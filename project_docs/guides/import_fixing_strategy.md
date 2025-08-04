@@ -50,7 +50,7 @@ The main issue is that our __init__.py files are only exposing select classes ra
 ### 1. autoimport (Primary Tool)
 - **Why**: Already installed, actively maintained, fixes imports automatically
 - **Usage**: `poetry run autoimport [--check] file.py`
-- **Benefits**: 
+- **Benefits**:
   - Handles both missing and unused imports
   - Preserves code style
   - Can run in check-only mode first

@@ -3,8 +3,8 @@
 from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 
-from .models import ExecutionResult
-from .prompts import EXECUTOR_PROMPT, EXECUTOR_SYSTEM_MESSAGE
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.reasoning_and_critique.reasoning_and_critique.self_discover.executor.models import ExecutionResult
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.reasoning_and_critique.reasoning_and_critique.self_discover.executor.prompts import EXECUTOR_PROMPT, EXECUTOR_SYSTEM_MESSAGE
 
 
 class ExecutorAgent(SimpleAgent):
@@ -30,7 +30,10 @@ class ExecutorAgent(SimpleAgent):
         ... })
     """
 
-    def __init__(self, name: str = "executor", engine: AugLLMConfig = None, **kwargs):
+    def __init__(self,
+                 name: str = "executor",
+                 engine: AugLLMConfig = None,
+                 **kwargs):
         """Initialize the Executor Agent.
 
         Args:

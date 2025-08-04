@@ -12,9 +12,9 @@ complex imports. We'll create simple visual demonstrations of agent concepts.
 # Let's demonstrate the concept of agent workflows with a simple visualization.
 
 import matplotlib.patches as mpatches
+from matplotlib.patches import FancyBboxPatch
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.patches import FancyBboxPatch
 
 # Create a figure for agent workflow visualization
 fig, ax = plt.subplots(1, 1, figsize=(12, 8))
@@ -33,7 +33,8 @@ positions = [(1, 4), (3, 4), (5, 4), (7, 4), (9, 4)]
 colors = ["#e8f4f8", "#d4edda", "#fff3cd", "#f8d7da", "#e2e3e5"]
 
 # Draw workflow boxes
-for i, (step, pos, color) in enumerate(zip(steps, positions, colors, strict=False)):
+for i, (step, pos,
+        color) in enumerate(zip(steps, positions, colors, strict=False)):
     # Create fancy box
     box = FancyBboxPatch(
         (pos[0] - 0.8, pos[1] - 0.4),
@@ -48,7 +49,13 @@ for i, (step, pos, color) in enumerate(zip(steps, positions, colors, strict=Fals
 
     # Add text
     ax.text(
-        pos[0], pos[1], step, ha="center", va="center", fontsize=10, fontweight="bold"
+        pos[0],
+        pos[1],
+        step,
+        ha="center",
+        va="center",
+        fontsize=10,
+        fontweight="bold",
     )
 
     # Add arrows between steps
@@ -69,7 +76,10 @@ ax.set_xlim(0, 10)
 ax.set_ylim(3, 5)
 ax.set_aspect("equal")
 ax.axis("off")
-ax.set_title("Haive Agent Workflow Pattern", fontsize=16, fontweight="bold", pad=20)
+ax.set_title("Haive Agent Workflow Pattern",
+             fontsize=16,
+             fontweight="bold",
+             pad=20)
 
 plt.tight_layout()
 plt.show()
@@ -87,10 +97,14 @@ simple_y = [3, 2, 1, 0]
 simple_colors = ["#17a2b8", "#28a745", "#ffc107", "#dc3545"]
 
 for i, (comp, y, color) in enumerate(
-    zip(simple_components, simple_y, simple_colors, strict=False)
-):
+        zip(simple_components, simple_y, simple_colors, strict=False), ):
     rect = mpatches.Rectangle(
-        (0, y), 3, 0.8, facecolor=color, alpha=0.7, edgecolor="black"
+        (0, y),
+        3,
+        0.8,
+        facecolor=color,
+        alpha=0.7,
+        edgecolor="black",
     )
     ax1.add_patch(rect)
     ax1.text(1.5, y + 0.4, comp, ha="center", va="center", fontweight="bold")
@@ -122,15 +136,27 @@ react_components = [
     "Response",
 ]
 react_positions = [(1, 5), (1, 4), (0, 3), (2, 3), (1, 2), (1, 1)]
-react_colors = ["#17a2b8", "#28a745", "#fd7e14", "#6f42c1", "#e83e8c", "#dc3545"]
+react_colors = [
+    "#17a2b8", "#28a745", "#fd7e14", "#6f42c1", "#e83e8c", "#dc3545"
+]
 
 for i, ((x, y), comp, color) in enumerate(
-    zip(react_positions, react_components, react_colors, strict=False)
-):
-    circle = plt.Circle((x, y), 0.4, facecolor=color, alpha=0.7, edgecolor="black")
+        zip(react_positions, react_components, react_colors, strict=False), ):
+    circle = plt.Circle((x, y),
+                        0.4,
+                        facecolor=color,
+                        alpha=0.7,
+                        edgecolor="black")
     ax2.add_patch(circle)
     ax2.text(
-        x, y, comp, ha="center", va="center", fontsize=8, fontweight="bold", wrap=True
+        x,
+        y,
+        comp,
+        ha="center",
+        va="center",
+        fontsize=8,
+        fontweight="bold",
+        wrap=True,
     )
 
 # Add connections
@@ -179,7 +205,12 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
 
 # Execution times
 bars1 = ax1.bar(
-    x - width / 2, setup_time, width, label="Setup Time (s)", color="#3498db", alpha=0.8
+    x - width / 2,
+    setup_time,
+    width,
+    label="Setup Time (s)",
+    color="#3498db",
+    alpha=0.8,
 )
 bars2 = ax1.bar(
     x + width / 2,
@@ -254,4 +285,6 @@ print("🎯 Key takeaways:")
 print("   - SimpleAgent: Fast, lightweight, direct LLM interaction")
 print("   - ReactAgent: Reasoning loops, tool integration, more complex")
 print("   - MultiAgent: Coordination overhead, powerful for complex tasks")
-print("   - RAGAgent: Knowledge retrieval, good balance of capability and performance")
+print(
+    "   - RAGAgent: Knowledge retrieval, good balance of capability and performance"
+)

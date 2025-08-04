@@ -14,7 +14,6 @@ from document_graders.models import (
     DocumentRelevanceScore,
 )
 
-
 __all__ = [
     "ComprehensiveDocumentGrade",
     "ComprehensiveGradingResponse",

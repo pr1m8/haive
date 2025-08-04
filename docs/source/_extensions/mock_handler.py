@@ -1,4 +1,5 @@
 """Comprehensive mock handler for Sphinx documentation build.
+
 Handles missing imports gracefully to allow documentation generation.
 """
 
@@ -6,7 +7,6 @@ import logging
 import sys
 import types
 from unittest.mock import MagicMock
-
 
 logger = logging.getLogger(__name__)
 
@@ -103,6 +103,7 @@ def mock_missing_modules():
 
             # Create a mock class that can be instantiated
             class MockClass:
+
                 def __init__(self, *args, **kwargs):
                     pass
 
@@ -141,7 +142,7 @@ MISSING_HAIVE_MODULES = [
     "haive.agents.conversation.base",
     "haive.agents.conversation.round_robin",
     "haive.agents.conversation.debate",
-    "haive.agents.conversation.collaberative",
+    "haive.agents.conversation.collaborative",
     "haive.agents.conversation.social_media",
     "haive.agents.conversation.directed.state",
     "haive.agents.document_modifiers.base",
@@ -367,7 +368,9 @@ def initialize_mocks():
     create_virtual_modules()
     mock_specific_imports()
     logger.info(
-        f"Documentation mocks initialized: {len(MISSING_HAIVE_MODULES) + len(EXTERNAL_DEPENDENCIES)} modules mocked"
+        f"Documentation mocks initialized: {
+            len(MISSING_HAIVE_MODULES) +
+            len(EXTERNAL_DEPENDENCIES)} modules mocked",
     )
 
 

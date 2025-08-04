@@ -11,24 +11,14 @@ Functions:
     get_conversation_state_schema: Get Conversation State Schema functionality.
     select_speaker: Select Speaker functionality.
 """
-
 # src/haive/agents/conversation/directed/agent.py
 """Directed conversation agent where participants respond to mentions and direct questions.
 
 Uses structured output models for robust speaker selection and interaction tracking.
 """
+from __future__ import annotations
 
-from enum import Enum
 import logging
-import re
-from typing import Any, Literal
-
-from langchain_core.messages import AIMessage, BaseMessage, SystemMessage
-from pydantic import BaseModel, Field
-
-from haive.agents.conversation.base.agent import BaseConversationAgent
-from haive.agents.conversation.directed.state import DirectedState
-
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.WARNING)
@@ -49,25 +39,32 @@ class SpeakerMention(BaseModel):
     speaker_name: str = Field(description="Name of the mentioned speaker")
     mention_type: MentionType = Field(description="Type of mention detected")
     confidence: float = Field(
-        default=1.0, description="Confidence in the mention detection"
+        default=1.0,
+        description="Confidence in the mention detection",
     )
-    context: str | None = Field(default=None, description="Context around the mention")
+    context: str | None = Field(default=None,
+                                description="Context around the mention")
 
 
 class SpeakerSelectionResult(BaseModel):
     """Structured output for speaker selection logic."""
 
-    next_speaker: str | None = Field(default=None, description="Next speaker to talk")
+    next_speaker: str | None = Field(default=None,
+                                     description="Next speaker to talk")
     pending_speakers: list[str] = Field(
-        default_factory=list, description="Queue of speakers waiting to talk"
+        default_factory=list,
+        description="Queue of speakers waiting to talk",
     )
     mentioned_speakers: list[str] = Field(
-        default_factory=list, description="All speakers mentioned in last message"
+        default_factory=list,
+        description="All speakers mentioned in last message",
     )
     selection_reason: str = Field(
-        default="", description="Reason for speaker selection"
+        default="",
+        description="Reason for speaker selection",
     )
-    confidence: float = Field(default=1.0, description="Confidence in the selection")
+    confidence: float = Field(default=1.0,
+                              description="Confidence in the selection")
 
 
 class InteractionPattern(BaseModel):
@@ -77,7 +74,8 @@ class InteractionPattern(BaseModel):
     to_speaker: str = Field(description="Speaker who was mentioned")
     mention_count: int = Field(default=1, description="Number of mentions")
     mention_types: list[MentionType] = Field(
-        default_factory=list, description="Types of mentions used"
+        default_factory=list,
+        description="Types of mentions used",
     )
 
 
@@ -85,24 +83,29 @@ class DirectedConversationConfig(BaseModel):
     """Configuration for directed conversation behavior."""
 
     mention_patterns: list[str] = Field(
-        default_factory=lambda: ["@{name}", "{name},", "{name}:", "ask {name}"],
+        default_factory=lambda:
+        ["@{name}", "{name},", "{name}:", "ask {name}"],
         description="Patterns to detect mentions (use {name} as placeholder)",
     )
     fallback_to_round_robin: bool = Field(
-        default=True, description="Use round-robin if no one is mentioned"
+        default=True,
+        description="Use round-robin if no one is mentioned",
     )
     max_silence_turns: int = Field(
-        default=3, description="Max turns before forcing someone to speak"
+        default=3,
+        description="Max turns before forcing someone to speak",
     )
     allow_self_selection: bool = Field(
-        default=True, description="Allow agents to volunteer to speak"
+        default=True,
+        description="Allow agents to volunteer to speak",
     )
     avoid_self_mentions: bool = Field(
         default=True,
         description="Prevent speakers from being selected based on self-mentions",
     )
     prioritize_least_active: bool = Field(
-        default=True, description="Prioritize speakers who haven't spoken recently"
+        default=True,
+        description="Prioritize speakers who haven't spoken recently",
     )
 
 
@@ -116,7 +119,7 @@ class DirectedConversation(BaseConversationAgent):
     - They haven't spoken in a while (configurable)
     """
 
-    mode: Literal["directed"] = Field(default="directed")
+    mode: Literal[directed] = Field(default="directed")
 
     # Configuration
     config: DirectedConversationConfig = Field(
@@ -132,13 +135,14 @@ class DirectedConversation(BaseConversationAgent):
         return DirectedState
 
     def select_speaker(self, state: DirectedState) -> dict[str, Any]:
-        """Select speaker based on mentions and context using structured models."""
+        """Select speaker based on mentions and context using structured
+        models."""
         # Get structured selection result
         selection_result = self._get_speaker_selection(state)
 
         # Log the selection reasoning
         logger.debug(
-            f"Speaker selection: {selection_result.next_speaker} - {selection_result.selection_reason}"
+            f"Speaker selection: {selection_result.next_speaker} - {selection_result.selection_reason}",
         )
 
         # Convert to state update
@@ -154,7 +158,8 @@ class DirectedConversation(BaseConversationAgent):
 
         return update
 
-    def _get_speaker_selection(self, state: DirectedState) -> SpeakerSelectionResult:
+    def _get_speaker_selection(self,
+                               state: DirectedState) -> SpeakerSelectionResult:
         """Get structured speaker selection result."""
         # Check pending speakers first
         if state.pending_speakers:
@@ -195,9 +200,8 @@ class DirectedConversation(BaseConversationAgent):
             if mentioned_names:
                 return SpeakerSelectionResult(
                     next_speaker=mentioned_names[0],
-                    pending_speakers=(
-                        mentioned_names[1:] if len(mentioned_names) > 1 else []
-                    ),
+                    pending_speakers=(mentioned_names[1:]
+                                      if len(mentioned_names) > 1 else []),
                     mentioned_speakers=mentioned_names,
                     selection_reason=f"Mentioned via {sorted_mentions[0].mention_type.value}",
                     confidence=sorted_mentions[0].confidence,
@@ -209,15 +213,18 @@ class DirectedConversation(BaseConversationAgent):
         return self._select_least_active_structured(state)
 
     def _extract_structured_mentions(
-        self, state: DirectedState
+        self,
+        state: DirectedState,
     ) -> list[SpeakerMention]:
         """Extract mentions as structured models."""
         if not state.messages:
             return []
 
         last_message = state.messages[-1]
-        if not isinstance(last_message, AIMessage | BaseMessage) or not hasattr(
-            last_message, "content"
+        if not isinstance(last_message,
+                          AIMessage | BaseMessage) or not hasattr(
+                              last_message,
+                              "content",
         ):
             return []
 
@@ -234,8 +241,7 @@ class DirectedConversation(BaseConversationAgent):
                         mention_type=MentionType.DIRECT_MENTION,
                         confidence=1.0,
                         context=self._extract_context(content, f"@{speaker}"),
-                    )
-                )
+                    ), )
                 continue
 
             # Name references (name, or name:)
@@ -247,8 +253,7 @@ class DirectedConversation(BaseConversationAgent):
                             mention_type=MentionType.NAME_REFERENCE,
                             confidence=0.9,
                             context=self._extract_context(content, pattern),
-                        )
-                    )
+                        ), )
                     break
 
             # Question targets
@@ -267,15 +272,18 @@ class DirectedConversation(BaseConversationAgent):
                                 speaker_name=speaker,
                                 mention_type=MentionType.QUESTION_TARGET,
                                 confidence=0.95,
-                                context=self._extract_context(content, speaker),
-                            )
-                        )
+                                context=self._extract_context(
+                                    content, speaker),
+                            ), )
                         break
 
         return mentions
 
     def _extract_context(
-        self, content: str, mention: str, context_size: int = 50
+        self,
+        content: str,
+        mention: str,
+        context_size: int = 50,
     ) -> str:
         """Extract context around a mention."""
         try:
@@ -318,7 +326,8 @@ class DirectedConversation(BaseConversationAgent):
         return None
 
     def _select_round_robin_structured(
-        self, state: DirectedState
+        self,
+        state: DirectedState,
     ) -> SpeakerSelectionResult:
         """Select next speaker using round-robin."""
         current_speaker = state.current_speaker
@@ -326,12 +335,14 @@ class DirectedConversation(BaseConversationAgent):
 
         if not speakers:
             return SpeakerSelectionResult(
-                next_speaker=None, selection_reason="No speakers available"
+                next_speaker=None,
+                selection_reason="No speakers available",
             )
 
         if not current_speaker:
             return SpeakerSelectionResult(
-                next_speaker=speakers[0], selection_reason="Starting with first speaker"
+                next_speaker=speakers[0],
+                selection_reason="Starting with first speaker",
             )
 
         try:
@@ -348,7 +359,8 @@ class DirectedConversation(BaseConversationAgent):
             )
 
     def _select_least_active_structured(
-        self, state: DirectedState
+        self,
+        state: DirectedState,
     ) -> SpeakerSelectionResult:
         """Select the speaker who has been least active."""
         # Count messages per speaker
@@ -364,7 +376,8 @@ class DirectedConversation(BaseConversationAgent):
             least_active = min(message_count.items(), key=lambda x: x[1])
             return SpeakerSelectionResult(
                 next_speaker=least_active[0],
-                selection_reason=f"Least active speaker (spoke {least_active[1]} times)",
+                selection_reason=f"Least active speaker (spoke {
+                    least_active[1]} times)",
                 confidence=0.8,
             )
 
@@ -386,7 +399,8 @@ class DirectedConversation(BaseConversationAgent):
                         from_speaker=state.current_speaker,
                         to_speaker=mentioned,
                         mention_count=1,
-                        mention_types=[MentionType.NAME_REFERENCE],  # Could be enhanced
+                        mention_types=[MentionType.NAME_REFERENCE
+                                       ],  # Could be enhanced
                     )
                     self._interaction_history.append(interaction)
 
@@ -397,8 +411,10 @@ class DirectedConversation(BaseConversationAgent):
 
             for mentioned in state.mentioned_speakers:
                 if mentioned != state.current_speaker:
-                    current = interaction_count[state.current_speaker].get(mentioned, 0)
-                    interaction_count[state.current_speaker][mentioned] = current + 1
+                    current = interaction_count[state.current_speaker].get(
+                        mentioned, 0)
+                    interaction_count[
+                        state.current_speaker][mentioned] = current + 1
 
             update["interaction_count"] = interaction_count
 
@@ -408,7 +424,9 @@ class DirectedConversation(BaseConversationAgent):
         return update
 
     def _prepare_agent_input(
-        self, state: DirectedState, agent_name: str
+        self,
+        state: DirectedState,
+        agent_name: str,
     ) -> dict[str, Any]:
         """Prepare input with mention context."""
         base_input = super()._prepare_agent_input(state, agent_name)
@@ -417,10 +435,13 @@ class DirectedConversation(BaseConversationAgent):
         if agent_name in state.mentioned_speakers:
             # Find how they were mentioned
             mentions = self._extract_structured_mentions(state)
-            agent_mentions = [m for m in mentions if m.speaker_name == agent_name]
+            agent_mentions = [
+                m for m in mentions if m.speaker_name == agent_name
+            ]
 
             if agent_mentions:
-                mention_type = agent_mentions[0].mention_type.value.replace("_", " ")
+                mention_type = agent_mentions[0].mention_type.value.replace(
+                    "_", " ")
                 context = f"[You were mentioned via {mention_type}. Please respond.]"
             else:
                 context = "[You were mentioned in the conversation. Please respond.]"
@@ -429,11 +450,8 @@ class DirectedConversation(BaseConversationAgent):
             messages = base_input.get("messages", [])
 
             # Insert before the last message
-            messages = (
-                [*messages[:-1], mention_msg, *messages[-1:]]
-                if messages
-                else [mention_msg]
-            )
+            messages = [*messages[:-1], mention_msg, *messages[-1:]
+                        ] if messages else [mention_msg]
             base_input["messages"] = messages
 
         return base_input
@@ -495,19 +513,19 @@ class DirectedConversation(BaseConversationAgent):
         # Create teacher agent
         teacher_engine = AugLLMConfig(
             name=f"{teacher_name_sanitized.lower()}_engine",
-            system_message=(
-                f"You are {teacher_name}, a teacher leading a discussion about {topic}. "
-                "Ask questions to specific students using their names. "
-                "Provide feedback and guide the discussion. "
-                "Make sure to mention student names when asking them questions."
-            ),
+            system_message=(f"You are {teacher_name}, a teacher leading a discussion about {topic}. "
+                            "Ask questions to specific students using their names. "
+                            "Provide feedback and guide the discussion. "
+                            "Make sure to mention student names when asking them questions."),
             temperature=0.6,
         )
 
         agents = {
-            teacher_name_sanitized: SimpleAgent(
-                name=f"{teacher_name_sanitized}_agent", engine=teacher_engine
-            )
+            teacher_name_sanitized:
+            SimpleAgent(
+                name=f"{teacher_name_sanitized}_agent",
+                engine=teacher_engine,
+            ),
         }
 
         # Create student agents
@@ -519,12 +537,12 @@ class DirectedConversation(BaseConversationAgent):
                     f"You are {student}, a student in class. "
                     "Answer when the teacher asks you questions. "
                     "You can also ask questions or respond to other students. "
-                    "Be engaged and thoughtful in your responses."
-                ),
+                    "Be engaged and thoughtful in your responses."),
                 temperature=0.7,
             )
             agents[student_sanitized] = SimpleAgent(
-                name=f"{student_sanitized}_agent", engine=student_engine
+                name=f"{student_sanitized}_agent",
+                engine=student_engine,
             )
 
         # Use provided config or create default
@@ -550,7 +568,8 @@ class DirectedConversation(BaseConversationAgent):
         )
 
     def _check_custom_end_conditions(
-        self, state: DirectedState
+        self,
+        state: DirectedState,
     ) -> dict[str, Any] | None:
         """Check if everyone has participated sufficiently."""
         # Count participation
@@ -565,7 +584,8 @@ class DirectedConversation(BaseConversationAgent):
         min_participation = min(participation.values()) if participation else 0
         total_messages = len(state.messages)
 
-        if min_participation >= 2 and total_messages >= len(state.speakers) * 3:
+        if min_participation >= 2 and total_messages >= len(
+                state.speakers) * 3:
             return {"conversation_ended": True}
 
         return None

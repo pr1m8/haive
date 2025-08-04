@@ -46,13 +46,13 @@ from haive.agents.rag.db_rag.sql_rag.config import SQLDatabaseConfig, SQLRAGConf
 from haive.agents.rag.db_rag.sql_rag.engines import default_sql_engines
 from haive.core.engine.aug_llm import AugLLMConfig
 
-
 # For backward compatibility
 SQLDatabaseAgent = SQLRAGAgent
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
@@ -125,7 +125,8 @@ def postgresql_example() -> dict[str, Any]:
     agent = SQLRAGAgent(agent_config)
 
     # Run a complex query
-    result = agent.run({"question": "Who are my top 5 customers by total order value?"})
+    result = agent.run(
+        {"question": "Who are my top 5 customers by total order value?"})
 
     return result
 
@@ -148,7 +149,8 @@ def sqlite_example() -> dict[str, Any]:
     """
     # Configure SQLite connection
     db_config = SQLDatabaseConfig(
-        db_type="sqlite", db_name="./data/sample.db"  # Path to SQLite file
+        db_type="sqlite",
+        db_name="./data/sample.db",  # Path to SQLite file
     )
 
     # Simple configuration
@@ -196,14 +198,18 @@ def mysql_example() -> dict[str, Any]:
         domain_examples={
             "analytics": [
                 {
-                    "question": "Show product sales trend",
-                    "query": "SELECT DATE_FORMAT(order_date, '%Y-%m') as month, SUM(quantity * unit_price) as revenue FROM order_details od JOIN orders o ON od.order_id = o.order_id GROUP BY month ORDER BY month",
+                    "question":
+                    "Show product sales trend",
+                    "query":
+                    "SELECT DATE_FORMAT(order_date, '%Y-%m') as month, SUM(quantity * unit_price) as revenue FROM order_details od JOIN orders o ON od.order_id = o.order_id GROUP BY month ORDER BY month",
                 },
                 {
-                    "question": "Customer retention rate",
-                    "query": "SELECT COUNT(DISTINCT customer_id) as returning_customers FROM orders WHERE customer_id IN (SELECT customer_id FROM orders WHERE order_date < DATE_SUB(NOW(), INTERVAL 1 YEAR))",
+                    "question":
+                    "Customer retention rate",
+                    "query":
+                    "SELECT COUNT(DISTINCT customer_id) as returning_customers FROM orders WHERE customer_id IN (SELECT customer_id FROM orders WHERE order_date < DATE_SUB(NOW(), INTERVAL 1 YEAR))",
                 },
-            ]
+            ],
         },
     )
 
@@ -212,8 +218,8 @@ def mysql_example() -> dict[str, Any]:
 
     # Run trend analysis
     result = agent.run(
-        {"question": "What's the product sales trend for the last 6 months?"}
-    )
+        {"question": "What's the product sales trend for the last 6 months?"
+         }, )
 
     return result
 
@@ -267,15 +273,15 @@ def custom_llm_example() -> dict[str, Any]:
         model="gpt-4",
         temperature=0.1,  # Very low temperature for consistent SQL
         prompt_template=default_sql_engines["generate_sql"].prompt_template,
-        structured_output_model=default_sql_engines[
-            "generate_sql"
-        ].structured_output_model,
+        structured_output_model=default_sql_engines["generate_sql"].
+        structured_output_model,
     )
 
     # Custom engines configuration
     custom_engines = {
         **default_sql_engines,  # Keep all defaults
-        "generate_sql": custom_sql_engine,  # Override SQL generator
+        "generate_sql":
+        custom_sql_engine,  # Override SQL generator
     }
 
     # Configure agent with custom engines
@@ -283,7 +289,8 @@ def custom_llm_example() -> dict[str, Any]:
 
     agent = SQLRAGAgent(config)
 
-    result = agent.run({"question": "Calculate the average order value by month"})
+    result = agent.run(
+        {"question": "Calculate the average order value by month"})
 
     return result
 
@@ -334,11 +341,14 @@ def batch_processing_example() -> list[dict[str, Any]]:
                     "sql": result.get("sql_statement", ""),
                     "time": query_time,
                     "success": True,
-                }
-            )
+                }, )
 
         except Exception as e:
-            results.append({"question": question, "error": str(e), "success": False})
+            results.append({
+                "question": question,
+                "error": str(e),
+                "success": False
+            })
 
     total_time = (datetime.now() - start_time).total_seconds()
     total_time / len(queries)
@@ -447,14 +457,15 @@ def main() -> Union[int, float]:
         help="Which example to run",
     )
     parser.add_argument("--query", type=str, help="Custom query to run")
-    parser.add_argument("--config", type=str, help="Path to JSON configuration file")
+    parser.add_argument("--config",
+                        type=str,
+                        help="Path to JSON configuration file")
 
     args = parser.parse_args()
 
     try:
         # If custom query is provided
         if args.query:
-
             # Load config from file if provided
             if args.config:
                 with open(args.config) as f:

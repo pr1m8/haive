@@ -4,6 +4,8 @@ This module provides reflection agents that use structured output models
 combined with a post-processing hook pattern for extracting results.
 """
 
+from __future__ import annotations
+
 import asyncio
 from typing import Any, TypeVar
 
@@ -13,17 +15,19 @@ from pydantic import BaseModel
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 
-from .models import ReflectionResult
-
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.reflection.reflection.models import ReflectionResult
 
 # Type variable for any Pydantic model
 T = TypeVar("T", bound=BaseModel)
 
 
 def extract_structured_output(
-    agent_result: dict[str, Any], model_class: type[T]
+    agent_result: dict[str, Any],
+    model_class: type[T],
 ) -> T | None:
-    """Generic post-processing hook to extract structured output from agent results.
+    """Generic post-processing hook to extract structured output from agent.
+
+    results.
 
     Args:
         agent_result: The dict returned by agent.arun()
@@ -106,20 +110,18 @@ Your role is to:
 Be constructive and specific in your feedback."""
 
         # Create reflection prompt template
-        self.prompt_template = ChatPromptTemplate.from_messages(
-            [
-                ("system", system_prompt),
-                (
-                    "human",
-                    """Please analyze and provide structured feedback on this response:
+        self.prompt_template = ChatPromptTemplate.from_messages([
+            ("system", system_prompt),
+            (
+                "human",
+                """Please analyze and provide structured feedback on this response:
 
 Original Query: {query}
 Response to Analyze: {response}
 
 Provide a comprehensive reflection on the quality, accuracy, and completeness of this response.""",
-                ),
-            ]
-        )
+            ),
+        ], )
 
         # Create the underlying SimpleAgent with structured output
         self.agent = SimpleAgent(
@@ -132,7 +134,8 @@ Provide a comprehensive reflection on the quality, accuracy, and completeness of
             ),
         )
 
-    async def reflect(self, query: str, response: str) -> ReflectionResult | None:
+    async def reflect(self, query: str,
+                      response: str) -> ReflectionResult | None:
         """Perform reflection analysis on a response.
 
         Args:
@@ -152,7 +155,9 @@ Provide a comprehensive reflection on the quality, accuracy, and completeness of
 class StructuredImprovementAgent:
     """Agent that improves responses based on reflection feedback."""
 
-    def __init__(self, name: str = "improvement_agent", temperature: float = 0.5):
+    def __init__(self,
+                 name: str = "improvement_agent",
+                 temperature: float = 0.5):
         """Initialize the improvement agent.
 
         Args:
@@ -164,9 +169,8 @@ class StructuredImprovementAgent:
         # Create improvement prompt template
         improvement_prompt = ChatPromptTemplate.from_messages(
             [
-                (
-                    "system",
-                    """You are an improvement agent that creates better versions of responses.
+                ("system",
+                 """You are an improvement agent that creates better versions of responses.
 
 You will receive:
 1. An original query
@@ -175,10 +179,9 @@ You will receive:
 
 Your task is to create an improved version that addresses the feedback while
 maintaining the strengths identified.""",
-                ),
-                (
-                    "human",
-                    """Please improve this response based on the feedback provided:
+                 ),
+                ("human",
+                 """Please improve this response based on the feedback provided:
 
 Original Query: {query}
 Original Response: {response}
@@ -188,20 +191,24 @@ Identified Weaknesses: {weaknesses}
 Improvement Suggestions: {suggestions}
 
 Provide an improved version of the response that addresses these issues.""",
-                ),
-            ]
+                 ),
+            ],
         )
 
         # Create the underlying SimpleAgent
         self.agent = SimpleAgent(
             name=name,
             engine=AugLLMConfig(
-                prompt_template=improvement_prompt, temperature=temperature
+                prompt_template=improvement_prompt,
+                temperature=temperature,
             ),
         )
 
     async def improve(
-        self, query: str, response: str, reflection: ReflectionResult
+        self,
+        query: str,
+        response: str,
+        reflection: ReflectionResult,
     ) -> str:
         """Improve a response based on reflection feedback.
 
@@ -221,8 +228,7 @@ Provide an improved version of the response that addresses these issues.""",
                 "feedback_summary": reflection.summary,
                 "weaknesses": "; ".join(reflection.critique.weaknesses),
                 "suggestions": "; ".join(reflection.critique.suggestions),
-            }
-        )
+            }, )
 
         # Extract improved response from messages
         if isinstance(result, dict) and "messages" in result:
@@ -257,7 +263,8 @@ class ReflectionLoop:
         self.max_iterations = max_iterations
         self.quality_threshold = quality_threshold
 
-    async def iterate(self, query: str, initial_response: str) -> dict[str, Any]:
+    async def iterate(self, query: str,
+                      initial_response: str) -> dict[str, Any]:
         """Run iterative reflection and improvement.
 
         Args:
@@ -296,37 +303,49 @@ class ReflectionLoop:
             # Apply improvements if needed
             if reflection.critique.needs_revision:
                 current_response = await self.improver.improve(
-                    query, current_response, reflection
+                    query,
+                    current_response,
+                    reflection,
                 )
             else:
                 break
 
         return {
-            "final_response": current_response,
-            "iterations": iteration,
-            "quality_scores": quality_scores,
-            "reflections": reflections,
-            "improved": (
-                len(quality_scores) > 0 and quality_scores[-1] > quality_scores[0]
-                if quality_scores
-                else False
-            ),
+            "final_response":
+            current_response,
+            "iterations":
+            iteration,
+            "quality_scores":
+            quality_scores,
+            "reflections":
+            reflections,
+            "improved":
+            (len(quality_scores) > 0 and quality_scores[-1] > quality_scores[0]
+             if quality_scores else False),
         }
 
 
 # Factory functions for easy creation
 def create_reflection_agent(
-    name: str = "reflector", temperature: float = 0.3, **kwargs
+    name: str = "reflector",
+    temperature: float = 0.3,
+    **kwargs,
 ) -> StructuredReflectionAgent:
     """Create a structured reflection agent."""
-    return StructuredReflectionAgent(name=name, temperature=temperature, **kwargs)
+    return StructuredReflectionAgent(name=name,
+                                     temperature=temperature,
+                                     **kwargs)
 
 
 def create_improvement_agent(
-    name: str = "improver", temperature: float = 0.5, **kwargs
+    name: str = "improver",
+    temperature: float = 0.5,
+    **kwargs,
 ) -> StructuredImprovementAgent:
     """Create a structured improvement agent."""
-    return StructuredImprovementAgent(name=name, temperature=temperature, **kwargs)
+    return StructuredImprovementAgent(name=name,
+                                      temperature=temperature,
+                                      **kwargs)
 
 
 def create_reflection_loop(
@@ -365,7 +384,6 @@ async def example_basic_reflection():
     reflection = await reflector.reflect(query, response)
 
     if reflection:
-
         for _strength in reflection.critique.strengths:
             pass
 
@@ -398,24 +416,22 @@ async def example_reflection_with_improvement():
     reflection = await reflector.reflect(query, original_response)
 
     if reflection:
-
         # Step 2: Apply improvements if needed
         if reflection.critique.needs_revision:
-
             improved_response = await improver.improve(
-                query, original_response, reflection
+                query,
+                original_response,
+                reflection,
             )
 
             # Optional: Reflect on the improvement
 
-            second_reflection = await reflector.reflect(query, improved_response)
+            second_reflection = await reflector.reflect(
+                query, improved_response)
 
             if second_reflection:
-
-                (
-                    second_reflection.critique.overall_quality
-                    - reflection.critique.overall_quality
-                )
+                (second_reflection.critique.overall_quality -
+                 reflection.critique.overall_quality)
         else:
             pass
 

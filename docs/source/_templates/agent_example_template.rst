@@ -49,7 +49,7 @@ Basic Example
 
     from haive.{{ module_path }} import {{ name }}
     from haive.core.engine.aug_llm import AugLLMConfig
-    
+
     # Create the agent
     agent = {{ name }}(
         name="{{ name|lower }}_example",
@@ -59,15 +59,15 @@ Basic Example
         ){% if tools %},
         tools=[{{ tools|join(", ") }}]{% endif %}
     )
-    
+
     # Basic usage
     import asyncio
-    
+
     async def run_example():
         result = await agent.arun("{{ example_input }}")
         print(result)
         return result
-    
+
     # Run the example
     result = asyncio.run(run_example())
 

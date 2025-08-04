@@ -94,9 +94,11 @@ class AgentInfo(BaseModel):
     description: str = Field(..., description="Agent description for routing")
     agent_class: str = Field(..., description="Agent class name")
     capabilities: list[str] = Field(
-        default_factory=list, description="List of agent capabilities"
+        default_factory=list,
+        description="List of agent capabilities",
     )
-    is_active: bool = Field(default=True, description="Whether agent is active")
+    is_active: bool = Field(default=True,
+                            description="Whether agent is active")
     created_at: datetime = Field(default_factory=datetime.now)
     last_used: datetime | None = Field(None, description="Last execution time")
     usage_count: int = Field(default=0, description="Number of times used")
@@ -149,7 +151,8 @@ class SupervisorTask(BaseModel):
     content: str = Field(..., description="Task content/description")
     target_agent: str | None = Field(None, description="Preferred agent")
     context: dict[str, Any] = Field(
-        default_factory=dict, description="Additional task context"
+        default_factory=dict,
+        description="Additional task context",
     )
     priority: int = Field(default=1, description="Task priority (1-10)")
     created_at: datetime = Field(default_factory=datetime.now)
@@ -165,7 +168,8 @@ class SupervisorResult(BaseModel):
     success: bool = Field(..., description="Whether execution succeeded")
     error_message: str | None = Field(None, description="Error if failed")
     metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional result metadata"
+        default_factory=dict,
+        description="Additional result metadata",
     )
     completed_at: datetime = Field(default_factory=datetime.now)
 
@@ -174,10 +178,14 @@ class RoutingDecision(BaseModel):
     """Decision made by supervisor routing logic."""
 
     selected_agent: str = Field(..., description="Selected agent name")
-    confidence: float = Field(..., ge=0.0, le=1.0, description="Routing confidence")
+    confidence: float = Field(...,
+                              ge=0.0,
+                              le=1.0,
+                              description="Routing confidence")
     reasoning: str = Field(..., description="Why this agent was selected")
     alternatives: list[str] = Field(
-        default_factory=list, description="Alternative agents considered"
+        default_factory=list,
+        description="Alternative agents considered",
     )
     routing_method: str = Field(..., description="Method used for routing")
 
@@ -209,8 +217,10 @@ class SupervisorConfig(BaseModel):
     """Configuration for supervisor behavior."""
 
     name: str = Field(..., description="Supervisor name")
-    max_iterations: int = Field(default=10, description="Max iterations for ReactAgent")
-    routing_strategy: str = Field(default="llm", description="Routing strategy")
+    max_iterations: int = Field(default=10,
+                                description="Max iterations for ReactAgent")
+    routing_strategy: str = Field(default="llm",
+                                  description="Routing strategy")
     enable_performance_tracking: bool = Field(default=True)
     auto_retry_on_failure: bool = Field(default=True)
     max_retries: int = Field(default=2)

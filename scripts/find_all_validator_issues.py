@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 """Find all Pydantic validator issues by trying to import modules."""
 
-import os
+from pathlib import Path
 import subprocess
 import sys
-from pathlib import Path
-from typing import List, Set
 
 
-def find_python_modules(root_dir: Path) -> List[str]:
+def find_python_modules(root_dir: Path) -> list[str]:
     """Find all Python modules that can be imported."""
     modules = []
 
@@ -22,22 +20,21 @@ def find_python_modules(root_dir: Path) -> List[str]:
 
         # Convert file path to module path
         try:
-            relative_path = py_file.relative_to(
-                root_dir.parent.parent
-            )  # relative to packages/
+            relative_path = py_file.relative_to(root_dir.parent.parent,
+                                                )  # relative to packages/
             module_parts = list(relative_path.parts)
 
             # Remove 'src' if present
             if "src" in module_parts:
                 src_idx = module_parts.index("src")
-                module_parts = module_parts[src_idx + 1 :]
+                module_parts = module_parts[src_idx + 1:]
 
             # Remove .py extension
             module_parts[-1] = module_parts[-1][:-3]
 
             module_name = ".".join(module_parts)
             modules.append((module_name, py_file))
-        except:
+        except BaseException:
             pass
 
     return modules
@@ -57,9 +54,9 @@ def test_imports():
         if not package_dir.is_dir() or package_dir.name.startswith("."):
             continue
 
-        print(f"\n{'='*60}")
+        print(f"\n{'=' * 60}")
         print(f"Testing package: {package_dir.name}")
-        print(f"{'='*60}")
+        print(f"{'=' * 60}")
 
         src_dir = package_dir / "src"
         if not src_dir.exists():
@@ -76,7 +73,11 @@ def test_imports():
             cmd = [sys.executable, "-c", f"import {module_name}"]
 
             result = subprocess.run(
-                cmd, capture_output=True, text=True, cwd=str(project_root)
+                cmd,
+                capture_output=True,
+                text=True,
+                cwd=str(project_root),
+                check=False,
             )
 
             if result.returncode != 0:
@@ -88,7 +89,8 @@ def test_imports():
                     lines = error_text.strip().split("\n")
                     for i, line in enumerate(lines):
                         if "PydanticUserError:" in line:
-                            error_msg = line.split("PydanticUserError:")[1].strip()
+                            error_msg = line.split(
+                                "PydanticUserError:")[1].strip()
 
                             # Try to find the exact location
                             location = "Unknown"
@@ -100,8 +102,10 @@ def test_imports():
                             # Extract method name from error
                             method_match = None
                             if "for <bound method" in error_msg:
-                                method_part = error_msg.split("for <bound method")[1]
-                                method_match = method_part.split(" of ")[0].strip()
+                                method_part = error_msg.split(
+                                    "for <bound method")[1]
+                                method_match = method_part.split(
+                                    " of ")[0].strip()
 
                             all_errors.append(
                                 {
@@ -110,8 +114,7 @@ def test_imports():
                                     "error": error_msg,
                                     "method": method_match,
                                     "location": location,
-                                }
-                            )
+                                }, )
 
                             print(f"\n❌ Validator error in {module_name}")
                             print(f"   File: {file_path}")
@@ -121,17 +124,16 @@ def test_imports():
                             break
 
     # Summary
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print("SUMMARY OF ALL VALIDATOR ISSUES")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     print(f"Total validator errors found: {len(all_errors)}")
 
     # Group by error type
     error_types = {}
     for error in all_errors:
-        error_type = (
-            error["error"].split(":")[0] if ":" in error["error"] else error["error"]
-        )
+        error_type = error["error"].split(
+            ":")[0] if ":" in error["error"] else error["error"]
         if error_type not in error_types:
             error_types[error_type] = []
         error_types[error_type].append(error)

@@ -117,17 +117,17 @@ Creates wiki-style documentation
 
        = Quantum Computing =
 
-   
+
    Quantum computing is a type of computation that harnesses quantum phenomena.
-   
+
    == Overview ==
    Unlike classical computers that use bits...
-   
+
    == Key Concepts ==
    * Superposition*
    * Entanglement*
    * Quantum gates*
-   
+
    [[See also]]: Quantum mechanics, Qubits
 
 .. raw:: html

@@ -1,8 +1,8 @@
 """Agent base class with integrated token usage tracking.
 
-This module provides an enhanced Agent base class that automatically tracks
-token usage for all LLM interactions, providing cost analysis and capacity
-monitoring capabilities.
+This module provides an enhanced Agent base class that automatically
+tracks token usage for all LLM interactions, providing cost analysis and
+capacity monitoring capabilities.
 """
 
 import logging
@@ -12,7 +12,6 @@ from pydantic import Field
 
 from haive.agents.base.agent import Agent
 from haive.core.schema import MessagesStateWithTokenUsage, SchemaComposer
-
 
 logger = logging.getLogger(__name__)
 
@@ -52,24 +51,27 @@ class TokenTrackingAgent(Agent):
             usage = agent.get_token_usage_summary()
             print(f"Total tokens: {usage['total_tokens']}")
             print(f"Total cost: ${usage['total_cost']:.4f}")
-
     """
 
     # Token tracking configuration
     track_costs: bool = Field(
-        default=True, description="Whether to calculate token costs"
+        default=True,
+        description="Whether to calculate token costs",
     )
 
     input_cost_per_1k: float = Field(
-        default=0.0, description="Cost per 1000 input tokens"
+        default=0.0,
+        description="Cost per 1000 input tokens",
     )
 
     output_cost_per_1k: float = Field(
-        default=0.0, description="Cost per 1000 output tokens"
+        default=0.0,
+        description="Cost per 1000 output tokens",
     )
 
     cached_input_cost_per_1k: float | None = Field(
-        default=None, description="Cost per 1000 cached input tokens (if applicable)"
+        default=None,
+        description="Cost per 1000 cached input tokens (if applicable)",
     )
 
     def _setup_schemas(self) -> None:
@@ -111,10 +113,11 @@ class TokenTrackingAgent(Agent):
                 # Use MessagesStateWithTokenUsage directly
                 self.state_schema = type(
                     f"{self.__class__.__name__}StateWithTokens",
-                    (MessagesStateWithTokenUsage,),
+                    (MessagesStateWithTokenUsage, ),
                     {},
                 )
-                logger.debug("Using MessagesStateWithTokenUsage for token tracking")
+                logger.debug(
+                    "Using MessagesStateWithTokenUsage for token tracking")
             else:
                 # Use the regular schema
                 self.state_schema = temp_schema
@@ -132,9 +135,15 @@ class TokenTrackingAgent(Agent):
         Returns:
             Dictionary with token usage statistics
         """
-        if hasattr(self, "_state") and hasattr(self._state, "get_token_usage_summary"):
+        if hasattr(self, "_state") and hasattr(self._state,
+                                               "get_token_usage_summary"):
             return self._state.get_token_usage_summary()
-        return {"total_tokens": 0, "total_cost": 0.0, "message_count": 0, "rounds": 0}
+        return {
+            "total_tokens": 0,
+            "total_cost": 0.0,
+            "message_count": 0,
+            "rounds": 0
+        }
 
     def calculate_conversation_costs(self) -> None:
         """Calculate costs for the current conversation."""

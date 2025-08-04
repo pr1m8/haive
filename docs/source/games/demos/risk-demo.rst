@@ -173,7 +173,7 @@ Global domination strategy game
        Asia: P4 (22 armies)
        Australia: P2 (6 armies)
 
-   
+
    Current Phase: Reinforcement
    Player 1 Turn
    Armies to place: 7

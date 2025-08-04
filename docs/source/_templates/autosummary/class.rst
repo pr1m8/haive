@@ -38,7 +38,7 @@
    {%- endfor %}
    {% endif %}
    {% endblock %}
-   
+
    .. rubric:: Examples
-   
+
    The Examples section from the class docstring will be displayed here automatically if present.

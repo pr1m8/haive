@@ -8,7 +8,7 @@ Agents
 
 The building blocks of Haive. Different types for different use cases.
 
-State Management  
+State Management
 ----------------
 
 How agents maintain and update their internal state.

@@ -15,12 +15,10 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from haive.agents.reasoning_and_critique.logic.models import ReasoningReport
 from haive.core.engine.aug_llm import AugLLMConfig
 
-
 REASONING_SYNTHESIS_PROMPT = ChatPromptTemplate.from_messages(
     [
-        (
-            "system",
-            """You are a master synthesizer who combines multiple reasoning perspectives into coherent conclusions.
+        ('system',
+         """You are a master synthesizer who combines multiple reasoning perspectives into coherent conclusions.
 
 Your role is to:
 1. Integrate different reasoning chains
@@ -218,20 +216,21 @@ Provide comprehensive synthesis including:
    - When to revisit
 
 Remember: Great synthesis doesn't just summarize - it creates new understanding by connecting disparate pieces into a coherent whole.""",
-        ),
-        (
-            "human",
-            "Synthesize these reasoning analyses into a final report:\n{analyses}",
-        ),
-        MessagesPlaceholder(variable_name="messages", optional=True),
-    ]
+         ),
+        ('human',
+         'Synthesize these reasoning analyses into a final report:\n{analyses}',
+         ),
+        MessagesPlaceholder(
+            variable_name='messages',
+            optional=True),
+    ],
 )
 
 
 def create_synthesis_agent() -> Any:
     """Create the reasoning synthesis agent."""
     return AugLLMConfig(
-        name="reasoning_synthesizer",
+        name='reasoning_synthesizer',
         prompt_template=REASONING_SYNTHESIS_PROMPT,
         structured_output_model=ReasoningReport,
         temperature=0.5,

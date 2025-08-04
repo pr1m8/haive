@@ -1,7 +1,7 @@
 Tool Routing and Selection
 ==========================
 
-As your agent's toolset grows, effectively routing and selecting the right tools becomes essential. 
+As your agent's toolset grows, effectively routing and selecting the right tools becomes essential.
 
 This guide covers advanced patterns for tool routing, selection, and orchestration in Haive.
 
@@ -9,7 +9,7 @@ Understanding Tool Routing
 
 --------------------------
 
-Tool routing refers to how an agent decides which tool(s) to use in response to a task. In Haive, 
+Tool routing refers to how an agent decides which tool(s) to use in response to a task. In Haive,
 
 tool routing can be:
 

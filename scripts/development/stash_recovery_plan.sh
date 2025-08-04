@@ -21,16 +21,16 @@ echo "✅ Created backup${ $BACKUP_BRAN}CH"
 apply_stash_safely() {
     local stash_num=$1
     local description=$2
-    
+
     echo ""
     echo "🔍 Analyzing sta${h_$stash_}nu${: $descript}ion"
-    
+
     # Check if stash exists
     if [[ ! -f "${RECOVERY_DIR}/stash_${stash_num}.patch" ]]; then
         echo "❌ Stash file not found: stas${_$stash_n}um.patch"
         return 1
     fi
-    
+
     # Show affected files
     echo "📁 Files in this stash:"
     if [[ -f "${RECOVERY_DIR}/stash_${stash_num}_files.txt" ]]; then
@@ -40,18 +40,18 @@ apply_stash_safely() {
             echo "   ... and $((total_files - 10)) more files"
         fi
     fi
-    
+
     # Get file size
     local size=$(du -h "${RECOVERY_DIR}/stash_${stash_num}.patch" | cut -f1)
     echo "📊 Patch siz${: $s}ize"
-    
+
     # Ask for confirmation
     echo ""
     read -p "Apply this stash? [y/N/s(skip)/q(quit)]: " choice
     case ${choice} in
         [Yy]* )
             echo "🔄 Applying sta${h_$stash_}num..."
-            
+
             # Try to apply with 3-way merge
             if git apply --3way --index "${RECOVERY_DIR}/stash_${stash_num}.patch" 2>/dev/null; then
                 echo "✅ Applied cleanly!"
@@ -62,7 +62,7 @@ Original stash from: $(head -4 "${RECOVERY_DIR}/stash_${stash_num}_files.txt" | 
 Recovery source: ${RECOVERY_DIR}/stash_${stash_num}.patch"
             else
                 echo "⚠️  Conflicts detected. Attempting manual resolution..."
-                
+
                 # Try without index first
                 if git apply "${RECOVERY_DIR}/stash_${stash_num}.patch" 2>/dev/null; then
                     echo "✅ Applied to working tree. Please review and commit manually."
@@ -102,7 +102,7 @@ echo "📅 PHASE 1: Recent Critical Work (July 29, 2025)"
 echo "   Priority: HIGH - These are your most recent commits"
 
 apply_stash_safely "0" "emergency-checkpoint-before-direct-fixes-20250729_193759"
-apply_stash_safely "1" "error-analyzer-checkpoint-20250729_193609" 
+apply_stash_safely "1" "error-analyzer-checkpoint-20250729_193609"
 apply_stash_safely "2" "error-analyzer-checkpoint-20250729_191934"
 
 echo ""

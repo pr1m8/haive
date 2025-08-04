@@ -1,6 +1,8 @@
+from __future__ import annotations
+
+from datetime import datetime
 import json
 import os
-from datetime import datetime
 from pathlib import Path
 
 from rich.console import Console
@@ -30,7 +32,9 @@ def log_debug(message: str) -> None:
 
 
 def write_report(filepath: str, issues: list[tuple[str, str]]) -> None:
-    """Save a JSON report of issues discovered in a file to the reports directory.
+    """Save a JSON report of issues discovered in a file to the reports
+    directory.
+
     The path is flattened to be filesystem-safe.
     """
     try:
@@ -44,7 +48,10 @@ def write_report(filepath: str, issues: list[tuple[str, str]]) -> None:
 
     report_data = {
         "file": rel_path,
-        "issues": [{"function": name, "message": msg} for name, msg in issues],
+        "issues": [{
+            "function": name,
+            "message": msg
+        } for name, msg in issues],
         "timestamp": datetime.now().isoformat(),
     }
 
@@ -54,13 +61,14 @@ def write_report(filepath: str, issues: list[tuple[str, str]]) -> None:
 
 
 def report_and_log(filepath: str, issues: list[tuple[str, str]]) -> None:
-    """Display issues in the Rich console, write a structured report, and log the result."""
+    """Display issues in the Rich console, write a structured report, and log
+    the result."""
     setup_report_dirs()
 
     if issues:
         console.print(
-            Panel(f"Issues found in [bold]{filepath}[/bold]", title="Validator Issues")
-        )
+            Panel(f"Issues found in [bold]{filepath}[/bold]",
+                  title="Validator Issues"), )
         for name, issue in issues:
             console.print(f"  [red]{name}[/red]: {issue}")
         write_report(filepath, issues)

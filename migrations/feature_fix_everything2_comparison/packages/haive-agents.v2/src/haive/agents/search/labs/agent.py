@@ -1,7 +1,8 @@
 """Labs Agent implementation.
 
-Provides interactive project automation with tools and workflows. Similar to
-Perplexity's Labs feature that creates apps, dashboards, and automated workflows.
+Provides interactive project automation with tools and workflows.
+Similar to Perplexity's Labs feature that creates apps, dashboards, and
+automated workflows.
 """
 
 import logging
@@ -112,8 +113,7 @@ class LabsAgent(BaseSearchAgent):
             f"Initialized LabsAgent: {name} (Code execution: {enable_code_execution})")
 
     def _create_labs_tools(self) -> list[Tool]:
-        """Create Labs-specific tools for project automation.
-        """
+        """Create Labs-specific tools for project automation."""
 
         @tool
         def execute_python_code(
@@ -295,13 +295,11 @@ class LabsAgent(BaseSearchAgent):
         ]
 
     def get_response_model(self) -> type[SearchResponse]:
-        """Get the response model for Labs.
-        """
+        """Get the response model for Labs."""
         return LabsResponse
 
     def get_system_prompt(self) -> str:
-        """Get the system prompt for Labs operations.
-        """
+        """Get the system prompt for Labs operations."""
         return """You are a Labs Assistant designed to automate complex projects and create interactive applications.
 
 Your role is to:
@@ -345,8 +343,7 @@ Output Standards:
 Remember: You are automating complex workflows and creating professional-grade deliverables through intelligent tool orchestration."""
 
     def get_search_instructions(self) -> str:
-        """Get specific search instructions for Labs operations.
-        """
+        """Get specific search instructions for Labs operations."""
         return """LABS PROJECT INSTRUCTIONS:
 
 1. PROJECT ANALYSIS:

@@ -1,7 +1,7 @@
 """Haive Supervisor Agent Implementation.
 
-A clean supervisor that manages multiple specialized agents using
-LLM-based routing decisions.
+A clean supervisor that manages multiple specialized agents using LLM-
+based routing decisions.
 """
 
 import logging
@@ -17,7 +17,6 @@ from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -25,16 +24,16 @@ class SupervisorState(BaseModel):
     """State for supervisor operations."""
 
     messages: list[Any] = Field(default_factory=list)
-    routing_decision: str | None = Field(None, description="Last routing decision")
+    routing_decision: str | None = Field(None,
+                                         description="Last routing decision")
     target_agent: str | None = Field(None, description="Current target agent")
 
 
 # Default supervisor prompt
-DEFAULT_SUPERVISOR_PROMPT = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            """You are a supervisor managing specialized agents.
+DEFAULT_SUPERVISOR_PROMPT = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        """You are a supervisor managing specialized agents.
 
 Available Agents:
 {agent_descriptions}
@@ -45,10 +44,9 @@ Instructions:
 3. Respond with ONLY the agent name or "END" if complete
 
 Decision:""",
-        ),
-        ("placeholder", "{messages}"),
-    ]
-)
+    ),
+    ("placeholder", "{messages}"),
+], )
 
 
 class SupervisorAgent(ReactAgent):
@@ -63,15 +61,18 @@ class SupervisorAgent(ReactAgent):
     # ========================================================================
 
     registered_agents: dict[str, Agent] = Field(
-        default_factory=dict, description="Registered agents by name"
+        default_factory=dict,
+        description="Registered agents by name",
     )
 
     agent_descriptions: dict[str, str] = Field(
-        default_factory=dict, description="Descriptions of agent capabilities"
+        default_factory=dict,
+        description="Descriptions of agent capabilities",
     )
 
     supervisor_prompt: ChatPromptTemplate | None = Field(
-        default=None, description="Custom prompt for routing decisions"
+        default=None,
+        description="Custom prompt for routing decisions",
     )
 
     # ========================================================================
@@ -102,8 +103,7 @@ class SupervisorAgent(ReactAgent):
 
         # Update prompt template for routing
         if self.engine:
-            self.engine.prompt_template = (
-                self.supervisor_prompt or self._create_routing_prompt()
+            self.engine.prompt_template = self.supervisor_prompt or self._create_routing_prompt(
             )
 
     def _create_routing_prompt(self) -> ChatPromptTemplate:
@@ -111,18 +111,21 @@ class SupervisorAgent(ReactAgent):
         if not self.agent_descriptions:
             descriptions = "No agents registered yet"
         else:
-            descriptions = "\n".join(
-                [f"- {name}: {desc}" for name, desc in self.agent_descriptions.items()]
-            )
+            descriptions = "\n".join([
+                f"- {name}: {desc}"
+                for name, desc in self.agent_descriptions.items()
+            ], )
 
         # Use default template with current descriptions
-        return DEFAULT_SUPERVISOR_PROMPT.partial(agent_descriptions=descriptions)
+        return DEFAULT_SUPERVISOR_PROMPT.partial(
+            agent_descriptions=descriptions)
 
     # ========================================================================
     # AGENT REGISTRATION
     # ========================================================================
 
-    def register_agent(self, name: str, agent: Agent, description: str) -> None:
+    def register_agent(self, name: str, agent: Agent,
+                       description: str) -> None:
         """Register an agent with the supervisor.
 
         Args:
@@ -170,7 +173,7 @@ class SupervisorAgent(ReactAgent):
 
         if not self.registered_agents:
             logger.warning(
-                "No agents registered, supervisor will only make routing decisions"
+                "No agents registered, supervisor will only make routing decisions",
             )
             return graph
 
@@ -223,10 +226,14 @@ class SupervisorAgent(ReactAgent):
             # Add conditional routing
             route_map = {
                 END: END,
-                **{f"{name}_node": f"{name}_node" for name in self.registered_agents},
+                **{
+                    f"{name}_node": f"{name}_node"
+                    for name in self.registered_agents
+                },
             }
 
-            graph.add_conditional_edges("route_decision", route_to_agent, route_map)
+            graph.add_conditional_edges("route_decision", route_to_agent,
+                                        route_map)
 
         return graph
 

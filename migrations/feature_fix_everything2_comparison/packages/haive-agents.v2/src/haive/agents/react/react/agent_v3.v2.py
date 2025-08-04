@@ -101,22 +101,19 @@ See Also:
 
 import logging
 from typing import Any
-
 from langchain_core.tools import BaseTool, tool
 from langgraph.graph import END
 from pydantic import BaseModel, Field, field_validator
-
-# Import enhanced SimpleAgentV3 as base class
 from haive.agents.simple.agent_v3 import SimpleAgentV3
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 
+# Import enhanced SimpleAgentV3 as base class
+
 # Hooks system integration
 
-
 logger = logging.getLogger(__name__)
-
 
 # ============================================================================
 # REACT AGENT V3 - Enhanced ReAct Pattern Implementation
@@ -124,7 +121,8 @@ logger = logging.getLogger(__name__)
 
 
 class ReactAgentV3(SimpleAgentV3):
-    """ReactAgent v3 with enhanced ReAct pattern, structured output, and hooks integration.
+    """ReactAgent v3 with enhanced ReAct pattern, structured output, and hooks
+    integration.
 
     This agent implements the ReAct (Reasoning and Acting) paradigm with significant
     enhancements over the original ReactAgent. It extends SimpleAgentV3 to inherit
@@ -351,12 +349,12 @@ class ReactAgentV3(SimpleAgentV3):
         if v > 50:
             logger.warning(
                 f"max_iterations={v} is very high and may cause performance issues. "
-                f"Consider using a lower value (5-15 typical range)."
-            )
+                f"Consider using a lower value (5-15 typical range).", )
         return v
 
     def setup_agent(self) -> None:
-        """Setup ReactAgent v3 with enhanced ReAct pattern and reasoning loop configuration.
+        """Setup ReactAgent v3 with enhanced ReAct pattern and reasoning loop
+        configuration.
 
         Extends SimpleAgentV3.setup_agent() with ReactAgent-specific initialization
         including reasoning loop configuration, iteration tracking setup, and
@@ -375,9 +373,11 @@ class ReactAgentV3(SimpleAgentV3):
         super().setup_agent()
 
         if self.debug:
-            logger.debug(f"Setting up ReactAgent v3 features for '{self.name}'")
+            logger.debug(
+                f"Setting up ReactAgent v3 features for '{self.name}'")
             logger.debug(f"Max iterations: {self.max_iterations}")
-            logger.debug(f"Stop on first tool result: {self.stop_on_first_tool_result}")
+            logger.debug(
+                f"Stop on first tool result: {self.stop_on_first_tool_result}")
             logger.debug(f"Require final answer: {self.require_final_answer}")
 
         # Initialize reasoning state
@@ -406,16 +406,20 @@ class ReactAgentV3(SimpleAgentV3):
         """
         try:
             # For now, use basic hook registration from SimpleAgentV3
-            # The specific ReAct hook events can be added later when HookEvent is extended
-            if hasattr(self, "hooks_enabled") and self.hooks_enabled and self.debug:
-                logger.debug("ReAct hooks would be registered here (placeholder)")
+            # The specific ReAct hook events can be added later when HookEvent is
+            # extended
+            if hasattr(self,
+                       "hooks_enabled") and self.hooks_enabled and self.debug:
+                logger.debug(
+                    "ReAct hooks would be registered here (placeholder)")
 
         except Exception as e:
             if self.debug:
                 logger.debug(f"ReAct hooks registration skipped: {e}")
 
     def build_graph(self) -> BaseGraph:
-        """Build enhanced ReAct graph with iterative reasoning loops and structured output.
+        """Build enhanced ReAct graph with iterative reasoning loops and
+        structured output.
 
         Creates a graph that implements the ReAct pattern with reasoning loops
         instead of the linear execution flow of SimpleAgent. The graph structure
@@ -481,8 +485,9 @@ class ReactAgentV3(SimpleAgentV3):
         """
         if self.debug:
             logger.debug(
-                f"Building ReAct graph for '{self.name}' with max_iterations={self.max_iterations}"
-            )
+                f"Building ReAct graph for '{
+                    self.name}' with max_iterations={
+                    self.max_iterations}", )
 
         # Start with SimpleAgentV3's enhanced graph
         graph = super().build_graph()
@@ -501,7 +506,7 @@ class ReactAgentV3(SimpleAgentV3):
 
         if self.debug:
             logger.debug(
-                f"ReAct graph build complete with nodes: {list(graph.nodes.keys())}"
+                f"ReAct graph build complete with nodes: {list(graph.nodes.keys())}",
             )
 
         return graph
@@ -585,11 +590,12 @@ class ReactAgentV3(SimpleAgentV3):
         """
         return bool(
             getattr(self, "structured_output_model", None)
-            or (self.engine and getattr(self.engine, "structured_output_model", None))
-        )
+            or (self.engine
+                and getattr(self.engine, "structured_output_model", None)), )
 
     def run(self, input_data: Any, debug: bool | None = None, **kwargs) -> Any:
-        """Execute ReactAgent with iterative reasoning loops and structured output.
+        """Execute ReactAgent with iterative reasoning loops and structured
+        output.
 
         Implements the full ReAct pattern with enhanced capabilities from SimpleAgentV3.
         The execution follows iterative reasoning cycles until the problem is solved
@@ -734,7 +740,7 @@ class ReactAgentV3(SimpleAgentV3):
 
             if run_debug:
                 logger.info(
-                    f"[{self.name}] Starting ReAct execution with max_iterations={self.max_iterations}"
+                    f"[{self.name}] Starting ReAct execution with max_iterations={self.max_iterations}",
                 )
                 logger.info(f"[{self.name}] Input: {str(input_data)[:200]}...")
 
@@ -744,13 +750,13 @@ class ReactAgentV3(SimpleAgentV3):
 
             if run_debug:
                 logger.info(
-                    f"[{self.name}] ReAct execution completed in {self.iteration_count} iterations"
+                    f"[{self.name}] ReAct execution completed in {self.iteration_count} iterations",
                 )
                 logger.info(
-                    f"[{self.name}] Reasoning steps: {len(self.reasoning_trace)}"
+                    f"[{self.name}] Reasoning steps: {len(self.reasoning_trace)}",
                 )
                 logger.info(
-                    f"[{self.name}] Tools used: {len(self.tool_results_history)}"
+                    f"[{self.name}] Tools used: {len(self.tool_results_history)}",
                 )
 
             return result
@@ -767,7 +773,8 @@ class ReactAgentV3(SimpleAgentV3):
         Args:
             step: Description of the reasoning step being performed
         """
-        self.reasoning_trace.append(f"Step {len(self.reasoning_trace) + 1}: {step}")
+        self.reasoning_trace.append(
+            f"Step {len(self.reasoning_trace) + 1}: {step}")
         if self.debug:
             logger.debug(f"[{self.name}] Reasoning: {step}")
 
@@ -780,7 +787,8 @@ class ReactAgentV3(SimpleAgentV3):
         return self.reasoning_trace.copy()
 
     def get_tool_usage_history(self) -> list[dict[str, Any]]:
-        """Get the complete tool usage history from the current or last execution.
+        """Get the complete tool usage history from the current or last
+        execution.
 
         Returns:
             List[Dict[str, Any]]: List of tool executions with results and metadata
@@ -804,7 +812,7 @@ class ReactAgentV3(SimpleAgentV3):
 
         if self.debug:
             logger.debug(
-                f"[{self.name}] Max iterations changed: {old_value} → {max_iterations}"
+                f"[{self.name}] Max iterations changed: {old_value} → {max_iterations}",
             )
 
 
@@ -823,7 +831,8 @@ def create_react_agent(
     debug: bool = False,
     **engine_kwargs,
 ) -> ReactAgentV3:
-    """Create a ReactAgentV3 with standard configuration for ReAct pattern execution.
+    """Create a ReactAgentV3 with standard configuration for ReAct pattern
+    execution.
 
     This factory function simplifies ReactAgent creation with sensible defaults
     for ReAct reasoning, tool usage, and optional structured output.
@@ -889,7 +898,8 @@ def create_react_agent(
     """
     # Validate inputs
     if not tools:
-        raise ValueError("ReAct agents require at least one tool for the acting phase")
+        raise ValueError(
+            "ReAct agents require at least one tool for the acting phase")
 
     if max_iterations < 1 or max_iterations > 50:
         raise ValueError("max_iterations must be between 1 and 50")
@@ -905,14 +915,17 @@ def create_react_agent(
 
     # Create ReactAgent
     agent = ReactAgentV3(
-        name=name, engine=engine_config, max_iterations=max_iterations, debug=debug
+        name=name,
+        engine=engine_config,
+        max_iterations=max_iterations,
+        debug=debug,
     )
 
     if debug:
         logger.info(
-            f"Created ReactAgentV3 '{name}' with {len(tools)} tools, "
-            f"max_iterations={max_iterations}, structured_output={structured_output_model is not None}"
-        )
+            f"Created ReactAgentV3 '{name}' with {
+                len(tools)} tools, " f"max_iterations={max_iterations}, structured_output={
+                structured_output_model is not None}", )
 
     return agent
 

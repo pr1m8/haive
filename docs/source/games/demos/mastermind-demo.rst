@@ -168,16 +168,16 @@ Code-breaking logic game
 
        Secret Code: [?][?][?][?]
 
-   
+
    Guess History:
    1. [R][B][G][Y] → ●●○○
    2. [B][R][Y][G] → ●○○
    3. [B][G][R][Y] → ●●●○
    4. [B][G][Y][R] → ●●●●
-   
+
    ● = Correct position
    ○ = Correct color, wrong position
-   
+
    Guesses remaining: 6
 
 .. raw:: html

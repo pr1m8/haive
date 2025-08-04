@@ -20,112 +20,112 @@ Beautiful, interactive game environments with intelligent AI opponents. Test you
 
       :link: ../api/games/chess/index
       :shadow: lg
-      
+
       **Strategy Game**
-      
+
       Play interactive chess against AI opponents of varying skill levels with advanced position evaluation and opening theory.
-      
+
       +++
-      
-      ✓ Position Analysis • ✓ Opening Theory • ✓ Endgame AI  
+
+      ✓ Position Analysis • ✓ Opening Theory • ✓ Endgame AI
       **8x8 Board • 2 Players • 60+ Min**
 
    .. grid-item-card:: 🎯 Tic-Tac-Toe
 
       :link: ../api/games/tic_tac_toe/index
       :shadow: lg
-      
+
       **Quick Game**
-      
+
       Classic 3x3 strategy game with perfect AI opponent using minimax algorithm for optimal play.
-      
+
       +++
-      
-      ✓ Perfect AI • ✓ Minimax Algorithm • ✓ Quick Play  
+
+      ✓ Perfect AI • ✓ Minimax Algorithm • ✓ Quick Play
       **3x3 Board • 2 Players • 2 Min**
 
    .. grid-item-card:: 🔴 Connect Four
 
       :link: ../api/games/connect4/index
       :shadow: lg
-      
+
       **Strategy Game**
-      
+
       Classic connection game with strategic depth and AI that uses pattern recognition for competitive play.
-      
+
       +++
-      
-      ✓ Pattern Recognition • ✓ Strategic Depth • ✓ Threat Detection  
+
+      ✓ Pattern Recognition • ✓ Strategic Depth • ✓ Threat Detection
       **7x6 Board • 2 Players • 10 Min**
 
    .. grid-item-card:: 🃏 Poker
 
       :link: ../api/games/poker/index
       :shadow: lg
-      
+
       **Card Game**
-      
+
       Texas Hold'em with betting, bluffing, and AI psychology that adapts to player patterns and behavior.
-      
+
       +++
-      
-      ✓ Bluffing AI • ✓ Psychology • ✓ Betting Strategy  
+
+      ✓ Bluffing AI • ✓ Psychology • ✓ Betting Strategy
       **52 Cards • 2-8 Players • 30 Min**
 
    .. grid-item-card:: 🕵️ Among Us
 
       :link: ../api/games/among_us/index
       :shadow: lg
-      
+
       **Social Deduction**
-      
+
       Social deduction game with intelligent AI crewmates and imposters using behavioral analysis and deception.
-      
+
       +++
-      
-      ✓ Behavioral Analysis • ✓ Deception AI • ✓ Role Playing  
+
+      ✓ Behavioral Analysis • ✓ Deception AI • ✓ Role Playing
       **4-10 Players • 1-3 Imposters • 15 Min**
 
    .. grid-item-card:: 🌍 Risk
 
       :link: ../api/games/risk/index
       :shadow: lg
-      
+
       **Strategy Game**
-      
+
       World domination strategy with AI diplomacy, warfare tactics, and long-term strategic planning.
-      
+
       +++
-      
-      ✓ Diplomacy AI • ✓ Warfare Tactics • ✓ Territory Control  
+
+      ✓ Diplomacy AI • ✓ Warfare Tactics • ✓ Territory Control
       **42 Territories • 2-6 Players • 120 Min**
 
    .. grid-item-card:: 🎲 Monopoly
 
       :link: ../api/games/monopoly/index
       :shadow: lg
-      
+
       **Economic Game**
-      
+
       Economic strategy game with AI negotiation, property trading, and financial optimization algorithms.
-      
+
       +++
-      
-      ✓ AI Negotiation • ✓ Property Trading • ✓ Financial Strategy  
+
+      ✓ AI Negotiation • ✓ Property Trading • ✓ Financial Strategy
       **40 Spaces • 2-8 Players • 90 Min**
 
    .. grid-item-card:: 🧩 Mastermind
 
       :link: ../api/games/mastermind/index
       :shadow: lg
-      
+
       **Logic Game**
-      
+
       Code-breaking game with AI logical deduction, pattern analysis, and optimal guessing strategies.
-      
+
       +++
-      
-      ✓ Logical Deduction • ✓ Pattern Analysis • ✓ Optimal Guessing  
+
+      ✓ Logical Deduction • ✓ Pattern Analysis • ✓ Optimal Guessing
       **4 Code Length • 2 Players • 20 Min**
 
 Game Categories

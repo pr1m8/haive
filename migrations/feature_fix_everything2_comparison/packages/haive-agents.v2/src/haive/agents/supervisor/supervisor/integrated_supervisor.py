@@ -7,31 +7,29 @@ This module provides a complete integration of:
 - DynamicChoiceModel routing
 - Tool-based agent addition/removal
 """
+from __future__ import annotations
 
 import logging
 from typing import Any
 
+from haive.agents.supervisor.dynamic_agent_tools import (
+    create_agent_management_tools, )
+from haive.agents.supervisor.dynamic_supervisor import DynamicSupervisorAgent
+from haive.agents.supervisor.multi_agent_dynamic_state import (
+    MultiAgentDynamicSupervisorState, )
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage
 from langgraph.graph import START
 from rich.console import Console
-
-from haive.agents.supervisor.dynamic_agent_tools import (
-    create_agent_management_tools,
-)
-from haive.agents.supervisor.dynamic_supervisor import DynamicSupervisorAgent
-from haive.agents.supervisor.multi_agent_dynamic_state import (
-    MultiAgentDynamicSupervisorState,
-)
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
 
 logger = logging.getLogger(__name__)
 console = Console()
 
 
 class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
-    """Integrated supervisor combining dynamic agent management and multi-agent coordination.
+    """Integrated supervisor combining dynamic agent management and multi-agent
+    coordination.
 
     This supervisor provides:
     - Dynamic agent addition/removal through tools
@@ -76,7 +74,7 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
             self._setup_agent_management_tools()
 
         logger.info(
-            f"IntegratedDynamicSupervisor '{name}' initialized with coordination mode: {coordination_mode}"
+            f"IntegratedDynamicSupervisor '{name}' initialized with coordination mode: {coordination_mode}",
         )
 
     def _setup_agent_management_tools(self) -> None:
@@ -89,12 +87,13 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
                 existing_tools = getattr(self.main_engine, "tools", [])
                 self.main_engine.tools = existing_tools + self.agent_management_tools
                 logger.info(
-                    f"Added {len(self.agent_management_tools)} agent management tools to supervisor"
+                    f"Added {len(self.agent_management_tools)} agent management tools to supervisor",
                 )
 
             # Get registry manager reference
             if self.agent_management_tools:
-                self.registry_manager = self.agent_management_tools[0].registry_manager
+                self.registry_manager = self.agent_management_tools[
+                    0].registry_manager
 
         except Exception as e:
             logger.exception(f"Failed to setup agent management tools: {e}")
@@ -102,10 +101,11 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
     def register_agent_constructor(self, agent_type: str, constructor) -> None:
         """Register an agent constructor for dynamic creation."""
         if self.registry_manager:
-            self.registry_manager.register_agent_constructor(agent_type, constructor)
+            self.registry_manager.register_agent_constructor(
+                agent_type, constructor)
         else:
             logger.warning(
-                "Registry manager not available - agent management tools disabled"
+                "Registry manager not available - agent management tools disabled",
             )
 
     async def register_agent(
@@ -118,22 +118,25 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
         """Enhanced agent registration with multi-agent state integration."""
         # Call parent registration
         success = await super().register_agent(
-            agent, capability_description, execution_config, rebuild_graph
+            agent,
+            capability_description,
+            execution_config,
+            rebuild_graph,
         )
 
         if success and hasattr(self, "_state") and self._state:
             # Update multi-agent state
             agent_tools = []
             if hasattr(agent, "tools") and agent.tools:
-                agent_tools = [getattr(tool, "name", str(tool)) for tool in agent.tools]
-            if (
-                hasattr(agent, "engine")
-                and agent.engine
-                and hasattr(agent.engine, "tools")
-            ) and agent.engine.tools:
-                agent_tools.extend(
-                    [getattr(tool, "name", str(tool)) for tool in agent.engine.tools]
-                )
+                agent_tools = [
+                    getattr(tool, "name", str(tool)) for tool in agent.tools
+                ]
+            if (hasattr(agent, "engine") and agent.engine
+                    and hasattr(agent.engine, "tools")) and agent.engine.tools:
+                agent_tools.extend([
+                    getattr(tool, "name", str(tool))
+                    for tool in agent.engine.tools
+                ], )
 
             self._state.agent_registry.add_agent_to_registry(
                 agent.name,
@@ -150,7 +153,9 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
         return success
 
     async def unregister_agent(
-        self, agent_name: str, rebuild_graph: bool | None = None
+        self,
+        agent_name: str,
+        rebuild_graph: bool | None = None,
     ) -> bool:
         """Enhanced agent unregistration with multi-agent state integration."""
         success = await super().unregister_agent(agent_name, rebuild_graph)
@@ -167,7 +172,8 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
         return success
 
     def build_graph(self) -> BaseGraph:
-        """Build integrated supervisor graph with agent management capabilities."""
+        """Build integrated supervisor graph with agent management
+        capabilities."""
         graph = BaseGraph(self.state_schema)
 
         # Add supervisor decision node (enhanced with tool capabilities)
@@ -202,9 +208,11 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
         """Create supervisor node with agent management tool integration."""
 
         async def supervisor_node(
-            state: MultiAgentDynamicSupervisorState, config=None
+            state: MultiAgentDynamicSupervisorState,
+            config=None,
         ) -> dict:
-            """Enhanced supervisor with tool and agent management capabilities."""
+            """Enhanced supervisor with tool and agent management
+            capabilities."""
             # Start performance monitoring
             self._performance_monitor.start_decision()
 
@@ -213,7 +221,8 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
                 if state.registry_needs_sync:
                     change_results = state.process_pending_agent_changes()
                     if change_results["added"] or change_results["removed"]:
-                        logger.info(f"Processed agent changes: {change_results}")
+                        logger.info(
+                            f"Processed agent changes: {change_results}")
                         # Trigger graph rebuild if needed
                         if self.auto_rebuild_graph:
                             await self._rebuild_graph()
@@ -222,32 +231,40 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
                 input_analysis = await self._analyze_input(state)
 
                 # Get available agents with performance data
-                available_agents = self._get_available_agents_with_context(state)
+                available_agents = self._get_available_agents_with_context(
+                    state)
 
                 # Get aggregated tool information
                 tool_info = self._aggregate_agent_tools()
 
                 # Check for agent management tool calls in recent messages
-                needs_agent_management = self._check_for_agent_management_needs(state)
+                needs_agent_management = self._check_for_agent_management_needs(
+                    state)
 
                 if needs_agent_management:
                     # Route to agent management node
                     decision_data = {
                         "target": "agent_management",
-                        "reasoning": "Request requires agent management operations",
+                        "reasoning":
+                        "Request requires agent management operations",
                         "confidence": 0.9,
                     }
                 else:
                     # Create enhanced prompt with reasoning including tool capabilities
                     prompt = self._create_enhanced_decision_prompt(
-                        state, input_analysis, available_agents, tool_info
+                        state,
+                        input_analysis,
+                        available_agents,
+                        tool_info,
                     )
 
                     # Get LLM decision with reasoning
                     if self.main_engine:
-                        response = await self.main_engine.ainvoke(prompt, config)
+                        response = await self.main_engine.ainvoke(
+                            prompt, config)
                         decision_data = self._parse_decision_response(
-                            response, available_agents
+                            response,
+                            available_agents,
                         )
                     else:
                         decision_data = {
@@ -299,8 +316,10 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
                 )
 
                 return {
-                    "current_decision": error_decision,
-                    "routing_decisions": [*state.routing_decisions, error_decision],
+                    "current_decision":
+                    error_decision,
+                    "routing_decisions":
+                    [*state.routing_decisions, error_decision],
                 }
 
         return supervisor_node
@@ -309,7 +328,8 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
         """Create node for processing agent management tool calls."""
 
         async def agent_management_node(
-            state: MultiAgentDynamicSupervisorState, config=None
+            state: MultiAgentDynamicSupervisorState,
+            config=None,
         ) -> dict:
             """Process agent management operations."""
             # This node handles tool calls for adding/removing agents
@@ -323,7 +343,7 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
                 "messages": [
                     *state.messages,
                     AIMessage(content="Agent management operations processed"),
-                ]
+                ],
             }
 
         return agent_management_node
@@ -332,7 +352,8 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
         """Create enhanced coordination node with multi-agent support."""
 
         async def coordinator_node(
-            state: MultiAgentDynamicSupervisorState, config=None
+            state: MultiAgentDynamicSupervisorState,
+            config=None,
         ) -> dict:
             """Enhanced coordination with multi-agent state management."""
             if not state.current_decision:
@@ -349,18 +370,16 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
 
             # Start coordination session if not active
             if not state.coordination_active:
-                session_id = state.start_coordination_session(self.coordination_mode)
+                session_id = state.start_coordination_session(
+                    self.coordination_mode)
                 logger.info(f"Started coordination session: {session_id}")
 
             # Add to execution queue
             state.coordination.add_to_execution_queue(
                 target_agent,
                 {"messages": state.messages},
-                priority=(
-                    state.get_agent_config(target_agent).priority
-                    if state.get_agent_config(target_agent)
-                    else 1
-                ),
+                priority=(state.get_agent_config(target_agent).priority
+                          if state.get_agent_config(target_agent) else 1),
             )
 
             # Prepare execution context
@@ -380,7 +399,8 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
             )
 
             # Start agent execution tracking
-            state.coordination.start_agent_execution(target_agent, execution_id)
+            state.coordination.start_agent_execution(target_agent,
+                                                     execution_id)
 
             return {
                 "current_execution": execution_result,
@@ -390,7 +410,8 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
         return coordinator_node
 
     def _check_for_agent_management_needs(
-        self, state: MultiAgentDynamicSupervisorState
+        self,
+        state: MultiAgentDynamicSupervisorState,
     ) -> bool:
         """Check if the request needs agent management operations."""
         if not state.messages:
@@ -416,7 +437,9 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
     def _setup_integrated_conditional_routing(self, graph: BaseGraph) -> None:
         """Setup enhanced conditional routing with agent management."""
         available_agents = self.agent_registry.get_available_agents()
-        routing_destinations = [*available_agents, "agent_management", "__end__"]
+        routing_destinations = [
+            *available_agents, "agent_management", "__end__"
+        ]
 
         def routing_condition(state: MultiAgentDynamicSupervisorState) -> str:
             """Enhanced routing condition with agent management support."""
@@ -449,7 +472,9 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
 
         # Set up routing from coordinator
         graph.add_conditional_edges(
-            "coordinator", routing_condition, routing_destinations
+            "coordinator",
+            routing_condition,
+            routing_destinations,
         )
 
         # Agent management returns to supervisor
@@ -494,9 +519,11 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
         coord_status = state.get_coordination_status()
         coord_table.add_row("Coordination Active", str(coord_status["active"]))
         coord_table.add_row("Coordination Mode", coord_status["mode"])
-        coord_table.add_row("Current Agent", coord_status.get("current_agent", "None"))
+        coord_table.add_row("Current Agent",
+                            coord_status.get("current_agent", "None"))
         coord_table.add_row("Queue Length", str(coord_status["queue_length"]))
-        coord_table.add_row("Active Executions", str(coord_status["active_executions"]))
+        coord_table.add_row("Active Executions",
+                            str(coord_status["active_executions"]))
 
         console.print(coord_table)
 
@@ -505,11 +532,14 @@ class IntegratedDynamicSupervisor(DynamicSupervisorAgent):
         registry_table.add_column("Property", style="cyan")
         registry_table.add_column("Value", style="green")
 
-        registry_table.add_row("Total Registered", str(state.total_registered_agents))
+        registry_table.add_row("Total Registered",
+                               str(state.total_registered_agents))
         registry_table.add_row("Total Tools", str(state.total_available_tools))
-        registry_table.add_row("Registry Sync Needed", str(state.registry_needs_sync))
+        registry_table.add_row("Registry Sync Needed",
+                               str(state.registry_needs_sync))
         registry_table.add_row(
-            "Choice Model Version", str(state.agent_registry.choice_model_version)
+            "Choice Model Version",
+            str(state.agent_registry.choice_model_version),
         )
 
         console.print(registry_table)

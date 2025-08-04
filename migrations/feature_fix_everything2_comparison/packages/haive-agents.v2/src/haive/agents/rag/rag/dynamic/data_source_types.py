@@ -5,6 +5,7 @@ This module provides data source types functionality for the Haive framework.
 Classes:
     DataSourceType: DataSourceType implementation.
 """
+from __future__ import annotations
 
 from enum import Enum
 

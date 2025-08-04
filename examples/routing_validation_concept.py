@@ -75,7 +75,7 @@ def demonstrate_routing_validation_concept():
             f"Send('{target_node}', {{'id': '{tool_id}', 'name': '{tool_name}'}})"
         )
 
-    print("\n📤 Routing Decision:"n:")
+    print("\n📤 Routing Decision:"n: ")
 
     if sends:
         print(f"  Return: List[Send] with {len(sends)} branches")

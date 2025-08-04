@@ -1,8 +1,11 @@
 """Fix autosummary module detection for Haive packages.
 
-This extension ensures that haive.core.*, haive.agents.*, etc. submodules
-are correctly recognized as modules rather than data attributes.
+This extension ensures that haive.core.*, haive.agents.*, etc.
+submodules are correctly recognized as modules rather than data
+attributes.
 """
+
+from __future__ import annotations
 
 import logging
 import os
@@ -10,12 +13,14 @@ from pathlib import Path
 
 from sphinx.ext.autosummary import Autosummary
 
-
 logger = logging.getLogger(__name__)
 
 
 def is_haive_module(name):
-    """Check if a name represents a haive module that should be treated as a module."""
+    """Check if a name represents a haive module that should be treated as a.
+
+    module.
+    """
     module_patterns = [
         "haive.core.engine",
         "haive.core.graph",
@@ -36,7 +41,8 @@ def is_haive_module(name):
         "haive.tools.code",
         "haive.tools.utility",
     ]
-    return name in module_patterns or any(name.startswith(p + ".") for p in module_patterns)
+    return name in module_patterns or any(
+        name.startswith(p + ".") for p in module_patterns)
 
 
 def fix_generated_file(filepath):
@@ -65,7 +71,9 @@ def fix_generated_file(filepath):
 
     # Check if it's using autodata instead of automodule
     if ".. autodata::" in content:
-        logger.info(f"Fixing {filepath}: converting autodata to automodule for {module_name}")
+        logger.info(
+            f"Fixing {filepath}: converting autodata to automodule for {module_name}"
+        )
 
         # Generate correct content
         underline = "=" * len(module_name)

@@ -1,7 +1,7 @@
 # Structured Output Pattern
 
-**Version**: 1.0  
-**Purpose**: Using PydanticToolsParser for structured output in MessagesState  
+**Version**: 1.0
+**Purpose**: Using PydanticToolsParser for structured output in MessagesState
 **Last Updated**: 2025-01-16
 
 ## 🎯 Overview

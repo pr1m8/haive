@@ -4,10 +4,12 @@ This shows the complete unified approach for ToolRouteMixin and AugLLMConfig.
 Part 1: Enhanced ToolRouteMixin (add to existing class)
 Location: /haive-core/src/haive/core/common/mixins/tool_route_mixin.py
 """
+from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 # Add to ToolRouteMixin class:
 
@@ -19,7 +21,8 @@ tools: list[Any] = Field(
 
 # NEW: Tool instance mapping for quick lookup
 tool_instances: dict[str, Any] = Field(
-    default_factory=dict, description="Mapping of tool names to actual tool instances"
+    default_factory=dict,
+    description="Mapping of tool names to actual tool instances",
 )
 
 
@@ -28,7 +31,7 @@ def add_tool(
     tool: Any,
     route: str | None = None,
     metadata: dict[str, Any] | None = None,
-) -> "ToolRouteMixin":
+) -> ToolRouteMixin:
     """Add a tool with automatic routing and metadata.
 
     Args:
@@ -80,7 +83,7 @@ def get_tools_by_route(self, route: str) -> list[Any]:
     return tools
 
 
-def clear_tools(self) -> "ToolRouteMixin":
+def clear_tools(self) -> ToolRouteMixin:
     """Clear all tools and routes."""
     self.tools.clear()
     self.tool_instances.clear()
@@ -139,7 +142,9 @@ def _process_tools(self):
 
         # Check if it's a BaseModel for special handling
         route = self.tool_routes.get(tool_name)
-        if route in ["pydantic_model", "pydantic_tool", "structured_output_tool"]:
+        if route in [
+                "pydantic_model", "pydantic_tool", "structured_output_tool"
+        ]:
             if isinstance(tool, type) and issubclass(tool, BaseModel):
                 basemodel_tools.append(tool)
 
@@ -148,7 +153,8 @@ def _process_tools(self):
     self.metadata["has_basemodel_tools"] = bool(basemodel_tools)
     self.metadata["basemodel_tool_count"] = len(basemodel_tools)
 
-    debug_print(f"✅ [green]Processed {len(tool_names)} tools with routes[/green]")
+    debug_print(
+        f"✅ [green]Processed {len(tool_names)} tools with routes[/green]")
 
 
 # Override _analyze_tool for AugLLM-specific logic:
@@ -156,11 +162,7 @@ def _analyze_tool(self, tool: Any) -> Tuple[str, dict[str, Any] | None]:
     """Analyze tool with AugLLM-specific routing logic."""
     # Check if this is the structured output model
     if self.structured_output_model and tool == self.structured_output_model:
-        route = (
-            "structured_output_tool"
-            if self.structured_output_version == "v2"
-            else "parser"
-        )
+        route = "structured_output_tool" if self.structured_output_version == "v2" else "parser"
         metadata = {
             "purpose": "structured_output",
             "version": self.structured_output_version,
@@ -188,16 +190,11 @@ def _setup_structured_output_as_tool(self):
                 "is_structured_output": True,
                 "version": self.structured_output_version,
                 "force_choice": self.structured_output_version == "v2",
-            }
-        )
+            }, )
         self.tool_metadata[model_name] = existing_metadata
     else:
         # Add as new tool
-        route = (
-            "structured_output_tool"
-            if self.structured_output_version == "v2"
-            else "parser"
-        )
+        route = "structured_output_tool" if self.structured_output_version == "v2" else "parser"
         self.add_tool(
             self.structured_output_model,
             route=route,
@@ -220,8 +217,7 @@ def get_tools_for_binding(self) -> list[Any]:
     ]
 
     return [
-        tool
-        for tool_name, tool in self.tool_instances.items()
+        tool for tool_name, tool in self.tool_instances.items()
         if self.tool_routes.get(tool_name) in bindable_routes
     ]
 
@@ -270,7 +266,7 @@ def setup_response_schema(self, schema: dict | type[BaseModel]):
     """
     if not self.llm_config.supports_response_schema:
         logger.warning(
-            f"Provider {self.llm_config.provider} doesn't support response_schema"
+            f"Provider {self.llm_config.provider} doesn't support response_schema",
         )
         return
 

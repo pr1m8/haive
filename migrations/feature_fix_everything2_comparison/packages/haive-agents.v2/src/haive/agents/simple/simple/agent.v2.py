@@ -34,9 +34,7 @@ from haive.core.graph.node.validation_node_config_v2 import ValidationNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import LLMConfig
 
-
 logger = logging.getLogger(__name__)
-
 
 # ========================================================================
 # HELPER FUNCTIONS
@@ -161,33 +159,42 @@ class SimpleAgent(Agent):
 
     # These fields sync to the engine for convenience
     temperature: float | None = Field(
-        default=None, description="Temperature for the LLM (syncs to engine)"
+        default=None,
+        description="Temperature for the LLM (syncs to engine)",
     )
     max_tokens: int | None = Field(
-        default=None, description="Max tokens for the LLM (syncs to engine)"
+        default=None,
+        description="Max tokens for the LLM (syncs to engine)",
     )
     model_name: str | None = Field(
-        default=None, description="Model name for the LLM (syncs to engine.model)"
+        default=None,
+        description="Model name for the LLM (syncs to engine.model)",
     )
     force_tool_use: bool | None = Field(
-        default=None, description="Force tool use (syncs to engine)"
+        default=None,
+        description="Force tool use (syncs to engine)",
     )
     structured_output_model: type[BaseModel] | None = Field(
-        default=None, description="Structured output model (syncs to engine)"
+        default=None,
+        description="Structured output model (syncs to engine)",
     )
     system_message: str | None = Field(
-        default=None, description="System message (syncs to engine)"
+        default=None,
+        description="System message (syncs to engine)",
     )
     llm_config: LLMConfig | dict[str, Any] | None = Field(
-        default=None, description="LLM config (syncs to engine)"
+        default=None,
+        description="LLM config (syncs to engine)",
     )
 
     # SimpleAgent specific fields
     output_parser: BaseOutputParser | None = Field(
-        default=None, description="Optional output parser"
+        default=None,
+        description="Optional output parser",
     )
     prompt_template: ChatPromptTemplate | PromptTemplate | None = Field(
-        default=None, description="Optional prompt template"
+        default=None,
+        description="Optional prompt template",
     )
 
     # ========================================================================
@@ -203,7 +210,8 @@ class SimpleAgent(Agent):
         if isinstance(v, dict):
             return AugLLMConfig(**v)
         if not isinstance(v, AugLLMConfig):
-            raise ValueError(f"SimpleAgent requires AugLLMConfig, got {type(v)}")
+            raise ValueError(
+                f"SimpleAgent requires AugLLMConfig, got {type(v)}")
         return v
 
     # ========================================================================
@@ -295,13 +303,15 @@ class SimpleAgent(Agent):
 
         # Add tool node if needed
         if needs_tools:
-            tool_config = ToolNodeConfig(name="tool_node", engine_name=self.engine.name)
+            tool_config = ToolNodeConfig(name="tool_node",
+                                         engine_name=self.engine.name)
             graph.add_node("tool_node", tool_config)
 
         # Add parser node if needed
         if needs_parsing:
             parser_config = ParserNodeConfigV2(
-                name="parse_output", engine_name=self.engine.name
+                name="parse_output",
+                engine_name=self.engine.name,
             )
             graph.add_node("parse_output", parser_config)
 
@@ -320,7 +330,12 @@ class SimpleAgent(Agent):
                 graph.add_edge("agent_node", "validation")
             else:
                 graph.add_conditional_edges(
-                    "agent_node", has_tool_calls, {True: "validation", False: END}
+                    "agent_node",
+                    has_tool_calls,
+                    {
+                        True: "validation",
+                        False: END
+                    },
                 )
 
         return graph
@@ -333,8 +348,8 @@ class SimpleAgent(Agent):
         """Check if agent has structured output."""
         return bool(
             self.structured_output_model
-            or (self.engine and getattr(self.engine, "structured_output_model", None))
-        )
+            or (self.engine
+                and getattr(self.engine, "structured_output_model", None)), )
 
     def _always_needs_validation(self) -> bool:
         """Check if we always need validation (structured output or parser)."""

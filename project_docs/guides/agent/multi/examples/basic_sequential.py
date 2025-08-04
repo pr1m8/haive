@@ -8,11 +8,12 @@ This example demonstrates a simple sequential workflow where:
 The agents communicate through direct field updates in the shared state.
 """
 
+from pydantic import BaseModel, Field
+
 from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
-from pydantic import BaseModel, Field
 
 
 # Define structured outputs for each agent
@@ -37,7 +38,9 @@ class ExecutionResult(BaseModel):
 class ReviewResult(BaseModel):
     """Output from the review agent."""
 
-    review_score: float = Field(ge=0.0, le=10.0, description="Quality score (0-10)")
+    review_score: float = Field(ge=0.0,
+                                le=10.0,
+                                description="Quality score (0-10)")
     strengths: list[str] = Field(description="Identified strengths")
     improvements: list[str] = Field(description="Suggested improvements")
     final_recommendation: str = Field(description="Overall recommendation")
@@ -157,7 +160,8 @@ def run_sequential_workflow(task_description: str, deadline: str = "1 week"):
 if __name__ == "__main__":
     # Example usage
     result = run_sequential_workflow(
-        task_description="Develop a new customer onboarding process", deadline="2 weeks"
+        task_description="Develop a new customer onboarding process",
+        deadline="2 weeks",
     )
 
     # Compare with traditional approach

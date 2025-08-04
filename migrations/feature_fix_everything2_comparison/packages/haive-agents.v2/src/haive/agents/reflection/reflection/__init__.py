@@ -53,20 +53,11 @@ from haive.agents.reflection.structured_output import (
     extract_structured_output,
 )
 
-from .models import (  # Add new models
-    Critique,
-    ExpertiseConfig,
-    GradingResult,
-    Improvement,
-    ImprovementSuggestion,
-    QualityScore,
-    ReflectionConfig,
-    ReflectionOutput,
-    ReflectionResult,
-    to_prompt,
-    validate_grade_matches_score,
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.reflection.reflection.models import (  # Add new models
+    Critique, ExpertiseConfig, GradingResult, Improvement,
+    ImprovementSuggestion, QualityScore, ReflectionConfig, ReflectionOutput,
+    ReflectionResult, to_prompt, validate_grade_matches_score,
 )
-
 
 # Models already imported above
 

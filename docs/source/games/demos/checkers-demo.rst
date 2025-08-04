@@ -244,15 +244,15 @@ Classic checkers with jumping and king promotion
    <pre id="checkers-state">
 
        b   b   b   b
-       b   b   b   b  
        b   b   b   b
-       .   .   .   .  
+       b   b   b   b
        .   .   .   .
-       r   r   r   r  
+       .   .   .   .
        r   r   r   r
-       r   r   r   r  
+       r   r   r   r
+       r   r   r   r
 
-   
+
    Turn: Red | Pieces: Red 12, Black 12
    Status: Game in progress
 

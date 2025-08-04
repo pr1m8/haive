@@ -1,8 +1,8 @@
 """Multi-Agent Memory Coordinator using MetaStateSchema patterns.
 
-This module provides a comprehensive coordinator that orchestrates multiple memory
-agents using the MetaStateSchema pattern for proper state management and agent
-composition.
+This module provides a comprehensive coordinator that orchestrates
+multiple memory agents using the MetaStateSchema pattern for proper
+state management and agent composition.
 """
 
 import asyncio
@@ -580,8 +580,7 @@ class MultiAgentMemoryCoordinator:
         self._setup_prompts()
 
     def _setup_agents(self) -> None:
-        """Setup and wrap agents with MetaStateSchema.
-        """
+        """Setup and wrap agents with MetaStateSchema."""
         # 1. KG Generator Agent
         kg_agent = KGGeneratorAgent(self.config.kg_generator_config)
         # Set persistence if configured
@@ -688,8 +687,7 @@ class MultiAgentMemoryCoordinator:
         )
 
     def _create_store_agent(self) -> SimpleAgent:
-        """Create a simple agent wrapper for memory store operations.
-        """
+        """Create a simple agent wrapper for memory store operations."""
         # Create a simple agent that wraps store operations
         store_agent = SimpleAgent(
             name="memory_store_agent",
@@ -711,8 +709,7 @@ Always provide clear, helpful responses about memory operations.""",
         return store_agent
 
     def _create_classifier_agent(self) -> SimpleAgent:
-        """Create a simple agent wrapper for memory classification.
-        """
+        """Create a simple agent wrapper for memory classification."""
         classifier_agent = SimpleAgent(
             name="memory_classifier_agent",
             engine=AugLLMConfig(temperature=0.1),
@@ -733,8 +730,7 @@ Always provide detailed analysis and classification results.""",
         return classifier_agent
 
     def _setup_prompts(self) -> None:
-        """Setup prompts for task routing and coordination.
-        """
+        """Setup prompts for task routing and coordination."""
         self.task_routing_prompt = PromptTemplate(
             template="""You are an expert task router for a multi-agent memory system. Analyze the task and route it to the most appropriate agent.
 
@@ -815,7 +811,8 @@ Decompose the task now:""", input_variables=[
                 "task_description", "task_complexity", "available_agents"], )
 
     async def execute_task(self, task: MemoryTask) -> MemoryTask:
-        """Execute a memory task using appropriate agents with intelligent routing.
+        """Execute a memory task using appropriate agents with intelligent
+        routing.
 
         This method is the core of the multi-agent coordinator, responsible for:
         1. Routing tasks to the most appropriate agent(s)
@@ -927,7 +924,8 @@ Decompose the task now:""", input_variables=[
             return task
 
     async def _route_task(self, task: MemoryTask) -> dict[str, Any]:
-        """Route task to appropriate agents using LLM-based intelligent routing.
+        """Route task to appropriate agents using LLM-based intelligent
+        routing.
 
         This method analyzes the task and uses the coordinator's LLM to determine
         the best routing strategy and agent assignment. It considers agent capabilities,
@@ -1012,8 +1010,7 @@ Decompose the task now:""", input_variables=[
             return self._fallback_task_routing(task)
 
     def _fallback_task_routing(self, task: MemoryTask) -> dict[str, Any]:
-        """Fallback rule-based task routing.
-        """
+        """Fallback rule-based task routing."""
         task_type = task.type.lower()
 
         if "store" in task_type or "save" in task_type:
@@ -1070,8 +1067,7 @@ Decompose the task now:""", input_variables=[
     async def _execute_single_agent_task(
         self, task: MemoryTask, routing_decision: dict[str, Any]
     ) -> Any:
-        """Execute task with a single agent.
-        """
+        """Execute task with a single agent."""
         agent_name = routing_decision["primary_agent"]
         if agent_name not in self.meta_agents:
             raise ValueError(f"Agent {agent_name} not found")
@@ -1091,8 +1087,7 @@ Decompose the task now:""", input_variables=[
     async def _execute_multi_agent_task(
         self, task: MemoryTask, routing_decision: dict[str, Any]
     ) -> Any:
-        """Execute task with multiple agents in parallel.
-        """
+        """Execute task with multiple agents in parallel."""
         primary_agent = routing_decision["primary_agent"]
         secondary_agents = routing_decision.get("secondary_agents", [])
         all_agents = [primary_agent, *secondary_agents]
@@ -1126,8 +1121,7 @@ Decompose the task now:""", input_variables=[
     async def _execute_sequential_task(
         self, task: MemoryTask, routing_decision: dict[str, Any]
     ) -> Any:
-        """Execute task with agents in sequence.
-        """
+        """Execute task with agents in sequence."""
         primary_agent = routing_decision["primary_agent"]
         secondary_agents = routing_decision.get("secondary_agents", [])
         all_agents = [primary_agent, *secondary_agents]
@@ -1162,8 +1156,7 @@ Decompose the task now:""", input_variables=[
     async def _execute_decomposed_task(
         self, task: MemoryTask, routing_decision: dict[str, Any]
     ) -> Any:
-        """Execute task that has been decomposed into subtasks.
-        """
+        """Execute task that has been decomposed into subtasks."""
         # This would involve decomposing the task and executing subtasks
         # For now, fall back to single agent execution
         return await self._execute_single_agent_task(
@@ -1176,8 +1169,7 @@ Decompose the task now:""", input_variables=[
         )
 
     def _parse_json_response(self, response: str) -> dict[str, Any] | None:
-        """Parse JSON response from LLM.
-        """
+        """Parse JSON response from LLM."""
         try:
             import json
 
@@ -1195,8 +1187,7 @@ Decompose the task now:""", input_variables=[
             self,
             task: MemoryTask,
             success: bool) -> None:
-        """Update performance metrics.
-        """
+        """Update performance metrics."""
         self.performance_metrics["total_tasks"] += 1
 
         if success:
@@ -1226,7 +1217,8 @@ Decompose the task now:""", input_variables=[
     async def store_memory(
         self, content: str, namespace: tuple[str, ...] | None = None
     ) -> str:
-        """Store a memory using the multi-agent system with intelligent routing.
+        """Store a memory using the multi-agent system with intelligent
+        routing.
 
         This method creates a memory storage task and routes it to the appropriate
         agent (typically the memory store agent). The system automatically handles
@@ -1291,7 +1283,8 @@ Decompose the task now:""", input_variables=[
         memory_types: list[MemoryType] | None = None,
         namespace: tuple[str, ...] | None = None,
     ) -> list[dict[str, Any]]:
-        """Retrieve memories using the multi-agent system with intelligent routing.
+        """Retrieve memories using the multi-agent system with intelligent
+        routing.
 
         This method creates a memory retrieval task and routes it to the most appropriate
         agent (typically the agentic RAG coordinator). The system automatically selects
@@ -1371,7 +1364,8 @@ Decompose the task now:""", input_variables=[
         return []
 
     async def analyze_memory(self, content: str) -> dict[str, Any]:
-        """Analyze memory content using the multi-agent system with specialized routing.
+        """Analyze memory content using the multi-agent system with specialized
+        routing.
 
         This method creates a memory analysis task and routes it to the most appropriate
         agent (typically the memory classifier). The system provides comprehensive
@@ -1447,7 +1441,8 @@ Decompose the task now:""", input_variables=[
     async def generate_knowledge_graph(
         self, namespace: tuple[str, ...] | None = None
     ) -> dict[str, Any]:
-        """Generate knowledge graph using the multi-agent system with KG specialization.
+        """Generate knowledge graph using the multi-agent system with KG
+        specialization.
 
         This method creates a knowledge graph generation task and routes it to the
         specialized KG generator agent. The system extracts entities, relationships,

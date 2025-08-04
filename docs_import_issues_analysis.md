@@ -24,7 +24,7 @@ The documentation build is failing due to multiple import errors across the haiv
 
 **Root Cause**: Missing `BranchSpec` class or import in `declarative_chain.py`
 
-**Fix Strategy**: 
+**Fix Strategy**:
 - Check if `BranchSpec` exists in the module
 - Add to mock imports if it's a complex dependency
 - Consider excluding chain modules from documentation if they're experimental
@@ -113,7 +113,7 @@ The documentation build is failing due to multiple import errors across the haiv
 
 **Affected Tools**:
 - Google Finance
-- Google Jobs  
+- Google Jobs
 - Google Scholar
 - Google Trends
 

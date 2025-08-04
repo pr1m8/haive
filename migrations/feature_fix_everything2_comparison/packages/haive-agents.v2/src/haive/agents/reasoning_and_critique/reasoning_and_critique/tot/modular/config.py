@@ -9,6 +9,8 @@ Functions:
     from_scratch: From Scratch functionality.
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 from datetime import datetime
 
@@ -33,33 +35,40 @@ class ToTAgentConfig(AgentConfig):
 
     # State schema
     state_schema: type[BaseModel] = Field(
-        default=ToTState, description="Schema for the agent state"
+        default=ToTState,
+        description="Schema for the agent state",
     )
 
     # Node names
     expand_node_name: str = Field(
-        default="expand", description="Name for the expansion node"
+        default="expand",
+        description="Name for the expansion node",
     )
 
     score_node_name: str = Field(
-        default="score", description="Name for the scoring node"
+        default="score",
+        description="Name for the scoring node",
     )
 
     prune_node_name: str = Field(
-        default="prune", description="Name for the pruning node"
+        default="prune",
+        description="Name for the pruning node",
     )
 
     # ToT parameters
     max_depth: int = Field(default=5, description="Maximum search depth")
 
-    threshold: float = Field(default=0.9, description="Score threshold for success")
+    threshold: float = Field(default=0.9,
+                             description="Score threshold for success")
 
     beam_size: int = Field(
-        default=3, description="Number of candidates to keep after pruning"
+        default=3,
+        description="Number of candidates to keep after pruning",
     )
 
     candidates_per_expansion: int = Field(
-        default=3, description="Number of candidates to generate in each expansion"
+        default=3,
+        description="Number of candidates to generate in each expansion",
     )
 
     # LLM configurations
@@ -81,7 +90,8 @@ class ToTAgentConfig(AgentConfig):
 
     # Customization
     visualize: bool = Field(
-        default=True, description="Whether to visualize the ToT graph"
+        default=True,
+        description="Whether to visualize the ToT graph",
     )
 
     @classmethod
@@ -89,12 +99,13 @@ class ToTAgentConfig(AgentConfig):
         cls,
         model: str = "gpt-4o",
         temperature: float = 0.7,
-        system_prompt: str = "You are a helpful assistant solving a complex problem step by step.",
+        system_prompt:
+        str = "You are a helpful assistant solving a complex problem step by step.",
         expand_prompt: ChatPromptTemplate | None = None,
         score_prompt: ChatPromptTemplate | None = None,
         name: str | None = None,
         **kwargs,
-    ) -> "ToTAgentConfig":
+    ) -> ToTAgentConfig:
         """Create a ToTAgentConfig from scratch.
 
         Args:
@@ -111,40 +122,40 @@ class ToTAgentConfig(AgentConfig):
         """
         # Create default expand prompt if not provided
         if expand_prompt is None:
-            expand_prompt = ChatPromptTemplate.from_messages(
-                [
-                    ("system", system_prompt),
-                    (
-                        "system",
-                        "Generate {candidates_per_expansion} different approaches to solve this problem. Be creative and diverse in your thinking.",
-                    ),
-                    ("user", "Problem: {problem}"),
-                    ("user", "Previous attempt: {seed}" if "seed" in kwargs else ""),
-                ]
-            )
+            expand_prompt = ChatPromptTemplate.from_messages([
+                ("system", system_prompt),
+                (
+                    "system",
+                    "Generate {candidates_per_expansion} different approaches to solve this problem. Be creative and diverse in your thinking.",
+                ),
+                ("user", "Problem: {problem}"),
+                ("user",
+                 "Previous attempt: {seed}" if "seed" in kwargs else ""),
+            ], )
 
         # Create default score prompt if not provided and no score function
         if score_prompt is None and "score_function" not in kwargs:
-            score_prompt = ChatPromptTemplate.from_messages(
-                [
-                    (
-                        "system",
-                        "Rate the following solution attempt on a scale of 0.0 to 1.0.",
-                    ),
-                    ("system", "Provide feedback on the reasoning and accuracy."),
-                    ("user", "Problem: {problem}"),
-                    ("user", "Solution attempt: {candidate}"),
-                ]
-            )
+            score_prompt = ChatPromptTemplate.from_messages([
+                (
+                    "system",
+                    "Rate the following solution attempt on a scale of 0.0 to 1.0.",
+                ),
+                ("system", "Provide feedback on the reasoning and accuracy."),
+                ("user", "Problem: {problem}"),
+                ("user", "Solution attempt: {candidate}"),
+            ], )
 
         # Set up LLM configs
         llm_config = AzureLLMConfig(
-            model=model, parameters={"temperature": temperature}
+            model=model,
+            parameters={"temperature": temperature},
         )
 
         # Create expand LLM config
         expand_llm = AugLLMConfig(
-            name="tot_expand_llm", llm_config=llm_config, prompt_template=expand_prompt
+            name="tot_expand_llm",
+            llm_config=llm_config,
+            prompt_template=expand_prompt,
         )
 
         # Create score LLM config if needed
@@ -158,7 +169,8 @@ class ToTAgentConfig(AgentConfig):
 
         # Create and return the config
         return cls(
-            name=name or f"tot_agent_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+            name=name
+            or f"tot_agent_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
             expand_llm_config=expand_llm,
             score_llm_config=score_llm,
             **kwargs,

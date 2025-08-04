@@ -12,11 +12,12 @@ The modern implementation uses string-based execution modes instead of enums:
 """
 
 # Import ExecutionMode from the archived implementation for backward compatibility
-from haive.agents.multi.archive.base import ExecutionMode
+from __future__ import annotations
 
-# Import everything from the current implementation (clean.py is the modern approach)
+from haive.agents.multi.archive.base import ExecutionMode
 from haive.agents.multi.clean import MultiAgent
 
+# Import everything from the current implementation (clean.py is the modern approach)
 
 # Create aliases for backward compatibility
 # Note: These all resolve to MultiAgent since the modern implementation

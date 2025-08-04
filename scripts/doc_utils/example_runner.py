@@ -7,16 +7,16 @@ visualization generation, and graceful error recovery.
 """
 
 import asyncio
+from dataclasses import dataclass, field
 import importlib.util
 import logging
+from pathlib import Path
 import sys
 import time
 import traceback
-from dataclasses import dataclass, field
-from pathlib import Path
 from typing import Any
 
-from .agent_analyzer import AgentAnalyzer, AgentArchitecture, AgentInfo
+from scripts.doc_utils.agent_analyzer import AgentAnalyzer, AgentArchitecture, AgentInfo
 
 logger = logging.getLogger(__name__)
 
@@ -143,12 +143,12 @@ class UniversalExampleRunner:
 
         # Also scan for standalone example files
         for examples_dir in [
-            self.project_root / "examples",
-            self.project_root / "packages" / "haive-agents" / "examples",
-            self.project_root / "packages" / "haive-core" / "examples",
-            self.project_root / "packages" / "haive-games" / "examples",
-            self.project_root / "packages" / "haive-mcp" / "examples",
-            self.project_root / "packages" / "haive-tools" / "examples",
+                self.project_root / "examples",
+                self.project_root / "packages" / "haive-agents" / "examples",
+                self.project_root / "packages" / "haive-core" / "examples",
+                self.project_root / "packages" / "haive-games" / "examples",
+                self.project_root / "packages" / "haive-mcp" / "examples",
+                self.project_root / "packages" / "haive-tools" / "examples",
         ]:
             if examples_dir.exists():
                 for example_file in examples_dir.rglob("*.py"):
@@ -166,7 +166,9 @@ class UniversalExampleRunner:
         return list(set(example_files))  # Remove duplicates
 
     async def run_example(
-        self, example_path: str | Path, config: ExecutionConfig | None = None
+        self,
+        example_path: str | Path,
+        config: ExecutionConfig | None = None,
     ) -> ExecutionResult:
         """Run a single example with full monitoring and streaming.
 
@@ -183,7 +185,8 @@ class UniversalExampleRunner:
         example_path = Path(example_path)
         if not example_path.exists():
             return ExecutionResult(
-                success=False, error=f"Example file not found: {example_path}"
+                success=False,
+                error=f"Example file not found: {example_path}",
             )
 
         logger.info(f"Running example: {example_path}")
@@ -198,18 +201,17 @@ class UniversalExampleRunner:
 
             # Generate visualization if requested and possible
             visualization_path = None
-            if (
-                config.enable_visualization
-                and agent_info
-                and agent_info.has_visualization
-            ):
+            if config.enable_visualization and agent_info and agent_info.has_visualization:
                 visualization_path = await self._generate_visualization(
-                    agent_info, config.visualization_path
+                    agent_info,
+                    config.visualization_path,
                 )
 
             # Execute the example
             success, output, error = await self._execute_example_safely(
-                example_path, streamer, config
+                example_path,
+                streamer,
+                config,
             )
 
             execution_time = time.time() - start_time
@@ -247,7 +249,8 @@ class UniversalExampleRunner:
                 },
             )
 
-    async def _detect_agent_for_example(self, example_path: Path) -> AgentInfo | None:
+    async def _detect_agent_for_example(
+            self, example_path: Path) -> AgentInfo | None:
         """Detect which agent is associated with an example.
 
         Args:
@@ -269,7 +272,8 @@ class UniversalExampleRunner:
             for _ in range(3):  # Look up to 3 levels up
                 for agent_file in current_dir.glob("*agent*.py"):
                     if agent_file.stem != example_path.stem:  # Not the example itself
-                        agent_info = self.analyzer._analyze_agent_file(agent_file)
+                        agent_info = self.analyzer._analyze_agent_file(
+                            agent_file)
                         if agent_info:
                             return agent_info
                 current_dir = current_dir.parent
@@ -283,7 +287,9 @@ class UniversalExampleRunner:
             return None
 
     async def _generate_visualization(
-        self, agent_info: AgentInfo, viz_path: Path | None = None
+        self,
+        agent_info: AgentInfo,
+        viz_path: Path | None = None,
     ) -> Path | None:
         """Generate visualization for an agent.
 
@@ -300,7 +306,8 @@ class UniversalExampleRunner:
         try:
             # Import the agent module
             spec = importlib.util.spec_from_file_location(
-                agent_info.module_path, agent_info.file_path
+                agent_info.module_path,
+                agent_info.file_path,
             )
             if not spec or not spec.loader:
                 return None
@@ -320,7 +327,8 @@ class UniversalExampleRunner:
                     from haive.core.engine.aug_llm import AugLLMConfig
 
                     agent = agent_class(
-                        name=f"viz_{agent_info.name.lower()}", engine=AugLLMConfig()
+                        name=f"viz_{agent_info.name.lower()}",
+                        engine=AugLLMConfig(),
                     )
                 else:
                     # Try with default constructor
@@ -330,7 +338,7 @@ class UniversalExampleRunner:
                 if viz_path is None:
                     timestamp = int(time.time())
                     viz_path = Path(
-                        f"{agent_info.name.lower()}_visualization_{timestamp}.png"
+                        f"{agent_info.name.lower()}_visualization_{timestamp}.png",
                     )
 
                 if hasattr(agent, "compile"):
@@ -342,18 +350,21 @@ class UniversalExampleRunner:
 
             except Exception as e:
                 logger.warning(
-                    f"Failed to create agent instance for visualization: {e}"
+                    f"Failed to create agent instance for visualization: {e}",
                 )
                 return None
 
         except Exception as e:
             logger.warning(
-                f"Failed to generate visualization for {agent_info.name}: {e}"
+                f"Failed to generate visualization for {agent_info.name}: {e}",
             )
             return None
 
     async def _execute_example_safely(
-        self, example_path: Path, streamer: OutputStreamer, config: ExecutionConfig
+        self,
+        example_path: Path,
+        streamer: OutputStreamer,
+        config: ExecutionConfig,
     ) -> tuple[bool, str, str | None]:
         """Execute an example with safety measures and output streaming.
 
@@ -371,15 +382,14 @@ class UniversalExampleRunner:
                 content = f.read()
 
             # Check if it's async
-            is_async = (
-                "asyncio.run" in content
-                or "await " in content
-                or "async def main" in content
-            )
+            is_async = ("asyncio.run" in content or "await " in content
+                        or "async def main" in content)
 
             if is_async:
-                return await self._execute_async_example(example_path, streamer, config)
-            return await self._execute_sync_example(example_path, streamer, config)
+                return await self._execute_async_example(
+                    example_path, streamer, config)
+            return await self._execute_sync_example(example_path, streamer,
+                                                    config)
 
         except Exception as e:
             error_msg = f"Execution failed: {e!s}\n{traceback.format_exc()}"
@@ -387,13 +397,17 @@ class UniversalExampleRunner:
             return False, streamer.get_output(), error_msg
 
     async def _execute_async_example(
-        self, example_path: Path, streamer: OutputStreamer, config: ExecutionConfig
+        self,
+        example_path: Path,
+        streamer: OutputStreamer,
+        config: ExecutionConfig,
     ) -> tuple[bool, str, str | None]:
         """Execute an async example."""
         try:
             # Import and execute the module
             spec = importlib.util.spec_from_file_location(
-                "example_module", example_path
+                "example_module",
+                example_path,
             )
             if not spec or not spec.loader:
                 raise ImportError(f"Cannot load module from {example_path}")
@@ -401,8 +415,8 @@ class UniversalExampleRunner:
             module = importlib.util.module_from_spec(spec)
 
             # Redirect stdout to capture output
-            import io
             from contextlib import redirect_stdout
+            import io
 
             captured_output = io.StringIO()
 
@@ -414,7 +428,8 @@ class UniversalExampleRunner:
                 if hasattr(module, "main"):
                     if asyncio.iscoroutinefunction(module.main):
                         await asyncio.wait_for(
-                            module.main(), timeout=config.timeout_seconds
+                            module.main(),
+                            timeout=config.timeout_seconds,
                         )
                     else:
                         module.main()
@@ -428,9 +443,8 @@ class UniversalExampleRunner:
             return True, streamer.get_output(), None
 
         except TimeoutError:
-            error_msg = (
-                f"Example execution timed out after {config.timeout_seconds} seconds"
-            )
+            error_msg = f"Example execution timed out after {
+                config.timeout_seconds} seconds"
             streamer.add_chunk(f"TIMEOUT: {error_msg}\n")
             return False, streamer.get_output(), error_msg
 
@@ -440,7 +454,10 @@ class UniversalExampleRunner:
             return False, streamer.get_output(), error_msg
 
     async def _execute_sync_example(
-        self, example_path: Path, streamer: OutputStreamer, config: ExecutionConfig
+        self,
+        example_path: Path,
+        streamer: OutputStreamer,
+        config: ExecutionConfig,
     ) -> tuple[bool, str, str | None]:
         """Execute a sync example."""
         try:
@@ -459,7 +476,8 @@ class UniversalExampleRunner:
             try:
                 while True:
                     line = await asyncio.wait_for(
-                        process.stdout.readline(), timeout=config.timeout_seconds
+                        process.stdout.readline(),
+                        timeout=config.timeout_seconds,
                     )
                     if not line:
                         break
@@ -498,7 +516,9 @@ class UniversalExampleRunner:
         Returns:
             List of text chunks
         """
-        return [text[i : i + chunk_size] for i in range(0, len(text), chunk_size)]
+        return [
+            text[i:i + chunk_size] for i in range(0, len(text), chunk_size)
+        ]
 
     async def run_multiple_examples(
         self,
@@ -555,7 +575,7 @@ class UniversalExampleRunner:
             for result in results:
                 if not result.success:
                     report.append(
-                        f"- {result.metadata.get('example_path', 'Unknown')}: {result.error}"
+                        f"- {result.metadata.get('example_path', 'Unknown')}: {result.error}",
                     )
             report.append("")
 

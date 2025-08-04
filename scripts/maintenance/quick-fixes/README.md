@@ -1,6 +1,6 @@
 # Quick Fixes
 
-**Purpose**: One-off fix scripts for common code issues  
+**Purpose**: One-off fix scripts for common code issues
 **Usage**: Run when encountering specific syntax, validation, or structural problems
 
 ## 📄 Scripts

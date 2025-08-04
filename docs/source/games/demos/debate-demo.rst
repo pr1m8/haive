@@ -168,13 +168,13 @@ AI agents engage in structured debates
 
        Topic: "AI will create more jobs than it eliminates"
 
-   
+
    PRO (Agent A): Opening Statement
    "AI augments human capabilities, creating new industries..."
-   
-   CON (Agent B): Opening Statement  
+
+   CON (Agent B): Opening Statement
    "Historical automation has consistently reduced employment..."
-   
+
    Round: 1/3 | Phase: Rebuttals
    Time remaining: 45s
 

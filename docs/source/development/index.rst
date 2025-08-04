@@ -18,36 +18,36 @@
 
       :link: setup
       :shadow: md
-      
+
       **Development Environment Setup**
-      
+
       Poetry, nox, pre-commit hooks, and IDE configuration for optimal development experience.
 
    .. grid-item-card:: 🛠️ Documentation Utilities
 
       :link: doc_utilities
       :shadow: md
-      
+
       **Advanced Documentation Tools**
-      
+
       Analyze agents, generate visualizations, validate examples, and create comprehensive documentation.
 
    .. grid-item-card:: 🧪 Testing Guide
 
       :link: testing
       :shadow: md
-      
+
       **Testing Philosophy & Practices**
-      
+
       No-mocks testing, real component validation, and comprehensive test coverage strategies.
 
    .. grid-item-card:: 📝 Contributing
 
       :link: contributing
       :shadow: md
-      
+
       **Contribution Guidelines**
-      
+
       Code standards, pull request process, and community guidelines for contributors.
 
 Quick Commands
@@ -58,12 +58,12 @@ Quick Commands
    .. tab:: Documentation
 
 .. code-block:: bash
-         
+
          # Build documentation
          nox -s docs                    # Fast incremental build
          nox -s docs_full               # Full rebuild
          nox -s docs_autobuild          # Live reload server
-         
+
          # Documentation utilities
          nox -s doc_utils_full          # Complete analysis & generation
          nox -s doc_utils_analyze       # Agent analysis report
@@ -72,12 +72,12 @@ Quick Commands
          .. tab:: Testing
 
 .. code-block:: bash
-         
+
          # Run tests
          nox -s test                    # All tests
          poetry run pytest -v          # Verbose output
          poetry run pytest -k "test_simple"  # Specific tests
-         
+
          # Quality checks
          nox -s lint                    # Code linting
          nox -s docs_quality            # Documentation quality
@@ -85,11 +85,11 @@ Quick Commands
          .. tab:: Development
 
 .. code-block:: bash
-         
+
          # Setup development environment
          poetry install --all-extras
          poetry run pre-commit install
-         
+
          # Check code quality
          trunk check --all
          poetry run mypy packages/
@@ -202,9 +202,9 @@ Quick Commands
          .. grid-item-card:: 📝 Code Documentation
 
          :shadow: sm
-      
+
          **Google-style Docstrings**
-      
+
          - All public functions documented
          - Type hints on all parameters
          - Examples for complex functions
@@ -213,9 +213,9 @@ Quick Commands
          .. grid-item-card:: 🎨 Visual Documentation
 
          :shadow: sm
-      
+
          **Automated Visualizations**
-      
+
          - Agent workflow diagrams
          - Architecture overviews
          - Comparison charts
@@ -224,9 +224,9 @@ Quick Commands
          .. grid-item-card:: 🧪 Living Documentation
 
          :shadow: sm
-      
+
          **Example-Driven Docs**
-      
+
          - Runnable code examples
          - Validated with real components
          - Auto-generated from analysis
@@ -360,9 +360,9 @@ Quick Commands
          .. grid-item-card:: 💬 Community
 
          :shadow: sm
-      
+
          **Join the Discussion**
-      
+
          - GitHub Discussions for questions
          - Discord for real-time chat
          - Stack Overflow for technical issues
@@ -371,9 +371,9 @@ Quick Commands
          .. grid-item-card:: 🐛 Bug Reports
 
          :shadow: sm
-      
+
          **Report Issues**
-      
+
          - GitHub Issues for bugs
          - Include reproduction steps
          - Use issue templates

@@ -1,5 +1,7 @@
 """Organized Sphinx configuration with proper package structure."""
 
+from __future__ import annotations
+
 project = "Haive AI Agent Framework"
 copyright = "2024, Haive Team"
 author = "Haive Team"
@@ -136,7 +138,6 @@ suppress_warnings = ["ref.python", "autosummary", "autoapi"]
 def autoapi_prepare_jinja_env(jinja_env):
     """Customize AutoAPI template environment."""
     # Add custom filters or functions if needed
-    pass
 
 
 def setup(app):

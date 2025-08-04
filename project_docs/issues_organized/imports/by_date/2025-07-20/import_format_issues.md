@@ -1,8 +1,8 @@
 # Import Format Issues - July 20, 2025
 
-**Date Discovered**: 2025-07-20  
-**Priority**: Critical  
-**Status**: Active  
+**Date Discovered**: 2025-07-20
+**Priority**: Critical
+**Status**: Active
 **Affected Files**: 5 files with invalid import syntax
 
 ## Problem Description
@@ -147,5 +147,5 @@ poetry run python -c "from haive.prebuilt.tldr2 import models, engines"
 
 ---
 
-**Critical**: These must be fixed manually, file by file. NO automated find-replace operations.  
+**Critical**: These must be fixed manually, file by file. NO automated find-replace operations.
 **Next Action**: Start with tldr2/state.py and work through each file individually.

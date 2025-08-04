@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 """Taskipy-friendly wrapper for lazy loading deployment.
 
-This script provides simple commands that work well with taskipy and provide
-excellent user experience with clear feedback and dry-run capabilities.
+This script provides simple commands that work well with taskipy and
+provide excellent user experience with clear feedback and dry-run
+capabilities.
 """
 
 import os
-import sys
 from pathlib import Path
+import sys
+
+from safe_lazy_loading_deployment import SafeLazyLoadingDeployment
 
 # Add the scripts directory to the path
 sys.path.insert(0, str(Path(__file__).parent))
-
-from safe_lazy_loading_deployment import SafeLazyLoadingDeployment
 
 
 def show_banner():
@@ -47,11 +48,11 @@ def lazy_loading_dry_run():
     print("\n🧪 Running pre-deployment tests...")
     if deployer.test_imports_before_deployment(files):
         print("✅ All tests passed - deployment would be safe!")
-        print("\n💡 To actually deploy, run: poetry run task lazy-loading-deploy")
+        print(
+            "\n💡 To actually deploy, run: poetry run task lazy-loading-deploy")
         return True
-    else:
-        print("❌ Tests failed - deployment not recommended")
-        return False
+    print("❌ Tests failed - deployment not recommended")
+    return False
 
 
 def lazy_loading_test_only():
@@ -117,7 +118,7 @@ def lazy_loading_deploy():
 
     try:
         # Create safety backups
-        git_checkpoint = deployer.create_git_checkpoint()
+        deployer.create_git_checkpoint()
         backups = deployer.create_file_backups(files)
 
         # Pre-deployment testing
@@ -125,7 +126,8 @@ def lazy_loading_deploy():
             raise Exception("Pre-deployment tests failed")
 
         # Deploy files
-        deployment_success = deployer.deploy_incremental(files, test_after_each=True)
+        deployment_success = deployer.deploy_incremental(files,
+                                                         test_after_each=True)
 
         if not deployment_success:
             raise Exception("Deployment failed")
@@ -134,26 +136,26 @@ def lazy_loading_deploy():
         if not deployer.test_imports_after_deployment(files):
             raise Exception("Post-deployment tests failed")
 
-        print(f"\n🎉 Deployment successful!")
+        print("\n🎉 Deployment successful!")
         print(f"📋 Deployment ID: {deployer.deployment_id}")
         print(f"💾 Backups saved in: {deployer.backup_dir}")
         print(
-            f"🧪 Run Sphinx to test: poetry run sphinx-build -b html docs/source docs/build/html"
+            "🧪 Run Sphinx to test: poetry run sphinx-build -b html docs/source docs/build/html",
         )
 
         return True
 
     except Exception as e:
         print(f"\n❌ Deployment failed: {e}")
-        print(f"🔄 Initiating automatic rollback...")
+        print("🔄 Initiating automatic rollback...")
 
         # Attempt rollback
         rollback_success = deployer.rollback_from_backups(backups)
 
         if rollback_success:
-            print(f"✅ Automatic rollback successful")
+            print("✅ Automatic rollback successful")
         else:
-            print(f"⚠️  Rollback failed - manual recovery may be needed")
+            print("⚠️  Rollback failed - manual recovery may be needed")
             print(f"💾 Backups available in: {deployer.backup_dir}")
 
         return False
@@ -177,16 +179,17 @@ def lazy_loading_rollback():
             print(f"📦 Available backups in {deployer.backup_dir}:")
             import json
 
-            for manifest in sorted(manifests, reverse=True)[:10]:  # Show last 10
+            for manifest in sorted(manifests,
+                                   reverse=True)[:10]:  # Show last 10
                 with open(manifest) as f:
                     data = json.load(f)
                 print(
-                    f"   🗂️  {data['deployment_id']} - {data['timestamp'][:19]} ({len(data['backups'])} files)"
+                    f"   🗂️  {data['deployment_id']} - {data['timestamp'][:19]} ({len(data['backups'])} files)",
                 )
 
-            print(f"\n💡 To rollback:")
+            print("\n💡 To rollback:")
             print(
-                f"   poetry run python scripts/maintenance/safe_lazy_loading_deployment.py --rollback DEPLOYMENT_ID"
+                "   poetry run python scripts/maintenance/safe_lazy_loading_deployment.py --rollback DEPLOYMENT_ID",
             )
         else:
             print("📭 No backups found")
@@ -208,5 +211,6 @@ if __name__ == "__main__":
         lazy_loading_rollback()
         sys.exit(0)
     else:
-        print("Usage: python lazy_loading_taskipy.py {dry|test|deploy|rollback}")
+        print(
+            "Usage: python lazy_loading_taskipy.py {dry|test|deploy|rollback}")
         sys.exit(1)

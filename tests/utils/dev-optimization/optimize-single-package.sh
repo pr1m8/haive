@@ -30,7 +30,7 @@ if [[ ! -f "${PACKAGE_PATH}/pyproject.toml" ]]; then
 	exit 1
 fi
 
-echo -e "${BLUE}🎯 Optimizing Packag${: $PACKAGE_N}AME${NC}"
+echo -e "${BLUE}🎯 Optimizing Package${: $PACKAGE_N}AME${NC}"
 echo "========================================"
 
 # Create tracking directory
@@ -186,8 +186,8 @@ repos:
         types: [python]
         stages: [pre-commit]
         pass_filenames: true
-        
-      - id: ruff-format  
+
+      - id: ruff-format
         name: "Ruff Formatter"
         entry: ruff format
         language: system
@@ -294,7 +294,7 @@ Generated: $(date)
 Package: ${PACKAGE_PATH}
 
 ## Summary
-- ✅ Safety checkpoint created: checkpoin${-$PACKAGE_NA}M${-$TIMESTA}MP
+- ✅ Safety checkpoint created: checkpoint${-$PACKAGE_NA}M${-$TIMESTA}MP
 - ✅ Backup files saved in${ $TRACK_D}IR
 - ✅ Optimizations applied successfully
 

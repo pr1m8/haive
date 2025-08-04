@@ -47,19 +47,19 @@
    {%- endfor %}
    {% endif %}
    {% endblock %}
-   
+
    {% block fields %}
    .. rubric:: {{ _('Pydantic Fields') }}
-   
+
    The field summary will be automatically generated showing constraints, types, and defaults.
    {% endblock %}
-   
+
    {% block validators %}
    .. rubric:: {{ _('Validators') }}
-   
+
    Field validators and model validators will be documented automatically.
    {% endblock %}
-   
+
    .. rubric:: Examples
-   
+
    The Examples section from the class docstring will be displayed here automatically if present.

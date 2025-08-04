@@ -118,7 +118,7 @@ Manages multi-turn conversations with context
        User: Tell me about AI safety
        Assistant: AI safety is a critical field focusing on ensuring AI systems are beneficial and aligned with human values...
 
-   
+
    User: What are the main risks?
    Assistant: The main risks include:
    1. Misalignment with human goals

@@ -77,12 +77,12 @@
                 font-weight: 600;
                 color: var(--color-brand-primary);
             }
-            
+
             /* Dim other package sections */
             .sidebar-tree .toctree-l2:not(.current) > a {
                 opacity: 0.7;
             }
-            
+
             /* Show current module prominently */
             .sidebar-tree .current-page > a {
                 background-color: var(--color-api-background-hover);
@@ -122,21 +122,21 @@
                 color: var(--color-foreground-secondary);
                 border-bottom: 1px solid var(--color-sidebar-background-border);
             }
-            
+
             .module-breadcrumb a {
                 color: var(--color-brand-primary);
                 text-decoration: none;
             }
-            
+
             .module-breadcrumb a:hover {
                 text-decoration: underline;
             }
-            
+
             .module-breadcrumb .separator {
                 margin: 0 0.5rem;
                 opacity: 0.5;
             }
-            
+
             .module-breadcrumb .current {
                 font-weight: 500;
                 color: var(--color-foreground-primary);

@@ -117,12 +117,12 @@ Retrieval-Augmented Generation for accurate responses
 
        Query: What is quantum computing?
 
-   
+
    Retrieved Sources: 3
    Confidence: 95%
-   
+
    Answer: Quantum computing uses quantum mechanics principles...
-   
+
    Sources:
    [1] Introduction to Quantum Computing, MIT Press
    [2] Nature Physics, Vol 15, 2023

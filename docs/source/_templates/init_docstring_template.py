@@ -1,8 +1,8 @@
+from __future__ import annotations
 """Template for __init__.py module docstrings following Google style guide.
 
 Copy this template and customize it for each module's __init__.py file.
 """
-
 # Example 1: Simple module
 """Simple module name - Brief one-line description.
 
@@ -17,7 +17,6 @@ Example:
         instance = MainClass()
         result = instance.process(data)
 """
-
 # Example 2: Complex module with multiple components
 """Module name - Brief one-line description.
 
@@ -85,7 +84,6 @@ References:
     * [Link to documentation or paper]
     * [Link to related resources]
 """
-
 # Example 3: Package-level __init__.py
 """Haive {Package} - Brief description of the package.
 
@@ -116,7 +114,6 @@ Quick Start:
 
 For detailed documentation, see the package README and API reference.
 """
-
 # Example 4: Submodule with specific focus
 """Submodule name - Specific functionality provider.
 
@@ -148,10 +145,10 @@ Limitations:
     * [Limitation 1]
     * [Limitation 2]
 """
-
 # Template structure to follow:
 """
 Required sections:
+
 1. Module name - One-line description
 2. Extended description paragraph
 3. Example section with code

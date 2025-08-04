@@ -12,7 +12,7 @@
    :padding: 2
 
    .. grid-item::
-      
+
 
       .. raw:: html
 
@@ -35,7 +35,7 @@
    </div>
 
    .. grid-item::
-      
+
 
       .. raw:: html
 
@@ -71,18 +71,18 @@ Agent Categories
 
       :link: ../api/haive/agents/simple/index
       :shadow: lg
-      
+
       **Basic Conversational Agent**
-      
+
       General-purpose conversational agent for straightforward interactions and basic task completion. Perfect starting point for custom agents.
-      
+
       +++
-      
-      ✓ Natural language processing  
-      ✓ Context-aware responses  
-      ✓ Memory integration  
-      ✓ Customizable prompts  
-      
+
+      ✓ Natural language processing
+      ✓ Context-aware responses
+      ✓ Memory integration
+      ✓ Customizable prompts
+
       .. raw:: html
 
    .. raw:: html
@@ -101,10 +101,10 @@ Agent Categories
 
    +++
 
-   ✓ Tool integration  
-   ✓ Multi-step reasoning  
-   ✓ Self-reflection capabilities  
-   ✓ Error recovery  
+   ✓ Tool integration
+   ✓ Multi-step reasoning
+   ✓ Self-reflection capabilities
+   ✓ Error recovery
 
    .. raw:: html
 
@@ -118,96 +118,96 @@ Agent Categories
 
       :link: ../api/haive/agents/rag/index
       :shadow: lg
-      
+
       **Retrieval-Augmented Generation**
-      
+
       Knowledge-grounded agents that combine retrieval systems with generation for accurate, up-to-date responses.
-      
+
       +++
-      
-      ✓ Vector search integration  
-      ✓ Knowledge base queries  
-      ✓ Source attribution  
-      ✓ Adaptive retrieval  
+
+      ✓ Vector search integration
+      ✓ Knowledge base queries
+      ✓ Source attribution
+      ✓ Adaptive retrieval
 
    .. grid-item-card:: 🔬 ResearchAgent
 
       :link: ../api/src/haive/agents/research/index
       :shadow: lg
-      
+
       **Advanced Research & Analysis**
-      
+
       Specialized agents for comprehensive research, information gathering, and multi-source analysis.
-      
+
       +++
-      
-      ✓ Multi-source research  
-      ✓ Fact verification  
-      ✓ Report generation  
-      ✓ Citation management  
+
+      ✓ Multi-source research
+      ✓ Fact verification
+      ✓ Report generation
+      ✓ Citation management
 
    .. grid-item-card:: 🎭 ConversationAgent
 
       :link: ../api/src/haive/agents/conversation/index
       :shadow: lg
-      
+
       **Multi-Party Dialogue**
-      
+
       Sophisticated dialogue management for multi-party conversations, debates, and collaborative discussions.
-      
+
       +++
-      
-      ✓ Multi-participant management  
-      ✓ Turn-taking protocols  
-      ✓ Debate facilitation  
-      ✓ Consensus building  
+
+      ✓ Multi-participant management
+      ✓ Turn-taking protocols
+      ✓ Debate facilitation
+      ✓ Consensus building
 
    .. grid-item-card:: 🎯 PlanningAgent
 
       :link: ../api/src/haive/agents/planning/index
       :shadow: lg
-      
+
       **Task Planning & Execution**
-      
+
       Advanced planning agents for task decomposition, workflow orchestration, and multi-step execution.
-      
+
       +++
-      
-      ✓ Task decomposition  
-      ✓ Workflow planning  
-      ✓ Resource allocation  
-      ✓ Progress tracking  
+
+      ✓ Task decomposition
+      ✓ Workflow planning
+      ✓ Resource allocation
+      ✓ Progress tracking
 
    .. grid-item-card:: 🌐 MultiAgent
 
       :link: ../api/src/haive/agents/multi/index
       :shadow: lg
-      
+
       **Coordinated Agent Systems**
-      
+
       Sophisticated multi-agent systems for complex problem-solving through coordinated collaboration.
-      
+
       +++
-      
-      ✓ Agent coordination  
-      ✓ Workflow orchestration  
-      ✓ State synchronization  
-      ✓ Distributed processing  
+
+      ✓ Agent coordination
+      ✓ Workflow orchestration
+      ✓ State synchronization
+      ✓ Distributed processing
 
    .. grid-item-card:: 🔍 SearchAgent
 
       :link: ../api/src/haive/agents/research/perplexity/index
       :shadow: lg
-      
+
       **Perplexity-Style Search**
-      
+
       Advanced search agents including QuickSearch, ProSearch, DeepResearch, and Labs automation capabilities.
-      
+
       +++
-      
-      ✓ Multi-tier search (Quick/Pro/Deep)  
-      ✓ Source verification  
-      ✓ Interactive dashboards  
+
+      ✓ Multi-tier search (Quick/Pro/Deep)
+      ✓ Source verification
+      ✓ Interactive dashboards
       ✓ Automated workflows
 
 Agent Catalog by Category
@@ -216,30 +216,30 @@ Agent Catalog by Category
 .. tab-set::
 
    .. tab-item:: 💬 Simple Agents
-      
+
 
       **Basic agents for straightforward tasks and conversations.**
-      
+
       - **SimpleAgent** - General purpose conversational agent
       - **SimpleAnalysisAgent** - Basic data analysis capabilities
       - **StructuredOutputAgent** - Agents with typed outputs
       - **AsyncAgent** - Asynchronous agent base class
 
    .. tab-item:: 🧠 ReAct Agents
-      
+
 
       **Reasoning and action agents that use tools to solve problems.**
-      
+
       - **ReactAgent** - Standard ReAct implementation
       - **ReactResearchAgent** - Research-focused ReAct
       - **ReactWithMemory** - ReAct with persistent memory
       - **DynamicReactAgent** - Dynamic tool selection
 
    .. tab-item:: 📚 RAG Agents
-      
+
 
       **Retrieval-Augmented Generation agents for knowledge-grounded responses.**
-      
+
       - **BaseRAGAgent** - Standard RAG implementation
       - **AdaptiveRAGAgent** - Dynamic retrieval strategies
       - **SelfRAGAgent** - Self-reflective RAG
@@ -247,20 +247,20 @@ Agent Catalog by Category
       - **HyDEAgent** - Hypothetical Document Embeddings
 
    .. tab-item:: 🌐 Multi-Agent
-      
+
 
       **Coordinated systems of multiple agents working together.**
-      
+
       - **SupervisorAgent** - Hierarchical coordination
       - **SequentialAgent** - Sequential execution
       - **ParallelAgent** - Parallel processing
       - **DynamicMultiAgent** - Dynamic agent activation
 
    .. tab-item:: 🎯 Specialized
-      
+
 
       **Agents designed for specific use cases and domains.**
-      
+
       - **ResearchAgent** - Academic research assistant
       - **DebateAgent** - Multi-perspective debates
       - **PlanAndExecuteAgent** - Strategic planning

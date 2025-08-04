@@ -7,7 +7,7 @@ Engine System
 .. warning::
 
    **This page is under development.**
-   
+
    We're actively working on this documentation section and it will be available soon.
 
 .. note::
@@ -17,7 +17,7 @@ Engine System
 .. admonition:: Future Content
 
    :class:`tip`
-   
+
    This section will include:
 
    * Comprehensive explanation of the engine architecture*
@@ -38,6 +38,6 @@ Engine System
 
 -------
 
-**Want to contribute?** We welcome contributions to our documentation. 
+**Want to contribute?** We welcome contributions to our documentation.
 
 `See our contribution guidelines <https://github.com/will-astley/haive/blob/main/CONTRIBUTING.md>`_.

@@ -1,7 +1,9 @@
 """Stable Sphinx configuration with working extensions and all packages."""
 
-import sys
+from __future__ import annotations
+
 from pathlib import Path
+import sys
 
 # Add conf_modules to Python path for imports
 conf_modules_dir = Path(__file__).parent / "conf_modules"

@@ -7,9 +7,13 @@ This example shows how the supervisor can:
 4. Build a team of agents on-demand
 """
 
+from __future__ import annotations
+
 import asyncio
 import os
 import tempfile
+
+from langchain_core.messages import HumanMessage
 
 from haive.agents.simple.agent import SimpleAgent
 from haive.agents.supervisor.dynamic_agent_discovery_supervisor import (
@@ -17,7 +21,6 @@ from haive.agents.supervisor.dynamic_agent_discovery_supervisor import (
     DynamicAgentDiscoverySupervisor,
 )
 from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import HumanMessage
 
 
 async def basic_agent_discovery_example():
@@ -26,7 +29,9 @@ async def basic_agent_discovery_example():
     config = AugLLMConfig(temperature=0.1)
 
     # Start with minimal agents
-    initial_agents = {"generalist": SimpleAgent(name="generalist", engine=config)}
+    initial_agents = {
+        "generalist": SimpleAgent(name="generalist", engine=config)
+    }
 
     # Create supervisor
     supervisor = DynamicAgentDiscoverySupervisor(
@@ -38,7 +43,7 @@ async def basic_agent_discovery_example():
 
     # Run task that needs specialists
     await supervisor.arun(
-        "I need an expert to analyze financial data and another to write a professional report"
+        "I need an expert to analyze financial data and another to write a professional report",
     )
 
     # Check discovered agents
@@ -56,13 +61,16 @@ async def factory_with_agent_specs_example():
             "description": "Expert in data science and machine learning",
             "specialties": ["data analysis", "machine learning", "statistics"],
             "tools": ["calculator", "data_processor", "ml_toolkit"],
-            "config": {"tools": []},  # Will be created with empty tools initially
+            "config": {
+                "tools": []
+            },  # Will be created with empty tools initially
         },
         {
             "name": "business_analyst",
             "agent_type": "SimpleAgent",
             "description": "Expert in business analysis and strategy",
-            "specialties": ["business strategy", "market analysis", "reporting"],
+            "specialties":
+            ["business strategy", "market analysis", "reporting"],
             "tools": [],
             "config": {},
         },
@@ -78,7 +86,9 @@ async def factory_with_agent_specs_example():
 
     # Create supervisor with pre-defined team
     supervisor = DynamicAgentDiscoverySupervisor.create_with_agent_specs(
-        name="project_team", initial_agent_specs=team_specs, engine=config
+        name="project_team",
+        initial_agent_specs=team_specs,
+        engine=config,
     )
 
     for agent_name, _agent in supervisor.agents.items():
@@ -88,7 +98,7 @@ async def factory_with_agent_specs_example():
 
     # Run complex project task
     await supervisor.arun(
-        "Analyze our sales data, identify trends, and create a comprehensive business report"
+        "Analyze our sales data, identify trends, and create a comprehensive business report",
     )
 
 
@@ -153,8 +163,7 @@ async def discovery_sources_example():
   - Brand strategy development
   - Social media strategy
   - SEO optimization
-"""
-            )
+""", )
 
         # Create supervisor with discovery sources
         supervisor = DynamicAgentDiscoverySupervisor.create_with_discovery(
@@ -175,7 +184,7 @@ async def discovery_sources_example():
 
         # Run task requiring specialists
         await supervisor.arun(
-            "I need help with a legal contract review and then a marketing strategy for the product launch"
+            "I need help with a legal contract review and then a marketing strategy for the product launch",
         )
 
 
@@ -186,7 +195,10 @@ async def dynamic_team_building_example():
     # Start with just a project manager
     supervisor = DynamicAgentDiscoverySupervisor(
         name="project_supervisor",
-        agents={"project_manager": SimpleAgent(name="project_manager", engine=config)},
+        agents={
+            "project_manager": SimpleAgent(name="project_manager",
+                                           engine=config)
+        },
         engine=config,
     )
 
@@ -200,7 +212,6 @@ async def dynamic_team_building_example():
     ]
 
     for _i, task in enumerate(tasks):
-
         # Check team before task
 
         # Execute task
@@ -223,7 +234,9 @@ async def agent_capability_routing_example():
             "description": "Frontend development expert",
             "specialties": ["React", "Vue", "CSS", "UI/UX"],
             "tools": ["code_editor", "browser_dev_tools"],
-            "config": {"tools": []},
+            "config": {
+                "tools": []
+            },
         },
         {
             "name": "backend_dev",
@@ -231,7 +244,9 @@ async def agent_capability_routing_example():
             "description": "Backend development expert",
             "specialties": ["Python", "Node.js", "databases", "APIs"],
             "tools": ["code_editor", "database_client"],
-            "config": {"tools": []},
+            "config": {
+                "tools": []
+            },
         },
         {
             "name": "devops_engineer",
@@ -252,7 +267,9 @@ async def agent_capability_routing_example():
     ]
 
     supervisor = DynamicAgentDiscoverySupervisor.create_with_agent_specs(
-        name="dev_team_supervisor", initial_agent_specs=team_specs, engine=config
+        name="dev_team_supervisor",
+        initial_agent_specs=team_specs,
+        engine=config,
     )
 
     for _name, _cap in supervisor.agent_capabilities.items():
@@ -267,12 +284,13 @@ async def agent_capability_routing_example():
     ]
 
     for task in technical_tasks:
-
         # Simulate routing decision
         from haive.agents.supervisor.types import SupervisorState
 
         state = SupervisorState(
-            messages=[HumanMessage(content=task)], next_agent="", agent_outputs={}
+            messages=[HumanMessage(content=task)],
+            next_agent="",
+            agent_outputs={},
         )
 
         await supervisor._make_decision(state)
@@ -300,7 +318,9 @@ async def performance_tracking_example():
                 "name": "agent_c",
                 "agent_type": "ReactAgent",
                 "description": "General agent C",
-                "config": {"tools": []},
+                "config": {
+                    "tools": []
+                },
             },
         ],
         engine=config,
@@ -335,6 +355,5 @@ async def main():
 
 
 if __name__ == "__main__":
-
     # Run examples
     asyncio.run(main())

@@ -7,6 +7,8 @@ This module defines project metadata including:
 - Language settings
 """
 
+from __future__ import annotations
+
 from datetime import datetime
 from typing import Any
 
@@ -96,5 +98,8 @@ def get_minimal_config() -> dict[str, Any]:
         Dictionary with minimal project settings
     """
     return get_config(
-        project_name="Project", author="Author", version="0.1", release="0.1.0"
+        project_name="Project",
+        author="Author",
+        version="0.1",
+        release="0.1.0",
     )

@@ -38,7 +38,7 @@
 
    </div>
 
-               
+
 
 .. raw:: html
 
@@ -58,7 +58,7 @@
 
 .. raw:: html
 
-   <div id="{{ agent_data.agent_id }}-graph" 
+   <div id="{{ agent_data.agent_id }}-graph"
    class="agent-graph-container"
    data-agent-graph='{{ agent_data.graph_data_json }}'>
    </div>
@@ -69,7 +69,7 @@
 
 .. raw:: html
 
-   <div id="{{ agent_data.agent_id }}-state-history" 
+   <div id="{{ agent_data.agent_id }}-state-history"
    class="state-history-container"
    data-state-history='{{ agent_data.state_history_json }}'>
    </div>
@@ -80,7 +80,7 @@
 
 .. raw:: html
 
-   <div id="{{ agent_data.agent_id }}-execution-trace" 
+   <div id="{{ agent_data.agent_id }}-execution-trace"
    class="execution-trace-container"
    data-execution-trace='{{ agent_data.execution_trace_json }}'>
    </div>
@@ -128,11 +128,11 @@
            // Initialize graph
            const graphData = JSON.parse(document.getElementById('{{ agent_data.agent_id }}-graph').dataset.agentGraph);
            new AgentGraphVisualizer('{{ agent_data.agent_id }}-graph', graphData);
-           
+
            // Initialize state history
            const stateData = JSON.parse(document.getElementById('{{ agent_data.agent_id }}-state-history').dataset.stateHistory);
            new StateHistoryVisualizer('{{ agent_data.agent_id }}-state-history', stateData);
-           
+
            // Initialize execution trace
            const traceData = JSON.parse(document.getElementById('{{ agent_data.agent_id }}-execution-trace').dataset.executionTrace);
            new ExecutionTraceVisualizer('{{ agent_data.agent_id }}-execution-trace', traceData);

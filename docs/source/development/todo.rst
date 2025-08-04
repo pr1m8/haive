@@ -36,7 +36,7 @@
 
 ## Haive-Dataflow
 
-### Seperation of su
+### Separation of su
 
 ### SET TESTING MODE: /home/will/Projects/haive/backend/haive/packages/haive-core/src/haive.core/engine/agent/config.py
 
@@ -54,9 +54,9 @@ auth
 
 # Docker
 
-- Fix Cuda issues, check whats installing twice.
+- Fix Cuda issues, check what's installing twice.
 
-### NEeed to add in the .precommit sutff back in.
+### NEeed to add in the .precommit stuff back in.
 
 # COnsolidate graph visualizers
 
@@ -64,7 +64,7 @@ auth
 
 # Look into docker issues.
 
-# HEAVY GRAPH IMPLEMENTAITON
+# HEAVY GRAPH IMPLEMENTATION
 
 # REFINED NODE CLASS
 
@@ -74,11 +74,11 @@ auth
 
 # mEMEaid check
 
-# Pattern Intergation
+# Pattern Integration
 
 # Agent Conversion .
 
-# Agent / Repo apprach .
+# Agent / Repo approach .
 
 # SEnd command // control
 
@@ -100,9 +100,9 @@ auth
 
 # instantiate vs create runnable consistnecy.
 
-# RAG VS - CHECK TO DO IN RETREIVER engien
+# RAG VS - CHECK TO DO IN RETRIEVER engien
 
-# ADD QUANTUM (HYBRID/Non-Hybrid REtreiver - http://chatgpt.com/c/680e9c8b-c850-8010-b400-a773b37f087a?model=o3)
+# ADD QUANTUM (HYBRID/Non-Hybrid retriever - http://chatgpt.com/c/680e9c8b-c850-8010-b400-a773b37f087a?model=o3)
 
 # Consistiency of gb vs grapoh uilde.
 
@@ -121,7 +121,7 @@ protobuf-compiler
 
 - trunk
 
-optional promtp varsw``
+optional prompt varsw``
 ```````````````````````
 
 python scripts/generate_agent_docs.py --all

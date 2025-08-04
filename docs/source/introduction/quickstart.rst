@@ -62,14 +62,14 @@ Basic Agent
 
     # Create multiple agents
     researcher = SimpleAgent(
-    name="researcher", 
+    name="researcher",
     engine=engine,
     system_prompt="You are a research specialist."
     )
 
     writer = SimpleAgent(
     name="writer",
-    engine=engine, 
+    engine=engine,
     system_prompt="You are a technical writer."
     )
 

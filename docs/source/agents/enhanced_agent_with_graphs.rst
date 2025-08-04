@@ -34,19 +34,19 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
 
    </div>
 
-            
+
 
 .. raw:: html
 
    <p class="agent-description">
 
-                Sophisticated AI agent that conducts comprehensive climate research using the ReAct (Reasoning + Acting) methodology. 
+                Sophisticated AI agent that conducts comprehensive climate research using the ReAct (Reasoning + Acting) methodology.
                 Watch how the agent iteratively gathers data, reasons about findings, and takes action to build comprehensive reports.
 .. raw:: html
 
    </p>
 
-            
+
 
 .. raw:: html
 
@@ -75,7 +75,7 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
 
 .. raw:: html
 
-   <div id="climate-agent-graph" 
+   <div id="climate-agent-graph"
    class="agent-graph-container"
    data-agent-graph='{
    "nodes": [
@@ -109,7 +109,7 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
 
 .. raw:: html
 
-   <div id="climate-agent-state" 
+   <div id="climate-agent-state"
    class="state-history-container"
    data-state-history='[
    {
@@ -192,7 +192,7 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
 
 .. raw:: html
 
-   <div id="climate-agent-trace" 
+   <div id="climate-agent-trace"
    class="execution-trace"
    data-execution-trace='[
    {
@@ -284,7 +284,7 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
        enable_visualization=True
 
    )
-   
+
    # Execute research with full tracing
    results = await agent.arun(
 
@@ -293,12 +293,12 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
        save_state_history=True
 
    )
-   
+
    # Access execution details
    print(f"Research completed in {results.total_time}ms")
    print(f"Data sources used: {results.sources_accessed}")
    print(f"Key finding: {results.main_conclusion}")
-   
+
    # Export visualizations
    agent.export_graph("climate_agent_workflow.svg")
    agent.export_state_history("climate_agent_states.json")
@@ -311,7 +311,7 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
 
    </div>
 
-            
+
 
 .. raw:: html
 
@@ -373,19 +373,19 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
 
    </div>
 
-            
+
 
 .. raw:: html
 
    <p class="agent-description">
 
-                Advanced supervisor agent that coordinates multiple specialized agents. Watch how it routes tasks, 
+                Advanced supervisor agent that coordinates multiple specialized agents. Watch how it routes tasks,
                 manages conversations, and synthesizes results from different expert agents working together.
 .. raw:: html
 
    </p>
 
-            
+
 
 .. raw:: html
 
@@ -414,7 +414,7 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
 
 .. raw:: html
 
-   <div id="supervisor-agent-graph" 
+   <div id="supervisor-agent-graph"
    class="agent-graph-container"
    data-agent-graph='{
    "nodes": [
@@ -475,9 +475,9 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
 
    # Initialize specialist agents
    research_agent = ResearchAgent(name="researcher")
-   analysis_agent = AnalysisAgent(name="analyst") 
+   analysis_agent = AnalysisAgent(name="analyst")
    writing_agent = WritingAgent(name="writer")
-   
+
    # Create supervisor with registered agents
    supervisor = SupervisorAgent(
 
@@ -490,7 +490,7 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
        enable_graph_visualization=True
 
    )
-   
+
    # Execute complex multi-step task
    result = await supervisor.arun(
 
@@ -506,7 +506,7 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
 
    </div>
 
-            
+
 
 .. raw:: html
 

@@ -15,8 +15,9 @@ from __future__ import annotations
 
 import ast
 import importlib.util
-import sys
 from pathlib import Path
+import sys
+
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent
@@ -25,7 +26,6 @@ packages_root = project_root / "packages"
 
 
 class ImportAnalyzer:
-
     def __init__(self):
         self.failed_imports = {}
         self.missing_modules = set()
@@ -94,11 +94,11 @@ class ImportAnalyzer:
                             "names": [alias.name],
                             "level": 0,
                             "line": node.lineno,
-                        }, )
+                        },
+                    )
             elif isinstance(node, ast.ImportFrom):
                 module = node.module or ""
-                names = [alias.name
-                         for alias in node.names] if node.names else []
+                names = [alias.name for alias in node.names] if node.names else []
                 imports.append(
                     {
                         "type": "from",
@@ -106,7 +106,8 @@ class ImportAnalyzer:
                         "names": names,
                         "level": node.level,
                         "line": node.lineno,
-                    }, )
+                    },
+                )
 
         return imports
 
@@ -151,8 +152,12 @@ class ImportAnalyzer:
                 self.missing_modules.add(module_name)
 
             # Check if it's an external dependency
-            if any(ext in module_name
-                   for ext in ["google", "openai", "anthropic", "langchain"]):
+            if any(
+                ext in module_name for ext in [
+                    "google",
+                    "openai",
+                    "anthropic",
+                    "langchain"]):
                 self.external_dependencies.add(module_name)
 
     def check_relative_import(self, file_path: Path, import_info: dict):
@@ -195,7 +200,8 @@ class ImportAnalyzer:
                     "line": line,
                     "issue": f"Cannot resolve relative import: {e}",
                     "import": f"{'.' * level}{module_name}",
-                }, )
+                },
+            )
 
     def record_import_issue(self, file_path: Path, line: int, issue: str):
         """Record an import issue."""
@@ -275,8 +281,7 @@ class ImportAnalyzer:
 
         print("\n3. Create missing core modules:")
         core_missing = [
-            m for m in self.missing_modules if m.startswith("haive.core")
-        ][:5]
+            m for m in self.missing_modules if m.startswith("haive.core")][:5]
         for module in core_missing:
             print(f"   - {module}")
 

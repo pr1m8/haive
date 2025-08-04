@@ -1,10 +1,12 @@
 """Enhanced HyDE RAG Agent using Structured Output Pattern.
 
-from typing import Any, Dict
-This demonstrates the new pattern where any agent can be enhanced with structured
-output by appending a SimpleAgent. This approach is more modular and follows the
-principle of separation of concerns.
+from typing import Any, Dict This demonstrates the new pattern where any
+agent can be enhanced with structured output by appending a SimpleAgent.
+This approach is more modular and follows the principle of separation of
+concerns.
 """
+
+from __future__ import annotations
 
 from typing import Any
 
@@ -21,13 +23,11 @@ from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
-
 # Improved HyDE generation prompt based on LangChain best practices
 ENHANCED_HYDE_PROMPT = ChatPromptTemplate.from_messages(
     [
-        (
-            "system",
-            """You are an expert at generating hypothetical documents for enhanced retrieval.
+        ("system",
+         """You are an expert at generating hypothetical documents for enhanced retrieval.
 
 Your task is to create a detailed, authoritative document that would ideally contain
 the complete answer to the given question. This hypothetical document will be used
@@ -47,16 +47,15 @@ The document should be the type that would appear in:
 - How-to guides for procedural questions
 
 {format_instructions}""",
-        ),
-        (
-            "human",
-            """Generate a comprehensive hypothetical document that would contain the ideal answer to this question:
+         ),
+        ("human",
+         """Generate a comprehensive hypothetical document that would contain the ideal answer to this question:
 
 Question: {query}
 
 Consider what type of document would best answer this question and write accordingly.""",
-        ),
-    ]
+         ),
+    ],
 )
 
 
@@ -82,7 +81,7 @@ class EnhancedHyDERAGAgent(SequentialAgent):
         llm_config: LLMConfig | None = None,
         embedding_model: str | None = None,
         use_enhancement_pattern: bool = True,
-        **kwargs
+        **kwargs,
     ):
         """Create Enhanced HyDE RAG from documents.
 
@@ -105,10 +104,16 @@ class EnhancedHyDERAGAgent(SequentialAgent):
 
         if use_enhancement_pattern:
             return cls._create_with_enhancement_pattern(
-                documents, llm_config, embedding_model, **kwargs
+                documents,
+                llm_config,
+                embedding_model,
+                **kwargs,
             )
         return cls._create_traditional_pattern(
-            documents, llm_config, embedding_model, **kwargs
+            documents,
+            llm_config,
+            embedding_model,
+            **kwargs,
         )
 
     @classmethod
@@ -117,7 +122,7 @@ class EnhancedHyDERAGAgent(SequentialAgent):
         documents: list[Document],
         llm_config: LLMConfig,
         embedding_model: str | None = None,
-        **kwargs
+        **kwargs,
     ):
         """Create using the new structured output enhancement pattern."""
         # Step 1: Base HyDE generation (focused on content, not structure)
@@ -151,12 +156,12 @@ Consider how well the hypothetical document would serve for semantic retrieval."
 
         # Step 4: Final answer generation
         from haive.agents.rag.common.answer_generators.prompts import (
-            RAG_ANSWER_STANDARD,
-        )
+            RAG_ANSWER_STANDARD, )
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=RAG_ANSWER_STANDARD
+                llm_config=llm_config,
+                prompt_template=RAG_ANSWER_STANDARD,
             ),
             name="Answer Generator",
         )
@@ -169,7 +174,7 @@ Consider how well the hypothetical document would serve for semantic retrieval."
                 answer_agent,
             ],
             name=kwargs.get("name", "Enhanced HyDE RAG Agent"),
-            **kwargs
+            **kwargs,
         )
 
     @classmethod
@@ -178,7 +183,7 @@ Consider how well the hypothetical document would serve for semantic retrieval."
         documents: list[Document],
         llm_config: LLMConfig,
         embedding_model: str | None = None,
-        **kwargs
+        **kwargs,
     ):
         """Create using traditional pattern for comparison."""
         # Traditional: structured output embedded in initial generation
@@ -194,16 +199,18 @@ Consider how well the hypothetical document would serve for semantic retrieval."
         )
 
         retriever = EnhancedHyDERetriever(
-            documents=documents, embedding_model=embedding_model, name="HyDE Retriever"
+            documents=documents,
+            embedding_model=embedding_model,
+            name="HyDE Retriever",
         )
 
         from haive.agents.rag.common.answer_generators.prompts import (
-            RAG_ANSWER_STANDARD,
-        )
+            RAG_ANSWER_STANDARD, )
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=RAG_ANSWER_STANDARD
+                llm_config=llm_config,
+                prompt_template=RAG_ANSWER_STANDARD,
             ),
             name="Answer Generator",
         )
@@ -211,28 +218,41 @@ Consider how well the hypothetical document would serve for semantic retrieval."
         return cls(
             agents=[hyde_generator, retriever, answer_agent],
             name=kwargs.get("name", "Traditional HyDE RAG Agent"),
-            **kwargs
+            **kwargs,
         )
 
 
 class EnhancedHyDERetriever(Agent):
-    """Enhanced retriever that handles both enhancement pattern and traditional outputs."""
+    """Enhanced retriever that handles both enhancement pattern and traditional.
+
+    outputs.
+    """
 
     # Define as Pydantic fields
     documents: list[Document] = Field(
-        default_factory=list, description="Documents for retrieval"
+        default_factory=list,
+        description="Documents for retrieval",
     )
     embedding_model: str | None = Field(
-        default=None, description="Embedding model to use"
+        default=None,
+        description="Embedding model to use",
     )
 
     def __init__(
-        self, documents: list[Document], embedding_model: str | None = None, **kwargs
+        self,
+        documents: list[Document],
+        embedding_model: str | None = None,
+        **kwargs,
     ):
-        super().__init__(documents=documents, embedding_model=embedding_model, **kwargs)
+        super().__init__(documents=documents,
+                         embedding_model=embedding_model,
+                         **kwargs)
 
     def build_graph(self) -> Any:
-        """Build graph that adapts to both enhancement and traditional patterns."""
+        """Build graph that adapts to both enhancement and traditional.
+
+        patterns.
+        """
         from langgraph.graph import END, START
 
         from haive.core.graph.state_graph.base_graph2 import BaseGraph
@@ -242,7 +262,8 @@ class EnhancedHyDERetriever(Agent):
         def adaptive_retrieval(state: dict[str, Any]) -> dict[str, Any]:
             """Adaptively retrieve based on available state information."""
             # Try to get structured HyDE result first (traditional pattern)
-            hyde_result = state.get("hyderesult_result") or state.get("hyde_result")
+            hyde_result = state.get("hyderesult_result") or state.get(
+                "hyde_result")
 
             if hyde_result:
                 # Use structured output
@@ -258,7 +279,8 @@ class EnhancedHyDERetriever(Agent):
             else:
                 # Fall back to raw hypothetical content (enhancement pattern)
                 retrieval_query = state.get(
-                    "hypothetical_content", state.get("query", "")
+                    "hypothetical_content",
+                    state.get("query", ""),
                 )
 
             # Create base retriever on-demand
@@ -275,7 +297,8 @@ class EnhancedHyDERetriever(Agent):
 
                 if hasattr(result, "retrieved_documents"):
                     docs = result.retrieved_documents
-                elif isinstance(result, dict) and "retrieved_documents" in result:
+                elif isinstance(result,
+                                dict) and "retrieved_documents" in result:
                     docs = result["retrieved_documents"]
 
                 return {
@@ -292,7 +315,8 @@ class EnhancedHyDERetriever(Agent):
 
                 if hasattr(result, "retrieved_documents"):
                     docs = result.retrieved_documents
-                elif isinstance(result, dict) and "retrieved_documents" in result:
+                elif isinstance(result,
+                                dict) and "retrieved_documents" in result:
                     docs = result["retrieved_documents"]
 
                 return {
@@ -315,7 +339,7 @@ def create_enhanced_hyde_agent(
     documents: list[Document],
     llm_config: LLMConfig | None = None,
     use_enhancement_pattern: bool = True,
-    **kwargs
+    **kwargs,
 ) -> EnhancedHyDERAGAgent:
     """Create an Enhanced HyDE RAG agent.
 
@@ -332,41 +356,48 @@ def create_enhanced_hyde_agent(
         documents=documents,
         llm_config=llm_config,
         use_enhancement_pattern=use_enhancement_pattern,
-        **kwargs
+        **kwargs,
     )
 
 
 # Demonstration of the pattern
 def demonstrate_enhancement_vs_traditional() -> Dict[str, Any]:
-    """Demonstrate the difference between enhancement and traditional patterns."""
+    """Demonstrate the difference between enhancement and traditional.
+
+    patterns.
+    """
     from langchain_core.documents import Document
 
     # Sample documents
     docs = [
         Document(
-            page_content="Machine learning uses algorithms to learn patterns from data."
-        ),
+            page_content="Machine learning uses algorithms to learn patterns from data.", ),
         Document(
-            page_content="Neural networks are inspired by biological neural networks."
-        ),
+            page_content="Neural networks are inspired by biological neural networks.", ),
         Document(
-            page_content="Deep learning uses multiple layers for complex pattern recognition."
+            page_content="Deep learning uses multiple layers for complex pattern recognition.",
         ),
     ]
 
     # Enhanced pattern (separation of concerns)
     enhanced_agent = create_enhanced_hyde_agent(
-        documents=docs, use_enhancement_pattern=True, name="Enhancement Pattern HyDE"
+        documents=docs,
+        use_enhancement_pattern=True,
+        name="Enhancement Pattern HyDE",
     )
 
     # Traditional pattern (embedded structure)
     traditional_agent = create_enhanced_hyde_agent(
-        documents=docs, use_enhancement_pattern=False, name="Traditional Pattern HyDE"
+        documents=docs,
+        use_enhancement_pattern=False,
+        name="Traditional Pattern HyDE",
     )
 
     return {
-        "enhanced": enhanced_agent,
-        "traditional": traditional_agent,
+        "enhanced":
+        enhanced_agent,
+        "traditional":
+        traditional_agent,
         "pattern_benefits": [
             "Modular design with reusable enhancement components",
             "Clearer separation between generation and structure",

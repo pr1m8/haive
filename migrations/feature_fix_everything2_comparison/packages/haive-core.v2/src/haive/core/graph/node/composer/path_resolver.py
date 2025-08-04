@@ -1,8 +1,11 @@
 """Path resolver for extracting values from objects using path notation.
 
-This module provides path-based value extraction from objects, supporting simple field
-access initially, with progressive enhancement for complex paths.
+This module provides path-based value extraction from objects,
+supporting simple field access initially, with progressive enhancement
+for complex paths.
 """
+
+from __future__ import annotations
 
 from typing import Any
 
@@ -56,7 +59,10 @@ class PathResolver:
         return self._extract_simple_field(obj, path, default)
 
     def _extract_simple_field(
-        self, obj: Any, field_name: str, default: Any = None
+        self,
+        obj: Any,
+        field_name: str,
+        default: Any = None,
     ) -> Any:
         """Extract a simple field from an object (Phase 1 logic)."""
         try:
@@ -90,7 +96,10 @@ class PathResolver:
         except (KeyError, AttributeError, TypeError, RuntimeError):
             return default
 
-    def _extract_complex_path(self, obj: Any, path: str, default: Any = None) -> Any:
+    def _extract_complex_path(self,
+                              obj: Any,
+                              path: str,
+                              default: Any = None) -> Any:
         """Extract value using complex path notation (Phase 2)."""
         try:
             current = obj
@@ -101,10 +110,12 @@ class PathResolver:
             for segment in segments:
                 if segment.endswith("]") and "[" in segment:
                     # Array access: "messages[0]" or "items[-1]"
-                    current = self._extract_array_access(current, segment, default)
+                    current = self._extract_array_access(
+                        current, segment, default)
                 else:
                     # Simple field access
-                    current = self._extract_simple_field(current, segment, default)
+                    current = self._extract_simple_field(
+                        current, segment, default)
 
                 # If we got the default value, the path failed
                 if current is default:
@@ -154,7 +165,8 @@ class PathResolver:
 
                 # If we just closed all brackets and there's more content,
                 # this segment is complete
-                if bracket_depth == 0 and i + 1 < len(path) and path[i + 1] == "[":
+                if bracket_depth == 0 and i + 1 < len(path) and path[i +
+                                                                     1] == "[":
                     segments.append(current_segment)
                     current_segment = ""
             else:
@@ -167,7 +179,10 @@ class PathResolver:
 
         return segments
 
-    def _extract_array_access(self, obj: Any, segment: str, default: Any = None) -> Any:
+    def _extract_array_access(self,
+                              obj: Any,
+                              segment: str,
+                              default: Any = None) -> Any:
         """Extract value using array access notation.
 
         Examples:
@@ -195,7 +210,7 @@ class PathResolver:
                 return default
 
             field_name = segment[:bracket_pos]
-            index_str = segment[bracket_pos + 1 : -1]  # Remove [ and ]
+            index_str = segment[bracket_pos + 1:-1]  # Remove [ and ]
 
             # Get the array/list
             array = self._extract_simple_field(obj, field_name, None)

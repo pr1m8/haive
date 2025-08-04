@@ -1,26 +1,31 @@
 """Example showing SimpleAgentWithValidation in action."""
+from __future__ import annotations
 
 import os
 import sys
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 # Add packages to path for example
 sys.path.insert(
-    0, os.path.join(os.path.dirname(__file__), "..", "..", "haive-core", "src")
+    0,
+    os.path.join(os.path.dirname(__file__), "..", "..", "haive-core", "src"),
 )
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 
 # Mock dependencies for example
 class MockLLMConfig:
+
     def __init__(self, model="gpt-4", temperature=0.7):
         self.model = model
         self.temperature = temperature
 
 
 class MockAugLLMConfig:
+
     def __init__(self, model="gpt-4", temperature=0.7, tools=None):
         self.name = f"engine_{id(self)}"
         self.model = model
@@ -49,6 +54,7 @@ class MockAugLLMConfig:
 
 
 class MockTool:
+
     def __init__(self, name: str):
         self.name = name
 
@@ -57,7 +63,10 @@ class MockTool:
 
 
 class MockAIMessage:
-    def __init__(self, content: str, tool_calls: list[dict[str, Any]] | None = None):
+
+    def __init__(self,
+                 content: str,
+                 tool_calls: list[dict[str, Any]] | None = None):
         self.content = content
         self.tool_calls = tool_calls or []
 
@@ -71,6 +80,7 @@ class ValidationMode:
 
 # Mock state for demonstration
 class MockState:
+
     def __init__(self):
         self.messages = []
         self.tools = []
@@ -99,7 +109,9 @@ def demonstrate_validation_integration():
 
     # Create engine with tools
     engine = MockAugLLMConfig(
-        model="gpt-4", temperature=0.7, tools=[search_tool, calculator_tool]
+        model="gpt-4",
+        temperature=0.7,
+        tools=[search_tool, calculator_tool],
     )
 
     # Define structured output model
@@ -107,7 +119,8 @@ def demonstrate_validation_integration():
         completed: bool = Field(description="Whether the task was completed")
         result: str = Field(description="The result of the task")
         confidence: float = Field(description="Confidence score 0-1")
-        tools_used: list[str] = Field(description="List of tools that were used")
+        tools_used: list[str] = Field(
+            description="List of tools that were used")
 
     # Create agent configuration (mock)
     agent_config = {
@@ -151,9 +164,25 @@ def demonstrate_validation_integration():
     ai_message = MockAIMessage(
         content="I'll search for information and calculate the result.",
         tool_calls=[
-            {"id": "call_1", "name": "web_search", "args": {"query": "AI trends"}},
-            {"id": "call_2", "name": "calculator", "args": {"expr": "100 * 0.85"}},
-            {"id": "call_3", "name": "unknown_tool", "args": {}},  # This will fail
+            {
+                "id": "call_1",
+                "name": "web_search",
+                "args": {
+                    "query": "AI trends"
+                }
+            },
+            {
+                "id": "call_2",
+                "name": "calculator",
+                "args": {
+                    "expr": "100 * 0.85"
+                }
+            },
+            {
+                "id": "call_3",
+                "name": "unknown_tool",
+                "args": {}
+            },  # This will fail
         ],
     )
     state.messages.append(ai_message)

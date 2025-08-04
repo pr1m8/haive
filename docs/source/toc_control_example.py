@@ -1,9 +1,9 @@
-"""
-TOC Control Examples for Haive Documentation
-"""
-
+"""TOC Control Examples for Haive Documentation."""
 
 # 1. Hide from documentation completely
+from __future__ import annotations
+
+
 class _PrivateClass:  # Leading underscore = hidden
     pass
 
@@ -14,11 +14,9 @@ class PublicClass:
 
     def public_method(self):
         """This appears under the class."""
-        pass
 
     def _private_method(self):
         """This is hidden from TOC."""
-        pass
 
 
 # 3. Control with autoapi_options in conf.py
@@ -28,7 +26,6 @@ class PublicClass:
 
 # 4. Skip specific items with AutoAPI
 # In conf.py:
-# autoapi_ignore = ["**/internal/**", "**/test_*.py"]
 
 # 5. Module-level control
 __all__ = ["PublicClass"]  # Only exports listed items

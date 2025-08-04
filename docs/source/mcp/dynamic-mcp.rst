@@ -15,7 +15,7 @@
    <div class="hero-content">
    <h2>🚀 Dynamic MCP with haive-mcp</h2>
    <p class="hero-description">
-   Intelligent MCP server discovery, hot-reload capabilities, and HITL approval workflows. 
+   Intelligent MCP server discovery, hot-reload capabilities, and HITL approval workflows.
    Access 992+ pre-indexed MCP servers with AI-powered discovery and real-time installation.
    </p>
    </div>
@@ -24,7 +24,7 @@
 
    </div>
 
-The haive-mcp package brings advanced dynamic capabilities to Model Context Protocol integration, 
+The haive-mcp package brings advanced dynamic capabilities to Model Context Protocol integration,
 enabling agents to automatically discover, install, and manage MCP servers based on their needs.
 
 Key Features
@@ -60,7 +60,7 @@ Key Features
    </div>
    <p class="agent-description">
 
-            Add servers and refresh tools without restarting your agents. 
+            Add servers and refresh tools without restarting your agents.
             Dynamic tool discovery and immediate availability.
 .. raw:: html
 
@@ -97,7 +97,7 @@ Key Features
    </div>
    <p class="agent-description">
 
-            AI analyzes user requests and automatically finds the right MCP servers 
+            AI analyzes user requests and automatically finds the right MCP servers
             from our database of 1,960+ pre-indexed servers.
 .. raw:: html
 
@@ -134,7 +134,7 @@ Key Features
    </div>
    <p class="agent-description">
 
-            Maintain control over server installations with flexible approval workflows. 
+            Maintain control over server installations with flexible approval workflows.
             Custom approval logic and enterprise-grade security.
 .. raw:: html
 
@@ -175,7 +175,7 @@ Quick Start
    # Agent automatically discovers and installs servers!
    result = await agent.arun({
    "messages": [{
-   "role": "user", 
+   "role": "user",
    "content": "Search for Python tutorials and save to a file"
    }]
    })
@@ -267,7 +267,7 @@ Quick Start
    # Install specific server
    await agent.arun({
    "messages": [{
-   "role": "user", 
+   "role": "user",
    "content": "Install modelcontextprotocol/server-postgres"
    }]
    })
@@ -287,7 +287,7 @@ Quick Start
 
    - **discover_mcp_servers(capability)** - Find servers by capability
    - **install_mcp_server(server_name)** - Install with optional approval
-   - **list_mcp_status()** - Get current server and tool status  
+   - **list_mcp_status()** - Get current server and tool status
    - **reload_mcp_server(server_name)** - Hot-reload specific server
 
    .. raw:: html
@@ -410,7 +410,7 @@ Quick Start
    )
 
    writer = TransferableMCPAgent(
-   engine=AugLLMConfig(), 
+   engine=AugLLMConfig(),
    name="writer",
    mcp_config=writer_config
    )
@@ -428,7 +428,7 @@ Quick Start
 
    # Transfer search tools to writer
    await researcher.transfer_tools_to_agent(
-   writer, 
+   writer,
    tool_names=["web_search", "arxiv_search"]
    )
 
@@ -489,7 +489,7 @@ Quick Start
    # Analysis phase
    analysis_result = await analysis_agent.arun({
    "messages": [{
-   "role": "user", 
+   "role": "user",
    "content": f"Analyze this research data: {research_data}"
    }]
    })
@@ -533,7 +533,7 @@ Quick Start
 
 .. code-block:: python
 
-   
+
 
       # Research agent with auto-discovery
       research_agent = IntelligentMCPAgent(
@@ -542,7 +542,7 @@ Quick Start
           require_approval=True
       )
 
-   
+
 
       # Agent automatically installs needed servers
       result = await research_agent.arun({
@@ -556,11 +556,11 @@ Quick Start
           }]
       })
 
-   
+
 
       # Auto-installs: brave-search, filesystem, possibly arxiv
 
-   
+
       .. raw:: html
 
       </div>
@@ -573,7 +573,7 @@ Quick Start
 
 .. code-block:: python
 
-   
+
 
       # Data analysis agent
       analyst_agent = IntelligentMCPAgent(
@@ -581,7 +581,7 @@ Quick Start
           auto_discover=True
       )
 
-   
+
 
       result = await analyst_agent.arun({
           "messages": [{
@@ -594,11 +594,11 @@ Quick Start
           }]
       })
 
-   
+
 
       # Auto-installs: postgres, excel, matplotlib, email servers
 
-   
+
       .. raw:: html
 
       </div>
@@ -611,7 +611,7 @@ Quick Start
 
 .. code-block:: python
 
-   
+
 
       # DevOps agent
       devops_agent = IntelligentMCPAgent(
@@ -619,7 +619,7 @@ Quick Start
           auto_discover=True
       )
 
-   
+
 
       result = await devops_agent.arun({
           "messages": [{
@@ -633,11 +633,11 @@ Quick Start
           }]
       })
 
-   
+
 
       # Auto-installs: github, docker, kubernetes, slack servers
 
-   
+
       .. raw:: html
 
       </div>
@@ -650,7 +650,7 @@ Quick Start
 
 .. code-block:: python
 
-   
+
 
       # Content creation agent
       content_agent = IntelligentMCPAgent(
@@ -658,7 +658,7 @@ Quick Start
           auto_discover=True
       )
 
-   
+
 
       result = await content_agent.arun({
           "messages": [{
@@ -672,11 +672,11 @@ Quick Start
           }]
       })
 
-   
+
 
       # Auto-installs: brave-search, github, wordpress, social-media servers
 
-   
+
       .. raw:: html
 
       </div>
@@ -805,7 +805,7 @@ Quick Start
        servers={
            "postgres": MCPServerConfig(
                name="postgres",
-               transport="stdio", 
+               transport="stdio",
                command="npx",
                args=["-y", "@modelcontextprotocol/server-postgres"],
                env={"DATABASE_URL": os.getenv("DATABASE_URL")}
@@ -813,7 +813,7 @@ Quick Start
            "github": MCPServerConfig(
                name="github",
                transport="stdio",
-               command="npx", 
+               command="npx",
                args=["-y", "@modelcontextprotocol/server-github"],
                env={"GITHUB_TOKEN": os.getenv("GITHUB_TOKEN")}
            )
@@ -862,7 +862,7 @@ Quick Start
    ----------
 
    - **Explore**: Try the auto-discovery features
-   - **Experiment**: Create custom approval workflows  
+   - **Experiment**: Create custom approval workflows
    - **Scale**: Move to production with static configs
    - **Monitor**: Implement health monitoring
    - **Contribute**: Add more servers to the database

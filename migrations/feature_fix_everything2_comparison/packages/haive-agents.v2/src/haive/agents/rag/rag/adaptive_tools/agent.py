@@ -1,18 +1,14 @@
 """Adaptive RAG with Tools Integration Agents.
 
-from typing import Any
-Implementation of adaptive RAG with tool integration and ReAct patterns.
-Includes Google Search integration, tool selection, and dynamic routing based on query needs.
+from typing import Any Implementation of adaptive RAG with tool
+integration and ReAct patterns. Includes Google Search integration, tool
+selection, and dynamic routing based on query needs.
 """
+from __future__ import annotations
 
-from enum import Enum
 import logging
+from enum import Enum
 from typing import Any
-
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-from langgraph.graph import END, START
-from pydantic import BaseModel, Field
 
 from haive.agents.base.agent import Agent
 from haive.agents.multi.base import SequentialAgent
@@ -20,8 +16,14 @@ from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.models.llm.base import LLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+from langgraph.graph import END
+from langgraph.graph import START
+from pydantic import BaseModel
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 
@@ -54,23 +56,28 @@ class ToolSelection(BaseModel):
 
     primary_tool: ToolType = Field(description="Primary tool to use")
     fallback_tools: list[ToolType] = Field(
-        description="Fallback tools if primary fails"
-    )
+        description="Fallback tools if primary fails", )
 
     query_need: QueryNeed = Field(description="Category of query need")
     urgency: float = Field(
-        ge=0.0, le=1.0, description="Urgency of getting current information"
+        ge=0.0,
+        le=1.0,
+        description="Urgency of getting current information",
     )
-    specificity: float = Field(ge=0.0, le=1.0, description="How specific the query is")
+    specificity: float = Field(ge=0.0,
+                               le=1.0,
+                               description="How specific the query is")
 
-    tool_justification: str = Field(description="Why these tools were selected")
+    tool_justification: str = Field(
+        description="Why these tools were selected")
     search_terms: list[str] = Field(
-        description="Optimized search terms for external tools"
-    )
+        description="Optimized search terms for external tools", )
     expected_result_type: str = Field(description="Expected type of results")
 
     confidence: float = Field(
-        ge=0.0, le=1.0, description="Confidence in tool selection"
+        ge=0.0,
+        le=1.0,
+        description="Confidence in tool selection",
     )
     react_strategy: str = Field(description="ReAct strategy to use")
 
@@ -84,24 +91,35 @@ class SearchResult(BaseModel):
     # Search metrics
     results_count: int = Field(description="Number of results found")
     search_quality: float = Field(
-        ge=0.0, le=1.0, description="Quality of search results"
+        ge=0.0,
+        le=1.0,
+        description="Quality of search results",
     )
     relevance_score: float = Field(
-        ge=0.0, le=1.0, description="Relevance to original query"
+        ge=0.0,
+        le=1.0,
+        description="Relevance to original query",
     )
 
     # Content
     documents: list[Document] = Field(description="Retrieved documents")
     source_urls: list[str] = Field(description="Source URLs for web results")
-    search_metadata: dict[str, Any] = Field(description="Additional search metadata")
+    search_metadata: dict[str, Any] = Field(
+        description="Additional search metadata")
 
     # Analysis
     content_freshness: float = Field(
-        ge=0.0, le=1.0, description="How recent the content is"
+        ge=0.0,
+        le=1.0,
+        description="How recent the content is",
     )
-    authority_score: float = Field(ge=0.0, le=1.0, description="Authority of sources")
+    authority_score: float = Field(ge=0.0,
+                                   le=1.0,
+                                   description="Authority of sources")
     completeness: float = Field(
-        ge=0.0, le=1.0, description="Completeness of answer coverage"
+        ge=0.0,
+        le=1.0,
+        description="Completeness of answer coverage",
     )
 
 
@@ -113,38 +131,48 @@ class AdaptiveToolsResult(BaseModel):
 
     # Tool usage analytics
     tools_used: list[ToolType] = Field(description="All tools used")
-    primary_tool_success: bool = Field(description="Whether primary tool succeeded")
-    fallback_used: bool = Field(description="Whether fallback tools were needed")
+    primary_tool_success: bool = Field(
+        description="Whether primary tool succeeded")
+    fallback_used: bool = Field(
+        description="Whether fallback tools were needed")
 
     # Search analytics
-    total_searches: int = Field(description="Total number of searches performed")
-    external_sources: int = Field(description="Number of external sources used")
+    total_searches: int = Field(
+        description="Total number of searches performed")
+    external_sources: int = Field(
+        description="Number of external sources used")
     local_sources: int = Field(description="Number of local sources used")
 
     # Quality metrics
     response_confidence: float = Field(
-        ge=0.0, le=1.0, description="Confidence in final response"
+        ge=0.0,
+        le=1.0,
+        description="Confidence in final response",
     )
     information_freshness: float = Field(
-        ge=0.0, le=1.0, description="How current the information is"
+        ge=0.0,
+        le=1.0,
+        description="How current the information is",
     )
     source_diversity: float = Field(
-        ge=0.0, le=1.0, description="Diversity of information sources"
+        ge=0.0,
+        le=1.0,
+        description="Diversity of information sources",
     )
 
     # ReAct tracking
     react_iterations: int = Field(description="Number of ReAct cycles")
     reasoning_steps: list[str] = Field(description="Reasoning steps taken")
 
-    processing_metadata: dict[str, Any] = Field(description="Processing statistics")
+    processing_metadata: dict[str,
+                              Any] = Field(description="Processing statistics")
 
 
 # Enhanced prompts for tool-integrated adaptive RAG
 TOOL_SELECTION_PROMPT = ChatPromptTemplate.from_messages(
     [
-        (
-            """system""",
-            """You are an expert at selecting the optimal tools for query processing in an adaptive RAG system.
+        ("""system""",
+         """You are an expert at selecting the optimal tools for query processing in an adaptive RAG system.
 
 **AVAILABLE TOOLS:**
 1. **Google Search**: Current events, recent information, web-scale factual lookup
@@ -170,10 +198,9 @@ TOOL_SELECTION_PROMPT = ChatPromptTemplate.from_messages(
 - **Iterative**: Tool usage based on previous results, adaptive approach
 
 Select tools strategically based on query characteristics and information needs.""",
-        ),
-        (
-            """human""",
-            """Analyze this query and select optimal tools:
+         ),
+        ("""human""",
+         """Analyze this query and select optimal tools:
 
 **Query:** {query}
 
@@ -189,16 +216,14 @@ Analyze the query and provide:
 5. ReAct approach for tool coordination
 
 Focus on maximizing information quality while minimizing tool usage overhead.""",
-        ),
-    ]
+         ),
+    ],
 )
-
 
 GOOGLE_SEARCH_PROMPT = ChatPromptTemplate.from_messages(
     [
-        (
-            """system""",
-            """You are an expert at Google search optimization and result processing for RAG systems.
+        ("""system""",
+         """You are an expert at Google search optimization and result processing for RAG systems.
 
 **SEARCH OPTIMIZATION PRINCIPLES:**
 1. **Query Refinement**: Transform natural questions into effective search terms
@@ -214,10 +239,9 @@ GOOGLE_SEARCH_PROMPT = ChatPromptTemplate.from_messages(
 - Combine broad and specific terms
 
 Process search results to create structured, relevant information for the RAG system.""",
-        ),
-        (
-            """human""",
-            """Optimize search and process results for this query:
+         ),
+        ("""human""",
+         """Optimize search and process results for this query:
 
 **Original Query:** {query}
 **Optimized Search Terms:** {search_terms}
@@ -231,16 +255,14 @@ Process search results to create structured, relevant information for the RAG sy
 5. Provide relevance scores and source metadata
 
 Focus on extracting factual, current, and authoritative information.""",
-        ),
-    ]
+         ),
+    ],
 )
-
 
 ADAPTIVE_SYNTHESIS_PROMPT = ChatPromptTemplate.from_messages(
     [
-        (
-            """system""",
-            """You are an expert at synthesizing information from multiple tools and sources in an adaptive RAG system.
+        ("""system""",
+         """You are an expert at synthesizing information from multiple tools and sources in an adaptive RAG system.
 
 **SYNTHESIS PRINCIPLES:**
 1. **Source Prioritization**: Weight information based on source authority and freshness
@@ -256,10 +278,9 @@ ADAPTIVE_SYNTHESIS_PROMPT = ChatPromptTemplate.from_messages(
 - Maintain appropriate uncertainty when information conflicts
 
 Create responses that optimally blend all available information sources.""",
-        ),
-        (
-            """human""",
-            """Synthesize information from multiple sources to answer the query:
+         ),
+        ("""human""",
+         """Synthesize information from multiple sources to answer the query:
 
 **Original Query:** {query}
 
@@ -280,8 +301,8 @@ Create responses that optimally blend all available information sources.""",
 5. Include appropriate confidence levels and source attribution
 
 Focus on creating the most accurate and complete response possible.""",
-        ),
-    ]
+         ),
+    ],
 )
 
 
@@ -305,7 +326,8 @@ def create_tool_selector_callable(llm_config: LLMConfig):
         if retrieved_documents:
             # Create summary of available documents
             doc_topics = [
-                doc.page_content[:100] + "..." for doc in retrieved_documents[:3]
+                doc.page_content[:100] + "..."
+                for doc in retrieved_documents[:3]
             ]
             available_docs_summary += f": {', '.join(doc_topics)}"
 
@@ -315,12 +337,12 @@ def create_tool_selector_callable(llm_config: LLMConfig):
                 "query": query,
                 "context": context,
                 "available_docs_summary": available_docs_summary,
-            }
-        )
+            }, )
 
         logger.info(
-            f"Tool selection: Primary={tool_selection.primary_tool}, Need={tool_selection.query_need}"
-        )
+            f"Tool selection: Primary={
+                tool_selection.primary_tool}, Need={
+                tool_selection.query_need}", )
 
         return {
             "tool_selection": tool_selection,
@@ -349,7 +371,8 @@ def create_google_search_callable(llm_config: LLMConfig):
         query = getattr(state, "query", "")
         search_terms = getattr(state, "search_terms", [query])
 
-        # Mock Google search for now (in real implementation, integrate with Google Search API)
+        # Mock Google search for now (in real implementation, integrate with
+        # Google Search API)
         mock_search_results = f"""
         Search Results for "{search_terms[0]}":
 
@@ -366,12 +389,12 @@ def create_google_search_callable(llm_config: LLMConfig):
                 "query": query,
                 "search_terms": ", ".join(search_terms),
                 "search_results": mock_search_results,
-            }
-        )
+            }, )
 
         logger.info(
-            f"Google search completed: {search_result.results_count} results, quality={search_result.search_quality}"
-        )
+            f"Google search completed: {
+                search_result.results_count} results, quality={
+                search_result.search_quality}", )
 
         return {
             "search_result": search_result,
@@ -401,31 +424,30 @@ def create_adaptive_synthesis_callable(llm_config: LLMConfig):
 
         # Gather local results
         retrieved_documents = getattr(state, "retrieved_documents", [])
-        local_results = (
-            "\n".join(
-                [
-                    f"Doc {i+1}: {doc.page_content[:200]}..."
-                    for i, doc in enumerate(retrieved_documents[:3])
-                ]
-            )
-            if retrieved_documents
-            else "No local documents"
-        )
+        local_results = ("\n".join([
+            f"Doc {i + 1}: {doc.page_content[:200]}..."
+            for i, doc in enumerate(retrieved_documents[:3])
+        ], ) if retrieved_documents else "No local documents")
 
         # Gather search results
         search_result = getattr(state, "search_result", None)
         search_results = "No external search performed"
         if search_result:
-            search_results = f"Search Quality: {search_result.search_quality}, Relevance: {search_result.relevance_score}"
+            search_results = f"Search Quality: {
+                search_result.search_quality}, Relevance: {
+                search_result.relevance_score}"
 
         # Tool analysis
         tool_selection = getattr(state, "tool_selection", None)
         tool_analysis = "No tool analysis available"
         if tool_selection:
-            tool_analysis = f"Primary Tool: {tool_selection.primary_tool}, Confidence: {tool_selection.confidence}"
+            tool_analysis = f"Primary Tool: {
+                tool_selection.primary_tool}, Confidence: {
+                tool_selection.confidence}"
 
         # Quality metrics
-        local_quality = len(retrieved_documents) / 10.0 if retrieved_documents else 0.0
+        local_quality = len(
+            retrieved_documents) / 10.0 if retrieved_documents else 0.0
         external_quality = search_result.search_quality if search_result else 0.0
         freshness_score = search_result.content_freshness if search_result else 0.5
 
@@ -439,12 +461,11 @@ def create_adaptive_synthesis_callable(llm_config: LLMConfig):
                 "local_quality": local_quality,
                 "external_quality": external_quality,
                 "freshness_score": freshness_score,
-            }
-        )
+            }, )
 
         logger.info(
-            f"Adaptive synthesis completed: confidence={adaptive_result.response_confidence}"
-        )
+            f"Adaptive synthesis completed: confidence={
+                adaptive_result.response_confidence}", )
 
         return {
             "adaptive_result": adaptive_result,
@@ -462,7 +483,8 @@ class ToolSelectionAgent(Agent):
     """Agent that selects optimal tools based on query analysis."""
 
     name: str = "Tool Selection"
-    llm_config: LLMConfig = Field(description="LLM configuration for tool selection")
+    llm_config: LLMConfig = Field(
+        description="LLM configuration for tool selection")
 
     def build_graph(self) -> BaseGraph:
         """Build tool selection graph."""
@@ -483,7 +505,8 @@ class SearchIntegrationAgent(Agent):
     """Agent that integrates external search tools."""
 
     name: str = "Search Integration"
-    llm_config: LLMConfig = Field(description="LLM configuration for search processing")
+    llm_config: LLMConfig = Field(
+        description="LLM configuration for search processing")
 
     def build_graph(self) -> BaseGraph:
         """Build search integration graph."""
@@ -501,7 +524,10 @@ class SearchIntegrationAgent(Agent):
 
 
 class AdaptiveToolsRAGAgent(SequentialAgent):
-    """Complete Adaptive RAG agent with tools integration and ReAct patterns."""
+    """Complete Adaptive RAG agent with tools integration and ReAct.
+
+    patterns.
+    """
 
     @classmethod
     def from_documents(
@@ -534,20 +560,24 @@ class AdaptiveToolsRAGAgent(SequentialAgent):
         agents = []
 
         # Step 1: Tool selection with structured output
-        tool_selector = ToolSelectionAgent(llm_config=llm_config, name="Tool Selector")
+        tool_selector = ToolSelectionAgent(llm_config=llm_config,
+                                           name="Tool Selector")
         agents.append(tool_selector)
 
         # Step 2: Local retrieval (if enabled)
         if enable_local_retrieval and documents:
             local_retriever = BaseRAGAgent.from_documents(
-                documents=documents, llm_config=llm_config, name="Local Retriever"
+                documents=documents,
+                llm_config=llm_config,
+                name="Local Retriever",
             )
             agents.append(local_retriever)
 
         # Step 3: External search integration (if enabled)
         if enable_google_search:
             search_integrator = SearchIntegrationAgent(
-                llm_config=llm_config, name="Search Integrator"
+                llm_config=llm_config,
+                name="Search Integrator",
             )
             agents.append(search_integrator)
 
@@ -599,7 +629,9 @@ def create_adaptive_tools_rag_agent(
         kwargs.setdefault("enable_google_search", True)
 
     return AdaptiveToolsRAGAgent.from_documents(
-        documents=documents, llm_config=llm_config, **kwargs
+        documents=documents,
+        llm_config=llm_config,
+        **kwargs,
     )
 
 

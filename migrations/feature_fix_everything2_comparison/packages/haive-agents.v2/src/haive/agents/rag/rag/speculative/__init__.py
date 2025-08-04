@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from speculative.agent import (
     Hypothesis,
     HypothesisConfidence,
@@ -16,7 +18,6 @@ from speculative.agent import (
     get_speculative_rag_io_schema,
     verify_hypotheses_parallel,
 )
-
 
 __all__ = [
     "Hypothesis",

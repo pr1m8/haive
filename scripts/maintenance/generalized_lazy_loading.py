@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 """Generalized lazy loading implementation with dry-run support.
 
-This script can apply lazy loading to any __init__.py file in the Haive codebase,
-with comprehensive dry-run capabilities for safe execution.
+This script can apply lazy loading to any __init__.py file in the Haive
+codebase, with comprehensive dry-run capabilities for safe execution.
 """
 
 import argparse
 import os
-import sys
 from pathlib import Path
-from typing import Dict, List, Optional, Set
 
 # Optional: Use drypy if available, fallback to custom implementation
 try:
@@ -26,6 +24,7 @@ except ImportError:
         _DRY_RUN_MODE = enabled
 
     def sham(func):
+
         def wrapper(*args, **kwargs):
             if _DRY_RUN_MODE:
                 return None
@@ -41,7 +40,8 @@ class LazyLoadingGenerator:
         self.dry_run = dry_run
         dryrun(dry_run)
 
-    def analyze_package_structure(self, init_file: Path) -> dict[str, set[str]]:
+    def analyze_package_structure(self,
+                                  init_file: Path) -> dict[str, set[str]]:
         """Analyze package structure to find submodules and classes."""
         package_dir = init_file.parent
 
@@ -56,9 +56,8 @@ class LazyLoadingGenerator:
         subpackages = {
             d.name
             for d in package_dir.iterdir()
-            if d.is_dir()
-            and not d.name.startswith("_")
-            and (d / "__init__.py").exists()
+            if d.is_dir() and not d.name.startswith("_") and (
+                d / "__init__.py").exists()
         }
 
         # Try to find existing exports in current __init__.py
@@ -89,14 +88,15 @@ class LazyLoadingGenerator:
             for node in ast.walk(tree):
                 if isinstance(node, ast.Assign):
                     for target in node.targets:
-                        if isinstance(target, ast.Name) and target.id == "__all__":
+                        if isinstance(target,
+                                      ast.Name) and target.id == "__all__":
                             if isinstance(node.value, ast.List):
                                 for elt in node.value.elts:
                                     if isinstance(elt, ast.Constant):
                                         exports.add(elt.value)
 
             return exports
-        except Exception as e:
+        except Exception:
             return set()
 
     def generate_lazy_loading_content(
@@ -110,12 +110,14 @@ class LazyLoadingGenerator:
 
         if template_type == "lazy_loader":
             return self._generate_lazy_loader_template(
-                init_file, package_name, structure
+                init_file,
+                package_name,
+                structure,
             )
         if template_type == "pep562":
-            return self._generate_pep562_template(init_file, package_name, structure)
-        else:
-            raise ValueError(f"Unknown template type: {template_type}")
+            return self._generate_pep562_template(init_file, package_name,
+                                                  structure)
+        raise ValueError(f"Unknown template type: {template_type}")
 
     def _extract_existing_docstring(self, init_file: Path) -> str | None:
         """Extract existing docstring from __init__.py file."""
@@ -131,20 +133,20 @@ class LazyLoadingGenerator:
             tree = ast.parse(content)
 
             # Get the first statement if it's a docstring
-            if (
-                tree.body
-                and isinstance(tree.body[0], ast.Expr)
-                and isinstance(tree.body[0].value, ast.Constant)
-                and isinstance(tree.body[0].value.value, str)
-            ):
+            if (tree.body and isinstance(tree.body[0], ast.Expr)
+                    and isinstance(tree.body[0].value, ast.Constant)
+                    and isinstance(tree.body[0].value.value, str)):
                 return tree.body[0].value.value
 
             return None
-        except Exception as e:
+        except Exception:
             return None
 
     def _generate_lazy_loader_template(
-        self, init_file: Path, package_name: str, structure: dict[str, set[str]]
+        self,
+        init_file: Path,
+        package_name: str,
+        structure: dict[str, set[str]],
     ) -> str:
         """Generate lazy_loader based template with preserved docstring."""
         submodules = sorted(structure["all_submodules"])
@@ -170,7 +172,7 @@ full compatibility with Sphinx AutoAPI and type checkers.
         submod_attrs_lines = []
         for module in submodules:
             submod_attrs_lines.append(
-                f"    '{module}': [],  # TODO: Add specific exports from {module}"
+                f"    '{module}': [],  # TODO: Add specific exports from {module}",
             )
         submod_attrs_content = "\n".join(submod_attrs_lines)
 
@@ -202,9 +204,13 @@ __getattr__, __dir__, __all__ = lazy.attach(
         return content
 
     def _generate_pep562_template(
-        self, init_file: Path, package_name: str, structure: dict[str, set[str]]
+        self,
+        init_file: Path,
+        package_name: str,
+        structure: dict[str, set[str]],
     ) -> str:
-        """Generate PEP 562 __getattr__ based template with preserved docstring."""
+        """Generate PEP 562 __getattr__ based template with preserved
+        docstring."""
         submodules = sorted(structure["all_submodules"])
 
         # Try to preserve existing docstring
@@ -265,7 +271,8 @@ __all__ = list(_LAZY_IMPORTS.keys())
     @sham
     def backup_file(self, file_path: Path) -> Path:
         """Create backup of original file."""
-        backup_path = file_path.with_suffix(f".py.backup.{self._get_timestamp()}")
+        backup_path = file_path.with_suffix(
+            f".py.backup.{self._get_timestamp()}")
 
         if file_path.exists():
             import shutil
@@ -282,7 +289,7 @@ __all__ = list(_LAZY_IMPORTS.keys())
             with open(init_file, "w") as f:
                 f.write(content)
             return True
-        except Exception as e:
+        except Exception:
             return False
 
     def _get_timestamp(self) -> str:
@@ -292,7 +299,10 @@ __all__ = list(_LAZY_IMPORTS.keys())
         return datetime.now().strftime("%Y%m%d_%H%M%S")
 
     def process_init_file(
-        self, init_file: Path, template_type: str = "lazy_loader", preview: bool = False
+        self,
+        init_file: Path,
+        template_type: str = "lazy_loader",
+        preview: bool = False,
     ) -> bool:
         """Process a single __init__.py file."""
 
@@ -310,7 +320,10 @@ __all__ = list(_LAZY_IMPORTS.keys())
 
         # Generate content
         content = self.generate_lazy_loading_content(
-            init_file, package_name, structure, template_type
+            init_file,
+            package_name,
+            structure,
+            template_type,
         )
 
         if preview or self.dry_run:
@@ -328,8 +341,7 @@ __all__ = list(_LAZY_IMPORTS.keys())
                 return True
             print(f"❌ Failed to update {init_file}")
             return False
-        else:
-            return True
+        return True
 
     def _test_import(self, init_file: Path):
         """Test that the updated module can be imported."""
@@ -338,12 +350,13 @@ __all__ = list(_LAZY_IMPORTS.keys())
             import py_compile
 
             py_compile.compile(init_file, doraise=True)
-        except Exception as e:
+        except Exception:
             pass
 
 
 def find_init_files(
-    base_path: Path, pattern: str = "**/haive/*/__init__.py"
+    base_path: Path,
+    pattern: str = "**/haive/*/__init__.py",
 ) -> list[Path]:
     """Find __init__.py files in the Haive codebase."""
     return list(base_path.glob(pattern))
@@ -371,7 +384,9 @@ Examples:
     )
 
     parser.add_argument(
-        "--file", type=Path, help="Specific __init__.py file to process"
+        "--file",
+        type=Path,
+        help="Specific __init__.py file to process",
     )
     parser.add_argument(
         "--pattern",
@@ -385,19 +400,26 @@ Examples:
         help="Template type to use",
     )
     parser.add_argument(
-        "--dry-run", action="store_true", help="Preview changes without applying them"
+        "--dry-run",
+        action="store_true",
+        help="Preview changes without applying them",
     )
     parser.add_argument(
-        "--preview", action="store_true", help="Show generated content preview"
+        "--preview",
+        action="store_true",
+        help="Show generated content preview",
     )
     parser.add_argument(
-        "--auto", action="store_true", help="Process common files automatically"
+        "--auto",
+        action="store_true",
+        help="Process common files automatically",
     )
 
     args = parser.parse_args()
 
     # Check environment variable
-    dry_run = args.dry_run or os.getenv("DRY_RUN", "").lower() in ("1", "true", "yes")
+    dry_run = args.dry_run or os.getenv("DRY_RUN",
+                                        "").lower() in ("1", "true", "yes")
 
     generator = LazyLoadingGenerator(dry_run=dry_run)
 
@@ -421,7 +443,9 @@ Examples:
     for init_file in files:
         if init_file.exists():
             success = generator.process_init_file(
-                init_file, template_type=args.template, preview=args.preview
+                init_file,
+                template_type=args.template,
+                preview=args.preview,
             )
             if success:
                 success_count += 1

@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from labs.agent import (
     LabsAgent,
     create_interactive_app,
@@ -22,7 +24,6 @@ from labs.models import (
     ProjectAsset,
     WorkflowStep,
 )
-
 
 __all__ = [
     "AssetType",

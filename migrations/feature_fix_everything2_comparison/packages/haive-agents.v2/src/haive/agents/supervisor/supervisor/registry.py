@@ -1,7 +1,8 @@
 """Agent Registry for Haive Supervisor System.
 
-Manages agent lifecycle and routing model synchronization using DynamicChoiceModel.
-Provides runtime agent registration/deregistration with automatic routing updates.
+Manages agent lifecycle and routing model synchronization using
+DynamicChoiceModel. Provides runtime agent registration/deregistration
+with automatic routing updates.
 """
 
 import logging
@@ -15,7 +16,6 @@ from rich.tree import Tree
 
 from haive.agents.base.agent import Agent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
-
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -49,7 +49,9 @@ class AgentRegistry:
 
         logger.info("AgentRegistry initialized")
 
-    def register(self, agent: Agent, capability_description: str | None = None) -> bool:
+    def register(self,
+                 agent: Agent,
+                 capability_description: str | None = None) -> bool:
         """Register an agent and update routing model.
 
         Args:
@@ -70,7 +72,8 @@ class AgentRegistry:
         # Check for name conflicts
         if agent_name in self.agents:
             logger.warning(f"Agent '{agent_name}' already registered")
-            console.print(f"[yellow]⚠️  Agent '{agent_name}' already exists[/yellow]")
+            console.print(
+                f"[yellow]⚠️  Agent '{agent_name}' already exists[/yellow]")
             return False
 
         # Register agent
@@ -83,7 +86,8 @@ class AgentRegistry:
         elif hasattr(agent, "description") and agent.description:
             self.agent_capabilities[agent_name] = agent.description
         else:
-            self.agent_capabilities[agent_name] = f"Agent for {agent_name} tasks"
+            self.agent_capabilities[
+                agent_name] = f"Agent for {agent_name} tasks"
 
         # Update routing model
         self.routing_model.add_option(agent_name)
@@ -108,7 +112,8 @@ class AgentRegistry:
         """
         if agent_name not in self.agents:
             logger.warning(f"Agent '{agent_name}' not found for removal")
-            console.print(f"[yellow]⚠️  Agent '{agent_name}' not found[/yellow]")
+            console.print(
+                f"[yellow]⚠️  Agent '{agent_name}' not found[/yellow]")
             return False
 
         # Remove agent and metadata
@@ -230,7 +235,8 @@ class AgentRegistry:
         logger.info("Cleared all agents from registry")
         console.print("[red]🗑️  Cleared all agents from registry[/red]")
 
-    def _print_registration_details(self, agent_name: str, action: str) -> None:
+    def _print_registration_details(self, agent_name: str,
+                                    action: str) -> None:
         """Print detailed registration information.
 
         Args:
@@ -241,8 +247,7 @@ class AgentRegistry:
         action_emoji = "➕" if action == "REGISTER" else "➖"
 
         tree = Tree(
-            f"{action_emoji} [bold {action_color}]{action} Operation[/bold {action_color}]"
-        )
+            f"{action_emoji} [bold {action_color}]{action} Operation[/bold {action_color}]", )
 
         # Operation details
         op_branch = tree.add("📋 Operation Details")
@@ -255,13 +260,15 @@ class AgentRegistry:
         # Current state
         state_branch = tree.add("🔄 Current State")
         state_branch.add(f"Total Agents: {len(self.agents)}")
-        state_branch.add(f"Routing Options: {len(self.routing_model.option_names)}")
+        state_branch.add(
+            f"Routing Options: {len(self.routing_model.option_names)}")
 
         if self.agents:
             agents_branch = state_branch.add("Active Agents")
             for name in sorted(self.agents.keys()):
                 timestamp = self.registration_timestamps.get(name, 0)
-                agents_branch.add(f"🤖 {name} (registered: {time.ctime(timestamp)})")
+                agents_branch.add(
+                    f"🤖 {name} (registered: {time.ctime(timestamp)})")
 
         console.print(Panel(tree, title="Registry Update", expand=False))
 
@@ -272,7 +279,8 @@ class AgentRegistry:
         table.add_column("Value", style="green")
 
         table.add_row("Total Agents", str(len(self.agents)))
-        table.add_row("Routing Options", str(len(self.routing_model.option_names)))
+        table.add_row("Routing Options",
+                      str(len(self.routing_model.option_names)))
         table.add_row("Rebuild Needed", str(self._rebuild_needed))
 
         if self.agents:
@@ -280,7 +288,8 @@ class AgentRegistry:
             table.add_row("Registered Agents", agent_list)
 
         # Routing model info
-        table.add_row("Current Model", self.routing_model.current_model.__name__)
+        table.add_row("Current Model",
+                      self.routing_model.current_model.__name__)
         table.add_row("Include END", str(self.routing_model.include_end))
 
         console.print(table)
@@ -303,18 +312,16 @@ class AgentRegistry:
             Dictionary with registry statistics
         """
         return {
-            "total_agents": len(self.agents),
-            "routing_options": len(self.routing_model.option_names),
-            "rebuild_needed": self._rebuild_needed,
-            "registered_agents": list(self.agents.keys()),
-            "oldest_registration": (
-                min(self.registration_timestamps.values())
-                if self.registration_timestamps
-                else None
-            ),
-            "newest_registration": (
-                max(self.registration_timestamps.values())
-                if self.registration_timestamps
-                else None
-            ),
+            "total_agents":
+            len(self.agents),
+            "routing_options":
+            len(self.routing_model.option_names),
+            "rebuild_needed":
+            self._rebuild_needed,
+            "registered_agents":
+            list(self.agents.keys()),
+            "oldest_registration": (min(self.registration_timestamps.values())
+                                    if self.registration_timestamps else None),
+            "newest_registration": (max(self.registration_timestamps.values())
+                                    if self.registration_timestamps else None),
         }

@@ -171,10 +171,10 @@ Mathematical strategy game
        Heap C: |||||||| (8)
        Heap D: || (2)
 
-   
+
    Last move: Player 1 took 3 from Heap C
    Current turn: Player 2
-   
+
    Classic rules: Take any number from one heap
    Goal: Force opponent to take last object
 

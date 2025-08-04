@@ -1,24 +1,24 @@
 """Mixin for adding structured output capabilities to agents.
 
-This mixin provides class methods for creating agents with structured output,
-enabling any agent to be composed with a StructuredOutputAgent for type-safe
-output conversion.
+This mixin provides class methods for creating agents with structured
+output, enabling any agent to be composed with a StructuredOutputAgent
+for type-safe output conversion.
 """
-
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import Any
+from typing import TYPE_CHECKING
+from typing import TypeVar
 
 from pydantic import BaseModel
-
 
 if TYPE_CHECKING:
     from langchain_core.prompts import ChatPromptTemplate
 
     from haive.agents.base.agent import Agent
 
-T = TypeVar("T", bound=BaseModel)
-TAgent = TypeVar("TAgent", bound="Agent")
+T = TypeVar('T', bound=BaseModel)
+TAgent = TypeVar('TAgent', bound='Agent')
 
 
 class StructuredOutputMixin:
@@ -33,7 +33,8 @@ class StructuredOutputMixin:
         custom_prompt: ChatPromptTemplate | None = None,
         **agent_kwargs,
     ) -> tuple[TAgent, Agent]:
-        """Create an agent paired with a StructuredOutputAgent for structured output.
+        """Create an agent paired with a StructuredOutputAgent for structured
+        output.
 
         This method creates a two-agent workflow where:
         1. The original agent produces unstructured output
@@ -95,7 +96,7 @@ class StructuredOutputMixin:
             custom_context=custom_context,
             custom_prompt=custom_prompt,
             # Use low temperature for consistent extraction
-            engine=agent_kwargs.get("engine"),
+            engine=agent_kwargs.get('engine'),
         )
 
         return original_agent, structured_agent
@@ -144,9 +145,8 @@ class StructuredOutputMixin:
         from haive.agents.structured import StructuredOutputAgent
 
         tool_name = name or f"{cls.__name__.lower()}_structured_tool"
-        tool_description = (
-            description or f"Run {cls.__name__} and return structured output"
-        )
+        tool_description = description or f"Run {
+            cls.__name__} and return structured output"
 
         def run_with_structured_output(input_text: str) -> T:
             """Run agent and convert to structured output."""
@@ -160,16 +160,16 @@ class StructuredOutputMixin:
             structurer = StructuredOutputAgent(
                 name=f"{agent.name}_structurer",
                 output_model=output_model,
-                engine=agent_kwargs.get("engine"),
+                engine=agent_kwargs.get('engine'),
             )
 
             # Handle different result types
             if isinstance(result, str):
                 structured_result = structurer.run(result)
-            elif hasattr(result, "content"):
+            elif hasattr(result, 'content'):
                 structured_result = structurer.run(result.content)
-            elif isinstance(result, dict) and "output" in result:
-                structured_result = structurer.run(result["output"])
+            elif isinstance(result, dict) and 'output' in result:
+                structured_result = structurer.run(result['output'])
             else:
                 structured_result = structurer.run(str(result))
 
@@ -179,11 +179,14 @@ class StructuredOutputMixin:
             name=tool_name,
             description=tool_description,
             func=run_with_structured_output,
-            args_schema=agent_kwargs.get("input_schema"),
+            args_schema=agent_kwargs.get('input_schema'),
         )
 
     def ensure_structured_output(
-        self, output: Any, output_model: type[T], handle_errors: bool = True
+        self,
+        output: Any,
+        output_model: type[T],
+        handle_errors: bool = True,
     ) -> T | None:
         """Ensure agent output conforms to a structured model.
 
@@ -228,7 +231,7 @@ class StructuredOutputMixin:
                 content = output
             elif isinstance(output, BaseMessage):
                 # Check for tool calls first
-                if hasattr(output, "tool_calls") and output.tool_calls:
+                if hasattr(output, 'tool_calls') and output.tool_calls:
                     # Parse tool calls
                     parser = PydanticToolsParser(tools=[output_model])
                     parsed = parser.parse(output)
@@ -241,12 +244,15 @@ class StructuredOutputMixin:
                     return output_model(**output)
                 except BaseException:
                     # Fall back to string conversion
-                    content = output.get("output", output.get("content", str(output)))
+                    content = output.get('output',
+                                         output.get('content', str(output)))
             elif isinstance(output, list):
                 # Handle list of messages
                 if output and isinstance(output[0], BaseMessage):
                     return self.ensure_structured_output(
-                        output[-1], output_model, handle_errors
+                        output[-1],
+                        output_model,
+                        handle_errors,
                     )
                 content = str(output)
             else:
@@ -255,18 +261,16 @@ class StructuredOutputMixin:
             # Use StructuredOutputAgent for conversion
             if content:
                 structurer = StructuredOutputAgent(
-                    name="temp_structurer",
+                    name='temp_structurer',
                     output_model=output_model,
-                    engine=getattr(self, "engine", None),
+                    engine=getattr(self, 'engine', None),
                 )
                 return structurer.run(content)
 
             if handle_errors:
                 return None
             raise ValueError(
-                f"Could not convert output to {
-                    output_model.__name__}"
-            )
+                f"Could not convert output to {output_model.__name__}", )
 
         except Exception:
             if handle_errors:

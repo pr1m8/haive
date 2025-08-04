@@ -31,7 +31,7 @@ DebateAgent - Multi-agent conversation and collaboration
 
    </div>
 
-            
+
 
 .. raw:: html
 
@@ -50,7 +50,7 @@ DebateAgent - Multi-agent conversation and collaboration
 
    <!-- Graph Visualization -->
 
-           <div id="debate-graph" 
+           <div id="debate-graph"
                 class="agent-graph-container"
                 data-agent-graph='{"nodes": [{"id": "start", "type": "start", "label": "START"}, {"id": "end", "type": "end", "label": "END"}, {"id": "process", "type": "agent", "label": "Process", "description": "Main processing"}, {"id": "tools", "type": "tool", "label": "Tools", "description": "External tools"}, {"id": "validate", "type": "validation", "label": "Validate", "description": "Check results"}], "edges": [{"source": "start", "target": "process"}, {"source": "process", "target": "tools"}, {"source": "tools", "target": "validate"}, {"source": "validate", "target": "end"}], "executionTrace": [{"step": 1, "node": "start", "status": "completed", "duration": 0.1, "output": "Initialized"}, {"step": 2, "node": "process", "status": "completed", "duration": 1.2, "output": "Processing..."}, {"step": 3, "node": "end", "status": "completed", "duration": 0.1, "output": "Finished"}]}'>
 .. raw:: html
@@ -61,7 +61,7 @@ DebateAgent - Multi-agent conversation and collaboration
 
    <!-- State History Timeline -->
 
-           <div id="debate-state-history" 
+           <div id="debate-state-history"
                 class="state-history-container"
                 data-state-history='[{"timestamp": "2025-01-08T10:00:00Z", "step": 1, "state": {"status": "initialized", "input": "User query"}, "diff": {"added": ["status", "input"], "changed": [], "removed": []}}, {"timestamp": "2025-01-08T10:00:01Z", "step": 2, "state": {"status": "processing", "input": "User query", "output": "Generated response"}, "diff": {"added": ["output"], "changed": ["status"], "removed": []}}]'>
 .. raw:: html
@@ -72,7 +72,7 @@ DebateAgent - Multi-agent conversation and collaboration
 
    <!-- Execution Trace -->
 
-           <div id="debate-execution-trace" 
+           <div id="debate-execution-trace"
                 class="execution-trace-container"
                 data-execution-trace='[{"step": 1, "operation": "Initialize", "duration": 0.1, "status": "success"}, {"step": 2, "operation": "Process", "duration": 1.5, "status": "success"}, {"step": 3, "operation": "Finalize", "duration": 0.2, "status": "success"}]'>
 .. raw:: html
@@ -122,11 +122,11 @@ DebateAgent - Multi-agent conversation and collaboration
         // Initialize graph
         const graphData = JSON.parse(document.getElementById('debate-graph').dataset.agentGraph);
         new AgentGraphVisualizer('debate-graph', graphData);
-        
+
         // Initialize state history
         const stateData = JSON.parse(document.getElementById('debate-state-history').dataset.stateHistory);
         new StateHistoryVisualizer('debate-state-history', stateData);
-        
+
         // Initialize execution trace
         const traceData = JSON.parse(document.getElementById('debate-execution-trace').dataset.executionTrace);
         new ExecutionTraceVisualizer('debate-execution-trace', traceData);

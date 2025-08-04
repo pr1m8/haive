@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from haive.agents.reasoning_and_critique.lats.v2.agents import (
     backpropagate,
     create_lats,
@@ -30,7 +32,6 @@ from haive.agents.reasoning_and_critique.lats.v2.state import (
     tree_statistics,
     update_nodes,
 )
-
 
 __all__ = [
     "CandidateActions",

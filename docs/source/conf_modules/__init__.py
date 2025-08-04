@@ -10,20 +10,28 @@ Main functions:
 - create_custom_config(): Mix and match specific features
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 # Import all configuration modules - relative imports within package
-from .core import logging, paths, project
-from .extensions import (api_generation, content, core_sphinx, diagrams,
-                        enhancement, export, external, quality)
-from .themes import furo
+from docs.source.conf_modules.core import logging, paths, project
+from docs.source.conf_modules.extensions import (
+    api_generation,
+    content,
+    core_sphinx,
+    diagrams,
+    enhancement,
+    export,
+    external,
+    quality,
+)
+from docs.source.conf_modules.themes import furo
 
 
 def create_minimal_config(
     project_name: str = "Project",
     author: str = "Author",
-    packages: Optional[List[str]] = None,
-) -> Dict[str, Any]:
+    packages: list[str] | None = None,
+) -> dict[str, Any]:
     """Create minimal Sphinx configuration.
 
     Includes only essential features:
@@ -64,10 +72,10 @@ def create_minimal_config(
 def create_standard_config(
     project_name: str = "Haive",
     author: str = "William R. Astley",
-    packages: Optional[List[str]] = None,
+    packages: list[str] | None = None,
     github_repo: str = "pr1m8/haive",
     base_url: str = "https://haive.readthedocs.io/",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Create standard Sphinx configuration.
 
     Includes commonly used features:
@@ -102,8 +110,8 @@ def create_standard_config(
     config.update(diagrams.get_standard_config())
     config.update(quality.get_standard_config())
     config.update(
-        external.get_standard_config(github_repo=github_repo, base_url=base_url)
-    )
+        external.get_standard_config(github_repo=github_repo,
+                                     base_url=base_url), )
     config.update(content.get_standard_config(packages=packages))
     config.update(export.get_standard_config())
 
@@ -119,10 +127,10 @@ def create_standard_config(
 def create_full_config(
     project_name: str = "Haive",
     author: str = "William R. Astley",
-    packages: Optional[List[str]] = None,
+    packages: list[str] | None = None,
     github_repo: str = "pr1m8/haive",
     base_url: str = "https://haive.readthedocs.io/",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Create full-featured Sphinx configuration.
 
     Includes all available features:
@@ -155,7 +163,8 @@ def create_full_config(
     config.update(enhancement.get_full_config())
     config.update(diagrams.get_full_config())
     config.update(quality.get_full_config())
-    config.update(external.get_full_config(github_repo=github_repo, base_url=base_url))
+    config.update(
+        external.get_full_config(github_repo=github_repo, base_url=base_url))
     config.update(content.get_full_config(packages=packages))
     config.update(export.get_full_config())
 
@@ -172,7 +181,7 @@ def create_custom_config(
     # Core settings
     project_name: str = "Project",
     author: str = "Author",
-    packages: Optional[List[str]] = None,
+    packages: list[str] | None = None,
     # Feature flags
     enable_api_docs: bool = True,
     enable_notebooks: bool = False,
@@ -180,9 +189,9 @@ def create_custom_config(
     enable_pdf: bool = False,
     enable_presentations: bool = False,
     # External settings
-    github_repo: Optional[str] = None,
-    base_url: Optional[str] = None,
-) -> Dict[str, Any]:
+    github_repo: str | None = None,
+    base_url: str | None = None,
+) -> dict[str, Any]:
     """Create custom Sphinx configuration.
 
     Mix and match specific features based on needs.
@@ -229,9 +238,9 @@ def create_custom_config(
     if enable_pdf or enable_presentations:
         config.update(
             export.get_config(
-                enable_pdf=enable_pdf, enable_presentations=enable_presentations
-            )
-        )
+                enable_pdf=enable_pdf,
+                enable_presentations=enable_presentations,
+            ), )
     else:
         config.update(export.get_minimal_config())
 
@@ -241,7 +250,8 @@ def create_custom_config(
 
     # Optional external integrations
     if github_repo and base_url:
-        config.update(external.get_config(github_repo=github_repo, base_url=base_url))
+        config.update(
+            external.get_config(github_repo=github_repo, base_url=base_url))
 
     # Combine all extensions
     config["extensions"] = _combine_extensions(config)
@@ -249,7 +259,7 @@ def create_custom_config(
     return config
 
 
-def _combine_extensions(config: Dict[str, Any]) -> List[str]:
+def _combine_extensions(config: dict[str, Any]) -> list[str]:
     """Combine and deduplicate extensions from all modules.
 
     Args:
@@ -276,7 +286,7 @@ def _combine_extensions(config: Dict[str, Any]) -> List[str]:
     return unique_extensions
 
 
-def get_all_available_extensions() -> Dict[str, List[str]]:
+def get_all_available_extensions() -> dict[str, list[str]]:
     """Get all available extensions organized by category.
 
     Returns:

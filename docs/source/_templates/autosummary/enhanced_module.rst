@@ -72,11 +72,11 @@
    {%- endfor %}
    {% endif %}
    {% endblock %}
-   
+
    {% block diagrams %}
    {% if classes and fullname is match('.*\.agents\..*') %}
    .. rubric:: {{ _('Module Structure') }}
-   
+
    .. inheritance-diagram:: {% for item in classes %}{{ item }}{% if not loop.last %} {% endif %}{% endfor %}
 
       :parts: 2
@@ -84,10 +84,10 @@
 
    {% endif %}
    {% endblock %}
-   
+
    {% block related %}
    .. rubric:: {{ _('Related') }}
-   
+
    {% if fullname is match('.*\.agents\..*') %}
    * :doc:`Agent Demos </agents/demos/index>`*
    * :doc:`Agent Examples </examples/agents/index>`*

@@ -7,6 +7,7 @@ Functions:
 """
 
 # src/haive/agents/reasoning/logical_reasoner.py
+from __future__ import annotations
 
 from typing import Any
 
@@ -15,12 +16,10 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from haive.agents.reasoning_and_critique.logic.models import ReasoningChain
 from haive.core.engine.aug_llm import AugLLMConfig
 
-
-LOGICAL_REASONING_PROMPT = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            """You are a master logician skilled in formal reasoning and inference.
+LOGICAL_REASONING_PROMPT = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        """You are a master logician skilled in formal reasoning and inference.
 
 Your role is to:
 1. Take premises and construct valid logical arguments
@@ -146,14 +145,13 @@ For each step specify:
 - The specific conclusion
 - Confidence level
 - Why this inference is valid""",
-        ),
-        (
-            "human",
-            "Build a logical argument for this reasoning chain:\n{reasoning_chain}",
-        ),
-        MessagesPlaceholder(variable_name="messages", optional=True),
-    ]
-)
+    ),
+    (
+        "human",
+        "Build a logical argument for this reasoning chain:\n{reasoning_chain}",
+    ),
+    MessagesPlaceholder(variable_name="messages", optional=True),
+], )
 
 
 def create_logical_reasoner() -> Any:

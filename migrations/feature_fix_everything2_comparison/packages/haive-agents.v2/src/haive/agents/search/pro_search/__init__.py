@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from pro_search.agent import (
     ProSearchAgent,
     extract_contextual_insights,
@@ -17,7 +19,6 @@ from pro_search.models import (
     ProSearchResponse,
     SearchRefinement,
 )
-
 
 __all__ = [
     "Config",

@@ -198,7 +198,7 @@ From a Python Script
 
     1. **Consistent Agent Name***s**: Use descriptive, consistent names for agents**
 
-    2.*** **Add Metadat***a**: Include relevant metadata with each agent run
+    2.*** **Add Metadata***a**: Include relevant metadata with each agent run
 
     3.*** **Limit State Histor***y**: For documentation, limit to 5-10 states to keep pages concise
     4.*** **Use SVG Graph***s**: SVG format provides the best quality for documentation
@@ -218,7 +218,7 @@ From a Python Script
 
       Basic conversational agent example
 
-   
+
     .. card::
 
       :link: ../agents/examples/react_agent_example
@@ -227,7 +227,7 @@ From a Python Script
 
       Reasoning and acting agent example
 
-   
+
     .. card::
 
       :link: ../agents/examples/rag_agent_example
@@ -236,7 +236,7 @@ From a Python Script
 
       Retrieval-augmented generation example
 
-   
+
     .. card::
 
       :link: ../agents/examples/task_analysis_example

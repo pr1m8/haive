@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """README Integration Tool for Haive Documentation.
 
-This script discovers README files throughout the codebase and integrates
-them into the Sphinx documentation.
+This script discovers README files throughout the codebase and
+integrates them into the Sphinx documentation.
 """
+from __future__ import annotations
 
 import re
 import shutil
@@ -130,7 +131,10 @@ class ReadmeIntegrator:
         return metadata
 
     def convert_markdown_links(
-        self, content: str, source_path: Path, dest_path: Path
+        self,
+        content: str,
+        source_path: Path,
+        dest_path: Path,
     ) -> str:
         """Convert relative markdown links to work in new location."""
         # Pattern for markdown links: [text](url)
@@ -194,7 +198,8 @@ class ReadmeIntegrator:
         return output_path
 
     def create_index_files(
-        self, processed_files: list[tuple[Path, dict[str, str]]]
+        self,
+        processed_files: list[tuple[Path, dict[str, str]]],
     ) -> None:
         """Create index files for discovered READMEs."""
         # Group by category
@@ -241,7 +246,8 @@ the Haive codebase, organized by category.
 
             # Add files to category index
             for output_path, metadata in sorted(
-                by_category[category], key=lambda x: x[0]
+                by_category[category],
+                key=lambda x: x[0],
             ):
                 # Get relative path from output directory
                 rel_path_from_output = output_path.relative_to(self.output_dir)
@@ -296,7 +302,7 @@ the Haive codebase, organized by category.
                     "title": metadata["title"],
                     "category": category,
                     "description": metadata["description"],
-                }
+                },
             )
 
         with open(summary_path, "w") as f:

@@ -29,7 +29,7 @@ A breaking tech news story with multiple perspectives and reactions.
     === Social Media Simulation: Tech News ===
 
     @TechJournalist ✓ [Verified]
-    BREAKING: OpenAI announces GPT-5 with "reasoning capabilities that match 
+    BREAKING: OpenAI announces GPT-5 with "reasoning capabilities that match
     human experts in specialized domains." Available in limited beta next month.
     🔗 Read more: [link]
     👍 5,234  💬 892  🔄 2,341  ⏰ 2 mins ago
@@ -98,7 +98,7 @@ A breaking tech news story with multiple perspectives and reactions.
 
     Top Hashtags:
     #GPT5 (45.2K posts)
-    #AIRevolution (23.1K posts)  
+    #AIRevolution (23.1K posts)
     #FutureOfWork (18.7K posts)
     #OpenAI (15.3K posts)
 
@@ -196,7 +196,7 @@ A breaking tech news story with multiple perspectives and reactions.
 
     ↳ @EcoTechOfficial ✓ [Verified]
     @BudgetMom We hear you! That's why we're launching Smart Garden
-    Mini at $99 next month. Same AI, smaller capacity. 
+    Mini at $99 next month. Same AI, smaller capacity.
     Join waitlist for early access!
     👍 2,345  💬 234  ⏰ 4 hours ago
 
@@ -222,7 +222,7 @@ A breaking tech news story with multiple perspectives and reactions.
     follower_count=500_000,
     personality="professional"
     ),
-    "ProGamer": SocialMediaAgent(
+    "programmer": SocialMediaAgent(
     handle="@EliteGamer42",
     follower_count=50_000,
     personality="passionate_critical"
@@ -257,17 +257,17 @@ A breaking tech news story with multiple perspectives and reactions.
 
 .. code-block:: text
 
-    @GameStudioOfficial ✓: Update 2.0 is live! Rebalanced weapons 
+    @GameStudioOfficial ✓: Update 2.0 is live! Rebalanced weapons
     based on pro feedback. Full notes: [link]
     📎 patch_notes.png
     👍 2.3K  👎 5.6K  💬 892
 
     ↳ @EliteGamer42: "Based on pro feedback" = you only listened
-    to streamers who play 12hrs/day. RIP casual players. The 
+    to streamers who play 12hrs/day. RIP casual players. The
     skill gap just became a skill CANYON.
     👍 8.9K  💬 234
 
-    ↳ @xXNoobSlayerXx: git gud scrubs 😂😂😂 finally some real
+    ↳ @xXNoobSlayerXx: git good scrubs 😂😂😂 finally some real
     difficulty in this baby game
     👍 123  👎 3.4K  💬 67
     [Hidden due to downvotes - Click to expand]

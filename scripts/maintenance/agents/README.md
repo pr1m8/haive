@@ -1,6 +1,6 @@
 # Agent Maintenance
 
-**Purpose**: Agent code maintenance, enhancement, and optimization tools  
+**Purpose**: Agent code maintenance, enhancement, and optimization tools
 **Usage**: Maintaining agent implementations, updating patterns, and ensuring consistency
 
 ## 📄 Current Scripts

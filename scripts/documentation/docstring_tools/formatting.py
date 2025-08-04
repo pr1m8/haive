@@ -8,10 +8,12 @@ This module provides comprehensive docstring formatting including:
 - Dry-run validation before applying changes
 """
 
+from __future__ import annotations
+
 import logging
+from pathlib import Path
 import subprocess
 import sys
-from pathlib import Path
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent.parent
@@ -58,7 +60,9 @@ class DocstringFormatter:
 
             cmd.append(str(package_dir))
 
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+            result = subprocess.run(
+                cmd, capture_output=True, text=True, timeout=120, check=False
+            )
 
             if result.stdout:
                 if self.dry_run:
@@ -68,13 +72,12 @@ class DocstringFormatter:
                     logger.info("✅ Docformatter applied successfully")
 
                 return True
-            else:
-                logger.info("ℹ️ No formatting changes needed")
-                return True
+            logger.info("ℹ️ No formatting changes needed")
+            return True
 
         except FileNotFoundError:
             logger.error(
-                "❌ docformatter not found. Install with: pip install docformatter"
+                "❌ docformatter not found. Install with: pip install docformatter",
             )
             return False
         except subprocess.TimeoutExpired:
@@ -90,11 +93,13 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Docstring formatting with docformatter"
+        description="Docstring formatting with docformatter",
     )
     parser.add_argument("--target", required=True, help="Target package")
     parser.add_argument(
-        "--dry-run", action="store_true", help="Show changes without applying"
+        "--dry-run",
+        action="store_true",
+        help="Show changes without applying",
     )
 
     args = parser.parse_args()

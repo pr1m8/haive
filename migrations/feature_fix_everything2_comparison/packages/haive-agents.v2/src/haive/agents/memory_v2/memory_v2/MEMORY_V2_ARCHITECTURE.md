@@ -1,8 +1,8 @@
 # Memory V2 Architecture - Complete Implementation Plan
 
-**Version**: 2.0  
-**Status**: In Development  
-**Last Updated**: 2025-01-21  
+**Version**: 2.0
+**Status**: In Development
+**Last Updated**: 2025-01-21
 **Purpose**: Complete memory system rebuild following proper Haive patterns with token tracking and summarization
 
 ## 🎯 Overview

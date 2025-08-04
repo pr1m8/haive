@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from deep_research.agent import (
     DeepResearchAgent,
     decompose_research_query,
@@ -18,7 +20,6 @@ from deep_research.models import (
     ResearchSection,
     ResearchSource,
 )
-
 
 __all__ = [
     "Config",

@@ -22,20 +22,24 @@ Usage:
     )
 """
 
-from .audit import DocumentationAuditor
-from .coverage import CoverageAnalyzer, CoverageReport, DocstringTarget
-from .formatting import DocstringFormatter
-from .generation import DocstringGenerator
-from .quality import QualityChecker
-from .validation import ComplianceChecker
+from __future__ import annotations
+
+from scripts.documentation.docstring_tools.audit import DocumentationAuditor
+from scripts.documentation.docstring_tools.coverage import CoverageAnalyzer
+from scripts.documentation.docstring_tools.coverage import CoverageReport
+from scripts.documentation.docstring_tools.coverage import DocstringTarget
+from scripts.documentation.docstring_tools.formatting import DocstringFormatter
+from scripts.documentation.docstring_tools.generation import DocstringGenerator
+from scripts.documentation.docstring_tools.quality import QualityChecker
+from scripts.documentation.docstring_tools.validation import ComplianceChecker
 
 __all__ = [
+    "ComplianceChecker",
     "CoverageAnalyzer",
-    "DocstringTarget",
     "CoverageReport",
     "DocstringFormatter",
     "DocstringGenerator",
-    "ComplianceChecker",
-    "QualityChecker",
+    "DocstringTarget",
     "DocumentationAuditor",
+    "QualityChecker",
 ]

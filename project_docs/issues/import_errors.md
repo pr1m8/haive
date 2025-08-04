@@ -1,7 +1,7 @@
 # Import and Module Resolution Issues
 
-**Date**: August 1, 2025  
-**Priority**: HIGH - Multiple modules failing  
+**Date**: August 1, 2025
+**Priority**: HIGH - Multiple modules failing
 **Status**: Open
 
 ## Problem

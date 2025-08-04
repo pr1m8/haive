@@ -8,30 +8,35 @@ This example demonstrates the Self-Discover reasoning pattern where:
 Each agent builds on the previous agent's output through direct field access.
 """
 
+from __future__ import annotations
+
 from typing import Any
+
+from pydantic import BaseModel, Field
 
 from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
-from pydantic import BaseModel, Field
 
 
 # Define structured outputs for each agent
 class SelectedModules(BaseModel):
     """Output from the module selection agent."""
 
-    selected_modules: list[str] = Field(description="Selected reasoning modules")
+    selected_modules: list[str] = Field(
+        description="Selected reasoning modules")
     rationale: str = Field(description="Why these modules were selected")
-    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in selection")
+    confidence: float = Field(ge=0.0,
+                              le=1.0,
+                              description="Confidence in selection")
 
 
 class AdaptedModules(BaseModel):
     """Output from the module adaptation agent."""
 
     adapted_modules: list[dict[str, str]] = Field(
-        description="Modules adapted for the task"
-    )
+        description="Modules adapted for the task", )
     task_context: str = Field(description="Context of the task")
     adaptation_notes: str = Field(description="Notes about adaptations made")
 
@@ -40,8 +45,7 @@ class ReasoningStructure(BaseModel):
     """Output from the reasoning structure agent."""
 
     reasoning_structure: dict[str, Any] = Field(
-        description="Complete reasoning structure"
-    )
+        description="Complete reasoning structure", )
     steps: list[str] = Field(description="Reasoning steps")
     methodology: str = Field(description="Overall methodology")
     expected_outcome: str = Field(description="What outcome is expected")

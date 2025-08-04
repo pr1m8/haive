@@ -17,13 +17,13 @@ async def main():
         name="my_agent",
         temperature=0.7
     )
-    
+
     # Create the SimpleAgent
     agent = SimpleAgent(
         name="my_agent",
         engine=config
     )
-    
+
     # Use the agent
     response = agent.run("Hello! Please introduce yourself.")
     print(f"Agent: {response}")
@@ -40,7 +40,7 @@ asyncio.run(main())
 
 ### ⚡ **Simple API**
 - Clean `.run()` method for synchronous usage
-- Async support with `.arun()` 
+- Async support with `.arun()`
 - No complex setup required
 
 ### 🔧 **Configurable**
@@ -62,36 +62,36 @@ from haive.core.engine.aug_llm import AugLLMConfig
 
 async def demo_conversation():
     """Demonstrate a multi-turn conversation."""
-    
+
     # Create agent
     config = AugLLMConfig(name="demo_agent", temperature=0.7)
     agent = SimpleAgent(name="demo_agent", engine=config)
-    
+
     # Multi-turn conversation
     responses = []
-    
+
     # Turn 1: Introduction
     response1 = agent.run("Hello! Please introduce yourself.")
     responses.append(("Human", "Hello! Please introduce yourself."))
     responses.append(("Agent", response1))
-    
+
     # Turn 2: Question with context
     response2 = agent.run("What's your favorite color?")
     responses.append(("Human", "What's your favorite color?"))
     responses.append(("Agent", response2))
-    
+
     # Turn 3: Follow-up that uses memory
     response3 = agent.run("Why did you choose that color?")
     responses.append(("Human", "Why did you choose that color?"))
     responses.append(("Agent", response3))
-    
+
     # Display conversation
     print("🤖 SimpleAgent Conversation Demo")
     print("=" * 50)
     for speaker, message in responses:
         print(f"{speaker}: {message}")
         print()
-    
+
     return responses
 
 if __name__ == "__main__":
@@ -148,7 +148,7 @@ The SimpleAgent is built on Haive's graph-based architecture:
 ### Internal Components
 
 - **Message State**: Maintains conversation history
-- **LLM Engine**: Processes inputs and generates responses  
+- **LLM Engine**: Processes inputs and generates responses
 - **Graph Executor**: Orchestrates the conversation flow
 
 ## Common Use Cases
@@ -159,7 +159,7 @@ The SimpleAgent is built on Haive's graph-based architecture:
 config = AugLLMConfig(
     name="support_agent",
     temperature=0.3,  # Lower for more consistent responses
-    system_message="""You are a helpful customer support agent. 
+    system_message="""You are a helpful customer support agent.
     Be polite, professional, and try to solve customer problems."""
 )
 
@@ -171,9 +171,9 @@ response = support_agent.run("I'm having trouble with my order")
 
 ```python
 config = AugLLMConfig(
-    name="tutor_agent", 
+    name="tutor_agent",
     temperature=0.5,
-    system_message="""You are a patient tutor. Explain concepts clearly 
+    system_message="""You are a patient tutor. Explain concepts clearly
     and ask follow-up questions to ensure understanding."""
 )
 
@@ -187,7 +187,7 @@ response = tutor.run("Can you explain photosynthesis?")
 config = AugLLMConfig(
     name="writer_agent",
     temperature=0.8,  # Higher for more creativity
-    system_message="""You are a creative writing assistant. Help users 
+    system_message="""You are a creative writing assistant. Help users
     brainstorm ideas and improve their writing."""
 )
 
@@ -240,7 +240,7 @@ config = AugLLMConfig(name="agent", max_tokens=100)
 Once you're comfortable with SimpleAgent, explore:
 
 - **[ReactAgent](react_agent_guide.md)**: For tool-using agents
-- **[Multi-Agent Systems](multi_agent_guide.md)**: For coordinated agent workflows  
+- **[Multi-Agent Systems](multi_agent_guide.md)**: For coordinated agent workflows
 - **[RAG Agents](rag_agent_guide.md)**: For knowledge-based agents
 
 ## API Reference
@@ -258,7 +258,7 @@ SimpleAgent(name: str, engine: AugLLMConfig)
 - Synchronous conversation method
 - Returns agent's response as string
 
-**`.arun(message: str) -> str`**  
+**`.arun(message: str) -> str`**
 - Asynchronous conversation method
 - Returns agent's response as string
 

@@ -1,4 +1,9 @@
-"""Generalized Structured Output Agent for enhancing any agent with structured output parsing."""
+"""Generalized Structured Output Agent for enhancing any agent with structured.
+
+output parsing.
+"""
+
+from __future__ import annotations
 
 from typing import Any, Optional
 
@@ -10,8 +15,7 @@ from haive.agents.multi.proper_base import ProperMultiAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.prebuilt.messages.messages_with_token_usage import (
-    MessagesStateWithTokenUsage,
-)
+    MessagesStateWithTokenUsage, )
 
 
 class StructuredOutputAgent(SimpleAgent):
@@ -42,12 +46,12 @@ class StructuredOutputAgent(SimpleAgent):
             output_models=[ResultModel],
             include_original_input=True
             )
-
     """
 
     # Configuration
     output_models: list[type[BaseModel]] = Field(
-        default_factory=list, description="Pydantic models to parse outputs into"
+        default_factory=list,
+        description="Pydantic models to parse outputs into",
     )
 
     include_original_input: bool = Field(
@@ -56,7 +60,8 @@ class StructuredOutputAgent(SimpleAgent):
     )
 
     fallback_on_error: bool = Field(
-        default=True, description="Return original content if parsing fails"
+        default=True,
+        description="Return original content if parsing fails",
     )
 
     @classmethod
@@ -107,7 +112,9 @@ class StructuredOutputAgent(SimpleAgent):
         }
 
         enhanced_state_class = type(
-            "EnhancedState", (MessagesStateWithTokenUsage,), enhanced_state_attrs
+            "EnhancedState",
+            (MessagesStateWithTokenUsage, ),
+            enhanced_state_attrs,
         )
 
         return ProperMultiAgent(
@@ -125,7 +132,7 @@ class StructuredOutputAgent(SimpleAgent):
         include_original_input: bool = True,
         system_message: str | None = None,
         **kwargs,
-    ) -> "StructuredOutputAgent":
+    ) -> StructuredOutputAgent:
         """Create a standalone structured output processor.
 
         Args:
@@ -160,7 +167,7 @@ Instructions:
 4. Output ONLY valid JSON that matches one of the schemas
 5. If the content doesn't fit any model perfectly, choose the closest match
 
-{'Include context from the original task when structuring the output.' if include_original_input else ''}
+{"Include context from the original task when structuring the output." if include_original_input else ""}
 
 Remember: Output must be valid JSON matching one of the provided schemas."""
 
@@ -182,7 +189,9 @@ Remember: Output must be valid JSON matching one of the provided schemas."""
         )
 
     def process_with_context(
-        self, content: str, original_input: str | None = None
+        self,
+        content: str,
+        original_input: str | None = None,
     ) -> dict[str, Any]:
         """Process content with optional original context.
 
@@ -214,7 +223,7 @@ Remember: Output must be valid JSON matching one of the provided schemas."""
         reflection_models: list[type[BaseModel]],
         name: str = "reflection_processor",
         **kwargs,
-    ) -> "StructuredOutputAgent":
+    ) -> StructuredOutputAgent:
         """Create a processor specifically for reflection patterns.
 
         This is optimized for reflection/reflexion agents that need to
@@ -255,7 +264,7 @@ Output must be valid JSON matching one of the reflection schemas."""
         validation_models: list[type[BaseModel]],
         name: str = "validation_processor",
         **kwargs,
-    ) -> "StructuredOutputAgent":
+    ) -> StructuredOutputAgent:
         """Create a processor for validation patterns.
 
         Args:

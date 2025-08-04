@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 
 import libcst as cst
@@ -9,13 +11,16 @@ console = Console()
 
 
 class ValidatorFixer(cst.CSTTransformer):
+
     def leave_FunctionDef(
-        self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
+        self,
+        original_node: cst.FunctionDef,
+        updated_node: cst.FunctionDef,
     ) -> cst.FunctionDef:
         decorators = [d.decorator for d in updated_node.decorators]
         is_validator = any(
-            m.matches(dec, m.Call(func=m.Name("model_validator"))) for dec in decorators
-        )
+            m.matches(dec, m.Call(func=m.Name("model_validator")))
+            for dec in decorators)
         if not is_validator:
             return updated_node
 
@@ -23,8 +28,7 @@ class ValidatorFixer(cst.CSTTransformer):
 
         # Remove @classmethod
         new_decorators = [
-            d
-            for d in updated_node.decorators
+            d for d in updated_node.decorators
             if not m.matches(d.decorator, m.Name("classmethod"))
         ]
 
@@ -38,6 +42,7 @@ class ValidatorFixer(cst.CSTTransformer):
 
         # Replace "cls" with "self" in function body
         class ReplaceClsWithSelf(cst.CSTTransformer):
+
             def leave_Name(self, orig, updated):
                 if updated.value == "cls":
                     return updated.with_changes(value="self")
@@ -47,10 +52,8 @@ class ValidatorFixer(cst.CSTTransformer):
 
         # Ensure return annotation is Self
         ret_annot = updated_node.returns
-        if not ret_annot or not (
-            isinstance(ret_annot.annotation, cst.Name)
-            and ret_annot.annotation.value == "Self"
-        ):
+        if not ret_annot or not (isinstance(ret_annot.annotation, cst.Name)
+                                 and ret_annot.annotation.value == "Self"):
             ret_annot = cst.Annotation(annotation=cst.Name("Self"))
 
         return updated_node.with_changes(
@@ -62,44 +65,41 @@ class ValidatorFixer(cst.CSTTransformer):
 
 
 class SelfImportAdder(cst.CSTTransformer):
+
     def leave_Module(
-        self, original_node: cst.Module, updated_node: cst.Module
+        self,
+        original_node: cst.Module,
+        updated_node: cst.Module,
     ) -> cst.Module:
         for stmt in updated_node.body:
             if m.matches(stmt, m.SimpleStatementLine()):
                 for expr in stmt.body:
-                    if (
-                        isinstance(expr, cst.ImportFrom)
-                        and expr.module
-                        and expr.module.value == "typing"
-                        and any(name.name.value == "Self" for name in expr.names)
-                    ):
+                    if (isinstance(expr, cst.ImportFrom) and expr.module
+                            and expr.module.value == "typing"
+                            and any(name.name.value == "Self"
+                                    for name in expr.names)):
                         return updated_node
 
         # Try to merge with existing typing import if possible
         for idx, stmt in enumerate(updated_node.body):
             if isinstance(stmt, cst.SimpleStatementLine):
                 for expr in stmt.body:
-                    if (
-                        isinstance(expr, cst.ImportFrom)
-                        and expr.module
-                        and expr.module.value == "typing"
-                    ):
+                    if (isinstance(expr, cst.ImportFrom) and expr.module
+                            and expr.module.value == "typing"):
                         names = list(expr.names)
                         names.append(cst.ImportAlias(name=cst.Name("Self")))
                         updated_import = expr.with_changes(names=names)
                         updated_stmt = stmt.with_changes(body=[updated_import])
-                        return updated_node.with_changes(
-                            body=[
-                                *updated_node.body[:idx],
-                                updated_stmt,
-                                *updated_node.body[idx + 1 :],
-                            ]
-                        )
+                        return updated_node.with_changes(body=[
+                            *updated_node.body[:idx],
+                            updated_stmt,
+                            *updated_node.body[idx + 1:],
+                        ], )
 
         # If no typing import, prepend one
         new_import = cst.parse_statement("from typing import Self\n")
-        return updated_node.with_changes(body=[new_import, *list(updated_node.body)])
+        return updated_node.with_changes(
+            body=[new_import, *list(updated_node.body)])
 
 
 def fix_validators(filepath: str) -> cst.Module:

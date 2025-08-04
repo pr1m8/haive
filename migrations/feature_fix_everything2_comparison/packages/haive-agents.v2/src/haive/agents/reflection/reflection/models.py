@@ -1,5 +1,7 @@
 """Models for reflection agent outputs and configurations."""
 
+from __future__ import annotations
+
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field, validator
@@ -8,9 +10,14 @@ from pydantic import BaseModel, Field, validator
 class QualityScore(BaseModel):
     """Simple quality score for responses."""
 
-    score: float = Field(ge=0.0, le=100.0, description="Overall quality score (0-100)")
+    score: float = Field(ge=0.0,
+                         le=100.0,
+                         description="Overall quality score (0-100)")
     confidence: float = Field(
-        default=0.8, ge=0.0, le=1.0, description="Confidence in the score"
+        default=0.8,
+        ge=0.0,
+        le=1.0,
+        description="Confidence in the score",
     )
     reasoning: str = Field(description="Brief explanation of the score")
 
@@ -19,14 +26,15 @@ class ImprovementSuggestion(BaseModel):
     """A specific improvement suggestion."""
 
     category: str = Field(
-        description="Category of improvement (clarity, accuracy, completeness, etc.)"
-    )
+        description="Category of improvement (clarity, accuracy, completeness, etc.)", )
     suggestion: str = Field(description="Specific suggestion for improvement")
     priority: Literal["high", "medium", "low"] = Field(
-        default="medium", description="Priority of this improvement"
+        default="medium",
+        description="Priority of this improvement",
     )
     example: str | None = Field(
-        default=None, description="Example of the improved version"
+        default=None,
+        description="Example of the improved version",
     )
 
 
@@ -34,41 +42,55 @@ class GradingResult(BaseModel):
     """Comprehensive grading result for a response."""
 
     # Core grading
-    overall_score: QualityScore = Field(description="Overall quality assessment")
+    overall_score: QualityScore = Field(
+        description="Overall quality assessment")
 
     # Detailed scores
     accuracy_score: float = Field(
-        ge=0.0, le=100.0, description="Accuracy/correctness score"
+        ge=0.0,
+        le=100.0,
+        description="Accuracy/correctness score",
     )
     completeness_score: float = Field(
-        ge=0.0, le=100.0, description="Completeness score"
+        ge=0.0,
+        le=100.0,
+        description="Completeness score",
     )
     clarity_score: float = Field(
-        ge=0.0, le=100.0, description="Clarity and coherence score"
+        ge=0.0,
+        le=100.0,
+        description="Clarity and coherence score",
     )
     relevance_score: float = Field(
-        ge=0.0, le=100.0, description="Relevance to the query score"
+        ge=0.0,
+        le=100.0,
+        description="Relevance to the query score",
     )
 
     # Feedback
     strengths: list[str] = Field(
-        default_factory=list, description="Identified strengths"
+        default_factory=list,
+        description="Identified strengths",
     )
     weaknesses: list[str] = Field(
-        default_factory=list, description="Identified weaknesses"
+        default_factory=list,
+        description="Identified weaknesses",
     )
     improvements: list[ImprovementSuggestion] = Field(
-        default_factory=list, description="Specific improvement suggestions"
+        default_factory=list,
+        description="Specific improvement suggestions",
     )
 
     # Grade
     letter_grade: str = Field(
-        pattern="^[A-F][+-]?$", description="Letter grade (A+, A, A-, B+, etc.)"
+        pattern="^[A-F][+-]?$",
+        description="Letter grade (A+, A, A-, B+, etc.)",
     )
 
     # Optional improved version
     improved_response: str | None = Field(
-        default=None, description="Suggested improved version of the response"
+        default=None,
+        description="Suggested improved version of the response",
     )
 
     @validator("letter_grade")
@@ -115,18 +137,23 @@ class GradingResult(BaseModel):
 class ReflectionOutput(BaseModel):
     """Output from reflection process (unstructured)."""
 
-    reflected_response: str = Field(description="The reflected/improved response")
+    reflected_response: str = Field(
+        description="The reflected/improved response")
 
     reflection_notes: str | None = Field(
-        default=None, description="Notes about what was improved"
+        default=None,
+        description="Notes about what was improved",
     )
 
     iterations: int = Field(
-        default=1, ge=1, description="Number of reflection iterations"
+        default=1,
+        ge=1,
+        description="Number of reflection iterations",
     )
 
     changes_made: list[str] = Field(
-        default_factory=list, description="List of changes made"
+        default_factory=list,
+        description="List of changes made",
     )
 
 
@@ -135,8 +162,10 @@ class ExpertiseConfig(BaseModel):
 
     domain: str = Field(description="Domain of expertise")
 
-    expertise_level: Literal["beginner", "intermediate", "expert", "world-class"] = (
-        Field(default="expert", description="Level of expertise to simulate")
+    expertise_level: Literal["beginner", "intermediate", "expert",
+                             "world-class"] = Field(
+                                 default="expert",
+                                 description="Level of expertise to simulate",
     )
 
     style: str | None = Field(
@@ -145,7 +174,8 @@ class ExpertiseConfig(BaseModel):
     )
 
     additional_context: str | None = Field(
-        default=None, description="Additional context about the expert role"
+        default=None,
+        description="Additional context about the expert role",
     )
 
     def to_prompt(self) -> str:
@@ -165,11 +195,17 @@ class ReflectionConfig(BaseModel):
     """Configuration for reflection process."""
 
     max_iterations: int = Field(
-        default=3, ge=1, le=10, description="Maximum reflection iterations"
+        default=3,
+        ge=1,
+        le=10,
+        description="Maximum reflection iterations",
     )
 
     min_score_threshold: float = Field(
-        default=80.0, ge=0.0, le=100.0, description="Minimum score to stop reflecting"
+        default=80.0,
+        ge=0.0,
+        le=100.0,
+        description="Minimum score to stop reflecting",
     )
 
     confidence_threshold: float = Field(
@@ -180,18 +216,22 @@ class ReflectionConfig(BaseModel):
     )
 
     reflection_mode: Literal["improve", "critique", "both"] = Field(
-        default="both", description="Mode of reflection"
+        default="both",
+        description="Mode of reflection",
     )
 
     include_reasoning: bool = Field(
-        default=True, description="Include reasoning in output"
+        default=True,
+        description="Include reasoning in output",
     )
 
     force_iterations: int | None = Field(
-        default=None, description="Force exact number of iterations"
+        default=None,
+        description="Force exact number of iterations",
     )
 
-    stop_on_decline: bool = Field(default=True, description="Stop if quality decreases")
+    stop_on_decline: bool = Field(default=True,
+                                  description="Stop if quality decreases")
 
 
 # Additional models for structured output reflection pattern
@@ -200,9 +240,12 @@ class Critique(BaseModel):
 
     strengths: list[str] = Field(description="Identified strengths")
     weaknesses: list[str] = Field(description="Identified weaknesses")
-    suggestions: list[str] = Field(description="Specific improvement suggestions")
+    suggestions: list[str] = Field(
+        description="Specific improvement suggestions")
     overall_quality: float = Field(
-        ge=0.0, le=1.0, description="Quality score 0.0 to 1.0"
+        ge=0.0,
+        le=1.0,
+        description="Quality score 0.0 to 1.0",
     )
     needs_revision: bool = Field(description="Whether revision is needed")
 
@@ -212,5 +255,8 @@ class ReflectionResult(BaseModel):
 
     summary: str = Field(description="Summary of the reflection analysis")
     critique: Critique = Field(description="Detailed critique")
-    action_items: list[str] = Field(description="Specific action items for improvement")
-    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in the analysis")
+    action_items: list[str] = Field(
+        description="Specific action items for improvement")
+    confidence: float = Field(ge=0.0,
+                              le=1.0,
+                              description="Confidence in the analysis")

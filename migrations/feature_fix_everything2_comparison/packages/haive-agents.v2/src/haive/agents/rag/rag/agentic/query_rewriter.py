@@ -1,7 +1,9 @@
 """Query Rewriting Agent for Agentic RAG.
 
-This agent rewrites queries to improve retrieval using existing models from common.
+This agent rewrites queries to improve retrieval using existing models
+from common.
 """
+from __future__ import annotations
 
 from haive.agents.rag.common.query_refinement.models import QueryRefinementResponse
 from haive.agents.simple import SimpleAgent
@@ -9,7 +11,9 @@ from haive.core.engine.aug_llm import AugLLMConfig
 
 
 def create_query_rewriter_agent(
-    name: str = "query_rewriter", temperature: float = 0.7, **kwargs
+    name: str = "query_rewriter",
+    temperature: float = 0.7,
+    **kwargs,
 ) -> SimpleAgent:
     """Create a query rewriter agent using direct SimpleAgent instantiation.
 
@@ -40,7 +44,6 @@ def create_query_rewriter_agent(
             print(f"Best rewrite: {result.best_refined_query}")
             for suggestion in result.refinement_suggestions:
             print(f"- {suggestion.refined_query} ({suggestion.improvement_type})")
-
     """
     prompt_template = (
         "You are a query optimization specialist for RAG systems. "
@@ -53,8 +56,7 @@ def create_query_rewriter_agent(
         "5. Break down complex queries if needed\n\n"
         "Provide multiple suggestions with clear rationales and select the best one.\n\n"
         "Query to rewrite: {query}\n\n"
-        "Context: {context}"
-    )
+        "Context: {context}")
 
     return SimpleAgent(
         name=name,
@@ -64,12 +66,14 @@ def create_query_rewriter_agent(
             structured_output_model=QueryRefinementResponse,
             structured_output_version="v2",
         ),
-        **kwargs
+        **kwargs,
     )
 
 
 async def rewrite_query(
-    agent: SimpleAgent, query: str, context: str = ""
+    agent: SimpleAgent,
+    query: str,
+    context: str = "",
 ) -> QueryRefinementResponse:
     """Rewrite a query to improve retrieval.
 

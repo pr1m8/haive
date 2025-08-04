@@ -243,7 +243,7 @@
             <button data-view="comfortable" class="active">Comfortable</button>
             <button data-view="showcase">Showcase</button>
           </div>
-          
+
           <div class="category-filter">
             <button class="category-chip active" data-category="all">All</button>
             ${getUniqueCategories()
@@ -287,7 +287,7 @@
           </div>
           <div class="agent-description">${agent.description}</div>
         </div>
-        
+
         <div class="agent-card-body">
           <div class="agent-features">
             ${agent.features
@@ -297,7 +297,7 @@
               )
               .join("")}
           </div>
-          
+
           <div class="agent-stats">
             <div class="stat-item">
               <span class="stat-value" style="color: ${complexityColors[agent.complexity]}">${agent.complexity[0]}</span>

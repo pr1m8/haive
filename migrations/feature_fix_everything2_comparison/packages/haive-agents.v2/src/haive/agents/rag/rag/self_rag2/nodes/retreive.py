@@ -1,10 +1,11 @@
-"""Retreive core module.
+"""Retrieve core module.
 
-This module provides retreive functionality for the Haive framework.
+This module provides retrieve functionality for the Haive framework.
 
 Functions:
     retrieve: Retrieve functionality.
 """
+from __future__ import annotations
 
 from typing import Any
 

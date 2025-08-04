@@ -1,7 +1,7 @@
 # Temporarily Bypassed Modules for Documentation
 
-**Date**: August 1, 2025  
-**Priority**: HIGH - These need to be fixed and re-enabled  
+**Date**: August 1, 2025
+**Priority**: HIGH - These need to be fixed and re-enabled
 **Status**: Modules excluded from documentation generation
 
 ## Overview

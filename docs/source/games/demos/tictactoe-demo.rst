@@ -242,17 +242,17 @@ Simple 3x3 grid game with perfect play AI
 
    <pre id="tictactoe-state">
 
-        |     |     
-       X  |  O  |     
+        |     |
+       X  |  O  |
        _____|_____|_____
-        |     |     
-        |  X  |     
+        |     |
+        |  X  |
        _____|_____|_____
-        |     |     
-        |     |  O  
-        |     |     
+        |     |
+        |     |  O
+        |     |
 
-   
+
    Turn: X | Move: 5
    Status: Game in progress
 

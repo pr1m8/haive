@@ -18,7 +18,7 @@ Comprehensive climate change research agent
    :alt: ClimateResearchAgent Agent Graph
    :align: center
    :width: 80%
-   
+
    Agent Architecture Graph
 
 Interactive Example

@@ -1,6 +1,6 @@
 # General Tools
 
-**Purpose**: General utilities and standalone tools for development support  
+**Purpose**: General utilities and standalone tools for development support
 **Usage**: Miscellaneous utilities that don't fit into specific categories
 
 ## 📄 Current Scripts

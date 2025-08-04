@@ -5,20 +5,19 @@ This module provides aug llms functionality for the Haive framework.
 
 from agents.reflexion.models import AnswerQuestion, ReviseAnswer
 
-# from langchain_core.tools import PydanticToolsParser
 from agents.reflexion.prompts import actor_prompt_template
 
 from haive.core.engine.aug_llm import AugLLMConfig
-
 
 initial_answer_prompt = actor_prompt_template.partial(
     first_instruction="Provide a detailed 1000 word essay.",
     function_name=AnswerQuestion.__name__,
 )
 initial_answer_chain_config = AugLLMConfig(
-    tools=[AnswerQuestion], prompt_template=initial_answer_prompt, name="responder"
+    tools=[AnswerQuestion],
+    prompt_template=initial_answer_prompt,
+    name="responder",
 )
-
 
 revise_instructions = """Revise your previous answer using the new information.
     - You should use the previous critique to add important information to your answer.
@@ -29,11 +28,12 @@ revise_instructions = """Revise your previous answer using the new information.
     - You should use the previous critique to remove superfluous information from your answer and make SURE it is not more than 250 words.
 """
 
-
 revision_prompt = actor_prompt_template.partial(
     first_instruction=revise_instructions,
     function_name=ReviseAnswer.__name__,
 )
 revision_chain_config = AugLLMConfig(
-    tools=[ReviseAnswer], prompt_template=revision_prompt, name="revisior"
+    tools=[ReviseAnswer],
+    prompt_template=revision_prompt,
+    name="revisior",
 )

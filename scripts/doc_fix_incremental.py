@@ -2,13 +2,11 @@
 """Apply documentation fixes incrementally with validation."""
 
 import argparse
-import shutil
-import subprocess
-import sys
-import time
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List
+import shutil
+import subprocess
+import time
 
 
 class IncrementalDocFixer:
@@ -18,8 +16,7 @@ class IncrementalDocFixer:
         self.backup = backup
         self.validate_each = validate_each
         self.backup_dir = Path(
-            f"docs/backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-        )
+            f"docs/backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}", )
         self.fixes_applied = []
         self.validation_results = {}
 
@@ -30,7 +27,8 @@ class IncrementalDocFixer:
             shutil.copytree("docs/source", self.backup_dir)
             print("✅ Backup created")
 
-    def validate_current_state(self, step_name: str = "initial") -> Dict[str, int]:
+    def validate_current_state(self,
+                               step_name: str = "initial") -> dict[str, int]:
         """Validate current documentation state."""
         print(f"\n🔍 Validating {step_name} state...")
 
@@ -42,9 +40,11 @@ class IncrementalDocFixer:
         for rst_file in sample_files:
             try:
                 result = subprocess.run(
-                    ["poetry", "run", "rstcheck", str(rst_file)],
+                    ["poetry", "run", "rstcheck",
+                     str(rst_file)],
                     capture_output=True,
                     text=True,
+                    check=False,
                 )
 
                 if result.stderr:
@@ -53,7 +53,7 @@ class IncrementalDocFixer:
                             results["rst_errors"] += 1
                         elif "WARNING" in line:
                             results["rst_warnings"] += 1
-            except:
+            except BaseException:
                 pass
 
         # Try a quick build
@@ -72,13 +72,14 @@ class IncrementalDocFixer:
                 capture_output=True,
                 text=True,
                 timeout=30,
+                check=False,
             )
             results["build_success"] = result.returncode == 0
 
             # Clean up
             if Path("docs/test_build_validate").exists():
                 shutil.rmtree("docs/test_build_validate")
-        except:
+        except BaseException:
             results["build_success"] = False
 
         self.validation_results[step_name] = results
@@ -106,20 +107,22 @@ class IncrementalDocFixer:
             fixed_count = 0
 
             for i in range(0, len(rst_files), batch_size):
-                batch = rst_files[i : i + batch_size]
+                batch = rst_files[i:i + batch_size]
 
                 for rst_file in batch:
                     result = subprocess.run(
-                        ["poetry", "run", "rstfmt", "--write", str(rst_file)],
+                        ["poetry", "run", "rstfmt", "--write",
+                         str(rst_file)],
                         capture_output=True,
                         text=True,
+                        check=False,
                     )
 
                     if result.returncode == 0:
                         fixed_count += 1
 
                 print(
-                    f"  Progress: {min(i+batch_size, len(rst_files))}/{len(rst_files)} files"
+                    f"  Progress: {min(i + batch_size, len(rst_files))}/{len(rst_files)} files",
                 )
 
             print(f"✅ Applied rstfmt to {fixed_count} files")
@@ -159,6 +162,7 @@ class IncrementalDocFixer:
                 ],
                 capture_output=True,
                 text=True,
+                check=False,
             )
 
             if result.returncode == 0:
@@ -169,9 +173,8 @@ class IncrementalDocFixer:
                     self.validate_current_state("after_docformatter")
 
                 return True
-            else:
-                print(f"⚠️  docformatter had issues: {result.stderr}")
-                return False
+            print(f"⚠️  docformatter had issues: {result.stderr}")
+            return False
 
         except Exception as e:
             print(f"❌ Error applying docformatter: {e}")
@@ -190,7 +193,7 @@ class IncrementalDocFixer:
             rst_files_with_code = []
 
             for rst_file in Path("docs/source").rglob("*.rst"):
-                with open(rst_file, "r") as f:
+                with open(rst_file) as f:
                     if ".. code-block::" in f.read():
                         rst_files_with_code.append(rst_file)
 
@@ -210,6 +213,7 @@ class IncrementalDocFixer:
                     ],
                     capture_output=True,
                     text=True,
+                    check=False,
                 )
 
                 if result.returncode == 0:
@@ -234,7 +238,10 @@ class IncrementalDocFixer:
         if dry_run:
             # Show what would be fixed
             result = subprocess.run(
-                ["poetry", "run", "codespell", "docs/"], capture_output=True, text=True
+                ["poetry", "run", "codespell", "docs/"],
+                capture_output=True,
+                text=True,
+                check=False,
             )
             if result.stdout:
                 print("  Would fix these spelling issues:")
@@ -249,6 +256,7 @@ class IncrementalDocFixer:
                 ["poetry", "run", "codespell", "-w", "docs/"],
                 capture_output=True,
                 text=True,
+                check=False,
             )
 
             if result.returncode == 0:
@@ -259,9 +267,8 @@ class IncrementalDocFixer:
                     self.validate_current_state("after_codespell")
 
                 return True
-            else:
-                print(f"⚠️  codespell had issues: {result.stderr}")
-                return False
+            print(f"⚠️  codespell had issues: {result.stderr}")
+            return False
 
         except Exception as e:
             print(f"❌ Error applying codespell: {e}")
@@ -279,7 +286,7 @@ class IncrementalDocFixer:
             fixed_count = 0
 
             for rst_file in Path("docs/source").rglob("*.rst"):
-                with open(rst_file, "r") as f:
+                with open(rst_file) as f:
                     content = f.read()
 
                 original = content
@@ -287,7 +294,8 @@ class IncrementalDocFixer:
                 # Fix exec_code directives
                 if ".. exec_code::" in content:
                     content = content.replace(
-                        ".. exec_code::", ".. code-block:: python"
+                        ".. exec_code::",
+                        ".. code-block:: python",
                     )
                     # Remove exec_code specific options
                     lines = content.split("\n")
@@ -307,7 +315,8 @@ class IncrementalDocFixer:
                 import re
 
                 # Fix :role:`text without closing backtick
-                content = re.sub(r":(\w+):`([^`\n]+)(?!`)", r":\1:`\2`", content)
+                content = re.sub(r":(\w+):`([^`\n]+)(?!`)", r":\1:`\2`",
+                                 content)
 
                 if content != original:
                     with open(rst_file, "w") as f:
@@ -338,6 +347,7 @@ class IncrementalDocFixer:
                 ["poetry", "run", "rstcheck", "docs/source", "--recursive"],
                 capture_output=True,
                 text=True,
+                check=False,
             )
 
             errors = result.stderr.count("ERROR")
@@ -368,14 +378,16 @@ class IncrementalDocFixer:
                 capture_output=True,
                 text=True,
                 timeout=120,
+                check=False,
             )
 
             build_time = time.time() - start_time
             build_success = result.returncode == 0
 
             print(
-                f"  Build {'✅ PASSED' if build_success else '❌ FAILED'} in {build_time:.1f}s"
-            )
+                f"  Build {
+                    '✅ PASSED' if build_success else '❌ FAILED'} in {
+                    build_time:.1f}s", )
 
             if not build_success and result.stderr:
                 # Show first few errors
@@ -408,41 +420,48 @@ class IncrementalDocFixer:
 
         if self.validation_results:
             print("\n📊 Validation Results:")
-            print(f"{'Step':<20} {'Errors':<10} {'Warnings':<10} {'Build':<10}")
+            print(
+                f"{'Step':<20} {'Errors':<10} {'Warnings':<10} {'Build':<10}")
             print("-" * 50)
 
             for step, results in self.validation_results.items():
-                build_status = "✅" if results.get("build_success", False) else "❌"
+                build_status = "✅" if results.get("build_success",
+                                                  False) else "❌"
                 print(
                     f"{step:<20} {results.get('rst_errors', 0):<10} "
-                    f"{results.get('rst_warnings', 0):<10} {build_status:<10}"
+                    f"{results.get('rst_warnings', 0):<10} {build_status:<10}",
                 )
 
         if self.backup:
             print(f"\n📦 Backup saved to: {self.backup_dir}")
             print(
-                f"   To restore: rm -rf docs/source && cp -r {self.backup_dir} docs/source"
+                f"   To restore: rm -rf docs/source && cp -r {self.backup_dir} docs/source",
             )
 
 
 def main():
     """Main function."""
     parser = argparse.ArgumentParser(
-        description="Apply documentation fixes incrementally"
-    )
+        description="Apply documentation fixes incrementally", )
     parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Show what would be done without applying",
     )
-    parser.add_argument("--no-backup", action="store_true", help="Skip creating backup")
+    parser.add_argument("--no-backup",
+                        action="store_true",
+                        help="Skip creating backup")
     parser.add_argument(
-        "--no-validate", action="store_true", help="Skip validation after each step"
+        "--no-validate",
+        action="store_true",
+        help="Skip validation after each step",
     )
     parser.add_argument(
         "--steps",
         nargs="+",
-        choices=["rstfmt", "docformatter", "blacken-docs", "codespell", "custom"],
+        choices=[
+            "rstfmt", "docformatter", "blacken-docs", "codespell", "custom"
+        ],
         help="Apply only specific steps",
     )
     args = parser.parse_args()
@@ -454,7 +473,9 @@ def main():
 
     print("🚀 Incremental Documentation Fixer")
     print(f"   Mode: {'DRY RUN' if args.dry_run else 'APPLYING FIXES'}")
-    print(f"   Validation: {'After each step' if fixer.validate_each else 'Disabled'}")
+    print(
+        f"   Validation: {'After each step' if fixer.validate_each else 'Disabled'}"
+    )
 
     # Create backup
     if not args.dry_run and fixer.backup:
@@ -497,7 +518,7 @@ def main():
 
     # Final validation
     if not args.dry_run:
-        build_success = fixer.final_validation()
+        fixer.final_validation()
 
     # Summary
     fixer.summarize()

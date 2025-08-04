@@ -1,22 +1,19 @@
 """Tool selection strategies for dynamic tool selection.
 
-This module implements various strategies for selecting tools based on different
-criteria and approaches, providing flexibility in how tools are chosen for different
-contexts and use cases.
+This module implements various strategies for selecting tools based on
+different criteria and approaches, providing flexibility in how tools
+are chosen for different contexts and use cases.
 """
+
+from __future__ import annotations
 
 from abc import ABC, abstractmethod
 import logging
 from typing import Any
 
-from haive.agents.discovery.dynamic_tool_selector import (
-    ContextAwareState,
-    ToolSelectionResult,
-)
+from haive.agents.discovery.dynamic_tool_selector import ContextAwareState, ToolSelectionResult
 from haive.agents.discovery.semantic_discovery import (
-    ComponentMetadata,
-)
-
+    ComponentMetadata, )
 
 logger = logging.getLogger(__name__)
 
@@ -56,11 +53,11 @@ class SemanticSelectionStrategy(BaseSelectionStrategy):
         scored_tools = []
         for tool in available_tools:
             # Calculate similarity score
-            tool_words = set(
-                (tool.description + " " + " ".join(tool.capabilities)).lower().split()
-            )
+            tool_words = set((tool.description + ' ' +
+                              ' '.join(tool.capabilities)).lower().split(), )
             common_words = query_words.intersection(tool_words)
-            similarity = len(common_words) / max(len(query_words), len(tool_words), 1)
+            similarity = len(common_words) / max(len(query_words),
+                                                 len(tool_words), 1)
 
             if similarity >= self.similarity_threshold:
                 tool.similarity_score = similarity
@@ -73,9 +70,9 @@ class SemanticSelectionStrategy(BaseSelectionStrategy):
         return ToolSelectionResult(
             selected_tools=selected,
             selection_metadata={
-                "strategy": "semantic",
-                "similarity_threshold": self.similarity_threshold,
-                "total_candidates": len(available_tools),
+                'strategy': 'semantic',
+                'similarity_threshold': self.similarity_threshold,
+                'total_candidates': len(available_tools),
             },
             selection_confidence=0.8 if selected else 0.0,
         )
@@ -101,7 +98,8 @@ class CapabilityBasedStrategy(BaseSelectionStrategy):
         scored_tools = []
         for tool in available_tools:
             capability_score = self._calculate_capability_match(
-                required_capabilities, tool.capabilities
+                required_capabilities,
+                tool.capabilities,
             )
 
             if capability_score > 0:
@@ -115,9 +113,9 @@ class CapabilityBasedStrategy(BaseSelectionStrategy):
         return ToolSelectionResult(
             selected_tools=selected,
             selection_metadata={
-                "strategy": "capability",
-                "required_capabilities": required_capabilities,
-                "total_candidates": len(available_tools),
+                'strategy': 'capability',
+                'required_capabilities': required_capabilities,
+                'total_candidates': len(available_tools),
             },
             selection_confidence=0.7 if selected else 0.0,
         )
@@ -125,11 +123,11 @@ class CapabilityBasedStrategy(BaseSelectionStrategy):
     def _extract_capabilities_from_query(self, query: str) -> list[str]:
         """Extract required capabilities from query."""
         capability_keywords = {
-            "search": ["search", "find", "lookup", "retrieve"],
-            "analysis": ["analyze", "examine", "evaluate", "assess"],
-            "generation": ["create", "generate", "build", "make"],
-            "processing": ["process", "transform", "convert", "parse"],
-            "communication": ["send", "message", "email", "notify"],
+            'search': ['search', 'find', 'lookup', 'retrieve'],
+            'analysis': ['analyze', 'examine', 'evaluate', 'assess'],
+            'generation': ['create', 'generate', 'build', 'make'],
+            'processing': ['process', 'transform', 'convert', 'parse'],
+            'communication': ['send', 'message', 'email', 'notify'],
         }
 
         query_lower = query.lower()
@@ -142,7 +140,9 @@ class CapabilityBasedStrategy(BaseSelectionStrategy):
         return detected_capabilities
 
     def _calculate_capability_match(
-        self, required: list[str], available: list[str]
+        self,
+        required: list[str],
+        available: list[str],
     ) -> float:
         """Calculate capability match score."""
         if not required:
@@ -193,17 +193,19 @@ class AdaptiveSelectionStrategy(BaseSelectionStrategy):
         return ToolSelectionResult(
             selected_tools=selected,
             selection_metadata={
-                "strategy": "adaptive",
-                "learning_rate": self.learning_rate,
-                "performance_data": len(self.tool_performance),
+                'strategy': 'adaptive',
+                'learning_rate': self.learning_rate,
+                'performance_data': len(self.tool_performance),
             },
             selection_confidence=0.9 if selected else 0.0,
         )
 
-    def _calculate_semantic_score(self, query: str, tool: ComponentMetadata) -> float:
+    def _calculate_semantic_score(self, query: str,
+                                  tool: ComponentMetadata) -> float:
         """Calculate basic semantic similarity score."""
         query_words = set(query.lower().split())
-        tool_text = (tool.description + " " + " ".join(tool.capabilities)).lower()
+        tool_text = (tool.description + ' ' +
+                     ' '.join(tool.capabilities)).lower()
         tool_words = set(tool_text.split())
 
         common_words = query_words.intersection(tool_words)
@@ -214,7 +216,8 @@ class AdaptiveSelectionStrategy(BaseSelectionStrategy):
         current_score = self.tool_performance.get(tool_name, 0.5)
 
         if success:
-            new_score = current_score + self.learning_rate * (1.0 - current_score)
+            new_score = current_score + self.learning_rate * (1.0 -
+                                                              current_score)
         else:
             new_score = current_score - self.learning_rate * current_score
 
@@ -247,9 +250,7 @@ class ContextualSelectionStrategy(BaseSelectionStrategy):
             history_score = self._calculate_history_relevance(tool, context)
 
             # Combine scores
-            combined_score = (
-                0.5 * semantic_score + 0.3 * context_score + 0.2 * history_score
-            )
+            combined_score = 0.5 * semantic_score + 0.3 * context_score + 0.2 * history_score
 
             tool.composite_score = combined_score
             if combined_score > 0.2:
@@ -262,17 +263,19 @@ class ContextualSelectionStrategy(BaseSelectionStrategy):
         return ToolSelectionResult(
             selected_tools=selected,
             selection_metadata={
-                "strategy": "contextual",
-                "context_keys": list(context.current_context.keys()),
-                "history_length": len(context.conversation_history),
+                'strategy': 'contextual',
+                'context_keys': list(context.current_context.keys()),
+                'history_length': len(context.conversation_history),
             },
             selection_confidence=0.85 if selected else 0.0,
         )
 
-    def _calculate_semantic_score(self, query: str, tool: ComponentMetadata) -> float:
+    def _calculate_semantic_score(self, query: str,
+                                  tool: ComponentMetadata) -> float:
         """Calculate semantic similarity."""
         query_words = set(query.lower().split())
-        tool_text = (tool.description + " " + " ".join(tool.capabilities)).lower()
+        tool_text = (tool.description + ' ' +
+                     ' '.join(tool.capabilities)).lower()
         tool_words = set(tool_text.split())
 
         if not query_words or not tool_words:
@@ -282,32 +285,36 @@ class ContextualSelectionStrategy(BaseSelectionStrategy):
         return len(common_words) / max(len(query_words), len(tool_words))
 
     def _calculate_context_relevance(
-        self, tool: ComponentMetadata, context: ContextAwareState
+        self,
+        tool: ComponentMetadata,
+        context: ContextAwareState,
     ) -> float:
         """Calculate how relevant tool is to current context."""
         relevance_score = 0.0
 
         # Check if tool capabilities match context requirements
-        context_domain = context.current_context.get("domain", "")
+        context_domain = context.current_context.get('domain', '')
         if context_domain and context_domain.lower() in [
-            tag.lower() for tag in tool.tags
+                tag.lower() for tag in tool.tags
         ]:
             relevance_score += 0.5
 
         # Check user preferences
-        preferred_tools = context.user_preferences.get("preferred_tools", [])
+        preferred_tools = context.user_preferences.get('preferred_tools', [])
         if tool.name in preferred_tools:
             relevance_score += 0.3
 
         # Check session metadata
-        session_type = context.session_metadata.get("type", "")
+        session_type = context.session_metadata.get('type', '')
         if session_type and session_type in tool.capabilities:
             relevance_score += 0.2
 
         return min(1.0, relevance_score)
 
     def _calculate_history_relevance(
-        self, tool: ComponentMetadata, context: ContextAwareState
+        self,
+        tool: ComponentMetadata,
+        context: ContextAwareState,
     ) -> float:
         """Calculate tool relevance based on conversation history."""
         if not context.conversation_history:
@@ -320,18 +327,15 @@ class ContextualSelectionStrategy(BaseSelectionStrategy):
             return 0.7
 
         # Analyze conversation topics
-        history_text = " ".join(
-            [
-                msg.content
-                for msg in context.conversation_history
-                if hasattr(msg, "content") and msg.content
-            ]
-        )
+        history_text = ' '.join([
+            msg.content for msg in context.conversation_history
+            if hasattr(msg, 'content') and msg.content
+        ], )
 
         # Simple topic relevance
         tool_keywords = tool.capabilities + tool.tags
         history_words = set(history_text.lower().split())
-        tool_words = set(" ".join(tool_keywords).lower().split())
+        tool_words = set(' '.join(tool_keywords).lower().split())
 
         common_words = history_words.intersection(tool_words)
         if tool_words:
@@ -366,11 +370,15 @@ class EnsembleSelectionStrategy(BaseSelectionStrategy):
         for strategy in self.strategies:
             try:
                 result = await strategy.select_tools(
-                    query, available_tools, context, max_tools * 2
+                    query,
+                    available_tools,
+                    context,
+                    max_tools * 2,
                 )
                 strategy_results.append(result)
             except Exception as e:
-                logger.warning(f"Strategy {type(strategy).__name__} failed: {e}")
+                logger.warning(
+                    f"Strategy {type(strategy).__name__} failed: {e}")
                 strategy_results.append(ToolSelectionResult())
 
         # Combine results using weighted voting
@@ -378,44 +386,47 @@ class EnsembleSelectionStrategy(BaseSelectionStrategy):
         total_confidence = 0.0
 
         for i, result in enumerate(strategy_results):
-            weight = self.strategy_weights[i] if i < len(self.strategy_weights) else 0.1
+            weight = self.strategy_weights[i] if i < len(
+                self.strategy_weights) else 0.1
             total_confidence += result.selection_confidence * weight
 
             for tool in result.selected_tools:
                 if tool.name not in tool_scores:
-                    tool_scores[tool.name] = {"tool": tool, "score": 0.0}
+                    tool_scores[tool.name] = {'tool': tool, 'score': 0.0}
 
                 # Add weighted score
-                tool_score = (
-                    getattr(tool, "similarity_score", 0.0)
-                    or getattr(tool, "capability_match_score", 0.0)
-                    or getattr(tool, "composite_score", 0.0)
-                )
+                tool_score = (getattr(tool, 'similarity_score', 0.0)
+                              or getattr(tool, 'capability_match_score', 0.0)
+                              or getattr(tool, 'composite_score', 0.0))
 
-                tool_scores[tool.name]["score"] += weight * tool_score
+                tool_scores[tool.name]['score'] += weight * tool_score
 
         # Sort by ensemble score and select top tools
         ranked_tools = sorted(
-            tool_scores.values(), key=lambda x: x["score"], reverse=True
+            tool_scores.values(),
+            key=lambda x: x['score'],
+            reverse=True,
         )
 
-        selected_tools = [item["tool"] for item in ranked_tools[:max_tools]]
+        selected_tools = [item['tool'] for item in ranked_tools[:max_tools]]
 
         return ToolSelectionResult(
             selected_tools=selected_tools,
             selection_metadata={
-                "strategy": "ensemble",
-                "num_strategies": len(self.strategies),
-                "strategy_weights": self.strategy_weights,
+                'strategy': 'ensemble',
+                'num_strategies': len(self.strategies),
+                'strategy_weights': self.strategy_weights,
             },
-            selection_confidence=(
-                total_confidence / len(self.strategies) if self.strategies else 0.0
-            ),
+            selection_confidence=(total_confidence / len(self.strategies)
+                                  if self.strategies else 0.0),
         )
 
 
 class LearningSelectionStrategy(BaseSelectionStrategy):
-    """Selection strategy that learns from user feedback and tool performance."""
+    """Selection strategy that learns from user feedback and tool.
+
+    performance.
+    """
 
     def __init__(self) -> None:
         self.tool_ratings: dict[str, list[float]] = {}
@@ -439,12 +450,11 @@ class LearningSelectionStrategy(BaseSelectionStrategy):
             performance_score = self._get_learned_performance(tool.name)
 
             # Add context-based learning score
-            context_score = self._get_context_learning_score(tool.name, context)
+            context_score = self._get_context_learning_score(
+                tool.name, context)
 
             # Combine scores
-            final_score = (
-                0.4 * base_score + 0.4 * performance_score + 0.2 * context_score
-            )
+            final_score = 0.4 * base_score + 0.4 * performance_score + 0.2 * context_score
             tool.composite_score = final_score
 
             if final_score > 0.3:
@@ -457,17 +467,22 @@ class LearningSelectionStrategy(BaseSelectionStrategy):
         return ToolSelectionResult(
             selected_tools=selected,
             selection_metadata={
-                "strategy": "learning",
-                "learned_tools": len(self.tool_ratings),
-                "feedback_entries": sum(
-                    len(feedback) for feedback in self.user_feedback.values()
-                ),
+                'strategy':
+                'learning',
+                'learned_tools':
+                len(self.tool_ratings),
+                'feedback_entries':
+                sum(len(feedback) for feedback in self.user_feedback.values()),
             },
             selection_confidence=0.9 if selected else 0.0,
         )
 
     def add_feedback(
-        self, tool_name: str, rating: float, context: str, feedback_data: dict[str, Any]
+        self,
+        tool_name: str,
+        rating: float,
+        context: str,
+        feedback_data: dict[str, Any],
     ) -> None:
         """Add user feedback for learning."""
         if tool_name not in self.tool_ratings:
@@ -484,34 +499,39 @@ class LearningSelectionStrategy(BaseSelectionStrategy):
             self.context_patterns[context].append(tool_name)
 
     def _calculate_base_compatibility(
-        self, query: str, tool: ComponentMetadata
+        self,
+        query: str,
+        tool: ComponentMetadata,
     ) -> float:
         """Calculate basic query-tool compatibility."""
         query_words = set(query.lower().split())
-        tool_text = (tool.description + " " + " ".join(tool.capabilities)).lower()
+        tool_text = (tool.description + ' ' +
+                     ' '.join(tool.capabilities)).lower()
         tool_words = set(tool_text.split())
 
         if not query_words or not tool_words:
             return 0.0
 
         return len(query_words.intersection(tool_words)) / len(
-            query_words.union(tool_words)
-        )
+            query_words.union(tool_words), )
 
     def _get_learned_performance(self, tool_name: str) -> float:
         """Get learned performance score for tool."""
-        if tool_name not in self.tool_ratings or not self.tool_ratings[tool_name]:
+        if tool_name not in self.tool_ratings or not self.tool_ratings[
+                tool_name]:
             return 0.5  # Neutral score for unknown tools
 
         ratings = self.tool_ratings[tool_name]
         return sum(ratings) / len(ratings)
 
     def _get_context_learning_score(
-        self, tool_name: str, context: ContextAwareState
+        self,
+        tool_name: str,
+        context: ContextAwareState,
     ) -> float:
         """Get context-based learning score."""
         # Extract context key
-        context_key = context.current_context.get("domain", "general")
+        context_key = context.current_context.get('domain', 'general')
 
         if context_key in self.context_patterns:
             successful_tools = self.context_patterns[context_key]
@@ -522,15 +542,16 @@ class LearningSelectionStrategy(BaseSelectionStrategy):
 
 
 # Factory function to create strategy instances
-def create_selection_strategy(strategy_name: str, **kwargs) -> BaseSelectionStrategy:
+def create_selection_strategy(strategy_name: str,
+                              **kwargs) -> BaseSelectionStrategy:
     """Create a selection strategy by name."""
     strategies = {
-        "semantic": SemanticSelectionStrategy,
-        "capability": CapabilityBasedStrategy,
-        "adaptive": AdaptiveSelectionStrategy,
-        "contextual": ContextualSelectionStrategy,
-        "ensemble": EnsembleSelectionStrategy,
-        "learning": LearningSelectionStrategy,
+        'semantic': SemanticSelectionStrategy,
+        'capability': CapabilityBasedStrategy,
+        'adaptive': AdaptiveSelectionStrategy,
+        'contextual': ContextualSelectionStrategy,
+        'ensemble': EnsembleSelectionStrategy,
+        'learning': LearningSelectionStrategy,
     }
 
     if strategy_name not in strategies:

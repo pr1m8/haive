@@ -1,7 +1,8 @@
 """Enhanced RAG State Schema for Multi-Agent RAG Systems.
 
-This module provides comprehensive state management for complex RAG workflows,
-supporting document processing, grading, multi-step retrieval, and conditional routing.
+This module provides comprehensive state management for complex RAG
+workflows, supporting document processing, grading, multi-step
+retrieval, and conditional routing.
 """
 
 from enum import Enum
@@ -41,36 +42,46 @@ class DocumentGradingResult(BaseModel):
 
     document_id: str = Field(description="Document identifier")
     document: Document = Field(description="The original document")
-    relevance_score: float = Field(ge=0.0, le=1.0, description="Relevance score")
-    is_relevant: bool = Field(description="Whether document passed relevance check")
+    relevance_score: float = Field(ge=0.0,
+                                   le=1.0,
+                                   description="Relevance score")
+    is_relevant: bool = Field(
+        description="Whether document passed relevance check")
     grading_reason: str = Field(description="Reason for grading decision")
-    grader_type: str = Field(description="Type of grader used (binary, numeric, etc.)")
+    grader_type: str = Field(
+        description="Type of grader used (binary, numeric, etc.)")
 
 
 class RAGStep(BaseModel):
     """Represents a single step in the RAG workflow."""
 
     step_id: str = Field(description="Unique identifier for this step")
-    operation_type: RAGOperationType = Field(description="Type of operation performed")
+    operation_type: RAGOperationType = Field(
+        description="Type of operation performed")
     input_data: dict[str, Any] = Field(
-        default_factory=dict, description="Input data for this step"
+        default_factory=dict,
+        description="Input data for this step",
     )
     output_data: dict[str, Any] = Field(
-        default_factory=dict, description="Output data from this step"
+        default_factory=dict,
+        description="Output data from this step",
     )
     timestamp: str | None = Field(
-        default=None, description="When this step was executed"
+        default=None,
+        description="When this step was executed",
     )
     agent_name: str | None = Field(
-        default=None, description="Which agent performed this step"
+        default=None,
+        description="Which agent performed this step",
     )
 
 
 class MultiAgentRAGState(StateSchema):
     """Comprehensive state schema for multi-agent RAG systems.
 
-    Supports complex RAG workflows with document grading, multi-step retrieval,
-    conditional routing, and state tracking across multiple agents.
+    Supports complex RAG workflows with document grading, multi-step
+    retrieval, conditional routing, and state tracking across multiple
+    agents.
     """
 
     # Core RAG Fields
@@ -82,22 +93,27 @@ class MultiAgentRAGState(StateSchema):
 
     # Document Management
     documents: Annotated[list[Document], operator.add] = Field(
-        default_factory=list, description="All available documents in the system"
+        default_factory=list,
+        description="All available documents in the system",
     )
     retrieved_documents: Annotated[list[Document], operator.add] = Field(
-        default_factory=list, description="Documents retrieved for current query"
-    )
-    graded_documents: Annotated[list[DocumentGradingResult], operator.add] = Field(
         default_factory=list,
-        description="Documents that have been graded for relevance",
+        description="Documents retrieved for current query",
+    )
+    graded_documents: Annotated[
+        list[DocumentGradingResult], operator.add] = Field(
+            default_factory=list,
+            description="Documents that have been graded for relevance",
     )
     filtered_documents: Annotated[list[Document], operator.add] = Field(
-        default_factory=list, description="Documents that passed relevance filtering"
+        default_factory=list,
+        description="Documents that passed relevance filtering",
     )
 
     # Generation and Responses
     generated_answer: str = Field(
-        default="", description="Generated answer from RAG process"
+        default="",
+        description="Generated answer from RAG process",
     )
     intermediate_answers: Annotated[list[str], operator.add] = Field(
         default_factory=list,
@@ -106,18 +122,22 @@ class MultiAgentRAGState(StateSchema):
 
     # Workflow Control
     query_status: QueryStatus = Field(
-        default=QueryStatus.PENDING, description="Current status of query processing"
+        default=QueryStatus.PENDING,
+        description="Current status of query processing",
     )
     current_operation: RAGOperationType | None = Field(
-        default=None, description="Currently executing operation"
+        default=None,
+        description="Currently executing operation",
     )
     next_operation: RAGOperationType | None = Field(
-        default=None, description="Next planned operation"
+        default=None,
+        description="Next planned operation",
     )
 
     # Step Tracking
     workflow_steps: Annotated[list[RAGStep], operator.add] = Field(
-        default_factory=list, description="Complete workflow history"
+        default_factory=list,
+        description="Complete workflow history",
     )
 
     # Quality Metrics
@@ -142,37 +162,46 @@ class MultiAgentRAGState(StateSchema):
 
     # Agent Coordination
     active_agent: str | None = Field(
-        default=None, description="Currently active agent name"
+        default=None,
+        description="Currently active agent name",
     )
     agent_decisions: Annotated[dict[str, Any], operator.add] = Field(
-        default_factory=dict, description="Decisions made by different agents"
+        default_factory=dict,
+        description="Decisions made by different agents",
     )
     routing_decisions: Annotated[list[dict[str, Any]], operator.add] = Field(
-        default_factory=list, description="History of routing decisions"
+        default_factory=list,
+        description="History of routing decisions",
     )
 
     # Error Handling
     errors: Annotated[list[str], operator.add] = Field(
-        default_factory=list, description="Any errors encountered during processing"
+        default_factory=list,
+        description="Any errors encountered during processing",
     )
     warnings: Annotated[list[str], operator.add] = Field(
-        default_factory=list, description="Warnings generated during processing"
+        default_factory=list,
+        description="Warnings generated during processing",
     )
 
     # Messages (inherited from StateSchema)
     messages: Annotated[list[BaseMessage], operator.add] = Field(
-        default_factory=list, description="Conversation messages"
+        default_factory=list,
+        description="Conversation messages",
     )
 
     # Configuration and Context
     retrieval_config: dict[str, Any] = Field(
-        default_factory=dict, description="Configuration for retrieval process"
+        default_factory=dict,
+        description="Configuration for retrieval process",
     )
     generation_config: dict[str, Any] = Field(
-        default_factory=dict, description="Configuration for generation process"
+        default_factory=dict,
+        description="Configuration for generation process",
     )
     grading_config: dict[str, Any] = Field(
-        default_factory=dict, description="Configuration for document grading"
+        default_factory=dict,
+        description="Configuration for document grading",
     )
 
     # Schema Metadata
@@ -232,8 +261,7 @@ class MultiAgentRAGState(StateSchema):
     def get_relevant_documents(self, min_score: float = 0.5) -> list[Document]:
         """Get documents that passed relevance threshold."""
         return [
-            result.document
-            for result in self.graded_documents
+            result.document for result in self.graded_documents
             if result.relevance_score >= min_score and result.is_relevant
         ]
 
@@ -241,30 +269,35 @@ class MultiAgentRAGState(StateSchema):
         """Update quality metrics based on current state."""
         if self.graded_documents:
             # Calculate retrieval confidence based on graded documents
-            relevant_count = sum(1 for doc in self.graded_documents if doc.is_relevant)
-            self.retrieval_confidence = relevant_count / len(self.graded_documents)
+            relevant_count = sum(1 for doc in self.graded_documents
+                                 if doc.is_relevant)
+            self.retrieval_confidence = relevant_count / len(
+                self.graded_documents)
 
         # Overall quality is average of retrieval and generation confidence
         if self.retrieval_confidence > 0 and self.generation_confidence > 0:
-            self.overall_quality_score = (
-                self.retrieval_confidence + self.generation_confidence
-            ) / 2
+            self.overall_quality_score = (self.retrieval_confidence +
+                                          self.generation_confidence) / 2
 
     def should_refine_query(self) -> bool:
         """Determine if query should be refined based on state."""
-        return (
-            self.retrieval_confidence < 0.3
-            or len(self.get_relevant_documents()) == 0
-            or self.query_status == QueryStatus.NEEDS_REFINEMENT
-        )
+        return (self.retrieval_confidence < 0.3
+                or len(self.get_relevant_documents()) == 0
+                or self.query_status == QueryStatus.NEEDS_REFINEMENT)
 
     def get_latest_step(
-        self, operation_type: RAGOperationType | None = None
+        self,
+        operation_type: RAGOperationType | None = None,
     ) -> RAGStep | None:
-        """Get the most recent workflow step, optionally filtered by operation type."""
+        """Get the most recent workflow step, optionally filtered by operation.
+
+        type.
+        """
         steps = self.workflow_steps
         if operation_type:
-            steps = [step for step in steps if step.operation_type == operation_type]
+            steps = [
+                step for step in steps if step.operation_type == operation_type
+            ]
 
         return steps[-1] if steps else None
 

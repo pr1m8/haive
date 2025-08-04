@@ -14,7 +14,8 @@ from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class SelfCorrectiveRAGConfig(BaseRAGConfig):
-    """Configuration for self-corrective RAG agents that can evaluate and improve their answers.
+    """Configuration for self-corrective RAG agents that can evaluate and
+    improve their answers.
 
     This RAG implementation extends the base RAG with:
     1. Answer evaluation to detect hallucinations
@@ -35,23 +36,28 @@ class SelfCorrectiveRAGConfig(BaseRAGConfig):
     )
 
     answer_corrector_config: AugLLMConfig | None = Field(
-        default=None, description="Configuration for the LLM that corrects answers"
+        default=None,
+        description="Configuration for the LLM that corrects answers",
     )
 
     # Document filtering options
     document_filter_config: AugLLMConfig | None = Field(
-        default=None, description="Configuration for document filtering"
+        default=None,
+        description="Configuration for document filtering",
     )
 
     relevance_threshold: float = Field(
-        default=0.7, description="Threshold for document relevance (0.0 to 1.0)"
+        default=0.7,
+        description="Threshold for document relevance (0.0 to 1.0)",
     )
 
     # Correction parameters
     max_correction_iterations: int = Field(
-        default=2, description="Maximum number of correction iterations"
+        default=2,
+        description="Maximum number of correction iterations",
     )
 
     minimum_answer_score: float = Field(
-        default=0.8, description="Minimum acceptable answer score (0.0 to 1.0)"
+        default=0.8,
+        description="Minimum acceptable answer score (0.0 to 1.0)",
     )

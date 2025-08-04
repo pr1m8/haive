@@ -6,10 +6,15 @@ This example shows how the supervisor can:
 3. Route tasks based on available tools and agent capabilities
 """
 
+from __future__ import annotations
+
 import asyncio
 import os
 import tempfile
 from typing import Any
+
+from langchain_core.messages import HumanMessage
+from langchain_core.tools import tool
 
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
@@ -18,8 +23,6 @@ from haive.agents.supervisor.dynamic_tool_discovery_supervisor import (
     ToolDiscoveryMode,
 )
 from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import HumanMessage
-from langchain_core.tools import tool
 
 
 # Create some sample tools that can be discovered
@@ -52,12 +55,14 @@ def text_analyzer(text: str) -> dict[str, Any]:
     """
     words = text.split()
     return {
-        "word_count": len(words),
-        "character_count": len(text),
-        "average_word_length": (
-            sum(len(word) for word in words) / len(words) if words else 0
-        ),
-        "unique_words": len(set(words)),
+        "word_count":
+        len(words),
+        "character_count":
+        len(text),
+        "average_word_length":
+        (sum(len(word) for word in words) / len(words) if words else 0),
+        "unique_words":
+        len(set(words)),
     }
 
 
@@ -95,14 +100,13 @@ async def basic_supervisor_example():
                 "name": "calculator",
                 "description": "Calculate mathematical expressions",
                 "func": calculator.func,
-            }
+            },
         ],
     )
 
     # Run task that needs tool discovery
     await supervisor.arun(
-        "I need to calculate 25 * 4 and analyze the word 'supervisor'"
-    )
+        "I need to calculate 25 * 4 and analyze the word 'supervisor'", )
 
     # Check discovered tools
 
@@ -154,8 +158,7 @@ async def factory_method_example():
 - Function: scrape_url(url: str) -> str
 - Description: Extract content from a URL
 - Returns: Cleaned text content
-"""
-            )
+""", )
 
         # Create supervisor with discovery configuration
         supervisor = DynamicToolDiscoverySupervisor.create_with_discovery(
@@ -176,7 +179,7 @@ async def factory_method_example():
 
         # Run task requiring tool discovery
         await supervisor.arun(
-            "Research the latest Python features, analyze their impact, and create a summary report"
+            "Research the latest Python features, analyze their impact, and create a summary report",
         )
 
         # Show tool discovery process
@@ -191,9 +194,20 @@ async def multi_agent_tool_routing_example():
 
     # Create specialized agents
     agent_configs = [
-        {"type": "ReactAgent", "name": "math_specialist", "tools": [calculator]},
-        {"type": "ReactAgent", "name": "text_specialist", "tools": [text_analyzer]},
-        {"type": "SimpleAgent", "name": "general_assistant"},
+        {
+            "type": "ReactAgent",
+            "name": "math_specialist",
+            "tools": [calculator]
+        },
+        {
+            "type": "ReactAgent",
+            "name": "text_specialist",
+            "tools": [text_analyzer]
+        },
+        {
+            "type": "SimpleAgent",
+            "name": "general_assistant"
+        },
     ]
 
     # Create supervisor with agents and tools
@@ -217,12 +231,13 @@ async def multi_agent_tool_routing_example():
     ]
 
     for task in tasks:
-
         # Simulate decision making
         from haive.agents.supervisor.types import SupervisorState
 
         state = SupervisorState(
-            messages=[HumanMessage(content=task)], next_agent="", agent_outputs={}
+            messages=[HumanMessage(content=task)],
+            next_agent="",
+            agent_outputs={},
         )
 
         await supervisor._make_decision(state)
@@ -260,10 +275,15 @@ async def performance_monitoring_example():
     supervisor = DynamicToolDiscoverySupervisor(
         name="monitoring_supervisor",
         agents={
-            "fast_agent": SimpleAgent(name="fast_agent", engine=config),
-            "slow_agent": SimpleAgent(name="slow_agent", engine=config),
-            "reliable_agent": ReactAgent(
-                name="reliable_agent", engine=config, tools=[calculator]
+            "fast_agent":
+            SimpleAgent(name="fast_agent", engine=config),
+            "slow_agent":
+            SimpleAgent(name="slow_agent", engine=config),
+            "reliable_agent":
+            ReactAgent(
+                name="reliable_agent",
+                engine=config,
+                tools=[calculator],
             ),
         },
         engine=config,
@@ -298,6 +318,5 @@ async def main():
 
 
 if __name__ == "__main__":
-
     # Run examples
     asyncio.run(main())

@@ -117,12 +117,12 @@ Self-reflects on outputs and improves them
 
        Initial Output: "The data shows improvement"
 
-   
+
    Reflection:
    - Too vague ⚠️
    - Lacks specifics ⚠️
    - No metrics ⚠️
-   
+
    Improved Output: "Sales data shows 23% improvement in Q3 2024 compared to Q2, driven by new marketing campaign
 
 .. raw:: html

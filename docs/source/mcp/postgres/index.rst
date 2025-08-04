@@ -15,7 +15,7 @@
    <div class="hero-content">
    <h2>🔀 Database Operations via MCP</h2>
    <p class="hero-description">
-   The PostgreSQL MCP server enables Claude Code to directly interact with your databases. 
+   The PostgreSQL MCP server enables Claude Code to directly interact with your databases.
    Query schemas, run SQL, analyze performance, and manage database operations seamlessly.
    </p>
    </div>
@@ -230,7 +230,7 @@ Installation
 
    -- Show table schema with details
    @postgres-local
-   SELECT 
+   SELECT
 
        column_name,
        data_type,
@@ -244,7 +244,7 @@ Installation
 
    -- Query data
    @postgres-local
-   SELECT 
+   SELECT
 
        a.id,
        a.name,
@@ -267,7 +267,7 @@ Installation
 
    -- Check table statistics
    @postgres-local
-   SELECT 
+   SELECT
 
        schemaname,
        tablename,
@@ -298,7 +298,7 @@ Installation
 
    -- Check active connections
    @postgres-local
-   SELECT 
+   SELECT
    pid,
    usename,
    application_name,
@@ -313,7 +313,7 @@ Installation
 
    -- Find slow queries
    @postgres-local
-   SELECT 
+   SELECT
    pid,
    now() - query_start as duration,
    query,
@@ -328,7 +328,7 @@ Installation
 
    -- Database sizes
    @postgres-local
-   SELECT 
+   SELECT
    datname as database,
    pg_size_pretty(pg_database_size(datname)) as size
    FROM pg_database
@@ -337,7 +337,7 @@ Installation
 
    -- Index usage
    @postgres-local
-   SELECT 
+   SELECT
    schemaname,
    tablename,
    indexname,
@@ -348,7 +348,7 @@ Installation
 
    -- Missing indexes suggestion
    @postgres-local
-   SELECT 
+   SELECT
    schemaname,
    tablename,
    attname as column_name,
@@ -383,7 +383,7 @@ Installation
 
    -- Agent performance metrics
    @postgres-local
-   SELECT 
+   SELECT
 
        a.name as agent_name,
        a.type as agent_type,
@@ -402,7 +402,7 @@ Installation
 
    -- Tool usage analysis
    @postgres-local
-   SELECT 
+   SELECT
 
        t.name as tool_name,
        COUNT(*) as usage_count,*
@@ -418,7 +418,7 @@ Installation
 
    -- Conversation checkpoints
    @postgres-local
-   SELECT 
+   SELECT
 
        c.thread_id,
        c.agent_id,
@@ -433,7 +433,7 @@ Installation
 
    -- Memory usage by agent
    @postgres-local
-   SELECT 
+   SELECT
 
        a.name,
        COUNT(DISTINCT m.conversation_id) as conversations_with_memory,

@@ -1,9 +1,9 @@
 Using Tools
 ===========
 
-Tools are a fundamental building block in Haive that enable agents to interact with external systems, 
+Tools are a fundamental building block in Haive that enable agents to interact with external systems,
 
-retrieve information, and perform specific actions. This guide will walk you through how to use 
+retrieve information, and perform specific actions. This guide will walk you through how to use
 
 existing tools and toolkits within your Haive agents.
 
@@ -19,7 +19,7 @@ In Haive, a tool is a function that:
 
 3. Returns structured output
 
-Tools can be simple utilities (like generating random numbers) or complex integrations (like querying 
+Tools can be simple utilities (like generating random numbers) or complex integrations (like querying
 
 APIs, searching the web, or executing code).
 

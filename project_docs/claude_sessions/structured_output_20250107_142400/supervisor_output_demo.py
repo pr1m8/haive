@@ -46,7 +46,6 @@ Always explain your reasoning step by step.""",
         },
     )
 
-
     # Test with different tasks
     tasks = [
         "What is the capital of France?",  # Simple - should use general_agent
@@ -61,7 +60,6 @@ Always explain your reasoning step by step.""",
             "current_iteration": 0,
             "max_iterations": 3,
         }
-
 
         try:
             # Run supervisor

@@ -120,7 +120,7 @@ Manages persistent memory across sessions
        Recent Recalls: 5
        Memory Score: 92%
 
-   
+
    Last Interaction: "Project deadline discussion"
    Related Memories: 3 found
 

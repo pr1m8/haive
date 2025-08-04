@@ -5,18 +5,14 @@ Use this instead of the regular base/__init__.py when you want the enhanced patt
 """
 
 # Export enhanced classes
-from haive.agents.base.enhanced_agent import (
-    Agent,
-    EngineT,
-    TypedInvokableEngine,
-    Workflow,
-)
+from __future__ import annotations
 
-# Also export regular mixins - they work with enhanced pattern
+from haive.agents.base.enhanced_agent import Agent, EngineT, TypedInvokableEngine, Workflow
 from haive.agents.base.mixins import ExecutionMixin, PersistenceMixin, StateMixin
 from haive.agents.base.serialization_mixin import SerializationMixin
 from haive.agents.base.types import AgentInput, AgentOutput, AgentState
 
+# Also export regular mixins - they work with enhanced pattern
 
 __all__ = [
     # Enhanced classes

@@ -1,8 +1,11 @@
 """Enhanced Multi-Agent RAG Workflows.
 
-Implements advanced RAG patterns like CRAG, Self-RAG, HYDE, and grading workflows
-using the new multi-agent base with compatibility and enhanced state management.
+Implements advanced RAG patterns like CRAG, Self-RAG, HYDE, and grading
+workflows using the new multi-agent base with compatibility and enhanced
+state management.
 """
+
+from __future__ import annotations
 
 from langchain_core.documents import Document
 from langgraph.graph import END, START
@@ -33,7 +36,8 @@ class DocumentGradingAgent(Agent):
 
         # Add document grader node
         grader_node = create_document_grader(
-            grading_func=simple_document_grader, name="grade_documents"
+            grading_func=simple_document_grader,
+            name="grade_documents",
         )
         graph.add_node("grade_documents", grader_node)
 
@@ -55,7 +59,9 @@ class RequeryDecisionAgent(Agent):
 
         # Add requery decision node
         decision_node = CallableNodeConfig(
-            name="requery_decision", callable_func=requery_decision, pass_state=True
+            name="requery_decision",
+            callable_func=requery_decision,
+            pass_state=True,
         )
         graph.add_node("requery_decision", decision_node)
 
@@ -89,7 +95,8 @@ class CorrectiveRAGAgent(ConditionalAgent):
             from haive.core.fixtures.documents import conversation_documents
 
             retrieval_agent = SimpleRAGAgent.from_documents(
-                documents or conversation_documents, name="CRAG Retrieval Agent"
+                documents or conversation_documents,
+                name="CRAG Retrieval Agent",
             )
 
         if not grading_agent:
@@ -99,7 +106,8 @@ class CorrectiveRAGAgent(ConditionalAgent):
             requery_agent = RequeryDecisionAgent()
 
         if not answer_agent:
-            answer_agent = SimpleAgent(name="CRAG Answer Agent", engine=AugLLMConfig())
+            answer_agent = SimpleAgent(name="CRAG Answer Agent",
+                                       engine=AugLLMConfig())
 
         # Initialize with agents
         agents = [retrieval_agent, grading_agent, requery_agent, answer_agent]
@@ -137,10 +145,8 @@ class CorrectiveRAGAgent(ConditionalAgent):
                 return self._get_agent_node_name(self.requery_agent)
 
             # If requery needed and haven't hit limit
-            if (
-                getattr(state, "needs_requery", False)
-                and state.retrieval_count < state.max_retrievals
-            ):
+            if (getattr(state, "needs_requery", False)
+                    and state.retrieval_count < state.max_retrievals):
                 # Clear previous docs and requery
                 state.retrieved_documents = []
                 state.graded_documents = []
@@ -155,13 +161,19 @@ class CorrectiveRAGAgent(ConditionalAgent):
             self.add_conditional_edge(
                 source_agent=agent,
                 condition=crag_router,
-                destinations={self._get_agent_node_name(a): a for a in self.agents},
+                destinations={
+                    self._get_agent_node_name(a): a
+                    for a in self.agents
+                },
                 default=END,
             )
 
 
 class HYDERAGAgent(SequentialAgent):
-    """HYDE RAG agent that generates hypothetical documents before retrieval."""
+    """HYDE RAG agent that generates hypothetical documents before.
+
+    retrieval.
+    """
 
     def __init__(
         self,
@@ -175,15 +187,13 @@ class HYDERAGAgent(SequentialAgent):
         if not hypothesis_agent:
             from langchain_core.prompts import ChatPromptTemplate
 
-            hyde_prompt = ChatPromptTemplate.from_messages(
-                [
-                    (
-                        "system",
-                        "You are an expert that generates detailed, accurate responses to questions. Write a comprehensive paragraph that would perfectly answer the given question.",
-                    ),
-                    ("human", "Question: {query}\n\nDetailed Answer:"),
-                ]
-            )
+            hyde_prompt = ChatPromptTemplate.from_messages([
+                (
+                    "system",
+                    "You are an expert that generates detailed, accurate responses to questions. Write a comprehensive paragraph that would perfectly answer the given question.",
+                ),
+                ("human", "Question: {query}\n\nDetailed Answer:"),
+            ], )
 
             hypothesis_agent = SimpleAgent(
                 name="HYDE Hypothesis Generator",
@@ -195,11 +205,13 @@ class HYDERAGAgent(SequentialAgent):
             from haive.core.fixtures.documents import conversation_documents
 
             retrieval_agent = SimpleRAGAgent.from_documents(
-                documents or conversation_documents, name="HYDE Retrieval Agent"
+                documents or conversation_documents,
+                name="HYDE Retrieval Agent",
             )
 
         if not answer_agent:
-            answer_agent = SimpleAgent(name="HYDE Answer Agent", engine=AugLLMConfig())
+            answer_agent = SimpleAgent(name="HYDE Answer Agent",
+                                       engine=AugLLMConfig())
 
         super().__init__(
             name="HYDE RAG Agent",
@@ -225,18 +237,16 @@ class SelfRAGAgent(ConditionalAgent):
         if not retrieval_decision_agent:
             from langchain_core.prompts import ChatPromptTemplate
 
-            retrieval_prompt = ChatPromptTemplate.from_messages(
-                [
-                    (
-                        "system",
-                        """You decide if external knowledge retrieval is needed.
+            retrieval_prompt = ChatPromptTemplate.from_messages([
+                (
+                    "system",
+                    """You decide if external knowledge retrieval is needed.
                 Respond with exactly one of:
                 - [Retrieval] if the question requires external knowledge
                 - [No Retrieval] if you can answer with your internal knowledge""",
-                    ),
-                    ("human", "Question: {query}"),
-                ]
-            )
+                ),
+                ("human", "Question: {query}"),
+            ], )
 
             retrieval_decision_agent = SimpleAgent(
                 name="Self-RAG Retrieval Decision",
@@ -248,17 +258,20 @@ class SelfRAGAgent(ConditionalAgent):
             from haive.core.fixtures.documents import conversation_documents
 
             retrieval_agent = SimpleRAGAgent.from_documents(
-                documents or conversation_documents, name="Self-RAG Retrieval Agent"
+                documents or conversation_documents,
+                name="Self-RAG Retrieval Agent",
             )
 
         if not relevance_agent:
             relevance_agent = SimpleAgent(
-                name="Self-RAG Relevance Checker", engine=AugLLMConfig()
+                name="Self-RAG Relevance Checker",
+                engine=AugLLMConfig(),
             )
 
         if not generation_agent:
             generation_agent = SimpleAgent(
-                name="Self-RAG Generator", engine=AugLLMConfig()
+                name="Self-RAG Generator",
+                engine=AugLLMConfig(),
             )
 
         agents = [
@@ -288,10 +301,8 @@ class SelfRAGAgent(ConditionalAgent):
         def self_rag_router(state: MultiAgentRAGState) -> str:
             """Route based on Self-RAG reflection logic."""
             # Check if we need retrieval decision
-            if (
-                not hasattr(state, "needs_retrieval_decision")
-                or not state.needs_retrieval_decision
-            ):
+            if not hasattr(state, "needs_retrieval_decision"
+                           ) or not state.needs_retrieval_decision:
                 return self._get_agent_node_name(self.retrieval_decision_agent)
 
             # If retrieval is needed and not done
@@ -300,7 +311,8 @@ class SelfRAGAgent(ConditionalAgent):
                 return self._get_agent_node_name(self.retrieval_agent)
 
             # Check relevance if documents retrieved but not checked
-            if state.retrieved_documents and not hasattr(state, "relevance_checked"):
+            if state.retrieved_documents and not hasattr(
+                    state, "relevance_checked"):
                 return self._get_agent_node_name(self.relevance_agent)
 
             # Generate final answer
@@ -311,13 +323,18 @@ class SelfRAGAgent(ConditionalAgent):
             self.add_conditional_edge(
                 source_agent=agent,
                 condition=self_rag_router,
-                destinations={self._get_agent_node_name(a): a for a in self.agents},
+                destinations={
+                    self._get_agent_node_name(a): a
+                    for a in self.agents
+                },
                 default=END,
             )
 
 
 def create_enhanced_rag_workflow(
-    workflow_type: str = "crag", documents: list[Document] | None = None, **kwargs
+    workflow_type: str = "crag",
+    documents: list[Document] | None = None,
+    **kwargs,
 ) -> Agent:
     """Factory function to create enhanced RAG workflows.
 

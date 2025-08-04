@@ -121,7 +121,7 @@ Processes and analyzes documents
        Topics: Machine Learning, NLP
        Key Entities: 8 identified
 
-   
+
    Summary: This paper presents a novel approach to...
 
 .. raw:: html

@@ -1,15 +1,11 @@
 """Agentic RAG Multi-Agent System.
 
-This implements an advanced RAG system with document grading, query rewriting,
-and conditional routing between retrieval and web search.
+This implements an advanced RAG system with document grading, query
+rewriting, and conditional routing between retrieval and web search.
 """
+from __future__ import annotations
 
 from typing import Any
-
-from langchain_core.messages import AIMessage
-from langchain_core.tools import tool
-from langgraph.graph import END, START
-from pydantic import Field
 
 from haive.agents.rag.agentic.document_grader import create_document_grader_agent
 from haive.agents.rag.agentic.query_rewriter import create_query_rewriter_agent
@@ -21,6 +17,11 @@ from haive.core.engine.retriever import BaseRetrieverConfig
 from haive.core.engine.vectorstore import VectorStoreConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.prebuilt.messages_state import MessagesState
+from langchain_core.messages import AIMessage
+from langchain_core.tools import tool
+from langgraph.graph import END
+from langgraph.graph import START
+from pydantic import Field
 
 
 class AgenticRAGState(MessagesState):
@@ -28,34 +29,42 @@ class AgenticRAGState(MessagesState):
 
     # Query and refinement
     original_query: str = Field(default="", description="Original user query")
-    refined_query: str = Field(default="", description="Refined query after rewriting")
-    query_rewrite_count: int = Field(default=0, description="Number of query rewrites")
+    refined_query: str = Field(default="",
+                               description="Refined query after rewriting")
+    query_rewrite_count: int = Field(default=0,
+                                     description="Number of query rewrites")
 
     # Retrieved documents
     retrieved_documents: list[dict[str, Any]] = Field(
-        default_factory=list, description="Documents retrieved from vector store"
+        default_factory=list,
+        description="Documents retrieved from vector store",
     )
 
     # Graded documents
     graded_documents: list[dict[str, Any]] = Field(
-        default_factory=list, description="Documents after relevance grading"
+        default_factory=list,
+        description="Documents after relevance grading",
     )
 
     relevant_documents: list[dict[str, Any]] = Field(
-        default_factory=list, description="Only the relevant documents"
+        default_factory=list,
+        description="Only the relevant documents",
     )
 
     # Web search results
     web_search_results: list[dict[str, Any]] = Field(
-        default_factory=list, description="Results from web search if needed"
+        default_factory=list,
+        description="Results from web search if needed",
     )
 
     # Control flow
     all_documents_relevant: bool = Field(
-        default=True, description="Whether all retrieved documents are relevant"
+        default=True,
+        description="Whether all retrieved documents are relevant",
     )
 
-    use_web_search: bool = Field(default=False, description="Whether to use web search")
+    use_web_search: bool = Field(default=False,
+                                 description="Whether to use web search")
 
     # Final answer
     final_answer: str = Field(default="", description="Final generated answer")
@@ -90,45 +99,52 @@ class AgenticRAGAgent(SimpleAgent):
             # 3. Rewrite query if needed
             # 4. Use web search if local docs aren't sufficient
             # 5. Generate comprehensive answer
-
     """
 
     # Component configurations
     retriever_config: BaseRetrieverConfig | VectorStoreConfig = Field(
-        ..., description="Retriever configuration for document retrieval"
+        ...,
+        description="Retriever configuration for document retrieval",
     )
 
     grader_agent: Any | None = Field(
-        default=None, description="Agent for grading document relevance"
+        default=None,
+        description="Agent for grading document relevance",
     )
 
     rewriter_agent: Any | None = Field(
-        default=None, description="Agent for query refinement"
+        default=None,
+        description="Agent for query refinement",
     )
 
     generator_agent: SimpleAgent | None = Field(
-        default=None, description="Agent for final answer generation"
+        default=None,
+        description="Agent for final answer generation",
     )
 
     web_search_agent: ReactRAGAgent | None = Field(
-        default=None, description="Agent for web search fallback"
+        default=None,
+        description="Agent for web search fallback",
     )
 
     # Workflow configuration
     max_query_rewrites: int = Field(
-        default=1, description="Maximum number of query rewrite attempts"
+        default=1,
+        description="Maximum number of query rewrite attempts",
     )
 
     use_web_search: bool = Field(
-        default=True, description="Whether to use web search as fallback"
+        default=True,
+        description="Whether to use web search as fallback",
     )
 
     relevance_threshold: float = Field(
-        default=0.7, description="Minimum relevance score for documents"
+        default=0.7,
+        description="Minimum relevance score for documents",
     )
 
     @classmethod
-    def create_default(cls, **kwargs) -> "AgenticRAGAgent":
+    def create_default(cls, **kwargs) -> AgenticRAGAgent:
         """Create a default Agentic RAG agent.
 
         Args:
@@ -146,7 +162,8 @@ class AgenticRAGAgent(SimpleAgent):
         name = kwargs.pop("name", "agentic_rag")
         retriever_config = kwargs.pop("retriever_config")
         if not retriever_config:
-            raise ValueError("retriever_config is required for AgenticRAGAgent")
+            raise ValueError(
+                "retriever_config is required for AgenticRAGAgent")
 
         # Extract optional config
         temperature = kwargs.pop("temperature", 0.1)
@@ -154,35 +171,37 @@ class AgenticRAGAgent(SimpleAgent):
 
         # Create component agents
         grader_agent = create_document_grader_agent(
-            name=f"{name}_grader", temperature=0.0  # Consistent grading
+            name=f"{name}_grader",
+            temperature=0.0,  # Consistent grading
         )
 
         rewriter_agent = create_query_rewriter_agent(
-            name=f"{name}_rewriter", temperature=0.7  # Creative rewriting
+            name=f"{name}_rewriter",
+            temperature=0.7,  # Creative rewriting
         )
 
         # Create generator agent
         generator_engine = AugLLMConfig(
-            temperature=temperature,
-            system_message=(
+            temperature=temperature, system_message=(
                 "You are an expert at generating comprehensive answers based on retrieved information.\n\n"
                 "Guidelines:\n"
                 "1. Use the provided documents to answer the query\n"
                 "2. Synthesize information from multiple sources\n"
                 "3. Be accurate and cite sources when possible\n"
                 "4. If information is incomplete, acknowledge limitations\n"
-                "5. Provide a clear, well-structured response"
-            ),
-        )
+                "5. Provide a clear, well-structured response"), )
 
-        generator_agent = SimpleAgent(name=f"{name}_generator", engine=generator_engine)
+        generator_agent = SimpleAgent(name=f"{name}_generator",
+                                      engine=generator_engine)
 
         # Create web search agent if enabled
         web_search_agent = None
         if use_web_search:
             web_search_tool = cls._create_web_search_tool()
             web_search_agent = ReactRAGAgent.create_default(
-                name=f"{name}_web_search", tools=[web_search_tool], temperature=0.3
+                name=f"{name}_web_search",
+                tools=[web_search_tool],
+                temperature=0.3,
             )
 
         # Create main engine
@@ -220,15 +239,13 @@ class AgenticRAGAgent(SimpleAgent):
                 Search results as a string
             """
             # In a real implementation, this would call a web search API
-            return (
-                f"Web search results for '{query}':\n\n"
-                "1. Recent developments in the field (2024)\n"
-                "2. Latest research papers and findings\n"
-                "3. Current industry applications\n"
-                "4. Expert opinions and analysis\n\n"
-                "Note: This is a mock implementation. "
-                "Replace with actual web search API integration."
-            )
+            return (f"Web search results for '{query}':\n\n"
+                    "1. Recent developments in the field (2024)\n"
+                    "2. Latest research papers and findings\n"
+                    "3. Current industry applications\n"
+                    "4. Expert opinions and analysis\n\n"
+                    "Note: This is a mock implementation. "
+                    "Replace with actual web search API integration.")
 
         return web_search
 
@@ -270,13 +287,15 @@ class AgenticRAGAgent(SimpleAgent):
 
         return graph
 
-    async def _retrieve_documents(self, state: AgenticRAGState) -> dict[str, Any]:
+    async def _retrieve_documents(self,
+                                  state: AgenticRAGState) -> dict[str, Any]:
         """Retrieve documents using the RAG agent."""
         # Use refined query if available, otherwise original
         query = state.refined_query or state.original_query
 
         # Create retriever agent
-        retriever = BaseRAGAgent(name="retriever", engine=self.retriever_config)
+        retriever = BaseRAGAgent(name="retriever",
+                                 engine=self.retriever_config)
 
         # Retrieve documents
         result = await retriever.arun({"query": query})
@@ -284,14 +303,16 @@ class AgenticRAGAgent(SimpleAgent):
         # Extract documents from result
         documents = []
         if isinstance(result, dict):
-            documents = result.get("documents", result.get("retrieved_documents", []))
+            documents = result.get("documents",
+                                   result.get("retrieved_documents", []))
 
         return {
-            "retrieved_documents": documents,
+            "retrieved_documents":
+            documents,
             "messages": [
                 *state.messages,
                 AIMessage(
-                    content=f"Retrieved {len(documents)} documents for query: {query}"
+                    content=f"Retrieved {len(documents)} documents for query: {query}",
                 ),
             ],
         }
@@ -310,13 +331,12 @@ class AgenticRAGAgent(SimpleAgent):
         query = state.refined_query or state.original_query
         grading_result = await self.grader_agent.grade_documents(
             query=query,
-            documents=[
-                {
-                    "id": f"doc_{i}",
-                    "content": doc.get("content", doc.get("page_content", "")),
-                }
-                for i, doc in enumerate(state.retrieved_documents)
-            ],
+            documents=[{
+                "id":
+                f"doc_{i}",
+                "content":
+                doc.get("content", doc.get("page_content", "")),
+            } for i, doc in enumerate(state.retrieved_documents)],
         )
 
         # Process grading results
@@ -336,7 +356,10 @@ class AgenticRAGAgent(SimpleAgent):
             "messages": [
                 *state.messages,
                 AIMessage(
-                    content=f"Graded {len(state.retrieved_documents)} documents. {len(relevant_docs)} are relevant."
+                    content=f"Graded {
+                        len(
+                            state.retrieved_documents)} documents. {
+                        len(relevant_docs)} are relevant.",
                 ),
             ],
         }
@@ -376,7 +399,8 @@ class AgenticRAGAgent(SimpleAgent):
             "messages": [
                 *state.messages,
                 AIMessage(
-                    content=f"Rewrote query from '{query}' to '{rewrite_result.best_refined_query}'"
+                    content=f"Rewrote query from '{query}' to '{
+                        rewrite_result.best_refined_query}'",
                 ),
             ],
         }
@@ -388,19 +412,23 @@ class AgenticRAGAgent(SimpleAgent):
 
         # Search with the best query we have
         query = state.refined_query or state.original_query
-        search_result = await self.web_search_agent.arun(f"Search for: {query}")
+        search_result = await self.web_search_agent.arun(f"Search for: {query}"
+                                                         )
 
         # Parse search results
         web_results = [
             {
                 "content": search_result,
                 "source": "web_search",
-                "metadata": {"query": query},
-            }
+                "metadata": {
+                    "query": query
+                },
+            },
         ]
 
         return {
-            "web_search_results": web_results,
+            "web_search_results":
+            web_results,
             "messages": [
                 *state.messages,
                 AIMessage(content=f"Performed web search for: {query}"),
@@ -419,7 +447,8 @@ class AgenticRAGAgent(SimpleAgent):
         context = "Based on the following information:\n\n"
         for i, doc in enumerate(all_docs, 1):
             content = doc.get("content", doc.get("page_content", ""))
-            source = doc.get("source", doc.get("metadata", {}).get("source", "Unknown"))
+            source = doc.get("source",
+                             doc.get("metadata", {}).get("source", "Unknown"))
             context += f"[{i}] Source: {source}\n{content}\n\n"
 
         # Generate answer
@@ -434,5 +463,6 @@ class AgenticRAGAgent(SimpleAgent):
 
         return {
             "final_answer": answer,
-            "messages": [*state.messages, AIMessage(content=answer)],
+            "messages": [*state.messages,
+                         AIMessage(content=answer)],
         }

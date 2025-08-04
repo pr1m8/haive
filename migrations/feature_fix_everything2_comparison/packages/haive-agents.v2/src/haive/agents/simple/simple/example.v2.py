@@ -1,30 +1,28 @@
 """Example usage of SimpleAgent implementation with enhanced debugging.
 
-from typing import Any
-This script demonstrates how to create and use SimpleAgent with custom state schema.
+from typing import Any This script demonstrates how to create and use
+SimpleAgent with custom state schema.
 """
+from __future__ import annotations
 
 import logging
 import uuid
 
+from haive.agents.simple import SimpleAgent
+from haive.agents.simple import SimpleAgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.messages import BaseMessage
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
-from pydantic import BaseModel, Field
-
-# Setup enhanced logging with rich
+from pydantic import BaseModel
+from pydantic import Field
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.panel import Panel
 from rich.traceback import install as install_rich_traceback
 
-from haive.agents.simple import (
-    SimpleAgent,
-    SimpleAgentConfig,
-)
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-
+# Setup enhanced logging with rich
 
 # Install rich traceback for better error display
 install_rich_traceback(show_locals=True, width=120, suppress=[])
@@ -49,8 +47,9 @@ def debug_print(title, obj, expand=False) -> None:
         from rich.pretty import Pretty
 
         console.print(
-            Panel(Pretty(obj, expand_all=expand), title=title, border_style="cyan")
-        )
+            Panel(Pretty(obj, expand_all=expand),
+                  title=title,
+                  border_style="cyan"), )
     else:
         console.print(Panel(str(obj), title=title, border_style="cyan"))
 
@@ -75,8 +74,7 @@ def example_with_custom_state_schema() -> Any:
         User query: {input}
 
         Please provide a helpful response based on the context and query.
-        """
-    )
+        """, )
 
     # Create the LLM chain with output field explicitly set to answer
     aug_llm = AugLLMConfig(
@@ -113,7 +111,7 @@ def example_with_custom_state_schema() -> Any:
 
         # Debug what's in the state
         console.print(
-            f"[bold green]State after process:[/bold green] answer={state.answer}"
+            f"[bold green]State after process:[/bold green] answer={state.answer}",
         )
 
         return state

@@ -3,6 +3,8 @@
 Implementation using conditional edges for routing between strategies.
 """
 
+from __future__ import annotations
+
 from enum import Enum
 import logging
 from typing import Any
@@ -23,7 +25,6 @@ from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import LLMConfig
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -41,24 +42,24 @@ class StrategyDecision(BaseModel):
     """Strategy selection decision."""
 
     strategy: RAGStrategy = Field(description="Selected strategy")
-    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in selection")
+    confidence: float = Field(ge=0.0,
+                              le=1.0,
+                              description="Confidence in selection")
     reasoning: str = Field(description="Reasoning for selection")
 
 
-STRATEGY_SELECTION_PROMPT = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            """Select the best RAG strategy for the query:
+STRATEGY_SELECTION_PROMPT = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        """Select the best RAG strategy for the query:
     - simple: Basic queries needing direct retrieval
     - multi_query: Complex queries benefiting from multiple perspectives
     - hyde: Abstract queries needing hypothetical expansion
     - fusion: High-quality results through rank fusion
     - flare: Iterative refinement needed""",
-        ),
-        ("human", "Query: {query}\n\nSelect the optimal strategy."),
-    ]
-)
+    ),
+    ("human", "Query: {query}\n\nSelect the optimal strategy."),
+], )
 
 
 class AgenticRAGRouterV2(Agent):
@@ -85,23 +86,33 @@ class AgenticRAGRouterV2(Agent):
 
         # Create strategy agents
         simple_rag = SimpleRAGAgent.from_documents(
-            documents=self.documents, llm_config=self.llm_config, name="SimpleRAG"
+            documents=self.documents,
+            llm_config=self.llm_config,
+            name="SimpleRAG",
         )
 
         multi_query_rag = MultiQueryRAGAgent.from_documents(
-            documents=self.documents, llm_config=self.llm_config, name="MultiQueryRAG"
+            documents=self.documents,
+            llm_config=self.llm_config,
+            name="MultiQueryRAG",
         )
 
         hyde_rag = HyDERAGAgentV2.from_documents(
-            documents=self.documents, llm_config=self.llm_config, name="HyDERAG"
+            documents=self.documents,
+            llm_config=self.llm_config,
+            name="HyDERAG",
         )
 
         fusion_rag = RAGFusionAgent.from_documents(
-            documents=self.documents, llm_config=self.llm_config, name="FusionRAG"
+            documents=self.documents,
+            llm_config=self.llm_config,
+            name="FusionRAG",
         )
 
         flare_rag = FLARERAGAgent.from_documents(
-            documents=self.documents, llm_config=self.llm_config, name="FLARERAG"
+            documents=self.documents,
+            llm_config=self.llm_config,
+            name="FLARERAG",
         )
 
         # Add nodes

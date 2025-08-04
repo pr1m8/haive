@@ -18,7 +18,7 @@ Agent specializing in quantum computing education
    :alt: QuantumExplainerAgent Agent Graph
    :align: center
    :width: 80%
-   
+
    Agent Architecture Graph
 
 Interactive Example

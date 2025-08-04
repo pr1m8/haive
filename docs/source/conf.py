@@ -1,29 +1,35 @@
 """Complete Sphinx configuration with all extensions and packages."""
 
+from __future__ import annotations
+
 import os
-import sys
 from pathlib import Path
+import sys
+
+from extension_configs import (
+    get_all_extension_configs,
+    get_conditional_configs,
+)
+from extensions import get_all_extensions
+from import_diagnostics import get_autodoc_mock_imports_from_diagnosis
+from memory import get_memory_safe_sphinx_config
 
 # Add conf_modules to Python path for imports
 conf_modules_dir = Path(__file__).parent / "conf_modules"
 sys.path.insert(0, str(conf_modules_dir))
-
-from extension_configs import (get_all_extension_configs,
-                               get_conditional_configs)
-from extensions import get_all_extensions, test_extension_compatibility
-from import_diagnostics import get_autodoc_mock_imports_from_diagnosis
-from memory import get_memory_safe_sphinx_config, monitor_sphinx_build
 
 # =============================================================================
 # PROJECT INFORMATION
 # =============================================================================
 
 # Get packages to build from environment (will be set later in the file)
-_sphinx_packages = os.environ.get('SPHINX_PACKAGES', 'all')
+_sphinx_packages = os.environ.get("SPHINX_PACKAGES", "all")
 
 # Update project name based on what we're building
-if _sphinx_packages != 'all':
-    pkg_names = [p.strip().replace('haive-', '') for p in _sphinx_packages.split(',')]
+if _sphinx_packages != "all":
+    pkg_names = [
+        p.strip().replace("haive-", "") for p in _sphinx_packages.split(",")
+    ]
     project = f"Haive {', '.join(p.title() for p in pkg_names)}"
 else:
     project = "Haive AI Agent Framework"
@@ -46,13 +52,15 @@ pygments_style = "sphinx"
 # =============================================================================
 
 # Get build profile from environment (default: full)
-SPHINX_PROFILE = os.environ.get('SPHINX_PROFILE', 'full')
+SPHINX_PROFILE = os.environ.get("SPHINX_PROFILE", "full")
 
-# Control example execution (set SPHINX_DISABLE_EXAMPLES=1 to skip computational examples)
-DISABLE_EXAMPLES = os.environ.get('SPHINX_DISABLE_EXAMPLES', '0').lower() in ('1', 'true', 'yes')
+# Control example execution (set SPHINX_DISABLE_EXAMPLES=1 to skip
+# computational examples)
+DISABLE_EXAMPLES = os.environ.get("SPHINX_DISABLE_EXAMPLES",
+                                  "0").lower() in ("1", "true", "yes")
 
 # Select extensions based on profile
-if SPHINX_PROFILE == 'minimal':
+if SPHINX_PROFILE == "minimal":
     # Minimal set for fast builds
     extensions = [
         "sphinx.ext.autodoc",
@@ -63,16 +71,18 @@ if SPHINX_PROFILE == 'minimal':
         "myst_parser",
     ]
     print(f"🚀 Using MINIMAL profile ({len(extensions)} extensions)")
-elif SPHINX_PROFILE == 'standard':
+elif SPHINX_PROFILE == "standard":
     # Standard set with common extensions
-    from extensions import get_core_sphinx_extensions, get_autoapi_extensions, get_myst_extensions
-    extensions = get_core_sphinx_extensions() + get_autoapi_extensions() + get_myst_extensions()
+    from extensions import get_autoapi_extensions, get_core_sphinx_extensions, get_myst_extensions
+
+    extensions = get_core_sphinx_extensions() + get_autoapi_extensions(
+    ) + get_myst_extensions()
     # Add a few more useful ones
     extensions.extend([
         "sphinx_copybutton",
         "sphinx_design",
         "sphinx_autodoc_typehints",
-    ])
+    ], )
     print(f"📚 Using STANDARD profile ({len(extensions)} extensions)")
 else:
     # Full set with all extensions
@@ -86,7 +96,9 @@ build_recommendations = memory_config["build_recommendations"]
 
 # Remove sphinx_gallery if examples are disabled
 if DISABLE_EXAMPLES:
-    extensions = [ext for ext in extensions if not ext.startswith('sphinx_gallery')]
+    extensions = [
+        ext for ext in extensions if not ext.startswith("sphinx_gallery")
+    ]
     print("🚫 Sphinx Gallery disabled via SPHINX_DISABLE_EXAMPLES")
 
 # Get extension-specific configurations
@@ -102,10 +114,8 @@ globals().update(conditional_configs)
 # AUTOAPI CONFIGURATION - ALL PACKAGES
 # =============================================================================
 
-import os
-
 # Get packages to build from environment (default: all)
-SPHINX_PACKAGES = os.environ.get('SPHINX_PACKAGES', 'all')
+SPHINX_PACKAGES = os.environ.get("SPHINX_PACKAGES", "all")
 
 # All available packages
 ALL_PACKAGES = {
@@ -121,31 +131,33 @@ ALL_PACKAGES = {
 autoapi_type = "python"
 
 # Determine which packages to build
-if SPHINX_PACKAGES == 'all':
+if SPHINX_PACKAGES == "all":
     autoapi_dirs = list(ALL_PACKAGES.values())
     print(f"📦 Building ALL packages ({len(autoapi_dirs)} total)")
 else:
     # Build specific packages (comma-separated)
-    requested_packages = [p.strip() for p in SPHINX_PACKAGES.split(',')]
+    requested_packages = [p.strip() for p in SPHINX_PACKAGES.split(",")]
     autoapi_dirs = []
-    
+
     for pkg in requested_packages:
         # Support both 'core' and 'haive-core' formats
-        pkg_name = pkg.replace('haive-', '') if pkg.startswith('haive-') else pkg
-        
+        pkg_name = pkg.replace("haive-",
+                               "") if pkg.startswith("haive-") else pkg
+
         if pkg_name in ALL_PACKAGES:
             autoapi_dirs.append(ALL_PACKAGES[pkg_name])
             print(f"📦 Adding package: haive-{pkg_name}")
         else:
             print(f"⚠️  Unknown package: {pkg}")
-    
+
     if not autoapi_dirs:
         print("❌ No valid packages specified, defaulting to haive-core")
         autoapi_dirs = [ALL_PACKAGES["core"]]
 
 # Automatically diagnose and configure mock imports
 autodoc_mock_imports = get_autodoc_mock_imports_from_diagnosis(
-    autoapi_dirs, str(Path(__file__).parent)
+    autoapi_dirs,
+    str(Path(__file__).parent),
 )
 # Add additional mocks for problematic dependencies
 autodoc_mock_imports.extend(
@@ -189,7 +201,7 @@ autodoc_mock_imports.extend(
         "haive.games.framework",
         "haive.games.framework.base",
         "haive.games.framework.core",
-        # MCP related  
+        # MCP related
         "mcp",
         "@modelcontextprotocol/sdk",
         # Tools related
@@ -226,7 +238,7 @@ autodoc_mock_imports.extend(
         # Hyde related
         "hyde",
         "hyde.agent",
-        "hyde.agent_v2", 
+        "hyde.agent_v2",
         "hyde.enhanced_agent",
         "hyde.enhanced_agent_v2",
         # Supervisor related
@@ -246,15 +258,116 @@ autodoc_mock_imports.extend(
         "haive.agents.multi.simple",
         "agents",
         "episodic",
-        "procedural", 
+        "procedural",
         "semantic",
         "react_v2",
         # Experiment modules
         "haive.agents.experiments.supervisor.base_supervisor",
         # Rag modules
         "haive.agents.rag.db_rag.graph_db.agent",
-    ]
-)
+        # ============================================
+        # COMPREHENSIVE ERROR FIXES - Round 3
+        # ============================================
+        # Missing core modules
+        "game",
+        "game_api",
+        "game_router",
+        "haive.api",
+        "haive.core.schema.example",
+        "haive.core.schema.prebuilt.messages.examples",
+        "haive.core.types.tree_leaf",
+        "haive.core.utils.collections",
+        "haive.core.utils.debugkit.benchmarking.core",
+        "haive.core.utils.debugkit.debugging",
+        "haive.core.utils.dev",
+        "haive.core.utils.parser_utils",
+        "haive.core.utils.tool_list",
+        # Missing dataflow modules
+        "haive.dataflow.api.api",
+        "haive.dataflow.api.engine",
+        "haive.dataflow.api.llms.api.llms",
+        "haive.dataflow.api.middleware.auth.supabase",
+        "haive.dataflow.api.middleware.config",
+        "haive.dataflow.api.models",
+        "haive.dataflow.api.routes.auth",
+        "haive.dataflow.api.routes.utils",
+        "haive.dataflow.api.utils",
+        "haive.dataflow.auth.auth",
+        "haive.dataflow.auth.config",
+        "haive.dataflow.db.db",
+        "haive.dataflow.engine",
+        "haive.dataflow.internal_websockets.auth",
+        "haive.dataflow.persistence.config",
+        "haive.dataflow.persistence.persistence",
+        "haive.dataflow.providers.providers",
+        "haive.dataflow.providers.utils",
+        "haive.dataflow.registries.db",
+        "haive.dataflow.registry.db.supabase",
+        "haive.dataflow.registry.registry",
+        # Missing games modules
+        "haive.games.cards.blackjack",
+        "haive.games.cards.bs",
+        "haive.games.cards.card",
+        "haive.games.models",
+        "haive.games.simple",
+        "haive_agents_dep",
+        "haive_games",
+        # Missing import names
+        "AgentRegistry",
+        "AmongUsConfig",
+        "AugLLMEngine",
+        "CardAction",
+        "ChessAgentConfig",
+        "GameConfig",
+        "GameInfo",
+        "GameState",
+        "MonopolyPlayerAgent",
+        "SupabaseServerConfig",
+        "TCard",
+        "create_age",
+        "update_availability_status",
+        # Missing undefined names
+        "Any",
+        "GamePiece",
+        # API tools and dependencies that require credentials
+        "TavilyClient",
+        "TavilySearchResults",
+        "RedditSearchAPIWrapper",
+        "GoogleSearchAPIWrapper",
+        "GoogleFinanceAPIWrapper",
+        "GoogleLensAPIWrapper",
+        "GooglePlacesAPIWrapper",
+        "GoogleScholarAPIWrapper",
+        "GoogleTrendsAPIWrapper",
+        "GoogleBooksAPIWrapper",
+        "GoogleJobsAPIWrapper",
+        "MissingAPIKeyError",
+        "TAVILY_API_KEY",
+        "REDDIT_CLIENT_ID",
+        "REDDIT_CLIENT_SECRET",
+        "REDDIT_USER_AGENT",
+        "GOOGLE_API_KEY",
+        "GOOGLE_CSE_ID",
+        "SERP_API_KEY",
+        "SERPAPI_API_KEY",
+        # Additional API wrappers and keys
+        "AlphaVantageAPIWrapper",
+        "AskNewsAPIWrapper",
+        "ElevenLabsText2SpeechTool",
+        "SceneXplainAPIWrapper",
+        "OpenAIError",
+        "ValidationError",
+        "PydanticUserError",
+        "ALPHAVANTAGE_API_KEY",
+        "ASKNEWS_CLIENT_ID",
+        "ELEVENLABS_API_KEY",
+        "SCENEX_API_KEY",
+        "OPENAI_API_KEY",
+        # Missing optional modules
+        "squeaky_hinge",
+        "ionic_langchain",
+        "haive.config",
+    ], )
 
 autoapi_root = "api"
 autoapi_add_toctree_entry = False
@@ -280,6 +393,16 @@ autoapi_ignore = [
     "**/demo*.py",
     "**/test*.py",
     "**/tests/**/*.py",
+    # Game examples that execute code on import (causing freezes)
+    "**/games/**/example.py",
+    "**/games/**/demo.py",
+    # For tools-only builds, skip core/agents modules that have schema issues
+    "**/haive/agents/**/*.py" if SPHINX_PACKAGES == "tools" else "",
+    "**/haive/core/**/*.py" if SPHINX_PACKAGES == "tools" else "",
+    "**/haive/games/**/*.py" if SPHINX_PACKAGES == "tools" else "",
+    "**/haive/dataflow/**/*.py" if SPHINX_PACKAGES == "tools" else "",
+    "**/haive/mcp/**/*.py" if SPHINX_PACKAGES == "tools" else "",
+    "**/haive/prebuilt/**/*.py" if SPHINX_PACKAGES == "tools" else "",
     # Skip auto-generated example galleries and archives
     "**/auto_examples/**",
     "**/archive/**",
@@ -356,6 +479,26 @@ autoapi_ignore = [
     "**/agents/multi/archive/**/*.py",
     # React class modules with complex import issues
     "**/agents/react_class/**/*.py",
+    # ============================================
+    # COMPREHENSIVE ERROR FIXES - Round 3 - Ignore Patterns
+    # ============================================
+    # Dataflow is experimental/incomplete
+    "**/dataflow/**/*.py",
+    # Abstract class instantiation errors
+    "**/configurable_config.py",
+    "**/generic_engines.py",
+    # Card games with missing dependencies
+    "**/cards/standard/blackjack/**/*.py",
+    "**/cards/standard/bs/**/*.py",
+    "**/cards/standard/poker/**/*.py",
+    # Core game modules with circular imports
+    "**/core/game/**/*.py",
+    # Memory modules with metaclass conflicts
+    "**/memory/models_dir/**/*.py",
+    "**/memory/search/**/*.py",
+    # Experimental example files
+    "**/api_example.py",
+    "**/example_configurable.py",
 ]
 
 
@@ -368,11 +511,11 @@ def autoapi_skip_member(app, what, name, obj, skip, options):
 def force_load_lazy_imports():
     """Force load lazy imports before documentation generation."""
     import importlib
-    import sys
 
     # Force load provider classes
     try:
-        providers_module = importlib.import_module("haive.core.models.llm.providers")
+        providers_module = importlib.import_module(
+            "haive.core.models.llm.providers")
         if hasattr(providers_module, "__all__"):
             for name in providers_module.__all__:
                 try:
@@ -384,7 +527,8 @@ def force_load_lazy_imports():
 
     # Force load retriever/vectorstore configs
     try:
-        retriever_module = importlib.import_module("haive.core.models.retriever")
+        retriever_module = importlib.import_module(
+            "haive.core.models.retriever")
         if hasattr(retriever_module, "__all__"):
             for name in retriever_module.__all__:
                 try:
@@ -395,7 +539,8 @@ def force_load_lazy_imports():
         print(f"Could not preload retrievers: {e}")
 
     try:
-        vectorstore_module = importlib.import_module("haive.core.models.vectorstore")
+        vectorstore_module = importlib.import_module(
+            "haive.core.models.vectorstore")
         if hasattr(vectorstore_module, "__all__"):
             for name in vectorstore_module.__all__:
                 try:
@@ -412,7 +557,9 @@ force_load_lazy_imports()
 # =============================================================================
 # JSMATH CONFIGURATION
 # =============================================================================
-jsmath_path = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+jsmath_path = (
+    "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+)
 
 # =============================================================================
 # HTML THEME CONFIGURATION

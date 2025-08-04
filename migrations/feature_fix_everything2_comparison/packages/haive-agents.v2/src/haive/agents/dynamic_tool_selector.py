@@ -12,6 +12,8 @@ Key Features:
 - Tool usage learning and optimization
 """
 
+from __future__ import annotations
+
 import asyncio
 from collections.abc import Callable
 from enum import Enum
@@ -28,11 +30,7 @@ from haive.agents.discovery.semantic_discovery import (
     ToolSelectionStrategy,
 )
 from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
-from haive.core.registry import (
-    ComponentMetadata,
-    Optional,
-)
-
+from haive.core.registry import ComponentMetadata, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -107,27 +105,32 @@ class ToolSelectionStrategy(Protocol):
 class DynamicToolSelector(BaseModel, ToolRouteMixin):
     """Dynamic tool selector implementing LangGraph-style patterns.
 
-    This class provides sophisticated tool selection capabilities that adapt to query
-    content, context, and usage patterns, similar to LangGraph's approach to handling
-    many tools.
+    This class provides sophisticated tool selection capabilities that
+    adapt to query content, context, and usage patterns, similar to
+    LangGraph's approach to handling many tools.
     """
 
     # Core configuration
     selection_mode: SelectionMode = Field(default=SelectionMode.DYNAMIC)
-    binding_strategy: ToolBindingStrategy = Field(default=ToolBindingStrategy.MERGE)
+    binding_strategy: ToolBindingStrategy = Field(
+        default=ToolBindingStrategy.MERGE)
     max_tools_per_query: int = Field(
-        default=5, description="Maximum tools to select per query"
+        default=5,
+        description="Maximum tools to select per query",
     )
     min_confidence_threshold: float = Field(
-        default=0.6, description="Minimum confidence for tool selection"
+        default=0.6,
+        description="Minimum confidence for tool selection",
     )
 
     # Discovery and selection components
     semantic_discovery: Optional[SemanticDiscoveryEngine] = Field(
-        default=None, exclude=True
+        default=None,
+        exclude=True,
     )
     selection_strategies: dict[str, ToolSelectionStrategy] = Field(
-        default_factory=dict, exclude=True
+        default_factory=dict,
+        exclude=True,
     )
 
     # State and learning
@@ -136,18 +139,18 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
     learning_enabled: bool = Field(default=True)
 
     # Caching and performance
-    tool_cache: dict[str, list[BaseTool]] = Field(default_factory=dict, exclude=True)
+    tool_cache: dict[str, list[BaseTool]] = Field(default_factory=dict,
+                                                  exclude=True)
     cache_ttl_seconds: float = Field(default=300.0)  # 5 minutes
 
     @model_validator(mode="after")
     @classmethod
-    def setup_selector(cls) -> "DynamicToolSelector":
+    def setup_selector(cls) -> DynamicToolSelector:
         """Setup the tool selector with default components."""
         # Initialize semantic discovery if not provided
         if not self.semantic_discovery:
             from haive.agents.discovery.semantic_discovery import (
-                create_semantic_discovery,
-            )
+                create_semantic_discovery, )
 
             self.semantic_discovery = create_semantic_discovery()
 
@@ -180,11 +183,13 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
         context: dict[str, Any] | None = None,
         force_refresh: bool = False,
     ) -> ToolSelectionResult:
-        """Select optimal tools for a given query using LangGraph-style selection.
+        """Select optimal tools for a given query using LangGraph-style.
 
-        This is the main entry point for tool selection, implementing the LangGraph
-        pattern of dynamically selecting relevant tools based on query content and
-        context.
+        selection.
+
+        This is the main entry point for tool selection, implementing
+        the LangGraph pattern of dynamically selecting relevant tools
+        based on query content and context.
         """
         start_time = asyncio.get_event_loop().time()
 
@@ -200,8 +205,8 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
                     selected_tools=cached_tools,
                     selection_metadata={"cache_hit": True},
                     selection_confidence=0.9,  # High confidence for cached results
-                    selection_time_ms=(asyncio.get_event_loop().time() - start_time)
-                    * 1000,
+                    selection_time_ms=(asyncio.get_event_loop().time() -
+                                       start_time) * 1000,
                 )
 
             # Discover available components if needed
@@ -223,13 +228,13 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
             )
 
             # Convert ComponentMetadata to actual tools
-            tools = await self._convert_to_tools(selection_result.selected_tools)
+            tools = await self._convert_to_tools(
+                selection_result.selected_tools)
 
             # Update result
             selection_result.selected_tools = tools
             selection_result.selection_time_ms = (
-                asyncio.get_event_loop().time() - start_time
-            ) * 1000
+                asyncio.get_event_loop().time() - start_time) * 1000
 
             # Cache result
             if selection_result.selection_confidence >= self.min_confidence_threshold:
@@ -240,8 +245,9 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
                 await self._update_usage_stats(query, tools, context)
 
             logger.info(
-                f"Selected {len(tools)} tools for query in {selection_result.selection_time_ms:.2f}ms"
-            )
+                f"Selected {
+                    len(tools)} tools for query in {
+                    selection_result.selection_time_ms:.2f}ms", )
             return selection_result
 
         except Exception as e:
@@ -250,7 +256,8 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
                 selected_tools=[],
                 selection_metadata={"error": str(e)},
                 fallback_used=True,
-                selection_time_ms=(asyncio.get_event_loop().time() - start_time) * 1000,
+                selection_time_ms=(asyncio.get_event_loop().time() -
+                                   start_time) * 1000,
             )
 
     async def bind_tools_to_llm(
@@ -261,8 +268,8 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
     ) -> Any:
         """Bind selected tools to LLM instance using specified strategy.
 
-        This implements the LangGraph pattern of dynamically binding tools to the
-        language model based on the current query context.
+        This implements the LangGraph pattern of dynamically binding
+        tools to the language model based on the current query context.
         """
         binding_strategy = strategy or self.binding_strategy
 
@@ -280,14 +287,16 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
             if binding_strategy == ToolBindingStrategy.MERGE:
                 # Intelligently merge tools
                 merged_tools = await self._merge_tools_intelligently(
-                    getattr(llm_instance, "bound_tools", []), selected_tools
+                    getattr(llm_instance, "bound_tools", []),
+                    selected_tools,
                 )
                 return llm_instance.bind_tools(merged_tools)
 
             if binding_strategy == ToolBindingStrategy.SELECTIVE:
                 # Selectively replace specific tools
                 updated_tools = await self._selective_tool_replacement(
-                    getattr(llm_instance, "bound_tools", []), selected_tools
+                    getattr(llm_instance, "bound_tools", []),
+                    selected_tools,
                 )
                 return llm_instance.bind_tools(updated_tools)
 
@@ -308,9 +317,9 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
     ) -> ToolSelectionResult:
         """Iteratively refine tool selection based on execution feedback.
 
-        This implements an advanced pattern where tool selection is refined based on the
-        results of previous tool executions, similar to LangGraph's iterative
-        approaches.
+        This implements an advanced pattern where tool selection is
+        refined based on the results of previous tool executions,
+        similar to LangGraph's iterative approaches.
         """
         current_query = initial_query
         iteration = 0
@@ -322,7 +331,8 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
             # Analyze previous results to refine query
             if iteration > 0:
                 current_query = await self._refine_query_from_feedback(
-                    initial_query, execution_results
+                    initial_query,
+                    execution_results,
                 )
 
             # Select tools with updated context
@@ -337,7 +347,8 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
 
             # Evaluate selection quality
             quality_score = await self._evaluate_selection_quality(
-                result, execution_results
+                result,
+                execution_results,
             )
 
             if not best_result or quality_score > best_result.selection_confidence:
@@ -347,7 +358,7 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
             # Check if we've reached good enough quality
             if quality_score >= 0.9:
                 logger.info(
-                    f"High quality selection achieved in iteration {iteration + 1}"
+                    f"High quality selection achieved in iteration {iteration + 1}",
                 )
                 break
 
@@ -370,7 +381,9 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
 
         # Sort tools by different metrics
         tools_by_usage = sorted(
-            self.usage_stats.items(), key=lambda x: x[1].usage_count, reverse=True
+            self.usage_stats.items(),
+            key=lambda x: x[1].usage_count,
+            reverse=True,
         )
 
         tools_by_success = sorted(
@@ -380,39 +393,41 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
         )
 
         tools_by_speed = sorted(
-            self.usage_stats.items(), key=lambda x: x[1].avg_execution_time
+            self.usage_stats.items(),
+            key=lambda x: x[1].avg_execution_time,
         )
 
         # Populate analysis
-        analysis["most_used_tools"] = [
-            {"name": name, "usage_count": stats.usage_count}
-            for name, stats in tools_by_usage[:5]
-        ]
+        analysis["most_used_tools"] = [{
+            "name": name,
+            "usage_count": stats.usage_count
+        } for name, stats in tools_by_usage[:5]]
 
-        analysis["highest_success_rate"] = [
-            {
-                "name": name,
-                "success_rate": stats.success_count / max(stats.usage_count, 1),
-                "usage_count": stats.usage_count,
-            }
-            for name, stats in tools_by_success[:5]
-            if stats.usage_count > 0
-        ]
+        analysis["highest_success_rate"] = [{
+            "name":
+            name,
+            "success_rate":
+            stats.success_count / max(stats.usage_count, 1),
+            "usage_count":
+            stats.usage_count,
+        } for name, stats in tools_by_success[:5] if stats.usage_count > 0]
 
-        analysis["fastest_tools"] = [
-            {"name": name, "avg_time_ms": stats.avg_execution_time}
-            for name, stats in tools_by_speed[:5]
-            if stats.avg_execution_time > 0
-        ]
+        analysis["fastest_tools"] = [{
+            "name": name,
+            "avg_time_ms": stats.avg_execution_time
+        } for name, stats in tools_by_speed[:5]
+            if stats.avg_execution_time > 0]
 
         # Generate recommendations
-        analysis["recommendations"] = await self._generate_tool_recommendations()
+        analysis[
+            "recommendations"] = await self._generate_tool_recommendations()
 
         return analysis
 
     # Private helper methods
 
-    async def _update_context_state(self, query: str, context: dict[str, Any]) -> None:
+    async def _update_context_state(self, query: str,
+                                    context: dict[str, Any]) -> None:
         """Update the context state with new information."""
         self.context_state.current_query = query
 
@@ -420,11 +435,10 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
         self.context_state.current_context.update(context)
 
         # Add to conversation history if this is a new query
-        if (
-            not self.context_state.conversation_history
-            or self.context_state.conversation_history[-1].content != query
-        ):
-            self.context_state.conversation_history.append(HumanMessage(content=query))
+        if (not self.context_state.conversation_history or
+                self.context_state.conversation_history[-1].content != query):
+            self.context_state.conversation_history.append(
+                HumanMessage(content=query))
 
     def _generate_cache_key(self, query: str, context: dict[str, Any]) -> str:
         """Generate cache key for tool selection."""
@@ -444,18 +458,22 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
         """Select appropriate tool selection strategy."""
         if self.selection_mode == SelectionMode.STATIC:
             return self.selection_strategies.get(
-                "semantic", self.selection_strategies["semantic"]
+                "semantic",
+                self.selection_strategies["semantic"],
             )
         if self.selection_mode == SelectionMode.ADAPTIVE:
             return self.selection_strategies.get(
-                "adaptive", self.selection_strategies["semantic"]
+                "adaptive",
+                self.selection_strategies["semantic"],
             )
         if self.selection_mode == SelectionMode.CONTEXTUAL:
             return self.selection_strategies.get(
-                "contextual", self.selection_strategies["semantic"]
+                "contextual",
+                self.selection_strategies["semantic"],
             )
         return self.selection_strategies.get(
-            "semantic", self.selection_strategies["semantic"]
+            "semantic",
+            self.selection_strategies["semantic"],
         )
 
     async def _get_available_components(self) -> list[ComponentMetadata]:
@@ -470,7 +488,8 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
         return self.semantic_discovery._component_cache.get("all", [])
 
     async def _convert_to_tools(
-        self, components: list[ComponentMetadata]
+        self,
+        components: list[ComponentMetadata],
     ) -> list[BaseTool]:
         """Convert ComponentMetadata to actual BaseTool instances."""
         tools = []
@@ -483,13 +502,14 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
                     tools.append(tool)
             except Exception as e:
                 logger.warning(
-                    f"Could not create tool from component {component.name}: {e}"
+                    f"Could not create tool from component {component.name}: {e}",
                 )
 
         return tools
 
     async def _create_tool_from_component(
-        self, component: ComponentMetadata
+        self,
+        component: ComponentMetadata,
     ) -> Optional[BaseTool]:
         """Create a BaseTool from ComponentMetadata."""
         try:
@@ -502,19 +522,21 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
             tool = StructuredTool.from_function(
                 func=placeholder_function,
                 name=component.name.replace(" ", "_").lower(),
-                description=component.description or f"Tool for {component.name}",
+                description=component.description
+                or f"Tool for {component.name}",
             )
 
             return tool
 
         except Exception as e:
             logger.exception(
-                f"Error creating tool from component {component.name}: {e}"
-            )
+                f"Error creating tool from component {component.name}: {e}", )
             return None
 
     async def _merge_tools_intelligently(
-        self, existing_tools: list[BaseTool], new_tools: list[BaseTool]
+        self,
+        existing_tools: list[BaseTool],
+        new_tools: list[BaseTool],
     ) -> list[BaseTool]:
         """Intelligently merge existing and new tools."""
         merged = {}
@@ -530,7 +552,9 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
         return list(merged.values())
 
     async def _selective_tool_replacement(
-        self, existing_tools: list[BaseTool], new_tools: list[BaseTool]
+        self,
+        existing_tools: list[BaseTool],
+        new_tools: list[BaseTool],
     ) -> list[BaseTool]:
         """Selectively replace tools based on performance metrics."""
         tools_by_name = {tool.name: tool for tool in existing_tools}
@@ -543,7 +567,9 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
         return list(tools_by_name.values())
 
     async def _is_tool_better(
-        self, new_tool: BaseTool, existing_tool: BaseTool
+        self,
+        new_tool: BaseTool,
+        existing_tool: BaseTool,
     ) -> bool:
         """Determine if new tool is better than existing tool."""
         new_stats = self.usage_stats.get(new_tool.name)
@@ -552,20 +578,26 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
         if not new_stats or not existing_stats:
             return True  # Prefer new tool if no stats available
 
-        new_success_rate = new_stats.success_count / max(new_stats.usage_count, 1)
+        new_success_rate = new_stats.success_count / max(
+            new_stats.usage_count, 1)
         existing_success_rate = existing_stats.success_count / max(
-            existing_stats.usage_count, 1
+            existing_stats.usage_count,
+            1,
         )
 
         return new_success_rate > existing_success_rate
 
     async def _update_usage_stats(
-        self, query: str, tools: list[BaseTool], context: dict[str, Any] | None
+        self,
+        query: str,
+        tools: list[BaseTool],
+        context: dict[str, Any] | None,
     ) -> None:
         """Update usage statistics for selected tools."""
         for tool in tools:
             if tool.name not in self.usage_stats:
-                self.usage_stats[tool.name] = ToolUsageStats(tool_name=tool.name)
+                self.usage_stats[tool.name] = ToolUsageStats(
+                    tool_name=tool.name)
 
             stats = self.usage_stats[tool.name]
             stats.usage_count += 1
@@ -577,7 +609,9 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
                     stats.contexts_used.append(context_str)
 
     async def _refine_query_from_feedback(
-        self, original_query: str, execution_results: dict[str, Any]
+        self,
+        original_query: str,
+        execution_results: dict[str, Any],
     ) -> str:
         """Refine query based on execution feedback."""
         # Simple refinement - could be enhanced with ML
@@ -588,7 +622,9 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
         return original_query
 
     async def _evaluate_selection_quality(
-        self, result: ToolSelectionResult, execution_results: dict[str, Any]
+        self,
+        result: ToolSelectionResult,
+        execution_results: dict[str, Any],
     ) -> float:
         """Evaluate the quality of tool selection."""
         # Simple quality scoring - could be enhanced
@@ -610,32 +646,28 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
 
         # Find underused but successful tools
         for name, stats in self.usage_stats.items():
-            if (
-                stats.usage_count < 5
-                and stats.success_count / max(stats.usage_count, 1) > 0.8
-            ):
+            if stats.usage_count < 5 and stats.success_count / max(
+                    stats.usage_count, 1) > 0.8:
                 recommendations.append(
-                    f"Consider using '{name}' more often - high success rate but low usage"
-                )
+                    f"Consider using '{name}' more often - high success rate but low usage", )
 
         # Find slow tools
         slow_tools = [
-            name
-            for name, stats in self.usage_stats.items()
+            name for name, stats in self.usage_stats.items()
             if stats.avg_execution_time > 5000  # 5 seconds
         ]
         if slow_tools:
-            recommendations.append(f"These tools are slow: {', '.join(slow_tools[:3])}")
+            recommendations.append(
+                f"These tools are slow: {', '.join(slow_tools[:3])}")
 
         # Find error-prone tools
         error_prone = [
-            name
-            for name, stats in self.usage_stats.items()
+            name for name, stats in self.usage_stats.items()
             if stats.error_count / max(stats.usage_count, 1) > 0.3
         ]
         if error_prone:
             recommendations.append(
-                f"These tools have high error rates: {', '.join(error_prone[:3])}"
+                f"These tools have high error rates: {', '.join(error_prone[:3])}",
             )
 
         return recommendations
@@ -644,17 +676,20 @@ class DynamicToolSelector(BaseModel, ToolRouteMixin):
 class LangGraphStyleSelector(DynamicToolSelector):
     """LangGraph-style tool selector with state-based selection.
 
-    This class specifically implements the LangGraph pattern of using state to determine
-    tool selection and binding.
+    This class specifically implements the LangGraph pattern of using
+    state to determine tool selection and binding.
     """
 
     async def select_tools_with_state(
-        self, state: dict[str, Any], available_tools: list[BaseTool] | None = None
+        self,
+        state: dict[str, Any],
+        available_tools: list[BaseTool] | None = None,
     ) -> ToolSelectionResult:
         """Select tools based on LangGraph-style state.
 
-        This method implements the LangGraph pattern where tool selection is based on
-        the current state of the conversation/workflow.
+        This method implements the LangGraph pattern where tool
+        selection is based on the current state of the
+        conversation/workflow.
         """
         # Extract query from state
         messages = state.get("messages", [])
@@ -672,13 +707,14 @@ class LangGraphStyleSelector(DynamicToolSelector):
         }
 
         # Use standard selection with state context
-        return await self.select_tools_for_query(query, available_tools, context)
+        return await self.select_tools_for_query(query, available_tools,
+                                                 context)
 
     def create_tool_selection_node(self) -> Callable:
         """Create a node function for LangGraph that selects tools.
 
-        This returns a function that can be used as a node in a LangGraph workflow for
-        dynamic tool selection.
+        This returns a function that can be used as a node in a
+        LangGraph workflow for dynamic tool selection.
         """
 
         async def select_tools_node(state: dict[str, Any]) -> dict[str, Any]:
@@ -689,7 +725,8 @@ class LangGraphStyleSelector(DynamicToolSelector):
 
                 # Update state with selected tools
                 return {
-                    "selected_tools": [tool.name for tool in result.selected_tools],
+                    "selected_tools":
+                    [tool.name for tool in result.selected_tools],
                     "tool_selection_metadata": result.selection_metadata,
                     "tools": result.selected_tools,  # Actual tools for binding
                 }
@@ -698,7 +735,9 @@ class LangGraphStyleSelector(DynamicToolSelector):
                 logger.exception(f"Error in tool selection node: {e}")
                 return {
                     "selected_tools": [],
-                    "tool_selection_metadata": {"error": str(e)},
+                    "tool_selection_metadata": {
+                        "error": str(e)
+                    },
                     "tools": [],
                 }
 
@@ -720,21 +759,24 @@ class ContextAwareSelector(DynamicToolSelector):
     ) -> ToolSelectionResult:
         """Select tools considering full conversation context."""
         # Analyze conversation patterns
-        context = await self._analyze_conversation_patterns(conversation_history)
+        context = await self._analyze_conversation_patterns(
+            conversation_history)
 
         # Add user preferences
         if user_preferences:
             context.update(user_preferences)
 
         # Extract tool usage patterns from history
-        previous_tools = self._extract_previous_tool_usage(conversation_history)
+        previous_tools = self._extract_previous_tool_usage(
+            conversation_history)
         context["previous_tools"] = previous_tools
 
         # Perform context-aware selection
         return await self.select_tools_for_query(query, context=context)
 
     async def _analyze_conversation_patterns(
-        self, history: list[BaseMessage]
+        self,
+        history: list[BaseMessage],
     ) -> dict[str, Any]:
         """Analyze conversation to extract useful patterns."""
         patterns = {
@@ -757,11 +799,13 @@ class ContextAwareSelector(DynamicToolSelector):
             # Calculate topic consistency (simplified)
             if topics:
                 unique_topics = set(topics)
-                patterns["topic_consistency"] = 1.0 - (len(unique_topics) / len(topics))
+                patterns["topic_consistency"] = 1.0 - (len(unique_topics) /
+                                                       len(topics))
 
         return patterns
 
-    def _extract_previous_tool_usage(self, history: list[BaseMessage]) -> list[str]:
+    def _extract_previous_tool_usage(self,
+                                     history: list[BaseMessage]) -> list[str]:
         """Extract tools that were used in conversation."""
         tools_used = []
 
@@ -791,7 +835,8 @@ def create_dynamic_tool_selector(
 
 
 def create_langgraph_style_selector(
-    max_tools: int = 5, learning_enabled: bool = True
+    max_tools: int = 5,
+    learning_enabled: bool = True,
 ) -> LangGraphStyleSelector:
     """Create a LangGraph-style tool selector."""
     return LangGraphStyleSelector(
@@ -802,7 +847,8 @@ def create_langgraph_style_selector(
 
 
 def create_context_aware_selector(
-    max_tools: int = 5, min_confidence: float = 0.7
+    max_tools: int = 5,
+    min_confidence: float = 0.7,
 ) -> ContextAwareSelector:
     """Create a context-aware tool selector."""
     return ContextAwareSelector(

@@ -4,6 +4,8 @@ The supervisor itself decides when to add/remove agents based on requests,
 not external management calls.
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any, Literal
 
@@ -12,7 +14,6 @@ from pydantic import Field, PrivateAttr
 
 from haive.agents.multi.agent import MultiAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
 
 logger = logging.getLogger(__name__)
 
@@ -29,19 +30,23 @@ class InternalDynamicSupervisor(MultiAgent):
 
     # Configuration
     coordination_mode: Literal["internal_dynamic"] = Field(
-        default="internal_dynamic", description="Internal dynamic coordination"
+        default="internal_dynamic",
+        description="Internal dynamic coordination",
     )
 
     enable_internal_agent_creation: bool = Field(
-        default=True, description="Allow supervisor to create agents internally"
+        default=True,
+        description="Allow supervisor to create agents internally",
     )
 
     max_agents: int = Field(
-        default=10, description="Maximum number of agents to maintain"
+        default=10,
+        description="Maximum number of agents to maintain",
     )
 
     # Private attributes
-    _agent_templates: dict[str, dict[str, Any]] = PrivateAttr(default_factory=dict)
+    _agent_templates: dict[str, dict[str,
+                                     Any]] = PrivateAttr(default_factory=dict)
     _creation_history: list[dict[str, Any]] = PrivateAttr(default_factory=list)
 
     def setup_agent(self) -> None:
@@ -56,9 +61,12 @@ class InternalDynamicSupervisor(MultiAgent):
         """Set up templates for agents the supervisor can create."""
         self._agent_templates = {
             "research": {
-                "type": "SimpleAgent",
-                "capability": "research, information gathering, fact-finding",
-                "system_message": "You are a research specialist. Find and analyze information thoroughly.",
+                "type":
+                "SimpleAgent",
+                "capability":
+                "research, information gathering, fact-finding",
+                "system_message":
+                "You are a research specialist. Find and analyze information thoroughly.",
                 "keywords": [
                     "research",
                     "find",
@@ -69,9 +77,12 @@ class InternalDynamicSupervisor(MultiAgent):
                 ],
             },
             "writing": {
-                "type": "SimpleAgent",
-                "capability": "writing, content creation, documentation",
-                "system_message": "You are a professional writer. Create engaging, well-structured content.",
+                "type":
+                "SimpleAgent",
+                "capability":
+                "writing, content creation, documentation",
+                "system_message":
+                "You are a professional writer. Create engaging, well-structured content.",
                 "keywords": [
                     "write",
                     "create",
@@ -82,9 +93,12 @@ class InternalDynamicSupervisor(MultiAgent):
                 ],
             },
             "coding": {
-                "type": "ReactAgent",
-                "capability": "coding, programming, software development",
-                "system_message": "You are a software developer. Write clean, efficient code and debug issues.",
+                "type":
+                "ReactAgent",
+                "capability":
+                "coding, programming, software development",
+                "system_message":
+                "You are a software developer. Write clean, efficient code and debug issues.",
                 "keywords": [
                     "code",
                     "program",
@@ -95,9 +109,12 @@ class InternalDynamicSupervisor(MultiAgent):
                 ],
             },
             "analysis": {
-                "type": "SimpleAgent",
-                "capability": "data analysis, pattern recognition, insights",
-                "system_message": "You are a data analyst. Analyze data and provide actionable insights.",
+                "type":
+                "SimpleAgent",
+                "capability":
+                "data analysis, pattern recognition, insights",
+                "system_message":
+                "You are a data analyst. Analyze data and provide actionable insights.",
                 "keywords": [
                     "analyze",
                     "data",
@@ -108,9 +125,12 @@ class InternalDynamicSupervisor(MultiAgent):
                 ],
             },
             "math": {
-                "type": "ReactAgent",
-                "capability": "mathematics, calculations, problem solving",
-                "system_message": "You are a mathematician. Solve mathematical problems step by step.",
+                "type":
+                "ReactAgent",
+                "capability":
+                "mathematics, calculations, problem solving",
+                "system_message":
+                "You are a mathematician. Solve mathematical problems step by step.",
                 "keywords": [
                     "calculate",
                     "math",
@@ -166,7 +186,10 @@ class InternalDynamicSupervisor(MultiAgent):
         return graph
 
     def _create_internal_supervisor_node(self):
-        """Create supervisor that makes internal decisions about agent management."""
+        """Create supervisor that makes internal decisions about agent.
+
+        management.
+        """
 
         async def supervisor_node(state: Any) -> dict[str, Any]:
             """Make decisions about agent creation and routing."""
@@ -204,14 +227,13 @@ class InternalDynamicSupervisor(MultiAgent):
                 }
 
             # Step 2: Check if we should create a new agent
-            if (
-                self.enable_internal_agent_creation
-                and len(self.agents) < self.max_agents
-            ):
+            if self.enable_internal_agent_creation and len(
+                    self.agents) < self.max_agents:
                 needed_agent_type = self._determine_needed_agent_type(content)
 
                 if needed_agent_type:
-                    logger.info(f"Need to create agent of type: {needed_agent_type}")
+                    logger.info(
+                        f"Need to create agent of type: {needed_agent_type}")
                     return {
                         "agent_type_to_create": needed_agent_type,
                         "original_request": content,
@@ -256,7 +278,8 @@ class InternalDynamicSupervisor(MultiAgent):
 
             # Create the agent
             success = await self._create_agent_from_template(
-                agent_type, original_request
+                agent_type,
+                original_request,
             )
 
             if success:
@@ -267,8 +290,7 @@ class InternalDynamicSupervisor(MultiAgent):
                         "request": original_request,
                         "timestamp": "now",
                         "success": True,
-                    }
-                )
+                    }, )
 
                 # Set target for next execution
                 new_agent_name = f"{agent_type}_agent"
@@ -309,7 +331,8 @@ class InternalDynamicSupervisor(MultiAgent):
 
             try:
                 # Prepare input
-                agent_input = self._extract_agent_input(target_agent, agent, state_dict)
+                agent_input = self._extract_agent_input(
+                    target_agent, agent, state_dict)
 
                 # Execute
                 if hasattr(agent, "ainvoke"):
@@ -319,7 +342,10 @@ class InternalDynamicSupervisor(MultiAgent):
 
                 # Process result
                 update = self._create_agent_output(
-                    target_agent, agent, result, state_dict
+                    target_agent,
+                    agent,
+                    result,
+                    state_dict,
                 )
                 update["last_agent"] = target_agent
                 update["execution_complete"] = True
@@ -346,7 +372,8 @@ class InternalDynamicSupervisor(MultiAgent):
             for template_type, template in self._agent_templates.items():
                 if f"{template_type}_agent" == agent_name:
                     # Check if any template keywords match the content
-                    if any(key in content_lower for key in template["keywords"]):
+                    if any(key in content_lower
+                           for key in template["keywords"]):
                         return agent_name
 
         return None
@@ -381,7 +408,8 @@ class InternalDynamicSupervisor(MultiAgent):
 
         return None
 
-    async def _create_agent_from_template(self, agent_type: str, request: str) -> bool:
+    async def _create_agent_from_template(self, agent_type: str,
+                                          request: str) -> bool:
         """Actually create an agent from a template."""
         if agent_type not in self._agent_templates:
             return False
@@ -491,30 +519,32 @@ if __name__ == "__main__":
 
         # Test 1: Research request (should create research agent)
         await supervisor.ainvoke(
-            {"messages": [HumanMessage(content="Research the latest AI trends")]}
-        )
+            {
+                "messages":
+                [HumanMessage(content="Research the latest AI trends")]
+            }, )
 
         # Test 2: Coding request (should create coding agent)
         await supervisor.ainvoke(
             {
                 "messages": [
-                    HumanMessage(content="Write code to implement a binary search")
-                ]
-            }
-        )
+                    HumanMessage(
+                        content="Write code to implement a binary search"),
+                ],
+            }, )
 
         # Test 3: Analysis request (should create analysis agent)
         await supervisor.ainvoke(
-            {"messages": [HumanMessage(content="Analyze the data patterns")]}
-        )
+            {"messages": [HumanMessage(content="Analyze the data patterns")]
+             }, )
 
         # Test 4: Another research request (should use existing)
         await supervisor.ainvoke(
             {
                 "messages": [
-                    HumanMessage(content="Find information about quantum computing")
-                ]
-            }
-        )
+                    HumanMessage(
+                        content="Find information about quantum computing"),
+                ],
+            }, )
 
     asyncio.run(test_internal_dynamic())

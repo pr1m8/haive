@@ -29,7 +29,7 @@ packages/haive-agents/src/haive/agents/
 │   └── example.py
 ├── conversation/
 │   ├── debate/agent.py             # DebateConversation agent
-│   └── collaberative/agent.py      # CollaborativeConversation
+│   └── collaborative/agent.py      # CollaborativeConversation
 ├── rag/
 │   ├── base/agent.py               # BaseRAGAgent
 │   ├── adaptive_rag/agent.py       # AdaptiveRAGAgent

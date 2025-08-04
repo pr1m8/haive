@@ -67,7 +67,7 @@ class EngineType(str, Enum):
 
 ```python
 @runtime_checkable
-class Invokable(Protocol[I, O]):
+class Invocable(Protocol[I, O]):
     def invoke(self, input_data: I, **kwargs) -> O: ...
 
 @runtime_checkable
@@ -92,7 +92,7 @@ class AsyncInvokable(Protocol[I, O]):
 ### 3. **Comprehensive Engine Types**
 
 - Covers all major AI/ML components
-- Clear categorization (invokable vs non-invokable)
+- Clear categorization (invocable vs non-invocable)
 - Extensible enum system
 
 ### 4. **Registration & Discovery**

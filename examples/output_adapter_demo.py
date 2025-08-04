@@ -1,10 +1,13 @@
 """Demo of OutputAdapter and transformation functionality."""
+from __future__ import annotations
 
 import contextlib
 from typing import Any
 
-from haive.agents.base.mixins.output_mixin import OutputAdapter, OutputMixin
-from pydantic import BaseModel, Field
+from haive.agents.base.mixins.output_mixin import OutputAdapter
+from haive.agents.base.mixins.output_mixin import OutputMixin
+from pydantic import BaseModel
+from pydantic import Field
 
 
 # Define structured output models
@@ -43,15 +46,18 @@ def demo_basic_transformation():
 
     # Simulate raw output from an agent
     raw_output = {
-        "product_name": "TechPro X500 Headphones",
+        "product_name":
+        "TechPro X500 Headphones",
         "pros": [
             "Excellent sound quality",
             "30+ hour battery life",
             "Comfortable design",
         ],
         "cons": ["Expensive at $350", "Bulky carrying case"],
-        "overall_rating": 8.5,
-        "recommendation": "Consider",
+        "overall_rating":
+        8.5,
+        "recommendation":
+        "Consider",
     }
 
     # Transform to structured output
@@ -74,16 +80,21 @@ def demo_field_mapping():
 
     # Raw output with different field names
     raw_output = {
-        "email_subject": "Q4 Budget Review",
-        "from": "john@company.com",
-        "priority": "High",
+        "email_subject":
+        "Q4 Budget Review",
+        "from":
+        "john@company.com",
+        "priority":
+        "High",
         "todos": [
             "Review financial reports",
             "Prepare questions for meeting",
             "Confirm attendance",
         ],
-        "due_date": "2024-01-10",
-        "other_field": "ignored",  # This will be ignored
+        "due_date":
+        "2024-01-10",
+        "other_field":
+        "ignored",  # This will be ignored
     }
 
     for _key, _value in raw_output.items():
@@ -97,7 +108,8 @@ def demo_field_extraction():
     """Demo: Extracting nested fields."""
     # Create adapter that extracts from nested field
     adapter = OutputAdapter(
-        target_schema=ProductAnalysis, extract_field="analysis_result"
+        target_schema=ProductAnalysis,
+        extract_field="analysis_result",
     )
 
     # Nested output structure
@@ -111,7 +123,10 @@ def demo_field_extraction():
             "overall_rating": 7.5,
             "recommendation": "Buy",
         },
-        "metadata": {"analyzer_version": "1.0", "confidence": 0.9},
+        "metadata": {
+            "analyzer_version": "1.0",
+            "confidence": 0.9
+        },
     }
 
     # Extract and transform
@@ -182,9 +197,15 @@ def demo_complex_transformation():
             "latest_activity": "Posted comment",
             "active_status": True,
             "engagement_score": 0.85,
-            "profile": {"name": "John Doe", "joined": "2023-01-01"},
+            "profile": {
+                "name": "John Doe",
+                "joined": "2023-01-01"
+            },
         },
-        "meta": {"request_id": "req_456", "duration_ms": 125},
+        "meta": {
+            "request_id": "req_456",
+            "duration_ms": 125
+        },
     }
 
     adapter.transform(api_response)
@@ -198,7 +219,8 @@ def demo_output_mixin():
 
         def __init__(self):
             super().__init__(
-                structured_output_model=ProductAnalysis, output_field_name="analysis"
+                structured_output_model=ProductAnalysis,
+                output_field_name="analysis",
             )
 
         def process(self, data: dict[str, Any]) -> ProductAnalysis:

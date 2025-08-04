@@ -18,7 +18,7 @@ Fast text summarization agent
    :alt: TextSummarizerAgent Agent Graph
    :align: center
    :width: 80%
-   
+
    Agent Architecture Graph
 
 Interactive Example

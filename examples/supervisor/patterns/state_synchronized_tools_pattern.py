@@ -2,17 +2,16 @@
 
 from typing import Any
 
+from pydantic import Field, model_validator
+
 from haive.agents.experiments.supervisor.component_2_tools import (
-    SupervisorStateWithTools,
-)
+    SupervisorStateWithTools, )
 from haive.agents.experiments.supervisor.component_3_agent_execution import (
-    AgentExecutionNode,
-)
+    AgentExecutionNode, )
 from haive.agents.react.agent import ReactAgent
 from haive.core.engine import AugLLMConfig
 from haive.core.graph import BaseGraph
 from haive.core.models.llm.base import AzureLLMConfig
-from pydantic import Field, model_validator
 
 
 class DynamicSupervisor(ReactAgent):
@@ -49,17 +48,16 @@ class DynamicSupervisor(ReactAgent):
         return AugLLMConfig(
             name="supervisor_engine",
             llm_config=AzureLLMConfig(model="gpt-4o"),
-            system_message=(
-                "You are a dynamic supervisor that coordinates multiple AI agents. "
-                "Your role is to:\n"
-                "1. Analyze incoming tasks and determine which agent should handle them\n"
-                "2. Route tasks to the appropriate agents using handoff tools\n"
-                "3. Use the choose_agent tool to make validated routing decisions\n"
-                "4. Always ensure tasks are handled by the most suitable agent\n"
-                "5. You can END the conversation when the task is complete\n\n"
-                "Available agents are dynamically updated based on the current state. "
-                "Use the choose_agent tool to see current options and make decisions."
-            ),
+            system_message=("You are a dynamic supervisor that coordinates multiple AI agents. "
+                            "Your role is to:\n"
+                            "1. Analyze incoming tasks and determine which agent should handle them\n"
+                            "2. Route tasks to the appropriate agents using handoff tools\n"
+                            "3. Use the choose_agent tool to make validated routing decisions\n"
+                            "4. Always ensure tasks are handled by the most suitable agent\n"
+                            "5. You can END the conversation when the task is complete\n\n"
+                            "Available agents are dynamically updated based on the current state. "
+                            "Use the choose_agent tool to see current options and make decisions."
+                            ),
             tools=[],  # Tools will be populated dynamically from state
         )
 
@@ -97,7 +95,8 @@ class DynamicSupervisor(ReactAgent):
 
             # Update tool routes (all dynamic tools use default routing)
             self.engine.tool_routes = {
-                tool.name: "langchain_tool" for tool in dynamic_tools
+                tool.name: "langchain_tool"
+                for tool in dynamic_tools
             }
 
         else:
@@ -125,7 +124,10 @@ class DynamicSupervisor(ReactAgent):
         graph.add_conditional_edges(
             "supervisor",
             self._route_supervisor_decision,
-            {"execute": "agent_execution", "end": "__end__"},
+            {
+                "execute": "agent_execution",
+                "end": "__end__"
+            },
         )
 
         # Agent execution always returns to supervisor
@@ -137,9 +139,11 @@ class DynamicSupervisor(ReactAgent):
         return graph.compile()
 
     async def _supervisor_reasoning_node(
-        self, state: SupervisorStateWithTools
+        self,
+        state: SupervisorStateWithTools,
     ) -> dict[str, Any]:
-        """Supervisor reasoning node that uses dynamic tools for decision making.
+        """Supervisor reasoning node that uses dynamic tools for decision
+        making.
 
         This node:
         1. Updates engine tools from current state
@@ -165,10 +169,12 @@ class DynamicSupervisor(ReactAgent):
         dynamic_tools = state.get_all_tools()
         self.engine.tools = dynamic_tools
         self.engine.tool_routes = {
-            tool.name: "langchain_tool" for tool in dynamic_tools
+            tool.name: "langchain_tool"
+            for tool in dynamic_tools
         }
 
-    def _route_supervisor_decision(self, state: SupervisorStateWithTools) -> str:
+    def _route_supervisor_decision(self,
+                                   state: SupervisorStateWithTools) -> str:
         """Route based on supervisor's decision in state."""
         if state.next_agent and state.next_agent != "END":
             return "execute"
@@ -176,7 +182,11 @@ class DynamicSupervisor(ReactAgent):
         return "end"
 
     # Convenience methods for agent management
-    def add_agent(self, name: str, agent: Any, description: str, active: bool = True):
+    def add_agent(self,
+                  name: str,
+                  agent: Any,
+                  description: str,
+                  active: bool = True):
         """Add an agent to the supervisor's registry."""
         if hasattr(self, "_current_state") and self._current_state:
             self._current_state.add_agent(name, agent, description, active)

@@ -15,13 +15,15 @@ Examples:
     # Complex commands
     DRY_RUN=1 python dryrun_wrapper.py -- poetry run python -m package.module --deploy
 """
+from __future__ import annotations
 
 import os
 import shlex
 import subprocess
 import sys
 from pathlib import Path
-from typing import List, Optional
+from typing import List
+from typing import Optional
 
 
 class UniversalDryRunWrapper:
@@ -43,7 +45,6 @@ class UniversalDryRunWrapper:
         """Show banner with command info."""
         if self.dry_run:
         else:
-
 
     def _analyze_command(self, command: list[str]) -> dict:
         """Analyze the command to understand what it might do."""
@@ -169,7 +170,6 @@ class UniversalDryRunWrapper:
         elif analysis["file_operations"] or analysis["package_operations"]:
             risk_level = "🟡 MEDIUM"
 
-
         operations = []
         if analysis["file_operations"]:
             operations.append("📁 File Operations")
@@ -187,7 +187,7 @@ class UniversalDryRunWrapper:
         if operations:
             pass
         else:
-            passs")
+            pass")
 
     def _execute_command(self, command: list[str]) -> int:
         """Execute the command (real or dry-run)."""

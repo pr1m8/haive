@@ -15,25 +15,25 @@ custom.SimpleAgent Agents
 
 .. card::
 
-   
+
    Agent specializing in quantum computing education
-   
+
 
   *** **Status***:** ✅ |*** **Duration***:** 0.00s |*** **Steps***:** 5
 
 .. card::
 
-   
+
    Comprehensive climate change research agent
-   
+
 
   *** **Status***:** ✅ |*** **Duration***:** 0.00s |*** **Steps***:** 5
 
 .. card::
 
-   
+
    Fast text summarization agent
-   
+
 
   *** **Status***:** ✅ |*** **Duration***:** 0.00s |*** **Steps***:** 5
 
@@ -60,13 +60,13 @@ Click on any agent card above to explore its documentation, or browse the comple
 
    :maxdepth: 1
    :titlesonly:
-   
+
    quantumexplaineragent_showcase
 
-   
+
    climateresearchagent_showcase
 
-   
+
    textsummarizeragent_showcase
 
 ***

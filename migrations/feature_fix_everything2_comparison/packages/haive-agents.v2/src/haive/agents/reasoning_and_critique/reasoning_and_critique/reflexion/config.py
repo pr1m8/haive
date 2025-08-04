@@ -9,6 +9,8 @@ Functions:
     create_agent: Create Agent functionality.
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 from typing import Any
 

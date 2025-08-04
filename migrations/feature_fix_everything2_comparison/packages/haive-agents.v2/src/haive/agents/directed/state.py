@@ -10,12 +10,8 @@ Classes:
 """Directed conversation agent where participants respond to mentions and direct questions."""
 
 
+from __future__ import annotations
 import logging
-
-from pydantic import Field
-
-from haive.agents.conversation.base.state import ConversationState
-
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.WARNING)
@@ -29,5 +25,6 @@ class DirectedState(ConversationState):
     pending_speakers: list[str] = Field(default_factory=list)
     # Track interaction patterns
     interaction_count: dict[str, dict[str, int]] = Field(
-        default_factory=dict, description="Track who mentions whom"
+        default_factory=dict,
+        description="Track who mentions whom",
     )

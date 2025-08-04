@@ -1,7 +1,7 @@
 """Example showing how to use the with_structured_output class method.
 
-This demonstrates the powerful pattern of adding structured output to any agent
-using the class method approach with future annotations.
+This demonstrates the powerful pattern of adding structured output to
+any agent using the class method approach with future annotations.
 """
 
 from __future__ import annotations
@@ -12,7 +12,8 @@ from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 from langchain_core.messages import AIMessage
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 
 # Define various output models
@@ -48,7 +49,7 @@ def example_1_class_method_usage():
         output_model=ResearchResult,
         name="researcher",
         engine=AugLLMConfig(
-            system_message="You are a research specialist. Provide comprehensive research on topics."
+            system_message="You are a research specialist. Provide comprehensive research on topics.",
         ),
         tools=[],  # Could add research tools
     )
@@ -59,7 +60,7 @@ def example_1_class_method_usage():
         name="planner",
         custom_context="Focus on actionable strategies and clear timelines",
         engine=AugLLMConfig(
-            system_message="You are a strategic planner. Create detailed implementation plans."
+            system_message="You are a strategic planner. Create detailed implementation plans.",
         ),
     )
 
@@ -130,7 +131,7 @@ def example_2_structured_tool():
         name="research_tool",
         description="Research any topic and return structured results",
         engine=AugLLMConfig(
-            system_message="You are a research expert. Provide thorough research."
+            system_message="You are a research expert. Provide thorough research.",
         ),
     )
 
@@ -138,7 +139,7 @@ def example_2_structured_tool():
     coordinator = SimpleAgent(
         name="research_coordinator",
         engine=AugLLMConfig(
-            system_message="You coordinate research tasks using available tools."
+            system_message="You coordinate research tasks using available tools.",
         ),
         tools=[research_tool],
     )
@@ -163,7 +164,9 @@ def example_3_ensure_structured_output():
 
             # Ensure it's structured
             structured = self.ensure_structured_output(
-                raw_output, ResearchResult, handle_errors=True
+                raw_output,
+                ResearchResult,
+                handle_errors=True,
             )
 
             if structured is None:
@@ -195,7 +198,8 @@ def example_4_handling_different_formats():
 
     # Create agent with structured output
     agent, structurer = SimpleAgent.with_structured_output(
-        output_model=ResearchResult, name="format_handler"
+        output_model=ResearchResult,
+        name="format_handler",
     )
 
     # Test different output formats
@@ -204,7 +208,7 @@ def example_4_handling_different_formats():
         "Research shows that AI is advancing rapidly with key findings in NLP and computer vision.",
         # AIMessage with content
         AIMessage(
-            content="The analysis reveals three key findings about quantum computing..."
+            content="The analysis reveals three key findings about quantum computing...",
         ),
         # AIMessage with tool calls
         AIMessage(
@@ -222,7 +226,7 @@ def example_4_handling_different_formats():
                         "sources": ["Nature", "Science"],
                         "confidence": 0.9,
                     },
-                }
+                },
             ],
         ),
         # Dict output
@@ -241,11 +245,13 @@ def example_4_handling_different_formats():
     ]
 
     for i, output in enumerate(test_outputs):
-        print(f"Test {i+1}: {type(output).__name__}")
+        print(f"Test {i + 1}: {type(output).__name__}")
 
         # Use ensure_structured_output
         structured = agent.ensure_structured_output(
-            output, ResearchResult, handle_errors=True
+            output,
+            ResearchResult,
+            handle_errors=True,
         )
 
         if structured:

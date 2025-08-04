@@ -28,8 +28,8 @@ Enhanced Game Showcase Template
    <h3 class="game-title">Quantum Quest</h3>
    <span class="game-category">Educational</span>
    <p class="game-description">
-   Embark on an interactive journey through quantum mechanics! 
-   Solve puzzles by manipulating quantum states, learn about 
+   Embark on an interactive journey through quantum mechanics!
+   Solve puzzles by manipulating quantum states, learn about
    superposition and entanglement through hands-on gameplay.
    </p>
 
@@ -62,7 +62,7 @@ Enhanced Game Showcase Template
 
    </div>
 
-                
+
 
 .. raw:: html
 
@@ -110,8 +110,8 @@ Enhanced Game Showcase Template
    <h3 class="game-title">Climate Detective</h3>
    <span class="game-category">Strategy</span>
    <p class="game-description">
-   Become a climate scientist and detective! Analyze environmental 
-   data, uncover climate patterns, and make decisions to save the planet 
+   Become a climate scientist and detective! Analyze environmental
+   data, uncover climate patterns, and make decisions to save the planet
    in this engaging simulation game.
    </p>
 
@@ -144,7 +144,7 @@ Enhanced Game Showcase Template
 
    </div>
 
-                
+
 
 .. raw:: html
 
@@ -192,8 +192,8 @@ Enhanced Game Showcase Template
    <h3 class="game-title">AI Ethics Challenge</h3>
    <span class="game-category">Simulation</span>
    <p class="game-description">
-   Navigate complex ethical dilemmas in AI development! Make decisions 
-   about bias, privacy, and fairness while building AI systems that 
+   Navigate complex ethical dilemmas in AI development! Make decisions
+   about bias, privacy, and fairness while building AI systems that
    benefit humanity.
    </p>
 
@@ -226,7 +226,7 @@ Enhanced Game Showcase Template
 
    </div>
 
-                
+
 
 .. raw:: html
 
@@ -274,8 +274,8 @@ Enhanced Game Showcase Template
    <h3 class="game-title">Data Mining Adventure</h3>
    <span class="game-category">Puzzle</span>
    <p class="game-description">
-   Dig deep into datasets to uncover hidden patterns and insights! 
-   Use machine learning tools and statistical methods to solve 
+   Dig deep into datasets to uncover hidden patterns and insights!
+   Use machine learning tools and statistical methods to solve
    data mysteries and unlock new levels.
    </p>
 
@@ -308,7 +308,7 @@ Enhanced Game Showcase Template
 
    </div>
 
-                
+
 
 .. raw:: html
 
@@ -356,8 +356,8 @@ Enhanced Game Showcase Template
    <h3 class="game-title">Neural Network Builder</h3>
    <span class="game-category">Educational</span>
    <p class="game-description">
-   Build and train your own neural networks! Experiment with different 
-   architectures, activation functions, and training methods in this 
+   Build and train your own neural networks! Experiment with different
+   architectures, activation functions, and training methods in this
    interactive machine learning sandbox.
    </p>
 
@@ -390,7 +390,7 @@ Enhanced Game Showcase Template
 
    </div>
 
-                
+
 
 .. raw:: html
 
@@ -438,8 +438,8 @@ Enhanced Game Showcase Template
    <h3 class="game-title">Algorithm Racing</h3>
    <span class="game-category">Competition</span>
    <p class="game-description">
-   Race against time and other players by optimizing algorithms! 
-   Compete in coding challenges, optimize for speed and efficiency, 
+   Race against time and other players by optimizing algorithms!
+   Compete in coding challenges, optimize for speed and efficiency,
    and climb the leaderboards.
    </p>
 
@@ -472,7 +472,7 @@ Enhanced Game Showcase Template
 
    </div>
 
-                
+
 
 .. raw:: html
 

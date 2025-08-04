@@ -15,7 +15,6 @@ from hallucination_grading.agent import (
     quick_hallucination_check,
 )
 
-
 __all__ = [
     "AdvancedHallucinationGrade",
     "AdvancedHallucinationGraderAgent",

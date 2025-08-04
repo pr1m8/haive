@@ -1,9 +1,10 @@
 """Safe autosummary extension that handles import errors gracefully."""
+from __future__ import annotations
 
 import logging
 
-from sphinx.ext.autosummary import Autosummary as BaseAutosummary, ImportExceptionGroup
-
+from sphinx.ext.autosummary import Autosummary as BaseAutosummary
+from sphinx.ext.autosummary import ImportExceptionGroup
 
 logger = logging.getLogger(__name__)
 

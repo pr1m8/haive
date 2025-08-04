@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Find the most recent indentation error that's blocking the docs build."""
 
-import sys
+from __future__ import annotations
+
 from pathlib import Path
+import sys
 
 
 def check_indentation_error(file_path: Path):

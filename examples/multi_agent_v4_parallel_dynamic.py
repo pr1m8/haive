@@ -5,6 +5,7 @@ This example demonstrates:
 2. Dynamic agent addition during runtime
 3. Manual graph building and edge configuration
 """
+from __future__ import annotations
 
 import asyncio
 from typing import List
@@ -12,7 +13,8 @@ from typing import List
 from haive.agents.multi.enhanced_multi_agent_v4 import EnhancedMultiAgentV4
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 
 # Define structured output models
@@ -302,7 +304,8 @@ async def dynamic_agent_addition_example():
             report = comprehensive_result.business_report
             print(f"\n📋 Executive Summary:\n{report.executive_summary}")
             print(
-                f"\n🎯 Top Strategic Recommendation:\n{report.strategic_recommendations[0]}"
+                f"\n🎯 Top Strategic Recommendation:\n{
+    report.strategic_recommendations[0]}"
             )
             print(f"\n✓ Priority Action Item:\n{report.action_items[0]}")
 

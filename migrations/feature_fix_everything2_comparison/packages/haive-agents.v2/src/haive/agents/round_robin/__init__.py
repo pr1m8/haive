@@ -1,14 +1,14 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from haive.agents.conversation.round_robin.agent import (
-    RoundRobinConversation,
-)
+    RoundRobinConversation, )
 from haive.agents.conversation.round_robin.example import (
     example_custom_round_robin,
     example_panel_discussion,
     example_simple_round_robin,
 )
-
 
 __all__ = [
     "RoundRobinConversation",

@@ -5,7 +5,7 @@ Retrieval-Augmented Generation agents combine the power of LLMs with external kn
 
 .. note::
 
-   
+
    This is the user guide for RAG agents. For API documentation, see :doc:`/api/haive/agents/rag/index`.
 
 Overview
@@ -25,10 +25,10 @@ Quick Start
 
    from haive.agents.rag import BaseRAGAgent
    from haive.core.vectorstore import ChromaStore
-   
+
    # Create vector store
    vectorstore = ChromaStore(collection_name="documents")
-   
+
    # Create RAG agent
    rag_agent = BaseRAGAgent(
 
@@ -37,7 +37,7 @@ Quick Start
        retriever_config={"k": 5}
 
    )
-   
+
    # Ask questions
    response = await rag_agent.arun(
 

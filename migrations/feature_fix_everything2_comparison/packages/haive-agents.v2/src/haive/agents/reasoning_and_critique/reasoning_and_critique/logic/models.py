@@ -13,13 +13,13 @@ Functions:
 """
 
 # src/haive/agents/reasoning/models.py
+from __future__ import annotations
 
 from datetime import datetime
 from enum import Enum
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field, computed_field
-
 
 # ============================================================================
 # ENUMS - Fundamental Reasoning Categories
@@ -125,17 +125,18 @@ class Premise(BaseModel):
 
     statement: str = Field(description="The premise statement")
     premise_type: Literal["fact", "assumption", "axiom", "hypothesis"] = Field(
-        description="Type of premise"
-    )
-    evidence: list["Evidence"] = Field(
-        default_factory=list, description="Supporting evidence for this premise"
+        description="Type of premise", )
+    evidence: list[Evidence] = Field(
+        default_factory=list,
+        description="Supporting evidence for this premise",
     )
     certainty: CertaintyLevel = Field(
-        description="How certain we are about this premise"
-    )
-    source: str | None = Field(default=None, description="Source of this premise")
+        description="How certain we are about this premise", )
+    source: str | None = Field(default=None,
+                               description="Source of this premise")
     is_contested: bool = Field(
-        default=False, description="Whether this premise is disputed"
+        default=False,
+        description="Whether this premise is disputed",
     )
 
 
@@ -146,15 +147,19 @@ class Evidence(BaseModel):
     description: str = Field(description="Description of the evidence")
     source: str = Field(description="Where this evidence comes from")
     strength: ArgumentStrength = Field(
-        description="How strongly this supports the claim"
-    )
+        description="How strongly this supports the claim", )
     reliability: float = Field(
-        ge=0.0, le=1.0, description="Reliability of the source (0-1)"
+        ge=0.0,
+        le=1.0,
+        description="Reliability of the source (0-1)",
     )
-    relevance: float = Field(ge=0.0, le=1.0, description="Relevance to the claim (0-1)")
+    relevance: float = Field(ge=0.0,
+                             le=1.0,
+                             description="Relevance to the claim (0-1)")
     date_collected: datetime | None = None
     limitations: list[str] = Field(
-        default_factory=list, description="Known limitations of this evidence"
+        default_factory=list,
+        description="Known limitations of this evidence",
     )
 
 
@@ -164,11 +169,15 @@ class LogicalStep(BaseModel):
     step_number: int = Field(description="Order in the reasoning chain")
     reasoning_type: ReasoningType = Field(description="Type of reasoning used")
     from_premises: list[int] = Field(description="Indices of premises used")
-    inference_rule: str = Field(description="Logical rule applied (e.g., modus ponens)")
+    inference_rule: str = Field(
+        description="Logical rule applied (e.g., modus ponens)")
     conclusion: str = Field(description="What we conclude from this step")
-    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in this step")
+    confidence: float = Field(ge=0.0,
+                              le=1.0,
+                              description="Confidence in this step")
     alternative_conclusions: list[str] = Field(
-        default_factory=list, description="Other possible conclusions"
+        default_factory=list,
+        description="Other possible conclusions",
     )
 
 
@@ -178,11 +187,12 @@ class Assumption(BaseModel):
     statement: str = Field(description="The assumption being made")
     justification: str = Field(description="Why we're making this assumption")
     impact: Literal["critical", "significant", "moderate", "minor"] = Field(
-        description="Impact if assumption is wrong"
-    )
-    testable: bool = Field(default=True, description="Whether this can be verified")
+        description="Impact if assumption is wrong", )
+    testable: bool = Field(default=True,
+                           description="Whether this can be verified")
     alternatives: list[str] = Field(
-        default_factory=list, description="Alternative assumptions possible"
+        default_factory=list,
+        description="Alternative assumptions possible",
     )
 
 
@@ -190,12 +200,15 @@ class CounterArgument(BaseModel):
     """A counter-argument to consider."""
 
     argument: str = Field(description="The counter-argument")
-    strength: ArgumentStrength = Field(description="Strength of this counter-argument")
+    strength: ArgumentStrength = Field(
+        description="Strength of this counter-argument")
     rebuttal: str | None = Field(
-        default=None, description="Our response to this counter-argument"
+        default=None,
+        description="Our response to this counter-argument",
     )
     unresolved: bool = Field(
-        default=False, description="Whether this remains unaddressed"
+        default=False,
+        description="Whether this remains unaddressed",
     )
 
 
@@ -206,40 +219,46 @@ class ReasoningChain(BaseModel):
     chain_id: str = Field(description="Unique identifier")
     question: str = Field(description="What we're trying to answer")
     context: dict[str, Any] = Field(
-        default_factory=dict, description="Relevant context"
+        default_factory=dict,
+        description="Relevant context",
     )
 
     # Components
     premises: list[Premise] = Field(description="Starting premises")
     assumptions: list[Assumption] = Field(
-        default_factory=list, description="Assumptions made"
+        default_factory=list,
+        description="Assumptions made",
     )
     logical_steps: list[LogicalStep] = Field(
-        description="Steps from premises to conclusion"
-    )
+        description="Steps from premises to conclusion", )
 
     # Conclusion
     conclusion: str = Field(description="Final conclusion reached")
     conclusion_strength: ArgumentStrength = Field(
-        description="How strong the argument is"
-    )
+        description="How strong the argument is", )
     certainty_level: CertaintyLevel = Field(description="How certain we are")
 
     # Alternative paths
     alternative_conclusions: list[dict[str, Any]] = Field(
-        default_factory=list, description="Other possible conclusions"
+        default_factory=list,
+        description="Other possible conclusions",
     )
     counter_arguments: list[CounterArgument] = Field(
-        default_factory=list, description="Arguments against our conclusion"
+        default_factory=list,
+        description="Arguments against our conclusion",
     )
 
     # Quality metrics
-    logical_validity: bool = Field(description="Whether reasoning is logically valid")
+    logical_validity: bool = Field(
+        description="Whether reasoning is logically valid")
     soundness: bool | None = Field(
-        default=None, description="Valid + true premises (if verifiable)"
+        default=None,
+        description="Valid + true premises (if verifiable)",
     )
     completeness: float = Field(
-        ge=0.0, le=1.0, description="How thoroughly we've reasoned"
+        ge=0.0,
+        le=1.0,
+        description="How thoroughly we've reasoned",
     )
 
     @computed_field
@@ -266,10 +285,10 @@ class BiasAssessment(BaseModel):
     """Assessment of potential biases."""
 
     bias_type: BiasType
-    description: str = Field(description="How this bias might be affecting reasoning")
+    description: str = Field(
+        description="How this bias might be affecting reasoning")
     severity: Literal["high", "medium", "low"] = Field(
-        description="How severely this affects conclusions"
-    )
+        description="How severely this affects conclusions", )
     evidence: list[str] = Field(description="Evidence of this bias")
     mitigation: str = Field(description="How to counteract this bias")
 
@@ -280,7 +299,8 @@ class FallacyDetection(BaseModel):
     fallacy_type: LogicalFallacy
     location: str = Field(description="Where in reasoning this occurs")
     description: str = Field(description="How this fallacy manifests")
-    impact: ArgumentStrength = Field(description="How much this weakens the argument")
+    impact: ArgumentStrength = Field(
+        description="How much this weakens the argument")
     correction: str = Field(description="How to fix this fallacy")
 
 
@@ -289,34 +309,38 @@ class UncertaintyAnalysis(BaseModel):
 
     # Sources of uncertainty
     epistemic_uncertainty: float = Field(
-        ge=0.0, le=1.0, description="Uncertainty from lack of knowledge"
+        ge=0.0,
+        le=1.0,
+        description="Uncertainty from lack of knowledge",
     )
     aleatory_uncertainty: float = Field(
-        ge=0.0, le=1.0, description="Inherent randomness/variability"
+        ge=0.0,
+        le=1.0,
+        description="Inherent randomness/variability",
     )
 
     # Specific uncertainties
     premise_uncertainty: dict[int, float] = Field(
-        description="Uncertainty in each premise"
-    )
+        description="Uncertainty in each premise", )
     inference_uncertainty: dict[int, float] = Field(
-        description="Uncertainty in each inference"
-    )
+        description="Uncertainty in each inference", )
 
     # Propagated uncertainty
     conclusion_uncertainty: float = Field(
-        ge=0.0, le=1.0, description="Total uncertainty in conclusion"
+        ge=0.0,
+        le=1.0,
+        description="Total uncertainty in conclusion",
     )
     confidence_interval: tuple[float, float] = Field(
-        description="Confidence interval for conclusion"
-    )
+        description="Confidence interval for conclusion", )
 
     # Sensitivity
     sensitive_assumptions: list[str] = Field(
-        description="Assumptions that most affect conclusion"
-    )
+        description="Assumptions that most affect conclusion", )
     robustness_score: float = Field(
-        ge=0.0, le=1.0, description="How robust conclusion is to uncertainties"
+        ge=0.0,
+        le=1.0,
+        description="How robust conclusion is to uncertainties",
     )
 
 
@@ -325,7 +349,12 @@ class ArgumentStructure(BaseModel):
 
     # Argument type
     structure_type: Literal[
-        "deductive", "inductive", "abductive", "analogical", "pragmatic", "mixed"
+        "deductive",
+        "inductive",
+        "abductive",
+        "analogical",
+        "pragmatic",
+        "mixed",
     ] = Field(description="Overall structure type")
 
     # Complexity metrics
@@ -335,16 +364,16 @@ class ArgumentStructure(BaseModel):
 
     # Dependencies
     premise_dependencies: dict[str, list[str]] = Field(
-        description="Which conclusions depend on which premises"
-    )
+        description="Which conclusions depend on which premises", )
     critical_premises: list[int] = Field(
-        description="Premises that support the most conclusions"
-    )
+        description="Premises that support the most conclusions", )
 
     # Patterns
-    reasoning_patterns: list[str] = Field(description="Common patterns identified")
+    reasoning_patterns: list[str] = Field(
+        description="Common patterns identified")
     circular_dependencies: list[list[int]] = Field(
-        default_factory=list, description="Any circular reasoning detected"
+        default_factory=list,
+        description="Any circular reasoning detected",
     )
 
 
@@ -353,42 +382,62 @@ class ReasoningQuality(BaseModel):
 
     # Logical quality
     validity_score: float = Field(
-        ge=0.0, le=1.0, description="Logical validity (structure)"
+        ge=0.0,
+        le=1.0,
+        description="Logical validity (structure)",
     )
     soundness_score: float = Field(
-        ge=0.0, le=1.0, description="Soundness (validity + truth)"
+        ge=0.0,
+        le=1.0,
+        description="Soundness (validity + truth)",
     )
 
     # Evidence quality
     evidence_quality: float = Field(
-        ge=0.0, le=1.0, description="Quality of supporting evidence"
+        ge=0.0,
+        le=1.0,
+        description="Quality of supporting evidence",
     )
     evidence_coverage: float = Field(
-        ge=0.0, le=1.0, description="How well evidence covers claims"
+        ge=0.0,
+        le=1.0,
+        description="How well evidence covers claims",
     )
 
     # Completeness
     consideration_breadth: float = Field(
-        ge=0.0, le=1.0, description="Breadth of factors considered"
+        ge=0.0,
+        le=1.0,
+        description="Breadth of factors considered",
     )
     alternative_exploration: float = Field(
-        ge=0.0, le=1.0, description="How well alternatives were explored"
+        ge=0.0,
+        le=1.0,
+        description="How well alternatives were explored",
     )
 
     # Bias and fallacies
     bias_score: float = Field(
-        ge=0.0, le=1.0, description="Freedom from bias (1 = unbiased)"
+        ge=0.0,
+        le=1.0,
+        description="Freedom from bias (1 = unbiased)",
     )
     fallacy_score: float = Field(
-        ge=0.0, le=1.0, description="Freedom from fallacies (1 = none)"
+        ge=0.0,
+        le=1.0,
+        description="Freedom from fallacies (1 = none)",
     )
 
     # Overall
     overall_quality: float = Field(
-        ge=0.0, le=1.0, description="Weighted overall quality"
+        ge=0.0,
+        le=1.0,
+        description="Weighted overall quality",
     )
     confidence_in_assessment: float = Field(
-        ge=0.0, le=1.0, description="Our confidence in this assessment"
+        ge=0.0,
+        le=1.0,
+        description="Our confidence in this assessment",
     )
 
 
@@ -396,46 +445,44 @@ class ReasoningAnalysis(BaseModel):
     """Complete analysis of a reasoning chain."""
 
     # Original reasoning
-    reasoning_chain: ReasoningChain = Field(description="The reasoning being analyzed")
+    reasoning_chain: ReasoningChain = Field(
+        description="The reasoning being analyzed")
 
     # Structural analysis
     argument_structure: ArgumentStructure = Field(
-        description="Structure of the argument"
-    )
+        description="Structure of the argument", )
 
     # Quality assessment
     quality_assessment: ReasoningQuality = Field(description="Quality metrics")
 
     # Bias and fallacy detection
     detected_biases: list[BiasAssessment] = Field(
-        default_factory=list, description="Potential biases found"
+        default_factory=list,
+        description="Potential biases found",
     )
     detected_fallacies: list[FallacyDetection] = Field(
-        default_factory=list, description="Logical fallacies found"
+        default_factory=list,
+        description="Logical fallacies found",
     )
 
     # Uncertainty
     uncertainty_analysis: UncertaintyAnalysis = Field(
-        description="Analysis of uncertainties"
-    )
+        description="Analysis of uncertainties", )
 
     # Improvements
     strengthening_suggestions: list[str] = Field(
-        description="How to strengthen the argument"
-    )
+        description="How to strengthen the argument", )
     missing_considerations: list[str] = Field(
-        description="Important factors not considered"
-    )
+        description="Important factors not considered", )
     additional_evidence_needed: list[str] = Field(
-        description="Evidence that would help"
-    )
+        description="Evidence that would help", )
 
     # Alternative perspectives
     alternative_framings: list[dict[str, Any]] = Field(
-        description="Other ways to approach the question"
-    )
+        description="Other ways to approach the question", )
     dialectical_synthesis: str | None = Field(
-        default=None, description="Synthesis of opposing views"
+        default=None,
+        description="Synthesis of opposing views",
     )
 
 
@@ -455,24 +502,24 @@ class ReasoningReport(BaseModel):
 
     # Alternative approaches
     alternative_chains: list[ReasoningChain] = Field(
-        default_factory=list, description="Alternative reasoning paths"
+        default_factory=list,
+        description="Alternative reasoning paths",
     )
 
     # Synthesis
     synthesized_conclusion: str = Field(
-        description="Conclusion considering all perspectives"
-    )
+        description="Conclusion considering all perspectives", )
     confidence_level: CertaintyLevel = Field(description="Overall confidence")
 
     # Recommendations
     decision_recommendation: str = Field(
-        description="What we recommend based on reasoning"
-    )
-    key_uncertainties: list[str] = Field(description="Main uncertainties to track")
+        description="What we recommend based on reasoning", )
+    key_uncertainties: list[str] = Field(
+        description="Main uncertainties to track")
     follow_up_questions: list[str] = Field(
-        description="Questions that would improve reasoning"
-    )
+        description="Questions that would improve reasoning", )
 
     # Executive summary
-    executive_summary: str = Field(description="Brief summary for decision-makers")
+    executive_summary: str = Field(
+        description="Brief summary for decision-makers")
     key_insights: list[str] = Field(description="Most important insights")

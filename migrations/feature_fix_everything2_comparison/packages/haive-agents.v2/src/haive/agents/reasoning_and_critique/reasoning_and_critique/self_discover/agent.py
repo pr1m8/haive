@@ -1,11 +1,15 @@
 """Self-Discover MultiAgent implementation."""
 
+from __future__ import annotations
+
+import asyncio
+
 from haive.agents.multi.clean import MultiAgent
 
-from .adapter import AdapterAgent
-from .executor import ExecutorAgent
-from .selector import SelectorAgent
-from .structurer import StructurerAgent
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.reasoning_and_critique.reasoning_and_critique.self_discover.adapter import AdapterAgent
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.reasoning_and_critique.reasoning_and_critique.self_discover.executor import ExecutorAgent
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.reasoning_and_critique.reasoning_and_critique.self_discover.selector import SelectorAgent
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.reasoning_and_critique.reasoning_and_critique.self_discover.structurer import StructurerAgent
 
 
 def get_default_modules() -> str:
@@ -42,7 +46,12 @@ def create_self_discover_agent(name: str = "self_discover") -> MultiAgent:
         MultiAgent configured for Self-Discover workflow
     """
     # Create the four specialized agents in sequential order
-    agents = [SelectorAgent(), AdapterAgent(), StructurerAgent(), ExecutorAgent()]
+    agents = [
+        SelectorAgent(),
+        AdapterAgent(),
+        StructurerAgent(),
+        ExecutorAgent()
+    ]
 
     # Create and return the MultiAgent (no engine needed for sequential execution)
     return MultiAgent(name=name, agents=agents)
@@ -50,9 +59,6 @@ def create_self_discover_agent(name: str = "self_discover") -> MultiAgent:
 
 # Create a default instance for easy import
 SelfDiscoverAgent = create_self_discover_agent()
-
-
-import asyncio
 
 
 async def main():

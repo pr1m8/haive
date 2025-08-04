@@ -32,6 +32,11 @@ We'll build a simple conversational agent that can answer questions and maintain
 #
 # We need just two imports to get started.
 
+import time
+
+from matplotlib import patches
+import matplotlib.pyplot as plt
+
 from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 
@@ -87,9 +92,11 @@ print()
 # Let's ask our agent to help with a real task.
 
 response3 = agent.run(
-    "Can you help me write a Python function to calculate fibonacci numbers?"
+    "Can you help me write a Python function to calculate fibonacci numbers?",
 )
-print("You: Can you help me write a Python function to calculate fibonacci numbers?")
+print(
+    "You: Can you help me write a Python function to calculate fibonacci numbers?"
+)
 print(f"Agent: {response3}")
 
 # %%
@@ -97,9 +104,6 @@ print(f"Agent: {response3}")
 # --------------------------------
 #
 # We can visualize how the conversation flows through the agent.
-
-import matplotlib.pyplot as plt
-from matplotlib import patches
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
@@ -157,7 +161,10 @@ ax.set_xlim(0, 1)
 ax.set_ylim(-1, 6)
 ax.axis("off")
 ax.set_title(
-    "Conversation Flow with Context Memory", fontsize=16, weight="bold", pad=20
+    "Conversation Flow with Context Memory",
+    fontsize=16,
+    weight="bold",
+    pad=20,
 )
 
 plt.tight_layout()
@@ -173,20 +180,15 @@ print(f"Total messages in history: {len(agent.messages)}")
 print("\nConversation summary:")
 for i, msg in enumerate(agent.messages):
     role = msg.type if hasattr(msg, "type") else "unknown"
-    content_preview = (
-        str(msg.content)[:50] + "..."
-        if len(str(msg.content)) > 50
-        else str(msg.content)
-    )
-    print(f"{i+1}. {role}: {content_preview}")
+    content_preview = (str(msg.content)[:50] + "..."
+                       if len(str(msg.content)) > 50 else str(msg.content))
+    print(f"{i + 1}. {role}: {content_preview}")
 
 # %%
 # Performance Metrics
 # -------------------
 #
 # Let's measure how fast our agent responds.
-
-import time
 
 # Measure response time
 queries = [

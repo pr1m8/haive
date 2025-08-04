@@ -1,6 +1,6 @@
 # Typing Tools
 
-**Purpose**: Type checking, inference, and automatic type hint generation  
+**Purpose**: Type checking, inference, and automatic type hint generation
 **Usage**: Improve code quality through better type annotations
 
 ## 📁 Contents

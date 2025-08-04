@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Audit all validators in the codebase and report issues."""
 
+from __future__ import annotations
+
 import ast
-import re
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 
 class ValidatorAuditor(ast.NodeVisitor):
+
     def __init__(self, file_path: Path):
         self.file_path = file_path
         self.issues = []
@@ -40,8 +42,7 @@ class ValidatorAuditor(ast.NodeVisitor):
                             "function": node.name,
                             "issue": "field_validator missing @classmethod",
                             "severity": "error",
-                        }
-                    )
+                        }, )
                 elif has_self:
                     self.issues.append(
                         {
@@ -51,8 +52,7 @@ class ValidatorAuditor(ast.NodeVisitor):
                             "function": node.name,
                             "issue": "field_validator has self instead of cls",
                             "severity": "error",
-                        }
-                    )
+                        }, )
 
             elif validator_info["type"] == "model_validator":
                 mode = validator_info.get("mode", "after")
@@ -65,33 +65,35 @@ class ValidatorAuditor(ast.NodeVisitor):
                                 "line": node.lineno,
                                 "class": self.current_class,
                                 "function": node.name,
-                                "issue": 'model_validator(mode="before") missing @classmethod',
+                                "issue":
+                                'model_validator(mode="before") missing @classmethod',
                                 "severity": "error",
-                            }
-                        )
+                            }, )
                     elif has_self:
                         self.issues.append(
                             {
-                                "file": str(self.file_path),
+                                "file": str(
+                                    self.file_path),
                                 "line": node.lineno,
                                 "class": self.current_class,
                                 "function": node.name,
                                 "issue": 'model_validator(mode="before") has self instead of cls',
                                 "severity": "error",
-                            }
+                            },
                         )
 
                 elif mode == "after":
                     if validator_info["has_classmethod"]:
                         self.issues.append(
                             {
-                                "file": str(self.file_path),
+                                "file": str(
+                                    self.file_path),
                                 "line": node.lineno,
                                 "class": self.current_class,
                                 "function": node.name,
                                 "issue": 'model_validator(mode="after") should not have @classmethod',
                                 "severity": "error",
-                            }
+                            },
                         )
                     elif has_cls:
                         self.issues.append(
@@ -100,22 +102,23 @@ class ValidatorAuditor(ast.NodeVisitor):
                                 "line": node.lineno,
                                 "class": self.current_class,
                                 "function": node.name,
-                                "issue": 'model_validator(mode="after") has cls instead of self',
+                                "issue":
+                                'model_validator(mode="after") has cls instead of self',
                                 "severity": "error",
-                            }
-                        )
+                            }, )
 
                 elif mode == "wrap":
                     if validator_info["has_classmethod"]:
                         self.issues.append(
                             {
-                                "file": str(self.file_path),
+                                "file": str(
+                                    self.file_path),
                                 "line": node.lineno,
                                 "class": self.current_class,
                                 "function": node.name,
                                 "issue": 'model_validator(mode="wrap") should not have @classmethod',
                                 "severity": "error",
-                            }
+                            },
                         )
 
         self.generic_visit(node)
@@ -146,17 +149,17 @@ class ValidatorAuditor(ast.NodeVisitor):
         return validator_info
 
 
-def audit_file(file_path: Path) -> List[Dict[str, Any]]:
+def audit_file(file_path: Path) -> list[dict[str, Any]]:
     """Audit a single Python file for validator issues."""
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             content = f.read()
 
         tree = ast.parse(content)
         auditor = ValidatorAuditor(file_path)
         auditor.visit(tree)
         return auditor.issues
-    except:
+    except BaseException:
         return []
 
 
@@ -194,7 +197,11 @@ def main():
         # Show first 3 examples
         for issue in issues[:3]:
             print(
-                f"  - {issue['file']}:{issue['line']} in {issue['class']}.{issue['function']}"
+                f"  - {
+                    issue['file']}:{
+                    issue['line']} in {
+                    issue['class']}.{
+                    issue['function']}",
             )
         if len(issues) > 3:
             print(f"  ... and {len(issues) - 3} more")

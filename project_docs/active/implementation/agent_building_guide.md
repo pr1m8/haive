@@ -133,42 +133,42 @@ from typing import List, Dict, Any
 
 class ContentAnalysis(BaseModel):
     """Structured output for content analysis."""
-    
+
     overall_score: float = Field(
         ge=0.0, le=10.0,
         description="Overall content quality score (0-10)"
     )
-    
+
     clarity_score: float = Field(
         ge=0.0, le=10.0,
         description="Clarity and readability score (0-10)"
     )
-    
+
     engagement_score: float = Field(
         ge=0.0, le=10.0,
         description="Engagement and interest score (0-10)"
     )
-    
+
     strengths: List[str] = Field(
         description="List of content strengths"
     )
-    
+
     improvements: List[str] = Field(
         description="List of suggested improvements"
     )
-    
+
     key_themes: List[str] = Field(
         description="Main themes identified in content"
     )
-    
+
     tone: str = Field(
         description="Overall tone of the content"
     )
-    
+
     target_audience: str = Field(
         description="Identified target audience"
     )
-    
+
     recommendations: List[str] = Field(
         description="Specific actionable recommendations"
     )
@@ -182,26 +182,26 @@ from haive.core.engine.aug_llm import AugLLMConfig
 
 class ContentAnalyzerAgent(SimpleAgent):
     """Agent that analyzes text content and provides structured feedback.
-    
+
     This agent specializes in content analysis, providing detailed feedback
     on quality, clarity, engagement, and actionable recommendations for
     improvement.
-    
+
     Examples:
         Basic usage::
-        
+
             agent = ContentAnalyzerAgent()
             analysis = agent.run("Your content here...")
             print(f"Overall score: {analysis.overall_score}")
-            
+
         With custom configuration::
-        
+
             agent = ContentAnalyzerAgent(
                 engine=AugLLMConfig(temperature=0.3)
             )
             analysis = agent.run(content, debug=True)
     """
-    
+
     def __init__(
         self,
         name: str = "content_analyzer",
@@ -209,7 +209,7 @@ class ContentAnalyzerAgent(SimpleAgent):
         **kwargs
     ):
         """Initialize the content analyzer agent.
-        
+
         Args:
             name: Agent identifier
             engine: LLM configuration (uses default if None)
@@ -220,31 +220,31 @@ class ContentAnalyzerAgent(SimpleAgent):
                 temperature=0.3,  # Lower temperature for consistent analysis
                 system_message=self._get_system_message()
             )
-        
+
         super().__init__(
             name=name,
             engine=engine,
             structured_output_model=ContentAnalysis,
             **kwargs
         )
-    
+
     def _get_system_message(self) -> str:
         """Get the system message for content analysis."""
         return """You are a professional content analyst and writing coach.
-        
+
         Your role is to:
         1. Analyze text content for quality, clarity, and engagement
         2. Provide constructive feedback with specific examples
         3. Identify strengths and areas for improvement
         4. Suggest actionable recommendations
         5. Assess tone and target audience
-        
+
         Always be:
         - Constructive and helpful
         - Specific with examples
         - Balanced in feedback
         - Professional in tone
-        
+
         Provide scores on a 1-10 scale where:
         - 1-3: Needs significant improvement
         - 4-6: Good with room for improvement
@@ -261,27 +261,27 @@ from haive.core.engine.aug_llm import AugLLMConfig
 
 class TestContentAnalyzerAgent:
     """Test suite for ContentAnalyzerAgent."""
-    
+
     def test_agent_creation(self):
         """Test agent can be created successfully."""
         agent = ContentAnalyzerAgent()
         assert agent.name == "content_analyzer"
         assert agent.structured_output_model == ContentAnalysis
-    
+
     def test_content_analysis_with_real_llm(self):
         """Test content analysis with real LLM."""
         agent = ContentAnalyzerAgent()
-        
+
         test_content = """
-        Artificial intelligence is transforming how we work and live. 
+        Artificial intelligence is transforming how we work and live.
         From automating routine tasks to enabling new forms of creativity,
         AI is becoming an integral part of our daily experiences.
         However, we must consider the ethical implications and ensure
         that AI development benefits everyone.
         """
-        
+
         result = agent.run(test_content)
-        
+
         # Verify structured output
         assert isinstance(result, ContentAnalysis)
         assert 0.0 <= result.overall_score <= 10.0
@@ -293,46 +293,46 @@ class TestContentAnalyzerAgent:
         assert result.tone
         assert result.target_audience
         assert len(result.recommendations) > 0
-    
+
     def test_poor_content_analysis(self):
         """Test analysis of poor quality content."""
         agent = ContentAnalyzerAgent()
-        
+
         poor_content = "this is bad content with no structure or clarity"
-        
+
         result = agent.run(poor_content)
-        
+
         # Should identify issues
         assert result.overall_score < 5.0
         assert len(result.improvements) > 0
         assert "clarity" in " ".join(result.improvements).lower()
-    
+
     def test_high_quality_content_analysis(self):
         """Test analysis of high quality content."""
         agent = ContentAnalyzerAgent()
-        
+
         quality_content = """
-        The future of sustainable energy lies in the convergence of three 
-        revolutionary technologies: advanced battery storage, smart grid 
+        The future of sustainable energy lies in the convergence of three
+        revolutionary technologies: advanced battery storage, smart grid
         infrastructure, and renewable energy sources.
-        
-        Battery technology has evolved dramatically, with lithium-ion 
-        efficiency improving by 300% over the past decade. This breakthrough 
-        enables storing renewable energy during peak production times and 
+
+        Battery technology has evolved dramatically, with lithium-ion
+        efficiency improving by 300% over the past decade. This breakthrough
+        enables storing renewable energy during peak production times and
         releasing it when demand is highest.
-        
-        Smart grids represent the nervous system of this new energy 
-        ecosystem, using AI to predict consumption patterns and optimize 
-        energy distribution in real-time. This intelligence reduces waste 
+
+        Smart grids represent the nervous system of this new energy
+        ecosystem, using AI to predict consumption patterns and optimize
+        energy distribution in real-time. This intelligence reduces waste
         by up to 40% compared to traditional grid systems.
-        
-        When combined with rapidly advancing solar and wind technologies, 
-        these innovations create a sustainable energy future that is both 
+
+        When combined with rapidly advancing solar and wind technologies,
+        these innovations create a sustainable energy future that is both
         economically viable and environmentally responsible.
         """
-        
+
         result = agent.run(quality_content)
-        
+
         # Should recognize quality
         assert result.overall_score >= 7.0
         assert len(result.strengths) >= 3

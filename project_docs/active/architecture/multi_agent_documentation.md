@@ -1,7 +1,7 @@
 # Multi-Agent System Documentation
 
-**Version**: 1.0  
-**Purpose**: Documentation for the clean, simple multi-agent implementation  
+**Version**: 1.0
+**Purpose**: Documentation for the clean, simple multi-agent implementation
 **Last Updated**: 2025-01-17
 
 ## 🎯 Overview

@@ -36,18 +36,21 @@ class TOTState(TOTInput, TOTOutput):
 
     # Basic state tracking
     messages: Annotated[list[BaseMessage], add_messages] = Field(
-        default_factory=list, description="Message history"
+        default_factory=list,
+        description="Message history",
     )
 
     # Problem definition
 
     # ToT algorithm state
     candidates: list[dict[str, Any]] = Field(
-        default_factory=list, description="Current candidate solutions"
+        default_factory=list,
+        description="Current candidate solutions",
     )
 
     scored_candidates: list[dict[str, Any]] = Field(
-        default_factory=list, description="Scored candidate solutions"
+        default_factory=list,
+        description="Scored candidate solutions",
     )
 
     # Search parameters
@@ -56,12 +59,14 @@ class TOTState(TOTInput, TOTOutput):
     max_depth: int = Field(default=5, description="Maximum search depth")
 
     best_candidate: dict[str, Any] | None = Field(
-        default=None, description="Best candidate found so far"
+        default=None,
+        description="Best candidate found so far",
     )
 
     # For expansion
     current_seed: dict[str, Any] | None = Field(
-        default=None, description="Current seed candidate for expansion"
+        default=None,
+        description="Current seed candidate for expansion",
     )
 
     # Use Pydantic v2 configuration
@@ -92,8 +97,7 @@ class TOTState(TOTInput, TOTOutput):
                         "score": item.score,
                         "feedback": item.feedback,
                         "metadata": item.metadata,
-                    }
-                )
+                    }, )
             elif isinstance(item, dict):
                 result.append(item)
             else:

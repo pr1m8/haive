@@ -7,7 +7,7 @@
 
    <div class="hero-section">
    <h1 class="gradient-text">Build Intelligent AI Agents</h1>
-   <p>Professional framework for creating sophisticated AI agents with conversational intelligence, 
+   <p>Professional framework for creating sophisticated AI agents with conversational intelligence,
    tool orchestration, game strategies, and multi-agent coordination.</p>
 
 .. raw:: html
@@ -29,7 +29,7 @@
    :gutter: 3
 
    .. grid-item::
-      
+
 
       **Install Haive**
 
@@ -61,7 +61,7 @@
          print(response)
 
          .. grid-item::
-      
+
 
          **Key Features**
 
@@ -175,66 +175,66 @@
 
          :shadow: lg
          :link: agents/index
-      
+
          Build intelligent agents with memory, personality, and advanced reasoning capabilities.
-      
+
          +++
-      
+
          **Available Types:** SimpleAgent • ReactAgent • RAG Systems
 
          .. grid-item-card:: 🎮 Game Intelligence
 
          :shadow: lg
          :link: games/index
-      
+
          Create AI opponents for Chess, Go, Poker, and other strategic games with advanced algorithms.
-      
+
          +++
-      
+
          **Available Types:** Chess Engine • Board Games • Strategy AI
 
-         .. grid-item-card:: 🔧 Tool Orchestration  
+         .. grid-item-card:: 🔧 Tool Orchestration
 
          :shadow: lg
          :link: tools/index
-      
+
          Connect agents to APIs, databases, search engines, and external services seamlessly.
-      
+
          +++
-      
+
          **Supported:** Web APIs • Databases • File Systems
 
          .. grid-item-card:: 🔄 Dynamic MCP
 
-         :shadow: lg  
+         :shadow: lg
          :link: mcp/index
-      
+
          1,960+ servers with hot-reload capabilities and AI-powered discovery.
-      
+
          +++
-      
+
          **Features:** Auto-Discovery • Hot-Reload • Plugin System
 
          .. grid-item-card:: 📖 API Reference
 
          :shadow: lg
          :link: api/index
-      
+
          Comprehensive API documentation with examples and implementation details.
-      
+
          +++
-      
+
          **Coverage:** Core API • Agent Classes • Tools
 
          .. grid-item-card:: 📚 Examples
 
          :shadow: lg
          :link: examples/index
-      
+
          Step-by-step tutorials and real-world examples to get started quickly.
-      
+
          +++
-      
+
          **Content:** Tutorials • Guides • Code Samples
 
          .. raw:: html
@@ -373,7 +373,7 @@
          :gutter: 2
 
          .. grid-item::
-      
+
 
          .. raw:: html
 
@@ -396,7 +396,7 @@
          </div>
 
          .. grid-item::
-      
+
          .. raw:: html
 
          .. raw:: html
@@ -429,7 +429,7 @@
          .. raw:: html
 
          <div class="content">
-         Haive transformed how we build AI applications. The agent architecture is intuitive 
+         Haive transformed how we build AI applications. The agent architecture is intuitive
          and the performance is outstanding. We reduced our development time by 70%.
          </div>
 
@@ -445,7 +445,7 @@
          .. raw:: html
 
          <div class="content">
-         The best AI agent framework I've used. The documentation is excellent and the 
+         The best AI agent framework I've used. The documentation is excellent and the
          community support is fantastic. Highly recommended for production use.
          </div>
 
@@ -465,21 +465,21 @@
 
          :link: introduction/index
          :shadow: md
-      
+
          Start with our comprehensive introduction and quickstart guide.
 
          .. grid-item-card:: 💻 View Examples
 
          :link: gallery
          :shadow: md
-      
+
          Explore real-world examples and implementation patterns.
 
          .. grid-item-card:: 🌟 Star on GitHub
 
          :link: https://github.com/haive/haive
          :shadow: md
-      
+
          Show your support and contribute to the project.
 
          .. toctree::

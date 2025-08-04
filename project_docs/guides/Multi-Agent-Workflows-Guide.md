@@ -1,7 +1,7 @@
 # Multi-Agent Workflows Guide
 
-**Version**: 1.0  
-**Purpose**: Comprehensive guide for creating and managing multi-agent workflows in Haive  
+**Version**: 1.0
+**Purpose**: Comprehensive guide for creating and managing multi-agent workflows in Haive
 **Last Updated**: 2025-01-16
 
 ## 🎯 Overview

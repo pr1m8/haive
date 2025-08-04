@@ -38,10 +38,13 @@ Examples:
         print(f"Retriever success rate: {analysis['agents']['retriever']['success_rate']}")
 """
 
-from .agent import SimpleRAGV3
-from .answer_generator_agent import SimpleAnswerAgent
-from .retriever_agent import RetrieverAgent
-from .state import SimpleRAGState
+from __future__ import annotations
 
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.rag.rag.simple.enhanced_v3.agent import SimpleRAGV3
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.rag.rag.simple.enhanced_v3.answer_generator_agent import SimpleAnswerAgent
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.rag.rag.simple.enhanced_v3.retriever_agent import RetrieverAgent
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.rag.rag.simple.enhanced_v3.state import SimpleRAGState
 
-__all__ = ["RetrieverAgent", "SimpleAnswerAgent", "SimpleRAGState", "SimpleRAGV3"]
+__all__ = [
+    "RetrieverAgent", "SimpleAnswerAgent", "SimpleRAGState", "SimpleRAGV3"
+]

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Fix common issues in showcase RST files - improved version."""
 
+from __future__ import annotations
+
 from pathlib import Path
 import re
 
@@ -24,9 +26,11 @@ def fix_showcase_file(file_path):
         line = re.sub(r"(\w+)\s+\*\*", r"\1 **", line)
 
         # Fix specific patterns
-        line = line.replace("**Succes***s**", "**Success**")
-        line = line.replace("``custom.SimpleAgen``t````", "``custom.SimpleAgent``")
-        line = line.replace("``haive.mock.simpleagen``t``", "``haive.mock.simpleagent``")
+        line = line.replace("**Success***s**", "**Success**")
+        line = line.replace("``custom.SimpleAgen``t````",
+                            "``custom.SimpleAgent``")
+        line = line.replace("``haive.mock.simpleagen``t``",
+                            "``haive.mock.simpleagent``")
         line = line.replace("`` ``SimpleAgen``t``", "``SimpleAgent``")
 
         # Handle JSON blocks
@@ -34,12 +38,8 @@ def fix_showcase_file(file_path):
             in_json_block = True
             fixed_lines.append(line)
             continue
-        if (
-            in_json_block
-            and line.strip() == ""
-            and i + 1 < len(lines)
-            and lines[i + 1].strip().startswith("{")
-        ):
+        if (in_json_block and line.strip() == "" and i + 1 < len(lines)
+                and lines[i + 1].strip().startswith("{")):
             fixed_lines.append(line)
             continue
         if in_json_block and not line.startswith(" ") and line.strip() != "":
@@ -48,12 +48,8 @@ def fix_showcase_file(file_path):
         if in_json_block and line.strip():
             # Ensure proper indentation for JSON content
             content = line.lstrip()
-            if (
-                content.startswith("{")
-                or content.startswith("}")
-                or content.startswith("[")
-                or content.startswith("]")
-            ):
+            if (content.startswith("{") or content.startswith("}")
+                    or content.startswith("[") or content.startswith("]")):
                 line = "   " + content.rstrip() + "\n"
             elif content.startswith('"'):
                 line = "     " + content.rstrip() + "\n"

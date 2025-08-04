@@ -1,5 +1,7 @@
 """Action Generator Agent for LATS v3 - Generates candidate actions."""
 
+from __future__ import annotations
+
 from haive.agents.reasoning_and_critique.lats.v3.models.action_models import (
     ActionGeneration,
     CandidateAction,
@@ -12,9 +14,10 @@ from haive.core.engine.aug_llm import AugLLMConfig
 class ActionGenerator:
     """Agent that generates candidate actions for a given node in LATS.
 
-    This agent analyzes the current state and generates multiple candidate
-    actions that could be taken, each with confidence scores and reasoning.
-    Uses composition pattern to avoid Pydantic inheritance issues.
+    This agent analyzes the current state and generates multiple
+    candidate actions that could be taken, each with confidence scores
+    and reasoning. Uses composition pattern to avoid Pydantic
+    inheritance issues.
     """
 
     def __init__(
@@ -88,21 +91,19 @@ Diversity is crucial - avoid generating similar actions."""
 
         if current_node.reflection_reasoning:
             prompt_parts.append(
-                f"Previous reflection: {current_node.reflection_reasoning}"
-            )
+                f"Previous reflection: {current_node.reflection_reasoning}", )
 
         if search_history:
             prompt_parts.append("\nSearch history (most recent first):")
-            for i, action in enumerate(search_history[:5]):  # Limit to recent 5
-                prompt_parts.append(f"  {i+1}. {action}")
+            for i, action in enumerate(
+                    search_history[:5]):  # Limit to recent 5
+                prompt_parts.append(f"  {i + 1}. {action}")
 
-        prompt_parts.extend(
-            [
-                f"\nGenerate {self.num_candidates} diverse candidate actions for the next step.",
-                "Each action should explore a different approach or strategy.",
-                "Consider what hasn't been tried and what might lead to success.",
-            ]
-        )
+        prompt_parts.extend([
+            f"\nGenerate {self.num_candidates} diverse candidate actions for the next step.",
+            "Each action should explore a different approach or strategy.",
+            "Consider what hasn't been tried and what might lead to success.",
+        ], )
 
         return "\n".join(prompt_parts)
 
@@ -123,7 +124,9 @@ Diversity is crucial - avoid generating similar actions."""
             ActionGeneration with candidate actions
         """
         prompt = self.create_generation_prompt(
-            current_node, problem_description, search_history
+            current_node,
+            problem_description,
+            search_history,
         )
 
         # Use the composed agent's arun method
@@ -135,8 +138,10 @@ Diversity is crucial - avoid generating similar actions."""
             while len(result.candidate_actions) < self.num_candidates:
                 base_action = result.candidate_actions[-1]
                 variation = CandidateAction(
-                    action=f"{base_action.action} (variation)",
-                    reasoning=f"Alternative approach to {base_action.action}",
+                    action=f"{
+                        base_action.action} (variation)",
+                    reasoning=f"Alternative approach to {
+                        base_action.action}",
                     expected_outcome="Exploring different execution of similar strategy",
                     confidence=base_action.confidence * 0.9,
                 )
@@ -144,7 +149,8 @@ Diversity is crucial - avoid generating similar actions."""
 
         return result
 
-    def rank_actions(self, actions: list[CandidateAction]) -> list[CandidateAction]:
+    def rank_actions(self,
+                     actions: list[CandidateAction]) -> list[CandidateAction]:
         """Rank actions by confidence score.
 
         Args:
@@ -171,7 +177,8 @@ Diversity is crucial - avoid generating similar actions."""
         """
         return [a for a in actions if a.confidence >= min_confidence]
 
-    def get_action_diversity_score(self, actions: list[CandidateAction]) -> float:
+    def get_action_diversity_score(self,
+                                   actions: list[CandidateAction]) -> float:
         """Calculate diversity score for a set of actions.
 
         Args:

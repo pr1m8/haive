@@ -1,7 +1,7 @@
 # Modular Docstring Tools - Haive Framework
 
-**Version**: 1.0  
-**Last Updated**: 2025-08-01  
+**Version**: 1.0
+**Last Updated**: 2025-08-01
 **Status**: Production Ready
 
 ## 🎯 Overview

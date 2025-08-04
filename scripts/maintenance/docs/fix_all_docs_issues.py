@@ -2,6 +2,7 @@
 """Comprehensive Documentation Fix Script
 Fixes all issues preventing documentation build.
 """
+from __future__ import annotations
 
 import os
 import re

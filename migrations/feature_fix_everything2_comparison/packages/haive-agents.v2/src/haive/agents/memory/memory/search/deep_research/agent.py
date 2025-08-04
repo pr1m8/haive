@@ -1,9 +1,11 @@
 """Deep Research Agent implementation.
 
-Provides comprehensive research with multiple sources and detailed analysis.
-Similar to Perplexity's Deep Research feature that performs dozens of searches
-and reads hundreds of sources.
+Provides comprehensive research with multiple sources and detailed
+analysis. Similar to Perplexity's Deep Research feature that performs
+dozens of searches and reads hundreds of sources.
 """
+
+from __future__ import annotations
 
 from datetime import datetime
 import logging
@@ -17,8 +19,6 @@ from haive.agents.memory.search.deep_research.models import (
     ResearchQuery,
     ResearchSection,
 )
-
-# from haive.agents.memory.document_modifiers.kg.kg_iterative_refinement import IterativeGraphTransformer
 from haive.core.engine.aug_llm import AugLLMConfig
 
 
@@ -26,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 
 class DeepResearchAgent(BaseSearchAgent):
-    """Agent for comprehensive research with multiple sources and detailed analysis.
+    """Agent for comprehensive research with multiple sources and detailed.
+
+    analysis.
 
     Mimics Perplexity's Deep Research feature by performing multiple searches,
     analyzing hundreds of sources, and generating comprehensive reports.
@@ -101,13 +103,17 @@ class DeepResearchAgent(BaseSearchAgent):
                 system_message=self.get_system_prompt(),
             )
 
-        super().__init__(name=name, engine=engine, search_tools=search_tools, **kwargs)
+        super().__init__(name=name,
+                         engine=engine,
+                         search_tools=search_tools,
+                         **kwargs)
 
         # Knowledge graph integration
         self.enable_kg = enable_kg
         self.kg_transformer = kg_transformer
 
-        logger.info(f"Initialized DeepResearchAgent: {name} (KG enabled: {enable_kg})")
+        logger.info(
+            f"Initialized DeepResearchAgent: {name} (KG enabled: {enable_kg})")
 
     def get_response_model(self) -> type[SearchResponse]:
         """Get the response model for deep research."""
@@ -194,7 +200,9 @@ Remember: Depth, accuracy, and comprehensive analysis are the hallmarks of excel
 Process each research query with systematic thoroughness and analytical rigor."""
 
     def decompose_research_query(
-        self, query: str, focus_areas: list[str] | None = None
+        self,
+        query: str,
+        focus_areas: list[str] | None = None,
     ) -> list[str]:
         """Decompose a complex research query into specific sub-queries.
 
@@ -230,7 +238,9 @@ Process each research query with systematic thoroughness and analytical rigor.""
         return sub_queries
 
     async def execute_research_query(
-        self, query: str, query_type: str = "general"
+        self,
+        query: str,
+        query_type: str = "general",
     ) -> ResearchQuery:
         """Execute a single research query and track results.
 
@@ -284,11 +294,13 @@ Process each research query with systematic thoroughness and analytical rigor.""
 
         # Domain-based scoring
         domain = source.get("domain", "").lower()
-        if any(edu_domain in domain for edu_domain in [".edu", ".ac.", ".org"]):
+        if any(edu_domain in domain
+               for edu_domain in [".edu", ".ac.", ".org"]):
             credibility_score += 0.3
         elif any(gov_domain in domain for gov_domain in [".gov", ".mil"]):
             credibility_score += 0.2
-        elif any(news_domain in domain for news_domain in ["reuters", "ap", "bbc"]):
+        elif any(news_domain in domain
+                 for news_domain in ["reuters", "ap", "bbc"]):
             credibility_score += 0.1
 
         # Content type scoring
@@ -302,21 +314,19 @@ Process each research query with systematic thoroughness and analytical rigor.""
         pub_date = source.get("publication_date")
         if pub_date:
             try:
-                pub_datetime = (
-                    datetime.fromisoformat(pub_date)
-                    if isinstance(pub_date, str)
-                    else pub_date
-                )
+                pub_datetime = (datetime.fromisoformat(pub_date) if isinstance(
+                    pub_date, str) else pub_date)
                 days_old = (datetime.now() - pub_datetime).days
                 if days_old < 365:  # Less than a year old
                     credibility_score += 0.1
-            except:
+            except BaseException:
                 pass
 
         return min(1.0, credibility_score)
 
     def organize_findings_by_theme(
-        self, findings: list[dict[str, Any]]
+        self,
+        findings: list[dict[str, Any]],
     ) -> list[ResearchSection]:
         """Organize research findings into thematic sections.
 
@@ -338,15 +348,20 @@ Process each research query with systematic thoroughness and analytical rigor.""
         for finding in findings:
             content = finding.get("content", "").lower()
 
-            if any(word in content for word in ["background", "history", "origin"]):
+            if any(word in content
+                   for word in ["background", "history", "origin"]):
                 themes["Background"].append(finding)
-            elif any(word in content for word in ["current", "present", "today"]):
+            elif any(word in content
+                     for word in ["current", "present", "today"]):
                 themes["Current State"].append(finding)
-            elif any(word in content for word in ["study", "research", "evidence"]):
+            elif any(word in content
+                     for word in ["study", "research", "evidence"]):
                 themes["Evidence"].append(finding)
-            elif any(word in content for word in ["implication", "impact", "effect"]):
+            elif any(word in content
+                     for word in ["implication", "impact", "effect"]):
                 themes["Implications"].append(finding)
-            elif any(word in content for word in ["future", "prospect", "trend"]):
+            elif any(word in content
+                     for word in ["future", "prospect", "trend"]):
                 themes["Future Outlook"].append(finding)
             else:
                 themes["Current State"].append(finding)  # Default category
@@ -362,8 +377,8 @@ Process each research query with systematic thoroughness and analytical rigor.""
                 for finding in theme_findings:
                     content += f"- {finding.get('content', '')}\n"
                     key_points.append(
-                        finding.get("summary", finding.get("content", "")[:100])
-                    )
+                        finding.get("summary",
+                                    finding.get("content", "")[:100]), )
                     if finding.get("sources"):
                         sources.extend(finding["sources"])
 
@@ -374,12 +389,12 @@ Process each research query with systematic thoroughness and analytical rigor.""
                         sources=sources,
                         key_points=key_points,
                         confidence_level=0.7,  # Default confidence
-                    )
-                )
+                    ), )
 
         return sections
 
-    def generate_executive_summary(self, sections: list[ResearchSection]) -> str:
+    def generate_executive_summary(self,
+                                   sections: list[ResearchSection]) -> str:
         """Generate an executive summary from research sections.
 
         Args:
@@ -424,7 +439,8 @@ Process each research query with systematic thoroughness and analytical rigor.""
 
         start_time = time.time()
 
-        logger.info(f"Starting deep research: {query} (depth={research_depth})")
+        logger.info(
+            f"Starting deep research: {query} (depth={research_depth})")
 
         # Decompose query into sub-queries
         sub_queries = self.decompose_research_query(query, focus_areas)
@@ -438,44 +454,49 @@ Process each research query with systematic thoroughness and analytical rigor.""
             q for q in sub_queries if "background" in q or "overview" in q
         ]
         for bg_query in background_queries[:3]:  # Limit background queries
-            research_result = await self.execute_research_query(bg_query, "background")
+            research_result = await self.execute_research_query(
+                bg_query, "background")
             research_queries.append(research_result)
 
             if research_result.success:
-                # Simulate findings (in real implementation, this would come from actual search)
+                # Simulate findings (in real implementation, this would come from actual
+                # search)
                 all_findings.append(
                     {
-                        "content": f"Background research finding for: {bg_query}",
+                        "content":
+                        f"Background research finding for: {bg_query}",
                         "sources": [],
                         "query": bg_query,
                         "type": "background",
-                    }
-                )
+                    }, )
 
         # Stage 2: Specific deep-dive queries
         specific_queries = [
-            q for q in sub_queries if "research studies" in q or "evidence" in q
+            q for q in sub_queries
+            if "research studies" in q or "evidence" in q
         ]
         for spec_query in specific_queries[:5]:  # Limit specific queries
-            research_result = await self.execute_research_query(spec_query, "specific")
+            research_result = await self.execute_research_query(
+                spec_query, "specific")
             research_queries.append(research_result)
 
             if research_result.success:
                 all_findings.append(
                     {
-                        "content": f"Specific research finding for: {spec_query}",
+                        "content":
+                        f"Specific research finding for: {spec_query}",
                         "sources": [],
                         "query": spec_query,
                         "type": "specific",
-                    }
-                )
+                    }, )
 
         # Stage 3: Validation queries (if fact checking enabled)
         if include_fact_checking:
             validation_queries = [f"fact check {query}", f"verify {query}"]
             for val_query in validation_queries:
                 research_result = await self.execute_research_query(
-                    val_query, "validation"
+                    val_query,
+                    "validation",
                 )
                 research_queries.append(research_result)
 
@@ -486,8 +507,7 @@ Process each research query with systematic thoroughness and analytical rigor.""
                             "sources": [],
                             "query": val_query,
                             "type": "validation",
-                        }
-                    )
+                        }, )
 
         # Organize findings into sections
         research_sections = self.organize_findings_by_theme(all_findings)
@@ -501,8 +521,10 @@ Process each research query with systematic thoroughness and analytical rigor.""
             full_response += section.content + "\n\n"
 
         # Calculate metrics
-        total_sources = sum(len(finding.get("sources", [])) for finding in all_findings)
-        high_quality_sources = max(1, total_sources // 4)  # Estimate 25% high quality
+        total_sources = sum(
+            len(finding.get("sources", [])) for finding in all_findings)
+        high_quality_sources = max(1, total_sources //
+                                   4)  # Estimate 25% high quality
 
         # Identify limitations
         limitations = [

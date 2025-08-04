@@ -15,7 +15,7 @@
    <div class="hero-content">
    <h2>🌟 1,960+ MCP Servers at Your Fingertips</h2>
    <p class="hero-description">
-   Comprehensive directory of pre-indexed MCP servers with setup guides, 
+   Comprehensive directory of pre-indexed MCP servers with setup guides,
    capabilities, and integration examples. From databases to AI services.
    </p>
    </div>
@@ -390,7 +390,7 @@ Database Servers
    await agent.arun({
 
        "messages": [{
-           "role": "user", 
+           "role": "user",
            "content": "Find database servers and install PostgreSQL"
        }]
 
@@ -1250,7 +1250,7 @@ Database Servers
 
    # Search by capability
    database_servers = [
-   server for server in all_servers 
+   server for server in all_servers
    if "database" in server.capabilities
    ]
 
@@ -1291,7 +1291,7 @@ Database Servers
 
 .. code-block:: python
 
-   
+
 
       # Research assistant configuration
       research_servers = {
@@ -1300,7 +1300,7 @@ Database Servers
               "purpose": "Web search and current information"
           },
           "filesystem": {
-              "package": "@modelcontextprotocol/server-filesystem", 
+              "package": "@modelcontextprotocol/server-filesystem",
               "purpose": "Save research documents"
           },
           "memory_bank": {
@@ -1313,7 +1313,7 @@ Database Servers
           }
       }
 
-   
+
 
       # Auto-discovery will find these automatically
       await agent.arun({
@@ -1323,7 +1323,7 @@ Database Servers
           }]
       })
 
-   
+
       .. raw:: html
 
       </div>
@@ -1336,7 +1336,7 @@ Database Servers
 
 .. code-block:: python
 
-   
+
 
       # Data analysis configuration
       analysis_servers = {
@@ -1358,7 +1358,7 @@ Database Servers
           }
       }
 
-   
+
       .. raw:: html
 
       </div>
@@ -1371,7 +1371,7 @@ Database Servers
 
 .. code-block:: python
 
-   
+
 
       # DevOps automation configuration
       devops_servers = {
@@ -1393,7 +1393,7 @@ Database Servers
           }
       }
 
-   
+
       .. raw:: html
 
       </div>
@@ -1406,7 +1406,7 @@ Database Servers
 
 .. code-block:: python
 
-   
+
 
       # Web development configuration
       web_servers = {
@@ -1428,7 +1428,7 @@ Database Servers
           }
       }
 
-   
+
       .. raw:: html
 
       </div>
@@ -1448,62 +1448,62 @@ Database Servers
       <div class="command-grid">
 
       **Essential Servers:**
-   
+
 
 .. code-block:: bash
 
-   
+
 
       # Database access
       claude mcp add haive-db -s user -- npx -y @modelcontextprotocol/server-postgres "postgresql://localhost/haive"
-      
+
       # File operations
       claude mcp add haive-files -s user -- npx -y @modelcontextprotocol/server-filesystem /path/to/project
-      
+
       # Web search
       claude mcp add brave-search -s user -e BRAVE_API_KEY=$BRAVE_API_KEY -- npx -y @modelcontextprotocol/server-brave-search
-      
+
       # GitHub integration
       claude mcp add haive-github -s user -e GITHUB_TOKEN=$GITHUB_TOKEN -- npx -y @modelcontextprotocol/server-github
 
-   
+
       **Development Tools:**
-   
+
 
 .. code-block:: bash
 
-   
+
 
       # Browser automation
       claude mcp add haive-browser -s user -- npx -y @modelcontextprotocol/server-puppeteer
-      
+
       # Container management
       claude mcp add haive-docker -s user -- npx -y @modelcontextprotocol/server-docker
-      
+
       # Memory management
       claude mcp add haive-memory -s user -- npx -y @modelcontextprotocol/server-memory
 
-   
+
       **Management Commands:**
-   
+
 
 .. code-block:: bash
 
-   
+
 
       # List all servers
       claude mcp list
-      
+
       # Test server connection
       claude mcp test haive-db
-      
+
       # Remove server
       claude mcp remove haive-db
-      
+
       # View server logs
       claude mcp logs haive-db
 
-   
+
       .. raw:: html
 
       </div>

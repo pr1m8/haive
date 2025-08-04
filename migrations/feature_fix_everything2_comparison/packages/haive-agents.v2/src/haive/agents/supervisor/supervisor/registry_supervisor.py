@@ -1,20 +1,23 @@
 """Registry-Based Dynamic Supervisor using DynamicChoiceModel.
 
-The supervisor gets agents from an agent registry instead of creating them.
-Uses DynamicChoiceModel for selection and all agents are ReactAgents.
+The supervisor gets agents from an agent registry instead of creating
+them. Uses DynamicChoiceModel for selection and all agents are
+ReactAgents.
 """
+from __future__ import annotations
 
 import logging
 from typing import Any
 
-from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
-from langchain_core.tools import BaseTool
-from pydantic import Field, PrivateAttr
-
 from haive.agents.react.agent import ReactAgent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
+from langchain_core.messages import AIMessage
+from langchain_core.messages import HumanMessage
+from langchain_core.messages import ToolMessage
+from langchain_core.tools import BaseTool
+from pydantic import Field
+from pydantic import PrivateAttr
 
 logger = logging.getLogger(__name__)
 
@@ -29,9 +32,8 @@ class AgentRegistry:
     def register_agent(self, agent: ReactAgent, capability: str | None = None):
         """Register an agent as available."""
         self.available_agents[agent.name] = agent
-        self.agent_capabilities[agent.name] = (
-            capability or f"General tasks for {agent.name}"
-        )
+        self.agent_capabilities[
+            agent.name] = capability or f"General tasks for {agent.name}"
         logger.info(f"Registered {agent.name} in registry")
 
     def get_agent(self, agent_name: str) -> ReactAgent | None:
@@ -77,7 +79,8 @@ class AgentRetrievalTool(BaseTool):
         logger.info(f"Looking for agent for task: {task_description}")
 
         # Get agents that might match
-        potential_agents = self.registry.search_agents_by_capability(task_description)
+        potential_agents = self.registry.search_agents_by_capability(
+            task_description)
 
         if not potential_agents:
             # Check if we have any available agents
@@ -135,8 +138,8 @@ class AgentSelectionTool(BaseTool):
 
             # Match agent type to task
             if "research" in option_lower and any(
-                word in task_lower for word in ["research", "find", "search"]
-            ):
+                    word in task_lower
+                    for word in ["research", "find", "search"]):
                 return option
 
         # Return first available if no specific match
@@ -170,7 +173,8 @@ class RegistrySupervisor(ReactAgent):
 
         # Create choice model
         self._choice_model = DynamicChoiceModel(
-            option_names=["END"], option_descriptions=["End the conversation"]
+            option_names=["END"],
+            option_descriptions=["End the conversation"],
         )
 
         # Create tools
@@ -185,16 +189,17 @@ class RegistrySupervisor(ReactAgent):
         logger.info("✅ Registry supervisor initialized")
 
     def populate_registry(
-        self, agents: list[ReactAgent], capabilities: list[str] | None = None
+        self,
+        agents: list[ReactAgent],
+        capabilities: list[str] | None = None,
     ):
         """Populate the agent registry with available agents."""
         if capabilities and len(capabilities) != len(agents):
             capabilities = None
 
         for i, agent in enumerate(agents):
-            capability = (
-                capabilities[i] if capabilities else f"General tasks for {agent.name}"
-            )
+            capability = capabilities[
+                i] if capabilities else f"General tasks for {agent.name}"
             self._registry.register_agent(agent, capability)
 
         logger.info(f"✅ Populated registry with {len(agents)} agents")
@@ -221,7 +226,8 @@ class RegistrySupervisor(ReactAgent):
                 descriptions.append("End the conversation")
             else:
                 capability = self._registry.agent_capabilities.get(
-                    name, f"Tasks for {name}"
+                    name,
+                    f"Tasks for {name}",
                 )
                 descriptions.append(f"Route to {name}: {capability}")
 
@@ -251,7 +257,10 @@ class RegistrySupervisor(ReactAgent):
         graph.add_conditional_edges(
             "supervisof",
             self._route_from_supervisor,
-            {"executor": "executor", "END": "__end__"},
+            {
+                "executor": "executor",
+                "END": "__end__"
+            },
         )
 
         # Executor loops back
@@ -285,8 +294,11 @@ class RegistrySupervisor(ReactAgent):
             last_message = messages[-1]
 
             # Avoid loops
-            if isinstance(last_message, AIMessage) and state_dict.get("last_agent"):
-                human_messages = [m for m in messages if isinstance(m, HumanMessage)]
+            if isinstance(last_message,
+                          AIMessage) and state_dict.get("last_agent"):
+                human_messages = [
+                    m for m in messages if isinstance(m, HumanMessage)
+                ]
                 if human_messages:
                     last_human_idx = messages.index(human_messages[-1])
                     if last_human_idx < len(messages) - 1:
@@ -298,17 +310,16 @@ class RegistrySupervisor(ReactAgent):
             # Use this supervisor's ReactAgent capabilities to make decisions
             supervisor_input = {
                 "messages": [
-                    HumanMessage(
-                        content=f"""Analyze this request and either:
+                    HumanMessage(content=f"""Analyze this request and either:
 1. Select an active agent using select_active_agent tool, OR
 2. Get a new agent from registry using get_agent_from_registry tool
 
 Request: {content}
 
 Available active agents: {list(self._active_agents.keys())}
-Available in registry: {list(self._registry.get_available_agents().keys())}"""
-                    )
-                ]
+Available in registry: {list(self._registry.get_available_agents().keys())}""",
+                    ),
+                ],
             }
 
             try:
@@ -388,10 +399,7 @@ Available in registry: {list(self._registry.get_available_agents().keys())}"""
             if isinstance(msg, ToolMessage):
                 if "select_active_agent" in getattr(msg, "name", ""):
                     agent_name = msg.content
-                    if (
-                        agent_name != "NO_ACTIVE_AGENTS"
-                        and agent_name in self._active_agents
-                    ):
+                    if agent_name != "NO_ACTIVE_AGENTS" and agent_name in self._active_agents:
                         return agent_name
                 elif "get_agent_from_registry" in getattr(msg, "name", ""):
                     # Agent was retrieved, should be in active now
@@ -448,9 +456,12 @@ Available in registry: {list(self._registry.get_available_agents().keys())}"""
     def get_choice_model_status(self) -> dict[str, Any]:
         """Get choice model status."""
         return {
-            "options": self._choice_model.option_names if self._choice_model else [],
-            "active_agents": len(self._active_agents),
-            "registry_agents": len(self._registry.available_agents),
+            "options":
+            self._choice_model.option_names if self._choice_model else [],
+            "active_agents":
+            len(self._active_agents),
+            "registry_agents":
+            len(self._registry.available_agents),
         }
 
 
@@ -470,7 +481,9 @@ if __name__ == "__main__":
             temperature=0.3,
         )
         research_agent = ReactAgent(
-            name="research_agent", engine=research_engine, tools=[]
+            name="research_agent",
+            engine=research_engine,
+            tools=[],
         )
 
         # Coding agent
@@ -479,7 +492,9 @@ if __name__ == "__main__":
             system_message="You are a software developer. Write clean, efficient code.",
             temperature=0.4,
         )
-        coding_agent = ReactAgent(name="coding_agent", engine=coding_engine, tools=[])
+        coding_agent = ReactAgent(name="coding_agent",
+                                  engine=coding_engine,
+                                  tools=[])
 
         # Create supervisor
         supervisor = RegistrySupervisor(name="registry_supervisor")
@@ -495,12 +510,16 @@ if __name__ == "__main__":
 
         # Test 1: Research request
         await supervisor.ainvoke(
-            {"messages": [HumanMessage(content="Research machine learning trends")]}
-        )
+            {
+                "messages":
+                [HumanMessage(content="Research machine learning trends")]
+            }, )
 
         # Test 2: Coding request
         await supervisor.ainvoke(
-            {"messages": [HumanMessage(content="Write Python code for sorting")]}
-        )
+            {
+                "messages":
+                [HumanMessage(content="Write Python code for sorting")]
+            }, )
 
     asyncio.run(test_registry_supervisor())

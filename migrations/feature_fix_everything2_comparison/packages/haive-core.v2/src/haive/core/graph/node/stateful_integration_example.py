@@ -1,9 +1,12 @@
-"""From typing import Any, Dict
+"""From typing import Any, Dict.
+
 Stateful Node Integration Example - How it works with SimpleAgent and LLMState.
 
 This example shows how the stateful node architecture integrates with the existing
 SimpleAgent, LLMState, and MetaStateSchema to provide truly dynamic discovery.
 """
+
+from __future__ import annotations
 
 from langchain_core.messages import AIMessage, HumanMessage
 
@@ -15,7 +18,6 @@ from haive.core.graph.node.stateful_node_config import (
 )
 from haive.core.schema.prebuilt.llm_state import LLMState
 from haive.core.schema.prebuilt.meta_state import MetaStateSchema
-
 
 # =============================================================================
 # EXAMPLE 1: SimpleAgent with Stateful Nodes
@@ -51,7 +53,9 @@ def create_simple_agent_with_stateful_nodes() -> Any:
 def create_llm_state_with_dynamic_nodes() -> Any:
     """Create LLMState that works with stateful nodes."""
     # Create engine
-    engine = AugLLMConfig(name="llm_engine", model="gpt-4-turbo", temperature=0.3)
+    engine = AugLLMConfig(name="llm_engine",
+                          model="gpt-4-turbo",
+                          temperature=0.3)
 
     # Create LLMState (which manages engine automatically)
     state = LLMState(
@@ -64,8 +68,10 @@ def create_llm_state_with_dynamic_nodes() -> Any:
                     {
                         "name": "calculator",
                         "id": "calc_1",
-                        "args": {"expression": "15 * 23"},
-                    }
+                        "args": {
+                            "expression": "15 * 23"
+                        },
+                    },
                 ],
             ),
         ],
@@ -97,8 +103,11 @@ def demonstrate_stateful_discovery() -> Any:
                     {
                         "name": "Plan",
                         "id": "plan_1",
-                        "args": {"task": "analyze", "steps": ["step1", "step2"]},
-                    }
+                        "args": {
+                            "task": "analyze",
+                            "steps": ["step1", "step2"]
+                        },
+                    },
                 ],
             ),
         ],
@@ -162,9 +171,9 @@ def demonstrate_meta_state_composition() -> Any:
 
     # The meta state can execute the inner agent
     # The inner agent's nodes will discover engines from the meta state
-    meta_state.execute_agent(
-        input_data={"messages": [HumanMessage(content="Hello from meta state")]}
-    )
+    meta_state.execute_agent(input_data={
+        "messages": [HumanMessage(content="Hello from meta state")]
+    }, )
 
     return meta_state
 
@@ -216,7 +225,10 @@ def demonstrate_dynamic_field_configuration() -> Any:
 
 
 def show_integration_with_simple_agent() -> Any:
-    """Show how stateful nodes integrate with existing SimpleAgent graph building."""
+    """Show how stateful nodes integrate with existing SimpleAgent graph.
+
+    building.
+    """
     # Create SimpleAgent as usual
     agent = SimpleAgent(
         name="integrated_agent",
@@ -234,7 +246,8 @@ def show_integration_with_simple_agent() -> Any:
         graph = BaseGraph(name=agent_instance.name)
 
         # Add engine node as usual
-        engine_node = EngineNodeConfig(name="agent_node", engine=agent_instance.engine)
+        engine_node = EngineNodeConfig(name="agent_node",
+                                       engine=agent_instance.engine)
         graph.add_node("agent_node", engine_node)
         graph.add_edge(START, "agent_node")
 
@@ -259,19 +272,23 @@ def show_integration_with_simple_agent() -> Any:
             name="stateful_parsef",
             engine_name=agent_instance.engine.name,
             discovery_enabled=True,
-            fallback_routing={"agent_node": "agent_node", "default": "END"},
+            fallback_routing={
+                "agent_node": "agent_node",
+                "default": "END"
+            },
         )
         graph.add_node("parse_output", parser_node)
 
         # Add routing
         graph.add_conditional_edges(
             "agent_node",
-            lambda state: (
-                bool(getattr(state.messages[-1], "tool_calls", None))
-                if state.messages
-                else False
-            ),
-            {True: "validation", False: END},
+            lambda state:
+            (bool(getattr(state.messages[-1], "tool_calls", None))
+             if state.messages else False),
+            {
+                True: "validation",
+                False: END
+            },
         )
 
         return graph
@@ -324,21 +341,23 @@ def complete_integration_example() -> dict[str, Any]:
     )
 
     # 6. Execute with full dynamic discovery
-    result = meta_state.execute_agent(
-        input_data={
-            "messages": [
-                HumanMessage(content="Calculate 15 * 23 and explain the result")
-            ]
-        }
-    )
+    result = meta_state.execute_agent(input_data={
+        "messages": [
+            HumanMessage(content="Calculate 15 * 23 and explain the result"),
+        ],
+    }, )
 
-    return {"agent": agent, "state": state, "meta_state": meta_state, "result": result}
+    return {
+        "agent": agent,
+        "state": state,
+        "meta_state": meta_state,
+        "result": result
+    }
 
 
 # =============================================================================
 # KEY INSIGHTS FROM INTEGRATION
 # =============================================================================
-
 """
 KEY INSIGHTS:
 
@@ -375,7 +394,6 @@ KEY INSIGHTS:
 """
 
 if __name__ == "__main__":
-
     # Run examples
     agent = create_simple_agent_with_stateful_nodes()
 

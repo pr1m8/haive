@@ -1,27 +1,27 @@
 """Enhanced Dynamic Supervisor with self-modification capabilities."""
+from __future__ import annotations
 
 import logging
 from typing import Any
 
-from langchain_core.tools import tool
-
 from haive.agents.experiments.dynamic_supervisor import DynamicSupervisorAgent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
-
+from langchain_core.tools import tool
 
 logger = logging.getLogger(__name__)
 
 
 def create_agent_management_tools(supervisor_instance) -> Any:
-    """Create tools that allow the supervisor to manage its own agent registry."""
+    """Create tools that allow the supervisor to manage its own agent
+    registry."""
 
     @tool
     def create_agent(
         name: str,
         description: str,
-        agent_type: str = "simple",
-        system_message: str = "",
+        agent_type: str = 'simple',
+        system_message: str = '',
         capabilities: str | None = None,
     ) -> str:
         """Create and register a new agent in the supervisor's registry.
@@ -39,8 +39,8 @@ def create_agent_management_tools(supervisor_instance) -> Any:
         try:
             # Map agent types to classes
             agent_classes = {
-                "simple": SimpleAgent,
-                "react": ReactAgent,
+                'simple': SimpleAgent,
+                'react': ReactAgent,
             }
 
             agent_class = agent_classes.get(agent_type.lower())
@@ -53,8 +53,10 @@ def create_agent_management_tools(supervisor_instance) -> Any:
 
             # Prepare config
             config = {
-                "name": name.replace("_", " ").title(),
-                "system_message": system_message or f"You are a {description.lower()}.",
+                'name':
+                name.replace('_', ' ').title(),
+                'system_message':
+                system_message or f"You are a {description.lower()}.",
             }
 
             # Add agent to registry
@@ -66,9 +68,11 @@ def create_agent_management_tools(supervisor_instance) -> Any:
             )
 
             # Store capabilities if provided
-            if capabilities and hasattr(supervisor_instance.agent_registry, "_agents"):
-                supervisor_instance.agent_registry._agents[name]["capabilities"] = [
-                    cap.strip() for cap in capabilities.split(",")
+            if capabilities and hasattr(supervisor_instance.agent_registry,
+                                        '_agents'):
+                supervisor_instance.agent_registry._agents[name][
+                    'capabilities'] = [
+                        cap.strip() for cap in capabilities.split(',')
                 ]
 
             return f"Successfully created and registered agent '{name}' with handoff tool 'handoff_to_{name}'"
@@ -119,18 +123,14 @@ def create_agent_management_tools(supervisor_instance) -> Any:
                 return f"Error: Agent '{name}' not found."
 
             # Update agent info
-            if hasattr(supervisor_instance.agent_registry, "_agents"):
+            if hasattr(supervisor_instance.agent_registry, '_agents'):
                 if description:
                     supervisor_instance.agent_registry._agents[name][
-                        "description"
-                    ] = description
-                if (
-                    system_message
-                    and "config" in supervisor_instance.agent_registry._agents[name]
-                ):
-                    supervisor_instance.agent_registry._agents[name]["config"][
-                        "system_message"
-                    ] = system_message
+                        'description'] = description
+                if system_message and 'config' in supervisor_instance.agent_registry._agents[
+                        name]:
+                    supervisor_instance.agent_registry._agents[name]['config'][
+                        'system_message'] = (system_message)
 
             return f"Successfully modified agent '{name}'"
 
@@ -152,58 +152,66 @@ def create_agent_management_tools(supervisor_instance) -> Any:
         suggestions = []
 
         # Analyze task keywords
-        if any(
-            word in task_lower
-            for word in ["code", "program", "debug", "script", "function"]
-        ):
+        if any(word in task_lower
+               for word in ['code', 'program', 'debug', 'script', 'function']):
             suggestions.append(
                 {
-                    "name": "coding_agent",
-                    "type": "react",
-                    "description": "Code generation, debugging, and analysis",
-                    "message": "You are an expert programmer who helps with coding tasks.",
-                }
-            )
+                    'name':
+                    'coding_agent',
+                    'type':
+                    'react',
+                    'description':
+                    'Code generation, debugging, and analysis',
+                    'message':
+                    'You are an expert programmer who helps with coding tasks.',
+                }, )
 
-        if any(
-            word in task_lower
-            for word in ["write", "draft", "compose", "edit", "content"]
-        ):
+        if any(word in task_lower
+               for word in ['write', 'draft', 'compose', 'edit', 'content']):
             suggestions.append(
                 {
-                    "name": "writing_agent",
-                    "type": "simple",
-                    "description": "Creative writing and content generation",
-                    "message": "You are a skilled writer who creates engaging content.",
-                }
-            )
+                    'name':
+                    'writing_agent',
+                    'type':
+                    'simple',
+                    'description':
+                    'Creative writing and content generation',
+                    'message':
+                    'You are a skilled writer who creates engaging content.',
+                }, )
 
-        if any(
-            word in task_lower for word in ["data", "analyze", "statistics", "visualiz"]
-        ):
+        if any(word in task_lower
+               for word in ['data', 'analyze', 'statistics', 'visualiz']):
             suggestions.append(
                 {
-                    "name": "data_agent",
-                    "type": "react",
-                    "description": "Data analysis and visualization",
-                    "message": "You are a data scientist who analyzes data and creates insights.",
-                }
-            )
+                    'name':
+                    'data_agent',
+                    'type':
+                    'react',
+                    'description':
+                    'Data analysis and visualization',
+                    'message':
+                    'You are a data scientist who analyzes data and creates insights.',
+                }, )
 
-        if any(word in task_lower for word in ["translate", "language", "localize"]):
+        if any(word in task_lower
+               for word in ['translate', 'language', 'localize']):
             suggestions.append(
                 {
-                    "name": "translator_agent",
-                    "type": "simple",
-                    "description": "Language translation and localization",
-                    "message": "You are a professional translator fluent in multiple languages.",
-                }
-            )
+                    'name':
+                    'translator_agent',
+                    'type':
+                    'simple',
+                    'description':
+                    'Language translation and localization',
+                    'message':
+                    'You are a professional translator fluent in multiple languages.',
+                }, )
 
         if not suggestions:
-            return "No specific agent type identified. Consider creating a general-purpose agent."
+            return 'No specific agent type identified. Consider creating a general-purpose agent.'
 
-        result = "Based on the task, I suggest creating:\n\n"
+        result = 'Based on the task, I suggest creating:\n\n'
         for s in suggestions:
             result += f"- Agent: '{s['name']}'\n"
             result += f"  Type: {s['type']}\n"
@@ -214,11 +222,15 @@ def create_agent_management_tools(supervisor_instance) -> Any:
 
         return result
 
-    return [create_agent, remove_agent, modify_agent, analyze_task_and_suggest_agent]
+    return [
+        create_agent, remove_agent, modify_agent,
+        analyze_task_and_suggest_agent
+    ]
 
 
 class SelfModifyingSupervisor(DynamicSupervisorAgent):
-    """A supervisor that can modify its own agent registry based on task requirements."""
+    """A supervisor that can modify its own agent registry based on task
+    requirements."""
 
     def __init__(self, *args, enable_self_modification: bool = True, **kwargs):
         """Initialize with self-modification capabilities."""
@@ -226,10 +238,9 @@ class SelfModifyingSupervisor(DynamicSupervisorAgent):
         self._enable_self_modification = enable_self_modification
 
         # Update system message if enabled
-        if enable_self_modification and "system_message" not in kwargs:
+        if enable_self_modification and 'system_message' not in kwargs:
             kwargs[
-                "system_message"
-            ] = """You are an intelligent dynamic supervisor that coordinates multiple specialized agents.
+                'system_message'] = """You are an intelligent dynamic supervisor that coordinates multiple specialized agents.
 
 Your key capabilities:
 1. Analyze incoming tasks and determine which agents are best suited
@@ -262,23 +273,25 @@ Always think step-by-step about the best approach before acting."""
 
 
 # Example usage
-if __name__ == "__main__":
+if __name__ == '__main__':
     import asyncio
 
     async def demo_self_modifying_supervisor():
         # Create self-modifying supervisor
         supervisor = SelfModifyingSupervisor(
-            name="Autonomous Supervisor", enable_self_modification=True, debug=True
+            name='Autonomous Supervisor',
+            enable_self_modification=True,
+            debug=True,
         )
 
         # Initial state - maybe just one general agent
         supervisor.agent_registry.register(
-            "general_agent",
-            "General purpose assistant",
+            'general_agent',
+            'General purpose assistant',
             SimpleAgent,
             {
-                "name": "General Assistant",
-                "system_message": "You are a helpful assistant.",
+                'name': 'General Assistant',
+                'system_message': 'You are a helpful assistant.',
             },
         )
 

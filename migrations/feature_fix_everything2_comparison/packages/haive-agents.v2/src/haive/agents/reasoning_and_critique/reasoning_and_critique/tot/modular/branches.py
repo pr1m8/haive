@@ -10,6 +10,8 @@ Functions:
     evaluate: Evaluate functionality.
 """
 
+from __future__ import annotations
+
 from typing import Any
 
 from langchain_core.messages import AIMessage
@@ -30,13 +32,15 @@ class ToTBranch(Branch):
         """Initialize with reference to parent agent for config access."""
         self.agent = agent
 
-    def evaluate(self, state: dict[str, Any]) -> str | tuple | list[Send] | Command:
+    def evaluate(self, state: dict[str,
+                                   Any]) -> str | tuple | list[Send] | Command:
         """Evaluate the current state and determine the next steps."""
         # Check termination conditions
         if hasattr(state, "depth") and hasattr(state, "max_depth"):
             max_depth_reached = state.depth >= state.max_depth
         else:
-            max_depth_reached = state.get("depth", 0) >= state.get("max_depth", 3)
+            max_depth_reached = state.get("depth",
+                                          0) >= state.get("max_depth", 3)
 
         # Get candidates
         if hasattr(state, "candidates"):
@@ -65,16 +69,12 @@ class ToTBranch(Branch):
         if isinstance(best_candidate, dict):
             score = best_candidate.get("score")
             content = best_candidate.get("content", "")
-            threshold_reached = (
-                score is not None and score >= self.agent.config.threshold
-            )
+            threshold_reached = score is not None and score >= self.agent.config.threshold
         else:
             # Assume it's a Candidate object with attributes
             score = getattr(best_candidate, "score", None)
             content = getattr(best_candidate, "content", "")
-            threshold_reached = (
-                score is not None and score >= self.agent.config.threshold
-            )
+            threshold_reached = score is not None and score >= self.agent.config.threshold
 
         # If we should terminate
         if max_depth_reached or threshold_reached:
@@ -94,7 +94,11 @@ class ToTBranch(Branch):
             }
 
         # Continue with best candidate as seed
-        return self.agent.config.expand_node_name, {"current_seed": best_candidate}
+        return self.agent.config.expand_node_name, {
+            "current_seed": best_candidate
+        }
 
         # Continue with best candidate as seed
-        return self.agent.config.expand_node_name, {"current_seed": candidates[0]}
+        return self.agent.config.expand_node_name, {
+            "current_seed": candidates[0]
+        }

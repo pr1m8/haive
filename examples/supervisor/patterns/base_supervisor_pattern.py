@@ -1,12 +1,17 @@
 """Base supervisor agent using ReactAgent with state-synchronized tools.
 
-This module provides the base supervisor implementation that inherits from
-ReactAgent and uses the state models and tools for agent management.
+This module provides the base supervisor implementation that inherits
+from ReactAgent and uses the state models and tools for agent
+management.
 """
 
-import logging
+from __future__ import annotations
+
 from collections.abc import Callable
+import logging
 from typing import Any
+
+from langchain_core.messages import AIMessage
 
 from haive.agents.base.agent import Agent
 from haive.agents.experiments.supervisor.state_models import (
@@ -15,11 +20,9 @@ from haive.agents.experiments.supervisor.state_models import (
     SupervisorState,
 )
 from haive.agents.experiments.supervisor.tools import (
-    build_supervisor_tools,
-)
+    build_supervisor_tools, )
 from haive.agents.react.agent import ReactAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from langchain_core.messages import AIMessage
 
 logger = logging.getLogger(__name__)
 
@@ -72,7 +75,7 @@ class BaseSupervisor(ReactAgent):
         # Get current state
         try:
             state = self.get_state()
-        except:
+        except BaseException:
             # If state not available yet, use default
             state = self.state_schema()
 
@@ -88,7 +91,8 @@ class BaseSupervisor(ReactAgent):
         if hasattr(self.main_engine, "tools"):
             self.main_engine.tools = tools
         elif hasattr(self.main_engine, "config") and hasattr(
-            self.main_engine.config, "tools"
+                self.main_engine.config,
+                "tools",
         ):
             self.main_engine.config.tools = tools
 
@@ -163,7 +167,10 @@ class BaseSupervisor(ReactAgent):
 
             # Wrap it with our state-aware execution
             def state_aware_tool_node(state):
-                """Enhanced tool node that handles agent handoffs from state."""
+                """Enhanced tool node that handles agent handoffs from.
+
+                state.
+                """
                 # First, sync tools to ensure they match state
                 self._sync_engine_tools()
 
@@ -187,7 +194,8 @@ class BaseSupervisor(ReactAgent):
 
         return graph
 
-    def get_agent_status(self, agent_name: str | None = None) -> dict[str, Any]:
+    def get_agent_status(self,
+                         agent_name: str | None = None) -> dict[str, Any]:
         """Get status information about agents.
 
         Args:
@@ -214,13 +222,12 @@ class BaseSupervisor(ReactAgent):
             "total_agents": len(state.agents),
             "agents": {
                 name: {
-                    "description": info.metadata.description,
-                    "usage_count": info.metadata.usage_count,
-                    "last_used": (
-                        info.metadata.last_used.isoformat()
-                        if info.metadata.last_used
-                        else None
-                    ),
+                    "description":
+                    info.metadata.description,
+                    "usage_count":
+                    info.metadata.usage_count,
+                    "last_used": (info.metadata.last_used.isoformat()
+                                  if info.metadata.last_used else None),
                 }
                 for name, info in state.agents.items()
             },
@@ -248,13 +255,16 @@ class BaseSupervisor(ReactAgent):
 class DynamicSupervisor(BaseSupervisor):
     """Dynamic supervisor that can create agents on the fly.
 
-    This extends BaseSupervisor with dynamic agent creation capabilities.
+    This extends BaseSupervisor with dynamic agent creation
+    capabilities.
     """
 
     def __init__(self, agent_factory: Callable | None = None, **kwargs):
         """Initialize with DynamicSupervisorState."""
         super().__init__(
-            state_schema=DynamicSupervisorState, agent_factory=agent_factory, **kwargs
+            state_schema=DynamicSupervisorState,
+            agent_factory=agent_factory,
+            **kwargs,
         )
 
     def add_agent_template(self, name: str, template: dict[str, Any]) -> None:

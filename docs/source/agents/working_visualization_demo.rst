@@ -52,7 +52,7 @@ Interactive Features
 The visualization components include:
 
 - **Graph Playback**: Step through agent execution
-- **State Timeline**: Track state changes over time  
+- **State Timeline**: Track state changes over time
 - **Execution Trace**: Detailed input/output logs
 
 This simpler version should render properly without complex JSON data.

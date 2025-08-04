@@ -32,20 +32,20 @@ Enhanced Agent Showcase Template
 
    </div>
 
-            
+
 
 .. raw:: html
 
    <p class="agent-description">
 
-                Sophisticated AI agent that conducts comprehensive climate research, 
-                analyzing environmental data, trends, and generating actionable insights 
+                Sophisticated AI agent that conducts comprehensive climate research,
+                analyzing environmental data, trends, and generating actionable insights
                 for climate action and policy decisions.
 .. raw:: html
 
    </p>
 
-            
+
 
 .. raw:: html
 
@@ -91,7 +91,7 @@ Enhanced Agent Showcase Template
                data_sources=["nasa", "noaa", "ipcc"]
            )
 
-   
+
 
            # Conduct research
            results = await agent.arun(
@@ -105,7 +105,7 @@ Enhanced Agent Showcase Template
 
    </div>
 
-            
+
 
 .. raw:: html
 
@@ -160,20 +160,20 @@ Enhanced Agent Showcase Template
 
    </div>
 
-            
+
 
 .. raw:: html
 
    <p class="agent-description">
 
-                Educational AI agent specialized in breaking down complex quantum physics 
-                concepts into understandable explanations with interactive visualizations 
+                Educational AI agent specialized in breaking down complex quantum physics
+                concepts into understandable explanations with interactive visualizations
                 and step-by-step learning paths.
 .. raw:: html
 
    </p>
 
-            
+
 
 .. raw:: html
 
@@ -219,7 +219,7 @@ Enhanced Agent Showcase Template
            visual_mode=True
        )
 
-   
+
 
        # Explain quantum concepts
        explanation = await agent.arun(
@@ -233,7 +233,7 @@ Enhanced Agent Showcase Template
 
    </div>
 
-            
+
 
 .. raw:: html
 
@@ -288,20 +288,20 @@ Enhanced Agent Showcase Template
 
    </div>
 
-            
+
 
 .. raw:: html
 
    <p class="agent-description">
 
-                Advanced research agent that combines reasoning and acting (ReAct) 
-                methodology to conduct systematic research with iterative hypothesis 
+                Advanced research agent that combines reasoning and acting (ReAct)
+                methodology to conduct systematic research with iterative hypothesis
                 testing and evidence gathering.
 .. raw:: html
 
    </p>
 
-            
+
 
 .. raw:: html
 
@@ -347,7 +347,7 @@ Enhanced Agent Showcase Template
            tools=["web_search", "arxiv", "pubmed"]
        )
 
-   
+
 
        # Conduct systematic research
        findings = await agent.arun(
@@ -361,7 +361,7 @@ Enhanced Agent Showcase Template
 
    </div>
 
-            
+
 
 .. raw:: html
 
@@ -416,20 +416,20 @@ Enhanced Agent Showcase Template
 
    </div>
 
-            
+
 
 .. raw:: html
 
    <p class="agent-description">
 
-                Powerful NLP agent that creates intelligent summaries of documents, 
-                articles, and reports with customizable length, style, and focus areas 
+                Powerful NLP agent that creates intelligent summaries of documents,
+                articles, and reports with customizable length, style, and focus areas
                 while preserving key information and context.
 .. raw:: html
 
    </p>
 
-            
+
 
 .. raw:: html
 
@@ -475,7 +475,7 @@ Enhanced Agent Showcase Template
            focus_areas=["key_findings", "conclusions"]
        )
 
-   
+
 
        # Summarize content
        summary = await agent.arun(
@@ -490,7 +490,7 @@ Enhanced Agent Showcase Template
 
    </div>
 
-            
+
 
 .. raw:: html
 
@@ -545,20 +545,20 @@ Enhanced Agent Showcase Template
 
    </div>
 
-            
+
 
 .. raw:: html
 
    <p class="agent-description">
 
-                Streamlined analysis agent perfect for quick data exploration and 
-                insights generation. Ideal for business analytics, trend analysis, 
+                Streamlined analysis agent perfect for quick data exploration and
+                insights generation. Ideal for business analytics, trend analysis,
                 and generating actionable recommendations from datasets.
 .. raw:: html
 
    </p>
 
-            
+
 
 .. raw:: html
 
@@ -604,7 +604,7 @@ Enhanced Agent Showcase Template
            export_format="pdf"
        )
 
-   
+
 
        # Analyze dataset
        insights = await agent.arun(
@@ -619,7 +619,7 @@ Enhanced Agent Showcase Template
 
    </div>
 
-            
+
 
 .. raw:: html
 
@@ -674,20 +674,20 @@ Enhanced Agent Showcase Template
 
    </div>
 
-            
+
 
 .. raw:: html
 
    <p class="agent-description">
 
-                Use our flexible framework to build custom agents tailored to your 
-                specific needs. Combine tools, models, and workflows to create 
+                Use our flexible framework to build custom agents tailored to your
+                specific needs. Combine tools, models, and workflows to create
                 powerful AI solutions for your unique use cases.
 .. raw:: html
 
    </p>
 
-            
+
 
 .. raw:: html
 
@@ -729,11 +729,11 @@ Enhanced Agent Showcase Template
 
        class MyCustomAgent(Agent[MyStateSchema]):
            """Your custom agent implementation."""
-           
+
            def setup_agent(self) -> None:
                self._setup_tools()
                self._setup_workflows()
-           
+
            async def process_task(self, task: str):
                # Your custom logic here
                return await self.execute_workflow(task)
@@ -745,7 +745,7 @@ Enhanced Agent Showcase Template
 
    </div>
 
-            
+
 
 .. raw:: html
 

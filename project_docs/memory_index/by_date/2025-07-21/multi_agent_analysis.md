@@ -50,7 +50,7 @@ class MultiAgent(Agent):
 
 ### 2. **`enhanced_multi_agent_standalone.py`** - Generic Implementation
 **File**: `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_standalone.py`
-**Status**: 🧪 **EXPERIMENTAL** 
+**Status**: 🧪 **EXPERIMENTAL**
 **Base**: Custom minimal base classes (standalone)
 **Features**:
 - **Generic typing**: `MultiAgent[AgentsT]` where AgentsT is dict or list
@@ -59,7 +59,7 @@ class MultiAgent(Agent):
 - **Specialized variants**: `BranchingMultiAgent`, `AdaptiveBranchingMultiAgent`
 - **Real async execution** with comprehensive demos
 
-**Key Insight**: 
+**Key Insight**:
 ```python
 # Generic on contained agents
 MultiAgent[AgentsT] = Agent[AugLLMConfig] + agents: AgentsT
@@ -123,22 +123,22 @@ Create `enhanced_multi_agent_v3.py` that combines the best of all implementation
 ```python
 class EnhancedMultiAgent(Agent, Generic[AgentsT]):
     """Enhanced MultiAgent V3 with all advanced features."""
-    
+
     # From clean.py (keep all existing)
     agents: AgentsT = Field(...)  # Now generic
     execution_mode: str = Field(default="infer")
     branches: dict[str, dict[str, Any]] = Field(default_factory=dict)
-    
+
     # From V3 pattern (add these)
     multi_engine_mode: bool = Field(default=False)
-    advanced_routing: bool = Field(default=False) 
+    advanced_routing: bool = Field(default=False)
     performance_mode: bool = Field(default=False)
     debug_mode: bool = Field(default=False)
-    
+
     # From standalone (add these)
     agent_performance: dict[str, dict[str, float]] = Field(default_factory=dict)
     adaptation_rate: float = Field(default=0.1)
-    
+
     # Rich capabilities
     def display_multi_agent_capabilities(self) -> None
     def get_multi_agent_summary(self) -> dict[str, Any]
@@ -151,7 +151,7 @@ Create specialized versions like the standalone implementation:
 ```python
 # Specialized for different use cases
 class SequentialMultiAgent(EnhancedMultiAgent[list[Agent]])
-class BranchingMultiAgent(EnhancedMultiAgent[dict[str, Agent]]) 
+class BranchingMultiAgent(EnhancedMultiAgent[dict[str, Agent]])
 class AdaptiveMultiAgent(BranchingMultiAgent)  # With performance tracking
 ```
 
@@ -205,7 +205,7 @@ Just add missing V3 features to existing `clean.py`:
 
 ## 🎯 Decision Recommendation
 
-### **RECOMMENDED: Create Enhanced MultiAgent V3** 
+### **RECOMMENDED: Create Enhanced MultiAgent V3**
 
 **Justification**:
 1. **Consistency** - All major agents should have V3 enhanced versions

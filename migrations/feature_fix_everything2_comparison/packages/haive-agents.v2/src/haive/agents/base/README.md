@@ -214,5 +214,5 @@ For detailed API documentation, see the [API Reference](../../../../docs/source/
 - [Round Robin Conversation](../round_robin/README.md) - Sequential turn-taking
 - [Debate Conversation](../debate/README.md) - Structured argumentative dialogue
 - [Directed Conversation](../directed/README.md) - Moderator-controlled flow
-- [Collaborative Conversation](../collaberative/README.md) - Team-based problem solving
+- [Collaborative Conversation](../collaborative/README.md) - Team-based problem solving
 - [Social Media Conversation](../social_media/README.md) - Platform-style interactions

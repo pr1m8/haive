@@ -86,7 +86,10 @@ class FreeMemoryAgent:
         # Create new vector store with initial document
         initial_doc = Document(
             page_content="Memory system initialized",
-            metadata={"type": "system", "timestamp": datetime.now().isoformat()},
+            metadata={
+                "type": "system",
+                "timestamp": datetime.now().isoformat()
+            },
         )
         return FAISS.from_documents([initial_doc], self.embeddings)
 
@@ -170,7 +173,9 @@ class FreeMemoryAgent:
 
         # Search with filter
         results = self.vector_store.similarity_search_with_score(
-            query, k=k, filter=filter_dict
+            query,
+            k=k,
+            filter=filter_dict,
         )
 
         # Format results
@@ -185,8 +190,7 @@ class FreeMemoryAgent:
                     "type": doc.metadata.get("type"),
                     "importance": doc.metadata.get("importance"),
                     "timestamp": doc.metadata.get("timestamp"),
-                }
-            )
+                }, )
 
         return formatted_results
 
@@ -213,15 +217,14 @@ class FreeMemoryAgent:
                 try:
                     dt = datetime.fromisoformat(timestamp)
                     timestamp = dt.strftime("%Y-%m-%d %H:%M")
-                except:
+                except BaseException:
                     pass
 
             context_parts.append(
                 f"{i}. [{memory.get('type', 'unknown')}] "
                 f"{memory['content']} "
                 f"(importance: {memory.get('importance', 'unknown')}, "
-                f"time: {timestamp})"
-            )
+                f"time: {timestamp})", )
 
         return "\n".join(context_parts)
 
@@ -232,13 +235,16 @@ class FreeMemoryAgent:
     def get_stats(self) -> dict[str, Any]:
         """Get memory statistics."""
         return {
-            "total_memories": self.memory_state.stats.total_memories,
-            "memories_by_type": dict(self.memory_state.stats.memories_by_type),
-            "memories_by_importance": dict(
-                self.memory_state.stats.memories_by_importance
-            ),
-            "storage_path": str(self.storage_path),
-            "vector_store_size": len(self.vector_store.docstore._dict),
+            "total_memories":
+            self.memory_state.stats.total_memories,
+            "memories_by_type":
+            dict(self.memory_state.stats.memories_by_type),
+            "memories_by_importance":
+            dict(self.memory_state.stats.memories_by_importance, ),
+            "storage_path":
+            str(self.storage_path),
+            "vector_store_size":
+            len(self.vector_store.docstore._dict),
         }
 
     async def process_input(self, user_input: str) -> str:
@@ -251,27 +257,22 @@ class FreeMemoryAgent:
             Response string
         """
         # Simple heuristic: questions vs statements
-        is_question = (
-            any(
-                user_input.lower().strip().startswith(word)
-                for word in [
-                    "who",
-                    "what",
-                    "where",
-                    "when",
-                    "why",
-                    "how",
-                    "is",
-                    "are",
-                    "do",
-                    "does",
-                    "can",
-                    "could",
-                    "tell me",
-                ]
-            )
-            or "?" in user_input
-        )
+        is_question = (any(user_input.lower().strip().startswith(word)
+                           for word in [
+                               "who",
+                               "what",
+                               "where",
+                               "when",
+                               "why",
+                               "how",
+                               "is",
+                               "are",
+                               "do",
+                               "does",
+                               "can",
+                               "could",
+                               "tell me",
+        ]) or "?" in user_input)
 
         if is_question:
             # Retrieve relevant memories
@@ -283,23 +284,23 @@ class FreeMemoryAgent:
         importance = ImportanceLevel.MEDIUM
 
         # Simple classification
-        if any(
-            word in user_input.lower()
-            for word in ["important", "critical", "urgent", "remember"]
-        ):
+        if any(word in user_input.lower()
+               for word in ["important", "critical", "urgent", "remember"]):
             importance = ImportanceLevel.HIGH
 
-        if any(
-            word in user_input.lower()
-            for word in ["fact", "is a", "are", "works", "located"]
-        ):
+        if any(word in user_input.lower()
+               for word in ["fact", "is a", "are", "works", "located"]):
             memory_type = MemoryType.FACTUAL
 
         memory_id = self.add_memory(
-            user_input, memory_type=memory_type, importance=importance
+            user_input,
+            memory_type=memory_type,
+            importance=importance,
         )
 
-        return f"I've stored that in my memory (ID: {memory_id}). Type: {memory_type.value}, Importance: {importance.value}"
+        return f"I've stored that in my memory (ID: {memory_id}). Type: {
+            memory_type.value}, Importance: {
+            importance.value}"
 
 
 async def test_free_memory_agent():

@@ -16,5 +16,6 @@ class LongTermMemoryState(AgentState):
     """State for the long term memory agent."""
 
     memories: list[BaseModel | KnowledgeTriple] = Field(
-        default_factory=list, description="List of memories to be used for the agent"
+        default_factory=list,
+        description="List of memories to be used for the agent",
     )

@@ -45,6 +45,8 @@ This package provides memory-capable agents built on BaseRAGAgent as requested:
 """
 
 # Import working standalone RAG memory components
+from __future__ import annotations
+
 from haive.agents.memory_v2.standalone_rag_memory import (
     ConversationMemoryAgent,
     FactualMemoryAgent,
@@ -58,12 +60,10 @@ from haive.agents.memory_v2.standalone_rag_memory import (
     create_unified_memory_agent,
 )
 
-
 # Optional components that may have import issues - try to import gracefully
 try:
     from haive.agents.memory_v2.time_weighted_retriever import (  # noqa: F401
-        TimeWeightConfig,
-        TimeWeightedRetriever,
+        TimeWeightConfig, TimeWeightedRetriever,
     )
 
     TIME_RETRIEVER_AVAILABLE = True
@@ -72,8 +72,7 @@ except ImportError:
 
 try:
     from haive.agents.memory_v2.message_document_converter import (  # noqa: F401
-        MessageDocumentConverter,
-        TimestampedDocument,
+        MessageDocumentConverter, TimestampedDocument,
     )
 
     DOCUMENT_CONVERTER_AVAILABLE = True
@@ -82,9 +81,7 @@ except ImportError:
 
 try:
     from haive.agents.memory_v2.extraction_prompts import (  # noqa: F401
-        EXTRACTION_PROMPTS,
-        get_all_extraction_types,
-        get_extraction_prompt,
+        EXTRACTION_PROMPTS, get_all_extraction_types, get_extraction_prompt,
     )
 
     EXTRACTION_AVAILABLE = True
@@ -115,6 +112,7 @@ if DOCUMENT_CONVERTER_AVAILABLE:
     __all__.extend(["MessageDocumentConverter", "TimestampedDocument"])
 
 if EXTRACTION_AVAILABLE:
-    __all__.extend(
-        ["EXTRACTION_PROMPTS", "get_all_extraction_types", "get_extraction_prompt"]
-    )
+    __all__.extend([
+        "EXTRACTION_PROMPTS", "get_all_extraction_types",
+        "get_extraction_prompt"
+    ], )

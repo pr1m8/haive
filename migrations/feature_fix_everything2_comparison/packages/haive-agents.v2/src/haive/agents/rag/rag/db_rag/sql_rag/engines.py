@@ -35,6 +35,8 @@ Example:
         >>> }
 """
 
+from __future__ import annotations
+
 from langchain_core.output_parsers import StrOutputParser
 
 from haive.agents.rag.db_rag.sql_rag.models import (
@@ -55,7 +57,6 @@ from haive.agents.rag.db_rag.sql_rag.prompts import (
     VALIDATE_SQL_PROMPT,
 )
 from haive.core.engine.aug_llm import AugLLMConfig
-
 
 # Engine for analyzing queries
 analyze_query_aug_llm_config = AugLLMConfig(

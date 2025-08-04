@@ -6,13 +6,13 @@ Added comprehensive control over example execution in documentation builds to ad
 
 ## 🔧 Changes Made
 
-### 1. **Environment Variable Control** 
+### 1. **Environment Variable Control**
 - `SPHINX_DISABLE_EXAMPLES=1` - Disables example execution
 - `SPHINX_PROFILE=minimal|standard|full` - Controls extension loading
 
 ### 2. **Configuration Updates**
 - **conf.py**: Added environment variable handling and example disabling logic
-- **content.py**: Set `execute_examples: False` in Sphinx Gallery config  
+- **content.py**: Set `execute_examples: False` in Sphinx Gallery config
 - **Enhanced ignore patterns**: Added auto_examples and archive directories
 
 ### 3. **New Nox Sessions**
@@ -25,7 +25,7 @@ nox -s docs_minimal_no_examples # Ultra-fast minimal build
 nox -s docs_fast_dev           # Convenience alias
 ```
 
-#### Production Builds (With Examples)  
+#### Production Builds (With Examples)
 ```bash
 nox -s docs_with_examples      # Full build with examples
 nox -s docs_prod               # Alias for production
@@ -67,7 +67,7 @@ nox -s docs_live
 
 ### For CI/CD
 ```bash
-# Fast CI validation  
+# Fast CI validation
 nox -s docs_no_examples
 
 # Error collection and analysis
@@ -87,7 +87,7 @@ SPHINX_DISABLE_EXAMPLES=0 nox -s docs_phased
 ```bash
 # Manual control
 SPHINX_DISABLE_EXAMPLES=1 nox -s docs       # Disable examples
-SPHINX_DISABLE_EXAMPLES=0 nox -s docs       # Enable examples  
+SPHINX_DISABLE_EXAMPLES=0 nox -s docs       # Enable examples
 SPHINX_PROFILE=minimal nox -s docs          # Minimal extensions
 SPHINX_PROFILE=standard nox -s docs         # Standard extensions
 SPHINX_PROFILE=full nox -s docs             # All extensions
@@ -96,7 +96,7 @@ SPHINX_PROFILE=full nox -s docs             # All extensions
 ## 📊 Performance Impact
 
 ### Expected Build Time Improvements
-- **Without examples**: ~30-60 seconds  
+- **Without examples**: ~30-60 seconds
 - **With examples**: ~5-15 minutes
 - **Speed improvement**: 5-10x faster
 
@@ -107,7 +107,7 @@ When `SPHINX_DISABLE_EXAMPLES=1`:
 - ✅ Gallery generation skipped
 - ✅ Archive and example directories ignored
 
-### What Still Works  
+### What Still Works
 - ✅ API documentation (AutoAPI)
 - ✅ Docstring examples (non-executed)
 - ✅ Code blocks in RST files
@@ -120,7 +120,7 @@ When `SPHINX_DISABLE_EXAMPLES=1`:
 - Fastest possible build
 - Basic documentation only
 
-### Standard Profile (`SPHINX_PROFILE=standard`)  
+### Standard Profile (`SPHINX_PROFILE=standard`)
 - ~20-30 common extensions
 - Good balance of features vs speed
 - **Default for no-examples builds**
@@ -153,7 +153,7 @@ When `SPHINX_DISABLE_EXAMPLES=1`:
 
 ## 🎯 Addressing Your Concerns
 
-### Problem: "i actually like it its more of i cant see it working on smaller levels - say haive-mcp and the orgnaizaiton eis lsloppy and messy"
+### Problem: "i actually like it its more of i can't see it working on smaller levels - say haive-mcp and the orgnaizaiton eis lsloppy and messy"
 
 ### Solution Provided:
 1. **Faster Builds**: `docs_dev` gives you quick feedback for individual packages
@@ -172,7 +172,7 @@ When `SPHINX_DISABLE_EXAMPLES=1`:
 
 You can now:
 - ✅ Get fast feedback during development (`nox -s docs_dev`)
-- ✅ Build individual packages quickly (`SPHINX_PACKAGES=mcp nox -s docs_dev`)  
+- ✅ Build individual packages quickly (`SPHINX_PACKAGES=mcp nox -s docs_dev`)
 - ✅ Still get complete docs when needed (`nox -s docs_prod`)
 - ✅ Control everything via environment variables
 - ✅ Use live development with auto-rebuild (`nox -s docs_live`)

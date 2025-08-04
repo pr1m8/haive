@@ -9,14 +9,14 @@
    :show-inheritance:
    :inherited-members:
    :special-members: __init__
-   
+
 
 .. agent-doc:: {{ fullname }}
 
    :show-example: true
    :show-visualization: true
    :show-config: true
-   
+
 
 .. rubric:: Related Resources
 
@@ -27,12 +27,12 @@
 .. admonition:: Example Files
 
    :class:`seealso`
-   
+
    - Example usage: ``{{ example_file }}``
    - Configuration: ``{{ config_file }}``
-   
+
    Run the example:
-   
+
 
 .. code-block:: bash
 

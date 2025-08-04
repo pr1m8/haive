@@ -1,21 +1,25 @@
 """Optimized Sphinx configuration for Haive documentation.
 
-This configuration utilizes all available documentation dependencies
-for a professional, feature-rich documentation experience.
+This configuration utilizes all available documentation dependencies for
+a professional, feature-rich documentation experience.
 """
 
+from datetime import datetime
 import logging
+from pathlib import Path
 import sys
 import warnings
-from datetime import datetime
-from pathlib import Path
+
+from agent_cache_loader import get_agent_demo_context, get_available_agent_types
+from agent_demo_data import AVAILABLE_AGENTS, get_agent_context
 
 # Set up logging for debugging
 log_file = Path(__file__).parent / "sphinx_debug.log"
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[logging.FileHandler(str(log_file)), logging.StreamHandler()],
+    handlers=[logging.FileHandler(str(log_file)),
+              logging.StreamHandler()],
 )
 logger = logging.getLogger(__name__)
 
@@ -87,7 +91,7 @@ if extensions_path.exists():
 project = "Haive"
 author = "William R. Astley"
 current_year = datetime.now().year
-copyright = f"2025-{current_year}, {author}"  # noqa: A001
+copyright = f"2025-{current_year}, {author}"
 version = "1.0"
 release = "1.0.0"
 
@@ -115,7 +119,6 @@ extensions = [
     "sphinx_copybutton",  # 📋 Copy code buttons
     "sphinx_exec_directive",  # ⚡ Execute Python code in docs
     # === MARKDOWN & CONTENT ===
-    # "myst_parser",  # 📝 Markdown support (MyST) - REPLACED by myst_nb
     # Note: sphinx_mdinclude disabled to avoid conflicts with myst_parser
     # === DIAGRAMS & MEDIA ===
     "sphinxcontrib.mermaid",  # 📊 Mermaid diagrams
@@ -134,14 +137,11 @@ extensions = [
     # === REQUIREMENTS & DATA ===
     "sphinx_needs",  # 📋 Requirements management - ENABLED for tracking
     # === CODE QUALITY & REFERENCES ===
-    # "sphinx_codeautolink",  # 🔗 Auto-link code references (causing get_logger error)
     "sphinx_prompt",  # 💻 Terminal prompt styling
     # === TEMPLATE PROCESSING ===
     "sphinx_jinja2",  # 🎨 Jinja2 template processing for agent demos
     # === PDF & EXPORT ===
-    # "sphinx_simplepdf",  # 📄 PDF generation (enable when needed)
     # === VERSIONING ===
-    # "sphinx_multiversion",  # 📚 Multi-version docs (enable when needed)
     "sphinx_external_toc",  # 📋 External table of contents management
     # === INTERACTIVE CONTENT ===
     "sphinx_exercise",  # 🎯 Interactive exercises with solutions
@@ -243,17 +243,26 @@ html_js_files = [
 # Furo theme options - ENHANCED WITH ADVANCED FEATURES
 html_theme_options = {
     # === SIDEBAR ===
-    "sidebar_hide_name": False,
-    "navigation_with_keys": True,
-    "top_of_page_buttons": ["edit", "view"],  # Remove download for cleaner look
-    "show_prev_next": True,  # Add prev/next navigation
+    "sidebar_hide_name":
+    False,
+    "navigation_with_keys":
+    True,
+    "top_of_page_buttons": ["edit",
+                            "view"],  # Remove download for cleaner look
+    "show_prev_next":
+    True,  # Add prev/next navigation
     # === NAVIGATION ENHANCEMENTS ===
-    "navigation_depth": 4,  # Show up to 4 levels in navigation
-    "collapse_navigation": False,  # Keep navigation expanded
-    "titles_only": False,  # Show full navigation tree
+    "navigation_depth":
+    4,  # Show up to 4 levels in navigation
+    "collapse_navigation":
+    False,  # Keep navigation expanded
+    "titles_only":
+    False,  # Show full navigation tree
     # === TABLE OF CONTENTS (RIGHT SIDEBAR) ===
-    "show_toc_level": 3,  # Show up to 3 levels in page TOC
-    "toc_title": "On this page",  # Title for the TOC
+    "show_toc_level":
+    3,  # Show up to 3 levels in page TOC
+    "toc_title":
+    "On this page",  # Title for the TOC
     # === ADVANCED CSS VARIABLES ===
     "light_css_variables": {
         # Layout enhancements - REDUCED SIDEBAR
@@ -261,7 +270,8 @@ html_theme_options = {
         "content-width": "50rem",  # Increased content width
         "content-padding": "2rem",  # Reduced padding for more space
         # Typography improvements
-        "font-stack--headings": "'Inter', system-ui, -apple-system, sans-serif",
+        "font-stack--headings":
+        "'Inter', system-ui, -apple-system, sans-serif",
         "font-size--small--2": "0.75rem",
         "font-size--small--3": "0.6875rem",
         "line-height--normal": "1.7",
@@ -311,8 +321,10 @@ html_theme_options = {
         "color-search-border--focus": "#60a5fa",
     },
     # === PYGMENTS STYLES ===
-    "pygments_light_style": "default",
-    "pygments_dark_style": "github-dark",
+    "pygments_light_style":
+    "default",
+    "pygments_dark_style":
+    "github-dark",
     # === COLORS & STYLING ===
     "light_css_variables": {
         "color-brand-primary": "#0066cc",
@@ -327,8 +339,10 @@ html_theme_options = {
         "color-sidebar-background-border": "#e1e4e8",
         "color-announcement-background": "#007acc",
         "color-announcement-text": "#ffffff",
-        "font-stack": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', sans-serif",
-        "font-stack--monospace": "'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace",
+        "font-stack":
+        "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Cantarell', 'Helvetica Neue', sans-serif",
+        "font-stack--monospace":
+        "'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace",
         "font-size--small": "0.875rem",
         "font-size--normal": "1rem",
         "font-size--medium": "1.125rem",
@@ -385,9 +399,12 @@ html_theme_options = {
         },
     ],
     # === SOURCE REPOSITORY ===
-    "source_repository": "https://github.com/will-astley/haive",
-    "source_branch": "main",
-    "source_directory": "docs/source/",
+    "source_repository":
+    "https://github.com/will-astley/haive",
+    "source_branch":
+    "main",
+    "source_directory":
+    "docs/source/",
 }
 
 # === SIDEBAR CONFIGURATION FOR FURO ===
@@ -447,7 +464,9 @@ def autoapi_skip_member(app, what, name, obj, skip, options):
         return True
 
     # Skip files that were causing import issues
-    for pattern in ["debug", "demo", "example", "ui.py", "main.py", "app.py", "cli.py"]:
+    for pattern in [
+            "debug", "demo", "example", "ui.py", "main.py", "app.py", "cli.py"
+    ]:
         if pattern in name.lower():
             return True
 
@@ -498,9 +517,9 @@ def fix_autoapi_paths(app, exception):
         logger.warning(f"Build had exception: {exception}")
         return
 
+    from pathlib import Path
     import re
     import shutil
-    from pathlib import Path
 
     # First fix the source API files
     api_dir = Path(app.srcdir) / "api"
@@ -564,7 +583,9 @@ def fix_autoapi_paths(app, exception):
 
                 # Fix URLs
                 content = re.sub(
-                    r'href="[^"]*api/src/haive/', 'href="../../api/haive/', content
+                    r'href="[^"]*api/src/haive/',
+                    'href="../../api/haive/',
+                    content,
                 )
                 content = re.sub(r"/api/src/haive/", "/api/haive/", content)
 
@@ -585,7 +606,7 @@ def fix_autoapi_paths(app, exception):
             try:
                 if not list(html_src_dir.iterdir()):
                     html_src_dir.rmdir()
-            except:
+            except BaseException:
                 pass
 
 
@@ -698,8 +719,10 @@ contributors_file = "CONTRIBUTORS.md"
 notfound_pagename = "404"
 notfound_template = "404.html"
 notfound_context = {
-    "title": "Page Not Found",
-    "body": "The page you're looking for doesn't exist. Try searching or check our main documentation.",
+    "title":
+    "Page Not Found",
+    "body":
+    "The page you're looking for doesn't exist. Try searching or check our main documentation.",
 }
 
 autodoc_type_aliases = {
@@ -717,9 +740,7 @@ autodoc_type_aliases = {
 # No additional configuration needed - works out of the box
 
 # === COPY BUTTON ===
-copybutton_prompt_text = (
-    r">>> |\\.\\.\\. |\\$ |In \\[\\d*\\]: | {2,5}\\.\\.\\.: | {5,8}: "
-)
+copybutton_prompt_text = r">>> |\\.\\.\\. |\\$ |In \\[\\d*\\]: | {2,5}\\.\\.\\.: | {5,8}: "
 copybutton_prompt_is_regexp = True
 copybutton_exclude = ".linenos, .gp"
 
@@ -772,21 +793,33 @@ sphinx_gallery_conf = {
         # "auto_examples/tools",  # TODO: Enable when examples exist
         # "auto_examples/core",   # TODO: Enable when examples exist
     ],
-    "filename_pattern": "/.*tutorial|.*guide|.*example",
-    "ignore_pattern": "__init__.py|debug_*|test_*",
-    "download_all_examples": True,
-    "show_memory": True,
-    "remove_config_comments": True,
+    "filename_pattern":
+    "/.*tutorial|.*guide|.*example",
+    "ignore_pattern":
+    "__init__.py|debug_*|test_*",
+    "download_all_examples":
+    True,
+    "show_memory":
+    True,
+    "remove_config_comments":
+    True,
     "expected_failing_examples": [],
     "thumbnail_size": (300, 200),
-    "subsection_order": "ExplicitOrder",
-    "within_subsection_order": "FileNameSortKey",
-    "show_signature": True,
-    "plot_gallery": False,  # We don't need matplotlib plots
-    "first_notebook_cell": "%matplotlib inline",
-    "last_notebook_cell": "# End of example",
+    "subsection_order":
+    "ExplicitOrder",
+    "within_subsection_order":
+    "FileNameSortKey",
+    "show_signature":
+    True,
+    "plot_gallery":
+    False,  # We don't need matplotlib plots
+    "first_notebook_cell":
+    "%matplotlib inline",
+    "last_notebook_cell":
+    "# End of example",
     # Enhanced gallery features
-    "promote_jupyter_magic": True,
+    "promote_jupyter_magic":
+    True,
     "binder": {
         "org": "haive",
         "repo": "haive",
@@ -866,7 +899,8 @@ from haive.core.schema import StateSchema
 """
 
 codeautolink_custom_blocks = {
-    "haive.agents.simple.SimpleAgent": ":class:`~haive.agents.simple.SimpleAgent`",
+    "haive.agents.simple.SimpleAgent":
+    ":class:`~haive.agents.simple.SimpleAgent`",
     "haive.agents.react.ReactAgent": ":class:`~haive.agents.react.ReactAgent`",
     "haive.core.engine.Engine": ":class:`~haive.core.engine.Engine`",
     "SimpleAgent": ":class:`~haive.agents.simple.SimpleAgent`",
@@ -977,7 +1011,7 @@ autoapi_ignore = [
     "**/reasoning_and_critique/self_discover/example.py",  # Syntax error: indentation
     "**/reasoning_and_critique/tot/modular/example.py",  # Syntax error: indentation
     "**/react_class/react_agent2/example.py",  # Syntax error: indentation
-    "**/conversation/collaberative/example.py",  # Syntax error: indentation
+    "**/conversation/collaborative/example.py",  # Syntax error: indentation
     # Additional problematic imports fixed
     "**/archive/meta/agent.py",  # Contains MetaAgentState that may conflict
     "**/self_healing_code/agent.py",  # Complex agent with potential issues
@@ -1018,11 +1052,10 @@ def linkcode_resolve(domain, info):
     package_name = module_parts[1]
     package_dir = f"haive-{package_name}"
 
-    submodule_path = "/".join(module_parts[2:]) if len(module_parts) > 2 else ""
+    submodule_path = "/".join(
+        module_parts[2:]) if len(module_parts) > 2 else ""
     if submodule_path:
-        filename = (
-            f"packages/{package_dir}/src/haive/{package_name}/{submodule_path}.py"
-        )
+        filename = f"packages/{package_dir}/src/haive/{package_name}/{submodule_path}.py"
     else:
         filename = f"packages/{package_dir}/src/haive/{package_name}/__init__.py"
 
@@ -1058,12 +1091,9 @@ def setup(app):
     app.add_css_file("haive-enhanced.css")
 
     # Connect autoapi hooks for cleaner URLs
-    # app.connect("autoapi-skip-member", autoapi_skip_member)  # Disabled with autoapi
-    # app.connect("build-finished", fix_autoapi_paths)  # Disabled with autoapi
 
     # Add hook to fix module resolution
     # if hasattr(app, 'setup_extension'):
-    #     app.setup_extension('autoapi.extension')  # Disabled while autoapi is off
 
     return {
         "version": "1.0",
@@ -1077,11 +1107,8 @@ def setup(app):
 # ==============================================================================
 
 # Import agent demo data
-import sys
 
 sys.path.insert(0, str(conf_dir))
-from agent_cache_loader import get_agent_demo_context, get_available_agent_types
-from agent_demo_data import AVAILABLE_AGENTS, get_agent_context
 
 # Configure Jinja2 contexts for sphinx-jinja2
 jinja2_contexts = {
@@ -1091,7 +1118,7 @@ jinja2_contexts = {
         # New cached data functions
         "get_agent_demo_context": get_agent_demo_context,
         "get_available_agent_types": get_available_agent_types,
-    }
+    },
 }
 
 # Enable debug mode for development

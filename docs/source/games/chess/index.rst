@@ -15,7 +15,7 @@
    <div class="hero-content">
    <h2>♟️ Advanced Chess Engine & AI</h2>
    <p class="hero-description">
-   A complete chess implementation with sophisticated AI opponents, opening book, endgame tables, 
+   A complete chess implementation with sophisticated AI opponents, opening book, endgame tables,
    and position analysis. Test your agents against various difficulty levels.
    </p>
    </div>
@@ -279,40 +279,40 @@ Quick Start
            self.depth = depth
            self.transposition_table = {}
            self.history_table = {}  # For move ordering
-       
+
        def get_best_move(self, board_state):
            """Find best move using alpha-beta search."""
-           
+
            def minimax(state, depth, alpha, beta, maximizing):
                # Check transposition table
                state_hash = hash(state)
                if state_hash in self.transposition_table:
                    return self.transposition_table[state_hash]
-               
+
                # Terminal node
                if depth == 0 or state.is_game_over():
                    eval_score = self.evaluate(state)
                    self.transposition_table[state_hash] = eval_score
                    return eval_score
-               
+
                # Get moves ordered by history heuristic
                moves = self.order_moves(state.get_legal_moves())
-               
+
                if maximizing:
                    max_eval = float('-inf')
                    for move in moves:
                        state.make_move(move)
                        eval_score = minimax(state, depth - 1, alpha, beta, False)
                        state.undo_move()
-                       
+
                        max_eval = max(max_eval, eval_score)
                        alpha = max(alpha, eval_score)
-                       
+
                        if beta <= alpha:
                            # Update history for good moves
                            self.history_table[move] = self.history_table.get(move, 0) + depth
                            break
-                   
+
                    return max_eval
                else:
                    min_eval = float('inf')
@@ -320,33 +320,33 @@ Quick Start
                        state.make_move(move)
                        eval_score = minimax(state, depth - 1, alpha, beta, True)
                        state.undo_move()
-                       
+
                        min_eval = min(min_eval, eval_score)
                        beta = min(beta, eval_score)
-                       
+
                        if beta <= alpha:
                            self.history_table[move] = self.history_table.get(move, 0) + depth
                            break
-                   
+
                    return min_eval
-           
+
            # Iterative deepening
            best_move = None
            for d in range(1, self.depth + 1):
                moves_with_scores = []
-               
+
                for move in board_state.get_legal_moves():
                    board_state.make_move(move)
                    score = minimax(board_state, d - 1, float('-inf'), float('inf'), False)
                    board_state.undo_move()
                    moves_with_scores.append((move, score))
-               
+
                # Sort by score
                moves_with_scores.sort(key=lambda x: x[1], reverse=True)
                best_move = moves_with_scores[0][0]
-           
+
            return best_move
-       
+
        def order_moves(self, moves):
            """Order moves for better pruning."""
            return sorted(
@@ -364,7 +364,7 @@ Quick Start
                'P': 100, 'N': 320, 'B': 330,
                'R': 500, 'Q': 900, 'K': 20000
            }
-           
+
            # Positional tables (simplified)
            self.pawn_table = [
                [0,  0,  0,  0,  0,  0,  0,  0],
@@ -376,28 +376,28 @@ Quick Start
                [5, 10, 10,-20,-20, 10, 10,  5],
                [0,  0,  0,  0,  0,  0,  0,  0]
            ]
-       
+
        def evaluate(self, board_state) -> float:
            """Comprehensive position evaluation."""
            score = 0.0
-           
+
            # Material count
            score += self.material_balance(board_state)
-           
+
            # Positional factors
            score += self.piece_positioning(board_state)
            score += self.king_safety(board_state)
            score += self.pawn_structure(board_state)
            score += self.center_control(board_state)
            score += self.mobility(board_state)
-           
+
            # Game phase adjustments
            phase = self.game_phase(board_state)
            if phase == "opening":
                score += self.opening_principles(board_state)
            elif phase == "endgame":
                score += self.endgame_principles(board_state)
-           
+
            return score
 
    # 3. Opening Book
@@ -413,7 +413,7 @@ Quick Start
                ],
                # More positions...
            }
-       
+
        def get_book_move(self, fen: str):
            """Get move from opening book."""
            if fen in self.book:
@@ -589,7 +589,7 @@ Quick Start
    [Event "Test Game"]
    [White "Agent1"]
    [Black "Agent2"]
-   
+
    1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6
    5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. c3 d5
    """)
@@ -618,18 +618,18 @@ Quick Start
    plt.figure(figsize=(12, 6))
    moves = range(len(analysis['evaluations']))
    evals = analysis['evaluations']
-   
+
    plt.plot(moves, evals, 'b-', linewidth=2)
    plt.axhline(y=0, color='gray', linestyle='--')
    plt.fill_between(moves, 0, evals, alpha=0.3)
-   
+
    # Mark critical moments
    for moment in analysis['critical_moments']:
 
        move_num = moment['move_number'] * 2 - (2 if moment['color'] == 'white' else 1)*
        plt.axvline(x=move_num, color='red', alpha=0.5)
 
-   
+
    plt.xlabel('Move Number')
    plt.ylabel('Evaluation (pawns)')
    plt.title('Game Evaluation Over Time')
@@ -638,18 +638,18 @@ Quick Start
 
    # Move quality distribution
    move_quality = analysis['move_quality']
-   
+
    plt.figure(figsize=(10, 6))
    categories = ['Brilliant', 'Best', 'Good', 'Inaccuracy', 'Mistake', 'Blunder']
    white_counts = [move_quality['white'][cat] for cat in categories]
    black_counts = [move_quality['black'][cat] for cat in categories]
-   
+
    x = range(len(categories))
    width = 0.35
-   
+
    plt.bar([i - width/2 for i in x], white_counts, width, label='White', color='lightgray')
    plt.bar([i + width/2 for i in x], black_counts, width, label='Black', color='darkgray')
-   
+
    plt.xlabel('Move Quality')
    plt.ylabel('Count')
    plt.title('Move Quality Distribution')
@@ -660,7 +660,7 @@ Quick Start
 
    # Interactive board visualization
    renderer = BoardRenderer()
-   
+
    # Show specific position
    renderer.show_position(
 

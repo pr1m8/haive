@@ -6,13 +6,15 @@ regardless of architecture or type. It creates consistent visual outputs includi
 workflow diagrams, execution traces, and performance metrics.
 """
 
-import logging
-import time
+from __future__ import annotations
+
 from dataclasses import dataclass
+import logging
 from pathlib import Path
+import time
 from typing import Any
 
-from .agent_analyzer import AgentArchitecture, AgentInfo
+from scripts.doc_utils.agent_analyzer import AgentArchitecture, AgentInfo
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +72,7 @@ class VisualizationManager:
         if output_path is None:
             timestamp = int(time.time())
             output_path = Path(
-                f"{agent_info.name.lower()}_viz_{timestamp}.{config.output_format}"
+                f"{agent_info.name.lower()}_viz_{timestamp}.{config.output_format}",
             )
 
         logger.info(f"Generating visualization for {agent_info.name}")
@@ -80,12 +82,16 @@ class VisualizationManager:
             if agent_info.has_visualization:
                 # Agent has native visualization support
                 result = await self._use_native_visualization(
-                    agent_info, output_path, config
+                    agent_info,
+                    output_path,
+                    config,
                 )
             else:
                 # Create visualization from analysis
                 result = await self._create_synthetic_visualization(
-                    agent_info, output_path, config
+                    agent_info,
+                    output_path,
+                    config,
                 )
 
             return result
@@ -95,7 +101,10 @@ class VisualizationManager:
             return VisualizationResult(success=False, error=str(e))
 
     async def _use_native_visualization(
-        self, agent_info: AgentInfo, output_path: Path, config: VisualizationConfig
+        self,
+        agent_info: AgentInfo,
+        output_path: Path,
+        config: VisualizationConfig,
     ) -> VisualizationResult:
         """Use the agent's native visualization method.
 
@@ -112,7 +121,8 @@ class VisualizationManager:
 
             # Import the agent module
             spec = importlib.util.spec_from_file_location(
-                agent_info.module_path, agent_info.file_path
+                agent_info.module_path,
+                agent_info.file_path,
             )
             if not spec or not spec.loader:
                 raise ImportError(f"Cannot load module {agent_info.module_path}")
@@ -144,18 +154,25 @@ class VisualizationManager:
                 metadata = await self._extract_visualization_metadata(agent, agent_info)
 
             return VisualizationResult(
-                success=True, output_path=output_path, metadata=metadata
+                success=True,
+                output_path=output_path,
+                metadata=metadata,
             )
 
         except Exception as e:
             logger.exception(f"Native visualization failed for {agent_info.name}: {e}")
             # Fallback to synthetic visualization
             return await self._create_synthetic_visualization(
-                agent_info, output_path, config
+                agent_info,
+                output_path,
+                config,
             )
 
     async def _create_synthetic_visualization(
-        self, agent_info: AgentInfo, output_path: Path, config: VisualizationConfig
+        self,
+        agent_info: AgentInfo,
+        output_path: Path,
+        config: VisualizationConfig,
     ) -> VisualizationResult:
         """Create visualization from agent analysis without instantiating.
 
@@ -171,26 +188,35 @@ class VisualizationManager:
             # Generate different visualizations based on format
             if config.output_format == "mermaid":
                 return await self._create_mermaid_diagram(
-                    agent_info, output_path, config
+                    agent_info,
+                    output_path,
+                    config,
                 )
             if config.output_format == "html":
                 return await self._create_html_visualization(
-                    agent_info, output_path, config
+                    agent_info,
+                    output_path,
+                    config,
                 )
             if config.output_format in ["png", "svg"]:
                 return await self._create_graph_visualization(
-                    agent_info, output_path, config
+                    agent_info,
+                    output_path,
+                    config,
                 )
             raise ValueError(f"Unsupported format: {config.output_format}")
 
         except Exception as e:
             logger.exception(
-                f"Synthetic visualization failed for {agent_info.name}: {e}"
+                f"Synthetic visualization failed for {agent_info.name}: {e}",
             )
             return VisualizationResult(success=False, error=str(e))
 
     async def _create_mermaid_diagram(
-        self, agent_info: AgentInfo, output_path: Path, config: VisualizationConfig
+        self,
+        agent_info: AgentInfo,
+        output_path: Path,
+        config: VisualizationConfig,
     ) -> VisualizationResult:
         """Create Mermaid diagram from agent info.
 
@@ -220,7 +246,9 @@ class VisualizationManager:
         )
 
     def _generate_mermaid_content(
-        self, agent_info: AgentInfo, config: VisualizationConfig
+        self,
+        agent_info: AgentInfo,
+        config: VisualizationConfig,
     ) -> str:
         """Generate Mermaid diagram content.
 
@@ -240,7 +268,7 @@ class VisualizationManager:
                     "    Agent --> Engine[AugLLM Engine]",
                     "    Engine --> Process[Process Input]",
                     "    Process --> Response[Generate Response]",
-                ]
+                ],
             )
         elif agent_info.architecture == AgentArchitecture.HAIVE_CORE_ENGINE:
             lines.extend(
@@ -248,7 +276,7 @@ class VisualizationManager:
                     "    Agent --> Config[Agent Config]",
                     "    Config --> Execute[Execute]",
                     "    Execute --> Response[Response]",
-                ]
+                ],
             )
         elif agent_info.architecture == AgentArchitecture.HAIVE_GAMES:
             lines.extend(
@@ -256,14 +284,14 @@ class VisualizationManager:
                     "    Agent --> GameState[Game State]",
                     "    GameState --> Action[Generate Action]",
                     "    Action --> Response[Game Response]",
-                ]
+                ],
             )
         else:
             lines.extend(
                 [
                     "    Agent --> Processing[Processing]",
                     "    Processing --> Response[Response]",
-                ]
+                ],
             )
 
         # Add tools if supported
@@ -280,14 +308,17 @@ class VisualizationManager:
                 [
                     "    classDef default fill:#2d3748,stroke:#4a5568,stroke-width:2px,color:#e2e8f0",
                     "    classDef agent fill:#4299e1,stroke:#3182ce,stroke-width:3px,color:#ffffff",
-                ]
+                ],
             )
             lines.append("    class Agent agent")
 
         return "\n".join(lines)
 
     async def _create_html_visualization(
-        self, agent_info: AgentInfo, output_path: Path, config: VisualizationConfig
+        self,
+        agent_info: AgentInfo,
+        output_path: Path,
+        config: VisualizationConfig,
     ) -> VisualizationResult:
         """Create interactive HTML visualization.
 
@@ -311,7 +342,9 @@ class VisualizationManager:
         )
 
     def _generate_html_content(
-        self, agent_info: AgentInfo, config: VisualizationConfig
+        self,
+        agent_info: AgentInfo,
+        config: VisualizationConfig,
     ) -> str:
         """Generate HTML visualization content.
 
@@ -335,15 +368,15 @@ class VisualizationManager:
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            background: {'#1a1a1a' if config.theme == 'dark' else '#ffffff'};
-            color: {'#e2e8f0' if config.theme == 'dark' else '#333333'};
+            background: {"#1a1a1a" if config.theme == "dark" else "#ffffff"};
+            color: {"#e2e8f0" if config.theme == "dark" else "#333333"};
         }}
         .header {{
             text-align: center;
             margin-bottom: 30px;
             padding: 20px;
             border-radius: 10px;
-            background: {'#2d3748' if config.theme == 'dark' else '#f7fafc'};
+            background: {"#2d3748" if config.theme == "dark" else "#f7fafc"};
         }}
         .info-grid {{
             display: grid;
@@ -354,12 +387,12 @@ class VisualizationManager:
         .info-card {{
             padding: 20px;
             border-radius: 8px;
-            background: {'#2d3748' if config.theme == 'dark' else '#f7fafc'};
-            border: {'1px solid #4a5568' if config.theme == 'dark' else '1px solid #e2e8f0'};
+            background: {"#2d3748" if config.theme == "dark" else "#f7fafc"};
+            border: {"1px solid #4a5568" if config.theme == "dark" else "1px solid #e2e8f0"};
         }}
         .info-card h3 {{
             margin-top: 0;
-            color: {'#4299e1' if config.theme == 'dark' else '#3182ce'};
+            color: {"#4299e1" if config.theme == "dark" else "#3182ce"};
         }}
         .tag {{
             display: inline-block;
@@ -367,14 +400,14 @@ class VisualizationManager:
             margin: 2px;
             border-radius: 4px;
             font-size: 0.8em;
-            background: {'#4299e1' if config.theme == 'dark' else '#e6f3ff'};
-            color: {'#ffffff' if config.theme == 'dark' else '#1a365d'};
+            background: {"#4299e1" if config.theme == "dark" else "#e6f3ff"};
+            color: {"#ffffff" if config.theme == "dark" else "#1a365d"};
         }}
         .workflow {{
             text-align: center;
             margin: 30px 0;
             padding: 20px;
-            background: {'#2d3748' if config.theme == 'dark' else '#f7fafc'};
+            background: {"#2d3748" if config.theme == "dark" else "#f7fafc"};
             border-radius: 8px;
         }}
         .workflow-step {{
@@ -382,14 +415,14 @@ class VisualizationManager:
             padding: 10px 20px;
             margin: 5px;
             border-radius: 20px;
-            background: {'#4299e1' if config.theme == 'dark' else '#3182ce'};
+            background: {"#4299e1" if config.theme == "dark" else "#3182ce"};
             color: #ffffff;
         }}
         .arrow {{
             display: inline-block;
             margin: 0 10px;
             font-size: 1.5em;
-            color: {'#4a5568' if config.theme == 'dark' else '#718096'};
+            color: {"#4a5568" if config.theme == "dark" else "#718096"};
         }}
     </style>
 </head>
@@ -403,15 +436,15 @@ class VisualizationManager:
     <div class="info-grid">
         <div class="info-card">
             <h3>Base Classes</h3>
-            {''.join(f'<span class="tag">{base}</span>' for base in agent_info.base_classes)}
+            {"".join(f'<span class="tag">{base}</span>' for base in agent_info.base_classes)}
         </div>
 
         <div class="info-card">
             <h3>Capabilities</h3>
             <div>
-                <span class="tag">{'✓' if agent_info.has_visualization else '✗'} Visualization</span>
-                <span class="tag">{'✓' if agent_info.tools_support else '✗'} Tools</span>
-                <span class="tag">{'✓' if agent_info.streaming_support else '✗'} Streaming</span>
+                <span class="tag">{"✓" if agent_info.has_visualization else "✗"} Visualization</span>
+                <span class="tag">{"✓" if agent_info.tools_support else "✗"} Tools</span>
+                <span class="tag">{"✓" if agent_info.streaming_support else "✗"} Streaming</span>
             </div>
         </div>
 
@@ -424,7 +457,7 @@ class VisualizationManager:
         <div class="info-card">
             <h3>Examples</h3>
             <div>
-                {f'<p>{len(agent_info.example_files)} example files found</p>' if agent_info.example_files else '<p>No example files found</p>'}
+                {f"<p>{len(agent_info.example_files)} example files found</p>" if agent_info.example_files else "<p>No example files found</p>"}
             </div>
         </div>
     </div>
@@ -446,14 +479,17 @@ class VisualizationManager:
         <h3>Module Information</h3>
         <p><strong>Module Path:</strong> {agent_info.module_path}</p>
         <p><strong>File Path:</strong> {agent_info.file_path}</p>
-        {f'<p><strong>Method Count:</strong> {agent_info.metadata.get("method_count", "Unknown")}</p>' if agent_info.metadata else ''}
+        {f"<p><strong>Method Count:</strong> {agent_info.metadata.get('method_count', 'Unknown')}</p>" if agent_info.metadata else ""}
     </div>
 </body>
 </html>
         """
 
     async def _create_graph_visualization(
-        self, agent_info: AgentInfo, output_path: Path, config: VisualizationConfig
+        self,
+        agent_info: AgentInfo,
+        output_path: Path,
+        config: VisualizationConfig,
     ) -> VisualizationResult:
         """Create graph visualization using graphviz or similar.
 
@@ -468,28 +504,33 @@ class VisualizationManager:
         try:
             # Try to use graphviz if available
             try:
-                import graphviz
+                pass
 
                 return await self._create_graphviz_visualization(
-                    agent_info, output_path, config
+                    agent_info,
+                    output_path,
+                    config,
                 )
             except ImportError:
                 pass
 
             # Try matplotlib as fallback
             try:
-                import matplotlib.pyplot as plt
-                from matplotlib import patches
+                pass
 
                 return await self._create_matplotlib_visualization(
-                    agent_info, output_path, config
+                    agent_info,
+                    output_path,
+                    config,
                 )
             except ImportError:
                 pass
 
             # If no graphical libraries available, create text-based diagram
             return await self._create_text_visualization(
-                agent_info, output_path, config
+                agent_info,
+                output_path,
+                config,
             )
 
         except Exception as e:
@@ -497,7 +538,10 @@ class VisualizationManager:
             return VisualizationResult(success=False, error=str(e))
 
     async def _create_matplotlib_visualization(
-        self, agent_info: AgentInfo, output_path: Path, config: VisualizationConfig
+        self,
+        agent_info: AgentInfo,
+        output_path: Path,
+        config: VisualizationConfig,
     ) -> VisualizationResult:
         """Create visualization using matplotlib.
 
@@ -509,8 +553,8 @@ class VisualizationManager:
         Returns:
             Visualization result
         """
-        import matplotlib.pyplot as plt
         from matplotlib import patches
+        import matplotlib.pyplot as plt
 
         fig, ax = plt.subplots(1, 1, figsize=(config.width / 100, config.height / 100))
 
@@ -569,14 +613,17 @@ class VisualizationManager:
 
         # Add title and metadata
         ax.set_title(
-            f"{agent_info.name} Workflow", fontsize=16, color=text_color, pad=20
+            f"{agent_info.name} Workflow",
+            fontsize=16,
+            color=text_color,
+            pad=20,
         )
 
         if config.include_metadata:
             metadata_text = f"""Architecture: {agent_info.architecture.value}
 Execution: {agent_info.execution_pattern}
-Tools: {'Yes' if agent_info.tools_support else 'No'}
-Visualization: {'Yes' if agent_info.has_visualization else 'No'}"""
+Tools: {"Yes" if agent_info.tools_support else "No"}
+Visualization: {"Yes" if agent_info.has_visualization else "No"}"""
 
             ax.text(
                 0.02,
@@ -615,9 +662,13 @@ Visualization: {'Yes' if agent_info.has_visualization else 'No'}"""
         )
 
     async def _create_text_visualization(
-        self, agent_info: AgentInfo, output_path: Path, config: VisualizationConfig
+        self,
+        agent_info: AgentInfo,
+        output_path: Path,
+        config: VisualizationConfig,
     ) -> VisualizationResult:
-        """Create text-based visualization when no graphical libraries are available.
+        """Create text-based visualization when no graphical libraries are
+        available.
 
         Args:
             agent_info: Agent information
@@ -629,7 +680,7 @@ Visualization: {'Yes' if agent_info.has_visualization else 'No'}"""
         """
         text_content = f"""
 {agent_info.name} - Agent Visualization
-{'=' * (len(agent_info.name) + 25)}
+{"=" * (len(agent_info.name) + 25)}
 
 Architecture: {agent_info.architecture.value}
 File: {agent_info.file_path}
@@ -639,9 +690,9 @@ Base Classes:
 {chr(10).join(f"  - {base}" for base in agent_info.base_classes)}
 
 Capabilities:
-  - Visualization: {'Yes' if agent_info.has_visualization else 'No'}
-  - Tools Support: {'Yes' if agent_info.tools_support else 'No'}
-  - Streaming: {'Yes' if agent_info.streaming_support else 'No'}
+  - Visualization: {"Yes" if agent_info.has_visualization else "No"}
+  - Tools Support: {"Yes" if agent_info.tools_support else "No"}
+  - Streaming: {"Yes" if agent_info.streaming_support else "No"}
   - Execution: {agent_info.execution_pattern}
 
 Workflow:
@@ -664,7 +715,9 @@ Examples: {len(agent_info.example_files)} files found
         )
 
     async def _create_agent_instance(
-        self, agent_info: AgentInfo, agent_class: type
+        self,
+        agent_info: AgentInfo,
+        agent_class: type,
     ) -> Any:
         """Create an agent instance with minimal configuration.
 
@@ -696,7 +749,9 @@ Examples: {len(agent_info.example_files)} files found
             return agent_class(name=f"viz_{agent_info.name.lower()}")
 
     async def _extract_visualization_metadata(
-        self, agent: Any, agent_info: AgentInfo
+        self,
+        agent: Any,
+        agent_info: AgentInfo,
     ) -> dict[str, Any]:
         """Extract metadata from agent instance.
 
@@ -722,7 +777,7 @@ Examples: {len(agent_info.example_files)} files found
                     metadata["model"] = agent.engine.model
                 if hasattr(agent.engine, "temperature"):
                     metadata["temperature"] = agent.engine.temperature
-        except:
+        except BaseException:
             pass
 
         return metadata
@@ -749,7 +804,9 @@ Examples: {len(agent_info.example_files)} files found
         try:
             if config.output_format == "html":
                 return await self._create_comparison_html(
-                    agents_info, output_path, config
+                    agents_info,
+                    output_path,
+                    config,
                 )
             return await self._create_comparison_table(agents_info, output_path, config)
 
@@ -775,22 +832,22 @@ Examples: {len(agent_info.example_files)} files found
         body {{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 20px;
-            background: {'#1a1a1a' if config.theme == 'dark' else '#ffffff'};
-            color: {'#e2e8f0' if config.theme == 'dark' else '#333333'};
+            background: {"#1a1a1a" if config.theme == "dark" else "#ffffff"};
+            color: {"#e2e8f0" if config.theme == "dark" else "#333333"};
         }}
         table {{
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            background: {'#2d3748' if config.theme == 'dark' else '#ffffff'};
+            background: {"#2d3748" if config.theme == "dark" else "#ffffff"};
         }}
         th, td {{
             padding: 12px;
             text-align: left;
-            border: {'1px solid #4a5568' if config.theme == 'dark' else '1px solid #ddd'};
+            border: {"1px solid #4a5568" if config.theme == "dark" else "1px solid #ddd"};
         }}
         th {{
-            background: {'#4a5568' if config.theme == 'dark' else '#f2f2f2'};
+            background: {"#4a5568" if config.theme == "dark" else "#f2f2f2"};
             font-weight: bold;
         }}
         .yes {{ color: #48bb78; }}
@@ -830,14 +887,14 @@ Examples: {len(agent_info.example_files)} files found
             <tr>
                 <td><strong>{agent.name}</strong></td>
                 <td><span class="architecture {arch_class}">{agent.architecture.value}</span></td>
-                <td class="{'yes' if agent.has_visualization else 'no'}">
-                    {'✓ Yes' if agent.has_visualization else '✗ No'}
+                <td class="{"yes" if agent.has_visualization else "no"}">
+                    {"✓ Yes" if agent.has_visualization else "✗ No"}
                 </td>
-                <td class="{'yes' if agent.tools_support else 'no'}">
-                    {'✓ Yes' if agent.tools_support else '✗ No'}
+                <td class="{"yes" if agent.tools_support else "no"}">
+                    {"✓ Yes" if agent.tools_support else "✗ No"}
                 </td>
-                <td class="{'yes' if agent.streaming_support else 'no'}">
-                    {'✓ Yes' if agent.streaming_support else '✗ No'}
+                <td class="{"yes" if agent.streaming_support else "no"}">
+                    {"✓ Yes" if agent.streaming_support else "✗ No"}
                 </td>
                 <td>{agent.execution_pattern.title()}</td>
                 <td>{len(agent.example_files)}</td>

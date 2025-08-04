@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Minimal documentation build test to verify basic functionality."""
+from __future__ import annotations
 
 import shutil
 import subprocess
@@ -38,7 +39,6 @@ cmd = [
 
 try:
     result = subprocess.run(cmd, check=False, capture_output=True, text=True)
-
 
     if result.stdout:
 

@@ -2,8 +2,10 @@
 """Agent Run Capture System for Documentation.
 
 This module provides utilities for capturing agent execution outputs,
-including logs, state transitions, and graph visualizations for documentation.
+including logs, state transitions, and graph visualizations for
+documentation.
 """
+from __future__ import annotations
 
 import asyncio
 import json
@@ -16,7 +18,8 @@ from typing import Any
 from uuid import uuid4
 
 import yaml
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 # Ensure haive packages are in path
 workspace_root = Path(__file__).resolve().parents[2]
@@ -60,7 +63,7 @@ class LogCapture(logging.Handler):
         super().__init__()
         self.logs = []
         self.setFormatter(
-            logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+            logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"),
         )
 
     def emit(self, record):
@@ -74,7 +77,7 @@ class LogCapture(logging.Handler):
                 "module": record.module,
                 "function": record.funcName,
                 "line": record.lineno,
-            }
+            },
         )
 
     def clear(self):
@@ -227,7 +230,7 @@ class AgentRunner:
             asyncio.set_event_loop(loop)
 
         return loop.run_until_complete(
-            self.run_agent_async(agent, input_data, config, capture_graph)
+            self.run_agent_async(agent, input_data, config, capture_graph),
         )
 
     def _capture_graph(self, agent, run_id: str) -> Path | None:
@@ -283,7 +286,7 @@ class AgentRunner:
                         "timestamp": log["timestamp"],
                         "message": message,
                         "type": "state_change",
-                    }
+                    },
                 )
 
         return transitions
@@ -312,7 +315,7 @@ class AgentRunner:
                         "timestamp": log["timestamp"],
                         "content": message,
                         "type": "message",
-                    }
+                    },
                 )
 
         return messages

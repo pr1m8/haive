@@ -4,7 +4,7 @@
 
 ### 1. Enhanced Progress Tracking
 - **Before**: No clear indication of which files were being processed
-- **After**: 
+- **After**:
   - Real-time file processing counter (every 50 files)
   - HTML generation tracking (every 20 files)
   - Detailed build metrics summary

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Generate recommended conf.py update for nitpick_ignore."""
+
 # Recommended high-impact additions to your current nitpick_ignore list
 from __future__ import annotations
 

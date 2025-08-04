@@ -20,16 +20,9 @@ conversation system, including automatic tracking, computed properties, and
 reducer-based state updates.
 """
 
-import asyncio
-import contextlib
 
-from haive.agents.conversation.base import (
-    ConversationState,
-    create_conversation_state,
-    get_conversation_progress,
-    validate_conversation_participants,
-)
-from haive.agents.simple import SimpleAgent
+from __future__ import annotations
+import asyncio
 
 
 def demonstrate_basic_state_creation() -> Any:
@@ -52,31 +45,28 @@ def demonstrate_basic_state_creation() -> Any:
 def demonstrate_state_updates(state: ConversationState):
     """Demonstrate reducer-based state updates."""
     # Simulate first turn (Alice speaks)
-    state = state.model_copy(
-        update={
-            "turn_count": 1,
-            "speaker_history": ["Alice"],
-            "current_speaker": "Alice",
-        }
-    )
+    state = state.model_copy(update={
+        "turn_count": 1,
+        "speaker_history": ["Alice"],
+        "current_speaker": "Alice",
+    }, )
 
     # Simulate second turn (Bob speaks)
     state = state.model_copy(
         update={
-            "turn_count": 1,  # This will be added to existing count (becomes 2)
-            "speaker_history": ["Bob"],  # This will be appended to existing history
+            "turn_count":
+            1,  # This will be added to existing count (becomes 2)
+            "speaker_history":
+            ["Bob"],  # This will be appended to existing history
             "current_speaker": "Bob",
-        }
-    )
+        }, )
 
     # Simulate third turn (Charlie speaks - completes round 1)
-    state = state.model_copy(
-        update={
-            "turn_count": 1,
-            "speaker_history": ["Charlie"],
-            "current_speaker": "Charlie",
-        }
-    )
+    state = state.model_copy(update={
+        "turn_count": 1,
+        "speaker_history": ["Charlie"],
+        "current_speaker": "Charlie",
+    }, )
 
     return state
 
@@ -86,13 +76,11 @@ def demonstrate_computed_properties(state: ConversationState):
     # Simulate several more turns to show progress
     for _round_num in range(2, 6):  # Rounds 2-5
         for speaker in state.speakers:
-            state = state.model_copy(
-                update={
-                    "turn_count": 1,
-                    "speaker_history": [speaker],
-                    "current_speaker": speaker,
-                }
-            )
+            state = state.model_copy(update={
+                "turn_count": 1,
+                "speaker_history": [speaker],
+                "current_speaker": speaker,
+            }, )
 
     return state
 
@@ -162,16 +150,20 @@ def demonstrate_custom_state_fields() -> Any:
     SimpleAgent(name="Bob")
 
     extended_state = ExtendedConversationState(
-        speakers=["Alice", "Bob"], topic="Quality conversation example", max_rounds=3
+        speakers=["Alice", "Bob"],
+        topic="Quality conversation example",
+        max_rounds=3,
     )
 
     # Update with custom data
     extended_state = extended_state.model_copy(
         update={
             "quality_scores": [8.5, 7.2],  # Will be appended
-            "engagement_metrics": {"participation": 0.85, "sentiment": 0.72},
-        }
-    )
+            "engagement_metrics": {
+                "participation": 0.85,
+                "sentiment": 0.72
+            },
+        }, )
 
 
 async def main():

@@ -19,7 +19,6 @@ from self_reflective.agent import (
     synthesize_result,
 )
 
-
 __all__ = [
     "ImprovedAnswer",
     "ReflectionCritique",

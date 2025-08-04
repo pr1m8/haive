@@ -34,7 +34,8 @@ def create_tot_agent(
     beam_size: int = 3,
     candidates_per_expansion: int = 3,
     name: str | None = None,
-    system_prompt: str = "You are an expert problem solver using a step-by-step approach.",
+    system_prompt:
+    str = "You are an expert problem solver using a step-by-step approach.",
     expand_prompt: str | ChatPromptTemplate | None = None,
     score_prompt: str | ChatPromptTemplate | None = None,
     score_function: Callable | None = None,
@@ -63,38 +64,32 @@ def create_tot_agent(
     """
     # Convert string prompts to ChatPromptTemplate if needed
     if isinstance(expand_prompt, str):
-        expand_prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", system_prompt),
-                ("system", expand_prompt),
-                ("user", "Problem: {problem}"),
-                ("user", "Previous attempt: {seed}" if "{seed}" in kwargs else ""),
-            ]
-        )
+        expand_prompt = ChatPromptTemplate.from_messages([
+            ("system", system_prompt),
+            ("system", expand_prompt),
+            ("user", "Problem: {problem}"),
+            ("user", "Previous attempt: {seed}" if "{seed}" in kwargs else ""),
+        ], )
 
     if isinstance(score_prompt, str) and not score_function:
-        score_prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", system_prompt),
-                ("system", score_prompt),
-                ("user", "Problem: {problem}"),
-                ("user", "Solution attempt: {candidate}"),
-            ]
-        )
+        score_prompt = ChatPromptTemplate.from_messages([
+            ("system", system_prompt),
+            ("system", score_prompt),
+            ("user", "Problem: {problem}"),
+            ("user", "Solution attempt: {candidate}"),
+        ], )
 
     # Create default prompts if none provided
     if not expand_prompt:
-        expand_prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", system_prompt),
-                (
-                    "system",
-                    f"Generate {candidates_per_expansion} different approaches to solve this problem. Be creative and diverse in your thinking.",
-                ),
-                ("user", "Problem: {problem}"),
-                ("user", "Previous attempt: {seed}" if "{seed}" in kwargs else ""),
-            ]
-        )
+        expand_prompt = ChatPromptTemplate.from_messages([
+            ("system", system_prompt),
+            (
+                "system",
+                f"Generate {candidates_per_expansion} different approaches to solve this problem. Be creative and diverse in your thinking.",
+            ),
+            ("user", "Problem: {problem}"),
+            ("user", "Previous attempt: {seed}" if "{seed}" in kwargs else ""),
+        ], )
 
     # Create the ToTAgentConfig
     config = ToTAgentConfig.from_scratch(
@@ -118,7 +113,10 @@ def create_tot_agent(
 
 
 def create_math_tot_agent(
-    model: str = "gpt-4o", temperature: float = 0.7, name: str | None = None, **kwargs
+    model: str = "gpt-4o",
+    temperature: float = 0.7,
+    name: str | None = None,
+    **kwargs,
 ) -> ToTAgent:
     """Create a Tree of Thoughts agent specifically for math problems.
 
@@ -162,11 +160,12 @@ def create_math_tot_agent(
 
         # Check for a clear final answer
         has_answer = bool(
-            re.search(r"answer|result|solution|=\s*\d+(?:\.\d+)?$", solution.lower())
-        )
+            re.search(r"answer|result|solution|=\s*\d+(?:\.\d+)?$",
+                      solution.lower()), )
 
         # Calculate a base score
-        base_score = min(1.0, (equations + numbers) / 20)  # Normalize math content
+        base_score = min(1.0,
+                         (equations + numbers) / 20)  # Normalize math content
         if has_answer:
             base_score += 0.3  # Bonus for clear answer
 
@@ -201,7 +200,10 @@ def create_math_tot_agent(
 
 
 def create_game24_tot_agent(
-    model: str = "gpt-4o", temperature: float = 0.7, name: str | None = None, **kwargs
+    model: str = "gpt-4o",
+    temperature: float = 0.7,
+    name: str | None = None,
+    **kwargs,
 ) -> ToTAgent:
     """Create a Tree of Thoughts agent specifically for "Game of 24" problems.
 
@@ -228,11 +230,9 @@ def create_game24_tot_agent(
         """An equation attempting to reach 24 using the provided numbers."""
 
         formula: str = Field(
-            description="Mathematical formula using all four numbers and basic operations"
-        )
+            description="Mathematical formula using all four numbers and basic operations", )
         reasoning: str = Field(
-            description="Step-by-step reasoning for how this formula works"
-        )
+            description="Step-by-step reasoning for how this formula works", )
 
         @field_validator("formula")
         @classmethod
@@ -240,41 +240,38 @@ def create_game24_tot_agent(
             """Validate the formula has basic math operators."""
             if not any(op in v for op in ["+", "-", "*", "/"]):
                 raise ValueError(
-                    "Formula must contain at least one mathematical operator"
+                    "Formula must contain at least one mathematical operator",
                 )
             return v
 
     class EquationList(BaseModel):
         """Multiple possible equations for the Game of 24."""
 
-        equations: list[Equation] = Field(description="List of candidate equations")
+        equations: list[Equation] = Field(
+            description="List of candidate equations")
 
     # Create expand prompt with structured output
-    expand_prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", system_prompt),
-            (
-                "system",
-                """Generate {k} different equations that might solve the Game of 24 for the given numbers.
+    expand_prompt = ChatPromptTemplate.from_messages([
+        ("system", system_prompt),
+        (
+            "system",
+            """Generate {k} different equations that might solve the Game of 24 for the given numbers.
                      For each attempt, show your formula and step-by-step reasoning.""",
-            ),
-            ("user", "Numbers: {problem}"),
-            ("user", "Previous attempt: {seed}" if "{seed}" in kwargs else ""),
-        ]
-    )
+        ),
+        ("user", "Numbers: {problem}"),
+        ("user", "Previous attempt: {seed}" if "{seed}" in kwargs else ""),
+    ], )
 
     # Create score prompt with structured output
-    score_prompt = ChatPromptTemplate.from_messages(
-        [
-            (
-                "system",
-                """Evaluate how close this equation comes to the target value of 24.
+    score_prompt = ChatPromptTemplate.from_messages([
+        (
+            "system",
+            """Evaluate how close this equation comes to the target value of 24.
                      Score from 0.0 to 1.0, where 1.0 means it equals exactly 24.""",
-            ),
-            ("user", "Numbers: {problem}"),
-            ("user", "Equation: {candidate}"),
-        ]
-    )
+        ),
+        ("user", "Numbers: {problem}"),
+        ("user", "Equation: {candidate}"),
+    ], )
 
     # Define a function to score Game of 24 solutions
     def score_equation(problem: str, solution: str) -> tuple:
@@ -351,7 +348,8 @@ def create_game24_tot_agent(
     # Ensure expand LLM has structured output
     expand_llm_config = AugLLMConfig(
         name="game24_expand",
-        llm_config=AzureLLMConfig(model=model, parameters={"temperature": temperature}),
+        llm_config=AzureLLMConfig(model=model,
+                                  parameters={"temperature": temperature}),
         prompt_template=expand_prompt,
         structured_output_model=EquationList,
     )
@@ -363,13 +361,15 @@ def create_game24_tot_agent(
         """Score for a Game of 24 solution."""
 
         score: float = Field(
-            description="Score between 0.0 and 1.0, with 1.0 being exactly 24"
+            description="Score between 0.0 and 1.0, with 1.0 being exactly 24",
         )
-        feedback: str = Field(description="Explanation of the score and correctness")
+        feedback: str = Field(
+            description="Explanation of the score and correctness")
 
     score_llm_config = AugLLMConfig(
         name="game24_score",
-        llm_config=AzureLLMConfig(model=model, parameters={"temperature": 0.2}),
+        llm_config=AzureLLMConfig(model=model, parameters={"temperature":
+                                                           0.2}),
         prompt_template=score_prompt,
         structured_output_model=ScoreResult,
     )

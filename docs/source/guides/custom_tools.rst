@@ -1,7 +1,7 @@
 Creating Custom Tools
 =====================
 
-While Haive provides many built-in tools, you'll often need to create custom tools specific to your use case. 
+While Haive provides many built-in tools, you'll often need to create custom tools specific to your use case.
 
 This guide walks you through creating your own tools and organizing them into toolkits.
 
@@ -11,11 +11,11 @@ Tool Basics
 
 A Haive tool consists of:
 
-1. **Input Schem***a**: Defines the parameters the tool accepts**
+1. **Input Scheme***a**: Defines the parameters the tool accepts**
 
 2.*** **Logi***c**: The code that executes when the tool is called
 
-3.*** **Output Schem***a**: Defines the structure of the tool's response
+3.*** **Output Scheme***a**: Defines the structure of the tool's response
 
 Creating a Simple Tool
 
@@ -71,12 +71,12 @@ Here's how to create a basic custom tool:
 
     When creating custom tools:
 
-    1.*** **Clear Descriptio***n**: Write clear descriptions for your tool and parameters
+    1.*** **Clear Description***n**: Write clear descriptions for your tool and parameters
 
     2.*** **Input Validatio***n**: Use Pydantic models to validate inputs
 
-    3.*** **Error Handlin***g**: Gracefully handle errors and edge cases
-    4.*** **Asynchronous Suppor***t**: For improved performance, consider implementing `_arun`
+    3.*** **Error Handling***g**: Gracefully handle errors and edge cases
+    4.*** **Asynchronous Support***t**: For improved performance, consider implementing `_arun`
     5.*** **Documentatio***n**: Document your tool's purpose, inputs, outputs, and limitations
 
     Creating Tool Kits

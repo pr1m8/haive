@@ -47,17 +47,24 @@ def create_example_graph():
                 {
                     "id": "call_001",
                     "name": "search_tool",
-                    "args": {"query": "python tutorials"},
+                    "args": {
+                        "query": "python tutorials"
+                    },
                 },
                 {
                     "id": "call_002",
                     "name": "calculator",
-                    "args": {"expression": "2 + 2"},
+                    "args": {
+                        "expression": "2 + 2"
+                    },
                 },
                 {
                     "id": "call_003",
                     "name": "create_document",
-                    "args": {"title": "Results", "content": "..."},
+                    "args": {
+                        "title": "Results",
+                        "content": "..."
+                    },
                 },
             ],
         )
@@ -66,8 +73,7 @@ def create_example_graph():
 
     # Routing validation node
     from haive.core.graph.node.routing_validation_node import (
-        create_routing_validation_node,
-    )
+        create_routing_validation_node, )
 
     routing_validator = create_routing_validation_node(
         engine_name="main_engine",
@@ -79,7 +85,8 @@ def create_example_graph():
     )
 
     # Tool execution node
-    def tool_executor(state: AgentState, tool_call: dict[str, Any]) -> AgentState:
+    def tool_executor(state: AgentState, tool_call: dict[str,
+                                                         Any]) -> AgentState:
         """Execute a validated tool call."""
         tool_name = tool_call["name"]
         tool_args = tool_call["args"]
@@ -93,20 +100,23 @@ def create_example_graph():
             result = f"Executed {tool_name}"
 
         # Create tool message
-        tool_message = ToolMessage(content=result, tool_call_id=tool_call["id"])
+        tool_message = ToolMessage(content=result,
+                                   tool_call_id=tool_call["id"])
         state.messages.append(tool_message)
 
         return state
 
     # Structured output node for Pydantic models
     def structured_output_node(
-        state: AgentState, tool_call: dict[str, Any]
+        state: AgentState,
+        tool_call: dict[str, Any],
     ) -> AgentState:
         """Handle structured output validation."""
         # This would validate against Pydantic schema
         result = f"Validated structured output: {tool_call['name']}"
 
-        tool_message = ToolMessage(content=result, tool_call_id=tool_call["id"])
+        tool_message = ToolMessage(content=result,
+                                   tool_call_id=tool_call["id"])
         state.messages.append(tool_message)
 
         return state
@@ -139,9 +149,18 @@ def demonstrate_routing():
 
     # Set up tools and routes
     state.tools = [
-        {"name": "search_tool", "type": "tool"},
-        {"name": "calculator", "type": "tool"},
-        {"name": "create_document", "type": "pydantic_model"},
+        {
+            "name": "search_tool",
+            "type": "tool"
+        },
+        {
+            "name": "calculator",
+            "type": "tool"
+        },
+        {
+            "name": "create_document",
+            "type": "pydantic_model"
+        },
     ]
 
     state.tool_routes = {
@@ -158,10 +177,32 @@ def demonstrate_routing():
     ai_message = AIMessage(
         content="Processing your request...",
         tool_calls=[
-            {"id": "1", "name": "search_tool", "args": {"query": "test"}},
-            {"id": "2", "name": "calculator", "args": {"expression": "2+2"}},
-            {"id": "3", "name": "create_document", "args": {"title": "Doc"}},
-            {"id": "4", "name": "unknown_tool", "args": {}},  # This will fail
+            {
+                "id": "1",
+                "name": "search_tool",
+                "args": {
+                    "query": "test"
+                }
+            },
+            {
+                "id": "2",
+                "name": "calculator",
+                "args": {
+                    "expression": "2+2"
+                }
+            },
+            {
+                "id": "3",
+                "name": "create_document",
+                "args": {
+                    "title": "Doc"
+                }
+            },
+            {
+                "id": "4",
+                "name": "unknown_tool",
+                "args": {}
+            },  # This will fail
         ],
     )
     state.messages.append(ai_message)
@@ -185,9 +226,7 @@ def demonstrate_routing():
             route = state.tool_routes[tool_name]
 
             # Map route to node
-            target_node = (
-                "structured_output" if route == "pydantic_model" else "tool_executor"
-            )
+            target_node = "structured_output" if route == "pydantic_model" else "tool_executor"
 
             print(f"  ✓ {tool_name} → {target_node} (route: {route})")
             sends.append(Send(target_node, tool_call))

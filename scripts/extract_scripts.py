@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """Extract individual dev-tools scripts from stash patch."""
+
 import os
-import re
 from pathlib import Path
+import re
 
 
 def extract_script_from_patch(patch_content, script_name):
     """Extract a single script file from the patch content."""
     # Find the start of this script in the patch
-    pattern = rf"\+\+\+ b/dev-tools/scripts/{re.escape(script_name)}\n(.*?)(?=\n\+\+\+ b/|\n--- a/|\Z)"
+    pattern = (
+        rf"\+\+\+ b/dev-tools/scripts/{re.escape(script_name)}\n(.*?)(?=\n\+\+\+ b/|\n--- a/|\Z)"
+    )
     match = re.search(pattern, patch_content, re.DOTALL)
 
     if not match:
@@ -37,9 +40,7 @@ def extract_script_from_patch(patch_content, script_name):
 
 def main():
     # Read the patch file
-    patch_file = (
-        "git_fsck_repair_20250729_213007/stashes/stash_1_content_20250729_213007.patch"
-    )
+    patch_file = "git_fsck_repair_20250729_213007/stashes/stash_1_content_20250729_213007.patch"
 
     with open(patch_file) as f:
         patch_content = f.read()

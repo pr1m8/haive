@@ -15,6 +15,7 @@ Functions:
 # ============================================================================
 # OUTPUT PARSER NODE CONFIG V2 - WITH SCHEMA SUPPORT
 # ============================================================================
+from __future__ import annotations
 
 import logging
 from typing import Any, Optional, TypeVar
@@ -32,7 +33,6 @@ from haive.core.schema.field_definition import FieldDefinition
 from haive.core.schema.field_registry import StandardFields
 from haive.core.schema.field_utils import create_field_name_from_model
 
-
 logger = logging.getLogger(__name__)
 console = Console()
 logger.setLevel(logging.WARNING)
@@ -43,7 +43,9 @@ TOutput = TypeVar("TOutput", bound=BaseModel)
 
 
 class OutputParserNodeConfig(BaseNodeConfig[TInput, TOutput]):
-    """Configuration for a node that parses LLM output using LangChain output parsers.
+    """Configuration for a node that parses LLM output using LangChain output.
+
+    parsers.
 
     This node extracts content from messages and parses it into structured data
     using LangChain output parsers. It supports multiple schema patterns through
@@ -61,20 +63,24 @@ class OutputParserNodeConfig(BaseNodeConfig[TInput, TOutput]):
 
     # Output parser configuration
     output_parser: BaseOutputParser = Field(
-        ..., description="LangChain output parser to use for parsing"
+        ...,
+        description="LangChain output parser to use for parsing",
     )
 
     # Field names
     messages_field: str = Field(
-        default="messages", description="Name of the messages field in input schema"
+        default="messages",
+        description="Name of the messages field in input schema",
     )
 
     output_field: str | None = Field(
-        default=None, description="Name of the parsed output field in output schema"
+        default=None,
+        description="Name of the parsed output field in output schema",
     )
 
     error_field: str = Field(
-        default="parse_error", description="Name of the error field in output schema"
+        default="parse_error",
+        description="Name of the error field in output schema",
     )
 
     raw_content_field: str = Field(
@@ -84,11 +90,13 @@ class OutputParserNodeConfig(BaseNodeConfig[TInput, TOutput]):
 
     # Parsing options
     parse_all_messages: bool = Field(
-        default=False, description="Whether to parse all messages or just the last one"
+        default=False,
+        description="Whether to parse all messages or just the last one",
     )
 
     continue_on_error: bool = Field(
-        default=True, description="Whether to continue to next node on parse error"
+        default=True,
+        description="Whether to continue to next node on parse error",
     )
 
     def get_default_input_fields(self) -> list[FieldDefinition]:
@@ -109,9 +117,9 @@ class OutputParserNodeConfig(BaseNodeConfig[TInput, TOutput]):
                 output_field_name = create_field_name_from_model(model)
                 fields.append(
                     StandardFields.structured_output(
-                        model_class=model, field_name=output_field_name
-                    )
-                )
+                        model_class=model,
+                        field_name=output_field_name,
+                    ), )
             else:
                 # Generic parsed output
                 output_field_name = "parsed_output"
@@ -121,46 +129,46 @@ class OutputParserNodeConfig(BaseNodeConfig[TInput, TOutput]):
                         field_type=Optional[Any],
                         default=None,
                         description="Parsed output from the parser",
-                    )
-                )
+                    ), )
 
         # Add error fields
-        fields.extend(
-            [
-                FieldDefinition(
-                    name=self.error_field,
-                    field_type=Optional[str],
-                    default=None,
-                    description="Parse error message if parsing failed",
-                ),
-                FieldDefinition(
-                    name=self.raw_content_field,
-                    field_type=Optional[str],
-                    default=None,
-                    description="Raw content that failed to parse",
-                ),
-            ]
-        )
+        fields.extend([
+            FieldDefinition(
+                name=self.error_field,
+                field_type=Optional[str],
+                default=None,
+                description="Parse error message if parsing failed",
+            ),
+            FieldDefinition(
+                name=self.raw_content_field,
+                field_type=Optional[str],
+                default=None,
+                description="Raw content that failed to parse",
+            ),
+        ], )
 
         return fields
 
-    def __call__(self, state: StateLike, config: ConfigLike | None = None) -> Command:
+    def __call__(self,
+                 state: StateLike,
+                 config: ConfigLike | None = None) -> Command:
         """Parse message content using the output parser."""
         # Get messages from state
         messages = self._get_messages_from_state(state)
 
         if not messages:
             logger.warning(
-                f"No messages found in field '{
-                    self.messages_field}'"
-            )
+                f"No messages found in field '{self.messages_field}'", )
             return self._create_error_response(
-                "No messages found", goto_node=self._get_goto_node()
+                "No messages found",
+                goto_node=self._get_goto_node(),
             )
 
         try:
             # Determine which messages to parse
-            messages_to_parse = messages if self.parse_all_messages else [messages[-1]]
+            messages_to_parse = messages if self.parse_all_messages else [
+                messages[-1]
+            ]
 
             # Extract and parse content
             parsed_results = []
@@ -179,28 +187,29 @@ class OutputParserNodeConfig(BaseNodeConfig[TInput, TOutput]):
                     errors.append(f"Parse error: {e!s}")
                     if not self.continue_on_error:
                         return self._create_error_response(
-                            str(e), raw_content=content, goto_node=self._get_goto_node()
+                            str(e),
+                            raw_content=content,
+                            goto_node=self._get_goto_node(),
                         )
 
             # Prepare output
             if parsed_results:
                 # Use the last successful parse result
-                result = (
-                    parsed_results[-1]
-                    if not self.parse_all_messages
-                    else parsed_results
-                )
+                result = parsed_results[
+                    -1] if not self.parse_all_messages else parsed_results
                 return self._create_success_response(result)
             # All parsing failed
             error_msg = "; ".join(errors) if errors else "No content to parse"
             return self._create_error_response(
-                error_msg, goto_node=self._get_goto_node()
+                error_msg,
+                goto_node=self._get_goto_node(),
             )
 
         except Exception as e:
             logger.exception(f"Error in output parser node: {e}")
             return self._create_error_response(
-                f"Node error: {e!s}", goto_node=self._get_goto_node()
+                f"Node error: {e!s}",
+                goto_node=self._get_goto_node(),
             )
 
     def _get_messages_from_state(self, state: StateLike) -> list[BaseMessage]:
@@ -266,8 +275,7 @@ class OutputParserNodeConfig(BaseNodeConfig[TInput, TOutput]):
         }
 
         logger.info(
-            f"Successfully parsed output using {
-                self.output_parser.__class__.__name__}"
+            f"Successfully parsed output using {self.output_parser.__class__.__name__}",
         )
 
         return Command(update=update_dict, goto=self._get_goto_node())
@@ -338,7 +346,8 @@ class PydanticParserNodeConfig(OutputParserNodeConfig):
     """Specialized node for Pydantic model parsing."""
 
     pydantic_model: type[BaseModel] = Field(
-        ..., description="Pydantic model to parse into"
+        ...,
+        description="Pydantic model to parse into",
     )
 
     def __init__(self, **kwargs) -> None:
@@ -347,14 +356,15 @@ class PydanticParserNodeConfig(OutputParserNodeConfig):
         # Extract pydantic_model before super().__init__
         pydantic_model = kwargs.get("pydantic_model")
         if not pydantic_model:
-            raise ValueError("pydantic_model is required for PydanticParserNodeConfig")
+            raise ValueError(
+                "pydantic_model is required for PydanticParserNodeConfig")
 
         if "output_parser" not in kwargs:
             kwargs["output_parser"] = PydanticOutputParser(
-                pydantic_object=pydantic_model
-            )
+                pydantic_object=pydantic_model, )
         if "output_field" not in kwargs:
-            kwargs["output_field"] = create_field_name_from_model(pydantic_model)
+            kwargs["output_field"] = create_field_name_from_model(
+                pydantic_model)
 
         super().__init__(**kwargs)
 
@@ -362,7 +372,8 @@ class PydanticParserNodeConfig(OutputParserNodeConfig):
         """Pydantic parser outputs a specific model."""
         return [
             StandardFields.structured_output(
-                model_class=self.pydantic_model, field_name=self.output_field
+                model_class=self.pydantic_model,
+                field_name=self.output_field,
             ),
             FieldDefinition(
                 name=self.error_field,
@@ -448,7 +459,10 @@ def create_json_parser_node(
 ) -> JsonParserNodeConfig:
     """Create a JSON parser node."""
     return JsonParserNodeConfig(
-        name=name, messages_field=messages_field, output_field=output_field, **kwargs
+        name=name,
+        messages_field=messages_field,
+        output_field=output_field,
+        **kwargs,
     )
 
 
@@ -507,7 +521,8 @@ def detect_output_parser_need(agent: Any) -> bool:
     return hasattr(agent, "output_parser") and agent.output_parser is not None
 
 
-def create_output_parser_node_for_agent(agent: Any) -> OutputParserNodeConfig | None:
+def create_output_parser_node_for_agent(
+        agent: Any) -> OutputParserNodeConfig | None:
     """Create an output parser node config for an agent if needed.
 
     Args:

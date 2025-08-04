@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from step_back.agent import (
     DualRetrievalAgent,
     StepBackQuery,
@@ -13,7 +15,6 @@ from step_back.agent import (
     generate_step_back_query,
     get_step_back_rag_io_schema,
 )
-
 
 __all__ = [
     "DualRetrievalAgent",

@@ -1,20 +1,22 @@
 # haive/agents/base/mixins/hooks_mixin.py
-
 """Enhanced hooks mixin for the Haive framework.
 
-from typing import Any
-Provides a flexible hooks system that can be used by both single and multi agents,
-with support for different hook points and graph-aware modifications.
+from typing import Any Provides a flexible hooks system that can be used
+by both single and multi agents, with support for different hook points
+and graph-aware modifications.
 """
+from __future__ import annotations
 
-from collections.abc import Callable
 import logging
-from typing import Any, Generic, TypeVar
+from collections.abc import Callable
+from typing import Any
+from typing import Generic
+from typing import TypeVar
 
+from haive.agents.base.types import HookContext
+from haive.agents.base.types import HookPoint
+from haive.agents.base.types import TState
 from pydantic import PrivateAttr
-
-from haive.agents.base.types import HookContext, HookPoint, TState
-
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +32,8 @@ class HooksMixin(Generic[TState]):
     """
 
     # Private storage for hooks
-    _hooks: dict[HookPoint, list[dict[str, Any]]] = PrivateAttr(default_factory=dict)
+    _hooks: dict[HookPoint,
+                 list[dict[str, Any]]] = PrivateAttr(default_factory=dict)
     _hook_enabled: bool = PrivateAttr(default=True)
     _hook_results: dict[str, Any] = PrivateAttr(default_factory=dict)
 
@@ -71,7 +74,8 @@ class HooksMixin(Generic[TState]):
         priority: int = 0,
         name: str | None = None,
         graph_aware: bool = False,
-        condition: Callable[["HooksMixin", HookContext[TState]], bool] | None = None,
+        condition: Callable[[HooksMixin, HookContext[TState]], bool]
+        | None = None,
     ) -> None:
         """Register a hook with enhanced capabilities.
 
@@ -104,7 +108,7 @@ class HooksMixin(Generic[TState]):
 
         logger.debug(
             f"Registered {'graph-aware ' if graph_aware else ''}hook "
-            f"'{hook_entry['name']}' at {point.value} with priority {priority}"
+            f"'{hook_entry['name']}' at {point.value} with priority {priority}",
         )
 
     def run_hooks(
@@ -154,19 +158,26 @@ class HooksMixin(Generic[TState]):
                 # Call with appropriate arguments
                 if hook_entry["graph_aware"]:
                     # Graph-aware hooks get special treatment
-                    hook_result = hook_func(self, *args, context=context, **kwargs)
+                    hook_result = hook_func(self,
+                                            *args,
+                                            context=context,
+                                            **kwargs)
                 else:
                     # Regular hooks
-                    hook_result = hook_func(self, *args, context=context, **kwargs)
+                    hook_result = hook_func(self,
+                                            *args,
+                                            context=context,
+                                            **kwargs)
 
                 # Store result
                 if hook_result is not None:
                     result = hook_result
-                    self._hook_results[f"{point.value}:{hook_name}"] = hook_result
+                    self._hook_results[
+                        f"{point.value}:{hook_name}"] = hook_result
 
             except Exception as e:
                 logger.exception(
-                    f"Hook '{hook_entry['name']}' error at {point.value}: {e}"
+                    f"Hook '{hook_entry['name']}' error at {point.value}: {e}",
                 )
                 if logger.isEnabledFor(logging.DEBUG):
                     logger.exception("Full hook error:")
@@ -183,7 +194,9 @@ class HooksMixin(Generic[TState]):
         self._hook_results.clear()
 
     def unregister_hook(
-        self, point: HookPoint, hook: Callable | str | None = None
+        self,
+        point: HookPoint,
+        hook: Callable | str | None = None,
     ) -> None:
         """Unregister one or all hooks at a point."""
         if point not in self._hooks:
@@ -196,7 +209,9 @@ class HooksMixin(Generic[TState]):
             if isinstance(hook, str):
                 self._hooks[point] = [h for h in hooks if h["name"] != hook]
             else:
-                self._hooks[point] = [h for h in hooks if h["function"] is not hook]
+                self._hooks[point] = [
+                    h for h in hooks if h["function"] is not hook
+                ]
 
     def enable_hooks(self) -> None:
         """Enable hook execution."""
@@ -209,17 +224,13 @@ class HooksMixin(Generic[TState]):
     def list_hooks(self) -> dict[str, list[dict[str, Any]]]:
         """List all registered hooks with metadata."""
         return {
-            point.value: [
-                {
-                    "name": h["name"],
-                    "priority": h["priority"],
-                    "graph_aware": h["graph_aware"],
-                    "has_condition": h["condition"] is not None,
-                }
-                for h in hooks
-            ]
-            for point, hooks in self._hooks.items()
-            if hooks
+            point.value: [{
+                "name": h["name"],
+                "priority": h["priority"],
+                "graph_aware": h["graph_aware"],
+                "has_condition": h["condition"] is not None,
+            } for h in hooks]
+            for point, hooks in self._hooks.items() if hooks
         }
 
 

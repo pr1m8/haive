@@ -130,22 +130,22 @@ Edit `package_configs.py`:
 ```python
 def get_haive_agents_profile() -> ExtensionProfile:
     profile = ExtensionProfile("haive-agents")
-    
+
     # Add to minimal profile
     profile._minimal = get_core_minimal_extensions() + [
         "your_essential_extension",
     ]
-    
+
     # Add to standard profile
     profile._standard = [
         "your_standard_extension",
     ]
-    
+
     # Add to full profile
     profile._full = [
         "your_advanced_extension",
     ]
-    
+
     return profile
 ```
 
@@ -156,11 +156,11 @@ Add a new function in `package_configs.py`:
 ```python
 def get_haive_newpackage_profile() -> ExtensionProfile:
     profile = ExtensionProfile("haive-newpackage")
-    
+
     profile._minimal = get_core_minimal_extensions()
     profile._standard = ["sphinx_design", "sphinx_copybutton"]
     profile._full = ["sphinx_examples", "sphinx_exec_directive"]
-    
+
     return profile
 
 # Don't forget to add to PACKAGE_PROFILES dict

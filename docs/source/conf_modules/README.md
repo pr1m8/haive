@@ -166,7 +166,7 @@ docs/source/
 3. **Mixed source/generated** → no clear separation
 4. **Duplicate content** → examples/ and auto_examples/
 
-### B. Design/CSS Issues  
+### B. Design/CSS Issues
 1. **60+ CSS files** → no clear active set
 2. **No CSS build process** → manual editing only
 3. **Missing resources** → Font Awesome, custom fonts
@@ -194,7 +194,7 @@ from sphinx.testing.util import SphinxTestApp
 
 @pytest.mark.parametrize("conf_file", [
     "conf_minimal.py",
-    "conf_fast.py", 
+    "conf_fast.py",
     "conf_complete.py"
 ])
 def test_conf_builds(conf_file):

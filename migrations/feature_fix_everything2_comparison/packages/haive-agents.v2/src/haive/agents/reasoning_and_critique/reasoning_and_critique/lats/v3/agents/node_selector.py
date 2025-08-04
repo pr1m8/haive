@@ -1,12 +1,13 @@
 """Node Selector Agent for LATS algorithm.
 
-This agent implements Upper Confidence Bound (UCB) selection logic to choose
-the best node for expansion in the Monte Carlo Tree Search.
+This agent implements Upper Confidence Bound (UCB) selection logic to
+choose the best node for expansion in the Monte Carlo Tree Search.
 """
 
+from __future__ import annotations
+
 from haive.agents.reasoning_and_critique.lats.v3.models.evaluation_models import (
-    UCBSelection,
-)
+    UCBSelection, )
 from haive.agents.reasoning_and_critique.lats.v3.models.tree_models import LATSNode
 from haive.agents.simple.agent_v3 import SimpleAgentV3
 from haive.core.engine.aug_llm import AugLLMConfig
@@ -66,10 +67,12 @@ You will receive node information and must select the best one to expand.""",
         name: str = "node_selector",
         exploration_weight: float = 1.4,
         temperature: float = 0.3,
-    ) -> "NodeSelector":
+    ) -> NodeSelector:
         """Create a NodeSelector with proper configuration."""
         return cls(
-            name=name, exploration_weight=exploration_weight, temperature=temperature
+            name=name,
+            exploration_weight=exploration_weight,
+            temperature=temperature,
         )
 
     def create_selection_prompt(
@@ -115,8 +118,7 @@ Node ID: {node_id}
 - UCB score: {ucb_score:.3f}
 - Is leaf: {node.is_leaf()}
 - Reflection score: {node.reflection_score:.3f}
-"""
-            )
+""", )
 
         prompt_parts.append(
             """
@@ -124,8 +126,7 @@ Select the best node to expand next. Consider:
 1. UCB scores (higher is better for selection)
 2. Strategic value of different search directions
 3. Balance between exploitation and exploration
-4. Whether unvisited nodes should be prioritized"""
-        )
+4. Whether unvisited nodes should be prioritized""", )
 
         return "\n".join(prompt_parts)
 
@@ -145,7 +146,8 @@ Select the best node to expand next. Consider:
         Returns:
             UCBSelection with the chosen node and reasoning
         """
-        prompt = self.create_selection_prompt(nodes, current_problem, search_context)
+        prompt = self.create_selection_prompt(nodes, current_problem,
+                                              search_context)
 
         # Use the composed agent's arun method
         result = await self.agent.arun(prompt)
@@ -153,7 +155,9 @@ Select the best node to expand next. Consider:
         return result
 
     def calculate_ucb_scores(
-        self, nodes: dict[str, LATSNode], parent_visits: int | None = None
+        self,
+        nodes: dict[str, LATSNode],
+        parent_visits: int | None = None,
     ) -> dict[str, float]:
         """Calculate UCB scores for all nodes (utility method).
 
@@ -169,14 +173,16 @@ Select the best node to expand next. Consider:
 
         ucb_scores = {}
         for node_id, node in nodes.items():
-            ucb_scores[node_id] = node.ucb_score(self.exploration_weight, parent_visits)
+            ucb_scores[node_id] = node.ucb_score(self.exploration_weight,
+                                                 parent_visits)
 
         return ucb_scores
 
 
 # Convenience function
 def create_node_selector(
-    exploration_weight: float = 1.4, temperature: float = 0.3
+    exploration_weight: float = 1.4,
+    temperature: float = 0.3,
 ) -> NodeSelector:
     """Create a node selector with default settings.
 
@@ -187,4 +193,5 @@ def create_node_selector(
     Returns:
         Configured NodeSelector
     """
-    return NodeSelector(exploration_weight=exploration_weight, temperature=temperature)
+    return NodeSelector(exploration_weight=exploration_weight,
+                        temperature=temperature)

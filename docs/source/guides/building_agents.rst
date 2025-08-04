@@ -76,7 +76,7 @@ Complete Agent Creation Examples
     class ConversationalAssistant:
     """A well-structured conversational agent."""
 
-    def __init__(self, 
+    def __init__(self,
     name: str = "Assistant",
     model: str = "gpt-4",
     temperature: float = 0.7,
@@ -92,13 +92,13 @@ Complete Agent Creation Examples
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
            self.name = name
            self.model = model
-           
+
            # Default system prompt
            if system_prompt is None:
                system_prompt = f"""You are {name}, a helpful AI assistant.
                You are knowledgeable, friendly, and concise.
                Always strive to be helpful while being honest about limitations."""
-           
+
            # Create the agent
            self.agent = SimpleAgent(
                name=name,
@@ -110,15 +110,15 @@ Complete Agent Creation Examples
                ),
                description=f"{name} - A conversational AI assistant"
            )
-           
+
            logger.info(f"Initialized {name} with model {model}")
-       
+
        def chat(self, message: str) -> str:
            """Send a message to the assistant.
-           
+
            Args:
                message: User's message
-               
+
            Returns:
                Assistant's response
 
@@ -131,7 +131,7 @@ Complete Agent Creation Examples
            except Exception as e:
                logger.error(f"Error in chat: {e}")
                return f"I apologize, but I encountered an error: {str(e)}"
-       
+
        async def chat_async(self, message: str) -> str:
            """Async version of chat."""
            try:
@@ -141,35 +141,35 @@ Complete Agent Creation Examples
                logger.error(f"Error in async chat: {e}")
                return f"I apologize, but I encountered an error: {str(e)}"
 
-   
+
     # Example usage
     def demo_basic_agent():
 
        """Demonstrate basic agent usage."""
-       
+
        # Create assistant
        assistant = ConversationalAssistant(
            name="Sophia",
            model="gpt-4",
            temperature=0.7
        )
-       
+
        # Example conversations
        queries = [
            "What are the key principles of good software design?",
            "Can you explain SOLID principles with examples?",
            "How do I know when to refactor my code?"
        ]
-       
+
        print("💬 Conversational Assistant Demo\n")
-       
+
        for query in queries:
            print(f"Human: {query}")
            response = assistant.chat(query)
            print(f"Sophia: {response}\n")
            print("-"*** * 80 + "\n")*
 
-   
+
     if __name__ == "__main__":
 
        demo_basic_agent()
@@ -211,9 +211,9 @@ Complete Agent Creation Examples
     def create_medical_advisor() -> SimpleAgent:
     """Create a medical advice agent (for educational purposes only)."""
 
-    system_prompt = """You are a medical information assistant designed to 
-    provide educational health information only. You are NOT a replacement 
-    for professional medical advice. Always remind users to consult with 
+    system_prompt = """You are a medical information assistant designed to
+    provide educational health information only. You are NOT a replacement
+    for professional medical advice. Always remind users to consult with
     healthcare professionals for actual medical concerns.
 
     Guidelines:
@@ -224,7 +224,7 @@ Complete Agent Creation Examples
     5. Flag emergency symptoms immediately
 
 """""""""""""""""""""""""""""""""""""""""""""
-       
+
        return SimpleAgent(
            name="Medical Info Assistant",
            engine=AugLLMConfig(
@@ -236,19 +236,19 @@ Complete Agent Creation Examples
            description="Provides educational medical information"
        )
 
-   
+
     def create_tech_support_expert() -> SimpleAgent:
 
        """Create a technical support expert agent."""
-       
-       system_prompt = """You are an expert technical support engineer with 
+
+       system_prompt = """You are an expert technical support engineer with
        deep knowledge of:
        - Software development and debugging
        - System administration (Linux, Windows, MacOS)
        - Network troubleshooting
        - Database management
        - Cloud services (AWS, Azure, GCP)
-       
+
        Your approach:
        1. Gather detailed information about the problem
        2. Analyze potential root causes systematically
@@ -257,7 +257,7 @@ Complete Agent Creation Examples
        5. Estimate time and complexity honestly
 
 """""""""""""""""""""""""""""""""""""""""""""""
-       
+
        return SimpleAgent(
            name="Tech Support Expert",
            engine=AugLLMConfig(
@@ -269,24 +269,24 @@ Complete Agent Creation Examples
            description="Expert technical support and troubleshooting"
        )
 
-   
+
     def create_financial_analyst() -> SimpleAgent:
 
        """Create a financial analysis agent."""
-       
+
        system_prompt = """You are a seasoned financial analyst with expertise in:
        - Investment analysis and portfolio management
        - Risk assessment and mitigation
        - Market trends and economic indicators
        - Financial planning and budgeting
        - Cryptocurrency and emerging markets
-       
-       Provide balanced, well-researched financial insights while always 
-       reminding users that this is educational content, not personalized 
+
+       Provide balanced, well-researched financial insights while always
+       reminding users that this is educational content, not personalized
        financial advice.
 
 """"""""""""""""""""""""
-       
+
        return SimpleAgent(
            name="Financial Analyst",
            engine=AugLLMConfig(
@@ -297,11 +297,11 @@ Complete Agent Creation Examples
            description="Financial analysis and market insights"
        )
 
-   
+
     def demo_domain_experts():
 
        """Demonstrate specialized domain experts."""
-       
+
        print("🏥 Medical Information Assistant Demo\n")
        medical = create_medical_advisor()
        result = medical.invoke(
@@ -314,9 +314,9 @@ Complete Agent Creation Examples
        for action in result.recommended_actions:
            print(f"  • {action}")
        print(f"\n⚠️  {result.disclaimer}\n")
-       
+
        print("\n" + "=*"*80 + "\n")
-       
+
        print("💻 Technical Support Expert Demo\n")
        tech = create_tech_support_expert()
        result = tech.invoke(
@@ -334,7 +334,7 @@ Complete Agent Creation Examples
        print(f"\nEstimated time: {result.estimated_time}")
        print(f"Difficulty: {result.difficulty_level}")
 
-   
+
     if __name__ == "__main__":
 
        demo_domain_experts()
@@ -405,20 +405,20 @@ Complete Agent Creation Examples
                    "error": f"No data available for {ticker}"
                })
 
-   
+
     class DatabaseQueryTool(Tool):
 
        """Custom tool for database queries."""
-       
+
        name = "database_query"
        description = "Query internal company database for business metrics"
-       
+
        def run(self, query: str) -> str:
            """Execute a database query.
-           
+
            Args:
                query: SQL-like query string
-               
+
            Returns:
                Query results as JSON
 
@@ -440,11 +440,11 @@ Complete Agent Creation Examples
                    "suggestion": "Try querying for 'sales' data"
                })
 
-   
+
     def create_research_assistant() -> ReactAgent:
 
        """Create a powerful research assistant with multiple tools."""
-       
+
        tools = [
            WebSearchTool(
                name="web_search",
@@ -465,21 +465,21 @@ Complete Agent Creation Examples
                description="Create charts and visualizations"
            )
        ]
-       
-       system_prompt = """You are a comprehensive research assistant with access 
+
+       system_prompt = """You are a comprehensive research assistant with access
        to multiple tools. Your goal is to provide thorough, accurate research by:
-       
+
        1. Understanding the user's research needs
        2. Selecting appropriate tools for the task
        3. Combining information from multiple sources
        4. Performing calculations and analysis as needed
        5. Creating visualizations when helpful
        6. Providing well-structured, actionable insights
-       
+
        Always cite your sources and explain your methodology.
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-       
+
        return ReactAgent(
            name="Research Assistant",
            tools=tools,
@@ -492,19 +492,19 @@ Complete Agent Creation Examples
            description="Comprehensive research assistant with multiple tools"
        )
 
-   
+
     def demo_tool_integration():
 
        """Demonstrate advanced tool usage."""
-       
+
        print("🔍 Multi-Tool Research Assistant Demo\n")
-       
+
        assistant = create_research_assistant()
-       
+
        # Example 1: Financial Analysis
        print("📊 Example 1: Financial Market Analysis")
        print("Query: Analyze Apple stock and compare with our Q1 sales performance\n")
-       
+
        result = assistant.invoke(
            "Analyze Apple (AAPL) stock performance and compare it with our "
            "internal Q1 sales data. Calculate the correlation if any and "
@@ -512,11 +512,11 @@ Complete Agent Creation Examples
        )
        print(f"Assistant: {result}\n")
        print("-"* * 80 + "\n")
-       
+
        # Example 2: Complex Research
        print("🌍 Example 2: Multi-Source Research")
        print("Query: Impact of AI on software development productivity\n")
-       
+
        result = assistant.invoke(
            "Research the impact of AI tools on software development productivity. "
            "Find recent statistics, calculate productivity gains, and analyze "
@@ -524,11 +524,11 @@ Complete Agent Creation Examples
        )
        print(f"Assistant: {result}\n")
        print("-"* * 80 + "\n")
-       
+
        # Example 3: Data Analysis
        print("📈 Example 3: Data Analysis and Visualization")
        print("Query: Analyze our sales growth rate and project next quarter\n")
-       
+
        result = assistant.invoke(
            "Using our sales database, calculate the month-over-month growth rate, "
            "identify trends, and project next quarter's revenue. Create a chart "
@@ -536,15 +536,15 @@ Complete Agent Creation Examples
        )
        print(f"Assistant: {result}\n")
 
-   
+
     def demonstrate_tool_selection():
 
        """Show how agents select appropriate tools."""
-       
+
        print("\n🎯 Tool Selection Intelligence Demo\n")
-       
+
        assistant = create_research_assistant()
-       
+
        # Different queries that require different tools
        queries = [
            ("Calculate compound interest on $10,000 at 5% for 10 years",
@@ -556,14 +556,14 @@ Complete Agent Creation Examples
            ("Create a fibonacci sequence and plot it",
             "Should use: Python + Visualization")
        ]
-       
+
        for query, expected in queries:
            print(f"Query: {query}")
            print(f"Expected: {expected}")
            result = assistant.invoke(query)
            print(f"Result: {result[:150]}...\n")
 
-   
+
     if __name__ == "__main__":
 
        demo_tool_integration()
@@ -675,20 +675,20 @@ Complete Agent Creation Examples
 
 """""""""""""""""""""""""""""""""""""""
            self.state.current_phase = ResearchPhase.PLANNING
-           
+
            # Generate research plan
            plan_prompt = f"""Create a detailed research plan for: {objective}
-           
+
            Include:
            1. Key research questions (5-7 questions)
            2. Methodology approach
            3. Estimated time needed
 
 """""""""""""""""""""""""""""""""""
-           
+
            response = self.invoke(plan_prompt)
-           
-           # Parse into structured plan (in real implementation, 
+
+           # Parse into structured plan (in real implementation,
            # this would use structured output)
            plan = ResearchPlan(
                objective=objective,
@@ -702,26 +702,26 @@ Complete Agent Creation Examples
                methodology="Mixed-method research using web sources and analysis",
                estimated_time="30-45 minutes"
            )
-           
+
            self.state.research_plan = plan
            return plan
-       
+
        def gather_information(self) -> List[ResearchItem]:
            """Gather information based on the research plan.
-           
+
            Returns:
                List of research findings
 
 """"""""""""""""""""""""""""""""""""""""
            if not self.state.research_plan:
                raise ValueError("No research plan available. Call plan_research first.")
-           
+
            self.state.current_phase = ResearchPhase.GATHERING
-           
+
            for question in self.state.research_plan.questions:
                # Research each question
                findings = self.invoke(f"Research: {question}")
-               
+
                item = ResearchItem(
                    topic=self.state.research_plan.objective,
                    query=question,
@@ -729,84 +729,84 @@ Complete Agent Creation Examples
                    confidence=0.85,  # In real implementation, calculate this
                    sources=["web_search", "analysis"]
                )
-               
+
                self.state.research_items.append(item)
                self.state.total_queries += 1
-           
+
            return self.state.research_items
-       
+
        def analyze_findings(self) -> Dict[str, Any]:
            """Analyze all gathered information.
-           
+
            Returns:
                Analysis results
 
 """""""""""""""""""""""""""""""
            self.state.current_phase = ResearchPhase.ANALYZING
-           
+
            # Compile all findings
            all_findings = "\n\n".join([
                f"Q: {item.query}\nA: {item.findings}"
                for item in self.state.research_items
            ])
-           
+
            analysis_prompt = f"""Analyze these research findings and identify:
            1. Key themes and patterns
            2. Contradictions or gaps
            3. Strength of evidence
            4. Actionable insights
-           
+
            Findings:
            {all_findings}
 
 """""""""""""""""""""""""
-           
+
            analysis = self.invoke(analysis_prompt)
-           
+
            return {
                "themes": ["Theme 1", "Theme 2"],  # Parsed from analysis
                "gaps": ["Gap 1", "Gap 2"],
                "insights": ["Insight 1", "Insight 2"],
                "raw_analysis": analysis
            }
-       
+
        def synthesize_research(self) -> str:
            """Create final synthesis of all research.
-           
+
            Returns:
                Final research synthesis
 
 """""""""""""""""""""""""""""""""""""""
            self.state.current_phase = ResearchPhase.SYNTHESIZING
-           
+
            synthesis_prompt = f"""Create a comprehensive synthesis of the research on:
            {self.state.research_plan.objective}
-           
+
            Include:
            1. Executive summary
            2. Key findings
            3. Recommendations
            4. Future considerations
-           
+
            Base this on all the research gathered and analyzed.
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-           
+
            synthesis = self.invoke(synthesis_prompt)
            self.state.synthesis = synthesis
            self.state.current_phase = ResearchPhase.COMPLETE
-           
+
            return synthesis
-       
+
        def get_research_summary(self) -> Dict[str, Any]:
            """Get a summary of the research process.
-           
+
            Returns:
                Research summary with metrics
 
 """"""""""""""""""""""""""""""""""""""""""""
            duration = (datetime.now() - self.state.start_time).total_seconds() / 60
-           
+
            return {
                "objective": self.state.research_plan.objective if self.state.research_plan else None,
                "current_phase": self.state.current_phase.value,
@@ -815,13 +815,13 @@ Complete Agent Creation Examples
                "duration_minutes": round(duration, 2),
                "has_synthesis": bool(self.state.synthesis)
            }
-       
+
        def export_research(self, format: str = "json") -> str:
            """Export research in specified format.
-           
+
            Args:
                format: Export format (json, markdown, html)
-               
+
            Returns:
                Formatted research export
 
@@ -833,7 +833,7 @@ Complete Agent Creation Examples
                    "synthesis": self.state.synthesis,
                    "metadata": self.get_research_summary()
                }, default=str, indent=2)
-           
+
            elif format == "markdown":
                md = f"# Research Report: {self.state.research_plan.objective}\n\n"
                md += f"## Summary\n{self.state.synthesis}\n\n"
@@ -841,26 +841,26 @@ Complete Agent Creation Examples
                for item in self.state.research_items:
                    md += f"### {item.query}\n{item.findings}\n\n"
                return md
-           
+
            else:
                raise ValueError(f"Unsupported format: {format}")
 
-   
+
     # Demonstration
     def demo_custom_agent():
 
        """Demonstrate the custom research agent."""
-       
+
        print("🔬 Advanced Research Agent Demo\n")
-       
+
        # Create agent
        researcher = AdvancedResearchAgent()
-       
+
        # Define research objective
        objective = "The impact of quantum computing on cryptography and cybersecurity"
-       
+
        print(f"Research Objective: {objective}\n")
-       
+
        # Step 1: Planning
        print("📋 Phase 1: Planning Research")
        plan = researcher.plan_research(objective)
@@ -869,29 +869,29 @@ Complete Agent Creation Examples
            print(f"  {i}. {q}")
        print(f"Methodology: {plan.methodology}")
        print(f"Estimated time: {plan.estimated_time}\n")
-       
+
        # Step 2: Gathering
        print("🔍 Phase 2: Gathering Information")
        items = researcher.gather_information()
        print(f"Gathered {len(items)} research items\n")
-       
+
        # Step 3: Analysis
        print("📊 Phase 3: Analyzing Findings")
        analysis = researcher.analyze_findings()
        print(f"Identified {len(analysis['themes'])} key themes")
        print(f"Found {len(analysis['gaps'])} research gaps\n")
-       
+
        # Step 4: Synthesis
        print("📝 Phase 4: Synthesizing Research")
        synthesis = researcher.synthesize_research()
        print(f"Synthesis preview: {synthesis[:200]}...\n")
-       
+
        # Summary
        print("📈 Research Summary")
        summary = researcher.get_research_summary()
        for key, value in summary.items():
            print(f"  {key}: {value}")
-       
+
        # Export
        print("\n💾 Exporting Research")
        export_path = "quantum_cryptography_research.json"
@@ -899,7 +899,7 @@ Complete Agent Creation Examples
            f.write(researcher.export_research("json"))
        print(f"Research exported to {export_path}")
 
-   
+
     if __name__ == "__main__":
 
        demo_custom_agent()
@@ -957,12 +957,12 @@ Complete Agent Creation Examples
            description="Solves complex problems with reasoning and actions"
        )
 
-   
+
     # Pattern 2: RAG (Retrieval-Augmented Generation)
     def create_rag_knowledge_assistant() -> SimpleRAGAgent:
 
        """Create a RAG agent for knowledge-intensive tasks.
-       
+
        Best for: Q&A over documents, knowledge bases, or specific domains
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -971,15 +971,15 @@ Complete Agent Creation Examples
            collection_name="knowledge_base",
            embedding_model="openai"
        )
-       
+
        return SimpleRAGAgent(
            name="RAG Knowledge Assistant",
            retriever=retriever,
            engine=AugLLMConfig(
                model="gpt-4",
                temperature=0.3,
-               system_prompt="""You are a knowledge assistant that answers questions 
-               based on retrieved context. Always cite your sources and indicate 
+               system_prompt="""You are a knowledge assistant that answers questions
+               based on retrieved context. Always cite your sources and indicate
                when information is not available in the knowledge base."""
            ),
            chunk_size=512,
@@ -987,12 +987,12 @@ Complete Agent Creation Examples
            description="Answers questions using retrieved knowledge"
        )
 
-   
+
     # Pattern 3: Plan-Execute
     def create_plan_execute_agent() -> PlanExecuteAgent:
 
        """Create a Plan-Execute agent for complex workflows.
-       
+
        Best for: Tasks requiring upfront planning and systematic execution
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1013,16 +1013,16 @@ Complete Agent Creation Examples
            description="Plans and executes complex workflows"
        )
 
-   
+
     # Pattern 4: Multi-Agent Collaboration
     class MultiAgentSystem:
 
        """Coordinate multiple agents for complex tasks.
-       
+
        Best for: Tasks requiring different expertise or parallel processing
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-       
+
        def __init__(self):
            # Create specialized agents
            self.researcher = SimpleAgent(
@@ -1031,14 +1031,14 @@ Complete Agent Creation Examples
                engine=AugLLMConfig(model="gpt-4"),
                description="Gathers information"
            )
-           
+
            self.analyst = SimpleAgent(
                name="Analyst",
                tools=[CalculatorTool(), CodeInterpreterTool()],
                engine=AugLLMConfig(model="gpt-4"),
                description="Analyzes data"
            )
-           
+
            self.writer = SimpleAgent(
                name="Writer",
                engine=AugLLMConfig(
@@ -1047,19 +1047,19 @@ Complete Agent Creation Examples
                ),
                description="Creates content"
            )
-           
+
            self.coordinator = SimpleAgent(
                name="Coordinator",
                engine=AugLLMConfig(model="gpt-4"),
                description="Coordinates other agents"
            )
-       
+
        async def process_request(self, request: str) -> Dict[str, str]:
            """Process a request using multiple agents.
-           
+
            Args:
                request: User request
-               
+
            Returns:
                Results from each agent
 
@@ -1068,28 +1068,28 @@ Complete Agent Creation Examples
            task_breakdown = await self.coordinator.ainvoke(
                f"Break down this request into tasks for Researcher, Analyst, and Writer: {request}"
            )
-           
+
            # Execute tasks in parallel where possible
            research_task = self.researcher.ainvoke(
                f"Research: {request}"
            )
-           
+
            research_results = await research_task
-           
+
            # Analyst uses research results
            analysis_task = self.analyst.ainvoke(
                f"Analyze this research: {research_results}"
            )
-           
+
            analysis_results = await analysis_task
-           
+
            # Writer creates final output
            writing_task = self.writer.ainvoke(
                f"Create a report based on:\nResearch: {research_results}\nAnalysis: {analysis_results}"
            )
-           
+
            final_report = await writing_task
-           
+
            return {
                "task_breakdown": task_breakdown,
                "research": research_results,
@@ -1097,66 +1097,66 @@ Complete Agent Creation Examples
                "final_report": final_report
            }
 
-   
+
     # Demonstration of patterns
     def demo_agent_patterns():
 
        """Demonstrate different agent patterns."""
-       
+
        print("🎭 Agent Design Patterns Demo\n")
-       
+
        # Pattern 1: ReAct
        print("1️⃣ ReAct Pattern Demo")
        print("Use case: Solving multi-step problems\n")
-       
+
        react_agent = create_react_problem_solver()
        problem = "What would be the total cost to drive from NYC to LA, including gas, "
        problem += "assuming 28 mpg, current gas prices, and 2,800 miles?"
-       
+
        print(f"Problem: {problem}")
        solution = react_agent.invoke(problem)
        print(f"Solution: {solution[:300]}...\n")
        print("-"*** * 80 + "\n")*
-       
+
        # Pattern 2: Plan-Execute
        print("2️⃣ Plan-Execute Pattern Demo")
        print("Use case: Complex projects requiring planning\n")
-       
+
        planner = create_plan_execute_agent()
        project = "Create a comprehensive market analysis for launching a new coffee shop in Seattle"
-       
+
        print(f"Project: {project}")
        result = planner.invoke(project)
        print(f"Execution Result: {result[:300]}...\n")
        print("-"* * 80 + "\n")
-       
+
        # Pattern 3: Multi-Agent
        print("3️⃣ Multi-Agent Pattern Demo")
        print("Use case: Complex tasks requiring multiple expertise\n")
-       
+
        async def run_multi_agent_demo():
            system = MultiAgentSystem()
            request = "Analyze the impact of AI on job markets in the next 5 years"
-           
+
            print(f"Request: {request}")
            results = await system.process_request(request)
-           
+
            print("\nResults from each agent:")
            print(f"📊 Task Breakdown: {results['task_breakdown'][:150]}...")
            print(f"🔍 Research: {results['research'][:150]}...")
            print(f"📈 Analysis: {results['analysis'][:150]}...")
            print(f"📝 Final Report: {results['final_report'][:200]}...")
-       
+
        asyncio.run(run_multi_agent_demo())
 
-   
+
     # Pattern selection guide
     def print_pattern_guide():
 
        """Print a guide for selecting agent patterns."""
-       
+
        print("\n📚 Agent Pattern Selection Guide\n")
-       
+
        patterns = [
            {
                "pattern": "SimpleAgent",
@@ -1184,13 +1184,13 @@ Complete Agent Creation Examples
                "example": "Research reports, complex analysis, content creation"
            }
        ]
-       
+
        for p in patterns:
            print(f"🎯 {p['pattern']}")
            print(f"   Best for: {p['best_for']}")
            print(f"   Example: {p['example']}\n")
 
-   
+
     if __name__ == "__main__":
 
        demo_agent_patterns()
@@ -1270,7 +1270,7 @@ Complete Agent Creation Examples
            self.max_retries = max_retries
            self.timeout = timeout
            self.metrics = AgentMetrics()
-           
+
            # Initialize cache
            self.cache = None
            if redis_url:
@@ -1280,7 +1280,7 @@ Complete Agent Creation Examples
                    logger.info(f"Redis cache initialized for {name}")
                except Exception as e:
                    logger.warning(f"Failed to initialize Redis: {e}")
-           
+
            # Create agent
            self.agent = SimpleAgent(
                name=name,
@@ -1291,19 +1291,19 @@ Complete Agent Creation Examples
                    max_tokens=500
                )
            )
-           
+
            # Initialize monitor
            self.monitor = AgentMonitor(agent_name=name)
-       
+
        def _get_cache_key(self, prompt: str) -> str:
            """Generate cache key for prompt."""
            return f"agent:{self.name}:prompt:{hash(prompt)}"
-       
+
        def _get_from_cache(self, prompt: str) -> Optional[str]:
            """Get response from cache."""
            if not self.redis_client:
                return None
-           
+
            try:
                key = self._get_cache_key(prompt)
                cached = self.redis_client.get(key)
@@ -1317,12 +1317,12 @@ Complete Agent Creation Examples
            except Exception as e:
                logger.error(f"Cache retrieval error: {e}")
                return None
-       
+
        def _set_cache(self, prompt: str, response: str) -> None:
            """Set response in cache."""
            if not self.redis_client:
                return
-           
+
            try:
                key = self._get_cache_key(prompt)
                self.redis_client.setex(
@@ -1333,7 +1333,7 @@ Complete Agent Creation Examples
                logger.debug(f"Cached response for prompt: {prompt[:50]}...")
            except Exception as e:
                logger.error(f"Cache storage error: {e}")
-       
+
        def _with_retry(func):
            """Decorator for retry logic."""
            @wraps(func)
@@ -1350,40 +1350,40 @@ Complete Agent Creation Examples
                            f"Retrying in {wait_time}s..."
                        )
                        await asyncio.sleep(wait_time)
-               
+
                raise last_error
            return wrapper
-       
+
        @_with_retry
        async def process(self, prompt: str) -> str:
            """Process a prompt with full production features.
-           
+
            Args:
                prompt: Input prompt
-               
+
            Returns:
                Agent response
 
 """""""""""""""""""""""""""""
            start_time = time.time()
            self.metrics.total_requests += 1
-           
+
            try:
                # Check cache first
                cached_response = self._get_from_cache(prompt)
                if cached_response:
                    self.metrics.successful_requests += 1
                    return cached_response
-               
+
                # Monitor start
                self.monitor.record_request_start(prompt)
-               
+
                # Process with agent
                response = await self.agent.ainvoke(prompt)
-               
+
                # Cache response
                self._set_cache(prompt, response)
-               
+
                # Update metrics
                response_time = time.time() - start_time
                self.metrics.successful_requests += 1
@@ -1391,23 +1391,23 @@ Complete Agent Creation Examples
                    (self.metrics.average_response_time*** * (self.metrics.successful_requests - 1) + response_time)*
                    / self.metrics.successful_requests
                )
-               
+
                # Monitor end
                self.monitor.record_request_end(response, response_time)
-               
+
                logger.info(
                    f"Processed request in {response_time:.2f}s "
                    f"(cache: {'hit' if cached_response else 'miss'})"
                )
-               
+
                return response
-               
+
            except Exception as e:
                self.metrics.failed_requests += 1
                self.monitor.record_error(str(e))
                logger.error(f"Error processing request: {e}")
                raise
-       
+
        def get_metrics(self) -> Dict[str, Any]:
            """Get current metrics."""
            return {
@@ -1425,7 +1425,7 @@ Complete Agent Creation Examples
                    if (self.metrics.cache_hits + self.metrics.cache_misses) > 0 else 0
                )
            }
-       
+
        def health_check(self) -> Dict[str, Any]:
            """Perform health check."""
            health = {
@@ -1434,38 +1434,38 @@ Complete Agent Creation Examples
                "agent": self.name,
                "issues": []
            }
-           
+
            # Check cache connection
            if self.redis_client:
                try:
                    self.redis_client.ping()
                except:
                    health["issues"].append("Cache connection failed")
-           
+
            # Check error rate
            if self.metrics.total_requests > 10:
                error_rate = self.metrics.failed_requests / self.metrics.total_requests
                if error_rate > 0.1:  # 10% error threshold
                    health["status"] = "degraded"
                    health["issues"].append(f"High error rate: {error_rate:.1%}")
-           
+
            # Check response time
            if self.metrics.average_response_time > 10:  # 10 second threshold
                health["status"] = "degraded"
                health["issues"].append(
                    f"Slow response time: {self.metrics.average_response_time:.1f}s"
                )
-           
+
            return health
 
-   
+
     # Demonstration
     async def demo_production_agent():
 
        """Demonstrate production agent features."""
-       
+
        print("🏭 Production Agent Demo\n")
-       
+
        # Create production agent
        agent = ProductionAgent(
            name="Production Assistant",
@@ -1474,7 +1474,7 @@ Complete Agent Creation Examples
            cache_ttl=3600,
            max_retries=3
        )
-       
+
        # Test queries
        queries = [
            "What are the SOLID principles in software engineering?",
@@ -1482,9 +1482,9 @@ Complete Agent Creation Examples
            "Explain microservices architecture",
            "What is the CAP theorem?"
        ]
-       
+
        print("Processing queries...\n")
-       
+
        for i, query in enumerate(queries, 1):
            print(f"Query {i}: {query}")
            try:
@@ -1492,13 +1492,13 @@ Complete Agent Creation Examples
                print(f"Response: {response[:100]}...\n")
            except Exception as e:
                print(f"Error: {e}\n")
-       
+
        # Display metrics
        print("\n📊 Agent Metrics")
        metrics = agent.get_metrics()
        for key, value in metrics.items():
            print(f"  {key}: {value}")
-       
+
        # Health check
        print("\n🏥 Health Check")
        health = agent.health_check()
@@ -1508,12 +1508,12 @@ Complete Agent Creation Examples
        else:
            print("  Issues: None")
 
-   
+
     # Scaling considerations
     class AgentPool:
 
        """Pool of agents for load balancing."""
-       
+
        def __init__(self, pool_size: int = 5,* **agent_kwargs):**
            """Initialize agent pool."""
            self.agents = [
@@ -1524,18 +1524,18 @@ Complete Agent Creation Examples
                for i in range(pool_size)
            ]
            self.current_index = 0
-       
+
        async def process(self, prompt: str) -> str:
            """Process using round-robin selection."""
            agent = self.agents[self.current_index]
            self.current_index = (self.current_index + 1) % len(self.agents)
            return await agent.process(prompt)
-       
+
        def get_pool_metrics(self) -> List[Dict[str, Any]]:
            """Get metrics for all agents in pool."""
            return [agent.get_metrics() for agent in self.agents]
 
-   
+
     if __name__ == "__main__":
 
        asyncio.run(demo_production_agent())
@@ -1555,11 +1555,11 @@ Complete Agent Creation Examples
 
     .. tip::
 
-   
+
 
     *** **Quick Reference Command***s**
 
-   
+
 
 .. code-block:: bash
 

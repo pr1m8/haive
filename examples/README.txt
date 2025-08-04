@@ -14,7 +14,7 @@ The examples are organized to show both the haive.agents and haive.core.engine
 patterns for creating AI agents:
 
 - **SimpleAgent Examples**: Easy-to-use agents from haive.agents
-- **Core Engine Examples**: Advanced configuration-based agents from haive.core.engine  
+- **Core Engine Examples**: Advanced configuration-based agents from haive.core.engine
 
 Each example includes:
 

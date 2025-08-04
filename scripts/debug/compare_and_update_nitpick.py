@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-"""Compare current nitpick_ignore with comprehensive list and generate
-update."""
+"""Compare current nitpick_ignore with comprehensive list and generate.
+
+update.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -108,19 +111,17 @@ def categorize_additions(additions):
     for ref_type, target in sorted(additions):
         if ref_type == "py:class":
             if target in [
-                "frozenset",
-                "bytearray",
-                "slice",
-                "range",
-                "enumerate",
-                "zip",
-                "filter",
-                "map",
+                    "frozenset",
+                    "bytearray",
+                    "slice",
+                    "range",
+                    "enumerate",
+                    "zip",
+                    "filter",
+                    "map",
             ]:
                 categories["Basic Python Types"].append((ref_type, target))
-            elif any(
-                x in target
-                for x in [
+            elif any(x in target for x in [
                     "typing_extensions",
                     "Iterator",
                     "Iterable",
@@ -128,28 +129,26 @@ def categorize_additions(additions):
                     "Async",
                     "Awaitable",
                     "Coroutine",
-                ]
-            ):
+            ]):
                 categories["Advanced Typing"].append((ref_type, target))
-            elif any(x in target for x in ["collections", "asyncio", "pathlib"]):
+            elif any(x in target
+                     for x in ["collections", "asyncio", "pathlib"]):
                 categories["Collections & Async"].append((ref_type, target))
             elif "pydantic" in target or target in [
-                "ValidationError",
-                "EmailStr",
-                "HttpUrl",
-                "PositiveInt",
-                "StrictStr",
-                "constr",
-                "UUID1",
+                    "ValidationError",
+                    "EmailStr",
+                    "HttpUrl",
+                    "PositiveInt",
+                    "StrictStr",
+                    "constr",
+                    "UUID1",
             ]:
                 categories["Pydantic Enhancements"].append((ref_type, target))
             elif "langchain" in target and "langgraph" not in target:
                 categories["LangChain Core"].append((ref_type, target))
             elif "langgraph" in target:
                 categories["LangGraph"].append((ref_type, target))
-            elif any(
-                x in target
-                for x in [
+            elif any(x in target for x in [
                     "numpy",
                     "pandas",
                     "requests",
@@ -160,15 +159,15 @@ def categorize_additions(additions):
                     "enum",
                     "logging",
                     "threading",
-                ]
-            ):
+            ]):
                 categories["External Libraries"].append((ref_type, target))
-            elif len(target) <= 3 and (
-                target.isupper() or target.startswith("~") or target.startswith("_")
-            ):
+            elif len(target) <= 3 and (target.isupper()
+                                       or target.startswith("~")
+                                       or target.startswith("_")):
                 categories["Generic Types"].append((ref_type, target))
             else:
-                categories["External Libraries"].append((ref_type, target))  # Default
+                categories["External Libraries"].append(
+                    (ref_type, target))  # Default
         else:
             categories["Methods & Functions"].append((ref_type, target))
 
@@ -181,7 +180,8 @@ def generate_incremental_update(additions):
     categories = categorize_additions(additions)
 
     lines = ["# INCREMENTAL ADDITIONS TO NITPICK_IGNORE"]
-    lines.append("# Add these entries to your existing nitpick_ignore list in conf.py")
+    lines.append(
+        "# Add these entries to your existing nitpick_ignore list in conf.py")
     lines.append("")
 
     for category, items in categories.items():
@@ -208,23 +208,18 @@ def generate_prioritized_update():
 
     for ref_type, target in additions:
         # High priority: Common LangChain/Pydantic types
-        if any(
-            x in target.lower()
-            for x in [
+        if any(x in target.lower() for x in [
                 "langchain",
                 "pydantic",
                 "typing_extensions",
                 "basemodel",
                 "document",
                 "message",
-            ]
-        ):
+        ]):
             high_priority.append((ref_type, target))
         # Medium priority: Python standard library
-        elif any(
-            x in target.lower()
-            for x in ["collections", "asyncio", "datetime", "pathlib", "enum"]
-        ):
+        elif any(x in target.lower() for x in
+                 ["collections", "asyncio", "datetime", "pathlib", "enum"]):
             medium_priority.append((ref_type, target))
         else:
             low_priority.append((ref_type, target))
@@ -279,13 +274,16 @@ def main():
 
     # Save different output formats
     incremental_update = generate_incremental_update(additions)
-    Path("nitpick_ignore_incremental_additions.txt").write_text(incremental_update)
+    Path("nitpick_ignore_incremental_additions.txt").write_text(
+        incremental_update)
 
     prioritized_update = generate_prioritized_update()
-    Path("nitpick_ignore_priority_additions.txt").write_text(prioritized_update)
+    Path("nitpick_ignore_priority_additions.txt").write_text(
+        prioritized_update)
 
     print("📁 Files generated:")
-    print("  - nitpick_ignore_incremental_additions.txt (full categorized list)")
+    print(
+        "  - nitpick_ignore_incremental_additions.txt (full categorized list)")
     print("  - nitpick_ignore_priority_additions.txt (prioritized essentials)")
     print()
 

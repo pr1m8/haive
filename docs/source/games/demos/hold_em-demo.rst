@@ -168,15 +168,15 @@ Popular poker variant
 
        Community Cards: [A♠] [K♦] [Q♦] [10♣] [?]
 
-   
+
    Pot: $450
    Current Bet: $100
-   
+
    Player 1: [?][?] | Stack: $980 | Action: Call
    Player 2: [?][?] | Stack: $1200 | Action: Raise $200
    Player 3: FOLDED
    Player 4: [?][?] | Stack: $750 | Action: ?
-   
+
    Phase: Turn | To call: $100
 
 .. raw:: html

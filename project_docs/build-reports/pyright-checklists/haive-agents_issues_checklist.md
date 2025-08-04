@@ -2291,7 +2291,7 @@
   - **Issue**: "validate_conversation_participants" is unknown import symbol
   - **Location**: `haive-agents/src/haive/agents/conversation/base/examples/basic_state_management.py:21:4`
 
-### 📄 haive-agents/src/haive/agents/conversation/collaberative/example.py
+### 📄 haive-agents/src/haive/agents/conversation/collaborative/example.py
 
 - [ ] **Line 33** (`reportAttributeAccessIssue`)
   - **Issue**: Cannot access attribute "run" for class "CollaborativeConversation"
@@ -2303,7 +2303,7 @@
             "input_schema" is an incompatible type
               Type "type[BaseModel] | dict[str, Any] | None" is not assignable to type "type[BaseModel] | None"
             "output_schema" is invariant because it is mutable
-  - **Location**: `haive-agents/src/haive/agents/conversation/collaberative/example.py:33:21`
+  - **Location**: `haive-agents/src/haive/agents/conversation/collaborative/example.py:33:21`
 
 - [ ] **Line 61** (`reportAttributeAccessIssue`)
   - **Issue**: Cannot access attribute "run" for class "CollaborativeConversation"
@@ -2315,7 +2315,7 @@
             "input_schema" is an incompatible type
               Type "type[BaseModel] | dict[str, Any] | None" is not assignable to type "type[BaseModel] | None"
             "output_schema" is invariant because it is mutable
-  - **Location**: `haive-agents/src/haive/agents/conversation/collaberative/example.py:61:20`
+  - **Location**: `haive-agents/src/haive/agents/conversation/collaborative/example.py:61:20`
 
 - [ ] **Line 138** (`reportAttributeAccessIssue`)
   - **Issue**: Cannot access attribute "run" for class "CollaborativeConversation"
@@ -2327,7 +2327,7 @@
             "input_schema" is an incompatible type
               Type "type[BaseModel] | dict[str, Any] | None" is not assignable to type "type[BaseModel] | None"
             "output_schema" is invariant because it is mutable
-  - **Location**: `haive-agents/src/haive/agents/conversation/collaberative/example.py:138:22`
+  - **Location**: `haive-agents/src/haive/agents/conversation/collaborative/example.py:138:22`
 
 ### 📄 haive-agents/src/haive/agents/conversation/debate/agent.py
 
@@ -13796,11 +13796,11 @@
   - **Issue**: Module is not callable
   - **Location**: `haive-agents/src/haive/agents/rag/self_rag2/nodes/grade_generation_v_documents_and_question.py:31:4`
 
-### 📄 haive-agents/src/haive/agents/rag/self_rag2/nodes/retreive.py
+### 📄 haive-agents/src/haive/agents/rag/self_rag2/nodes/retrieve.py
 
 - [ ] **Line 16** (`reportUndefinedVariable`)
   - **Issue**: "retriever" is not defined
-  - **Location**: `haive-agents/src/haive/agents/rag/self_rag2/nodes/retreive.py:16:16`
+  - **Location**: `haive-agents/src/haive/agents/rag/self_rag2/nodes/retrieve.py:16:16`
 
 ### 📄 haive-agents/src/haive/agents/rag/self_rag2/nodes/transform_query.py
 
@@ -23379,11 +23379,11 @@
   - **Location**: `haive-agents/src/haive/agents/base/types.py:57:6`
 
 - [ ] **Line 67** (`reportInvalidTypeVarUse`)
-  - **Issue**: Type variable "TInput" used in generic Protocol "Invokable" should be contravariant
+  - **Issue**: Type variable "TInput" used in generic Protocol "Invocable" should be contravariant
   - **Location**: `haive-agents/src/haive/agents/base/types.py:67:6`
 
 - [ ] **Line 67** (`reportInvalidTypeVarUse`)
-  - **Issue**: Type variable "TOutput" used in generic Protocol "Invokable" should be covariant
+  - **Issue**: Type variable "TOutput" used in generic Protocol "Invocable" should be covariant
   - **Location**: `haive-agents/src/haive/agents/base/types.py:67:6`
 
 - [ ] **Line 84** (`reportInvalidTypeVarUse`)
@@ -24516,7 +24516,7 @@
   - **Issue**: "validate_conversation_participants" is unknown import symbol
   - **Location**: `haive-agents/src/haive/agents/conversation/base/examples/basic_state_management.py:21:4`
 
-### 📄 haive-agents/src/haive/agents/conversation/collaberative/example.py
+### 📄 haive-agents/src/haive/agents/conversation/collaborative/example.py
 
 - [ ] **Line 33** (`reportAttributeAccessIssue`)
   - **Issue**: Cannot access attribute "run" for class "CollaborativeConversation"
@@ -24528,7 +24528,7 @@
             "input_schema" is an incompatible type
               Type "type[BaseModel] | dict[str, Any] | None" is not assignable to type "type[BaseModel] | None"
             "output_schema" is invariant because it is mutable
-  - **Location**: `haive-agents/src/haive/agents/conversation/collaberative/example.py:33:21`
+  - **Location**: `haive-agents/src/haive/agents/conversation/collaborative/example.py:33:21`
 
 - [ ] **Line 61** (`reportAttributeAccessIssue`)
   - **Issue**: Cannot access attribute "run" for class "CollaborativeConversation"
@@ -24540,7 +24540,7 @@
             "input_schema" is an incompatible type
               Type "type[BaseModel] | dict[str, Any] | None" is not assignable to type "type[BaseModel] | None"
             "output_schema" is invariant because it is mutable
-  - **Location**: `haive-agents/src/haive/agents/conversation/collaberative/example.py:61:20`
+  - **Location**: `haive-agents/src/haive/agents/conversation/collaborative/example.py:61:20`
 
 - [ ] **Line 138** (`reportAttributeAccessIssue`)
   - **Issue**: Cannot access attribute "run" for class "CollaborativeConversation"
@@ -24552,7 +24552,7 @@
             "input_schema" is an incompatible type
               Type "type[BaseModel] | dict[str, Any] | None" is not assignable to type "type[BaseModel] | None"
             "output_schema" is invariant because it is mutable
-  - **Location**: `haive-agents/src/haive/agents/conversation/collaberative/example.py:138:22`
+  - **Location**: `haive-agents/src/haive/agents/conversation/collaborative/example.py:138:22`
 
 ### 📄 haive-agents/src/haive/agents/conversation/debate/agent.py
 
@@ -36213,11 +36213,11 @@
   - **Issue**: Module is not callable
   - **Location**: `haive-agents/src/haive/agents/rag/self_rag2/nodes/grade_generation_v_documents_and_question.py:31:4`
 
-### 📄 haive-agents/src/haive/agents/rag/self_rag2/nodes/retreive.py
+### 📄 haive-agents/src/haive/agents/rag/self_rag2/nodes/retrieve.py
 
 - [ ] **Line 16** (`reportUndefinedVariable`)
   - **Issue**: "retriever" is not defined
-  - **Location**: `haive-agents/src/haive/agents/rag/self_rag2/nodes/retreive.py:16:16`
+  - **Location**: `haive-agents/src/haive/agents/rag/self_rag2/nodes/retrieve.py:16:16`
 
 ### 📄 haive-agents/src/haive/agents/rag/self_rag2/nodes/transform_query.py
 
@@ -45151,5 +45151,5 @@ poetry run pytest packages/haive-agents/tests/ -v
 
 ---
 
-**Generated**: 2025-08-02  
+**Generated**: 2025-08-02
 **Source**: `project_docs/build-reports/pyright-issues/haive-agents-*.json`

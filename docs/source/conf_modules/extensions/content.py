@@ -8,6 +8,8 @@ This module configures extensions for processing different content types:
 - External TOC: External table of contents management
 """
 
+from __future__ import annotations
+
 from typing import Any
 
 
@@ -88,7 +90,8 @@ def _get_myst_config() -> dict[str, Any]:
             "attrs_block",  # {attrs} for block elements
         ],
         "myst_url_schemes": ["http", "https", "ftp", "mailto"],
-        "myst_heading_anchors": 3,  # Auto-generate anchors for headings
+        "myst_heading_anchors":
+        3,  # Auto-generate anchors for headings
     }
 
 
@@ -138,7 +141,8 @@ def _get_gallery_config(packages: list[str] | None = None) -> dict[str, Any]:
             "within_subsection_order": "FileNameSortKey",
             "show_signature": True,
             "plot_gallery": False,  # We don't need matplotlib plots
-            "execute_examples": False,  # Disable execution to avoid computational cost
+            "execute_examples":
+            False,  # Disable execution to avoid computational cost
             "run_code_after_examples": False,  # Don't run code after examples
             "first_notebook_cell": "%matplotlib inline",
             "last_notebook_cell": "# End of example",
@@ -150,7 +154,7 @@ def _get_gallery_config(packages: list[str] | None = None) -> dict[str, Any]:
                 "binderhub_url": "https://mybinder.org",
                 "dependencies": ["../../pyproject.toml"],
             },
-        }
+        },
     }
 
 
@@ -160,7 +164,7 @@ def _get_jinja_config() -> dict[str, Any]:
         "jinja2_contexts": {
             "agent_demo": {
                 # These will be imported from agent demo modules
-            }
+            },
         },
         "jinja2_debug": False,
     }
@@ -170,7 +174,8 @@ def _get_external_toc_config() -> dict[str, Any]:
     """Get external table of contents configuration."""
     return {
         "external_toc_path": "_toc.yml",  # Use external TOC file (optional)
-        "external_toc_exclude_missing": True,  # Don't break build for missing entries
+        "external_toc_exclude_missing":
+        True,  # Don't break build for missing entries
     }
 
 
@@ -182,7 +187,7 @@ def _get_thebe_config() -> dict[str, Any]:
             "repository_branch": "main",
             "selector": ".thebe",
             "binderUrl": "https://mybinder.org",
-        }
+        },
     }
 
 
@@ -215,7 +220,7 @@ def get_proof_config() -> dict[str, Any]:
             "lemma": "Lemma",
             "theorem": "Theorem",
             "property": "Property",
-        }
+        },
     }
 
 
@@ -259,8 +264,7 @@ def get_full_config() -> dict[str, Any]:
         [
             "sphinx_exercise",  # Interactive exercises
             "sphinx_proof",  # Mathematical proofs
-        ]
-    )
+        ], )
 
     config.update(get_exec_config())
     config.update(get_exercise_config())

@@ -1,6 +1,6 @@
 # Development Diagnostics
 
-**Purpose**: Diagnostic and analysis tools for troubleshooting development issues  
+**Purpose**: Diagnostic and analysis tools for troubleshooting development issues
 **Usage**: When investigating errors, performance issues, or code quality problems
 
 ## 📄 Scripts

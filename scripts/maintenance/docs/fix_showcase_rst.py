@@ -16,12 +16,14 @@ def fix_showcase_file(file_path):
     content = re.sub(r"\*\*\*\n", "\n", content)
     content = re.sub(r"\*\*\*$", "", content, flags=re.MULTILINE)
     content = re.sub(r"^\*\*\*", "", content, flags=re.MULTILINE)
-    content = re.sub(r"\*\*Succes\*\*\*s\*\*", "**Success**", content)
+    content = re.sub(r"\*\*Success\*\*\*s\*\*", "**Success**", content)
     content = re.sub(r"\*\*\s+", "** ", content)
     content = re.sub(r"\s+\*\*", " **", content)
 
     # Fix section underlines
-    content = re.sub(r"\n-{3,}\n", lambda m: "\n" + "-" * len(m.group().strip()) + "\n", content)
+    content = re.sub(r"\n-{3,}\n",
+                     lambda m: "\n" + "-" * len(m.group().strip()) + "\n",
+                     content)
 
     # Fix JSON indentation in code blocks
     lines = content.split("\n")
@@ -32,7 +34,8 @@ def fix_showcase_file(file_path):
         if line.strip() == ".. code-block:: json":
             in_json_block = True
             fixed_lines.append(line)
-        elif in_json_block and line and not line[0].isspace() and line.strip() != "":
+        elif in_json_block and line and not line[0].isspace() and line.strip(
+        ) != "":
             in_json_block = False
             fixed_lines.append(line)
         elif in_json_block and line.strip().startswith("{"):
@@ -47,7 +50,8 @@ def fix_showcase_file(file_path):
     content = "\n".join(fixed_lines)
 
     # Fix missing JSON closing braces
-    content = re.sub(r'(\n\s*"[^"]+"\s*:\s*"[^"]+"\s*\n)\s*\n}', r"\1   }\n}", content)
+    content = re.sub(r'(\n\s*"[^"]+"\s*:\s*"[^"]+"\s*\n)\s*\n}', r"\1   }\n}",
+                     content)
 
     # Fix backticks
     content = re.sub(r"``\s*``(\w+)``\s*``", r"``\1``", content)

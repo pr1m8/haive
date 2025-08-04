@@ -1,11 +1,12 @@
 """Enhanced Sphinx extension for automatic game documentation generation.
 
-This extension recognizes the consistent patterns in haive-games and creates
-better documentation that respects the structure and nuances of each game.
+This extension recognizes the consistent patterns in haive-games and
+creates better documentation that respects the structure and nuances of
+each game.
 """
 
-import re
 from pathlib import Path
+import re
 
 from docutils import nodes
 from docutils.parsers.rst import directives
@@ -49,7 +50,8 @@ class GameInfo:
                         title = first_line.lstrip("#").strip()
                         # Clean up common patterns
                         title = re.sub(r"^(Haive Games?:?\s*)?", "", title)
-                        title = re.sub(r"\s*(Module|Game|Implementation)$", "", title)
+                        title = re.sub(r"\s*(Module|Game|Implementation)$", "",
+                                       title)
                         return title
             except Exception:
                 pass
@@ -89,9 +91,8 @@ class GameInfo:
                                 # Check next few lines for description
                                 desc_lines = []
                                 for j in range(i + 1, min(i + 5, len(lines))):
-                                    if lines[j].strip() and not lines[j].startswith(
-                                        "#"
-                                    ):
+                                    if lines[j].strip(
+                                    ) and not lines[j].startswith("#", ):
                                         desc_lines.append(lines[j].strip())
                                     elif desc_lines:
                                         break
@@ -173,7 +174,8 @@ class GameInfo:
         ]
 
         for file_name in standard_files:
-            components[file_name.replace(".py", "")] = (self.path / file_name).exists()
+            components[file_name.replace(".py", "")] = (self.path /
+                                                        file_name).exists()
 
         return components
 
@@ -182,26 +184,47 @@ class GameCategorizer:
     """Categorizes games into logical groups."""
 
     CATEGORIES = {
-        "board_games": GameCategory(
-            "Board Games", "Classic board games with strategic depth", "♟️"
+        "board_games":
+        GameCategory(
+            "Board Games",
+            "Classic board games with strategic depth",
+            "♟️",
         ),
-        "card_games": GameCategory(
-            "Card Games", "Traditional and modern card games", "🃏"
+        "card_games":
+        GameCategory(
+            "Card Games",
+            "Traditional and modern card games",
+            "🃏",
         ),
-        "single_player": GameCategory(
-            "Single Player Games", "Puzzle and single-player challenges", "🧩"
+        "single_player":
+        GameCategory(
+            "Single Player Games",
+            "Puzzle and single-player challenges",
+            "🧩",
         ),
-        "social_deduction": GameCategory(
-            "Social Deduction", "Games involving deception and social reasoning", "🎭"
+        "social_deduction":
+        GameCategory(
+            "Social Deduction",
+            "Games involving deception and social reasoning",
+            "🎭",
         ),
-        "strategy_games": GameCategory(
-            "Strategy Games", "Complex strategic and tactical games", "🏰"
+        "strategy_games":
+        GameCategory(
+            "Strategy Games",
+            "Complex strategic and tactical games",
+            "🏰",
         ),
-        "arcade_games": GameCategory(
-            "Arcade Games", "Fast-paced action and reaction games", "🕹️"
+        "arcade_games":
+        GameCategory(
+            "Arcade Games",
+            "Fast-paced action and reaction games",
+            "🕹️",
         ),
-        "other_games": GameCategory(
-            "Other Games", "Miscellaneous and experimental games", "🎲"
+        "other_games":
+        GameCategory(
+            "Other Games",
+            "Miscellaneous and experimental games",
+            "🎲",
         ),
     }
 
@@ -304,13 +327,13 @@ class GameDocumentationGenerator:
             if item.is_dir() and not item.name.startswith(("_", ".")):
                 # Skip utility directories
                 if item.name in [
-                    "core",
-                    "framework",
-                    "base",
-                    "base_v2",
-                    "common",
-                    "utils",
-                    "api",
+                        "core",
+                        "framework",
+                        "base",
+                        "base_v2",
+                        "common",
+                        "utils",
+                        "api",
                 ]:
                     continue
 
@@ -352,7 +375,8 @@ class GameDocumentationGenerator:
                 "minimal": "🚧",
             }.get(game.quality_level, "❓")
 
-            lines.append(f"   .. grid-item-card:: {quality_emoji} **{game.title}**")
+            lines.append(
+                f"   .. grid-item-card:: {quality_emoji} **{game.title}**")
             if game.has_readme:
                 lines.append(f"      :link: {game.name}/index")
                 lines.append("      :link-type: doc")
@@ -389,10 +413,15 @@ class GameDocumentationGenerator:
                     lines.append(".. code-block:: python")
                     lines.append("")
                     lines.append(
-                        f"   from haive.games.{game.name} import {game.title.replace(' ', '')}Agent"
+                        f"   from haive.games.{
+                            game.name} import {
+                            game.title.replace(
+                                ' ',
+                                '')}Agent",
                     )
                     lines.append("   ")
-                    lines.append(f"   agent = {game.title.replace(' ', '')}Agent()")
+                    lines.append(
+                        f"   agent = {game.title.replace(' ', '')}Agent()")
                     lines.append("   result = agent.run()")
                     lines.append("")
 
@@ -417,7 +446,7 @@ class GameDocumentationGenerator:
         lines.append("==============")
         lines.append("")
         lines.append(
-            "Comprehensive game environments for AI agents with LLM integration."
+            "Comprehensive game environments for AI agents with LLM integration.",
         )
         lines.append("")
 
@@ -428,20 +457,20 @@ class GameDocumentationGenerator:
 
         quality_counts = {}
         for game in all_games:
-            quality_counts[game.quality_level] = (
-                quality_counts.get(game.quality_level, 0) + 1
-            )
+            quality_counts[game.quality_level] = quality_counts.get(
+                game.quality_level, 0) + 1
 
         lines.append(".. note::")
         lines.append("")
         lines.append(
-            f"   **{len(all_games)} games available** across {len([c for c in self.categories.values() if c.games])} categories"
+            f"   **{len(all_games)} games available** across {len([c for c in self.categories.values() if c.games])} categories",
         )
 
         if quality_counts:
             quality_info = []
             if quality_counts.get("excellent", 0) > 0:
-                quality_info.append(f"⭐ {quality_counts['excellent']} excellent")
+                quality_info.append(
+                    f"⭐ {quality_counts['excellent']} excellent")
             if quality_counts.get("good", 0) > 0:
                 quality_info.append(f"✅ {quality_counts['good']} good")
             if quality_counts.get("basic", 0) > 0:
@@ -466,7 +495,7 @@ class GameDocumentationGenerator:
         for category_name, category in self.categories.items():
             if category.games:
                 lines.append(
-                    f"   .. grid-item-card:: {category.icon} **{category.name}**"
+                    f"   .. grid-item-card:: {category.icon} **{category.name}**",
                 )
                 lines.append(f"      :link: {category_name}")
                 lines.append("      :link-type: doc")
@@ -479,14 +508,15 @@ class GameDocumentationGenerator:
         lines.append("")
 
         # Featured games (excellent quality)
-        excellent_games = [g for g in all_games if g.quality_level == "excellent"]
+        excellent_games = [
+            g for g in all_games if g.quality_level == "excellent"
+        ]
         if excellent_games:
             lines.append("⭐ Featured Games")
             lines.append("----------------")
             lines.append("")
             lines.append(
-                "These games have comprehensive documentation, examples, and full feature sets:"
-            )
+                "These games have comprehensive documentation, examples, and full feature sets:", )
             lines.append("")
 
             for game in excellent_games[:5]:  # Top 5 featured
@@ -557,18 +587,13 @@ class GamesAutoDocDirective(SphinxDirective):
             games_path = Path(self.options["games-path"])
         else:
             # Default path relative to project root
-            games_path = (
-                Path(env.srcdir).parent.parent
-                / "packages"
-                / "haive-games"
-                / "src"
-                / "haive"
-                / "games"
-            )
+            games_path = (Path(env.srcdir).parent.parent / "packages" /
+                          "haive-games" / "src" / "haive" / "games")
 
         if not games_path.exists():
             error_node = nodes.error()
-            error_node += nodes.paragraph(text=f"Games path not found: {games_path}")
+            error_node += nodes.paragraph(
+                text=f"Games path not found: {games_path}")
             return [error_node]
 
         # Generate documentation
@@ -579,8 +604,7 @@ class GamesAutoDocDirective(SphinxDirective):
             category_name = self.options["category"]
             if category_name in generator.categories:
                 content = generator.generate_category_index(
-                    generator.categories[category_name]
-                )
+                    generator.categories[category_name], )
             else:
                 content = f"Category '{category_name}' not found."
         else:

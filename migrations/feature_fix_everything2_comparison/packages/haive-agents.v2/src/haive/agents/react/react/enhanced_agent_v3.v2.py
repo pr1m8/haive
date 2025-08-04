@@ -11,19 +11,20 @@ Key Features:
 - Performance optimizations for iterative workflows
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any
 
 from langgraph.graph import END
 from pydantic import Field
 
-# Import the enhanced SimpleAgent as our base
 from haive.agents.simple.enhanced_agent_v3 import EnhancedSimpleAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
+# Import the enhanced SimpleAgent as our base
 
 logger = logging.getLogger(__name__)
-
 
 # ========================================================================
 # ENHANCED REACT AGENT V3
@@ -31,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class EnhancedReactAgent(EnhancedSimpleAgent):
-    """Enhanced ReactAgent V3 with complete ReAct pattern and advanced features.
+    """Enhanced ReactAgent V3 with complete ReAct pattern and advanced
+    features.
 
     This agent implements the full Reasoning and Acting (ReAct) pattern with
     sophisticated enhancements:
@@ -138,31 +140,37 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
     # ========================================================================
 
     max_iterations: int = Field(
-        default=10, ge=1, le=50, description="Maximum reasoning iterations"
+        default=10,
+        ge=1,
+        le=50,
+        description='Maximum reasoning iterations',
     )
 
     reasoning_mode: str = Field(
-        default="efficient",
-        pattern="^(thorough|efficient|creative)$",
-        description="Reasoning strategy: thorough, efficient, or creative",
+        default='efficient',
+        pattern='^(thorough|efficient|creative)$',
+        description='Reasoning strategy: thorough, efficient, or creative',
     )
 
     tool_selection_strategy: str = Field(
-        default="auto",
-        pattern="^(auto|explicit|learned)$",
-        description="Tool selection strategy: auto, explicit, or learned",
+        default='auto',
+        pattern='^(auto|explicit|learned)$',
+        description='Tool selection strategy: auto, explicit, or learned',
     )
 
     loop_detection: bool = Field(
-        default=True, description="Enable infinite loop detection and prevention"
+        default=True,
+        description='Enable infinite loop detection and prevention',
     )
 
     reasoning_trace: bool = Field(
-        default=False, description="Preserve detailed reasoning traces"
+        default=False,
+        description='Preserve detailed reasoning traces',
     )
 
     performance_tracking: bool = Field(
-        default=False, description="Track performance metrics per iteration"
+        default=False,
+        description='Track performance metrics per iteration',
     )
 
     # ========================================================================
@@ -170,22 +178,26 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
     # ========================================================================
 
     iteration_timeout: float | None = Field(
-        default=None, ge=1.0, description="Timeout per iteration in seconds"
+        default=None,
+        ge=1.0,
+        description='Timeout per iteration in seconds',
     )
 
     tool_usage_optimization: bool = Field(
-        default=False, description="Enable tool usage caching and optimization"
+        default=False,
+        description='Enable tool usage caching and optimization',
     )
 
     reasoning_quality_threshold: float | None = Field(
         default=None,
         ge=0.0,
         le=1.0,
-        description="Minimum reasoning quality score (0.0-1.0)",
+        description='Minimum reasoning quality score (0.0-1.0)',
     )
 
     early_termination_conditions: list[str] | None = Field(
-        default=None, description="Custom early termination conditions"
+        default=None,
+        description='Custom early termination conditions',
     )
 
     # ========================================================================
@@ -207,34 +219,34 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
 
     def _setup_react_features(self) -> None:
         """Setup ReAct-specific capabilities."""
-        logger.debug("Setting up ReAct features")
+        logger.debug('Setting up ReAct features')
 
         # Configure reasoning mode
-        if self.reasoning_mode == "thorough":
+        if self.reasoning_mode == 'thorough':
             # More detailed reasoning, higher token usage
             if self.max_tokens is None:
                 self.max_tokens = 2000
-        elif self.reasoning_mode == "creative":
+        elif self.reasoning_mode == 'creative':
             # More creative reasoning, higher temperature
             if self.temperature is None:
                 self.temperature = 0.8
 
         # Setup tool selection strategy
-        if self.tool_selection_strategy == "learned":
+        if self.tool_selection_strategy == 'learned':
             # TODO: Implement learned tool selection
-            logger.debug("Learned tool selection enabled (TODO: implement)")
+            logger.debug('Learned tool selection enabled (TODO: implement)')
 
         # Configure loop detection
         if self.loop_detection:
-            logger.debug("Loop detection enabled")
+            logger.debug('Loop detection enabled')
 
         # Setup reasoning trace
         if self.reasoning_trace:
-            logger.debug("Reasoning trace preservation enabled")
+            logger.debug('Reasoning trace preservation enabled')
 
     def _setup_iteration_management(self) -> None:
         """Setup iteration management and control."""
-        logger.debug("Setting up iteration management")
+        logger.debug('Setting up iteration management')
 
         # Configure iteration timeout
         if self.iteration_timeout:
@@ -243,34 +255,34 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
         # Setup early termination
         if self.early_termination_conditions:
             logger.debug(
-                f"Early termination conditions: {self.early_termination_conditions}"
+                f"Early termination conditions: {self.early_termination_conditions}",
             )
 
     def _setup_performance_tracking(self) -> None:
         """Setup performance tracking for iterations."""
         if self.performance_tracking:
-            logger.debug("Performance tracking enabled")
+            logger.debug('Performance tracking enabled')
             # TODO: Initialize performance tracking
 
         if self.tool_usage_optimization:
-            logger.debug("Tool usage optimization enabled")
+            logger.debug('Tool usage optimization enabled')
             # TODO: Initialize tool caching
 
     def _validate_react_configuration(self) -> None:
         """Validate ReAct-specific configuration."""
         # Validate max_iterations
         if self.max_iterations < 1:
-            raise ValueError("max_iterations must be at least 1")
+            raise ValueError('max_iterations must be at least 1')
 
         # Validate timeout
         if self.iteration_timeout is not None and self.iteration_timeout < 1.0:
-            raise ValueError("iteration_timeout must be at least 1.0 seconds")
+            raise ValueError('iteration_timeout must be at least 1.0 seconds')
 
         # Validate quality threshold
         if self.reasoning_quality_threshold is not None and not (
-            0.0 <= self.reasoning_quality_threshold <= 1.0
-        ):
-            raise ValueError("reasoning_quality_threshold must be between 0.0 and 1.0")
+                0.0 <= self.reasoning_quality_threshold <= 1.0):
+            raise ValueError(
+                'reasoning_quality_threshold must be between 0.0 and 1.0')
 
     # ========================================================================
     # ENHANCED GRAPH BUILDING FOR REACT
@@ -310,7 +322,8 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
 
         # Check if we need ReAct modifications
         if not self._has_tools():
-            logger.debug("No tools found, using simple graph without ReAct loop")
+            logger.debug(
+                'No tools found, using simple graph without ReAct loop')
             return graph
 
         # Modify graph for ReAct pattern
@@ -318,45 +331,46 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
         self._add_iteration_control(graph)
         self._add_performance_monitoring(graph)
 
-        logger.debug(f"Built enhanced ReAct graph with {len(graph.nodes)} nodes")
+        logger.debug(
+            f"Built enhanced ReAct graph with {len(graph.nodes)} nodes")
         return graph
 
     def _add_react_loop(self, graph: BaseGraph) -> None:
         """Add ReAct looping logic to the graph."""
-        logger.debug("Adding ReAct loop logic")
+        logger.debug('Adding ReAct loop logic')
 
         # The key ReAct modification: tool_node loops back to agent_node
-        if "tool_node" in graph.nodes:
+        if 'tool_node' in graph.nodes:
             # Remove tool_node → END edge if it exists
             try:
-                graph.remove_edge("tool_node", END)
-                logger.debug("Removed tool_node → END edge")
+                graph.remove_edge('tool_node', END)
+                logger.debug('Removed tool_node → END edge')
             except Exception:
                 pass  # Edge might not exist
 
             # Add tool_node → agent_node edge (THE REACT LOOP)
-            graph.add_edge("tool_node", "agent_node")
-            logger.debug("Added ReAct loop: tool_node → agent_node")
+            graph.add_edge('tool_node', 'agent_node')
+            logger.debug('Added ReAct loop: tool_node → agent_node')
 
         # Also handle parser loops if structured output
-        if "parse_output" in graph.nodes and self.reasoning_trace:
+        if 'parse_output' in graph.nodes and self.reasoning_trace:
             try:
-                graph.remove_edge("parse_output", END)
-                graph.add_edge("parse_output", "agent_node")
-                logger.debug("Added parser loop for reasoning trace")
+                graph.remove_edge('parse_output', END)
+                graph.add_edge('parse_output', 'agent_node')
+                logger.debug('Added parser loop for reasoning trace')
             except Exception:
                 pass
 
     def _add_iteration_control(self, graph: BaseGraph) -> None:
         """Add iteration control and loop detection."""
-        logger.debug("Adding iteration control")
+        logger.debug('Adding iteration control')
 
         # TODO: Add iteration counting node
         # TODO: Add max iteration checking
         # TODO: Add loop detection logic
 
         if self.loop_detection:
-            logger.debug("Loop detection configured")
+            logger.debug('Loop detection configured')
 
         if self.max_iterations:
             logger.debug(f"Max iterations set to: {self.max_iterations}")
@@ -364,12 +378,12 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
     def _add_performance_monitoring(self, graph: BaseGraph) -> None:
         """Add performance monitoring to the graph."""
         if self.performance_tracking:
-            logger.debug("Adding performance monitoring")
+            logger.debug('Adding performance monitoring')
             # TODO: Add performance monitoring nodes
             # TODO: Add timing and metrics collection
 
         if self.tool_usage_optimization:
-            logger.debug("Adding tool usage optimization")
+            logger.debug('Adding tool usage optimization')
             # TODO: Add tool caching logic
 
     # ========================================================================
@@ -382,23 +396,24 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
 
         react_summary = {
             **base_summary,
-            "react_features": {
-                "max_iterations": self.max_iterations,
-                "reasoning_mode": self.reasoning_mode,
-                "tool_selection_strategy": self.tool_selection_strategy,
-                "loop_detection": self.loop_detection,
-                "reasoning_trace": self.reasoning_trace,
-                "performance_tracking": self.performance_tracking,
-                "iteration_timeout": self.iteration_timeout,
-                "tool_usage_optimization": self.tool_usage_optimization,
-                "reasoning_quality_threshold": self.reasoning_quality_threshold,
+            'react_features': {
+                'max_iterations': self.max_iterations,
+                'reasoning_mode': self.reasoning_mode,
+                'tool_selection_strategy': self.tool_selection_strategy,
+                'loop_detection': self.loop_detection,
+                'reasoning_trace': self.reasoning_trace,
+                'performance_tracking': self.performance_tracking,
+                'iteration_timeout': self.iteration_timeout,
+                'tool_usage_optimization': self.tool_usage_optimization,
+                'reasoning_quality_threshold':
+                self.reasoning_quality_threshold,
             },
-            "execution_stats": {
+            'execution_stats': {
                 # TODO: Add execution statistics
-                "total_iterations": 0,
-                "tool_calls_made": 0,
-                "avg_iteration_time": 0.0,
-                "reasoning_quality_score": 0.0,
+                'total_iterations': 0,
+                'tool_calls_made': 0,
+                'avg_iteration_time': 0.0,
+                'reasoning_quality_score': 0.0,
             },
         }
 
@@ -416,61 +431,63 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
 
         # Create ReAct-specific capabilities table
         table = Table(title=f"Enhanced ReactAgent Capabilities: {self.name}")
-        table.add_column("Feature", style="cyan")
-        table.add_column("Configuration", style="green")
-        table.add_column("Status", style="yellow")
+        table.add_column('Feature', style='cyan')
+        table.add_column('Configuration', style='green')
+        table.add_column('Status', style='yellow')
 
         # ReAct configuration
-        react_features = summary["react_features"]
-        table.add_row("Max Iterations", str(react_features["max_iterations"]), "✅")
-        table.add_row("Reasoning Mode", react_features["reasoning_mode"], "✅")
-        table.add_row("Tool Selection", react_features["tool_selection_strategy"], "✅")
+        react_features = summary['react_features']
+        table.add_row('Max Iterations', str(react_features['max_iterations']),
+                      '✅')
+        table.add_row('Reasoning Mode', react_features['reasoning_mode'], '✅')
+        table.add_row('Tool Selection',
+                      react_features['tool_selection_strategy'], '✅')
         table.add_row(
-            "Loop Detection",
-            str(react_features["loop_detection"]),
-            "✅" if react_features["loop_detection"] else "❌",
+            'Loop Detection',
+            str(react_features['loop_detection']),
+            '✅' if react_features['loop_detection'] else '❌',
         )
         table.add_row(
-            "Reasoning Trace",
-            str(react_features["reasoning_trace"]),
-            "✅" if react_features["reasoning_trace"] else "❌",
+            'Reasoning Trace',
+            str(react_features['reasoning_trace']),
+            '✅' if react_features['reasoning_trace'] else '❌',
         )
         table.add_row(
-            "Performance Tracking",
-            str(react_features["performance_tracking"]),
-            "✅" if react_features["performance_tracking"] else "❌",
+            'Performance Tracking',
+            str(react_features['performance_tracking']),
+            '✅' if react_features['performance_tracking'] else '❌',
         )
 
         # Advanced features
         table.add_section()
         table.add_row(
-            "Iteration Timeout",
-            str(react_features["iteration_timeout"]),
-            "✅" if react_features["iteration_timeout"] else "❌",
+            'Iteration Timeout',
+            str(react_features['iteration_timeout']),
+            '✅' if react_features['iteration_timeout'] else '❌',
         )
         table.add_row(
-            "Tool Optimization",
-            str(react_features["tool_usage_optimization"]),
-            "✅" if react_features["tool_usage_optimization"] else "❌",
+            'Tool Optimization',
+            str(react_features['tool_usage_optimization']),
+            '✅' if react_features['tool_usage_optimization'] else '❌',
         )
         table.add_row(
-            "Quality Threshold",
-            str(react_features["reasoning_quality_threshold"]),
-            "✅" if react_features["reasoning_quality_threshold"] else "❌",
+            'Quality Threshold',
+            str(react_features['reasoning_quality_threshold']),
+            '✅' if react_features['reasoning_quality_threshold'] else '❌',
         )
 
         console.print(table)
 
         # Show execution stats if available
-        stats = summary["execution_stats"]
+        stats = summary['execution_stats']
         if any(stats.values()):
             stats_panel = Panel(
                 f"Iterations: {stats['total_iterations']} | "
                 f"Tool Calls: {stats['tool_calls_made']} | "
                 f"Avg Time: {stats['avg_iteration_time']:.2f}s | "
                 f"Quality: {stats['reasoning_quality_score']:.2f}",
-                title="Execution Statistics",
-                style="blue",
+                title='Execution Statistics',
+                style='blue',
             )
             console.print(stats_panel)
 
@@ -491,23 +508,23 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
         # TODO: Implement tool usage analysis
         # Return insights about tool selection, frequency, success rates
         return {
-            "most_used_tools": [],
-            "tool_success_rates": {},
-            "avg_tools_per_iteration": 0.0,
-            "tool_selection_efficiency": 0.0,
+            'most_used_tools': [],
+            'tool_success_rates': {},
+            'avg_tools_per_iteration': 0.0,
+            'tool_selection_efficiency': 0.0,
         }
 
     def optimize_performance(self) -> dict[str, Any]:
         """Run performance optimization analysis."""
         if not self.performance_tracking:
-            return {"message": "Performance tracking not enabled"}
+            return {'message': 'Performance tracking not enabled'}
 
         # TODO: Implement performance optimization
         # Analyze patterns and suggest improvements
         return {
-            "suggestions": [],
-            "potential_improvements": {},
-            "optimization_score": 0.0,
+            'suggestions': [],
+            'potential_improvements': {},
+            'optimization_score': 0.0,
         }
 
     def __repr__(self) -> str:
@@ -517,18 +534,16 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
 
         if self.max_iterations != 10:
             react_features.append(f"max_iter={self.max_iterations}")
-        if self.reasoning_mode != "efficient":
+        if self.reasoning_mode != 'efficient':
             react_features.append(f"mode={self.reasoning_mode}")
         if self.loop_detection:
-            react_features.append("loop_detect")
+            react_features.append('loop_detect')
         if self.reasoning_trace:
-            react_features.append("trace")
+            react_features.append('trace')
         if self.performance_tracking:
-            react_features.append("perf_track")
+            react_features.append('perf_track')
 
-        react_str = (
-            f" ReAct({', '.join(react_features)})" if react_features else " ReAct"
-        )
-        return (
-            base_repr.replace("EnhancedSimpleAgent", "EnhancedReactAgent") + react_str
-        )
+        react_str = f" ReAct({
+            ', '.join(react_features)})" if react_features else ' ReAct'
+        return base_repr.replace('EnhancedSimpleAgent',
+                                 'EnhancedReactAgent') + react_str

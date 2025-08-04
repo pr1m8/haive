@@ -1,6 +1,6 @@
 # Development Utilities
 
-**Purpose**: Development workflow tools, git utilities, and diagnostics  
+**Purpose**: Development workflow tools, git utilities, and diagnostics
 **Usage**: Daily development workflow support and troubleshooting
 
 ## 📄 Scripts

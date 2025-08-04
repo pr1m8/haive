@@ -253,7 +253,7 @@ Economic strategy game with property trading and AI negotiation
        │     │     │ P5  │     │     │
        └─────┴─────┴─────┴─────┴─────┘
 
-   
+
    P1: $1500 | P2: $1450 | P3: $1600
    Turn: Player 1 | Dice: Ready
    Status: Game in progress

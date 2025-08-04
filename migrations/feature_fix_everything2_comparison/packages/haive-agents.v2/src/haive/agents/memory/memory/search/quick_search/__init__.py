@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from quick_search.agent import (
     QuickSearchAgent,
     determine_answer_type,
@@ -9,7 +11,6 @@ from quick_search.agent import (
     get_system_prompt,
 )
 from quick_search.models import Config, QuickSearchRequest, QuickSearchResponse
-
 
 __all__ = [
     "Config",

@@ -9,9 +9,9 @@
    :show-inheritance:
    :inherited-members:
    :special-members: __init__
-   
+
    .. rubric:: Examples
-   
+
    {% if fullname.endswith('SimpleAgent') %}
 
 .. code-block:: python

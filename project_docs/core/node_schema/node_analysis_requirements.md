@@ -17,7 +17,7 @@ This document outlines the requirements and patterns for node schema composition
 NodeSchemaComposer (needed)
     ↓
 AgentSchemaComposer (exists - for agents)
-    ↓  
+    ↓
 MultiAgentSchemaComposer (needs update - field visibility)
 ```
 
@@ -80,7 +80,7 @@ node_config = {
 ```python
 class NodeSchemaComposer:
     """Compose schemas dynamically for nodes."""
-    
+
     def compose(
         self,
         base_schema: Type[BaseModel],
@@ -145,7 +145,7 @@ validation_node = create_node(
 ```python
 class ValidationNode:
     """Basic validation node with schema composition."""
-    
+
     def __init__(self, validation_model: Type[BaseModel]):
         self.schema = compose_schemas(
             MessagesState,
@@ -159,7 +159,7 @@ class ValidationNode:
 ```python
 class MultiAgentValidationNode:
     """Validation across multiple agents."""
-    
+
     def __init__(self, agents: List[Agent]):
         self.schema = MultiAgentSchemaComposer.compose(
             base=MessagesState,

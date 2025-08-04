@@ -169,11 +169,11 @@ Classic tile-matching game
        Current Chain:
        [2|5]─[5|5]─[5|3]─[3|1]─[1|6]─[6|6]─[6|4]
 
-   
+
    Player 1 Hand: 7 tiles
    Player 2 Hand: 5 tiles
    Boneyard: 12 tiles
-   
+
    Last Play: P2 played [6|4]
    Current Turn: Player 1
 

@@ -10,7 +10,7 @@ This page demonstrates the enhanced documentation features available with our 86
    🎨 Enhanced Documentation Showcase
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Demonstrating advanced features using 86+ Sphinx extensions including Pydantic models, 
+   Demonstrating advanced features using 86+ Sphinx extensions including Pydantic models,
    interactive components, diagrams, and enhanced UI elements.
 
 🚀 Interactive Components
@@ -88,9 +88,9 @@ Enhanced Tabs with Sphinx-Design
 
          :class-header: demo-card-header
          :shadow: lg
-      
+
          Advanced agent types with Pydantic validation and enhanced documentation.
-      
+
          * SimpleAgent with config validation*
          * ReactAgent with tool integration  *
          * Multi-agent coordination*
@@ -100,9 +100,9 @@ Enhanced Tabs with Sphinx-Design
 
          :class-header: demo-card-header
          :shadow: lg
-      
+
          Pydantic models with comprehensive documentation and validation.
-      
+
          * Field constraints and validation*
          * Type hints and descriptions*
          * Configuration summaries*
@@ -112,9 +112,9 @@ Enhanced Tabs with Sphinx-Design
 
          :class-header: demo-card-header
          :shadow: lg
-      
+
          Rich UI components using sphinx-design and other extensions.
-      
+
          * Interactive tabs and dropdowns*
          * Enhanced code blocks with copy*
          * Responsive grid layouts*
@@ -127,21 +127,21 @@ Enhanced Tabs with Sphinx-Design
 
          :class:`tip`
 
-         The enhanced documentation system automatically detects Pydantic models and applies 
+         The enhanced documentation system automatically detects Pydantic models and applies
          specialized formatting for better readability and developer experience.
 
          .. admonition:: ⚠️ Important
 
          :class:`warning`
 
-         When using the enhanced templates, make sure your Pydantic models have comprehensive 
+         When using the enhanced templates, make sure your Pydantic models have comprehensive
          docstrings for the best documentation experience.
 
          .. admonition:: 📚 More Information
 
          :class:`note`
 
-         All 86 Sphinx extensions work together to provide a comprehensive documentation 
+         All 86 Sphinx extensions work together to provide a comprehensive documentation
          experience with automatic cross-references, enhanced search, and beautiful styling.
 
          🎯 Dropdown Components
@@ -164,22 +164,22 @@ Enhanced Tabs with Sphinx-Design
           # Model selection
           model="gpt-4-turbo",
           provider="openai",
-          
+
           # Generation parameters
           temperature=0.7,
           max_tokens=2000,
           top_p=0.9,
           frequency_penalty=0.1,
           presence_penalty=0.1,
-          
+
           # System configuration
           system_message="You are an expert AI assistant.",
           max_retries=3,
           timeout=30.0,
-          
+
           # Structured output
           structured_output_model=MyResponseModel,
-          
+
           # Advanced features
           tools=["web_search", "calculator"],
           memory_enabled=True,
@@ -244,7 +244,7 @@ Enhanced Tabs with Sphinx-Design
    # Create specialized agents
    researcher = ReactAgent(
 
-       name="researcher", 
+       name="researcher",
        tools=[WebSearchTool()]
 
    )
@@ -271,7 +271,7 @@ Enhanced Tabs with Sphinx-Design
 
    .. container:: highlight-box
 
-   **Enhanced Styling**: This documentation uses custom CSS that integrates with 
+   **Enhanced Styling**: This documentation uses custom CSS that integrates with
    all 86+ Sphinx extensions to provide a cohesive and beautiful experience.
 
    .. container:: metrics-showcase
@@ -282,30 +282,30 @@ Enhanced Tabs with Sphinx-Design
 
       .. grid-item::
          :class:`metric`-display
-         
+
          **86**
-         
+
          *Total Extensions*
 
       .. grid-item::
          :class:`metric`-display
-         
+
          **100%**
-         
+
          *Compatibility*
 
       .. grid-item::
          :class:`metric`-display
-         
+
          **0**
-         
+
          *Failed Extensions*
 
       .. grid-item::
          :class:`metric`-display
-         
+
          **6**
-         
+
          *New Templates*
 
    🔗 Cross-References and Links
@@ -327,7 +327,7 @@ Enhanced Tabs with Sphinx-Design
    The enhanced search functionality includes:
 
    - Full-text search across all documentation
-   - API-specific search with type information  
+   - API-specific search with type information
    - Cross-package search with namespace handling
    - Enhanced result ranking and context
 
@@ -341,5 +341,5 @@ Enhanced Tabs with Sphinx-Design
    * 🖥️ Large screens and ultra-wide displays*
    * 🌙 Dark mode and light mode themes*
 
-   All interactive components adapt seamlessly to different screen sizes while 
+   All interactive components adapt seamlessly to different screen sizes while
    maintaining full functionality and beautiful styling.

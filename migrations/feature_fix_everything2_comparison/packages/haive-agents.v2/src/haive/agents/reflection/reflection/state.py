@@ -1,5 +1,7 @@
 """State schema for Reflection Agent."""
 
+from __future__ import annotations
+
 from pydantic import Field
 
 from haive.agents.reflection.models import Critique, Improvement
@@ -10,26 +12,33 @@ class ReflectionState(MultiAgentState):
     """State for Reflection Agent."""
 
     input: str = Field(..., description="The original content to reflect on")
-    current_content: str = Field(..., description="Current version of the content")
+    current_content: str = Field(...,
+                                 description="Current version of the content")
 
     critique: Critique | None = Field(
-        default=None, description="Current critique of the content"
+        default=None,
+        description="Current critique of the content",
     )
 
     improvements: list[Improvement] = Field(
-        default_factory=list, description="List of improvements made"
+        default_factory=list,
+        description="List of improvements made",
     )
 
-    iteration_count: int = Field(default=0, description="Current iteration number")
+    iteration_count: int = Field(default=0,
+                                 description="Current iteration number")
 
-    max_iterations: int = Field(default=3, description="Maximum number of iterations")
+    max_iterations: int = Field(default=3,
+                                description="Maximum number of iterations")
 
     quality_threshold: float = Field(
-        default=0.8, description="Quality threshold to stop iterating"
+        default=0.8,
+        description="Quality threshold to stop iterating",
     )
 
     final_content: str | None = Field(
-        default=None, description="Final improved content"
+        default=None,
+        description="Final improved content",
     )
 
     def should_continue(self) -> bool:

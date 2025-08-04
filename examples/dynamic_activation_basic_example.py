@@ -12,6 +12,8 @@ Usage:
     poetry run python examples/dynamic_activation_basic_example.py
 """
 
+from __future__ import annotations
+
 import asyncio
 import logging
 from typing import Any
@@ -20,11 +22,9 @@ from langchain_core.tools import tool
 
 from haive.agents.react.dynamic_react_agent import DynamicReactAgent
 from haive.agents.supervisor.dynamic_activation_supervisor import (
-    DynamicActivationSupervisor,
-)
+    DynamicActivationSupervisor, )
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.registry import RegistryItem
-
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -104,7 +104,10 @@ async def example_1_basic_dynamic_react_agent():
 
     # Create AugLLMConfig (real Azure OpenAI)
     config = AugLLMConfig(
-        name="basic_example_llm", temperature=0.3, max_tokens=200, model="gpt-4o-mini"
+        name="basic_example_llm",
+        temperature=0.3,
+        max_tokens=200,
+        model="gpt-4o-mini",
     )
 
     # Create tools list for agent
@@ -134,7 +137,9 @@ async def example_1_basic_dynamic_react_agent():
 
     # Create DynamicReactAgent with tools
     agent = DynamicReactAgent.create_with_tools(
-        name="basic_dynamic_agent", tools=tools, engine=config
+        name="basic_dynamic_agent",
+        tools=tools,
+        engine=config,
     )
 
     logger.info(f"Created agent: {agent.name}")
@@ -150,8 +155,7 @@ async def example_1_basic_dynamic_react_agent():
     # Execute agent with a task
     try:
         result = await agent.arun(
-            "Calculate 15 + 25 and then process the text 'hello world'"
-        )
+            "Calculate 15 + 25 and then process the text 'hello world'", )
         logger.info(f"Agent result: {result}")
     except Exception as e:
         logger.exception(f"Agent execution error: {e}")
@@ -186,8 +190,10 @@ async def example_2_dynamic_activation_supervisor():
             "name": "Math Processor",
             "description": "Mathematical processing component",
             "component": {
-                "type": "processor",
-                "category": "math",
+                "type":
+                "processor",
+                "category":
+                "math",
                 "capabilities": [
                     "addition",
                     "subtraction",
@@ -201,8 +207,10 @@ async def example_2_dynamic_activation_supervisor():
             "name": "Text Analyzer",
             "description": "Text analysis component",
             "component": {
-                "type": "analyzer",
-                "category": "text",
+                "type":
+                "analyzer",
+                "category":
+                "text",
                 "capabilities": [
                     "sentiment",
                     "language_detection",
@@ -215,8 +223,10 @@ async def example_2_dynamic_activation_supervisor():
             "name": "Data Validator",
             "description": "Data validation component",
             "component": {
-                "type": "validator",
-                "category": "data",
+                "type":
+                "validator",
+                "category":
+                "data",
                 "capabilities": [
                     "format_validation",
                     "schema_validation",
@@ -228,25 +238,27 @@ async def example_2_dynamic_activation_supervisor():
 
     # Create DynamicActivationSupervisor
     supervisor = DynamicActivationSupervisor.create_with_components(
-        name="example_supervisor", components=components, engine=config
+        name="example_supervisor",
+        components=components,
+        engine=config,
     )
 
     logger.info(f"Created supervisor: {supervisor.name}")
-    logger.info(f"Registry has {len(supervisor.state.registry.items)} components")
+    logger.info(
+        f"Registry has {len(supervisor.state.registry.items)} components")
 
     # Activate components
     supervisor.state.activate_component("math_processor")
     supervisor.state.activate_component("text_analyzer")
 
     logger.info(
-        f"Activated components: {list(supervisor.state.active_components.keys())}"
+        f"Activated components: {list(supervisor.state.active_components.keys())}",
     )
 
     # Execute supervisor
     try:
         result = await supervisor.arun(
-            "I need help with mathematical calculations and text analysis"
-        )
+            "I need help with mathematical calculations and text analysis", )
         logger.info(f"Supervisor result: {result}")
     except Exception as e:
         logger.exception(f"Supervisor execution error: {e}")
@@ -332,7 +344,8 @@ async def example_3_discovery_based_activation():
     """
 
     # Create temporary file
-    with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as f:
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".md",
+                                     delete=False) as f:
         f.write(tools_doc)
         temp_file = f.name
 
@@ -347,22 +360,24 @@ async def example_3_discovery_based_activation():
 
         # Create DynamicReactAgent with discovery
         agent = DynamicReactAgent.create_with_discovery(
-            name="discovery_agent", document_path=temp_file, engine=config
+            name="discovery_agent",
+            document_path=temp_file,
+            engine=config,
         )
 
         logger.info(f"Created discovery agent: {agent.name}")
-        logger.info(f"Discovery agent configured: {agent._discovery_agent is not None}")
+        logger.info(
+            f"Discovery agent configured: {agent._discovery_agent is not None}"
+        )
 
         # Discover tools for specific tasks
         try:
             math_tools = await agent.discover_and_load_tools(
-                "mathematical calculations and statistics"
-            )
+                "mathematical calculations and statistics", )
             logger.info(f"Discovered {len(math_tools)} math tools")
 
             text_tools = await agent.discover_and_load_tools(
-                "text processing and summarization"
-            )
+                "text processing and summarization", )
             logger.info(f"Discovered {len(text_tools)} text tools")
 
             # Check discovery queries
@@ -374,8 +389,7 @@ async def example_3_discovery_based_activation():
         # Execute agent with discovered tools
         try:
             result = await agent.arun(
-                "I need help with statistical analysis of text data"
-            )
+                "I need help with statistical analysis of text data", )
             logger.info(f"Discovery agent result: {result}")
         except Exception as e:
             logger.exception(f"Discovery agent execution error: {e}")
@@ -402,8 +416,7 @@ async def example_4_registry_management():
 
     from haive.core.registry import DynamicRegistry
     from haive.core.schema.prebuilt.dynamic_activation_state import (
-        DynamicActivationState,
-    )
+        DynamicActivationState, )
 
     # Create registry for custom components
     registry = DynamicRegistry[dict[str, Any]]()
@@ -485,8 +498,8 @@ async def example_4_registry_management():
         meta_state = state.activate_component(item_id)
         if meta_state:
             logger.info(
-                f"Activated {item_id} with MetaStateSchema: {meta_state.execution_status}"
-            )
+                f"Activated {item_id} with MetaStateSchema: {
+                    meta_state.execution_status}", )
 
     # Get activation statistics
     activation_stats = state.get_activation_stats()
@@ -524,7 +537,8 @@ async def example_5_performance_testing():
         components.append(component)
 
     creation_time = time.time() - start_time
-    logger.info(f"Created {num_components} components in {creation_time:.3f} seconds")
+    logger.info(
+        f"Created {num_components} components in {creation_time:.3f} seconds")
 
     # Register all components
     start_time = time.time()
@@ -540,7 +554,7 @@ async def example_5_performance_testing():
 
     registration_time = time.time() - start_time
     logger.info(
-        f"Registered {num_components} components in {registration_time:.3f} seconds"
+        f"Registered {num_components} components in {registration_time:.3f} seconds",
     )
 
     # Test activation performance
@@ -555,7 +569,7 @@ async def example_5_performance_testing():
 
     activation_time = time.time() - start_time
     logger.info(
-        f"Activated {activated_count} components in {activation_time:.3f} seconds"
+        f"Activated {activated_count} components in {activation_time:.3f} seconds",
     )
 
     # Test stats performance
@@ -576,8 +590,8 @@ async def example_5_performance_testing():
 
     deactivation_time = time.time() - start_time
     logger.info(
-        f"Deactivated {deactivated_count} components in {deactivation_time:.3f} seconds"
-    )
+        f"Deactivated {deactivated_count} components in {
+            deactivation_time:.3f} seconds", )
 
     # Final stats
     final_stats = large_registry.get_stats()
@@ -610,15 +624,17 @@ async def main():
 
         # Summary
         logger.info("=== Summary ===")
-        logger.info(f"Basic agent active tools: {len(agent.get_active_tool_names())}")
         logger.info(
-            f"Supervisor active components: {len(supervisor.state.active_components)}"
+            f"Basic agent active tools: {len(agent.get_active_tool_names())}")
+        logger.info(
+            f"Supervisor active components: {len(supervisor.state.active_components)}",
         )
         logger.info(
-            f"Discovery agent queries: {len(discovery_agent.state.discovery_queries)}"
+            f"Discovery agent queries: {len(discovery_agent.state.discovery_queries)}",
         )
         logger.info(f"State registry components: {len(state.registry.items)}")
-        logger.info(f"Performance registry components: {len(perf_registry.items)}")
+        logger.info(
+            f"Performance registry components: {len(perf_registry.items)}")
 
     except Exception as e:
         logger.exception(f"Example execution failed: {e}")

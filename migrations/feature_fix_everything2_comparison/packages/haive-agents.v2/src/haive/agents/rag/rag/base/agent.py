@@ -8,9 +8,7 @@ Classes:
 Functions:
     build_graph: Build Graph functionality.
 """
-
-from langgraph.graph import END, START
-from pydantic import Field
+from __future__ import annotations
 
 from haive.agents.base.agent import Agent
 from haive.core.engine.retriever import BaseRetrieverConfig
@@ -18,6 +16,9 @@ from haive.core.engine.retriever.mixins import RetrieverMixin
 from haive.core.engine.vectorstore.vectorstore import VectorStoreConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from langgraph.graph import END
+from langgraph.graph import START
+from pydantic import Field
 
 
 class BaseRAGAgent(RetrieverMixin, Agent):
@@ -45,26 +46,26 @@ class BaseRAGAgent(RetrieverMixin, Agent):
             vector_store_config=vs_config,
             name="my_rag_agent"
             )
-
     """
 
-    name: str = "Base RAG Agent"
+    name: str = 'Base RAG Agent'
     engine: BaseRetrieverConfig | VectorStoreConfig = Field(
         ...,
-        description="Retriever Engine (accepts BaseRetrieverConfig or VectorStoreConfig)",
+        description='Retriever Engine (accepts BaseRetrieverConfig or VectorStoreConfig)',
     )
 
     def build_graph(self) -> BaseGraph:
         """Build the RAG agent graph."""
         # Create base graph with proper name
-        graph = BaseGraph(name="BaseRAGAgent")
+        graph = BaseGraph(name='BaseRAGAgent')
 
         # Add the retrieval node
-        retrieval_node = EngineNodeConfig(engine=self.engine, name="retrieval_node")
-        graph.add_node("retrieval_node", retrieval_node)
+        retrieval_node = EngineNodeConfig(engine=self.engine,
+                                          name='retrieval_node')
+        graph.add_node('retrieval_node', retrieval_node)
 
         # Set up proper flow: START -> retrieval_node -> END
-        graph.add_edge(START, "retrieval_node")
-        graph.add_edge("retrieval_node", END)
+        graph.add_edge(START, 'retrieval_node')
+        graph.add_edge('retrieval_node', END)
 
         return graph

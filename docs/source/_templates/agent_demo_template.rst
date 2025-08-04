@@ -33,7 +33,7 @@
 
    </div>
 
-            
+
 
 .. raw:: html
 
@@ -53,7 +53,7 @@
 
 .. raw:: html
 
-   <div id="{{ agent_id }}-graph" 
+   <div id="{{ agent_id }}-graph"
    class="agent-graph-container"
    data-agent-graph='{{ graph_data | tojson }}'>
    </div>
@@ -64,7 +64,7 @@
 
 .. raw:: html
 
-   <div id="{{ agent_id }}-state-history" 
+   <div id="{{ agent_id }}-state-history"
    class="state-history-container"
    data-state-history='{{ state_history | tojson }}'>
    </div>
@@ -75,7 +75,7 @@
 
 .. raw:: html
 
-   <div id="{{ agent_id }}-execution-trace" 
+   <div id="{{ agent_id }}-execution-trace"
    class="execution-trace-container"
    data-execution-trace='{{ execution_trace | tojson }}'>
    </div>
@@ -123,11 +123,11 @@
         // Initialize graph
         const graphData = JSON.parse(document.getElementById('{{ agent_id }}-graph').dataset.agentGraph);
         new AgentGraphVisualizer('{{ agent_id }}-graph', graphData);
-        
+
         // Initialize state history
         const stateData = JSON.parse(document.getElementById('{{ agent_id }}-state-history').dataset.stateHistory);
         new StateHistoryVisualizer('{{ agent_id }}-state-history', stateData);
-        
+
         // Initialize execution trace
         const traceData = JSON.parse(document.getElementById('{{ agent_id }}-execution-trace').dataset.executionTrace);
         new ExecutionTraceVisualizer('{{ agent_id }}-execution-trace', traceData);

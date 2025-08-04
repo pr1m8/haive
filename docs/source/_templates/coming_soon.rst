@@ -8,7 +8,7 @@
 .. warning::
   * **This page is under development***.** **
 
-   
+
    We're actively working on this documentation section and it will be available soon.
 
 .. note::
@@ -17,7 +17,7 @@
 .. admonition:: Future Content
 
    :class:`tip`
-   
+
    This section will include:
 
    {{ future_content|default("

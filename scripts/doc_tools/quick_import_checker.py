@@ -3,6 +3,7 @@
 
 A simplified version that quickly identifies problematic modules for documentation.
 """
+from __future__ import annotations
 
 import importlib
 import json
@@ -38,7 +39,7 @@ def test_key_modules():
         "haive.agents.conversation.directed",
         "haive.agents.conversation.round_robin",
         "haive.agents.conversation.social_media",
-        "haive.agents.conversation.collaberative",
+        "haive.agents.conversation.collaborative",
         # RAG modules
         "haive.agents.rag",
         "haive.agents.rag.base",
@@ -78,7 +79,6 @@ def test_key_modules():
         "type_errors": [],
         "other_errors": [],
     }
-
 
     for i, module_name in enumerate(key_modules, 1):
 
@@ -142,12 +142,11 @@ def generate_quick_fixes(results):
     total = len(results["successful"]) + len(results["failed"])
     success_rate = len(results["successful"]) / total * 100 if total > 0 else 0
 
-
     # Recommendation
     if success_rate < 50:
         pass
     elif success_rate < 80:
-        passs")
+        pass")
     else:
         passy")
 

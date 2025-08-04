@@ -44,8 +44,8 @@
 
 /* Enhanced sidebar */
 .bd-sidebar {
-    background: linear-gradient(180deg, 
-        var(--pst-color-surface, #ffffff) 0%, 
+    background: linear-gradient(180deg,
+        var(--pst-color-surface, #ffffff) 0%,
         rgba(41, 98, 255, 0.02) 100%);
     border-right: 1px solid var(--pst-color-border, #dee2e6);
 }
@@ -79,8 +79,8 @@
 
 /* Enhanced API documentation */
 .api-docs .signature {
-    background: linear-gradient(135deg, 
-        rgba(41, 98, 255, 0.1) 0%, 
+    background: linear-gradient(135deg,
+        rgba(41, 98, 255, 0.1) 0%,
         rgba(79, 195, 247, 0.1) 100%);
     border-radius: var(--haive-border-radius-small);
     padding: 1rem;
@@ -198,16 +198,16 @@
     .hero h1 {
         font-size: 2rem;
     }
-    
+
     .hero p {
         font-size: 1rem;
     }
-    
+
     .package-showcase {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-    
+
     .package-card {
         padding: 1.5rem;
     }

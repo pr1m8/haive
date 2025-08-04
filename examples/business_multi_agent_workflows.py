@@ -1,4 +1,4 @@
-"""Business Multi-Agent Workflows - Real-World Applications
+"""Business Multi-Agent Workflows - Real-World Applications.
 
 This example demonstrates practical business workflows using complex multi-agent patterns:
 - Customer support escalation
@@ -8,16 +8,19 @@ This example demonstrates practical business workflows using complex multi-agent
 - Sales qualification process
 """
 
+from __future__ import annotations
+
 import asyncio
 from enum import Enum
 from typing import Any
+
+from langchain_core.tools import tool
+from pydantic import BaseModel, Field
 
 from haive.agents.multi.base import MultiAgent, ParallelAgent, SequentialAgent
 from haive.agents.react import ReactAgent
 from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.tools import tool
-from pydantic import BaseModel, Field
 
 # === 1. CUSTOMER SUPPORT ESCALATION SYSTEM ===
 
@@ -64,7 +67,8 @@ class CustomerSupportEscalation(MultiAgent):
         # Level 2: Specialized Support Agents
         billing_agent = SimpleAgent(
             name="billing_support",
-            engine=AugLLMConfig(temperature=0.4),
+            engine=AugLLMConfig(
+                temperature=0.4),
             structured_output_model=TicketResolution,
             system_message="You are a billing specialist. Resolve billing inquiries professionally.",
         )
@@ -81,7 +85,8 @@ class CustomerSupportEscalation(MultiAgent):
 
         technical_agent = ReactAgent(
             name="technical_support",
-            engine=AugLLMConfig(temperature=0.4),
+            engine=AugLLMConfig(
+                temperature=0.4),
             tools=[technical_diagnostics],
             structured_output_model=TicketResolution,
             system_message="You are a technical support expert. Diagnose and resolve technical issues.",
@@ -89,7 +94,8 @@ class CustomerSupportEscalation(MultiAgent):
 
         account_agent = ReactAgent(
             name="account_support",
-            engine=AugLLMConfig(temperature=0.4),
+            engine=AugLLMConfig(
+                temperature=0.4),
             tools=[check_account_status],
             structured_output_model=TicketResolution,
             system_message="You are an account specialist. Help with account-related issues.",
@@ -98,7 +104,8 @@ class CustomerSupportEscalation(MultiAgent):
         # Level 3: Senior Support
         senior_agent = SimpleAgent(
             name="senior_support",
-            engine=AugLLMConfig(temperature=0.5),
+            engine=AugLLMConfig(
+                temperature=0.5),
             structured_output_model=TicketResolution,
             system_message="You are a senior support specialist. Handle complex and escalated issues.",
         )
@@ -120,7 +127,9 @@ class CustomerSupportEscalation(MultiAgent):
         }
 
         super().__init__(
-            name="support_escalation", agents=agents, entry_point="classifier"
+            name="support_escalation",
+            agents=agents,
+            entry_point="classifier",
         )
 
         self._setup_escalation_flow()
@@ -162,8 +171,11 @@ class CustomerSupportEscalation(MultiAgent):
         self.add_conditional_edges(source="classifier", path=route_by_category)
 
         # Escalation check for each specialist
-        for specialist in ["billing_support", "technical_support", "account_support"]:
-            self.add_conditional_edges(source=specialist, path=check_escalation)
+        for specialist in [
+                "billing_support", "technical_support", "account_support"
+        ]:
+            self.add_conditional_edges(source=specialist,
+                                       path=check_escalation)
 
         # Senior always goes to QA
         self.add_edge("senior_support", "qa_review")
@@ -268,12 +280,14 @@ async def content_creation_pipeline():
 
     # Parallel optimization
     optimization_team = ParallelAgent(
-        name="optimization_team", agents=[seo_optimizer, grammar_checker, fact_checker]
+        name="optimization_team",
+        agents=[seo_optimizer, grammar_checker, fact_checker],
     )
 
     # Full pipeline
     pipeline = SequentialAgent(
-        name="content_pipeline", agents=[researcher, writer, optimization_team, editor]
+        name="content_pipeline",
+        agents=[researcher, writer, optimization_team, editor],
     )
 
     # Execute with a brief
@@ -281,7 +295,9 @@ async def content_creation_pipeline():
         content_type="blog",
         topic="AI in Healthcare",
         target_audience="Healthcare professionals",
-        key_points=["Diagnosis assistance", "Treatment planning", "Patient monitoring"],
+        key_points=[
+            "Diagnosis assistance", "Treatment planning", "Patient monitoring"
+        ],
         tone="professional",
         word_count=1500,
     )
@@ -386,7 +402,9 @@ class DataAnalysisWorkflow(MultiAgent):
         }
 
         super().__init__(
-            name="data_analysis_workflow", agents=agents, entry_point="quality"
+            name="data_analysis_workflow",
+            agents=agents,
+            entry_point="quality",
         )
 
         self._setup_analysis_flow()
@@ -503,16 +521,18 @@ async def risk_assessment_system():
     # Execute assessment
     result = await risk_pipeline.arun(
         {
-            "company": "TechCorp",
-            "industry": "Software",
-            "size": "Mid-market",
+            "company":
+            "TechCorp",
+            "industry":
+            "Software",
+            "size":
+            "Mid-market",
             "recent_events": [
                 "New product launch",
                 "Market expansion",
                 "Leadership change",
             ],
-        }
-    )
+        }, )
 
     return result
 
@@ -578,27 +598,31 @@ async def sales_qualification_workflow():
 
     # Parallel analysis
     analysis_team = ParallelAgent(
-        name="qualification_team", agents=[lead_scorer, competitive_analyst]
+        name="qualification_team",
+        agents=[lead_scorer, competitive_analyst],
     )
 
     # Full qualification process
     qualification_pipeline = SequentialAgent(
-        name="sales_qualification", agents=[analysis_team, personalizer]
+        name="sales_qualification",
+        agents=[analysis_team, personalizer],
     )
 
     # Execute qualification
     result = await qualification_pipeline.arun(
         {
-            "company": "InnovateCorp",
-            "contact": "Jane Smith, VP of Engineering",
-            "source": "Webinar attendance",
+            "company":
+            "InnovateCorp",
+            "contact":
+            "Jane Smith, VP of Engineering",
+            "source":
+            "Webinar attendance",
             "interactions": [
                 "Downloaded whitepaper",
                 "Visited pricing page",
                 "Attended demo",
             ],
-        }
-    )
+        }, )
 
     return result
 
@@ -619,10 +643,10 @@ async def main():
         {
             "ticket_id": "TICK-12345",
             "customer_id": "CUST-789",
-            "issue": "My billing shows duplicate charges for last month. This is the third time this has happened!",
+            "issue":
+            "My billing shows duplicate charges for last month. This is the third time this has happened!",
             "previous_interactions": 2,
-        }
-    )
+        }, )
     print(f"Support Result: {ticket_result}\n")
 
     # 2. Content Creation
@@ -637,7 +661,8 @@ async def main():
     analysis_workflow = DataAnalysisWorkflow()
     analysis_result = await analysis_workflow.arun(
         {
-            "dataset_description": "Customer behavior data for Q4 2023",
+            "dataset_description":
+            "Customer behavior data for Q4 2023",
             "analysis_goals": [
                 "Identify churn patterns",
                 "Segment high-value customers",
@@ -646,9 +671,9 @@ async def main():
                 "What drives customer retention?",
                 "Which features correlate with upgrades?",
             ],
-            "output_format": "report",
-        }
-    )
+            "output_format":
+            "report",
+        }, )
     print(f"Analysis Result: {analysis_result}\n")
 
     # 4. Risk Assessment

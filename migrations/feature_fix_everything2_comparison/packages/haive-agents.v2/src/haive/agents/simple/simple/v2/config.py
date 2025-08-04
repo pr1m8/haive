@@ -1,7 +1,8 @@
 """Simple agent implementation with comprehensive schema handling.
 
-This module defines a basic single-node agent that uses AugLLMConfig for reasoning,
-with support for structured outputs, schema composition, and explicit input/output schemas.
+This module defines a basic single-node agent that uses AugLLMConfig for
+reasoning, with support for structured outputs, schema composition, and
+explicit input/output schemas.
 """
 
 import logging
@@ -13,14 +14,15 @@ from haive.core.engine.agent.agent import Agent, register_agent
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from haive.core.graph.node.config import NodeConfig
 
-
 # Set up logging
 logger = logging.getLogger(__name__)
 
 
 @register_agent(SimpleAgentConfig)
 class SimpleAgent(Agent[SimpleAgentConfig]):
-    """A simple agent with a single node workflow and comprehensive schema handling.
+    """A simple agent with a single node workflow and comprehensive schema.
+
+    handling.
 
     Features:
     - Single processing node using AugLLMConfig
@@ -39,7 +41,9 @@ class SimpleAgent(Agent[SimpleAgentConfig]):
         super().__init__(config)
 
     def setup_workflow(self) -> None:
-        """Set up a single-node workflow with the configured schemas and mappings.
+        """Set up a single-node workflow with the configured schemas and.
+
+        mappings.
 
         This creates a simple graph with one processing node that handles:
         - Receiving input according to input schema

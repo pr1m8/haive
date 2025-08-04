@@ -12,7 +12,7 @@ from haive.agents.multi.base import SequentialAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.corrective.agent_v2 import CorrectiveRAGAgentV2
 
-# from haive.agents.rag.document_grading.agent import DocumentGradingAgent  # Temporarily disabled - missing callable_node
+# # Temporarily disabled - missing callable_node
 from haive.agents.rag.hallucination_grading.agent import (
     AdvancedHallucinationGraderAgent,
     HallucinationGraderAgent,
@@ -29,7 +29,6 @@ from haive.agents.rag.query_decomposition.agent import (
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-
 
 logger = logging.getLogger(__name__)
 
@@ -93,11 +92,16 @@ class CompatibleRAGFactory:
 
     @classmethod
     def create_simple_workflow(
-        cls, documents: list[Document], llm_config: LLMConfig | None = None, **kwargs
+        cls,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
+        **kwargs,
     ) -> SequentialAgent:
         """Create simple RAG workflow."""
         return SimpleRAGAgent.from_documents(
-            documents=documents, llm_config=llm_config, **kwargs
+            documents=documents,
+            llm_config=llm_config,
+            **kwargs,
         )
 
     @classmethod
@@ -118,14 +122,19 @@ class CompatibleRAGFactory:
 
         # Create components
         hyde_agent = HyDERAGAgentV2.from_documents(
-            documents=documents, llm_config=llm_config, name="HyDE RAG"
+            documents=documents,
+            llm_config=llm_config,
+            name="HyDE RAG",
         )
 
-        # grading_agent = DocumentGradingAgent(  # Temporarily disabled - missing callable_node
+        # grading_agent = DocumentGradingAgent(  # Temporarily disabled - missing
+        # callable_node
         grading_agent = None  # Placeholder until DocumentGradingAgent is fixed
 
         corrective_agent = CorrectiveRAGAgentV2.from_documents(
-            documents=documents, llm_config=llm_config, name="Corrective RAG"
+            documents=documents,
+            llm_config=llm_config,
+            name="Corrective RAG",
         )
 
         return SequentialAgent(
@@ -153,7 +162,8 @@ def create_plug_and_play_component(
     if component_type == RAGComponent.QUERY_DECOMPOSITION:
         return QueryDecomposerAgent(llm_config=llm_config, **kwargs)
     if component_type == RAGComponent.HIERARCHICAL_DECOMPOSITION:
-        return HierarchicalQueryDecomposerAgent(llm_config=llm_config, **kwargs)
+        return HierarchicalQueryDecomposerAgent(llm_config=llm_config,
+                                                **kwargs)
     if component_type == RAGComponent.CONTEXTUAL_DECOMPOSITION:
         return ContextualQueryDecomposerAgent(llm_config=llm_config, **kwargs)
     if component_type == RAGComponent.ADAPTIVE_DECOMPOSITION:
@@ -163,38 +173,45 @@ def create_plug_and_play_component(
     if component_type == RAGComponent.HALLUCINATION_GRADING:
         return HallucinationGraderAgent(llm_config=llm_config, **kwargs)
     if component_type == RAGComponent.ADVANCED_HALLUCINATION_GRADING:
-        return AdvancedHallucinationGraderAgent(llm_config=llm_config, **kwargs)
+        return AdvancedHallucinationGraderAgent(llm_config=llm_config,
+                                                **kwargs)
     if component_type == RAGComponent.REALTIME_HALLUCINATION_GRADING:
-        return RealtimeHallucinationGraderAgent(llm_config=llm_config, **kwargs)
+        return RealtimeHallucinationGraderAgent(llm_config=llm_config,
+                                                **kwargs)
 
     # Document processing components
     if component_type == RAGComponent.DOCUMENT_GRADING:
         # return DocumentGradingAgent(  # Temporarily disabled - missing callable_node
         #     documents=documents, llm_config=llm_config, **kwargs
         raise NotImplementedError(
-            "DocumentGradingAgent temporarily disabled due to missing dependencies"
+            "DocumentGradingAgent temporarily disabled due to missing dependencies",
         )
 
     # Retrieval components
     if component_type == RAGComponent.SIMPLE_RETRIEVAL:
         return BaseRAGAgent.from_documents(
-            documents=documents, llm_config=llm_config, **kwargs
+            documents=documents,
+            llm_config=llm_config,
+            **kwargs,
         )
     if component_type == RAGComponent.HYDE_RETRIEVAL:
         return HyDERAGAgentV2.from_documents(
-            documents=documents, llm_config=llm_config, **kwargs
+            documents=documents,
+            llm_config=llm_config,
+            **kwargs,
         )
     if component_type == RAGComponent.MULTI_QUERY_RETRIEVAL:
         return MultiQueryRAGAgent.from_documents(
-            documents=documents, llm_config=llm_config, **kwargs
+            documents=documents,
+            llm_config=llm_config,
+            **kwargs,
         )
 
     raise ValueError(f"Unknown component type: {component_type}")
 
 
 def get_component_compatibility_info(
-    component_type: RAGComponent,
-) -> dict[str, list[str]]:
+        component_type: RAGComponent, ) -> dict[str, list[str]]:
     """Get I/O schema information for a component type."""
     # Simplified I/O schemas for compatibility checking
     schemas = {
@@ -204,7 +221,8 @@ def get_component_compatibility_info(
         },
         RAGComponent.HALLUCINATION_GRADING: {
             "inputs": ["query", "response", "retrieved_documents", "messages"],
-            "outputs": ["hallucination_result", "hallucination_score", "messages"],
+            "outputs":
+            ["hallucination_result", "hallucination_score", "messages"],
         },
         RAGComponent.DOCUMENT_GRADING: {
             "inputs": ["query", "retrieved_documents", "messages"],
@@ -216,4 +234,7 @@ def get_component_compatibility_info(
         },
     }
 
-    return schemas.get(component_type, {"inputs": ["query"], "outputs": ["response"]})
+    return schemas.get(component_type, {
+        "inputs": ["query"],
+        "outputs": ["response"]
+    })

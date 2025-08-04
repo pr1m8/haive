@@ -1,8 +1,8 @@
 # Missing Function Documentation
 
-**Date Discovered**: 2025-01-21  
-**Priority**: High  
-**Status**: Active  
+**Date Discovered**: 2025-01-21
+**Priority**: High
+**Status**: Active
 **Package(s)**: All packages
 
 ## Problem Description

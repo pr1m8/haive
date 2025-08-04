@@ -7,6 +7,7 @@ Functions:
 """
 
 # src/haive/agents/reasoning/uncertainty_analyzer.py
+from __future__ import annotations
 
 from typing import Any
 
@@ -15,12 +16,10 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from haive.agents.reasoning_and_critique.logic.models import UncertaintyAnalysis
 from haive.core.engine.aug_llm import AugLLMConfig
 
-
-UNCERTAINTY_ANALYSIS_PROMPT = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            """You are an expert in uncertainty quantification and probabilistic reasoning.
+UNCERTAINTY_ANALYSIS_PROMPT = ChatPromptTemplate.from_messages([
+    (
+        'system',
+        """You are an expert in uncertainty quantification and probabilistic reasoning.
 
 Your role is to:
 1. Identify all sources of uncertainty
@@ -178,17 +177,16 @@ Provide comprehensive uncertainty analysis:
    - Which uncertainties to reduce first
    - How to make reasoning more robust
    - What additional info would help most""",
-        ),
-        ("human", "Analyze uncertainty in this reasoning:\n{reasoning_chain}"),
-        MessagesPlaceholder(variable_name="messages", optional=True),
-    ]
-)
+    ),
+    ('human', 'Analyze uncertainty in this reasoning:\n{reasoning_chain}'),
+    MessagesPlaceholder(variable_name='messages', optional=True),
+], )
 
 
 def create_uncertainty_analyzer() -> Any:
     """Create the uncertainty analysis agent."""
     return AugLLMConfig(
-        name="uncertainty_analyzer",
+        name='uncertainty_analyzer',
         prompt_template=UNCERTAINTY_ANALYSIS_PROMPT,
         structured_output_model=UncertaintyAnalysis,
         temperature=0.3,

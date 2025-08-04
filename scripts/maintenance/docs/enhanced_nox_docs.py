@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Enhanced nox documentation session with better error handling and styling."""
+"""Enhanced nox documentation session with better error handling and
+styling."""
 
+from __future__ import annotations
+
+from datetime import datetime
 import os
+from pathlib import Path
 import shutil
 import subprocess
-from datetime import datetime
-from pathlib import Path
 
 import nox
 
@@ -77,7 +80,8 @@ def run_sphinx_build(session, cmd, operation, log_file):
                     session.log(f"✅ {line}")
                 elif "AutoAPI" in line and "Reading files" in line:
                     session.log(f"📚 {line}")
-                elif line and not line.startswith(("Running Sphinx", "loading")):
+                elif line and not line.startswith(
+                        ("Running Sphinx", "loading")):
                     session.log(f"📄 {line}")
 
         status["returncode"] = process.poll()
@@ -98,10 +102,10 @@ def run_sphinx_build(session, cmd, operation, log_file):
             session.log(f"✅ {operation} completed successfully!")
         elif status["output_exists"]:
             session.log(
-                f"⚠️  {operation} completed with issues but documentation was built!"
+                f"⚠️  {operation} completed with issues but documentation was built!",
             )
             session.log(
-                f"📊 Found {status['warnings']} warnings, {status['errors']} errors"
+                f"📊 Found {status['warnings']} warnings, {status['errors']} errors",
             )
         else:
             session.log(f"❌ {operation} failed - no output generated")
@@ -118,8 +122,10 @@ def run_sphinx_build(session, cmd, operation, log_file):
 
 @nox.session(python=PYTHON_VERSIONS)
 def docs_enhanced(session):
-    """Enhanced sphinx-build with comprehensive error handling, syntax checking, and beautiful output."""
-    session.log("🎨 Running ENHANCED sphinx-build with comprehensive features...")
+    """Enhanced sphinx-build with comprehensive error handling, syntax
+    checking, and beautiful output."""
+    session.log(
+        "🎨 Running ENHANCED sphinx-build with comprehensive features...")
     session.log("=" * 60)
     session.log("🚀 HAIVE DOCUMENTATION BUILD - ENHANCED MODE")
     session.log("=" * 60)
@@ -135,7 +141,11 @@ def docs_enhanced(session):
     session.log("🔍 Running pre-build syntax check...")
     try:
         session.run(
-            "poetry", "run", "python", "pre_build_syntax_check.py", external=True
+            "poetry",
+            "run",
+            "python",
+            "pre_build_syntax_check.py",
+            external=True,
         )
         session.log("✅ Pre-build syntax check passed")
     except Exception as e:
@@ -203,7 +213,8 @@ def docs_enhanced(session):
         session.log("🌐 Access your documentation:")
         session.log(f"   📁 Local file: {BUILD_DIR / 'index.html'}")
         session.log("   🌐 HTTP server: Run 'nox -s docs_serve' to serve")
-        session.log("   🔄 Auto-rebuild: Run 'nox -s docs_autobuild' for live updates")
+        session.log(
+            "   🔄 Auto-rebuild: Run 'nox -s docs_autobuild' for live updates")
         session.log("")
         session.log("✨ Features available:")
         session.log("   🌙 Dark/Light mode toggle")
@@ -224,7 +235,8 @@ def docs_enhanced(session):
         session.log("   No documentation output was generated")
         session.log(f"   📋 Check log file: {log_file}")
         session.log("   🔧 Common fixes:")
-        session.log("     - Run 'poetry run python fix_critical_syntax_errors.py'")
+        session.log(
+            "     - Run 'poetry run python fix_critical_syntax_errors.py'")
         session.log("     - Check for missing dependencies")
         session.log("     - Verify Python imports")
 

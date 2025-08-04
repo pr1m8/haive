@@ -13,9 +13,6 @@ group_deps = poetry.get("group", {})
 extras = poetry.get("extras", {})
 sources = poetry.get("source", [])
 
-from pathlib import Path
-
-import toml
 
 # Locate the root pyproject.toml
 pyproject_path = Path(__file__).resolve().parents[2] / "pyproject.toml"

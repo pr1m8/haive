@@ -117,14 +117,14 @@ Conducts comprehensive research on topics
 
        Research Report: AI in Healthcare
 
-   
+
    Sources Analyzed: 47
    Key Findings: 12
    Confidence Level: High
-   
+
    Executive Summary:
    AI adoption in healthcare has increased 40% in 2024...
-   
+
    Full report: 2,500 words
    Citations: 23
 

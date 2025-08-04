@@ -108,7 +108,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">SimpleAgent</h3>
    <p class="agent-description">
 
-                        The foundation agent for straightforward conversational AI tasks. 
+                        The foundation agent for straightforward conversational AI tasks.
                         Perfect for chatbots, Q&A systems, and basic interactions.
 .. raw:: html
 
@@ -159,7 +159,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">StructuredSimpleAgent</h3>
    <p class="agent-description">
 
-                        Get perfectly structured, validated responses using Pydantic models. 
+                        Get perfectly structured, validated responses using Pydantic models.
                         Ideal for APIs, data extraction, and form processing.
 .. raw:: html
 
@@ -210,7 +210,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">SimpleAgentV2</h3>
    <p class="agent-description">
 
-                        Next-generation simple agent with advanced state management, 
+                        Next-generation simple agent with advanced state management,
                         tool integration, and enhanced performance.
 .. raw:: html
 
@@ -282,7 +282,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">ReactAgent</h3>
    <p class="agent-description">
 
-                        Powerful reasoning agent that can use tools to solve complex problems. 
+                        Powerful reasoning agent that can use tools to solve complex problems.
                         Combines thought, action, and observation cycles.
 .. raw:: html
 
@@ -333,7 +333,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">ReactAgent + Memory</h3>
    <p class="agent-description">
 
-                        Enhanced ReAct agent with persistent memory for long-term reasoning 
+                        Enhanced ReAct agent with persistent memory for long-term reasoning
                         and complex multi-step problem solving.
 .. raw:: html
 
@@ -405,7 +405,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">BaseRAGAgent</h3>
    <p class="agent-description">
 
-                        Foundation RAG agent for building knowledge-aware applications. 
+                        Foundation RAG agent for building knowledge-aware applications.
                         Integrates with various vector stores and retrieval strategies.
 .. raw:: html
 
@@ -456,7 +456,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">AgenticRAG</h3>
    <p class="agent-description">
 
-                        State-of-the-art RAG with document grading, query rewriting, 
+                        State-of-the-art RAG with document grading, query rewriting,
                         and web search fallback. Production-ready for complex Q&A.
 .. raw:: html
 
@@ -507,7 +507,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">AdaptiveRAG</h3>
    <p class="agent-description">
 
-                        Intelligent RAG that dynamically adjusts retrieval strategy based 
+                        Intelligent RAG that dynamically adjusts retrieval strategy based
                         on query complexity and available resources.
 .. raw:: html
 
@@ -579,7 +579,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">MultiAgent</h3>
    <p class="agent-description">
 
-                        Orchestrate multiple specialized agents working together. 
+                        Orchestrate multiple specialized agents working together.
                         Supports sequential, parallel, and conditional execution patterns.
 .. raw:: html
 
@@ -630,7 +630,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">SupervisorAgent</h3>
    <p class="agent-description">
 
-                        Intelligent task delegation to specialized worker agents. 
+                        Intelligent task delegation to specialized worker agents.
                         Monitors progress and ensures quality outcomes.
 .. raw:: html
 
@@ -681,7 +681,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">DebateAgent</h3>
    <p class="agent-description">
 
-                        Facilitate structured debates between multiple agents to explore 
+                        Facilitate structured debates between multiple agents to explore
                         different perspectives and reach consensus.
 .. raw:: html
 
@@ -753,7 +753,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">PersonResearchAgent</h3>
    <p class="agent-description">
 
-                        Comprehensive research agent for gathering and analyzing information 
+                        Comprehensive research agent for gathering and analyzing information
                         about individuals from various sources.
 .. raw:: html
 
@@ -804,7 +804,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">DeepResearchAgent</h3>
    <p class="agent-description">
 
-                        Advanced research agent that performs iterative, deep-dive research 
+                        Advanced research agent that performs iterative, deep-dive research
                         with source verification and synthesis.
 .. raw:: html
 
@@ -855,7 +855,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">STORMAgent</h3>
    <p class="agent-description">
 
-                        Stanford's STORM methodology for creating comprehensive, 
+                        Stanford's STORM methodology for creating comprehensive,
                         Wikipedia-style articles from research.
 .. raw:: html
 
@@ -927,7 +927,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">PlanAndExecuteAgent</h3>
    <p class="agent-description">
 
-                        Creates comprehensive plans and executes them step-by-step with 
+                        Creates comprehensive plans and executes them step-by-step with
                         adaptive replanning based on outcomes.
 .. raw:: html
 
@@ -978,7 +978,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">ReWOOAgent</h3>
    <p class="agent-description">
 
-                        Reasoning without observation - plans entire tool use sequence 
+                        Reasoning without observation - plans entire tool use sequence
                         upfront for maximum efficiency.
 .. raw:: html
 
@@ -1029,7 +1029,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">SelfDiscoverAgent</h3>
    <p class="agent-description">
 
-                        Meta-reasoning agent that discovers and applies the best reasoning 
+                        Meta-reasoning agent that discovers and applies the best reasoning
                         structure for each unique problem.
 .. raw:: html
 
@@ -1101,7 +1101,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">DocumentProcessingAgent</h3>
    <p class="agent-description">
 
-                        Intelligent document processing with extraction, summarization, 
+                        Intelligent document processing with extraction, summarization,
                         and structured data output capabilities.
 .. raw:: html
 
@@ -1152,7 +1152,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">KnowledgeGraphAgent</h3>
    <p class="agent-description">
 
-                        Build and query knowledge graphs from unstructured data. 
+                        Build and query knowledge graphs from unstructured data.
                         Perfect for relationship mapping and insights.
 .. raw:: html
 
@@ -1203,7 +1203,7 @@ Explore our comprehensive collection of AI agents, each designed for specific us
    <h3 class="agent-name">SummarizationAgent</h3>
    <p class="agent-description">
 
-                        Advanced summarization with multiple strategies: extractive, 
+                        Advanced summarization with multiple strategies: extractive,
                         abstractive, and hierarchical summarization.
 .. raw:: html
 

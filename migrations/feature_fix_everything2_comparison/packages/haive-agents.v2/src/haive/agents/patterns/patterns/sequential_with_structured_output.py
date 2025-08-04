@@ -23,7 +23,6 @@ from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 
-
 # Type variable for structured output models
 OutputT = TypeVar("OutputT", bound=BaseModel)
 
@@ -32,7 +31,8 @@ class SequentialHooks(BaseModel):
     """Hooks for customizing sequential agent behavior."""
 
     pre_process: Callable[[dict[str, Any]], dict[str, Any]] | None = Field(
-        default=None, description="Function to preprocess input before first agent"
+        default=None,
+        description="Function to preprocess input before first agent",
     )
 
     intermediate_transform: Callable[[Any], dict[str, Any]] | None = Field(
@@ -41,11 +41,13 @@ class SequentialHooks(BaseModel):
     )
 
     post_process: Callable[[Any], Any] | None = Field(
-        default=None, description="Function to post-process final output"
+        default=None,
+        description="Function to post-process final output",
     )
 
     error_handler: Callable[[Exception], Any] | None = Field(
-        default=None, description="Function to handle errors in the pipeline"
+        default=None,
+        description="Function to handle errors in the pipeline",
     )
 
     class Config:
@@ -95,29 +97,27 @@ class SequentialAgentWithStructuredOutput(Generic[OutputT]):
         else:
             # Create default structured output agent
             self.second_agent = self._create_structured_output_agent(
-                structured_output_prompt
-            )
+                structured_output_prompt, )
 
     def _create_structured_output_agent(
-        self, custom_prompt: ChatPromptTemplate | None = None
+        self,
+        custom_prompt: ChatPromptTemplate | None = None,
     ) -> SimpleAgent:
         """Create default agent for structured output."""
         # Default structured output prompt if none provided
         if custom_prompt is None:
             custom_prompt = ChatPromptTemplate.from_messages(
                 [
-                    (
-                        "system",
-                        """You are a structured output specialist. Your role is to take the provided
+                    ("system",
+                     """You are a structured output specialist. Your role is to take the provided
 information and organize it into the requested structured format.
 
 Ensure all required fields are populated accurately based on the input data.
 If certain information is not available, use reasonable defaults or indicate
 that the information is missing.""",
-                    ),
-                    (
-                        "human",
-                        """Please structure the following information into the required format.
+                     ),
+                    ("human",
+                     """Please structure the following information into the required format.
 
 Input Information:
 {input_data}
@@ -132,9 +132,10 @@ Requirements:
 - Flag any missing or uncertain information
 
 Provide the structured output now:""",
-                    ),
-                ]
-            ).partial(context="")
+                     ),
+                ],
+            ).partial(
+                context="")
 
         return SimpleAgent(
             name=f"{self.name}_structurer",
@@ -147,7 +148,10 @@ Provide the structured output now:""",
         )
 
     async def arun(
-        self, input_data: Any, context: dict[str, Any] | None = None, **kwargs
+        self,
+        input_data: Any,
+        context: dict[str, Any] | None = None,
+        **kwargs,
     ) -> OutputT:
         """Run the sequential agent pipeline asynchronously.
 
@@ -178,61 +182,65 @@ Provide the structured output now:""",
 
             # Transform intermediate result if hook provided
             if self.hooks.intermediate_transform:
-                structured_input = self.hooks.intermediate_transform(first_result)
+                structured_input = self.hooks.intermediate_transform(
+                    first_result)
             else:
                 # Default transformation
                 structured_input = self._default_transform(
-                    first_result, input_data, context
+                    first_result,
+                    input_data,
+                    context,
                 )
 
             # Step 2: Run structured output agent
             if self.debug:
                 pass
 
-            structured_result = await self.second_agent.arun(structured_input, **kwargs)
+            structured_result = await self.second_agent.arun(
+                structured_input, **kwargs)
 
             if self.debug:
                 pass
 
             # Extract the actual structured output from the result
-            if hasattr(structured_result, "messages") and structured_result.messages:
+            if hasattr(structured_result,
+                       "messages") and structured_result.messages:
                 # Get the last message
                 last_message = structured_result.messages[-1]
 
                 # Check if it has tool calls (structured output)
-                if hasattr(last_message, "tool_calls") and last_message.tool_calls:
+                if hasattr(last_message,
+                           "tool_calls") and last_message.tool_calls:
                     for tool_call in last_message.tool_calls:
-                        if (
-                            "name" in tool_call
-                            and tool_call["name"]
-                            == self.structured_output_model.__name__
-                        ):
+                        if ("name" in tool_call and tool_call["name"]
+                                == self.structured_output_model.__name__):
                             # Parse the structured output
                             import json
 
                             args = tool_call.get("args", {})
                             if isinstance(args, str):
                                 args = json.loads(args)
-                            structured_result = self.structured_output_model(**args)
+                            structured_result = self.structured_output_model(
+                                **args)
                             break
                         if "function" in tool_call:
                             # Handle OpenAI format
                             func = tool_call["function"]
-                            if (
-                                func.get("name")
-                                == self.structured_output_model.__name__
-                            ):
+                            if func.get(
+                                    "name"
+                            ) == self.structured_output_model.__name__:
                                 args = func.get("arguments", {})
                                 if isinstance(args, str):
                                     args = json.loads(args)
-                                structured_result = self.structured_output_model(**args)
+                                structured_result = self.structured_output_model(
+                                    **args)
                                 break
             elif isinstance(structured_result, dict):
                 # Try to extract from dict format
-                if self.structured_output_model.__name__.lower() in structured_result:
+                if self.structured_output_model.__name__.lower(
+                ) in structured_result:
                     structured_result = structured_result[
-                        self.structured_output_model.__name__.lower()
-                    ]
+                        self.structured_output_model.__name__.lower()]
                 elif "output" in structured_result:
                     structured_result = structured_result["output"]
 
@@ -240,8 +248,7 @@ Provide the structured output now:""",
                 if isinstance(structured_result, dict):
                     with contextlib.suppress(Exception):
                         structured_result = self.structured_output_model(
-                            **structured_result
-                        )
+                            **structured_result, )
 
             # Post-process if hook provided
             if self.hooks.post_process:
@@ -272,7 +279,9 @@ Provide the structured output now:""",
             # Handle agent state with messages
             messages = first_result.messages
             if messages:
-                input_data = {"content": messages[-1].content if messages else ""}
+                input_data = {
+                    "content": messages[-1].content if messages else ""
+                }
             else:
                 input_data = {"content": str(first_result)}
         else:
@@ -320,7 +329,9 @@ def create_react_to_structured(
     react_config = react_config or {}
 
     react_agent = ReactAgent(
-        name=f"{name}_react", tools=tools, engine=AugLLMConfig(**react_config)
+        name=f"{name}_react",
+        tools=tools,
+        engine=AugLLMConfig(**react_config),
     )
 
     return SequentialAgentWithStructuredOutput(
@@ -360,7 +371,8 @@ def create_analysis_to_report(
 
     analysis_agent = SimpleAgent(
         name=f"{name}_analyzer",
-        engine=AugLLMConfig(prompt_template=analysis_prompt, **analysis_config),
+        engine=AugLLMConfig(prompt_template=analysis_prompt,
+                            **analysis_config),
     )
 
     return SequentialAgentWithStructuredOutput(

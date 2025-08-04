@@ -1,8 +1,8 @@
 # Invalid Import Format Errors
 
-**Date Discovered**: 2025-01-21  
-**Priority**: Critical  
-**Status**: Active  
+**Date Discovered**: 2025-01-21
+**Priority**: Critical
+**Status**: Active
 **Package(s)**: haive-prebuilt
 
 ## Problem Description

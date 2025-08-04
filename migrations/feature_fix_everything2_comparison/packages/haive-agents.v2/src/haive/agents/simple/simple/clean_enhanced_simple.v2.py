@@ -9,28 +9,16 @@ Functions:
     setup_agent: Setup Agent functionality.
     build_graph: Build Graph functionality.
 """
-
 # src/haive/agents/simple/clean_enhanced_simple.py
-
 """Clean Enhanced SimpleAgent - SimpleAgent as Agent[AugLLMConfig].
 
 This is the cleanest implementation showing SimpleAgent is just Agent[AugLLMConfig].
 """
+from __future__ import annotations
 
 import logging
-from typing import Any
-
-from langchain_core.messages import AIMessage
-from langgraph.graph import END, START
-from pydantic import Field
 
 # Import from enhanced base module
-from haive.agents.base.enhanced_agent import Agent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.node.tool_node_config_v2 import ToolNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
 
 logger = logging.getLogger(__name__)
 
@@ -93,7 +81,10 @@ class SimpleAgent(Agent[AugLLMConfig]):
             graph.add_conditional_edges(
                 "agent",
                 lambda s: "tools" if self._has_tool_calls(s) else "end",
-                {"tools": "tools", "end": END},
+                {
+                    "tools": "tools",
+                    "end": END
+                },
             )
             graph.add_edge("tools", END)
         else:

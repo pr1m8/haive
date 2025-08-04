@@ -18,7 +18,7 @@ A research agent using ReAct pattern with tool integration
    :alt: ReactResearchAgent Agent Graph
    :align: center
    :width: 80%
-   
+
    Agent Architecture Graph
 
 Interactive Example

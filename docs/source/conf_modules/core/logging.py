@@ -6,6 +6,8 @@ This module sets up logging for debugging Sphinx builds including:
 - Debug helpers
 """
 
+from __future__ import annotations
+
 import logging
 from pathlib import Path
 from typing import Any
@@ -78,7 +80,9 @@ def get_debug_config() -> dict[str, Any]:
         Dictionary with debug-level logging
     """
     return get_config(
-        log_level="DEBUG", log_file="sphinx_debug_full.log", console_output=True
+        log_level="DEBUG",
+        log_file="sphinx_debug_full.log",
+        console_output=True,
     )
 
 
@@ -89,13 +93,17 @@ def get_minimal_config() -> dict[str, Any]:
 
 def get_standard_config() -> dict[str, Any]:
     """Get standard logging configuration."""
-    return get_config(log_level="INFO", log_file="sphinx.log", console_output=True)
+    return get_config(log_level="INFO",
+                      log_file="sphinx.log",
+                      console_output=True)
 
 
 def get_full_config() -> dict[str, Any]:
     """Get full logging configuration with debug."""
     return get_config(
-        log_level="DEBUG", log_file="sphinx_debug.log", console_output=True
+        log_level="DEBUG",
+        log_file="sphinx_debug.log",
+        console_output=True,
     )
 
 

@@ -9,20 +9,11 @@ Functions:
     placeholder_node: Placeholder Node functionality.
     build_graph: Build Graph functionality.
 """
-
 # haive/agents/multi/sequential.py
-
 """Sequential multi-agent implementation for the Haive framework."""
+from __future__ import annotations
 
 import logging
-from typing import Any
-
-from langgraph.graph import END, START
-from langgraph.types import Command
-
-from haive.agents.multi.base import MultiAgent
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
 
 logger = logging.getLogger(__name__)
 
@@ -79,11 +70,12 @@ class SequentialMultiAgent(MultiAgent):
 
     def _setup_node(self, state: Any) -> Command:
         """Initialize the multi-agent state."""
-        return Command(
-            update={
-                "agents": self._agent_order,
-                "current_agent": self._agent_order[0] if self._agent_order else None,
-                "completed_agents": [],
-                "execution_mode": "sequential",
-            }
-        )
+        return Command(update={
+            "agents":
+            self._agent_order,
+            "current_agent":
+            self._agent_order[0] if self._agent_order else None,
+            "completed_agents": [],
+            "execution_mode":
+            "sequential",
+        }, )

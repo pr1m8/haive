@@ -168,18 +168,18 @@ Classic card game with multiple variants
 
        5-Card Draw
 
-   
+
    Your Hand: [K♠][K♥][7♦][7♣][A♠]
-   
+
    Pot: $320
    Current Bet: $50
-   
+
    Actions:
    - Player 1: Bet $50
    - Player 2: Call $50
    - Player 3: Fold
    - You: ?
-   
+
    Draw Phase | Cards to exchange: ?
 
 .. raw:: html

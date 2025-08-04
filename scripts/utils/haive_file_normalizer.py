@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Haive File Normalizer and Import Fixer
+"""Haive File Normalizer and Import Fixer.
 
 A comprehensive utility for the Haive polyrepo framework:
 1. Normalizing file names in directories
@@ -20,10 +20,10 @@ Usage:
 """
 
 import argparse
+from pathlib import Path
 import re
 import shutil
 import sys
-from pathlib import Path
 
 # Rich imports for beautiful CLI
 from rich.console import Console
@@ -40,7 +40,6 @@ from rich.table import Table
 # Import fixing dependencies
 try:
     import libcst as cst
-    from libcst import matchers as m
 
     LIBCST_AVAILABLE = True
 except ImportError:
@@ -81,7 +80,8 @@ class HaivePathResolver:
             haive_idx = None
 
             for i, part in enumerate(parts):
-                if part == "src" and i + 1 < len(parts) and parts[i + 1] == "haive":
+                if part == "src" and i + 1 < len(parts) and parts[
+                        i + 1] == "haive":
                     src_idx = i
                     haive_idx = i + 1
                     break
@@ -92,7 +92,8 @@ class HaivePathResolver:
 
                 # Remove .py extension from the last part if it's a file
                 if module_parts[-1].endswith(".py"):
-                    module_parts = module_parts[:-1] + (module_parts[-1][:-3],)
+                    module_parts = module_parts[:-1] + (
+                        module_parts[-1][:-3], )
 
                 return ".".join(module_parts)
 
@@ -127,13 +128,14 @@ class ImportFixer:
         """Fix relative imports to absolute imports in Haive namespace."""
         if not LIBCST_AVAILABLE:
             self.console.print(
-                "[red]libcst not available. Install with: pip install libcst[/red]"
+                "[red]libcst not available. Install with: pip install libcst[/red]",
             )
             return source_code
 
         try:
             tree = cst.parse_module(source_code)
-            transformer = RelativeImportTransformer(file_path, self.target_package)
+            transformer = RelativeImportTransformer(file_path,
+                                                    self.target_package)
             modified_tree = tree.visit(transformer)
             return modified_tree.code
         except Exception as e:
@@ -150,7 +152,9 @@ class RelativeImportTransformer(cst.CSTTransformer):
         self.current_module = HaivePathResolver.resolve_import_path(file_path)
 
     def leave_ImportFrom(
-        self, original_node: cst.ImportFrom, updated_node: cst.ImportFrom
+        self,
+        original_node: cst.ImportFrom,
+        updated_node: cst.ImportFrom,
     ) -> cst.ImportFrom:
         """Transform relative imports to absolute imports."""
         if updated_node.module is None:
@@ -158,15 +162,11 @@ class RelativeImportTransformer(cst.CSTTransformer):
 
         # Check if it's a relative import
         if isinstance(updated_node.module, cst.Attribute) or (
-            isinstance(updated_node.module, cst.Name)
-            and str(updated_node.module.value).startswith(".")
-        ):
+                isinstance(updated_node.module, cst.Name)
+                and str(updated_node.module.value).startswith(".")):
             # Convert relative to absolute
-            relative_path = (
-                str(updated_node.module.value)
-                if hasattr(updated_node.module, "value")
-                else str(updated_node.module)
-            )
+            relative_path = (str(updated_node.module.value) if hasattr(
+                updated_node.module, "value") else str(updated_node.module))
 
             if relative_path.startswith("."):
                 # Calculate absolute import
@@ -174,17 +174,16 @@ class RelativeImportTransformer(cst.CSTTransformer):
                     module_parts = self.current_module.split(".")
 
                     # Handle different levels of relative imports
-                    levels = len(relative_path) - len(relative_path.lstrip("."))
+                    levels = len(relative_path) - len(
+                        relative_path.lstrip("."))
                     remaining_path = relative_path.lstrip(".")
 
                     if levels == 1:  # from .module
                         base_module = ".".join(module_parts[:-1])
                     else:  # from ..module, ...module, etc.
                         base_module = ".".join(
-                            module_parts[: -(levels - 1)]
-                            if levels > 1
-                            else module_parts
-                        )
+                            module_parts[:-(levels - 1)]
+                            if levels > 1 else module_parts, )
 
                     if remaining_path:
                         absolute_import = f"{base_module}.{remaining_path}"
@@ -192,17 +191,14 @@ class RelativeImportTransformer(cst.CSTTransformer):
                         absolute_import = base_module
 
                     # Create new module node
-                    new_module = cst.parse_expression(f'"{absolute_import}"').value
+                    cst.parse_expression(f'"{absolute_import}"').value
                     return updated_node.with_changes(
-                        module=(
-                            cst.Attribute(
-                                value=cst.Name(absolute_import.split(".")[0]),
-                                attr=cst.Name(".".join(absolute_import.split(".")[1:])),
-                            )
-                            if "." in absolute_import
-                            else cst.Name(absolute_import)
-                        )
-                    )
+                        module=(cst.Attribute(
+                            value=cst.Name(absolute_import.split(".")[0]),
+                            attr=cst.Name(".".join(
+                                absolute_import.split(".")[1:])),
+                        ) if "." in absolute_import else
+                            cst.Name(absolute_import)), )
 
         return updated_node
 
@@ -220,17 +216,15 @@ class FileNormalizer:
             return ""
 
         # Get directory name as potential prefix
-        dir_name = (
-            self.directory.name.lower()
-            .replace(" ", "")
-            .replace("-", "")
-            .replace("_", "")
-        )
+        dir_name = self.directory.name.lower().replace(" ", "").replace(
+            "-", "").replace("_", "")
 
         # Check if directory name is a common prefix
         dir_matches = 0
         for file in files:
-            clean_file = file.lower().replace(" ", "").replace("-", "").replace("_", "")
+            clean_file = file.lower().replace(" ",
+                                              "").replace("-",
+                                                          "").replace("_", "")
             if clean_file.startswith(dir_name):
                 dir_matches += 1
 
@@ -251,7 +245,8 @@ class FileNormalizer:
         return prefix if len(prefix) >= 3 else ""
 
     def extract_number_suffix(self, filename: str) -> tuple[str, int | None]:
-        """Extract number suffix from filename (e.g., 'file (1).py' -> ('file.py', 1))."""
+        """Extract number suffix from filename (e.g., 'file (1).py' ->
+        ('file.py', 1))."""
         # Pattern for files with numbers: "name (n)", "name_n", "name-n", etc.
         patterns = [
             r"^(.+?)\s*\((\d+)\)(\.[^.]+)?$",  # file (1).ext
@@ -268,7 +263,8 @@ class FileNormalizer:
 
         return filename, None
 
-    def group_duplicate_files(self, files: list[Path]) -> dict[str, list[Path]]:
+    def group_duplicate_files(self,
+                              files: list[Path]) -> dict[str, list[Path]]:
         """Group files that are likely duplicates."""
         groups = {}
 
@@ -305,13 +301,15 @@ class FileNormalizer:
             clean_prefix = common_prefix.lower()
             if clean_name.startswith(clean_prefix):
                 # Remove prefix and any following separators
-                remaining = name_part[len(common_prefix) :]
+                remaining = name_part[len(common_prefix):]
                 name_part = remaining.lstrip("_- ")
 
         # Clean up the name
         name_part = re.sub(r"[_\-\s]+", "_", name_part)  # Normalize separators
         name_part = re.sub(
-            r"^_+|_+$", "", name_part
+            r"^_+|_+$",
+            "",
+            name_part,
         )  # Remove leading/trailing underscores
 
         # Ensure we have a name
@@ -323,7 +321,8 @@ class FileNormalizer:
     def normalize_directory(self, dry_run: bool = True) -> dict[str, any]:
         """Normalize all files in the directory."""
         if not self.directory.exists():
-            self.console.print(f"[red]Directory {self.directory} does not exist[/red]")
+            self.console.print(
+                f"[red]Directory {self.directory} does not exist[/red]")
             return {"success": False, "error": "Directory not found"}
 
         # Get all files
@@ -339,8 +338,7 @@ class FileNormalizer:
                 f"[bold blue]Analyzing Directory:[/bold blue] {self.directory}\n"
                 f"[dim]Found {len(all_files)} files[/dim]",
                 title="File Normalizer",
-            )
-        )
+            ), )
 
         # Find common prefix
         filenames = [f.name for f in all_files]
@@ -348,8 +346,7 @@ class FileNormalizer:
 
         if common_prefix:
             self.console.print(
-                f"[green]Detected common prefix:[/green] '{common_prefix}'"
-            )
+                f"[green]Detected common prefix:[/green] '{common_prefix}'", )
 
         # Group duplicates FIRST (before normalization)
         file_groups = self.group_duplicate_files(all_files)
@@ -358,13 +355,14 @@ class FileNormalizer:
         duplicates_removed = []
 
         with Progress(
-            SpinnerColumn(),
-            TextColumn("[progress.description]{task.description}"),
-            BarColumn(),
-            TaskProgressColumn(),
-            console=self.console,
+                SpinnerColumn(),
+                TextColumn("[progress.description]{task.description}"),
+                BarColumn(),
+                TaskProgressColumn(),
+                console=self.console,
         ) as progress:
-            task = progress.add_task("Processing files...", total=len(file_groups))
+            task = progress.add_task("Processing files...",
+                                     total=len(file_groups))
 
             for base_name, files in file_groups.items():
                 if len(files) > 1:
@@ -375,9 +373,9 @@ class FileNormalizer:
                             duplicates_removed.append(
                                 {
                                     "file": str(file),
-                                    "reason": f"Duplicate of {newest_file.name}",
-                                }
-                            )
+                                    "reason":
+                                    f"Duplicate of {newest_file.name}",
+                                }, )
                             if not dry_run:
                                 file.unlink()
 
@@ -388,16 +386,19 @@ class FileNormalizer:
 
                 # Normalize filename for remaining files
                 for file in files_to_process:
-                    # For duplicates, we need to work with the base name (without numbers)
+                    # For duplicates, we need to work with the base name (without
+                    # numbers)
                     if len(files) > 1:
                         # This was a duplicate group, normalize the base name
                         normalized_name = self.normalize_filename(
-                            base_name, common_prefix
+                            base_name,
+                            common_prefix,
                         )
                     else:
                         # Single file, normalize as normal
                         normalized_name = self.normalize_filename(
-                            file.name, common_prefix
+                            file.name,
+                            common_prefix,
                         )
 
                     if normalized_name != file.name:
@@ -407,22 +408,21 @@ class FileNormalizer:
                         counter = 1
                         original_normalized = normalized_name
                         while new_path.exists() and new_path != file:
-                            name_part, ext = (
-                                original_normalized.rsplit(".", 1)
-                                if "." in original_normalized
-                                else (original_normalized, "")
-                            )
-                            normalized_name = (
-                                f"{name_part}_{counter}.{ext}"
-                                if ext
-                                else f"{name_part}_{counter}"
-                            )
+                            name_part, ext = (original_normalized.rsplit(
+                                ".", 1) if "." in original_normalized else
+                                (original_normalized, ""))
+                            normalized_name = (f"{name_part}_{counter}.{ext}"
+                                               if ext else
+                                               f"{name_part}_{counter}")
                             new_path = file.parent / normalized_name
                             counter += 1
 
                         changes.append(
-                            {"old": str(file), "new": str(new_path), "type": "rename"}
-                        )
+                            {
+                                "old": str(file),
+                                "new": str(new_path),
+                                "type": "rename"
+                            }, )
                         if not dry_run:
                             file.rename(new_path)
 
@@ -439,19 +439,21 @@ class FileNormalizer:
         }
 
     def _display_results(
-        self, changes: list[dict], duplicates: list[dict], dry_run: bool
+        self,
+        changes: list[dict],
+        duplicates: list[dict],
+        dry_run: bool,
     ):
         """Display the results of normalization."""
         if not changes and not duplicates:
             self.console.print(
-                "[green]✓ No changes needed - all files are already normalized[/green]"
+                "[green]✓ No changes needed - all files are already normalized[/green]",
             )
             return
 
         # Create results table
         table = Table(
-            title=f"File Normalization Results {'(DRY RUN)' if dry_run else ''}"
-        )
+            title=f"File Normalization Results {'(DRY RUN)' if dry_run else ''}", )
         table.add_column("Action", style="cyan")
         table.add_column("From", style="red")
         table.add_column("To", style="green")
@@ -468,8 +470,7 @@ class FileNormalizer:
 
         if dry_run:
             self.console.print(
-                "\n[yellow]This was a dry run. Use --execute to apply changes.[/yellow]"
-            )
+                "\n[yellow]This was a dry run. Use --execute to apply changes.[/yellow]", )
 
 
 class DownloadNormalizer:
@@ -479,7 +480,9 @@ class DownloadNormalizer:
         self.downloads_dir = downloads_dir or Path.home() / "Downloads"
         self.console = console
 
-    def find_matching_downloads(self, pattern: str, limit: int = 10) -> list[Path]:
+    def find_matching_downloads(self,
+                                pattern: str,
+                                limit: int = 10) -> list[Path]:
         """Find recent downloads matching pattern."""
         if not self.downloads_dir.exists():
             return []
@@ -496,14 +499,18 @@ class DownloadNormalizer:
         return files[:limit]
 
     def normalize_downloads(
-        self, pattern: str, destination: Path, limit: int = 10, dry_run: bool = True
+        self,
+        pattern: str,
+        destination: Path,
+        limit: int = 10,
+        dry_run: bool = True,
     ) -> dict[str, any]:
         """Find, normalize, and move matching downloads."""
         matching_files = self.find_matching_downloads(pattern, limit)
 
         if not matching_files:
             self.console.print(
-                f"[yellow]No Python files found matching pattern '{pattern}'[/yellow]"
+                f"[yellow]No Python files found matching pattern '{pattern}'[/yellow]",
             )
             return {"success": True, "files": []}
 
@@ -516,8 +523,7 @@ class DownloadNormalizer:
             Panel(
                 f"Found {len(matching_files)} files matching '{pattern}'",
                 title="Download Normalizer",
-            )
-        )
+            ), )
 
         # Create temporary directory for normalization
         temp_dir = destination / "temp_normalize" if not dry_run else None
@@ -535,8 +541,7 @@ class DownloadNormalizer:
             # Normalize in temp directory
             if temp_dir:
                 normalizer = FileNormalizer(
-                    temp_dir if not dry_run else self.downloads_dir
-                )
+                    temp_dir if not dry_run else self.downloads_dir, )
                 result = normalizer.normalize_directory(dry_run=dry_run)
 
                 if not dry_run:
@@ -559,7 +564,8 @@ class DownloadNormalizer:
         except Exception as e:
             if temp_dir and temp_dir.exists():
                 shutil.rmtree(temp_dir)
-            self.console.print(f"[red]Error during download normalization: {e}[/red]")
+            self.console.print(
+                f"[red]Error during download normalization: {e}[/red]")
             return {"success": False, "error": str(e)}
 
 
@@ -587,50 +593,76 @@ Examples:
         """,
     )
 
-    subparsers = parser.add_subparsers(dest="command", help="Available commands")
+    subparsers = parser.add_subparsers(dest="command",
+                                       help="Available commands")
 
     # Normalize command
-    normalize_parser = subparsers.add_parser("normalize", help="Normalize file names")
-    normalize_parser.add_argument("directory", type=Path, help="Directory to normalize")
+    normalize_parser = subparsers.add_parser("normalize",
+                                             help="Normalize file names")
+    normalize_parser.add_argument("directory",
+                                  type=Path,
+                                  help="Directory to normalize")
     normalize_parser.add_argument(
-        "--execute", action="store_true", help="Execute changes (default is dry run)"
+        "--execute",
+        action="store_true",
+        help="Execute changes (default is dry run)",
     )
 
     # Fix imports command
-    fix_parser = subparsers.add_parser("fix-imports", help="Fix Python imports")
-    fix_parser.add_argument("directory", type=Path, help="Directory to fix imports in")
+    fix_parser = subparsers.add_parser("fix-imports",
+                                       help="Fix Python imports")
+    fix_parser.add_argument("directory",
+                            type=Path,
+                            help="Directory to fix imports in")
     fix_parser.add_argument(
         "--target-package",
         required=True,
         help="Target package (e.g., haive.games.holdem)",
     )
     fix_parser.add_argument(
-        "--execute", action="store_true", help="Execute changes (default is dry run)"
+        "--execute",
+        action="store_true",
+        help="Execute changes (default is dry run)",
     )
 
     # Download normalize command
     download_parser = subparsers.add_parser(
-        "download-normalize", help="Normalize downloads"
+        "download-normalize",
+        help="Normalize downloads",
     )
     download_parser.add_argument(
-        "pattern", help="Pattern to match in download filenames"
+        "pattern",
+        help="Pattern to match in download filenames",
     )
-    download_parser.add_argument("destination", type=Path, help="Destination directory")
+    download_parser.add_argument("destination",
+                                 type=Path,
+                                 help="Destination directory")
     download_parser.add_argument(
-        "--limit", type=int, default=10, help="Max files to process"
+        "--limit",
+        type=int,
+        default=10,
+        help="Max files to process",
     )
     download_parser.add_argument(
-        "--execute", action="store_true", help="Execute changes (default is dry run)"
+        "--execute",
+        action="store_true",
+        help="Execute changes (default is dry run)",
     )
 
     # All command
     all_parser = subparsers.add_parser(
-        "all", help="Run normalization and import fixing"
+        "all",
+        help="Run normalization and import fixing",
     )
-    all_parser.add_argument("directory", type=Path, help="Directory to process")
-    all_parser.add_argument("--target-package", help="Target package for import fixing")
+    all_parser.add_argument("directory",
+                            type=Path,
+                            help="Directory to process")
+    all_parser.add_argument("--target-package",
+                            help="Target package for import fixing")
     all_parser.add_argument(
-        "--execute", action="store_true", help="Execute changes (default is dry run)"
+        "--execute",
+        action="store_true",
+        help="Execute changes (default is dry run)",
     )
 
     args = parser.parse_args()
@@ -646,8 +678,7 @@ Examples:
             "[dim]Polyrepo-aware file management for the Haive framework[/dim]",
             title="🤖 Haive Tools",
             border_style="blue",
-        )
-    )
+        ), )
 
     try:
         if args.command == "normalize":
@@ -657,8 +688,7 @@ Examples:
         elif args.command == "fix-imports":
             if not LIBCST_AVAILABLE:
                 console.print(
-                    "[red]libcst is required for import fixing. Install with: pip install libcst[/red]"
-                )
+                    "[red]libcst is required for import fixing. Install with: pip install libcst[/red]", )
                 return 1
 
             # Fix imports in Python files
@@ -671,7 +701,8 @@ Examples:
                 return None
 
             with Progress(console=console) as progress:
-                task = progress.add_task("Fixing imports...", total=len(python_files))
+                task = progress.add_task("Fixing imports...",
+                                         total=len(python_files))
 
                 for py_file in python_files:
                     try:
@@ -679,36 +710,42 @@ Examples:
                             original_content = f.read()
 
                         fixed_content = import_fixer.fix_relative_imports(
-                            original_content, py_file
+                            original_content,
+                            py_file,
                         )
 
                         if fixed_content != original_content:
-                            console.print(f"[green]Fixed imports in:[/green] {py_file}")
+                            console.print(
+                                f"[green]Fixed imports in:[/green] {py_file}")
                             if args.execute:
                                 with open(py_file, "w", encoding="utf-8") as f:
                                     f.write(fixed_content)
 
                     except Exception as e:
-                        console.print(f"[red]Error processing {py_file}: {e}[/red]")
+                        console.print(
+                            f"[red]Error processing {py_file}: {e}[/red]")
 
                     progress.advance(task)
 
             if not args.execute:
                 console.print(
-                    "\n[yellow]This was a dry run. Use --execute to apply changes.[/yellow]"
-                )
+                    "\n[yellow]This was a dry run. Use --execute to apply changes.[/yellow]", )
 
         elif args.command == "download-normalize":
             normalizer = DownloadNormalizer()
             result = normalizer.normalize_downloads(
-                args.pattern, args.destination, args.limit, dry_run=not args.execute
+                args.pattern,
+                args.destination,
+                args.limit,
+                dry_run=not args.execute,
             )
 
         elif args.command == "all":
             # Run normalization first
             console.print("[bold]Step 1: File Normalization[/bold]")
             normalizer = FileNormalizer(args.directory)
-            norm_result = normalizer.normalize_directory(dry_run=not args.execute)
+            norm_result = normalizer.normalize_directory(
+                dry_run=not args.execute)
 
             # Then fix imports if package specified
             if args.target_package and LIBCST_AVAILABLE:
@@ -717,7 +754,7 @@ Examples:
                 # Implementation similar to fix-imports command
             elif args.target_package and not LIBCST_AVAILABLE:
                 console.print(
-                    "[yellow]Skipping import fixing - libcst not available[/yellow]"
+                    "[yellow]Skipping import fixing - libcst not available[/yellow]",
                 )
 
     except KeyboardInterrupt:

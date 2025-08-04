@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""Enhanced documentation build with comprehensive error handling and extension utilization."""
+"""Enhanced documentation build with comprehensive error handling and extension
+utilization."""
 
 import ast
+from datetime import datetime
 import json
 import os
+from pathlib import Path
 import shutil
 import subprocess
 import sys
 import traceback
-from datetime import datetime
-from pathlib import Path
 
 # Configuration
 DOCS_DIR = Path("docs")
@@ -101,28 +102,23 @@ def fix_common_syntax_errors(file_path: Path) -> bool:
         modified = False
         for i, line in enumerate(lines):
             # Fix empty except blocks
-            if line.strip().startswith("except") and line.strip().endswith(":"):
+            if line.strip().startswith("except") and line.strip().endswith(
+                    ":"):
                 if i + 1 < len(lines) and not lines[i + 1].strip():
                     lines[i + 1] = "    pass\n"
                     modified = True
 
             # Fix empty for/while loops
-            if (
-                line.strip().startswith(("for ", "while "))
-                and line.strip().endswith(":")
-                and i + 1 < len(lines)
-                and not lines[i + 1].strip()
-            ):
+            if (line.strip().startswith(
+                ("for ", "while ")) and line.strip().endswith(":")
+                    and i + 1 < len(lines) and not lines[i + 1].strip()):
                 lines[i + 1] = "    pass\n"
                 modified = True
 
             # Fix empty if/else blocks
-            if (
-                line.strip().startswith(("if ", "else", "elif "))
-                and line.strip().endswith(":")
-                and i + 1 < len(lines)
-                and not lines[i + 1].strip()
-            ):
+            if (line.strip().startswith(
+                ("if ", "else", "elif ")) and line.strip().endswith(":")
+                    and i + 1 < len(lines) and not lines[i + 1].strip()):
                 lines[i + 1] = "    pass\n"
                 modified = True
 
@@ -158,16 +154,22 @@ def pre_build_validation() -> dict:
                     valid, new_error = check_python_syntax(py_file)
                     if valid:
                         results["fixed_errors"].append(
-                            {"file": str(py_file), "original_error": error}
-                        )
+                            {
+                                "file": str(py_file),
+                                "original_error": error
+                            }, )
                     else:
                         results["syntax_errors"].append(
-                            {"file": str(py_file), "error": new_error}
-                        )
+                            {
+                                "file": str(py_file),
+                                "error": new_error
+                            }, )
                 else:
                     results["syntax_errors"].append(
-                        {"file": str(py_file), "error": error}
-                    )
+                        {
+                            "file": str(py_file),
+                            "error": error
+                        }, )
 
     # Report results
 
@@ -193,8 +195,11 @@ def check_extension_compatibility() -> dict:
             results["available"].append(ext)
         except ImportError as e:
             results["missing"].append(
-                {"extension": ext, "description": description, "error": str(e)}
-            )
+                {
+                    "extension": ext,
+                    "description": description,
+                    "error": str(e)
+                }, )
 
     if results["missing"]:
         pass
@@ -240,8 +245,7 @@ def run_sphinx_build_enhanced(log_file: Path) -> dict:
             "SPHINX_VERBOSE": "true",
             "HAIVE_DOCS_MODE": "enhanced",
             "PYTHONWARNINGS": "default",  # Show Python warnings
-        }
-    )
+        }, )
 
     try:
         # Run build process
@@ -300,9 +304,8 @@ def generate_build_report(
     log_file: Path,
 ) -> Path:
     """Generate comprehensive build report."""
-    report_file = (
-        ERROR_REPORT_DIR / f"build_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
-    )
+    report_file = ERROR_REPORT_DIR / \
+        f"build_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
 
     with open(report_file, "w") as f:
         f.write("# Haive Documentation Build Report\n\n")
@@ -318,8 +321,12 @@ def generate_build_report(
             f.write("❌ **Build Status**: FAILED\n")
 
         f.write(f"- Files validated: {validation_results['total_files']}\n")
-        f.write(f"- Syntax errors fixed: {len(validation_results['fixed_errors'])}\n")
-        f.write(f"- Remaining errors: {len(validation_results['syntax_errors'])}\n")
+        f.write(
+            f"- Syntax errors fixed: {len(validation_results['fixed_errors'])}\n"
+        )
+        f.write(
+            f"- Remaining errors: {len(validation_results['syntax_errors'])}\n"
+        )
         f.write(f"- Build warnings: {build_status['warnings']}\n")
         f.write(f"- Build errors: {build_status['errors']}\n")
         if "html_count" in build_status:
@@ -386,7 +393,8 @@ def main():
     build_status = run_sphinx_build_enhanced(log_file)
 
     # Generate comprehensive report
-    generate_build_report(validation_results, extension_results, build_status, log_file)
+    generate_build_report(validation_results, extension_results, build_status,
+                          log_file)
 
     # Final summary
 

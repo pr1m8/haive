@@ -7,20 +7,20 @@ Functions:
     extract_best_solution: Extract Best Solution functionality.
     print_tree_stats: Print Tree Stats functionality.
 """
-
 # src/haive/agents/mcts/utils.py
+from __future__ import annotations
 
 import logging
 from typing import Any
 
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.tools import BaseTool
-
 from haive.agents.reasoning_and_critique.mcts.agent import MCTSAgent
 from haive.agents.reasoning_and_critique.mcts.config import MCTSAgentConfig
 from haive.agents.reasoning_and_critique.mcts.models import Reflection
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.models.llm.base import LLMConfig
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import MessagesPlaceholder
+from langchain_core.tools import BaseTool
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -53,7 +53,8 @@ def create_mcts_agent(
     """
     # Set defaults
     llm_config = llm_config or AzureLLMConfig(
-        model="gpt-4o", parameters={"temperature": 0.7}
+        model="gpt-4o",
+        parameters={"temperature": 0.7},
     )
     tools = tools or []
     system_prompt = system_prompt or "You are an AI assistant."
@@ -61,36 +62,30 @@ def create_mcts_agent(
 
     # Create default prompt templates if not in kwargs
     if "initial_prompt_template" not in kwargs:
-        initial_prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", system_prompt),
-                ("user", "{input}"),
-                MessagesPlaceholder(variable_name="messages", optional=True),
-            ]
-        )
+        initial_prompt = ChatPromptTemplate.from_messages([
+            ("system", system_prompt),
+            ("user", "{input}"),
+            MessagesPlaceholder(variable_name="messages", optional=True),
+        ], )
         kwargs["initial_prompt_template"] = initial_prompt
 
     if "expansion_prompt_template" not in kwargs:
-        expansion_prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", system_prompt),
-                ("user", "{input}"),
-                MessagesPlaceholder(variable_name="messages"),
-            ]
-        )
+        expansion_prompt = ChatPromptTemplate.from_messages([
+            ("system", system_prompt),
+            ("user", "{input}"),
+            MessagesPlaceholder(variable_name="messages"),
+        ], )
         kwargs["expansion_prompt_template"] = expansion_prompt
 
     if "reflection_prompt_template" not in kwargs:
-        reflection_prompt = ChatPromptTemplate.from_messages(
-            [
-                (
-                    "system",
-                    "Reflect and grade the assistant response to the user question below.",
-                ),
-                ("user", "{input}"),
-                MessagesPlaceholder(variable_name="candidate"),
-            ]
-        )
+        reflection_prompt = ChatPromptTemplate.from_messages([
+            (
+                "system",
+                "Reflect and grade the assistant response to the user question below.",
+            ),
+            ("user", "{input}"),
+            MessagesPlaceholder(variable_name="candidate"),
+        ], )
         kwargs["reflection_prompt_template"] = reflection_prompt
 
     # Create agent config
@@ -129,8 +124,8 @@ def extract_best_solution(result: dict[str, Any]) -> dict[str, Any] | None:
 
     # Extract solution information
     solution_messages = nodes.deserialize_messages(
-        nodes.get_trajectory(best_solution.node_id, include_reflections=False)
-    )
+        nodes.get_trajectory(best_solution.node_id,
+                             include_reflections=False), )
 
     reflection_data = best_solution.reflection
     reflection = Reflection(**reflection_data)

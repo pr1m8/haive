@@ -1,5 +1,7 @@
 # Enhanced nitpick_ignore list for Haive documentation
 # Reduces type reference warnings while maintaining useful error detection
+from __future__ import annotations
+
 nitpicky = True  # Enable nitpicky mode to catch all reference issues
 nitpick_ignore = [
     # Basic Python types that don't need cross-references

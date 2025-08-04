@@ -55,7 +55,7 @@ final_state = agent.run_game(visualize=True)
 if final_state.get("game_status", "") == "draw":
     print("Game ended in a draw!")
 elif final_state.get("game_status", "").endswith("_win"):
-    winn
+    win
 
 ... (truncated)
 

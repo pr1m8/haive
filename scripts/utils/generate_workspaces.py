@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 from pathlib import Path
 
@@ -26,23 +28,31 @@ DEPS = {
 def generate_workspace(name, dependencies):
     # Compose list of folder paths relative to ROOT
     folders = [{"name": "root", "path": "."}]
-    all_names = list(dict.fromkeys([*dependencies, name]))  # dedupe, preserve order
+    all_names = list(dict.fromkeys([*dependencies,
+                                    name]))  # dedupe, preserve order
     folders += [{"name": n, "path": f"./packages/{n}"} for n in all_names]
 
     # Shared settings
     settings = {
-        "python.defaultInterpreterPath": "${workspaceFolder:root}/.venv/bin/python",
-        "python.analysis.extraPaths": [
-            f"${{workspaceFolder:{n}}}/src" for n in all_names
-        ],
-        "python.envFile": "${workspaceFolder:root}/.env",
-        "python.testing.pytestEnabled": True,
+        "python.defaultInterpreterPath":
+        "${workspaceFolder:root}/.venv/bin/python",
+        "python.analysis.extraPaths":
+        [f"${{workspaceFolder:{n}}}/src" for n in all_names],
+        "python.envFile":
+        "${workspaceFolder:root}/.env",
+        "python.testing.pytestEnabled":
+        True,
         "python.testing.pytestArgs": ["packages/"],
-        "editor.formatOnSave": True,
-        "python.analysis.typeCheckingMode": "basic",
-        "python.linting.enabled": True,
-        "python.linting.pylintEnabled": True,
-        "terminal.integrated.cwd": "${workspaceFolder:root}",
+        "editor.formatOnSave":
+        True,
+        "python.analysis.typeCheckingMode":
+        "basic",
+        "python.linting.enabled":
+        True,
+        "python.linting.pylintEnabled":
+        True,
+        "terminal.integrated.cwd":
+        "${workspaceFolder:root}",
         "files.exclude": {
             "**/__pycache__": True,
             "**/*.pyc": True,
@@ -55,9 +65,13 @@ def generate_workspace(name, dependencies):
     workspace_data = {
         "folders": folders,
         "settings": settings,
-        "launch": {"configurations": [], "compounds": []},
+        "launch": {
+            "configurations": [],
+            "compounds": []
+        },
         "extensions": {
-            "recommendations": ["ms-python.python", "ms-python.vscode-pylance"]
+            "recommendations":
+            ["ms-python.python", "ms-python.vscode-pylance"],
         },
     }
 

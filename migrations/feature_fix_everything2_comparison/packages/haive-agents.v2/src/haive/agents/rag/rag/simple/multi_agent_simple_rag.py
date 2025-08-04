@@ -48,22 +48,11 @@ Examples:
         )
 """
 
+
 from __future__ import annotations
-
 import logging
-from typing import Any
-
-from langchain_core.documents import Document
-from pydantic import BaseModel, Field, field_validator, model_validator
 
 # Import the proper MultiAgent base
-from haive.agents.multi.multi_agent import MultiAgent
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.engine.retriever import BaseRetrieverConfig
-from haive.core.engine.vectorstore import VectorStoreConfig
-
 
 logger = logging.getLogger(__name__)
 
@@ -132,11 +121,12 @@ class SimpleRAG(MultiAgent):
 
     retriever_config: BaseRetrieverConfig | VectorStoreConfig = Field(
         ...,
-        description="Configuration for document retrieval (vector store or retriever)",
+        description='Configuration for document retrieval (vector store or retriever)',
     )
 
     llm_config: AugLLMConfig = Field(
-        ..., description="Configuration for answer generation LLM"
+        ...,
+        description='Configuration for answer generation LLM',
     )
 
     # Retrieval parameters
@@ -144,61 +134,62 @@ class SimpleRAG(MultiAgent):
         default=5,
         ge=1,
         le=50,
-        description="Number of documents to retrieve from vector store",
+        description='Number of documents to retrieve from vector store',
     )
 
     similarity_threshold: float = Field(
         default=0.0,
         ge=0.0,
         le=1.0,
-        description="Minimum similarity score for retrieved documents",
+        description='Minimum similarity score for retrieved documents',
     )
 
     # Generation parameters
     structured_output_model: type[BaseModel] | None = Field(
-        default=None, description="Pydantic model for structured output formatting"
+        default=None,
+        description='Pydantic model for structured output formatting',
     )
 
     context_template: str = Field(
-        default="Context:\n{context}\n\nQuestion: {query}\n\nAnswer:",
+        default='Context:\n{context}\n\nQuestion: {query}\n\nAnswer:',
         min_length=10,
-        description="Template for formatting context and query for LLM",
+        description='Template for formatting context and query for LLM',
     )
 
     system_prompt_template: str = Field(
         default=(
-            "You are a helpful assistant that answers questions based on the provided context. "
-            "Use only the information in the context to answer the question. "
-            "If the context doesn't contain enough information, say so clearly."
-        ),
+            'You are a helpful assistant that answers questions based on the provided context. '
+            'Use only the information in the context to answer the question. '
+            "If the context doesn't contain enough information, say so clearly."),
         min_length=10,
-        description="System prompt template for answer generation",
+        description='System prompt template for answer generation',
     )
 
     # =============================
     # Validation and Setup
     # =============================
 
-    @field_validator("context_template")
+    @field_validator('context_template')
     @classmethod
     def validate_context_template(cls, v: str) -> str:
         """Validate context template has required placeholders."""
-        required_placeholders = {"{context}", "{query}"}
+        required_placeholders = {'{context}', '{query}'}
         missing = required_placeholders - {
-            ph for ph in required_placeholders if ph in v
+            ph
+            for ph in required_placeholders if ph in v
         }
         if missing:
             raise ValueError(
-                f"Context template missing required placeholders: {missing}"
-            )
+                f"Context template missing required placeholders: {missing}", )
         return v
 
-    @model_validator(mode="after")
+    @model_validator(mode='after')
     def setup_rag_agents(self) -> SimpleRAG:
         """Setup the retriever and generator agents after validation."""
         # Create retriever agent
         retriever_agent = BaseRAGAgent(
-            name=f"{self.name}_retriever", engine=self.retriever_config
+            name=f"{self.name}_retriever",
+            engine=self.retriever_config,
         )
 
         # Create generator agent with customized system prompt
@@ -213,14 +204,18 @@ class SimpleRAG(MultiAgent):
         )
 
         # Set up the agents dictionary (required by MultiAgent)
-        self.agents = {"retriever": retriever_agent, "generator": generator_agent}
+        self.agents = {
+            'retriever': retriever_agent,
+            'generator': generator_agent
+        }
 
         # Set execution mode to sequential (retriever → generator)
-        self.execution_mode = "sequence"
+        self.execution_mode = 'sequence'
 
         # Set up coordinator config (inherited from MultiAgent)
         # For sequential mode, we don't need coordinator but MultiAgent expects it
-        if not hasattr(self, "coordinator_config") or self.coordinator_config is None:
+        if not hasattr(
+                self, 'coordinator_config') or self.coordinator_config is None:
             self.coordinator_config = self.llm_config
 
         return self
@@ -235,7 +230,7 @@ class SimpleRAG(MultiAgent):
         documents: list[Document],
         embedding_config: Any,
         llm_config: AugLLMConfig,
-        name: str = "SimpleRAG_from_docs",
+        name: str = 'SimpleRAG_from_docs',
         **kwargs,
     ) -> SimpleRAG:
         """Create SimpleRAG from a list of documents.
@@ -269,7 +264,7 @@ class SimpleRAG(MultiAgent):
         cls,
         vector_store_config: VectorStoreConfig,
         llm_config: AugLLMConfig,
-        name: str = "SimpleRAG_from_vs",
+        name: str = 'SimpleRAG_from_vs',
         **kwargs,
     ) -> SimpleRAG:
         """Create SimpleRAG from existing vector store configuration.
@@ -296,11 +291,11 @@ class SimpleRAG(MultiAgent):
 
     def get_retriever_agent(self) -> BaseRAGAgent:
         """Get the retriever agent."""
-        return self.agents["retriever"]
+        return self.agents['retriever']
 
     def get_generator_agent(self) -> SimpleAgent:
         """Get the generator agent."""
-        return self.agents["generator"]
+        return self.agents['generator']
 
     async def retrieve_documents(
         self,
@@ -321,9 +316,9 @@ class SimpleRAG(MultiAgent):
             List of retrieved documents
         """
         retrieval_input = {
-            "query": query,
-            "k": k or self.top_k,
-            "score_threshold": score_threshold or self.similarity_threshold,
+            'query': query,
+            'k': k or self.top_k,
+            'score_threshold': score_threshold or self.similarity_threshold,
             **kwargs,
         }
 
@@ -333,17 +328,21 @@ class SimpleRAG(MultiAgent):
         # Extract documents from result
         if isinstance(result, list):
             return [doc for doc in result if isinstance(doc, Document)]
-        if isinstance(result, dict) and "documents" in result:
-            return result["documents"]
-        if hasattr(result, "documents"):
+        if isinstance(result, dict) and 'documents' in result:
+            return result['documents']
+        if hasattr(result, 'documents'):
             return list(result.documents)
         # Fallback: create document from string result
         return [
-            Document(page_content=str(result), metadata={"source": "retrieval_result"})
+            Document(page_content=str(result),
+                     metadata={'source': 'retrieval_result'}),
         ]
 
     async def generate_answer(
-        self, query: str, documents: list[Document], **kwargs
+        self,
+        query: str,
+        documents: list[Document],
+        **kwargs,
     ) -> Any:
         """Generate answer using the generator agent.
 
@@ -360,20 +359,24 @@ class SimpleRAG(MultiAgent):
         for i, doc in enumerate(documents):
             content = doc.page_content.strip()
             if content:
-                source = doc.metadata.get("source", f"Document {i+1}")
+                source = doc.metadata.get('source', f"Document {i + 1}")
                 context_parts.append(f"Source: {source}\n{content}")
 
-        context = "\n\n".join(context_parts)
+        context = '\n\n'.join(context_parts)
 
         # Format with template
-        formatted_input = self.context_template.format(context=context, query=query)
+        formatted_input = self.context_template.format(context=context,
+                                                       query=query)
 
         # Generate answer
         generator = self.get_generator_agent()
         return await generator.arun(formatted_input, **kwargs)
 
     async def arun(
-        self, input_data: str | dict[str, Any], debug: bool = False, **kwargs
+        self,
+        input_data: str | dict[str, Any],
+        debug: bool = False,
+        **kwargs,
     ) -> Any:
         """Execute RAG pipeline using MultiAgent sequential execution.
 
@@ -395,10 +398,11 @@ class SimpleRAG(MultiAgent):
         # Extract query from input
         if isinstance(input_data, str):
             query = input_data
-        elif isinstance(input_data, dict) and "query" in input_data:
-            query = input_data["query"]
+        elif isinstance(input_data, dict) and 'query' in input_data:
+            query = input_data['query']
         else:
-            raise ValueError("Input must be a string or dict with 'query' field")
+            raise ValueError(
+                "Input must be a string or dict with 'query' field")
 
         if debug:
             logger.info(f"🔍 SimpleRAG processing query: {query}")
@@ -421,30 +425,32 @@ class SimpleRAG(MultiAgent):
     def get_rag_info(self) -> dict[str, Any]:
         """Get information about the RAG configuration."""
         return {
-            "name": self.name,
-            "retriever_agent": self.agents["retriever"].name,
-            "generator_agent": self.agents["generator"].name,
-            "execution_mode": self.execution_mode,
-            "top_k": self.top_k,
-            "similarity_threshold": self.similarity_threshold,
-            "structured_output": self.structured_output_model is not None,
-            "context_template": (
-                self.context_template[:50] + "..."
-                if len(self.context_template) > 50
-                else self.context_template
-            ),
+            'name':
+            self.name,
+            'retriever_agent':
+            self.agents['retriever'].name,
+            'generator_agent':
+            self.agents['generator'].name,
+            'execution_mode':
+            self.execution_mode,
+            'top_k':
+            self.top_k,
+            'similarity_threshold':
+            self.similarity_threshold,
+            'structured_output':
+            self.structured_output_model is not None,
+            'context_template': (self.context_template[:50] + '...' if len(
+                self.context_template) > 50 else self.context_template),
         }
 
     def __repr__(self) -> str:
         """String representation showing MultiAgent structure."""
-        return (
-            f"SimpleRAG(MultiAgent)("
-            f"name='{self.name}', "
-            f"agents={list(self.agents.keys())}, "
-            f"mode='{self.execution_mode}', "
-            f"top_k={self.top_k}"
-            f")"
-        )
+        return (f"SimpleRAG(MultiAgent)("
+                f"name='{self.name}', "
+                f"agents={list(self.agents.keys())}, "
+                f"mode='{self.execution_mode}', "
+                f"top_k={self.top_k}"
+                f")")
 
 
 # ================================
@@ -454,19 +460,17 @@ class SimpleRAG(MultiAgent):
 # Alias for backward compatibility
 SimpleRAGAgent = SimpleRAG
 
-
 # ================================
 # Export for Easy Import
 # ================================
 
-__all__ = ["SimpleRAG", "SimpleRAGAgent"]  # Legacy alias
-
+__all__ = ['SimpleRAG', 'SimpleRAGAgent']  # Legacy alias
 
 # ================================
 # Example Usage
 # ================================
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     from langchain_core.documents import Document
 
     async def demo():
@@ -474,27 +478,20 @@ if __name__ == "__main__":
         # Example documents
         [
             Document(
-                page_content="Machine learning is a subset of AI that enables computers to learn without explicit programming.",
-                metadata={"source": "ml_guide.pdf"},
+                page_content='Machine learning is a subset of AI that enables computers to learn without explicit programming.',
+                metadata={
+                    'source': 'ml_guide.pdf'},
             ),
             Document(
-                page_content="Neural networks are computing systems inspired by biological neural networks.",
-                metadata={"source": "nn_book.pdf"},
+                page_content='Neural networks are computing systems inspired by biological neural networks.',
+                metadata={
+                    'source': 'nn_book.pdf'},
             ),
         ]
 
         # This would create a proper SimpleRAG with real configs
-        # rag = SimpleRAG.from_documents(
-        #     documents=docs,
-        #     embedding_config=embedding_config,
-        #     llm_config=AugLLMConfig(temperature=0.7)
-        # )
 
-        # print(f"📋 RAG Info: {rag.get_rag_info()}")
-        # print(f"🏗️ Structure: {rag}")
 
         # result = await rag.arun("What is machine learning?", debug=True)
-        # print(f"💬 Result: {result}")
 
     # Uncomment to run demo
-    # asyncio.run(demo())

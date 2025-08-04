@@ -11,17 +11,15 @@ Functions:
     execute: Execute functionality.
     execute: Execute functionality.
 """
-
 # src/haive/agents/simple/enhanced_simple_minimal.py
-
 """Minimal Enhanced SimpleAgent - showing the pattern in action.
 
 This is the absolute minimal version showing SimpleAgent as Agent[AugLLMConfig].
 It's self-contained to avoid import issues.
 """
+from __future__ import annotations
 
-from abc import ABC, abstractmethod
-from typing import Any, Generic, TypeVar
+from abc import ABC
 
 
 # Minimal type definitions to show the pattern

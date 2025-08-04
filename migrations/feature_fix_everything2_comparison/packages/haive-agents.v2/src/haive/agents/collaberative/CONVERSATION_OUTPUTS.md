@@ -1,10 +1,10 @@
-# Collaberative Conversation Outputs
+# Collaborative Conversation Outputs
 
 Generated: 2025-07-02T22:04:14.973179
 
 ## Overview
 
-This file provides easy access to all outputs from collaberative conversation agents.
+This file provides easy access to all outputs from collaborative conversation agents.
 
 ## Recent Outputs (9 files found)
 
@@ -47,7 +47,7 @@ Current content:
 ### 3. ProductManager_agent_20250702_211722.json
 
 **Type:** state_history
-**File:** `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaberative/resources/state_history/ProductManager_agent_20250702_211722.json`
+**File:** `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaborative/resources/state_history/ProductManager_agent_20250702_211722.json`
 **Last Modified:** 2025-07-02T21:18:28.293416
 **Messages:** 62
 
@@ -63,7 +63,7 @@ Current content:
 ### 4. Engineer_agent_20250702_211753.json
 
 **Type:** state_history
-**File:** `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaberative/resources/state_history/Engineer_agent_20250702_211753.json`
+**File:** `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaborative/resources/state_history/Engineer_agent_20250702_211753.json`
 **Last Modified:** 2025-07-02T21:17:56.682381
 **Messages:** 11
 
@@ -83,7 +83,7 @@ Current content:
 ### 5. Designer_agent_20250702_211732.json
 
 **Type:** state_history
-**File:** `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaberative/resources/state_history/Designer_agent_20250702_211732.json`
+**File:** `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaborative/resources/state_history/Designer_agent_20250702_211732.json`
 **Last Modified:** 2025-07-02T21:17:37.613788
 **Messages:** 11
 
@@ -139,7 +139,7 @@ Current content:
 ### 8. code_review.md
 
 **Type:** markdown
-**File:** `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaberative/outputs/code_review.md`
+**File:** `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaborative/outputs/code_review.md`
 **Last Modified:** 2025-06-16T19:18:56.168913
 **Lines:** 450
 **Title:** 🔍 Code Review Results:
@@ -164,7 +164,7 @@ Current content:
 ### 9. brainstorming.md
 
 **Type:** markdown
-**File:** `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaberative/outputs/brainstorming.md`
+**File:** `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaborative/outputs/brainstorming.md`
 **Last Modified:** 2025-06-16T19:18:56.168913
 **Lines:** 393
 **Title:** 📄 Final Brainstorming Document:
@@ -189,7 +189,7 @@ P...
 
 ```bash
 # View recent state history files
-find /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaberative -name "*.json" -exec ls -la {} \;
+find /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaborative -name "*.json" -exec ls -la {} \;
 
 # Pretty print JSON
 cat path/to/file.json | jq '.[0].messages | length'
@@ -199,7 +199,7 @@ cat path/to/file.json | jq '.[0].messages | length'
 
 ```bash
 # View markdown outputs
-find /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaberative/outputs -name "*.md" -exec cat {} \;
+find /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaborative/outputs -name "*.md" -exec cat {} \;
 ```
 
 ### Copy Files for Analysis
@@ -207,13 +207,13 @@ find /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/age
 ```bash
 # Copy all outputs to a temporary directory for analysis
 mkdir -p /tmp/collaberative_analysis
-find /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaberative -name "*.json" -o -name "*.md" | xargs -I {} cp {} /tmp/collaberative_analysis/
+find /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/collaborative -name "*.json" -o -name "*.md" | xargs -I {} cp {} /tmp/collaberative_analysis/
 ```
 
 ## File Structure
 
 ```
-collaberative/
+collaborative/
 ├── outputs/           # Conversation result files (.md)
 ├── resources/         # State history files (.json)
 │   └── state_history/

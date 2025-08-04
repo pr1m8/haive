@@ -19,14 +19,18 @@ class MultiStrategyRAGConfig(SelfCorrectiveRAGConfig):
     """Configuration for multi-strategy RAG agents."""
 
     state_schema: type[MultiStrategyRAGState] = Field(
-        default=MultiStrategyRAGState, description="State schema"
+        default=MultiStrategyRAGState,
+        description="State schema",
     )
     query_analyzer_config: AugLLMConfig | None = Field(
-        default=None, description="Configuration for query analysis"
+        default=None,
+        description="Configuration for query analysis",
     )
     query_rewriter_config: AugLLMConfig | None = Field(
-        default=None, description="Configuration for query rewriting"
+        default=None,
+        description="Configuration for query rewriting",
     )
     retriever_strategies: dict[str, Any] = Field(
-        default_factory=dict, description="Specialized retriever configurations"
+        default_factory=dict,
+        description="Specialized retriever configurations",
     )

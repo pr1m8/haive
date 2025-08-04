@@ -1,6 +1,6 @@
 # Import Maintenance
 
-**Purpose**: Import statement management, dependency cleanup, and module organization  
+**Purpose**: Import statement management, dependency cleanup, and module organization
 **Usage**: Maintaining clean import structures, resolving circular dependencies, and optimizing imports
 
 ## 📄 Current Scripts

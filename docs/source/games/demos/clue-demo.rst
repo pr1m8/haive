@@ -177,7 +177,7 @@ Mystery deduction game to solve the murder
        ║   P3  ║   P4   ║  P5   ║  P6   ║
        ╚═══════╩═══════╩═══════╩═══════╝
 
-   
+
    Current Player: Miss Scarlet
    Location: Study
    Cards in hand: 3

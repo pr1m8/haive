@@ -120,7 +120,7 @@ Dynamically manages and coordinates multiple agents
        Tasks Completed: 12/15
        Average Response: 1.2s
 
-   
+
    Current Assignments:
    - Research Agent → Market analysis
    - Writer Agent → Report draft

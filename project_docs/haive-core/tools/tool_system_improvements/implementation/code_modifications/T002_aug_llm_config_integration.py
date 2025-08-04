@@ -7,14 +7,13 @@ Key changes:
 2. Smart routing for structured output models
 3. Better tool validation and conversion
 """
-
 # The AugLLMConfig already inherits from ToolRouteMixin
 # We need to override/enhance certain methods to use the new functionality
-
 # Add this import
-
-
 # Override the comprehensive_validation_and_setup method to use enhanced tool handling
+from __future__ import annotations
+
+
 def comprehensive_validation_and_setup(self):
     """Enhanced validation that uses improved tool management."""
     # ... existing validation code ...
@@ -47,7 +46,8 @@ def comprehensive_validation_and_setup(self):
 
 
 # Add method to get tools for LLM binding
-def get_tools_for_binding(self) -> List[Union[BaseTool, Type[BaseModel], Callable]]:
+def get_tools_for_binding(
+        self) -> List[Union[BaseTool, Type[BaseModel], Callable]]:
     """Get tools in the format needed for LLM tool binding.
 
     Returns:
@@ -63,26 +63,25 @@ def get_tools_for_binding(self) -> List[Union[BaseTool, Type[BaseModel], Callabl
 
         # Include based on route and LLM compatibility
         if route in [
-            "langchain_tool",
-            "function",
-            "pydantic_tool",
-            "structured_output_tool",
+                "langchain_tool",
+                "function",
+                "pydantic_tool",
+                "structured_output_tool",
         ]:
             binding_tools.append(tool)
         elif route == "pydantic_model":
             # Only include Pydantic models that are meant for tool use
             metadata = self.tool_metadata.get(tool_name, {})
-            if (
-                metadata.get("is_executable")
-                or metadata.get("purpose") == "structured_output"
-            ):
+            if metadata.get("is_executable") or metadata.get(
+                    "purpose") == "structured_output":
                 binding_tools.append(tool)
 
     return binding_tools
 
 
 # Override create_runnable to use enhanced tool management
-def create_runnable(self, runnable_config: Optional[RunnableConfig] = None) -> Any:
+def create_runnable(self,
+                    runnable_config: Optional[RunnableConfig] = None) -> Any:
     """Create a runnable with enhanced tool handling."""
     # ... existing code ...
 
@@ -143,7 +142,8 @@ def _analyze_tool(self, tool: Any) -> Tuple[str, Optional[Dict[str, Any]]]:
         # Add structured output context if applicable
         if self.structured_output_model and tool == self.structured_output_model:
             metadata["is_structured_output"] = True
-            metadata["structured_output_version"] = self.structured_output_version
+            metadata[
+                "structured_output_version"] = self.structured_output_version
 
         return route, metadata
 
@@ -176,7 +176,11 @@ def prepare_tools_for_provider(self, provider: str = "openai") -> List[Any]:
                 # Functions might need conversion
                 # This would need actual conversion logic
                 logger.debug(
-                    f"Function {getattr(tool, '__name__', 'unknown')} may need conversion"
+                    f"Function {
+                        getattr(
+                            tool,
+                            '__name__',
+                            'unknown')} may need conversion",
                 )
 
         # Add other provider-specific handling as needed

@@ -12,25 +12,22 @@ Functions:
 """
 
 # src/haive/agents/supervisor/clean_dynamic_supervisor.py
-
 """Clean Dynamic Supervisor Implementation.
 
 A dynamic supervisor that can add/remove agents at runtime and
 adapt routing based on agent capabilities.
 """
 
-import logging
 from typing import Any
-
+import logging
 from langchain_core.tools import tool
 from langgraph.graph import END
 from pydantic import BaseModel, Field
-
 from haive.agents.base import Agent
 from haive.agents.react.agent import ReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
 
 
 logger = logging.getLogger(__name__)
@@ -61,23 +58,28 @@ class DynamicSupervisor(ReactAgent):
     # ========================================================================
 
     registered_agents: dict[str, Agent] = Field(
-        default_factory=dict, description="Currently registered agents"
+        default_factory=dict,
+        description="Currently registered agents",
     )
 
     agent_capabilities: dict[str, str] = Field(
-        default_factory=dict, description="Agent capability descriptions"
+        default_factory=dict,
+        description="Agent capability descriptions",
     )
 
     auto_rebuild: bool = Field(
-        default=True, description="Automatically rebuild graph on agent changes"
+        default=True,
+        description="Automatically rebuild graph on agent changes",
     )
 
     enable_tool_aggregation: bool = Field(
-        default=True, description="Aggregate tools from all agents"
+        default=True,
+        description="Aggregate tools from all agents",
     )
 
     state_schema: type[BaseModel] = Field(
-        default=DynamicSupervisorState, description="Use dynamic supervisor state"
+        default=DynamicSupervisorState,
+        description="Use dynamic supervisor state",
     )
 
     # ========================================================================
@@ -232,13 +234,13 @@ class DynamicSupervisor(ReactAgent):
         if self.engine and hasattr(self.engine, "tools"):
             # Keep management tools, add agent tools
             mgmt_tools = [
-                t
-                for t in (self.engine.tools or [])
+                t for t in (self.engine.tools or [])
                 if t.name in ("add_agent", "remove_agent", "list_agents")
             ]
             self.engine.tools = mgmt_tools + aggregated_tools
 
-            logger.info(f"Aggregated {len(aggregated_tools)} tools from agents")
+            logger.info(
+                f"Aggregated {len(aggregated_tools)} tools from agents")
 
     # ========================================================================
     # GRAPH BUILDING
@@ -306,11 +308,16 @@ class DynamicSupervisor(ReactAgent):
             # Add conditional routing
             route_map = {
                 END: END,
-                "tool_node": "tool_node" if "tool_node" in graph.nodes else END,
-                **{f"{name}_node": f"{name}_node" for name in self.registered_agents},
+                "tool_node":
+                "tool_node" if "tool_node" in graph.nodes else END,
+                **{
+                    f"{name}_node": f"{name}_node"
+                    for name in self.registered_agents
+                },
             }
 
-            graph.add_conditional_edges("route_decision", route_to_agent, route_map)
+            graph.add_conditional_edges("route_decision", route_to_agent,
+                                        route_map)
 
         return graph
 

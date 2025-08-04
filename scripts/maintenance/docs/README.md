@@ -1,6 +1,6 @@
 # Documentation Maintenance
 
-**Purpose**: Documentation maintenance, cleanup, and optimization tools  
+**Purpose**: Documentation maintenance, cleanup, and optimization tools
 **Usage**: Maintaining documentation quality, fixing issues, and optimizing build processes
 
 ## 📄 Current Scripts

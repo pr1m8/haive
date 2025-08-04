@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Properly reorganize the docs directory.
+"""Properly reorganize the docs directory.
 
 This script completely restructures the docs folder to be clean and logical:
 - Keeps only essential files in root
@@ -8,10 +7,9 @@ This script completely restructures the docs folder to be clean and logical:
 - Creates a proper structure for ongoing work
 """
 
-import os
-import shutil
 from datetime import datetime
 from pathlib import Path
+import shutil
 
 
 def reorganize_docs_directory():
@@ -158,7 +156,9 @@ def keep_essentials_only(docs_root):
         print(f"   📦 Archived file: {file_path.name}")
 
     print(
-        f"✅ Kept {len(essential_files)} essential files, archived {len(files_to_archive)} others"
+        f"✅ Kept {
+            len(essential_files)} essential files, archived {
+            len(files_to_archive)} others",
     )
 
 

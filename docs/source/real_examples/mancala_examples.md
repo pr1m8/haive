@@ -51,7 +51,7 @@ The game board consists of 14 pits:
 
 ### Running the Example Game
 
-```pytho
+```python
 
 ... (truncated)
 

@@ -13,6 +13,7 @@ Functions:
 # ============================================================================
 # OUTPUT PARSER NODE CONFIG - EXTENSION OF PARSER NODE
 # ============================================================================
+from __future__ import annotations
 
 import logging
 from typing import Any
@@ -27,28 +28,32 @@ from haive.core.graph.common.types import ConfigLike, StateLike
 from haive.core.graph.node.parser_node_config import ParserNodeConfig
 from haive.core.graph.node.types import NodeType
 
-
 logger = logging.getLogger(__name__)
 console = Console()
 logger.setLevel(logging.WARNING)
 
 
 class OutputParserNodeConfig(ParserNodeConfig):
-    """Configuration for a node that parses LLM output using LangChain output parsers.
+    """Configuration for a node that parses LLM output using LangChain output.
 
-    This extends ParserNodeConfig to handle regular output parsing (not tool calls). It
-    parses the last message content using a LangChain BaseOutputParser.
+    parsers.
+
+    This extends ParserNodeConfig to handle regular output parsing (not
+    tool calls). It parses the last message content using a LangChain
+    BaseOutputParser.
     """
 
     node_type: NodeType = Field(default=NodeType.OUTPUT_PARSER)
 
     # Output parser configuration
     output_parser: BaseOutputParser = Field(
-        ..., description="LangChain output parser to use for parsing"
+        ...,
+        description="LangChain output parser to use for parsing",
     )
 
     output_key: str = Field(
-        default="parsed_output", description="Key to store parsed output in state"
+        default="parsed_output",
+        description="Key to store parsed output in state",
     )
 
     # Override default behavior - we don't need tool info for output parsing
@@ -57,27 +62,29 @@ class OutputParserNodeConfig(ParserNodeConfig):
         description="Whether tool information is required (False for output parsing)",
     )
 
-    def __call__(self, state: StateLike, config: ConfigLike | None = None) -> Command:
+    def __call__(self,
+                 state: StateLike,
+                 config: ConfigLike | None = None) -> Command:
         """Parse the last message content using the output parser."""
         # Ensure we have a valid command_goto
         goto_node = self.command_goto or self.agent_node
 
         # Get messages from state
-        messages = (
-            getattr(state, self.messages_key, state.get(self.messages_key, []))
-            if hasattr(state, "get")
-            else getattr(state, self.messages_key, [])
-        )
+        messages = (getattr(state, self.messages_key,
+                            state.get(self.messages_key, [])) if hasattr(
+                                state, "get") else getattr(
+                                    state, self.messages_key, []))
 
         logger.debug(f"OutputParserNode processing {len(messages)} messages")
 
         if not messages:
             logger.warning(
-                f"No messages found in state key '{
-                    self.messages_key}'"
-            )
+                f"No messages found in state key '{self.messages_key}'", )
             return Command(
-                update={self.output_key: None, "parse_error": "No messages found"},
+                update={
+                    self.output_key: None,
+                    "parse_error": "No messages found"
+                },
                 goto=goto_node,
             )
 
@@ -90,13 +97,14 @@ class OutputParserNodeConfig(ParserNodeConfig):
 
             if content is None:
                 logger.warning(
-                    f"Unable to extract content from message: {
-                        type(last_message)}"
+                    f"Unable to extract content from message: {type(last_message)}",
                 )
                 return Command(
                     update={
-                        self.output_key: None,
-                        "parse_error": f"Invalid message type: {type(last_message)}",
+                        self.output_key:
+                        None,
+                        "parse_error":
+                        f"Invalid message type: {type(last_message)}",
                     },
                     goto=goto_node,
                 )
@@ -109,8 +117,7 @@ class OutputParserNodeConfig(ParserNodeConfig):
 
                 logger.info(
                     f"Successfully parsed output using {
-                        self.output_parser.__class__.__name__}"
-                )
+                        self.output_parser.__class__.__name__}", )
                 return Command(update=update_dict, goto=goto_node)
 
             except Exception as parse_error:
@@ -129,8 +136,7 @@ class OutputParserNodeConfig(ParserNodeConfig):
             return Command(
                 update={
                     self.output_key: None,
-                    "parse_error": f"Node error: {
-                        e!s}",
+                    "parse_error": f"Node error: {e!s}",
                 },
                 goto=goto_node,
             )
@@ -282,7 +288,8 @@ def detect_output_parser_need(agent: Any) -> bool:
     return hasattr(agent, "output_parser") and agent.output_parser is not None
 
 
-def create_output_parser_node_for_agent(agent: Any) -> OutputParserNodeConfig | None:
+def create_output_parser_node_for_agent(
+        agent: Any) -> OutputParserNodeConfig | None:
     """Create an output parser node config for an agent if needed.
 
     Args:

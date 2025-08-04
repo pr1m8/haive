@@ -13,7 +13,7 @@ State Management
 
 Placeholder for state management patterns.
 
-Tool Integration  
+Tool Integration
 ----------------
 
 Placeholder for tool integration guide.

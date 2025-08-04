@@ -1,4 +1,4 @@
-/* Compatability shim for jQuery and underscores.js.
+/* Compatibility shim for jQuery and underscores.js.
  *
  * Copyright Sphinx contributors
  * Released under the two clause BSD licence

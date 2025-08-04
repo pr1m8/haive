@@ -3,21 +3,19 @@
 This version uses state schemas with built-in configuration support,
 providing a cleaner approach to managing agent-specific parameters.
 """
+from __future__ import annotations
 
 from typing import Any
 
-from haive.agents.multi.base import ExecutionMode, MultiAgent
-from haive.agents.rag.multi_agent_rag.enhanced_state_schemas import (
-    GradedRAGState,
-    StateConfigMixin,
-)
-from haive.agents.rag.multi_agent_rag.grading_components import (
-    create_answer_grader,
-    create_document_grader,
-    create_hallucination_grader,
-    create_priority_ranker,
-    create_query_analyzer,
-)
+from haive.agents.multi.base import ExecutionMode
+from haive.agents.multi.base import MultiAgent
+from haive.agents.rag.multi_agent_rag.enhanced_state_schemas import GradedRAGState
+from haive.agents.rag.multi_agent_rag.enhanced_state_schemas import StateConfigMixin
+from haive.agents.rag.multi_agent_rag.grading_components import create_answer_grader
+from haive.agents.rag.multi_agent_rag.grading_components import create_document_grader
+from haive.agents.rag.multi_agent_rag.grading_components import create_hallucination_grader
+from haive.agents.rag.multi_agent_rag.grading_components import create_priority_ranker
+from haive.agents.rag.multi_agent_rag.grading_components import create_query_analyzer
 from haive.agents.simple import SimpleAgent
 
 
@@ -72,7 +70,8 @@ class FullyGradedRAGAgentV2(MultiAgent, StateConfigMixin):
         )
 
         answer_grader = create_answer_grader("answer_quality_grader")
-        hallucination_grader = create_hallucination_grader("hallucination_detector")
+        hallucination_grader = create_hallucination_grader(
+            "hallucination_detector")
 
         synthesis_agent = SimpleAgent(
             name="grade_synthesis",
@@ -123,7 +122,8 @@ class FullyGradedRAGAgentV2(MultiAgent, StateConfigMixin):
         """Override to inject configuration into state."""
         # Ensure state has our configuration
         if "relevance_threshold" not in inputs:
-            inputs["relevance_threshold"] = self._initial_config["relevance_threshold"]
+            inputs["relevance_threshold"] = self._initial_config[
+                "relevance_threshold"]
         if "workflow_type" not in inputs:
             inputs["workflow_type"] = self._initial_config["workflow_type"]
 
@@ -173,10 +173,15 @@ class MultiCriteriaGradedRAGAgentV2(MultiAgent, StateConfigMixin):
             instructions="""
             Generate answer balancing all criteria from state.grading_criteria.
             """,
-            output_schema={"answer": "str", "criteria_addressed": "Dict[str, bool]"},
+            output_schema={
+                "answer": "str",
+                "criteria_addressed": "Dict[str, bool]"
+            },
         )
 
-        agents = [multi_criteria_grader, perspective_aggregator, balanced_generator]
+        agents = [
+            multi_criteria_grader, perspective_aggregator, balanced_generator
+        ]
 
         super().__init__(
             agents=agents,
@@ -193,7 +198,8 @@ class MultiCriteriaGradedRAGAgentV2(MultiAgent, StateConfigMixin):
     async def ainvoke(self, inputs: dict[str, Any]) -> dict[str, Any]:
         """Override to inject configuration."""
         if "grading_criteria" not in inputs:
-            inputs["grading_criteria"] = self._initial_config["grading_criteria"]
+            inputs["grading_criteria"] = self._initial_config[
+                "grading_criteria"]
         if "workflow_type" not in inputs:
             inputs["workflow_type"] = self._initial_config["workflow_type"]
 
@@ -244,12 +250,15 @@ def create_graded_rag_agent(
     grading_criteria: list[str] | None = None,
     **kwargs,
 ) -> MultiAgent:
-    """Factory function to create graded RAG agents with proper configuration."""
+    """Factory function to create graded RAG agents with proper
+    configuration."""
     if workflow_type == "fully_graded":
-        return FullyGradedRAGAgentV2(relevance_threshold=relevance_threshold, **kwargs)
+        return FullyGradedRAGAgentV2(relevance_threshold=relevance_threshold,
+                                     **kwargs)
     if workflow_type == "multi_criteria":
         return MultiCriteriaGradedRAGAgentV2(
-            grading_criteria=grading_criteria, **kwargs
+            grading_criteria=grading_criteria,
+            **kwargs,
         )
     raise ValueError(f"Unknown workflow type: {workflow_type}")
 
@@ -258,7 +267,9 @@ def create_graded_rag_agent(
 if __name__ == "__main__":
     # Create agent with configuration
     agent = create_graded_rag_agent(
-        workflow_type="fully_graded", relevance_threshold=0.7, name="production_rag"
+        workflow_type="fully_graded",
+        relevance_threshold=0.7,
+        name="production_rag",
     )
 
     # Configuration is stored in state, not agent
@@ -269,5 +280,4 @@ if __name__ == "__main__":
             # Can override configuration per-invocation
             "relevance_threshold": 0.8,
             "max_documents": 5,
-        }
-    )
+        }, )

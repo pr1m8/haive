@@ -7,6 +7,8 @@ This module configures extensions that enhance content presentation:
 - Math support and emojis
 """
 
+from __future__ import annotations
+
 from typing import Any
 
 
@@ -43,8 +45,7 @@ def get_config(
                 "sphinx_tabs.tabs",  # Tabbed content sections
                 "sphinx_inline_tabs",  # Inline tabbed content
                 "sphinx_togglebutton",  # Collapsible sections
-            ]
-        )
+            ], )
 
     # Code enhancements
     if enable_copybutton:
@@ -66,8 +67,7 @@ def get_config(
             "sphinx_prompt",  # Terminal prompt styling
             "sphinx_substitution_extensions",  # Advanced text substitutions
             "sphinx_removed_in",  # Deprecation notices
-        ]
-    )
+        ], )
 
     config["extensions"] = extensions
     return config
@@ -76,11 +76,12 @@ def get_config(
 def _get_copybutton_config() -> dict[str, Any]:
     """Get copy button configuration."""
     return {
-        "copybutton_prompt_text": (
-            r">>> |\\.\\.\\. |\\$ |In \\[\\d*\\]: | {2,5}\\.\\.\\.: | {5,8}: "
-        ),
-        "copybutton_prompt_is_regexp": True,
-        "copybutton_exclude": ".linenos, .gp",
+        "copybutton_prompt_text":
+        (r">>> |\\.\\.\\. |\\$ |In \\[\\d*\\]: | {2,5}\\.\\.\\.: | {5,8}: "),
+        "copybutton_prompt_is_regexp":
+        True,
+        "copybutton_exclude":
+        ".linenos, .gp",
     }
 
 

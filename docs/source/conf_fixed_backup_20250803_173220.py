@@ -1,5 +1,8 @@
 """Fixed Sphinx configuration with all packages and working extensions."""
 
+import os
+import sys
+
 project = "Haive AI Agent Framework"
 copyright = "2024, Haive Team"
 author = "Haive Team"
@@ -46,19 +49,16 @@ autoapi_dirs = [
     "../../packages/haive-prebuilt/src",
 ]
 
-import os
-
 # Add the package roots to Python path so imports work
-import sys
 
 for package in [
-    "haive-core",
-    "haive-agents",
-    "haive-tools",
-    "haive-games",
-    "haive-dataflow",
-    "haive-mcp",
-    "haive-prebuilt",
+        "haive-core",
+        "haive-agents",
+        "haive-tools",
+        "haive-games",
+        "haive-dataflow",
+        "haive-mcp",
+        "haive-prebuilt",
 ]:
     sys.path.insert(0, os.path.abspath(f"../../packages/{package}/src"))
 
