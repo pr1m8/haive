@@ -1,7 +1,0 @@
-+354487f18310bc56b42830754090ba42148ce3b4 packages/haive-agents (recovery-critical-20250722-225154-53-g354487f)
-+2151e95129aeb63380c254551930d1a1a4123d58 packages/haive-core (heads/feature/fix_everything-9-g2151e95)
- 626f825992c61d14d993638a3d3bc04c3dd88889 packages/haive-dataflow (heads/main-14-g626f825)
-+b646fe34406fba42af198cb307d49faa5fb77092 packages/haive-games (heads/feature/fix_everything-49-gb646fe3)
- 240c072f3ea838d4d1d8257606ff0a2ef83dac70 packages/haive-mcp (remotes/origin/vzn/dav-1-g240c072)
-+31923f9d308afddbee67ac76d076711de66b1525 packages/haive-prebuilt (remotes/origin/vzn/dav-3-g31923f9)
-+7bb991f70d4a71bae90cbae7f76d713cfbbf9313 packages/haive-tools (remotes/origin/vzn/dav-4-g7bb991f)
