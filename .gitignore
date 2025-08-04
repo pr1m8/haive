@@ -22,7 +22,8 @@ packages/*/.git
 # Claude AI specific
 **/.claude/settings.local.json
 .claude/settings.local.json
-
+scripts/validator_backup_*/
+vscode-wsl-context.reg
 # =============================================================================
 # 💾 Large database dumps and exports (Docker build optimization)
 # =============================================================================
