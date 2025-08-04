@@ -64,35 +64,23 @@ lint:
 
 actions:
   disabled:
-    - trunk-announce  # Disable announcements only
+    - trunk-announce # Disable announcements only
   enabled:
     - git-lfs
-    - trunk-fmt-pre-commit   # ✅ Auto-format on commit
-    - trunk-check-pre-push   # ✅ Check before push
+    - trunk-fmt-pre-commit # ✅ Auto-format on commit
+    - trunk-check-pre-push # ✅ Check before push
     - trunk-cache-prune
     - trunk-upgrade-available
-    - run-pre-commit         # Custom action to run your .pre-commit-config.yaml
-  #output_level: verbose
+    - run-pre-commit # Custom action to run your .pre-commit-config.yaml
+  output_level: verbose
+  actions:
+  definitions:
+    - id: run-pre-commit
+      display_name: "Run project’s pre-commit hooks"
+      description: "Invoke pre-commit against changed files"
+      triggers:
+        - git_hooks: [pre-commit]
+      run: pre-commit run --files $TRUNK_CHANGED_FILES
+      interactive: false
+      notify_on_error: false
 
-definitions:
-  - id: run-pre-commit
-    display_name: "Run project’s pre-commit hooks on staged files"
-    description: "Invoke pre-commit on all staged files, excluding packages/"
-    triggers:
-      - git_hooks: [pre-commit]
-    run: >
-      bash -c '
-        echo "DEBUG: run-pre-commit action triggered";
-        staged=$(git diff --cached --name-only --diff-filter=ACM);
-        echo "DEBUG: staged files: $staged";
-        files=$(echo "$staged" | grep -v "^packages/");
-        echo "DEBUG: files after excluding packages/: $files";
-        if [ -n "$files" ]; then
-          echo "Running pre-commit on: $files";
-          pre-commit run --files $files --verbose;
-        else
-          echo "No relevant staged files to lint.";
-        fi
-      '
-    interactive: false
-    notify_on_error: false
