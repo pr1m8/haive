@@ -72,7 +72,7 @@ actions:
     - trunk-cache-prune
     - trunk-upgrade-available
     - run-pre-commit         # Custom action to run your .pre-commit-config.yaml
-  output_level: verbose
+  #output_level: verbose
 
 definitions:
   - id: run-pre-commit
@@ -82,13 +82,16 @@ definitions:
       - git_hooks: [pre-commit]
     run: >
       bash -c '
-        files=$(git diff --cached --name-only --diff-filter=ACM \
-          | grep -v "^packages/");
+        echo "DEBUG: run-pre-commit action triggered";
+        staged=$(git diff --cached --name-only --diff-filter=ACM);
+        echo "DEBUG: staged files: $staged";
+        files=$(echo "$staged" | grep -v "^packages/");
+        echo "DEBUG: files after excluding packages/: $files";
         if [ -n "$files" ]; then
-          echo "Running pre-commit on:$files"
-          pre-commit run --files $files --verbose
+          echo "Running pre-commit on: $files";
+          pre-commit run --files $files --verbose;
         else
-          echo "No relevant staged files to lint."
+          echo "No relevant staged files to lint.";
         fi
       '
     interactive: false
