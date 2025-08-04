@@ -7,17 +7,13 @@ This module provides memory-safe versions of documentation sessions that:
 - Provide progressive fallback under memory pressure
 """
 
-from pathlib import Path
-
-import nox
-
 # Import memory management
 from memory_manager import get_memory_safe_sphinx_args, memory_manager
+import nox
 
 # Import base documentation sessions
 from session_docs import (
     BUILD_DIR,
-    DOCS_DIR,
     PYTHON_VERSIONS,
     SOURCE_DIR,
     create_log_file,
@@ -56,7 +52,8 @@ def docs_memory_safe(session):
 
     # Monitor memory during build
     with memory_manager.monitor_build(session, "Sphinx Build"):
-        status = run_with_graceful_handling(session, cmd, log_file, "Memory-Safe Build")
+        status = run_with_graceful_handling(session, cmd, log_file,
+                                            "Memory-Safe Build")
 
     # Clean up if needed
     if memory_status in ["critical", "low"]:
@@ -94,7 +91,7 @@ def docs_monitor(session):
     session.log("=" * 50)
 
     # Check memory
-    memory_status = memory_manager.check_memory_status(session)
+    memory_manager.check_memory_status(session)
     memory_gb = memory_manager.get_memory_gb()
 
     # Check CPU if available
@@ -104,7 +101,7 @@ def docs_monitor(session):
         cpu_count = psutil.cpu_count()
         cpu_percent = psutil.cpu_percent(interval=1)
         session.log(f"🖥️  CPU: {cpu_count} cores, {cpu_percent:.1f}% usage")
-    except:
+    except BaseException:
         cpu_count = 4
         session.log("🖥️  CPU: Unable to detect (assuming 4 cores)")
 
@@ -135,7 +132,7 @@ def docs_adaptive(session):
     session.log("🤖 Adaptive documentation build starting...")
 
     # Check resources
-    memory_gb = memory_manager.get_memory_gb()
+    memory_manager.get_memory_gb()
     memory_status = memory_manager.check_memory_status(session)
 
     # Choose strategy based on resources
@@ -179,13 +176,14 @@ def docs_adaptive(session):
 
     # Monitor and build
     with memory_manager.monitor_build(session, "Adaptive Build"):
-        status = run_with_graceful_handling(session, cmd, log_file, "Adaptive Build")
+        status = run_with_graceful_handling(session, cmd, log_file,
+                                            "Adaptive Build")
 
     # Report results
     if status["success"]:
         session.log("✅ Adaptive build completed successfully!")
         session.log(
-            f"💾 Final memory: {memory_manager.get_memory_gb():.1f}GB available"
+            f"💾 Final memory: {memory_manager.get_memory_gb():.1f}GB available",
         )
 
     return status["success"]

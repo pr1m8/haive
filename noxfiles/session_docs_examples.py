@@ -1,25 +1,20 @@
 """Documentation sessions with example execution control for Haive."""
+from __future__ import annotations
 
 import os
 import shutil
 from datetime import datetime
-from pathlib import Path
 
 import nox
+from env_utils import ensure_sphinx_available
+from session_docs import BUILD_DIR
+from session_docs import create_log_file
+from session_docs import PYTHON_VERSIONS
+from session_docs import run_with_graceful_handling
+from session_docs import SOURCE_DIR
 
 # Import shared environment utilities
-from env_utils import ensure_poetry_sync, ensure_sphinx_available, log_environment_info
-
 # Import shared utilities from the main docs sessions
-from session_docs import (
-    BUILD_DIR,
-    DOCS_DIR,
-    LOGS_DIR,
-    PYTHON_VERSIONS,
-    SOURCE_DIR,
-    create_log_file,
-    run_with_graceful_handling,
-)
 
 # Reuse virtualenvs for speed
 nox.options.reuse_existing_virtualenvs = True
@@ -27,11 +22,14 @@ nox.options.reuse_existing_virtualenvs = True
 
 @nox.session(python=PYTHON_VERSIONS)
 def docs_no_examples(session):
-    """Fast documentation build WITHOUT example execution (non-computational)."""
+    """Fast documentation build WITHOUT example execution (non-.
+
+    computational).
+    """
     start_time = datetime.now()
     session.log("🚀 Running FAST documentation build WITHOUT examples...")
     session.log(
-        "   This build skips example execution for faster, non-computational builds"
+        "   This build skips example execution for faster, non-computational builds",
     )
 
     log_file = create_log_file(session, "docs_no_examples")
@@ -39,7 +37,7 @@ def docs_no_examples(session):
     # Ensure dependencies are ready
     if not ensure_sphinx_available(session):
         session.error("❌ Could not prepare Sphinx for documentation build")
-        return
+        return None
 
     # Set environment to disable examples
     env = os.environ.copy()
@@ -47,7 +45,8 @@ def docs_no_examples(session):
     env["SPHINX_PROFILE"] = "standard"  # Use standard profile for good balance
 
     session.log("📊 Environment configuration:")
-    session.log(f"   SPHINX_DISABLE_EXAMPLES = {env['SPHINX_DISABLE_EXAMPLES']}")
+    session.log(
+        f"   SPHINX_DISABLE_EXAMPLES = {env['SPHINX_DISABLE_EXAMPLES']}")
     session.log(f"   SPHINX_PROFILE = {env['SPHINX_PROFILE']}")
     session.log("   🚫 Sphinx Gallery execution DISABLED")
     session.log("   ⚡ Examples will be documented but not executed")
@@ -70,7 +69,10 @@ def docs_no_examples(session):
     # Run build with environment variables
     session.env.update(env)
     status = run_with_graceful_handling(
-        session, cmd, log_file, "No-Examples Sphinx Build"
+        session,
+        cmd,
+        log_file,
+        "No-Examples Sphinx Build",
     )
 
     # Check actual results
@@ -108,7 +110,7 @@ def docs_with_examples(session):
     # Ensure dependencies are ready
     if not ensure_sphinx_available(session):
         session.error("❌ Could not prepare Sphinx for documentation build")
-        return
+        return None
 
     # Set environment to enable examples
     env = os.environ.copy()
@@ -116,7 +118,8 @@ def docs_with_examples(session):
     env["SPHINX_PROFILE"] = "full"  # Use full profile for examples
 
     session.log("📊 Environment configuration:")
-    session.log(f"   SPHINX_DISABLE_EXAMPLES = {env['SPHINX_DISABLE_EXAMPLES']}")
+    session.log(
+        f"   SPHINX_DISABLE_EXAMPLES = {env['SPHINX_DISABLE_EXAMPLES']}")
     session.log(f"   SPHINX_PROFILE = {env['SPHINX_PROFILE']}")
     session.log("   ✅ Sphinx Gallery execution ENABLED")
     session.log("   🔄 Examples will be executed (computational overhead)")
@@ -137,7 +140,10 @@ def docs_with_examples(session):
     # Run build with environment variables
     session.env.update(env)
     status = run_with_graceful_handling(
-        session, cmd, log_file, "With-Examples Sphinx Build"
+        session,
+        cmd,
+        log_file,
+        "With-Examples Sphinx Build",
     )
 
     # Check actual results
@@ -147,11 +153,8 @@ def docs_with_examples(session):
 
         # Check for generated examples
         auto_examples_dir = BUILD_DIR / "auto_examples"
-        example_files = (
-            list(auto_examples_dir.rglob("*.html"))
-            if auto_examples_dir.exists()
-            else []
-        )
+        example_files = (list(auto_examples_dir.rglob("*.html"))
+                         if auto_examples_dir.exists() else [])
     else:
         actual_files_count = 0
         example_files = []
@@ -176,9 +179,8 @@ def docs_with_examples(session):
 @nox.session(python=PYTHON_VERSIONS)
 def docs_compare_examples(session):
     """Compare build times and results with and without example execution."""
-    session.log("🏁 Comparing documentation builds with and without examples...")
-
-    results = {}
+    session.log(
+        "🏁 Comparing documentation builds with and without examples...")
 
     # Build without examples
     session.log("\n" + "=" * 60)
@@ -212,11 +214,8 @@ def docs_compare_examples(session):
     if BUILD_DIR.exists():
         files_with_examples = len(list(BUILD_DIR.glob("*.html")))
         auto_examples_dir = BUILD_DIR / "auto_examples"
-        example_files = (
-            len(list(auto_examples_dir.rglob("*.html")))
-            if auto_examples_dir.exists()
-            else 0
-        )
+        example_files = (len(list(auto_examples_dir.rglob("*.html")))
+                         if auto_examples_dir.exists() else 0)
     else:
         files_with_examples = 0
         example_files = 0
@@ -241,23 +240,25 @@ def docs_compare_examples(session):
     if time_with_examples > 0:
         time_savings = time_with_examples - time_no_examples
         percent_faster = (time_savings / time_with_examples) * 100
-        session.log(f"\n💡 Performance Comparison:")
+        session.log("\n💡 Performance Comparison:")
         session.log(
-            f"   ⚡ Time saved: {time_savings:.1f}s ({percent_faster:.1f}% faster)"
+            f"   ⚡ Time saved: {time_savings:.1f}s ({percent_faster:.1f}% faster)",
         )
         session.log(
-            f"   📊 Speed multiplier: {time_with_examples/time_no_examples:.1f}x"
+            f"   📊 Speed multiplier: {time_with_examples / time_no_examples:.1f}x",
         )
 
     # Recommendations
-    session.log(f"\n🎯 Recommendations:")
+    session.log("\n🎯 Recommendations:")
     session.log(
-        f"   - For development: Use 'nox -s docs_no_examples' ({time_no_examples:.1f}s)"
+        f"   - For development: Use 'nox -s docs_no_examples' ({time_no_examples:.1f}s)",
     )
-    session.log(f"   - For CI/testing: Use 'nox -s docs_no_examples' (fast feedback)")
-    session.log(f"   - For production: Use 'nox -s docs_with_examples' (complete docs)")
     session.log(
-        f"   - For preview: Use 'nox -s docs_no_examples' then 'nox -s docs_serve'"
+        "   - For CI/testing: Use 'nox -s docs_no_examples' (fast feedback)")
+    session.log(
+        "   - For production: Use 'nox -s docs_with_examples' (complete docs)")
+    session.log(
+        "   - For preview: Use 'nox -s docs_no_examples' then 'nox -s docs_serve'",
     )
 
 
@@ -272,7 +273,7 @@ def docs_minimal_no_examples(session):
     # Ensure dependencies are ready
     if not ensure_sphinx_available(session):
         session.error("❌ Could not prepare Sphinx for documentation build")
-        return
+        return None
 
     # Set environment for minimal build
     env = os.environ.copy()
@@ -280,7 +281,8 @@ def docs_minimal_no_examples(session):
     env["SPHINX_PROFILE"] = "minimal"  # Minimal profile
 
     session.log("📊 Ultra-minimal configuration:")
-    session.log(f"   SPHINX_DISABLE_EXAMPLES = {env['SPHINX_DISABLE_EXAMPLES']}")
+    session.log(
+        f"   SPHINX_DISABLE_EXAMPLES = {env['SPHINX_DISABLE_EXAMPLES']}")
     session.log(f"   SPHINX_PROFILE = {env['SPHINX_PROFILE']}")
     session.log("   ⚡ Minimal extensions only")
     session.log("   🚫 No examples, no gallery, no heavy processing")
@@ -301,12 +303,14 @@ def docs_minimal_no_examples(session):
 
     # Run build
     session.env.update(env)
-    status = run_with_graceful_handling(session, cmd, log_file, "Minimal Build")
+    status = run_with_graceful_handling(session, cmd, log_file,
+                                        "Minimal Build")
 
     elapsed = (datetime.now() - start_time).total_seconds()
 
     if status["success"]:
-        files_count = len(list(BUILD_DIR.glob("*.html"))) if BUILD_DIR.exists() else 0
+        files_count = len(list(
+            BUILD_DIR.glob("*.html"))) if BUILD_DIR.exists() else 0
         session.log(f"⚡ Ultra-fast build completed in {elapsed:.1f}s!")
         session.log(f"📄 Generated {files_count} HTML files")
         session.log(f"🌐 View docs: file://{BUILD_DIR.absolute()}/index.html")
@@ -329,7 +333,7 @@ def docs_autobuild_no_examples(session):
     try:
         session.run("pkill", "-f", "sphinx-autobuild.*8004", external=True)
         session.log("🧹 Killed existing sphinx processes")
-    except:
+    except BaseException:
         pass
 
     # Install dependencies
@@ -371,7 +375,10 @@ def docs_autobuild_no_examples(session):
         # Run with environment variables
         session.env.update(env)
         run_with_graceful_handling(
-            session, cmd, log_file, "Auto-build Server (No Examples)"
+            session,
+            cmd,
+            log_file,
+            "Auto-build Server (No Examples)",
         )
     except KeyboardInterrupt:
         session.log("🛑 Auto-build server stopped by user")

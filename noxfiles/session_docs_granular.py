@@ -4,16 +4,14 @@ This module provides fine-grained control over documentation testing,
 allowing developers to test specific packages, configurations, and
 changes incrementally.
 """
+from __future__ import annotations
 
 import json
-import os
 import shutil
 import time
 from pathlib import Path
-from typing import Dict, List, Optional
 
 import nox
-from env_utils import ensure_poetry_sync, log_environment_info
 
 # Configuration
 PYTHON_VERSIONS = ["3.12"]
@@ -108,7 +106,9 @@ CONFIG_PRESETS = {
 
 
 def create_package_config(
-    package_name: str, preset: str = "api_only", include_deps: bool = True
+    package_name: str,
+    preset: str = "api_only",
+    include_deps: bool = True,
 ) -> str:
     """Create a temporary Sphinx config for testing a specific package."""
 
@@ -155,7 +155,7 @@ autoapi_generate_api_docs = {preset_info.get("autoapi", True)}
 autoapi_member_order = "bysource"
 autoapi_options = [
     "members",
-    "undoc-members", 
+    "undoc-members",
     "show-inheritance",
     "show-module-summary",
 ]
@@ -194,7 +194,10 @@ intersphinx_mapping = {
 @nox.parametrize("package", list(PACKAGES.keys()))
 @nox.parametrize("preset", ["minimal", "api_only"])
 def docs_test_package(session, package: str, preset: str):
-    """Test documentation for a single package with different configurations."""
+    """Test documentation for a single package with different.
+
+    configurations.
+    """
 
     pkg_info = PACKAGES[package]
     preset_info = CONFIG_PRESETS[preset]
@@ -261,8 +264,9 @@ This is a test build for the {package} package using {preset} preset.
         # Check build time against limit
         if build_time > preset_info["build_time_limit"]:
             session.log(
-                f"⚠️  Build time {build_time:.1f}s exceeded limit {preset_info['build_time_limit']}s"
-            )
+                f"⚠️  Build time {
+                    build_time:.1f}s exceeded limit {
+                    preset_info['build_time_limit']}s", )
 
         # Analyze results
         results = analyze_build_results(build_dir, package, preset, build_time)
@@ -366,18 +370,16 @@ def docs_test_incremental(session):
 
     # Performance analysis
     performance_report = {
-        "timestamp": time.time(),
-        "times": times,
-        "speedup_no_change": (
-            times["clean_build"] / times["no_change"]
-            if times["no_change"] > 0
-            else float("inf")
-        ),
-        "speedup_index": (
-            times["clean_build"] / times["index_change"]
-            if times["index_change"] > 0
-            else float("inf")
-        ),
+        "timestamp":
+        time.time(),
+        "times":
+        times,
+        "speedup_no_change":
+        (times["clean_build"] /
+         times["no_change"] if times["no_change"] > 0 else float("inf")),
+        "speedup_index":
+        (times["clean_build"] /
+         times["index_change"] if times["index_change"] > 0 else float("inf")),
     }
 
     # Save performance data
@@ -456,25 +458,24 @@ html_title = "Configuration Test - {config_type.title()}"
 
         session.log(f"✅ {config_type} config: {build_time:.1f}s")
         session.log(
-            f"   Generated: {len(html_files)} HTML, {len(css_files)} CSS, {len(js_files)} JS files"
+            f"   Generated: {
+                len(html_files)} HTML, {
+                len(css_files)} CSS, {
+                len(js_files)} JS files",
         )
 
         # Test-specific validations
         if config_type == "minimal":
             # Should have basic files only
-            assert (
-                len(html_files) < 100
-            ), f"Too many files for minimal config: {len(html_files)}"
+            assert len(
+                html_files
+            ) < 100, f"Too many files for minimal config: {len(html_files)}"
         elif config_type == "modular":
             # Should have API documentation
-            api_files = (
-                list((build_dir / "api").rglob("*.html"))
-                if (build_dir / "api").exists()
-                else []
-            )
-            assert (
-                len(api_files) > 10
-            ), f"Expected API files in modular config, got {len(api_files)}"
+            api_files = (list((build_dir / "api").rglob("*.html")) if
+                         (build_dir / "api").exists() else [])
+            assert len(api_files) > 10, (
+                f"Expected API files in modular config, got {len(api_files)}")
 
     finally:
         if temp_conf.exists():
@@ -505,9 +506,9 @@ def docs_compare_configs(session):
         # Create isolated config and source
         config_lines = [
             f'project = "Config Comparison - {config.title()}"',
-            f'extensions = {preset_info["extensions"]}',
+            f"extensions = {preset_info['extensions']}",
             f'html_theme = "{preset_info["theme"]}"',
-            f'autoapi_generate_api_docs = {preset_info.get("autoapi", False)}',
+            f"autoapi_generate_api_docs = {preset_info.get('autoapi', False)}",
             'master_doc = "index"',
         ]
 
@@ -572,9 +573,8 @@ Configuration comparison test completed.
 
             # Collect metrics
             html_files = list(build_dir.rglob("*.html"))
-            total_size = sum(
-                f.stat().st_size for f in build_dir.rglob("*") if f.is_file()
-            )
+            total_size = sum(f.stat().st_size for f in build_dir.rglob("*")
+                             if f.is_file())
 
             results[config] = {
                 "build_time": build_time,
@@ -584,7 +584,12 @@ Configuration comparison test completed.
             }
 
             session.log(
-                f"   ⏱️  {build_time:.1f}s, {len(html_files)} files, {total_size/1024/1024:.1f}MB"
+                f"   ⏱️  {
+                    build_time:.1f}s, {
+                    len(html_files)} files, {
+                    total_size /
+                    1024 /
+                    1024:.1f}MB",
             )
 
         finally:
@@ -597,7 +602,7 @@ Configuration comparison test completed.
     session.log("\n📊 Configuration Comparison:")
     session.log("─" * 60)
     session.log(
-        f"{'Config':<12} {'Time (s)':<8} {'Files':<6} {'Size (MB)':<10} {'API':<4}"
+        f"{'Config':<12} {'Time (s)':<8} {'Files':<6} {'Size (MB)':<10} {'API':<4}",
     )
     session.log("─" * 60)
 
@@ -605,8 +610,7 @@ Configuration comparison test completed.
         api_marker = "✓" if metrics["has_api"] else "✗"
         session.log(
             f"{config:<12} {metrics['build_time']:<8.1f} {metrics['html_files']:<6} "
-            f"{metrics['total_size_mb']:<10.1f} {api_marker:<4}"
-        )
+            f"{metrics['total_size_mb']:<10.1f} {api_marker:<4}", )
 
     # Save detailed comparison
     comparison_file = DOCS_DIR / "config_comparison.json"
@@ -617,8 +621,11 @@ Configuration comparison test completed.
 
 
 def analyze_build_results(
-    build_dir: Path, package: str, preset: str, build_time: float
-) -> Dict:
+    build_dir: Path,
+    package: str,
+    preset: str,
+    build_time: float,
+) -> dict:
     """Analyze build results and return metrics."""
 
     if not build_dir.exists():
@@ -635,26 +642,34 @@ def analyze_build_results(
     api_files = list(api_dir.rglob("*.html")) if has_api else []
 
     # Calculate sizes
-    total_size = sum(f.stat().st_size for f in build_dir.rglob("*") if f.is_file())
+    total_size = sum(f.stat().st_size for f in build_dir.rglob("*")
+                     if f.is_file())
 
     return {
-        "success": True,
-        "package": package,
-        "preset": preset,
-        "build_time": build_time,
+        "success":
+        True,
+        "package":
+        package,
+        "preset":
+        preset,
+        "build_time":
+        build_time,
         "file_counts": {
             "html": len(html_files),
             "css": len(css_files),
             "js": len(js_files),
             "api": len(api_files),
         },
-        "has_api": has_api,
-        "total_size_mb": total_size / 1024 / 1024,
-        "summary": f"{build_time:.1f}s, {len(html_files)} files, {total_size/1024/1024:.1f}MB",
+        "has_api":
+        has_api,
+        "total_size_mb":
+        total_size / 1024 / 1024,
+        "summary":
+        f"{build_time:.1f}s, {len(html_files)} files, {total_size / 1024 / 1024:.1f}MB",
     }
 
 
-def save_test_results(package: str, preset: str, results: Dict):
+def save_test_results(package: str, preset: str, results: dict):
     """Save test results for trend analysis."""
 
     results_dir = DOCS_DIR / "test_results"
@@ -821,7 +836,8 @@ print(f"✅ Modular config ready for {package}")
 '''
 
     # Use isolated directories
-    temp_conf_dir, temp_source_dir = create_isolated_dirs(build_dir, package, "modular")
+    temp_conf_dir, temp_source_dir = create_isolated_dirs(
+        build_dir, package, "modular")
 
     try:
         # Write modular configuration
@@ -833,18 +849,19 @@ print(f"✅ Modular config ready for {package}")
         if source_conf_modules.exists():
             import shutil
 
-            shutil.copytree(source_conf_modules, temp_conf_dir / "conf_modules")
+            shutil.copytree(source_conf_modules,
+                            temp_conf_dir / "conf_modules")
 
         # Create simple test content
         index_content = f"""
 {package.title()} Modular Configuration Test
-{'=' * (len(package) + 30)}
+{"=" * (len(package) + 30)}
 
 Testing the modular configuration system with {package} package.
 
 .. toctree::
    :maxdepth: 2
-   
+
    api/index
 
 Extensions Loaded
@@ -880,8 +897,9 @@ Package Focus
         # Check results
         html_files = list(build_dir.glob("**/*.html"))
         session.log(
-            f"✅ Modular config test passed: {len(html_files)} files in {build_time:.1f}s"
-        )
+            f"✅ Modular config test passed: {
+                len(html_files)} files in {
+                build_time:.1f}s", )
 
     finally:
         cleanup_temp_dirs(temp_conf_dir, temp_source_dir)
@@ -915,7 +933,7 @@ import sys
 from pathlib import Path
 
 # Load modular system
-conf_modules_dir = Path(__file__).parent / "conf_modules"  
+conf_modules_dir = Path(__file__).parent / "conf_modules"
 sys.path.insert(0, str(conf_modules_dir))
 
 from extensions import get_all_extensions
@@ -940,7 +958,7 @@ autoapi_ignore = [
 ]
 
 # Focus patterns for {module}
-{f'# Focus on {module} module only' if module != 'init_only' else '# Focus on __init__.py files only'}
+{f"# Focus on {module} module only" if module != "init_only" else "# Focus on __init__.py files only"}
 
 autoapi_root = "api"
 html_theme = "furo"
@@ -949,7 +967,8 @@ suppress_warnings = ["ref.python", "autosummary", "autoapi"]
 print(f"🎯 Focused on {package}/{module}")
 '''
 
-    temp_conf_dir, temp_source_dir = create_isolated_dirs(build_dir, package, module)
+    temp_conf_dir, temp_source_dir = create_isolated_dirs(
+        build_dir, package, module)
 
     try:
         # Write configuration
@@ -961,28 +980,29 @@ print(f"🎯 Focused on {package}/{module}")
         if source_conf_modules.exists():
             import shutil
 
-            shutil.copytree(source_conf_modules, temp_conf_dir / "conf_modules")
+            shutil.copytree(source_conf_modules,
+                            temp_conf_dir / "conf_modules")
 
         # Create focused content
         index_content = f"""
 {package.title()} - {module.title()} Documentation
-{'=' * (len(package) + len(module) + 20)}
+{"=" * (len(package) + len(module) + 20)}
 
 Focused documentation for the {module} module in {package}.
 
 .. toctree::
    :maxdepth: 3
-   
+
    api/index
 
 Module Focus: {module}
-{'-' * (14 + len(module))}
+{"-" * (14 + len(module))}
 
 This build focuses specifically on:
 
 - **Package**: haive-{package}
-- **Module**: {module}  
-- **Pattern**: {module_patterns.get(module, 'all')}
+- **Module**: {module}
+- **Pattern**: {module_patterns.get(module, "all")}
 """
         (temp_source_dir / "index.rst").write_text(index_content)
 
@@ -1004,11 +1024,12 @@ This build focuses specifically on:
         html_files = list(build_dir.glob("**/*.html"))
 
         session.log(
-            f"✅ Module build completed: {len(html_files)} files in {build_time:.1f}s"
+            f"✅ Module build completed: {len(html_files)} files in {build_time:.1f}s",
         )
 
         # Show specific module results
-        module_files = list(build_dir.glob(f"**/haive/{package}/{module}/**/*.html"))
+        module_files = list(
+            build_dir.glob(f"**/haive/{package}/{module}/**/*.html"))
         if module_files:
             session.log(f"📁 {module} module files: {len(module_files)}")
 
@@ -1043,7 +1064,7 @@ extensions = get_all_extensions()
 print(f"Total extensions: {{len(extensions)}}")
 
 # Test memory config
-memory_config = get_memory_safe_sphinx_config(extensions[:10])  
+memory_config = get_memory_safe_sphinx_config(extensions[:10])
 print(f"Memory config keys: {{list(memory_config.keys())}}")
 
 # Test extension configs
@@ -1056,17 +1077,15 @@ print("✅ Modular configuration system working!")
     import subprocess
 
     try:
-        changed_files = (
-            subprocess.check_output(
-                ["git", "diff", "--name-only", "HEAD~1"], universal_newlines=True
-            )
-            .strip()
-            .split("\n")
-        )
+        changed_files = (subprocess.check_output(
+            ["git", "diff", "--name-only", "HEAD~1"],
+            text=True,
+        ).strip().split("\n"))
 
         # Filter for documentation-related changes
         doc_changes = [
-            f for f in changed_files if "docs/" in f or ".rst" in f or ".md" in f
+            f for f in changed_files
+            if "docs/" in f or ".rst" in f or ".md" in f
         ]
 
         if doc_changes:

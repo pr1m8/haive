@@ -1,14 +1,13 @@
-"""
-Modular Documentation Sessions
+"""Modular Documentation Sessions.
 
-This module provides nox sessions for building package-specific documentation
-using the new modular configuration system.
+This module provides nox sessions for building package-specific
+documentation using the new modular configuration system.
 """
 
+from pathlib import Path
 import shutil
 import tempfile
 import time
-from pathlib import Path
 
 import nox
 
@@ -174,7 +173,7 @@ builder.print_build_summary()
         # Create index content
         index_content = f"""
 Haive {package.title()} Documentation
-{'=' * (len(package) + 21)}
+{"=" * (len(package) + 21)}
 
 Welcome to the documentation for the **haive-{package}** package.
 
@@ -183,7 +182,7 @@ This documentation was built using the **{profile}** profile.
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-   
+
    api/index
 
 Package Overview
@@ -235,13 +234,14 @@ API Reference
             # Check results
             html_files = list(build_dir.glob("**/*.html"))
             session.log(
-                f"✅ Build successful: {len(html_files)} files in {build_time:.1f}s"
+                f"✅ Build successful: {len(html_files)} files in {build_time:.1f}s",
             )
 
             # Show result location
             index_file = build_dir / "index.html"
             if index_file.exists():
-                session.log(f"📄 View documentation: file://{index_file.absolute()}")
+                session.log(
+                    f"📄 View documentation: file://{index_file.absolute()}")
 
         except Exception as e:
             build_time = time.time() - start_time
@@ -258,12 +258,12 @@ def docs_test_modular_system(session):
     session.log("🧪 Testing modular configuration system")
 
     # Test that we can import and use the modular system
-    test_script = """
+    test_script = f"""
 import sys
 from pathlib import Path
 
 # Add conf_modules to path
-conf_modules_dir = Path("{conf_modules_dir}")
+conf_modules_dir = Path("{CONF_MODULES_DIR}")
 sys.path.insert(0, str(conf_modules_dir))
 
 print("Testing modular imports...")
@@ -272,7 +272,7 @@ print("Testing modular imports...")
 try:
     from package_configs import PACKAGE_PROFILES, get_package_extensions
     print(f"✅ Package configs loaded: {{len(PACKAGE_PROFILES)}} packages")
-    
+
     # Test each package
     for package in PACKAGE_PROFILES.keys():
         minimal = get_package_extensions(package, "minimal")
@@ -286,7 +286,7 @@ except Exception as e:
 # Test modular builder
 try:
     from modular_builder import ModularSphinxBuilder
-    
+
     # Test building config for each package
     for package in ["core", "agents", "tools"]:
         builder = ModularSphinxBuilder(package, "minimal")
@@ -297,9 +297,7 @@ except Exception as e:
     raise
 
 print("\\n🎉 All modular system tests passed!")
-""".format(
-        conf_modules_dir=CONF_MODULES_DIR
-    )
+"""
 
     # Run the test
     session.run("python", "-c", test_script)
@@ -361,7 +359,8 @@ if len(common) > 10:
 def docs_quick_build(session, package):
     """Quick documentation build for development (minimal profile).
 
-    This is the fastest way to build docs for a package during development.
+    This is the fastest way to build docs for a package during
+    development.
     """
     session.install(*BASE_DEPENDENCIES)
 
@@ -394,22 +393,20 @@ config = builder.get_sphinx_config()
 
 for key, value in config.items():
     globals()[key] = value
-"""
-        )
+""", )
 
         # Minimal index
         index_file = temp_path / "index.rst"
         index_file.write_text(
             f"""
 {package.title()} Quick Build
-{'=' * (len(package) + 12)}
+{"=" * (len(package) + 12)}
 
 .. toctree::
    :maxdepth: 2
-   
+
    api/index
-"""
-        )
+""", )
 
         # Build
         if build_dir.exists():
@@ -429,7 +426,9 @@ for key, value in config.items():
                     0,
                     1,
                     2,
-                ],  # Accept exit codes 0, 1 (warnings), or 2 (errors that still produced output)
+                    # Accept exit codes 0, 1 (warnings), or 2 (errors that still
+                    # produced output)
+                ],
                 silent=True,
             )
             build_time = time.time() - start_time
@@ -440,12 +439,14 @@ for key, value in config.items():
             if index_file.exists():
                 session.log(f"📄 View: file://{index_file}")
             else:
-                session.log(f"⚠️  No index.html found, checking for other HTML files...")
+                session.log(
+                    "⚠️  No index.html found, checking for other HTML files..."
+                )
                 html_files = list(build_dir.rglob("*.html"))
                 if html_files:
                     session.log(f"📄 Found {len(html_files)} HTML files")
                     session.log(
-                        f"📄 API docs: file://{build_dir / 'api' / 'index.html'}"
+                        f"📄 API docs: file://{build_dir / 'api' / 'index.html'}",
                     )
         except Exception as e:
             session.error(f"❌ Build failed: {e}")
@@ -494,24 +495,22 @@ for key, value in config.items():
 # Store stats for comparison
 with open("build_stats.txt", "w") as f:
     f.write(f"extensions={{len(config.get('extensions', []))}}")
-"""
-            )
+""", )
 
             # Create index
             index_file = temp_path / "index.rst"
             index_file.write_text(
                 f"""
 {package.title()} - {profile.title()} Profile
-{'=' * (len(package) + len(profile) + 12)}
+{"=" * (len(package) + len(profile) + 12)}
 
 Built with **{profile}** profile.
 
 .. toctree::
    :maxdepth: 2
-   
+
    api/index
-"""
-            )
+""", )
 
             # Build
             if build_dir.exists():
@@ -520,7 +519,12 @@ Built with **{profile}** profile.
             start_time = time.time()
             try:
                 session.run(
-                    "sphinx-build", "-b", "html", str(temp_path), str(build_dir), "-q"
+                    "sphinx-build",
+                    "-b",
+                    "html",
+                    str(temp_path),
+                    str(build_dir),
+                    "-q",
                 )
                 build_time = time.time() - start_time
 
@@ -550,7 +554,7 @@ Built with **{profile}** profile.
     session.log("\n📊 Profile Comparison Results:")
     session.log("-" * 60)
     session.log(
-        f"{'Profile':<10} {'Status':<10} {'Time':<10} {'Files':<10} {'Extensions':<10}"
+        f"{'Profile':<10} {'Status':<10} {'Time':<10} {'Files':<10} {'Extensions':<10}",
     )
     session.log("-" * 60)
 
@@ -558,8 +562,7 @@ Built with **{profile}** profile.
         if result["success"]:
             session.log(
                 f"{profile:<10} {'✅':<10} {result['time']:<10.1f} "
-                f"{result['files']:<10} {result['extensions']:<10}"
-            )
+                f"{result['files']:<10} {result['extensions']:<10}", )
             session.log(f"  📄 {result['path']}")
         else:
             session.log(f"{profile:<10} {'❌':<10} Failed: {result['error']}")

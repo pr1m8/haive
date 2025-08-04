@@ -1,16 +1,14 @@
 """Documentation sessions for Haive."""
 
-import json
+from datetime import datetime
 import os
+from pathlib import Path
 import shutil
 import subprocess
-from datetime import datetime
-from pathlib import Path
-
-import nox
 
 # Import shared environment utilities
-from env_utils import ensure_poetry_sync, ensure_sphinx_available, log_environment_info
+from env_utils import ensure_sphinx_available
+import nox
 
 # Configuration
 PYTHON_VERSIONS = ["3.12"]
@@ -46,7 +44,10 @@ def create_log_file(session, operation_name: str) -> Path:
 
 
 def run_with_graceful_handling(
-    session, cmd: list, log_file: Path, operation: str
+    session,
+    cmd: list,
+    log_file: Path,
+    operation: str,
 ) -> dict:
     """Run command with proper error detection and detailed logging."""
     status = {
@@ -183,14 +184,18 @@ def run_with_graceful_handling(
             session.log(f"📄 Built {status['files_built']} files")
         elif status["exit_code"] == 0 and status["errors"] > 0:
             session.log(
-                f"⚠️  {operation} completed with errors (sphinx didn't report failure)"
+                f"⚠️  {operation} completed with errors (sphinx didn't report failure)",
             )
             session.log(f"❌ Found {status['errors']} errors in output")
         else:
-            session.log(f"❌ {operation} failed with exit code: {status['exit_code']}")
+            session.log(
+                f"❌ {operation} failed with exit code: {status['exit_code']}")
 
         session.log(
-            f"📊 Warnings: {status['warnings']}, Errors: {status['errors']}, Files: {status['files_built']}"
+            f"📊 Warnings: {
+                status['warnings']}, Errors: {
+                status['errors']}, Files: {
+                status['files_built']}",
         )
 
         # Show last few errors if any
@@ -235,7 +240,8 @@ def docs_fast(session):
     ]
 
     # Run build with improved error handling
-    status = run_with_graceful_handling(session, cmd, log_file, "Fast Sphinx Build")
+    status = run_with_graceful_handling(session, cmd, log_file,
+                                        "Fast Sphinx Build")
 
     # Check actual results on disk
     if BUILD_DIR.exists():
@@ -246,20 +252,20 @@ def docs_fast(session):
 
     # Report comprehensive results
     if status["success"] and actual_files_count > 0:
-        session.log(f"✅ Build completed successfully!")
+        session.log("✅ Build completed successfully!")
         session.log(f"📄 Found {actual_files_count} HTML files on disk")
         session.log(f"🌐 View docs: file://{BUILD_DIR.absolute()}/index.html")
     elif status["exit_code"] == 0 and status["errors"] > 0:
-        session.log(f"⚠️  Build reported success but errors were detected!")
+        session.log("⚠️  Build reported success but errors were detected!")
         session.log(
-            f"📄 Found {actual_files_count} HTML files on disk (may be incomplete)"
+            f"📄 Found {actual_files_count} HTML files on disk (may be incomplete)",
         )
         if actual_files_count > 0:
             session.log(
-                f"🌐 View docs (with caution): file://{BUILD_DIR.absolute()}/index.html"
+                f"🌐 View docs (with caution): file://{BUILD_DIR.absolute()}/index.html",
             )
     else:
-        session.log(f"❌ Build failed!")
+        session.log("❌ Build failed!")
         session.log(f"📄 Only {actual_files_count} HTML files were generated")
 
     # Show log file location for debugging
@@ -299,7 +305,8 @@ def docs(session):
 
 @nox.session(python=PYTHON_VERSIONS)
 def docs_full(session):
-    """Full sphinx-build with autosummary regeneration (slower but complete)."""
+    """Full sphinx-build with autosummary regeneration (slower but
+    complete)."""
     session.log("📚 Running FULL documentation build...")
 
     log_file = create_log_file(session, "docs_full_build")
@@ -369,7 +376,7 @@ def docs_autobuild(session):
     try:
         session.run("pkill", "-f", "sphinx-autobuild.*8003", external=True)
         session.log("🧹 Killed existing sphinx processes")
-    except:
+    except BaseException:
         pass
 
     # Install dependencies
@@ -468,11 +475,14 @@ def docs_debug(session):
 
     # Count issues
     issues = {
-        "import_errors": content.count("ModuleNotFoundError")
-        + content.count("ImportError"),
-        "syntax_errors": content.count("SyntaxError"),
-        "warnings": content.count("WARNING"),
-        "file_not_found": content.count("FileNotFoundError"),
+        "import_errors":
+        content.count("ModuleNotFoundError") + content.count("ImportError"),
+        "syntax_errors":
+        content.count("SyntaxError"),
+        "warnings":
+        content.count("WARNING"),
+        "file_not_found":
+        content.count("FileNotFoundError"),
     }
 
     session.log("=" * 50)
@@ -482,7 +492,8 @@ def docs_debug(session):
     for issue_type, count in issues.items():
         if count > 0:
             icon = "🚨" if count > 10 else "⚠️"
-            session.log(f"{icon} {issue_type.replace('_', ' ').title()}: {count}")
+            session.log(
+                f"{icon} {issue_type.replace('_', ' ').title()}: {count}")
 
     session.log(f"📋 Full log: {latest_log}")
 
@@ -521,7 +532,7 @@ def docs_history(session):
 
         status = "✅" if errors == 0 else "❌"
         session.log(
-            f"{i+1:2d}. {formatted_time} | {status} | ⚠️ {warnings:3d} | 🚨 {errors:3d}"
+            f"{i + 1:2d}. {formatted_time} | {status} | ⚠️ {warnings:3d} | 🚨 {errors:3d}",
         )
 
     session.log("=" * 60)
@@ -546,19 +557,21 @@ def docs_logs(session):
     session.log(f"💾 Total log size: {size_mb:.1f} MB")
 
     # Show recent logs
-    recent_logs = sorted(all_logs, key=lambda f: f.stat().st_mtime, reverse=True)[:5]
+    recent_logs = sorted(all_logs,
+                         key=lambda f: f.stat().st_mtime,
+                         reverse=True)[:5]
 
     session.log("\n📋 Recent logs:")
     for log_file in recent_logs:
         size_kb = log_file.stat().st_size / 1024
         mtime = datetime.fromtimestamp(log_file.stat().st_mtime)
         session.log(
-            f"  📄 {log_file.name} ({size_kb:.1f} KB) - {mtime.strftime('%Y-%m-%d %H:%M:%S')}"
+            f"  📄 {log_file.name} ({size_kb:.1f} KB) - {mtime.strftime('%Y-%m-%d %H:%M:%S')}",
         )
 
     if len(all_logs) > 20:
         session.log(
-            f"\n⚠️  You have {len(all_logs)} log files. Consider cleaning old logs."
+            f"\n⚠️  You have {len(all_logs)} log files. Consider cleaning old logs.",
         )
 
 
@@ -567,7 +580,7 @@ def docs_quality(session):
     """Run documentation quality checks (doc8, codespell)."""
     session.log("🔍 Running documentation quality checks...")
 
-    log_file = create_log_file(session, "docs_quality")
+    create_log_file(session, "docs_quality")
 
     # Install dependencies
     session.run("poetry", "install", "--only", "docs", external=True)
@@ -583,7 +596,11 @@ def docs_quality(session):
     # Run codespell
     session.log("📝 Running codespell (typo checker)...")
     try:
-        session.run("poetry", "run", "codespell", str(SOURCE_DIR), external=True)
+        session.run("poetry",
+                    "run",
+                    "codespell",
+                    str(SOURCE_DIR),
+                    external=True)
         session.log("✅ codespell: No typos found")
     except Exception as e:
         session.log(f"⚠️  codespell found typos: {e}")
@@ -634,14 +651,15 @@ def docs_linkcheck(session):
 @nox.session(python=PYTHON_VERSIONS)
 def docs_nitpicky(session):
     """Run Sphinx in nitpicky mode to catch all warnings and errors."""
-    session.log("🔍 Running Sphinx in nitpicky mode (all warnings are errors)...")
+    session.log(
+        "🔍 Running Sphinx in nitpicky mode (all warnings are errors)...")
 
     log_file = create_log_file(session, "docs_nitpicky")
 
     # Ensure dependencies are ready
     if not ensure_sphinx_available(session):
         session.error("❌ Could not prepare Sphinx for nitpicky check")
-        return
+        return None
 
     # Nitpicky mode command
     cmd = [
@@ -657,13 +675,15 @@ def docs_nitpicky(session):
     ]
 
     # Run nitpicky check
-    status = run_with_graceful_handling(session, cmd, log_file, "Nitpicky Check")
+    status = run_with_graceful_handling(session, cmd, log_file,
+                                        "Nitpicky Check")
 
     if status["success"]:
         session.log("✅ All checks passed in nitpicky mode!")
     else:
         session.log(f"❌ Nitpicky check failed with {status['errors']} errors")
-        session.log("💡 Fix all warnings and errors before building documentation")
+        session.log(
+            "💡 Fix all warnings and errors before building documentation")
 
     return status["success"]
 
@@ -677,7 +697,11 @@ def docs_test(session):
     session.log("📋 Checking conf.py syntax...")
     try:
         session.run(
-            "python", "-m", "compileall", str(SOURCE_DIR / "conf.py"), external=True
+            "python",
+            "-m",
+            "compileall",
+            str(SOURCE_DIR / "conf.py"),
+            external=True,
         )
         session.log("✅ conf.py syntax is valid")
     except Exception as e:
@@ -740,7 +764,8 @@ def docs_coverage(session):
         str(DOCS_DIR / "build" / "coverage"),
     ]
 
-    status = run_with_graceful_handling(session, cmd, log_file, "Coverage Check")
+    status = run_with_graceful_handling(session, cmd, log_file,
+                                        "Coverage Check")
 
     # Report results
     coverage_file = DOCS_DIR / "build" / "coverage" / "python.txt"
