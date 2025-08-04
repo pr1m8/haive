@@ -1,16 +1,14 @@
 """Clean and organized noxfile for Haive project.
 
-This noxfile imports all sessions from modular files in the noxfiles/ directory.
+This noxfile imports all sessions from modular files in the noxfiles/
+directory.
 """
 
-import sys
+from __future__ import annotations
+
 from pathlib import Path
+import sys
 
-# Add noxfiles to Python path to import session modules
-noxfiles_dir = Path(__file__).parent / "noxfiles"
-sys.path.insert(0, str(noxfiles_dir))
-
-# Import all documentation sessions
 from session_docs import (
     docs,
     docs_autobuild,
@@ -22,20 +20,14 @@ from session_docs import (
     docs_history,
     docs_linkcheck,
     docs_logs,
-    docs_nitpicky,
     docs_pdf,
     docs_quality,
     docs_serve,
-    docs_test,
 )
-
-# Import error collection sessions
 from session_docs_error_collector import (
     docs_phased_with_error_collection,
     review_errors,
 )
-
-# Import example-aware documentation sessions
 from session_docs_examples import (
     docs_autobuild_no_examples,
     docs_compare_examples,
@@ -45,32 +37,13 @@ from session_docs_examples import (
     docs_prod,
     docs_with_examples,
 )
-
-# Import modular documentation build sessions
-from session_docs_modular import (
-    docs_build_package,
-    docs_compare_profiles,
-    docs_list_profiles,
-    docs_quick_build,
-    docs_test_modular_system,
-)
-
-# Import package-specific documentation sessions
 from session_docs_package import (
     docs_multi,
     docs_package,
     docs_quick,
 )
-
-# Import phased documentation sessions
 from session_docs_phased import (
-    docs_diagnose,
-    docs_phased,
-    docs_phased_no_examples,
-    docs_validate,
-)
-
-# Import documentation testing sessions
+    docs_phased_no_examples, )
 from session_docs_testing import (
     docs_test_all,
     docs_test_docstrings,
@@ -81,8 +54,6 @@ from session_docs_testing import (
     docs_test_prose,
     docs_test_spelling,
 )
-
-# Import example sessions
 from session_examples import (
     examples,
     examples_docs,
@@ -92,12 +63,32 @@ from session_examples import (
     run_example,
     validate_examples,
 )
+from session_lint import format, lint, mypy, security
+from session_test import test, test_integration, test_package, test_quick
+
+# Add noxfiles to Python path to import session modules
+noxfiles_dir = Path(__file__).parent / "noxfiles"
+sys.path.insert(0, str(noxfiles_dir))
+
+# Import all documentation sessions
+
+# Import error collection sessions
+
+# Import example-aware documentation sessions
+
+# Import modular documentation build sessions
+
+# Import package-specific documentation sessions
+
+# Import phased documentation sessions
+
+# Import documentation testing sessions
+
+# Import example sessions
 
 # Import linting sessions
-from session_lint import format, lint, mypy, security
 
 # Import testing sessions
-from session_test import test, test_integration, test_package, test_quick
 
 # Import granular documentation testing sessions (temporarily disabled due to file corruption)
 # from session_docs_granular import (
@@ -107,18 +98,10 @@ from session_test import test, test_integration, test_package, test_quick
 #     docs_test_config,
 #     docs_test_incremental,
 #     docs_test_package,
-# )
-
 
 # Import memory-aware sessions if available
 try:
-    from session_docs_memory import (
-        docs_adaptive,
-        docs_autobuild_memory,
-        docs_fast_memory,
-        docs_memory_safe,
-        docs_monitor,
-    )
+    pass
 
     MEMORY_SESSIONS_AVAILABLE = True
 except ImportError:
@@ -218,15 +201,13 @@ __all__ = [
 
 # Add memory sessions if available
 if MEMORY_SESSIONS_AVAILABLE:
-    __all__.extend(
-        [
-            "docs_adaptive",
-            "docs_autobuild_memory",
-            "docs_fast_memory",
-            "docs_memory_safe",
-            "docs_monitor",
-        ]
-    )
+    __all__.extend([
+        "docs_adaptive",
+        "docs_autobuild_memory",
+        "docs_fast_memory",
+        "docs_memory_safe",
+        "docs_monitor",
+    ], )
 
 # Print help when running nox without arguments
 if __name__ == "__main__":
