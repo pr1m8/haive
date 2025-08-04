@@ -147,8 +147,4 @@ def examples_docs(session):
 
     # Change to docs directory and run docs example generator
     session.chdir("docs")
-    session.run("poetry",
-                "run",
-                "python",
-                "run_examples_for_docs.py",
-                external=True)
+    session.run("poetry", "run", "python", "run_examples_for_docs.py", external=True)

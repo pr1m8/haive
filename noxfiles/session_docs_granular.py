@@ -1105,10 +1105,3 @@ print("✅ Modular configuration system working!")
 
 
 if __name__ == "__main__":
-    print("Granular Documentation Testing Sessions:")
-    print("  nox -s docs-test-package         # Test individual packages")
-    print("  nox -s docs-test-incremental     # Test build performance")
-    print("  nox -s docs-test-config          # Test configurations")
-    print("  nox -s docs-compare-configs      # Compare config approaches")
-    print("  nox -s docs-quick-test           # Quick smoke test")
-    print("  nox -s docs-dev                  # Development workflow")

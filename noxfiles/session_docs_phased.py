@@ -4,15 +4,16 @@ This module provides a staged approach to building documentation,
 allowing for better debugging and incremental validation.
 """
 
-from datetime import datetime
 import os
-from pathlib import Path
 import subprocess
 import time
+from datetime import datetime
+from pathlib import Path
+
+import nox
 
 # Import shared environment utilities
-from env_utils import ensure_sphinx_available, log_environment_info
-import nox
+from .env_utils import ensure_sphinx_available, log_environment_info
 
 # Configuration
 PYTHON_VERSIONS = ["3.12"]
