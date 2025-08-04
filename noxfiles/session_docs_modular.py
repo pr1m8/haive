@@ -4,10 +4,10 @@ This module provides nox sessions for building package-specific
 documentation using the new modular configuration system.
 """
 
-from pathlib import Path
 import shutil
 import tempfile
 import time
+from pathlib import Path
 
 import nox
 
@@ -240,8 +240,7 @@ API Reference
             # Show result location
             index_file = build_dir / "index.html"
             if index_file.exists():
-                session.log(
-                    f"📄 View documentation: file://{index_file.absolute()}")
+                session.log(f"📄 View documentation: file://{index_file.absolute()}")
 
         except Exception as e:
             build_time = time.time() - start_time
@@ -393,7 +392,8 @@ config = builder.get_sphinx_config()
 
 for key, value in config.items():
     globals()[key] = value
-""", )
+""",
+        )
 
         # Minimal index
         index_file = temp_path / "index.rst"
@@ -406,7 +406,8 @@ for key, value in config.items():
    :maxdepth: 2
 
    api/index
-""", )
+""",
+        )
 
         # Build
         if build_dir.exists():
@@ -415,7 +416,7 @@ for key, value in config.items():
         start_time = time.time()
         try:
             # Run sphinx-build (may have some warnings but that's OK for quick builds)
-            result = session.run(
+            session.run(
                 "sphinx-build",
                 "-b",
                 "html",
@@ -439,9 +440,7 @@ for key, value in config.items():
             if index_file.exists():
                 session.log(f"📄 View: file://{index_file}")
             else:
-                session.log(
-                    "⚠️  No index.html found, checking for other HTML files..."
-                )
+                session.log("⚠️  No index.html found, checking for other HTML files...")
                 html_files = list(build_dir.rglob("*.html"))
                 if html_files:
                     session.log(f"📄 Found {len(html_files)} HTML files")
@@ -495,7 +494,8 @@ for key, value in config.items():
 # Store stats for comparison
 with open("build_stats.txt", "w") as f:
     f.write(f"extensions={{len(config.get('extensions', []))}}")
-""", )
+""",
+            )
 
             # Create index
             index_file = temp_path / "index.rst"
@@ -510,7 +510,8 @@ Built with **{profile}** profile.
    :maxdepth: 2
 
    api/index
-""", )
+""",
+            )
 
             # Build
             if build_dir.exists():
@@ -562,25 +563,11 @@ Built with **{profile}** profile.
         if result["success"]:
             session.log(
                 f"{profile:<10} {'✅':<10} {result['time']:<10.1f} "
-                f"{result['files']:<10} {result['extensions']:<10}", )
+                f"{result['files']:<10} {result['extensions']:<10}",
+            )
             session.log(f"  📄 {result['path']}")
         else:
             session.log(f"{profile:<10} {'❌':<10} Failed: {result['error']}")
 
 
 if __name__ == "__main__":
-    print("Modular Documentation Build System")
-    print("==================================")
-    print()
-    print("Available sessions:")
-    print("  nox -s docs-build-package         # Build specific package")
-    print("  nox -s docs-test-modular          # Test the modular system")
-    print("  nox -s docs-list-profiles         # List all profiles")
-    print("  nox -s docs-quick                 # Quick minimal build")
-    print("  nox -s docs-compare-profiles      # Compare all profiles")
-    print()
-    print("Examples:")
-    print("  nox -s docs-build-package-core-standard")
-    print("  nox -s docs-build-package-agents-full")
-    print("  nox -s docs-quick-agents")
-    print("  nox -s docs-compare-profiles-agents")

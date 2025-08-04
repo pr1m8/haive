@@ -7,12 +7,13 @@ This module provides memory-safe versions of documentation sessions that:
 - Provide progressive fallback under memory pressure
 """
 
-# Import memory management
-from memory_manager import get_memory_safe_sphinx_args, memory_manager
 import nox
 
+# Import memory management
+from .memory_manager import get_memory_safe_sphinx_args, memory_manager
+
 # Import base documentation sessions
-from session_docs import (
+from .session_docs import (
     BUILD_DIR,
     PYTHON_VERSIONS,
     SOURCE_DIR,
@@ -52,8 +53,7 @@ def docs_memory_safe(session):
 
     # Monitor memory during build
     with memory_manager.monitor_build(session, "Sphinx Build"):
-        status = run_with_graceful_handling(session, cmd, log_file,
-                                            "Memory-Safe Build")
+        status = run_with_graceful_handling(session, cmd, log_file, "Memory-Safe Build")
 
     # Clean up if needed
     if memory_status in ["critical", "low"]:
@@ -78,7 +78,7 @@ def docs_fast_memory(session):
     # Otherwise run fast build with monitoring
     with memory_manager.monitor_build(session, "Fast Build"):
         # Import and run the original fast build
-        from session_docs import docs_fast
+        from .session_docs import docs_fast
 
         # Call the underlying function directly
         docs_fast.func(session)
@@ -176,8 +176,7 @@ def docs_adaptive(session):
 
     # Monitor and build
     with memory_manager.monitor_build(session, "Adaptive Build"):
-        status = run_with_graceful_handling(session, cmd, log_file,
-                                            "Adaptive Build")
+        status = run_with_graceful_handling(session, cmd, log_file, "Adaptive Build")
 
     # Report results
     if status["success"]:
@@ -206,8 +205,9 @@ def docs_autobuild_memory(session):
     session.log("⚠️  Will show warnings if memory drops below 2GB")
 
     # Import and run original autobuild
-    from session_docs import docs_autobuild
+    from .session_docs import docs_autobuild
 
     # Wrap the original function
     with memory_manager.monitor_build(session, "Auto-build Server"):
         docs_autobuild.func(session)
+    return None
