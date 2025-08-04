@@ -12,11 +12,7 @@ Key improvements:
 import inspect
 from collections.abc import Callable
 from datetime import datetime
-from typing import (
-    Any,
-    Union,
-    get_type_hints,
-)
+from typing import Any, Union, get_type_hints
 
 from langchain_core.tools import BaseTool, StructuredTool, Tool
 from pydantic import BaseModel, Field, field_validator, model_validator
