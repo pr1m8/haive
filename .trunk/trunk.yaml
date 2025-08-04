@@ -13,25 +13,29 @@ runtimes:
   enabled: [go@1.21.0, node@22.16.0, python@3.10.8]
 lint:
   enabled:
+    - codespell@2.4.1
+    - flake8@7.3.0
+    - pyright@1.1.403
+    - vale@3.12.0
     - pre-commit-hooks@5.0.0
     - actionlint@1.7.7
     - bandit@1.8.6
     - black@25.1.0
-    - checkov@3.2.451
+    - checkov@3.2.457
     - dotenv-linter@3.3.0
     - git-diff-check
     - hadolint@2.12.1-beta
     - isort@6.0.1
     - markdownlint@0.45.0
-    - mypy@1.17.0
+    - mypy@1.17.1
     - osv-scanner@2.0.3
     - oxipng@9.1.5
     - prettier@3.6.2
-    - ruff@0.12.3
+    - ruff@0.12.7
     - shellcheck@0.10.0
     - shfmt@3.6.0
     - taplo@0.9.3
-    - trufflehog@3.90.0
+    - trufflehog@3.90.2
     - yamllint@1.37.1
   ignore:
     - linters: [ALL]
