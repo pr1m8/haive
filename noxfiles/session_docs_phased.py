@@ -4,19 +4,15 @@ This module provides a staged approach to building documentation,
 allowing for better debugging and incremental validation.
 """
 
-import json
+from datetime import datetime
 import os
-import shutil
+from pathlib import Path
 import subprocess
 import time
-from datetime import datetime
-from pathlib import Path
-from typing import Dict, List, Optional, Tuple
-
-import nox
 
 # Import shared environment utilities
-from env_utils import ensure_poetry_sync, ensure_sphinx_available, log_environment_info
+from env_utils import ensure_sphinx_available, log_environment_info
+import nox
 
 # Configuration
 PYTHON_VERSIONS = ["3.12"]
@@ -56,25 +52,25 @@ class PhaseLogger:
             "warnings": [],
         }
 
-        self.session.log(f"\n{'='*60}")
+        self.session.log(f"\n{'=' * 60}")
         self.session.log(f"📍 PHASE: {name}")
         self.session.log(f"📝 {description}")
-        self.session.log(f"{'='*60}")
+        self.session.log(f"{'=' * 60}")
 
     def end_phase(self):
         """End the current phase."""
         if self.current_phase:
             self.current_phase["end_time"] = time.time()
-            self.current_phase["duration"] = (
-                self.current_phase["end_time"] - self.current_phase["start_time"]
-            )
+            self.current_phase["duration"] = (self.current_phase["end_time"] -
+                                              self.current_phase["start_time"])
 
             # Report phase results
             phase = self.current_phase
             status = "✅" if not phase["errors"] else "❌"
             self.session.log(
-                f"{status} Phase '{phase['name']}' completed in {phase['duration']:.1f}s"
-            )
+                f"{status} Phase '{
+                    phase['name']}' completed in {
+                    phase['duration']:.1f}s", )
 
             if phase["warnings"]:
                 self.session.log(f"⚠️  {len(phase['warnings'])} warnings")
@@ -89,7 +85,10 @@ class PhaseLogger:
     def log(self, message: str, level: str = "info"):
         """Log a message to the current phase."""
         if self.current_phase:
-            self.current_phase["logs"].append({"level": level, "message": message})
+            self.current_phase["logs"].append({
+                "level": level,
+                "message": message
+            })
 
         # Also log to session
         icons = {"info": "ℹ️", "warning": "⚠️", "error": "❌", "success": "✅"}
@@ -117,10 +116,10 @@ class PhaseLogger:
 
         # Write to log file
         with open(self.log_file, "w") as f:
-            f.write(f"Documentation Build Report\n")
+            f.write("Documentation Build Report\n")
             f.write(f"Generated: {datetime.now()}\n")
             f.write(f"Total Duration: {total_time:.1f}s\n")
-            f.write(f"{'='*80}\n\n")
+            f.write(f"{'=' * 80}\n\n")
 
             for phase in self.phases:
                 f.write(f"Phase: {phase['name']}\n")
@@ -128,7 +127,7 @@ class PhaseLogger:
                 f.write(f"Duration: {phase['duration']:.1f}s\n")
                 f.write(f"Errors: {len(phase['errors'])}\n")
                 f.write(f"Warnings: {len(phase['warnings'])}\n")
-                f.write(f"-" * 40 + "\n")
+                f.write("-" * 40 + "\n")
 
                 if phase["errors"]:
                     f.write("Errors:\n")
@@ -143,9 +142,9 @@ class PhaseLogger:
                 f.write("\n")
 
         # Print summary to console
-        self.session.log(f"\n{'='*60}")
-        self.session.log(f"📊 BUILD SUMMARY")
-        self.session.log(f"{'='*60}")
+        self.session.log(f"\n{'=' * 60}")
+        self.session.log("📊 BUILD SUMMARY")
+        self.session.log(f"{'=' * 60}")
         self.session.log(f"Total Duration: {total_time:.1f}s")
         self.session.log(f"Phases Completed: {len(self.phases)}")
 
@@ -154,11 +153,10 @@ class PhaseLogger:
 
         if errors == 0:
             self.session.log(
-                f"✅ Build completed successfully with {warnings} warnings"
-            )
+                f"✅ Build completed successfully with {warnings} warnings", )
         else:
             self.session.log(
-                f"❌ Build failed with {errors} errors and {warnings} warnings"
+                f"❌ Build failed with {errors} errors and {warnings} warnings",
             )
 
         self.session.log(f"📋 Full report: {self.log_file}")
@@ -167,7 +165,7 @@ class PhaseLogger:
 def run_sphinx_command(
     session,
     logger: PhaseLogger,
-    args: List[str],
+    args: list[str],
     phase_name: str,
     check_output: bool = True,
     verbose: bool = True,
@@ -182,9 +180,8 @@ def run_sphinx_command(
         args = ["-v"] + args
 
     # Add more verbosity for AutoAPI debugging or if requested
-    if "-vv" not in args and (
-        phase_name == "extension_test" or (session.posargs and "vv" in session.posargs)
-    ):
+    if "-vv" not in args and (phase_name == "extension_test" or
+                              (session.posargs and "vv" in session.posargs)):
         args = ["-vv"] + args
 
     cmd = ["poetry", "run", "sphinx-build"] + args
@@ -242,15 +239,16 @@ def run_sphinx_command(
                 # Extract number of changed files
                 import re
 
-                match = re.search(r"(\d+) source files? that are out of date", line)
+                match = re.search(r"(\d+) source files? that are out of date",
+                                  line)
                 if match:
-                    logger.log(f"🔄 Building {match.group(1)} changed source files")
-            elif (
-                "[AutoAPI] Reading files..." in line or "Reading Python objects" in line
-            ):
+                    logger.log(
+                        f"🔄 Building {match.group(1)} changed source files")
+            elif "[AutoAPI] Reading files..." in line or "Reading Python objects" in line:
                 files_processed += 1
                 if files_processed % 50 == 0:
-                    logger.log(f"📂 AutoAPI processed {files_processed} files...")
+                    logger.log(
+                        f"📂 AutoAPI processed {files_processed} files...")
             elif "writing" in line and ".html" in line:
                 html_generated += 1
                 if html_generated % 20 == 0:
@@ -289,7 +287,8 @@ def run_sphinx_command(
                 if match:
                     failed_import = match.group(1)
                     provider_errors[failed_import] = "Import failed"
-                    logger.warning(f"⚠️ AutoSummary failed to import: {failed_import}")
+                    logger.warning(
+                        f"⚠️ AutoSummary failed to import: {failed_import}")
 
             # Capture the "not enough values to unpack" errors
             elif "ValueError: not enough values to unpack" in line:
@@ -300,26 +299,22 @@ def run_sphinx_command(
                 logger.log("🎉 Build succeeded!", "success")
             elif "build finished with problems" in line:
                 logger.error("Build finished with problems")
-            else:
-                # Log other potentially useful lines
-                if any(
-                    keyword in line.lower()
-                    for keyword in [
-                        "finished",
-                        "complete",
-                        "done",
-                        "failed",
-                        "error",
-                        "traceback",
-                    ]
-                ):
-                    logger.log(line)
+            # Log other potentially useful lines
+            elif any(keyword in line.lower() for keyword in [
+                    "finished",
+                    "complete",
+                    "done",
+                    "failed",
+                    "error",
+                    "traceback",
+            ]):
+                logger.log(line)
 
         # Wait for process to complete
         process.wait()
 
         # Report metrics
-        logger.log(f"📊 Build metrics:")
+        logger.log("📊 Build metrics:")
         logger.log(f"   - Files processed: {files_processed}")
         logger.log(f"   - HTML files generated: {html_generated}")
         logger.log(f"   - Warnings: {len(warnings_found)}")
@@ -334,7 +329,8 @@ def run_sphinx_command(
         # Report provider import errors
         if provider_errors:
             logger.log(f"⚠️ Provider/import errors: {len(provider_errors)}")
-            for name, error in list(provider_errors.items())[:5]:  # Show first 5
+            for name, error in list(
+                    provider_errors.items())[:5]:  # Show first 5
                 logger.log(f"   - {name}: {error}")
 
         # Check result
@@ -363,15 +359,19 @@ def docs_phased(session):
     # Set environment to disable examples by default for faster phased builds
     env = os.environ.copy()
     env["SPHINX_DISABLE_EXAMPLES"] = env.get(
-        "SPHINX_DISABLE_EXAMPLES", "1"
+        "SPHINX_DISABLE_EXAMPLES",
+        "1",
     )  # Default to disabled
-    env["SPHINX_PROFILE"] = env.get("SPHINX_PROFILE", "standard")  # Default to standard
+    env["SPHINX_PROFILE"] = env.get("SPHINX_PROFILE",
+                                    "standard")  # Default to standard
 
     session.log("📊 Phased build configuration:")
-    session.log(f"   SPHINX_DISABLE_EXAMPLES = {env['SPHINX_DISABLE_EXAMPLES']}")
+    session.log(
+        f"   SPHINX_DISABLE_EXAMPLES = {env['SPHINX_DISABLE_EXAMPLES']}")
     session.log(f"   SPHINX_PROFILE = {env['SPHINX_PROFILE']}")
     session.log("   🚫 Examples disabled by default for faster phased builds")
-    session.log("   💡 Override with SPHINX_DISABLE_EXAMPLES=0 to enable examples")
+    session.log(
+        "   💡 Override with SPHINX_DISABLE_EXAMPLES=0 to enable examples")
 
     # Apply environment to session
     session.env.update(env)
@@ -421,7 +421,8 @@ def docs_phased(session):
         logger.error(f"conf.py import failed: {e}")
 
     # Phase 3: Extension Testing - SKIPPED to go directly to HTML build
-    logger.log("Skipping extension test phase - going directly to HTML build", "info")
+    logger.log("Skipping extension test phase - going directly to HTML build",
+               "info")
 
     # Phase 4: Content Validation - SKIPPED
     logger.log("Skipping content validation phase", "info")
@@ -437,24 +438,23 @@ def docs_phased(session):
     success = run_sphinx_command(
         session,
         logger,
-        ["-b", "html", "-j", "auto", str(SOURCE_DIR), str(BUILD_DIR / "html")],
+        ["-b", "html", "-j", "auto",
+         str(SOURCE_DIR),
+         str(BUILD_DIR / "html")],
         "html_build",
     )
 
     if success:
         # Count all generated HTML files recursively
         html_files = list((BUILD_DIR / "html").rglob("*.html"))
-        api_files = (
-            list((BUILD_DIR / "html" / "api").rglob("*.html"))
-            if (BUILD_DIR / "html" / "api").exists()
-            else []
-        )
+        api_files = (list((BUILD_DIR / "html" / "api").rglob("*.html")) if
+                     (BUILD_DIR / "html" / "api").exists() else [])
 
-        logger.log(f"📊 Final HTML generation stats:", "success")
+        logger.log("📊 Final HTML generation stats:", "success")
         logger.log(f"   - Total HTML files: {len(html_files)}")
         logger.log(f"   - API documentation files: {len(api_files)}")
         logger.log(
-            f"   - Root level files: {len(list((BUILD_DIR / 'html').glob('*.html')))}"
+            f"   - Root level files: {len(list((BUILD_DIR / 'html').glob('*.html')))}",
         )
 
         if html_files:
@@ -474,7 +474,9 @@ def docs_phased(session):
         run_sphinx_command(
             session,
             logger,
-            ["-b", "simplepdf", str(SOURCE_DIR), str(BUILD_DIR / "pdf")],
+            ["-b", "simplepdf",
+             str(SOURCE_DIR),
+             str(BUILD_DIR / "pdf")],
             "pdf_build",
         )
 
@@ -491,8 +493,10 @@ def docs_validate(session):
         "conf.py exists": (SOURCE_DIR / "conf.py").exists(),
         "index.rst/md exists": (SOURCE_DIR / "index.rst").exists()
         or (SOURCE_DIR / "index.md").exists(),
-        "docs directory": DOCS_DIR.exists(),
-        "source directory": SOURCE_DIR.exists(),
+        "docs directory":
+        DOCS_DIR.exists(),
+        "source directory":
+        SOURCE_DIR.exists(),
     }
 
     # Run checks
@@ -504,7 +508,9 @@ def docs_validate(session):
             all_passed = False
 
     # Check for common files
-    common_files = ["conf.py", "index.rst", "index.md", "_toc.yml", "requirements.txt"]
+    common_files = [
+        "conf.py", "index.rst", "index.md", "_toc.yml", "requirements.txt"
+    ]
     session.log("\n📁 Common files:")
     for filename in common_files:
         path = SOURCE_DIR / filename
@@ -537,7 +543,10 @@ def docs_diagnose(session):
         f.write("-" * 40 + "\n")
 
         result = subprocess.run(
-            ["poetry", "run", "python", "--version"], capture_output=True, text=True
+            ["poetry", "run", "python", "--version"],
+            capture_output=True,
+            text=True,
+            check=False,
         )
         f.write(f"Python Version: {result.stdout.strip()}\n")
 
@@ -545,6 +554,7 @@ def docs_diagnose(session):
             ["poetry", "run", "sphinx-build", "--version"],
             capture_output=True,
             text=True,
+            check=False,
         )
         f.write(f"Sphinx Version: {result.stdout.strip()}\n\n")
 
@@ -563,6 +573,7 @@ def docs_diagnose(session):
             ],
             capture_output=True,
             text=True,
+            check=False,
         )
         f.write(extensions_check.stdout)
         f.write("\n")
@@ -581,6 +592,7 @@ def docs_diagnose(session):
             ],
             capture_output=True,
             text=True,
+            check=False,
         )
 
         if import_test.returncode == 0:
@@ -600,7 +612,9 @@ def docs_diagnose(session):
             if conf_content.count("extensions = ") > 1:
                 f.write("⚠️  Multiple 'extensions =' assignments found\n")
             if "myst_parser" in conf_content and "myst_nb" in conf_content:
-                f.write("⚠️  Both myst_parser and myst_nb found (use only myst_nb)\n")
+                f.write(
+                    "⚠️  Both myst_parser and myst_nb found (use only myst_nb)\n"
+                )
 
         # 5. Try minimal build
         f.write("\n5. Minimal Build Test\n")
@@ -618,6 +632,7 @@ def docs_diagnose(session):
             ],
             capture_output=True,
             text=True,
+            check=False,
         )
 
         if minimal_test.returncode == 0:
@@ -627,15 +642,11 @@ def docs_diagnose(session):
             f.write("STDOUT:\n")
             f.write(
                 minimal_test.stdout[:1000] + "...\n"
-                if len(minimal_test.stdout) > 1000
-                else minimal_test.stdout
-            )
+                if len(minimal_test.stdout) > 1000 else minimal_test.stdout, )
             f.write("\nSTDERR:\n")
             f.write(
                 minimal_test.stderr[:1000] + "...\n"
-                if len(minimal_test.stderr) > 1000
-                else minimal_test.stderr
-            )
+                if len(minimal_test.stderr) > 1000 else minimal_test.stderr, )
 
     session.log(f"📋 Diagnostic report saved to: {report_file}")
 

@@ -1,4 +1,5 @@
 """Testing-related nox sessions."""
+from __future__ import annotations
 
 import nox
 
@@ -46,7 +47,8 @@ def test_quick(session):
 def test_package(session):
     """Test a specific package."""
     if not session.posargs:
-        session.error("Please specify a package: nox -s test_package -- haive-agents")
+        session.error(
+            "Please specify a package: nox -s test_package -- haive-agents")
 
     package = session.posargs[0]
     session.log(f"🧪 Testing {package}...")
@@ -54,7 +56,12 @@ def test_package(session):
     session.run("poetry", "install", "--all-extras", external=True)
 
     session.run(
-        "poetry", "run", "pytest", f"packages/{package}/tests/", "-v", external=True
+        "poetry",
+        "run",
+        "pytest",
+        f"packages/{package}/tests/",
+        "-v",
+        external=True,
     )
 
 

@@ -1,8 +1,9 @@
 """Memory management utilities for nox sessions.
 
-This module provides intelligent memory management to prevent system crashes
-during resource-intensive documentation builds.
+This module provides intelligent memory management to prevent system
+crashes during resource-intensive documentation builds.
 """
+from __future__ import annotations
 
 import gc
 import time
@@ -44,45 +45,50 @@ class MemoryManager:
         return 50.0  # Assume 50% if psutil unavailable
 
     def calculate_parallel_jobs(self):
-        """Calculate optimal number of parallel jobs based on available memory."""
+        """Calculate optimal number of parallel jobs based on available.
+
+        memory.
+        """
         available_memory = self.get_available_memory()
 
         if available_memory < self.memory_threshold_critical:
             return 1  # Single job only
-        elif available_memory < self.memory_threshold_low:
+        if available_memory < self.memory_threshold_low:
             return 2  # Minimal parallelism
-        elif available_memory < self.memory_threshold_moderate:
+        if available_memory < self.memory_threshold_moderate:
             return 4  # Moderate parallelism
-        elif available_memory < self.memory_threshold_high:
+        if available_memory < self.memory_threshold_high:
             return 6  # Good parallelism
-        else:
-            return "auto"  # Let Sphinx decide
+        return "auto"  # Let Sphinx decide
 
     def check_memory_status(self, session):
         """Check current memory status and log it."""
         if not PSUTIL_AVAILABLE:
-            session.log("⚠️  psutil not available - memory monitoring disabled")
+            session.log(
+                "⚠️  psutil not available - memory monitoring disabled")
             return "unknown"
 
         available_gb = self.get_memory_gb()
         percent_used = self.get_memory_percent()
 
         session.log(
-            f"💾 Memory: {available_gb:.1f}GB available ({100-percent_used:.0f}% free)"
+            f"💾 Memory: {
+                available_gb:.1f}GB available ({
+                100 -
+                percent_used:.0f}% free)",
         )
 
         if available_gb < 1.0:
             session.log("🚨 CRITICAL: Less than 1GB memory available!")
             return "critical"
-        elif available_gb < 2.0:
+        if available_gb < 2.0:
             session.log("⚠️  WARNING: Low memory - build may be slow")
             return "low"
-        elif available_gb < 4.0:
+        if available_gb < 4.0:
             session.log("📊 Moderate memory available")
             return "moderate"
-        else:
-            session.log("✅ Plenty of memory available")
-            return "good"
+        session.log("✅ Plenty of memory available")
+        return "good"
 
     def cleanup_memory(self, session):
         """Force garbage collection and cleanup."""
@@ -96,14 +102,14 @@ class MemoryManager:
 
                 subprocess.run(["sync"], check=False)
                 # Note: This would require sudo permissions
-                # subprocess.run(["sudo", "sh", "-c", "echo 1 > /proc/sys/vm/drop_caches"], check=False)
-            except:
+            except BaseException:
                 pass
 
     def monitor_build(self, session, operation_name):
         """Context manager to monitor memory during builds."""
 
         class MemoryMonitor:
+
             def __init__(self, mm, sess, op_name):
                 self.memory_manager = mm
                 self.session = sess
@@ -115,8 +121,9 @@ class MemoryManager:
                 self.start_memory = self.memory_manager.get_available_memory()
                 self.start_time = time.time()
                 self.session.log(
-                    f"🚀 Starting {self.operation} with {self.memory_manager.get_memory_gb():.1f}GB available"
-                )
+                    f"🚀 Starting {
+                        self.operation} with {
+                        self.memory_manager.get_memory_gb():.1f}GB available", )
                 return self
 
             def __exit__(self, exc_type, exc_val, exc_tb):
@@ -124,7 +131,8 @@ class MemoryManager:
                 memory_used = (self.start_memory - end_memory) / (1024**3)
                 elapsed = time.time() - self.start_time
 
-                self.session.log(f"✅ {self.operation} completed in {elapsed:.1f}s")
+                self.session.log(
+                    f"✅ {self.operation} completed in {elapsed:.1f}s")
                 self.session.log(f"💾 Memory used: {memory_used:.1f}GB")
 
                 # Cleanup if memory is low

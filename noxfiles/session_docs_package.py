@@ -1,5 +1,7 @@
 """Package-specific documentation builds using the main conf.py."""
 
+from __future__ import annotations
+
 from pathlib import Path
 
 import nox

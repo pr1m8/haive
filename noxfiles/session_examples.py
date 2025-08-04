@@ -1,5 +1,7 @@
 """Example-related nox sessions."""
 
+from __future__ import annotations
+
 from pathlib import Path
 
 import nox
@@ -40,7 +42,13 @@ def validate_examples(session):
     for example in example_files:
         session.log(f"Checking {example.name}...")
         session.run(
-            "poetry", "run", "python", "-m", "py_compile", str(example), external=True
+            "poetry",
+            "run",
+            "python",
+            "-m",
+            "py_compile",
+            str(example),
+            external=True,
         )
 
     session.log("✅ All examples validated!")
@@ -51,7 +59,7 @@ def run_example(session):
     """Run a specific example."""
     if not session.posargs:
         session.error(
-            "Please specify an example: nox -s run_example -- simple_agent.py"
+            "Please specify an example: nox -s run_example -- simple_agent.py",
         )
 
     example = session.posargs[0]
@@ -139,4 +147,8 @@ def examples_docs(session):
 
     # Change to docs directory and run docs example generator
     session.chdir("docs")
-    session.run("poetry", "run", "python", "run_examples_for_docs.py", external=True)
+    session.run("poetry",
+                "run",
+                "python",
+                "run_examples_for_docs.py",
+                external=True)
