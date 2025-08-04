@@ -1,16 +1,23 @@
----
 # .trunk/trunk.yaml
 # See: https://docs.trunk.io/reference/trunk-yaml
+
 version: 0.1
+
 cli:
   version: 1.24.0
+
 plugins:
   sources:
     - id: trunk
       ref: v1.7.1
       uri: https://github.com/trunk-io/plugins
+
 runtimes:
-  enabled: [go@1.21.0, node@22.16.0, python@3.10.8]
+  enabled:
+    - go@1.21.0
+    - node@22.16.0
+    - python@3.10.8
+
 lint:
   enabled:
     - pre-commit-hooks@5.0.0
@@ -54,7 +61,7 @@ lint:
         - "*.egg-info/**"
         - docs/source/conf.py
         - docs/source/conf_modules/**
-# Trunk Actions - Following trunk's recommended defaults
+
 actions:
   disabled:
     - trunk-announce # Disable announcements only
@@ -64,3 +71,14 @@ actions:
     - trunk-check-pre-push # ✅ Check before push
     - trunk-cache-prune
     - trunk-upgrade-available
+    - run-pre-commit # Custom action to run your .pre-commit-config.yaml
+
+  definitions:
+    - id: run-pre-commit
+      display_name: "Run project’s pre-commit hooks"
+      description: "Invoke pre-commit against all files in your repository"
+      triggers:
+        - git_hooks: [pre-commit]
+      run: pre-commit run --all-files
+      interactive: false
+      notify_on_error: false
