@@ -1,6 +1,6 @@
 # CI/CD Scripts
 
-**Purpose**: Continuous Integration and Continuous Deployment tools  
+**Purpose**: Continuous Integration and Continuous Deployment tools
 **Usage**: Automated testing, deployment, and quality assurance workflows
 
 ## 📁 Contents

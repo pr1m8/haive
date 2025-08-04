@@ -47,7 +47,7 @@ ELIMINATED=$((PRINT_COUNT - FINAL_COUNT))
 
 echo ""
 echo "🎉 RESULTS:"
-echo "📊 BEFOR${: $PRINT_CO}UNT print statements"
+echo "📊 BEFORE${: $PRINT_CO}UNT print statements"
 echo "✅ AFTER:${ $FINAL_COU}NT print statements"
 echo "🎯 ELIMINATE${: $ELIMINA}TED print statements"
 echo ""

@@ -134,7 +134,7 @@ display_dashboard() {
 	echo ""
 	echo -e "${BLUE}📈 SUMMARY STATISTICS:${NC}"
 	echo "  🎯 Total Error$$$${: $}tot}al_}err}ors acro$$$$${${ }}$to}tal}_pa}cka}ges packages"
-	echo "  📊 Average Errors per Packag$$$${${${}} $a}vg_}err}ors"
+	echo "  📊 Average Errors per Package$$$${${${}} $a}vg_}err}ors"
 	echo "  🛡️ Safety Checkpoints Available: $(get_stash_count)"
 	echo ""
 

@@ -51,7 +51,7 @@ case ${MODE} in
 
 	echo ""
 	echo -e "${GREEN}🎉 RUFF T201 FIX RESULTS:${NC}"
-	echo -e "${BLUE}📊 BEFOR${: $T201_CO}UNT print statements${NC}"
+	echo -e "${BLUE}📊 BEFORE${: $T201_CO}UNT print statements${NC}"
 	echo -e "${GREEN}✅ AFTER:${ $FINAL_COU}NT print statements${NC}"
 	echo -e "${CYAN}🎯 ELIMINATE${: $ELIMINA}TED print statements${NC}"
 	;;
@@ -74,7 +74,7 @@ case ${MODE} in
 
 	echo ""
 	echo -e "${GREEN}🎉 SAFE REMOVAL RESULTS:${NC}"
-	echo -e "${BLUE}📊 BEFOR${: $T201_CO}UNT print statements${NC}"
+	echo -e "${BLUE}📊 BEFORE${: $T201_CO}UNT print statements${NC}"
 	echo -e "${GREEN}✅ AFTER:${ $FINAL_COU}NT print statements${NC}"
 	echo -e "${CYAN}🎯 ELIMINATE${: $ELIMINA}TED print statements${NC}"
 	;;

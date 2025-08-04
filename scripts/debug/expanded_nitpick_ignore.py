@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""
-Comprehensive nitpick_ignore list expansion for Haive Sphinx documentation.
+"""Comprehensive nitpick_ignore list expansion for Haive Sphinx documentation.
 
-This provides a comprehensive set of commonly missing type references that should
-be ignored in Sphinx nitpicky mode to reduce noise and focus on actual issues.
+This provides a comprehensive set of commonly missing type references
+that should be ignored in Sphinx nitpicky mode to reduce noise and focus
+on actual issues.
 """
 
 # COMPREHENSIVE NITPICK_IGNORE LIST FOR HAIVE
@@ -552,7 +552,7 @@ EXPANDED_NITPICK_IGNORE = [
 
 
 def format_for_conf_py():
-    """Format the list for easy copy-paste into conf.py"""
+    """Format the list for easy copy-paste into conf.py."""
 
     lines = ["# Comprehensive nitpick_ignore list - add to your conf.py"]
     lines.append("nitpick_ignore = [")
@@ -571,7 +571,7 @@ def format_for_conf_py():
 
 
 def save_to_file():
-    """Save the formatted list to a file"""
+    """Save the formatted list to a file."""
     from pathlib import Path
 
     content = format_for_conf_py()

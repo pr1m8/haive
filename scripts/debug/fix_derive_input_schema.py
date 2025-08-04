@@ -2,7 +2,9 @@
 """Fix the derive_input_schema method to exclude engine fields."""
 
 import logging
+from typing import Any, Optional
 
+from pydantic import BaseModel, Field, create_model
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -23,10 +25,7 @@ Let me check if there's a name collision or if the schema is being modified afte
 
 logger.info(fix_content)
 
-from typing import Any, Optional
-
 # Create a test to reproduce the exact issue
-from pydantic import BaseModel, Field, create_model
 
 
 # Simulate MessagesState
@@ -65,8 +64,7 @@ Looking more closely at the debug output:
 - But the derived input schema has 'engine' and 'engines'
 
 The problem is likely in how the agent determines its input_schema. Let me check...
-"""
-)
+""", )
 
 # Check if the issue is in the agent's input_schema property
 logger.info("\n=== Solution ===")
@@ -79,8 +77,7 @@ derive_input_schema method is somehow including engine fields.
 
 The fix needs to be in the derive_input_schema method to explicitly exclude certain fields
 that should never be in input schemas (like 'engine', 'engines', 'runnable_config', etc).
-"""
-)
+""", )
 
 # Let's create the fix
 fix_code = '''
@@ -144,8 +141,7 @@ This suggests that either:
 3. There's some other code modifying the schema after creation
 
 Let me check if MessagesState inherits from something that has engine fields...
-"""
-)
+""", )
 
 # Actually, I think I found it. Let's check if MessagesState inherits from StateSchema
 # and if StateSchema has engine fields
@@ -161,8 +157,7 @@ inherited from StateSchema.
 
 The fix is to NOT use MessagesState directly as the base for input schemas.
 Instead, we should create a minimal base that only has the fields we need.
-"""
-)
+""", )
 
 # Here's the actual fix needed:
 actual_fix = """

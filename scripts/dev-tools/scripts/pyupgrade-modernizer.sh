@@ -77,7 +77,7 @@ FIXED_ISSUES=$((TOTAL_ISSUES - FINAL_TOTAL))
 
 echo ""
 echo "🎉 MODERNIZATION RESULTS:"
-echo "📊 BEFOR${: $TOTAL_ISS}UES modernization issues"
+echo "📊 BEFORE${: $TOTAL_ISS}UES modernization issues"
 echo "✅ AFTER:${ $FINAL_TOT}AL modernization issues"
 echo "🎯 FIXED${  $FIXED_ISS}UES issues"
 echo "📁 FILES MODIFIE${: $MODIFIED_CO}UNT files"

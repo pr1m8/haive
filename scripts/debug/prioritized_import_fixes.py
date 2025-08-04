@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Prioritized Import Fix Script for Haive Framework
+"""Prioritized Import Fix Script for Haive Framework.
 
 Based on the comprehensive analysis, this script applies fixes in order of impact:
 1. HIGH: Missing __init__.py files
@@ -12,11 +11,8 @@ Usage:
     poetry run python scripts/debug/prioritized_import_fixes.py
 """
 
-import os
 import re
-import subprocess
 from pathlib import Path
-from typing import List, Tuple
 
 # Project root
 project_root = Path(__file__).parent.parent.parent
@@ -24,6 +20,7 @@ packages_root = project_root / "packages"
 
 
 class ImportFixer:
+
     def __init__(self):
         self.fixes_applied = []
         self.errors_encountered = []
@@ -92,7 +89,7 @@ class ImportFixer:
                 relative_path = directory.relative_to(packages_root)
 
                 content = f'''"""
-{module_name.replace('_', ' ').title()} module.
+{module_name.replace("_", " ").title()} module.
 
 This module is part of the Haive framework.
 Location: {relative_path}
@@ -105,12 +102,12 @@ Location: {relative_path}
                     f.write(content)
 
                 self.fixes_applied.append(
-                    f"Created {init_file.relative_to(project_root)}"
-                )
+                    f"Created {init_file.relative_to(project_root)}", )
                 print(f"✅ Created {init_file.relative_to(project_root)}")
 
             except Exception as e:
-                self.errors_encountered.append(f"Failed to create {init_file}: {e}")
+                self.errors_encountered.append(
+                    f"Failed to create {init_file}: {e}")
                 print(f"❌ Failed to create {init_file}: {e}")
 
     def fix_relative_imports(self):
@@ -122,14 +119,17 @@ Location: {relative_path}
         relative_import_fixes = [
             # Multi-agent RAG module
             {
-                "file": "packages/haive-agents/src/haive/agents/rag/multi_agent_rag/__init__.py",
+                "file":
+                "packages/haive-agents/src/haive/agents/rag/multi_agent_rag/__init__.py",
                 "patterns": [
-                    (r"from multi_agent_rag", "from haive.agents.rag.multi_agent_rag"),
+                    (r"from multi_agent_rag",
+                     "from haive.agents.rag.multi_agent_rag"),
                 ],
             },
             # React agent2 module
             {
-                "file": "packages/haive-agents/src/haive/agents/react_class/react_agent2/__init__.py",
+                "file":
+                "packages/haive-agents/src/haive/agents/react_class/react_agent2/__init__.py",
                 "patterns": [
                     (
                         r"from react_agent2",
@@ -139,7 +139,8 @@ Location: {relative_path}
             },
             # Task analysis module
             {
-                "file": "packages/haive-agents/src/haive/agents/task_analysis/agent.py",
+                "file":
+                "packages/haive-agents/src/haive/agents/task_analysis/agent.py",
                 "patterns": [
                     (r"from task_analysis", "from haive.agents.task_analysis"),
                 ],
@@ -152,7 +153,7 @@ Location: {relative_path}
                 continue
 
             try:
-                with open(file_path, "r") as f:
+                with open(file_path) as f:
                     content = f.read()
 
                 original_content = content
@@ -167,14 +168,15 @@ Location: {relative_path}
                         f.write(content)
 
                     self.fixes_applied.append(
-                        f"Fixed relative imports in {file_path.relative_to(project_root)}"
-                    )
+                        f"Fixed relative imports in {
+                            file_path.relative_to(project_root)}", )
                     print(
-                        f"✅ Fixed relative imports in {file_path.relative_to(project_root)}"
-                    )
+                        f"✅ Fixed relative imports in {
+                            file_path.relative_to(project_root)}", )
 
             except Exception as e:
-                self.errors_encountered.append(f"Failed to fix {file_path}: {e}")
+                self.errors_encountered.append(
+                    f"Failed to fix {file_path}: {e}")
                 print(f"❌ Failed to fix {file_path}: {e}")
 
     def fix_missing_exports(self):
@@ -186,7 +188,8 @@ Location: {relative_path}
         missing_exports = [
             # MCTS module missing exports
             {
-                "file": "packages/haive-agents/src/haive/agents/reasoning_and_critique/mcts/models.py",
+                "file":
+                "packages/haive-agents/src/haive/agents/reasoning_and_critique/mcts/models.py",
                 "missing_functions": [
                     "as_message",
                     "backpropagate",
@@ -195,7 +198,8 @@ Location: {relative_path}
             },
             # LATS module missing exports
             {
-                "file": "packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/node.py",
+                "file":
+                "packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/node.py",
                 "missing_functions": ["add_child", "get", "get_path"],
             },
         ]
@@ -206,7 +210,7 @@ Location: {relative_path}
                 continue
 
             try:
-                with open(file_path, "r") as f:
+                with open(file_path) as f:
                     content = f.read()
 
                 # Add stub implementations for missing functions
@@ -221,7 +225,7 @@ Location: {relative_path}
 def {func_name}(*args, **kwargs):
     """
     Stub implementation for {func_name}.
-    
+
     This function was auto-generated to fix import issues.
     Please implement the actual functionality.
     """
@@ -238,16 +242,17 @@ def {func_name}(*args, **kwargs):
                         f.write(content)
 
                     self.fixes_applied.append(
-                        f"Added {len(stub_implementations)} stub functions to {file_path.relative_to(project_root)}"
-                    )
+                        f"Added {
+                            len(stub_implementations)} stub functions to {
+                            file_path.relative_to(project_root)}", )
                     print(
-                        f"✅ Added {len(stub_implementations)} stub functions to {file_path.relative_to(project_root)}"
-                    )
+                        f"✅ Added {
+                            len(stub_implementations)} stub functions to {
+                            file_path.relative_to(project_root)}", )
 
             except Exception as e:
                 self.errors_encountered.append(
-                    f"Failed to add stubs to {file_path}: {e}"
-                )
+                    f"Failed to add stubs to {file_path}: {e}", )
                 print(f"❌ Failed to add stubs to {file_path}: {e}")
 
     def fix_pydantic_validators(self):
@@ -267,7 +272,7 @@ def {func_name}(*args, **kwargs):
             # Look for Python files with @validator decorators
             for py_file in src_dir.rglob("*.py"):
                 try:
-                    with open(py_file, "r") as f:
+                    with open(py_file) as f:
                         content = f.read()
 
                     # Check for old Pydantic v1 patterns
@@ -275,7 +280,8 @@ def {func_name}(*args, **kwargs):
                         original_content = content
 
                         # Replace @validator with @field_validator
-                        content = re.sub(r"@validator\(", "@field_validator(", content)
+                        content = re.sub(r"@validator\(", "@field_validator(",
+                                         content)
 
                         # Add @classmethod decorator if missing
                         lines = content.split("\n")
@@ -283,24 +289,24 @@ def {func_name}(*args, **kwargs):
 
                         for i, line in enumerate(lines):
                             new_lines.append(line)
-                            # If we find @field_validator, ensure next function has @classmethod
+                            # If we find @field_validator, ensure next function has
+                            # @classmethod
                             if "@field_validator(" in line:
                                 # Look ahead to find the function definition
                                 for j in range(i + 1, min(i + 3, len(lines))):
-                                    if (
-                                        "def " in lines[j]
-                                        and "@classmethod" not in lines[j - 1]
-                                    ):
-                                        new_lines.insert(-1, "    @classmethod")
+                                    if "def " in lines[
+                                            j] and "@classmethod" not in lines[
+                                                j - 1]:
+                                        new_lines.insert(
+                                            -1, "    @classmethod")
                                         break
 
                         content = "\n".join(new_lines)
 
                         # Add necessary imports
-                        if (
-                            "from pydantic import field_validator" not in content
-                            and "@field_validator" in content
-                        ):
+                        if ("from pydantic import field_validator"
+                                not in content
+                                and "@field_validator" in content):
                             # Find existing pydantic imports
                             if "from pydantic import" in content:
                                 content = re.sub(
@@ -310,9 +316,7 @@ def {func_name}(*args, **kwargs):
                                 )
                             else:
                                 # Add new import
-                                content = (
-                                    "from pydantic import field_validator\n" + content
-                                )
+                                content = "from pydantic import field_validator\n" + content
 
                         # Write back if changed
                         if content != original_content:
@@ -320,15 +324,15 @@ def {func_name}(*args, **kwargs):
                                 f.write(content)
 
                             self.fixes_applied.append(
-                                f"Fixed Pydantic validators in {py_file.relative_to(project_root)}"
-                            )
+                                f"Fixed Pydantic validators in {
+                                    py_file.relative_to(project_root)}", )
                             print(
-                                f"✅ Fixed Pydantic validators in {py_file.relative_to(project_root)}"
-                            )
+                                f"✅ Fixed Pydantic validators in {
+                                    py_file.relative_to(project_root)}", )
 
                 except Exception as e:
                     self.errors_encountered.append(
-                        f"Failed to fix Pydantic validators in {py_file}: {e}"
+                        f"Failed to fix Pydantic validators in {py_file}: {e}",
                     )
                     # Don't print every error, too noisy
 
@@ -340,8 +344,10 @@ def {func_name}(*args, **kwargs):
         # Based on our analysis, these modules are frequently missing
         missing_modules = [
             {
-                "path": "packages/haive-agents/src/haive/agents/chain/declarative_chain.py",
-                "content": '''"""
+                "path":
+                "packages/haive-agents/src/haive/agents/chain/declarative_chain.py",
+                "content":
+                '''"""
 Declarative chain module stub.
 
 This module was auto-generated to fix import issues.
@@ -349,7 +355,7 @@ This module was auto-generated to fix import issues.
 
 class DeclarativeChain:
     """Stub implementation of DeclarativeChain."""
-    
+
     def __init__(self, *args, **kwargs):
         raise NotImplementedError("DeclarativeChain not yet implemented")
 
@@ -359,8 +365,10 @@ def complex_rag(*args, **kwargs):
 ''',
             },
             {
-                "path": "packages/haive-core/src/haive/core/graph/state_graph/compiled_state_graph.py",
-                "content": '''"""
+                "path":
+                "packages/haive-core/src/haive/core/graph/state_graph/compiled_state_graph.py",
+                "content":
+                '''"""
 Compiled state graph module stub.
 
 This module was auto-generated to fix import issues.
@@ -368,14 +376,16 @@ This module was auto-generated to fix import issues.
 
 class CompiledStateGraph:
     """Stub implementation of CompiledStateGraph."""
-    
+
     def __init__(self, *args, **kwargs):
         raise NotImplementedError("CompiledStateGraph not yet implemented")
 ''',
             },
             {
-                "path": "packages/haive-core/src/haive/core/engine/base/agent_types.py",
-                "content": '''"""
+                "path":
+                "packages/haive-core/src/haive/core/engine/base/agent_types.py",
+                "content":
+                '''"""
 Agent types module stub.
 
 This module was auto-generated to fix import issues.
@@ -405,42 +415,43 @@ class AgentType(Enum):
                         f.write(stub_info["content"])
 
                     self.fixes_applied.append(
-                        f"Created stub module {file_path.relative_to(project_root)}"
+                        f"Created stub module {file_path.relative_to(project_root)}",
                     )
                     print(
-                        f"✅ Created stub module {file_path.relative_to(project_root)}"
+                        f"✅ Created stub module {file_path.relative_to(project_root)}",
                     )
 
                 except Exception as e:
                     self.errors_encountered.append(
-                        f"Failed to create stub {file_path}: {e}"
-                    )
+                        f"Failed to create stub {file_path}: {e}", )
                     print(f"❌ Failed to create stub {file_path}: {e}")
 
     def generate_report(self):
         """Generate final report of all fixes applied."""
-        print(f"\n📊 IMPORT FIX SUMMARY")
+        print("\n📊 IMPORT FIX SUMMARY")
         print("=" * 50)
         print(f"✅ Fixes applied: {len(self.fixes_applied)}")
         print(f"❌ Errors encountered: {len(self.errors_encountered)}")
 
         if self.fixes_applied:
-            print(f"\n🎯 SUCCESSFUL FIXES:")
+            print("\n🎯 SUCCESSFUL FIXES:")
             for fix in self.fixes_applied:
                 print(f"   ✅ {fix}")
 
         if self.errors_encountered:
-            print(f"\n⚠️  ERRORS (first 10):")
+            print("\n⚠️  ERRORS (first 10):")
             for error in self.errors_encountered[:10]:
                 print(f"   ❌ {error}")
 
-        print(f"\n🚀 NEXT STEPS:")
+        print("\n🚀 NEXT STEPS:")
         print("1. Test documentation build:")
         print("   nox -s docs_fast")
         print("\n2. Run import analysis again:")
         print("   poetry run python scripts/debug/find_all_import_issues.py")
         print("\n3. Check specific modules:")
-        print("   poetry run python -c 'import haive.agents.chain.declarative_chain'")
+        print(
+            "   poetry run python -c 'import haive.agents.chain.declarative_chain'"
+        )
 
 
 def main():

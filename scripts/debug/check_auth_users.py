@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Check available user IDs from auth.users table."""
+from __future__ import annotations
 
 import os
 from urllib.parse import urlparse
@@ -55,8 +56,8 @@ def main():
             cursor.execute(
                 """
                     SELECT EXISTS (
-                        SELECT FROM information_schema.tables 
-                        WHERE table_schema = 'auth' 
+                        SELECT FROM information_schema.tables
+                        WHERE table_schema = 'auth'
                         AND table_name = 'users'
                     )
                 """
@@ -70,8 +71,8 @@ def main():
                 cursor.execute(
                     """
                         SELECT EXISTS (
-                            SELECT FROM information_schema.tables 
-                            WHERE table_schema = 'public' 
+                            SELECT FROM information_schema.tables
+                            WHERE table_schema = 'public'
                             AND table_name = 'users'
                         )
                     """
@@ -96,8 +97,8 @@ def main():
                     # Check what tables exist
                     cursor.execute(
                         """
-                            SELECT table_schema, table_name 
-                            FROM information_schema.tables 
+                            SELECT table_schema, table_name
+                            FROM information_schema.tables
                             WHERE table_schema IN ('auth', 'public')
                             ORDER BY table_schema, table_name
                         """

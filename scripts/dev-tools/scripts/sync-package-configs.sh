@@ -61,7 +61,7 @@ force_absolute_imports = true
 
 exclude_dirs = [
     "docs",
-    "tests/fixtures", 
+    "tests/fixtures",
     "build",
     ".git",
     "__pycache__",

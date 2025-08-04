@@ -60,7 +60,7 @@ PERCENTAGE=$((IMPROVEMENT * 100 / BASELINE_ERRORS))
 
 echo ""
 echo "🎉 RESULTS SUMMARY:"
-echo "📊 BEFOR${: $BASELINE_ERR}ORS errors"
+echo "📊 BEFORE${: $BASELINE_ERR}ORS errors"
 echo "✅ AFTER:${ $FINAL_ERRO}RS errors"
 echo "🎯 FIXED${  $IMPROVEM}ENT error${ ($PERCENT}AGE% improvement)"
 echo ""

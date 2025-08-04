@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Find the most recent indentation error that's blocking the docs build."""
 
-import ast
 import sys
 from pathlib import Path
 
@@ -9,7 +8,7 @@ from pathlib import Path
 def check_indentation_error(file_path: Path):
     """Check for specific indentation errors."""
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             content = f.read()
 
         # Try to compile to catch indentation errors

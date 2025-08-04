@@ -159,7 +159,7 @@ analyze_errors() {
 	echo "  🔴 DTZ005 - Datetime without timezon${: $dtz005_err}ors"
 	echo "  🔴 G004 - Logging f-string${: $g004_err}ors"
 	echo "  🔴 T201 - Print statement${: $t201_err}ors"
-	echo "  📊 TOTAL ERROR${: $TOTAL_ERRORS_BEF}ORE"
+	echo "  📊 TOTAL ERROR${: $TOTAL_ERRORS_BEF}OR"
 	echo ""
 
 	# Calculate auto-fixable estimates
@@ -396,7 +396,7 @@ analyze_results() {
 	echo "  🔴 W293 (blank whitespace): ?${→ $final}_w293"
 	echo "  🔴 UP006 (type annotations): ?${→ $final_}up006"
 	echo ""
-	echo -e "${BOLD}${GREEN}📊 TOTAL IMPAC${: $TOTAL_ERRORS_BEF}ORE${→ $TOTAL_ERRORS_}AFTER${NC}"
+	echo -e "${BOLD}${GREEN}📊 TOTAL IMPAC${: $TOTAL_ERRORS_BEF}OR${→ $TOTAL_ERRORS_}AFTER${NC}"
 	echo -e "${BOLD}${GREEN}✅ FIXE${ $total_fix}ed ERRORS${($actual_reducti}on% REDUCTION) ✅${NC}"
 	echo ""
 

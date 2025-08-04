@@ -201,7 +201,7 @@ print(syntax_errors)
 ")
 
 		if [[ "${CURRENT_SYNTAX}" -gt 10 ]]; then
-			echo -e "${YELLOW}⚠️  Too many syntax erro${s ($CURRENT_SY}NTAX) - skipping indentation step${NC}"
+			echo -e "${YELLOW}⚠️  Too many syntax error${s ($CURRENT_SY}NTAX) - skipping indentation step${NC}"
 			echo -e "${YELLOW}   Run Step 1 manually or fix remaining syntax errors first${NC}"
 			echo ""
 		else

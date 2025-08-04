@@ -7,6 +7,7 @@ This script checks common issues that cause slow test execution:
 - Import issues
 - Environment setup
 """
+from __future__ import annotations
 
 import os
 import sys

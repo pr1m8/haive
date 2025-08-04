@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Capture type hint warnings from Sphinx build."""
 
+from __future__ import annotations
+
 import re
-import shutil
 import subprocess
-import sys
 import tempfile
 from collections import defaultdict
 from pathlib import Path
@@ -38,7 +38,7 @@ autoapi_type = "python"
 autoapi_root = "api"
 autoapi_options = [
     "members",
-    "undoc-members", 
+    "undoc-members",
     "show-inheritance",
     "show-module-summary",
     "special-members",
@@ -62,7 +62,7 @@ nitpicky = True
 nitpick_ignore = [
     # Only the most basic types
     ("py:class", "str"),
-    ("py:class", "int"), 
+    ("py:class", "int"),
     ("py:class", "bool"),
     ("py:class", "dict"),
     ("py:class", "list"),
@@ -89,7 +89,11 @@ def run_test_build():
 
     # Create temp config
     with tempfile.NamedTemporaryFile(
-        mode="w", suffix=".py", prefix="test_conf_", dir="docs/source", delete=False
+        mode="w",
+        suffix=".py",
+        prefix="test_conf_",
+        dir="docs/source",
+        delete=False,
     ) as f:
         f.write(create_minimal_conf())
         temp_conf = f.name
@@ -120,7 +124,9 @@ def run_test_build():
         ]
 
         print(f"Running: {' '.join(cmd)}")
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        result = subprocess.run(
+            cmd, capture_output=True, text=True, timeout=120, check=False
+        )
 
         return result.stdout + result.stderr, Path("type_warnings.log")
 
@@ -184,9 +190,9 @@ def categorize_references(warnings):
                 categories["typing_extensions"].append((ref_type, clean_target))
             elif clean_target.startswith("haive."):
                 categories["haive_internal"].append((ref_type, clean_target))
-            elif len(clean_target) == 1 and clean_target.isupper():
-                categories["generic_types"].append((ref_type, clean_target))
-            elif any(x in clean_target for x in ["T", "~", "TypeVar"]):
+            elif (len(clean_target) == 1 and clean_target.isupper()) or any(
+                x in clean_target for x in ["T", "~", "TypeVar"]
+            ):
                 categories["generic_types"].append((ref_type, clean_target))
             else:
                 categories["external_libs"].append((ref_type, clean_target))
@@ -223,7 +229,7 @@ def main():
             return
 
         # Show summary
-        print(f"\n=== Type Reference Warnings Summary ===")
+        print("\n=== Type Reference Warnings Summary ===")
         total = sum(len(targets) for targets in warnings.values())
         print(f"Total unique missing references: {total}")
 
@@ -234,7 +240,7 @@ def main():
         # Categorize
         categories = categorize_references(warnings)
 
-        print(f"\n=== By Category ===")
+        print("\n=== By Category ===")
         for category, items in categories.items():
             if items:
                 print(f"{category}: {len(items)} items")
@@ -242,7 +248,7 @@ def main():
         # Generate nitpick_ignore additions
         additions = []
 
-        print(f"\n=== Suggested nitpick_ignore additions ===")
+        print("\n=== Suggested nitpick_ignore additions ===")
         for category, items in categories.items():
             if not items:
                 continue

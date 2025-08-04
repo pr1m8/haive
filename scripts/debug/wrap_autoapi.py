@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Wrapper script to debug AutoAPI file processing."""
 
+from __future__ import annotations
+
 import logging
-import os
 import sys
 from pathlib import Path
 
@@ -32,7 +33,7 @@ try:
             logger.info(f"Successfully parsed: {file_path}")
             return result
         except Exception as e:
-            logger.error(f"ERROR parsing {file_path}: {type(e).__name__}: {str(e)}")
+            logger.error(f"ERROR parsing {file_path}: {type(e).__name__}: {e!s}")
             raise
 
     # Replace the method
