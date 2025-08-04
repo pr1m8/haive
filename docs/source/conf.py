@@ -234,6 +234,25 @@ autodoc_mock_imports.extend(
         "SupervisorReactState",
         # Missing usage examples
         "examples.usage_examples",
+        # Missing functions and modules
+        "should_refine",
+        "kg_extraction_engine",
+        "format_search_context",
+        "extract_memory_items",
+        "check_domain_relevance",
+        # Memory modules
+        "haive.agents.memory_reorganized.base.memory_models_standalone",
+        "haive.agents.memory_reorganized.core.memory_state_original",
+        "haive.agents.multi.simple",
+        "agents",
+        "episodic",
+        "procedural", 
+        "semantic",
+        "react_v2",
+        # Experiment modules
+        "haive.agents.experiments.supervisor.base_supervisor",
+        # Rag modules
+        "haive.agents.rag.db_rag.graph_db.agent",
     ]
 )
 
@@ -321,12 +340,22 @@ autoapi_ignore = [
     # Reasoning and wiki agents
     "**/agents/reasoning_and_critique/**/*.py",
     "**/agents/wiki_writer/**/*.py",
-    # Hyde agents with import issues
+    # Hyde agents with import issues (complex dependencies)
     "**/agents/rag/hyde/**/*.py",
+    "**/rag/hyde/**/*.py",
     # Conversation examples with generic type issues
     "**/agents/conversation/base/example*.py",
     # Experiment modules with generic type issues
     "**/agents/experiments/**/*.py",
+    # Memory modules with complex issues
+    "**/agents/memory/models_dir/**/*.py",
+    "**/agents/memory/search/**/*.py",
+    "**/agents/memory_reorganized/**/*.py",
+    "**/agents/memory_v2/**/*.py",
+    # Multi-agent archive with complex issues
+    "**/agents/multi/archive/**/*.py",
+    # React class modules with complex import issues
+    "**/agents/react_class/**/*.py",
 ]
 
 

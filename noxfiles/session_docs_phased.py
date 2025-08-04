@@ -359,6 +359,23 @@ def docs_phased(session):
     log_file = LOGS_DIR / f"docs_phased_{timestamp}.log"
 
     session.log("🚀 Starting PHASED documentation build...")
+
+    # Set environment to disable examples by default for faster phased builds
+    env = os.environ.copy()
+    env["SPHINX_DISABLE_EXAMPLES"] = env.get(
+        "SPHINX_DISABLE_EXAMPLES", "1"
+    )  # Default to disabled
+    env["SPHINX_PROFILE"] = env.get("SPHINX_PROFILE", "standard")  # Default to standard
+
+    session.log("📊 Phased build configuration:")
+    session.log(f"   SPHINX_DISABLE_EXAMPLES = {env['SPHINX_DISABLE_EXAMPLES']}")
+    session.log(f"   SPHINX_PROFILE = {env['SPHINX_PROFILE']}")
+    session.log("   🚫 Examples disabled by default for faster phased builds")
+    session.log("   💡 Override with SPHINX_DISABLE_EXAMPLES=0 to enable examples")
+
+    # Apply environment to session
+    session.env.update(env)
+
     logger = PhaseLogger(session, log_file)
 
     # Phase 1: Environment Check
@@ -629,3 +646,17 @@ def docs_diagnose(session):
             session.log("❌ Issues found - check report for details")
         else:
             session.log("✅ No major issues detected")
+
+
+@nox.session(python=PYTHON_VERSIONS)
+def docs_phased_no_examples(session):
+    """Build documentation in phases WITHOUT examples (fast phased build)."""
+    # Set environment to explicitly disable examples
+    os.environ["SPHINX_DISABLE_EXAMPLES"] = "1"
+    os.environ["SPHINX_PROFILE"] = "standard"
+
+    session.log("🚀 Starting FAST phased documentation build (no examples)...")
+    session.log("   🚫 Examples explicitly disabled for maximum speed")
+
+    # Call the main docs_phased function
+    return docs_phased.func(session)

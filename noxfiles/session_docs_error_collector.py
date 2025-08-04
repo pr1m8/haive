@@ -531,7 +531,14 @@ def docs_phased_with_error_collection(session, package, profile):
     env = {
         "SPHINX_PACKAGES": package,
         "SPHINX_PROFILE": profile,
+        "SPHINX_DISABLE_EXAMPLES": "1",  # Disable examples for faster error collection
     }
+
+    session.log(f"📊 Error collection configuration:")
+    session.log(f"   SPHINX_PACKAGES = {package}")
+    session.log(f"   SPHINX_PROFILE = {profile}")
+    session.log(f"   SPHINX_DISABLE_EXAMPLES = 1 (disabled for speed)")
+    session.log("   🚫 Examples disabled for faster error collection")
 
     # Determine output directory
     output_dir = BUILD_DIR / f"{package}_{profile}_with_errors"

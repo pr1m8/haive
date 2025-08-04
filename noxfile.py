@@ -63,7 +63,12 @@ from session_docs_package import (
 )
 
 # Import phased documentation sessions
-from session_docs_phased import docs_diagnose, docs_phased, docs_validate
+from session_docs_phased import (
+    docs_diagnose,
+    docs_phased,
+    docs_phased_no_examples,
+    docs_validate,
+)
 
 # Import documentation testing sessions
 from session_docs_testing import (
@@ -188,6 +193,7 @@ __all__ = [
     "docs_quick",
     "docs_multi",
     # Error collection and review
+    "docs_phased_no_examples",
     "docs_phased_with_error_collection",
     "review_errors",
     # Examples
