@@ -1,6 +1,6 @@
 # Automation Scripts
 
-**Purpose**: Automated workflows, CI/CD integration, and batch processing  
+**Purpose**: Automated workflows, CI/CD integration, and batch processing
 **Usage**: Continuous integration, automated testing, and workflow orchestration
 
 ## 📁 Contents

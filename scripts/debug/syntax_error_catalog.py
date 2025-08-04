@@ -1,22 +1,24 @@
 #!/usr/bin/env python3
-"""Create a comprehensive catalog of all syntax errors with examples and proposed fixes."""
+"""Create a comprehensive catalog of all syntax errors with examples and
+proposed fixes."""
+from __future__ import annotations
 
 import ast
 import json
 import sys
 from collections import defaultdict
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 
-def analyze_file(file_path: Path) -> Dict[str, Any]:
+def analyze_file(file_path: Path) -> dict[str, Any]:
     """Analyze a Python file for syntax errors with context."""
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             lines = f.readlines()
 
         # Try to parse the file
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             ast.parse(f.read(), filename=str(file_path))
         return None
 
@@ -79,25 +81,24 @@ def categorize_error(msg: str) -> str:
 
     if "unterminated string" in msg_lower:
         return "unterminated_string"
-    elif "unexpected character after line continuation" in msg_lower:
+    if "unexpected character after line continuation" in msg_lower:
         return "line_continuation"
-    elif "expected an indented block" in msg_lower:
+    if "expected an indented block" in msg_lower:
         return "missing_indented_block"
-    elif "unexpected indent" in msg_lower:
+    if "unexpected indent" in msg_lower:
         return "unexpected_indent"
-    elif "unmatched" in msg_lower:
+    if "unmatched" in msg_lower:
         return "unmatched_bracket"
-    elif "invalid syntax" in msg_lower:
+    if "invalid syntax" in msg_lower:
         return "invalid_syntax"
-    elif "closing parenthesis" in msg_lower and "does not match" in msg_lower:
+    if "closing parenthesis" in msg_lower and "does not match" in msg_lower:
         return "mismatched_parenthesis"
-    elif "expected" in msg_lower and ("except" in msg_lower or "finally" in msg_lower):
+    if "expected" in msg_lower and ("except" in msg_lower or "finally" in msg_lower):
         return "missing_except_finally"
-    else:
-        return "other"
+    return "other"
 
 
-def propose_fix(msg: str, error_text: str, full_line: str) -> Dict[str, str]:
+def propose_fix(msg: str, error_text: str, full_line: str) -> dict[str, str]:
     """Propose a fix for the error."""
     msg_lower = msg.lower()
 
@@ -110,7 +111,7 @@ def propose_fix(msg: str, error_text: str, full_line: str) -> Dict[str, str]:
                     "description": "Add closing double quote",
                     "example": error_text + '"',
                 }
-            elif "'" in error_text and not error_text.count("'") % 2 == 0:
+            if "'" in error_text and not error_text.count("'") % 2 == 0:
                 return {
                     "type": "add_quote",
                     "description": "Add closing single quote",
@@ -154,7 +155,7 @@ def propose_fix(msg: str, error_text: str, full_line: str) -> Dict[str, str]:
                 "description": "Change } to ]",
                 "example": full_line.replace("}", "]") if full_line else None,
             }
-        elif "]" in msg and "(" in msg:
+        if "]" in msg and "(" in msg:
             return {
                 "type": "fix_bracket",
                 "description": "Change ] to )",
@@ -236,13 +237,13 @@ def main():
 
         # Detailed examples by category
         for category, cat_errors in sorted(error_by_category.items()):
-            f.write(f"\n{'='*80}\n")
+            f.write(f"\n{'=' * 80}\n")
             f.write(f"{category.upper()} ({len(cat_errors)} errors)\n")
-            f.write(f"{'='*80}\n\n")
+            f.write(f"{'=' * 80}\n\n")
 
             # Show first 5 examples with full context
             for i, error in enumerate(cat_errors[:5]):
-                f.write(f"Example {i+1}:\n")
+                f.write(f"Example {i + 1}:\n")
                 f.write(f"File: {error['file']}\n")
                 f.write(f"Line {error['line']}: {error['msg']}\n")
 
@@ -253,7 +254,7 @@ def main():
 
                 if error.get("error_line"):
                     f.write(
-                        f"→ {error['line']:4d}: {error['error_line']}  ← ERROR HERE\n"
+                        f"→ {error['line']:4d}: {error['error_line']}  ← ERROR HERE\n",
                     )
 
                 if error.get("context_after"):
@@ -274,9 +275,9 @@ def main():
     for cat, count in sorted(error_by_category.items(), key=lambda x: -len(x[1])):
         print(f"   {cat}: {count} errors")
 
-    print(f"\n📄 Detailed catalog saved to:")
-    print(f"   - syntax_errors_catalog.json (machine-readable)")
-    print(f"   - syntax_errors_report_detailed.txt (human-readable with examples)")
+    print("\n📄 Detailed catalog saved to:")
+    print("   - syntax_errors_catalog.json (machine-readable)")
+    print("   - syntax_errors_report_detailed.txt (human-readable with examples)")
 
     # Show a few examples
     print("\n📌 Sample Fixes:")

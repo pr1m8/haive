@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Fix logging imports in conversation agents."""
+from __future__ import annotations
 
 import re
 from pathlib import Path
@@ -10,7 +11,7 @@ def fix_logging_imports():
     # Files that need fixing
     files_to_fix = [
         "packages/haive-agents/tests/multi/test_recompile_mixin.py",
-        "packages/haive-agents/src/haive/agents/conversation/collaberative/agent.py",
+        "packages/haive-agents/src/haive/agents/conversation/collaborative/agent.py",
         "packages/haive-agents/src/haive/agents/conversation/base/state.py",
         "packages/haive-agents/src/haive/agents/conversation/base/agent.py",
         "packages/haive-agents/src/haive/agents/conversation/round_robin/agent.py",
@@ -27,7 +28,6 @@ def fix_logging_imports():
         path = Path(file_path)
         if not path.exists():
             continue
-
 
         # Read the file
         with open(path, encoding="utf-8") as f:

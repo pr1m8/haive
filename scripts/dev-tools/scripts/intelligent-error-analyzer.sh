@@ -324,7 +324,7 @@ apply_emergency_fixes() {
 	)
 
 	for pattern in "${emergency_patterns[@]}"; do
-		echo -e "${RED}🔧 Applying patter${: $patt}ern${NC}"
+		echo -e "${RED}🔧 Applying pattern${: $patt}ern${NC}"
 
 		if [[ ${preview} == "true" ]]; then
 			# Show what would be changed

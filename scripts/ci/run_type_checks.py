@@ -2,6 +2,8 @@
 #!/usr/bin/env python
 """Run type checking across all packages."""
 
+from __future__ import annotations
+
 import os
 import subprocess
 import sys
@@ -34,7 +36,10 @@ def run_mypy(package_name, package_dir):
 
     if src_dir.exists():
         result = subprocess.run(
-            ["mypy", str(src_dir)], capture_output=True, text=True, check=False
+            ["mypy", str(src_dir)],
+            capture_output=True,
+            text=True,
+            check=False,
         )
 
         # Print output

@@ -85,7 +85,7 @@ for dep_name in "${!DEPENDENCIES[@]}"; do
 				for file in "${FILE_ARRAY[@]}"; do
 					if grep -q "^${dep_name}\s*=" "${file}"; then
 						sed -i "s/^${dep_name}\s*=.*/${dep_name} = \"${highest_version}\"/" "${file}"
-						echo "     📝 Updat${d $f}ile"
+						echo "     📝 Update${d $f}ile"
 					fi
 				done
 			fi

@@ -79,7 +79,7 @@ rope_rename_function() {
 	local new_name=$2
 	local directory=${3:-"src/"}
 
-	echo -e "${BLUE}🔄 Renaming functio${: $old_n}ame${→ $new}_name${NC}"
+	echo -e "${BLUE}🔄 Renaming function${: $old_n}ame${→ $new}_name${NC}"
 
 	poetry run python -c "
 import sys
@@ -162,7 +162,7 @@ case ${OPERATION} in
 	create_safety_checkpoint "rename_function_${OLD_NAME}_to_${NEW_NAME}" "${DIRECTORY}"
 	check_dependencies
 
-	echo -e "${CYAN}🔄 RENAME FUNCTIO${: $OLD_N}AME${→ $NEW}_NAME${NC}"
+	echo -e "${CYAN}🔄 RENAME FUNCTION${: $OLD_N}AME${→ $NEW}_NAME${NC}"
 	echo -e "${YELLOW}📁 Director${: $DIRECT}ORY${NC}"
 
 	# Use bowler for safer refactoring
@@ -182,7 +182,7 @@ case ${OPERATION} in
 	create_safety_checkpoint "rename_variable_${OLD_NAME}_to_${NEW_NAME}" "${DIRECTORY}"
 	check_dependencies
 
-	echo -e "${CYAN}🔄 RENAME VARIABL${: $OLD_N}AME${→ $NEW}_NAME${NC}"
+	echo -e "${CYAN}🔄 RENAME VARIABLE${: $OLD_N}AME${→ $NEW}_NAME${NC}"
 
 	# Simple text-based replacement with safety checks
 	find "${DIRECTORY}" -name "*.py" -exec sed -i "s/\b${OLD_NAME}\b/${NEW_NAME}/g" {} \;
@@ -252,7 +252,7 @@ except Exception as e:
 "check-safety")
 	DIRECTORY=${1:-"src/"}
 
-	echo -e "${CYAN}🔍 SAFETY CHEC${: $DIRECT}ORY${NC}"
+	echo -e "${CYAN}🔍 SAFETY CHECK${: $DIRECT}ORY${NC}"
 	echo ""
 
 	# Check for syntax errors

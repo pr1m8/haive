@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""
-Generate recommended conf.py update for nitpick_ignore.
-"""
-
+"""Generate recommended conf.py update for nitpick_ignore."""
 # Recommended high-impact additions to your current nitpick_ignore list
+from __future__ import annotations
+
 RECOMMENDED_ADDITIONS = [
     # === HIGH PRIORITY: LangChain Core Types ===
     ("py:class", "langchain_core.documents.Document"),
@@ -208,7 +207,6 @@ def generate_conf_py_snippet():
     lines.extend(current_entries)
 
     # Group new additions by category
-    current_section = ""
     for ref_type, target in RECOMMENDED_ADDITIONS:
         # Skip if already in current list
         if (ref_type, target) in [
@@ -254,10 +252,10 @@ def main():
     print("🎯 Recommended nitpick_ignore Configuration Update")
     print("=" * 60)
     print()
-    print(f"📊 Analysis:")
-    print(f"  - Current list: ~45 entries")
+    print("📊 Analysis:")
+    print("  - Current list: ~45 entries")
     print(f"  - Recommended additions: {len(RECOMMENDED_ADDITIONS)} entries")
-    print(f"  - Focus: High-impact LangChain, Pydantic, and typing references")
+    print("  - Focus: High-impact LangChain, Pydantic, and typing references")
     print()
 
     # Save full replacement
@@ -277,12 +275,12 @@ def main():
     print()
     print("  Option A - Full Replacement (Recommended):")
     print(
-        "    Replace your entire nitpick_ignore list with recommended_full_nitpick_ignore.py"
+        "    Replace your entire nitpick_ignore list with recommended_full_nitpick_ignore.py",
     )
     print()
     print("  Option B - Incremental Addition:")
     print(
-        "    Add the entries from recommended_incremental_additions.txt to your current list"
+        "    Add the entries from recommended_incremental_additions.txt to your current list",
     )
     print()
     print("  Option C - Gradual Implementation:")

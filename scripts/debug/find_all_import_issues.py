@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Import Issue Analysis Script for Haive Framework
+"""Import Issue Analysis Script for Haive Framework.
 
 This script systematically finds all import issues in the codebase using multiple approaches:
 1. Direct import testing
@@ -12,15 +11,12 @@ Usage:
     poetry run python scripts/debug/find_all_import_issues.py
 """
 
+from __future__ import annotations
+
 import ast
-import importlib
 import importlib.util
-import os
-import re
 import sys
-import traceback
 from pathlib import Path
-from typing import Dict, List, Set, Tuple
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent
@@ -29,6 +25,7 @@ packages_root = project_root / "packages"
 
 
 class ImportAnalyzer:
+
     def __init__(self):
         self.failed_imports = {}
         self.missing_modules = set()
@@ -63,7 +60,7 @@ class ImportAnalyzer:
     def analyze_file(self, file_path: Path):
         """Analyze a single Python file for import issues."""
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
 
             # Parse AST
@@ -83,7 +80,7 @@ class ImportAnalyzer:
         except Exception as e:
             self.failed_imports[str(file_path)] = f"FileError: {e}"
 
-    def extract_imports(self, tree: ast.AST) -> List[Dict]:
+    def extract_imports(self, tree: ast.AST) -> list[dict]:
         """Extract all import statements from AST."""
         imports = []
 
@@ -97,11 +94,11 @@ class ImportAnalyzer:
                             "names": [alias.name],
                             "level": 0,
                             "line": node.lineno,
-                        }
-                    )
+                        }, )
             elif isinstance(node, ast.ImportFrom):
                 module = node.module or ""
-                names = [alias.name for alias in node.names] if node.names else []
+                names = [alias.name
+                         for alias in node.names] if node.names else []
                 imports.append(
                     {
                         "type": "from",
@@ -109,12 +106,11 @@ class ImportAnalyzer:
                         "names": names,
                         "level": node.level,
                         "line": node.lineno,
-                    }
-                )
+                    }, )
 
         return imports
 
-    def check_import(self, file_path: Path, import_info: Dict):
+    def check_import(self, file_path: Path, import_info: dict):
         """Check if an import statement works."""
         module_name = import_info["module"]
         import_type = import_info["type"]
@@ -134,20 +130,19 @@ class ImportAnalyzer:
         try:
             if import_type == "import":
                 importlib.import_module(module_name)
-            else:  # from X import Y
-                if module_name:
-                    mod = importlib.import_module(module_name)
-                    # Check if specific names exist
-                    for name in import_info["names"]:
-                        if name != "*" and not hasattr(mod, name):
-                            self.record_import_issue(
-                                file_path,
-                                line,
-                                f"'{name}' not found in module '{module_name}'",
-                            )
-                else:
-                    # from . import ... (handled in relative imports)
-                    pass
+            elif module_name:
+                mod = importlib.import_module(module_name)
+                # Check if specific names exist
+                for name in import_info["names"]:
+                    if name != "*" and not hasattr(mod, name):
+                        self.record_import_issue(
+                            file_path,
+                            line,
+                            f"'{name}' not found in module '{module_name}'",
+                        )
+            else:
+                # from . import ... (handled in relative imports)
+                pass
         except ImportError as e:
             self.record_import_issue(file_path, line, str(e))
 
@@ -156,13 +151,11 @@ class ImportAnalyzer:
                 self.missing_modules.add(module_name)
 
             # Check if it's an external dependency
-            if any(
-                ext in module_name
-                for ext in ["google", "openai", "anthropic", "langchain"]
-            ):
+            if any(ext in module_name
+                   for ext in ["google", "openai", "anthropic", "langchain"]):
                 self.external_dependencies.add(module_name)
 
-    def check_relative_import(self, file_path: Path, import_info: Dict):
+    def check_relative_import(self, file_path: Path, import_info: dict):
         """Check relative import issues."""
         level = import_info["level"]
         module_name = import_info["module"]
@@ -177,7 +170,7 @@ class ImportAnalyzer:
             # Remove 'src' and file extension
             if "src" in parts:
                 src_index = parts.index("src")
-                parts = parts[src_index + 1 :]
+                parts = parts[src_index + 1:]
             parts[-1] = parts[-1].replace(".py", "")
 
             # Calculate relative path
@@ -186,9 +179,13 @@ class ImportAnalyzer:
                     {
                         "file": str(file_path),
                         "line": line,
-                        "issue": f"Relative import level {level} too high for module depth {len(parts) - 1}",
-                        "import": f"{'.' * level}{module_name}",
-                    }
+                        "issue": f"Relative import level {level} too high for module depth {
+                            len(parts) -
+                            1}",
+                        "import": f"{
+                            '.' *
+                            level}{module_name}",
+                    },
                 )
 
         except Exception as e:
@@ -198,8 +195,7 @@ class ImportAnalyzer:
                     "line": line,
                     "issue": f"Cannot resolve relative import: {e}",
                     "import": f"{'.' * level}{module_name}",
-                }
-            )
+                }, )
 
     def record_import_issue(self, file_path: Path, line: int, issue: str):
         """Record an import issue."""
@@ -212,7 +208,7 @@ class ImportAnalyzer:
 
     def generate_report(self):
         """Generate comprehensive import analysis report."""
-        print(f"\n📊 IMPORT ANALYSIS RESULTS")
+        print("\n📊 IMPORT ANALYSIS RESULTS")
         print("=" * 60)
         print(f"Files analyzed: {self.analyzed_files}")
         print(f"Files with issues: {len(self.failed_imports)}")
@@ -221,7 +217,7 @@ class ImportAnalyzer:
         print(f"External dependencies: {len(self.external_dependencies)}")
 
         # Most problematic modules
-        print(f"\n🚨 MISSING CORE MODULES (TOP 10)")
+        print("\n🚨 MISSING CORE MODULES (TOP 10)")
         print("-" * 40)
         missing_sorted = sorted(self.missing_modules)[:10]
         for i, module in enumerate(missing_sorted, 1):
@@ -229,7 +225,7 @@ class ImportAnalyzer:
 
         # Relative import issues
         if self.relative_import_issues:
-            print(f"\n⚠️  RELATIVE IMPORT ISSUES")
+            print("\n⚠️  RELATIVE IMPORT ISSUES")
             print("-" * 40)
             for issue in self.relative_import_issues[:10]:  # Top 10
                 rel_file = Path(issue["file"]).relative_to(project_root)
@@ -240,13 +236,13 @@ class ImportAnalyzer:
 
         # External dependencies
         if self.external_dependencies:
-            print(f"\n📦 EXTERNAL DEPENDENCIES NEEDED")
+            print("\n📦 EXTERNAL DEPENDENCIES NEEDED")
             print("-" * 40)
             for dep in sorted(self.external_dependencies):
                 print(f"   {dep}")
 
         # Detailed file issues (top 20)
-        print(f"\n📋 DETAILED IMPORT ISSUES (TOP 20)")
+        print("\n📋 DETAILED IMPORT ISSUES (TOP 20)")
         print("-" * 40)
         sorted_files = sorted(
             self.failed_imports.items(),
@@ -267,7 +263,7 @@ class ImportAnalyzer:
                 print(f"   ❌ {issues}")
 
         # Summary recommendations
-        print(f"\n🎯 RECOMMENDATIONS")
+        print("\n🎯 RECOMMENDATIONS")
         print("-" * 40)
         print("1. Install missing external dependencies:")
         for dep in sorted(self.external_dependencies)[:5]:
@@ -278,13 +274,13 @@ class ImportAnalyzer:
         print("   - Check module structure and __init__.py files")
 
         print("\n3. Create missing core modules:")
-        core_missing = [m for m in self.missing_modules if m.startswith("haive.core")][
-            :5
-        ]
+        core_missing = [
+            m for m in self.missing_modules if m.startswith("haive.core")
+        ][:5]
         for module in core_missing:
             print(f"   - {module}")
 
-        print(f"\n4. Priority fixes (most impactful):")
+        print("\n4. Priority fixes (most impactful):")
         print("   - Fix relative imports (blocks AST parsing)")
         print("   - Add missing __init__.py files")
         print("   - Install google-search-results")
@@ -297,7 +293,7 @@ def main():
     analyzer.analyze_all_packages()
 
     # Also suggest tools for automated fixing
-    print(f"\n🛠️  RECOMMENDED TOOLS FOR FIXING")
+    print("\n🛠️  RECOMMENDED TOOLS FOR FIXING")
     print("-" * 40)
     print("1. deptry - Find missing dependencies:")
     print("   pip install deptry && deptry .")

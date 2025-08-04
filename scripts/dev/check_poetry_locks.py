@@ -2,6 +2,8 @@
 #!/usr/bin/env python
 """Check that Poetry lock files are in sync with pyproject.toml files."""
 
+from __future__ import annotations
+
 import os
 import subprocess
 import sys

@@ -91,7 +91,7 @@ UNORGANIZED_IMPORTS=$(find "${DIRECTORY}" -name "*.py" | wc -l)
 IMPORT_ERRORS=$(poetry run ruff check "${DIRECTORY}" --select I001,F401 2>/dev/null | wc -l || echo "0")
 
 echo -e "${YELLOW}📋 IMPORT ANALYSIS RESULTS:${NC}"
-echo "  🔍 Files to chec${: $UNORGANIZED_IMPO}RTS Python files"
+echo "  🔍 Files to check${: $UNORGANIZED_IMPO}RTS Python files"
 echo "  📦 Import errors (I001, F401${: $IMPORT_ERR}ORS"
 echo "  ❓ Potential missing imports${ $MISSING_IMPOR}TS"
 echo ""
@@ -122,7 +122,7 @@ if [[ "${MODE}" = "--fix" ]]; then
 
 	echo ""
 	echo -e "${GREEN}🎉 IMPORT MANAGEMENT RESULTS:${NC}"
-	echo -e "${BLUE}📊 BEFOR${: $IMPORT_ERR}ORS import issues${NC}"
+	echo -e "${BLUE}📊 BEFORE${: $IMPORT_ERR}ORS import issues${NC}"
 	echo -e "${GREEN}✅ AFTER:${ $FINAL_ERRO}RS import issues${NC}"
 	echo -e "${CYAN}🎯 FIXED${  $FIXED_ISS}UES import issues${NC}"
 	echo ""

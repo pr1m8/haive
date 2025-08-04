@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""
-Compare current nitpick_ignore with comprehensive list and generate update.
-"""
+"""Compare current nitpick_ignore with comprehensive list and generate
+update."""
+from __future__ import annotations
 
-import re
 from pathlib import Path
 
 # Current nitpick_ignore from conf.py

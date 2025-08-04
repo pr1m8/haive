@@ -10,7 +10,6 @@ Run before documentation builds to catch errors early.
 """
 
 import ast
-import re
 import sys
 from pathlib import Path
 
@@ -20,7 +19,7 @@ def check_file_for_pydantic_errors(filepath: Path) -> list[str]:
     errors = []
 
     try:
-        with open(filepath, "r") as f:
+        with open(filepath) as f:
             content = f.read()
 
         # Parse AST for structural analysis
@@ -36,39 +35,33 @@ def check_file_for_pydantic_errors(filepath: Path) -> list[str]:
         for line_num, line in enumerate(lines, 1):
             if "@field_validatorvalidate_" in line:
                 errors.append(
-                    f"{filepath}:{line_num}: Invalid @field_validator syntax - missing parentheses"
-                )
+                    f"{filepath}:{line_num}: Invalid @field_validator syntax - missing parentheses", )
 
         # 2. Check for args_schema direct assignment in BaseTool classes
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
                 # Check if this inherits from BaseTool
                 inherits_basetool = any(
-                    (isinstance(base, ast.Name) and base.id == "BaseTool")
-                    or (isinstance(base, ast.Attribute) and base.attr == "BaseTool")
-                    for base in node.bases
-                )
+                    (isinstance(base, ast.Name) and base.id == "BaseTool") or (
+                        isinstance(base, ast.Attribute)
+                        and base.attr == "BaseTool") for base in node.bases)
 
                 if inherits_basetool:
                     for item in node.body:
-                        if (
-                            isinstance(item, ast.Assign)
-                            and len(item.targets) == 1
-                            and isinstance(item.targets[0], ast.Name)
-                            and item.targets[0].id == "args_schema"
-                        ):
-
+                        if (isinstance(item, ast.Assign)
+                                and len(item.targets) == 1
+                                and isinstance(item.targets[0], ast.Name)
+                                and item.targets[0].id == "args_schema"):
                             # Check if it's a simple assignment without Field
-                            is_field_call = (
-                                isinstance(item.value, ast.Call)
-                                and isinstance(item.value.func, ast.Name)
-                                and item.value.func.id == "Field"
-                            )
+                            is_field_call = (isinstance(item.value, ast.Call)
+                                             and isinstance(
+                                                 item.value.func, ast.Name)
+                                             and item.value.func.id == "Field")
 
                             if not is_field_call:
                                 errors.append(
-                                    f"{filepath}:{item.lineno}: args_schema in BaseTool should use Field(default=Model) annotation"
-                                )
+                                    f"{filepath}:{
+                                        item.lineno}: args_schema in BaseTool should use Field(default=Model) annotation", )
 
             # 3. Check for @model_validator(mode="after") with @classmethod
             if isinstance(node, ast.FunctionDef):
@@ -77,26 +70,22 @@ def check_file_for_pydantic_errors(filepath: Path) -> list[str]:
 
                 for decorator in node.decorator_list:
                     if isinstance(decorator, ast.Call):
-                        if (
-                            isinstance(decorator.func, ast.Attribute)
-                            and decorator.func.attr == "model_validator"
-                        ):
+                        if (isinstance(decorator.func, ast.Attribute)
+                                and decorator.func.attr == "model_validator"):
                             for keyword in decorator.keywords:
-                                if (
-                                    keyword.arg == "mode"
-                                    and isinstance(keyword.value, ast.Constant)
-                                    and keyword.value.value == "after"
-                                ):
+                                if (keyword.arg == "mode" and isinstance(
+                                        keyword.value, ast.Constant)
+                                        and keyword.value.value == "after"):
                                     has_model_validator_after = True
-                    elif (
-                        isinstance(decorator, ast.Name)
-                        and decorator.id == "classmethod"
-                    ):
+                    elif isinstance(
+                            decorator,
+                            ast.Name) and decorator.id == "classmethod":
                         has_classmethod = True
 
                 if has_model_validator_after and has_classmethod:
                     errors.append(
-                        f"{filepath}:{node.lineno}: @model_validator(mode='after') should not use @classmethod"
+                        f"{filepath}:{
+                            node.lineno}: @model_validator(mode='after') should not use @classmethod",
                     )
 
     except Exception as e:
@@ -118,11 +107,13 @@ def main():
         dirs_to_check.append(migrations_dir)
 
     if not dirs_to_check:
-        print(f"ERROR: No directories found to check")
+        print("ERROR: No directories found to check")
         sys.exit(1)
 
     print(
-        f"🔍 Checking for Pydantic validation errors in: {', '.join(str(d) for d in dirs_to_check)}"
+        f"🔍 Checking for Pydantic validation errors in: {
+            ', '.join(
+                str(d) for d in dirs_to_check)}",
     )
     print("=" * 60)
 

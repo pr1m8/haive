@@ -50,7 +50,7 @@ if [[ "${FIX_MODE}" = "--fix" ]]; then
 
 	echo ""
 	echo -e "${GREEN}🎉 FIXIT RESULTS:${NC}"
-	echo -e "${BLUE}📊 BEFOR${: $BASELINE_ISS}UES files with issues${NC}"
+	echo -e "${BLUE}📊 BEFORE${: $BASELINE_ISS}UES files with issues${NC}"
 	echo -e "${GREEN}✅ AFTER:${ $FINAL_ISSU}ES files with issues${NC}"
 	echo -e "${CYAN}🎯 FIXED${  $FIXED_ISS}UES files automatically${NC}"
 	echo ""

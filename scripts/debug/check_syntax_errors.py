@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 """Debug script to find Python syntax errors in the codebase."""
+from __future__ import annotations
 
 import ast
 import sys
 from pathlib import Path
-from typing import List, Tuple
 
 
-def check_file_syntax(file_path: Path) -> Tuple[bool, str]:
+def check_file_syntax(file_path: Path) -> tuple[bool, str]:
     """Check if a Python file has syntax errors.
 
     Returns:
         (success, error_message)
     """
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             content = f.read()
 
         # Try to parse the file
@@ -26,10 +26,10 @@ def check_file_syntax(file_path: Path) -> Tuple[bool, str]:
     except IndentationError as e:
         return False, f"IndentationError at line {e.lineno}: {e.msg}"
     except Exception as e:
-        return False, f"Error: {type(e).__name__}: {str(e)}"
+        return False, f"Error: {type(e).__name__}: {e!s}"
 
 
-def scan_directory(directory: Path) -> List[Tuple[Path, str]]:
+def scan_directory(directory: Path) -> list[tuple[Path, str]]:
     """Scan directory for Python files with syntax errors."""
     errors = []
 
