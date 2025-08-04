@@ -1,10 +1,9 @@
+---
 name: Pre-commit auto-update
-
 on:
   schedule:
-    - cron: "0 0 * * *" # Daily at midnight
+    - cron: 0 0 * * * # Daily at midnight
   workflow_dispatch: # Allow manual runs
-
 jobs:
   auto-update:
     runs-on: ubuntu-latest
