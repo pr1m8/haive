@@ -29,6 +29,28 @@ from session_docs import (
     docs_test,
 )
 
+# Import error collection sessions
+from session_docs_error_collector import (
+    docs_phased_with_error_collection,
+    review_errors,
+)
+
+# Import modular documentation build sessions
+from session_docs_modular import (
+    docs_build_package,
+    docs_compare_profiles,
+    docs_list_profiles,
+    docs_quick_build,
+    docs_test_modular_system,
+)
+
+# Import package-specific documentation sessions
+from session_docs_package import (
+    docs_multi,
+    docs_package,
+    docs_quick,
+)
+
 # Import phased documentation sessions
 from session_docs_phased import docs_diagnose, docs_phased, docs_validate
 
@@ -60,6 +82,17 @@ from session_lint import format, lint, mypy, security
 
 # Import testing sessions
 from session_test import test, test_integration, test_package, test_quick
+
+# Import granular documentation testing sessions (temporarily disabled due to file corruption)
+# from session_docs_granular import (
+#     docs_compare_configs,
+#     docs_dev,
+#     docs_quick_test,
+#     docs_test_config,
+#     docs_test_incremental,
+#     docs_test_package,
+# )
+
 
 # Import memory-aware sessions if available
 try:
@@ -119,6 +152,20 @@ __all__ = [
     "docs_test_pipeline",
     "docs_test_prose",
     "docs_test_spelling",
+    # Granular documentation testing
+    "docs_compare_configs",
+    "docs_dev",
+    "docs_quick_test",
+    "docs_test_config",
+    "docs_test_incremental",
+    "docs_test_package",
+    # Package-specific documentation
+    "docs_package",
+    "docs_quick",
+    "docs_multi",
+    # Error collection and review
+    "docs_phased_with_error_collection",
+    "review_errors",
     # Examples
     "examples",
     "examples_docs",
