@@ -35,6 +35,17 @@ from session_docs_error_collector import (
     review_errors,
 )
 
+# Import example-aware documentation sessions
+from session_docs_examples import (
+    docs_autobuild_no_examples,
+    docs_compare_examples,
+    docs_dev,
+    docs_minimal_no_examples,
+    docs_no_examples,
+    docs_prod,
+    docs_with_examples,
+)
+
 # Import modular documentation build sessions
 from session_docs_modular import (
     docs_build_package,
@@ -113,6 +124,10 @@ docs_d = docs  # nox -s d
 docs_s = docs_serve  # nox -s s
 docs_dl = docs_autobuild  # nox -s dl
 
+# Example-aware aliases
+docs_fast_dev = docs_no_examples  # nox -s docs_fast_dev (no examples)
+docs_live = docs_autobuild_no_examples  # nox -s docs_live (auto-build without examples)
+
 
 # Define session groups for easy execution
 def list_sessions():
@@ -127,10 +142,19 @@ __all__ = [
     # Documentation building
     "docs",
     "docs_autobuild",
+    "docs_autobuild_no_examples",
     "docs_clean",
+    "docs_compare_examples",
     "docs_coverage",
+    "docs_dev",
+    "docs_minimal_no_examples",
+    "docs_no_examples",
+    "docs_prod",
+    "docs_with_examples",
     # Aliases
     "docs_d",
+    "docs_fast_dev",
+    "docs_live",
     # Documentation analysis
     "docs_debug",
     "docs_dl",
