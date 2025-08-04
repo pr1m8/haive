@@ -223,6 +223,17 @@ autodoc_mock_imports.extend(
         "haive.agents.simple",
         # Memory related
         "unified_memory_api",
+        # Hyde related
+        "hyde",
+        "hyde.agent",
+        "hyde.agent_v2", 
+        "hyde.enhanced_agent",
+        "hyde.enhanced_agent_v2",
+        # Supervisor related
+        "langgraph_supervisor",
+        "SupervisorReactState",
+        # Missing usage examples
+        "examples.usage_examples",
     ]
 )
 
@@ -310,6 +321,12 @@ autoapi_ignore = [
     # Reasoning and wiki agents
     "**/agents/reasoning_and_critique/**/*.py",
     "**/agents/wiki_writer/**/*.py",
+    # Hyde agents with import issues
+    "**/agents/rag/hyde/**/*.py",
+    # Conversation examples with generic type issues
+    "**/agents/conversation/base/example*.py",
+    # Experiment modules with generic type issues
+    "**/agents/experiments/**/*.py",
 ]
 
 
