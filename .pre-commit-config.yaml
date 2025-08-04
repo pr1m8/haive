@@ -261,12 +261,6 @@ repos:
         language: system
         types: [python]
         pass_filenames: true
-      - id: abs-imports
-        name: Additional Import Fixes
-        entry: poetry run abs-imports
-        language: system
-        types: [python]
-        pass_filenames: true
 
   # 📝 Documentation Quality Suite
   - repo: local
@@ -300,12 +294,12 @@ repos:
 
       # Vale for Google-style docstrings
       - id: vale-prose-lint
-        name: Vale Google Docstrings
+        name: Vale Prose Linter
         entry: poetry run vale
         language: system
-        files: \.py$
         pass_filenames: true
-        args: [--config, .vale.ini]
+        types: [markdown, rst, text]
+        args: [--config=.vale.ini]
 
       # 🧪 Advanced Documentation Testing
       #- repo: local
