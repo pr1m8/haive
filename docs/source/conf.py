@@ -48,6 +48,9 @@ pygments_style = "sphinx"
 # Get build profile from environment (default: full)
 SPHINX_PROFILE = os.environ.get('SPHINX_PROFILE', 'full')
 
+# Control example execution (set SPHINX_DISABLE_EXAMPLES=1 to skip computational examples)
+DISABLE_EXAMPLES = os.environ.get('SPHINX_DISABLE_EXAMPLES', '0').lower() in ('1', 'true', 'yes')
+
 # Select extensions based on profile
 if SPHINX_PROFILE == 'minimal':
     # Minimal set for fast builds
@@ -80,6 +83,11 @@ else:
 memory_config = get_memory_safe_sphinx_config(extensions)
 extensions = memory_config["extensions"]  # Use memory-optimized extensions
 build_recommendations = memory_config["build_recommendations"]
+
+# Remove sphinx_gallery if examples are disabled
+if DISABLE_EXAMPLES:
+    extensions = [ext for ext in extensions if not ext.startswith('sphinx_gallery')]
+    print("🚫 Sphinx Gallery disabled via SPHINX_DISABLE_EXAMPLES")
 
 # Get extension-specific configurations
 extension_configs = get_all_extension_configs(extensions)
@@ -242,6 +250,12 @@ autoapi_ignore = [
     "**/demo*.py",
     "**/test*.py",
     "**/tests/**/*.py",
+    # Skip auto-generated example galleries and archives
+    "**/auto_examples/**",
+    "**/archive/**",
+    "**/archives/**",
+    "**/packages/*/archive/**",
+    "**/packages/*/archives/**",
     # Skip app.py files that cause logger issues
     "**/app.py",
     "**/app/**/*.py",
