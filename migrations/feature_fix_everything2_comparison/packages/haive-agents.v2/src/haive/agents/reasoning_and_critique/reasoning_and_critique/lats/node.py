@@ -12,7 +12,9 @@ Functions:
     serialize_children: Serialize Children functionality.
 """
 
-from typing import Any, Optional
+from __future__ import annotations
+
+from typing import Any
 
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field, field_serializer, model_serializer
@@ -23,8 +25,8 @@ class Node(BaseModel):
 
     messages: list[BaseMessage]
     reflection: dict[str, Any] | None = None
-    parent: Optional["Node"] = None
-    children: list["Node"] = Field(default_factory=list)
+    parent: Node | None = None
+    children: list[Node] = Field(default_factory=list)
     value: float = 0.0
     visits: int = 0
     depth: int = Field(default=1)
@@ -38,7 +40,7 @@ class Node(BaseModel):
             self.depth = 1
 
     @field_serializer("parent")
-    def serialize_parent(self, parent: Optional["Node"]) -> dict[str, Any] | None:
+    def serialize_parent(self, parent: Node | None) -> dict[str, Any] | None:
         """Serialize parent node as ID only to avoid recursion."""
         if parent is None:
             return None
@@ -46,7 +48,7 @@ class Node(BaseModel):
         return {"id": id(parent), "depth": parent.depth}
 
     @field_serializer("children")
-    def serialize_children(self, children: list["Node"]) -> list[dict[str, Any]]:
+    def serialize_children(self, children: list[Node]) -> list[dict[str, Any]]:
         """Serialize children as IDs only to avoid recursion."""
         return [{"id": id(child), "depth": child.depth} for child in children]
 
@@ -63,13 +65,13 @@ class Node(BaseModel):
             "depth": self.depth,
         }
 
-    def add_child(self, child: "Node") -> None:
+    def add_child(self, child: Node) -> None:
         """Add a child node."""
         self.children.append(child)
         child.parent = self
         child.depth = self.depth + 1
 
-    def get_path(self) -> list["Node"]:
+    def get_path(self) -> list[Node]:
         """Get path from root to this node."""
         path = []
         current = self
@@ -78,7 +80,8 @@ class Node(BaseModel):
             current = current.parent
         return list(reversed(path))
 
-    def get_trajectory(self, include_reflections: bool = True) -> list[BaseMessage]:
+    def get_trajectory(self,
+                       include_reflections: bool = True) -> list[BaseMessage]:
         """Get all messages in the path from root to this node."""
         messages = []
         current = self
@@ -95,7 +98,10 @@ class Node(BaseModel):
 
 # NodeManager for keeping track of nodes and rebuilding the tree
 class NodeManager:
-    """Manages Node objects to rebuild references after serialization/deserialization."""
+    """Manages Node objects to rebuild references after.
+
+    serialization/deserialization.
+    """
 
     def __init__(self) -> None:
         self.nodes: dict[int, Node] = {}
@@ -118,7 +124,6 @@ class NodeManager:
                 node.parent = self.nodes[parent_id]
 
             node.children = [
-                self.nodes[child_id]
-                for child_id in children_ids
+                self.nodes[child_id] for child_id in children_ids
                 if child_id in self.nodes
             ]

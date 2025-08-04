@@ -1,8 +1,10 @@
 """ReactAgent with memory tools for dynamic memory management.
 
-This implementation follows LangChain's long-term memory patterns but uses
-ReactAgent with tools for flexible memory operations.
+This implementation follows LangChain's long-term memory patterns but
+uses ReactAgent with tools for flexible memory operations.
 """
+
+from __future__ import annotations
 
 from datetime import datetime
 from typing import Any
@@ -57,14 +59,14 @@ class ReactMemoryAgent:
                     self.embeddings,
                     allow_dangerous_deserialization=True,
                 )
-            except:
+            except BaseException:
                 # Create new if doesn't exist
                 self.vector_store = FAISS.from_documents(
                     [
                         Document(
                             page_content="Initial memory",
                             metadata={"timestamp": datetime.now().isoformat()},
-                        )
+                        ),
                     ],
                     self.embeddings,
                 )
@@ -74,7 +76,7 @@ class ReactMemoryAgent:
                     Document(
                         page_content="Initial memory",
                         metadata={"timestamp": datetime.now().isoformat()},
-                    )
+                    ),
                 ],
                 self.embeddings,
             )
@@ -82,10 +84,13 @@ class ReactMemoryAgent:
         # Initialize retrievers
         if self.use_time_weighting:
             self.retriever = TimeWeightedRetriever(
-                vectorstore=self.vector_store, decay_rate=self.decay_rate, k=self.k
+                vectorstore=self.vector_store,
+                decay_rate=self.decay_rate,
+                k=self.k,
             )
         else:
-            self.retriever = self.vector_store.as_retriever(search_kwargs={"k": self.k})
+            self.retriever = self.vector_store.as_retriever(
+                search_kwargs={"k": self.k})
 
         # Create memory tools
         self.memory_tools = self._create_memory_tools()
@@ -100,7 +105,8 @@ class ReactMemoryAgent:
 
     def _get_system_message(self) -> str:
         """Get system message that instructs agent on memory usage."""
-        return f"""You are an AI assistant with access to long-term memory for user {self.user_id}.
+        return f"""You are an AI assistant with access to long-term memory for user {
+            self.user_id}.
 
 IMPORTANT: For EVERY user query, you should:
 1. First use the 'search_memories' tool to find relevant past conversations and facts
@@ -153,9 +159,8 @@ Always strive to use memories to provide more helpful, personalized responses.""
                     importance = doc.metadata.get("importance", "normal")
 
                     memories.append(
-                        f"Memory {i} [{memory_type}] (from {timestamp}, importance: {importance}):\n"
-                        f"{doc.page_content}"
-                    )
+                        f"Memory {i} [{memory_type}] (from {timestamp}, importance: {importance}):\n" f"{
+                            doc.page_content}", )
 
                 return "\n\n".join(memories)
             except Exception as e:
@@ -163,7 +168,9 @@ Always strive to use memories to provide more helpful, personalized responses.""
 
         @tool
         def search_memories_by_time(
-            start_date: str, end_date: str | None = None, k: int | None = None
+            start_date: str,
+            end_date: str | None = None,
+            k: int | None = None,
         ) -> str:
             """Search memories within a time range.
 
@@ -180,7 +187,8 @@ Always strive to use memories to provide more helpful, personalized responses.""
                 from datetime import datetime
 
                 start = datetime.fromisoformat(start_date)
-                end = datetime.fromisoformat(end_date) if end_date else datetime.now()
+                end = datetime.fromisoformat(
+                    end_date) if end_date else datetime.now()
 
                 # Get all documents
                 all_docs = self.vector_store.similarity_search("", k=1000)
@@ -196,12 +204,14 @@ Always strive to use memories to provide more helpful, personalized responses.""
 
                 # Sort by timestamp and limit
                 filtered_docs.sort(
-                    key=lambda d: d.metadata.get("timestamp", ""), reverse=True
+                    key=lambda d: d.metadata.get("timestamp", ""),
+                    reverse=True,
                 )
                 filtered_docs = filtered_docs[:k]
 
                 if not filtered_docs:
-                    return f"No memories found between {start_date} and {end_date or 'now'}."
+                    return f"No memories found between {start_date} and {
+                        end_date or 'now'}."
 
                 # Format memories
                 memories = []
@@ -210,9 +220,8 @@ Always strive to use memories to provide more helpful, personalized responses.""
                     memory_type = doc.metadata.get("type", "general")
 
                     memories.append(
-                        f"Memory {i} [{memory_type}] (from {timestamp}):\n"
-                        f"{doc.page_content}"
-                    )
+                        f"Memory {i} [{memory_type}] (from {timestamp}):\n{
+                            doc.page_content}", )
 
                 return "\n\n".join(memories)
             except Exception as e:
@@ -280,7 +289,8 @@ Always strive to use memories to provide more helpful, personalized responses.""
                 }
 
                 doc = Document(
-                    page_content=f"[UPDATED MEMORY] {new_content}", metadata=metadata
+                    page_content=f"[UPDATED MEMORY] {new_content}",
+                    metadata=metadata,
                 )
 
                 self.vector_store.add_documents([doc])
@@ -351,8 +361,7 @@ Always strive to use memories to provide more helpful, personalized responses.""
 
                     memories.append(
                         f"{i}. [{memory_type}] {timestamp} (importance: {importance}):\n"
-                        f"   {doc.page_content[:100]}..."
-                    )
+                        f"   {doc.page_content[:100]}...", )
 
                 return "Recent memories:\n" + "\n".join(memories)
             except Exception as e:
@@ -368,7 +377,10 @@ Always strive to use memories to provide more helpful, personalized responses.""
         ]
 
     async def arun(
-        self, query: str, auto_save: bool = True, include_metadata: bool = False
+        self,
+        query: str,
+        auto_save: bool = True,
+        include_metadata: bool = False,
     ) -> dict[str, Any]:
         """Run the ReactAgent with memory tools.
 
@@ -390,19 +402,19 @@ Always strive to use memories to provide more helpful, personalized responses.""
 
             # Use store_memory tool to save
             await self.agent.arun(
-                f"Please store this conversation as a memory: {conversation_memory}"
+                f"Please store this conversation as a memory: {conversation_memory}",
             )
 
         if include_metadata:
             return {
-                "response": response,
-                "user_id": self.user_id,
-                "timestamp": datetime.now().isoformat(),
-                "tools_used": (
-                    self.agent.get_tool_usage_stats()
-                    if hasattr(self.agent, "get_tool_usage_stats")
-                    else None
-                ),
+                "response":
+                response,
+                "user_id":
+                self.user_id,
+                "timestamp":
+                datetime.now().isoformat(),
+                "tools_used": (self.agent.get_tool_usage_stats() if hasattr(
+                    self.agent, "get_tool_usage_stats") else None),
             }
 
         return response
@@ -418,7 +430,7 @@ Always strive to use memories to provide more helpful, personalized responses.""
         engine: AugLLMConfig | None = None,
         custom_tools: list[Any] | None = None,
         **kwargs,
-    ) -> "ReactMemoryAgent":
+    ) -> ReactMemoryAgent:
         """Create ReactMemoryAgent with additional custom tools.
 
         Args:
@@ -451,7 +463,10 @@ async def example_basic_usage():
     """Example of basic ReactMemoryAgent usage."""
     # Create agent
     agent = ReactMemoryAgent(
-        name="personal_assistant", user_id="alice_smith", k=5, use_time_weighting=True
+        name="personal_assistant",
+        user_id="alice_smith",
+        k=5,
+        use_time_weighting=True,
     )
 
     # First conversation
@@ -464,7 +479,8 @@ async def example_basic_usage():
     await agent.arun("What do you remember about my job?", auto_save=True)
 
     # Search specific memories
-    await agent.arun("Search my memories for information about hiking", auto_save=False)
+    await agent.arun("Search my memories for information about hiking",
+                     auto_save=False)
 
     # Save vector store
     agent.save_vector_store("alice_memories")
@@ -483,7 +499,7 @@ async def example_with_custom_tools():
             past_date = datetime.fromisoformat(date_str)
             days = (datetime.now() - past_date).days
             return f"{days} days have passed since {date_str}"
-        except:
+        except BaseException:
             return "Invalid date format. Use YYYY-MM-DD"
 
     # Create agent with custom tool
@@ -496,8 +512,7 @@ async def example_with_custom_tools():
     # Use both memory and custom tools
     await agent.arun(
         "Store a memory that I started my new job on 2024-01-15, "
-        "then calculate how many days I've been working there."
-    )
+        "then calculate how many days I've been working there.", )
 
 
 if __name__ == "__main__":
@@ -505,4 +520,3 @@ if __name__ == "__main__":
 
     # Run examples
     asyncio.run(example_basic_usage())
-    # asyncio.run(example_with_custom_tools())

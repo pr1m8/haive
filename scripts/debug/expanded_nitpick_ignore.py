@@ -8,6 +8,7 @@ on actual issues.
 
 # COMPREHENSIVE NITPICK_IGNORE LIST FOR HAIVE
 # Add these to your conf.py nitpick_ignore list
+from __future__ import annotations
 
 EXPANDED_NITPICK_IGNORE = [
     # =========================================================================

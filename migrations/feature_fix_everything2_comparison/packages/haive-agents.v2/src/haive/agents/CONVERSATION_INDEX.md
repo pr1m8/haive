@@ -4,10 +4,10 @@ Generated: 2025-07-02T22:04:14.974828
 
 ## Available Conversation Types
 
-### [Collaberative](./collaberative/CONVERSATION_OUTPUTS.md)
+### [Collaborative](./collaborative/CONVERSATION_OUTPUTS.md)
 
 **Files:** 9
-**Summary:** `./collaberative/CONVERSATION_OUTPUTS.md`
+**Summary:** `./collaborative/CONVERSATION_OUTPUTS.md`
 
 ### [Round_Robin](./round_robin/CONVERSATION_OUTPUTS.md)
 

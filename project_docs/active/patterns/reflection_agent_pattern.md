@@ -1,7 +1,7 @@
 # Reflection/Reflexion Agent Pattern
 
-**Version**: 1.0  
-**Purpose**: Building reflection agents using message transformer nodes  
+**Version**: 1.0
+**Purpose**: Building reflection agents using message transformer nodes
 **Last Updated**: 2025-01-16
 
 ## 🎯 Overview

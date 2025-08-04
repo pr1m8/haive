@@ -45,7 +45,6 @@ from haive.agents.rag.db_rag.graph_db.state import InputState, OutputState, Over
 from haive.core.engine.agent.agent import AgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 
-
 # Try to load environment variables from .env file if it exists
 load_dotenv(".env")
 
@@ -100,7 +99,8 @@ class GraphDBConfig(BaseModel):
         description="The database name in Neo4j (defaults to 'neo4j')",
     )
     enhanced_schema: bool = Field(
-        default=True, description="Enable enhanced schema scanning for better detection"
+        default=True,
+        description="Enable enhanced schema scanning for better detection",
     )
 
     def get_graph_db(self) -> Neo4jGraph | None:
@@ -203,14 +203,16 @@ class ExampleConfig(BaseModel):
     """
 
     examples_path: str | None = Field(
-        default=None, description="Path to JSON file containing Cypher query examples"
+        default=None,
+        description="Path to JSON file containing Cypher query examples",
     )
     examples: list[dict[str, str]] | None = Field(
         default=None,
         description="Direct list of examples with 'question' and 'query' keys",
     )
     k: int = Field(
-        default=2, description="Number of examples to retrieve for few-shot prompting"
+        default=2,
+        description="Number of examples to retrieve for few-shot prompting",
     )
 
 
@@ -284,11 +286,13 @@ class GraphDBRAGConfig(AgentConfig):
     )
 
     example_config: ExampleConfig | None = Field(
-        default=None, description="Configuration for Cypher query examples"
+        default=None,
+        description="Configuration for Cypher query examples",
     )
 
     state_schema: Any = Field(
-        default=OverallState, description="Pydantic model for workflow state management"
+        default=OverallState,
+        description="Pydantic model for workflow state management",
     )
 
     graph_db_config: GraphDBConfig = Field(
@@ -297,11 +301,13 @@ class GraphDBRAGConfig(AgentConfig):
     )
 
     input_schema: Any = Field(
-        default=InputState, description="Schema for validating agent inputs"
+        default=InputState,
+        description="Schema for validating agent inputs",
     )
 
     output_schema: Any = Field(
-        default=OutputState, description="Schema for structuring agent outputs"
+        default=OutputState,
+        description="Schema for structuring agent outputs",
     )
 
     domain_examples: dict[str, list[dict[str, str]]] = Field(
@@ -311,7 +317,8 @@ class GraphDBRAGConfig(AgentConfig):
 
     @field_validator("engines")
     def validate_engines(
-        self, engines: dict[str, AugLLMConfig]
+        self,
+        engines: dict[str, AugLLMConfig],
     ) -> dict[str, AugLLMConfig]:
         """Validate that all required engines are present.
 
@@ -343,8 +350,7 @@ class GraphDBRAGConfig(AgentConfig):
                 else:
                     raise ValueError(
                         f"Missing required engine: {engine_name}. "
-                        f"Available engines: {list(engines.keys())}"
-                    )
+                        f"Available engines: {list(engines.keys())}", )
 
         return engines
 

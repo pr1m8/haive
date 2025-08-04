@@ -59,7 +59,7 @@ Contributing
 
 ------------
 
-We welcome contributions! See our `contribution guidelines <https://github.com/will-astley/haive/blob/main/CONTRIBUTING.md>`_ 
+We welcome contributions! See our `contribution guidelines <https://github.com/will-astley/haive/blob/main/CONTRIBUTING.md>`_
 
 for more information on how to get involved.
 

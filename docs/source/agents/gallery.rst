@@ -236,7 +236,7 @@ Basic Conversation
 
 .. code-block:: python
 
-    from haive.agents.conversation.collaberative import CollaborativeConversation
+    from haive.agents.conversation.collaborative import CollaborativeConversation
     from haive.agents.simple import SimpleAgent
 
     # Create specialized agents
@@ -246,7 +246,7 @@ Basic Conversation
     )
 
     engineer = SimpleAgent(
-    name="engineer", 
+    name="engineer",
     system_message="You are a software engineer."
     )
 

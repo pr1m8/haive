@@ -43,7 +43,6 @@ async def take_screenshots():
 
             for url, name in urls_to_check:
                 try:
-
                     # Navigate to page
                     await page.goto(url, wait_until="networkidle")
 
@@ -52,7 +51,7 @@ async def take_screenshots():
 
                     # Scroll to load all lazy content
                     await page.evaluate(
-                        "window.scrollTo(0, document.body.scrollHeight)"
+                        "window.scrollTo(0, document.body.scrollHeight)",
                     )
                     await page.wait_for_timeout(1000)
                     await page.evaluate("window.scrollTo(0, 0)")

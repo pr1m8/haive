@@ -10,12 +10,12 @@ Functions:
     final_answer: Final Answer functionality.
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 
 from agents.reflexion.config import ReflexionConfig
 from agents.reflexion.responder_with_retries import ResponderWithRetries
-
-# from haive_agents.reflexion.aug_llms import initial_answer_chain,revision_chain
 from agents.reflexion.utils import _get_num_iterations
 from langchain_core.prompts import PromptTemplate
 from langchain_core.tools import BaseTool, StructuredTool
@@ -28,6 +28,7 @@ from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.branches import Branch
 
 
+
 @register_agent(ReflexionConfig)
 class ReflexionAgent(Agent[ReflexionConfig]):
     """Agent that uses Reflexion to answer questions."""
@@ -37,17 +38,24 @@ class ReflexionAgent(Agent[ReflexionConfig]):
     def __init__(self, config: ReflexionConfig = ReflexionConfig()):
         self.config = config
         self.responder = ResponderWithRetries(
-            config.engines["responder"], config.attempts, name="responder"
+            config.engines["responder"],
+            config.attempts,
+            name="responder",
         )
         self.revisor = ResponderWithRetries(
-            config.engines["revisor"], config.attempts, name="revisor"
+            config.engines["revisor"],
+            config.attempts,
+            name="revisor",
         )
         self.answer_writer = AugLLMConfig(model="gpt-4o", name="answer_writef")
         self.tool_node = self.create_tool_node(config.tools)
         self.event_loop_branch = Branch(
-            function=lambda state: _get_num_iterations(state)
-            > self.config.max_iterations,
-            destinations={True: "end", False: "execute_tools"},
+            function=lambda state: _get_num_iterations(state) > self.config.
+            max_iterations,
+            destinations={
+                True: "end",
+                False: "execute_tools"
+            },
         )
         super().__init__(config)
 
@@ -63,18 +71,16 @@ class ReflexionAgent(Agent[ReflexionConfig]):
         for tool in self.config.tools:
             for model in self.config.models:
                 tool_node_tools.append(
-                    StructuredTool.from_function(tool, name=model.__name__)
-                )
+                    StructuredTool.from_function(tool, name=model.__name__), )
         return ToolNode(tools=tool_node_tools)
 
     def final_answer(self, state: dict):
         """Final answer tool."""
         prompt = PromptTemplate.from_template(
-            """Given the folllowing converstaion, and user request, write out the final response.
+            """Given the following conversation, and user request, write out the final response.
             Conversation:
             {conversation}
-            """
-        )
+            """, )
         self.answer_writer.prompt_template = prompt
         aug_llm = self.answer_writer.create_runnable()
         response = aug_llm.invoke(input={"conversation": state.model_dump()})
@@ -93,5 +99,8 @@ class ReflexionAgent(Agent[ReflexionConfig]):
         self.graph.add_conditional_edges(
             "revision",
             self.event_loop_branch.evaluate,
-            {"execute_tools": "tools", "end": "final_answer"},
+            {
+                "execute_tools": "tools",
+                "end": "final_answer"
+            },
         )

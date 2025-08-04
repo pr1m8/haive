@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
-"""Enhanced supervisor using DynamicChoiceModel for structured decision making."""
+"""Enhanced supervisor using DynamicChoiceModel for structured decision.
+
+making.
+"""
+
+from __future__ import annotations
 
 import contextlib
 from typing import Any
+
+from langchain_core.messages import HumanMessage
+from langchain_core.tools import tool
+from pydantic import Field, model_validator
 
 from haive.agents.experiments.supervisor.test_registry_setup import AgentRegistry
 from haive.agents.experiments.supervisor.test_route_tools import (
@@ -12,13 +21,13 @@ from haive.agents.experiments.supervisor.test_route_tools import (
 from haive.agents.react.agent import ReactAgent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import HumanMessage
-from langchain_core.tools import tool
-from pydantic import Field, model_validator
 
 
 class EnhancedSupervisorWithChoice(ReactAgent):
-    """Enhanced supervisor that uses DynamicChoiceModel for structured agent selection."""
+    """Enhanced supervisor that uses DynamicChoiceModel for structured agent.
+
+    selection.
+    """
 
     # Core components
     agent_registry: AgentRegistry = Field(
@@ -28,14 +37,15 @@ class EnhancedSupervisorWithChoice(ReactAgent):
 
     agent_choice_model: DynamicChoiceModel = Field(
         default_factory=lambda: DynamicChoiceModel(
-            model_name="AgentChoice", include_end=True
+            model_name="AgentChoice",
+            include_end=True,
         ),
         description="Dynamic choice model for agent selection",
     )
 
     @model_validator(mode="after")
     @classmethod
-    def setup_enhanced_supervisor(cls) -> "EnhancedSupervisorWithChoice":
+    def setup_enhanced_supervisor(cls) -> EnhancedSupervisorWithChoice:
         """Setup supervisor with choice model + route tools."""
         # Update choice model with available agents
         self._sync_choice_model_with_registry()
@@ -84,11 +94,16 @@ Always follow this structured workflow for clear decision making.""",
             self.agent_choice_model.add_option(agent_name)
 
     def _create_agent_choice_tool(self):
-        """Create tool that uses DynamicChoiceModel for structured agent selection."""
+        """Create tool that uses DynamicChoiceModel for structured agent.
+
+        selection.
+        """
 
         @tool
         def choose_agent(task_description: str, reasoning: str = "") -> str:
-            """Make a structured, validated choice about which agent to use for a task.
+            """Make a structured, validated choice about which agent to use for.
+
+            a task.
 
             Args:
                 task_description: Description of the task to be performed
@@ -98,7 +113,6 @@ Always follow this structured workflow for clear decision making.""",
                 The name of the chosen agent (validated against available options)
             """
             try:
-
                 # Get current choice model
                 ChoiceModel = self.agent_choice_model.current_model
                 available_options = self.agent_choice_model.option_names
@@ -109,16 +123,13 @@ Always follow this structured workflow for clear decision making.""",
 
                 chosen_agent = "END"  # Default fallback
 
-                if any(
-                    word in task_lower
-                    for word in ["math", "calculate", "add", "multiply", "number"]
-                ):
+                if any(word in task_lower for word in
+                       ["math", "calculate", "add", "multiply", "number"]):
                     if "math_agent" in available_options:
                         chosen_agent = "math_agent"
                 elif any(
-                    word in task_lower
-                    for word in ["plan", "schedule", "organize", "steps"]
-                ):
+                        word in task_lower
+                        for word in ["plan", "schedule", "organize", "steps"]):
                     if "planning_agent" in available_options:
                         chosen_agent = "planning_agent"
                 elif available_options and available_options[0] != "END":
@@ -130,22 +141,23 @@ Always follow this structured workflow for clear decision making.""",
                     validated_choice = ChoiceModel(choice=chosen_agent)
 
                     if reasoning:
-                        return f"Chosen agent: {validated_choice.choice} (Reasoning: {reasoning})"
+                        return f"Chosen agent: {
+                            validated_choice.choice} (Reasoning: {reasoning})"
                     return f"Chosen agent: {validated_choice.choice}"
 
                 except Exception:
                     # Fall back to END
                     fallback_choice = ChoiceModel(choice="END")
-                    return (
-                        f"Chosen agent: {fallback_choice.choice} (validation fallback)"
-                    )
+                    return f"Chosen agent: {
+                        fallback_choice.choice} (validation fallback)"
 
             except Exception as e:
                 return f"Error choosing agent: {e!s}"
 
         return choose_agent
 
-    def add_agent_to_registry(self, name: str, agent: Any, description: str) -> None:
+    def add_agent_to_registry(self, name: str, agent: Any,
+                              description: str) -> None:
         """Add agent to registry and sync choice model."""
         self.agent_registry.register(name, agent, description)
         self.agent_choice_model.add_option(name)
@@ -153,7 +165,8 @@ Always follow this structured workflow for clear decision making.""",
     def remove_agent_from_registry(self, name: str) -> bool:
         """Remove agent from registry and choice model."""
         # Remove from choice model first
-        removed_from_choice = self.agent_choice_model.remove_option_by_name(name)
+        removed_from_choice = self.agent_choice_model.remove_option_by_name(
+            name)
 
         # Remove from registry (would need to implement this)
         # For now, just report
@@ -164,22 +177,26 @@ def test_enhanced_supervisor():
     """Test the enhanced supervisor with choice model."""
     # Import here to avoid circular imports
     from haive.agents.experiments.supervisor.test_registry_setup import (
-        create_test_agents,
-    )
+        create_test_agents, )
 
     # Create registry with agents
     registry = AgentRegistry()
     agents = create_test_agents()
     registry.register(
-        "math_agent", agents["math_agent"], "Performs mathematical calculations"
+        "math_agent",
+        agents["math_agent"],
+        "Performs mathematical calculations",
     )
     registry.register(
-        "planning_agent", agents["planning_agent"], "Creates structured plans"
+        "planning_agent",
+        agents["planning_agent"],
+        "Creates structured plans",
     )
 
     # Create enhanced supervisor
     supervisor = EnhancedSupervisorWithChoice(
-        name="enhanced_supervisor", agent_registry=registry
+        name="enhanced_supervisor",
+        agent_registry=registry,
     )
 
     # Test choice model directly
@@ -187,7 +204,8 @@ def test_enhanced_supervisor():
 
     # Test supervisor workflow
     with contextlib.suppress(Exception):
-        supervisor.invoke({"messages": [HumanMessage("I need to calculate 15 * 7")]})
+        supervisor.invoke(
+            {"messages": [HumanMessage("I need to calculate 15 * 7")]})
 
     return supervisor
 

@@ -1,7 +1,8 @@
 # scripts/migration/advanced_dependency_analyzer.py
+from __future__ import annotations
 
-import logging
 from collections import defaultdict
+import logging
 from pathlib import Path
 
 import toml
@@ -68,9 +69,11 @@ def load_root_pyproject():
 
 def extract_packages_from_poetry_groups(pyproject):
     group_packages = {}
-    if not pyproject or "tool" not in pyproject or "poetry" not in pyproject["tool"]:
+    if not pyproject or "tool" not in pyproject or "poetry" not in pyproject[
+            "tool"]:
         return group_packages
-    for group_name, group_data in pyproject["tool"]["poetry"].get("group", {}).items():
+    for group_name, group_data in pyproject["tool"]["poetry"].get("group",
+                                                                  {}).items():
         if "dependencies" in group_data:
             group_packages[group_name] = group_data["dependencies"]
     return group_packages
@@ -95,14 +98,20 @@ def generate_package_pyproject(package_name, toolkits, root_deps, sources):
             "poetry": {
                 "name": package_name,
                 "version": "0.1.0",
-                "description": f"{package_name.split('-')[1].title()} components for the Haive framework",
+                "description": f"{
+                    package_name.split('-')[1].title()} components for the Haive framework",
                 "authors": ["pr1m8 <william.astley@algebraicwealth.com>"],
                 "license": "MIT",
                 "readme": "README.md",
                 "packages": [
-                    {"include": package_name.replace("-", "_"), "from": "src"}
+                    {
+                        "include": package_name.replace(
+                            "-",
+                            "_"),
+                        "from": "src"},
                 ],
-                "dependencies": {"python": ">=3.12,<3.13"},
+                "dependencies": {
+                    "python": ">=3.12,<3.13"},
                 "extras": {},
                 "group": {
                     "dev": {
@@ -111,10 +120,10 @@ def generate_package_pyproject(package_name, toolkits, root_deps, sources):
                             "black": "^25.1.0",
                             "isort": "^6.0.1",
                             "mypy": "^1.15.0",
-                        }
-                    }
+                        },
+                    },
                 },
-            }
+            },
         },
         "build-system": {
             "requires": ["poetry-core>=1.0.0"],
@@ -135,10 +144,11 @@ def generate_package_pyproject(package_name, toolkits, root_deps, sources):
 
     for toolkit_name, toolkit_deps in toolkits.items():
         pyproject["tool"]["poetry"]["group"][toolkit_name] = {
-            "dependencies": toolkit_deps.copy()
+            "dependencies": toolkit_deps.copy(),
         }
         short = toolkit_name.split("_")[0]
-        pyproject["tool"]["poetry"]["extras"][short] = list(toolkit_deps.keys())
+        pyproject["tool"]["poetry"]["extras"][short] = list(
+            toolkit_deps.keys())
 
     return toml.dumps(pyproject)
 
@@ -150,29 +160,37 @@ def create_empty_package_structure(package_dir, package_name):
     init_file = package_dir / "src" / module_name / "__init__.py"
     if not init_file.exists():
         init_file.write_text(
-            f'"""Haive {package_name.split("-")[1]} package."""\n\n__version__ = "0.1.0"\n'
+            f'"""Haive {
+                package_name.split("-")[1]} package."""\n\n__version__ = "0.1.0"\n',
         )
 
 
-def merge_with_static_analysis(package_name, toolkit_pyproject, analysis_pyproject):
+def merge_with_static_analysis(package_name, toolkit_pyproject,
+                               analysis_pyproject):
     toolkit_dict = toml.loads(toolkit_pyproject)
-    analysis_dict = (
-        toml.loads(analysis_pyproject)
-        if analysis_pyproject
-        else {"tool": {"poetry": {"dependencies": {}}}}
-    )
+    analysis_dict = (toml.loads(analysis_pyproject)
+                     if analysis_pyproject else {
+                         "tool": {
+                             "poetry": {
+                                 "dependencies": {}
+                             }
+                         }
+    })
 
     toolkit_deps = toolkit_dict["tool"]["poetry"]["dependencies"]
-    for dep, version in analysis_dict["tool"]["poetry"].get("dependencies", {}).items():
-        if dep not in toolkit_deps and dep != "python" and not dep.startswith("haive-"):
+    for dep, version in analysis_dict["tool"]["poetry"].get(
+            "dependencies", {}).items():
+        if dep not in toolkit_deps and dep != "python" and not dep.startswith(
+                "haive-"):
             toolkit_deps[dep] = version
 
     toolkit_dict["tool"]["poetry"]["extras"].update(
-        analysis_dict["tool"]["poetry"].get("extras", {})
-    )
+        analysis_dict["tool"]["poetry"].get("extras", {}), )
 
-    for group, group_data in analysis_dict["tool"]["poetry"].get("group", {}).items():
-        if group != "dev" and group not in toolkit_dict["tool"]["poetry"]["group"]:
+    for group, group_data in analysis_dict["tool"]["poetry"].get("group",
+                                                                 {}).items():
+        if group != "dev" and group not in toolkit_dict["tool"]["poetry"][
+                "group"]:
             toolkit_dict["tool"]["poetry"]["group"][group] = group_data
 
     return toml.dumps(toolkit_dict)
@@ -185,7 +203,8 @@ def main():
         logger.error("❌ Could not load root pyproject.toml.")
         return
 
-    root_deps = root_pyproject.get("tool", {}).get("poetry", {}).get("dependencies", {})
+    root_deps = root_pyproject.get("tool", {}).get("poetry",
+                                                   {}).get("dependencies", {})
     group_packages = extract_packages_from_poetry_groups(root_pyproject)
     sources = extract_sources_from_root(root_pyproject)
 
@@ -197,24 +216,29 @@ def main():
         logger.info(f"\n📁 Processing {package}...")
 
         if not (package_dir / "src").exists():
-            logger.warning("📂 Structure missing. Creating new package skeleton...")
+            logger.warning(
+                "📂 Structure missing. Creating new package skeleton...")
             create_empty_package_structure(package_dir, package)
 
         toolkits = package_toolkits.get(package, {})
         toolkit_pyproject = generate_package_pyproject(
-            package, toolkits, root_deps, sources
+            package,
+            toolkits,
+            root_deps,
+            sources,
         )
 
         analysis_pyproject = None  # Plug in static analysis logic here if desired
         final_pyproject = merge_with_static_analysis(
-            package, toolkit_pyproject, analysis_pyproject
+            package,
+            toolkit_pyproject,
+            analysis_pyproject,
         )
 
         output_path = package_dir / "pyproject.toml"
 
-        response = (
-            input(f"💾 Write to {output_path}? (y/n/a for all): ").lower().strip()
-        )
+        response = input(
+            f"💾 Write to {output_path}? (y/n/a for all): ").lower().strip()
         write_all = False
 
         if response == "a":

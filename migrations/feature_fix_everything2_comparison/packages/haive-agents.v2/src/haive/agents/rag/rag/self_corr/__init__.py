@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from self_corr.agent import (
     SelfCorrectiveRAGAgent,
     correct_answer,
@@ -14,7 +16,6 @@ from self_corr.agent import (
 )
 from self_corr.config import SelfCorrectiveRAGConfig
 from self_corr.state import SelfCorrectiveRAGState
-
 
 __all__ = [
     "SelfCorrectiveRAGAgent",

@@ -155,7 +155,8 @@ class MultiAgent(Agent):
     )
 
     agent: Agent | None = Field(
-        default=None, description="Main/default agent for this multi-agent"
+        default=None,
+        description="Main/default agent for this multi-agent",
     )
 
     # Execution mode
@@ -184,7 +185,8 @@ class MultiAgent(Agent):
 
     @model_validator(mode="before")
     @classmethod
-    def normalize_agents_and_name(cls, values: dict[str, Any]) -> dict[str, Any]:
+    def normalize_agents_and_name(cls, values: dict[str,
+                                                    Any]) -> dict[str, Any]:
         """Normalize agents dict and auto-generate name - follows engines pattern."""
         if not isinstance(values, dict):
             return values
@@ -241,16 +243,17 @@ class MultiAgent(Agent):
     def build_graph(self) -> BaseGraph:
         """Build the BaseGraph for this multi-agent.
 
-        Uses intelligent routing from BaseGraph for sequence inference and branching.
+        Uses intelligent routing from BaseGraph for sequence inference
+        and branching.
         """
         # Create BaseGraph with state schema
-        graph = BaseGraph(name=f"{self.name}_graph", state_schema=self.state_schema)
+        graph = BaseGraph(name=f"{self.name}_graph",
+                          state_schema=self.state_schema)
 
         # Check if we have custom routing patterns
         has_custom_routing = any(
             branch.get("type") in ["conditional", "parallel", "direct"]
-            for branch in self.branches.values()
-        )
+            for branch in self.branches.values())
 
         if has_custom_routing:
             # Build custom graph with enhanced routing
@@ -286,14 +289,17 @@ class MultiAgent(Agent):
                 routes = branch_config["routes"]
 
                 def make_condition_fn(fn, route_map) -> Any:
+
                     def condition_wrapper(state: dict[str, Any]):
                         route_key = fn(state)
-                        return route_map.get(route_key, next(iter(route_map.values())))
+                        return route_map.get(route_key,
+                                             next(iter(route_map.values())))
 
                     return condition_wrapper
 
                 graph.add_conditional_edges(
-                    source, make_condition_fn(condition_fn, routes)
+                    source,
+                    make_condition_fn(condition_fn, routes),
                 )
                 processed_sources.add(source)
                 has_entry_edges = True
@@ -362,14 +368,16 @@ class MultiAgent(Agent):
             graph.add_edge("__start__", self.entry_point)
         elif not has_entry_edges:
             # No explicit routing, connect first agent to start
-            first_agent = next(iter(self.agents.keys())) if self.agents else None
+            first_agent = next(iter(
+                self.agents.keys())) if self.agents else None
             if first_agent:
                 graph.add_edge("__start__", first_agent)
 
         # Ensure all terminal nodes connect to END
         for agent_name in self.agents:
             # Check if this node has any outgoing edges
-            has_outgoing = any(source == agent_name for source in self.branches)
+            has_outgoing = any(source == agent_name
+                               for source in self.branches)
             if not has_outgoing and agent_name not in processed_sources:
                 # This is a terminal node
                 graph.add_edge(agent_name, "__end__")
@@ -411,9 +419,13 @@ class MultiAgent(Agent):
                     execution_mode="parallel"
                 )
         """
-        return cls(name=name, agents=agents, execution_mode=execution_mode, **kwargs)
+        return cls(name=name,
+                   agents=agents,
+                   execution_mode=execution_mode,
+                   **kwargs)
 
-    def add_branch(self, source_agent: str, condition: str, target_agents: list[str]):
+    def add_branch(self, source_agent: str, condition: str,
+                   target_agents: list[str]):
         """Add a branch condition for routing between agents.
 
         Args:
@@ -421,7 +433,10 @@ class MultiAgent(Agent):
             condition: The condition logic (e.g., 'if error' or 'if success')
             target_agents: List of possible target agents
         """
-        self.branches[source_agent] = {"condition": condition, "targets": target_agents}
+        self.branches[source_agent] = {
+            "condition": condition,
+            "targets": target_agents
+        }
 
     def add_conditional_routing(
         self,
@@ -482,7 +497,9 @@ class MultiAgent(Agent):
         }
 
     def add_parallel_group(
-        self, agent_names: list[str], next_agent: str | None = None
+        self,
+        agent_names: list[str],
+        next_agent: str | None = None,
     ) -> None:
         """Add a group of agents that run in parallel.
 
@@ -553,7 +570,10 @@ class MultiAgent(Agent):
             This method marks the MultiAgent for custom routing mode, bypassing
             the intelligent routing system in favor of explicit connections.
         """
-        self.branches[source_agent] = {"type": "direct", "target": target_agent}
+        self.branches[source_agent] = {
+            "type": "direct",
+            "target": target_agent
+        }
 
     def set_sequence(self, sequence: list[str]):
         """Manually set the execution sequence of agents.
@@ -564,7 +584,8 @@ class MultiAgent(Agent):
         # Validate that all agents exist
         for agent_name in sequence:
             if agent_name not in self.agents:
-                raise ValueError(f"Agent '{agent_name}' not found in agents dict")
+                raise ValueError(
+                    f"Agent '{agent_name}' not found in agents dict")
 
         # Store the sequence and disable inference
         self.execution_mode = "sequential"
@@ -580,7 +601,9 @@ class MultiAgent(Agent):
         self.agents = ordered_agents
 
     def add_conditional_edges(
-        self, source: str, path: Callable[[dict[str, Any]], str]
+        self,
+        source: str,
+        path: Callable[[dict[str, Any]], str],
     ) -> None:
         """Add conditional edges for backward compatibility with examples.
 

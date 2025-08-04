@@ -171,7 +171,7 @@ var Stemmer = function () {
 
     // Step 4
     re =
-      /^(.+?)(al|ance|ence|er|ic|able|ible|ant|ement|ment|ent|ou|ism|ate|iti|ous|ive|ize)$/;
+      /^(.+?)(al|ance|ence|er|ic|able|ible|ant|ement|meant|ent|ou|ism|ate|iti|ous|ive|ize)$/;
     re2 = /^(.+?)(s|t)(ion)$/;
     if (re.test(w)) {
       var fp = re.exec(w);

@@ -7,18 +7,19 @@ Functions:
     create_memory_vectorstore: Create Memory Vectorstore functionality.
     save_unstructured_memories: Save Unstructured Memories functionality.
 """
+from __future__ import annotations
 
-from collections.abc import Callable
 import datetime
 import logging
-from typing import Any
 import uuid
+from collections.abc import Callable
+from typing import Any
 
-from agents.react.memory.state import KnowledgeTriple, MemoryItem
+from agents.react.memory.state import KnowledgeTriple
+from agents.react.memory.state import MemoryItem
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
 from langchain_core.vectorstores import VectorStore
-
 
 logger = logging.getLogger(__name__)
 
@@ -32,11 +33,11 @@ def get_user_id_from_state(state: dict[str, Any]) -> str:
     Returns:
         User ID string
     """
-    user_id = state.get("user_id")
+    user_id = state.get('user_id')
     if not user_id:
         # Check if it's in metadata
-        metadata = state.get("metadata", {})
-        user_id = metadata.get("user_id")
+        metadata = state.get('metadata', {})
+        user_id = metadata.get('user_id')
 
     if not user_id:
         # Generate a random ID
@@ -45,7 +46,8 @@ def get_user_id_from_state(state: dict[str, Any]) -> str:
     return user_id
 
 
-def create_memory_vectorstore(embedding_model: Embeddings | None = None) -> VectorStore:
+def create_memory_vectorstore(
+        embedding_model: Embeddings | None = None) -> VectorStore:
     """Create a vector store for storing memories.
 
     Args:
@@ -65,7 +67,9 @@ def create_memory_vectorstore(embedding_model: Embeddings | None = None) -> Vect
 
 
 def save_unstructured_memories(
-    memories: list[str | MemoryItem], vector_store: VectorStore, user_id: str
+    memories: list[str | MemoryItem],
+    vector_store: VectorStore,
+    user_id: str,
 ) -> list[str]:
     """Save unstructured memories to vector store.
 
@@ -87,17 +91,17 @@ def save_unstructured_memories(
             # Convert string to MemoryItem
             memory_item = MemoryItem(
                 content=memory,
-                source="conversation",
+                source='conversation',
                 timestamp=timestamp,
-                metadata={"user_id": user_id},
+                metadata={'user_id': user_id},
             )
             content = memory
         elif isinstance(memory, MemoryItem):
             memory_item = memory
             if not memory_item.timestamp:
                 memory_item.timestamp = timestamp
-            if "user_id" not in memory_item.metadata:
-                memory_item.metadata["user_id"] = user_id
+            if 'user_id' not in memory_item.metadata:
+                memory_item.metadata['user_id'] = user_id
             content = memory_item.content
         else:
             # Skip invalid memory types
@@ -108,9 +112,9 @@ def save_unstructured_memories(
         document = Document(
             page_content=content,
             metadata={
-                "user_id": user_id,
-                "timestamp": memory_item.timestamp,
-                "source": memory_item.source,
+                'user_id': user_id,
+                'timestamp': memory_item.timestamp,
+                'source': memory_item.source,
                 **memory_item.metadata,
             },
         )
@@ -147,25 +151,24 @@ def save_structured_memories(
 
     for memory in memories:
         if isinstance(memory, dict) and all(
-            k in memory for k in ["subject", "predicate", "object_"]
-        ):
+                k in memory for k in ['subject', 'predicate', 'object_']):
             # Convert dict to KnowledgeTriple
             triple_dict = memory
             triple = KnowledgeTriple(
-                subject=triple_dict["subject"],
-                predicate=triple_dict["predicate"],
-                object_=triple_dict["object_"],
-                confidence=triple_dict.get("confidence", 1.0),
-                source=triple_dict.get("source", "conversation"),
-                timestamp=triple_dict.get("timestamp", timestamp),
-                metadata=triple_dict.get("metadata", {"user_id": user_id}),
+                subject=triple_dict['subject'],
+                predicate=triple_dict['predicate'],
+                object_=triple_dict['object_'],
+                confidence=triple_dict.get('confidence', 1.0),
+                source=triple_dict.get('source', 'conversation'),
+                timestamp=triple_dict.get('timestamp', timestamp),
+                metadata=triple_dict.get('metadata', {'user_id': user_id}),
             )
         elif isinstance(memory, KnowledgeTriple):
             triple = memory
             if not triple.timestamp:
                 triple.timestamp = timestamp
-            if "user_id" not in triple.metadata:
-                triple.metadata["user_id"] = user_id
+            if 'user_id' not in triple.metadata:
+                triple.metadata['user_id'] = user_id
         else:
             # Skip invalid memory types
             logger.warning(f"Skipping invalid memory type: {type(memory)}")
@@ -178,13 +181,14 @@ def save_structured_memories(
         document = Document(
             page_content=triple_str,
             metadata={
-                "user_id": user_id,
-                "timestamp": triple.timestamp,
-                "source": triple.source,
-                "subject": triple.subject,
-                "predicate": triple.predicate,
-                "object": triple.object_,  # Use object instead of object_ for compatibility
-                "confidence": triple.confidence,
+                'user_id': user_id,
+                'timestamp': triple.timestamp,
+                'source': triple.source,
+                'subject': triple.subject,
+                'predicate': triple.predicate,
+                'object': triple.
+                object_,  # Use object instead of object_ for compatibility
+                'confidence': triple.confidence,
                 **triple.metadata,
             },
         )
@@ -194,7 +198,8 @@ def save_structured_memories(
     # Add documents to vector store
     if documents:
         vector_store.add_documents(documents)
-        logger.info(f"Saved {len(documents)} structured memories for user {user_id}")
+        logger.info(
+            f"Saved {len(documents)} structured memories for user {user_id}")
 
     return saved_triples
 
@@ -222,16 +227,19 @@ def retrieve_memories(
     if filter_fn is None:
 
         def filter_fn(doc) -> Any:
-            return doc.metadata.get("user_id") == user_id
+            return doc.metadata.get('user_id') == user_id
 
     try:
         # Search for relevant documents
-        documents = vector_store.similarity_search(query, k=limit, filter=filter_fn)
+        documents = vector_store.similarity_search(query,
+                                                   k=limit,
+                                                   filter=filter_fn)
 
         # Extract memory strings
         memory_strings = [doc.page_content for doc in documents]
 
-        logger.info(f"Retrieved {len(memory_strings)} memories for user {user_id}")
+        logger.info(
+            f"Retrieved {len(memory_strings)} memories for user {user_id}")
         return memory_strings
 
     except Exception as e:
@@ -258,14 +266,19 @@ def create_memory_tools(vector_store: VectorStore):
 
     @tool
     def save_structured_memory(
-        subject: str, predicate: str, object_: str, user_id: str
+        subject: str,
+        predicate: str,
+        object_: str,
+        user_id: str,
     ) -> str:
         """Save a structured memory as a knowledge triple."""
         triple = {
-            "subject": subject,
-            "predicate": predicate,
-            "object_": object_,
-            "metadata": {"user_id": user_id},
+            'subject': subject,
+            'predicate': predicate,
+            'object_': object_,
+            'metadata': {
+                'user_id': user_id
+            },
         }
         save_structured_memories([triple], vector_store, user_id)
         return f"Structured memory saved: {subject} {predicate} {object_}"
@@ -276,7 +289,7 @@ def create_memory_tools(vector_store: VectorStore):
         return retrieve_memories(query, vector_store, user_id, limit)
 
     return {
-        "save_memory": save_memory,
-        "save_structured_memory": save_structured_memory,
-        "recall_memories": recall_memory,
+        'save_memory': save_memory,
+        'save_structured_memory': save_structured_memory,
+        'recall_memories': recall_memory,
     }

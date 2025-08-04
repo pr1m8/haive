@@ -31,8 +31,7 @@ from haive.agents.react.agent import ReactAgent
 
 
 class MemorySystemMode(str, Enum):
-    """Modes for the integrated memory system.
-    """
+    """Modes for the integrated memory system."""
 
     STRUCTURED = "structured"  # Use graph memory for structured data
     CONVERSATIONAL = "conversational"  # Use React memory for conversations
@@ -44,8 +43,8 @@ class MemorySystemMode(str, Enum):
 class IntegratedMemorySystem:
     """Combines multiple memory systems for comprehensive memory management.
 
-    This system intelligently routes memory operations to the most appropriate subsystem
-    based on content type and requirements.
+    This system intelligently routes memory operations to the most
+    appropriate subsystem based on content type and requirements.
     """
 
     def __init__(
@@ -70,8 +69,7 @@ class IntegratedMemorySystem:
         self.coordinator = self._create_coordinator()
 
     def _init_graph_memory(self, neo4j_config: dict[str, Any] | None):
-        """Initialize graph memory for structured knowledge.
-        """
+        """Initialize graph memory for structured knowledge."""
         config = GraphMemoryConfig(
             user_id=self.user_id,
             mode=GraphMemoryMode.FULL,
@@ -88,8 +86,7 @@ class IntegratedMemorySystem:
         self.graph_memory = GraphMemoryAgent(config)
 
     def _init_react_memory(self, vector_store_path: Optional[str]):
-        """Initialize React memory for flexible tool-based management.
-        """
+        """Initialize React memory for flexible tool-based management."""
         self.react_memory = ReactMemoryAgent(
             name="react_memory",
             engine=self.engine,
@@ -100,15 +97,13 @@ class IntegratedMemorySystem:
         )
 
     def _init_longterm_memory(self):
-        """Initialize long-term memory for persistence.
-        """
+        """Initialize long-term memory for persistence."""
         self.longterm_memory = LongTermMemoryAgent(
             user_id=self.user_id, llm_config=self.engine, k_memories=10
         )
 
     def _create_memory_router(self) -> ReactAgent:
-        """Create router agent that determines which memory system to use.
-        """
+        """Create router agent that determines which memory system to use."""
 
         @tool
         def analyze_memory_type(content: str) -> str:
@@ -244,8 +239,7 @@ the best memory system(s) to use:
         return router
 
     def _create_coordinator(self) -> SimpleMultiAgent:
-        """Create coordinator that manages all memory systems.
-        """
+        """Create coordinator that manages all memory systems."""
         agents = {
             "router": self.router,
             "graph": self.graph_memory.as_tool(self.graph_memory.config),
@@ -396,8 +390,7 @@ the best memory system(s) to use:
 
     async def _combine_query_results(
             self, query: str, results: dict[str, Any]) -> str:
-        """Combine results from multiple memory systems.
-        """
+        """Combine results from multiple memory systems."""
         # Use a simple agent to synthesize results
         synthesis_prompt = f"""
 Query: {query}
@@ -424,8 +417,7 @@ Synthesize these results into a comprehensive answer.
         return combined
 
     async def get_memory_analytics(self) -> dict[str, Any]:
-        """Get analytics across all memory systems.
-        """
+        """Get analytics across all memory systems."""
         analytics = {
             "user_id": self.user_id,
             "timestamp": datetime.now().isoformat(),
@@ -468,8 +460,7 @@ Synthesize these results into a comprehensive answer.
         return analytics
 
     async def consolidate_all_memories(self) -> dict[str, Any]:
-        """Consolidate memories across all systems.
-        """
+        """Consolidate memories across all systems."""
         consolidation_results = {
             "timestamp": datetime.now().isoformat(),
             "systems_consolidated": [],
@@ -499,8 +490,7 @@ Synthesize these results into a comprehensive answer.
 
 # Example usage
 async def demo_integrated_memory():
-    """Demonstrate the integrated memory system.
-    """
+    """Demonstrate the integrated memory system."""
     system = IntegratedMemorySystem(
         user_id="demo_user",
         neo4j_config={
@@ -563,8 +553,7 @@ async def demo_integrated_memory():
 
 # Advanced example with custom agent
 async def create_research_assistant():
-    """Create a research assistant with integrated memory.
-    """
+    """Create a research assistant with integrated memory."""
     # Initialize memory system
     memory_system = IntegratedMemorySystem(
         user_id="researcher",
@@ -580,8 +569,7 @@ async def create_research_assistant():
     async def remember_paper(
         title: str, authors: str, key_findings: str, relevance: str
     ) -> str:
-        """Remember details about a research paper.
-        """
+        """Remember details about a research paper."""
         memory_content = f"""
         Research Paper: {title}
         Authors: {authors}
@@ -599,8 +587,7 @@ async def create_research_assistant():
 
     @tool
     async def find_related_papers(topic: str) -> str:
-        """Find papers related to a topic from memory.
-        """
+        """Find papers related to a topic from memory."""
         result = await memory_system.query_memory(
             f"Find research papers related to {topic}", mode=MemorySystemMode.HYBRID
         )
@@ -611,8 +598,7 @@ async def create_research_assistant():
 
     @tool
     async def get_research_graph(entity: str) -> str:
-        """Get the knowledge graph around a research entity.
-        """
+        """Get the knowledge graph around a research entity."""
         graph_result = await memory_system.graph_memory.get_memory_subgraph(
             entity, max_depth=2, relationship_types=["AUTHORED", "CITES", "RELATED_TO"]
         )

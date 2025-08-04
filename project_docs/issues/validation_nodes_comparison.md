@@ -38,7 +38,7 @@ The haive-core package contains multiple validation node implementations that ha
 
 ### 2. ValidationNodeV2 + validation_router_v2
 
-**Files**: `validation_node_v2.py`, `validation_router_v2.py`  
+**Files**: `validation_node_v2.py`, `validation_router_v2.py`
 **Type**: Proper node + conditional router
 **Status**: Improved but still two-step
 

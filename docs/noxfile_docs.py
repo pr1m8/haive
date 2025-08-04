@@ -1,9 +1,10 @@
-"""
-Nox configuration for documentation testing and building.
+"""Nox configuration for documentation testing and building.
 
 This provides granular control over documentation builds for different
 testing scenarios and package-level validation.
 """
+
+from __future__ import annotations
 
 from pathlib import Path
 
@@ -108,13 +109,13 @@ html_theme = "furo"
 
 # AutoAPI config for single package
 autoapi_type = "python"
-autoapi_dirs = {pkg_config['autoapi_dirs']}
+autoapi_dirs = {pkg_config["autoapi_dirs"]}
 autoapi_root = "api"
 autoapi_add_toctree_entry = True
 autoapi_generate_api_docs = True
 
 # Add package to path
-sys.path.insert(0, os.path.abspath("{pkg_config['path']}"))
+sys.path.insert(0, os.path.abspath("{pkg_config["path"]}"))
 """
 
     # Write temporary config
@@ -130,7 +131,7 @@ sys.path.insert(0, os.path.abspath("{pkg_config['path']}"))
             "-c",
             "docs/source",  # Use source dir but with temp config
             "-D",
-            f"config_file=conf_temp.py",
+            "config_file=conf_temp.py",
             "docs/source",
             f"docs/build/test_{package}",
             "-q",
@@ -143,9 +144,10 @@ sys.path.insert(0, os.path.abspath("{pkg_config['path']}"))
         api_dir = Path(f"docs/build/test_{package}/api")
         if api_dir.exists():
             rst_files = list(api_dir.rglob("*.rst"))
-            html_files = list(Path(f"docs/build/test_{package}").rglob("*.html"))
+            html_files = list(
+                Path(f"docs/build/test_{package}").rglob("*.html"))
             print(
-                f"📊 Generated {len(rst_files)} RST files, {len(html_files)} HTML files"
+                f"📊 Generated {len(rst_files)} RST files, {len(html_files)} HTML files",
             )
 
     finally:
@@ -234,7 +236,8 @@ def docs_incremental_test(session):
     print(f"⚡ Incremental build: {incremental_time:.2f}s")
 
     # Performance check
-    speedup = clean_time / incremental_time if incremental_time > 0 else float("inf")
+    speedup = clean_time / incremental_time if incremental_time > 0 else float(
+        "inf")
     print(f"📈 Speedup: {speedup:.1f}x faster")
 
     if incremental_time > 60:
@@ -320,7 +323,12 @@ def docs_serve(session):
 
     # Ensure docs are built
     session.run(
-        "sphinx-build", "-b", "html", "docs/source", "docs/build/html", external=True
+        "sphinx-build",
+        "-b",
+        "html",
+        "docs/source",
+        "docs/build/html",
+        external=True,
     )
 
     print("🌐 Starting documentation server at http://localhost:8000")
@@ -368,7 +376,8 @@ def docs_clean(session):
     api_dir = Path("docs/source/api")
     if api_dir.exists() and api_dir.is_dir():
         # Only remove if it looks like generated content
-        if len(list(api_dir.rglob("*.rst"))) > 100:  # Lots of RST files = generated
+        if len(list(api_dir.rglob(
+                "*.rst"))) > 100:  # Lots of RST files = generated
             response = input("Remove generated API files? (y/N): ")
             if response.lower() == "y":
                 shutil.rmtree(api_dir)
@@ -384,7 +393,12 @@ def docs(session):
     session.install("-e", ".", "--extras", "docs")
 
     session.run(
-        "sphinx-build", "-b", "html", "docs/source", "docs/build/html", external=True
+        "sphinx-build",
+        "-b",
+        "html",
+        "docs/source",
+        "docs/build/html",
+        external=True,
     )
 
     print("✅ Documentation built at docs/build/html/")

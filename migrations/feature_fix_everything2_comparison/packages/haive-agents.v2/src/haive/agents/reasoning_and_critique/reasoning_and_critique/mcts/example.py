@@ -8,6 +8,7 @@ Functions:
 """
 
 # src/haive/agents/mcts/example.py
+from __future__ import annotations
 
 import logging
 from typing import Any
@@ -23,7 +24,6 @@ from haive.agents.reasoning_and_critique.mcts.utils import (
 )
 from haive.core.models.llm.base import AzureLLMConfig
 
-
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -36,7 +36,8 @@ def setup_tavily_tool() -> BaseTool:
 
 
 def run_mcts_agent_example(
-    question: str, tools: list[BaseTool] | None = None
+    question: str,
+    tools: list[BaseTool] | None = None,
 ) -> dict[str, Any]:
     """Run an example MCTS agent workflow with the given question.
 
@@ -52,11 +53,13 @@ def run_mcts_agent_example(
         try:
             tools = [setup_tavily_tool()]
         except Exception as e:
-            logger.warning(f"Failed to set up Tavily tool: {e}. Using no tools.")
+            logger.warning(
+                f"Failed to set up Tavily tool: {e}. Using no tools.")
             tools = []
 
     # Set up LLM config
-    llm_config = AzureLLMConfig(model="gpt-4o", parameters={"temperature": 0.7})
+    llm_config = AzureLLMConfig(model="gpt-4o",
+                                parameters={"temperature": 0.7})
 
     # Create the MCTS agent
     agent = create_mcts_agent(
@@ -82,14 +85,16 @@ def run_mcts_agent_example(
         results = step
 
         # Extract relevant step name
-        step_name = next(iter(step.keys())) if isinstance(step, dict) else "unknown"
+        step_name = next(iter(step.keys())) if isinstance(step,
+                                                          dict) else "unknown"
 
         # Get current tree height
         tree_height = 0
         if "nodes" in step[step_name]:
             tree_height = step[step_name]["nodes"].get_tree_height()
 
-        logger.info(f"Step {step_count} ({step_name}): Tree height {tree_height}")
+        logger.info(
+            f"Step {step_count} ({step_name}): Tree height {tree_height}")
 
     # Get final result
     final_result = next(iter(results.values())) if results else None

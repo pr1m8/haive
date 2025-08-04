@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # Generate setup.py from pyproject.toml
+from __future__ import annotations
 
+from pathlib import Path
 import re
 import sys
-from pathlib import Path
 
 import toml
 
@@ -23,11 +24,8 @@ def generate_setup_py(pyproject_path):
     description = package_info.get("description", "")
     authors = package_info.get("authors", [])
     author = authors[0].split("<")[0].strip() if authors else ""
-    author_email = (
-        authors[0].split("<")[1].split(">")[0].strip()
-        if authors and "<" in authors[0]
-        else ""
-    )
+    author_email = (authors[0].split("<")[1].split(">")[0].strip()
+                    if authors and "<" in authors[0] else "")
 
     # Extract dependencies
     dependencies = {}
@@ -36,11 +34,11 @@ def generate_setup_py(pyproject_path):
             # Convert ^1.2.3 to >=1.2.3,<2.0.0
             if isinstance(dep_version, str) and dep_version.startswith("^"):
                 major, minor, patch = re.match(
-                    r"\^(\d+)\.(\d+)\.(\d+)", dep_version
+                    r"\^(\d+)\.(\d+)\.(\d+)",
+                    dep_version,
                 ).groups()
-                dependencies[dep_name] = (
-                    f">={major}.{minor}.{patch},<{int(major) + 1}.0.0"
-                )
+                dependencies[
+                    dep_name] = f">={major}.{minor}.{patch},<{int(major) + 1}.0.0"
             else:
                 dependencies[dep_name] = dep_version
 
@@ -70,8 +68,7 @@ setup(
     packages=find_packages(where="src"),
     python_requires=">=3.12,<3.13",
     install_requires=[
-"""
-        )
+""", )
         for dep_name, dep_version in dependencies.items():
             f.write(f'        "{dep_name}{dep_version}",\n')
         f.write(
@@ -81,21 +78,17 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-"""
-        )
+""", )
         if system_reqs:
             f.write(
                 """    setup_requires=[
         "setuptools>=42",
         "wheel"
     ],
-"""
-            )
-        f.write(
-            """    include_package_data=True,
+""", )
+        f.write("""    include_package_data=True,
 )
-"""
-        )
+""", )
 
     return True
 

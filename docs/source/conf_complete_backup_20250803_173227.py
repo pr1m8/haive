@@ -1,17 +1,21 @@
 """Complete Sphinx configuration with all extensions and packages."""
 
-import sys
+from __future__ import annotations
+
 from pathlib import Path
+import sys
+
+from extension_configs import (
+    get_all_extension_configs,
+    get_conditional_configs,
+)
+from extensions import get_all_extensions
+from import_diagnostics import get_autodoc_mock_imports_from_diagnosis
+from memory import get_memory_safe_sphinx_config
 
 # Add conf_modules to Python path for imports
 conf_modules_dir = Path(__file__).parent / "conf_modules"
 sys.path.insert(0, str(conf_modules_dir))
-
-from extension_configs import (get_all_extension_configs,
-                               get_conditional_configs)
-from extensions import get_all_extensions, test_extension_compatibility
-from import_diagnostics import get_autodoc_mock_imports_from_diagnosis
-from memory import get_memory_safe_sphinx_config, monitor_sphinx_build
 
 # =============================================================================
 # PROJECT INFORMATION
@@ -69,39 +73,38 @@ autoapi_dirs = [
 
 # Automatically diagnose and configure mock imports
 autodoc_mock_imports = get_autodoc_mock_imports_from_diagnosis(
-    autoapi_dirs, str(Path(__file__).parent)
+    autoapi_dirs,
+    str(Path(__file__).parent),
 )
 # Add additional mocks for problematic dependencies
-autodoc_mock_imports.extend(
-    [
-        "google_search_results",
-        "google-search-results",
-        "serpapi",
-        "agents",
-        "langgraph_supervisor",
-        "compiled_state_graph",
-        "agent_types",
-        "complex_rag",
-        "usage_examples",
-        "normalize_contents",
-        "map_branch",
-        "llm_compiler",
-        "plan_and_execute",
-        "web_nav",
-        "SolvabilityStatus",
-        "SimpleAgentConfig",
-        "tool",
-        "task_analysis",
-        "react_agent2",
-        "from_llms",
-        "models",
-        "base",
-        "WebSource",
-        "LocalSource",
-        "TypeConverter",
-        "Config",
-    ]
-)
+autodoc_mock_imports.extend([
+    "google_search_results",
+    "google-search-results",
+    "serpapi",
+    "agents",
+    "langgraph_supervisor",
+    "compiled_state_graph",
+    "agent_types",
+    "complex_rag",
+    "usage_examples",
+    "normalize_contents",
+    "map_branch",
+    "llm_compiler",
+    "plan_and_execute",
+    "web_nav",
+    "SolvabilityStatus",
+    "SimpleAgentConfig",
+    "tool",
+    "task_analysis",
+    "react_agent2",
+    "from_llms",
+    "models",
+    "base",
+    "WebSource",
+    "LocalSource",
+    "TypeConverter",
+    "Config",
+], )
 
 autoapi_root = "api"
 autoapi_add_toctree_entry = False
@@ -182,11 +185,11 @@ def autoapi_skip_member(app, what, name, obj, skip, options):
 def force_load_lazy_imports():
     """Force load lazy imports before documentation generation."""
     import importlib
-    import sys
 
     # Force load provider classes
     try:
-        providers_module = importlib.import_module("haive.core.models.llm.providers")
+        providers_module = importlib.import_module(
+            "haive.core.models.llm.providers")
         if hasattr(providers_module, "__all__"):
             for name in providers_module.__all__:
                 try:
@@ -198,7 +201,8 @@ def force_load_lazy_imports():
 
     # Force load retriever/vectorstore configs
     try:
-        retriever_module = importlib.import_module("haive.core.models.retriever")
+        retriever_module = importlib.import_module(
+            "haive.core.models.retriever")
         if hasattr(retriever_module, "__all__"):
             for name in retriever_module.__all__:
                 try:
@@ -209,7 +213,8 @@ def force_load_lazy_imports():
         print(f"Could not preload retrievers: {e}")
 
     try:
-        vectorstore_module = importlib.import_module("haive.core.models.vectorstore")
+        vectorstore_module = importlib.import_module(
+            "haive.core.models.vectorstore")
         if hasattr(vectorstore_module, "__all__"):
             for name in vectorstore_module.__all__:
                 try:
@@ -226,7 +231,9 @@ force_load_lazy_imports()
 # =============================================================================
 # JSMATH CONFIGURATION
 # =============================================================================
-jsmath_path = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+jsmath_path = (
+    "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+)
 
 # =============================================================================
 # HTML THEME CONFIGURATION

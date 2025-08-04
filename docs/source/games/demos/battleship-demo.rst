@@ -178,7 +178,7 @@ Naval strategy game with hidden ship placement
        9 . . . . . . . C C C        9 . . . . . . . ? ? ?
        10 . . . . . . . . . .       10 . . . . . . . . . .
 
-   
+
    Your Fleet | Enemy Waters
    S=Submarine, B=Battleship, D=Destroyer, C=Cruiser
    X=Hit, O=Miss, ?=Unknown

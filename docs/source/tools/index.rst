@@ -867,59 +867,59 @@ Quick Start
    from pydantic import BaseModel, Field, validator
    from typing import Optional, Union
    import logging
-   
+
    logger = logging.getLogger(__name__)
-   
+
    # Best Practice 1: Clear documentation
    @tool
    def analyze_sentiment(text: str, language: str = "en") -> Dict[str, Any]:
 
        """Analyze sentiment of the given text.
-       
+
        This tool uses advanced NLP to determine the emotional tone
        of text content. It returns sentiment scores and classifications.
-       
+
        Args:
            text: The text to analyze (max 5000 characters)
            language: ISO 639-1 language code (default: 'en')
-           
+
        Returns:
            Dictionary containing:
            - sentiment: Overall sentiment (positive/negative/neutral)
            - score: Confidence score (0-1)
            - emotions: Detected emotions and their scores
-           
+
        Raises:
            ValueError: If text is empty or too long
            LanguageError: If language is not supported
-           
+
        Examples:
            >>> analyze_sentiment("I love this product!")
            {'sentiment': 'positive', 'score': 0.95, 'emotions': {'joy': 0.8}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
        if not text or len(text) > 5000:
            raise ValueError("Text must be 1-5000 characters")
-       
+
        # Implementation here
        return {"sentiment": "positive", "score": 0.95}
 
-   
+
    # Best Practice 2: Input validation with Pydantic
    class SearchInput(BaseModel):
 
        """Validated search parameters."""
-       
+
        query: str = Field(..., min_length=1, max_length=200)
        max_results: int = Field(10, ge=1, le=100)
        include_metadata: bool = Field(True)
        filters: Optional[Dict[str, Any]] = Field(None)
-       
+
        @validator('query')
        def clean_query(cls, v):
            """Remove dangerous characters from query."""
            return v.strip().replace(";", "").replace("--", "")
 
-   
+
    @tool(args_schema=SearchInput)
    async def advanced_search(
 
@@ -932,25 +932,25 @@ Quick Start
 
        """Perform advanced search with validation."""
        logger.info(f"Searching for: {query}")
-       
+
        try:
            # Search implementation
            results = await perform_search(query, max_results, filters)
-           
+
            if include_metadata:
                results = enrich_with_metadata(results)
-           
+
            logger.info(f"Found {len(results)} results")
            return results
-           
+
        except Exception as e:
            logger.error(f"Search failed: {e}")
            raise
 
-   
+
    # Best Practice 3: Error handling and retries
    from tenacity import retry, stop_after_attempt, wait_exponential
-   
+
    @tool
    @retry(
 

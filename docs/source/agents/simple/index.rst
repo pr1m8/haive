@@ -15,7 +15,7 @@
    <div class="hero-content">
    <h2>💬 Basic Conversational Agent</h2>
    <p class="hero-description">
-   SimpleAgent is the foundation for conversational AI in Haive. Perfect for straightforward interactions, 
+   SimpleAgent is the foundation for conversational AI in Haive. Perfect for straightforward interactions,
    question-answering, and basic task completion with full memory and context management.
    </p>
    </div>
@@ -271,7 +271,7 @@ Quick Start
 
 .. code-block:: python
 
-   
+
 
       # Convert agent to tool for other agents
       expert_tool = SimpleAgent.as_tool(
@@ -282,17 +282,17 @@ Quick Start
           )
       )
 
-   
+
 
       # Use in ReactAgent
       from haive.agents.react import ReactAgent
-      
+
       react_agent = ReactAgent(
           name="researcher",
           tools=[expert_tool]
       )
 
-   
+
       .. raw:: html
 
       </div>
@@ -304,12 +304,12 @@ Quick Start
 
 .. code-block:: python
 
-   
+
 
       # Part of multi-agent workflow
       from haive.agents.multi import SequentialAgent
 
-   
+
 
       agents = [
           SimpleAgent(name="greeter", engine=config),
@@ -317,14 +317,14 @@ Quick Start
           SimpleAgent(name="closer", engine=config)
       ]
 
-   
+
 
       workflow = SequentialAgent(
           name="support_flow",
           agents=agents
       )
 
-   
+
       .. raw:: html
 
       </div>

@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from search.base import (
     BaseSearchAgent,
     SearchResponse,
@@ -9,7 +11,6 @@ from search.base import (
     get_search_instructions,
     get_system_prompt,
 )
-
 
 __all__ = [
     "BaseSearchAgent",

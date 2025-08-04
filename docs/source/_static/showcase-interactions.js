@@ -453,13 +453,13 @@
             .showcase-search-container {
                 margin: 2rem 0;
             }
-            
+
             .showcase-search-wrapper {
                 position: relative;
                 max-width: 400px;
                 margin: 0 auto;
             }
-            
+
             .showcase-search-input {
                 width: 100%;
                 padding: 0.75rem 1rem;
@@ -468,13 +468,13 @@
                 font-size: 1rem;
                 transition: all 0.3s ease;
             }
-            
+
             .showcase-search-input:focus {
                 outline: none;
                 border-color: #0066cc;
                 box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
             }
-            
+
             .showcase-search-clear {
                 position: absolute;
                 right: 10px;
@@ -492,23 +492,23 @@
                 align-items: center;
                 justify-content: center;
             }
-            
+
             .showcase-search-clear:hover {
                 background: rgba(0, 0, 0, 0.1);
             }
-            
+
             .search-results-count {
                 text-align: center;
                 margin: 1rem 0;
                 color: #666;
                 font-size: 0.9rem;
             }
-            
+
             .search-highlight {
                 outline: 2px solid #0066cc;
                 outline-offset: 2px;
             }
-            
+
             .performance-modal {
                 position: fixed;
                 top: 0;
@@ -521,7 +521,7 @@
                 justify-content: center;
                 z-index: 1000;
             }
-            
+
             .performance-modal-content {
                 background: white;
                 padding: 2rem;
@@ -531,16 +531,16 @@
                 max-height: 80vh;
                 overflow-y: auto;
             }
-            
+
             [data-theme="dark"] .performance-modal-content {
                 background: #2d3748;
                 color: #e2e8f0;
             }
-            
+
             .performance-details p {
                 margin: 0.5rem 0;
             }
-            
+
             .close-modal {
                 background: #0066cc;
                 color: white;
@@ -550,25 +550,25 @@
                 cursor: pointer;
                 margin-top: 1rem;
             }
-            
+
             .close-modal:hover {
                 background: #0056b3;
             }
-            
+
             .loading {
                 opacity: 0.7;
             }
-            
+
             .loaded {
                 opacity: 1;
                 transition: opacity 0.3s ease;
             }
-            
+
             .keyboard-navigation *:focus {
                 outline: 2px solid #0066cc !important;
                 outline-offset: 2px !important;
             }
-            
+
             .copy-code-btn:hover {
                 background: rgba(0, 0, 0, 0.9) !important;
             }

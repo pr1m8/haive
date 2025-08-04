@@ -7,6 +7,8 @@ Custom Sphinx extension for Haive documentation that provides:
 - Enhanced autosummary features
 """
 
+from __future__ import annotations
+
 import ast
 from collections import defaultdict
 from dataclasses import dataclass, field
@@ -19,7 +21,6 @@ from docutils.parsers.rst import directives
 from sphinx.application import Sphinx
 from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
-
 
 logger = logging.getLogger(__name__)
 
@@ -103,7 +104,8 @@ class AgentRunCaptureDirective(SphinxDirective):
             self._add_graph_section(container, capture_data)
 
         # Add execution steps
-        self._add_execution_steps(container, capture_data, paginated, page_size)
+        self._add_execution_steps(container, capture_data, paginated,
+                                  page_size)
 
         # Add metrics if requested
         if show_metrics:
@@ -137,15 +139,13 @@ class AgentRunCaptureDirective(SphinxDirective):
             ("Run ID", capture_data.get("run_id", "Unknown")[:8] + "..."),
             (
                 "Status",
-                "✅ Success" if capture_data.get("error") is None else "❌ Failed",
+                "✅ Success"
+                if capture_data.get("error") is None else "❌ Failed",
             ),
             (
                 "Duration",
-                (
-                    f"{capture_data.get('duration', 0):.2f}s"
-                    if capture_data.get("end_time")
-                    else "Running..."
-                ),
+                (f"{capture_data.get('duration', 0):.2f}s"
+                 if capture_data.get("end_time") else "Running..."),
             ),
             ("Steps", str(len(capture_data.get("steps", [])))),
         ]
@@ -176,14 +176,16 @@ class AgentRunCaptureDirective(SphinxDirective):
             figure += image
 
             # Add caption
-            caption = nodes.caption(text="Agent workflow graph showing the execution flow")
+            caption = nodes.caption(
+                text="Agent workflow graph showing the execution flow")
             figure += caption
 
             graph_section += figure
 
         container += graph_section
 
-    def _add_execution_steps(self, container, capture_data, paginated, page_size):
+    def _add_execution_steps(self, container, capture_data, paginated,
+                             page_size):
         """Add execution steps section."""
         steps_section = nodes.section()
         steps_title = nodes.title(text="Execution Steps")
@@ -192,7 +194,8 @@ class AgentRunCaptureDirective(SphinxDirective):
         steps = capture_data.get("steps", [])
 
         if not steps:
-            steps_section += nodes.paragraph(text="No execution steps recorded.")
+            steps_section += nodes.paragraph(
+                text="No execution steps recorded.")
             container += steps_section
             return
 
@@ -205,8 +208,7 @@ class AgentRunCaptureDirective(SphinxDirective):
             # Add pagination info
             pagination_info = nodes.paragraph(
                 text=f"Showing first {page_size} of {len(steps)} steps. "
-                f"{remaining} more steps available in full capture."
-            )
+                f"{remaining} more steps available in full capture.", )
             pagination_info["classes"] = ["pagination-info"]
             steps_section += pagination_info
 
@@ -287,7 +289,8 @@ class AgentRunCaptureDirective(SphinxDirective):
         # Add step type breakdown
         for step_type, count in step_types.items():
             row = nodes.row()
-            row += nodes.entry("", nodes.paragraph(text=f"{step_type.title()} Steps"))
+            row += nodes.entry(
+                "", nodes.paragraph(text=f"{step_type.title()} Steps"))
             row += nodes.entry("", nodes.paragraph(text=str(count)))
             tbody += row
 
@@ -440,7 +443,8 @@ class ReadmeDiscoveryDirective(SphinxDirective):
                 continue
 
             # Check exclusions
-            if any(exc.strip() in str(relative_path) for exc in exclude_patterns if exc.strip()):
+            if any(exc.strip() in str(relative_path)
+                   for exc in exclude_patterns if exc.strip()):
                 continue
 
             readme_files.append((readme_path, relative_path))
@@ -479,7 +483,7 @@ class ReadmeDiscoveryDirective(SphinxDirective):
                         if line and not line.startswith("#"):
                             para += nodes.Text(f" - {line[:100]}...")
                             break
-            except:
+            except BaseException:
                 pass
 
             item += para
@@ -537,7 +541,8 @@ class AgentDiscovery:
                 return True
 
         # Skip non-Python files or __init__.py files
-        return bool(file_path.suffix != ".py" or file_path.name == "__init__.py")
+        return bool(file_path.suffix != ".py"
+                    or file_path.name == "__init__.py")
 
     def extract_agent_info_from_ast(self, file_path: Path) -> list[AgentInfo]:
         """Extract agent information from Python AST without importing."""
@@ -556,7 +561,8 @@ class AgentDiscovery:
             # Find agent classes
             for node in ast.walk(tree):
                 if isinstance(node, ast.ClassDef):
-                    agent_info = self.analyze_class_node(node, file_path, module_docstring)
+                    agent_info = self.analyze_class_node(
+                        node, file_path, module_docstring)
                     if agent_info:
                         agents.append(agent_info)
 
@@ -568,7 +574,10 @@ class AgentDiscovery:
         return agents
 
     def analyze_class_node(
-        self, node: ast.ClassDef, file_path: Path, module_docstring: str
+        self,
+        node: ast.ClassDef,
+        file_path: Path,
+        module_docstring: str,
     ) -> AgentInfo | None:
         """Analyze a class AST node to determine if it's an agent."""
         class_name = node.name
@@ -581,13 +590,9 @@ class AgentDiscovery:
         base_classes = [self.get_base_class_name(base) for base in node.bases]
         docstring = ast.get_docstring(node) or ""
         is_abstract = any(
-            isinstance(item, ast.FunctionDef)
-            and any(
+            isinstance(item, ast.FunctionDef) and any(
                 isinstance(dec, ast.Name) and dec.id == "abstractmethod"
-                for dec in item.decorator_list
-            )
-            for item in node.body
-        )
+                for dec in item.decorator_list) for item in node.body)
 
         # Determine module path
         module_path = self.file_path_to_module_path(file_path)
@@ -627,7 +632,8 @@ class AgentDiscovery:
         # Check base classes
         for base in node.bases:
             base_name = self.get_base_class_name(base)
-            if base_name and ("agent" in base_name.lower() or "Agent" in base_name):
+            if base_name and ("agent" in base_name.lower()
+                              or "Agent" in base_name):
                 return True
 
         return False
@@ -648,30 +654,34 @@ class AgentDiscovery:
         parts = file_path.parts
         try:
             src_index = parts.index("src")
-            module_parts = parts[src_index + 1 : -1]  # Exclude 'src' and file extension
-            module_parts = list(module_parts) + [file_path.stem]  # Add filename without extension
+            module_parts = parts[src_index +
+                                 1:-1]  # Exclude 'src' and file extension
+            # Add filename without extension
+            module_parts = list(module_parts) + [file_path.stem]
             return ".".join(module_parts)
         except ValueError:
             # Fallback: use relative path from packages
             try:
                 packages_index = parts.index("packages")
-                module_parts = parts[packages_index + 1 :]
+                module_parts = parts[packages_index + 1:]
                 if "src" in module_parts:
                     src_index = module_parts.index("src")
-                    module_parts = module_parts[src_index + 1 :]
+                    module_parts = module_parts[src_index + 1:]
                 # Remove file extension
                 module_parts = [*list(module_parts[:-1]), file_path.stem]
                 return ".".join(module_parts)
             except ValueError:
                 return str(file_path.stem)
 
-    def categorize_agent(self, file_path: Path, class_name: str, docstring: str) -> str:
+    def categorize_agent(self, file_path: Path, class_name: str,
+                         docstring: str) -> str:
         """Categorize an agent based on its location and characteristics."""
         path_str = str(file_path).lower()
 
         # Package-based categorization
         if "haive-games" in path_str:
-            if any(game in path_str for game in ["chess", "poker", "checkers", "go"]):
+            if any(game in path_str
+                   for game in ["chess", "poker", "checkers", "go"]):
                 return "Classic Games"
             if any(game in path_str for game in ["among_us", "mafia", "risk"]):
                 return "Strategy Games"
@@ -682,7 +692,8 @@ class AgentDiscovery:
         if "haive-prebuilt" in path_str:
             if any(term in path_str for term in ["contract", "legal"]):
                 return "Legal & Business"
-            if any(term in path_str for term in ["scientific", "research", "paper"]):
+            if any(term in path_str
+                   for term in ["scientific", "research", "paper"]):
                 return "Academic & Research"
             return "Prebuilt Solutions"
 
@@ -723,7 +734,8 @@ class AgentDiscovery:
             return "haive-games"
         return "unknown"
 
-    def extract_features(self, node: ast.ClassDef, docstring: str) -> list[str]:
+    def extract_features(self, node: ast.ClassDef,
+                         docstring: str) -> list[str]:
         """Extract features from class definition and docstring."""
         features = []
         doc_lower = docstring.lower()
@@ -732,8 +744,10 @@ class AgentDiscovery:
         feature_keywords = {
             "tools": ["tool", "function", "external"],
             "memory": ["memory", "persist", "checkpoint", "history"],
-            "structured_output": ["structured", "schema", "output", "pydantic"],
-            "conversation": ["conversation", "chat", "dialogue", "multi-agent"],
+            "structured_output":
+            ["structured", "schema", "output", "pydantic"],
+            "conversation":
+            ["conversation", "chat", "dialogue", "multi-agent"],
             "reasoning": ["reasoning", "thought", "critique", "reflection"],
             "retrieval": ["rag", "retrieval", "vector", "search", "knowledge"],
             "planning": ["plan", "strategy", "goal", "decompose"],
@@ -745,7 +759,8 @@ class AgentDiscovery:
 
         # Check class fields for features
         for item in node.body:
-            if isinstance(item, ast.AnnAssign) and isinstance(item.target, ast.Name):
+            if isinstance(item, ast.AnnAssign) and isinstance(
+                    item.target, ast.Name):
                 field_name = item.target.id.lower()
                 if "tool" in field_name:
                     features.append("tools")
@@ -754,14 +769,19 @@ class AgentDiscovery:
 
         return list(set(features))  # Remove duplicates
 
-    def determine_complexity(self, node: ast.ClassDef, docstring: str, features: list[str]) -> str:
+    def determine_complexity(self, node: ast.ClassDef, docstring: str,
+                             features: list[str]) -> str:
         """Determine the complexity level of an agent."""
         # Count methods
-        method_count = sum(1 for item in node.body if isinstance(item, ast.FunctionDef))
+        method_count = sum(1 for item in node.body
+                           if isinstance(item, ast.FunctionDef))
 
         # Complexity indicators
-        complex_features = ["reasoning", "planning", "conversation", "multi-agent"]
-        has_complex_features = any(feature in features for feature in complex_features)
+        complex_features = [
+            "reasoning", "planning", "conversation", "multi-agent"
+        ]
+        has_complex_features = any(feature in features
+                                   for feature in complex_features)
 
         doc_lower = docstring.lower()
         complex_keywords = [
@@ -771,7 +791,8 @@ class AgentDiscovery:
             "sophisticated",
             "framework",
         ]
-        has_complex_keywords = any(keyword in doc_lower for keyword in complex_keywords)
+        has_complex_keywords = any(keyword in doc_lower
+                                   for keyword in complex_keywords)
 
         if method_count > 10 or has_complex_features or has_complex_keywords:
             return "complex"
@@ -779,13 +800,15 @@ class AgentDiscovery:
             return "medium"
         return "simple"
 
-    def extract_description(self, docstring: str, module_docstring: str) -> str:
+    def extract_description(self, docstring: str,
+                            module_docstring: str) -> str:
         """Extract a concise description from docstrings."""
         # Try class docstring first
         if docstring:
             lines = docstring.strip().split("\n")
             first_line = lines[0].strip()
-            if first_line and not first_line.startswith(("Args:", "Parameters:", "Returns:")):
+            if first_line and not first_line.startswith(
+                    ("Args:", "Parameters:", "Returns:")):
                 return first_line
 
         # Fallback to module docstring
@@ -830,14 +853,16 @@ class AgentDiscovery:
 
             # Check if module should be skipped
             module_path = self.file_path_to_module_path(file_path)
-            if any(skip_module in module_path for skip_module in self.SKIP_MODULES):
+            if any(skip_module in module_path
+                   for skip_module in self.SKIP_MODULES):
                 continue
 
             agents = self.extract_agent_info_from_ast(file_path)
             self.agents.extend(agents)
 
 
-def generate_agent_showcase(workspace_root: Path, output_dir: Path) -> dict[str, Any]:
+def generate_agent_showcase(workspace_root: Path,
+                            output_dir: Path) -> dict[str, Any]:
     """Generate agent showcase data and documentation."""
     logger.info("🤖 Discovering agents across haive packages...")
 
@@ -849,7 +874,8 @@ def generate_agent_showcase(workspace_root: Path, output_dir: Path) -> dict[str,
         "metadata": {
             "total_agents": len(discovery.agents),
             "total_categories": len(discovery.categories),
-            "packages": list({agent.package for agent in discovery.agents}),
+            "packages": list({agent.package
+                              for agent in discovery.agents}),
             "errors_count": len(discovery.errors),
         },
         "categories": {},
@@ -867,11 +893,13 @@ def generate_agent_showcase(workspace_root: Path, output_dir: Path) -> dict[str,
         showcase_data["categories"][category] = {
             "count": len(agents),
             "agents": [agent.name for agent in agents],
-            "packages": list({agent.package for agent in agents}),
+            "packages": list({agent.package
+                              for agent in agents}),
             "complexity_breakdown": {
                 "simple": len([a for a in agents if a.complexity == "simple"]),
                 "medium": len([a for a in agents if a.complexity == "medium"]),
-                "complex": len([a for a in agents if a.complexity == "complex"]),
+                "complex":
+                len([a for a in agents if a.complexity == "complex"]),
             },
         }
 
@@ -890,8 +918,7 @@ def generate_agent_showcase(workspace_root: Path, output_dir: Path) -> dict[str,
                 "has_memory": agent.has_memory,
                 "is_abstract": agent.is_abstract,
                 "base_classes": agent.base_classes,
-            }
-        )
+            }, )
 
         # Update stats
         showcase_data["stats"]["by_package"][agent.package] += 1
@@ -919,8 +946,9 @@ def generate_agent_showcase(workspace_root: Path, output_dir: Path) -> dict[str,
     (agents_dir / "complete_index.md").write_text(index_content)
 
     logger.info(
-        f"✅ Generated showcase for {showcase_data['metadata']['total_agents']} agents across {showcase_data['metadata']['total_categories']} categories"
-    )
+        f"✅ Generated showcase for {
+            showcase_data['metadata']['total_agents']} agents across {
+            showcase_data['metadata']['total_categories']} categories", )
 
     return showcase_data
 
@@ -951,17 +979,16 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
 """
 
     # Add category overview
-    sorted_categories = sorted(categories.items(), key=lambda x: x[1]["count"], reverse=True)
+    sorted_categories = sorted(categories.items(),
+                               key=lambda x: x[1]["count"],
+                               reverse=True)
 
     content += "| Category | Agents | Primary Package |\n"
     content += "|----------|--------|----------------|\n"
 
     for category, cat_data in sorted_categories[:10]:  # Top 10 categories
-        primary_package = (
-            max(cat_data["packages"], key=lambda x: x.count(x))
-            if cat_data["packages"]
-            else "unknown"
-        )
+        primary_package = (max(cat_data["packages"], key=lambda x: x.count(x))
+                           if cat_data["packages"] else "unknown")
         content += f"| **{category}** | {cat_data['count']} | `{primary_package}` |\n"
 
     if len(sorted_categories) > 10:
@@ -1012,7 +1039,9 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
         content += f"**Packages:** {', '.join(cat_data['packages'])}\n\n"
 
         # Get agents in this category
-        category_agents = [a for a in data["agents"] if a["category"] == category]
+        category_agents = [
+            a for a in data["agents"] if a["category"] == category
+        ]
         category_agents.sort(key=lambda x: (x["complexity"], x["name"]))
 
         # Show agents in a table
@@ -1025,15 +1054,13 @@ Welcome to the comprehensive showcase of Haive's intelligent agent ecosystem! Th
                 "medium": "🟡 Medium",
                 "complex": "🔴 Complex",
             }.get(agent["complexity"], "❓ Unknown")
-            features_str = ", ".join(agent["features"][:2]) if agent["features"] else "Basic"
+            features_str = ", ".join(
+                agent["features"][:2]) if agent["features"] else "Basic"
             if len(agent["features"]) > 2:
                 features_str += f" +{len(agent['features']) - 2}"
 
-            description = (
-                agent["description"][:80] + "..."
-                if len(agent["description"]) > 80
-                else agent["description"]
-            )
+            description = (agent["description"][:80] + "..." if len(
+                agent["description"]) > 80 else agent["description"])
 
             content += (
                 f"| **{agent['name']}** | {complexity_badge} | {features_str} | {description} |\n"
@@ -1072,7 +1099,8 @@ Alphabetical listing of all agents in the Haive ecosystem.
                 "medium": "🟡 Medium",
                 "complex": "🔴 Complex",
             }.get(agent["complexity"], "❓ Unknown")
-            features_str = ", ".join(agent["features"][:3]) if agent["features"] else "Basic"
+            features_str = ", ".join(
+                agent["features"][:3]) if agent["features"] else "Basic"
             if len(agent["features"]) > 3:
                 features_str += f", +{len(agent['features']) - 3} more"
 
@@ -1108,10 +1136,8 @@ def discover_readmes(app: Sphinx, config: Any) -> None:
     for package_dir in packages_dir.glob("haive-*"):
         for readme in package_dir.rglob("README.md"):
             # Skip node_modules, build directories, etc.
-            if any(
-                part in readme.parts
-                for part in ["node_modules", "build", "dist", "__pycache__", ".git"]
-            ):
+            if any(part in readme.parts for part in
+                   ["node_modules", "build", "dist", "__pycache__", ".git"]):
                 continue
 
             readme_files.append(readme)

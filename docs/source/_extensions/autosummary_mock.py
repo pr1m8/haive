@@ -1,5 +1,7 @@
 """Mock problematic imports for autosummary."""
 
+from __future__ import annotations
+
 import sys
 from unittest.mock import MagicMock
 
@@ -38,6 +40,5 @@ for module in mock_modules:
 
 # Also mock some specific classes that cause issues
 sys.modules["haive.agents.conversation.directed.state"] = MagicMock()
-sys.modules["haive.agents.conversation.directed.state"].DirectedConversationState = (
-    MagicMock
-)
+sys.modules[
+    "haive.agents.conversation.directed.state"].DirectedConversationState = MagicMock

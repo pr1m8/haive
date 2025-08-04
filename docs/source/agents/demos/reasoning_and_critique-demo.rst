@@ -117,15 +117,15 @@ Provides logical reasoning and critical analysis
 
        Analysis of Argument:
 
-   
+
    Premise 1: Valid ✓
    Premise 2: Questionable ⚠️
    Conclusion: Does not follow
-   
+
    Logical Fallacies Detected:
    - Hasty generalization
    - Appeal to authority
-   
+
    Recommendation: Strengthen premise 2 with data
 
 .. raw:: html

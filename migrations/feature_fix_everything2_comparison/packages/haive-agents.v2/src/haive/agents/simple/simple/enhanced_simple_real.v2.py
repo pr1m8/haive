@@ -12,20 +12,15 @@ Functions:
     build_graph: Build Graph functionality.
     arun: Arun functionality.
 """
-
 # src/haive/agents/simple/enhanced_simple_real.py
-
 """Enhanced SimpleAgent - Real implementation using Agent[AugLLMConfig].
 
 This is the real SimpleAgent implementation showing it as Agent[AugLLMConfig].
 It carefully imports only what's needed to avoid circular imports.
 """
+from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Any, Literal
-
-from pydantic import Field, model_validator
-
 
 # Carefully import to avoid cycles
 if TYPE_CHECKING:
@@ -103,7 +98,8 @@ class SimpleAgent(EnhancedAgentBase):
             )
         elif not isinstance(values["engine"], AugLLMConfig):
             # Convert to AugLLMConfig if needed
-            logger.warning("SimpleAgent requires AugLLMConfig engine, converting...")
+            logger.warning(
+                "SimpleAgent requires AugLLMConfig engine, converting...")
             values["engine"] = AugLLMConfig()
 
         return values
@@ -123,7 +119,7 @@ class SimpleAgent(EnhancedAgentBase):
             if self.tools:
                 self.engine.tools = self.tools
 
-    def build_graph(self) -> "BaseGraph":
+    def build_graph(self) -> BaseGraph:
         """Build minimal graph for SimpleAgent."""
         # Import here to avoid circular imports
         from langchain_core.messages import AIMessage
@@ -146,7 +142,7 @@ class SimpleAgent(EnhancedAgentBase):
             graph.add_node("tools", tool_node)
 
             # Conditional routing based on tool calls
-            def check_tools(state: dict[str, Any]) -> Literal["tools", "end"]:
+            def check_tools(state: dict[str, Any]) -> Literal[tools, end]:
                 messages = state.get("messages", [])
                 if messages and isinstance(messages[-1], AIMessage):
                     if messages[-1].tool_calls:
@@ -154,7 +150,12 @@ class SimpleAgent(EnhancedAgentBase):
                 return "end"
 
             graph.add_conditional_edges(
-                "agent", check_tools, {"tools": "tools", "end": END}
+                "agent",
+                check_tools,
+                {
+                    "tools": "tools",
+                    "end": END
+                },
             )
             graph.add_edge("tools", END)
         else:

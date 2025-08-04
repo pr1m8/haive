@@ -121,7 +121,7 @@ Executes chains of operations in sequence
        Step 3: Validation ✓
        Step 4: Output generation ✓
 
-   
+
    Total time: 2.3s
    Status: Complete
 

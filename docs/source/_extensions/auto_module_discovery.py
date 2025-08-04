@@ -1,9 +1,10 @@
 """Auto-discovery of modules for comprehensive Sphinx documentation."""
+from __future__ import annotations
 
 import importlib
-from pathlib import Path
 import pkgutil
 import sys
+from pathlib import Path
 
 
 def discover_modules(package_name, base_path=None):
@@ -23,7 +24,8 @@ def discover_modules(package_name, base_path=None):
 
         # Walk through all modules in the package
         for _importer, modname, ispkg in pkgutil.walk_packages(
-            package.__path__, package.__name__ + "."
+                package.__path__,
+                package.__name__ + ".",
         ):
             try:
                 # Try to import the module to ensure it's valid

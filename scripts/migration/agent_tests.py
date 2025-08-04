@@ -1,4 +1,6 @@
 # agent_analyzer.py
+from __future__ import annotations
+
 import json
 import os
 import sys
@@ -106,7 +108,7 @@ if __name__ == "__main__":
     # Output summary
     for agent, data in results.items():
 
-    # Output common patterns
+        # Output common patterns
     patterns = find_common_patterns(results)
     for file in patterns["common_files"]:
         pass

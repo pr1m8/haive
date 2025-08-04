@@ -8,13 +8,14 @@ This module provides comprehensive docstring coverage analysis including:
 - Detailed reporting by file, function, class, and module
 """
 
+from __future__ import annotations
+
 import ast
+from dataclasses import dataclass, field
 import logging
+from pathlib import Path
 import subprocess
 import sys
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any, Dict, List
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent.parent
@@ -34,7 +35,7 @@ class DocstringTarget:
     line_number: int = 0
     current_docstring: str = ""
     missing_docstring: bool = False
-    docstring_issues: List[str] = field(default_factory=list)
+    docstring_issues: list[str] = field(default_factory=list)
     target_type: str = "function"  # function, method, class, module
 
 
@@ -48,7 +49,7 @@ class CoverageReport:
     documented_classes: int = 0
     total_modules: int = 0
     documented_modules: int = 0
-    missing_targets: List[DocstringTarget] = field(default_factory=list)
+    missing_targets: list[DocstringTarget] = field(default_factory=list)
     coverage_percentage: float = 0.0
     interrogate_score: float = 0.0
     docstr_coverage_score: float = 0.0
@@ -58,7 +59,7 @@ class CoverageAnalyzer(ast.NodeVisitor):
     """AST visitor to analyze docstring coverage and quality."""
 
     def __init__(self):
-        self.targets_needing_docs: List[DocstringTarget] = []
+        self.targets_needing_docs: list[DocstringTarget] = []
         self.current_class = None
         self.file_path = None
         self.stats = {
@@ -70,14 +71,14 @@ class CoverageAnalyzer(ast.NodeVisitor):
             "documented_methods": 0,
         }
 
-    def analyze_file(self, file_path: Path) -> List[DocstringTarget]:
+    def analyze_file(self, file_path: Path) -> list[DocstringTarget]:
         """Analyze a Python file for docstring coverage."""
         self.file_path = file_path
         self.targets_needing_docs.clear()
         self.current_class = None
 
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
 
             tree = ast.parse(content)
@@ -92,7 +93,7 @@ class CoverageAnalyzer(ast.NodeVisitor):
                         line_number=1,
                         missing_docstring=True,
                         target_type="module",
-                    )
+                    ),
                 )
 
             return self.targets_needing_docs
@@ -157,7 +158,10 @@ class CoverageAnalyzer(ast.NodeVisitor):
         self.current_class = old_class
 
     def analyze_package_coverage(self, package_path: str) -> CoverageReport:
-        """Analyze docstring coverage for a package using multiple approaches."""
+        """Analyze docstring coverage for a package using multiple.
+
+        approaches.
+        """
         logger.info(f"📊 Analyzing docstring coverage in {package_path}")
 
         # Convert package path to directory
@@ -258,6 +262,7 @@ class CoverageAnalyzer(ast.NodeVisitor):
                 capture_output=True,
                 text=True,
                 timeout=60,
+                check=False,
             )
 
             if result.returncode == 0 and result.stdout:
@@ -267,9 +272,8 @@ class CoverageAnalyzer(ast.NodeVisitor):
                 score = data.get("overall_coverage", 0.0)
                 logger.info(f"📊 Interrogate coverage: {score:.1f}%")
                 return score
-            else:
-                logger.warning("⚠️ Interrogate analysis failed")
-                return 0.0
+            logger.warning("⚠️ Interrogate analysis failed")
+            return 0.0
 
         except FileNotFoundError:
             logger.info("ℹ️ interrogate not found (available in poetry dependencies)")
@@ -288,19 +292,19 @@ class CoverageAnalyzer(ast.NodeVisitor):
                 capture_output=True,
                 text=True,
                 timeout=60,
+                check=False,
             )
 
             if result.returncode == 0 and result.stdout.strip():
                 score = float(result.stdout.strip().replace("%", ""))
                 logger.info(f"📊 Docstr-coverage: {score:.1f}%")
                 return score
-            else:
-                logger.warning("⚠️ Docstr-coverage analysis failed")
-                return 0.0
+            logger.warning("⚠️ Docstr-coverage analysis failed")
+            return 0.0
 
         except (FileNotFoundError, ValueError):
             logger.info(
-                "ℹ️ docstr-coverage not found (available in poetry dependencies)"
+                "ℹ️ docstr-coverage not found (available in poetry dependencies)",
             )
             return 0.0
         except Exception as e:
@@ -317,14 +321,14 @@ class CoverageAnalyzer(ast.NodeVisitor):
 
         if report.docstr_coverage_score > 0:
             logger.info(
-                f"  📋 Docstr-Coverage Score: {report.docstr_coverage_score:.1f}%"
+                f"  📋 Docstr-Coverage Score: {report.docstr_coverage_score:.1f}%",
             )
 
         logger.info(
-            f"  🔧 Functions: {report.documented_functions}/{report.total_functions} documented"
+            f"  🔧 Functions: {report.documented_functions}/{report.total_functions} documented",
         )
         logger.info(
-            f"  🏗️ Classes: {report.documented_classes}/{report.total_classes} documented"
+            f"  🏗️ Classes: {report.documented_classes}/{report.total_classes} documented",
         )
         logger.info(f"  📁 Modules: {report.total_modules} analyzed")
 
@@ -349,10 +353,14 @@ def main():
     parser = argparse.ArgumentParser(description="Docstring coverage analysis")
     parser.add_argument("--target", required=True, help="Target package")
     parser.add_argument(
-        "--interrogate", action="store_true", help="Use interrogate analysis"
+        "--interrogate",
+        action="store_true",
+        help="Use interrogate analysis",
     )
     parser.add_argument(
-        "--docstr-coverage", action="store_true", help="Use docstr-coverage analysis"
+        "--docstr-coverage",
+        action="store_true",
+        help="Use docstr-coverage analysis",
     )
 
     args = parser.parse_args()

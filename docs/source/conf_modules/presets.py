@@ -8,30 +8,36 @@ This module provides ready-to-use configurations for common documentation needs:
 - Multi-language documentation
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 # Import from __init__ module in same directory
 try:
-    from __init__ import (create_custom_config, create_full_config,
-                          create_minimal_config, create_standard_config)
+    from __init__ import (
+        create_custom_config,
+        create_full_config,
+        create_standard_config,
+    )
 except ImportError:
     # If that fails, try absolute imports
-    import sys
     from pathlib import Path
+    import sys
 
     current_dir = Path(__file__).parent
     sys.path.insert(0, str(current_dir))
 
-    from __init__ import (create_custom_config, create_full_config,
-                          create_minimal_config, create_standard_config)
+    from __init__ import (
+        create_custom_config,
+        create_full_config,
+        create_standard_config,
+    )
 
 
 def create_api_only_config(
     project_name: str = "API Documentation",
     author: str = "Author",
-    packages: Optional[List[str]] = None,
-    github_repo: Optional[str] = None,
-) -> Dict[str, Any]:
+    packages: list[str] | None = None,
+    github_repo: str | None = None,
+) -> dict[str, Any]:
     """Create configuration focused purely on API documentation.
 
     Features:
@@ -65,10 +71,10 @@ def create_api_only_config(
 def create_tutorial_config(
     project_name: str = "Tutorial Documentation",
     author: str = "Author",
-    packages: Optional[List[str]] = None,
-    github_repo: Optional[str] = None,
-    base_url: Optional[str] = None,
-) -> Dict[str, Any]:
+    packages: list[str] | None = None,
+    github_repo: str | None = None,
+    base_url: str | None = None,
+) -> dict[str, Any]:
     """Create configuration optimized for tutorials and learning.
 
     Features:
@@ -105,10 +111,10 @@ def create_tutorial_config(
 def create_research_config(
     project_name: str = "Research Documentation",
     author: str = "Researcher",
-    packages: Optional[List[str]] = None,
-    github_repo: Optional[str] = None,
-    base_url: Optional[str] = None,
-) -> Dict[str, Any]:
+    packages: list[str] | None = None,
+    github_repo: str | None = None,
+    base_url: str | None = None,
+) -> dict[str, Any]:
     """Create configuration for research and academic documentation.
 
     Features:
@@ -159,8 +165,7 @@ def create_research_config(
             "bibtex_default_style": "alpha",
             "math_number_all": True,
             "math_eqref_format": "Eq. {number}",
-        }
-    )
+        }, )
 
     return config
 
@@ -168,9 +173,9 @@ def create_research_config(
 def create_blog_config(
     project_name: str = "Blog",
     author: str = "Blogger",
-    github_repo: Optional[str] = None,
-    base_url: Optional[str] = None,
-) -> Dict[str, Any]:
+    github_repo: str | None = None,
+    base_url: str | None = None,
+) -> dict[str, Any]:
     """Create configuration for blog-style documentation.
 
     Features:
@@ -207,8 +212,7 @@ def create_blog_config(
         {
             "html_title": f"📝 {project_name}",
             "html_short_title": project_name.split()[0],  # Use first word
-        }
-    )
+        }, )
 
     # Enhanced social features
     blog_extensions = [
@@ -228,11 +232,11 @@ def create_blog_config(
 def create_multilang_config(
     project_name: str = "Multilingual Documentation",
     author: str = "Author",
-    languages: List[str] = ["en", "es", "fr"],
-    packages: Optional[List[str]] = None,
-    github_repo: Optional[str] = None,
-    base_url: Optional[str] = None,
-) -> Dict[str, Any]:
+    languages: list[str] = ["en", "es", "fr"],
+    packages: list[str] | None = None,
+    github_repo: str | None = None,
+    base_url: str | None = None,
+) -> dict[str, Any]:
     """Create configuration for multi-language documentation.
 
     Features:
@@ -274,8 +278,7 @@ def create_multilang_config(
             "locale_dirs": ["locale/"],
             "gettext_compact": False,
             "gettext_additional_targets": ["index"],
-        }
-    )
+        }, )
 
     return config
 
@@ -283,10 +286,10 @@ def create_multilang_config(
 def create_corporate_config(
     project_name: str = "Corporate Documentation",
     author: str = "Company",
-    packages: Optional[List[str]] = None,
-    github_repo: Optional[str] = None,
-    base_url: Optional[str] = None,
-) -> Dict[str, Any]:
+    packages: list[str] | None = None,
+    github_repo: str | None = None,
+    base_url: str | None = None,
+) -> dict[str, Any]:
     """Create configuration for corporate/enterprise documentation.
 
     Features:
@@ -320,8 +323,7 @@ def create_corporate_config(
             "html_show_sphinx": False,  # Hide "Created with Sphinx"
             "html_show_copyright": True,
             "html_last_updated_fmt": "%Y-%m-%d %H:%M:%S",
-        }
-    )
+        }, )
 
     # Add corporate extensions
     corporate_extensions = [
@@ -349,7 +351,7 @@ PRESETS = {
 }
 
 
-def get_preset(preset_name: str, **kwargs) -> Dict[str, Any]:
+def get_preset(preset_name: str, **kwargs) -> dict[str, Any]:
     """Get a preset configuration by name.
 
     Args:
@@ -364,12 +366,13 @@ def get_preset(preset_name: str, **kwargs) -> Dict[str, Any]:
     """
     if preset_name not in PRESETS:
         available = ", ".join(PRESETS.keys())
-        raise ValueError(f"Unknown preset '{preset_name}'. Available: {available}")
+        raise ValueError(
+            f"Unknown preset '{preset_name}'. Available: {available}")
 
     return PRESETS[preset_name](**kwargs)
 
 
-def list_presets() -> List[str]:
+def list_presets() -> list[str]:
     """Get list of available preset names.
 
     Returns:

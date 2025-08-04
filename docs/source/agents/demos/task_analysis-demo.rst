@@ -117,18 +117,18 @@ Analyzes and decomposes complex tasks
 
        Task Analysis: Build E-commerce Site
 
-   
+
    Complexity: High
    Estimated Time: 3 months
    Required Skills: 5
-   
+
    Subtasks:
    1. Frontend (40h)
    2. Backend API (60h)
    3. Database (20h)
    4. Payment Integration (30h)
    5. Testing (25h)
-   
+
    Risk Factors: 3 identified
 
 .. raw:: html

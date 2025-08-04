@@ -13,17 +13,20 @@ The workflow follows this pattern:
 
 Each agent uses structured output and proper state transfer through AgentNodeV3.
 """
+from __future__ import annotations
 
 import asyncio
 import logging
-from typing import Any, Dict
+from typing import Any
+from typing import Dict
 
 from haive.agents.simple.agent_v3 import SimpleAgentV3
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
 from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 # Configure logging for detailed debug output
 logging.basicConfig(
@@ -159,7 +162,8 @@ def extract_structured_output_content(result: dict[str, Any], output_field: str)
                 # Parse the validation message format - improved regex
                 import re
 
-                # Look for the pattern: Successfully validated ModelName: {'field': 'value'}
+                # Look for the pattern: Successfully validated ModelName: {'field':
+                # 'value'}
                 match = re.search(
                     r"Successfully validated \w+: \{['\"]([^'\"]+)['\"]:\s*['\"]([^'\"]*)['\"]",
                     content,
@@ -490,7 +494,7 @@ Options: circle, triangle, square, pentagon, hexagon"""
 
     svg_results = await run_sequential_self_discover(svg_task, debug=True)
 
-    print("\n🎯 SVG Analysis Results:"s:")
+    print("\n🎯 SVG Analysis Results:"s: ")
     print(f"Success: {svg_results.get('success', False)}")
     if svg_results.get("success"):
         print(f"Final Answer: {svg_results.get('final_answer', 'No answer')}")

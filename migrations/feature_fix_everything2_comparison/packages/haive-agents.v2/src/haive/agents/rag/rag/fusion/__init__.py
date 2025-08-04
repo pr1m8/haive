@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from fusion.agent import (
     FusionResult,
     MultiQueryRetrievalAgent,
@@ -14,7 +16,6 @@ from fusion.agent import (
     multi_query_retrieve,
     perform_rrf_fusion,
 )
-
 
 __all__ = [
     "FusionResult",

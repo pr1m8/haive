@@ -1,8 +1,9 @@
 """Example demonstrating the use of the Tree of Thoughts agent.
 
-This example shows how to instantiate and run the ToT agent
-with different problem types.
+This example shows how to instantiate and run the ToT agent with
+different problem types.
 """
+from __future__ import annotations
 
 import asyncio
 import logging
@@ -12,7 +13,6 @@ from haive.agents.reasoning_and_critique.tot.config import TOTAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 
-
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -20,13 +20,13 @@ logger = logging.getLogger(__name__)
 
 async def run_basic_example():
     """Run a basic example of the ToT agent."""
-    logger.info("=== Running Basic Example ===")
+    logger.info('=== Running Basic Example ===')
 
     # Create a standard ToT agent with default configuration
     agent = ToTAgent()
 
     # Define a problem to solve
-    problem = "What is the most effective way to reduce carbon emissions?"
+    problem = 'What is the most effective way to reduce carbon emissions?'
 
     # Run the agent
     result = await agent.run(problem)
@@ -42,28 +42,32 @@ async def run_basic_example():
 
 async def run_math_example():
     """Run a math example with the ToT agent."""
-    logger.info("=== Running Math Example ===")
+    logger.info('=== Running Math Example ===')
 
     # Create a ToT agent optimized for equation problems
     config = TOTAgentConfig.create_for_problem_type(
-        content_type="equation",
+        content_type='equation',
         max_depth=4,
         beam_width=3,
         expansion_count=5,
         threshold=0.95,
         engines={
-            "generator": AugLLMConfig(
-                name="math_generator",
-                description="Generates mathematical solutions",
+            'generator':
+            AugLLMConfig(
+                name='math_generator',
+                description='Generates mathematical solutions',
                 llm_config=AzureLLMConfig(
-                    model="gpt-4o", parameters={"temperature": 0.7}
+                    model='gpt-4o',
+                    parameters={'temperature': 0.7},
                 ),
             ),
-            "evaluator": AugLLMConfig(
-                name="math_evaluator",
-                description="Evaluates mathematical solutions",
+            'evaluator':
+            AugLLMConfig(
+                name='math_evaluator',
+                description='Evaluates mathematical solutions',
                 llm_config=AzureLLMConfig(
-                    model="gpt-4o", parameters={"temperature": 0.1}
+                    model='gpt-4o',
+                    parameters={'temperature': 0.1},
                 ),
             ),
         },
@@ -72,7 +76,9 @@ async def run_math_example():
     agent = ToTAgent(config)
 
     # Define a Game of 24 problem
-    problem = "Use the numbers 4, 7, 8, and 9 exactly once with basic operations (+, -, *, /) to get 24."
+    problem = (
+        'Use the numbers 4, 7, 8, and 9 exactly once with basic operations (+, -, *, /) to get 24.'
+    )
 
     # Run the agent
     result = await agent.run(problem)
@@ -88,7 +94,7 @@ async def run_math_example():
 
 async def run_complex_reasoning_example():
     """Run a complex reasoning example with the ToT agent."""
-    logger.info("=== Running Complex Reasoning Example ===")
+    logger.info('=== Running Complex Reasoning Example ===')
 
     # Create a ToT agent with custom configuration
     config = TOTAgentConfig(
@@ -99,18 +105,28 @@ async def run_complex_reasoning_example():
         parallel_evaluation=True,
         parallel_expansion=True,
         engines={
-            "generator": AugLLMConfig(
-                name="reasoning_generator",
-                description="Generates solutions for complex reasoning problems",
+            'generator':
+            AugLLMConfig(
+                name='reasoning_generator',
+                description='Generates solutions for complex reasoning problems',
                 llm_config=AzureLLMConfig(
-                    model="gpt-4o", parameters={"temperature": 0.8, "max_tokens": 2000}
+                    model='gpt-4o',
+                    parameters={
+                        'temperature': 0.8,
+                        'max_tokens': 2000
+                    },
                 ),
             ),
-            "evaluator": AugLLMConfig(
-                name="reasoning_evaluator",
-                description="Evaluates solutions for complex reasoning problems",
+            'evaluator':
+            AugLLMConfig(
+                name='reasoning_evaluator',
+                description='Evaluates solutions for complex reasoning problems',
                 llm_config=AzureLLMConfig(
-                    model="gpt-4o", parameters={"temperature": 0.1, "max_tokens": 1000}
+                    model='gpt-4o',
+                    parameters={
+                        'temperature': 0.1,
+                        'max_tokens': 1000
+                    },
                 ),
             ),
         },
@@ -137,10 +153,14 @@ async def run_complex_reasoning_example():
     """
 
     # Run the agent with extended depth
-    result = await agent.run({"problem": problem, "max_depth": 6, "beam_width": 5})
+    result = await agent.run({
+        'problem': problem,
+        'max_depth': 6,
+        'beam_width': 5
+    })
 
     # Print the result
-    logger.info("Problem: Complex Pirate Problem")
+    logger.info('Problem: Complex Pirate Problem')
     logger.info(f"Answer: {result.get('answer', 'No answer found')}")
     logger.info(f"Search depth: {result.get('search_depth', 0)}")
     logger.info(f"Score: {result.get('score', 0)}")
@@ -155,6 +175,6 @@ async def main():
     await run_complex_reasoning_example()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     # Run the examples
     asyncio.run(main())

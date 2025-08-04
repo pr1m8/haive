@@ -38,7 +38,7 @@ class MonopolyPromptGenerator(GenericPromptGenerator[str, str]):
     def __init__(self):  # Missing required parameter
         pass
 
-# After (fixed)  
+# After (fixed)
 class MonopolyPromptGenerator(GenericPromptGenerator[str, str]):
     def __init__(self, players: GamePlayerIdentifiers[str, str]):
         super().__init__(players)
@@ -54,7 +54,7 @@ Removed invalid imports from `__init__.py` files:
 ## Technical Implementation
 
 ### Key Tools Created
-1. **fix_all_imports.py**: 
+1. **fix_all_imports.py**:
    - Analyzed 455 Python files
    - Cleaned 60 `__init__.py` files
    - Removed 1000+ broken import references
@@ -64,7 +64,7 @@ Removed invalid imports from `__init__.py` files:
    # Test core functionality
    from haive.games.chess import *  # ✅ Works
    from haive.games.monopoly.generic_engines import MonopolyPromptGenerator  # ✅ Works
-   
+
    # Test initialization
    identifiers = MonopolyPlayerIdentifiers()
    prompt_gen = MonopolyPromptGenerator(identifiers)  # ✅ Works
@@ -87,7 +87,7 @@ Removed invalid imports from `__init__.py` files:
 
 ### 🔧 Tools for Future Maintenance
 - Comprehensive import analysis scripts
-- Automated cleanup utilities  
+- Automated cleanup utilities
 - Testing validation framework
 - Documentation on best practices
 
@@ -99,8 +99,8 @@ Removed invalid imports from `__init__.py` files:
    # Good
    pattern = r'\d+'
    path = r'C:\Windows\System32'
-   
-   # Bad  
+
+   # Bad
    pattern = '\d+'  # SyntaxWarning in Python 3.12+
    ```
 
@@ -123,7 +123,7 @@ Removed invalid imports from `__init__.py` files:
 # All tests pass
 poetry run python -c "
 from haive.games import chess
-from haive.games.chess.models import ChessPlayerDecision  
+from haive.games.chess.models import ChessPlayerDecision
 from haive.games.monopoly.generic_engines import MonopolyPromptGenerator
 print('✅ All critical imports working')
 "
@@ -138,7 +138,7 @@ print('✅ All critical imports working')
 
 ## Future Recommendations
 1. Use absolute imports consistently across all packages
-2. Implement import validation in CI/CD pipeline  
+2. Implement import validation in CI/CD pipeline
 3. Regular audits of `__init__.py` files
 4. Standardize on raw strings for regex patterns and file paths
 5. Document base class requirements clearly

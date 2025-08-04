@@ -38,10 +38,10 @@ from haive.agents.rag.db_rag.graph_db.config import (
     GraphDBRAGConfig,
 )
 
-
 # Configure logging for better debugging
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
@@ -130,7 +130,9 @@ def streaming_example():
         # Stream the execution
         for chunk in agent.stream(
             {"question": question},
-            config={"configurable": {"thread_id": "example-stream"}},
+                config={"configurable": {
+                    "thread_id": "example-stream"
+                }},
         ):
             # Process each step
             for node_name, node_output in chunk.items():
@@ -193,20 +195,16 @@ def custom_domain_example():
         # Configure for healthcare domain
 
         # Create custom examples for few-shot learning
-        healthcare_examples = [
-            {
-                "question": "Which patients have diabetes?",
-                "query": "MATCH (p:Patient)-[:HAS_CONDITION]->(c:Condition {name: 'Diabetes'}) RETURN p.name",
-            },
-            {
-                "question": "What medications treat hypertension?",
-                "query": "MATCH (m:Medication)-[:TREATS]->(c:Condition {name: 'Hypertension'}) RETURN m.name",
-            },
-            {
-                "question": "List all cardiologists",
-                "query": "MATCH (d:Doctor {specialty: 'Cardiology'}) RETURN d.name",
-            },
-        ]
+        healthcare_examples = [{"question": "Which patients have diabetes?",
+                                "query": "MATCH (p:Patient)-[:HAS_CONDITION]->(c:Condition {name: 'Diabetes'}) RETURN p.name",
+                                },
+                               {"question": "What medications treat hypertension?",
+                                "query": "MATCH (m:Medication)-[:TREATS]->(c:Condition {name: 'Hypertension'}) RETURN m.name",
+                                },
+                               {"question": "List all cardiologists",
+                                "query": "MATCH (d:Doctor {specialty: 'Cardiology'}) RETURN d.name",
+                                },
+                               ]
 
         # Create configuration
         config = GraphDBRAGConfig(
@@ -219,12 +217,12 @@ def custom_domain_example():
                 "treatment",
             ],
             example_config=ExampleConfig(
-                examples=healthcare_examples, k=2  # Use 2 most similar examples
+                examples=healthcare_examples,
+                k=2,  # Use 2 most similar examples
             ),
             graph_db_config=GraphDBConfig(
                 # Assuming healthcare database
-                graph_db_database="healthcare"
-            ),
+                graph_db_database="healthcare", ),
         )
 
         # Create agent
@@ -235,7 +233,8 @@ def custom_domain_example():
         # Should pass
         healthcare_question = "Which patients have diabetes?"
         result = agent.run({"question": healthcare_question})
-        if "answer" in result and "not about healthcare" not in result["answer"]:
+        if "answer" in result and "not about healthcare" not in result[
+                "answer"]:
             pass
         else:
             pass
@@ -319,12 +318,15 @@ def batch_processing_example():
 
                 results.append(
                     {
-                        "question": question,
-                        "answer": result.get("answer"),
-                        "time": execution_time,
-                        "success": "not about" not in result.get("answer", "").lower(),
-                    }
-                )
+                        "question":
+                        question,
+                        "answer":
+                        result.get("answer"),
+                        "time":
+                        execution_time,
+                        "success":
+                        "not about" not in result.get("answer", "").lower(),
+                    }, )
 
                 total_time += execution_time
 
@@ -372,9 +374,7 @@ def error_handling_example():
         agent = GraphDBRAGAgent(config)
 
         # Test 1: Query that might generate invalid Cypher
-        complex_question = (
-            "Show me all actors who have worked with directors who have won an Oscaf"
-        )
+        complex_question = "Show me all actors who have worked with directors who have won an Oscaf"
 
         # Use streaming to see the correction process
         for chunk in agent.stream({"question": complex_question}):
@@ -387,9 +387,9 @@ def error_handling_example():
         # Test 2: Query with non-existent entities
         result = agent.run(
             {
-                "question": "List all SpaceShips in the database"  # Assuming no SpaceShip label
-            }
-        )
+                "question":
+                "List all SpaceShips in the database",  # Assuming no SpaceShip label
+            }, )
         if "not about movies" in result.get("answer", "").lower():
             pass
         else:
@@ -398,9 +398,9 @@ def error_handling_example():
         # Test 3: Very complex query
         complex_result = agent.run(
             {
-                "question": "What is the average rating of movies directed by people who have also acted?"
-            }
-        )
+                "question":
+                "What is the average rating of movies directed by people who have also acted?",
+            }, )
         if complex_result.get("answer"):
             pass
     except Exception as e:
@@ -459,8 +459,8 @@ def performance_monitoring_example():
                 else:
                     step_times[node_name]["end"] = time.time()
                     step_times[node_name]["duration"] = (
-                        step_times[node_name]["end"] - step_times[node_name]["start"]
-                    )
+                        step_times[node_name]["end"] -
+                        step_times[node_name]["start"])
 
         total_time = time.time() - total_start
 
@@ -472,13 +472,12 @@ def performance_monitoring_example():
                 (timing["duration"] / total_time) * 100
 
         # Identify bottlenecks
-        bottleneck = max(step_times.items(), key=lambda x: x[1]["duration"] or 0)
+        bottleneck = max(step_times.items(),
+                         key=lambda x: x[1]["duration"] or 0)
 
-        if (
-            bottleneck[0] == "generate_query"
-            or bottleneck[0] == "execute_query"
-            or bottleneck[0] == "validate_query"
-        ):
+        if (bottleneck[0] == "generate_query"
+                or bottleneck[0] == "execute_query"
+                or bottleneck[0] == "validate_query"):
             pass
     except Exception as e:
         logger.exception(f"Error in performance monitoring: {e}")
@@ -515,13 +514,13 @@ async def async_example():
         ]
 
         # Define async task
-
         async def process_query(agent, question, index):
             start_time = time.time()
             try:
                 # Note: This is a simplified example
                 # In practice, you'd use agent.ainvoke() if available
-                result = await asyncio.to_thread(agent.invoke, {"question": question})
+                result = await asyncio.to_thread(agent.invoke,
+                                                 {"question": question})
                 execution_time = time.time() - start_time
                 return {
                     "index": index,
@@ -542,7 +541,8 @@ async def async_example():
         # Process all queries concurrently
         start_time = time.time()
         tasks = [
-            process_query(agent, question, i) for i, question in enumerate(queries, 1)
+            process_query(agent, question, i)
+            for i, question in enumerate(queries, 1)
         ]
         results = await asyncio.gather(*tasks)
         time.time() - start_time
@@ -619,8 +619,8 @@ def main():
 def run_all_examples():
     """Run all examples in sequence.
 
-    This function executes all example functions to demonstrate
-    the full capabilities of the GraphDBRAGAgent.
+    This function executes all example functions to demonstrate the full
+    capabilities of the GraphDBRAGAgent.
     """
     examples = [
         ("Basic Usage", basic_example),

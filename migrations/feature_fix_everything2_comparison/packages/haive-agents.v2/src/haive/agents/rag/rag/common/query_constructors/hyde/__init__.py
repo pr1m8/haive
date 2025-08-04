@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from hyde.enhanced_prompts import (
     HyDEPerspective,
     HyDEPromptConfig,
@@ -11,7 +13,6 @@ from hyde.enhanced_prompts import (
     select_prompt_automatically,
 )
 from hyde.models import HyDEResponse, HypotheticalDocument, to_query
-
 
 __all__ = [
     "HyDEPerspective",

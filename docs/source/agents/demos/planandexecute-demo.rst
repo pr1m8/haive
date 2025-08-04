@@ -31,7 +31,7 @@ PlanAndExecuteAgent - Multi-step planning and execution agents
 
    </div>
 
-            
+
 
 .. raw:: html
 
@@ -50,7 +50,7 @@ PlanAndExecuteAgent - Multi-step planning and execution agents
 
    <!-- Graph Visualization -->
 
-           <div id="planandexecute-graph" 
+           <div id="planandexecute-graph"
                 class="agent-graph-container"
                 data-agent-graph='{"nodes": [{"id": "start", "type": "start", "label": "START"}, {"id": "end", "type": "end", "label": "END"}, {"id": "plan", "type": "agent", "label": "Plan", "description": "Create execution plan"}, {"id": "execute", "type": "tool", "label": "Execute", "description": "Run plan steps"}, {"id": "monitor", "type": "validation", "label": "Monitor", "description": "Track progress"}], "edges": [{"source": "start", "target": "plan"}, {"source": "plan", "target": "execute"}, {"source": "execute", "target": "monitor"}, {"source": "monitor", "target": "execute"}, {"source": "monitor", "target": "end"}], "executionTrace": [{"step": 1, "node": "start", "status": "completed", "duration": 0.1, "output": "Initialized"}, {"step": 2, "node": "plan", "status": "completed", "duration": 1.2, "output": "Processing..."}, {"step": 3, "node": "end", "status": "completed", "duration": 0.1, "output": "Finished"}]}'>
 .. raw:: html
@@ -61,7 +61,7 @@ PlanAndExecuteAgent - Multi-step planning and execution agents
 
    <!-- State History Timeline -->
 
-           <div id="planandexecute-state-history" 
+           <div id="planandexecute-state-history"
                 class="state-history-container"
                 data-state-history='[{"timestamp": "2025-01-08T10:00:00Z", "step": 1, "state": {"status": "initialized", "input": "User query"}, "diff": {"added": ["status", "input"], "changed": [], "removed": []}}, {"timestamp": "2025-01-08T10:00:01Z", "step": 2, "state": {"status": "processing", "input": "User query", "output": "Generated response"}, "diff": {"added": ["output"], "changed": ["status"], "removed": []}}]'>
 .. raw:: html
@@ -72,7 +72,7 @@ PlanAndExecuteAgent - Multi-step planning and execution agents
 
    <!-- Execution Trace -->
 
-           <div id="planandexecute-execution-trace" 
+           <div id="planandexecute-execution-trace"
                 class="execution-trace-container"
                 data-execution-trace='[{"step": 1, "operation": "Initialize", "duration": 0.1, "status": "success"}, {"step": 2, "operation": "Process", "duration": 1.5, "status": "success"}, {"step": 3, "operation": "Finalize", "duration": 0.2, "status": "success"}]'>
 .. raw:: html
@@ -122,11 +122,11 @@ PlanAndExecuteAgent - Multi-step planning and execution agents
         // Initialize graph
         const graphData = JSON.parse(document.getElementById('planandexecute-graph').dataset.agentGraph);
         new AgentGraphVisualizer('planandexecute-graph', graphData);
-        
+
         // Initialize state history
         const stateData = JSON.parse(document.getElementById('planandexecute-state-history').dataset.stateHistory);
         new StateHistoryVisualizer('planandexecute-state-history', stateData);
-        
+
         // Initialize execution trace
         const traceData = JSON.parse(document.getElementById('planandexecute-execution-trace').dataset.executionTrace);
         new ExecutionTraceVisualizer('planandexecute-execution-trace', traceData);

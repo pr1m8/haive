@@ -104,7 +104,7 @@ Module docstrings should be placed at the top of the file and describe the modul
 
     """Chess board game implementation.
 
-    This module provides a complete implementation of Chess for the Haive 
+    This module provides a complete implementation of Chess for the Haive
     games framework, including game state management, rules enforcement, move validation,
     and agent integration.
 

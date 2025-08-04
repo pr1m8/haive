@@ -1,7 +1,7 @@
 # Haive Typing Scripts - Auto-Typing & Monkey Patching
 
-**Version**: 1.0  
-**Last Updated**: 2025-08-01  
+**Version**: 1.0
+**Last Updated**: 2025-08-01
 **Status**: Experimental
 
 ## 🎯 Overview

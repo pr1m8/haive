@@ -11,13 +11,11 @@ from langgraph.graph import END, START
 from pydantic import Field, field_validator, model_validator
 
 # Import base enhanced agent when available
-# from haive.agents.base.enhanced_agent import Agent
 # For now, using minimal base
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase as Agent
 from haive.core.engine.aug_llm.config import AugLLMConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
 
 logger = logging.getLogger(__name__)
 
@@ -72,27 +70,36 @@ class SupervisorAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
 
     # Supervisor specific fields
     workers: dict[str, Agent] = Field(
-        default_factory=dict, description="Dictionary of worker agents"
+        default_factory=dict,
+        description="Dictionary of worker agents",
     )
 
     max_delegation_rounds: int = Field(
-        default=3, ge=1, le=10, description="Maximum rounds of delegation to workers"
+        default=3,
+        ge=1,
+        le=10,
+        description="Maximum rounds of delegation to workers",
     )
 
-    delegation_strategy: Literal["first", "best", "all", "round_robin"] = Field(
-        default="best", description="Strategy for choosing workers"
+    delegation_strategy: Literal[
+        "first", "best", "all", "round_robin"] = Field(
+            default="best",
+            description="Strategy for choosing workers",
     )
 
     supervisor_prompt: str | None = Field(
-        default=None, description="Custom supervisor prompt"
+        default=None,
+        description="Custom supervisor prompt",
     )
 
     allow_direct_response: bool = Field(
-        default=True, description="Whether supervisor can respond without delegating"
+        default=True,
+        description="Whether supervisor can respond without delegating",
     )
 
     # Convenience fields
-    temperature: float = Field(default=0.3, ge=0.0, le=2.0)  # Lower temp for decisions
+    temperature: float = Field(default=0.3, ge=0.0,
+                               le=2.0)  # Lower temp for decisions
     max_tokens: int | None = Field(default=None, ge=1)
 
     @field_validator("workers")
@@ -169,16 +176,15 @@ class SupervisorAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
 
             # Set supervisor prompt
             if not self.engine.system_message:
-                self.engine.system_message = self._get_default_supervisor_prompt()
+                self.engine.system_message = self._get_default_supervisor_prompt(
+                )
 
     def _get_default_supervisor_prompt(self) -> str:
         """Get default supervisor prompt."""
-        worker_descriptions = "\n".join(
-            [
-                f"- {name}: {type(agent).__name__}"
-                for name, agent in self.workers.items()
-            ]
-        )
+        worker_descriptions = "\n".join([
+            f"- {name}: {type(agent).__name__}"
+            for name, agent in self.workers.items()
+        ], )
 
         return f"""You are a supervisor agent coordinating a team of workers.
 
@@ -206,7 +212,8 @@ For each request, think about:
         graph = BaseGraph(name=f"{self.name}_supervisor_graph")
 
         # Supervisor decision node
-        supervisor_node = EngineNodeConfig(name="supervisor", engine=self.engine)
+        supervisor_node = EngineNodeConfig(name="supervisor",
+                                           engine=self.engine)
         graph.add_node("supervisor", supervisor_node)
         graph.add_edge(START, "supervisor")
 
@@ -215,11 +222,8 @@ For each request, think about:
             # Create node for each worker
             worker_node = EngineNodeConfig(
                 name=f"worker_{worker_name}",
-                engine=(
-                    worker_agent.engine
-                    if hasattr(worker_agent, "engine")
-                    else worker_agent
-                ),
+                engine=(worker_agent.engine
+                        if hasattr(worker_agent, "engine") else worker_agent),
             )
             graph.add_node(f"worker_{worker_name}", worker_node)
 
@@ -233,12 +237,8 @@ For each request, think about:
             last_message = messages[-1]
 
             # Check delegation rounds
-            delegations = sum(
-                1
-                for m in messages
-                if isinstance(m, AIMessage)
-                and "delegating to" in str(m.content).lower()
-            )
+            delegations = sum(1 for m in messages if isinstance(m, AIMessage)
+                              and "delegating to" in str(m.content).lower())
             if delegations >= self.max_delegation_rounds:
                 return "end"
 
@@ -248,17 +248,13 @@ For each request, think about:
 
                 # Check for delegation indicators
                 for worker_name in self.workers:
-                    if (
-                        f"delegate to {worker_name}" in content
-                        or f"asking {worker_name}" in content
-                    ):
+                    if (f"delegate to {worker_name}" in content
+                            or f"asking {worker_name}" in content):
                         return f"worker_{worker_name}"
 
                 # Check if supervisor is providing final answer
-                if any(
-                    phrase in content
-                    for phrase in ["final answer", "in conclusion", "to summarize"]
-                ):
+                if any(phrase in content for phrase in
+                       ["final answer", "in conclusion", "to summarize"]):
                     return "end"
 
             # Default to end if no clear delegation
@@ -282,13 +278,15 @@ For each request, think about:
         """String representation with worker info."""
         engine_type = type(self.engine).__name__ if self.engine else "None"
         worker_names = list(self.workers.keys())
-        return f"SupervisorAgent[{engine_type}](name='{self.name}', workers={worker_names})"
+        return f"SupervisorAgent[{engine_type}](name='{
+            self.name}', workers={worker_names})"
 
 
 # Example usage
 if __name__ == "__main__":
     # Mock worker agents for demo
     class MockWorker:
+
         def __init__(self, name: str, specialty: str):
             self.name = name
             self.specialty = specialty

@@ -120,7 +120,7 @@ Discovers patterns and insights in data
        ✓ Identified 2 anomalies
        ✓ Generated 5 insights
 
-   
+
    Key Finding: Customer behavior shifts on weekends
    Confidence: 87%
 

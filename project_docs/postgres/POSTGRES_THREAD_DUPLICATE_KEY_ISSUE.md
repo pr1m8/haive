@@ -1,8 +1,8 @@
 # PostgreSQL Thread Duplicate Key Issue
 
-**Issue Type**: Database Constraint Violation  
-**Severity**: Medium (affects execution but not agent functionality)  
-**First Observed**: 2025-01-21 during LLM Compiler V3 testing  
+**Issue Type**: Database Constraint Violation
+**Severity**: Medium (affects execution but not agent functionality)
+**First Observed**: 2025-01-21 during LLM Compiler V3 testing
 **Status**: Active
 
 ## 🚨 Error Details

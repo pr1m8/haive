@@ -22,11 +22,11 @@
    :field-show-required: true
 
    .. rubric:: {{ _('Configuration') }}
-   
+
    The Pydantic model configuration and validation rules.
 
    .. rubric:: {{ _('Field Details') }}
-   
+
    Detailed field information with types, constraints, and validation.
 
 {% else %}
@@ -75,11 +75,11 @@
    {%- endfor %}
    {% endif %}
    {% endblock %}
-   
+
    {% block diagrams %}
    {% if objname is match('.*Agent$') %}*
    .. rubric:: {{ _('Class Diagram') }}
-   
+
    .. inheritance-diagram:: {{ objname }}
 
       :parts: 1
@@ -88,27 +88,27 @@
 
    {% endif %}
    {% endblock %}
-   
+
    .. rubric:: {{ _('Examples') }}
-   
+
    {% if objname is match('.*Agent$') %}*
    Usage examples for this agent type:
-   
+
 
 .. code-block:: python
 
       :caption: Basic usage
-      
+
       from {{ module }} import {{ objname }}
-      
+
       # Create and configure agent
       agent = {{ objname }}(name="example")
-      
+
       # Use agent
       result = await agent.arun("Your input here")
       print(result)
 
-   
+
       For more examples, see the :doc:`agent examples </agents/demos/index>`.
       {% else %}
       The Examples section from the class docstring will be displayed here automatically if present.

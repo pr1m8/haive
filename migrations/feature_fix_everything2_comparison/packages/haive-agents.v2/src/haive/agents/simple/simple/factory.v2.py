@@ -1,8 +1,10 @@
 """Utility functions for creating and using SimpleAgent.
 
-This module provides helper functions for easily creating SimpleAgent instances
-with various configurations.
+This module provides helper functions for easily creating SimpleAgent
+instances with various configurations.
 """
+
+from __future__ import annotations
 
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel

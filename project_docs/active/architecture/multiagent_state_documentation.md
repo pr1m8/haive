@@ -1,7 +1,7 @@
 # MultiAgentState Documentation
 
-**Version**: 1.0  
-**Purpose**: Comprehensive guide to MultiAgentState for multi-agent coordination  
+**Version**: 1.0
+**Purpose**: Comprehensive guide to MultiAgentState for multi-agent coordination
 **Last Updated**: 2025-01-16
 
 ## 🎯 Overview

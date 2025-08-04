@@ -1,7 +1,7 @@
 # Multi-Agent Patterns Guide
 
-**Version**: 1.0  
-**Purpose**: Comprehensive guide to building multi-agent systems in Haive  
+**Version**: 1.0
+**Purpose**: Comprehensive guide to building multi-agent systems in Haive
 **Last Updated**: 2025-01-16
 
 ## 🎯 Overview

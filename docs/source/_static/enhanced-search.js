@@ -256,8 +256,8 @@ window.addEventListener("error", function (e) {
   const errorDiv = document.createElement("div");
   errorDiv.className = "error-message";
   errorDiv.innerHTML = `
-        <strong>Documentation Error:</strong> 
-        Something went wrong. Please refresh the page or 
+        <strong>Documentation Error:</strong>
+        Something went wrong. Please refresh the page or
         <a href="https://github.com/will-astley/haive/issues">report this issue</a>.
     `;
   errorDiv.style.cssText = `

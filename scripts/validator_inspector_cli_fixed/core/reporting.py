@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from rich.console import Console
 from rich.panel import Panel
 
@@ -10,7 +12,8 @@ def report_and_log(filepath: str, issues: list):
         console.print(f"No issues found in {filepath}")
         return
 
-    console.print(Panel(f"Issues found in {filepath}", title="Validator Issues"))
+    console.print(
+        Panel(f"Issues found in {filepath}", title='Validator Issues'))
 
     for func_name, issue in issues:
         console.print(f"  {func_name}: {issue}")

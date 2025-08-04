@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Validate Python syntax with py_compile and commit fixes by package."""
+from __future__ import annotations
 
 import logging
 import py_compile
 import subprocess
 from pathlib import Path
-from typing import Dict, List, Set
+from typing import Dict
+from typing import List
+from typing import Set
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -63,7 +66,9 @@ class PackageValidator:
                 logger.exception(error_msg)
 
         logger.info(
-            f"Package {package_name}: {len(files_checked)} files OK, {len(errors)} errors"
+            f"Package {package_name}: {
+    len(files_checked)} files OK, {
+        len(errors)} errors"
         )
         return {"errors": errors, "files_checked": files_checked}
 
@@ -224,7 +229,9 @@ class PackageValidator:
 
             # 2. Attempt to fix syntax errors
             logger.info(
-                f"🛠️  Attempting to fix {len(syntax_check['errors'])} errors in {package_name}"
+                f"🛠️  Attempting to fix {
+    len(
+        syntax_check['errors'])} errors in {package_name}"
             )
             fixed_files = self.fix_basic_syntax_errors(package_name)
 

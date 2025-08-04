@@ -21,22 +21,11 @@ This agent integrates LangMem functionality within the Haive framework,
 providing memory extraction, processing, and tool-based memory management.
 """
 
-from datetime import datetime
+
+from __future__ import annotations
 import logging
-from typing import Any
-
-from langchain_core.messages import AnyMessage
-from langgraph.graph import END, START
-from pydantic import BaseModel, Field
-
-from haive.agents.base.agent import Agent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import LLMConfig
-
 
 logger = logging.getLogger(__name__)
-
 
 # ============================================================================
 # STATE SCHEMA
@@ -46,13 +35,14 @@ logger = logging.getLogger(__name__)
 class LTMState(BaseModel):
     """LTM Agent State following Haive patterns.
 
-    This state schema tracks the progression through memory processing stages and
-    maintains all necessary data for the LTM workflow.
+    This state schema tracks the progression through memory processing
+    stages and maintains all necessary data for the LTM workflow.
     """
 
     # Core message state (required by LangGraph)
     messages: list[AnyMessage] = Field(
-        default_factory=list, description="Conversation messages"
+        default_factory=list,
+        description="Conversation messages",
     )
 
     # Processing control
@@ -61,62 +51,78 @@ class LTMState(BaseModel):
         description="Current processing stage: extract -> kg -> categorize -> consolidate -> store -> tools",
     )
     processing_complete: bool = Field(
-        default=False, description="Whether all processing is complete"
+        default=False,
+        description="Whether all processing is complete",
     )
 
     # Memory data
     extracted_memories: list[dict[str, Any]] = Field(
-        default_factory=list, description="Extracted memories from conversation"
+        default_factory=list,
+        description="Extracted memories from conversation",
     )
     knowledge_graph: dict[str, Any] | None = Field(
-        default=None, description="Extracted knowledge graph entities and relationships"
+        default=None,
+        description="Extracted knowledge graph entities and relationships",
     )
     categories: list[str] = Field(
-        default_factory=list, description="Memory categories from TNT classification"
+        default_factory=list,
+        description="Memory categories from TNT classification",
     )
     consolidated_memories: list[dict[str, Any]] = Field(
-        default_factory=list, description="Consolidated and refined memories"
+        default_factory=list,
+        description="Consolidated and refined memories",
     )
 
     # Processing results
     processing_errors: list[str] = Field(
-        default_factory=list, description="Any errors encountered during processing"
+        default_factory=list,
+        description="Any errors encountered during processing",
     )
     tool_calls_needed: bool = Field(
-        default=False, description="Whether memory tools should be activated"
+        default=False,
+        description="Whether memory tools should be activated",
     )
     reflection_scheduled: bool = Field(
-        default=False, description="Whether background reflection has been scheduled"
+        default=False,
+        description="Whether background reflection has been scheduled",
     )
 
     # Quality metrics
     extraction_quality: float = Field(
-        default=0.0, description="Quality score for memory extraction (0.0-1.0)"
+        default=0.0,
+        description="Quality score for memory extraction (0.0-1.0)",
     )
     processing_quality: float = Field(
-        default=0.0, description="Overall processing quality score (0.0-1.0)"
+        default=0.0,
+        description="Overall processing quality score (0.0-1.0)",
     )
 
     # Configuration flags
     enable_kg_processing: bool = Field(
-        default=True, description="Enable knowledge graph processing"
+        default=True,
+        description="Enable knowledge graph processing",
     )
     enable_categorization: bool = Field(
-        default=True, description="Enable memory categorization"
+        default=True,
+        description="Enable memory categorization",
     )
     enable_consolidation: bool = Field(
-        default=True, description="Enable memory consolidation"
+        default=True,
+        description="Enable memory consolidation",
     )
     enable_reflection: bool = Field(
-        default=True, description="Enable background reflection"
+        default=True,
+        description="Enable background reflection",
     )
 
     # Metadata
     processing_started_at: datetime | None = Field(
-        default=None, description="When processing started"
+        default=None,
+        description="When processing started",
     )
     processing_completed_at: datetime | None = Field(
-        default=None, description="When processing completed"
+        default=None,
+        description="When processing completed",
     )
 
 
@@ -137,31 +143,21 @@ def has_processing_errors(state: LTMState) -> bool:
 
 def needs_kg_processing(state: LTMState) -> bool:
     """Check if KG processing is needed."""
-    return (
-        state.enable_kg_processing
-        and bool(state.extracted_memories)
-        and not state.knowledge_graph
-        and len(state.extracted_memories) >= 2
-    )
+    return (state.enable_kg_processing and bool(state.extracted_memories)
+            and not state.knowledge_graph
+            and len(state.extracted_memories) >= 2)
 
 
 def needs_categorization(state: LTMState) -> bool:
     """Check if categorization is needed."""
-    return (
-        state.enable_categorization
-        and bool(state.extracted_memories)
-        and not state.categories
-        and len(state.extracted_memories) >= 3
-    )
+    return (state.enable_categorization and bool(state.extracted_memories)
+            and not state.categories and len(state.extracted_memories) >= 3)
 
 
 def needs_consolidation(state: LTMState) -> bool:
     """Check if consolidation is needed."""
-    return (
-        state.enable_consolidation
-        and bool(state.extracted_memories)
-        and len(state.extracted_memories) >= 5
-    )
+    return (state.enable_consolidation and bool(state.extracted_memories)
+            and len(state.extracted_memories) >= 5)
 
 
 def needs_tool_activation(state: LTMState) -> bool:
@@ -195,19 +191,24 @@ class LTMAgent(Agent):
 
     # Configuration fields
     enable_kg_processing: bool = Field(
-        default=True, description="Enable knowledge graph extraction"
+        default=True,
+        description="Enable knowledge graph extraction",
     )
     enable_categorization: bool = Field(
-        default=True, description="Enable memory categorization"
+        default=True,
+        description="Enable memory categorization",
     )
     enable_consolidation: bool = Field(
-        default=True, description="Enable memory consolidation"
+        default=True,
+        description="Enable memory consolidation",
     )
     enable_reflection: bool = Field(
-        default=True, description="Enable background reflection"
+        default=True,
+        description="Enable background reflection",
     )
     ltm_llm_config: LLMConfig | None = Field(
-        default=None, description="LLM configuration for memory processing"
+        default=None,
+        description="LLM configuration for memory processing",
     )
 
     def __init__(
@@ -237,14 +238,18 @@ class LTMAgent(Agent):
         # Set configuration values
         kwargs.update(
             {
-                "enable_kg_processing": enable_kg_processing,
-                "enable_categorization": enable_categorization,
-                "enable_consolidation": enable_consolidation,
-                "enable_reflection": enable_reflection,
-                "ltm_llm_config": llm_config
-                or LLMConfig(provider="anthropic", model="claude-3-haiku-20240307"),
-            }
-        )
+                "enable_kg_processing":
+                enable_kg_processing,
+                "enable_categorization":
+                enable_categorization,
+                "enable_consolidation":
+                enable_consolidation,
+                "enable_reflection":
+                enable_reflection,
+                "ltm_llm_config":
+                llm_config or LLMConfig(provider="anthropic",
+                                        model="claude-3-haiku-20240307"),
+            }, )
 
         super().__init__(name=name, **kwargs)
 
@@ -253,8 +258,7 @@ class LTMAgent(Agent):
             f"KG={self.enable_kg_processing}, "
             f"Categorization={self.enable_categorization}, "
             f"Consolidation={self.enable_consolidation}, "
-            f"Reflection={self.enable_reflection}"
-        )
+            f"Reflection={self.enable_reflection}", )
 
     def setup_agent(self) -> None:
         """Setup LTM agent engines and components."""
@@ -302,12 +306,14 @@ class LTMAgent(Agent):
         # Start with extraction
         graph.add_edge(START, "extract_memories")
 
-        # After extraction - route based on success/failure (following SimpleAgent pattern)
+        # After extraction - route based on success/failure (following SimpleAgent
+        # pattern)
         graph.add_conditional_edges(
             "extract_memories",
             extraction_succeeded,
             {
-                True: "complete_processing",  # For now, just complete after extraction
+                True:
+                "complete_processing",  # For now, just complete after extraction
                 False: "handle_errors",
             },
         )
@@ -326,7 +332,10 @@ class LTMAgent(Agent):
     # ============================================================================
 
     def extract_memories_node(self, state: LTMState) -> dict[str, Any]:
-        """Extract memories using LangMem memory manager (Phase 2 implementation)."""
+        """Extract memories using LangMem memory manager (Phase 2.
+
+        implementation).
+        """
         logger.info("Executing LangMem memory extraction...")
 
         try:
@@ -337,7 +346,8 @@ class LTMAgent(Agent):
 
             if not state.messages:
                 return {
-                    "processing_errors": ["No messages to extract memories from"],
+                    "processing_errors":
+                    ["No messages to extract memories from"],
                     "processing_stage": "error",
                 }
 
@@ -363,37 +373,44 @@ class LTMAgent(Agent):
                 pass
 
             # Extract memories using LangMem
-            logger.info(f"Extracting memories from {len(state.messages)} messages...")
+            logger.info(
+                f"Extracting memories from {len(state.messages)} messages...")
             extracted_memories = manager.invoke(input_state)  # Sync for now
 
             # Process LangMem results
             memories_data = []
             for memory in extracted_memories:
                 memory_dict = {
-                    "memory_id": memory.id,
-                    "content": (
-                        memory.content.model_dump()
-                        if hasattr(memory.content, "model_dump")
-                        else str(memory.content)
-                    ),
-                    "schema": memory.content.__class__.__name__,
-                    "timestamp": datetime.now().isoformat(),
-                    "source": "langmem_extraction",
-                    "confidence": getattr(memory.content, "confidence", 0.8),
+                    "memory_id":
+                    memory.id,
+                    "content": (memory.content.model_dump() if hasattr(
+                        memory.content, "model_dump") else str(
+                            memory.content)),
+                    "schema":
+                    memory.content.__class__.__name__,
+                    "timestamp":
+                    datetime.now().isoformat(),
+                    "source":
+                    "langmem_extraction",
+                    "confidence":
+                    getattr(memory.content, "confidence", 0.8),
                 }
                 memories_data.append(memory_dict)
 
             # Calculate quality score based on extraction results
-            quality = self._calculate_extraction_quality(memories_data, state.messages)
+            quality = self._calculate_extraction_quality(
+                memories_data, state.messages)
 
             logger.info(
-                f"LangMem extracted {len(memories_data)} memories with quality {quality:.2f}"
-            )
+                f"LangMem extracted {
+                    len(memories_data)} memories with quality {
+                    quality:.2f}", )
 
             return {
                 "extracted_memories": memories_data,
                 "extraction_quality": quality,
-                "processing_stage": "complete",  # For Phase 2, still go to complete
+                "processing_stage":
+                "complete",  # For Phase 2, still go to complete
                 "processing_started_at": datetime.now(),
             }
 
@@ -405,7 +422,9 @@ class LTMAgent(Agent):
             }
 
     def _calculate_extraction_quality(
-        self, memories: list[dict], messages: list
+        self,
+        memories: list[dict],
+        messages: list,
     ) -> float:
         """Calculate quality score for extracted memories."""
         if not memories:
@@ -430,9 +449,11 @@ class LTMAgent(Agent):
         diversity_bonus = min(0.2, len(schema_types) * 0.05)
 
         # Penalty for errors or low confidence
-        avg_confidence = sum(m.get("confidence", 0.8) for m in memories) / len(memories)
+        avg_confidence = sum(m.get("confidence", 0.8)
+                             for m in memories) / len(memories)
 
-        final_quality = min(1.0, ratio_quality + diversity_bonus) * avg_confidence
+        final_quality = min(1.0,
+                            ratio_quality + diversity_bonus) * avg_confidence
         return round(final_quality, 2)
 
     def complete_processing_node(self, state: LTMState) -> dict[str, Any]:
@@ -447,7 +468,8 @@ class LTMAgent(Agent):
 
     def handle_errors_node(self, state: LTMState) -> dict[str, Any]:
         """Handle processing errors."""
-        logger.error(f"Handling LTM processing errors: {state.processing_errors}")
+        logger.error(
+            f"Handling LTM processing errors: {state.processing_errors}")
 
         # For now, just log errors and mark as complete
         return {
@@ -471,9 +493,7 @@ class LTMAgent(Agent):
         }
 
     def __repr__(self) -> str:
-        return (
-            f"LTMAgent(name='{self.name}', "
-            f"kg={self.enable_kg_processing}, "
-            f"categorization={self.enable_categorization}, "
-            f"consolidation={self.enable_consolidation})"
-        )
+        return (f"LTMAgent(name='{self.name}', "
+                f"kg={self.enable_kg_processing}, "
+                f"categorization={self.enable_categorization}, "
+                f"consolidation={self.enable_consolidation})")

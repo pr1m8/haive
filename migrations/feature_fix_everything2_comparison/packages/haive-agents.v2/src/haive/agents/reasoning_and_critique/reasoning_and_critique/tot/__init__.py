@@ -31,7 +31,6 @@ from haive.agents.reasoning_and_critique.tot.state import (
     convert_single_candidate,
 )
 
-
 __all__ = [
     "Candidate",
     "CandidateEvaluation",

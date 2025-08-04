@@ -17,6 +17,8 @@ Architecture:
 - Cross-conversation persistence
 """
 
+from __future__ import annotations
+
 import asyncio
 import contextlib
 from datetime import UTC, datetime
@@ -32,13 +34,12 @@ from langchain_core.tools import tool
 from pydantic import BaseModel, ConfigDict, Field
 
 from haive.agents.rag.base.agent import BaseRAGAgent
-
-# Import the fixed SimpleRAG components
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.core.engine.vectorstore import VectorStoreProvider
 from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig
 from haive.core.models.llm.base import LLMConfig
 
+# Import the fixed SimpleRAG components
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +53,8 @@ class MemoryEntry(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid4()))
     content: str = Field(..., description="Memory content")
     memory_type: str = Field(
-        default="text", description="Type: text, knowledge_triple, preference"
+        default="text",
+        description="Type: text, knowledge_triple, preference",
     )
 
     # Temporal information
@@ -74,7 +76,9 @@ class MemoryEntry(BaseModel):
     access_count: int = Field(default=0)
     relevance_scores: dict[str, float] = Field(default_factory=dict)
 
-    def mark_accessed(self, query: str | None = None, relevance: float | None = None):
+    def mark_accessed(self,
+                      query: str | None = None,
+                      relevance: float | None = None):
         """Mark memory as accessed."""
         self.access_count += 1
         self.last_accessed = datetime.now(UTC)
@@ -144,7 +148,8 @@ class LongTermMemoryStore:
         self.memories[memory.id] = memory
         self._save_memory(memory)
 
-    def add_knowledge_triple(self, triple: KnowledgeTriple, **kwargs) -> MemoryEntry:
+    def add_knowledge_triple(self, triple: KnowledgeTriple,
+                             **kwargs) -> MemoryEntry:
         """Add knowledge triple as memory."""
         memory = triple.to_memory_entry(**kwargs)
         self.add_memory(memory)
@@ -152,7 +157,9 @@ class LongTermMemoryStore:
         return memory
 
     def get_memories(
-        self, user_id: str | None = None, limit: int | None = None
+        self,
+        user_id: str | None = None,
+        limit: int | None = None,
     ) -> list[MemoryEntry]:
         """Get memories, optionally filtered by user."""
         memories = list(self.memories.values())
@@ -169,7 +176,10 @@ class LongTermMemoryStore:
         return memories
 
     def search_memories(
-        self, query: str, user_id: str | None = None, limit: int = 5
+        self,
+        query: str,
+        user_id: str | None = None,
+        limit: int = 5,
     ) -> list[MemoryEntry]:
         """Simple text search in memories."""
         query_lower = query.lower()
@@ -184,7 +194,8 @@ class LongTermMemoryStore:
                 matches.append(memory)
 
         # Sort by relevance and importance
-        matches.sort(key=lambda m: (m.importance, m.access_count), reverse=True)
+        matches.sort(key=lambda m: (m.importance, m.access_count),
+                     reverse=True)
         return matches[:limit]
 
     def _save_memory(self, memory: MemoryEntry) -> None:
@@ -250,10 +261,10 @@ class LongTermMemoryAgent:
         self.memory_store = LongTermMemoryStore(storage_path)
 
         # Vector store configuration
-        self.embedding_model = HuggingFaceEmbeddingConfig(model=embedding_model)
+        self.embedding_model = HuggingFaceEmbeddingConfig(
+            model=embedding_model)
         self.vector_store_provider = vector_store_provider
 
-        # Agents (initialized in setup)
         self.memory_retriever: BaseRAGAgent | None = None
         self.memory_enhanced_agent: SimpleRAGAgent | None = None
         self._initialized = False
@@ -266,8 +277,10 @@ class LongTermMemoryAgent:
             return
 
         # Step 1: Load memories for this user
-        user_memories = self.memory_store.get_memories(user_id=self.user_id, limit=100)
-        logger.info(f"Loaded {len(user_memories)} memories for user {self.user_id}")
+        user_memories = self.memory_store.get_memories(user_id=self.user_id,
+                                                       limit=100)
+        logger.info(
+            f"Loaded {len(user_memories)} memories for user {self.user_id}")
 
         # Step 2: Convert memories to documents for RAG
         memory_documents = [memory.to_document() for memory in user_memories]
@@ -276,7 +289,10 @@ class LongTermMemoryAgent:
         if not memory_documents:
             placeholder = Document(
                 page_content="No previous memories stored for this user.",
-                metadata={"memory_type": "system", "user_id": self.user_id},
+                metadata={
+                    "memory_type": "system",
+                    "user_id": self.user_id
+                },
             )
             memory_documents.append(placeholder)
 
@@ -297,10 +313,12 @@ class LongTermMemoryAgent:
 
         self._initialized = True
         logger.info(
-            f"✅ Initialized LongTermMemoryAgent with {len(memory_documents)} memory documents"
-        )
+            f"✅ Initialized LongTermMemoryAgent with {
+                len(memory_documents)} memory documents", )
 
-    async def run(self, query: str, extract_memories: bool = True) -> dict[str, Any]:
+    async def run(self,
+                  query: str,
+                  extract_memories: bool = True) -> dict[str, Any]:
         """Run memory-enhanced conversation.
 
         This implements the "load memories first" pattern:
@@ -315,7 +333,8 @@ class LongTermMemoryAgent:
         retrieved_memories = memory_result.get("retrieved_documents", [])
 
         # Step 2: Generate memory-enhanced response
-        enhanced_result = await self.memory_enhanced_agent.arun({"query": query})
+        enhanced_result = await self.memory_enhanced_agent.arun(
+            {"query": query})
         response = enhanced_result.get("answer", "No response generated")
 
         # Step 3: Extract and store new memories (if enabled)
@@ -331,18 +350,19 @@ class LongTermMemoryAgent:
         return {
             "response": response,
             "retrieved_memories": len(retrieved_memories),
-            "memory_context": [doc.page_content for doc in retrieved_memories[:3]],
+            "memory_context":
+            [doc.page_content for doc in retrieved_memories[:3]],
             "user_id": self.user_id,
         }
 
-    async def add_conversation(self, messages: list[BaseMessage]) -> list[MemoryEntry]:
+    async def add_conversation(
+            self, messages: list[BaseMessage]) -> list[MemoryEntry]:
         """Add conversation and extract memories."""
         extracted_memories = []
 
         for message in messages:
-            content = (
-                str(message.content) if hasattr(message, "content") else str(message)
-            )
+            content = str(message.content) if hasattr(
+                message, "content") else str(message)
 
             # Extract different types of memories using simple heuristics
             # In production, use LLM-based extraction
@@ -366,60 +386,55 @@ class LongTermMemoryAgent:
             await self._refresh_agents()
 
         logger.info(
-            f"Extracted {len(extracted_memories)} memories from {len(messages)} messages"
-        )
+            f"Extracted {
+                len(extracted_memories)} memories from {
+                len(messages)} messages", )
         return extracted_memories
 
-    def _extract_memories_from_content(self, content: str) -> list[dict[str, Any]]:
+    def _extract_memories_from_content(self,
+                                       content: str) -> list[dict[str, Any]]:
         """Extract memories from content using heuristics."""
         content_lower = content.lower()
         memories = []
 
         # Factual information patterns
-        if any(
-            pattern in content_lower
-            for pattern in ["i am", "i work", "my name", "i live"]
-        ):
+        if any(pattern in content_lower
+               for pattern in ["i am", "i work", "my name", "i live"]):
             memories.append(
                 {
                     "content": content,
                     "type": "factual",
                     "importance": 0.8,
                     "tags": ["personal", "factual"],
-                }
-            )
+                }, )
 
         # Preference patterns
-        elif any(
-            pattern in content_lower
-            for pattern in ["i prefer", "i like", "i dislike", "i love", "i hate"]
-        ):
+        elif any(pattern in content_lower for pattern in
+                 ["i prefer", "i like", "i dislike", "i love", "i hate"]):
             memories.append(
                 {
                     "content": content,
                     "type": "preference",
                     "importance": 0.6,
                     "tags": ["preference"],
-                }
-            )
+                }, )
 
         # Important events or decisions
         elif any(
-            pattern in content_lower
-            for pattern in ["decided", "planning", "meeting", "deadline"]
-        ):
+                pattern in content_lower
+                for pattern in ["decided", "planning", "meeting", "deadline"]):
             memories.append(
                 {
                     "content": content,
                     "type": "event",
                     "importance": 0.7,
                     "tags": ["event", "planning"],
-                }
-            )
+                }, )
 
         return memories
 
-    async def _extract_and_store_memories(self, query: str, response: str) -> None:
+    async def _extract_and_store_memories(self, query: str,
+                                          response: str) -> None:
         """Extract memories from query and response."""
         # Extract from user query
         query_memories = self._extract_memories_from_content(query)
@@ -436,7 +451,8 @@ class LongTermMemoryAgent:
     async def _refresh_agents(self) -> None:
         """Refresh agents with updated memories."""
         # Get updated memories
-        user_memories = self.memory_store.get_memories(user_id=self.user_id, limit=100)
+        user_memories = self.memory_store.get_memories(user_id=self.user_id,
+                                                       limit=100)
         memory_documents = [memory.to_document() for memory in user_memories]
 
         # Recreate agents
@@ -458,16 +474,27 @@ class LongTermMemoryAgent:
         user_memories = self.memory_store.get_memories(user_id=self.user_id)
 
         return {
-            "user_id": self.user_id,
-            "total_memories": len(user_memories),
-            "memory_types": list({m.memory_type for m in user_memories}),
-            "most_accessed": sorted(
-                user_memories, key=lambda m: m.access_count, reverse=True
+            "user_id":
+            self.user_id,
+            "total_memories":
+            len(user_memories),
+            "memory_types":
+            list({m.memory_type
+                  for m in user_memories}),
+            "most_accessed":
+            sorted(
+                user_memories,
+                key=lambda m: m.access_count,
+                reverse=True,
             )[:3],
-            "recent_memories": sorted(
-                user_memories, key=lambda m: m.created_at, reverse=True
+            "recent_memories":
+            sorted(
+                user_memories,
+                key=lambda m: m.created_at,
+                reverse=True,
             )[:3],
-            "storage_path": str(self.memory_store.storage_path),
+            "storage_path":
+            str(self.memory_store.storage_path),
         }
 
     # ReactAgent tool integration
@@ -476,7 +503,8 @@ class LongTermMemoryAgent:
         """Create memory tool for ReactAgent integration."""
 
         @tool(
-            name="long_term_memory", description="Search and recall long-term memories"
+            name="long_term_memory",
+            description="Search and recall long-term memories",
         )
         async def memory_tool(query: str) -> str:
             """Search long-term memory for relevant information."""
@@ -488,8 +516,7 @@ class LongTermMemoryAgent:
             memory_context = result.get("memory_context", [])
             if memory_context:
                 return "Relevant memories found:\n" + "\n".join(
-                    f"- {mem}" for mem in memory_context
-                )
+                    f"- {mem}" for mem in memory_context)
             return "No relevant memories found."
 
         return memory_tool
@@ -503,7 +530,9 @@ def create_long_term_memory_agent(
 ) -> LongTermMemoryAgent:
     """Factory function to create long-term memory agent."""
     return LongTermMemoryAgent(
-        user_id=user_id, llm_config=llm_config, storage_path=storage_path
+        user_id=user_id,
+        llm_config=llm_config,
+        storage_path=storage_path,
     )
 
 
@@ -517,7 +546,8 @@ async def demo_long_term_memory():
 
     # Add some memories through conversation
     messages = [
-        HumanMessage("Hi, I'm Sarah and I work as a product manager at Spotify"),
+        HumanMessage(
+            "Hi, I'm Sarah and I work as a product manager at Spotify"),
         HumanMessage("I prefer morning meetings and I really love jazz music"),
         HumanMessage("I'm working on improving recommendation algorithms"),
     ]

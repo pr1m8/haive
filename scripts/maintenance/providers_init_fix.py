@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Show how to fix the providers/__init__.py to expose modules."""
 
+from __future__ import annotations
+
 CURRENT_BEGINNING = '''"""LLM Providers Module.
 
 
@@ -143,7 +145,7 @@ def __getattr__(name: str):
         except ImportError as e:
             logger.debug(f"Failed to import provider module {name}: {e}")
             raise AttributeError(f"module '{__name__}' has no module '{name}'")
-    
+
     # Then check if it's a class name (existing logic)
     class_to_provider = {
         "OpenAIProvider": LLMProvider.OPENAI,
@@ -167,5 +169,5 @@ print("  from haive.core.models.llm.providers import nvidia")
 print("  from haive.core.models.llm import providers")
 print("  providers.nvidia  # Works!")
 print(
-    "  from haive.core.models.llm.providers.nvidia import NVIDIAProvider  # Still works!"
+    "  from haive.core.models.llm.providers.nvidia import NVIDIAProvider  # Still works!",
 )

@@ -1,9 +1,9 @@
 # Debugkit Development Experience & Philosophy
 
-**Document Version**: 1.0  
-**Created**: 2025-07-31  
-**Author**: Claude (Development Session)  
-**Location**: `packages/haive-core/src/haive/core/utils/debugkit/`  
+**Document Version**: 1.0
+**Created**: 2025-07-31
+**Author**: Claude (Development Session)
+**Location**: `packages/haive-core/src/haive/core/utils/debugkit/`
 **Status**: Completed Module Rename & Enhancement
 
 ## 🎯 Project Context

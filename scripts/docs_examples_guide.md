@@ -21,7 +21,7 @@ nox -s docs_minimal_no_examples
 # Full production build with examples
 nox -s docs_prod
 
-# Or the full name  
+# Or the full name
 nox -s docs_with_examples
 ```
 
@@ -58,7 +58,7 @@ nox -s docs_autobuild_no_examples
 |-------|---------|-------------|
 | `docs_dev` | `docs_no_examples` | Development build |
 | `docs_prod` | `docs_with_examples` | Production build |
-| `docs_fast_dev` | `docs_no_examples` | Fast development |  
+| `docs_fast_dev` | `docs_no_examples` | Fast development |
 | `docs_live` | `docs_autobuild_no_examples` | Live development |
 
 ## 🎯 Environment Variables
@@ -74,7 +74,7 @@ SPHINX_DISABLE_EXAMPLES=0 nox -s docs
 
 # Control Sphinx profile
 SPHINX_PROFILE=minimal nox -s docs      # Fastest
-SPHINX_PROFILE=standard nox -s docs     # Balanced  
+SPHINX_PROFILE=standard nox -s docs     # Balanced
 SPHINX_PROFILE=full nox -s docs         # Complete
 ```
 
@@ -117,7 +117,7 @@ Even with examples disabled:
 - Fastest build time
 - Basic documentation only
 
-### Standard Profile (`SPHINX_PROFILE=standard`) 
+### Standard Profile (`SPHINX_PROFILE=standard`)
 - Common extensions (copybutton, design, etc.)
 - Good balance of features vs speed
 - Recommended for development
@@ -206,7 +206,7 @@ nox -s docs_autobuild              # Port 8003
 5. **Set up shell aliases** for even faster access:
    ```bash
    alias nd='nox -s docs_dev'
-   alias nl='nox -s docs_live' 
+   alias nl='nox -s docs_live'
    alias np='nox -s docs_prod'
    ```
 
@@ -229,7 +229,7 @@ SPHINX_PROFILE=full SPHINX_DISABLE_EXAMPLES=1 nox -s docs
 # Build only core package docs (no examples)
 SPHINX_PACKAGES=core nox -s docs_dev
 
-# Build agents package with examples  
+# Build agents package with examples
 SPHINX_PACKAGES=agents nox -s docs_prod
 ```
 

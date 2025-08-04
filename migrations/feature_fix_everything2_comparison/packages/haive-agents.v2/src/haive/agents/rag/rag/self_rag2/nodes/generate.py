@@ -6,6 +6,8 @@ Functions:
     generate: Generate functionality.
 """
 
+from __future__ import annotations
+
 from typing import Any
 
 
@@ -23,4 +25,8 @@ def generate(state: dict[str, Any]):
 
     # RAG generation
     generation = rag_chain.invoke({"context": documents, "question": question})
-    return {"documents": documents, "question": question, "generation": generation}
+    return {
+        "documents": documents,
+        "question": question,
+        "generation": generation
+    }

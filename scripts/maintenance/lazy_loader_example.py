@@ -8,36 +8,59 @@ This shows how to implement lazy loading for haive.core.models
 # haive/core/models/__init__.py
 """Models module with lazy loading for performance."""
 
-import lazy_loader as lazy
-
 # Define submodules to lazy load
+import os
+import importlib
+import sys
+from typing import TYPE_CHECKING
+import lazy_loader as lazy
+from scripts.maintenance import (
+    embeddings as embeddings,
+    llm as llm,
+    retriever as retriever,
+    vectorstore as vectorstore,
+)
+from scripts.maintenance.embeddings import (
+    BaseEmbeddingConfig as BaseEmbeddingConfig,
+    EmbeddingProvider as EmbeddingProvider,
+    OpenAIEmbeddingConfig as OpenAIEmbeddingConfig,
+)
+from scripts.maintenance.llm import (
+    LLMConfig as LLMConfig,
+    LLMFactory as LLMFactory,
+    LLMProvider as LLMProvider,
+    create_llm as create_llm,
+)
+from scripts.maintenance.metadata_mixin import MetadataMixin as MetadataMixin
+from scripts.maintenance.metadata import ModelMetadata as ModelMetadata
+
+
 submodules = ["llm", "embeddings", "retriever", "vectorstore"]
 
 # Define specific attributes from submodules
 submod_attrs = {
     "llm": ["LLMConfig", "LLMFactory", "LLMProvider", "create_llm"],
-    "embeddings": ["BaseEmbeddingConfig", "EmbeddingProvider", "OpenAIEmbeddingConfig"],
+    "embeddings":
+    ["BaseEmbeddingConfig", "EmbeddingProvider", "OpenAIEmbeddingConfig"],
     "retriever": ["RetrieverConfig", "RetrieverType"],
     "vectorstore": ["VectorStoreConfig", "VectorStoreProvider"],
 }
 
 # Attach lazy loading - this creates __getattr__, __dir__, and __all__
 __getattr__, __dir__, __all__ = lazy.attach(
-    __name__, submodules=submodules, submod_attrs=submod_attrs
+    __name__,
+    submodules=submodules,
+    submod_attrs=submod_attrs,
 )
 
 # Add any eagerly loaded items
-from .metadata import ModelMetadata
-from .metadata_mixin import MetadataMixin
 
 # Update __all__ to include eager imports
-__all__ += ["ModelMetadata", "MetadataMixin"]
-
+__all__ += ["MetadataMixin", "ModelMetadata"]
 
 # ===== Option 1B: With Type Stubs (Better for IDEs) =====
 
 # haive/core/models/__init__.py
-import lazy_loader as lazy
 
 __getattr__, __dir__, __all__ = lazy.attach_stub(__name__, "__init__.pyi")
 
@@ -45,21 +68,8 @@ __getattr__, __dir__, __all__ = lazy.attach_stub(__name__, "__init__.pyi")
 """Type stubs for models module."""
 
 # Submodules
-from . import embeddings as embeddings
-from . import llm as llm
-from . import retriever as retriever
-from . import vectorstore as vectorstore
-from .embeddings import BaseEmbeddingConfig as BaseEmbeddingConfig
-from .embeddings import EmbeddingProvider as EmbeddingProvider
-from .embeddings import OpenAIEmbeddingConfig as OpenAIEmbeddingConfig
 
 # Specific imports
-from .llm import LLMConfig as LLMConfig
-from .llm import LLMFactory as LLMFactory
-from .llm import LLMProvider as LLMProvider
-from .llm import create_llm as create_llm
-from .metadata import ModelMetadata as ModelMetadata
-from .metadata_mixin import MetadataMixin as MetadataMixin
 
 __all__ = [
     # Submodules
@@ -79,47 +89,49 @@ __all__ = [
     "MetadataMixin",
 ]
 
-
 # ===== Option 2: PEP 562 Pattern (Built-in, no deps) =====
 
 # haive/core/models/__init__.py
 """Models module with PEP 562 lazy loading."""
 
-import importlib
-from typing import TYPE_CHECKING
-
 # For type checking, import everything
 if TYPE_CHECKING:
-    from . import embeddings, llm, retriever, vectorstore
-    from .embeddings import BaseEmbeddingConfig, EmbeddingProvider
-    from .llm import LLMConfig, LLMFactory, LLMProvider
-    from .metadata import ModelMetadata
-    from .metadata_mixin import MetadataMixin
+    from scripts.maintenance import embeddings, llm, retriever, vectorstore
+    from scripts.maintenance.embeddings import BaseEmbeddingConfig, EmbeddingProvider
+    from scripts.maintenance.llm import LLMConfig, LLMFactory, LLMProvider
+    from scripts.maintenance.metadata import ModelMetadata
+    from scripts.maintenance.metadata_mixin import MetadataMixin
 
 # Lazy imports mapping
 _LAZY_IMPORTS = {
     # Submodules
-    "llm": "haive.core.models.llm",
-    "embeddings": "haive.core.models.embeddings",
-    "retriever": "haive.core.models.retriever",
-    "vectorstore": "haive.core.models.vectorstore",
+    "llm":
+    "haive.core.models.llm",
+    "embeddings":
+    "haive.core.models.embeddings",
+    "retriever":
+    "haive.core.models.retriever",
+    "vectorstore":
+    "haive.core.models.vectorstore",
     # Specific classes (module_path, attribute)
     "LLMConfig": ("haive.core.models.llm", "LLMConfig"),
     "LLMFactory": ("haive.core.models.llm", "LLMFactory"),
     "LLMProvider": ("haive.core.models.llm", "LLMProvider"),
     "create_llm": ("haive.core.models.llm", "create_llm"),
-    "BaseEmbeddingConfig": ("haive.core.models.embeddings", "BaseEmbeddingConfig"),
+    "BaseEmbeddingConfig":
+    ("haive.core.models.embeddings", "BaseEmbeddingConfig"),
     "EmbeddingProvider": ("haive.core.models.embeddings", "EmbeddingProvider"),
-    "OpenAIEmbeddingConfig": ("haive.core.models.embeddings", "OpenAIEmbeddingConfig"),
+    "OpenAIEmbeddingConfig":
+    ("haive.core.models.embeddings", "OpenAIEmbeddingConfig"),
     "RetrieverConfig": ("haive.core.models.retriever", "RetrieverConfig"),
     "RetrieverType": ("haive.core.models.retriever", "RetrieverType"),
-    "VectorStoreConfig": ("haive.core.models.vectorstore", "VectorStoreConfig"),
-    "VectorStoreProvider": ("haive.core.models.vectorstore", "VectorStoreProvider"),
+    "VectorStoreConfig":
+    ("haive.core.models.vectorstore", "VectorStoreConfig"),
+    "VectorStoreProvider":
+    ("haive.core.models.vectorstore", "VectorStoreProvider"),
 }
 
 # Eager imports (lightweight)
-from .metadata import ModelMetadata
-from .metadata_mixin import MetadataMixin
 
 
 def __getattr__(name: str):
@@ -132,13 +144,12 @@ def __getattr__(name: str):
             module = importlib.import_module(import_info)
             globals()[name] = module
             return module
-        else:
-            # It's an attribute from a module
-            module_name, attr_name = import_info
-            module = importlib.import_module(module_name)
-            attr = getattr(module, attr_name)
-            globals()[name] = attr
-            return attr
+        # It's an attribute from a module
+        module_name, attr_name = import_info
+        module = importlib.import_module(module_name)
+        attr = getattr(module, attr_name)
+        globals()[name] = attr
+        return attr
 
     raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
 
@@ -171,31 +182,28 @@ __all__ = [
     "MetadataMixin",
 ]
 
-
 # ===== Option 3: Hybrid Approach (Safest for Sphinx) =====
 
 # haive/core/models/__init__.py
 """Models module with conditional lazy loading."""
 
-import os
-import sys
-
 # Check if we're building docs
-BUILDING_DOCS = os.environ.get("READTHEDOCS") == "True" or "sphinx" in sys.modules
+BUILDING_DOCS = os.environ.get(
+    "READTHEDOCS") == "True" or "sphinx" in sys.modules
 
 if BUILDING_DOCS:
     # For documentation, import everything normally
-    from . import embeddings, llm, retriever, vectorstore
-    from .embeddings import (
+    from scripts.maintenance import embeddings, llm, retriever, vectorstore
+    from scripts.maintenance.embeddings import (
         BaseEmbeddingConfig,
         EmbeddingProvider,
         OpenAIEmbeddingConfig,
     )
-    from .llm import LLMConfig, LLMFactory, LLMProvider, create_llm
-    from .metadata import ModelMetadata
-    from .metadata_mixin import MetadataMixin
-    from .retriever import RetrieverConfig, RetrieverType
-    from .vectorstore import VectorStoreConfig, VectorStoreProvider
+    from scripts.maintenance.llm import LLMConfig, LLMFactory, LLMProvider, create_llm
+    from scripts.maintenance.metadata import ModelMetadata
+    from scripts.maintenance.metadata_mixin import MetadataMixin
+    from scripts.maintenance.retriever import RetrieverConfig, RetrieverType
+    from scripts.maintenance.vectorstore import VectorStoreConfig, VectorStoreProvider
 else:
     # For runtime, use lazy loading
     import lazy_loader as lazy
@@ -216,11 +224,10 @@ else:
     )
 
     # Eager imports
-    from .metadata import ModelMetadata
-    from .metadata_mixin import MetadataMixin
+    from scripts.maintenance.metadata import ModelMetadata
+    from scripts.maintenance.metadata_mixin import MetadataMixin
 
-    __all__ += ["ModelMetadata", "MetadataMixin"]
-
+    __all__ += ["MetadataMixin", "ModelMetadata"]
 
 # ===== Testing and Development =====
 

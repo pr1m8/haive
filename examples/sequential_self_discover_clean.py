@@ -13,17 +13,20 @@ The workflow follows this pattern:
 
 Each agent uses structured output and proper state transfer through AgentNodeV3.
 """
+from __future__ import annotations
 
 import asyncio
 import logging
-from typing import Any, Dict
+from typing import Any
+from typing import Dict
 
 from haive.agents.simple.agent_v3 import SimpleAgentV3
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
 from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 # Configure logging for detailed debug output
 logging.basicConfig(

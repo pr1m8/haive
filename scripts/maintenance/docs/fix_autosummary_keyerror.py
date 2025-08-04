@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Fix autosummary KeyError by removing problematic files and fixing imports."""
+from __future__ import annotations
 
 from pathlib import Path
 
@@ -7,7 +8,6 @@ from pathlib import Path
 def main():
     """Main function to fix documentation build errors."""
     project_root = Path(__file__).parent
-
 
     # 1. Remove problematic file with spaces and parentheses
     problematic_file = (

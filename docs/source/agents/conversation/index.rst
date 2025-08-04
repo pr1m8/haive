@@ -12,15 +12,15 @@ The Haive conversation system provides several conversation patterns, each optim
 
       :link: directed
       :link-type: doc
-      
+
       Orchestrated discussions with @mentions and targeted responses.
       Perfect for panels, meetings, and classroom settings.
 
    .. card::
 
-      :link: round_robin  
+      :link: round_robin
       :link-type: doc
-      
+
       Equal participation in fixed order. Ideal for standups,
       brainstorming, and status updates.
 
@@ -28,7 +28,7 @@ The Haive conversation system provides several conversation patterns, each optim
 
       :link: collaborative
       :link-type: doc
-      
+
       Free-flowing cooperation toward shared goals. Great for
       problem-solving and creative work.
 
@@ -36,7 +36,7 @@ The Haive conversation system provides several conversation patterns, each optim
 
       :link: debate
       :link-type: doc
-      
+
       Structured argumentation with opposing positions. Useful for
       decision-making and exploring ideas.
 
@@ -44,7 +44,7 @@ The Haive conversation system provides several conversation patterns, each optim
 
       :link: social_media
       :link-type: doc
-      
+
       Simulates online discussions with posts, comments, and
       viral dynamics.
 
@@ -52,7 +52,7 @@ The Haive conversation system provides several conversation patterns, each optim
 
       :link: custom_patterns
       :link-type: doc
-      
+
       Build your own conversation patterns for specialized needs.
 
 Quick Start
@@ -167,13 +167,13 @@ Quick Start
        A[Conversation Manager] --> B[Turn Management]
        A --> C[Message History]
        A --> D[Agent Coordination]
-       
+
        B --> E[Speaker Selection]
        B --> F[Time Control]
-       
+
        C --> G[Context Window]
        C --> H[Summarization]
-       
+
        D --> I[@Mention Detection]
        D --> J[Role Assignment]
        D --> K[Consensus Tracking]
@@ -183,29 +183,29 @@ Quick Start
 
     1. **Base Conversation Class**
 
-   
+
     - Message management
-    - Turn orchestration  
+    - Turn orchestration
     - History tracking
     - Context building
 
     2. **Agent Integration**
 
-   
+
     - Any Haive agent can participate
     - Agents maintain individual context
     - System messages guide behavior
 
     3. **Conversation Flow**
 
-   
+
     - Configurable turn patterns
     - Dynamic speaker selection
     - Termination conditions
 
     4. **Output Formats**
 
-   
+
     - Full transcript
     - Summary generation
     - Metrics and analytics
@@ -295,7 +295,7 @@ Quick Start
 
     :maxdepth: 1
     :caption: Conversation Types
-   
+
     directed
     round_robin
     collaborative
@@ -307,7 +307,7 @@ Quick Start
 
     :maxdepth: 1
     :caption: Use Cases
-   
+
     examples/education
     examples/business
     examples/research
@@ -327,6 +327,6 @@ Quick Start
     --------
 
     - :doc:`/guides/building_agents` - Create custom agents
-    - :doc:`/api/haive-agents` - Full agents API reference  
+    - :doc:`/api/haive-agents` - Full agents API reference
     - :doc:`/guides/multi_agent_systems` - Advanced multi-agent patterns
     - :doc:`/examples/index` - More code examples

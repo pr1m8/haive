@@ -17,10 +17,12 @@ Subpackages:
 # SimpleAgent Package - Ultra-fast lazy loading
 """
 SimpleAgent package with ultra-optimized import performance.
+
 Achieves sub-3 second import times through comprehensive lazy loading.
 """
-
 # Lazy import mapping for SimpleAgent variants
+
+from __future__ import annotations
 _SIMPLE_AGENT_IMPORTS = {
     "SimpleAgent": ("haive.agents.simple.agent_v2", "SimpleAgentV2"),
     "SimpleAgentV3": ("haive.agents.simple.agent_v3", "SimpleAgentV3"),

@@ -168,19 +168,19 @@ Social deduction party game
 
        Day 3 - Discussion Phase
 
-   
+
    Alive Players:
    - Player 1 (?)
    - Player 3 (?)
    - Player 5 (?)
    - Player 7 (?)
    - Player 8 (?)
-   
+
    Eliminated:
    - Player 2 (Villager) - Night 1
    - Player 4 (Detective) - Voted Day 2
    - Player 6 (Villager) - Night 2
-   
+
    Time until vote: 2:30
 
 .. raw:: html

@@ -18,11 +18,11 @@ from haive.core.graph.common.types import ConfigLike, NodeType
 from haive.core.graph.node.base_node_config import BaseNodeConfig
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 
-
 logger = logging.getLogger(__name__)
 
 
-class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]):
+class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState,
+                                               MultiAgentState]):
     """Intelligent multi-agent node with sequence inference and branching.
 
     This node provides advanced multi-agent coordination with:
@@ -44,7 +44,8 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
     )
 
     infer_sequence: bool = Field(
-        default=True, description="Whether to automatically infer execution sequence"
+        default=True,
+        description="Whether to automatically infer execution sequence",
     )
 
     # Branch configuration
@@ -55,28 +56,32 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
 
     # Execution state
     current_sequence: list[str] | None = Field(
-        default=None, description="Current inferred or manually set sequence"
+        default=None,
+        description="Current inferred or manually set sequence",
     )
 
     execution_index: int = Field(
-        default=0, description="Current position in execution sequence"
+        default=0,
+        description="Current position in execution sequence",
     )
 
     @model_validator(mode="after")
     def validate_config(self) -> Self:
         """Validate node configuration."""
         if self.execution_mode not in [
-            "infer",
-            "sequential",
-            "parallel",
-            "branch",
-            "conditional",
+                "infer",
+                "sequential",
+                "parallel",
+                "branch",
+                "conditional",
         ]:
             raise ValueError(f"Invalid execution_mode: {self.execution_mode}")
         return self
 
     def __call__(
-        self, state: MultiAgentState, config: ConfigLike | None = None
+        self,
+        state: MultiAgentState,
+        config: ConfigLike | None = None,
     ) -> Command:
         """Execute intelligent multi-agent coordination."""
         logger.info(f"{'=' * 60}")
@@ -108,7 +113,8 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
             raise ValueError(f"Unknown execution mode: {self.execution_mode}")
 
         except Exception as e:
-            logger.exception(f"Error in intelligent multi-agent execution: {e}")
+            logger.exception(
+                f"Error in intelligent multi-agent execution: {e}")
             return Command(goto=END)
 
     def _infer_execution_sequence(self, state: MultiAgentState) -> list[str]:
@@ -198,7 +204,9 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
         return []
 
     def _infer_from_agent_types(
-        self, agent_names: list[str], agents: dict[str, Any]
+        self,
+        agent_names: list[str],
+        agents: dict[str, Any],
     ) -> list[str]:
         """Infer sequence from agent types/classes."""
         # Check agent classes for common patterns
@@ -225,7 +233,9 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
         return []
 
     def _infer_from_prompt_dependencies(
-        self, agent_names: list[str], agents: dict[str, Any]
+        self,
+        agent_names: list[str],
+        agents: dict[str, Any],
     ) -> list[str]:
         """Infer sequence from prompt template dependencies."""
         # Look for agents whose prompts reference other agents' outputs
@@ -236,22 +246,20 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
             dependencies[agent_name] = set()
 
             # Check if agent has prompt template
-            if hasattr(agent, "engine") and hasattr(agent.engine, "prompt_template"):
+            if hasattr(agent, "engine") and hasattr(agent.engine,
+                                                    "prompt_template"):
                 prompt = str(agent.engine.prompt_template)
 
                 # Look for references to other agents' outputs
                 for other_agent in agent_names:
                     if other_agent != agent_name:
                         # Check for common output field references
-                        if any(
-                            field in prompt.lower()
-                            for field in [
+                        if any(field in prompt.lower() for field in [
                                 f"{other_agent}_result",
                                 f"{other_agent}_output",
                                 f"result_from_{other_agent}",
                                 f"output_from_{other_agent}",
-                            ]
-                        ):
+                        ]):
                             dependencies[agent_name].add(other_agent)
 
         # Build sequence based on dependencies
@@ -286,7 +294,9 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
         return list(state.agents.keys())
 
     def _execute_sequential(
-        self, state: MultiAgentState, sequence: list[str]
+        self,
+        state: MultiAgentState,
+        sequence: list[str],
     ) -> Command:
         """Execute agents in sequence."""
         if not sequence:
@@ -310,7 +320,8 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
         # Done with sequence
         return Command(goto=END)
 
-    def _execute_parallel(self, state: MultiAgentState, sequence: list[str]) -> Command:
+    def _execute_parallel(self, state: MultiAgentState,
+                          sequence: list[str]) -> Command:
         """Execute agents in parallel."""
         if not sequence:
             return Command(goto=END)
@@ -323,7 +334,8 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
 
         return Command(goto=END)
 
-    def _execute_branch(self, state: MultiAgentState, sequence: list[str]) -> Command:
+    def _execute_branch(self, state: MultiAgentState,
+                        sequence: list[str]) -> Command:
         """Execute agents with conditional branching."""
         if not sequence:
             return Command(goto=END)
@@ -346,18 +358,17 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
         return Command(goto=f"agent_{current_agent}")
 
     def _execute_conditional(
-        self, state: MultiAgentState, sequence: list[str]
+        self,
+        state: MultiAgentState,
+        sequence: list[str],
     ) -> Command:
         """Execute agents with conditional flow."""
         if not sequence:
             return Command(goto=END)
 
         # Get current agent
-        current_agent = (
-            sequence[self.execution_index]
-            if self.execution_index < len(sequence)
-            else None
-        )
+        current_agent = (sequence[self.execution_index]
+                         if self.execution_index < len(sequence) else None)
         if not current_agent:
             return Command(goto=END)
 
@@ -369,14 +380,17 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
             next_agent = sequence[self.execution_index + 1]
 
             # Evaluate condition (simplified)
-            if self._should_continue_to_next_agent(state, current_agent, next_agent):
+            if self._should_continue_to_next_agent(state, current_agent,
+                                                   next_agent):
                 self.execution_index += 1
                 return Command(goto=f"agent_{next_agent}")
 
         return Command(goto=END)
 
     def _evaluate_branch_condition(
-        self, state: MultiAgentState, branch_config: dict[str, Any]
+        self,
+        state: MultiAgentState,
+        branch_config: dict[str, Any],
     ) -> str | None:
         """Evaluate branch condition and return next agent."""
         condition = branch_config.get("condition", "default")
@@ -390,7 +404,10 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
         return targets[0] if targets else None
 
     def _should_continue_to_next_agent(
-        self, state: MultiAgentState, current_agent: str, next_agent: str
+        self,
+        state: MultiAgentState,
+        current_agent: str,
+        next_agent: str,
     ) -> bool:
         """Determine if execution should continue to next agent."""
         # Simple condition evaluation - can be enhanced
@@ -400,10 +417,16 @@ class IntelligentMultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]
         return True
 
     def add_branch_condition(
-        self, source_agent: str, condition: str, target_agents: list[str]
+        self,
+        source_agent: str,
+        condition: str,
+        target_agents: list[str],
     ):
         """Add a branch condition for an agent."""
-        self.branches[source_agent] = {"condition": condition, "targets": target_agents}
+        self.branches[source_agent] = {
+            "condition": condition,
+            "targets": target_agents
+        }
 
     def set_execution_sequence(self, sequence: list[str]):
         """Manually set the execution sequence."""
@@ -431,5 +454,8 @@ def create_intelligent_multi_agent_node(
         Configured IntelligentMultiAgentNode
     """
     return IntelligentMultiAgentNode(
-        name=name, execution_mode=execution_mode, branches=branches or {}, **kwargs
+        name=name,
+        execution_mode=execution_mode,
+        branches=branches or {},
+        **kwargs,
     )

@@ -7,7 +7,7 @@ Complete API documentation for all Haive packages, automatically generated from 
 
    :maxdepth: 2
    :caption: 📦 Package APIs
-   
+
    api/core/index
    api/agents/index
    api/tools/index

@@ -1,8 +1,8 @@
 # Enhanced MultiAgent V3 - Complete Usage Guide
 
-**Version**: 1.0  
-**Created**: 2025-07-21  
-**Status**: Production Ready  
+**Version**: 1.0
+**Created**: 2025-07-21
+**Status**: Production Ready
 
 ## 🎯 Overview
 
@@ -49,7 +49,7 @@ analyzer = EnhancedSimpleAgent(
     system_message="You analyze data and provide insights."
 )
 summarizer = EnhancedSimpleAgent(
-    name="summarizer", 
+    name="summarizer",
     temperature=0.7,
     system_message="You create concise summaries."
 )
@@ -175,7 +175,7 @@ content_team = EnhancedMultiAgent(
     name="content_creation_team",
     agents={
         "researcher": researcher,
-        "analyzer": analyzer, 
+        "analyzer": analyzer,
         "writer": writer
     },
     execution_mode="sequential"  # Can change to parallel, conditional, etc.
@@ -188,16 +188,16 @@ content_team = EnhancedMultiAgent(
 advanced_team = EnhancedMultiAgent(
     name="advanced_content_team",
     agents={"researcher": researcher, "analyzer": analyzer, "writer": writer},
-    
+
     # Enhanced features
     performance_mode=True,      # Track and optimize performance
     debug_mode=True,           # Rich debugging information
     multi_engine_mode=True,    # Different engines per agent
     advanced_routing=True,     # Sophisticated routing
-    
+
     # Performance tuning
     adaptation_rate=0.2,       # How quickly to adapt (0.0-1.0)
-    
+
     # Execution configuration
     execution_mode="sequential",
     entry_point="researcher"   # Start with researcher
@@ -214,7 +214,7 @@ compiled_team = advanced_team.compile()
 result = compiled_team.invoke({
     "messages": [
         {
-            "role": "user", 
+            "role": "user",
             "content": "Create a comprehensive article about the future of AI in healthcare"
         }
     ]
@@ -292,11 +292,11 @@ def route_customer_request(state):
         return "general_agent"
 
 smart_router.add_conditional_routing(
-    "classifier", 
+    "classifier",
     route_customer_request,
     {
         "billing_agent": "billing_agent",
-        "technical_agent": "technical_agent", 
+        "technical_agent": "technical_agent",
         "general_agent": "general_agent"
     }
 )
@@ -321,7 +321,7 @@ document_processor = EnhancedMultiAgent(
 # Configure complex routing
 document_processor.add_edge("validator", "ocr_processor")
 document_processor.add_parallel_group(
-    ["ocr_processor", "nlp_processor"], 
+    ["ocr_processor", "nlp_processor"],
     next_agent="aggregator"
 )
 ```
@@ -405,13 +405,13 @@ def intelligent_router(state):
     """Custom routing logic based on multiple factors."""
     content = state["messages"][-1].content
     context = state.get("shared_context", {})
-    
+
     # Route based on content complexity
     word_count = len(content.split())
     if word_count > 100:
         return "detailed_processor"
     elif any(keyword in content.lower() for keyword in ["urgent", "asap", "immediate"]):
-        return "fast_processor" 
+        return "fast_processor"
     else:
         return "standard_processor"
 
@@ -427,7 +427,7 @@ complex_router.add_conditional_routing(
     intelligent_router,
     {
         "detailed_processor": "detailed",
-        "fast_processor": "fast", 
+        "fast_processor": "fast",
         "standard_processor": "standard"
     }
 )
@@ -440,7 +440,7 @@ complex_router.add_conditional_routing(
 Each agent automatically tracks:
 
 - **Success Rate**: Percentage of successful executions
-- **Average Duration**: Mean execution time in seconds  
+- **Average Duration**: Mean execution time in seconds
 - **Task Count**: Total number of tasks completed
 - **Efficiency Score**: Success rate / duration ratio
 - **Last Execution**: Timestamp of most recent execution
@@ -451,17 +451,17 @@ Each agent automatically tracks:
 def create_monitoring_dashboard(multi_agent):
     """Create a simple monitoring dashboard."""
     analysis = multi_agent.analyze_agent_performance()
-    
+
     print("=" * 80)
     print(f"PERFORMANCE DASHBOARD: {multi_agent.name}")
     print("=" * 80)
-    
+
     overall = analysis.get("overall", {})
     print(f"Overall Success Rate: {overall.get('average_success_rate', 0):.1%}")
     print(f"Average Duration: {overall.get('average_duration', 0):.2f}s")
     print(f"Total Tasks: {overall.get('total_tasks', 0)}")
     print(f"Best Performer: {overall.get('best_agent', 'Unknown')}")
-    
+
     print("\nPER-AGENT METRICS:")
     for agent_name, metrics in analysis.get("agents", {}).items():
         print(f"  {agent_name:20} | "
@@ -501,7 +501,7 @@ from haive.agents.simple.enhanced_agent_v3 import EnhancedSimpleAgent
 
 def create_production_workflow():
     """Create production-ready multi-agent workflow."""
-    
+
     # Production agents with appropriate settings
     agents = {
         "intake": EnhancedSimpleAgent(
@@ -510,7 +510,7 @@ def create_production_workflow():
             system_message="You process and validate incoming requests."
         ),
         "analyzer": EnhancedSimpleAgent(
-            name="request_analyzer", 
+            name="request_analyzer",
             temperature=0.3,  # Moderate for analysis
             system_message="You analyze requests and determine appropriate routing."
         ),
@@ -520,37 +520,37 @@ def create_production_workflow():
             system_message="You handle specialized domain requests with expertise."
         )
     }
-    
+
     # Production workflow with monitoring
     workflow = EnhancedMultiAgent(
         name="production_request_processor",
         agents=agents,
         execution_mode="conditional",
         entry_point="intake",
-        
+
         # Production features
         performance_mode=True,
         debug_mode=False,  # Disable verbose debugging in production
         advanced_routing=True,
         adaptation_rate=0.05,  # Conservative adaptation rate
-        
+
         # Persistence for production
         persistence_config={
             "store_type": "postgres",
             "connection_string": "postgresql://user:pass@host/db"
         }
     )
-    
+
     # Configure production routing
     def production_router(state):
         content = state["messages"][-1].content.lower()
         priority = state.get("shared_context", {}).get("priority", "normal")
-        
+
         if priority == "high" or "urgent" in content:
             return "specialist"
         else:
             return "analyzer"
-    
+
     workflow.add_conditional_routing(
         "intake",
         production_router,
@@ -559,7 +559,7 @@ def create_production_workflow():
             "analyzer": "analyzer"
         }
     )
-    
+
     return workflow
 
 # Usage in production
@@ -582,29 +582,29 @@ from typing import Optional
 
 def robust_execution(multi_agent, input_data: dict, max_retries: int = 3) -> Optional[dict]:
     """Execute multi-agent with error handling and retries."""
-    
+
     for attempt in range(max_retries):
         try:
             compiled = multi_agent.compile()
             result = compiled.invoke(input_data)
-            
+
             # Validate result
             if result and "messages" in result and result["messages"]:
                 logging.info(f"Multi-agent execution successful on attempt {attempt + 1}")
                 return result
             else:
                 logging.warning(f"Empty result on attempt {attempt + 1}")
-                
+
         except Exception as e:
             logging.error(f"Execution failed on attempt {attempt + 1}: {e}")
             if attempt == max_retries - 1:
                 logging.error("All retry attempts exhausted")
                 return None
-            
+
             # Exponential backoff
             import time
             time.sleep(2 ** attempt)
-    
+
     return None
 
 # Usage
@@ -624,7 +624,7 @@ else:
 # ❌ Wrong
 from haive.agents.multi import EnhancedMultiAgent
 
-# ✅ Correct  
+# ✅ Correct
 from haive.agents.multi.enhanced_multi_agent_v3 import EnhancedMultiAgent
 ```
 
@@ -714,7 +714,7 @@ data_validator = EnhancedSimpleAgent(
 )
 
 creative_writer = EnhancedSimpleAgent(
-    name="creative_writer", 
+    name="creative_writer",
     temperature=0.8,  # High for creativity
     system_message="You write engaging, creative content that captures reader attention while maintaining factual accuracy."
 )
@@ -756,7 +756,7 @@ content_pipeline = EnhancedMultiAgent(
 )
 ```
 
-### Customer Service Router  
+### Customer Service Router
 ```python
 customer_service = EnhancedMultiAgent(
     name="customer_service",

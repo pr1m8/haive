@@ -66,8 +66,7 @@ def _get_config_impl(minimal: bool = False) -> dict[str, Any]:
                 "sphinx.ext.inheritance_diagram",  # Class diagrams
                 "sphinx.ext.autosummary",  # Auto summary tables
                 "sphinx.ext.extlinks",  # External link shortcuts
-            ]
-        )
+            ], )
 
     config["extensions"] = extensions
 
@@ -134,9 +133,11 @@ def _get_config_impl(minimal: bool = False) -> dict[str, Any]:
 
         # Extlinks for common external links
         config["extlinks"] = {
-            "issue": ("https://github.com/username/haive/issues/%s", "issue %s"),
+            "issue":
+            ("https://github.com/username/haive/issues/%s", "issue %s"),
             "pr": ("https://github.com/username/haive/pull/%s", "PR %s"),
-            "commit": ("https://github.com/username/haive/commit/%s", "commit %s"),
+            "commit":
+            ("https://github.com/username/haive/commit/%s", "commit %s"),
         }
 
     return config

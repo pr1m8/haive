@@ -1,24 +1,24 @@
 """Simple multi-agent using use_prebuilt_base pattern."""
 
+from pydantic import Field, model_validator
+from langgraph.graph import END, START
+from langchain_core.messages import HumanMessage
+from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
+from haive.core.schema.prebuilt import multi_agent_state
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config, create_agent_node_v3
+from haive.core.graph.node import agent_node_v3
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.agents.simple.agent import SimpleAgent
+from haive.agents.base.agent import Agent
+from typing import Any, Dict, List
 import sys
 
 sys.path.insert(0, "packages/haive-agents/src")
 sys.path.insert(0, "packages/haive-core/src")
 
-from typing import Any, Dict, List
 
 # Fix forward reference issues
-from haive.agents.base.agent import Agent
-from haive.agents.simple.agent import SimpleAgent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node import agent_node_v3
-from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config, create_agent_node_v3
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.prebuilt import multi_agent_state
-from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
-from langchain_core.messages import HumanMessage
-from langgraph.graph import END, START
-from pydantic import Field, model_validator
 
 multi_agent_state.Agent = Agent
 agent_node_v3.Agent = Agent
@@ -86,7 +86,7 @@ class SimpleMultiAgent(Agent):
             graph.add_edge(START, f"agent_{agent_names[0]}")
 
             for i in range(len(agent_names) - 1):
-                graph.add_edge(f"agent_{agent_names[i]}", f"agent_{agent_names[i+1]}")
+                graph.add_edge(f"agent_{agent_names[i]}", f"agent_{agent_names[i + 1]}")
 
             graph.add_edge(f"agent_{agent_names[-1]}", END)
 

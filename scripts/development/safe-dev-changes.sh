@@ -90,7 +90,7 @@ show_current_state() {
 	echo "üîß Available dev tools:"
 	for tool in ruff black isort mypy pyright pre-commit; do
 		if command -v "$tool" >/dev/null 2>&1; then
-			echo -e "   ‚ú${ $to}ol ($(whic"h $to"ol))"
+			echo -e "   ‚ú${ $to}ol ($(which"h $to"ol))"
 		else
 			echo -e "   ‚ù${ $to}ol (not found)"
 		fi
@@ -168,8 +168,8 @@ repos:
         types: [python]
         stages: [pre-commit]
         pass_filenames: true
-        
-      - id: ruff-format  
+
+      - id: ruff-format
         name: "Ruff Formatter"
         entry: ruff format
         language: system

@@ -177,7 +177,7 @@ Ancient strategic board game
        2 . . . . . . . . .
        1 . . . . . . . . .
 
-   
+
    Black: 12 captured
    White: 8 captured
    Turn: Black | Move: 45

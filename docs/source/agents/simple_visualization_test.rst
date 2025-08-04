@@ -18,7 +18,7 @@ This page should have normal content.
 
 .. raw:: html
 
-   <div id="test-graph" 
+   <div id="test-graph"
    class="agent-graph-container"
    data-agent-graph='{"nodes": [{"id": "start", "type": "start", "label": "START"}], "edges": []}'>
    </div>

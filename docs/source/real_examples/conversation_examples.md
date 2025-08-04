@@ -4,7 +4,7 @@ Real examples and outputs from the conversation agent.
 
 ## conversation_README
 
-**Source**: `packages/haive-agents/src/haive/agents/conversation/collaberative/README.md`
+**Source**: `packages/haive-agents/src/haive/agents/conversation/collaborative/README.md`
 
 # Collaborative Conversation
 

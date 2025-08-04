@@ -30,6 +30,8 @@ Example:
     Registered agents: ['helper']
 """
 
+from __future__ import annotations
+
 from haive.agents.supervisor_new.base.agent import BaseSupervisor
 from haive.agents.supervisor_new.base.models import (
     AgentInfo,
@@ -57,7 +59,6 @@ from haive.agents.supervisor_new.base.tools import (
     create_handoff_tool,
     create_list_agents_tool,
 )
-
 
 __all__ = [
     # Models

@@ -7,14 +7,14 @@ This module provides automatic docstring generation including:
 - Module and class docstring generation
 - Smart insertion logic that preserves existing code
 """
+from __future__ import annotations
 
 import ast
 import logging
 import sys
 from pathlib import Path
-from typing import List
 
-from .coverage import DocstringTarget
+from scripts.documentation.docstring_tools.coverage import DocstringTarget
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent.parent
@@ -29,9 +29,9 @@ class DocstringGenerator:
 
     def __init__(self, dry_run: bool = False):
         self.dry_run = dry_run
-        self.generated_docstrings: List[DocstringTarget] = []
+        self.generated_docstrings: list[DocstringTarget] = []
 
-    def generate_missing_docstrings(self, targets: List[DocstringTarget]) -> int:
+    def generate_missing_docstrings(self, targets: list[DocstringTarget]) -> int:
         """Generate docstrings for missing targets."""
         if self.dry_run:
             logger.info(f"🧪 Would generate {len(targets)} missing docstrings")
@@ -58,11 +58,13 @@ class DocstringGenerator:
         return generated_count
 
     def _generate_docstrings_for_file(
-        self, file_path: Path, targets: List[DocstringTarget]
+        self,
+        file_path: Path,
+        targets: list[DocstringTarget],
     ) -> bool:
         """Generate docstrings for targets in a specific file."""
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 lines = f.readlines()
 
             # Sort targets by line number (reverse order to maintain line numbers)
@@ -84,14 +86,16 @@ class DocstringGenerator:
             return False
 
     def _create_docstring_for_target(
-        self, target: DocstringTarget, file_path: Path
+        self,
+        target: DocstringTarget,
+        file_path: Path,
     ) -> str:
         """Create a docstring for a specific target."""
         if target.target_type == "module":
             return self._create_module_docstring(file_path)
-        elif target.target_type == "class":
+        if target.target_type == "class":
             return self._create_class_docstring(target)
-        elif target.target_type in ["function", "method"]:
+        if target.target_type in ["function", "method"]:
             return self._create_function_docstring(target, file_path)
 
         return ""
@@ -102,8 +106,7 @@ class DocstringGenerator:
         if module_name == "__init__":
             package_name = file_path.parent.name
             return f'"""Package initialization for {package_name}."""\n\n'
-        else:
-            return f'"""Module: {module_name}."""\n\n'
+        return f'"""Module: {module_name}."""\n\n'
 
     def _create_class_docstring(self, target: DocstringTarget) -> str:
         """Create a class docstring."""
@@ -111,12 +114,14 @@ class DocstringGenerator:
         return f'    """Class: {class_name}."""\n'
 
     def _create_function_docstring(
-        self, target: DocstringTarget, file_path: Path
+        self,
+        target: DocstringTarget,
+        file_path: Path,
     ) -> str:
         """Create a function/method docstring."""
         # Try to analyze the function signature for better docstring
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
 
             tree = ast.parse(content)
@@ -128,7 +133,6 @@ class DocstringGenerator:
                     and node.name == target.function_name
                     and node.lineno == target.line_number
                 ):
-
                     return self._generate_google_style_docstring(node, target)
 
         except Exception:
@@ -139,7 +143,9 @@ class DocstringGenerator:
         return f'{indent}"""{target.function_name.replace("_", " ").title()}."""\n'
 
     def _generate_google_style_docstring(
-        self, node: ast.FunctionDef, target: DocstringTarget
+        self,
+        node: ast.FunctionDef,
+        target: DocstringTarget,
     ) -> str:
         """Generate Google-style docstring from function AST node."""
         indent = "        " if target.target_type == "method" else "    "
@@ -161,7 +167,7 @@ class DocstringGenerator:
                 [
                     "",
                     "    Args:",
-                ]
+                ],
             )
             for arg in args:
                 docstring_lines.append(f"        {arg}: Description of {arg}.")
@@ -178,7 +184,7 @@ class DocstringGenerator:
                     "",
                     "    Returns:",
                     "        Return value description.",
-                ]
+                ],
             )
 
         docstring_lines.append('    """')
@@ -188,7 +194,10 @@ class DocstringGenerator:
         return result
 
     def _insert_docstring(
-        self, lines: List[str], target: DocstringTarget, docstring: str
+        self,
+        lines: list[str],
+        target: DocstringTarget,
+        docstring: str,
     ):
         """Insert docstring into file lines."""
         if target.target_type == "module":
@@ -218,13 +227,15 @@ def main():
     parser = argparse.ArgumentParser(description="Generate missing docstrings")
     parser.add_argument("--target", required=True, help="Target package")
     parser.add_argument(
-        "--dry-run", action="store_true", help="Show what would be generated"
+        "--dry-run",
+        action="store_true",
+        help="Show what would be generated",
     )
 
     args = parser.parse_args()
 
     # Import coverage analyzer to find missing docstrings
-    from .coverage import CoverageAnalyzer
+    from scripts.documentation.docstring_tools.coverage import CoverageAnalyzer
 
     analyzer = CoverageAnalyzer()
     coverage_report = analyzer.analyze_package_coverage(args.target)
@@ -232,13 +243,12 @@ def main():
     if coverage_report.missing_targets:
         generator = DocstringGenerator(dry_run=args.dry_run)
         generated = generator.generate_missing_docstrings(
-            coverage_report.missing_targets
+            coverage_report.missing_targets,
         )
         logger.info(f"🎉 Generated {generated} docstrings")
         return 0
-    else:
-        logger.info("✅ No missing docstrings found!")
-        return 0
+    logger.info("✅ No missing docstrings found!")
+    return 0
 
 
 if __name__ == "__main__":

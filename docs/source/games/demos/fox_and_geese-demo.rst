@@ -174,7 +174,7 @@ Asymmetric strategy game
        G G G
        . G .
 
-   
+
    F = Fox, G = Goose
    Fox Turn | Geese captured: 2
 

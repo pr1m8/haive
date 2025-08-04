@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 project = "Haive Documentation Test"
 extensions = ["sphinx.ext.autodoc"]
 html_theme = "furo"

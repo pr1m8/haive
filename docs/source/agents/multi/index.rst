@@ -5,7 +5,7 @@ Coordinate multiple agents to solve complex problems collaboratively.
 
 .. note::
 
-   
+
    This is the user guide for multi-agent systems. For API documentation, see :doc:`/api/haive/agents/multi/index`.
 
 Overview
@@ -14,7 +14,7 @@ Overview
 Multi-agent systems in Haive enable sophisticated agent coordination patterns:
 
 - **SequentialMultiAgent** - Agents work in sequence, passing results
-- **ParallelMultiAgent** - Agents work simultaneously on sub-tasks  
+- **ParallelMultiAgent** - Agents work simultaneously on sub-tasks
 - **HierarchicalMultiAgent** - Supervisor agents manage worker agents
 - **CollaborativeMultiAgent** - Agents negotiate and reach consensus
 
@@ -26,11 +26,11 @@ Quick Start
    from haive.agents.multi import SequentialMultiAgent
    from haive.agents.simple import SimpleAgent
    from haive.agents.react import ReactAgent
-   
+
    # Create individual agents
    researcher = ReactAgent(name="researcher", tools=[search_tool])
    writer = SimpleAgent(name="writer", system_prompt="You are a technical writer")
-   
+
    # Create multi-agent system
    multi_agent = SequentialMultiAgent(
 
@@ -39,7 +39,7 @@ Quick Start
        flow_description="Research topic then write article"
 
    )
-   
+
    # Execute workflow
    result = await multi_agent.arun(
 

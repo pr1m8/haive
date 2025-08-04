@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from document_grading.agent import (
     DocumentGradingAgent,
     DocumentGradingRAGAgent,
@@ -8,7 +10,6 @@ from document_grading.agent import (
     from_documents,
     grade_single_document,
 )
-
 
 __all__ = [
     "DocumentGradingAgent",

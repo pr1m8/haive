@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 

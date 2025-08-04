@@ -9,10 +9,10 @@ This module provides comprehensive docstring validation including:
 """
 
 import logging
+from pathlib import Path
 import subprocess
 import sys
-from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent.parent
@@ -28,7 +28,7 @@ class ComplianceChecker:
     def __init__(self):
         pass
 
-    def run_pydocstyle_check(self, package_path: str) -> List[str]:
+    def run_pydocstyle_check(self, package_path: str) -> list[str]:
         """Run pydocstyle PEP 257 compliance check."""
         logger.info(f"✅ Running pydocstyle PEP 257 check on {package_path}")
 
@@ -49,6 +49,7 @@ class ComplianceChecker:
                 capture_output=True,
                 text=True,
                 timeout=60,
+                check=False,
             )
 
             if result.stdout:
@@ -63,13 +64,12 @@ class ComplianceChecker:
                     logger.info(f"  ... and {len(issues) - 10} more issues")
 
                 return issues
-            else:
-                logger.info("✅ No pydocstyle issues found!")
-                return []
+            logger.info("✅ No pydocstyle issues found!")
+            return []
 
         except FileNotFoundError:
             logger.error(
-                "❌ pydocstyle not found. Install with: pip install pydocstyle"
+                "❌ pydocstyle not found. Install with: pip install pydocstyle",
             )
             return []
         except subprocess.TimeoutExpired:
@@ -79,7 +79,7 @@ class ComplianceChecker:
             logger.error(f"❌ pydocstyle check failed: {e}")
             return []
 
-    def run_flake8_docstring_check(self, package_path: str) -> List[str]:
+    def run_flake8_docstring_check(self, package_path: str) -> list[str]:
         """Run flake8-docstrings for additional docstring validation."""
         logger.info(f"🔍 Running flake8-docstrings check on {package_path}")
 
@@ -100,6 +100,7 @@ class ComplianceChecker:
                 capture_output=True,
                 text=True,
                 timeout=60,
+                check=False,
             )
 
             if result.stdout:
@@ -114,9 +115,8 @@ class ComplianceChecker:
                     logger.info(f"  ... and {len(issues) - 10} more issues")
 
                 return issues
-            else:
-                logger.info("✅ No flake8-docstrings issues found!")
-                return []
+            logger.info("✅ No flake8-docstrings issues found!")
+            return []
 
         except FileNotFoundError:
             logger.info("ℹ️ flake8 with docstring plugin not found")
@@ -128,9 +128,10 @@ class ComplianceChecker:
             logger.error(f"❌ flake8-docstrings check failed: {e}")
             return []
 
-    def comprehensive_validation(self, package_path: str) -> Dict[str, Any]:
+    def comprehensive_validation(self, package_path: str) -> dict[str, Any]:
         """Run comprehensive docstring validation with multiple tools."""
-        logger.info(f"🔍 Running comprehensive docstring validation on {package_path}")
+        logger.info(
+            f"🔍 Running comprehensive docstring validation on {package_path}")
 
         validation_results = {
             "pydocstyle_issues": [],
@@ -152,25 +153,29 @@ class ComplianceChecker:
             validation_results["tools_used"].append("flake8-docstrings")
 
         # Calculate total issues
-        validation_results["total_issues"] = len(pydocstyle_issues) + len(flake8_issues)
+        validation_results["total_issues"] = len(pydocstyle_issues) + len(
+            flake8_issues)
 
         self._report_validation_results(validation_results)
         return validation_results
 
-    def _report_validation_results(self, results: Dict[str, Any]):
+    def _report_validation_results(self, results: dict[str, Any]):
         """Report comprehensive validation results."""
         logger.info("📋 Comprehensive Docstring Validation Report:")
         logger.info(f"  🔍 Total Issues Found: {results['total_issues']}")
         logger.info(
-            f"  🛠️ Tools Used: {', '.join(results['tools_used']) if results['tools_used'] else 'None'}"
+            f"  🛠️ Tools Used: {
+                ', '.join(
+                    results['tools_used']) if results['tools_used'] else 'None'}",
         )
 
         if results["pydocstyle_issues"]:
-            logger.info(f"  📝 pydocstyle Issues: {len(results['pydocstyle_issues'])}")
+            logger.info(
+                f"  📝 pydocstyle Issues: {len(results['pydocstyle_issues'])}")
 
         if results["flake8_docstring_issues"]:
             logger.info(
-                f"  🔧 flake8-docstrings Issues: {len(results['flake8_docstring_issues'])}"
+                f"  🔧 flake8-docstrings Issues: {len(results['flake8_docstring_issues'])}",
             )
 
         if results["total_issues"] == 0:
@@ -182,15 +187,20 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Docstring PEP 257 compliance checking"
-    )
+        description="Docstring PEP 257 compliance checking", )
     parser.add_argument("--target", required=True, help="Target package")
-    parser.add_argument("--pydocstyle", action="store_true", help="Use pydocstyle only")
+    parser.add_argument("--pydocstyle",
+                        action="store_true",
+                        help="Use pydocstyle only")
     parser.add_argument(
-        "--flake8", action="store_true", help="Use flake8-docstrings only"
+        "--flake8",
+        action="store_true",
+        help="Use flake8-docstrings only",
     )
     parser.add_argument(
-        "--comprehensive", action="store_true", help="Use all validation tools"
+        "--comprehensive",
+        action="store_true",
+        help="Use all validation tools",
     )
 
     args = parser.parse_args()
@@ -201,10 +211,10 @@ def main():
         # Default to comprehensive
         results = checker.comprehensive_validation(args.target)
         return 0 if results["total_issues"] == 0 else 1
-    elif args.pydocstyle:
+    if args.pydocstyle:
         issues = checker.run_pydocstyle_check(args.target)
         return 0 if len(issues) == 0 else 1
-    elif args.flake8:
+    if args.flake8:
         issues = checker.run_flake8_docstring_check(args.target)
         return 0 if len(issues) == 0 else 1
 

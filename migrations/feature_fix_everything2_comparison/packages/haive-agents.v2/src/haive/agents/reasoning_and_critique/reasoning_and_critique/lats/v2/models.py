@@ -12,6 +12,8 @@ Functions:
     normalized_score: Normalized Score functionality.
 """
 
+from __future__ import annotations
+
 import math
 from typing import Any
 import uuid
@@ -42,7 +44,9 @@ class TreeNode(BaseModel):
     is_solved: bool = False
     is_terminal: bool = False
 
-    def uct_score(self, parent_visits: int, exploration_weight: float = 1.0) -> float:
+    def uct_score(self,
+                  parent_visits: int,
+                  exploration_weight: float = 1.0) -> float:
         """Calculate Upper Confidence Bound for tree search."""
         if self.visits == 0:
             return float("inf")  # Unexplored nodes have highest priority
@@ -60,16 +64,14 @@ class Reflection(BaseModel):
     """Output from reflection agent."""
 
     reflections: str = Field(
-        description="Critique and reflections on the response quality"
-    )
+        description="Critique and reflections on the response quality", )
     score: float = Field(
         ge=0,
         le=10,
         description="Score from 0-10 on the quality of the candidate response",
     )
     found_solution: bool = Field(
-        description="Whether the response has fully solved the question or task"
-    )
+        description="Whether the response has fully solved the question or task", )
 
     @property
     def normalized_score(self) -> float:
@@ -80,7 +82,7 @@ class CandidateActions(BaseModel):
     """Output from expansion agent."""
 
     candidates: list[dict[str, Any]] = Field(
-        description="List of candidate next actions (tool calls or responses)"
+        description="List of candidate next actions (tool calls or responses)",
     )
     reasoning: str = Field(description="Reasoning for the selected candidates")
 

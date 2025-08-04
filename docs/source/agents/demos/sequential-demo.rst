@@ -122,7 +122,7 @@ Executes tasks in sequential order
        [✓] Step 4: Validate
        [→] Step 5: Generate output
 
-   
+
    Progress: 80% complete
 
 .. raw:: html

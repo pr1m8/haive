@@ -18,7 +18,7 @@ A straightforward agent for content analysis and summarization
    :alt: SimpleAnalysisAgent Agent Graph
    :align: center
    :width: 80%
-   
+
    Agent Architecture Graph
 
 Interactive Example

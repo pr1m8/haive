@@ -12,28 +12,29 @@ Architecture:
 - ConversationMemoryAgent tool for conversation context
 - Memory analysis and coordination through ReactAgent reasoning
 """
+from __future__ import annotations
 
 import asyncio
 import logging
 from typing import Any
 
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
-from langchain_core.tools import tool
-from pydantic import BaseModel, ConfigDict, Field
-
 from haive.agents.memory_v2.conversation_memory_agent import ConversationMemoryAgent
-
-# Import our memory agents
-from haive.agents.memory_v2.long_term_memory_agent import (
-    LongTermMemoryAgent,
-    MemoryEntry,
-)
-
-# Import ReactAgent for coordination
+from haive.agents.memory_v2.long_term_memory_agent import LongTermMemoryAgent
+from haive.agents.memory_v2.long_term_memory_agent import MemoryEntry
 from haive.agents.react.agent import ReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.models.llm.base import LLMConfig
+from langchain_core.messages import AIMessage
+from langchain_core.messages import BaseMessage
+from langchain_core.messages import HumanMessage
+from langchain_core.tools import tool
+from pydantic import BaseModel
+from pydantic import ConfigDict
+from pydantic import Field
 
+# Import our memory agents
+# Import ReactAgent for coordination
 
 logger = logging.getLogger(__name__)
 
@@ -135,7 +136,8 @@ class ReactMemoryCoordinator:
 
         if self.config.enable_conversation_memory:
             self.conversation_memory = ConversationMemoryAgent.create(
-                user_id=self.user_id, name=f"{self.name}_conv"
+                user_id=self.user_id,
+                name=f"{self.name}_conv",
             )
             await self.conversation_memory.initialize()
             logger.info("✅ Conversation memory agent initialized")
@@ -159,13 +161,15 @@ class ReactMemoryCoordinator:
         )
 
         self.react_agent = ReactAgent(
-            name=self.name, engine=aug_llm_config, tools=memory_tools
+            name=self.name,
+            engine=aug_llm_config,
+            tools=memory_tools,
         )
 
         self._initialized = True
         logger.info(
-            f"✅ ReactMemoryCoordinator initialized with {len(memory_tools)} memory tools"
-        )
+            f"✅ ReactMemoryCoordinator initialized with {
+                len(memory_tools)} memory tools", )
 
     def _create_memory_tools(self) -> list:
         """Create memory tools for ReactAgent."""
@@ -179,14 +183,13 @@ class ReactMemoryCoordinator:
                 """Search long-term memory for relevant information."""
                 try:
                     result = await self.long_term_memory.run(
-                        query, extract_memories=False
+                        query,
+                        extract_memories=False,
                     )
                     memory_context = result.get("memory_context", [])
                     if memory_context:
-                        return (
-                            f"Found {len(memory_context)} relevant memories:\n"
-                            + "\n".join(f"- {mem}" for mem in memory_context[:3])
-                        )
+                        return f"Found {len(memory_context)} relevant memories:\n" + "\n".join(
+                            f"- {mem}" for mem in memory_context[:3])
                     return "No relevant long-term memories found."
                 except Exception as e:
                     return f"Error searching long-term memory: {e!s}"
@@ -200,17 +203,17 @@ class ReactMemoryCoordinator:
             async def search_conversation_memory(query: str) -> str:
                 """Search conversation memory for relevant context."""
                 try:
-                    docs = await self.conversation_memory.retrieve_context(query, k=3)
+                    docs = await self.conversation_memory.retrieve_context(
+                        query, k=3)
                     if docs:
                         results = []
                         for doc in docs:
-                            msg_type = doc.metadata.get("message_type", "unknown")
+                            msg_type = doc.metadata.get(
+                                "message_type", "unknown")
                             content = doc.page_content[:100]
                             results.append(f"[{msg_type}] {content}")
-                        return (
-                            f"Found {len(docs)} relevant conversation messages:\n"
-                            + "\n".join(results)
-                        )
+                        return f"Found {len(docs)} relevant conversation messages:\n" + \
+                            "\n".join(results, )
                     return "No relevant conversation history found."
                 except Exception as e:
                     return f"Error searching conversation memory: {e!s}"
@@ -220,7 +223,9 @@ class ReactMemoryCoordinator:
         # Memory storage tool
         @tool
         async def store_memory(
-            content: str, memory_type: str = "factual", importance: float = 0.7
+            content: str,
+            memory_type: str = "factual",
+            importance: float = 0.7,
         ) -> str:
             """Store new information in long-term memory."""
             try:
@@ -228,14 +233,13 @@ class ReactMemoryCoordinator:
                     memory = MemoryEntry(
                         content=content,
                         memory_type=memory_type,
-                        importance=min(max(importance, 0.0), 1.0),  # Clamp to [0,1]
+                        importance=min(max(importance, 0.0),
+                                       1.0),  # Clamp to [0,1]
                         user_id=self.user_id,
                         tags=[memory_type],
                     )
                     self.long_term_memory.memory_store.add_memory(memory)
-                    return (
-                        f"✅ Stored {memory_type} memory with importance {importance}"
-                    )
+                    return f"✅ Stored {memory_type} memory with importance {importance}"
                 return "❌ Long-term memory not enabled"
             except Exception as e:
                 return f"❌ Error storing memory: {e!s}"
@@ -252,22 +256,19 @@ class ReactMemoryCoordinator:
                 if self.long_term_memory:
                     ltm_summary = self.long_term_memory.get_memory_summary()
                     insights.append(
-                        f"Long-term: {ltm_summary['total_memories']} memories, types: {ltm_summary['memory_types']}"
+                        f"Long-term: {ltm_summary['total_memories']} memories, types: {ltm_summary['memory_types']}",
                     )
 
                 if self.conversation_memory:
-                    conv_summary = (
-                        await self.conversation_memory.get_conversation_summary()
+                    conv_summary = await self.conversation_memory.get_conversation_summary(
                     )
                     insights.append(
-                        f"Conversation: {conv_summary['total_messages']} messages across {conv_summary['conversations']} conversations"
-                    )
+                        f"Conversation: {
+                            conv_summary['total_messages']} messages across {
+                            conv_summary['conversations']} conversations", )
 
-                return (
-                    "Memory Analysis:\n" + "\n".join(insights)
-                    if insights
-                    else "No memory data available for analysis."
-                )
+                return ("Memory Analysis:\n" + "\n".join(insights) if insights
+                        else "No memory data available for analysis.")
 
             except Exception as e:
                 return f"❌ Error analyzing memory: {e!s}"
@@ -300,7 +301,9 @@ When users ask questions:
 
 Be helpful, insightful, and proactive about memory management."""
 
-    async def run(self, query: str, add_to_conversation: bool = True) -> dict[str, Any]:
+    async def run(self,
+                  query: str,
+                  add_to_conversation: bool = True) -> dict[str, Any]:
         """Run memory-enhanced conversation with ReactAgent reasoning.
 
         This implements the ReactAgent pattern for memory operations:
@@ -322,22 +325,24 @@ Be helpful, insightful, and proactive about memory management."""
         # Step 3: Extract and store memories if enabled
         if self.config.auto_extract_memories and self.long_term_memory:
             await self.long_term_memory._extract_and_store_memories(
-                query, str(react_result)
+                query,
+                str(react_result),
             )
 
         return {
-            "response": react_result,
-            "user_id": self.user_id,
-            "memory_tools_used": (
-                self.react_agent.tool_calls_made
-                if hasattr(self.react_agent, "tool_calls_made")
-                else 0
-            ),
-            "coordinator_name": self.name,
+            "response":
+            react_result,
+            "user_id":
+            self.user_id,
+            "memory_tools_used": (self.react_agent.tool_calls_made if hasattr(
+                self.react_agent, "tool_calls_made") else 0),
+            "coordinator_name":
+            self.name,
         }
 
     async def add_conversation_batch(
-        self, messages: list[BaseMessage]
+        self,
+        messages: list[BaseMessage],
     ) -> dict[str, Any]:
         """Add a batch of conversation messages to memory."""
         results = {"conversation_stored": False, "memories_extracted": 0}
@@ -365,13 +370,12 @@ Be helpful, insightful, and proactive about memory management."""
 
         if self.long_term_memory:
             summary["memory_systems"][
-                "long_term"
-            ] = self.long_term_memory.get_memory_summary()
+                "long_term"] = self.long_term_memory.get_memory_summary()
 
         if self.conversation_memory:
             summary["memory_systems"][
-                "conversation"
-            ] = await self.conversation_memory.get_conversation_summary()
+                "conversation"] = await self.conversation_memory.get_conversation_summary(
+            )
 
         return summary
 
@@ -383,7 +387,7 @@ Be helpful, insightful, and proactive about memory management."""
         llm_config: LLMConfig | None = None,
         enable_all_memory: bool = True,
         name: str = "react_memory_coordinator",
-    ) -> "ReactMemoryCoordinator":
+    ) -> ReactMemoryCoordinator:
         """Factory method to create ReactMemoryCoordinator."""
         config = MemoryCoordinatorConfig(
             llm_config=llm_config,
@@ -399,7 +403,7 @@ Be helpful, insightful, and proactive about memory management."""
         user_id: str,
         llm_config: LLMConfig | None = None,
         name: str = "focused_memory_coordinator",
-    ) -> "ReactMemoryCoordinator":
+    ) -> ReactMemoryCoordinator:
         """Create coordinator optimized for focused reasoning."""
         config = MemoryCoordinatorConfig(
             llm_config=llm_config,
@@ -415,7 +419,8 @@ async def demo_react_memory_coordinator():
     """Demo ReactAgent memory coordinator functionality."""
     # Create coordinator
     coordinator = ReactMemoryCoordinator.create(
-        user_id="demo_user", name="demo_coordinator"
+        user_id="demo_user",
+        name="demo_coordinator",
     )
 
     # Initialize
@@ -425,10 +430,10 @@ async def demo_react_memory_coordinator():
     initial_messages = [
         HumanMessage("Hi, I'm Alex and I work as a data scientist at Netflix"),
         HumanMessage(
-            "I prefer working in the morning and I love collaborative projects"
+            "I prefer working in the morning and I love collaborative projects",
         ),
         HumanMessage(
-            "I'm currently working on a recommendation system for documentaries"
+            "I'm currently working on a recommendation system for documentaries",
         ),
     ]
 

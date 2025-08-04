@@ -123,7 +123,7 @@ Attributes
 
 ## 🎨 UI Preferences Noted
 
-**User Comment**: "i prefered th e old ui fo rthe schemas"
+**User Comment**: "i preferred th e old ui fo rthe schemas"
 
 **Interpretation**: The old autosummary UI provided:
 

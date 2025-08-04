@@ -8,14 +8,17 @@ Classes:
 Functions:
     update_candidates: Update Candidates functionality.
 """
+from __future__ import annotations
 
 from collections.abc import Sequence
-from typing import Annotated, Any
+from typing import Annotated
+from typing import Any
 
 from agents.tot.modular.models import Candidate
 from langchain_core.messages import BaseMessage
 from langgraph.graph import add_messages
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 
 def update_candidates(
@@ -35,7 +38,7 @@ def update_candidates(
         existing = []
     if updates is None:
         return existing
-    if updates == "clear":
+    if updates == 'clear':
         return []
 
     # Handle list of dictionaries by converting to Candidate objects
@@ -54,39 +57,46 @@ class ToTState(BaseModel):
 
     # Basic state tracking
     messages: Annotated[Sequence[BaseMessage], add_messages] = Field(
-        default_factory=list, description="Message history"
+        default_factory=list,
+        description='Message history',
     )
 
     # Problem definition
-    problem: str = Field(default="", description="The problem to solve")
+    problem: str = Field(default='', description='The problem to solve')
 
     # ToT algorithm state
     candidates: Annotated[list[Candidate], update_candidates] = Field(
-        default_factory=list, description="Current candidate solutions"
+        default_factory=list,
+        description='Current candidate solutions',
     )
 
     scored_candidates: Annotated[list[Candidate], update_candidates] = Field(
-        default_factory=list, description="Scored candidate solutions"
+        default_factory=list,
+        description='Scored candidate solutions',
     )
 
     # Search parameters
-    depth: int = Field(default=0, description="Current search depth")
+    depth: int = Field(default=0, description='Current search depth')
 
-    max_depth: int = Field(default=5, description="Maximum search depth")
+    max_depth: int = Field(default=5, description='Maximum search depth')
 
     best_candidate: Candidate | None = Field(
-        default=None, description="Best candidate found so far"
+        default=None,
+        description='Best candidate found so far',
     )
 
     # For expansion
     current_seed: Candidate | None = Field(
-        default=None, description="Current seed candidate for expansion"
+        default=None,
+        description='Current seed candidate for expansion',
     )
 
     # Output field
-    answer: str | None = Field(default=None, description="Final answer to the problem")
+    answer: str | None = Field(default=None,
+                               description='Final answer to the problem')
 
     # Extra metadata
     metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional metadata"
+        default_factory=dict,
+        description='Additional metadata',
     )

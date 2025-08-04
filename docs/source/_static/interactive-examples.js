@@ -260,11 +260,11 @@ document.addEventListener("DOMContentLoaded", function () {
                             <span class="game-status ${result.status}">${result.status.toUpperCase()}</span>
                             <span class="game-result">${result.result}</span>
                         </div>
-                        
+
                         <div class="game-board">
                             <pre class="board-display">${result.ui_output}</pre>
                         </div>
-                        
+
                         <div class="game-info">
                             <div class="moves-section">
                                 <h4>📝 Move History</h4>
@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                       .join(" ")}
                                 </div>
                             </div>
-                            
+
                             <div class="analysis-section">
                                 <h4>🧠 AI Analysis</h4>
                                 <div class="analysis-content">
@@ -323,7 +323,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <h4>❓ Query</h4>
                             <p class="query">${result.query}</p>
                         </div>
-                        
+
                         <div class="retrieval-section">
                             <h4>📚 Retrieved Documents</h4>
                             <div class="docs-list">
@@ -342,12 +342,12 @@ document.addEventListener("DOMContentLoaded", function () {
                                   .join("")}
                             </div>
                         </div>
-                        
+
                         <div class="response-section">
                             <h4>💬 Generated Response</h4>
                             <p class="response">${result.response}</p>
                         </div>
-                        
+
                         <div class="metadata">
                             <span>Retrieval: ${result.metadata.retrieval_time}</span>
                             <span>Generation: ${result.metadata.generation_time}</span>

@@ -18,15 +18,17 @@ Examples:
     python doc_utils_runner.py docs --api-docs --output ./agent_docs
 """
 
+from __future__ import annotations
+
 import asyncio
-import sys
 from pathlib import Path
+import sys
+
+from scripts.doc_utils.cli import main
 
 # Add the project root to the path to ensure imports work
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
-
-from scripts.doc_utils.cli import main
 
 if __name__ == "__main__":
     asyncio.run(main())

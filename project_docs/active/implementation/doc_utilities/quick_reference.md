@@ -1,7 +1,7 @@
 # Documentation Utilities - Quick Reference
 
-**Date**: 2025-01-22  
-**Status**: Ready for Use  
+**Date**: 2025-01-22
+**Status**: Ready for Use
 **Location**: `/scripts/doc_utils/`
 
 ## 🚀 Quick Commands

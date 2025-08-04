@@ -3,14 +3,14 @@
 This module provides prompts functionality for the Haive framework.
 """
 
+from __future__ import annotations
+
 from langchain_core.prompts import ChatPromptTemplate
 
-
-RAG_HALLUCINATION_DETECTION_COMPREHENSIVE = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            """You are an expert fact-checker specializing in detecting hallucinations and unsupported claims in AI-generated answers. Your role is to rigorously verify that generated answers are fully grounded in the provided source documents.
+RAG_HALLUCINATION_DETECTION_COMPREHENSIVE = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        """You are an expert fact-checker specializing in detecting hallucinations and unsupported claims in AI-generated answers. Your role is to rigorously verify that generated answers are fully grounded in the provided source documents.
 
 **Hallucination Types to Detect:**
 
@@ -44,10 +44,10 @@ RAG_HALLUCINATION_DETECTION_COMPREHENSIVE = ChatPromptTemplate.from_messages(
 - **Severe Hallucination (1.0)**: Answer contains substantial fabricated or contradictory information
 
 Be thorough, precise, and evidence-based in your analysis.""",
-        ),
-        (
-            "human",
-            """Analyze the following AI-generated answer for hallucinations by comparing it against the source documents.
+    ),
+    (
+        "human",
+        """Analyze the following AI-generated answer for hallucinations by comparing it against the source documents.
 
 **Original Query:** {query}
 
@@ -65,15 +65,13 @@ Be thorough, precise, and evidence-based in your analysis.""",
 5. **Recommendations** for improving accuracy
 
 Provide detailed analysis with specific examples and evidence.""",
-        ),
-    ]
-)
+    ),
+], )
 
-RAG_HALLUCINATION_DETECTION_BINARY = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            """You are an expert fact-checker providing binary hallucination detection.
+RAG_HALLUCINATION_DETECTION_BINARY = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        """You are an expert fact-checker providing binary hallucination detection.
 
 **HALLUCINATION DETECTED if:**
 - Answer includes facts not found in source documents
@@ -88,16 +86,15 @@ RAG_HALLUCINATION_DETECTION_BINARY = ChatPromptTemplate.from_messages(
 - Answer acknowledges limitations appropriately
 
 Provide clear HALLUCINATION DETECTED / NO HALLUCINATION decisions.""",
-        ),
-        (
-            "human",
-            """Determine if the AI-generated answer contains significant hallucinations.
+    ),
+    (
+        "human",
+        """Determine if the AI-generated answer contains significant hallucinations.
 
 **Query:** {query}
 **Source Documents:** {retrieved_documents}
 **Generated Answer:** {generated_answer}
 
 Provide a clear decision with detailed justification and specific issues if found.""",
-        ),
-    ]
-)
+    ),
+], )

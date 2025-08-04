@@ -16,11 +16,11 @@ Brainstorming: Eco-friendly smart home device ideas
 ===================================================
 
 Problem Statement:
-[ProductManager]: I. Environmental Concerns  
+[ProductManager]: I. Environmental Concerns
  A. Growing impact of energy consumption on the environment
 
 1.  High levels of greenhouse gas emissions
-2.  Depletion of natural resources  
+2.  Depletion of natural resources
     B. Increasing waste and pollution from electronic devices
 3.  E-waste contributing to landfill overflow
 4.  Toxic materials leaching into soil and water
@@ -28,24 +28,24 @@ Problem Statement:
 ...
 
 Product Ideas:
-[ProductManager]: I. Intelligent Energy Management System  
- A. Smart power grid integration for homes  
- B. Real-time energy monitoring and optimization  
+[ProductManager]: I. Intelligent Energy Management System
+ A. Smart power grid integration for homes
+ B. Real-time energy monitoring and optimization
  C. Automated scheduling of high-energy consumption tasks
 
-[Designer]: VI. Smart Air Quality Management System  
- A. Real-time monitoring of indoor air quality metrics  
- B. Automated air purifiers and ventilation control  
+[Designer]: VI. Smart Air Quality Management System
+ A. Real-time monitoring of indoor air quality metrics
+ B. Automated air purifiers and ventilation control
  C. Notifications and tips for enhancing air quality
 
-[Engineer]: X. Smart Lighting System  
- A. Adaptive lighting based on occupant activity and natural light availability  
- B. Integration with circadian rhythm to enhance sleep and wellness  
+[Engineer]: X. Smart Lighting System
+ A. Adaptive lighting based on occupant activity and natural light availability
+ B. Integration with circadian rhythm to enhance sleep and wellness
  C. Energy-efficient LED lighting with remote control access
 
-[Marketer]: XIII. Smart Composting Trash Can  
- A. Automatic waste categorization and composting  
- B. Integrated sensors for monitoring decomposition progress  
+[Marketer]: XIII. Smart Composting Trash Can
+ A. Automatic waste categorization and composting
+ B. Integrated sensors for monitoring decomposition progress
  C. Mobile app notifications for maintenance and output usage tips
 
 ============================================================
@@ -199,7 +199,7 @@ These conversation agents can be integrated into your applications to provide:
 ### Implementation Example
 
 ```python
-from haive.agents.conversation.collaberative.agent import CollaborativeConversation
+from haive.agents.conversation.collaborative.agent import CollaborativeConversation
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 
@@ -243,8 +243,8 @@ print(result.final_document)  # Complete collaborative output
 
 All examples on this page come from real outputs in the codebase:
 
-- **Brainstorming Example**: `packages/haive-agents/src/haive/agents/conversation/collaberative/outputs/brainstorming.md`
-- **Code Review Example**: `packages/haive-agents/src/haive/agents/conversation/collaberative/outputs/code_review.md`
+- **Brainstorming Example**: `packages/haive-agents/src/haive/agents/conversation/collaborative/outputs/brainstorming.md`
+- **Code Review Example**: `packages/haive-agents/src/haive/agents/conversation/collaborative/outputs/code_review.md`
 - **Debate Examples**: `packages/haive-agents/src/haive/agents/conversation/debate/outputs/`
 - **Working Code**: `packages/haive-agents/src/haive/agents/conversation/*/example.py`
 

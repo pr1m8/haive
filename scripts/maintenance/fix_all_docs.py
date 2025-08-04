@@ -3,8 +3,8 @@
 
 import logging
 import os
-import re
 from pathlib import Path
+import re
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -49,7 +49,8 @@ class DocumentationFixer:
 
         for rst_file in rst_files:
             if self.fix_title_underlines(rst_file):
-                logger.info(f"  ✓ Fixed: {rst_file.relative_to(self.docs_dir)}")
+                logger.info(
+                    f"  ✓ Fixed: {rst_file.relative_to(self.docs_dir)}")
                 self.fixed_count += 1
 
     def fix_title_underlines(self, file_path):
@@ -72,9 +73,8 @@ class DocumentationFixer:
             if i + 1 < len(lines):
                 next_line = lines[i + 1]
                 # RST underline characters
-                if next_line.strip() and all(
-                    c in '=-~^"+*#' for c in next_line.strip()
-                ):
+                if next_line.strip() and all(c in '=-~^"+*#'
+                                             for c in next_line.strip()):
                     title_length = len(line.rstrip())
                     underline_char = next_line.strip()[0]
                     current_underline_length = len(next_line.strip())
@@ -169,8 +169,9 @@ class DocumentationFixer:
                         with open(rst_file, "w", encoding="utf-8") as f:
                             f.write(content)
                         logger.info(
-                            f"  ✓ Fixed toctree in: {rst_file.relative_to(self.docs_dir)}"
-                        )
+                            f"  ✓ Fixed toctree in: {
+                                rst_file.relative_to(
+                                    self.docs_dir)}", )
                         self.fixed_count += 1
 
             except Exception as e:
@@ -189,7 +190,7 @@ class DocumentationFixer:
                 if rst_index.exists() and md_index.exists():
                     md_index.unlink()
                     logger.info(
-                        f"  ✓ Removed duplicate: {md_index.relative_to(self.docs_dir)}"
+                        f"  ✓ Removed duplicate: {md_index.relative_to(self.docs_dir)}",
                     )
                     self.fixed_count += 1
 
@@ -245,12 +246,8 @@ class DocumentationFixer:
                         # Starting a docstring, determine base indentation
                         docstring_indent = len(line) - len(line.lstrip())
 
-                if (
-                    in_docstring
-                    and line.strip()
-                    and '"""' not in line
-                    and "'''" not in line
-                ):
+                if in_docstring and line.strip(
+                ) and '"""' not in line and "'''" not in line:
                     # Ensure consistent indentation within docstrings
                     current_indent = len(line) - len(line.lstrip())
                     if current_indent < docstring_indent + 4 and line.strip():
@@ -282,7 +279,9 @@ def main():
     fixer.fix_all()
 
     logger.info("\n🎉 Documentation fixes complete!")
-    logger.info("   Run 'poetry run sphinx-build -b html source build/html' to rebuild")
+    logger.info(
+        "   Run 'poetry run sphinx-build -b html source build/html' to rebuild"
+    )
 
 
 if __name__ == "__main__":

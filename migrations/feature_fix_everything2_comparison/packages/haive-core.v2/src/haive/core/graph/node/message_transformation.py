@@ -53,23 +53,25 @@ class TransformationType(str, Enum):
 class MessageTransformationNodeConfig(NodeConfig):
     """Configuration for a node that transforms messages in various ways.
 
-    Supports multiple transformation types including role swapping, metadata
-    manipulation, and agent-to-agent communication.
+    Supports multiple transformation types including role swapping,
+    metadata manipulation, and agent-to-agent communication.
     """
 
     node_type: NodeType = Field(default=NodeType.MESSAGE_TRANSFORMER)
 
     # Core transformation configuration
     transformation_type: TransformationType = Field(
-        description="Type of transformation to apply"
+        description="Type of transformation to apply",
     )
 
     messages_key: str = Field(
-        default="messages", description="State key containing the messages to transform"
+        default="messages",
+        description="State key containing the messages to transform",
     )
 
     output_key: str = Field(
-        default="messages", description="State key to store transformed messages"
+        default="messages",
+        description="State key to store transformed messages",
     )
 
     # Engine ID configuration
@@ -108,7 +110,8 @@ class MessageTransformationNodeConfig(NodeConfig):
 
     # Custom transformation
     custom_transformer: Callable[[list[BaseMessage]], list[BaseMessage]] | None = Field(
-        default=None, description="Custom transformation function"
+        default=None,
+        description="Custom transformation function",
     )
 
     # Additional options
@@ -128,13 +131,10 @@ class MessageTransformationNodeConfig(NodeConfig):
             and not self.engine_name
         ):
             raise ValueError(
-                "engine_id or engine_name is required for ADD_ENGINE_ID transformation"
+                "engine_id or engine_name is required for ADD_ENGINE_ID transformation",
             )
 
-        if (
-            self.transformation_type == TransformationType.CUSTOM
-            and not self.custom_transformer
-        ):
+        if self.transformation_type == TransformationType.CUSTOM and not self.custom_transformer:
             raise ValueError("custom_transformer is required for CUSTOM transformation")
 
         return self
@@ -144,7 +144,8 @@ class MessageTransformationNodeConfig(NodeConfig):
         if self.debug:
             console.print(
                 f"[cyan]MessageTransformation[/] Starting {
-                    self.transformation_type} transformation"
+                    self.transformation_type
+                } transformation",
             )
 
         try:
@@ -153,8 +154,7 @@ class MessageTransformationNodeConfig(NodeConfig):
 
             if not messages:
                 logger.warning(
-                    f"No messages found in state key '{
-                        self.messages_key}'"
+                    f"No messages found in state key '{self.messages_key}'",
                 )
                 return Command(update={}, goto=self.command_goto)
 
@@ -166,8 +166,7 @@ class MessageTransformationNodeConfig(NodeConfig):
 
             if self.debug:
                 console.print(
-                    f"[green]Transformed to {
-                        len(transformed_messages)} messages[/]"
+                    f"[green]Transformed to {len(transformed_messages)} messages[/]",
                 )
 
             # Create update dictionary
@@ -178,7 +177,8 @@ class MessageTransformationNodeConfig(NodeConfig):
         except Exception as e:
             logger.exception(f"Error in message transformation: {e}")
             return Command(
-                update={"transformation_error": str(e)}, goto=self.command_goto
+                update={"transformation_error": str(e)},
+                goto=self.command_goto,
             )
 
     def _get_messages_from_state(self, state: StateLike) -> list[BaseMessage]:
@@ -204,7 +204,7 @@ class MessageTransformationNodeConfig(NodeConfig):
         transformer = transformation_map.get(self.transformation_type)
         if not transformer:
             raise ValueError(
-                f"Unsupported transformation type: {self.transformation_type}"
+                f"Unsupported transformation type: {self.transformation_type}",
             )
 
         return transformer(messages)
@@ -244,7 +244,7 @@ class MessageTransformationNodeConfig(NodeConfig):
 
                 if self.debug:
                     console.print(
-                        f"[green]Transformed AI → Human:[/] {msg.content[:50]}..."
+                        f"[green]Transformed AI → Human:[/] {msg.content[:50]}...",
                     )
             else:
                 # Keep other message types unchanged
@@ -287,7 +287,7 @@ class MessageTransformationNodeConfig(NodeConfig):
 
                 if self.debug:
                     console.print(
-                        f"[green]Transformed Human → AI:[/] {msg.content[:50]}..."
+                        f"[green]Transformed Human → AI:[/] {msg.content[:50]}...",
                     )
             else:
                 # Keep other message types unchanged
@@ -317,7 +317,7 @@ class MessageTransformationNodeConfig(NodeConfig):
 
             if self.debug:
                 console.print(
-                    f"[dim]Preserving first message:[/] {messages[0].content[:50]}..."
+                    f"[dim]Preserving first message:[/] {messages[0].content[:50]}...",
                 )
         else:
             start_idx = 0
@@ -342,7 +342,7 @@ class MessageTransformationNodeConfig(NodeConfig):
 
                 if self.debug:
                     console.print(
-                        f"[green]Reflection swap {msg.type} → {target_cls.__name__.lower()}:[/] {msg.content[:50]}..."
+                        f"[green]Reflection swap {msg.type} → {target_cls.__name__.lower()}:[/] {msg.content[:50]}...",
                     )
             # Keep non-human/ai messages unchanged (unless excluded)
             elif not (
@@ -354,11 +354,13 @@ class MessageTransformationNodeConfig(NodeConfig):
         return transformed
 
     def _transform_agent_to_agent(
-        self, messages: list[BaseMessage]
+        self,
+        messages: list[BaseMessage],
     ) -> list[BaseMessage]:
         """Transform messages for agent-to-agent communication.
 
-        Excludes system messages and converts AI messages to Human messages.
+        Excludes system messages and converts AI messages to Human
+        messages.
         """
         transformed = []
 
@@ -367,7 +369,7 @@ class MessageTransformationNodeConfig(NodeConfig):
             if isinstance(msg, SystemMessage):
                 if self.debug:
                     console.print(
-                        f"[dim]Excluding system message:[/] {msg.content[:50]}..."
+                        f"[dim]Excluding system message:[/] {msg.content[:50]}...",
                     )
                 continue
 
@@ -375,7 +377,7 @@ class MessageTransformationNodeConfig(NodeConfig):
             if self.exclude_tool_messages and isinstance(msg, ToolMessage):
                 if self.debug:
                     console.print(
-                        f"[dim]Excluding tool message:[/] {msg.content[:50]}..."
+                        f"[dim]Excluding tool message:[/] {msg.content[:50]}...",
                     )
                 continue
 
@@ -437,8 +439,7 @@ class MessageTransformationNodeConfig(NodeConfig):
 
                 if self.debug:
                     console.print(
-                        f"[green]Added engine_id to AI message:[/] {
-                            self.engine_id}"
+                        f"[green]Added engine_id to AI message:[/] {self.engine_id}",
                     )
             else:
                 # Keep other messages unchanged
@@ -449,8 +450,8 @@ class MessageTransformationNodeConfig(NodeConfig):
     def _extract_first_human(self, messages: list[BaseMessage]) -> list[BaseMessage]:
         """Extract the first real human input (content-only, no metadata).
 
-        Returns only the first human message that has pure content without metadata like
-        engine_id or name.
+        Returns only the first human message that has pure content
+        without metadata like engine_id or name.
         """
         for msg in messages:
             if isinstance(msg, HumanMessage):
@@ -468,7 +469,7 @@ class MessageTransformationNodeConfig(NodeConfig):
                 if not has_metadata:
                     if self.debug:
                         console.print(
-                            f"[green]Found first real human input:[/] {msg.content[:50]}..."
+                            f"[green]Found first real human input:[/] {msg.content[:50]}...",
                         )
                     return [msg]
 
@@ -477,7 +478,8 @@ class MessageTransformationNodeConfig(NodeConfig):
         return []
 
     def _apply_custom_transformation(
-        self, messages: list[BaseMessage]
+        self,
+        messages: list[BaseMessage],
     ) -> list[BaseMessage]:
         """Apply custom transformation function."""
         if not self.custom_transformer:
@@ -488,9 +490,9 @@ class MessageTransformationNodeConfig(NodeConfig):
 
             if self.debug:
                 console.print(
-                    f"[green]Applied custom transformation:[/] {
-                        len(messages)} → {
-                        len(result)} messages"
+                    f"[green]Applied custom transformation:[/] {len(messages)} → {
+                        len(result)
+                    } messages",
                 )
 
             return result
@@ -577,7 +579,9 @@ def create_engine_id_transformer(
 
 
 def create_first_human_extractor(
-    messages_key: str = "messages", output_key: str = "first_human_message", **kwargs
+    messages_key: str = "messages",
+    output_key: str = "first_human_message",
+    **kwargs,
 ) -> MessageTransformationNodeConfig:
     """Create a transformer that extracts the first real human input."""
     return MessageTransformationNodeConfig(

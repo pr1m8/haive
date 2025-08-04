@@ -36,7 +36,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnhancedRetrieverConfig(BaseModel):
-    """Configuration for enhanced memory retriever with self-query capabilities.
+    """Configuration for enhanced memory retriever with self-query.
+
+    capabilities.
     """
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
@@ -107,8 +109,7 @@ class EnhancedRetrieverConfig(BaseModel):
 
 
 class EnhancedQueryResult(BaseModel):
-    """Result of enhanced memory retrieval with detailed metadata.
-    """
+    """Result of enhanced memory retrieval with detailed metadata."""
 
     # Core results
     memories: list[dict[str, Any]] = Field(
@@ -155,7 +156,9 @@ class EnhancedQueryResult(BaseModel):
 
 
 class EnhancedMemoryRetriever:
-    """Enhanced self-query retriever with memory-aware context and sophisticated scoring.
+    """Enhanced self-query retriever with memory-aware context and.
+
+    sophisticated scoring.
 
     This retriever implements Phase 2 of the incremental memory system, building on
     the memory classification foundation to provide intelligent, context-aware retrieval.
@@ -169,8 +172,7 @@ class EnhancedMemoryRetriever:
     """
 
     def __init__(self, config: EnhancedRetrieverConfig):
-        """Initialize enhanced memory retriever.
-        """
+        """Initialize enhanced memory retriever."""
         self.config = config
         self.memory_store = config.memory_store_manager
         self.classifier = config.memory_classifier
@@ -305,8 +307,7 @@ class EnhancedMemoryRetriever:
             self,
             query: str,
             query_intent: MemoryQueryIntent) -> str:
-        """Expand query with related terms and context.
-        """
+        """Expand query with related terms and context."""
         try:
             # Simple expansion based on entities and topics
             expansion_terms = []
@@ -350,8 +351,7 @@ class EnhancedMemoryRetriever:
         query_intent: MemoryQueryIntent,
         memory_types: list[MemoryType],
     ) -> list[dict[str, Any]]:
-        """Apply enhanced multi-factor scoring to memories.
-        """
+        """Apply enhanced multi-factor scoring to memories."""
         try:
             scored_memories = []
 
@@ -407,8 +407,7 @@ class EnhancedMemoryRetriever:
     def _calculate_type_score(
         self, memory_types: list[MemoryType], target_types: list[MemoryType]
     ) -> float:
-        """Calculate memory type relevance score.
-        """
+        """Calculate memory type relevance score."""
         if not memory_types or not target_types:
             return 0.5  # Neutral score
 
@@ -430,8 +429,7 @@ class EnhancedMemoryRetriever:
         return min(1.0, normalized_score)
 
     def _calculate_recency_score(self, metadata: dict[str, Any]) -> float:
-        """Calculate time-based recency score.
-        """
+        """Calculate time-based recency score."""
         try:
             created_at_str = metadata.get(
                 "created_at", datetime.utcnow().isoformat())
@@ -462,8 +460,7 @@ class EnhancedMemoryRetriever:
             retrieval_time: float,
             results_count: int,
             memory_types: list[MemoryType]) -> None:
-        """Update retrieval performance statistics.
-        """
+        """Update retrieval performance statistics."""
         try:
             self._retrieval_stats["total_queries"] += 1
 
@@ -486,13 +483,11 @@ class EnhancedMemoryRetriever:
             logger.exception(f"Error updating stats: {e}")
 
     def get_performance_stats(self) -> dict[str, Any]:
-        """Get retrieval performance statistics.
-        """
+        """Get retrieval performance statistics."""
         return dict(self._retrieval_stats)
 
     async def optimize_for_usage_patterns(self) -> dict[str, Any]:
-        """Analyze usage patterns and suggest optimizations.
-        """
+        """Analyze usage patterns and suggest optimizations."""
         stats = self.get_performance_stats()
 
         recommendations = []

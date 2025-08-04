@@ -6,6 +6,8 @@ Classes:
     SelfCorrectiveRAGState: SelfCorrectiveRAGState implementation.
 """
 
+from __future__ import annotations
+
 from typing import Any
 
 from langchain_core.documents import Document
@@ -23,31 +25,38 @@ class SelfCorrectiveRAGState(BaseRAGState):
 
     # Document filtering fields
     filtered_documents: list[Document] = Field(
-        default_factory=list, description="Documents filtered for relevance"
+        default_factory=list,
+        description="Documents filtered for relevance",
     )
 
     relevance_scores: dict[str, float] = Field(
-        default_factory=dict, description="Relevance scores for documents"
+        default_factory=dict,
+        description="Relevance scores for documents",
     )
 
     # Evaluation fields
     answer_score: float = Field(
-        default=0.0, description="Quality score for the generated answer (0.0 to 1.0)"
+        default=0.0,
+        description="Quality score for the generated answer (0.0 to 1.0)",
     )
 
     correction_iterations: int = Field(
-        default=0, description="Number of correction iterations performed"
+        default=0,
+        description="Number of correction iterations performed",
     )
 
     hallucination_assessment: dict[str, Any] = Field(
-        default_factory=dict, description="Assessment of hallucinations in the answer"
+        default_factory=dict,
+        description="Assessment of hallucinations in the answer",
     )
 
     final_answer: bool = Field(
-        default=False, description="Whether this is the final answer"
+        default=False,
+        description="Whether this is the final answer",
     )
 
     # Final output fields
     final_confidence: float | None = Field(
-        default=None, description="Final confidence score in the answer"
+        default=None,
+        description="Final confidence score in the answer",
     )

@@ -3,8 +3,8 @@
 from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 
-from .models import AdaptedModules
-from .prompts import ADAPTER_PROMPT, ADAPTER_SYSTEM_MESSAGE
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.reasoning_and_critique.reasoning_and_critique.self_discover.adapter.models import AdaptedModules
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.reasoning_and_critique.reasoning_and_critique.self_discover.adapter.prompts import ADAPTER_PROMPT, ADAPTER_SYSTEM_MESSAGE
 
 
 class AdapterAgent(SimpleAgent):
@@ -30,7 +30,10 @@ class AdapterAgent(SimpleAgent):
         ... })
     """
 
-    def __init__(self, name: str = "adapter", engine: AugLLMConfig = None, **kwargs):
+    def __init__(self,
+                 name: str = "adapter",
+                 engine: AugLLMConfig = None,
+                 **kwargs):
         """Initialize the Adapter Agent.
 
         Args:

@@ -1,45 +1,54 @@
 """Base classes for search agents.
 
-This module provides the foundation for all search agents in the memory system,
-with common functionality for memory integration, tool management, and structured outputs.
+This module provides the foundation for all search agents in the memory
+system, with common functionality for memory integration, tool
+management, and structured outputs.
 """
+from __future__ import annotations
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from typing import Any
-
-from langchain_core.tools import Tool
-from pydantic import BaseModel, Field
 
 from haive.agents.memory.core.types import MemoryType
 from haive.agents.react.agent import ReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.tools import Tool
+from pydantic import BaseModel
+from pydantic import Field
 
 
 class SearchResponse(BaseModel):
     """Base response model for all search agents."""
 
-    query: str = Field(..., description="The original search query")
-    response: str = Field(..., description="The search response content")
+    query: str = Field(..., description='The original search query')
+    response: str = Field(..., description='The search response content')
     sources: list[str] = Field(
-        default_factory=list, description="Source URLs or references"
+        default_factory=list,
+        description='Source URLs or references',
     )
     confidence: float = Field(
-        default=0.0, ge=0.0, le=1.0, description="Confidence score"
+        default=0.0,
+        ge=0.0,
+        le=1.0,
+        description='Confidence score',
     )
-    search_type: str = Field(..., description="Type of search performed")
+    search_type: str = Field(..., description='Type of search performed')
     processing_time: float = Field(
-        default=0.0, description="Time taken to process in seconds"
+        default=0.0,
+        description='Time taken to process in seconds',
     )
     metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional metadata"
+        default_factory=dict,
+        description='Additional metadata',
     )
 
 
 class BaseSearchAgent(ReactAgent, ABC):
     """Abstract base class for all search agents.
 
-    Provides common functionality for memory integration, tool management,
-    and structured output formatting for search operations.
+    Provides common functionality for memory integration, tool
+    management, and structured output formatting for search operations.
     """
 
     def __init__(
@@ -62,7 +71,7 @@ class BaseSearchAgent(ReactAgent, ABC):
 
         # Add search tools if provided
         if search_tools:
-            if hasattr(self, "tools") and self.tools is not None:
+            if hasattr(self, 'tools') and self.tools is not None:
                 self.tools.extend(search_tools)
             else:
                 self.tools = search_tools
@@ -79,7 +88,8 @@ class BaseSearchAgent(ReactAgent, ABC):
     def get_search_instructions(self) -> str:
         """Get specific search instructions for this agent type."""
 
-    def format_search_context(self, query: str, context: dict[str, Any]) -> str:
+    def format_search_context(self, query: str, context: dict[str,
+                                                              Any]) -> str:
         """Format search context for the agent.
 
         Args:
@@ -92,30 +102,31 @@ class BaseSearchAgent(ReactAgent, ABC):
         context_parts = [f"Query: {query}"]
 
         # Add memory context if available
-        if "memory_context" in context:
-            memory_items = context["memory_context"]
+        if 'memory_context' in context:
+            memory_items = context['memory_context']
             if memory_items:
-                context_parts.append("Relevant Memory:")
+                context_parts.append('Relevant Memory:')
                 for item in memory_items[:3]:  # Limit to top 3
                     context_parts.append(f"- {item}")
 
         # Add user preferences if available
-        if "preferences" in context:
-            prefs = context["preferences"]
+        if 'preferences' in context:
+            prefs = context['preferences']
             if prefs:
                 context_parts.append(f"User Preferences: {prefs}")
 
         # Add search history if available
-        if "search_history" in context:
-            history = context["search_history"]
+        if 'search_history' in context:
+            history = context['search_history']
             if history:
-                context_parts.append("Recent Searches:")
+                context_parts.append('Recent Searches:')
                 for search in history[-2:]:  # Last 2 searches
                     context_parts.append(f"- {search}")
 
-        return "\n".join(context_parts)
+        return '\n'.join(context_parts)
 
-    def extract_memory_items(self, query: str, response: str) -> list[dict[str, Any]]:
+    def extract_memory_items(self, query: str,
+                             response: str) -> list[dict[str, Any]]:
         """Extract memory items from search interaction.
 
         Args:
@@ -130,25 +141,27 @@ class BaseSearchAgent(ReactAgent, ABC):
         # Store the search interaction as episodic memory
         memory_items.append(
             {
-                "type": MemoryType.EPISODIC,
-                "content": f"Search: {query} -> {response[:200]}...",
-                "metadata": {
-                    "query": query,
-                    "response_length": len(response),
-                    "search_type": self.__class__.__name__,
+                'type': MemoryType.EPISODIC,
+                'content': f"Search: {query} -> {response[:200]}...",
+                'metadata': {
+                    'query': query,
+                    'response_length': len(response),
+                    'search_type': self.__class__.__name__,
                 },
-            }
-        )
+            }, )
 
         # Extract semantic facts from response (basic extraction)
-        if "fact:" in response.lower() or "according to" in response.lower():
+        if 'fact:' in response.lower() or 'according to' in response.lower():
             memory_items.append(
                 {
-                    "type": MemoryType.SEMANTIC,
-                    "content": response[:500],  # First 500 chars as semantic knowledge
-                    "metadata": {"source": "search_response", "query": query},
-                }
-            )
+                    'type': MemoryType.SEMANTIC,
+                    'content':
+                    response[:500],  # First 500 chars as semantic knowledge
+                    'metadata': {
+                        'source': 'search_response',
+                        'query': query
+                    },
+                }, )
 
         return memory_items
 

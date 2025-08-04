@@ -7491,5 +7491,5 @@ poetry run pytest packages/haive-games/tests/ -v
 
 ---
 
-**Generated**: 2025-08-02  
+**Generated**: 2025-08-02
 **Source**: `project_docs/build-reports/pyright-issues/haive-games-*.json`

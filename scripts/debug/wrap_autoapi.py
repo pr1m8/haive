@@ -4,8 +4,8 @@
 from __future__ import annotations
 
 import logging
-import sys
 from pathlib import Path
+import sys
 
 # Add packages to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -14,7 +14,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[logging.FileHandler("/tmp/autoapi_debug.log"), logging.StreamHandler()],
+    handlers=[
+        logging.FileHandler("/tmp/autoapi_debug.log"),
+        logging.StreamHandler()
+    ],
 )
 
 logger = logging.getLogger(__name__)
@@ -33,7 +36,8 @@ try:
             logger.info(f"Successfully parsed: {file_path}")
             return result
         except Exception as e:
-            logger.error(f"ERROR parsing {file_path}: {type(e).__name__}: {e!s}")
+            logger.error(
+                f"ERROR parsing {file_path}: {type(e).__name__}: {e!s}")
             raise
 
     # Replace the method

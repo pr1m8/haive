@@ -26,7 +26,6 @@ from pydantic import BaseModel, Field, model_validator
 from haive.core.engine.base import Engine
 from haive.core.graph.node.types import CommandGoto, NodeType
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -53,14 +52,17 @@ class NodeConfig(BaseModel):
         description="Type of node (determined automatically if not specified)",
     )
     schemas: Sequence[BaseTool | type[BaseModel] | Callable] = Field(
-        default_factory=list, description="The schemas to use for the node"
+        default_factory=list,
+        description="The schemas to use for the node",
     )
     # Engine/Callable (one of these must be set)
     engine: Engine | None = Field(
-        default=None, description="Engine instance to use for this node"
+        default=None,
+        description="Engine instance to use for this node",
     )
     engine_name: str | None = Field(
-        default=None, description="Name of engine to look up in registry"
+        default=None,
+        description="Name of engine to look up in registry",
     )
     callable_func: Callable | None = Field(
         default=None,
@@ -68,20 +70,24 @@ class NodeConfig(BaseModel):
         exclude=True,  # Exclude only non-serializable callables
     )
     callable_ref: str | None = Field(
-        default=None, description="Reference to callable function (module.function)"
+        default=None,
+        description="Reference to callable function (module.function)",
     )
 
     # State schema - CRUCIAL ELEMENT
     state_schema: type[BaseModel] | None = Field(
-        default=None, description="State schema class for this node"
+        default=None,
+        description="State schema class for this node",
     )
 
     # Schema integration
     input_schema: type[BaseModel] | None = Field(
-        default=None, description="Input schema for this node"
+        default=None,
+        description="Input schema for this node",
     )
     output_schema: type[BaseModel] | None = Field(
-        default=None, description="Output schema for this node"
+        default=None,
+        description="Output schema for this node",
     )
 
     # Input/Output mapping
@@ -96,58 +102,74 @@ class NodeConfig(BaseModel):
 
     # Control flow
     command_goto: CommandGoto | None = Field(
-        default=None, description="Next node to go to after this node (or END)"
+        default=None,
+        description="Next node to go to after this node (or END)",
     )
 
     # Execution options
     retry_policy: RetryPolicy | None = Field(
-        default=None, description="Retry policy for node execution"
+        default=None,
+        description="Retry policy for node execution",
     )
 
     # Node type specific options
     # Tool node options
-    tools: list[Any] | None = Field(default=None, description="Tools for tool nodes")
+    tools: list[Any] | None = Field(default=None,
+                                    description="Tools for tool nodes")
     messages_field: str | None = Field(
         default="messages",
         description="Field containing messages for tool/validation nodes",
     )
     handle_tool_errors: bool | str | Callable = Field(
-        default=True, description="How to handle tool errors"
+        default=True,
+        description="How to handle tool errors",
     )
 
     # Validation node options
     validation_schemas: list[type[BaseModel] | Callable] | None = Field(
-        default=None, description="Validation schemas for validation nodes"
+        default=None,
+        description="Validation schemas for validation nodes",
     )
 
     # Branch node options
     condition: Callable | None = Field(
-        default=None, description="Condition function for branch nodes", exclude=True
+        default=None,
+        description="Condition function for branch nodes",
+        exclude=True,
     )
     condition_ref: str | None = Field(
-        default=None, description="Reference to condition function (module.function)"
+        default=None,
+        description="Reference to condition function (module.function)",
     )
     routes: dict[Any, str] | None = Field(
-        default=None, description="Routes mapping condition results to node names"
+        default=None,
+        description="Routes mapping condition results to node names",
     )
 
     # Send node options
     send_targets: list[str] | None = Field(
-        default=None, description="Target nodes for send operations"
+        default=None,
+        description="Target nodes for send operations",
     )
     send_field: str | None = Field(
-        default=None, description="Field containing items to distribute to targets"
+        default=None,
+        description="Field containing items to distribute to targets",
     )
 
     # Runtime configuration
     config_overrides: dict[str, Any] = Field(
-        default_factory=dict, description="Engine configuration overrides for this node"
+        default_factory=dict,
+        description="Engine configuration overrides for this node",
     )
     metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional metadata for this node"
+        default_factory=dict,
+        description="Additional metadata for this node",
     )
 
-    model_config = {"arbitrary_types_allowed": True, "validate_assignment": True}
+    model_config = {
+        "arbitrary_types_allowed": True,
+        "validate_assignment": True
+    }
 
     def to_dict(self) -> dict[str, Any]:
         """Convert this node config to a dictionary representation.
@@ -156,7 +178,8 @@ class NodeConfig(BaseModel):
             Dictionary representation of this node config
         """
         # Use model_dump for serialization
-        data = self.model_dump(exclude={"engine", "callable_func", "condition"})
+        data = self.model_dump(
+            exclude={"engine", "callable_func", "condition"})
 
         # Handle engine reference
         if self.engine:
@@ -173,21 +196,21 @@ class NodeConfig(BaseModel):
         # Handle specific fields that need serialization
         # Add state_schema class name if present
         if self.state_schema:
-            data["state_schema"] = (
-                f"{self.state_schema.__module__}.{self.state_schema.__name__}"
-            )
+            data["state_schema"] = f"{
+                self.state_schema.__module__}.{
+                self.state_schema.__name__}"
 
         # Add input_schema class name if present
         if self.input_schema:
-            data["input_schema"] = (
-                f"{self.input_schema.__module__}.{self.input_schema.__name__}"
-            )
+            data["input_schema"] = f"{
+                self.input_schema.__module__}.{
+                self.input_schema.__name__}"
 
         # Add output_schema class name if present
         if self.output_schema:
-            data["output_schema"] = (
-                f"{self.output_schema.__module__}.{self.output_schema.__name__}"
-            )
+            data["output_schema"] = f"{
+                self.output_schema.__module__}.{
+                self.output_schema.__name__}"
 
         # Convert CommandGoto.END to string representation
         if self.command_goto == END:
@@ -197,25 +220,22 @@ class NodeConfig(BaseModel):
 
     @model_validator(mode="after")
     def validate_and_determine_node_type(self) -> Self:
-        """Validate the configuration and determine the node type automatically if not
-        specified.
+        """Validate the configuration and determine the node type automatically.
+
+        if not specified.
         """
         # Convert END string to Literal
         if self.command_goto == "END":
             self.command_goto = END
 
         # Ensure at least one execution target is set
-        if (
-            self.engine is None
-            and self.engine_name is None
-            and self.callable_func is None
-            and self.tools is None
-            and self.schemas is None
-            # and self.node_type is not NodeType.VALIDATION
-        ):
+        if (self.engine is None and self.engine_name is None
+                and self.callable_func is None and self.tools is None
+                and self.schemas is None
+                # and self.node_type is not NodeType.VALIDATION
+                ):
             raise ValueError(
-                "At least one of engine, engine_name, tools,schemas or callable_func must be set"
-            )
+                "At least one of engine, engine_name, tools,schemas or callable_func must be set", )
 
         # Convert input_fields and output_fields to dictionaries if they're
         # lists
@@ -259,7 +279,8 @@ class NodeConfig(BaseModel):
                 if not self.output_schema:
                     self.output_schema = schema.create_output_schema()
             except Exception as e:
-                logger.warning(f"Could not auto-generate schema from engine: {e}")
+                logger.warning(
+                    f"Could not auto-generate schema from engine: {e}")
 
         # Extract input/output mappings from engine I/O schema if they exist
         if self.engine and not self.input_fields and not self.output_fields:
@@ -269,7 +290,9 @@ class NodeConfig(BaseModel):
                 # Check if state schema has engine I/O mappings
                 if hasattr(self.state_schema, "__engine_io_mappings__"):
                     io_mappings = getattr(
-                        self.state_schema, "__engine_io_mappings__", {}
+                        self.state_schema,
+                        "__engine_io_mappings__",
+                        {},
                     )
                     if engine_name in io_mappings:
                         mapping = io_mappings[engine_name]
@@ -278,17 +301,22 @@ class NodeConfig(BaseModel):
                         if "inputs" in mapping and not self.input_fields:
                             input_fields = mapping["inputs"]
                             # Create identity mapping
-                            self.input_fields = {field: field for field in input_fields}
+                            self.input_fields = {
+                                field: field
+                                for field in input_fields
+                            }
 
                         # Extract output fields
                         if "outputs" in mapping and not self.output_fields:
                             output_fields = mapping["outputs"]
                             # Create identity mapping
                             self.output_fields = {
-                                field: field for field in output_fields
+                                field: field
+                                for field in output_fields
                             }
             except Exception as e:
-                logger.warning(f"Could not extract I/O mappings from schema: {e}")
+                logger.warning(
+                    f"Could not extract I/O mappings from schema: {e}")
 
         return self
 
@@ -320,8 +348,7 @@ class NodeConfig(BaseModel):
         except ImportError:
             logger.warning(
                 f"Could not import EngineRegistry to resolve engine: {
-                    self.engine_name}"
-            )
+                    self.engine_name}", )
 
         # Not found - return None
         return None, None

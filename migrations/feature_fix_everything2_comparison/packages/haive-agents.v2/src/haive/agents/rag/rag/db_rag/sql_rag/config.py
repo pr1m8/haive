@@ -32,6 +32,8 @@ Note:
     for security. See SQLDatabaseConfig for supported variables.
 """
 
+from __future__ import annotations
+
 import inspect
 import os
 from typing import Any
@@ -46,8 +48,7 @@ from haive.core.engine.agent.agent import AgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
-
-load_dotenv(".env")
+load_dotenv('.env')
 
 
 class SQLDatabaseConfig(BaseModel):
@@ -111,50 +112,50 @@ class SQLDatabaseConfig(BaseModel):
     """
 
     db_type: str = Field(
-        default=os.getenv("SQL_DB_TYPE", "postgresql"),
-        description="Type of SQL database (postgresql, mysql, sqlite, etc.)",
+        default=os.getenv('SQL_DB_TYPE', 'postgresql'),
+        description='Type of SQL database (postgresql, mysql, sqlite, etc.)',
     )
     db_uri: str | None = Field(
-        default=None, description="The database connection URI (if provided directly)"
+        default=None,
+        description='The database connection URI (if provided directly)',
     )
     db_user: str = Field(
-        default=os.getenv("SQL_DB_USER", "postgres"),
-        description="The database username",
+        default=os.getenv('SQL_DB_USER', 'postgres'),
+        description='The database username',
     )
     db_password: str = Field(
-        default=os.getenv("SQL_DB_PASSWORD", "postgres"),
-        description="The database password",
+        default=os.getenv('SQL_DB_PASSWORD', 'postgres'),
+        description='The database password',
     )
     db_host: str = Field(
-        default=os.getenv("SQL_DB_HOST", "localhost"), description="The database host"
+        default=os.getenv('SQL_DB_HOST', 'localhost'),
+        description='The database host',
     )
     db_port: str = Field(
-        default=os.getenv("SQL_DB_PORT", "5432"), description="The database port"
+        default=os.getenv('SQL_DB_PORT', '5432'),
+        description='The database port',
     )
     db_name: str = Field(
-        default=os.getenv("SQL_DB_NAME", "postgres"), description="The database name"
+        default=os.getenv('SQL_DB_NAME', 'postgres'),
+        description='The database name',
     )
     include_tables: list[str] | None = Field(
-        default_factory=lambda: (
-            os.getenv("SQL_INCLUDE_TABLES", "").split(",")
-            if os.getenv("SQL_INCLUDE_TABLES")
-            else None
-        ),
-        description="Specific tables to include, if None then include all",
+        default_factory=lambda: (os.getenv('SQL_INCLUDE_TABLES', '').split(',')
+                                 if os.getenv('SQL_INCLUDE_TABLES') else None),
+        description='Specific tables to include, if None then include all',
     )
     exclude_tables: list[str] = Field(
-        default_factory=lambda: (
-            os.getenv("SQL_EXCLUDE_TABLES", "").split(",")
-            if os.getenv("SQL_EXCLUDE_TABLES")
-            else []
-        ),
-        description="Tables to exclude from schema",
+        default_factory=lambda: (os.getenv('SQL_EXCLUDE_TABLES', '').split(',')
+                                 if os.getenv('SQL_EXCLUDE_TABLES') else []),
+        description='Tables to exclude from schema',
     )
     sample_rows_in_table_info: int = Field(
-        default=3, description="Number of sample rows to include in table info"
+        default=3,
+        description='Number of sample rows to include in table info',
     )
     custom_query: str | None = Field(
-        default=None, description="Custom query to execute for schema info"
+        default=None,
+        description='Custom query to execute for schema info',
     )
 
     def get_connection_string(self) -> str:
@@ -181,19 +182,25 @@ class SQLDatabaseConfig(BaseModel):
         if self.db_uri:
             return self.db_uri
 
-        if self.db_type == "postgresql":
-            return f"postgresql+psycopg2://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
-        if self.db_type == "mysql":
+        if self.db_type == 'postgresql':
+            return f"postgresql+psycopg2://{
+                self.db_user}:{
+                self.db_password}@{
+                self.db_host}:{
+                self.db_port}/{
+                    self.db_name}"
+        if self.db_type == 'mysql':
             return f"mysql+pymysql://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
-        if self.db_type == "sqlite":
+        if self.db_type == 'sqlite':
             # For SQLite, the db_name is the path to the file
             return f"sqlite:///{self.db_name}"
-        if self.db_type == "mssql":
+        if self.db_type == 'mssql':
             return f"mssql+pyodbc://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
         raise ValueError(f"Unsupported database type: {self.db_type}")
 
     def get_sql_db(self) -> SQLDatabase | None:
-        """Create and return a SQLDatabase object for interacting with the database.
+        """Create and return a SQLDatabase object for interacting with the
+        database.
 
         Returns:
             Optional[SQLDatabase]: Connected database object or None if connection fails.
@@ -215,15 +222,15 @@ class SQLDatabaseConfig(BaseModel):
 
             # Create kwargs dictionary with only the parameters that are supported
             db_kwargs = {
-                "include_tables": self.include_tables,
-                "sample_rows_in_table_info": self.sample_rows_in_table_info,
+                'include_tables': self.include_tables,
+                'sample_rows_in_table_info': self.sample_rows_in_table_info,
             }
 
             # Older versions might not support exclude_tables
             # Check if the class accepts this parameter first
             sig = inspect.signature(SQLDatabase.from_uri)
-            if "exclude_tables" in sig.parameters:
-                db_kwargs["exclude_tables"] = self.exclude_tables
+            if 'exclude_tables' in sig.parameters:
+                db_kwargs['exclude_tables'] = self.exclude_tables
 
             db = SQLDatabase.from_uri(connection_string, **db_kwargs)
             return db
@@ -249,16 +256,16 @@ class SQLDatabaseConfig(BaseModel):
         """
         db = self.get_sql_db()
         if not db:
-            return {"tables": [], "dialect": "unknown"}
+            return {'tables': [], 'dialect': 'unknown'}
 
         schema = {
-            "tables": db.get_usable_table_names(),
-            "dialect": str(db.dialect),
-            "table_info": {},
+            'tables': db.get_usable_table_names(),
+            'dialect': str(db.dialect),
+            'table_info': {},
         }
 
-        for table in schema["tables"]:
-            schema["table_info"][table] = db.get_table_info([table])
+        for table in schema['tables']:
+            schema['table_info'][table] = db.get_table_info([table])
 
         return schema
 
@@ -332,67 +339,74 @@ class SQLRAGConfig(AgentConfig):
     """
 
     engines: dict[str, AugLLMConfig] = Field(
-        description="The LLM runnable configs for the SQL database agent",
+        description='The LLM runnable configs for the SQL database agent',
         default=default_sql_engines,
     )
 
     llm_config: LLMConfig = Field(
         default_factory=AzureLLMConfig,
-        description="The LLM config for the SQL database agent",
+        description='The LLM config for the SQL database agent',
     )
 
     domain_name: str = Field(
-        default="database",
+        default='database',
         description="The domain name the agent is specialized for (e.g., 'SQL database', 'database records', etc.)",
     )
 
     domain_categories: list[str] = Field(
-        default=["database"],
+        default=['database'],
         description="Valid categories for the guardrails to recognize, in addition to 'end'",
     )
 
     state_schema: Any = Field(
-        default=OverallState, description="The state schema for the SQL database agent"
+        default=OverallState,
+        description='The state schema for the SQL database agent',
     )
 
     db_config: SQLDatabaseConfig = Field(
         default_factory=SQLDatabaseConfig,
-        description="The database config for the SQL database agent",
+        description='The database config for the SQL database agent',
     )
 
     input_schema: Any = Field(
-        default=InputState, description="The input schema for the SQL database agent"
+        default=InputState,
+        description='The input schema for the SQL database agent',
     )
 
     output_schema: Any = Field(
-        default=OutputState, description="The output schema for the SQL database agent"
+        default=OutputState,
+        description='The output schema for the SQL database agent',
     )
 
     hallucination_check: bool = Field(
-        default=True, description="Whether to check for hallucinations in the response"
+        default=True,
+        description='Whether to check for hallucinations in the response',
     )
 
     answer_grading: bool = Field(
         default=True,
-        description="Whether to grade the answer for relevance to the question",
+        description='Whether to grade the answer for relevance to the question',
     )
 
     examples_path: str | None = Field(
-        default=None, description="Path to examples JSON file"
+        default=None,
+        description='Path to examples JSON file',
     )
 
     domain_examples: dict[str, list[dict[str, str]]] = Field(
         default_factory=dict,
-        description="Examples for different domains to guide the model",
+        description='Examples for different domains to guide the model',
     )
 
     max_iterations: int = Field(
-        default=5, description="Maximum number of iterations for retrying SQL queries"
+        default=5,
+        description='Maximum number of iterations for retrying SQL queries',
     )
 
-    @field_validator("engines")
+    @field_validator('engines')
     def check_required_engines(
-        self, v: dict[str, AugLLMConfig]
+        self,
+        v: dict[str, AugLLMConfig],
     ) -> dict[str, AugLLMConfig]:
         """Validate that all required engines are present.
 
@@ -406,15 +420,14 @@ class SQLRAGConfig(AgentConfig):
             ValueError: If any required engines are missing.
         """
         required_engines = [
-            "analyze_query",
-            "validate_sql",
-            "generate_sql",
-            "guardrails",
-            "generate_final_answer",
+            'analyze_query',
+            'validate_sql',
+            'generate_sql',
+            'guardrails',
+            'generate_final_answer',
         ]
         missing = [
-            engine
-            for engine in required_engines
+            engine for engine in required_engines
             if engine not in v or v[engine] is None
         ]
         if missing:

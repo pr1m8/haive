@@ -10,7 +10,7 @@ Haive is an AI agent framework designed for building intelligent, collaborative 
 
    :maxdepth: 2
    :caption: Getting Started
-   
+
    overview
    installation
    quickstart

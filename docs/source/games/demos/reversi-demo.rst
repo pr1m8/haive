@@ -176,7 +176,7 @@ Disc-flipping strategy game
        7 . . . . . . . .
        8 . . . . . . . .
 
-   
+
    Black: 5 | White: 1
    Turn: White
    Valid moves: C5, E3, E5

@@ -10,12 +10,14 @@ This example demonstrates the DynamicReactAgent's ability to:
 Run with: poetry run python examples/dynamic_react_agent_example.py
 """
 
+from __future__ import annotations
 
 import contextlib
 
+from langchain_core.tools import tool
+
 from haive.agents.react.dynamic_react_agent import DynamicReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.tools import tool
 
 
 @tool
@@ -23,7 +25,7 @@ def calculator(expression: str) -> float:
     """Calculate mathematical expression."""
     try:
         return eval(expression)
-    except:
+    except BaseException:
         return 0.0
 
 
@@ -61,17 +63,12 @@ def main():
     ]
 
     agent = DynamicReactAgent.create_with_tools(
-        name="demo_agent",
-        tools=tools,
-        engine=AugLLMConfig(
-            system_message="You are a helpful assistant with dynamic tool capabilities."
-        ),
-    )
+        name="demo_agent", tools=tools, engine=AugLLMConfig(
+            system_message="You are a helpful assistant with dynamic tool capabilities.", ), )
 
     # Show that the agent has the discovery tool
     discovery_tools = [
-        tool
-        for tool in agent.engine.tools
+        tool for tool in agent.engine.tools
         if hasattr(tool, "name") and "discover_and_load_tools" in tool.name
     ]
 
@@ -81,7 +78,9 @@ def main():
     # Example 2: Agent with discovery capabilities
 
     DynamicReactAgent.create_with_discovery(
-        name="discovery_agent", document_path="@haive-tools", engine=AugLLMConfig()
+        name="discovery_agent",
+        document_path="@haive-tools",
+        engine=AugLLMConfig(),
     )
 
     # Example 3: Agent with RAG-based tool discovery
@@ -95,7 +94,9 @@ def main():
     ]
 
     DynamicReactAgent.create_with_rag_tooling(
-        name="rag_agent", engine=AugLLMConfig(), rag_documents=documents
+        name="rag_agent",
+        engine=AugLLMConfig(),
+        rag_documents=documents,
     )
 
     # Example 4: Demonstrate tool management
@@ -124,7 +125,6 @@ def main():
     # Test the discovery tool functionality
     discovery_tool = discovery_tools[0] if discovery_tools else None
     if discovery_tool:
-
         # Test discovery for different tasks
         test_queries = [
             "mathematical calculations",

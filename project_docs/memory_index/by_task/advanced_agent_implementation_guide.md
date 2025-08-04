@@ -9,7 +9,7 @@
 
 **Plan-and-Execute V3 infrastructure is working perfectly** - we've proven the Enhanced MultiAgent V3 pattern with:
 - ✅ Real LLM integration
-- ✅ PostgreSQL state persistence 
+- ✅ PostgreSQL state persistence
 - ✅ LangGraph execution flow
 - ✅ ChatPromptTemplate + computed fields
 - ✅ Structured output models
@@ -31,7 +31,7 @@ self.planner = SimpleAgent(
     structured_output_model=ExecutionPlan
 )
 
-# ❌ WRONG - Don't use system_message string  
+# ❌ WRONG - Don't use system_message string
 self.planner = SimpleAgent(
     name=f"{name}_planner",
     engine=self.config,
@@ -45,9 +45,9 @@ self.planner = SimpleAgent(
 ```python
 class AdvancedAgentState(MessagesState):
     """State schema with computed fields for dynamic prompt variables."""
-    
+
     @computed_field
-    @property  
+    @property
     def current_step(self) -> Optional[str]:
         """Get formatted current step for executor"""
         if self.plan and self.current_step_id:
@@ -55,7 +55,7 @@ class AdvancedAgentState(MessagesState):
             if step:
                 return f"Step {step.step_id}: {step.description}"
         return None
-        
+
     @computed_field
     @property
     def plan_status(self) -> str:
@@ -91,7 +91,7 @@ self.multi_agent = EnhancedMultiAgent(
         "evaluator": self.evaluator
     },
     execution_mode="sequential",  # Start with sequential
-    entry_point="planner", 
+    entry_point="planner",
     performance_mode=True,
     debug_mode=True,  # For development
     state_schema=YourAdvancedState
@@ -118,7 +118,7 @@ class PydanticEncoder(json.JSONEncoder):
 - **Solution**: Add `ON CONFLICT (id) DO NOTHING` to thread creation
 - **Impact**: Enables state persistence across test runs
 
-### **Issue 2: DateTime Serialization** 
+### **Issue 2: DateTime Serialization**
 - **Problem**: `Object of type datetime is not JSON serializable`
 - **Solution**: Update PydanticEncoder to handle datetime objects
 - **Impact**: Allows complex state schemas with timestamps
@@ -148,7 +148,7 @@ class PydanticEncoder(json.JSONEncoder):
 ```
 packages/haive-agents/src/haive/agents/{category}/{pattern}_v3/
 ├── models.py          # Pydantic models for structured outputs
-├── state.py           # State schema with computed fields  
+├── state.py           # State schema with computed fields
 ├── prompts.py         # ChatPromptTemplate definitions
 ├── agent.py           # Main agent with Enhanced MultiAgent V3
 ├── __init__.py        # Module exports
@@ -176,14 +176,14 @@ class ExecutorOutput(BaseModel):
 ```python
 class PatternState(MessagesState):
     """State schema for pattern with computed fields."""
-    
+
     # Core data fields
     plan: Optional[ExecutionPlan] = None
     executions: List[StepExecution] = Field(default_factory=list)
-    
+
     # Metadata
     started_at: datetime = Field(default_factory=datetime.now)
-    
+
     # Computed fields for prompts
     @computed_field
     @property
@@ -207,18 +207,18 @@ Create a detailed plan...""")
 ```python
 class PatternV3Agent:
     """Pattern implementation using Enhanced MultiAgent V3."""
-    
+
     def __init__(self, name: str, config: Optional[AugLLMConfig] = None, **kwargs):
         # Configure sub-agents with prompt templates
         planner_config = AugLLMConfig.model_copy(self.config)
         planner_config.prompt_template = planner_prompt
-        
+
         self.planner = SimpleAgent(
             name=f"{name}_planner",
             engine=planner_config,
             structured_output_model=PlannerOutput
         )
-        
+
         # Create Enhanced MultiAgent V3 coordinator
         self.multi_agent = EnhancedMultiAgent(
             name=f"{name}_coordinator",
@@ -235,14 +235,14 @@ class PatternV3Agent:
 - **Issues**: Likely using old system_message pattern
 - **Fix**: Apply ChatPromptTemplate + computed fields pattern
 
-### **2. Tree of Thoughts V3 - Ready for Implementation**  
+### **2. Tree of Thoughts V3 - Ready for Implementation**
 - **Pattern**: Search tree exploration with backtracking
 - **State**: TreeState with node exploration tracking
 - **Agents**: NodeGenerator, Evaluator, Selector
 - **Computed Fields**: `current_path`, `best_solutions`, `exploration_status`
 
 ### **3. Reflexion V3 - Ready for Implementation**
-- **Pattern**: Self-reflection and improvement cycles  
+- **Pattern**: Self-reflection and improvement cycles
 - **State**: ReflexionState with attempt history
 - **Agents**: Actor, Critic, Reflector
 - **Computed Fields**: `current_attempt`, `reflection_summary`, `improvement_areas`
@@ -250,12 +250,12 @@ class PatternV3Agent:
 ### **4. LATS V3 - Ready for Implementation**
 - **Pattern**: Language Agent Tree Search with value estimation
 - **State**: LATSState with search tree and values
-- **Agents**: Generator, Reflector, Evaluator, Selector  
+- **Agents**: Generator, Reflector, Evaluator, Selector
 - **Computed Fields**: `search_progress`, `value_estimates`, `best_trajectory`
 
 ### **5. ReWOO V3 - Ready for Implementation**
 - **Pattern**: Reasoning without Observation (plan-then-execute)
-- **State**: ReWOOState with reasoning chain  
+- **State**: ReWOOState with reasoning chain
 - **Agents**: Planner, Worker, Solver
 - **Computed Fields**: `reasoning_chain`, `evidence_summary`, `solution_confidence`
 
@@ -270,7 +270,7 @@ class PatternV3Agent:
 - [ ] Design state schema with computed fields
 - [ ] Plan prompt templates with state placeholders
 
-#### **Implementation**  
+#### **Implementation**
 - [ ] Create `models.py` with Pydantic models
 - [ ] Create `state.py` with MessagesState extension + computed fields
 - [ ] Create `prompts.py` with ChatPromptTemplate using state fields
@@ -307,7 +307,7 @@ class PatternV3Agent:
 3. **Manual state processing** - Let Enhanced MultiAgent V3 handle it
 4. **Mock testing** - Doesn't validate real behavior
 
-### **Critical Success Factors**  
+### **Critical Success Factors**
 1. **Infrastructure first** - Get persistence, serialization, routing working
 2. **Incremental complexity** - Start sequential, add conditional routing later
 3. **Real LLM testing** - Validate with actual AI interactions
@@ -316,7 +316,7 @@ class PatternV3Agent:
 ## 🎯 **Immediate Next Steps**
 
 1. **Fix LLM Compiler V3** - Update to use new patterns
-2. **Implement Tree of Thoughts V3** - Apply proven pattern  
+2. **Implement Tree of Thoughts V3** - Apply proven pattern
 3. **Create pattern template generator** - Automate boilerplate
 4. **Build integration test suite** - Validate all patterns together
 

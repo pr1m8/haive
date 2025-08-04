@@ -4,6 +4,8 @@ This module implements advanced RAG architectures including Forward-Looking Acti
 Dynamic RAG with add/remove retrievers, and Debate-based RAG for multi-perspective reasoning.
 """
 
+from __future__ import annotations
+
 from typing import Any
 
 from haive.agents.multi.base import ExecutionMode, MultiAgent
@@ -14,7 +16,7 @@ from haive.core.schema.prebuilt.rag_state import RAGState
 class FLAREState(RAGState):
     """RAG state for Forward-Looking Active REtrieval."""
 
-    current_generation: str = ""
+    current_generation: str = ''
     uncertainty_tokens: list[str] = []
     active_retrieval_points: list[int] = []
     generation_segments: list[str] = []
@@ -41,7 +43,7 @@ class DebateRAGState(RAGState):
     debate_rounds: int = 0
     synthesis_attempts: list[str] = []
     consensus_reached: bool = False
-    final_answer: str = ""
+    final_answer: str = ''
 
 
 class FLAREAgent(MultiAgent):
@@ -52,7 +54,7 @@ class FLAREAgent(MultiAgent):
     def __init__(self, **kwargs) -> None:
         # Generation monitor agent
         generation_monitor = SimpleAgent(
-            name="generation_monitor",
+            name='generation_monitor',
             instructions="""
             Monitor text generation for uncertainty indicators and retrieval needs.
             Look for:
@@ -64,18 +66,18 @@ class FLAREAgent(MultiAgent):
             Mark these points as active retrieval triggers.
             """,
             output_schema={
-                "current_segment": "str",
-                "uncertainty_detected": "bool",
-                "uncertainty_tokens": "List[str]",
-                "confidence_score": "float",
-                "retrieval_needed": "bool",
-                "retrieval_query": "Optional[str]",
+                'current_segment': 'str',
+                'uncertainty_detected': 'bool',
+                'uncertainty_tokens': 'List[str]',
+                'confidence_score': 'float',
+                'retrieval_needed': 'bool',
+                'retrieval_query': 'Optional[str]',
             },
         )
 
         # Active retrieval agent
         active_retrieval = SimpleAgent(
-            name="active_retrieval",
+            name='active_retrieval',
             instructions="""
             When triggered by uncertainty or information needs, perform targeted retrieval.
             Focus on:
@@ -86,16 +88,17 @@ class FLAREAgent(MultiAgent):
             Retrieve documents that can resolve uncertainty or provide needed facts.
             """,
             output_schema={
-                "retrieval_query": "str",
-                "retrieved_documents": "List[str]",
-                "relevance_scores": "List[float]",
-                "retrieval_type": "str",  # "uncertainty", "predictive", "factual"
+                'retrieval_query': 'str',
+                'retrieved_documents': 'List[str]',
+                'relevance_scores': 'List[float]',
+                'retrieval_type':
+                'str',  # "uncertainty", "predictive", "factual"
             },
         )
 
         # Informed generation agent
         informed_generator = SimpleAgent(
-            name="informed_generator",
+            name='informed_generator',
             instructions="""
             Continue or revise generation using retrieved information.
             - If retrieval occurred, incorporate the new information naturally
@@ -104,17 +107,17 @@ class FLAREAgent(MultiAgent):
             - Continue until the next uncertainty point or completion
             """,
             output_schema={
-                "generated_segment": "str",
-                "confidence_score": "float",
-                "information_used": "List[str]",
-                "generation_complete": "bool",
-                "next_prediction": "Optional[str]",
+                'generated_segment': 'str',
+                'confidence_score': 'float',
+                'information_used': 'List[str]',
+                'generation_complete': 'bool',
+                'next_prediction': 'Optional[str]',
             },
         )
 
         # Synthesis agent
         synthesis_agent = SimpleAgent(
-            name="synthesis_agent",
+            name='synthesis_agent',
             instructions="""
             Combine all generation segments into a final coherent response.
             - Ensure smooth transitions between segments
@@ -123,10 +126,10 @@ class FLAREAgent(MultiAgent):
             - Provide confidence assessment
             """,
             output_schema={
-                "final_response": "str",
-                "retrieval_impact": "str",
-                "overall_confidence": "float",
-                "key_facts_verified": "List[str]",
+                'final_response': 'str',
+                'retrieval_impact': 'str',
+                'overall_confidence': 'float',
+                'key_facts_verified': 'List[str]',
             },
         )
 
@@ -158,7 +161,7 @@ class DynamicRAGAgent(MultiAgent):
     def __init__(self, **kwargs) -> None:
         # Retriever manager agent
         retriever_manager = SimpleAgent(
-            name="retriever_manager",
+            name='retriever_manager',
             instructions="""
             Manage the pool of active retrievers based on:
             - Query characteristics and domain
@@ -169,17 +172,17 @@ class DynamicRAGAgent(MultiAgent):
             Decide which retrievers to activate, deactivate, or reconfigure.
             """,
             output_schema={
-                "query_analysis": "Dict[str, Any]",
-                "recommended_retrievers": "List[str]",
-                "retrievers_to_add": "List[Dict[str, Any]]",
-                "retrievers_to_remove": "List[str]",
-                "configuration_updates": "Dict[str, Any]",
+                'query_analysis': 'Dict[str, Any]',
+                'recommended_retrievers': 'List[str]',
+                'retrievers_to_add': 'List[Dict[str, Any]]',
+                'retrievers_to_remove': 'List[str]',
+                'configuration_updates': 'Dict[str, Any]',
             },
         )
 
         # Multi-retriever coordinator
         retriever_coordinator = SimpleAgent(
-            name="retriever_coordinator",
+            name='retriever_coordinator',
             instructions="""
             Coordinate retrieval across all active retrievers:
             - Execute parallel retrieval from different sources
@@ -188,16 +191,16 @@ class DynamicRAGAgent(MultiAgent):
             - Track retriever performance metrics
             """,
             output_schema={
-                "retrieval_results": "Dict[str, List[str]]",
-                "performance_metrics": "Dict[str, float]",
-                "source_distribution": "Dict[str, int]",
-                "deduplication_stats": "Dict[str, int]",
+                'retrieval_results': 'Dict[str, List[str]]',
+                'performance_metrics': 'Dict[str, float]',
+                'source_distribution': 'Dict[str, int]',
+                'deduplication_stats': 'Dict[str, int]',
             },
         )
 
         # Performance analyzer
         performance_analyzer = SimpleAgent(
-            name="performance_analyzer",
+            name='performance_analyzer',
             instructions="""
             Analyze retriever performance and adapt strategy:
             - Measure relevance and diversity of results
@@ -206,16 +209,16 @@ class DynamicRAGAgent(MultiAgent):
             - Suggest optimizations and reconfigurations
             """,
             output_schema={
-                "performance_report": "Dict[str, Dict[str, float]]",
-                "optimization_suggestions": "List[str]",
-                "retriever_rankings": "Dict[str, float]",
-                "adaptation_needed": "bool",
+                'performance_report': 'Dict[str, Dict[str, float]]',
+                'optimization_suggestions': 'List[str]',
+                'retriever_rankings': 'Dict[str, float]',
+                'adaptation_needed': 'bool',
             },
         )
 
         # Answer synthesis agent
         dynamic_synthesis = SimpleAgent(
-            name="dynamic_synthesis",
+            name='dynamic_synthesis',
             instructions="""
             Synthesize answer using dynamically retrieved documents:
             - Weight information based on retriever performance
@@ -224,10 +227,10 @@ class DynamicRAGAgent(MultiAgent):
             - Provide confidence based on retrieval quality
             """,
             output_schema={
-                "answer": "str",
-                "sources_used": "Dict[str, List[str]]",
-                "confidence_by_source": "Dict[str, float]",
-                "synthesis_strategy": "str",
+                'answer': 'str',
+                'sources_used': 'Dict[str, List[str]]',
+                'confidence_by_source': 'Dict[str, float]',
+                'synthesis_strategy': 'str',
             },
         )
 
@@ -258,7 +261,7 @@ class DebateRAGAgent(MultiAgent):
     def __init__(self, debate_positions: list[str] | None = None, **kwargs):
         # Default positions if not provided
         if debate_positions is None:
-            debate_positions = ["Affirmative", "Negative", "Neutral"]
+            debate_positions = ['Affirmative', 'Negative', 'Neutral']
 
         # Create position agents
         position_agents = []
@@ -275,18 +278,18 @@ class DebateRAGAgent(MultiAgent):
                 Your goal is to contribute to finding the truth through debate.
                 """,
                 output_schema={
-                    "position": "str",
-                    "argument": "str",
-                    "evidence": "List[str]",
-                    "counterpoints": "Dict[str, str]",
-                    "confidence": "float",
+                    'position': 'str',
+                    'argument': 'str',
+                    'evidence': 'List[str]',
+                    'counterpoints': 'Dict[str, str]',
+                    'confidence': 'float',
                 },
             )
             position_agents.append(agent)
 
         # Moderator agent
         moderator = SimpleAgent(
-            name="debate_moderator",
+            name='debate_moderator',
             instructions="""
             Moderate the debate between different positions:
             - Ensure all perspectives are heard
@@ -296,17 +299,17 @@ class DebateRAGAgent(MultiAgent):
             - Facilitate productive exchange
             """,
             output_schema={
-                "debate_summary": "str",
-                "key_agreements": "List[str]",
-                "key_conflicts": "List[str]",
-                "information_gaps": "List[str]",
-                "next_focus": "str",
+                'debate_summary': 'str',
+                'key_agreements': 'List[str]',
+                'key_conflicts': 'List[str]',
+                'information_gaps': 'List[str]',
+                'next_focus': 'str',
             },
         )
 
         # Evidence arbiter
         evidence_arbiter = SimpleAgent(
-            name="evidence_arbiter",
+            name='evidence_arbiter',
             instructions="""
             Evaluate evidence presented by all positions:
             - Assess source credibility and relevance
@@ -316,17 +319,17 @@ class DebateRAGAgent(MultiAgent):
             - Note where evidence is lacking
             """,
             output_schema={
-                "evidence_evaluation": "Dict[str, Dict[str, Any]]",
-                "strongest_evidence": "List[str]",
-                "conflicting_evidence": "List[Dict[str, str]]",
-                "evidence_gaps": "List[str]",
-                "credibility_scores": "Dict[str, float]",
+                'evidence_evaluation': 'Dict[str, Dict[str, Any]]',
+                'strongest_evidence': 'List[str]',
+                'conflicting_evidence': 'List[Dict[str, str]]',
+                'evidence_gaps': 'List[str]',
+                'credibility_scores': 'Dict[str, float]',
             },
         )
 
         # Synthesis judge
         synthesis_judge = SimpleAgent(
-            name="synthesis_judge",
+            name='synthesis_judge',
             instructions="""
             Synthesize the debate into a final comprehensive answer:
             - Consider all positions and evidence fairly
@@ -336,15 +339,17 @@ class DebateRAGAgent(MultiAgent):
             - Explain the reasoning path taken
             """,
             output_schema={
-                "final_answer": "str",
-                "reasoning_path": "str",
-                "position_contributions": "Dict[str, str]",
-                "confidence_level": "float",
-                "remaining_uncertainty": "List[str]",
+                'final_answer': 'str',
+                'reasoning_path': 'str',
+                'position_contributions': 'Dict[str, str]',
+                'confidence_level': 'float',
+                'remaining_uncertainty': 'List[str]',
             },
         )
 
-        agents = [*position_agents, moderator, evidence_arbiter, synthesis_judge]
+        agents = [
+            *position_agents, moderator, evidence_arbiter, synthesis_judge
+        ]
 
         # Store debate configuration as instance variable
         self._debate_positions = debate_positions
@@ -370,7 +375,7 @@ class AdaptiveThresholdRAGAgent(MultiAgent):
     def __init__(self, **kwargs) -> None:
         # Query analyzer
         query_analyzer = SimpleAgent(
-            name="query_analyzer",
+            name='query_analyzer',
             instructions="""
             Analyze query characteristics to set initial thresholds:
             - Assess query complexity and specificity
@@ -381,17 +386,17 @@ class AdaptiveThresholdRAGAgent(MultiAgent):
             Set initial thresholds for retrieval and relevance.
             """,
             output_schema={
-                "query_complexity": "float",
-                "domain": "str",
-                "specificity": "float",
-                "initial_threshold": "float",
-                "retrieval_strategy": "str",
+                'query_complexity': 'float',
+                'domain': 'str',
+                'specificity': 'float',
+                'initial_threshold': 'float',
+                'retrieval_strategy': 'str',
             },
         )
 
         # Adaptive retriever
         adaptive_retriever = SimpleAgent(
-            name="adaptive_retriever",
+            name='adaptive_retriever',
             instructions="""
             Perform retrieval with dynamic threshold adjustment:
             - Start with initial threshold
@@ -400,17 +405,17 @@ class AdaptiveThresholdRAGAgent(MultiAgent):
             - Balance precision and recall based on query needs
             """,
             output_schema={
-                "documents": "List[str]",
-                "relevance_scores": "List[float]",
-                "threshold_used": "float",
-                "threshold_adjustments": "List[float]",
-                "retrieval_rounds": "int",
+                'documents': 'List[str]',
+                'relevance_scores': 'List[float]',
+                'threshold_used': 'float',
+                'threshold_adjustments': 'List[float]',
+                'retrieval_rounds': 'int',
             },
         )
 
         # Confidence assessor
         confidence_assessor = SimpleAgent(
-            name="confidence_assessor",
+            name='confidence_assessor',
             instructions="""
             Assess answer confidence and need for more retrieval:
             - Evaluate if retrieved documents sufficiently answer the query
@@ -419,17 +424,17 @@ class AdaptiveThresholdRAGAgent(MultiAgent):
             - Recommend further retrieval if needed
             """,
             output_schema={
-                "answer_confidence": "float",
-                "information_completeness": "float",
-                "gaps_identified": "List[str]",
-                "recommend_adjustment": "bool",
-                "suggested_threshold": "Optional[float]",
+                'answer_confidence': 'float',
+                'information_completeness': 'float',
+                'gaps_identified': 'List[str]',
+                'recommend_adjustment': 'bool',
+                'suggested_threshold': 'Optional[float]',
             },
         )
 
         # Final answer generator
         threshold_aware_generator = SimpleAgent(
-            name="threshold_aware_generator",
+            name='threshold_aware_generator',
             instructions="""
             Generate answer with awareness of retrieval thresholds:
             - Acknowledge if high thresholds limited information
@@ -438,11 +443,11 @@ class AdaptiveThresholdRAGAgent(MultiAgent):
             - Suggest areas for deeper investigation if needed
             """,
             output_schema={
-                "answer": "str",
-                "retrieval_quality": "str",
-                "confidence": "float",
-                "limitations": "List[str]",
-                "further_investigation": "Optional[List[str]]",
+                'answer': 'str',
+                'retrieval_quality': 'str',
+                'confidence': 'float',
+                'limitations': 'List[str]',
+                'further_investigation': 'Optional[List[str]]',
             },
         )
 

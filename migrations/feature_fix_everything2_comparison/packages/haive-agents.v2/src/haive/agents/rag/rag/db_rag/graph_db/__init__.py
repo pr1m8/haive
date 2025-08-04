@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from graph_db.agent import (
     GraphDBRAGAgent,
     check_domain_relevance,
@@ -41,7 +43,6 @@ from graph_db.models import (
     validate_filter_type,
 )
 from graph_db.state import InputState, OutputState, OverallState
-
 
 __all__ = [
     "Config",

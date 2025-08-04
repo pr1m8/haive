@@ -1,8 +1,10 @@
 """Hallucination Grading Agents.
 
-Modular agents for detecting and grading hallucinations in RAG responses.
-Can be plugged into any workflow with compatible I/O schemas.
+Modular agents for detecting and grading hallucinations in RAG
+responses. Can be plugged into any workflow with compatible I/O schemas.
 """
+
+from __future__ import annotations
 
 import logging
 from typing import Any, Literal
@@ -18,7 +20,6 @@ from haive.core.graph.node.agent_node import AgentNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -27,19 +28,20 @@ class HallucinationGrade(BaseModel):
     """Single hallucination assessment."""
 
     has_hallucination: bool = Field(
-        description="Whether response contains hallucinations"
-    )
+        description="Whether response contains hallucinations", )
     confidence_score: float = Field(
-        ge=0.0, le=1.0, description="Confidence in assessment (0-1)"
+        ge=0.0,
+        le=1.0,
+        description="Confidence in assessment (0-1)",
     )
-    hallucination_type: Literal["factual", "contextual", "logical", "none"] = Field(
-        description="Type of hallucination detected"
-    )
+    hallucination_type: Literal[
+        "factual", "contextual", "logical",
+        "none"] = Field(description="Type of hallucination detected", )
     severity: Literal["low", "medium", "high", "critical"] = Field(
-        description="Severity of hallucination"
-    )
+        description="Severity of hallucination", )
     evidence: list[str] = Field(
-        default_factory=list, description="Specific evidence of hallucination"
+        default_factory=list,
+        description="Specific evidence of hallucination",
     )
     reasoning: str = Field(description="Detailed reasoning for the assessment")
 
@@ -49,54 +51,68 @@ class AdvancedHallucinationGrade(BaseModel):
 
     # Basic assessment
     has_hallucination: bool = Field(
-        description="Whether response contains hallucinations"
-    )
+        description="Whether response contains hallucinations", )
     overall_confidence: float = Field(
-        ge=0.0, le=1.0, description="Overall confidence in assessment"
+        ge=0.0,
+        le=1.0,
+        description="Overall confidence in assessment",
     )
 
     # Detailed analysis
     factual_accuracy: float = Field(
-        ge=0.0, le=1.0, description="Factual accuracy score"
+        ge=0.0,
+        le=1.0,
+        description="Factual accuracy score",
     )
     contextual_consistency: float = Field(
-        ge=0.0, le=1.0, description="Consistency with context"
+        ge=0.0,
+        le=1.0,
+        description="Consistency with context",
     )
     logical_coherence: float = Field(
-        ge=0.0, le=1.0, description="Logical coherence score"
+        ge=0.0,
+        le=1.0,
+        description="Logical coherence score",
     )
     source_attribution: float = Field(
-        ge=0.0, le=1.0, description="Proper source attribution"
+        ge=0.0,
+        le=1.0,
+        description="Proper source attribution",
     )
 
     # Specific hallucination types
     hallucination_types: list[str] = Field(
-        default_factory=list, description="Types of hallucinations found"
+        default_factory=list,
+        description="Types of hallucinations found",
     )
 
     # Evidence and examples
     fabricated_facts: list[str] = Field(
-        default_factory=list, description="Specific fabricated facts identified"
+        default_factory=list,
+        description="Specific fabricated facts identified",
     )
     unsupported_claims: list[str] = Field(
-        default_factory=list, description="Claims not supported by context"
+        default_factory=list,
+        description="Claims not supported by context",
     )
     contradictions: list[str] = Field(
-        default_factory=list, description="Contradictions with source material"
+        default_factory=list,
+        description="Contradictions with source material",
     )
 
     # Recommendations
-    severity_level: Literal["none", "low", "medium", "high", "critical"] = Field(
-        description="Overall severity level"
-    )
-    action_needed: Literal["none", "review", "revise", "regenerate", "reject"] = Field(
-        description="Recommended action"
-    )
+    severity_level: Literal["none", "low", "medium", "high",
+                            "critical"] = Field(
+                                description="Overall severity level", )
+    action_needed: Literal["none", "review", "revise", "regenerate",
+                           "reject"] = Field(
+                               description="Recommended action", )
 
     # Detailed analysis
     detailed_reasoning: str = Field(description="Comprehensive reasoning")
     improvement_suggestions: list[str] = Field(
-        default_factory=list, description="Specific suggestions for improvement"
+        default_factory=list,
+        description="Specific suggestions for improvement",
     )
 
 
@@ -104,21 +120,23 @@ class RealtimeHallucinationCheck(BaseModel):
     """Quick hallucination check for real-time applications."""
 
     is_safe: bool = Field(description="Whether response is safe to use")
-    risk_level: Literal["very_low", "low", "medium", "high", "very_high"] = Field(
-        description="Risk level for hallucination"
-    )
+    risk_level: Literal["very_low", "low", "medium", "high",
+                        "very_high"] = Field(
+                            description="Risk level for hallucination", )
     quick_flags: list[str] = Field(
-        default_factory=list, description="Quick warning flags"
+        default_factory=list,
+        description="Quick warning flags",
     )
-    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in assessment")
+    confidence: float = Field(ge=0.0,
+                              le=1.0,
+                              description="Confidence in assessment")
 
 
 # Enhanced prompts for hallucination detection
-BASIC_HALLUCINATION_PROMPT = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            """You are an expert at detecting hallucinations in AI-generated responses.
+BASIC_HALLUCINATION_PROMPT = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        """You are an expert at detecting hallucinations in AI-generated responses.
 
 A hallucination occurs when the response contains information that is:
 - Not supported by the provided context/documents
@@ -127,10 +145,10 @@ A hallucination occurs when the response contains information that is:
 - Makes unsupported claims or assumptions
 
 Assess the response carefully and identify any hallucinations.""",
-        ),
-        (
-            "human",
-            """Evaluate this response for hallucinations:
+    ),
+    (
+        "human",
+        """Evaluate this response for hallucinations:
 
 Query: {query}
 Context Documents: {retrieved_documents}
@@ -138,16 +156,13 @@ AI Response: {generated_response}
 
 Check if the response contains any information not supported by the context or any fabricated facts.
 Provide a detailed assessment.""",
-        ),
-    ]
-)
-
+    ),
+], )
 
 ADVANCED_HALLUCINATION_PROMPT = ChatPromptTemplate.from_messages(
     [
-        (
-            "system",
-            """You are a world-class expert in detecting and analyzing hallucinations in AI responses.
+        ("system",
+         """You are a world-class expert in detecting and analyzing hallucinations in AI responses.
 Your role is to provide comprehensive analysis of response quality and accuracy.
 
 **HALLUCINATION TYPES:**
@@ -172,10 +187,9 @@ Your role is to provide comprehensive analysis of response quality and accuracy.
 - **Critical**: Dangerous misinformation that could cause harm
 
 Be thorough and provide specific examples for any hallucinations found.""",
-        ),
-        (
-            "human",
-            """Conduct a comprehensive hallucination analysis:
+         ),
+        ("human",
+         """Conduct a comprehensive hallucination analysis:
 
 **Query:** {query}
 
@@ -191,16 +205,14 @@ Be thorough and provide specific examples for any hallucinations found.""",
 - Grading results: {grading_results}
 
 Provide a detailed analysis with specific examples of any hallucinations found.""",
-        ),
-    ]
+         ),
+    ],
 )
 
-
-REALTIME_HALLUCINATION_PROMPT = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            """You are a fast hallucination detector for real-time applications.
+REALTIME_HALLUCINATION_PROMPT = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        """You are a fast hallucination detector for real-time applications.
 
 Quickly assess if the response is safe to use. Focus on:
 - Obviously fabricated facts
@@ -209,19 +221,18 @@ Quickly assess if the response is safe to use. Focus on:
 - Completely unsupported claims
 
 Provide a quick safety assessment.""",
-        ),
-        (
-            "human",
-            """Quick hallucination check:
+    ),
+    (
+        "human",
+        """Quick hallucination check:
 
 Query: {query}
 Context: {retrieved_documents}
 Response: {generated_response}
 
 Is this response safe to use? Flag any obvious hallucinations.""",
-        ),
-    ]
-)
+    ),
+], )
 
 
 class HallucinationGraderAgent(Agent):
@@ -230,7 +241,10 @@ class HallucinationGraderAgent(Agent):
     name: str = "Hallucination Grader"
 
     def __init__(
-        self, llm_config: LLMConfig | None = None, threshold: float = 0.7, **kwargs
+        self,
+        llm_config: LLMConfig | None = None,
+        threshold: float = 0.7,
+        **kwargs,
     ):
         """Initialize hallucination grader.
 
@@ -264,21 +278,18 @@ class HallucinationGraderAgent(Agent):
             """Grade response for hallucinations."""
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
-            generated_response = getattr(state, "generated_response", "") or getattr(
-                state, "response", ""
+            generated_response = getattr(state, "generated_response",
+                                         "") or getattr(
+                                             state,
+                                             "response",
+                                             "",
             )
 
             # Format documents for context
-            doc_context = (
-                "\n\n".join(
-                    [
-                        f"Document {i+1}: {doc.page_content}"
-                        for i, doc in enumerate(retrieved_documents[:5])
-                    ]
-                )
-                if retrieved_documents
-                else "No documents provided"
-            )
+            doc_context = ("\n\n".join([
+                f"Document {i + 1}: {doc.page_content}"
+                for i, doc in enumerate(retrieved_documents[:5])
+            ], ) if retrieved_documents else "No documents provided")
 
             # Get structured grade
             grade = grading_engine.invoke(
@@ -286,26 +297,28 @@ class HallucinationGraderAgent(Agent):
                     "query": query,
                     "retrieved_documents": doc_context,
                     "generated_response": generated_response,
-                }
-            )
+                }, )
 
             # Add processing metadata
-            is_flagged = (
-                grade.confidence_score >= self.threshold and grade.has_hallucination
-            )
+            is_flagged = grade.confidence_score >= self.threshold and grade.has_hallucination
 
             return {
-                "hallucination_grade": grade,
-                "is_hallucination_flagged": is_flagged,
-                "hallucination_confidence": grade.confidence_score,
-                "needs_revision": is_flagged and grade.severity in ["high", "critical"],
+                "hallucination_grade":
+                grade,
+                "is_hallucination_flagged":
+                is_flagged,
+                "hallucination_confidence":
+                grade.confidence_score,
+                "needs_revision":
+                is_flagged and grade.severity in ["high", "critical"],
             }
 
         # Add grading node
         AgentNodeConfig(
             name="hallucination_grader",
             agent=SimpleAgent(
-                engine=grading_engine, name="Hallucination Grader Engine"
+                engine=grading_engine,
+                name="Hallucination Grader Engine",
             ),
         )
 
@@ -354,12 +367,16 @@ class AdvancedHallucinationGraderAgent(Agent):
             output_key="advanced_hallucination_grade",
         )
 
-        def advanced_hallucination_analysis(state: dict[str, Any]) -> dict[str, Any]:
+        def advanced_hallucination_analysis(
+                state: dict[str, Any]) -> dict[str, Any]:
             """Comprehensive hallucination analysis."""
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
-            generated_response = getattr(state, "generated_response", "") or getattr(
-                state, "response", ""
+            generated_response = getattr(state, "generated_response",
+                                         "") or getattr(
+                                             state,
+                                             "response",
+                                             "",
             )
 
             # Get additional context if available
@@ -368,16 +385,10 @@ class AdvancedHallucinationGraderAgent(Agent):
             grading_results = getattr(state, "grading_results", "")
 
             # Format context
-            doc_context = (
-                "\n\n".join(
-                    [
-                        f"Document {i+1}: {doc.page_content}"
-                        for i, doc in enumerate(retrieved_documents[:10])
-                    ]
-                )
-                if retrieved_documents
-                else "No documents provided"
-            )
+            doc_context = ("\n\n".join([
+                f"Document {i + 1}: {doc.page_content}"
+                for i, doc in enumerate(retrieved_documents[:10])
+            ], ) if retrieved_documents else "No documents provided")
 
             # Get comprehensive analysis
             grade = grading_engine.invoke(
@@ -386,12 +397,10 @@ class AdvancedHallucinationGraderAgent(Agent):
                     "retrieved_documents": doc_context,
                     "generated_response": generated_response,
                     "web_search_results": str(web_search_results),
-                    "messages": (
-                        str(messages[-3:]) if messages else ""
-                    ),  # Last 3 messages
+                    "messages": (str(messages[-3:])
+                                 if messages else ""),  # Last 3 messages
                     "grading_results": str(grading_results),
-                }
-            )
+                }, )
 
             # Calculate risk scores
             risk_score = 1.0 - min(
@@ -410,14 +419,18 @@ class AdvancedHallucinationGraderAgent(Agent):
             }.get(grade.action_needed, 1)
 
             return {
-                "advanced_hallucination_grade": grade,
-                "hallucination_risk_score": risk_score,
-                "action_urgency_level": action_urgency,
-                "needs_immediate_attention": grade.severity_level
-                in ["high", "critical"],
-                "is_response_reliable": grade.overall_confidence > 0.8
-                and not grade.has_hallucination,
-                "improvement_needed": len(grade.improvement_suggestions) > 0,
+                "advanced_hallucination_grade":
+                grade,
+                "hallucination_risk_score":
+                risk_score,
+                "action_urgency_level":
+                action_urgency,
+                "needs_immediate_attention":
+                grade.severity_level in ["high", "critical"],
+                "is_response_reliable":
+                grade.overall_confidence > 0.8 and not grade.has_hallucination,
+                "improvement_needed":
+                len(grade.improvement_suggestions) > 0,
             }
 
         graph.add_node("advanced_analysis", advanced_hallucination_analysis)
@@ -469,21 +482,18 @@ class RealtimeHallucinationGraderAgent(Agent):
             """Quick safety check for hallucinations."""
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
-            generated_response = getattr(state, "generated_response", "") or getattr(
-                state, "response", ""
+            generated_response = getattr(state, "generated_response",
+                                         "") or getattr(
+                                             state,
+                                             "response",
+                                             "",
             )
 
             # Quick context (fewer documents for speed)
-            doc_context = (
-                "\n\n".join(
-                    [
-                        f"Doc {i+1}: {doc.page_content[:200]}..."
-                        for i, doc in enumerate(retrieved_documents[:3])
-                    ]
-                )
-                if retrieved_documents
-                else "No context"
-            )
+            doc_context = ("\n\n".join([
+                f"Doc {i + 1}: {doc.page_content[:200]}..."
+                for i, doc in enumerate(retrieved_documents[:3])
+            ], ) if retrieved_documents else "No context")
 
             # Get quick assessment
             check = checking_engine.invoke(
@@ -491,22 +501,24 @@ class RealtimeHallucinationGraderAgent(Agent):
                     "query": query,
                     "retrieved_documents": doc_context,
                     "generated_response": generated_response,
-                }
-            )
+                }, )
 
             # Safety decision
-            is_safe_to_use = (
-                check.is_safe
-                and check.confidence >= self.safety_threshold
-                and check.risk_level in ["very_low", "low"]
-            )
+            is_safe_to_use = (check.is_safe
+                              and check.confidence >= self.safety_threshold
+                              and check.risk_level in ["very_low", "low"])
 
             return {
-                "realtime_hallucination_check": check,
-                "is_safe_to_use": is_safe_to_use,
-                "quick_risk_level": check.risk_level,
-                "safety_confidence": check.confidence,
-                "needs_full_check": not is_safe_to_use
+                "realtime_hallucination_check":
+                check,
+                "is_safe_to_use":
+                is_safe_to_use,
+                "quick_risk_level":
+                check.risk_level,
+                "safety_confidence":
+                check.confidence,
+                "needs_full_check":
+                not is_safe_to_use
                 or check.risk_level not in ["very_low", "low"],
             }
 
@@ -536,9 +548,11 @@ def create_hallucination_grader(
     if grader_type == "basic":
         return HallucinationGraderAgent(llm_config=llm_config, **kwargs)
     if grader_type == "advanced":
-        return AdvancedHallucinationGraderAgent(llm_config=llm_config, **kwargs)
+        return AdvancedHallucinationGraderAgent(llm_config=llm_config,
+                                                **kwargs)
     if grader_type == "realtime":
-        return RealtimeHallucinationGraderAgent(llm_config=llm_config, **kwargs)
+        return RealtimeHallucinationGraderAgent(llm_config=llm_config,
+                                                **kwargs)
     raise ValueError(f"Unknown grader type: {grader_type}")
 
 

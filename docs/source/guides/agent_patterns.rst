@@ -6,7 +6,7 @@ Agent Patterns
 .. warning::
 
    **This page is under development***.** **
-   
+
    We're actively working on this documentation section and it will be available soon.
 
 .. note::
@@ -15,7 +15,7 @@ Agent Patterns
 .. admonition:: Future Content
 
    :class:`tip`
-   
+
    This section will include:
 
   *** * Common agent design patterns and architectures*

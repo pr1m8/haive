@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Preview documentation fixes before applying them."""
 
+from __future__ import annotations
+
 import difflib
 import json
+from pathlib import Path
 import shutil
 import subprocess
-import sys
 import tempfile
-from pathlib import Path
-from typing import Dict, List, Tuple
 
 
 class DocFixPreviewer:
@@ -19,7 +19,7 @@ class DocFixPreviewer:
         self.temp_dir = tempfile.mkdtemp(prefix="doc_preview_")
         print(f"📁 Created temp directory: {self.temp_dir}")
 
-    def preview_rstfmt(self, sample_files: int = 3) -> Dict[str, str]:
+    def preview_rstfmt(self, sample_files: int = 3) -> dict[str, str]:
         """Preview rstfmt formatting changes on sample RST files."""
         print("\n🔍 PREVIEWING: rstfmt (RST formatting)")
         print("=" * 60)
@@ -31,7 +31,7 @@ class DocFixPreviewer:
             print(f"\n📄 File: {rst_file}")
 
             # Read original
-            with open(rst_file, "r") as f:
+            with open(rst_file) as f:
                 original = f.read()
 
             # Get formatted version
@@ -40,6 +40,7 @@ class DocFixPreviewer:
                     ["poetry", "run", "rstfmt", str(rst_file)],
                     capture_output=True,
                     text=True,
+                    check=False,
                 )
 
                 if result.returncode == 0:
@@ -56,11 +57,11 @@ class DocFixPreviewer:
                     print(f"  ❌ Error: {result.stderr}")
 
             except Exception as e:
-                print(f"  ❌ Error: {str(e)}")
+                print(f"  ❌ Error: {e!s}")
 
         return previews
 
-    def preview_docformatter(self, sample_files: int = 3) -> Dict[str, str]:
+    def preview_docformatter(self, sample_files: int = 3) -> dict[str, str]:
         """Preview docformatter changes on Python files."""
         print("\n🔍 PREVIEWING: docformatter (Python docstrings)")
         print("=" * 60)
@@ -69,7 +70,7 @@ class DocFixPreviewer:
         py_files = []
         for py_file in Path("packages").rglob("*.py"):
             if py_file.stat().st_size > 100:  # Skip empty files
-                with open(py_file, "r") as f:
+                with open(py_file) as f:
                     content = f.read()
                     if '"""' in content or "'''" in content:
                         py_files.append(py_file)
@@ -87,6 +88,7 @@ class DocFixPreviewer:
                     ["poetry", "run", "docformatter", "--diff", str(py_file)],
                     capture_output=True,
                     text=True,
+                    check=False,
                 )
 
                 if result.stdout:
@@ -96,11 +98,11 @@ class DocFixPreviewer:
                     print("  ✅ Docstrings already properly formatted")
 
             except Exception as e:
-                print(f"  ❌ Error: {str(e)}")
+                print(f"  ❌ Error: {e!s}")
 
         return previews
 
-    def preview_blacken_docs(self, sample_files: int = 3) -> Dict[str, str]:
+    def preview_blacken_docs(self, sample_files: int = 3) -> dict[str, str]:
         """Preview blacken-docs changes on RST files with code blocks."""
         print("\n🔍 PREVIEWING: blacken-docs (code blocks in docs)")
         print("=" * 60)
@@ -108,7 +110,7 @@ class DocFixPreviewer:
         # Find RST files with code blocks
         rst_files = []
         for rst_file in Path("docs/source").rglob("*.rst"):
-            with open(rst_file, "r") as f:
+            with open(rst_file) as f:
                 content = f.read()
                 if ".. code-block::" in content or ".. code::" in content:
                     rst_files.append(rst_file)
@@ -137,12 +139,13 @@ class DocFixPreviewer:
                     ],
                     capture_output=True,
                     text=True,
+                    check=False,
                 )
 
                 # Compare original and modified
-                with open(rst_file, "r") as f:
+                with open(rst_file) as f:
                     original = f.read()
-                with open(temp_file, "r") as f:
+                with open(temp_file) as f:
                     modified = f.read()
 
                 if original != modified:
@@ -153,11 +156,11 @@ class DocFixPreviewer:
                     print("  ✅ Code blocks already properly formatted")
 
             except Exception as e:
-                print(f"  ❌ Error: {str(e)}")
+                print(f"  ❌ Error: {e!s}")
 
         return previews
 
-    def preview_codespell(self, sample_issues: int = 10) -> Dict[str, List[str]]:
+    def preview_codespell(self, sample_issues: int = 10) -> dict[str, list[str]]:
         """Preview spelling corrections from codespell."""
         print("\n🔍 PREVIEWING: codespell (spelling corrections)")
         print("=" * 60)
@@ -168,6 +171,7 @@ class DocFixPreviewer:
                 ["poetry", "run", "codespell", "docs/", "--count"],
                 capture_output=True,
                 text=True,
+                check=False,
             )
 
             if result.stdout:
@@ -183,15 +187,14 @@ class DocFixPreviewer:
                     print(f"  ... and {len(lines) - sample_issues} more")
 
                 return {"spelling": issues}
-            else:
-                print("  ✅ No spelling issues found")
-                return {}
-
-        except Exception as e:
-            print(f"  ❌ Error: {str(e)}")
+            print("  ✅ No spelling issues found")
             return {}
 
-    def preview_rstcheck_issues(self) -> Dict[str, int]:
+        except Exception as e:
+            print(f"  ❌ Error: {e!s}")
+            return {}
+
+    def preview_rstcheck_issues(self) -> dict[str, int]:
         """Preview issues that rstcheck would find."""
         print("\n🔍 CHECKING: rstcheck validation")
         print("=" * 60)
@@ -207,6 +210,7 @@ class DocFixPreviewer:
                     ["poetry", "run", "rstcheck", str(rst_file), "--report", "warning"],
                     capture_output=True,
                     text=True,
+                    check=False,
                 )
 
                 if result.stderr:
@@ -225,7 +229,7 @@ class DocFixPreviewer:
             return issue_counts
 
         except Exception as e:
-            print(f"  ❌ Error: {str(e)}")
+            print(f"  ❌ Error: {e!s}")
             return issue_counts
 
     def test_fixes_on_sample(self) -> bool:
@@ -241,6 +245,7 @@ class DocFixPreviewer:
                 ["poetry", "run", "rstcheck", str(rst_file)],
                 capture_output=True,
                 text=True,
+                check=False,
             )
             if result.returncode != 0:
                 sample_file = rst_file
@@ -261,12 +266,16 @@ class DocFixPreviewer:
 
         # 1. Format with rstfmt
         subprocess.run(
-            ["poetry", "run", "rstfmt", "--write", str(temp_file)], capture_output=True
+            ["poetry", "run", "rstfmt", "--write", str(temp_file)],
+            capture_output=True,
+            check=False,
         )
 
         # 2. Fix code blocks
         subprocess.run(
-            ["poetry", "run", "blacken-docs", str(temp_file)], capture_output=True
+            ["poetry", "run", "blacken-docs", str(temp_file)],
+            capture_output=True,
+            check=False,
         )
 
         # 3. Validate fixed file
@@ -275,15 +284,16 @@ class DocFixPreviewer:
             ["poetry", "run", "rstcheck", str(temp_file)],
             capture_output=True,
             text=True,
+            check=False,
         )
 
         if result.returncode == 0:
             print("  ✅ File validates successfully after fixes!")
 
             # Show what was fixed
-            with open(sample_file, "r") as f:
+            with open(sample_file) as f:
                 original = f.read()
-            with open(temp_file, "r") as f:
+            with open(temp_file) as f:
                 fixed = f.read()
 
             if original != fixed:
@@ -292,13 +302,16 @@ class DocFixPreviewer:
                 print(diff)
 
             return True
-        else:
-            print("  ⚠️  File still has issues after fixes:")
-            print(result.stderr)
-            return False
+        print("  ⚠️  File still has issues after fixes:")
+        print(result.stderr)
+        return False
 
     def _create_diff(
-        self, original: str, modified: str, filename: str, context: int = 5
+        self,
+        original: str,
+        modified: str,
+        filename: str,
+        context: int = 5,
     ) -> str:
         """Create a unified diff between original and modified content."""
         original_lines = original.splitlines(keepends=True)
@@ -329,7 +342,7 @@ class DocFixPreviewer:
     def cleanup(self):
         """Clean up temporary directory."""
         shutil.rmtree(self.temp_dir)
-        print(f"\n🧹 Cleaned up temp directory")
+        print("\n🧹 Cleaned up temp directory")
 
     def save_preview_results(self):
         """Save preview results to file."""
@@ -341,7 +354,7 @@ class DocFixPreviewer:
             "docformatter_changes": len(self.preview_results.get("docformatter", {})),
             "blacken_docs_changes": len(self.preview_results.get("blacken_docs", {})),
             "spelling_issues": len(
-                self.preview_results.get("codespell", {}).get("spelling", [])
+                self.preview_results.get("codespell", {}).get("spelling", []),
             ),
             "rstcheck_issues": self.preview_results.get("rstcheck", {}),
         }
@@ -363,13 +376,13 @@ def main():
         # Preview each type of fix
         previewer.preview_results["rstfmt"] = previewer.preview_rstfmt(sample_files=3)
         previewer.preview_results["docformatter"] = previewer.preview_docformatter(
-            sample_files=3
+            sample_files=3,
         )
         previewer.preview_results["blacken_docs"] = previewer.preview_blacken_docs(
-            sample_files=3
+            sample_files=3,
         )
         previewer.preview_results["codespell"] = previewer.preview_codespell(
-            sample_issues=10
+            sample_issues=10,
         )
         previewer.preview_results["rstcheck"] = previewer.preview_rstcheck_issues()
 
@@ -388,24 +401,24 @@ def main():
 
         print(f"\n📊 Total files that would be changed: {total_changes}")
         print(
-            f"   - RST formatting: {len(previewer.preview_results.get('rstfmt', {}))}"
+            f"   - RST formatting: {len(previewer.preview_results.get('rstfmt', {}))}",
         )
         print(
-            f"   - Python docstrings: {len(previewer.preview_results.get('docformatter', {}))}"
+            f"   - Python docstrings: {len(previewer.preview_results.get('docformatter', {}))}",
         )
         print(
-            f"   - Code blocks: {len(previewer.preview_results.get('blacken_docs', {}))}"
+            f"   - Code blocks: {len(previewer.preview_results.get('blacken_docs', {}))}",
         )
 
         spelling_issues = len(
-            previewer.preview_results.get("codespell", {}).get("spelling", [])
+            previewer.preview_results.get("codespell", {}).get("spelling", []),
         )
         if spelling_issues > 0:
             print(f"   - Spelling corrections: {spelling_issues}")
 
         rstcheck = previewer.preview_results.get("rstcheck", {})
         if rstcheck:
-            print(f"\n⚠️  Current validation issues:")
+            print("\n⚠️  Current validation issues:")
             print(f"   - Errors: {rstcheck.get('errors', 0)}")
             print(f"   - Warnings: {rstcheck.get('warnings', 0)}")
 

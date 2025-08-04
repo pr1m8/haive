@@ -15,6 +15,7 @@ Functions:
 # ============================================================================
 # AGENT NODE CONFIG V2 - WITH SCHEMA SUPPORT
 # ============================================================================
+from __future__ import annotations
 
 import logging
 from typing import Any, Literal, Optional, Self, TypeVar
@@ -29,7 +30,6 @@ from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
 from haive.core.graph.node.base_node_config import BaseNodeConfig
 from haive.core.schema.field_definition import FieldDefinition
 from haive.core.schema.field_registry import StandardFields
-
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -59,7 +59,8 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
     """
 
     node_type: NodeType = Field(
-        default=NodeType.AGENT, description="Node type for agents"
+        default=NodeType.AGENT,
+        description="Node type for agents",
     )
 
     # The agent to execute
@@ -79,25 +80,30 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
     )
 
     agent_fields: dict[str, str] | None = Field(
-        default=None, description="Mapping of global_field -> agent_field names"
+        default=None,
+        description="Mapping of global_field -> agent_field names",
     )
 
     # Output handling
     output_field: str | None = Field(
-        default=None, description="Field to store agent's primary output"
+        default=None,
+        description="Field to store agent's primary output",
     )
 
     preserve_messages: bool = Field(
-        default=True, description="Whether to preserve message objects (not serialize)"
+        default=True,
+        description="Whether to preserve message objects (not serialize)",
     )
 
     # Metadata tracking
     track_execution: bool = Field(
-        default=True, description="Whether to track execution in metadata"
+        default=True,
+        description="Whether to track execution in metadata",
     )
 
     metadata_field: str = Field(
-        default="agent_metadata", description="Field to store execution metadata"
+        default="agent_metadata",
+        description="Field to store execution metadata",
     )
 
     @model_validator(mode="after")
@@ -116,7 +122,8 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
 
         # Add agent-specific fields if we know the schema
         if self.agent_state_schema:
-            for field_name, field_info in self.agent_state_schema.model_fields.items():
+            for field_name, field_info in self.agent_state_schema.model_fields.items(
+            ):
                 if field_name not in ["messages"]:  # Avoid duplicates
                     fields.append(
                         FieldDefinition(
@@ -126,8 +133,7 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
                             description=field_info.description
                             or f"Agent field: {field_name}",
                             source=f"agent:{self.agent.name}",
-                        )
-                    )
+                        ), )
 
         return fields
 
@@ -146,8 +152,7 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
                     field_type=Optional[Any],
                     default=None,
                     description=f"Output from agent {self.agent.name}",
-                )
-            )
+                ), )
 
         # Add metadata field
         fields.append(
@@ -156,12 +161,13 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
                 field_type=Optional[dict[str, Any]],
                 default=None,
                 description="Agent execution metadata",
-            )
-        )
+            ), )
 
         return fields
 
-    def __call__(self, state: StateLike, config: ConfigLike | None = None) -> Command:
+    def __call__(self,
+                 state: StateLike,
+                 config: ConfigLike | None = None) -> Command:
         """Execute the agent with proper state management."""
         logger.info(f"{'=' * 60}")
         logger.info(f"AGENT NODE V2: {self.name}")
@@ -195,9 +201,7 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
                 state_update[self.metadata_field] = metadata
 
             logger.info(
-                f"✅ Agent completed with {
-                    len(state_update)} field updates"
-            )
+                f"✅ Agent completed with {len(state_update)} field updates", )
 
             return Command(update=state_update, goto=self._get_goto_node())
 
@@ -208,7 +212,8 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
             if self.track_execution:
                 metadata = self._track_error(e)
                 return Command(
-                    update={self.metadata_field: metadata}, goto=self._get_goto_node()
+                    update={self.metadata_field: metadata},
+                    goto=self._get_goto_node(),
                 )
 
             raise
@@ -220,12 +225,12 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
         # If agent has specific schema, extract those fields
         if self.agent_state_schema:
             logger.debug(
-                f"Using agent's state schema: {
-                    self.agent_state_schema.__name__}"
+                f"Using agent's state schema: {self.agent_state_schema.__name__}",
             )
 
             # Extract fields that exist in both state and agent schema
-            for field_name, _field_info in self.agent_state_schema.model_fields.items():
+            for field_name, _field_info in self.agent_state_schema.model_fields.items(
+            ):
                 # Check field mapping
                 source_field = field_name
                 if self.agent_fields and field_name in self.agent_fields:
@@ -241,11 +246,13 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
 
                     agent_input[field_name] = value
                     logger.debug(
-                        f"Extracted field '{field_name}' from '{source_field}'"
+                        f"Extracted field '{field_name}' from '{source_field}'",
                     )
-                elif hasattr(state, "get") and state.get(source_field) is not None:
+                elif hasattr(state,
+                             "get") and state.get(source_field) is not None:
                     agent_input[field_name] = state.get(source_field)
-                    logger.debug(f"Extracted field '{field_name}' from state dict")
+                    logger.debug(
+                        f"Extracted field '{field_name}' from state dict")
 
         else:
             # No specific schema - extract shared fields
@@ -266,9 +273,8 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
         # Convert to dict if it's a Pydantic model
         if isinstance(agent_input, BaseModel):
             # But preserve message objects
-            messages = (
-                agent_input.messages if hasattr(agent_input, "messages") else None
-            )
+            messages = agent_input.messages if hasattr(agent_input,
+                                                       "messages") else None
             agent_input = agent_input.model_dump()
             if messages and self.preserve_messages:
                 agent_input["messages"] = messages
@@ -290,7 +296,8 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
             logger.warning(f"Cannot extract messages from {type(messages)}")
             return []
 
-    def _process_agent_output(self, result: Any, state: StateLike) -> dict[str, Any]:
+    def _process_agent_output(self, result: Any,
+                              state: StateLike) -> dict[str, Any]:
         """Process agent output and prepare state update."""
         state_update = {}
 
@@ -328,7 +335,8 @@ class AgentNodeConfig(BaseNodeConfig[TInput, TOutput]):
             "input_message_count": len(self._get_messages_from_state(state)),
         }
 
-    def _track_end(self, metadata: dict[str, Any], result: Any) -> dict[str, Any]:
+    def _track_end(self, metadata: dict[str, Any],
+                   result: Any) -> dict[str, Any]:
         """Track agent execution end."""
         metadata["end_time"] = logger.time()
         metadata["duration_ms"] = metadata["end_time"] - metadata["start_time"]
@@ -379,22 +387,24 @@ class CoordinatorNodeConfig(BaseNodeConfig[TInput, TOutput]):
     """
 
     node_type: NodeType = Field(
-        default=NodeType.COORDINATOR, description="Coordinator node type"
+        default=NodeType.COORDINATOR,
+        description="Coordinator node type",
     )
 
     agents: list[Agent] = Field(description="Agents to coordinate")
 
-    mode: Literal["fanout", "aggregate", "sequence"] = Field(
-        description="Coordination mode"
-    )
+    mode: Literal["fanout", "aggregate",
+                  "sequence"] = Field(description="Coordination mode", )
 
     # Aggregation settings
     aggregation_field: str = Field(
-        default="agent_results", description="Field to store aggregated results"
+        default="agent_results",
+        description="Field to store aggregated results",
     )
 
     preserve_individual: bool = Field(
-        default=True, description="Whether to preserve individual agent outputs"
+        default=True,
+        description="Whether to preserve individual agent outputs",
     )
 
     def get_default_input_fields(self) -> list[FieldDefinition]:
@@ -408,8 +418,7 @@ class CoordinatorNodeConfig(BaseNodeConfig[TInput, TOutput]):
                     field_type=Optional[dict[str, Any]],
                     default_factory=dict,
                     description="Individual agent results to aggregate",
-                )
-            )
+                ), )
 
         return fields
 
@@ -424,12 +433,13 @@ class CoordinatorNodeConfig(BaseNodeConfig[TInput, TOutput]):
                     field_type=Optional[Any],
                     default=None,
                     description="Aggregated result from all agents",
-                )
-            )
+                ), )
 
         return fields
 
-    def __call__(self, state: StateLike, config: ConfigLike | None = None) -> Command:
+    def __call__(self,
+                 state: StateLike,
+                 config: ConfigLike | None = None) -> Command:
         """Execute coordination logic."""
         if self.mode == "fanout":
             return self._handle_fanout(state, config)
@@ -439,17 +449,20 @@ class CoordinatorNodeConfig(BaseNodeConfig[TInput, TOutput]):
             return self._handle_sequence(state, config)
         raise ValueError(f"Unknown coordination mode: {self.mode}")
 
-    def _handle_fanout(self, state: StateLike, config: ConfigLike | None) -> Command:
+    def _handle_fanout(self, state: StateLike,
+                       config: ConfigLike | None) -> Command:
         """Prepare for parallel agent execution."""
         logger.info(f"Fanning out to {len(self.agents)} agents")
 
         # Just mark ready for parallel execution
         # The graph structure handles the actual parallel routing
         return Command(
-            update={"coordination_stage": "fanout"}, goto=self._get_goto_node()
+            update={"coordination_stage": "fanout"},
+            goto=self._get_goto_node(),
         )
 
-    def _handle_aggregate(self, state: StateLike, config: ConfigLike | None) -> Command:
+    def _handle_aggregate(self, state: StateLike,
+                          config: ConfigLike | None) -> Command:
         """Aggregate results from parallel agents."""
         logger.info("Aggregating agent results")
 
@@ -457,9 +470,8 @@ class CoordinatorNodeConfig(BaseNodeConfig[TInput, TOutput]):
         if hasattr(state, self.aggregation_field):
             results = getattr(state, self.aggregation_field)
         else:
-            results = (
-                state.get(self.aggregation_field, {}) if hasattr(state, "get") else {}
-            )
+            results = state.get(self.aggregation_field, {}) if hasattr(
+                state, "get") else {}
 
         # Perform aggregation based on result types
         aggregated = self._aggregate_results(results)
@@ -472,14 +484,19 @@ class CoordinatorNodeConfig(BaseNodeConfig[TInput, TOutput]):
             goto=self._get_goto_node(),
         )
 
-    def _handle_sequence(self, state: StateLike, config: ConfigLike | None) -> Command:
+    def _handle_sequence(self, state: StateLike,
+                         config: ConfigLike | None) -> Command:
         """Handle sequential agent execution tracking."""
         # This is more of a tracking node - actual sequencing is in graph
         # structure
-        current_index = state.get("agent_index", 0) if hasattr(state, "get") else 0
+        current_index = state.get("agent_index", 0) if hasattr(state,
+                                                               "get") else 0
 
         return Command(
-            update={"agent_index": current_index + 1, "coordination_stage": "sequence"},
+            update={
+                "agent_index": current_index + 1,
+                "coordination_stage": "sequence"
+            },
             goto=self._get_goto_node(),
         )
 
@@ -535,7 +552,10 @@ def create_agent_node(
         name = f"agent_{agent.name}"
 
     return AgentNodeConfig(
-        name=name, agent=agent, shared_fields=shared_fields or ["messages"], **kwargs
+        name=name,
+        agent=agent,
+        shared_fields=shared_fields or ["messages"],
+        **kwargs,
     )
 
 

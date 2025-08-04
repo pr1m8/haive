@@ -15,7 +15,7 @@
    <div class="hero-content">
    <h2>🔍 Powerful Search & Information Retrieval</h2>
    <p class="hero-description">
-   Comprehensive search tools for web content, documentation, academic papers, and structured data. 
+   Comprehensive search tools for web content, documentation, academic papers, and structured data.
    Enable your agents to find accurate, up-to-date information from multiple sources.
    </p>
    </div>
@@ -561,7 +561,7 @@ Quick Start
        def filter(self, results: List[Dict]) -> List[Dict]:
            """Apply custom filtering logic."""
            filtered = []
-           
+
            for result in results:
                # Check URL patterns
                if self.is_valid_source(result['url']):
@@ -570,9 +570,9 @@ Quick Start
                        # Check freshness
                        if self.is_recent(result):
                            filtered.append(result)
-           
+
            return filtered
-       
+
        def is_valid_source(self, url: str) -> bool:
            """Validate source credibility."""
            trusted_domains = [
@@ -581,18 +581,18 @@ Quick Start
                'ieee.org', 'acm.org'
            ]
            return any(domain in url for domain in trusted_domains)
-       
+
        def has_quality_content(self, result: Dict) -> bool:
            """Check content quality indicators."""
            snippet = result.get('snippet', '')
-           
+
            # Check for citations/references
            has_citations = bool(re.search(r'\[\d+\]|\(\d{4}\)', snippet))
-           
+
            # Check for technical terms
            tech_terms = ['algorithm', 'method', 'analysis', 'results']
            has_tech_terms = any(term in snippet.lower() for term in tech_terms)
-           
+
            return has_citations or has_tech_terms
 
    # Content extraction from search results
@@ -602,13 +602,13 @@ Quick Start
            """Extract full content from URL."""
            import aiohttp
            from bs4 import BeautifulSoup
-           
+
            async with aiohttp.ClientSession() as session:
                async with session.get(url) as response:
                    html = await response.text()
-           
+
            soup = BeautifulSoup(html, 'html.parser')
-           
+
            # Extract structured content
            content = {
                'title': soup.find('title').text if soup.find('title') else '',
@@ -617,22 +617,22 @@ Quick Start
                'links': [a.get('href') for a in soup.find_all('a', href=True)],
                'metadata': self.extract_metadata(soup)
            }
-           
+
            return content
-       
+
        def extract_metadata(self, soup) -> Dict:
            """Extract page metadata."""
            metadata = {}
-           
+
            # Open Graph tags
            for tag in soup.find_all('meta', property=re.compile(r'^og:')):
                key = tag.get('property').replace('og:', '')
                metadata[key] = tag.get('content')
-           
+
            # Other meta tags
            for tag in soup.find_all('meta', attrs={'name': True}):
                metadata[tag['name']] = tag.get('content', '')
-           
+
            return metadata
 
    # Intelligent result ranking
@@ -640,37 +640,37 @@ Quick Start
 
        def __init__(self, weights: Dict[str, float]):
            self.weights = weights
-       
+
        def rank(self, results: List[Dict], query: str) -> List[Dict]:
            """Rank results based on multiple factors."""
            scored_results = []
-           
+
            for result in results:
                score = 0.0
-               
+
                # Relevance score
                score += self.weights['relevance'] * self.calculate_relevance(*
                    query, result
                )
-               
+
                # Authority score
                score += self.weights['authority'] * self.calculate_authority(*
                    result
                )
-               
+
                # Freshness score
                score += self.weights['freshness'] * self.calculate_freshness(*
                    result
                )
-               
+
                # Engagement score
                score += self.weights['engagement'] * self.calculate_engagement(*
                    result
                )
-               
+
                result['ranking_score'] = score
                scored_results.append(result)
-           
+
            # Sort by score
            return sorted(
                scored_results,
@@ -698,7 +698,7 @@ Quick Start
 
 .. code-block:: python
 
-   
+
 
       # Progressive search refinement
       async def progressive_search(
@@ -707,19 +707,19 @@ Quick Start
       ):
           web = WebSearchTool()
           wiki = WikipediaSearchTool()
-          
+
           # Start broad
           results = await web.ainvoke(initial_query)
-          
+
           # Extract entities
           entities = extract_entities(results)
-          
+
           # Deep dive on entities
           for entity in entities[:depth]:
               wiki_data = await wiki.ainvoke(entity)
               # Process and integrate
 
-   
+
       .. raw:: html
 
       </div>
@@ -731,7 +731,7 @@ Quick Start
 
 .. code-block:: python
 
-   
+
 
       # Verify information across sources
       async def verify_facts(claim: str):
@@ -740,7 +740,7 @@ Quick Start
               WikipediaSearchTool(),
               ArxivSearchTool()
           ]
-          
+
           evidence = []
           for source in sources:
               result = await source.ainvoke(claim)
@@ -748,10 +748,10 @@ Quick Start
                   'source': source.name,
                   'support': analyze_support(result, claim)
               })
-          
+
           return aggregate_evidence(evidence)
 
-   
+
       .. raw:: html
 
       </div>

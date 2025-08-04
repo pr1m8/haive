@@ -195,23 +195,23 @@ The runner creates organized output:
 
     async def run_my_examples():
         runner = UniversalExampleRunner()
-        
+
         # Custom configuration
         config = ExecutionConfig(
             timeout_seconds=120,
             enable_visualization=True,
             max_output_size=1000000
         )
-        
+
         # Discover specific examples
         examples = await runner.discover_all_examples()
         my_examples = [e for e in examples if "my_agent" in str(e)]
-        
+
         # Run with custom settings
         results = await runner.run_multiple_examples(
             my_examples, config, max_concurrent=2
         )
-        
+
         # Generate custom report
         report = runner.generate_example_report(results)
         print(report)

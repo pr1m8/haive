@@ -15,7 +15,7 @@
    <div class="hero-content">
    <h2>🛠️ Complete MCP Setup Guide</h2>
    <p class="hero-description">
-   Step-by-step guide to configure MCP servers for development and production environments. 
+   Step-by-step guide to configure MCP servers for development and production environments.
    From basic setup to advanced enterprise configurations.
    </p>
    </div>
@@ -24,7 +24,7 @@
 
    </div>
 
-Comprehensive guide for setting up Model Context Protocol integration with detailed 
+Comprehensive guide for setting up Model Context Protocol integration with detailed
 configuration examples and best practices.
 
 Prerequisites
@@ -92,12 +92,12 @@ Prerequisites
 
 .. code-block:: python
 
-   
+
 
       from haive.mcp.agents import IntelligentMCPAgent
       from haive.core.engine.aug_llm import AugLLMConfig
 
-   
+
 
       # Create agent with auto-discovery
       agent = IntelligentMCPAgent(
@@ -106,11 +106,11 @@ Prerequisites
           require_approval=True    # Require approval for installs
       )
 
-   
+
 
       await agent.setup()
 
-   
+
 
       # Agent automatically discovers and installs servers!
       result = await agent.arun({
@@ -121,13 +121,13 @@ Prerequisites
       })
       # Auto-installs postgres server if approved!
 
-   
+
       **Benefits:**
       - Zero manual configuration
       - AI selects appropriate servers
       - Handles complex requirements automatically
       - Great for exploration and prototyping
-   
+
       .. raw:: html
 
       </div>
@@ -140,43 +140,43 @@ Prerequisites
 
 .. code-block:: bash
 
-   
+
 
       # PostgreSQL - Database operations
       claude mcp add haive-db -s user -- npx -y @modelcontextprotocol/server-postgres "postgresql://localhost/haive"
 
-   
+
 
       # Filesystem - Enhanced file operations
       claude mcp add haive-files -s user -- npx -y @modelcontextprotocol/server-filesystem /home/user/project
 
-   
+
 
       # GitHub - Repository management
       claude mcp add haive-github -s user -e GITHUB_TOKEN=$GITHUB_TOKEN -- npx -y @modelcontextprotocol/server-github
 
-   
+
 
       # Web search - Information retrieval
       claude mcp add brave-search -s user -e BRAVE_API_KEY=$BRAVE_API_KEY -- npx -y @modelcontextprotocol/server-brave-search
 
-   
+
 
       # Browser automation - Web testing
       claude mcp add haive-browser -s user -- npx -y @modelcontextprotocol/server-puppeteer
 
-   
+
 
       # List all configured servers
       claude mcp list
 
-   
+
       **Benefits:**
       - Direct control over installations
       - Immediate availability
       - Easy to script and automate
       - Works with any MCP-compatible tool
-   
+
       .. raw:: html
 
       </div>
@@ -189,12 +189,12 @@ Prerequisites
 
 .. code-block:: python
 
-   
+
 
       from haive.mcp.config import MCPConfig, MCPServerConfig
       from haive.mcp.agents import MCPAgent
 
-   
+
 
       # Production configuration
       production_config = MCPConfig(
@@ -209,7 +209,7 @@ Prerequisites
                   env={"DATABASE_URL": "postgresql://user:pass@localhost/db"}
               ),
               "github": MCPServerConfig(
-                  name="github", 
+                  name="github",
                   transport="stdio",
                   command="npx",
                   args=["-y", "@modelcontextprotocol/server-github"],
@@ -217,7 +217,7 @@ Prerequisites
               ),
               "filesystem": MCPServerConfig(
                   name="filesystem",
-                  transport="stdio", 
+                  transport="stdio",
                   command="npx",
                   args=["-y", "@modelcontextprotocol/server-filesystem"],
                   env={"ALLOWED_DIRS": "/app/data,/app/output"}
@@ -227,7 +227,7 @@ Prerequisites
           timeout=30
       )
 
-   
+
 
       # Agent with static configuration
       agent = MCPAgent(
@@ -235,17 +235,17 @@ Prerequisites
           mcp_config=production_config
       )
 
-   
+
 
       await agent.setup()
 
-   
+
       **Benefits:**
       - Predictable behavior
       - Version control friendly
       - Production ready
       - Security auditable
-   
+
       .. raw:: html
 
       </div>
@@ -258,7 +258,7 @@ Prerequisites
 
 .. code-block:: python
 
-   
+
 
       # Base configuration with essential servers
       base_config = MCPConfig(
@@ -266,7 +266,7 @@ Prerequisites
               "postgres": MCPServerConfig(
                   name="postgres",
                   transport="stdio",
-                  command="npx", 
+                  command="npx",
                   args=["-y", "@modelcontextprotocol/server-postgres"],
                   env={"DATABASE_URL": os.getenv("DATABASE_URL")}
               ),
@@ -280,7 +280,7 @@ Prerequisites
           }
       )
 
-   
+
 
       # Agent with base config + dynamic discovery
       agent = IntelligentMCPAgent(
@@ -290,17 +290,17 @@ Prerequisites
           require_approval=True      # Controlled expansion
       )
 
-   
+
 
       await agent.setup()
 
-   
+
       **Benefits:**
       - Reliable core functionality
       - Flexible expansion
       - Controlled growth
       - Best of both worlds
-   
+
       .. raw:: html
 
       </div>
@@ -501,13 +501,13 @@ Prerequisites
 
    # Local
    postgresql://localhost/database
-   
+
    # With auth
    postgresql://user:password@localhost:5432/database
-   
+
    # With SSL
    postgresql://user:password@localhost:5432/database?sslmode=require
-   
+
    # Production
    postgresql://user:password@prod-server:5432/database?sslmode=require&pool_size=20
 
@@ -517,7 +517,7 @@ Prerequisites
 
    # Test connection
    claude mcp test haive-db
-   
+
    # Manual query
    @haive-db show tables
    @haive-db describe users
@@ -662,11 +662,11 @@ Prerequisites
    # Issue management
    @haive-github list open issues with label "bug"
    @haive-github create issue "Bug in authentication" --label bug
-   
+
    # Pull requests
    @haive-github create PR from feature/new-auth to main
    @haive-github list PR reviews
-   
+
    # Repository info
    @haive-github show workflow runs
    @haive-github get repository statistics
@@ -742,10 +742,10 @@ Prerequisites
    # Web search
    @brave-search latest Python 3.12 features
    @brave-search "machine learning tutorials" site:python.org
-   
+
    # News search
    @brave-search AI developments 2024 --type news
-   
+
    # Academic search
    @brave-search quantum computing research --type academic
 

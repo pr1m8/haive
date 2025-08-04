@@ -19,7 +19,6 @@ from query_decomposition.agent import (
     hierarchical_decompose,
 )
 
-
 __all__ = [
     "AdaptiveQueryDecomposerAgent",
     "ContextualDecomposition",

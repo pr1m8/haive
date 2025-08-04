@@ -4,7 +4,7 @@ Custom Agents
 .. warning::
 
    **This page is under development***.** **
-   
+
    We're actively working on this documentation section and it will be available soon.
 
 .. note::
@@ -13,7 +13,7 @@ Custom Agents
 .. admonition:: Future Content
 
    :class:`tip`
-   
+
    This section will include:
 
   *** * Step-by-step guide for creating custom agents*

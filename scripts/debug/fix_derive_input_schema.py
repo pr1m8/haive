@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Fix the derive_input_schema method to exclude engine fields."""
 
+from __future__ import annotations
+
 import logging
 from typing import Any, Optional
 

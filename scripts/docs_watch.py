@@ -1,21 +1,26 @@
 #!/usr/bin/env python3
-"""
-Watch source files and automatically rebuild documentation when changes are detected.
+"""Watch source files and automatically rebuild documentation when changes are.
+
+detected.
+
 Keeps API documentation in sync with code changes.
 """
 
+from __future__ import annotations
+
 import logging
+from pathlib import Path
 import subprocess
 import sys
 import time
-from pathlib import Path
 
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
@@ -63,7 +68,11 @@ class DocsBuildHandler(FileSystemEventHandler):
         try:
             # Run build command
             result = subprocess.run(
-                self.build_command, shell=True, capture_output=True, text=True
+                self.build_command,
+                shell=True,
+                capture_output=True,
+                text=True,
+                check=False,
             )
 
             if result.returncode == 0:

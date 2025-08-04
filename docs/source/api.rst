@@ -7,49 +7,49 @@ Complete API documentation for all Haive packages.
 
    :maxdepth: 3
    :caption: Core Package
-   
+
    api/haive/core/index
 
 .. toctree::
 
    :maxdepth: 3
    :caption: Agents Package
-   
+
    api/haive/agents/index
 
 .. toctree::
 
    :maxdepth: 3
    :caption: Tools Package
-   
+
    api/haive/tools/index
 
 .. toctree::
 
    :maxdepth: 3
    :caption: Games Package
-   
+
    api/haive/games/index
 
 .. toctree::
 
    :maxdepth: 3
    :caption: MCP Package
-   
+
    api/haive/mcp/index
 
 .. toctree::
 
    :maxdepth: 3
    :caption: Dataflow Package
-   
+
    api/haive/dataflow/index
 
 .. toctree::
 
    :maxdepth: 3
    :caption: Prebuilt Package
-   
+
    api/haive/prebuilt/index
 
 Package Overview

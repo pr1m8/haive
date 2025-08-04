@@ -4,14 +4,12 @@ import logging
 import os
 import sys
 
-
-# Add project root to path for imports
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from agents.lats.agent import create_lats_agent
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_community.utilities.tavily_search import TavilySearchAPIWrapper
 
+# Add project root to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -22,7 +20,8 @@ def main():
     """Run an example of the LATS agent."""
     # Check for required API keys
     if not os.environ.get("AZURE_OPENAI_API_KEY"):
-        raise ValueError("AZURE_OPENAI_API_KEY environment variable is required")
+        raise ValueError(
+            "AZURE_OPENAI_API_KEY environment variable is required")
 
     # Set up tools - using Tavily search in this example
     tools = []
@@ -32,7 +31,8 @@ def main():
         tools.append(tavily_tool)
         logger.info("Tavily search tool added")
     else:
-        logger.warning("TAVILY_API_KEY not found, continuing without search tool")
+        logger.warning(
+            "TAVILY_API_KEY not found, continuing without search tool")
 
     # Create the LATS agent
     agent = create_lats_agent(
@@ -47,12 +47,13 @@ def main():
     questions = [
         # "Generate a table with the average size and weight, as well as the oldest recorded instance for each of the top 5 most common birds.",
         # "What is the chemical composition of lithium-ion batteries and their environmental impact?",
-        "Write out magnus carlson series of moves in his game against Alireza Firouzja and propose an alternate strategy"
+        "Write out magnus carlson series of moves in his game against Alireza Firouzja and propose an alternate strategy",
     ]
 
     # Run the agent on each question
     for question in questions:
-        logger.info(f"\n\n*** Running LATS agent on question: {question} ***\n")
+        logger.info(
+            f"\n\n*** Running LATS agent on question: {question} ***\n")
 
         # Track the computation steps
         last_step = None
@@ -60,7 +61,9 @@ def main():
 
         # Stream the agent's processing steps
         for step in agent.app.stream(
-            {"input": question}, debug=True, config=agent.config.runnable_config
+            {"input": question},
+                debug=True,
+                config=agent.config.runnable_config,
         ):
             step_count += 1
             last_step = step
@@ -78,7 +81,8 @@ def main():
                     max_depth = max(max_depth, node_data.depth)
                 tree_height = max_depth
 
-            logger.info(f"Step {step_count}: {step_name} (tree height: {tree_height})")
+            logger.info(
+                f"Step {step_count}: {step_name} (tree height: {tree_height})")
 
             # Log the output if available
             if step_state.get("output"):

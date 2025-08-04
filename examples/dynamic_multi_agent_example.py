@@ -6,6 +6,8 @@ This example demonstrates how to:
 3. Handle tool_route annotations dynamically
 """
 
+from __future__ import annotations
+
 import logging
 import operator
 from typing import Annotated, Any
@@ -34,11 +36,13 @@ class MockAgent:
 
     def add_tool(self, tool_func, route: str):
         """Add a tool dynamically."""
-        tool_name = tool_func.name if hasattr(tool_func, "name") else tool_func.__name__
+        tool_name = tool_func.name if hasattr(tool_func,
+                                              "name") else tool_func.__name__
         self.tools.append(tool_func)
         self.tool_routes[tool_name] = route
         self._recompile_needed = True
-        logger.info(f"Added tool {tool_name} with route {route} to agent {self.name}")
+        logger.info(
+            f"Added tool {tool_name} with route {route} to agent {self.name}")
 
     def needs_recompile(self):
         return self._recompile_needed
@@ -93,7 +97,8 @@ class MultiAgentState(BaseModel):
 
     # Agent management
     agents: dict[str, MockAgent] = Field(default_factory=dict)
-    selected_agents: Annotated[list[str], operator.add] = Field(default_factory=list)
+    selected_agents: Annotated[list[str],
+                               operator.add] = Field(default_factory=list)
 
     # Tool routing
     global_tool_routes: dict[str, str] = Field(default_factory=dict)
@@ -146,7 +151,11 @@ def agent_router(state: MultiAgentState) -> Send | list[Send] | Command:
     if state.selected_agent and state.selected_agent in state.agents:
         # Use Send for dynamic routing - no Literal needed!
         return Send(
-            "agent_executor", {"agent_name": state.selected_agent, "state": state}
+            "agent_executor",
+            {
+                "agent_name": state.selected_agent,
+                "state": state
+            },
         )
 
     # Or route to multiple agents in parallel
@@ -155,8 +164,10 @@ def agent_router(state: MultiAgentState) -> Send | list[Send] | Command:
         sends = []
         for agent_name in state.agents:
             sends.append(
-                Send("agent_executor", {"agent_name": agent_name, "state": state})
-            )
+                Send("agent_executor", {
+                    "agent_name": agent_name,
+                    "state": state
+                }), )
         return sends
 
     # Default: go to end
@@ -166,8 +177,8 @@ def agent_router(state: MultiAgentState) -> Send | list[Send] | Command:
 def tool_manager(arg: dict[str, Any]) -> Command:
     """Manage dynamic tool additions.
 
-    This node handles adding tools to agents and marking them
-    for recompilation.
+    This node handles adding tools to agents and marking them for
+    recompilation.
     """
     state = arg if isinstance(arg, MultiAgentState) else arg.get("state")
 
@@ -186,9 +197,8 @@ def tool_manager(arg: dict[str, Any]) -> Command:
             agents_to_recompile.add(agent_name)
 
             # Update global tool routes
-            tool_name = (
-                tool_func.name if hasattr(tool_func, "name") else tool_func.__name__
-            )
+            tool_name = tool_func.name if hasattr(
+                tool_func, "name") else tool_func.__name__
             state.global_tool_routes[tool_name] = f"{agent_name}.{route}"
 
     # Clear pending additions
@@ -232,14 +242,17 @@ def agent_executor(arg: dict[str, Any]) -> Command:
     state = arg.get("state")
 
     if agent_name not in state.agents:
-        return Command(update={"messages": [f"Agent {agent_name} not found"]}, goto=END)
+        return Command(update={"messages": [f"Agent {agent_name} not found"]},
+                       goto=END)
 
     agent = state.agents[agent_name]
     runnable = agent.create_runnable()
     result = runnable(state)
 
     updates = {
-        "results": {agent_name: result},
+        "results": {
+            agent_name: result
+        },
         "messages": [f"Executed agent {agent_name}"],
     }
 
@@ -263,7 +276,8 @@ def control_node(state: MultiAgentState) -> Command:
         # Specific agent selected
         return Command(goto="agent_router")
     # Need to select an agent
-    return Command(update={"selected_agents": ["simple_agent"]}, goto="agent_router")
+    return Command(update={"selected_agents": ["simple_agent"]},
+                   goto="agent_router")
 
 
 # ============================================================================
@@ -301,9 +315,10 @@ def demonstrate_dynamic_tool_routing():
     react_agent = MockAgent("react_agent", [search])
 
     # Create initial state
-    initial_state = MultiAgentState(
-        agents={"simple_agent": simple_agent, "react_agent": react_agent}
-    )
+    initial_state = MultiAgentState(agents={
+        "simple_agent": simple_agent,
+        "react_agent": react_agent
+    }, )
 
     # Build graph
     graph = build_dynamic_graph()
@@ -317,7 +332,11 @@ def demonstrate_dynamic_tool_routing():
 
     # Now add a tool dynamically
     initial_state.pending_tool_additions = [
-        {"agent_name": "simple_agent", "tool": analyze, "route": "analysis_route"}
+        {
+            "agent_name": "simple_agent",
+            "tool": analyze,
+            "route": "analysis_route"
+        },
     ]
 
     # Run again - this will trigger tool addition and recompilation
@@ -325,8 +344,16 @@ def demonstrate_dynamic_tool_routing():
 
     # Add multiple tools to different agents
     initial_state.pending_tool_additions = [
-        {"agent_name": "simple_agent", "tool": search, "route": "search_route"},
-        {"agent_name": "react_agent", "tool": analyze, "route": "react_analysis"},
+        {
+            "agent_name": "simple_agent",
+            "tool": search,
+            "route": "search_route"
+        },
+        {
+            "agent_name": "react_agent",
+            "tool": analyze,
+            "route": "react_analysis"
+        },
     ]
 
     app.invoke(initial_state)
@@ -341,7 +368,6 @@ def demonstrate_dynamic_tool_routing():
 # ============================================================================
 # KEY INSIGHTS
 # ============================================================================
-
 """
 Key Insights from this implementation:
 

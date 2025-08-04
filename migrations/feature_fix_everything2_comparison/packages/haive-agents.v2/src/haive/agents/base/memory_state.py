@@ -1,15 +1,15 @@
 """Memory state models for Memory V2 system using original Haive memory models.
 
-This module integrates the proven memory models from haive.agents.memory.models and
-haive.agents.ltm.memory_schemas with our V2 enhancements for token tracking, graph
-integration, and advanced memory management.
+This module integrates the proven memory models from
+haive.agents.memory.models and haive.agents.ltm.memory_schemas with our
+V2 enhancements for token tracking, graph integration, and advanced
+memory management.
 """
 
 import logging
 from typing import Any
 
 from pydantic import BaseModel, Field
-
 
 # Import original proven memory models
 
@@ -56,7 +56,8 @@ class MemoryMetadata(BaseModel):
     )
 
     timestamp: str | None = Field(
-        default=None, description="ISO timestamp when memory was created"
+        default=None,
+        description="ISO timestamp when memory was created",
     )
 
     source: str = Field(
@@ -66,11 +67,13 @@ class MemoryMetadata(BaseModel):
     )
 
     tags: list[str] = Field(
-        default_factory=list, description="Tags for categorization and search"
+        default_factory=list,
+        description="Tags for categorization and search",
     )
 
     entities: list[str] = Field(
-        default_factory=list, description="Named entities extracted from the memory"
+        default_factory=list,
+        description="Named entities extracted from the memory",
     )
 
     relationships: list[dict[str, str]] = Field(
@@ -79,15 +82,19 @@ class MemoryMetadata(BaseModel):
     )
 
     context_id: str | None = Field(
-        default=None, description="ID linking related memories in the same context"
+        default=None,
+        description="ID linking related memories in the same context",
     )
 
     retrieval_count: int = Field(
-        default=0, ge=0, description="Number of times this memory has been retrieved"
+        default=0,
+        ge=0,
+        description="Number of times this memory has been retrieved",
     )
 
     last_accessed: str | None = Field(
-        default=None, description="ISO timestamp when memory was last accessed"
+        default=None,
+        description="ISO timestamp when memory was last accessed",
     )
 
 
@@ -107,7 +114,9 @@ class MemoryEntry(BaseModel):
 
     id: str = Field(..., description="Unique identifier for the memory")
 
-    content: str = Field(..., min_length=1, description="The actual memory content")
+    content: str = Field(...,
+                         min_length=1,
+                         description="The actual memory content")
 
     metadata: MemoryMetadata = Field(
         default_factory=MemoryMetadata,
@@ -115,7 +124,8 @@ class MemoryEntry(BaseModel):
     )
 
     embedding: list[float] | None = Field(
-        default=None, description="Vector embedding for similarity search"
+        default=None,
+        description="Vector embedding for similarity search",
     )
 
     similarity_score: float | None = Field(
@@ -129,7 +139,8 @@ class MemoryEntry(BaseModel):
 class MemoryStats(BaseModel):
     """Statistics about memory operations and performance.
 
-    Tracks memory system performance, usage patterns, and optimization metrics.
+    Tracks memory system performance, usage patterns, and optimization
+    metrics.
     """
 
     total_memories: int = Field(default=0, ge=0)
@@ -176,24 +187,29 @@ class MemoryState(MessagesState):
 
     # Core memory data
     current_memories: list[MemoryEntry] = Field(
-        default_factory=list, description="Memory entries currently being processed"
+        default_factory=list,
+        description="Memory entries currently being processed",
     )
 
     retrieved_memories: list[MemoryEntry] = Field(
-        default_factory=list, description="Memories retrieved in the last operation"
+        default_factory=list,
+        description="Memories retrieved in the last operation",
     )
 
     # Metadata and tracking
     memory_metadata: dict[str, Any] = Field(
-        default_factory=dict, description="General metadata about the memory session"
+        default_factory=dict,
+        description="General metadata about the memory session",
     )
 
     memory_stats: MemoryStats = Field(
-        default_factory=MemoryStats, description="Performance and usage statistics"
+        default_factory=MemoryStats,
+        description="Performance and usage statistics",
     )
 
     token_usage: dict[str, Any] = Field(
-        default_factory=dict, description="Token usage tracking for memory operations"
+        default_factory=dict,
+        description="Token usage tracking for memory operations",
     )
 
     # Operation tracking
@@ -203,7 +219,8 @@ class MemoryState(MessagesState):
     )
 
     memory_context: dict[str, Any] = Field(
-        default_factory=dict, description="Context information for memory operations"
+        default_factory=dict,
+        description="Context information for memory operations",
     )
 
     # Search and filtering
@@ -214,7 +231,8 @@ class MemoryState(MessagesState):
 
     # Memory management
     memory_storage_path: str | None = Field(
-        default=None, description="Path to persistent memory storage"
+        default=None,
+        description="Path to persistent memory storage",
     )
 
     memory_cache: dict[str, Any] = Field(
@@ -241,21 +259,19 @@ class MemoryState(MessagesState):
             self.memory_stats.memories_by_importance[importance] = 1
 
     def update_retrieval_stats(
-        self, memories: list[MemoryEntry], retrieval_time: float
+        self,
+        memories: list[MemoryEntry],
+        retrieval_time: float,
     ) -> None:
         """Update statistics after memory retrieval."""
         self.retrieved_memories = memories
         self.memory_stats.total_retrievals += 1
 
         # Update average retrieval time
-        total_time = (
-            self.memory_stats.avg_retrieval_time
-            * (self.memory_stats.total_retrievals - 1)
-            + retrieval_time
-        )
-        self.memory_stats.avg_retrieval_time = (
-            total_time / self.memory_stats.total_retrievals
-        )
+        total_time = (self.memory_stats.avg_retrieval_time *
+                      (self.memory_stats.total_retrievals - 1) +
+                      retrieval_time)
+        self.memory_stats.avg_retrieval_time = total_time / self.memory_stats.total_retrievals
 
         # Update retrieval counts for individual memories
         for memory in memories:
@@ -267,7 +283,8 @@ class MemoryState(MessagesState):
             "total_memories": len(self.current_memories),
             "retrieved_count": len(self.retrieved_memories),
             "memory_types": dict(self.memory_stats.memories_by_type),
-            "importance_levels": dict(self.memory_stats.memories_by_importance),
+            "importance_levels":
+            dict(self.memory_stats.memories_by_importance),
             "performance": {
                 "avg_storage_time": self.memory_stats.avg_storage_time,
                 "avg_retrieval_time": self.memory_stats.avg_retrieval_time,

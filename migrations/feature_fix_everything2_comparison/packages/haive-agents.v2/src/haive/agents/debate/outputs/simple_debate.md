@@ -1,4 +1,4 @@
-06/12/25 21:32:16] INFO Phase transition: closing -> complete  
+06/12/25 21:32:16] INFO Phase transition: closing -> complete
 [42:writes] Finished step 42 with writes to 5 channels:
 
 - current_phase -> 'complete'

@@ -4,12 +4,14 @@
 This script runs all documentation quality checks and generates reports.
 """
 
+from __future__ import annotations
+
 import argparse
 import contextlib
 import json
+from pathlib import Path
 import subprocess
 import sys
-from pathlib import Path
 
 # ANSI color codes
 GREEN = "\033[92m"
@@ -35,7 +37,11 @@ class DocQualityChecker:
             pass
 
         result = subprocess.run(
-            cmd, capture_output=True, text=True, cwd=self.project_root, check=False
+            cmd,
+            capture_output=True,
+            text=True,
+            cwd=self.project_root,
+            check=False,
         )
 
         if check and result.returncode != 0 and result.stderr:
@@ -115,7 +121,7 @@ class DocQualityChecker:
         returncode, stdout, stderr = self.run_command(cmd)
 
         error_count = len(
-            [line for line in (stdout + stderr).split("\n") if "Error" in line]
+            [line for line in (stdout + stderr).split("\n") if "Error" in line],
         )
 
         return {
@@ -149,7 +155,7 @@ class DocQualityChecker:
         returncode, stdout, stderr = self.run_command(cmd)
 
         error_count = len(
-            [line for line in stdout.split("\n") if line.strip() and ":" in line]
+            [line for line in stdout.split("\n") if line.strip() and ":" in line],
         )
 
         return {
@@ -210,10 +216,13 @@ class DocQualityChecker:
 def main():
     """Main entry point."""
     parser = argparse.ArgumentParser(
-        description="Run documentation quality checks for Haive"
+        description="Run documentation quality checks for Haive",
     )
     parser.add_argument(
-        "-v", "--verbose", action="store_true", help="Show detailed output"
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="Show detailed output",
     )
     parser.add_argument(
         "-o",
@@ -223,7 +232,9 @@ def main():
         help="Output path for JSON report",
     )
     parser.add_argument(
-        "--fix", action="store_true", help="Attempt to auto-fix issues where possible"
+        "--fix",
+        action="store_true",
+        help="Attempt to auto-fix issues where possible",
     )
 
     args = parser.parse_args()
@@ -237,10 +248,10 @@ def main():
 
     # Auto-fix if requested
     if args.fix:
-
         # Fix formatting
         subprocess.run(
-            ["poetry", "run", "docformatter", "-i", "-r", "packages/"], check=False
+            ["poetry", "run", "docformatter", "-i", "-r", "packages/"],
+            check=False,
         )
 
         # Fix spelling interactively

@@ -1,9 +1,9 @@
 # PostgreSQL Thread Duplicate Key Issue - RESOLVED ✅
 
-**Issue**: `duplicate key value violates unique constraint "threads_pkey1"`  
-**Status**: RESOLVED  
-**Resolution Date**: 2025-01-14  
-**File Fixed**: `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py`  
+**Issue**: `duplicate key value violates unique constraint "threads_pkey1"`
+**Status**: RESOLVED
+**Resolution Date**: 2025-01-14
+**File Fixed**: `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py`
 **Method**: `_ensure_thread_exists` (line ~68)
 
 ## 🎯 Root Cause

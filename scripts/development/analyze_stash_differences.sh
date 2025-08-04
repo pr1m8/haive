@@ -12,20 +12,20 @@ RECOVERED_DIR="recovered_stashes/20250729_205753"
 # Function to compare a single stash
 compare_stash() {
     local stash_num=$1
-    
+
     if [[ -f "${CATALOG_DIR}/stash_${stash_num}.patch" && -f "${RECOVERED_DIR}/stash_${stash_num}.patch" ]]; then
         echo "📦 STA$$${H_$}sta}sh_}num Comparison:"
-        
+
         # Size comparison
         local catalog_size=$(du -h "${CATALOG_DIR}/stash_${stash_num}.patch" | cut -f1)
         local recovered_size=$(du -h "${RECOVERED_DIR}/stash_${stash_num}.patch" | cut -f1)
-        echo "   📊 Sizes: catal$$$${g=$}cat}alo}g_s}ize, recover$$$$${${${}}}$re}cov}ere}d_s}ize"
-        
+        echo "   📊 Sizes: catal$$$${g=$}cat}also}g_s}ize, recover$$$$${${${}}}$re}cov}ere}d_s}ize"
+
         # Line count comparison
         local catalog_lines=$(wc -l < "${CATALOG_DIR}/stash_${stash_num}.patch")
         local recovered_lines=$(wc -l < "${RECOVERED_DIR}/stash_${stash_num}.patch")
         echo "   📄 Lines: catal$$$$${${${}}=$c}ata}log}_li}nes, recover$$$$${d=$}rec}ove}red}_li}nes"
-        
+
         # Check if identical
         if diff -q "${CATALOG_DIR}/stash_${stash_num}.patch" "${RECOVERED_DIR}/stash_${stash_num}.patch" >/dev/null; then
             echo "   ✅ IDENTICAL - Same content"
@@ -48,7 +48,7 @@ echo ""
 
 # Compare the 3 stashes present in both locations
 compare_stash "0"
-compare_stash "1" 
+compare_stash "1"
 compare_stash "10"
 
 echo "📊 SUMMARY:"

@@ -9,7 +9,7 @@
 Size Breakdown:
 - logs/              521MB  (!!!) - Giant debug logs
 - reference/         28MB   - Generated API content
-- api/               26MB   - Generated API content  
+- api/               26MB   - Generated API content
 - examples/          24MB   - Generated notebooks/zips
 - auto_examples/     8.7MB  - Generated examples
 - Other              4.3MB  - Source content
@@ -63,7 +63,7 @@ docs/source/
 ├── agents/                  # Agent documentation
 │   ├── index.rst
 │   └── demos/              # Demo RST files only
-├── games/                   # Game documentation  
+├── games/                   # Game documentation
 ├── tools/                   # Tool documentation
 ├── guides/                  # User guides
 ├── mcp/                     # MCP documentation
@@ -91,13 +91,13 @@ cp -r docs/source docs/source_backup_disaster_$(date +%Y%m%d)
 ```bash
 # Remove all generated/temporary content
 find docs/source -name "*.log" -delete
-find docs/source -name "*.ipynb" -delete  
+find docs/source -name "*.ipynb" -delete
 find docs/source -name "*.zip" -delete
 find docs/source -name "*.py" -not -path "*/conf_modules/*" -not -name "conf*.py" -delete
 rm -rf docs/source/logs/
 rm -rf docs/source/auto_examples/
 rm -rf docs/source/examples/
-rm -rf docs/source/reference/  
+rm -rf docs/source/reference/
 rm -rf docs/source/generated/
 rm -rf docs/source/discovered_readmes/
 rm -rf docs/source/_static/backup*/
@@ -139,7 +139,7 @@ docs/source/**/*.zip
 ## 📈 Expected Results
 
 **Before**: 612MB, 4,482 files
-**After**: ~50MB, <200 files  
+**After**: ~50MB, <200 files
 
 **Build Impact**:
 - Faster builds (no processing thousands of generated files)

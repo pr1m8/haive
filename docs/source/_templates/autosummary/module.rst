@@ -29,7 +29,7 @@
 
 {# Try to include README if it exists #}
 .. ifconfig:: False
-     
+
      .. include:: {{ readme_path }}
         :parser: myst_parser.sphinx_
 {%- endif %}
@@ -43,11 +43,11 @@
    :special-members: __init__, __call__, __new__
    :imported-members:
    :exclude-members: logger
-   
+
    {# Show module-level docstring with examples #}
    {% if fullname.endswith('.agent') or fullname.endswith('.agents') %}
    .. rubric:: Module Overview
-   
+
    This module contains agent implementations. See the class documentation below for detailed usage.
    {% endif %}
 
@@ -66,7 +66,7 @@
       {{ item }}
 
    {%- endfor %}
-   
+
    {# Detailed attribute documentation #}
    {% for item in attributes %}
    .. autodata:: {{ item }}
@@ -92,10 +92,10 @@
       {{ item }}
 
    {%- endfor %}
-   
+
    {# Detailed function documentation with examples #}
    {% for item in functions %}
-   
+
    .. autofunction:: {{ item }}
    {%- endfor %}
    {% endif %}
@@ -116,10 +116,10 @@
       {{ item }}
 
    {%- endfor %}
-   
+
    {# Detailed class documentation #}
    {% for item in classes %}
-   
+
    .. autoclass:: {{ item }}
 
       :members:
@@ -127,9 +127,9 @@
       :show-inheritance:
       :inherited-members:
       :special-members: __init__, __call__
-      
+
       .. rubric:: Examples
-      
+
       .. note::
          See the class docstring for usage examples.
 
@@ -152,7 +152,7 @@
       {{ item }}
 
    {%- endfor %}
-   
+
    {% for item in exceptions %}
    .. autoexception:: {{ item }}
 
@@ -171,7 +171,7 @@
 
    :toctree: .
    :template: module.rst
-   
+
 
 {% for item in modules %}
 
@@ -184,7 +184,7 @@
 
    :maxdepth: 1
    :caption: Submodules
-   
+
 
 {% for item in modules %}
 

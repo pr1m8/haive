@@ -33,7 +33,7 @@ class SimpleRAGAgent(EnhancedMultiAgent):
         documents: list[Document] | None = None,
         llm_config: LLMConfig | None = None,
         name: str = "simple_rag",
-        **kwargs
+        **kwargs,
     ):
         """Initialize SimpleRAG with documents and LLM config.
 
@@ -49,7 +49,8 @@ class SimpleRAGAgent(EnhancedMultiAgent):
         # Create retrieval agent
         if documents is not None:
             retrieval_agent = BaseRAGAgent.from_documents(
-                documents=documents, name="retriever"
+                documents=documents,
+                name="retriever",
             )
             agents.append(retrieval_agent)
 
@@ -64,7 +65,8 @@ class SimpleRAGAgent(EnhancedMultiAgent):
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
                 llm_config=llm_config,
-                prompt_template=RAG_ANSWER_STANDARD,  # Has {query} and {retrieved_documents}
+                # Has {query} and {retrieved_documents}
+                prompt_template=RAG_ANSWER_STANDARD,
             ),
             name="answer_generator",
         )
@@ -72,7 +74,10 @@ class SimpleRAGAgent(EnhancedMultiAgent):
 
         # Initialize as EnhancedMultiAgent with sequential execution
         super().__init__(
-            name=name, agents=agents, execution_mode="sequential", **kwargs
+            name=name,
+            agents=agents,
+            execution_mode="sequential",
+            **kwargs,
         )
 
     @classmethod
@@ -81,10 +86,13 @@ class SimpleRAGAgent(EnhancedMultiAgent):
         documents: list[Document],
         llm_config: LLMConfig | None = None,
         name: str = "simple_rag",
-        **kwargs
+        **kwargs,
     ) -> "SimpleRAGAgent":
         """Create SimpleRAG from documents - factory method."""
-        return cls(documents=documents, llm_config=llm_config, name=name, **kwargs)
+        return cls(documents=documents,
+                   llm_config=llm_config,
+                   name=name,
+                   **kwargs)
 
     @classmethod
     def create_enhanced(
@@ -94,7 +102,7 @@ class SimpleRAGAgent(EnhancedMultiAgent):
         performance_mode: bool = True,
         debug_mode: bool = False,
         name: str = "enhanced_simple_rag",
-        **kwargs
+        **kwargs,
     ) -> "SimpleRAGAgent":
         """Create enhanced SimpleRAG with V3 features enabled."""
         return cls(
@@ -103,17 +111,19 @@ class SimpleRAGAgent(EnhancedMultiAgent):
             name=name,
             performance_mode=performance_mode,
             debug_mode=debug_mode,
-            **kwargs
+            **kwargs,
         )
 
 
 # Create the pattern the user literally asked for
 def create_simple_rag_pattern(
-    documents: list[Document], llm_config: LLMConfig | None = None
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
 ):
     """Literally: SimpleRAGAgent = EnhancedMulti([BaseRAGAgent, SimpleAgent], mode=Sequential)."""
     # Create the agents
-    base_rag = BaseRAGAgent.from_documents(documents=documents, name="retriever")
+    base_rag = BaseRAGAgent.from_documents(documents=documents,
+                                           name="retriever")
 
     if not llm_config:
         llm_config = AzureLLMConfig(
@@ -139,6 +149,8 @@ def create_simple_rag_pattern(
 
 
 # For even more direct usage - alias pattern
-def SimpleRAG(documents: list[Document], llm_config: LLMConfig | None = None, **kwargs):
+def SimpleRAG(documents: list[Document],
+              llm_config: LLMConfig | None = None,
+              **kwargs):
     """Direct function pattern: SimpleRAG(documents) -> working RAG agent."""
     return create_simple_rag_pattern(documents, llm_config)

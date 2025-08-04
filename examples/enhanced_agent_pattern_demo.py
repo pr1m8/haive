@@ -7,10 +7,14 @@ This example demonstrates:
 3. How different engine types create different agent types
 4. The clean type safety this provides
 """
+from __future__ import annotations
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from dataclasses import dataclass
-from typing import Any, Generic, TypeVar
+from typing import Any
+from typing import Generic
+from typing import TypeVar
 
 # ========================================================================
 # MOCK ENGINE TYPES (in real code, import from haive.core.engine)
@@ -90,13 +94,16 @@ class Agent(Workflow, Generic[EngineT]):
         """Execute using the engine."""
         # Log the execution
         self.history.append(
-            {"input": input_data, "engine_type": type(self.engine).__name__}
-        )
+            {
+                "input": input_data,
+                "engine_type": type(self.engine).__name__
+            }, )
 
         # In real implementation, this would use the engine
-        result = (
-            f"{self.name} processed '{input_data}' using {type(self.engine).__name__}"
-        )
+        result = f"{
+            self.name} processed '{input_data}' using {
+            type(
+                self.engine).__name__}"
 
         self.history[-1]["output"] = result
         return result
@@ -146,7 +153,7 @@ class ReasoningAgent(Agent[ReasoningEngine]):
         """Multi-step reasoning - available because engine is ReasoningEngine."""
         steps = []
         for i in range(self.engine.max_iterations):
-            steps.append(f"Step {i+1}: Analyzing {problem}")
+            steps.append(f"Step {i + 1}: Analyzing {problem}")
         return " -> ".join(steps)
 
 
@@ -181,7 +188,8 @@ class MultiAgent(Agent[AugLLMConfig]):
     an LLM to coordinate. The agents it coordinates can be any type.
     """
 
-    def __init__(self, name: str, engine: AugLLMConfig, agents: dict[str, Agent[Any]]):
+    def __init__(self, name: str, engine: AugLLMConfig,
+                 agents: dict[str, Agent[Any]]):
         super().__init__(name, engine)
         self.agents = agents
 
@@ -195,7 +203,11 @@ class MultiAgent(Agent[AugLLMConfig]):
         for agent_name, agent in self.agents.items():
             results[agent_name] = await agent.execute(input_data)
 
-        return {"coordinator": self.name, "decision": decision, "results": results}
+        return {
+            "coordinator": self.name,
+            "decision": decision,
+            "results": results
+        }
 
     def list_agents(self) -> list[AgentRef]:
         """List all coordinated agents with their types."""
@@ -218,7 +230,8 @@ async def main():
 
     # 1. SimpleAgent = Agent[AugLLMConfig]
     print("\n1. SimpleAgent (Agent[AugLLMConfig]):")
-    simple = SimpleAgent(name="assistant", engine=AugLLMConfig(temperature=0.7))
+    simple = SimpleAgent(name="assistant",
+                         engine=AugLLMConfig(temperature=0.7))
     print(f"   Created: {simple}")
     result = await simple.execute("Hello world")
     print(f"   Result: {result}")
@@ -226,7 +239,8 @@ async def main():
     # 2. RAGAgent = Agent[RetrieverEngine]
     print("\n2. RAGAgent (Agent[RetrieverEngine]):")
     rag = RAGAgent(
-        name="researcher", engine=RetrieverEngine(index_name="knowledge_base")
+        name="researcher",
+        engine=RetrieverEngine(index_name="knowledge_base"),
     )
     print(f"   Created: {rag}")
     docs = await rag.retrieve("Python programming")
@@ -236,7 +250,8 @@ async def main():
 
     # 3. ReasoningAgent = Agent[ReasoningEngine]
     print("\n3. ReasoningAgent (Agent[ReasoningEngine]):")
-    reasoner = ReasoningAgent(name="thinker", engine=ReasoningEngine(max_iterations=3))
+    reasoner = ReasoningAgent(name="thinker",
+                              engine=ReasoningEngine(max_iterations=3))
     print(f"   Created: {reasoner}")
     reasoning = await reasoner.reason("How to solve world hunger")
     print(f"   Reasoning: {reasoning}")
@@ -244,7 +259,8 @@ async def main():
     # 4. MultiModalAgent = Agent[MultiModalEngine]
     print("\n4. MultiModalAgent (Agent[MultiModalEngine]):")
     multimodal = MultiModalAgent(
-        name="vision", engine=MultiModalEngine(modalities=["text", "image", "audio"])
+        name="vision",
+        engine=MultiModalEngine(modalities=["text", "image", "audio"]),
     )
     print(f"   Created: {multimodal}")
     print(f"   Modalities: {multimodal.supported_modalities()}")
@@ -254,7 +270,11 @@ async def main():
     coordinator = MultiAgent(
         name="coordinator",
         engine=AugLLMConfig(temperature=0.3),  # Low temp for coordination
-        agents={"simple": simple, "rag": rag, "reasoner": reasoner},
+        agents={
+            "simple": simple,
+            "rag": rag,
+            "reasoner": reasoner
+        },
     )
     print(f"   Created: {coordinator}")
     print("   Coordinating agents:")

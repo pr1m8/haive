@@ -1,9 +1,11 @@
 """Graph RAG Retriever for Memory System.
 
-This module implements a Graph RAG retriever that combines knowledge graph
-traversal with vector similarity search to provide comprehensive memory retrieval
-with relationship context and semantic understanding.
+This module implements a Graph RAG retriever that combines knowledge
+graph traversal with vector similarity search to provide comprehensive
+memory retrieval with relationship context and semantic understanding.
 """
+
+from __future__ import annotations
 
 from datetime import datetime
 import logging
@@ -23,12 +25,13 @@ from haive.agents.memory.kg_generator_agent import (
 )
 from haive.core.engine.aug_llm import AugLLMConfig
 
-
 logger = logging.getLogger(__name__)
 
 
 class GraphRAGResult(BaseModel):
-    """Comprehensive result from Graph RAG retrieval combining knowledge graph and vector search.
+    """Comprehensive result from Graph RAG retrieval combining knowledge graph.
+
+    and vector search.
 
     This class encapsulates all information from a Graph RAG retrieval operation,
     including retrieved memories, graph traversal results, scoring information,
@@ -112,23 +115,28 @@ class GraphRAGResult(BaseModel):
 
     query: str = Field(..., description="Original query")
     memories: list[dict[str, Any]] = Field(
-        default_factory=list, description="Retrieved memories"
+        default_factory=list,
+        description="Retrieved memories",
     )
 
     # Graph traversal results
     start_entities: list[KnowledgeGraphNode] = Field(
-        default_factory=list, description="Starting entities for traversal"
+        default_factory=list,
+        description="Starting entities for traversal",
     )
     traversed_entities: list[KnowledgeGraphNode] = Field(
-        default_factory=list, description="All traversed entities"
+        default_factory=list,
+        description="All traversed entities",
     )
     relationship_paths: list[list[KnowledgeGraphRelationship]] = Field(
-        default_factory=list, description="Relationship paths found"
+        default_factory=list,
+        description="Relationship paths found",
     )
 
     # Test-expected fields
     graph_nodes_explored: int = Field(
-        default=0, description="Number of graph nodes explored during traversal"
+        default=0,
+        description="Number of graph nodes explored during traversal",
     )
     graph_paths: list[list[KnowledgeGraphRelationship]] = Field(
         default_factory=list,
@@ -137,30 +145,38 @@ class GraphRAGResult(BaseModel):
 
     # Scoring information
     similarity_scores: list[float] = Field(
-        default_factory=list, description="Similarity scores for memories"
+        default_factory=list,
+        description="Similarity scores for memories",
     )
     graph_scores: list[float] = Field(
-        default_factory=list, description="Graph centrality scores"
+        default_factory=list,
+        description="Graph centrality scores",
     )
     final_scores: list[float] = Field(
-        default_factory=list, description="Combined final scores"
+        default_factory=list,
+        description="Combined final scores",
     )
 
     # Metadata
     total_time_ms: float = Field(
-        default=0.0, description="Total retrieval time in milliseconds"
+        default=0.0,
+        description="Total retrieval time in milliseconds",
     )
     graph_traversal_time_ms: float = Field(
-        default=0.0, description="Graph traversal time"
+        default=0.0,
+        description="Graph traversal time",
     )
-    vector_search_time_ms: float = Field(default=0.0, description="Vector search time")
+    vector_search_time_ms: float = Field(default=0.0,
+                                         description="Vector search time")
 
     # Query analysis
     query_intent: MemoryQueryIntent | None = Field(
-        default=None, description="Analyzed query intent"
+        default=None,
+        description="Analyzed query intent",
     )
     expansion_terms: list[str] = Field(
-        default_factory=list, description="Query expansion terms"
+        default_factory=list,
+        description="Query expansion terms",
     )
 
     def get_top_memories(self, limit: int = 10) -> list[dict[str, Any]]:
@@ -185,14 +201,17 @@ class GraphRAGResult(BaseModel):
             return []
 
         # Sort by final score
-        scored_memories = list(zip(self.memories, self.final_scores, strict=False))
+        scored_memories = list(
+            zip(self.memories, self.final_scores, strict=False))
         scored_memories.sort(key=lambda x: x[1], reverse=True)
 
         return [memory for memory, score in scored_memories[:limit]]
 
 
 class GraphRAGRetrieverConfig(BaseModel):
-    """Configuration for Graph RAG retriever with comprehensive customization options.
+    """Configuration for Graph RAG retriever with comprehensive customization.
+
+    options.
 
     This configuration class defines all parameters needed to create and configure
     a GraphRAGRetriever, including core components, graph traversal settings,
@@ -299,56 +318,73 @@ class GraphRAGRetrieverConfig(BaseModel):
 
     # Core components
     memory_store_manager: MemoryStoreManager = Field(
-        ..., description="Memory store manager"
+        ...,
+        description="Memory store manager",
     )
-    memory_classifier: MemoryClassifier = Field(..., description="Memory classifier")
-    kg_generator: KGGeneratorAgent = Field(..., description="Knowledge graph generator")
+    memory_classifier: MemoryClassifier = Field(
+        ..., description="Memory classifier")
+    kg_generator: KGGeneratorAgent = Field(
+        ..., description="Knowledge graph generator")
 
     # Retrieval configuration
     default_limit: int = Field(
-        default=10, description="Default number of memories to retrieve"
+        default=10,
+        description="Default number of memories to retrieve",
     )
     max_limit: int = Field(
-        default=50, description="Maximum number of memories to retrieve"
+        default=50,
+        description="Maximum number of memories to retrieve",
     )
 
     # Graph traversal configuration
     max_traversal_depth: int = Field(
-        default=3, description="Maximum graph traversal depth"
+        default=3,
+        description="Maximum graph traversal depth",
     )
     min_relationship_confidence: float = Field(
-        default=0.5, description="Minimum confidence for relationships"
+        default=0.5,
+        description="Minimum confidence for relationships",
     )
     enable_bidirectional_traversal: bool = Field(
-        default=True, description="Enable bidirectional graph traversal"
+        default=True,
+        description="Enable bidirectional graph traversal",
     )
 
     # Scoring configuration
     similarity_weight: float = Field(
-        default=0.4, description="Weight for similarity score"
+        default=0.4,
+        description="Weight for similarity score",
     )
     graph_weight: float = Field(
-        default=0.3, description="Weight for graph centrality score"
+        default=0.3,
+        description="Weight for graph centrality score",
     )
     importance_weight: float = Field(
-        default=0.2, description="Weight for importance score"
+        default=0.2,
+        description="Weight for importance score",
     )
-    recency_weight: float = Field(default=0.1, description="Weight for recency score")
+    recency_weight: float = Field(default=0.1,
+                                  description="Weight for recency score")
 
     # Query expansion
     enable_query_expansion: bool = Field(
-        default=True, description="Enable query expansion"
+        default=True,
+        description="Enable query expansion",
     )
-    max_expansion_terms: int = Field(default=5, description="Maximum expansion terms")
+    max_expansion_terms: int = Field(default=5,
+                                     description="Maximum expansion terms")
 
     # LLM configuration
     llm_config: AugLLMConfig = Field(
-        default_factory=AugLLMConfig, description="LLM for query analysis"
+        default_factory=AugLLMConfig,
+        description="LLM for query analysis",
     )
 
 
 class GraphRAGRetriever:
-    """Advanced Graph RAG retriever that combines knowledge graph traversal with vector similarity search.
+    """Advanced Graph RAG retriever that combines knowledge graph traversal.
+
+    with vector similarity search.
 
     The GraphRAGRetriever enhances traditional vector-based memory retrieval by leveraging
     knowledge graph structure to discover relevant memories through entity relationships
@@ -557,9 +593,8 @@ FORMAT: Return a JSON object with structure:
     "suggested_traversal_depth": 2
 }}
 
-Analyze the query now:""",
-            input_variables=["query", "known_entities"],
-        )
+Analyze the query now:""", input_variables=[
+                "query", "known_entities"], )
 
         self.relationship_path_analysis_prompt = PromptTemplate(
             template="""You are an expert at analyzing relationship paths in knowledge graphs to provide context.
@@ -587,7 +622,10 @@ FORMAT: Return a JSON object:
 }}
 
 Analyze the relationship path now:""",
-            input_variables=["query", "relationship_path", "path_memories"],
+            input_variables=[
+                "query",
+                "relationship_path",
+                "path_memories"],
         )
 
     async def retrieve_memories(
@@ -622,7 +660,8 @@ Analyze the relationship path now:""",
 
             # Step 1: Analyze query intent
             if self.classifier:
-                result.query_intent = self.classifier.classify_query_intent(query)
+                result.query_intent = self.classifier.classify_query_intent(
+                    query)
 
             # Step 2: Identify entities in query
             graph_traversal_start = datetime.now()
@@ -631,9 +670,11 @@ Analyze the relationship path now:""",
 
             # Step 3: Perform graph traversal if enabled
             if enable_graph_traversal:
-                # Use provided max_graph_depth or fall back to suggested or config default
+                # Use provided max_graph_depth or fall back to suggested or config
+                # default
                 traversal_depth = max_graph_depth or entities_info.get(
-                    "suggested_traversal_depth", self.config.max_traversal_depth
+                    "suggested_traversal_depth",
+                    self.config.max_traversal_depth,
                 )
                 (
                     result.start_entities,
@@ -646,18 +687,17 @@ Analyze the relationship path now:""",
                 )
                 # Populate test-expected fields
                 result.graph_nodes_explored = len(result.traversed_entities)
-                result.graph_paths = (
-                    result.relationship_paths
-                )  # Alias for backward compatibility
+                result.graph_paths = result.relationship_paths  # Alias for backward compatibility
 
             graph_traversal_end = datetime.now()
             result.graph_traversal_time_ms = (
-                graph_traversal_end - graph_traversal_start
-            ).total_seconds() * 1000
+                graph_traversal_end -
+                graph_traversal_start).total_seconds() * 1000
 
             # Step 4: Retrieve memories using traditional vector search
             vector_search_start = datetime.now()
-            expanded_query = self._build_expanded_query(query, result.expansion_terms)
+            expanded_query = self._build_expanded_query(
+                query, result.expansion_terms)
 
             vector_memories = await self.memory_store.retrieve_memories(
                 query=expanded_query,
@@ -668,18 +708,19 @@ Analyze the relationship path now:""",
 
             vector_search_end = datetime.now()
             result.vector_search_time_ms = (
-                vector_search_end - vector_search_start
-            ).total_seconds() * 1000
+                vector_search_end - vector_search_start).total_seconds() * 1000
 
             # Step 5: Get graph-based memories
             graph_memories = []
             if enable_graph_traversal:
                 graph_memories = await self._get_memories_from_graph_entities(
-                    result.traversed_entities, namespace
+                    result.traversed_entities,
+                    namespace,
                 )
 
             # Step 6: Combine and deduplicate memories
-            combined_memories = self._combine_memories(vector_memories, graph_memories)
+            combined_memories = self._combine_memories(vector_memories,
+                                                       graph_memories)
 
             # Step 7: Score memories using combined approach
             (
@@ -704,21 +745,28 @@ Analyze the relationship path now:""",
                         result.graph_scores,
                         result.final_scores,
                         strict=False,
-                    )
-                )
+                    ), )
                 scored_memories.sort(key=lambda x: x[3], reverse=True)
 
                 result.memories = [m[0] for m in scored_memories[:limit]]
-                result.similarity_scores = [m[1] for m in scored_memories[:limit]]
+                result.similarity_scores = [
+                    m[1] for m in scored_memories[:limit]
+                ]
                 result.graph_scores = [m[2] for m in scored_memories[:limit]]
                 result.final_scores = [m[3] for m in scored_memories[:limit]]
 
             # Calculate total time
             end_time = datetime.now()
-            result.total_time_ms = (end_time - start_time).total_seconds() * 1000
+            result.total_time_ms = (end_time -
+                                    start_time).total_seconds() * 1000
 
             logger.info(
-                f"Graph RAG retrieval completed in {result.total_time_ms:.1f}ms: {len(result.memories)} memories, {len(result.traversed_entities)} entities"
+                f"Graph RAG retrieval completed in {
+                    result.total_time_ms:.1f}ms: {
+                    len(
+                        result.memories)} memories, {
+                    len(
+                        result.traversed_entities)} entities",
             )
 
             return result
@@ -727,7 +775,8 @@ Analyze the relationship path now:""",
             logger.exception(f"Error in Graph RAG retrieval: {e}")
             # Return empty result on error
             result = GraphRAGResult(query=query)
-            result.total_time_ms = (datetime.now() - start_time).total_seconds() * 1000
+            result.total_time_ms = (datetime.now() -
+                                    start_time).total_seconds() * 1000
             return result
 
     async def _identify_query_entities(self, query: str) -> dict[str, Any]:
@@ -753,18 +802,15 @@ Analyze the relationship path now:""",
             prompt = self.entity_identification_prompt.format(
                 query=query,
                 known_entities=", ".join(
-                    known_entities[:100]
-                ),  # Limit to avoid token limits
+                    known_entities[:100], ),  # Limit to avoid token limits
             )
 
-            response = await self.llm.ainvoke(
-                [
-                    SystemMessage(
-                        content="You are an expert entity identifier for knowledge graph retrieval."
-                    ),
-                    HumanMessage(content=prompt),
-                ]
-            )
+            response = await self.llm.ainvoke([
+                SystemMessage(
+                    content="You are an expert entity identifier for knowledge graph retrieval.",
+                ),
+                HumanMessage(content=prompt),
+            ], )
 
             # Parse response
             entities_info = self._parse_json_response(response.content)
@@ -779,7 +825,9 @@ Analyze the relationship path now:""",
             return self._fallback_entity_identification(query, known_entities)
 
     def _fallback_entity_identification(
-        self, query: str, known_entities: list[str]
+        self,
+        query: str,
+        known_entities: list[str],
     ) -> dict[str, Any]:
         """Fallback entity identification using simple matching."""
         query_lower = query.lower()
@@ -799,11 +847,14 @@ Analyze the relationship path now:""",
         }
 
     async def _perform_graph_traversal(
-        self, direct_entities: list[str], related_entities: list[str], max_depth: int
+        self,
+        direct_entities: list[str],
+        related_entities: list[str],
+        max_depth: int,
     ) -> tuple[
-        list[KnowledgeGraphNode],
-        list[KnowledgeGraphNode],
-        list[list[KnowledgeGraphRelationship]],
+            list[KnowledgeGraphNode],
+            list[KnowledgeGraphNode],
+            list[list[KnowledgeGraphRelationship]],
     ]:
         """Perform graph traversal to find related entities."""
         kg = self.kg_generator.knowledge_graph
@@ -841,16 +892,13 @@ Analyze the relationship path now:""",
 
                 # Filter by confidence
                 filtered_relationships = [
-                    rel
-                    for rel in relationships
-                    if rel.confidence >= self.config.min_relationship_confidence
+                    rel for rel in relationships if rel.confidence >=
+                    self.config.min_relationship_confidence
                 ]
 
                 for rel in filtered_relationships:
                     # Determine next node
-                    next_node_id = (
-                        rel.target_id if rel.source_id == node_id else rel.source_id
-                    )
+                    next_node_id = rel.target_id if rel.source_id == node_id else rel.source_id
 
                     if next_node_id not in visited and next_node_id in kg.nodes:
                         next_level.add(next_node_id)
@@ -862,9 +910,8 @@ Analyze the relationship path now:""",
 
                         # Create relationship path
                         path = [rel]
-                        if (
-                            len(relationship_paths) < 50
-                        ):  # Limit paths to avoid memory issues
+                        if len(relationship_paths
+                               ) < 50:  # Limit paths to avoid memory issues
                             relationship_paths.append(path)
 
             current_level = next_level
@@ -872,7 +919,9 @@ Analyze the relationship path now:""",
         return start_entities, all_traversed, relationship_paths
 
     async def _get_memories_from_graph_entities(
-        self, entities: list[KnowledgeGraphNode], namespace: tuple[str, ...] | None
+        self,
+        entities: list[KnowledgeGraphNode],
+        namespace: tuple[str, ...] | None,
     ) -> list[dict[str, Any]]:
         """Get memories associated with graph entities."""
         memories = []
@@ -891,8 +940,7 @@ Analyze the relationship path now:""",
                             "entity_name": entity.name,
                             "entity_type": entity.type,
                             "confidence": entity.confidence,
-                        }
-                    )
+                        }, )
                     memories.append(memory)
 
         return memories
@@ -924,7 +972,8 @@ Analyze the relationship path now:""",
                     if "graph_context" in memory:
                         if "graph_context" not in existing:
                             existing["graph_context"] = []
-                        existing["graph_context"].extend(memory["graph_context"])
+                        existing["graph_context"].extend(
+                            memory["graph_context"])
                 else:
                     memory["retrieval_source"] = "graph"
                     combined[memory_id] = memory
@@ -938,7 +987,10 @@ Analyze the relationship path now:""",
         graph_entities: list[KnowledgeGraphNode],
         relationship_paths: list[list[KnowledgeGraphRelationship]],
     ) -> tuple[list[dict[str, Any]], list[float], list[float], list[float]]:
-        """Score memories using combined vector similarity and graph centrality."""
+        """Score memories using combined vector similarity and graph.
+
+        centrality.
+        """
         similarity_scores = []
         graph_scores = []
         final_scores = []
@@ -952,7 +1004,9 @@ Analyze the relationship path now:""",
 
             # Calculate graph centrality score
             graph_score = self._calculate_graph_centrality_score(
-                memory, entity_lookup, relationship_paths
+                memory,
+                entity_lookup,
+                relationship_paths,
             )
 
             # Get importance and recency
@@ -965,22 +1019,20 @@ Analyze the relationship path now:""",
             if created_at:
                 try:
                     created_time = datetime.fromisoformat(created_at)
-                    hours_ago = (
-                        datetime.utcnow() - created_time
-                    ).total_seconds() / 3600
+                    hours_ago = (datetime.utcnow() -
+                                 created_time).total_seconds() / 3600
                     recency = max(
-                        0.0, 1.0 - (hours_ago / 1000)
+                        0.0,
+                        1.0 - (hours_ago / 1000),
                     )  # Decay over ~1000 hours
-                except:
+                except BaseException:
                     pass
 
             # Combine scores
-            final_score = (
-                similarity * self.config.similarity_weight
-                + graph_score * self.config.graph_weight
-                + importance * self.config.importance_weight
-                + recency * self.config.recency_weight
-            )
+            final_score = (similarity * self.config.similarity_weight +
+                           graph_score * self.config.graph_weight +
+                           importance * self.config.importance_weight +
+                           recency * self.config.recency_weight)
 
             similarity_scores.append(similarity)
             graph_scores.append(graph_score)
@@ -1050,14 +1102,16 @@ Analyze the relationship path now:""",
         return min(centrality_score, 1.0)
 
     def _build_expanded_query(
-        self, original_query: str, expansion_terms: list[str]
+        self,
+        original_query: str,
+        expansion_terms: list[str],
     ) -> str:
         """Build expanded query with additional terms."""
         if not expansion_terms or not self.config.enable_query_expansion:
             return original_query
 
         # Add expansion terms
-        limited_terms = expansion_terms[: self.config.max_expansion_terms]
+        limited_terms = expansion_terms[:self.config.max_expansion_terms]
         expanded = f"{original_query} {' '.join(limited_terms)}"
 
         return expanded
@@ -1078,7 +1132,9 @@ Analyze the relationship path now:""",
         return None
 
     async def get_entity_context(self, entity_name: str) -> dict[str, Any]:
-        """Get comprehensive context information for a specific entity in the knowledge graph.
+        """Get comprehensive context information for a specific entity in the.
+
+        knowledge graph.
 
         This method provides detailed information about an entity including its neighborhood,
         associated memories, and connection statistics. It's useful for understanding the
@@ -1161,12 +1217,14 @@ Analyze the relationship path now:""",
 
         # Get entity neighborhood
         neighborhood = await self.kg_generator.get_entity_neighborhood(
-            entity_id, depth=2
+            entity_id,
+            depth=2,
         )
 
         # Get associated memories
         memories = await self._get_memories_from_graph_entities(
-            [self.kg_generator.knowledge_graph.nodes[entity_id]], None
+            [self.kg_generator.knowledge_graph.nodes[entity_id]],
+            None,
         )
 
         return {
@@ -1178,7 +1236,10 @@ Analyze the relationship path now:""",
         }
 
     async def find_relationship_paths(
-        self, entity1: str, entity2: str, max_depth: int = 3
+        self,
+        entity1: str,
+        entity2: str,
+        max_depth: int = 3,
     ) -> list[list[KnowledgeGraphRelationship]]:
         """Find relationship paths between two entities in the knowledge graph.
 
@@ -1292,9 +1353,7 @@ Analyze the relationship path now:""",
             relationships = kg.get_relationships_for_node(current_entity)
 
             for rel in relationships:
-                next_entity = (
-                    rel.target_id if rel.source_id == current_entity else rel.source_id
-                )
+                next_entity = rel.target_id if rel.source_id == current_entity else rel.source_id
 
                 if next_entity not in visited:
                     new_path = [*path, rel]

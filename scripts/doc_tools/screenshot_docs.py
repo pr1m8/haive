@@ -10,12 +10,14 @@ Features:
 - Structure: deep docstrings and comments for maintainability.
 """
 
+from __future__ import annotations
+
 import asyncio
 from datetime import datetime
 from pathlib import Path
 
-from playwright.async_api import TimeoutError as PlaywrightTimeoutError
 from playwright.async_api import (
+    TimeoutError as PlaywrightTimeoutError,
     async_playwright,
 )
 from rich.console import Console
@@ -52,8 +54,8 @@ console = Console(
             "warn": "bold yellow",
             "action": "bold blue",
             "success": "bold green",
-        }
-    )
+        },
+    ),
 )
 
 # ------------------ Screenshot Utilities ------------------
@@ -89,7 +91,7 @@ async def scroll_and_screenshot(page, save_dir: Path, url: str, scroll_steps: in
         await page.wait_for_timeout(400)
         fname = save_dir / f"screenshot_{step:02}.png"
         await page.screenshot(path=fname, full_page=False)
-        console.log(f"[success]Saved page segment {step+1}/{scroll_steps} to {fname}")
+        console.log(f"[success]Saved page segment {step + 1}/{scroll_steps} to {fname}")
 
 
 async def screenshot_headers(page, save_dir: Path, selector: str):
@@ -112,7 +114,10 @@ async def screenshot_headers(page, save_dir: Path, selector: str):
 
 
 async def hide_sticky_navbars(page):
-    """Hide common sticky/fixed navbars and headers to make screenshots clearer."""
+    """Hide common sticky/fixed navbars and headers to make screenshots.
+
+    clearer.
+    """
     await page.evaluate(
         """
         () => {
@@ -120,13 +125,17 @@ async def hide_sticky_navbars(page):
                 document.querySelectorAll(sel).forEach(e => e.style.display = 'none');
             }
         }
-    """
+    """,
     )
     await page.wait_for_timeout(100)
 
 
 async def handle_page(
-    page, url: str, outdir: Path, scroll_steps: int, headers_selector: str
+    page,
+    url: str,
+    outdir: Path,
+    scroll_steps: int,
+    headers_selector: str,
 ):
     """Main logic for screenshotting a single page (with error handling)."""
     page_dir = outdir / url.replace("://", "_").replace("/", "_")
@@ -136,7 +145,8 @@ async def handle_page(
         await page.goto(url, timeout=20000)
         await page.wait_for_load_state("networkidle", timeout=10000)
         await hide_sticky_navbars(page)
-        # Example: Try opening sidebar or toggling theme (customize selectors for your site)
+        # Example: Try opening sidebar or toggling theme (customize selectors for
+        # your site)
         await try_click(page, "label.nav-overlay-icon", "Sidebar Toggle", 2000)
         await try_click(page, "button.theme-toggle", "Theme Toggle", 2000)
 
@@ -150,7 +160,10 @@ async def handle_page(
 
 
 async def screenshot_run(
-    urls: list[str], outdir: Path, scroll_steps: int, headers_selector: str
+    urls: list[str],
+    outdir: Path,
+    scroll_steps: int,
+    headers_selector: str,
 ):
     """Visit each URL, screenshot page sections and headers, save to outdir."""
     async with async_playwright() as play:
@@ -179,7 +192,7 @@ def main():
         console.print(Panel(str(e), title="[error]Fatal error[/error]"))
 
     console.print(
-        "[success]───────────────────────────── All done! ─────────────────────────────[/success]"
+        "[success]───────────────────────────── All done! ─────────────────────────────[/success]",
     )
 
 

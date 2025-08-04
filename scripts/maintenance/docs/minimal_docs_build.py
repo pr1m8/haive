@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Minimal documentation build script."""
+from __future__ import annotations
 
 import os
 import subprocess

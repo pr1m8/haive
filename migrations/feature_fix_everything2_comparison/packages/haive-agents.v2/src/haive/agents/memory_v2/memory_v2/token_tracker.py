@@ -1,15 +1,16 @@
 """Token tracking component for memory operations.
 
-Monitors token usage across memory operations and triggers
-summarization or rewriting when approaching context limits.
+Monitors token usage across memory operations and triggers summarization
+or rewriting when approaching context limits.
 """
+from __future__ import annotations
 
-from datetime import datetime
 import logging
+from datetime import datetime
 from typing import Any
 
-from pydantic import BaseModel, Field
-
+from pydantic import BaseModel
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 
@@ -61,14 +62,18 @@ class TokenTracker(BaseModel):
     thresholds: TokenThresholds = Field(default_factory=TokenThresholds)
 
     # Tracking window
-    window_size: int = Field(default=100, description="Number of operations to track")
+    window_size: int = Field(default=100,
+                             description="Number of operations to track")
 
     # Analytics
     operation_averages: dict[str, float] = Field(default_factory=dict)
     peak_usage: int = Field(default=0, ge=0)
 
     def track(
-        self, operation: str, tokens: int, metadata: dict[str, Any] | None = None
+        self,
+        operation: str,
+        tokens: int,
+        metadata: dict[str, Any] | None = None,
     ) -> None:
         """Track tokens for an operation.
 
@@ -79,16 +84,17 @@ class TokenTracker(BaseModel):
         """
         # Update totals
         self.total_tokens += tokens
-        self.tokens_by_operation[operation] = (
-            self.tokens_by_operation.get(operation, 0) + tokens
-        )
+        self.tokens_by_operation[operation] = self.tokens_by_operation.get(
+            operation, 0) + tokens
 
         # Update peak
         self.peak_usage = max(self.peak_usage, self.total_tokens)
 
         # Add to history
         entry = TokenUsageEntry(
-            operation=operation, tokens=tokens, metadata=metadata or {}
+            operation=operation,
+            tokens=tokens,
+            metadata=metadata or {},
         )
         self.usage_history.append(entry)
 
@@ -107,8 +113,7 @@ class TokenTracker(BaseModel):
         if status != "OK":
             logger.warning(
                 f"Token usage {status}: {self.total_tokens}/{self.max_context_tokens} "
-                f"({self.get_usage_ratio():.1%}) after {operation}"
-            )
+                f"({self.get_usage_ratio():.1%}) after {operation}", )
 
     def reset_tokens(self, keep_history: bool = True) -> None:
         """Reset token counts while optionally keeping history.
@@ -127,11 +132,7 @@ class TokenTracker(BaseModel):
 
     def get_usage_ratio(self) -> float:
         """Get current usage ratio (0.0 to 1.0)."""
-        return (
-            self.total_tokens / self.max_context_tokens
-            if self.max_context_tokens > 0
-            else 0.0
-        )
+        return self.total_tokens / self.max_context_tokens if self.max_context_tokens > 0 else 0.0
 
     def get_status(self) -> str:
         """Get current status based on thresholds."""
@@ -150,7 +151,8 @@ class TokenTracker(BaseModel):
         Returns:
             True if operation can fit, False otherwise
         """
-        return (self.total_tokens + estimated_tokens) <= self.max_context_tokens
+        return (self.total_tokens +
+                estimated_tokens) <= self.max_context_tokens
 
     def get_recommendations(self) -> list[str]:
         """Get recommendations based on usage patterns.
@@ -175,13 +177,15 @@ class TokenTracker(BaseModel):
         # Analyze heavy operations
         if self.operation_averages:
             heavy_ops = sorted(
-                self.operation_averages.items(), key=lambda x: x[1], reverse=True
+                self.operation_averages.items(),
+                key=lambda x: x[1],
+                reverse=True,
             )[:3]
 
             for op, avg in heavy_ops:
                 if avg > self.max_context_tokens * 0.1:  # >10% per operation
                     recommendations.append(
-                        f"Optimize '{op}' operations (avg: {avg:.0f} tokens)"
+                        f"Optimize '{op}' operations (avg: {avg:.0f} tokens)",
                     )
 
         return recommendations
@@ -225,7 +229,8 @@ class TokenTracker(BaseModel):
     def _update_averages(self, operation: str) -> None:
         """Update operation averages."""
         operation_entries = [
-            entry for entry in self.usage_history if entry.operation == operation
+            entry for entry in self.usage_history
+            if entry.operation == operation
         ]
 
         if operation_entries:
@@ -233,7 +238,8 @@ class TokenTracker(BaseModel):
             self.operation_averages[operation] = total / len(operation_entries)
 
     def suggest_compression_targets(
-        self, target_reduction: float = 0.3
+        self,
+        target_reduction: float = 0.3,
     ) -> list[tuple[str, int]]:
         """Suggest operations to target for compression.
 
@@ -248,7 +254,9 @@ class TokenTracker(BaseModel):
 
         # Sort operations by token usage
         sorted_ops = sorted(
-            self.tokens_by_operation.items(), key=lambda x: x[1], reverse=True
+            self.tokens_by_operation.items(),
+            key=lambda x: x[1],
+            reverse=True,
         )
 
         suggestions = []

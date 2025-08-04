@@ -1,7 +1,7 @@
 # Documentation Build Process Issues
 
-**Date**: August 1, 2025  
-**Priority**: MEDIUM - Process improvements needed  
+**Date**: August 1, 2025
+**Priority**: MEDIUM - Process improvements needed
 **Status**: Open
 
 ## Problem

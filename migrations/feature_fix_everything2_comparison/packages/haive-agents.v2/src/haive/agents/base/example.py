@@ -19,20 +19,18 @@ This example demonstrates how to create custom conversation agents by extending
 the BaseConversationAgent class and implementing core conversation patterns.
 """
 
-import asyncio
 import operator
+import asyncio
 from typing import Any
-
 from langchain_core.messages import AIMessage, HumanMessage
 from pydantic import Field
-
 from haive.agents.conversation.base import (
     BaseConversationAgent,
     ConversationState,
     get_conversation_progress,
 )
-from haive.agents.simple import SimpleAgent
 from haive.core.exceptions import ConversationError
+from haive.agents.simple import SimpleAgent
 
 
 logger = logging.getLogger(__name__)
@@ -80,7 +78,8 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
             "engagement_scores": [],
         }
 
-    def select_next_speaker(self, state: CustomConversationState) -> str | None:
+    def select_next_speaker(self,
+                            state: CustomConversationState) -> str | None:
         """Custom speaker selection with engagement-based prioritization.
 
         Selects speakers based on:
@@ -93,10 +92,9 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
             # If engagement is high, prioritize active participants
             if state.engagement_level > 0.7:
                 # Sort by recent activity (those who spoke more recently)
-                recent_speakers = state.speaker_history[-len(state.speakers) :]
+                recent_speakers = state.speaker_history[-len(state.speakers):]
                 active_remaining = [
-                    s
-                    for s in state.remaining_speakers_this_round
+                    s for s in state.remaining_speakers_this_round
                     if s in recent_speakers
                 ]
                 if active_remaining:
@@ -139,7 +137,10 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
         return False
 
     async def execute_agent(
-        self, agent: Any, input_data: str, state: CustomConversationState
+        self,
+        agent: Any,
+        input_data: str,
+        state: CustomConversationState,
     ) -> str:
         """Execute agent with quality assessment and error handling."""
         try:
@@ -151,7 +152,8 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
 
             # Update metrics
             self.conversation_metrics["total_words"] += len(response.split())
-            self.conversation_metrics["engagement_scores"].append(quality_score)
+            self.conversation_metrics["engagement_scores"].append(
+                quality_score)
 
             # Update state with quality score
             state.quality_scores.append(quality_score)
@@ -213,11 +215,8 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
         state = self.get_state()
 
         # Calculate final metrics
-        avg_response_length = (
-            self.conversation_metrics["total_words"] / state.turn_count
-            if state.turn_count > 0
-            else 0
-        )
+        avg_response_length = (self.conversation_metrics["total_words"] /
+                               state.turn_count if state.turn_count > 0 else 0)
 
         return {
             "basic_info": {
@@ -228,14 +227,14 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
                 "progress": f"{state.conversation_progress:.1%}",
             },
             "quality_metrics": {
-                "average_quality": state.average_quality,
-                "final_engagement": state.engagement_level,
-                "quality_trend": (
-                    "improving"
-                    if len(state.quality_scores) > 1
-                    and state.quality_scores[-1] > state.quality_scores[0]
-                    else "declining"
-                ),
+                "average_quality":
+                state.average_quality,
+                "final_engagement":
+                state.engagement_level,
+                "quality_trend":
+                ("improving" if len(state.quality_scores) > 1
+                 and state.quality_scores[-1] > state.quality_scores[0] else
+                 "declining"),
             },
             "conversation_metrics": {
                 "total_words": self.conversation_metrics["total_words"],
@@ -301,7 +300,7 @@ async def main():
         # Start the conversation
         await conversation.arun(
             "Let's discuss how AI can transform education. "
-            "Alice, what are your thoughts on AI-powered personalized learning?"
+            "Alice, what are your thoughts on AI-powered personalized learning?",
         )
 
         # Get final state

@@ -1,21 +1,23 @@
 #!/usr/bin/env python3
 """Using the prebuilt state schemas for multi-agent systems.
 
-This shows how to properly use MetaAgentState and MultiAgentState
-from base_state_schemas.py
+This shows how to properly use MetaAgentState and MultiAgentState from
+base_state_schemas.py
 """
+
+from __future__ import annotations
 
 import sys
 
-sys.path.insert(0, "/home/will/Projects/haive/backend/haive")
-
+from langchain_core.messages import HumanMessage
 
 from haive.core.schema.base_state_schemas import (
     HierarchicalAgentState,
     MetaAgentState,
     MultiAgentState,
 )
-from langchain_core.messages import HumanMessage
+
+sys.path.insert(0, "/home/will/Projects/haive/backend/haive")
 
 
 def test_meta_agent_state():
@@ -29,16 +31,21 @@ def test_meta_agent_state():
 
     # Spawn sub-agents
     meta_state.spawn_sub_agent(
-        name="planner", agent_type="llm", initial_state={"task": "Create project plan"}
+        name="planner",
+        agent_type="llm",
+        initial_state={"task": "Create project plan"},
     )
 
     meta_state.spawn_sub_agent(
-        name="coder", agent_type="llm", initial_state={"task": "Write code"}
+        name="coder",
+        agent_type="llm",
+        initial_state={"task": "Write code"},
     )
 
     # Update results
     meta_state.update_sub_agent_result(
-        "planner", {"plan": "1. Design\n2. Code\n3. Test"}
+        "planner",
+        {"plan": "1. Design\n2. Code\n3. Test"},
     )
 
     return meta_state
@@ -48,8 +55,7 @@ def test_multi_agent_state():
     """Test using the prebuilt MultiAgentState."""
     # MultiAgentState provides isolation between agents
     multi_state = MultiAgentState(
-        messages=[HumanMessage(content="Analyze this document")]
-    )
+        messages=[HumanMessage(content="Analyze this document")], )
 
     # Each agent gets its own state
     planner_state = multi_state.get_agent_state("planner")
@@ -61,7 +67,8 @@ def test_multi_agent_state():
     analyzer_state.tool_results = {"analysis": "Document is about X"}
 
     # Broadcast shared data
-    multi_state.broadcast_to_agents({"document_url": "https://example.com/doc.pdf"})
+    multi_state.broadcast_to_agents(
+        {"document_url": "https://example.com/doc.pdf"})
 
     # Collect results
     multi_state.collect_agent_results()
@@ -99,8 +106,12 @@ def test_hierarchical_state():
     parent_state.add_child_agent("reviewer")
 
     # Update child results
-    parent_state.agent_states["researcher"].tool_results = {"facts": ["fact1", "fact2"]}
-    parent_state.agent_states["writer"].tool_results = {"draft": "Article draft..."}
+    parent_state.agent_states["researcher"].tool_results = {
+        "facts": ["fact1", "fact2"]
+    }
+    parent_state.agent_states["writer"].tool_results = {
+        "draft": "Article draft..."
+    }
     parent_state.agent_states["reviewer"].tool_results = {"score": 0.85}
 
     # Aggregate results

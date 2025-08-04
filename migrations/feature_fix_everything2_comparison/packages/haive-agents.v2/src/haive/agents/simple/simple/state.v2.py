@@ -25,11 +25,13 @@ class SimpleAgentState(StateSchema):
     """Base state for simple agents.
 
     This provides a standard chat-based state with a messages field that
-    supports proper message history management through the add_messages reducer.
+    supports proper message history management through the add_messages
+    reducer.
     """
 
     messages: Annotated[Sequence[BaseMessage], add_messages] = Field(
-        default_factory=list, description="Chat message history"
+        default_factory=list,
+        description="Chat message history",
     )
 
     def add_human_message(self, content: str) -> "SimpleAgentState":
@@ -74,7 +76,8 @@ class SimpleAgentState(StateSchema):
             return None
 
         last_message = self.messages[-1]
-        return last_message.content if hasattr(last_message, "content") else None
+        return last_message.content if hasattr(last_message,
+                                               "content") else None
 
     @classmethod
     def with_messages(cls, messages: list[BaseMessage]) -> "SimpleAgentState":

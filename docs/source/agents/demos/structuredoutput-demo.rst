@@ -31,7 +31,7 @@ StructuredOutputAgent - Basic conversational agents for straightforward tasks
 
    </div>
 
-            
+
 
 .. raw:: html
 
@@ -50,7 +50,7 @@ StructuredOutputAgent - Basic conversational agents for straightforward tasks
 
    <!-- Graph Visualization -->
 
-           <div id="structuredoutput-graph" 
+           <div id="structuredoutput-graph"
                 class="agent-graph-container"
                 data-agent-graph='{"nodes": [{"id": "start", "type": "start", "label": "START"}, {"id": "end", "type": "end", "label": "END"}, {"id": "agent", "type": "agent", "label": "StructuredOutputAgent", "description": "Main processing node"}], "edges": [{"source": "start", "target": "agent"}, {"source": "agent", "target": "end"}], "executionTrace": [{"step": 1, "node": "start", "status": "completed", "duration": 0.1, "output": "Initialized"}, {"step": 2, "node": "agent", "status": "completed", "duration": 1.2, "output": "Processing..."}, {"step": 3, "node": "end", "status": "completed", "duration": 0.1, "output": "Finished"}]}'>
 .. raw:: html
@@ -61,7 +61,7 @@ StructuredOutputAgent - Basic conversational agents for straightforward tasks
 
    <!-- State History Timeline -->
 
-           <div id="structuredoutput-state-history" 
+           <div id="structuredoutput-state-history"
                 class="state-history-container"
                 data-state-history='[{"timestamp": "2025-01-08T10:00:00Z", "step": 1, "state": {"status": "initialized", "input": "User query"}, "diff": {"added": ["status", "input"], "changed": [], "removed": []}}, {"timestamp": "2025-01-08T10:00:01Z", "step": 2, "state": {"status": "processing", "input": "User query", "output": "Generated response"}, "diff": {"added": ["output"], "changed": ["status"], "removed": []}}]'>
 .. raw:: html
@@ -72,7 +72,7 @@ StructuredOutputAgent - Basic conversational agents for straightforward tasks
 
    <!-- Execution Trace -->
 
-           <div id="structuredoutput-execution-trace" 
+           <div id="structuredoutput-execution-trace"
                 class="execution-trace-container"
                 data-execution-trace='[{"step": 1, "operation": "Initialize", "duration": 0.1, "status": "success"}, {"step": 2, "operation": "Process", "duration": 1.5, "status": "success"}, {"step": 3, "operation": "Finalize", "duration": 0.2, "status": "success"}]'>
 .. raw:: html
@@ -122,11 +122,11 @@ StructuredOutputAgent - Basic conversational agents for straightforward tasks
         // Initialize graph
         const graphData = JSON.parse(document.getElementById('structuredoutput-graph').dataset.agentGraph);
         new AgentGraphVisualizer('structuredoutput-graph', graphData);
-        
+
         // Initialize state history
         const stateData = JSON.parse(document.getElementById('structuredoutput-state-history').dataset.stateHistory);
         new StateHistoryVisualizer('structuredoutput-state-history', stateData);
-        
+
         // Initialize execution trace
         const traceData = JSON.parse(document.getElementById('structuredoutput-execution-trace').dataset.executionTrace);
         new ExecutionTraceVisualizer('structuredoutput-execution-trace', traceData);

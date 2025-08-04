@@ -6,6 +6,8 @@ This example demonstrates how to use the PlanAndExecuteAgent to:
 3. Handle replanning when needed
 """
 
+from __future__ import annotations
+
 import asyncio
 import logging
 
@@ -16,7 +18,6 @@ from haive.agents.planning.plan_and_execute import (
 from haive.core.llm import AugLLMConfig
 from haive.tools.tools.search_tools import tavily_search
 
-
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -26,7 +27,9 @@ async def main():
     """Run a Plan and Execute agent example."""
     # Create configurations for each agent
     planner_config = AugLLMConfig(
-        model="gpt-4", temperature=0.7, system_message="You are a strategic planner."
+        model="gpt-4",
+        temperature=0.7,
+        system_message="You are a strategic planner.",
     )
 
     executor_config = AugLLMConfig(
@@ -36,7 +39,9 @@ async def main():
     )
 
     replanner_config = AugLLMConfig(
-        model="gpt-4", temperature=0.5, system_message="You are a thoughtful replanner."
+        model="gpt-4",
+        temperature=0.5,
+        system_message="You are a thoughtful replanner.",
     )
 
     # Create the Plan and Execute agent

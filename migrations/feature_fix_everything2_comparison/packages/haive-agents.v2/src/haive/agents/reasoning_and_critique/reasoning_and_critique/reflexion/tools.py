@@ -5,11 +5,10 @@ This module provides tools functionality for the Haive framework.
 Functions:
     run_queries: Run Queries functionality.
 """
-
 # from haive_agents.reflexion.models import ReviseAnswer,
+from __future__ import annotations
 
 from langchain_community.tools import TavilySearchResults
-
 
 tavily_tool = TavilySearchResults(max_results=5)
 
@@ -23,4 +22,4 @@ def run_queries(search_queries: list[str], **kwargs):
     Returns:
         A list of search results.
     """
-    return tavily_tool.batch([{"query": query} for query in search_queries])
+    return tavily_tool.batch([{'query': query} for query in search_queries])

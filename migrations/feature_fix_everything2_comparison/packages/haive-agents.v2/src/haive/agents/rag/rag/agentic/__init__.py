@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from agentic.agent import (
     AgenticRAGAgent,
     AgenticRAGState,
@@ -32,7 +34,6 @@ from agentic.react_rag_agent import (
     from_vectorstore,
     trigger_retrieval,
 )
-
 
 __all__ = [
     "AgenticRAGAgent",

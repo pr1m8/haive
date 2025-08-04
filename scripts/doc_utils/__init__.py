@@ -26,10 +26,17 @@ Usage:
         result = await runner.run_example("path/to/example.py")
 """
 
-from .agent_analyzer import AgentAnalyzer, AgentArchitecture, AgentInfo
-from .doc_generator import DocumentationConfig, DocumentationGenerator
-from .example_runner import ExecutionConfig, ExecutionResult, UniversalExampleRunner
-from .visualization_utils import VisualizationConfig, VisualizationManager
+from scripts.doc_utils.agent_analyzer import AgentAnalyzer, AgentArchitecture, AgentInfo
+from scripts.doc_utils.doc_generator import DocumentationConfig, DocumentationGenerator
+from scripts.doc_utils.example_runner import (
+    ExecutionConfig,
+    ExecutionResult,
+    UniversalExampleRunner,
+)
+from scripts.doc_utils.visualization_utils import (
+    VisualizationConfig,
+    VisualizationManager,
+)
 
 __version__ = "1.0.0"
 

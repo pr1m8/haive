@@ -1,4 +1,4 @@
-"""Advanced Multi-Agent Patterns - Haive Framework
+"""Advanced Multi-Agent Patterns - Haive Framework.
 
 This example demonstrates complex multi-agent workflows including:
 - Parallel execution with result aggregation
@@ -11,13 +11,14 @@ This example demonstrates complex multi-agent workflows including:
 import asyncio
 from typing import Any
 
+from langchain_core.tools import tool
+from pydantic import BaseModel, Field
+
 from haive.agents.multi import MultiAgent
 from haive.agents.multi.base import ParallelAgent, SequentialAgent
 from haive.agents.react import ReactAgent
 from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.tools import tool
-from pydantic import BaseModel, Field
 
 # === 1. PARALLEL RESEARCH WITH AGGREGATION ===
 
@@ -84,12 +85,13 @@ async def parallel_research_pattern():
 
     # Sequential: parallel research → aggregation
     research_pipeline = SequentialAgent(
-        name="research_pipeline", agents=[parallel_research, aggregator]
+        name="research_pipeline",
+        agents=[parallel_research, aggregator],
     )
 
     # Execute
     result = await research_pipeline.arun(
-        "Analyze the impact of quantum computing on cryptography"
+        "Analyze the impact of quantum computing on cryptography",
     )
 
     return result
@@ -102,10 +104,12 @@ class TaskClassification(BaseModel):
     """Classification result."""
 
     category: str = Field(
-        ..., description="Main category: technical/business/creative/research"
+        ...,
+        description="Main category: technical/business/creative/research",
     )
     complexity: str = Field(
-        ..., description="Complexity level: simple/moderate/complex"
+        ...,
+        description="Complexity level: simple/moderate/complex",
     )
     subtasks: list[str] = Field(default_factory=list, description="Identified subtasks")
     requires_tools: bool = Field(default=False)
@@ -138,11 +142,15 @@ async def dynamic_routing_pattern():
         return f"Market data for {query}: Growing 15% YoY"
 
     complex_tech = ReactAgent(
-        name="complex_tech", engine=AugLLMConfig(), tools=[code_analyzer]
+        name="complex_tech",
+        engine=AugLLMConfig(),
+        tools=[code_analyzer],
     )
 
     complex_biz = ReactAgent(
-        name="complex_biz", engine=AugLLMConfig(), tools=[market_data]
+        name="complex_biz",
+        engine=AugLLMConfig(),
+        tools=[market_data],
     )
 
     # Creative tasks go through a different pipeline
@@ -159,7 +167,8 @@ async def dynamic_routing_pattern():
     )
 
     creative_pipeline = SequentialAgent(
-        name="creative_pipeline", agents=[ideation, refinement]
+        name="creative_pipeline",
+        agents=[ideation, refinement],
     )
 
     # Research tasks use parallel pattern
@@ -181,7 +190,9 @@ async def dynamic_routing_pattern():
             }
 
             super().__init__(
-                name="dynamic_router", agents=agents, entry_point="classifier"
+                name="dynamic_router",
+                agents=agents,
+                entry_point="classifier",
             )
 
             # Add routing logic
@@ -208,13 +219,14 @@ async def dynamic_routing_pattern():
                 return "simple_tech"  # Default
 
             self.add_conditional_edges(
-                source="classifier", path=route_by_classification
+                source="classifier",
+                path=route_by_classification,
             )
 
     # Use the dynamic router
     router = DynamicRouter()
     result = await router.arun(
-        "Create a technical analysis of blockchain scalability solutions"
+        "Create a technical analysis of blockchain scalability solutions",
     )
 
     return result
@@ -416,7 +428,8 @@ async def consensus_pattern():
 
     # Parallel analysis
     analysts = ParallelAgent(
-        name="analyst_panel", agents=[optimist, pessimist, realist]
+        name="analyst_panel",
+        agents=[optimist, pessimist, realist],
     )
 
     # Moderator to build consensus
@@ -429,11 +442,12 @@ async def consensus_pattern():
 
     # Debate → Consensus pipeline
     consensus_builder = SequentialAgent(
-        name="consensus_pipeline", agents=[analysts, moderator]
+        name="consensus_pipeline",
+        agents=[analysts, moderator],
     )
 
     result = await consensus_builder.arun(
-        "Should we invest in developing a quantum computing division?"
+        "Should we invest in developing a quantum computing division?",
     )
 
     return result

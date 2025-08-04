@@ -8,6 +8,8 @@ This module configures extensions for creating diagrams and visualizations:
 - Image galleries and thumbnails
 """
 
+from __future__ import annotations
+
 from typing import Any
 
 
@@ -63,8 +65,10 @@ def get_config(
 def _get_mermaid_config() -> dict[str, Any]:
     """Get Mermaid diagram configuration."""
     return {
-        "mermaid_version": "10.6.1",
-        "mermaid_init_js": """
+        "mermaid_version":
+        "10.6.1",
+        "mermaid_init_js":
+        """
 mermaid.initialize({
     startOnLoad: true,
     theme: 'default',
@@ -99,7 +103,7 @@ def _get_images_config() -> dict[str, Any]:
             "override_image_directive": False,
             "show_caption": True,
             "download": True,
-        }
+        },
     }
 
 

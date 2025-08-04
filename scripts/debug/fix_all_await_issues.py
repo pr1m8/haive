@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Fix all await outside function issues in documentation."""
 
+from __future__ import annotations
+
 from pathlib import Path
 
 FIXES = [

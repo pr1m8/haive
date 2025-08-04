@@ -3,10 +3,10 @@
 
 import hashlib
 import json
+from pathlib import Path
 import subprocess
 import sys
 import time
-from pathlib import Path
 
 from rich.console import Console
 from rich.layout import Layout
@@ -83,7 +83,7 @@ class DocsCache:
             try:
                 with open(self.cache_file) as f:
                     return json.load(f)
-            except:
+            except BaseException:
                 return {}
         return {}
 
@@ -115,7 +115,9 @@ class DocsCache:
 
         return False
 
-    def get_changed_files(self, directory: Path, pattern: str = "*.py") -> list[Path]:
+    def get_changed_files(self,
+                          directory: Path,
+                          pattern: str = "*.py") -> list[Path]:
         """Get list of changed files."""
         changed = []
         for filepath in directory.rglob(pattern):
@@ -172,7 +174,8 @@ class RichDocsBuilder:
         table.add_column("Metric", style="cyan")
         table.add_column("Value", style="green")
 
-        elapsed = time.time() - self.stats.start_time if self.stats.start_time else 0
+        elapsed = time.time(
+        ) - self.stats.start_time if self.stats.start_time else 0
 
         table.add_row("⏱️  Elapsed Time", f"{elapsed:.1f}s")
         table.add_row("📄 HTML Files", str(self.stats.html_files))
@@ -189,7 +192,9 @@ class RichDocsBuilder:
 
     def update_progress_panel(self) -> Panel:
         """Create progress panel."""
-        return Panel(self.progress, title="🚀 Build Progress", border_style="green")
+        return Panel(self.progress,
+                     title="🚀 Build Progress",
+                     border_style="green")
 
     def update_footer_panel(self) -> Panel:
         """Create footer panel with recent activity."""
@@ -204,14 +209,14 @@ class RichDocsBuilder:
         # Add recent warnings
         if self.stats.warnings:
             warnings_branch = tree.add(
-                f"⚠️  Recent Warnings ({len(self.stats.warnings)})"
-            )
+                f"⚠️  Recent Warnings ({len(self.stats.warnings)})", )
             for warning in self.stats.warnings[-5:]:  # Last 5 warnings
                 warnings_branch.add(Text(warning[:80] + "...", style="yellow"))
 
         # Add recent errors
         if self.stats.errors:
-            errors_branch = tree.add(f"❌ Recent Errors ({len(self.stats.errors)})")
+            errors_branch = tree.add(
+                f"❌ Recent Errors ({len(self.stats.errors)})")
             for error in self.stats.errors[-5:]:  # Last 5 errors
                 errors_branch.add(Text(error[:80] + "...", style="red"))
 
@@ -221,7 +226,8 @@ class RichDocsBuilder:
         """Count source files by type."""
         counts = {"python": 0, "rst": 0, "md": 0, "total": 0}
 
-        for pattern, key in [("*.py", "python"), ("*.rst", "rst"), ("*.md", "md")]:
+        for pattern, key in [("*.py", "python"), ("*.rst", "rst"),
+                             ("*.md", "md")]:
             for _ in self.source_dir.rglob(pattern):
                 counts[key] += 1
                 counts["total"] += 1
@@ -282,18 +288,23 @@ class RichDocsBuilder:
                     # Parse progress
                     if "reading sources..." in line:
                         self.progress.update(
-                            task_id, description="📖 Reading sources..."
+                            task_id,
+                            description="📖 Reading sources...",
                         )
                     elif "building [html]:" in line:
-                        self.progress.update(task_id, description="🔨 Building HTML...")
+                        self.progress.update(task_id,
+                                             description="🔨 Building HTML...")
                     elif "writing output..." in line:
                         self.progress.update(
-                            task_id, description="✍️  Writing output..."
+                            task_id,
+                            description="✍️  Writing output...",
                         )
                     elif "copying" in line:
-                        self.progress.update(task_id, description="📋 Copying files...")
+                        self.progress.update(task_id,
+                                             description="📋 Copying files...")
                     elif "dumping" in line:
-                        self.progress.update(task_id, description="💾 Dumping data...")
+                        self.progress.update(task_id,
+                                             description="💾 Dumping data...")
 
                     # Track warnings/errors
                     if "WARNING" in line:
@@ -332,10 +343,12 @@ class RichDocsBuilder:
             with self.progress:
                 # Phase 1: Analyze changes
                 task1 = self.progress.add_task(
-                    "🔍 Analyzing changes...", total=source_counts["total"]
+                    "🔍 Analyzing changes...",
+                    total=source_counts["total"],
                 )
 
-                self.stats.build_phases["analyze"] = time.time() - self.stats.start_time
+                self.stats.build_phases["analyze"] = time.time(
+                ) - self.stats.start_time
 
                 changed_files = []
                 for ext in ["*.py", "*.rst", "*.md"]:
@@ -349,7 +362,8 @@ class RichDocsBuilder:
 
                 # Phase 2: Build documentation
                 task2 = self.progress.add_task(
-                    "🏗️  Building documentation...", total=100
+                    "🏗️  Building documentation...",
+                    total=100,
                 )
 
                 build_start = time.time()
@@ -357,11 +371,13 @@ class RichDocsBuilder:
                 self.stats.build_phases["sphinx"] = time.time() - build_start
 
                 # Phase 3: Analyze output
-                task3 = self.progress.add_task("📊 Analyzing output...", total=100)
+                task3 = self.progress.add_task("📊 Analyzing output...",
+                                               total=100)
 
                 analyze_start = time.time()
                 self.analyze_build_output(self.build_dir / "html")
-                self.stats.build_phases["analyze_output"] = time.time() - analyze_start
+                self.stats.build_phases["analyze_output"] = time.time(
+                ) - analyze_start
                 self.progress.update(task3, completed=100)
 
                 # Update final stats
@@ -375,8 +391,7 @@ class RichDocsBuilder:
         console.print("\n" + "=" * 80)
         if success:
             console.print(
-                "✅ [bold green]Documentation build completed successfully![/bold green]"
-            )
+                "✅ [bold green]Documentation build completed successfully![/bold green]", )
         else:
             console.print("❌ [bold red]Documentation build failed![/bold red]")
 
@@ -385,17 +400,18 @@ class RichDocsBuilder:
         console.print(f"   • HTML pages: {self.stats.html_files}")
         console.print(f"   • Total files: {self.stats.total_files}")
         console.print(
-            f"   • Cache efficiency: {self.stats.cache_hits}/{self.stats.cache_hits + self.stats.cache_misses} hits"
-        )
+            f"   • Cache efficiency: {
+                self.stats.cache_hits}/{
+                self.stats.cache_hits + self.stats.cache_misses} hits", )
         console.print(f"   • Warnings: {len(self.stats.warnings)}")
         console.print(f"   • Errors: {len(self.stats.errors)}")
 
         if success:
             console.print(
-                f"\n🌐 View docs at: file://{self.build_dir / 'html' / 'index.html'}"
+                f"\n🌐 View docs at: file://{self.build_dir / 'html' / 'index.html'}",
             )
             console.print(
-                f"   Or run: python -m http.server 8003 --directory {self.build_dir / 'html'}"
+                f"   Or run: python -m http.server 8003 --directory {self.build_dir / 'html'}",
             )
 
         return success

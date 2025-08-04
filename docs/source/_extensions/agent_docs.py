@@ -1,4 +1,9 @@
-"""Sphinx extension for automatic agent documentation with examples and visualization."""
+"""Sphinx extension for automatic agent documentation with examples and.
+
+visualization.
+"""
+
+from __future__ import annotations
 
 from typing import Any
 
@@ -12,8 +17,10 @@ logger = logging.getLogger(__name__)
 # Agent metadata registry
 AGENT_METADATA = {
     "SimpleAgent": {
-        "category": "simple",
-        "description": "Basic conversational agent for straightforward interactions",
+        "category":
+        "simple",
+        "description":
+        "Basic conversational agent for straightforward interactions",
         "example_config": {
             "engine": "AugLLMConfig",
             "params": {
@@ -21,7 +28,8 @@ AGENT_METADATA = {
                 "system_message": "You are a helpful assistant.",
             },
         },
-        "example_usage": """
+        "example_usage":
+        """
 # Single turn conversation
 response = await agent.arun("What's the capital of France?")
 
@@ -44,13 +52,19 @@ response = await agent.arun("What's my name?", config=config)
         ],
     },
     "ReactAgent": {
-        "category": "react",
-        "description": "Reasoning and acting agent with tool use capabilities",
+        "category":
+        "react",
+        "description":
+        "Reasoning and acting agent with tool use capabilities",
         "example_config": {
             "tools": ["SearchTool()", "CalculatorTool()"],
-            "params": {"max_iterations": 5, "verbose": True},
+            "params": {
+                "max_iterations": 5,
+                "verbose": True
+            },
         },
-        "example_usage": """
+        "example_usage":
+        """
 # Research with reasoning
 result = await agent.arun(
     "Find the population density of Tokyo and compare to NYC"
@@ -74,17 +88,22 @@ trace = agent.get_reasoning_trace()
         ],
     },
     "BaseRAGAgent": {
-        "category": "rag",
-        "description": "Base retrieval-augmented generation agent",
+        "category":
+        "rag",
+        "description":
+        "Base retrieval-augmented generation agent",
         "example_config": {
             "retriever": "VectorRetriever",
             "params": {
                 "collection": "docs",
                 "top_k": 5,
-                "llm_config": {"temperature": 0.3},
+                "llm_config": {
+                    "temperature": 0.3
+                },
             },
         },
-        "example_usage": """
+        "example_usage":
+        """
 # Query with retrieval
 answer = await agent.arun("What are the main features?")
 
@@ -108,8 +127,10 @@ for doc in sources:
         ],
     },
     "DebateConversation": {
-        "category": "conversation",
-        "description": "Structured debate with multiple participants",
+        "category":
+        "conversation",
+        "description":
+        "Structured debate with multiple participants",
         "example_config": {
             "factory_method": "create_simple_debate",
             "params": {
@@ -120,7 +141,8 @@ for doc in sources:
                 "arguments_per_side": 3,
             },
         },
-        "example_usage": """
+        "example_usage":
+        """
 # Run debate
 result = await debate.arun()
 
@@ -144,13 +166,19 @@ print(f"Key arguments: {summary['key_points']}")
         ],
     },
     "AdaptiveRAGAgent": {
-        "category": "rag",
-        "description": "RAG agent that adapts retrieval strategy based on query",
+        "category":
+        "rag",
+        "description":
+        "RAG agent that adapts retrieval strategy based on query",
         "example_config": {
             "strategies": ["simple", "multi_query", "hyde", "fusion"],
-            "params": {"strategy_selector": "auto", "fallback_strategy": "simple"},
+            "params": {
+                "strategy_selector": "auto",
+                "fallback_strategy": "simple"
+            },
         },
-        "example_usage": """
+        "example_usage":
+        """
 # Complex query with adaptive strategy
 result = await agent.arun(
     "Compare pricing tiers focusing on enterprise features"
@@ -224,13 +252,15 @@ class AgentDocDirective(SphinxDirective):
 
         # Add example if requested
         if self.options.get("show-example", True):
-            example_section = self._create_example_section(agent_name, metadata)
+            example_section = self._create_example_section(
+                agent_name, metadata)
             if example_section:
                 content.append(example_section)
 
         # Add visualization info
         if self.options.get("show-visualization", True):
-            viz_section = self._create_visualization_section(agent_name, metadata)
+            viz_section = self._create_visualization_section(
+                agent_name, metadata)
             if viz_section:
                 content.append(viz_section)
 
@@ -257,11 +287,16 @@ class AgentDocDirective(SphinxDirective):
         return {
             "category": category,
             "description": f"{agent_name} - AI agent implementation",
-            "visualization": {"supports_graph": True, "graph_type": "simple"},
+            "visualization": {
+                "supports_graph": True,
+                "graph_type": "simple"
+            },
         }
 
     def _create_example_section(
-        self, agent_name: str, metadata: dict[str, Any]
+        self,
+        agent_name: str,
+        metadata: dict[str, Any],
     ) -> nodes.section | None:
         """Create example usage section."""
         section = nodes.section()
@@ -274,7 +309,8 @@ class AgentDocDirective(SphinxDirective):
             section += config_title
 
             config_code = self._format_config_example(
-                agent_name, metadata["example_config"]
+                agent_name,
+                metadata["example_config"],
             )
             literal = nodes.literal_block(config_code, config_code)
             literal["language"] = "python"
@@ -287,7 +323,8 @@ class AgentDocDirective(SphinxDirective):
             section += usage_title
 
             literal = nodes.literal_block(
-                metadata["example_usage"], metadata["example_usage"]
+                metadata["example_usage"],
+                metadata["example_usage"],
             )
             literal["language"] = "python"
             section += literal
@@ -295,7 +332,9 @@ class AgentDocDirective(SphinxDirective):
         return section if len(section) > 1 else None
 
     def _create_visualization_section(
-        self, agent_name: str, metadata: dict[str, Any]
+        self,
+        agent_name: str,
+        metadata: dict[str, Any],
     ) -> nodes.section | None:
         """Create visualization section."""
         viz_info = metadata.get("visualization", {})
@@ -308,8 +347,9 @@ class AgentDocDirective(SphinxDirective):
         # Graph type info
         para = nodes.paragraph()
         para += nodes.Text(
-            f"This agent supports graph visualization (type: {viz_info.get('graph_type', 'simple')})"
-        )
+            f"This agent supports graph visualization (type: {
+                viz_info.get(
+                    'graph_type', 'simple')})", )
         section += para
 
         # Visualization code
@@ -327,7 +367,9 @@ agent.visualize_graph("{agent_name.lower()}_graph.html", format="html")
         return section
 
     def _create_config_section(
-        self, agent_name: str, metadata: dict[str, Any]
+        self,
+        agent_name: str,
+        metadata: dict[str, Any],
     ) -> nodes.section | None:
         """Create configuration details section."""
         section = nodes.section()
@@ -342,7 +384,8 @@ agent.visualize_graph("{agent_name.lower()}_graph.html", format="html")
 
         return section if len(section) > 1 else None
 
-    def _format_config_example(self, agent_name: str, config: dict[str, Any]) -> str:
+    def _format_config_example(self, agent_name: str,
+                               config: dict[str, Any]) -> str:
         """Format configuration example."""
         lines = [f"from haive.agents import {agent_name}"]
 
@@ -404,7 +447,9 @@ class AgentGalleryDirective(SphinxDirective):
         return content
 
     def _create_agent_card(
-        self, agent_name: str, metadata: dict[str, Any]
+        self,
+        agent_name: str,
+        metadata: dict[str, Any],
     ) -> nodes.container:
         """Create a card for an agent."""
         card = nodes.container()

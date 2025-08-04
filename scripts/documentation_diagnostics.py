@@ -5,14 +5,18 @@ Date: August 1, 2025
 Purpose: Comprehensive analysis of Sphinx documentation build issues
 """
 
-import importlib
+from __future__ import annotations
+
+from datetime import datetime
 import json
 import logging
+from pathlib import Path
 import subprocess
 import sys
-from datetime import datetime
-from pathlib import Path
-from typing import Dict, List, Set, Tuple
+
+from conf_modules.import_diagnostics import (
+    get_autodoc_mock_imports_from_diagnosis,
+)
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -24,11 +28,6 @@ sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PROJECT_ROOT / "docs" / "source"))
 
 # Import the diagnostics module
-from conf_modules.import_diagnostics import (
-    diagnose_imports,
-    find_all_python_modules,
-    get_autodoc_mock_imports_from_diagnosis,
-)
 
 
 def analyze_import_issues():
@@ -56,7 +55,8 @@ def analyze_import_issues():
 
     # Run import diagnostics
     mock_imports = get_autodoc_mock_imports_from_diagnosis(
-        autoapi_dirs, str(source_dir)
+        autoapi_dirs,
+        str(source_dir),
     )
 
     return mock_imports
@@ -81,7 +81,9 @@ def run_sphinx_diagnostic_build():
         str(build_dir),
     ]
 
-    result = subprocess.run(cmd, capture_output=True, text=True, cwd=PROJECT_ROOT)
+    result = subprocess.run(
+        cmd, capture_output=True, text=True, cwd=PROJECT_ROOT, check=False
+    )
 
     return {
         "stdout": result.stdout,

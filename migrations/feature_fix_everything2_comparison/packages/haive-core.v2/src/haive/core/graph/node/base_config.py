@@ -22,13 +22,13 @@ from pydantic import BaseModel, Field
 from haive.core.graph.node.types import CommandGoto, NodeType
 from haive.core.schema.field_definition import FieldDefinition
 
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.WARNING)
 
 
 class NodeConfig(ABC, BaseModel):
-    """Base configuration for a node in a graph with input/output schema support.
+    """Base configuration for a node in a graph with input/output schema
+    support.
 
     This base class supports the LangGraph multiple schemas pattern where nodes
     can declare their input and output schemas as subsets of the overall state.
@@ -51,46 +51,56 @@ class NodeConfig(ABC, BaseModel):
 
     # Schema definitions (LangGraph multiple schemas pattern)
     input_schema: type[BaseModel] | None = Field(
-        default=None, description="Input schema for this node (subset of state)"
+        default=None,
+        description="Input schema for this node (subset of state)",
     )
     output_schema: type[BaseModel] | None = Field(
-        default=None, description="Output schema for this node (subset of state)"
+        default=None,
+        description="Output schema for this node (subset of state)",
     )
 
     # Field registry integration
     input_field_defs: list[FieldDefinition] = Field(
-        default_factory=list, description="Input field definitions for this node"
+        default_factory=list,
+        description="Input field definitions for this node",
     )
     output_field_defs: list[FieldDefinition] = Field(
-        default_factory=list, description="Output field definitions for this node"
+        default_factory=list,
+        description="Output field definitions for this node",
     )
 
     # Engine attribution
     auto_add_engine_attribution: bool = Field(
-        default=True, description="Automatically add engine_name/engine_id to outputs"
+        default=True,
+        description="Automatically add engine_name/engine_id to outputs",
     )
     engine_name: str | None = Field(
-        default=None, description="Engine name for attribution"
+        default=None,
+        description="Engine name for attribution",
     )
 
     # Control flow
     command_goto: CommandGoto | None = Field(
-        default=END, description="Next node to go to after this node (or END)"
+        default=END,
+        description="Next node to go to after this node (or END)",
     )
 
     # Runtime configuration
     config_overrides: dict[str, Any] = Field(
-        default_factory=dict, description="Configuration overrides for this node"
+        default_factory=dict,
+        description="Configuration overrides for this node",
     )
 
     # Config schema for runtime parameters
     config_schema: type[BaseModel] | None = Field(
-        default=None, description="Schema for runtime configuration parameters"
+        default=None,
+        description="Schema for runtime configuration parameters",
     )
 
     # Metadata
     metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional metadata for this node"
+        default_factory=dict,
+        description="Additional metadata for this node",
     )
 
     model_config = {"arbitrary_types_allowed": True}
@@ -101,19 +111,24 @@ class NodeConfig(ABC, BaseModel):
         self._setup_schemas_from_field_defs()
 
     def _setup_schemas_from_field_defs(self):
-        """Setup input/output schemas from field definitions if not provided."""
+        """Setup input/output schemas from field definitions if not
+        provided."""
         if not self.input_schema and self.input_field_defs:
             self.input_schema = self._create_schema_from_fields(
-                self.input_field_defs, f"{self.name}Input"
+                self.input_field_defs,
+                f"{self.name}Input",
             )
 
         if not self.output_schema and self.output_field_defs:
             self.output_schema = self._create_schema_from_fields(
-                self.output_field_defs, f"{self.name}Output"
+                self.output_field_defs,
+                f"{self.name}Output",
             )
 
     def _create_schema_from_fields(
-        self, field_defs: list[FieldDefinition], schema_name: str
+        self,
+        field_defs: list[FieldDefinition],
+        schema_name: str,
     ) -> type[BaseModel]:
         """Create a Pydantic schema from field definitions."""
         from pydantic import create_model
@@ -128,13 +143,20 @@ class NodeConfig(ABC, BaseModel):
     def get_input_fields_for_state(self) -> dict[str, Any]:
         """Get input fields that should be included in overall state schema."""
         if self.input_field_defs:
-            return {fd.name: fd.to_field_info() for fd in self.input_field_defs}
+            return {
+                fd.name: fd.to_field_info()
+                for fd in self.input_field_defs
+            }
         return {}
 
     def get_output_fields_for_state(self) -> dict[str, Any]:
-        """Get output fields that should be included in overall state schema."""
+        """Get output fields that should be included in overall state
+        schema."""
         if self.output_field_defs:
-            return {fd.name: fd.to_field_info() for fd in self.output_field_defs}
+            return {
+                fd.name: fd.to_field_info()
+                for fd in self.output_field_defs
+            }
         return {}
 
     def extract_input_from_state(self, state: Any) -> dict[str, Any]:
@@ -165,7 +187,8 @@ class NodeConfig(ABC, BaseModel):
                         output_dict[field_name] = result[field_name]
             else:
                 # Try to map single result to first output field
-                output_field_names = list(self.output_schema.model_fields.keys())
+                output_field_names = list(
+                    self.output_schema.model_fields.keys())
                 if output_field_names:
                     output_dict[output_field_names[0]] = result
         elif isinstance(result, dict):
@@ -189,9 +212,10 @@ class NodeConfig(ABC, BaseModel):
 
     @abstractmethod
     def __call__(
-        self, state: dict[str, Any], config: dict[str, Any] | None = None
+        self,
+        state: dict[str, Any],
+        config: dict[str, Any] | None = None,
     ) -> Any:
         """Base implementation - subclasses should override this."""
         raise NotImplementedError(
-            f"Node type {self.node_type} does not implement __call__"
-        )
+            f"Node type {self.node_type} does not implement __call__", )

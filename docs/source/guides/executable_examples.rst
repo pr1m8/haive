@@ -25,7 +25,7 @@ Here's a simple example that runs live:
    # Import Haive components
    from haive.agents.simple import SimpleAgent
    from haive.core.engine.aug_llm import AugLLMConfig
-   
+
    # Create configuration
    config = AugLLMConfig(
 
@@ -33,7 +33,7 @@ Here's a simple example that runs live:
        max_tokens=100
 
    )
-   
+
    # Create agent
    agent = SimpleAgent(
 
@@ -41,7 +41,7 @@ Here's a simple example that runs live:
        engine=config
 
    )
-   
+
    print(f"Agent created: {agent.name}")
    print(f"Agent type: {type(agent).__name__}")
 
@@ -69,10 +69,10 @@ Here's a simple example that runs live:
 .. code-block:: python
 
    import numpy as np
-   
+
    # Create sample data
    data = np.random.randn(100)
-   
+
    print(f"Mean: {np.mean(data):.4f}")
    print(f"Std Dev: {np.std(data):.4f}")
    print(f"Min: {np.min(data):.4f}")

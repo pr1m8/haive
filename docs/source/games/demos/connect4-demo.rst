@@ -181,7 +181,7 @@ Drop discs to connect four in a row
        └─┴─┴─┴─┴─┴─┴─┘
        1 2 3 4 5 6 7
 
-   
+
    Turn: Red | Moves: 9
 
 .. raw:: html

@@ -194,7 +194,7 @@ Classic chess with AI agents of varying skill levels
        ♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙
        ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖
 
-   
+
    Turn: White | Move: 1
    Status: Game in progress
 

@@ -1,8 +1,10 @@
 """Example of using TokenTrackingAgent for cost-aware agent development.
 
-This example demonstrates how to use the TokenTrackingAgent base class to
-automatically track token usage and costs for LLM-based agents.
+This example demonstrates how to use the TokenTrackingAgent base class
+to automatically track token usage and costs for LLM-based agents.
 """
+
+from __future__ import annotations
 
 from haive.agents.base import TokenTrackingAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
@@ -64,8 +66,12 @@ def main():
 
     # First message
     result1 = agent.invoke(
-        {"messages": [{"role": "user", "content": "What is quantum computing?"}]}
-    )
+        {
+            "messages": [{
+                "role": "user",
+                "content": "What is quantum computing?"
+            }]
+        }, )
 
     # Get token usage after first interaction
     agent.get_token_usage_summary()
@@ -74,12 +80,20 @@ def main():
     agent.invoke(
         {
             "messages": [
-                {"role": "user", "content": "What is quantum computing?"},
-                {"role": "assistant", "content": result1["messages"][-1].content},
-                {"role": "user", "content": "Can you explain superposition?"},
-            ]
-        }
-    )
+                {
+                    "role": "user",
+                    "content": "What is quantum computing?"
+                },
+                {
+                    "role": "assistant",
+                    "content": result1["messages"][-1].content
+                },
+                {
+                    "role": "user",
+                    "content": "Can you explain superposition?"
+                },
+            ],
+        }, )
 
     # Get cumulative token usage
     agent.get_token_usage_summary()

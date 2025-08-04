@@ -1,16 +1,18 @@
 """Demo of enhanced tool management with validation routing."""
+from __future__ import annotations
 
-from typing import Any, Dict, List
+from typing import Any
+from typing import Dict
+from typing import List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
+from tests.enhanced_tool_management.test_validation_state_standalone import RouteRecommendation
+from tests.enhanced_tool_management.test_validation_state_standalone import ToolValidationResult
+from tests.enhanced_tool_management.test_validation_state_standalone import ValidationRoutingState
+from tests.enhanced_tool_management.test_validation_state_standalone import ValidationStatus
 # Simulated imports (these would be the real imports in practice)
-from tests.enhanced_tool_management.test_validation_state_standalone import (
-    RouteRecommendation,
-    ToolValidationResult,
-    ValidationRoutingState,
-    ValidationStatus,
-)
 
 
 class SearchTool(BaseModel):
@@ -88,7 +90,7 @@ def demonstrate_routing_decisions(routing_state: ValidationRoutingState):
     # Get routing decision data
     decision_data = routing_state.get_routing_decision()
 
-    print("📊 Validation Summary:"y:")
+    print("📊 Validation Summary:"y: ")
     print(f"   • Total tools: {decision_data['total_count']}")
     print(f"   • Valid: {decision_data['valid_count']}")
     print(f"   • Invalid: {decision_data['invalid_count']}")

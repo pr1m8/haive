@@ -118,14 +118,14 @@ Creates and executes strategic plans
        Generated Plan:
        Goal: Launch new product
 
-   
+
    Steps:
    1. Market research (2 weeks)
    2. Design phase (3 weeks)
    3. Development (6 weeks)
    4. Testing (2 weeks)
    5. Launch prep (1 week)
-   
+
    Total Duration: 14 weeks
    Resources: 5 team members
 

@@ -5,10 +5,12 @@ This module provides utilities to automatically detect agent types, analyze inhe
 patterns, and extract metadata from agent implementations across the Haive ecosystem.
 """
 
+from __future__ import annotations
+
 import ast
-import logging
 from dataclasses import dataclass
 from enum import Enum
+import logging
 from pathlib import Path
 from typing import Any
 
@@ -482,7 +484,8 @@ class AgentAnalyzer:
         return None
 
     def get_agents_by_architecture(
-        self, architecture: AgentArchitecture
+        self,
+        architecture: AgentArchitecture,
     ) -> list[AgentInfo]:
         """Get all agents using a specific architecture.
 
@@ -559,7 +562,9 @@ class AgentAnalyzer:
         inheritance = self.analyze_inheritance_patterns()
         report.append("## Top Base Classes")
         sorted_bases = sorted(
-            inheritance.items(), key=lambda x: len(x[1]), reverse=True
+            inheritance.items(),
+            key=lambda x: len(x[1]),
+            reverse=True,
         )
         for base_class, derived in sorted_bases[:10]:
             report.append(f"- {base_class}: {len(derived)} agents")

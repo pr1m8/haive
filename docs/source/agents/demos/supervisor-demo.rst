@@ -117,11 +117,11 @@ Supervises and coordinates agent teams
 
        Team Status Report:
 
-   
+
    Active Agents: 5/5
    Current Tasks: 3
    Completed Today: 12
-   
+
    Performance Metrics:
    - Avg Response Time: 0.8s
    - Success Rate: 96%

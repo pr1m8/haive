@@ -10,31 +10,17 @@ Functions:
     create_default_engine: Create Default Engine functionality.
     setup_agent: Setup Agent functionality.
 """
-
 # src/haive/agents/simple/enhanced_simple_agent.py
-
 """Enhanced SimpleAgent with engine-focused generics.
 
 This implements SimpleAgent using the enhanced agent pattern with engine generics.
 SimpleAgent becomes essentially Agent[AugLLMConfig] as requested.
 """
+from __future__ import annotations
 
 import logging
-from typing import Any, Literal
-
-from langchain_core.messages import AIMessage
-from langgraph.graph import END, START
-from pydantic import Field, model_validator
-
-from haive.agents.base.enhanced_agent import Agent
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.node.tool_node_config_v2 import ToolNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
 
 logger = logging.getLogger(__name__)
-
 
 # ========================================================================
 # ENHANCED SIMPLE AGENT - Clean Agent[AugLLMConfig] implementation
@@ -90,26 +76,33 @@ class EnhancedSimpleAgent(Agent[AugLLMConfig]):
 
     # These sync to the AugLLMConfig engine
     temperature: float | None = Field(
-        default=None, ge=0.0, le=2.0, description="LLM temperature (0.0-2.0)"
+        default=None,
+        ge=0.0,
+        le=2.0,
+        description='LLM temperature (0.0-2.0)',
     )
 
     max_tokens: int | None = Field(
-        default=None, ge=1, description="Maximum tokens for LLM responses"
+        default=None,
+        ge=1,
+        description='Maximum tokens for LLM responses',
     )
 
     system_message: str | None = Field(
-        default=None, description="System message for the LLM"
+        default=None,
+        description='System message for the LLM',
     )
 
     tools: list[Any] = Field(
-        default_factory=list, description="Tools available to the agent"
+        default_factory=list,
+        description='Tools available to the agent',
     )
 
     # ========================================================================
     # ENGINE SETUP - ENHANCED PATTERN
     # ========================================================================
 
-    @model_validator(mode="before")
+    @model_validator(mode='before')
     @classmethod
     def create_default_engine(cls, values: dict[str, Any]) -> dict[str, Any]:
         """Create AugLLMConfig engine if not provided."""
@@ -117,24 +110,25 @@ class EnhancedSimpleAgent(Agent[AugLLMConfig]):
             return values
 
         # If no engine provided, create AugLLMConfig
-        if "engine" not in values or values["engine"] is None:
+        if 'engine' not in values or values['engine'] is None:
             # Extract config from convenience fields
             config_kwargs = {}
 
-            if "temperature" in values and values["temperature"] is not None:
-                config_kwargs["temperature"] = values["temperature"]
+            if 'temperature' in values and values['temperature'] is not None:
+                config_kwargs['temperature'] = values['temperature']
 
-            if "max_tokens" in values and values["max_tokens"] is not None:
-                config_kwargs["max_tokens"] = values["max_tokens"]
+            if 'max_tokens' in values and values['max_tokens'] is not None:
+                config_kwargs['max_tokens'] = values['max_tokens']
 
-            if "system_message" in values and values["system_message"] is not None:
-                config_kwargs["system_message"] = values["system_message"]
+            if 'system_message' in values and values[
+                    'system_message'] is not None:
+                config_kwargs['system_message'] = values['system_message']
 
-            if values.get("tools"):
-                config_kwargs["tools"] = values["tools"]
+            if values.get('tools'):
+                config_kwargs['tools'] = values['tools']
 
             # Create the engine
-            values["engine"] = AugLLMConfig(**config_kwargs)
+            values['engine'] = AugLLMConfig(**config_kwargs)
 
         return values
 
@@ -167,8 +161,7 @@ class EnhancedSimpleAgent(Agent[AugLLMConfig]):
         if self.verbose:
             logger.info(
                 f"EnhancedSimpleAgent setup complete: {self.name} "
-                f"(temp={self.temperature}, tools={len(self.tools)})"
-            )
+                f"(temp={self.temperature}, tools={len(self.tools)})", )
 
     # ========================================================================
     # GRAPH BUILDING - MINIMAL IMPLEMENTATION
@@ -179,33 +172,38 @@ class EnhancedSimpleAgent(Agent[AugLLMConfig]):
         graph = BaseGraph(name=self.name)
 
         # Add engine node (the heart of SimpleAgent)
-        engine_node = EngineNodeConfig(name="agent_node", engine=self.engine)
-        graph.add_node("agent_node", engine_node)
-        graph.add_edge(START, "agent_node")
+        engine_node = EngineNodeConfig(name='agent_node', engine=self.engine)
+        graph.add_node('agent_node', engine_node)
+        graph.add_edge(START, 'agent_node')
 
         # Add tool node if we have tools
         if self.tools:
-            tool_node = ToolNodeConfig(name="tool_node", tools=self.tools)
-            graph.add_node("tool_node", tool_node)
+            tool_node = ToolNodeConfig(name='tool_node', tools=self.tools)
+            graph.add_node('tool_node', tool_node)
 
             # Conditional routing based on tool calls
-            def has_tool_calls(state: dict[str, Any]) -> Literal["tools", "end"]:
-                messages = state.get("messages", [])
+            def has_tool_calls(state: dict[str, Any]) -> Literal[tools, end]:
+                messages = state.get('messages', [])
                 if messages:
                     last_msg = messages[-1]
                     if isinstance(last_msg, AIMessage) and last_msg.tool_calls:
-                        return "tools"
-                return "end"
+                        return 'tools'
+                return 'end'
 
             graph.add_conditional_edges(
-                "agent_node", has_tool_calls, {"tools": "tool_node", "end": END}
+                'agent_node',
+                has_tool_calls,
+                {
+                    'tools': 'tool_node',
+                    'end': END
+                },
             )
 
             # Tools always return to end
-            graph.add_edge("tool_node", END)
+            graph.add_edge('tool_node', END)
         else:
             # No tools - straight to end
-            graph.add_edge("agent_node", END)
+            graph.add_edge('agent_node', END)
 
         return graph
 
@@ -225,7 +223,7 @@ class EnhancedSimpleAgent(Agent[AugLLMConfig]):
             ValueError: If engine is not set.
         """
         if not self.engine:
-            raise ValueError("Engine not initialized")
+            raise ValueError('Engine not initialized')
         return self.engine
 
     def update_temperature(self, temperature: float) -> None:
@@ -270,7 +268,7 @@ class EnhancedSimpleAgent(Agent[AugLLMConfig]):
 
 
 def create_simple_agent(
-    name: str = "simple_agent",
+    name: str = 'simple_agent',
     temperature: float = 0.7,
     max_tokens: int | None = None,
     system_message: str | None = None,

@@ -17,7 +17,6 @@ from langgraph.graph import END
 from haive.agents.simple import SimpleAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
-
 # ========================================================================
 # REACT AGENT
 # ============================================================================

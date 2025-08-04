@@ -418,5 +418,5 @@ For detailed API documentation, see the [API Reference](../../../../docs/source/
 - [Base Conversation Agent](../base/README.md) - Core conversation infrastructure
 - [Directed Conversation](../directed/README.md) - Moderated discussion alternative
 - [Round Robin Conversation](../round_robin/README.md) - Equal participation format
-- [Collaborative Conversation](../collaberative/README.md) - Cooperative problem solving
+- [Collaborative Conversation](../collaborative/README.md) - Cooperative problem solving
 - [Social Media Conversation](../social_media/README.md) - Platform-style discussions

@@ -1,8 +1,8 @@
 """Graph RAG Retriever for Memory System.
 
-This module implements a Graph RAG retriever that combines knowledge graph traversal
-with vector similarity search to provide comprehensive memory retrieval with
-relationship context and semantic understanding.
+This module implements a Graph RAG retriever that combines knowledge
+graph traversal with vector similarity search to provide comprehensive
+memory retrieval with relationship context and semantic understanding.
 """
 
 import logging
@@ -31,8 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 class GraphRAGResult(BaseModel):
-    """Comprehensive result from Graph RAG retrieval combining knowledge graph and vector
-    search.
+    """Comprehensive result from Graph RAG retrieval combining knowledge graph
+    and vector search.
 
     This class encapsulates all information from a Graph RAG retrieval operation,
     including retrieved memories, graph traversal results, scoring information,
@@ -197,7 +197,8 @@ class GraphRAGResult(BaseModel):
 
 
 class GraphRAGRetrieverConfig(BaseModel):
-    """Configuration for Graph RAG retriever with comprehensive customization options.
+    """Configuration for Graph RAG retriever with comprehensive customization
+    options.
 
     This configuration class defines all parameters needed to create and configure
     a GraphRAGRetriever, including core components, graph traversal settings,
@@ -357,8 +358,8 @@ class GraphRAGRetrieverConfig(BaseModel):
 
 
 class GraphRAGRetriever:
-    """Advanced Graph RAG retriever that combines knowledge graph traversal with vector
-    similarity search.
+    """Advanced Graph RAG retriever that combines knowledge graph traversal
+    with vector similarity search.
 
     The GraphRAGRetriever enhances traditional vector-based memory retrieval by leveraging
     knowledge graph structure to discover relevant memories through entity relationships
@@ -535,8 +536,7 @@ class GraphRAGRetriever:
         self._setup_prompts()
 
     def _setup_prompts(self) -> None:
-        """Setup prompts for query analysis and expansion.
-        """
+        """Setup prompts for query analysis and expansion."""
         self.entity_identification_prompt = PromptTemplate(
             template="""You are an expert at identifying entities in user queries for knowledge graph retrieval.
 
@@ -754,8 +754,7 @@ Analyze the relationship path now:""",
             return result
 
     async def _identify_query_entities(self, query: str) -> dict[str, Any]:
-        """Identify entities mentioned in the query.
-        """
+        """Identify entities mentioned in the query."""
         # Get known entities from knowledge graph
         known_entities = [
             f"{node.name} ({node.type})"
@@ -805,8 +804,7 @@ Analyze the relationship path now:""",
     def _fallback_entity_identification(
         self, query: str, known_entities: list[str]
     ) -> dict[str, Any]:
-        """Fallback entity identification using simple matching.
-        """
+        """Fallback entity identification using simple matching."""
         query_lower = query.lower()
         direct_entities = []
 
@@ -830,8 +828,7 @@ Analyze the relationship path now:""",
                                                                 list[KnowledgeGraphNode],
                                                                 list[list[KnowledgeGraphRelationship]],
                                                                 ]:
-        """Perform graph traversal to find related entities.
-        """
+        """Perform graph traversal to find related entities."""
         kg = self.kg_generator.knowledge_graph
 
         # Find starting entity nodes
@@ -899,8 +896,7 @@ Analyze the relationship path now:""",
     async def _get_memories_from_graph_entities(
         self, entities: list[KnowledgeGraphNode], namespace: tuple[str, ...] | None
     ) -> list[dict[str, Any]]:
-        """Get memories associated with graph entities.
-        """
+        """Get memories associated with graph entities."""
         memories = []
 
         for entity in entities:
@@ -928,8 +924,7 @@ Analyze the relationship path now:""",
         vector_memories: list[dict[str, Any]],
         graph_memories: list[dict[str, Any]],
     ) -> list[dict[str, Any]]:
-        """Combine and deduplicate memories from vector and graph sources.
-        """
+        """Combine and deduplicate memories from vector and graph sources."""
         # Use memory ID for deduplication
         combined = {}
 
@@ -966,8 +961,8 @@ Analyze the relationship path now:""",
         graph_entities: list[KnowledgeGraphNode],
         relationship_paths: list[list[KnowledgeGraphRelationship]],
     ) -> tuple[list[dict[str, Any]], list[float], list[float], list[float]]:
-        """Score memories using combined vector similarity and graph centrality.
-        """
+        """Score memories using combined vector similarity and graph
+        centrality."""
         similarity_scores = []
         graph_scores = []
         final_scores = []
@@ -1023,8 +1018,7 @@ Analyze the relationship path now:""",
         entity_lookup: dict[str, KnowledgeGraphNode],
         relationship_paths: list[list[KnowledgeGraphRelationship]],
     ) -> float:
-        """Calculate graph centrality score for a memory.
-        """
+        """Calculate graph centrality score for a memory."""
         # Get entities associated with this memory
         memory_entities = set()
 
@@ -1082,8 +1076,7 @@ Analyze the relationship path now:""",
     def _build_expanded_query(
         self, original_query: str, expansion_terms: list[str]
     ) -> str:
-        """Build expanded query with additional terms.
-        """
+        """Build expanded query with additional terms."""
         if not expansion_terms or not self.config.enable_query_expansion:
             return original_query
 
@@ -1094,8 +1087,7 @@ Analyze the relationship path now:""",
         return expanded
 
     def _parse_json_response(self, response: str) -> dict[str, Any] | None:
-        """Parse JSON response from LLM.
-        """
+        """Parse JSON response from LLM."""
         try:
             import json
 
@@ -1110,8 +1102,8 @@ Analyze the relationship path now:""",
         return None
 
     async def get_entity_context(self, entity_name: str) -> dict[str, Any]:
-        """Get comprehensive context information for a specific entity in the knowledge
-        graph.
+        """Get comprehensive context information for a specific entity in the
+        knowledge graph.
 
         This method provides detailed information about an entity including its neighborhood,
         associated memories, and connection statistics. It's useful for understanding the

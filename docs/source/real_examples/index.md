@@ -8,7 +8,7 @@ These are actual outputs from agents, games, and conversations - not mock data.
 ### conversation_README
 
 - **Type**: conversation
-- **Path**: `packages/haive-agents/src/haive/agents/conversation/collaberative/README.md`
+- **Path**: `packages/haive-agents/src/haive/agents/conversation/collaborative/README.md`
 - **Agent Type**: conversation
 - **Word Count**: 1385
 - **Sections**: Collaborative Conversation, Overview, Architecture...

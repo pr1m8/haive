@@ -6,6 +6,8 @@ Classes:
     FilteredRAGConfig: FilteredRAGConfig implementation.
 """
 
+from __future__ import annotations
+
 from pydantic import Field
 
 from haive.agents.rag.base.config import BaseRAGConfig
@@ -23,19 +25,23 @@ class FilteredRAGConfig(BaseRAGConfig):
 
     # State schema
     state_schema: type = Field(
-        default=FilteredRAGState, description="State schema for filtered RAG"
+        default=FilteredRAGState,
+        description="State schema for filtered RAG",
     )
 
     # Document filtering
     document_filter_config: AugLLMConfig | None = Field(
-        default=None, description="Configuration for document relevance evaluation"
+        default=None,
+        description="Configuration for document relevance evaluation",
     )
 
     relevance_threshold: float = Field(
-        default=0.7, description="Threshold for document relevance (0.0 to 1.0)"
+        default=0.7,
+        description="Threshold for document relevance (0.0 to 1.0)",
     )
 
     # Optional answer generator
     answer_generator_config: AugLLMConfig | None = Field(
-        default=None, description="Configuration for answer generation"
+        default=None,
+        description="Configuration for answer generation",
     )

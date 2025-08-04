@@ -475,7 +475,7 @@ Quick Setup
    """Execute complete DevOps workflow."""
    tools = [
    self.check_database_health,
-   self.analyze_project_files, 
+   self.analyze_project_files,
    self.check_github_status,
    self.run_container_tests
    ]

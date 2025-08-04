@@ -1,18 +1,17 @@
 """Extensions module for modular Sphinx configuration.
 
-This module organizes all Sphinx extensions into logical groups and provides
-debugging/logging capabilities to test each part procedurally.
+This module organizes all Sphinx extensions into logical groups and
+provides debugging/logging capabilities to test each part procedurally.
 """
 
 import logging
-from typing import Any, Dict, List
+from typing import Any
 
 # Try to use rich for better UI, fall back to basic logging if not available
 try:
     from rich.console import Console
     from rich.logging import RichHandler
     from rich.panel import Panel
-    from rich.progress import Progress, SpinnerColumn, TextColumn
     from rich.table import Table
 
     # Set up rich console and logging
@@ -33,7 +32,7 @@ except ImportError:
 logger = logging.getLogger("sphinx_config")
 
 
-def get_core_sphinx_extensions() -> List[str]:
+def get_core_sphinx_extensions() -> list[str]:
     """Get core Sphinx extensions with debugging."""
     logger.info("🔧 Loading core Sphinx extensions...")
 
@@ -58,7 +57,7 @@ def get_core_sphinx_extensions() -> List[str]:
     return extensions
 
 
-def get_autoapi_extensions() -> List[str]:
+def get_autoapi_extensions() -> list[str]:
     """Get AutoAPI extensions with debugging."""
     logger.info("📚 Loading AutoAPI extensions...")
 
@@ -66,7 +65,7 @@ def get_autoapi_extensions() -> List[str]:
 
     # Test if autoapi is available
     try:
-        import autoapi
+        pass
 
         logger.info("✅ AutoAPI available and loaded")
     except ImportError:
@@ -76,7 +75,7 @@ def get_autoapi_extensions() -> List[str]:
     return extensions
 
 
-def get_myst_extensions() -> List[str]:
+def get_myst_extensions() -> list[str]:
     """Get MyST extensions with debugging."""
     logger.info("📝 Loading MyST extensions...")
 
@@ -88,9 +87,9 @@ def get_myst_extensions() -> List[str]:
     for ext in extensions:
         try:
             if ext == "myst_parser":
-                import myst_parser
+                pass
             elif ext == "myst_nb":
-                import myst_nb
+                pass
             available_extensions.append(ext)
         except ImportError:
             logger.warning(f"⚠️  {ext} not installed")
@@ -99,7 +98,7 @@ def get_myst_extensions() -> List[str]:
     return available_extensions
 
 
-def get_additional_extensions() -> List[str]:
+def get_additional_extensions() -> list[str]:
     """Get additional Sphinx extensions with availability testing."""
     logger.info("🎨 Loading additional extensions...")
 
@@ -159,13 +158,14 @@ def get_additional_extensions() -> List[str]:
             logger.debug(f"❌ {ext_name} (not installed)")
 
     if unavailable_extensions:
-        logger.warning(f"⚠️  {len(unavailable_extensions)} extensions not available")
+        logger.warning(
+            f"⚠️  {len(unavailable_extensions)} extensions not available")
 
     logger.info(f"✅ Loaded {len(available_extensions)} additional extensions")
     return available_extensions
 
 
-def get_development_extensions() -> List[str]:
+def get_development_extensions() -> list[str]:
     """Get development and testing extensions."""
     logger.info("🔬 Loading development extensions...")
 
@@ -197,7 +197,6 @@ def get_development_extensions() -> List[str]:
         "sphinx_argparse": "sphinx_argparse",
         "sphinx_click": "sphinx_click",
         # REMOVED: sphinx_codeautolink - causes NodeType.MESSAGE_TRANSFORMER error with Sphinx 8.2.3
-        # "sphinx_codeautolink": "sphinx_codeautolink",
         "sphinx_codefence": "sphinx_codefence",
         "sphinx_codelinks": "sphinx_codelinks",
         "sphinx_exec_directive": "sphinx_exec_directive",
@@ -227,7 +226,7 @@ def get_development_extensions() -> List[str]:
     return available_extensions
 
 
-def get_enhanced_extensions() -> List[str]:
+def get_enhanced_extensions() -> list[str]:
     """Get enhanced feature extensions."""
     logger.info("✨ Loading enhanced extensions...")
 
@@ -275,13 +274,10 @@ def get_enhanced_extensions() -> List[str]:
         "sphinx_fasvg": "sphinx_fasvg",
         # Mathematical and Scientific
         # DISABLED: sphinx_math_dollar incompatible with Sphinx 8.2.3 - causes NotImplementedError
-        # "sphinx_math_dollar": "sphinx_math_dollar",
         "sphinx_uml": "sphinx_uml",
         "sphinx_mindmap": "sphinx_mindmap",
         "sphinx_diagrams": "sphinx_diagrams",
         # Markdown Integration - DISABLED due to conflict with myst_parser
-        # "sphinx_markdown": "sphinx_markdown",
-        # "sphinx_mdinclude": "sphinx_mdinclude",
         # Social and External Integration
         "sphinx_disqus": "sphinx_disqus",
         "sphinx_social": "sphinx_social",
@@ -340,15 +336,14 @@ def get_enhanced_extensions() -> List[str]:
     return available_extensions
 
 
-def get_all_extensions() -> List[str]:
+def get_all_extensions() -> list[str]:
     """Get all available extensions with comprehensive testing and rich UI."""
     if RICH_AVAILABLE and console:
         console.print(
             Panel.fit(
                 "🚀 [bold blue]Loading Sphinx Extensions[/bold blue]",
                 border_style="blue",
-            )
-        )
+            ), )
     else:
         logger.info("🚀 Loading Sphinx Extensions")
 
@@ -366,7 +361,9 @@ def get_all_extensions() -> List[str]:
     # Create summary table or simple output
     if RICH_AVAILABLE and console:
         table = Table(
-            title="Extension Summary", show_header=True, header_style="bold magenta"
+            title="Extension Summary",
+            show_header=True,
+            header_style="bold magenta",
         )
         table.add_column("Category", style="cyan")
         table.add_column("Count", justify="right", style="green")
@@ -390,7 +387,9 @@ def get_all_extensions() -> List[str]:
             f"{len(development)} available extensions",
         )
         table.add_row(
-            "Enhanced", str(len(enhanced)), f"{len(enhanced)} available extensions"
+            "Enhanced",
+            str(len(enhanced)),
+            f"{len(enhanced)} available extensions",
         )
         table.add_row(
             "[bold]TOTAL[/bold]",
@@ -401,12 +400,13 @@ def get_all_extensions() -> List[str]:
         console.print(table)
         console.print(
             Panel.fit(
-                f"✅ [bold green]{len(all_extensions)} extensions ready for use![/bold green]",
+                f"✅ [bold green]{
+                    len(all_extensions)} extensions ready for use![/bold green]",
                 border_style="green",
-            )
+            ),
         )
     else:
-        logger.info(f"Extension Summary:")
+        logger.info("Extension Summary:")
         logger.info(f"  Core Sphinx: {len(core)}")
         logger.info(f"  AutoAPI: {len(autoapi)}")
         logger.info(f"  MyST: {len(myst)}")
@@ -418,15 +418,14 @@ def get_all_extensions() -> List[str]:
     return all_extensions
 
 
-def test_extension_compatibility() -> Dict[str, Any]:
+def test_extension_compatibility() -> dict[str, Any]:
     """Test extension compatibility and provide debugging info."""
     if RICH_AVAILABLE and console:
         console.print(
             Panel.fit(
                 "🧪 [bold yellow]Testing Extension Compatibility[/bold yellow]",
                 border_style="yellow",
-            )
-        )
+            ), )
     else:
         logger.info("🧪 Testing Extension Compatibility")
 
@@ -462,12 +461,14 @@ def test_extension_compatibility() -> Dict[str, Any]:
 
     # Summary
     if results["failed_extensions"]:
-        logger.warning(f"❌ {len(results['failed_extensions'])} extensions failed")
+        logger.warning(
+            f"❌ {len(results['failed_extensions'])} extensions failed")
     if results["warnings"]:
-        logger.warning(f"⚠️  {len(results['warnings'])} extensions have warnings")
+        logger.warning(
+            f"⚠️  {len(results['warnings'])} extensions have warnings")
 
     logger.info(
-        f"✅ {results['working_extensions']}/{results['total_extensions']} extensions working"
+        f"✅ {results['working_extensions']}/{results['total_extensions']} extensions working",
     )
 
     return results

@@ -1,12 +1,11 @@
 """Serialization mixin for Agent classes.
 
-This mixin provides proper serialization support for Agent instances in LangGraph,
-handling both pickle and msgpack serialization formats.
+This mixin provides proper serialization support for Agent instances in
+LangGraph, handling both pickle and msgpack serialization formats.
 """
 
 import logging
 from typing import Any
-
 
 logger = logging.getLogger(__name__)
 
@@ -14,11 +13,13 @@ logger = logging.getLogger(__name__)
 class SerializationMixin:
     """Mixin for serializing and deserializing Agent instances.
 
-    This mixin provides methods for handling serialization with both pickle and
-    msgpack, focusing on addressing the specific needs of agents within LangGraph.
+    This mixin provides methods for handling serialization with both
+    pickle and msgpack, focusing on addressing the specific needs of
+    agents within LangGraph.
 
-    LangGraph uses msgpack under the hood for serialization during graph execution.
-    This mixin ensures agents can be properly serialized without errors.
+    LangGraph uses msgpack under the hood for serialization during graph
+    execution. This mixin ensures agents can be properly serialized
+    without errors.
     """
 
     def __getstate__(self) -> dict[str, Any]:
@@ -35,13 +36,13 @@ class SerializationMixin:
 
         # Remove non-serializable components
         for exclude_key in [
-            "graph",
-            "_compiled_graph",
-            "checkpointer",
-            "store",
-            "_app",
-            "config",
-            "output_parser",
+                "graph",
+                "_compiled_graph",
+                "checkpointer",
+                "store",
+                "_app",
+                "config",
+                "output_parser",
         ]:
             if exclude_key in state:
                 state.pop(exclude_key)
@@ -52,22 +53,26 @@ class SerializationMixin:
             if schema_key in state and state[schema_key] is not None:
                 # Store schema name and module for reconstruction
                 schema = state[schema_key]
-                state[f"_{schema_key}_name"] = getattr(schema, "__name__", str(schema))
-                state[f"_{schema_key}_module"] = getattr(schema, "__module__", None)
+                state[f"_{schema_key}_name"] = getattr(schema, "__name__",
+                                                       str(schema))
+                state[f"_{schema_key}_module"] = getattr(
+                    schema, "__module__", None)
                 # Remove the actual schema
                 state.pop(schema_key)
 
         # Handle structured_output_model (which is a Type object)
-        if (
-            "structured_output_model" in state
-            and state["structured_output_model"] is not None
-        ):
+        if "structured_output_model" in state and state[
+                "structured_output_model"] is not None:
             model = state["structured_output_model"]
             state["_structured_output_model_name"] = getattr(
-                model, "__name__", str(model)
+                model,
+                "__name__",
+                str(model),
             )
             state["_structured_output_model_module"] = getattr(
-                model, "__module__", None
+                model,
+                "__module__",
+                None,
             )
             state.pop("structured_output_model")
 
@@ -126,7 +131,8 @@ class SerializationMixin:
         return state
 
     @classmethod
-    def _deserialize_from_msgpack(cls, data: dict[str, Any]) -> "SerializationMixin":
+    def _deserialize_from_msgpack(
+            cls, data: dict[str, Any]) -> "SerializationMixin":
         """Reconstruct an agent from msgpack-serialized data.
 
         Args:
@@ -141,8 +147,11 @@ class SerializationMixin:
         # Initialize instance with empty state to avoid validation errors
         # that might occur in __init__
         instance.__dict__.update(
-            {"_setup_complete": False, "_graph_built": False, "_is_compiled": False}
-        )
+            {
+                "_setup_complete": False,
+                "_graph_built": False,
+                "_is_compiled": False
+            }, )
 
         # Remove type information fields
         data.pop("__agent_type__", None)

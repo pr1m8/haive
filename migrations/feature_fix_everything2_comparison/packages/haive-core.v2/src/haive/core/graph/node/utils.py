@@ -18,17 +18,9 @@ This module provides convenience functions for creating different types of nodes
 and extracting information from schemas for node integration.
 """
 
-from collections.abc import Callable
+
+from __future__ import annotations
 import logging
-from typing import Any
-
-from langgraph.types import RetryPolicy
-from pydantic import BaseModel
-
-from haive.core.graph.node.config import NodeConfig
-from haive.core.graph.node.factory import NodeFactory
-from haive.core.graph.node.types import CommandGoto, NodeType
-
 
 logger = logging.getLogger(__name__)
 
@@ -65,14 +57,13 @@ def create_node(
     # Create node config
     config = NodeConfig(
         name=name or "unnamed_node",
-        engine=engine_or_callable if not isinstance(engine_or_callable, str) else None,
-        engine_name=engine_or_callable if isinstance(engine_or_callable, str) else None,
-        callable_func=(
-            engine_or_callable
-            if callable(engine_or_callable)
-            and not hasattr(engine_or_callable, "engine_type")
-            else None
-        ),
+        engine=engine_or_callable
+        if not isinstance(engine_or_callable, str) else None,
+        engine_name=engine_or_callable
+        if isinstance(engine_or_callable, str) else None,
+        callable_func=(engine_or_callable if callable(engine_or_callable)
+                       and not hasattr(engine_or_callable, "engine_type") else
+                       None),
         command_goto=command_goto,
         input_fields=input_mapping,
         output_fields=output_mapping,
@@ -108,9 +99,9 @@ def create_validation_node(
         name=name or "validation_node",
         node_type=NodeType.VALIDATION,
         command_goto=command_goto,
-        input_mapping=(
-            {"messages": messages_field} if messages_field != "messages" else None
-        ),
+        input_mapping=({
+            "messages": messages_field
+        } if messages_field != "messages" else None),
         validation_schemas=schemas,
         messages_field=messages_field,
         **kwargs,
@@ -194,7 +185,8 @@ def create_send_node(
 
 
 def extract_io_mapping_from_schema(
-    schema: type, engine_id: str
+    schema: type,
+    engine_id: str,
 ) -> dict[str, dict[str, str]]:
     """Extract input and output mappings from a schema for a specific engine.
 
@@ -210,7 +202,7 @@ def extract_io_mapping_from_schema(
     # Check if schema has engine I/O mappings
     if not hasattr(schema, "__engine_io_mappings__"):
         logger.warning(
-            f"Schema {schema.__name__} has no __engine_io_mappings__ attribute"
+            f"Schema {schema.__name__} has no __engine_io_mappings__ attribute",
         )
         return result
 
@@ -223,9 +215,9 @@ def extract_io_mapping_from_schema(
     else:
         # Try partial matches
         for key in mappings:
-            if isinstance(key, str) and (
-                key == engine_id or engine_id.endswith(key) or key.endswith(engine_id)
-            ):
+            if isinstance(key,
+                          str) and (key == engine_id or engine_id.endswith(key)
+                                    or key.endswith(engine_id)):
                 matched_key = key
                 break
 
@@ -243,7 +235,8 @@ def extract_io_mapping_from_schema(
                         result["inputs"][field_name] = field_name
 
                     # Check if field is output from this engine
-                    if "output_from" in meta and engine_id in meta["output_from"]:
+                    if "output_from" in meta and engine_id in meta[
+                            "output_from"]:
                         result["outputs"][field_name] = field_name
 
         return result

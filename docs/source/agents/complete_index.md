@@ -402,7 +402,7 @@ Agent for playing Clue.
 _Conversation & Multi-Agent | haive-agents_
 Collaborative conversation for building shared content.
 **Features:** structured_output, conversation
-**Module:** `haive.agents.conversation.collaberative.agent`
+**Module:** `haive.agents.conversation.collaborative.agent`
 
 **CompatibilityEnhancedConditionalAgent** (🟢 Simple)
 _Multi-Agent Systems | haive-agents_

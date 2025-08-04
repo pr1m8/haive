@@ -115,7 +115,8 @@ class BaseSupervisorState(StateSchema):
 
     # Core messaging (inherited from ReactAgent pattern)
     messages: list[BaseMessage] = Field(
-        default_factory=list, description="Conversation messages"
+        default_factory=list,
+        description="Conversation messages",
     )
 
     # Supervisor-specific state
@@ -123,49 +124,61 @@ class BaseSupervisorState(StateSchema):
 
     # Task management
     current_task: SupervisorTask | None = Field(
-        None, description="Currently executing task"
+        None,
+        description="Currently executing task",
     )
     task_history: list[SupervisorTask] = Field(
-        default_factory=list, description="History of executed tasks"
+        default_factory=list,
+        description="History of executed tasks",
     )
     results_history: list[SupervisorResult] = Field(
-        default_factory=list, description="History of task results"
+        default_factory=list,
+        description="History of task results",
     )
 
     # Routing and decision tracking
     last_routing_decision: RoutingDecision | None = Field(
-        None, description="Last routing decision made"
+        None,
+        description="Last routing decision made",
     )
     routing_history: list[RoutingDecision] = Field(
-        default_factory=list, description="History of routing decisions"
+        default_factory=list,
+        description="History of routing decisions",
     )
 
     # Agent management (basic tracking)
     registered_agent_names: list[str] = Field(
-        default_factory=list, description="Names of registered agents"
+        default_factory=list,
+        description="Names of registered agents",
     )
     active_agent_names: list[str] = Field(
-        default_factory=list, description="Names of currently active agents"
+        default_factory=list,
+        description="Names of currently active agents",
     )
 
     # Performance tracking
     agent_performance: dict[str, AgentPerformanceMetrics] = Field(
-        default_factory=dict, description="Performance metrics per agent"
+        default_factory=dict,
+        description="Performance metrics per agent",
     )
 
     # Execution context
-    execution_count: int = Field(default=0, description="Total number of executions")
+    execution_count: int = Field(default=0,
+                                 description="Total number of executions")
     last_agent_used: str | None = Field(
-        None, description="Last agent that was executed"
+        None,
+        description="Last agent that was executed",
     )
 
     # Error handling
-    last_error: str | None = Field(None, description="Last error message if any")
+    last_error: str | None = Field(None,
+                                   description="Last error message if any")
     error_count: int = Field(default=0, description="Total number of errors")
 
     # Metadata
     supervisor_metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional supervisor metadata"
+        default_factory=dict,
+        description="Additional supervisor metadata",
     )
 
     def add_task(self, task: SupervisorTask) -> None:
@@ -183,8 +196,7 @@ class BaseSupervisorState(StateSchema):
         agent_name = result.agent_used
         if agent_name not in self.agent_performance:
             self.agent_performance[agent_name] = AgentPerformanceMetrics(
-                agent_name=agent_name
-            )
+                agent_name=agent_name, )
 
         metrics = self.agent_performance[agent_name]
         metrics.total_executions += 1
@@ -199,9 +211,9 @@ class BaseSupervisorState(StateSchema):
         else:
             # Running average
             metrics.average_execution_time = (
-                metrics.average_execution_time * (metrics.total_executions - 1)
-                + result.execution_time
-            ) / metrics.total_executions
+                metrics.average_execution_time *
+                (metrics.total_executions - 1) +
+                result.execution_time) / metrics.total_executions
 
         metrics.last_execution = result.completed_at
 
@@ -224,10 +236,7 @@ class BaseSupervisorState(StateSchema):
 
     def activate_agent(self, agent_name: str) -> None:
         """Activate an agent."""
-        if (
-            agent_name in self.registered_agent_names
-            and agent_name not in self.active_agent_names
-        ):
+        if agent_name in self.registered_agent_names and agent_name not in self.active_agent_names:
             self.active_agent_names.append(agent_name)
 
     def set_error(self, error_message: str) -> None:
@@ -239,7 +248,8 @@ class BaseSupervisorState(StateSchema):
         """Clear error state."""
         self.last_error = None
 
-    def get_agent_performance(self, agent_name: str) -> AgentPerformanceMetrics | None:
+    def get_agent_performance(
+            self, agent_name: str) -> AgentPerformanceMetrics | None:
         """Get performance metrics for an agent."""
         return self.agent_performance.get(agent_name)
 

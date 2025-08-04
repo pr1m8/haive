@@ -23,13 +23,10 @@ from pydantic import BaseModel
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 
-
 # Import message transformation safely
 try:
     from haive.core.graph.node.message_transformation_v2 import (
-        TransformationType,
-        create_reflection_transformer,
-    )
+        create_reflection_transformer, )
 
     MESSAGE_TRANSFORMER_AVAILABLE = True
 except (ImportError, AttributeError):
@@ -37,11 +34,13 @@ except (ImportError, AttributeError):
 
     # Fallback transformer
     class SimpleTransformer:
+
         def __init__(self, preserve_first=True):
             self.preserve_first_message = preserve_first
 
         def _apply_transformation(
-            self, messages: list[BaseMessage]
+            self,
+            messages: list[BaseMessage],
         ) -> list[BaseMessage]:
             if not messages:
                 return []
@@ -55,23 +54,22 @@ except (ImportError, AttributeError):
                     transformed.append(
                         HumanMessage(
                             content=msg.content,
-                            additional_kwargs=getattr(msg, "additional_kwargs", {}),
-                        )
-                    )
+                            additional_kwargs=getattr(msg, "additional_kwargs",
+                                                      {}),
+                        ), )
                 elif isinstance(msg, HumanMessage):
                     transformed.append(
                         AIMessage(
                             content=msg.content,
-                            additional_kwargs=getattr(msg, "additional_kwargs", {}),
-                        )
-                    )
+                            additional_kwargs=getattr(msg, "additional_kwargs",
+                                                      {}),
+                        ), )
                 else:
                     transformed.append(msg)
             return transformed
 
 
-from .models import Critique
-
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.reflection.reflection.models import Critique
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -106,8 +104,7 @@ class MessageTransformerPostHook:
         # Create message transformer
         if MESSAGE_TRANSFORMER_AVAILABLE and transform_type == "reflection":
             self.transformer = create_reflection_transformer(
-                preserve_first_message=preserve_first_message
-            )
+                preserve_first_message=preserve_first_message, )
         else:
             self.transformer = SimpleTransformer(preserve_first_message)
 
@@ -127,13 +124,15 @@ class MessageTransformerPostHook:
         Returns:
             Enhanced result with reflection applied
         """
-        if not isinstance(agent_result, dict) or "messages" not in agent_result:
+        if not isinstance(agent_result,
+                          dict) or "messages" not in agent_result:
             return agent_result
 
         original_messages = agent_result["messages"]
 
         # Step 1: Apply message transformation
-        transformed_messages = self.transformer._apply_transformation(original_messages)
+        transformed_messages = self.transformer._apply_transformation(
+            original_messages)
 
         # Step 2: Prepare reflection prompt with optional structured data
         reflection_input = {"messages": transformed_messages}
@@ -164,8 +163,7 @@ class MessageTransformerPostHook:
                 "reflection_result": reflection_result,
                 "transformation_applied": self.transform_type,
                 "post_hook_applied": True,
-            }
-        )
+            }, )
 
         return enhanced_result
 
@@ -191,31 +189,33 @@ class ReflectionWithGradePostHook(MessageTransformerPostHook):
             reflection_agent: Agent that does reflection with grade context
             preserve_first_message: Whether to preserve first message
         """
-        super().__init__(reflection_agent, "reflection", preserve_first_message)
+        super().__init__(reflection_agent, "reflection",
+                         preserve_first_message)
         self.grading_agent = grading_agent
 
         # Create reflection prompt that accepts grade context
-        self.reflection_prompt = ChatPromptTemplate.from_messages(
-            [
-                ("system", "You are a reflection specialist that improves responses."),
-                (
-                    "human",
-                    """Please improve this response:
+        self.reflection_prompt = ChatPromptTemplate.from_messages([
+            ("system",
+             "You are a reflection specialist that improves responses."),
+            (
+                "human",
+                """Please improve this response:
 
 {response}
 
 {grade_context}
 
 Provide an enhanced version that addresses any feedback.""",
-                ),
-            ]
-        )
+            ),
+        ], )
 
         # Update reflection agent's prompt template
         self.reflection_agent.engine.prompt_template = self.reflection_prompt
 
     async def __call__(
-        self, agent_result: dict[str, Any], original_input: Any = None
+        self,
+        agent_result: dict[str, Any],
+        original_input: Any = None,
     ) -> dict[str, Any]:
         """Apply grading → message transform → reflection with grade context.
 
@@ -226,7 +226,8 @@ Provide an enhanced version that addresses any feedback.""",
         Returns:
             Enhanced result with grading and reflection applied
         """
-        if not isinstance(agent_result, dict) or "messages" not in agent_result:
+        if not isinstance(agent_result,
+                          dict) or "messages" not in agent_result:
             return agent_result
 
         # Step 1: Extract response content from agent result
@@ -251,7 +252,8 @@ Provide an enhanced version that addresses any feedback.""",
             for msg in reversed(grade_result["messages"]):
                 if hasattr(msg, "tool_calls") and msg.tool_calls:
                     for tool_call in msg.tool_calls:
-                        if isinstance(tool_call, dict) and tool_call.get("args"):
+                        if isinstance(tool_call,
+                                      dict) and tool_call.get("args"):
                             grade_data = tool_call["args"]
                             break
 
@@ -259,15 +261,16 @@ Provide an enhanced version that addresses any feedback.""",
         grade_context = ""
         if grade_data:
             grade_context = f"""Grade Feedback:
-- Score: {grade_data.get('score', 'N/A')}/100
-- Letter Grade: {grade_data.get('letter_grade', 'N/A')}
-- Strengths: {', '.join(grade_data.get('strengths', []))}
-- Weaknesses: {', '.join(grade_data.get('weaknesses', []))}
-- Suggestions: {', '.join(grade_data.get('suggestions', []))}"""
+- Score: {grade_data.get("score", "N/A")}/100
+- Letter Grade: {grade_data.get("letter_grade", "N/A")}
+- Strengths: {", ".join(grade_data.get("strengths", []))}
+- Weaknesses: {", ".join(grade_data.get("weaknesses", []))}
+- Suggestions: {", ".join(grade_data.get("suggestions", []))}"""
 
         # Step 5: Apply message transformation
         original_messages = agent_result["messages"]
-        transformed_messages = self.transformer._apply_transformation(original_messages)
+        transformed_messages = self.transformer._apply_transformation(
+            original_messages)
 
         # Step 6: Run reflection with grade context as prompt partial
         reflection_input = {
@@ -290,8 +293,7 @@ Provide an enhanced version that addresses any feedback.""",
                 "reflection_result": reflection_result,
                 "transformation_applied": "reflection_with_grade",
                 "post_hook_applied": True,
-            }
-        )
+            }, )
 
         return enhanced_result
 
@@ -349,26 +351,26 @@ def create_reflection_post_hook(
 ) -> MessageTransformerPostHook:
     """Create a basic reflection post-hook."""
     if not reflection_prompt_template:
-        reflection_prompt_template = ChatPromptTemplate.from_messages(
-            [
-                (
-                    "system",
-                    """You are a reflection agent that analyzes responses.
+        reflection_prompt_template = ChatPromptTemplate.from_messages([
+            (
+                "system",
+                """You are a reflection agent that analyzes responses.
 
 Analyze the conversation and provide constructive feedback on:
 1. Quality and accuracy
 2. Completeness
 3. Clarity and communication
 4. Areas for improvement""",
-                ),
-                ("human", "Analyze this conversation and provide reflection insights."),
-            ]
-        )
+            ),
+            ("human",
+             "Analyze this conversation and provide reflection insights."),
+        ], )
 
     reflection_agent = SimpleAgent(
         name="reflection_agent",
         engine=AugLLMConfig(
-            prompt_template=reflection_prompt_template, temperature=temperature
+            prompt_template=reflection_prompt_template,
+            temperature=temperature,
         ),
     )
 
@@ -376,24 +378,24 @@ Analyze the conversation and provide constructive feedback on:
 
 
 def create_graded_reflection_post_hook(
-    grading_model: type[BaseModel], temperature: float = 0.2
+    grading_model: type[BaseModel],
+    temperature: float = 0.2,
 ) -> ReflectionWithGradePostHook:
     """Create a graded reflection post-hook."""
     # Create grading agent with structured output
-    grading_prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", "You are a grading expert that evaluates response quality."),
-            (
-                "human",
-                """Grade this response to the query:
+    grading_prompt = ChatPromptTemplate.from_messages([
+        ("system",
+         "You are a grading expert that evaluates response quality."),
+        (
+            "human",
+            """Grade this response to the query:
 
 Query: {original_query}
 Response: {response}
 
 Provide a detailed grade with score, strengths, weaknesses, and suggestions.""",
-            ),
-        ]
-    )
+        ),
+    ], )
 
     grading_agent = SimpleAgent(
         name="grading_agent",
@@ -407,14 +409,16 @@ Provide a detailed grade with score, strengths, weaknesses, and suggestions.""",
 
     # Create reflection agent (will be updated with proper prompt in post-hook)
     reflection_agent = SimpleAgent(
-        name="reflection_agent", engine=AugLLMConfig(temperature=0.3)
+        name="reflection_agent",
+        engine=AugLLMConfig(temperature=0.3),
     )
 
     return ReflectionWithGradePostHook(grading_agent, reflection_agent)
 
 
 def create_agent_with_reflection(
-    base_agent: SimpleAgent, reflection_type: str = "basic"
+    base_agent: SimpleAgent,
+    reflection_type: str = "basic",
 ) -> AgentWithPostHook:
     """Create an agent with reflection post-hook.
 
@@ -429,7 +433,7 @@ def create_agent_with_reflection(
         post_hook = create_reflection_post_hook()
     elif reflection_type == "graded":
         # Need to import a grading model
-        from .models import Critique  # Use existing Critique model
+        from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.reflection.reflection.models import Critique  # Use existing Critique model
 
         post_hook = create_graded_reflection_post_hook(Critique)
     else:
@@ -445,7 +449,8 @@ async def example_basic_post_hook():
     base_agent = SimpleAgent(
         name="writer",
         engine=AugLLMConfig(
-            system_message="You are a helpful writing assistant.", temperature=0.7
+            system_message="You are a helpful writing assistant.",
+            temperature=0.7,
         ),
     )
 
@@ -511,7 +516,8 @@ async def example_factory_pattern():
     base_agent = SimpleAgent(
         name="summarizer",
         engine=AugLLMConfig(
-            system_message="You are a text summarization expert.", temperature=0.4
+            system_message="You are a text summarization expert.",
+            temperature=0.4,
         ),
     )
 

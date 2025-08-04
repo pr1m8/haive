@@ -11,12 +11,10 @@ from langgraph.graph import END, START
 from pydantic import Field, field_validator
 
 # Import base enhanced agent when available
-# from haive.agents.base.enhanced_agent import Agent
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase as Agent
 from haive.core.engine.aug_llm.config import AugLLMConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
 
 logger = logging.getLogger(__name__)
 
@@ -66,31 +64,41 @@ class ParallelAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
 
     # Parallel specific fields
     agents: list[Agent] = Field(
-        default_factory=list, description="List of agents to execute in parallel"
+        default_factory=list,
+        description="List of agents to execute in parallel",
     )
 
-    aggregation_strategy: Literal["all", "first", "best", "majority", "merge"] = Field(
-        default="all", description="Strategy for aggregating results"
+    aggregation_strategy: Literal[
+        "all", "first", "best", "majority", "merge"] = Field(
+            default="all",
+            description="Strategy for aggregating results",
     )
 
     timeout_per_agent: float | None = Field(
-        default=30.0, gt=0, description="Timeout for each agent in seconds"
+        default=30.0,
+        gt=0,
+        description="Timeout for each agent in seconds",
     )
 
     continue_on_timeout: bool = Field(
-        default=True, description="Continue if some agents timeout"
+        default=True,
+        description="Continue if some agents timeout",
     )
 
     min_agents_for_consensus: int = Field(
-        default=2, ge=1, description="Minimum agents needed for consensus strategies"
+        default=2,
+        ge=1,
+        description="Minimum agents needed for consensus strategies",
     )
 
     quality_scorer: Any | None = Field(
-        default=None, description="Function to score result quality for 'best' strategy"
+        default=None,
+        description="Function to score result quality for 'best' strategy",
     )
 
     merge_with_llm: bool = Field(
-        default=True, description="Use LLM to merge results in 'merge' strategy"
+        default=True,
+        description="Use LLM to merge results in 'merge' strategy",
     )
 
     # Convenience fields
@@ -142,19 +150,18 @@ class ParallelAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
                 if self.aggregation_strategy == "merge":
                     self.engine.system_message = self._get_merge_prompt()
                 else:
-                    self.engine.system_message = (
-                        "You coordinate parallel agent execution."
-                    )
+                    self.engine.system_message = "You coordinate parallel agent execution."
 
     def _get_merge_prompt(self) -> str:
         """Get prompt for merging results."""
         agent_names = [
-            getattr(agent, "name", f"Agent{i}") for i, agent in enumerate(self.agents)
+            getattr(agent, "name", f"Agent{i}")
+            for i, agent in enumerate(self.agents)
         ]
 
         return f"""You are aggregating results from multiple parallel agents:
 
-Agents: {', '.join(agent_names)}
+Agents: {", ".join(agent_names)}
 
 Your task:
 1. Receive all agent outputs
@@ -220,7 +227,8 @@ Create a unified response that leverages all agent contributions."""
                 task = agent.arun(input_data)
             else:
                 # Wrap sync in async
-                task = asyncio.create_task(asyncio.to_thread(agent.run, input_data))
+                task = asyncio.create_task(
+                    asyncio.to_thread(agent.run, input_data))
 
             # Wrap with timeout if specified
             if self.timeout_per_agent:
@@ -255,7 +263,9 @@ Create a unified response that leverages all agent contributions."""
         return await self._aggregate_results(results, input_data)
 
     async def _aggregate_results(
-        self, results: list[tuple[int, Any]], original_input: Any
+        self,
+        results: list[tuple[int, Any]],
+        original_input: Any,
     ) -> list[Any] | Any:
         """Aggregate results based on strategy.
 
@@ -268,13 +278,10 @@ Create a unified response that leverages all agent contributions."""
         """
         if self.aggregation_strategy == "all":
             # Return all results with agent info
-            return [
-                {
-                    "agent": getattr(self.agents[i], "name", f"agent_{i}"),
-                    "result": result,
-                }
-                for i, result in results
-            ]
+            return [{
+                "agent": getattr(self.agents[i], "name", f"agent_{i}"),
+                "result": result,
+            } for i, result in results]
 
         if self.aggregation_strategy == "first":
             # Return first successful result
@@ -283,9 +290,8 @@ Create a unified response that leverages all agent contributions."""
         if self.aggregation_strategy == "best":
             # Score and return best result
             if self.quality_scorer:
-                scored = [
-                    (i, result, self.quality_scorer(result)) for i, result in results
-                ]
+                scored = [(i, result, self.quality_scorer(result))
+                          for i, result in results]
                 best = max(scored, key=lambda x: x[2])
                 return best[1]
             # Default to longest response
@@ -296,8 +302,8 @@ Create a unified response that leverages all agent contributions."""
             # Find consensus (simplified - real impl would be smarter)
             if len(results) < self.min_agents_for_consensus:
                 raise ValueError(
-                    f"Need at least {self.min_agents_for_consensus} agents for consensus"
-                )
+                    f"Need at least {
+                        self.min_agents_for_consensus} agents for consensus", )
 
             # Group similar results (simplified)
             from collections import Counter
@@ -314,43 +320,44 @@ Create a unified response that leverages all agent contributions."""
             # Use LLM to merge all results
             if self.merge_with_llm and hasattr(self, "arun"):
                 merge_input = {
-                    "original_query": original_input,
-                    "agent_results": [
-                        {
-                            "agent": getattr(self.agents[i], "name", f"agent_{i}"),
-                            "result": result,
-                        }
-                        for i, result in results
-                    ],
-                    "instruction": "Merge these agent results into a comprehensive response",
+                    "original_query":
+                    original_input,
+                    "agent_results": [{
+                        "agent":
+                        getattr(self.agents[i], "name", f"agent_{i}"),
+                        "result":
+                        result,
+                    } for i, result in results],
+                    "instruction":
+                    "Merge these agent results into a comprehensive response",
                 }
                 return await self.arun(merge_input)
             # Simple concatenation
-            return "\n\n".join(
-                [
-                    f"{getattr(self.agents[i], 'name', f'Agent {i}')}: {result}"
-                    for i, result in results
-                ]
-            )
+            return "\n\n".join([
+                f"{getattr(self.agents[i], 'name', f'Agent {i}')}: {result}"
+                for i, result in results
+            ], )
 
         return results
 
     def __repr__(self) -> str:
         """String representation with parallel info."""
         engine_type = type(self.engine).__name__ if self.engine else "None"
-        [getattr(agent, "name", f"agent_{i}") for i, agent in enumerate(self.agents)]
-        return (
-            f"ParallelAgent[{engine_type}]("
-            f"name='{self.name}', "
-            f"agents={len(self.agents)}, "
-            f"strategy='{self.aggregation_strategy}')"
-        )
+        [
+            getattr(agent, "name", f"agent_{i}")
+            for i, agent in enumerate(self.agents)
+        ]
+        return (f"ParallelAgent[{engine_type}]("
+                f"name='{self.name}', "
+                f"agents={len(self.agents)}, "
+                f"strategy='{self.aggregation_strategy}')")
 
 
 # Example usage
 if __name__ == "__main__":
     # Mock agents for demo
     class MockExpert:
+
         def __init__(self, name: str, specialty: str):
             self.name = name
             self.specialty = specialty
@@ -361,7 +368,10 @@ if __name__ == "__main__":
             import random
 
             await asyncio.sleep(random.uniform(0.1, 0.5))
-            return f"{self.name} ({self.specialty}): Analysis of '{input_data}' from {self.specialty} perspective"
+            return f"{
+                self.name} ({
+                self.specialty}): Analysis of '{input_data}' from {
+                self.specialty} perspective"
 
     # Create parallel agent ensemble
     ensemble = ParallelAgent(

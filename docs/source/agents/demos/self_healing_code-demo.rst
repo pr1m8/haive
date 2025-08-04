@@ -120,12 +120,12 @@ Automatically fixes code errors and issues
        ✗ Undefined variable 'user_data'
        ✗ Missing import statement
 
-   
+
    Auto-fixes applied:
    ✓ Fixed syntax error
    ✓ Initialized variable
    ✓ Added missing import
-   
+
    All tests passing ✓
 
 .. raw:: html

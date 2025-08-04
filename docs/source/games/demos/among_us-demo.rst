@@ -245,19 +245,19 @@ Social deduction with AI crewmates and imposters
 
        Emergency Meeting Called!
 
-   
+
    Crewmates: 6
    Imposters: 2
    Tasks: 45% Complete
-   
+
    Discussion Phase
    Time Remaining: 45s
-   
+
    Chat:
    Red: "I saw Blue vent in Electrical!"
    Blue: "No way, I was doing wires!"
    Green: "I was with Yellow in MedBay"
-   
+
    Vote Status: Waiting...
 
 .. raw:: html

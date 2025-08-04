@@ -23,16 +23,15 @@ from haive.core.engine.base import Engine, EngineType
 from haive.core.graph.state_graph.compiled_state_graph import CompiledStateGraph
 from haive.core.schema.schema_composer import SchemaComposer
 
-
 logger = logging.getLogger(__name__)
 
 
 class CompiledAgent(
-    CompiledStateGraph,
-    ExecutionMixin,
-    StateMixin,
-    PersistenceMixin,
-    SerializationMixin,
+        CompiledStateGraph,
+        ExecutionMixin,
+        StateMixin,
+        PersistenceMixin,
+        SerializationMixin,
 ):
     """Agent class based on CompiledStateGraph architecture.
 
@@ -76,21 +75,25 @@ class CompiledAgent(
 
     # Tool capabilities
     tools: list[BaseTool] = Field(
-        default_factory=list, description="List of tools available to this agent"
+        default_factory=list,
+        description="List of tools available to this agent",
     )
 
     # Agent-specific behavior
     conversation_memory: bool = Field(
-        default=True, description="Whether to maintain conversation history"
+        default=True,
+        description="Whether to maintain conversation history",
     )
 
     max_iterations: int = Field(
-        default=10, description="Maximum reasoning iterations before stopping"
+        default=10,
+        description="Maximum reasoning iterations before stopping",
     )
 
     # Schema generation control
     set_schema: bool = Field(
-        default=True, description="Whether to auto-generate schemas from engines"
+        default=True,
+        description="Whether to auto-generate schemas from engines",
     )
 
     @model_validator(mode="after")
@@ -98,28 +101,27 @@ class CompiledAgent(
     def validate_agent_requirements(cls) -> CompiledAgent:
         """Validate that agent has required LLM capabilities.
 
-        Agents must have an LLM engine for reasoning. This validator ensures
-        that the agent is properly configured with reasoning capabilities.
+        Agents must have an LLM engine for reasoning. This validator
+        ensures that the agent is properly configured with reasoning
+        capabilities.
         """
         if not self.engine:
             if not self.engines:
                 raise ValueError(
                     "Agents must have at least one engine. "
-                    "Provide either 'engine' or 'engines' parameter."
-                )
+                    "Provide either 'engine' or 'engines' parameter.", )
             # If no primary engine, try to find an LLM engine in engines dict
             llm_engines = [
-                eng
-                for eng in self.engines.values()
-                if hasattr(eng, "engine_type") and eng.engine_type == EngineType.LLM
+                eng for eng in self.engines.values()
+                if hasattr(eng, "engine_type")
+                and eng.engine_type == EngineType.LLM
             ]
             if llm_engines:
                 self.engine = llm_engines[0]
             else:
                 logger.warning(
                     f"Agent {self.name} has no LLM engine. "
-                    "Agents should have reasoning capabilities."
-                )
+                    "Agents should have reasoning capabilities.", )
 
         # Set up schemas if requested
         if self.set_schema:
@@ -130,9 +132,10 @@ class CompiledAgent(
     def _setup_schemas(self) -> None:
         """Generate schemas from available engines.
 
-        This method creates state, input, and output schemas based on the
-        engines available to this agent. It uses SchemaComposer for basic
-        composition (agents with sub-agents should use AgentSchemaComposer).
+        This method creates state, input, and output schemas based on
+        the engines available to this agent. It uses SchemaComposer for
+        basic composition (agents with sub-agents should use
+        AgentSchemaComposer).
         """
         if not self.state_schema:
             engine_list = []
@@ -142,11 +145,10 @@ class CompiledAgent(
 
             if engine_list:
                 logger.debug(
-                    f"Creating schema from {
-                        len(engine_list)} engines"
-                )
+                    f"Creating schema from {len(engine_list)} engines", )
                 self.state_schema = SchemaComposer.from_components(
-                    components=engine_list, name=f"{self.__class__.__name__}State"
+                    components=engine_list,
+                    name=f"{self.__class__.__name__}State",
                 )
             else:
                 logger.debug("No engines found, using basic state schema")
@@ -155,7 +157,9 @@ class CompiledAgent(
                 self.state_schema = MessagesState
 
     @abstractmethod
-    def reason(self, problem: Any, context: dict[str, Any] | None = None) -> Any:
+    def reason(self,
+               problem: Any,
+               context: dict[str, Any] | None = None) -> Any:
         """Reason about a problem and provide a solution.
 
         This method must be implemented by all agent subclasses to define
@@ -176,7 +180,9 @@ class CompiledAgent(
             NotImplementedError: If not implemented by subclass
         """
 
-    async def areason(self, problem: Any, context: dict[str, Any] | None = None) -> Any:
+    async def areason(self,
+                      problem: Any,
+                      context: dict[str, Any] | None = None) -> Any:
         """Asynchronous version of reason method.
 
         Default implementation calls the synchronous reason method.
@@ -248,12 +254,14 @@ class CompiledAgent(
     def setup_agent(self) -> None:
         """Hook for subclass-specific setup logic.
 
-        This method is called during initialization and can be overridden
-        by subclasses for custom setup logic. Maintained for backward
-        compatibility with existing Agent interface.
+        This method is called during initialization and can be
+        overridden by subclasses for custom setup logic. Maintained for
+        backward compatibility with existing Agent interface.
         """
 
-    def invoke(self, input_data: Any, config: dict[str, Any] | None = None) -> Any:
+    def invoke(self,
+               input_data: Any,
+               config: dict[str, Any] | None = None) -> Any:
         """Invoke the agent with input data.
 
         This method provides the standard invocation interface for agents.
@@ -270,7 +278,9 @@ class CompiledAgent(
         return compiled_graph.invoke(input_data, config=config)
 
     async def ainvoke(
-        self, input_data: Any, config: dict[str, Any] | None = None
+        self,
+        input_data: Any,
+        config: dict[str, Any] | None = None,
     ) -> Any:
         """Asynchronous invoke method.
 

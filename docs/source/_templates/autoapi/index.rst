@@ -16,6 +16,6 @@ This section contains auto-generated API reference documentation.
 
 .. note::
 
-   
-   This documentation is automatically generated from the source code using 
+
+   This documentation is automatically generated from the source code using
    `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_.

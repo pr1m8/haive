@@ -10,13 +10,16 @@ a registry-based approach for agent configuration and instantiation.
 # Import Required Components
 # --------------------------
 # Import the core agent system components.
+from __future__ import annotations
 
 import os
 from typing import Any
 
-from haive.agents.base.agent import Agent, AgentConfig, register_agent
-from haive.core.schema.message import BaseMessage
 from pydantic import Field
+
+from haive.agents.base.agent import Agent, AgentConfig, register_agent
+from haive.core.engine.agent import AGENT_REGISTRY
+from haive.core.schema.message import BaseMessage
 
 # Disable checkpointer for this example
 os.environ["HAIVE_DISABLE_CHECKPOINTER"] = "true"
@@ -60,7 +63,10 @@ class AnalyzerAgent(Agent[AnalyzerConfig]):
         """Build the agent's processing graph."""
         # In a real implementation, this would build a StateGraph
         # For this example, we'll create a simple mock structure
-        return {"nodes": ["analyze", "summarize"], "edges": [("analyze", "summarize")]}
+        return {
+            "nodes": ["analyze", "summarize"],
+            "edges": [("analyze", "summarize")]
+        }
 
     async def ainvoke(
         self,
@@ -111,7 +117,8 @@ print(f"Focus areas: {config.focus_areas}")
 # In the core pattern, agents are typically created from configurations.
 
 # Create agent instance
-agent = config.build()  # This uses the registry to instantiate the correct agent
+agent = config.build(
+)  # This uses the registry to instantiate the correct agent
 
 print(f"\nAgent created: {type(agent).__name__}")
 print(f"Agent configuration: {agent.config.name}")
@@ -132,8 +139,6 @@ print("✓ Support for complex agent hierarchies")
 # Show Registry Contents
 # ----------------------
 # Display what's in the agent registry.
-
-from haive.core.engine.agent import AGENT_REGISTRY
 
 print("\n=== Registered Agent Types ===")
 for config_class, agent_class in AGENT_REGISTRY.items():

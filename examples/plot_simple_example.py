@@ -9,6 +9,7 @@ This is a simple example to test Sphinx Gallery.
 # Plotting a simple graph
 # -----------------------
 # Let's create a simple plot to test the gallery.
+from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np

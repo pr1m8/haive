@@ -1,8 +1,8 @@
 # Documentation Issues - July 20, 2025
 
-**Date Discovered**: 2025-07-20  
-**Priority**: High  
-**Status**: Active  
+**Date Discovered**: 2025-07-20
+**Priority**: High
+**Status**: Active
 **Total Issues**: 20,308 documentation problems across 2,582 Python files
 
 ## Problem Description
@@ -176,5 +176,5 @@ def process_data(data: List[Dict], threshold: float = 0.5) -> ProcessedResult:
 
 ---
 
-**Reference**: Complete issue details in `/tmp/documentation_audit.log`  
+**Reference**: Complete issue details in `/tmp/documentation_audit.log`
 **Next Action**: Start with the 172 issues in `packages/haive-core/src/haive/core/models/llm/base.py`

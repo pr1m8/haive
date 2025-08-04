@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Comprehensive documentation fix script for Haive project."""
+from __future__ import annotations
 
 import logging
 import os

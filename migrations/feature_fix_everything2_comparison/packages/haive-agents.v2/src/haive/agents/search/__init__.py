@@ -10,7 +10,6 @@ from search.base import (
     get_system_prompt,
 )
 
-
 __all__ = [
     "BaseSearchAgent",
     "SearchResponse",

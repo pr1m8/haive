@@ -1,8 +1,8 @@
 # Priority 1: Import Format Fixes
 
-**Status**: Ready for Implementation  
-**Assigned**: Available for immediate work  
-**Target**: Complete within 1 day  
+**Status**: Ready for Implementation
+**Assigned**: Available for immediate work
+**Target**: Complete within 1 day
 
 ## Immediate Action Required
 
@@ -22,7 +22,7 @@ poetry run python -c "
 import py_compile
 files = [
     'packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py',
-    'packages/haive-prebuilt/src/haive/prebuilt/tldr2/engines.py', 
+    'packages/haive-prebuilt/src/haive/prebuilt/tldr2/engines.py',
     'packages/haive-prebuilt/src/haive/prebuilt/tldr2/agent.py'
 ]
 for f in files:

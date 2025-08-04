@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Clean up the messy docs directory structure.
+"""Clean up the messy docs directory structure.
 
 This script organizes the docs folder by:
 1. Moving old logs to archive
@@ -9,10 +8,12 @@ This script organizes the docs folder by:
 4. Creating proper directory structure
 """
 
-import os
-import shutil
+from __future__ import annotations
+
 from datetime import datetime
+import os
 from pathlib import Path
+import shutil
 
 
 def cleanup_docs_directory():
@@ -107,8 +108,7 @@ def clean_duplicate_files(docs_root):
     source_dir = docs_root / "source"
     if source_dir.exists():
         backup_files = list(source_dir.glob("conf_backup*.py")) + list(
-            source_dir.glob("conf_*.py")
-        )
+            source_dir.glob("conf_*.py"), )
         for backup_file in backup_files:
             if backup_file.name != "conf.py" and backup_file.exists():
                 try:
@@ -133,7 +133,8 @@ def organize_build_outputs(docs_root):
         if build_path.exists():
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             shutil.move(
-                str(build_path), str(archive_builds / f"{build_dir}_{timestamp}")
+                str(build_path),
+                str(archive_builds / f"{build_dir}_{timestamp}"),
             )
 
     # Keep main build directory clean
@@ -144,7 +145,7 @@ def organize_build_outputs(docs_root):
         # Sync main build to current build if needed
         pass
 
-    print(f"✅ Organized build outputs")
+    print("✅ Organized build outputs")
 
 
 def clean_source_directory(docs_root):

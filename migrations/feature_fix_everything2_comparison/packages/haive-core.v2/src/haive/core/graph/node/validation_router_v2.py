@@ -9,13 +9,14 @@ Flow:
 3. Routes to appropriate nodes (tool_node, parse_output, agent_node, END)
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any
 
 from langchain_core.messages import AIMessage, ToolMessage
 from langgraph.graph import END
 from langgraph.types import Send
-
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +49,9 @@ def has_tool_error_v2(message: ToolMessage) -> bool:
             pass
 
         # String-based error detection
-        error_terms = ["error", "invalid", "failed", "exception", "validation error"]
+        error_terms = [
+            "error", "invalid", "failed", "exception", "validation error"
+        ]
         return any(term in content.lower() for term in error_terms)
 
     # Check dict content
@@ -84,7 +87,8 @@ def validation_router_v2(state: dict[str, Any]) -> str | list[str] | Send:
     # Get the last AIMessage with tool calls
     last_ai_message = None
     for msg in reversed(messages):
-        if isinstance(msg, AIMessage) and hasattr(msg, "tool_calls") and msg.tool_calls:
+        if isinstance(msg, AIMessage) and hasattr(
+                msg, "tool_calls") and msg.tool_calls:
             last_ai_message = msg
             break
 
@@ -118,10 +122,8 @@ def validation_router_v2(state: dict[str, Any]) -> str | list[str] | Send:
         # Find corresponding ToolMessage (if any)
         tool_message = None
         for msg in messages:
-            if (
-                isinstance(msg, ToolMessage)
-                and getattr(msg, "tool_call_id", None) == tool_id
-            ):
+            if isinstance(msg, ToolMessage) and getattr(
+                    msg, "tool_call_id", None) == tool_id:
                 tool_message = msg
                 break
 
@@ -129,7 +131,8 @@ def validation_router_v2(state: dict[str, Any]) -> str | list[str] | Send:
             if tool_message:
                 # We have a ToolMessage from V2 validation
                 if has_tool_error_v2(tool_message):
-                    logger.warning(f"Pydantic validation failed for {tool_name}")
+                    logger.warning(
+                        f"Pydantic validation failed for {tool_name}")
                     # Route errors back to agent
                     destinations.add("agent_node")
                     has_errors = True
@@ -139,7 +142,8 @@ def validation_router_v2(state: dict[str, Any]) -> str | list[str] | Send:
                     destinations.add("parse_output")
             else:
                 # No ToolMessage found - this shouldn't happen with V2
-                logger.warning(f"No ToolMessage found for Pydantic model {tool_name}")
+                logger.warning(
+                    f"No ToolMessage found for Pydantic model {tool_name}")
                 destinations.add("agent_node")
                 has_errors = True
 

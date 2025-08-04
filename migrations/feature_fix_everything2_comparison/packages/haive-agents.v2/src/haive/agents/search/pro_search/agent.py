@@ -1,7 +1,8 @@
 """Pro Search Agent implementation.
 
-Provides deep, contextual search with user preferences and advanced reasoning. Similar
-to Perplexity's Pro Search feature that goes deeper and considers user context.
+Provides deep, contextual search with user preferences and advanced
+reasoning. Similar to Perplexity's Pro Search feature that goes deeper
+and considers user context.
 """
 
 import logging
@@ -89,13 +90,11 @@ class ProSearchAgent(BaseSearchAgent):
         logger.info(f"Initialized ProSearchAgent: {name}")
 
     def get_response_model(self) -> type[SearchResponse]:
-        """Get the response model for pro search.
-        """
+        """Get the response model for pro search."""
         return ProSearchResponse
 
     def get_system_prompt(self) -> str:
-        """Get the system prompt for pro search operations.
-        """
+        """Get the system prompt for pro search operations."""
         return """You are a Pro Search Assistant designed to provide deep, contextual, and personalized search responses.
 
 Your role is to:
@@ -134,8 +133,7 @@ Pro Search Process:
 Remember: Depth, context, and personalization are key to pro search excellence."""
 
     def get_search_instructions(self) -> str:
-        """Get specific search instructions for pro search.
-        """
+        """Get specific search instructions for pro search."""
         return """PRO SEARCH INSTRUCTIONS:
 
 1. QUERY ANALYSIS & REFINEMENT:

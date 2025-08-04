@@ -8,6 +8,7 @@ This implementation focuses on:
 
 No fancy features - just the core dynamic tooling pattern.
 """
+from __future__ import annotations
 
 from typing import Any
 
@@ -15,22 +16,22 @@ from haive.agents.react.agent import ReactAgent
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from haive.core.schema import StateSchema
 from langchain_core.tools import tool
-from pydantic import Field, model_validator
+from pydantic import Field
+from pydantic import model_validator
 
 
 class SupervisorState(StateSchema):
     """State for dynamic supervisor with agent registry."""
 
     # Core state
-    current_task: str = Field(default="")
+    current_task: str = Field(default='')
     agent_to_execute: str | None = Field(default=None)
-    agent_task: str = Field(default="")
+    agent_task: str = Field(default='')
     agent_response: str | None = Field(default=None)
 
     # Registry tracking
-    available_agents: dict[str, str] = Field(
-        default_factory=dict
-    )  # name -> description
+    available_agents: dict[str, str] = Field(default_factory=dict,
+                                             )  # name -> description
     execution_history: list[dict[str, Any]] = Field(default_factory=list)
 
 
@@ -70,13 +71,14 @@ class DynamicSupervisorV2(ReactAgent):
     agent_registry: AgentRegistry = Field(default_factory=AgentRegistry)
     agent_choice_model: DynamicChoiceModel | None = Field(default=None)
 
-    @model_validator(mode="after")
+    @model_validator(mode='after')
     @classmethod
     def setup_dynamic_supervisor(cls):
         """Set up supervisor with dynamic tool creation."""
         # Initialize choice model
         self.agent_choice_model = DynamicChoiceModel(
-            model_name="AgentChoice", include_end=True
+            model_name='AgentChoice',
+            include_end=True,
         )
 
         # Build initial tools (will be updated when agents are added)
@@ -92,7 +94,7 @@ class DynamicSupervisorV2(ReactAgent):
         # Update choice model with available agents
         # Remove existing options first
         for existing_name in self.agent_choice_model.option_names:
-            if existing_name != "END":  # Don't remove END
+            if existing_name != 'END':  # Don't remove END
                 self.agent_choice_model.remove_option_by_name(existing_name)
 
         # Add new agents
@@ -120,7 +122,7 @@ class DynamicSupervisorV2(ReactAgent):
             pass
 
         # Update engine tools if we have an engine
-        if hasattr(self, "engine") and self.engine:
+        if hasattr(self, 'engine') and self.engine:
             # Clear existing dynamic tools
             self.engine.tools = [
                 t for t in self.engine.tools if not self._is_dynamic_tool(t)
@@ -131,11 +133,11 @@ class DynamicSupervisorV2(ReactAgent):
     def _is_dynamic_tool(self, tool) -> bool:
         """Check if a tool is dynamically created by supervisor."""
         dynamic_prefixes = [
-            "list_agents",
-            "choose_agent",
-            "handoff_to_",
-            "forward_to_",
-            "execution_status",
+            'list_agents',
+            'choose_agent',
+            'handoff_to_',
+            'forward_to_',
+            'execution_status',
         ]
         return any(tool.name.startswith(prefix) for prefix in dynamic_prefixes)
 
@@ -147,9 +149,9 @@ class DynamicSupervisorV2(ReactAgent):
             """List all available agents and their capabilities."""
             available = self.agent_registry.list_available()
             if not available:
-                return "No agents currently available"
+                return 'No agents currently available'
 
-            result = "Available agents:\n"
+            result = 'Available agents:\n'
             for name, description in available.items():
                 result += f"- {name}: {description}\n"
             return result.strip()
@@ -160,7 +162,7 @@ class DynamicSupervisorV2(ReactAgent):
         """Create tool that uses dynamic choice model for agent selection."""
 
         @tool
-        def choose_agent(task_description: str, reasoning: str = "") -> str:
+        def choose_agent(task_description: str, reasoning: str = '') -> str:
             """Make a validated choice about which agent to use for a task.
 
             Args:
@@ -171,41 +173,40 @@ class DynamicSupervisorV2(ReactAgent):
                 The chosen agent name and next steps
             """
             try:
-
                 # Get current choice model
                 if not self.agent_choice_model:
-                    return "Error: No choice model available"
+                    return 'Error: No choice model available'
 
                 ChoiceModel = self.agent_choice_model.current_model
                 available_options = self.agent_choice_model.option_names
 
                 # Simple heuristic-based selection
                 task_lower = task_description.lower()
-                chosen_agent = "END"  # Default
+                chosen_agent = 'END'  # Default
 
                 # Basic keyword matching
-                if any(
-                    word in task_lower
-                    for word in ["math", "calculate", "add", "multiply", "number"]
-                ):
-                    if "math_agent" in available_options:
-                        chosen_agent = "math_agent"
+                if any(word in task_lower for word in
+                       ['math', 'calculate', 'add', 'multiply', 'number']):
+                    if 'math_agent' in available_options:
+                        chosen_agent = 'math_agent'
                 elif any(
-                    word in task_lower
-                    for word in ["plan", "schedule", "organize", "steps"]
-                ):
-                    if "planning_agent" in available_options:
-                        chosen_agent = "planning_agent"
-                elif available_options and available_options[0] != "END":
+                        word in task_lower
+                        for word in ['plan', 'schedule', 'organize', 'steps']):
+                    if 'planning_agent' in available_options:
+                        chosen_agent = 'planning_agent'
+                elif available_options and available_options[0] != 'END':
                     # Fallback to first available agent
                     chosen_agent = available_options[0]
 
                 # Validate choice
                 validated_choice = ChoiceModel(choice=chosen_agent)
 
-                if validated_choice.choice == "END":
-                    return f"Task complete or no suitable agent found. Chosen: {validated_choice.choice}"
-                return f"Chosen agent: {validated_choice.choice}. Use handoff_to_{validated_choice.choice} to execute."
+                if validated_choice.choice == 'END':
+                    return f"Task complete or no suitable agent found. Chosen: {
+                        validated_choice.choice}"
+                return f"Chosen agent: {
+                    validated_choice.choice}. Use handoff_to_{
+                    validated_choice.choice} to execute."
 
             except Exception as e:
                 return f"Error choosing agent: {e!s}"
@@ -225,7 +226,6 @@ class DynamicSupervisorV2(ReactAgent):
                 Result from the agent execution
             """
             try:
-
                 # Get the agent
                 agent = self.agent_registry.get(agent_name)
                 if not agent:
@@ -233,38 +233,40 @@ class DynamicSupervisorV2(ReactAgent):
 
                 # Execute the agent
                 result = agent.invoke(
-                    {"messages": [{"role": "user", "content": task_description}]}
-                )
+                    {
+                        'messages': [{
+                            'role': 'user',
+                            'content': task_description
+                        }]
+                    }, )
 
                 # Extract response
-                if isinstance(result, dict) and "messages" in result:
-                    response = result["messages"][-1].get("content", str(result))
+                if isinstance(result, dict) and 'messages' in result:
+                    response = result['messages'][-1].get(
+                        'content', str(result))
                 else:
                     response = str(result)
 
                 # Record execution
                 self.state.execution_history.append(
                     {
-                        "agent": agent_name,
-                        "task": task_description,
-                        "success": True,
-                        "response_length": len(response),
-                    }
-                )
+                        'agent': agent_name,
+                        'task': task_description,
+                        'success': True,
+                        'response_length': len(response),
+                    }, )
 
                 return f"{agent_name} response: {response}"
 
             except Exception as e:
-
                 # Record failure
                 self.state.execution_history.append(
                     {
-                        "agent": agent_name,
-                        "task": task_description,
-                        "success": False,
-                        "error": str(e),
-                    }
-                )
+                        'agent': agent_name,
+                        'task': task_description,
+                        'success': False,
+                        'error': str(e),
+                    }, )
 
                 return f"Error executing {agent_name}: {e!s}"
 
@@ -278,7 +280,7 @@ class DynamicSupervisorV2(ReactAgent):
     def _create_forward_tool(self, agent_name: str, description: str):
         """Create forward tool for specific agent."""
 
-        def forward_tool(message: str, context: str = "") -> str:
+        def forward_tool(message: str, context: str = '') -> str:
             """Forward a message to agent for processing.
 
             Args:
@@ -289,7 +291,6 @@ class DynamicSupervisorV2(ReactAgent):
                 Formatted response from the agent
             """
             try:
-
                 # Get the agent
                 agent = self.agent_registry.get(agent_name)
                 if not agent:
@@ -302,12 +303,15 @@ class DynamicSupervisorV2(ReactAgent):
 
                 # Execute the agent
                 result = agent.invoke(
-                    {"messages": [{"role": "user", "content": full_message}]}
-                )
+                    {'messages': [{
+                        'role': 'user',
+                        'content': full_message
+                    }]}, )
 
                 # Extract response
-                if isinstance(result, dict) and "messages" in result:
-                    response = result["messages"][-1].get("content", str(result))
+                if isinstance(result, dict) and 'messages' in result:
+                    response = result['messages'][-1].get(
+                        'content', str(result))
                 else:
                     response = str(result)
 
@@ -332,15 +336,15 @@ class DynamicSupervisorV2(ReactAgent):
         def execution_status() -> str:
             """Get current execution status and history."""
             if not self.state.execution_history:
-                return "No execution history available"
+                return 'No execution history available'
 
-            status_lines = ["Execution History:"]
+            status_lines = ['Execution History:']
             for i, record in enumerate(self.state.execution_history[-5:], 1):
-                agent = record.get("agent", "unknown")
-                success = "✅" if record.get("success", False) else "❌"
+                agent = record.get('agent', 'unknown')
+                success = '✅' if record.get('success', False) else '❌'
                 status_lines.append(f"{i}. {success} {agent}")
 
-            return "\n".join(status_lines)
+            return '\n'.join(status_lines)
 
         return execution_status
 

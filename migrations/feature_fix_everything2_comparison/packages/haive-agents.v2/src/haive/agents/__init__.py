@@ -1,8 +1,9 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from haive.agents.discovery.component_discovery_agent import (  # clear_cache,  # Instance method, not module function; get_cache_stats,  # Instance method, not module function; setup_discovery_agent,  # Instance method, not module function
-    ComponentDiscoveryAgent,
-)
+    ComponentDiscoveryAgent, )
 from haive.agents.discovery.dynamic_tool_selector import (
     ContextAwareSelector,
     ContextAwareState,
@@ -51,7 +52,6 @@ from haive.agents.discovery.semantic_discovery import (
     setup_vector_store,
     update_selection_strategy,
 )
-
 
 __all__ = [
     "AdaptiveSelectionStrategy",

@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from flare.agent import (
     ActiveRetrievalAgent,
     ConfidenceLevel,
@@ -17,7 +19,6 @@ from flare.agent import (
     get_flare_rag_io_schema,
     plan_flare_iteration,
 )
-
 
 __all__ = [
     "ActiveRetrievalAgent",

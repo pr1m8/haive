@@ -1,6 +1,7 @@
 """Quick Sphinx configuration to show HTML writing."""
-
 # Basic project info
+from __future__ import annotations
+
 project = "Haive AI Agent Framework"
 copyright = "2024, Haive Team"
 author = "Haive Team"

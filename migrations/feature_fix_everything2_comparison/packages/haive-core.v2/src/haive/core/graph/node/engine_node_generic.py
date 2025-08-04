@@ -1,8 +1,10 @@
-"""Generic Engine Node Configuration with Type Safety and Field Registry Integration.
+"""Generic Engine Node Configuration with Type Safety and Field Registry
+Integration.
 
-This module provides generic engine node configurations that can distinguish between
-different engine types (LLM, RAG, etc.) while maintaining backwards compatibility. It
-integrates with the field registry for standardized field definitions.
+This module provides generic engine node configurations that can
+distinguish between different engine types (LLM, RAG, etc.) while
+maintaining backwards compatibility. It integrates with the field
+registry for standardized field definitions.
 """
 
 import logging
@@ -32,8 +34,8 @@ logger.setLevel(logging.DEBUG)
 class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
     """Generic engine node with type-safe input/output schemas.
 
-    This base class provides the foundation for type-safe engine nodes that can declare
-    their input and output schemas explicitly.
+    This base class provides the foundation for type-safe engine nodes
+    that can declare their input and output schemas explicitly.
     """
 
     # Core identity
@@ -55,7 +57,8 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
 
     # Engine attribution
     auto_add_engine_attribution: bool = Field(
-        default=True, description="Automatically add engine_name to outputs"
+        default=True,
+        description="Automatically add engine_name to outputs",
     )
 
     # Options
@@ -69,26 +72,32 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         """Post-initialization to setup schemas from field definitions."""
         super().model_post_init(__context)
 
-        # Setup default field definitions from engine if not provided (like EngineNodeConfig)
+        # Setup default field definitions from engine if not provided (like
+        # EngineNodeConfig)
         if self.engine and not self.input_field_defs and not self.output_field_defs:
             self._setup_default_field_defs_from_engine()
 
         self._setup_schemas_from_field_defs()
 
     def _setup_schemas_from_field_defs(self):
-        """Setup input/output schemas from field definitions if not provided."""
+        """Setup input/output schemas from field definitions if not
+        provided."""
         if not self.input_schema and self.input_field_defs:
             self.input_schema = self._create_schema_from_fields(
-                self.input_field_defs, f"{self.name}Input"
+                self.input_field_defs,
+                f"{self.name}Input",
             )
 
         if not self.output_schema and self.output_field_defs:
             self.output_schema = self._create_schema_from_fields(
-                self.output_field_defs, f"{self.name}Output"
+                self.output_field_defs,
+                f"{self.name}Output",
             )
 
     def _create_schema_from_fields(
-        self, field_defs: list[FieldDefinition], schema_name: str
+        self,
+        field_defs: list[FieldDefinition],
+        schema_name: str,
     ) -> type[BaseModel]:
         """Create a Pydantic schema from field definitions."""
         from pydantic import create_model
@@ -101,7 +110,8 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         return create_model(schema_name, **fields)
 
     def _setup_default_field_defs_from_engine(self):
-        """Setup default field definitions based on engine type (like EngineNodeConfig)."""
+        """Setup default field definitions based on engine type (like
+        EngineNodeConfig)."""
         if not self.engine:
             return
 
@@ -116,8 +126,7 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                     logger.debug(
                         f"Engine derived input fields: {
                             list(
-                                engine_input_fields.keys())}"
-                    )
+                                engine_input_fields.keys())}", )
 
                     # Convert engine fields to field definitions using
                     # StandardFields when possible
@@ -147,21 +156,22 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                                     )
 
                                     field_def = FieldDefinition(
-                                        name=field_name, type_hint=type_hint
+                                        name=field_name,
+                                        type_hint=type_hint,
                                     )
 
                             self.input_field_defs.append(field_def)
                         except Exception as e:
                             logger.debug(
-                                f"Failed to create field definition for {field_name}: {e}"
-                            )
+                                f"Failed to create field definition for {field_name}: {e}", )
                             # Fallback to generic field definition
                             from haive.core.schema.field_definition import (
                                 FieldDefinition,
                             )
 
                             field_def = FieldDefinition(
-                                name=field_name, type_hint=type_hint
+                                name=field_name,
+                                type_hint=type_hint,
                             )
                             self.input_field_defs.append(field_def)
                 else:
@@ -185,9 +195,7 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
             if not self.output_field_defs:
                 # Use the actual output schema from the retriever engine
                 # The retriever output schema has 'retrieved_documents' field
-                self.output_field_defs = (
-                    []
-                )  # Let it use the engine's actual output schema
+                self.output_field_defs = []  # Let it use the engine's actual output schema
 
     def get_input_fields_for_state(self) -> dict[str, Any]:
         """Get input fields that should be included in state schema."""
@@ -202,7 +210,9 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         return {}
 
     def __call__(
-        self, state: StateLike, config: ConfigLike | None = None
+        self,
+        state: StateLike,
+        config: ConfigLike | None = None,
     ) -> Command | Send:
         """Execute the engine node with type-safe I/O."""
         logger.info("=" * 80)
@@ -222,18 +232,18 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
             logger.debug(f"Node input_field_defs: {self.input_field_defs}")
             logger.debug(
                 f"State fields available: {
-                    [
-                        field for field in dir(state) if not field.startswith('_')]}"
+                    [field for field in dir(state) if not field.startswith('_')]
+                }",
             )
 
             if self.input_schema or self.input_field_defs:
                 input_data = self.extract_input_from_state(state)
                 logger.info(
                     f"Using schema-based input extraction: {
-                        list(
-                            input_data.keys()) if isinstance(
-                            input_data,
-                            dict) else type(input_data)}"
+                        list(input_data.keys())
+                        if isinstance(input_data, dict)
+                        else type(input_data)
+                    }",
                 )
                 logger.debug(f"Extracted input_data: {input_data}")
             else:
@@ -269,11 +279,14 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         return self._extract_smart_input(state, engine)
 
     def _wrap_typed_result(
-        self, result: Any, state: StateLike, engine: Engine
+        self,
+        result: Any,
+        state: StateLike,
+        engine: Engine,
     ) -> Command | Send:
         """Wrap result using output schema if available."""
         logger.debug(
-            f"_wrap_typed_result called with output_schema: {self.output_schema}"
+            f"_wrap_typed_result called with output_schema: {self.output_schema}",
         )
 
         if self.output_schema:
@@ -287,7 +300,8 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                     if field_name in result:
                         output_dict[field_name] = result[field_name]
             elif hasattr(result, "content"):
-                # Handle AIMessage result - check for both "ai_message" and "messages" fields
+                # Handle AIMessage result - check for both "ai_message" and "messages"
+                # fields
                 if "ai_message" in self.output_schema.model_fields:
                     output_dict["ai_message"] = result
                 elif "messages" in self.output_schema.model_fields:
@@ -296,8 +310,9 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                     logger.debug("Added AI message to messages field")
                 else:
                     logger.warning(
-                        f"AI message result but no ai_message or messages field in output schema: {list(self.output_schema.model_fields.keys())}"
-                    )
+                        f"AI message result but no ai_message or messages field in output schema: {
+                            list(
+                                self.output_schema.model_fields.keys())}", )
 
             # Add engine attribution if enabled
             if self.auto_add_engine_attribution and "engine_name" in output_dict:
@@ -330,14 +345,16 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         return None
 
     def _extract_smart_input(self, state: StateLike, engine: Engine) -> Any:
-        """Extract input using the most appropriate strategy (like EngineNodeConfig)."""
+        """Extract input using the most appropriate strategy (like
+        EngineNodeConfig)."""
         logger.debug(f"Extracting input for {engine.engine_type.value} engine...")
 
         # Strategy 1: Explicit mapping
         if hasattr(self, "input_fields") and self.input_fields:
             logger.debug("Using explicit input field mapping")
             return self._extract_mapped_input(
-                state, self._normalize_mapping(self.input_fields)
+                state,
+                self._normalize_mapping(self.input_fields),
             )
 
         # Strategy 2: Schema-defined inputs
@@ -357,14 +374,17 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         return self._extract_default_input(state, engine.engine_type)
 
     def _get_schema_inputs(
-        self, state: StateLike, engine_name: str
+        self,
+        state: StateLike,
+        engine_name: str,
     ) -> list[str] | None:
         """Get input fields from state schema mappings."""
-        return (
-            getattr(state, "__engine_io_mappings__", {})
-            .get(engine_name, {})
-            .get("inputs")
-        )
+        return getattr(
+            state,
+            "__engine_io_mappings__",
+            {}).get(
+            engine_name,
+            {}).get("inputs")
 
     def _get_engine_inputs(self, engine: Engine) -> list[str] | None:
         """Get input fields from engine definition."""
@@ -373,7 +393,9 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         return None
 
     def _extract_mapped_input(
-        self, state: StateLike, mapping: dict[str, str]
+        self,
+        state: StateLike,
+        mapping: dict[str, str],
     ) -> dict[str, Any]:
         """Extract using explicit state->input mapping."""
         logger.debug(f"Extracting with mapping: {mapping}")
@@ -390,7 +412,10 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         return mapping
 
     def _extract_typed_input(
-        self, state: StateLike, fields: list[str], engine_type: EngineType
+        self,
+        state: StateLike,
+        fields: list[str],
+        engine_type: EngineType,
     ) -> dict[str, Any]:
         """Extract fields with type-specific intelligence."""
         logger.debug(f"Extracting typed input for {engine_type.value}")
@@ -426,16 +451,19 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
             return {"query": query}
         if engine_type == EngineType.EMBEDDINGS:
             text = (
-                self._get_state_value(state, "text")
-                or self._get_state_value(state, "query")
-                or ""
-            )
+                self._get_state_value(
+                    state,
+                    "text") or self._get_state_value(
+                    state,
+                    "query") or "")
             return text
         # Return state as-is for unknown types
         return state
 
     def _extract_retriever_fields(
-        self, state: StateLike, fields: list[str]
+        self,
+        state: StateLike,
+        fields: list[str],
     ) -> dict[str, Any]:
         """Retriever-specific extraction: ensure query is always present."""
         logger.debug("Extracting retriever fields")
@@ -457,7 +485,9 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         return input_data
 
     def _extract_llm_fields(
-        self, state: StateLike, fields: list[str]
+        self,
+        state: StateLike,
+        fields: list[str],
     ) -> dict[str, Any]:
         """LLM-specific extraction: include all fields."""
         logger.debug("Extracting LLM fields")
@@ -466,7 +496,9 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         return result
 
     def _extract_vectorstore_fields(
-        self, state: StateLike, fields: list[str]
+        self,
+        state: StateLike,
+        fields: list[str],
     ) -> dict[str, Any]:
         """Vector store extraction: filter None values except query."""
         logger.debug("Extracting vector store fields")
@@ -486,7 +518,7 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                 value = self._get_state_value(state, field)
                 if value:
                     logger.debug(
-                        f"Using {field} field for embeddings: {str(value)[:100]}..."
+                        f"Using {field} field for embeddings: {str(value)[:100]}...",
                     )
                     return value
 
@@ -494,7 +526,9 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         return {field: self._get_state_value(state, field) for field in fields}
 
     def _extract_agent_fields(
-        self, state: StateLike, fields: list[str]
+        self,
+        state: StateLike,
+        fields: list[str],
     ) -> dict[str, Any]:
         """Agent-specific extraction: include all fields, prioritize messages."""
         logger.debug("Extracting agent fields")
@@ -517,7 +551,9 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         return result
 
     def _extract_generic_fields(
-        self, state: StateLike, fields: list[str]
+        self,
+        state: StateLike,
+        fields: list[str],
     ) -> dict[str, Any]:
         """Generic extraction: include non-None values."""
         logger.debug("Extracting generic fields")
@@ -528,25 +564,32 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         }
 
     def _execute_with_config(
-        self, engine: Engine, input_data: Any, config: ConfigLike | None
+        self,
+        engine: Engine,
+        input_data: Any,
+        config: ConfigLike | None,
     ) -> Any:
         """Execute engine with detailed debugging."""
         logger.info("Step 3: Engine Execution")
         logger.debug(f"Engine: {type(engine)} - {engine.name}")
         logger.debug(f"Input data type: {type(input_data)}")
         logger.debug(
-            f"Input data keys: {list(input_data.keys()) if isinstance(input_data, dict) else 'Not a dict'}"
+            f"Input data keys: {
+                list(
+                    input_data.keys()) if isinstance(
+                    input_data,
+                    dict) else 'Not a dict'}",
         )
         logger.debug(f"Config: {config}")
 
         # Log engine configuration details
         if hasattr(engine, "structured_output_model"):
             logger.debug(
-                f"Engine structured_output_model: {engine.structured_output_model}"
+                f"Engine structured_output_model: {engine.structured_output_model}",
             )
         if hasattr(engine, "structured_output_version"):
             logger.debug(
-                f"Engine structured_output_version: {engine.structured_output_version}"
+                f"Engine structured_output_version: {engine.structured_output_version}",
             )
         if hasattr(engine, "temperature"):
             logger.debug(f"Engine temperature: {engine.temperature}")
@@ -564,8 +607,9 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                 if result.tool_calls:
                     for i, tool_call in enumerate(result.tool_calls):
                         logger.debug(
-                            f"  Tool call {i}: name={tool_call.get('name')}, args={tool_call.get('args')}"
-                        )
+                            f"  Tool call {i}: name={
+                                tool_call.get('name')}, args={
+                                tool_call.get('args')}", )
                 else:
                     logger.warning("❌ NO TOOL CALLS FOUND in AI message")
 
@@ -578,7 +622,10 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
             raise
 
     def _wrap_smart_result(
-        self, result: Any, state: StateLike, engine: Engine
+        self,
+        result: Any,
+        state: StateLike,
+        engine: Engine,
     ) -> Command | Send:
         """Simple result wrapping - handle messages for LLM engines."""
         logger.info("Step 4: Result Wrapping")
@@ -591,28 +638,30 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         # Check if it's an AI message with structured output
         if hasattr(result, "content") and hasattr(result, "tool_calls"):
             logger.debug(
-                f"   AI message with tool calls: {len(result.tool_calls) if result.tool_calls else 0}"
+                f"   AI message with tool calls: {len(result.tool_calls) if result.tool_calls else 0}",
             )
             if result.tool_calls:
                 for i, tool_call in enumerate(result.tool_calls):
                     logger.debug(
-                        f"     Tool call {i}: {tool_call.get('name')} with args {tool_call.get('args')}"
-                    )
+                        f"     Tool call {i}: {
+                            tool_call.get('name')} with args {
+                            tool_call.get('args')}", )
 
         # Check if result is a message-like object
         if hasattr(result, "content") and hasattr(result, "type"):
             update = {"messages": [result]}
             logger.debug(
-                f"   ✅ Treating as message, update keys: {list(update.keys())}"
+                f"   ✅ Treating as message, update keys: {list(update.keys())}",
             )
             logger.debug(
-                f"   Message content length: {len(str(result.content)) if hasattr(result, 'content') else 'N/A'}"
+                f"   Message content length: {len(str(result.content)) if hasattr(result, 'content') else 'N/A'}",
             )
         else:
             update = {"result": result}
             logger.debug(
-                f"   ⚠️  Treating as generic result, update keys: {list(update.keys())}"
-            )
+                f"   ⚠️  Treating as generic result, update keys: {
+                    list(
+                        update.keys())}", )
 
         logger.debug(f"   Creating Command with goto: {self.command_goto}")
 
@@ -627,7 +676,7 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         # Log the final command being created
         command = Command(update=update, goto=goto)
         logger.info(
-            f"✅ Created Command: update_keys={list(update.keys())}, goto={goto}"
+            f"✅ Created Command: update_keys={list(update.keys())}, goto={goto}",
         )
         logger.debug(f"   Command details: {command}")
 
@@ -635,8 +684,7 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
 
     def extract_input_from_state(self, state: Any) -> dict[str, Any]:
         """Extract input fields from state using engine-aware logic (like
-        EngineNodeConfig).
-        """
+        EngineNodeConfig)."""
         logger.debug("Generic engine node extracting input from state...")
 
         # Use input schema if available
@@ -657,9 +705,7 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                 if value is not None:
                     input_dict[field_def.name] = value
             logger.debug(
-                f"Field definition extraction: {
-                    list(
-                        input_dict.keys())}"
+                f"Field definition extraction: {list(input_dict.keys())}",
             )
             return input_dict
 
@@ -691,7 +737,7 @@ class LLMNodeConfig(GenericEngineNodeConfig[BaseModel, BaseModel]):
             # Check if engine has its own input schema
             if not (hasattr(engine, "input_schema") and engine.input_schema):
                 kwargs["input_field_defs"] = [
-                    StandardFields.messages(use_enhanced=True)
+                    StandardFields.messages(use_enhanced=True),
                 ]
 
         if "output_field_defs" not in kwargs and engine:
@@ -733,13 +779,19 @@ class RAGNodeConfig(GenericEngineNodeConfig[BaseModel, BaseModel]):
 
 @overload
 def create_engine_node(
-    engine: Engine, name: str, *, engine_type: EngineType.LLM
+    engine: Engine,
+    name: str,
+    *,
+    engine_type: EngineType.LLM,
 ) -> LLMNodeConfig: ...
 
 
 @overload
 def create_engine_node(
-    engine: Engine, name: str, *, engine_type: EngineType.RETRIEVER
+    engine: Engine,
+    name: str,
+    *,
+    engine_type: EngineType.RETRIEVER,
 ) -> RAGNodeConfig: ...
 
 

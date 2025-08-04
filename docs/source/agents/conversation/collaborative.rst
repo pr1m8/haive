@@ -10,7 +10,7 @@ A team collaboratively solving a technical challenge.
 
 **Full Example Code:**
 
-.. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/collaberative/example.py
+.. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/collaborative/example.py
 
    :language: python
    :pyobject: example_problem_solving
@@ -20,7 +20,7 @@ A team collaboratively solving a technical challenge.
 
 .. code-block:: bash
 
-    poetry run python packages/haive-agents/src/haive/agents/conversation/collaberative/example.py
+    poetry run python packages/haive-agents/src/haive/agents/conversation/collaborative/example.py
 
     **Sample Output:**
 
@@ -30,46 +30,46 @@ A team collaboratively solving a technical challenge.
 
     Topic: Optimizing Database Performance for High-Traffic Application
 
-    DBA: I've noticed our query response times increasing during peak hours. 
-    The main bottleneck seems to be complex JOIN operations on our user_activity 
+    DBA: I've noticed our query response times increasing during peak hours.
+    The main bottleneck seems to be complex JOIN operations on our user_activity
     table, which has grown to 50 million rows.
 
-    Backend Dev: That makes sense. I've been seeing timeout errors in our logs. 
-    What if we implement query result caching for frequently accessed data? We 
+    Backend Dev: That makes sense. I've been seeing timeout errors in our logs.
+    What if we implement query result caching for frequently accessed data? We
     could use Redis with a 5-minute TTL for user dashboards.
 
-    DevOps: Good idea on caching! I can also help by setting up read replicas 
-    to distribute the query load. We could route all analytical queries to 
+    DevOps: Good idea on caching! I can also help by setting up read replicas
+    to distribute the query load. We could route all analytical queries to
     replicas while keeping transactional queries on the primary.
 
-    DBA: Excellent suggestions! Building on the caching idea, we should also 
-    consider partitioning the user_activity table by date. Queries usually 
+    DBA: Excellent suggestions! Building on the caching idea, we should also
+    consider partitioning the user_activity table by date. Queries usually
     only need recent data, so this would significantly reduce scan times.
 
-    Backend Dev: Partitioning would help a lot. I'll also refactor our ORM 
-    queries to use more efficient eager loading and eliminate N+1 query 
+    Backend Dev: Partitioning would help a lot. I'll also refactor our ORM
+    queries to use more efficient eager loading and eliminate N+1 query
     problems I've identified in the codebase.
 
-    System Architect: These are all great tactical solutions. For long-term 
-    scalability, should we consider event sourcing for user activities? We 
-    could stream events to a data warehouse for analytics, keeping our 
+    System Architect: These are all great tactical solutions. For long-term
+    scalability, should we consider event sourcing for user activities? We
+    could stream events to a data warehouse for analytics, keeping our
     transactional database lean.
 
-    DBA: Event sourcing is interesting! As an immediate step, I'll create 
-    indexes on the most common query patterns and archive data older than 
-    6 months. This should give us breathing room to implement the bigger 
+    DBA: Event sourcing is interesting! As an immediate step, I'll create
+    indexes on the most common query patterns and archive data older than
+    6 months. This should give us breathing room to implement the bigger
     architectural changes.
 
-    DevOps: I'll set up monitoring dashboards for query performance and 
-    cache hit rates. This way we can measure the impact of each optimization 
+    DevOps: I'll set up monitoring dashboards for query performance and
+    cache hit rates. This way we can measure the impact of each optimization
     and identify any new bottlenecks that emerge.
 
-    Backend Dev: Perfect! Let's implement these changes incrementally. I'll 
-    start with the caching layer and query optimizations while DBA works on 
+    Backend Dev: Perfect! Let's implement these changes incrementally. I'll
+    start with the caching layer and query optimizations while DBA works on
     partitioning. We can sync up daily on progress.
 
-    System Architect: Agreed. I'll draft the event sourcing architecture 
-    proposal. Let's aim to have the immediate fixes in production by next 
+    System Architect: Agreed. I'll draft the event sourcing architecture
+    proposal. Let's aim to have the immediate fixes in production by next
     week and the architectural changes planned for next quarter.
 
     Creative Design Session
@@ -79,7 +79,7 @@ A team collaboratively solving a technical challenge.
 
     **Full Example Code:**
 
-    .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/collaberative/example.py
+    .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/collaborative/example.py
 
     :language: python
     :pyobject: example_design_collaboration
@@ -93,47 +93,47 @@ A team collaboratively solving a technical challenge.
 
     Topic: Designing an AI-Powered Personal Assistant Feature
 
-    UX Designer: I envision the AI assistant as a friendly companion that 
-    learns user preferences over time. It should have a conversational 
-    interface but not feel intrusive. Maybe a subtle icon that expands 
+    UX Designer: I envision the AI assistant as a friendly companion that
+    learns user preferences over time. It should have a conversational
+    interface but not feel intrusive. Maybe a subtle icon that expands
     when needed?
 
-    UI Designer: I love the companion concept! For the visual design, we 
-    could use soft, organic shapes and gentle animations. The icon could 
+    UI Designer: I love the companion concept! For the visual design, we
+    could use soft, organic shapes and gentle animations. The icon could
     pulse softly when it has suggestions, like a gentle breathing effect.
 
-    Product Manager: These ideas align well with user feedback. Users want 
-    help but not interruptions. What if the assistant only appears when 
-    users seem stuck? We could detect patterns like repeated actions or 
+    Product Manager: These ideas align well with user feedback. Users want
+    help but not interruptions. What if the assistant only appears when
+    users seem stuck? We could detect patterns like repeated actions or
     long pauses.
 
-    UX Researcher: Based on our user studies, people are concerned about 
-    privacy with AI assistants. The design should clearly show when the AI 
+    UX Researcher: Based on our user studies, people are concerned about
+    privacy with AI assistants. The design should clearly show when the AI
     is active and what data it's using. Maybe a privacy indicator?
 
-    UI Designer: Great point! I can design a small status indicator that 
-    shows data usage. We could use color coding - green for local processing, 
+    UI Designer: Great point! I can design a small status indicator that
+    shows data usage. We could use color coding - green for local processing,
     blue for cloud. The breathing animation could match these colors.
 
-    UX Designer: Building on the privacy theme, let's give users granular 
-    controls. They could choose which features the AI can access. The 
+    UX Designer: Building on the privacy theme, let's give users granular
+    controls. They could choose which features the AI can access. The
     onboarding should emphasize user control and transparency.
 
-    Product Manager: I'm seeing a cohesive vision emerging. The assistant 
-    is helpful but respectful, visually subtle but clear about its actions. 
+    Product Manager: I'm seeing a cohesive vision emerging. The assistant
+    is helpful but respectful, visually subtle but clear about its actions.
     How about adding a learning mode where users can explicitly teach it?
 
-    UX Researcher: Users would love that! In testing, people wanted to 
-    correct AI mistakes and see it improve. A simple thumbs up/down on 
+    UX Researcher: Users would love that! In testing, people wanted to
+    correct AI mistakes and see it improve. A simple thumbs up/down on
     suggestions could train it while keeping the interaction lightweight.
 
-    UI Designer: For the teaching interaction, we could use micro-animations 
-    showing the AI "learning" - maybe the icon briefly transforms or sparkles 
-    when receiving feedback. It makes the learning process visible and 
+    UI Designer: For the teaching interaction, we could use micro-animations
+    showing the AI "learning" - maybe the icon briefly transforms or sparkles
+    when receiving feedback. It makes the learning process visible and
     satisfying.
 
-    UX Designer: Perfect! Let's prototype this flow: subtle icon → contextual 
-    appearance → clear privacy indicators → easy feedback mechanism. The 
+    UX Designer: Perfect! Let's prototype this flow: subtle icon → contextual
+    appearance → clear privacy indicators → easy feedback mechanism. The
     whole experience should feel like a helpful friend, not a surveillance tool.
 
     Research Collaboration
@@ -145,7 +145,7 @@ A team collaboratively solving a technical challenge.
 
 .. code-block:: python
 
-    from haive.agents.conversation.collaberative import CollaborativeConversation
+    from haive.agents.conversation.collaborative import CollaborativeConversation
     from haive.agents.simple import SimpleAgent
 
     def example_research_collaboration():
@@ -186,41 +186,41 @@ A team collaboratively solving a technical challenge.
 
 .. code-block:: text
 
-    DataScientist: Our regression analysis shows a -2.3% yield decrease per 
-    degree Celsius increase, with p<0.001. The effect is most pronounced in 
+    DataScientist: Our regression analysis shows a -2.3% yield decrease per
+    degree Celsius increase, with p<0.001. The effect is most pronounced in
     wheat (-3.1%) and least in sorghum (-0.8%). Interesting regional variations too.
 
-    DomainExpert: These findings align with crop physiology. Wheat is 
-    temperature-sensitive during grain filling. The sorghum resilience makes 
+    DomainExpert: These findings align with crop physiology. Wheat is
+    temperature-sensitive during grain filling. The sorghum resilience makes
     sense - it's originally from hot climates. What about precipitation interactions?
 
-    DataScientist: Great question! When we include precipitation, the model 
-    improves significantly (R²=0.76). Low rainfall amplifies temperature 
-    effects. Areas with >800mm annual rainfall show 40% less temperature 
+    DataScientist: Great question! When we include precipitation, the model
+    improves significantly (R²=0.76). Low rainfall amplifies temperature
+    effects. Areas with >800mm annual rainfall show 40% less temperature
     impact on yields.
 
-    Methodologist: We should verify these interactions aren't just capturing 
-    irrigation differences. Did we control for irrigation infrastructure? 
+    Methodologist: We should verify these interactions aren't just capturing
+    irrigation differences. Did we control for irrigation infrastructure?
     Also, 5 years might not capture long-term adaptation effects.
 
-    DomainExpert: Valid concern. Farmers do adapt - switching cultivars, 
-    adjusting planting dates. Our study areas have minimal irrigation, so 
+    DomainExpert: Valid concern. Farmers do adapt - switching cultivars,
+    adjusting planting dates. Our study areas have minimal irrigation, so
     that's controlled. But yes, adaptation is a limitation we should acknowledge.
 
-    DataScientist: I can separate short-term weather effects from long-term 
-    trends using panel data methods. Preliminary results suggest 30% of the 
+    DataScientist: I can separate short-term weather effects from long-term
+    trends using panel data methods. Preliminary results suggest 30% of the
     impact is offset by adaptation within 3 years. Still significant net negative effect.
 
-    Methodologist: That's a crucial finding! For actionable insights, we should 
-    model specific adaptation strategies. Which practices show the most promise 
+    Methodologist: That's a crucial finding! For actionable insights, we should
+    model specific adaptation strategies. Which practices show the most promise
     for yield recovery in our data?
 
-    DomainExpert: From field observations, successful farms shifted planting 
-    dates earlier and adopted drought-resistant varieties. We could quantify 
+    DomainExpert: From field observations, successful farms shifted planting
+    dates earlier and adopted drought-resistant varieties. We could quantify
     these effects and create region-specific recommendations.
 
-    DataScientist: I'll run that analysis. Initial results: 15 days earlier 
-    planting recovers 1.2% yield, drought varieties add 1.8%. Combined with 
+    DataScientist: I'll run that analysis. Initial results: 15 days earlier
+    planting recovers 1.2% yield, drought varieties add 1.8%. Combined with
     optimal fertilization, we can offset up to 60% of climate impact.
 
     Key Features Demonstrated

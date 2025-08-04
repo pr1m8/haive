@@ -2,15 +2,14 @@
 
 This module provides prompt functionality for the Haive framework.
 """
+from __future__ import annotations
 
 from langchain_core.prompts import ChatPromptTemplate
 
-
-RAG_DOCUMENT_GRADE_COMPREHENSIVE = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            """You are an expert document relevance evaluator for Retrieval-Augmented Generation (RAG) systems. Your role is to assess whether retrieved documents are relevant to a given query and how well they support answering that query.
+RAG_DOCUMENT_GRADE_COMPREHENSIVE = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        """You are an expert document relevance evaluator for Retrieval-Augmented Generation (RAG) systems. Your role is to assess whether retrieved documents are relevant to a given query and how well they support answering that query.
 
 **Core Evaluation Principles:**
 
@@ -43,10 +42,10 @@ RAG_DOCUMENT_GRADE_COMPREHENSIVE = ChatPromptTemplate.from_messages(
 - Account for different types of queries (factual, analytical, procedural, etc.)
 
 Provide comprehensive evaluation with structured output.""",
-        ),
-        (
-            "human",
-            """Evaluate the relevance of the following documents to the given query.
+    ),
+    (
+        "human",
+        """Evaluate the relevance of the following documents to the given query.
 
 **Query:** {query}
 
@@ -54,6 +53,5 @@ Provide comprehensive evaluation with structured output.""",
 {retrieved_documents}
 
 Provide comprehensive evaluation with scores, justifications, key information identified, and limitations for each document.""",
-        ),
-    ]
-)
+    ),
+], )

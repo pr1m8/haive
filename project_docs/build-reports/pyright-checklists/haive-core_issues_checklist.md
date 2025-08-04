@@ -10201,7 +10201,7 @@
 ### 📄 haive-core/src/haive/core/graph/routing.py
 
 - [ ] **Line 24** (`reportMissingImports`)
-  - **Issue**: Import "haive.core.registry.registy" could not be resolved
+  - **Issue**: Import "haive.core.registry.registry" could not be resolved
   - **Location**: `haive-core/src/haive/core/graph/routing.py:24:5`
 
 - [ ] **Line 480** (`reportArgumentType`)
@@ -18159,11 +18159,11 @@
 ### 📄 haive-core/src/haive/core/engine/base/protocols.py
 
 - [ ] **Line 17** (`reportInvalidTypeVarUse`)
-  - **Issue**: Type variable "I" used in generic Protocol "Invokable" should be contravariant
+  - **Issue**: Type variable "I" used in generic Protocol "Invocable" should be contravariant
   - **Location**: `haive-core/src/haive/core/engine/base/protocols.py:17:6`
 
 - [ ] **Line 17** (`reportInvalidTypeVarUse`)
-  - **Issue**: Type variable "O" used in generic Protocol "Invokable" should be covariant
+  - **Issue**: Type variable "O" used in generic Protocol "Invocable" should be covariant
   - **Location**: `haive-core/src/haive/core/engine/base/protocols.py:17:6`
 
 - [ ] **Line 58** (`reportInvalidTypeVarUse`)
@@ -27659,7 +27659,7 @@
 ### 📄 haive-core/src/haive/core/graph/routing.py
 
 - [ ] **Line 24** (`reportMissingImports`)
-  - **Issue**: Import "haive.core.registry.registy" could not be resolved
+  - **Issue**: Import "haive.core.registry.registry" could not be resolved
   - **Location**: `haive-core/src/haive/core/graph/routing.py:24:5`
 
 - [ ] **Line 480** (`reportArgumentType`)
@@ -33991,5 +33991,5 @@ poetry run pytest packages/haive-core/tests/ -v
 
 ---
 
-**Generated**: 2025-08-02  
+**Generated**: 2025-08-02
 **Source**: `project_docs/build-reports/pyright-issues/haive-core-*.json`

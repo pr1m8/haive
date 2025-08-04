@@ -34,26 +34,32 @@ class SelfDiscoverMultiAgentState(StateSchema):
     # Input
     task_description: str = Field(default="", description="The task to solve")
     reasoning_modules: list[str] = Field(
-        default_factory=list, description="Available reasoning modules"
+        default_factory=list,
+        description="Available reasoning modules",
     )
 
     # Intermediate results
     selected_modules: list[SelectedModule] | None = Field(
-        default=None, description="Modules selected for this task"
+        default=None,
+        description="Modules selected for this task",
     )
     adapted_modules: list[AdaptedModule] | None = Field(
-        default=None, description="Task-specific adapted modules"
+        default=None,
+        description="Task-specific adapted modules",
     )
     reasoning_structure: ReasoningStructure | None = Field(
-        default=None, description="Step-by-step reasoning plan"
+        default=None,
+        description="Step-by-step reasoning plan",
     )
 
     # Final output
     reasoning_results: dict[str, str] = Field(
-        default_factory=dict, description="Results from executing each reasoning step"
+        default_factory=dict,
+        description="Results from executing each reasoning step",
     )
     final_answer: str | None = Field(
-        default=None, description="Final answer to the task"
+        default=None,
+        description="Final answer to the task",
     )
 
 
@@ -99,8 +105,7 @@ Select 3-5 modules that are most relevant for solving this task. For each select
 - Explain why this module is relevant for the task
 
 Return your selection in a clear, structured format.
-"""
-    )
+""", )
 
     config = AugLLMConfig(
         temperature=0.1,
@@ -127,8 +132,7 @@ For each selected module, provide a task-specific adaptation that:
 - Provides concrete guidance on how to use it
 
 Return the adapted modules in a clear, structured format.
-"""
-    )
+""", )
 
     config = AugLLMConfig(
         temperature=0.3,
@@ -161,8 +165,7 @@ Format the plan as a numbered list of steps, each with:
 - Expected outcome
 
 Note: Create the PLAN only, do not solve the problem yet.
-"""
-    )
+""", )
 
     config = AugLLMConfig(
         temperature=0.2,
@@ -192,8 +195,7 @@ Follow the plan step by step:
 - Work toward the final answer
 
 Provide detailed reasoning for each step and conclude with the final answer.
-"""
-    )
+""", )
 
     config = AugLLMConfig(
         temperature=0.1,
@@ -205,7 +207,8 @@ Provide detailed reasoning for each step and conclude with the final answer.
 
 
 def create_self_discover_multiagent(
-    name: str = "self_discover_system", reasoning_modules: list[str] | None = None
+    name: str = "self_discover_system",
+    reasoning_modules: list[str] | None = None,
 ) -> MultiAgent:
     """Create a Self-Discover system using MultiAgent.
 
@@ -276,7 +279,7 @@ def create_self_discover_with_conditional_routing() -> MultiAgent:
     error_handler = SimpleAgent(
         name="error_handler",
         engine=AugLLMConfig(
-            system_message="You handle errors and provide helpful feedback."
+            system_message="You handle errors and provide helpful feedback.",
         ),
     )
 
@@ -302,7 +305,12 @@ def create_self_discover_with_conditional_routing() -> MultiAgent:
 
     # Could add error checking after each stage
     multi_agent.add_conditional_routing(
-        "reasonef", check_for_errors, {"error": "error_handler", "continue": "__end__"}
+        "reasonef",
+        check_for_errors,
+        {
+            "error": "error_handler",
+            "continue": "__end__"
+        },
     )
 
     return multi_agent

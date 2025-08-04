@@ -1,6 +1,6 @@
 # Git Development Tools
 
-**Purpose**: Git workflow automation, repository management, and development utilities  
+**Purpose**: Git workflow automation, repository management, and development utilities
 **Usage**: Streamlining git operations, automated workflows, and repository maintenance
 
 ## 📄 Current Scripts

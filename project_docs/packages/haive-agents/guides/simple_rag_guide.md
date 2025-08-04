@@ -1,8 +1,8 @@
 # SimpleRAG Agent - Dead Simple RAG Pattern
 
-**Version**: 1.0  
-**Date**: 2025-01-21  
-**Status**: Production Ready  
+**Version**: 1.0
+**Date**: 2025-01-21
+**Status**: Production Ready
 
 ## 🎯 **Overview**
 
@@ -13,7 +13,7 @@ SimpleRAGAgent = EnhancedMulti([BaseRAGAgent, SimpleAgent], mode=Sequential)
 ```
 
 **Key Features:**
-- **BaseRAGAgent** handles document retrieval 
+- **BaseRAGAgent** handles document retrieval
 - **SimpleAgent** has built-in `RAG_ANSWER_STANDARD` prompt template
 - **Sequential execution** via EnhancedMultiAgent V3
 - **Built-in keys**: `{query}` and `{retrieved_documents}` in the prompt
@@ -77,12 +77,12 @@ Your SimpleAgent automatically gets the `RAG_ANSWER_STANDARD` prompt with these 
 
 **Full Prompt Structure:**
 ```text
-System: You are an expert AI assistant specialized in generating comprehensive, 
-accurate answers using retrieved documents. Your role is to synthesize information 
+System: You are an expert AI assistant specialized in generating comprehensive,
+accurate answers using retrieved documents. Your role is to synthesize information
 from multiple sources to provide helpful, truthful, and well-structured responses.
 
 Core Principles:
 1. Accuracy First - Only use information from provided documents
-2. Source Grounding - Base every claim on the provided documents  
+2. Source Grounding - Base every claim on the provided documents
 3. Comprehensiveness - Address all aspects when information is available
 4. Transparency - Be clear about limitations and uncertainties

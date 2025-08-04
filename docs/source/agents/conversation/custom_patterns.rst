@@ -128,7 +128,7 @@ Basic Template
     # Simple heuristic - in practice, use NLP/LLM
     indicators = [
     "I understand",
-    "that makes sense", 
+    "that makes sense",
     "I see now",
     "because",
     "therefore"
@@ -316,7 +316,7 @@ Basic Template
     def get_next_revelation(self) -> str:
     """Get next piece of information to reveal."""
     unrevealed = [
-    info for info in self.secret_info 
+    info for info in self.secret_info
     if info not in self.revealed_info
     ]
     if unrevealed:
@@ -329,10 +329,10 @@ Basic Template
     """Update trust based on investigator approach."""
     if message.speaker in [inv.name for inv in self.investigators]:
     # Simple heuristic - real implementation would analyze content
-    if any(word in message.content.lower() for word in 
+    if any(word in message.content.lower() for word in
     ["please", "help", "important", "trust", "safe"]):
     self.trust_level = min(self.trust_level + 0.15, 1.0)
-    elif any(word in message.content.lower() for word in 
+    elif any(word in message.content.lower() for word in
     ["demand", "tell", "now", "must"]):
     self.trust_level = max(self.trust_level - 0.1, 0.0)
 
@@ -349,7 +349,7 @@ Basic Template
     def __init__(self, thread_configs: List[Dict], **kwargs):**
     # Initialize multiple conversation threads
     self.threads = [
-    self.create_thread(config) 
+    self.create_thread(config)
     for config in thread_configs
     ]
 
@@ -389,21 +389,21 @@ Basic Template
 
     1. **Clear State Management**
 
-   
+
     - Track conversation-specific state
     - Use dataclasses for complex state
     - Implement state persistence if needed
 
     2. **Flexible Configuration**
 
-   
+
     - Use keyword arguments for extensibility
     - Provide sensible defaults
     - Allow runtime configuration changes
 
     3. **Robust Error Handling**
 
-   
+
     - Handle agent failures gracefully
     - Implement timeout mechanisms
     - Provide fallback behaviors

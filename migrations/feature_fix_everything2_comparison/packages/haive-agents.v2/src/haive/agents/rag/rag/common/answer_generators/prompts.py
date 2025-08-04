@@ -2,15 +2,14 @@
 
 This module provides prompts functionality for the Haive framework.
 """
+from __future__ import annotations
 
 from langchain_core.prompts import ChatPromptTemplate
 
-
-RAG_ANSWER_STANDARD = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            """You are an expert AI assistant specialized in generating comprehensive, accurate answers using retrieved documents. Your role is to synthesize information from multiple sources to provide helpful, truthful, and well-structured responses.
+RAG_ANSWER_STANDARD = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        """You are an expert AI assistant specialized in generating comprehensive, accurate answers using retrieved documents. Your role is to synthesize information from multiple sources to provide helpful, truthful, and well-structured responses.
 
 **Core Principles:**
 
@@ -30,10 +29,10 @@ RAG_ANSWER_STANDARD = ChatPromptTemplate.from_messages(
 - **Limitations**: Acknowledge what cannot be answered from the available information
 
 Generate responses that would be valuable to someone seeking comprehensive information on the topic.""",
-        ),
-        (
-            "human",
-            """Based on the following retrieved documents, provide a comprehensive answer to the query.
+    ),
+    (
+        "human",
+        """Based on the following retrieved documents, provide a comprehensive answer to the query.
 
 **Query:** {query}
 
@@ -47,15 +46,13 @@ Generate responses that would be valuable to someone seeking comprehensive infor
 4. Include relevant details that add value
 5. Acknowledge any limitations or gaps in the available information
 6. If the documents don't contain sufficient information to answer the query, clearly state this""",
-        ),
-    ]
-)
+    ),
+], )
 
 RAG_ANSWER_WITH_CITATIONS = ChatPromptTemplate.from_messages(
     [
-        (
-            "system",
-            """You are an expert AI assistant specialized in generating comprehensive, accurate answers with proper citations and source attribution.
+        ("system",
+         """You are an expert AI assistant specialized in generating comprehensive, accurate answers with proper citations and source attribution.
 
 Follow the same core principles as standard answer generation, but with enhanced citation requirements:
 
@@ -67,10 +64,9 @@ Follow the same core principles as standard answer generation, but with enhanced
 - Provide a source summary at the end
 
 Generate well-cited, comprehensive responses.""",
-        ),
-        (
-            "human",
-            """Generate a detailed answer with proper citations and source attribution.
+         ),
+        ("human",
+         """Generate a detailed answer with proper citations and source attribution.
 
 **Query:** {query}
 
@@ -82,6 +78,6 @@ Generate well-cited, comprehensive responses.""",
 3. **Key Findings** (bulleted list with citations)
 4. **Source Summary** (brief description of each document used)
 5. **Limitations** (what couldn't be answered from available sources)""",
-        ),
-    ]
+         ),
+    ],
 )

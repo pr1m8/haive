@@ -1,27 +1,25 @@
 """Advanced extraction prompt templates for Memory V2 system.
 
-This module provides sophisticated, focused prompt templates for extracting
-different types of information from conversations and documents, specifically
-designed for memory-based agents with KG integration.
+This module provides sophisticated, focused prompt templates for
+extracting different types of information from conversations and
+documents, specifically designed for memory-based agents with KG
+integration.
 """
+from __future__ import annotations
 
 from typing import Any
 
-from langchain_core.prompts import (
-    ChatPromptTemplate,
-    HumanMessagePromptTemplate,
-    SystemMessagePromptTemplate,
-)
-
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import HumanMessagePromptTemplate
+from langchain_core.prompts import SystemMessagePromptTemplate
 
 # ============================================================================
 # CORE MEMORY EXTRACTION PROMPTS
 # ============================================================================
 
-PROFESSIONAL_INFORMATION_EXTRACTOR = ChatPromptTemplate.from_messages(
-    [
-        SystemMessagePromptTemplate.from_template(
-            """You are an expert at extracting professional information from conversations.
+PROFESSIONAL_INFORMATION_EXTRACTOR = ChatPromptTemplate.from_messages([
+    SystemMessagePromptTemplate.from_template(
+        """You are an expert at extracting professional information from conversations.
 
 Your task is to identify and extract:
 1. Job titles, roles, and positions
@@ -58,19 +56,15 @@ Output Format:
     }
   ]
 }
-```"""
-        ),
-        HumanMessagePromptTemplate.from_template(
-            "Extract professional information from this conversation:\n\n{conversation_text}"
-        ),
-    ]
-)
+```""", ),
+    HumanMessagePromptTemplate.from_template(
+        'Extract professional information from this conversation:\n\n{conversation_text}',
+    ),
+], )
 
-
-PERSONAL_CONTEXT_EXTRACTOR = ChatPromptTemplate.from_messages(
-    [
-        SystemMessagePromptTemplate.from_template(
-            """You are an expert at extracting personal context and background information.
+PERSONAL_CONTEXT_EXTRACTOR = ChatPromptTemplate.from_messages([
+    SystemMessagePromptTemplate.from_template(
+        """You are an expert at extracting personal context and background information.
 
 Focus on extracting:
 1. Personal interests and hobbies
@@ -108,19 +102,15 @@ Output Format:
     }
   ]
 }
-```"""
-        ),
-        HumanMessagePromptTemplate.from_template(
-            "Extract personal context from this conversation:\n\n{conversation_text}"
-        ),
-    ]
-)
+```""", ),
+    HumanMessagePromptTemplate.from_template(
+        'Extract personal context from this conversation:\n\n{conversation_text}',
+    ),
+], )
 
-
-TECHNICAL_KNOWLEDGE_EXTRACTOR = ChatPromptTemplate.from_messages(
-    [
-        SystemMessagePromptTemplate.from_template(
-            """You are an expert at extracting technical knowledge and expertise information.
+TECHNICAL_KNOWLEDGE_EXTRACTOR = ChatPromptTemplate.from_messages([
+    SystemMessagePromptTemplate.from_template(
+        """You are an expert at extracting technical knowledge and expertise information.
 
 Focus on identifying:
 1. Programming languages and frameworks
@@ -169,19 +159,15 @@ Output Format:
     }
   ]
 }
-```"""
-        ),
-        HumanMessagePromptTemplate.from_template(
-            "Extract technical knowledge from this conversation:\n\n{conversation_text}"
-        ),
-    ]
-)
+```""", ),
+    HumanMessagePromptTemplate.from_template(
+        'Extract technical knowledge from this conversation:\n\n{conversation_text}',
+    ),
+], )
 
-
-PROJECT_AND_TASK_EXTRACTOR = ChatPromptTemplate.from_messages(
-    [
-        SystemMessagePromptTemplate.from_template(
-            """You are an expert at extracting project, task, and timeline information.
+PROJECT_AND_TASK_EXTRACTOR = ChatPromptTemplate.from_messages([
+    SystemMessagePromptTemplate.from_template(
+        """You are an expert at extracting project, task, and timeline information.
 
 Focus on identifying:
 1. Current and upcoming projects
@@ -232,19 +218,15 @@ Output Format:
     }
   ]
 }
-```"""
-        ),
-        HumanMessagePromptTemplate.from_template(
-            "Extract projects, tasks, and timeline information from:\n\n{conversation_text}"
-        ),
-    ]
-)
+```""", ),
+    HumanMessagePromptTemplate.from_template(
+        'Extract projects, tasks, and timeline information from:\n\n{conversation_text}',
+    ),
+], )
 
-
-ENTITY_RELATIONSHIP_EXTRACTOR = ChatPromptTemplate.from_messages(
-    [
-        SystemMessagePromptTemplate.from_template(
-            """You are an expert at extracting entities and their relationships from text.
+ENTITY_RELATIONSHIP_EXTRACTOR = ChatPromptTemplate.from_messages([
+    SystemMessagePromptTemplate.from_template(
+        """You are an expert at extracting entities and their relationships from text.
 
 Your task is to identify:
 1. People and their attributes
@@ -290,23 +272,18 @@ Output Format:
     }
   ]
 }
-```"""
-        ),
-        HumanMessagePromptTemplate.from_template(
-            "Extract entities and relationships from:\n\n{conversation_text}"
-        ),
-    ]
-)
-
+```""", ),
+    HumanMessagePromptTemplate.from_template(
+        'Extract entities and relationships from:\n\n{conversation_text}', ),
+], )
 
 # ============================================================================
 # SPECIALIZED DOMAIN EXTRACTORS
 # ============================================================================
 
-PRODUCT_MANAGEMENT_EXTRACTOR = ChatPromptTemplate.from_messages(
-    [
-        SystemMessagePromptTemplate.from_template(
-            """You are an expert at extracting product management information.
+PRODUCT_MANAGEMENT_EXTRACTOR = ChatPromptTemplate.from_messages([
+    SystemMessagePromptTemplate.from_template(
+        """You are an expert at extracting product management information.
 
 Focus on:
 1. Product features and requirements
@@ -343,19 +320,14 @@ Output Format:
     }
   ]
 }
-```"""
-        ),
-        HumanMessagePromptTemplate.from_template(
-            "Extract product management insights from:\n\n{conversation_text}"
-        ),
-    ]
-)
+```""", ),
+    HumanMessagePromptTemplate.from_template(
+        'Extract product management insights from:\n\n{conversation_text}', ),
+], )
 
-
-ENGINEERING_CONTEXT_EXTRACTOR = ChatPromptTemplate.from_messages(
-    [
-        SystemMessagePromptTemplate.from_template(
-            """You are an expert at extracting engineering and technical context.
+ENGINEERING_CONTEXT_EXTRACTOR = ChatPromptTemplate.from_messages([
+    SystemMessagePromptTemplate.from_template(
+        """You are an expert at extracting engineering and technical context.
 
 Focus on:
 1. Technical architecture and design decisions
@@ -393,23 +365,18 @@ Output Format:
     }
   ]
 }
-```"""
-        ),
-        HumanMessagePromptTemplate.from_template(
-            "Extract engineering context from:\n\n{conversation_text}"
-        ),
-    ]
-)
-
+```""", ),
+    HumanMessagePromptTemplate.from_template(
+        'Extract engineering context from:\n\n{conversation_text}', ),
+], )
 
 # ============================================================================
 # CONVERSATION ANALYSIS EXTRACTORS
 # ============================================================================
 
-SENTIMENT_AND_TONE_EXTRACTOR = ChatPromptTemplate.from_messages(
-    [
-        SystemMessagePromptTemplate.from_template(
-            """You are an expert at analyzing sentiment, tone, and emotional context.
+SENTIMENT_AND_TONE_EXTRACTOR = ChatPromptTemplate.from_messages([
+    SystemMessagePromptTemplate.from_template(
+        """You are an expert at analyzing sentiment, tone, and emotional context.
 
 Analyze:
 1. Overall sentiment and mood
@@ -445,19 +412,14 @@ Output Format:
     }
   ]
 }
-```"""
-        ),
-        HumanMessagePromptTemplate.from_template(
-            "Analyze sentiment and tone in:\n\n{conversation_text}"
-        ),
-    ]
-)
+```""", ),
+    HumanMessagePromptTemplate.from_template(
+        'Analyze sentiment and tone in:\n\n{conversation_text}', ),
+], )
 
-
-DECISION_MAKING_EXTRACTOR = ChatPromptTemplate.from_messages(
-    [
-        SystemMessagePromptTemplate.from_template(
-            """You are an expert at extracting decision-making information and processes.
+DECISION_MAKING_EXTRACTOR = ChatPromptTemplate.from_messages([
+    SystemMessagePromptTemplate.from_template(
+        """You are an expert at extracting decision-making information and processes.
 
 Focus on:
 1. Decisions made or pending
@@ -498,23 +460,18 @@ Output Format:
     }
   ]
 }
-```"""
-        ),
-        HumanMessagePromptTemplate.from_template(
-            "Extract decision-making information from:\n\n{conversation_text}"
-        ),
-    ]
-)
-
+```""", ),
+    HumanMessagePromptTemplate.from_template(
+        'Extract decision-making information from:\n\n{conversation_text}', ),
+], )
 
 # ============================================================================
 # MULTI-TURN CONVERSATION EXTRACTOR
 # ============================================================================
 
-CONVERSATION_SUMMARY_EXTRACTOR = ChatPromptTemplate.from_messages(
-    [
-        SystemMessagePromptTemplate.from_template(
-            """You are an expert at creating comprehensive conversation summaries.
+CONVERSATION_SUMMARY_EXTRACTOR = ChatPromptTemplate.from_messages([
+    SystemMessagePromptTemplate.from_template(
+        """You are an expert at creating comprehensive conversation summaries.
 
 Create a structured summary that captures:
 1. Key participants and their roles
@@ -568,30 +525,27 @@ Output Format:
     "overall_outcome": "Summary of what was accomplished"
   }
 }
-```"""
-        ),
-        HumanMessagePromptTemplate.from_template(
-            "Create a comprehensive summary of this conversation:\n\n{conversation_text}"
-        ),
-    ]
-)
-
+```""", ),
+    HumanMessagePromptTemplate.from_template(
+        'Create a comprehensive summary of this conversation:\n\n{conversation_text}',
+    ),
+], )
 
 # ============================================================================
 # PROMPT TEMPLATE REGISTRY
 # ============================================================================
 
 EXTRACTION_PROMPTS = {
-    "professional": PROFESSIONAL_INFORMATION_EXTRACTOR,
-    "personal": PERSONAL_CONTEXT_EXTRACTOR,
-    "technical": TECHNICAL_KNOWLEDGE_EXTRACTOR,
-    "projects": PROJECT_AND_TASK_EXTRACTOR,
-    "entities": ENTITY_RELATIONSHIP_EXTRACTOR,
-    "product": PRODUCT_MANAGEMENT_EXTRACTOR,
-    "engineering": ENGINEERING_CONTEXT_EXTRACTOR,
-    "sentiment": SENTIMENT_AND_TONE_EXTRACTOR,
-    "decisions": DECISION_MAKING_EXTRACTOR,
-    "summary": CONVERSATION_SUMMARY_EXTRACTOR,
+    'professional': PROFESSIONAL_INFORMATION_EXTRACTOR,
+    'personal': PERSONAL_CONTEXT_EXTRACTOR,
+    'technical': TECHNICAL_KNOWLEDGE_EXTRACTOR,
+    'projects': PROJECT_AND_TASK_EXTRACTOR,
+    'entities': ENTITY_RELATIONSHIP_EXTRACTOR,
+    'product': PRODUCT_MANAGEMENT_EXTRACTOR,
+    'engineering': ENGINEERING_CONTEXT_EXTRACTOR,
+    'sentiment': SENTIMENT_AND_TONE_EXTRACTOR,
+    'decisions': DECISION_MAKING_EXTRACTOR,
+    'summary': CONVERSATION_SUMMARY_EXTRACTOR,
 }
 
 
@@ -608,8 +562,9 @@ def get_extraction_prompt(prompt_type: str) -> ChatPromptTemplate:
         ValueError: If prompt_type is not available
     """
     if prompt_type not in EXTRACTION_PROMPTS:
-        available = ", ".join(EXTRACTION_PROMPTS.keys())
-        raise ValueError(f"Unknown prompt type '{prompt_type}'. Available: {available}")
+        available = ', '.join(EXTRACTION_PROMPTS.keys())
+        raise ValueError(
+            f"Unknown prompt type '{prompt_type}'. Available: {available}")
 
     return EXTRACTION_PROMPTS[prompt_type]
 
@@ -634,7 +589,9 @@ class ExtractionOrchestrator:
             self.llm = llm_config.instantiate()
 
     async def extract_all(
-        self, conversation_text: str, extraction_types: list[str] | None = None
+        self,
+        conversation_text: str,
+        extraction_types: list[str] | None = None,
     ) -> dict[str, Any]:
         """Run multiple extractors on the same conversation.
 
@@ -658,20 +615,17 @@ class ExtractionOrchestrator:
                     # Use configured LLM
                     chain = prompt | self.llm
                     result = await chain.ainvoke(
-                        {"conversation_text": conversation_text}
-                    )
-                    results[extraction_type] = (
-                        result.content if hasattr(result, "content") else str(result)
-                    )
+                        {'conversation_text': conversation_text}, )
+                    results[extraction_type] = (result.content if hasattr(
+                        result, 'content') else str(result))
                 else:
                     # Return prompt for external processing
                     formatted_prompt = prompt.format(
-                        conversation_text=conversation_text
-                    )
-                    results[extraction_type] = {"prompt": formatted_prompt}
+                        conversation_text=conversation_text, )
+                    results[extraction_type] = {'prompt': formatted_prompt}
 
             except Exception as e:
-                results[extraction_type] = {"error": str(e)}
+                results[extraction_type] = {'error': str(e)}
 
         return results
 
@@ -685,17 +639,20 @@ class ExtractionOrchestrator:
             List of recommended extraction types
         """
         domain_mappings = {
-            "product": ["professional", "projects", "product", "decisions", "summary"],
-            "engineering": [
-                "professional",
-                "technical",
-                "engineering",
-                "projects",
-                "summary",
+            'product':
+            ['professional', 'projects', 'product', 'decisions', 'summary'],
+            'engineering': [
+                'professional',
+                'technical',
+                'engineering',
+                'projects',
+                'summary',
             ],
-            "general": ["professional", "personal", "entities", "summary"],
-            "analysis": ["sentiment", "decisions", "entities", "summary"],
-            "comprehensive": get_all_extraction_types(),
+            'general': ['professional', 'personal', 'entities', 'summary'],
+            'analysis': ['sentiment', 'decisions', 'entities', 'summary'],
+            'comprehensive':
+            get_all_extraction_types(),
         }
 
-        return domain_mappings.get(domain, ["professional", "entities", "summary"])
+        return domain_mappings.get(domain,
+                                   ['professional', 'entities', 'summary'])

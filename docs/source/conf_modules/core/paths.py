@@ -7,17 +7,20 @@ This module handles all path setup including:
 - Extension paths
 """
 
+from __future__ import annotations
+
 import logging
-import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+import sys
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
 
 def get_config(
-    packages: Optional[List[str]] = None, minimal: bool = False
-) -> Dict[str, Any]:
+    packages: list[str] | None = None,
+    minimal: bool = False,
+) -> dict[str, Any]:
     """Get path configuration for Sphinx.
 
     Args:
@@ -83,7 +86,8 @@ def get_config(
                         __import__(package_module)
                         logger.info(f"Successfully imported {package_module}")
                     except Exception as e:
-                        logger.warning(f"Failed to import {package_module}: {e}")
+                        logger.warning(
+                            f"Failed to import {package_module}: {e}")
 
     # Exclude patterns
     config["exclude_patterns"] = [
@@ -108,7 +112,7 @@ def get_config(
     return config
 
 
-def get_package_paths(workspace_dir: Path) -> List[Path]:
+def get_package_paths(workspace_dir: Path) -> list[Path]:
     """Get all package source paths in the workspace.
 
     Args:

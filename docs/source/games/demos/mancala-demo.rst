@@ -246,7 +246,7 @@ Ancient seed-counting game with strategic depth
        [0]                         [0]
        [4] [4] [4] [4] [4] [4]
 
-   
+
    Player 1: 0 | Player 2: 0
    Turn: Player 1
    Status: Game in progress

@@ -16,7 +16,7 @@ Overview
 The Haive Documentation Utilities provide a powerful, unified system for:
 
 - **🔍 Agent Analysis** - Discover and analyze all agent types automatically
-- **🎨 Visualization** - Generate workflow diagrams and comparison charts  
+- **🎨 Visualization** - Generate workflow diagrams and comparison charts
 - **📚 Documentation** - Create comprehensive docs with cross-references
 - **🧪 Example Validation** - Test and validate all example files
 
@@ -30,7 +30,7 @@ Quick Start
    :gutter: 3
 
    .. grid-item::
-      
+
 
       **Using Nox (Recommended)**
 
@@ -47,7 +47,7 @@ Quick Start
          nox -s doc_utils_generate    # Documentation
 
          .. grid-item::
-      
+
 
          **Direct CLI Usage**
 
@@ -74,9 +74,9 @@ Quick Start
          .. grid-item-card:: 🔍 AgentAnalyzer
 
          :shadow: md
-      
+
          **Comprehensive agent discovery and analysis**
-      
+
          - Auto-detects 100+ agent types across packages
          - Identifies architectures (haive.agents, haive.core, haive.games)
          - Analyzes capabilities (visualization, tools, streaming)
@@ -85,9 +85,9 @@ Quick Start
          .. grid-item-card:: 🧪 UniversalExampleRunner
 
          :shadow: md
-      
+
          **Execute any example with monitoring**
-      
+
          - Universal compatibility across all agent types
          - Streaming output with intelligent chunking
          - Timeout protection and error recovery
@@ -96,9 +96,9 @@ Quick Start
          .. grid-item-card:: 🎨 VisualizationManager
 
          :shadow: md
-      
+
          **Universal agent visualization**
-      
+
          - Multiple formats: PNG, SVG, HTML, Mermaid
          - Native visualization when available
          - Synthetic diagrams for any agent type
@@ -107,9 +107,9 @@ Quick Start
          .. grid-item-card:: 📚 DocumentationGenerator
 
          :shadow: md
-      
+
          **Automated documentation creation**
-      
+
          - Individual agent documentation
          - Project-wide docs with cross-references
          - Multiple formats: Markdown, RST, HTML
@@ -125,20 +125,20 @@ Quick Start
          .. tab:: Quick Commands
 
 .. code-block:: bash
-         
+
          # Complete documentation utilities workflow
          nox -s doc_utils_full
 
          # Individual components
          nox -s doc_utils_analyze      # Agent analysis report
-         nox -s doc_utils_examples     # Example validation  
+         nox -s doc_utils_examples     # Example validation
          nox -s doc_utils_visualize    # Generate visualizations
          nox -s doc_utils_generate     # Create documentation
 
          .. tab:: Output Structure
 
 .. code-block:: text
-         
+
          docs/build/
          ├── agent_analysis/
          │   └── agent_analysis_report.md
@@ -159,7 +159,7 @@ Quick Start
          Each nox session accepts environment variables for customization:
 
 .. code-block:: bash
-         
+
          # Customize timeouts and output
          TIMEOUT_SECONDS=120 nox -s doc_utils_examples
          MAX_OUTPUT_SIZE=50000000 nox -s doc_utils_examples
@@ -174,7 +174,7 @@ Quick Start
          .. tab:: Analysis Commands
 
 .. code-block:: bash
-         
+
          # Analyze all agents
          python doc_utils_runner.py analyze --report --output analysis.md
 
@@ -187,7 +187,7 @@ Quick Start
          .. tab:: Example Commands
 
 .. code-block:: bash
-         
+
          # Discover all examples
          python doc_utils_runner.py run --discover
 
@@ -200,7 +200,7 @@ Quick Start
          .. tab:: Visualization Commands
 
 .. code-block:: bash
-         
+
          # Create agent comparison
          python doc_utils_runner.py visualize --compare --format html --theme dark
 
@@ -213,7 +213,7 @@ Quick Start
          .. tab:: Documentation Commands
 
 .. code-block:: bash
-         
+
          # Generate project documentation
          python doc_utils_runner.py docs --format markdown --api-docs
 
@@ -261,7 +261,7 @@ Quick Start
 
          async def run_examples():
              runner = UniversalExampleRunner()
-             
+
              # Discover examples
              examples = await runner.discover_all_examples()
              print(f"Found {len(examples)} examples")
@@ -272,7 +272,7 @@ Quick Start
                  stream_output=True,
                  enable_visualization=True
              )
-             
+
              result = await runner.run_example(examples[0], config)
              print(f"Success: {result.success}")
              print(f"Time: {result.execution_time:.2f}s")
@@ -289,22 +289,22 @@ Quick Start
 
          async def create_visualizations():
              viz_manager = VisualizationManager()
-             
+
              # Get agent info
              analyzer = AgentAnalyzer()
              agents = analyzer.discover_all_agents()
-             
+
              # Create visualization
              config = VisualizationConfig(
                  output_format="html",
                  theme="dark",
                  include_metadata=True
              )
-             
+
              for agent in agents[:5]:  # First 5 agents
                  viz_path = Path(f"{agent.name.lower()}_viz.html")
                  result = await viz_manager.visualize_agent(agent, viz_path, config)
-                 
+
                  if result.success:
                      print(f"✅ {agent.name}: {result.output_path}")
 
@@ -320,7 +320,7 @@ Quick Start
 
          async def generate_docs():
              doc_generator = DocumentationGenerator()
-             
+
              # Configuration
              config = DocumentationConfig(
                  include_examples=True,
@@ -329,13 +329,13 @@ Quick Start
                  output_format="markdown",
                  template_style="comprehensive"
              )
-             
+
              # Generate project-wide documentation
              output_dir = Path("./generated_documentation")
              result = await doc_generator.generate_project_documentation(
                  output_dir, config
              )
-             
+
              if result.success:
                  print(f"Documentation generated:")
                  print(f"  Index: {result.index_file}")
@@ -407,9 +407,9 @@ Quick Start
          .. grid-item-card:: haive.agents
 
          :shadow: sm
-      
+
          **Mixin-based Architecture**
-      
+
          - SimpleAgent, ReactAgent, MultiAgent
          - RAG agents, Memory agents
          - Planning agents, Document processing
@@ -418,9 +418,9 @@ Quick Start
          .. grid-item-card:: haive.core.engine
 
          :shadow: sm
-      
+
          **Protocol-based Architecture**
-      
+
          - Registry-based agents
          - Configurable execution patterns
          - Engine-driven workflows
@@ -428,9 +428,9 @@ Quick Start
          .. grid-item-card:: haive.games
 
          :shadow: sm
-      
+
          **Game-specific Agents**
-      
+
          - Chess, Go, Poker agents
          - Board game strategies
          - Multi-player coordination
@@ -453,7 +453,7 @@ Quick Start
 
          ## Architecture Distribution
          - haive.agents: 89 agents
-         - haive.games: 32 agents  
+         - haive.games: 32 agents
          - haive.core.engine: 6 agents
 
          ## Visualization Support
@@ -529,7 +529,7 @@ Quick Start
          :gutter: 2
 
          .. grid-item::
-      
+
 
          .. raw:: html
 
@@ -552,7 +552,7 @@ Quick Start
          </div>
 
          .. grid-item::
-      
+
          .. raw:: html
 
          .. raw:: html
@@ -576,7 +576,7 @@ Quick Start
          **Key Performance Features:**
 
          - **Concurrent Execution** - Multiple examples run in parallel
-         - **Streaming Output** - Prevents memory issues with large responses  
+         - **Streaming Output** - Prevents memory issues with large responses
          - **Intelligent Caching** - Repeated operations use cached results
          - **Timeout Protection** - Prevents hanging on problematic examples
          - **Graceful Degradation** - Works when optional dependencies are missing
@@ -589,40 +589,40 @@ Quick Start
          :animate: fade-in-slide-down
 
          **Import Errors**
-   
+
          Ensure you're running from the project root:
-   
+
 
 .. code-block:: bash
-      
+
       cd /path/to/haive/backend/haive
       python doc_utils_runner.py analyze
 
       **Missing Dependencies**
-   
+
       Some visualizations require optional packages:
-   
+
 
 .. code-block:: bash
-      
+
       pip install graphviz matplotlib  # For advanced visualizations
 
       **Large Output Handling**
-   
+
       The system automatically saves large outputs to files:
-   
+
 
 .. code-block:: text
-      
+
       [OUTPUT TOO LARGE - Saved to: agent_output_1642789123.txt]
 
       **Timeout Issues**
-   
+
       Increase timeout for slow examples:
-   
+
 
 .. code-block:: bash
-      
+
       python doc_utils_runner.py run --timeout 600  # 10 minutes
 
       Integration with CI/CD
@@ -638,26 +638,26 @@ Quick Start
 
          name: Documentation Utilities
          on: [push, pull_request]
-         
+
          jobs:
            doc-utilities:
              runs-on: ubuntu-latest
              steps:
                - uses: actions/checkout@v3
-               
+
                - name: Setup Python
                  uses: actions/setup-python@v4
                  with:
                    python-version: '3.12'
-               
+
                - name: Install dependencies
                  run: |
                    pip install poetry
                    poetry install --with docs
-               
+
                - name: Run documentation utilities
                  run: nox -s doc_utils_full
-               
+
                - name: Upload artifacts
                  uses: actions/upload-artifact@v3
                  with:
@@ -706,9 +706,9 @@ Quick Start
          .. grid-item-card:: 🔄 Regular Updates
 
          :shadow: sm
-      
+
          **Keep documentation current**
-      
+
          - Run ``nox -s doc_utils_full`` weekly
          - Update visualizations after major changes
          - Validate examples before releases
@@ -717,9 +717,9 @@ Quick Start
          .. grid-item-card:: 🎯 Targeted Analysis
 
          :shadow: sm
-      
+
          **Focus on what matters**
-      
+
          - Use ``--agent-name`` for specific analysis
          - Generate visualizations for key agents
          - Validate critical examples first
@@ -728,9 +728,9 @@ Quick Start
          .. grid-item-card:: 📊 Performance Monitoring
 
          :shadow: sm
-      
+
          **Track documentation health**
-      
+
          - Monitor execution times
          - Check success rates
          - Review output sizes
@@ -739,9 +739,9 @@ Quick Start
          .. grid-item-card:: 🔧 Customization
 
          :shadow: sm
-      
+
          **Adapt to your needs**
-      
+
          - Configure timeouts appropriately
          - Choose visualization formats
          - Set documentation styles

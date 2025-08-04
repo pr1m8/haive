@@ -1,9 +1,9 @@
 """HyDE (Hypothetical Document Embeddings) RAG Agent.
 
-from typing import Any
-Bridges query-document semantic gap by generating hypothetical documents.
-Implements architecture from rag-architectures-flows.md:
-Query -> Generate Hypothetical Doc -> Embed -> Retrieve Real Docs -> Generate
+from typing import Any Bridges query-document semantic gap by generating
+hypothetical documents. Implements architecture from rag-architectures-
+flows.md: Query -> Generate Hypothetical Doc -> Embed -> Retrieve Real
+Docs -> Generate
 """
 
 from langchain_core.documents import Document
@@ -15,34 +15,29 @@ from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
-
 HYDE_GENERATION_PROMPT = ChatPromptTemplate.from_messages(
     [
-        (
-            "system",
-            """You are an expert at generating hypothetical documents that would answer questions.
+        ("system",
+         """You are an expert at generating hypothetical documents that would answer questions.
 Your task is to write a detailed, informative paragraph that would perfectly answer the given question.""",
-        ),
-        (
-            "human",
-            """Write a detailed paragraph that would answer this question:
+         ),
+        ("human",
+         """Write a detailed paragraph that would answer this question:
 Question: {query}
 
 Paragraph:""",
-        ),
-    ]
+         ),
+    ],
 )
 
-
-HYDE_ANSWER_PROMPT = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            "You are an expert assistant. Answer based on the retrieved documents.",
-        ),
-        (
-            "human",
-            """Answer the question using the retrieved documents.
+HYDE_ANSWER_PROMPT = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        "You are an expert assistant. Answer based on the retrieved documents.",
+    ),
+    (
+        "human",
+        """Answer the question using the retrieved documents.
 
 Original Question: {query}
 
@@ -50,9 +45,8 @@ Retrieved Documents:
 {retrieved_documents}
 
 Provide a comprehensive answer:""",
-        ),
-    ]
-)
+    ),
+], )
 
 
 class HyDERAGAgent(MultiAgent):
@@ -60,7 +54,10 @@ class HyDERAGAgent(MultiAgent):
 
     @classmethod
     def from_documents(
-        cls, documents: list[Document], llm_config: LLMConfig | None = None, **kwargs
+        cls,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
+        **kwargs,
     ):
         """Create HyDE RAG from documents.
 
@@ -82,7 +79,8 @@ class HyDERAGAgent(MultiAgent):
         # Step 1: Generate hypothetical document
         hyde_generator = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=HYDE_GENERATION_PROMPT
+                llm_config=llm_config,
+                prompt_template=HYDE_GENERATION_PROMPT,
             ),
             name="hyde_generator",
         )
@@ -91,13 +89,15 @@ class HyDERAGAgent(MultiAgent):
         # In a full implementation, we'd embed the hypothetical doc
         # For now, we'll use it as the query
         retrieval_agent = BaseRAGAgent.from_documents(
-            documents=documents, name="hyde_retriever"
+            documents=documents,
+            name="hyde_retriever",
         )
 
         # Step 3: Generate final answer
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=HYDE_ANSWER_PROMPT
+                llm_config=llm_config,
+                prompt_template=HYDE_ANSWER_PROMPT,
             ),
             name="hyde_answer_generator",
         )
@@ -109,5 +109,5 @@ class HyDERAGAgent(MultiAgent):
             agents=[hyde_generator, retrieval_agent, answer_agent],
             name=agent_name,
             execution_mode="sequential",
-            **kwargs
+            **kwargs,
         )

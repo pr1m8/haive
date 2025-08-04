@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Fix common documentation build issues."""
 
+from __future__ import annotations
+
 from pathlib import Path
 import re
 
@@ -19,7 +21,8 @@ def fix_title_underlines(file_path):
         if i + 1 < len(lines):
             next_line = lines[i + 1]
             # Check for RST underline characters
-            if next_line.strip() and all(c in '=-~^"' for c in next_line.strip()):
+            if next_line.strip() and all(c in '=-~^"'
+                                         for c in next_line.strip()):
                 title_length = len(line.rstrip())
                 underline_char = next_line.strip()[0]
                 correct_underline = underline_char * title_length + "\n"
@@ -44,9 +47,8 @@ def fix_grid_items(file_path):
     # Fix grid structure by adding grid-row directives
     fixed_content = re.sub(
         r"(\.\. grid::.*?\n)((?:\s*\.\. grid-item::.*?\n(?:(?!\.\. grid).*\n)*)+)",
-        lambda m: m.group(1)
-        + "\n   .. grid-row::\n\n"
-        + "\n".join("      " + line for line in m.group(2).split("\n") if line),
+        lambda m: m.group(1) + "\n   .. grid-row::\n\n" + "\n".join(
+            "      " + line for line in m.group(2).split("\n") if line),
         content,
         flags=re.MULTILINE | re.DOTALL,
     )

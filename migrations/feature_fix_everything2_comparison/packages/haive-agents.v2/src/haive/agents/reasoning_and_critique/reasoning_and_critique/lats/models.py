@@ -11,9 +11,11 @@ Functions:
     normalized_score: Normalized Score functionality.
 """
 
+from __future__ import annotations
+
 from collections import deque
 import math
-from typing import Any, Optional
+from typing import Any
 
 from langchain_core.messages import BaseMessage, HumanMessage
 from pydantic import BaseModel, Field
@@ -22,21 +24,18 @@ from pydantic import BaseModel, Field
 class Reflection(BaseModel):
     reflections: str = Field(
         description="The critique and reflections on the sufficiency, superfluency,"
-        " and general quality of the response"
-    )
+        " and general quality of the response", )
     score: int = Field(
         description="Score from 0-10 on the quality of the candidate response.",
         gte=0,
         lte=10,
     )
     found_solution: bool = Field(
-        description="Whether the response has fully solved the question or task."
-    )
+        description="Whether the response has fully solved the question or task.", )
 
     def as_message(self) -> Any:
         return HumanMessage(
-            content=f"Reasoning: {self.reflections}\nScore: {self.score}"
-        )
+            content=f"Reasoning: {self.reflections}\nScore: {self.score}", )
 
     @property
     def normalized_score(self) -> float:
@@ -44,11 +43,12 @@ class Reflection(BaseModel):
 
 
 class Node:
+
     def __init__(
         self,
         messages: list[BaseMessage],
         reflection: Reflection,
-        parent: Optional["Node"] = None,
+        parent: Node | None = None,
     ):
         self.messages = messages
         self.parent = parent
@@ -63,10 +63,8 @@ class Node:
         self.backpropagate(reflection.normalized_score)
 
     def __repr__(self) -> str:
-        return (
-            f"<Node value={self.value}, visits={self.visits},"
-            f" solution={self.messages} reflection={self.reflection}/>"
-        )
+        return (f"<Node value={self.value}, visits={self.visits},"
+                f" solution={self.messages} reflection={self.reflection}/>")
 
     @property
     def is_solved(self) -> bool:
@@ -82,7 +80,8 @@ class Node:
         """Return the child with the highest value."""
         if not self.children:
             return None
-        return max(self.children, key=lambda child: int(child.is_solved) * child.value)
+        return max(self.children,
+                   key=lambda child: int(child.is_solved) * child.value)
 
     @property
     def height(self) -> int:
@@ -92,7 +91,10 @@ class Node:
         return 1
 
     def upper_confidence_bound(self, exploration_weight=1.0) -> Any:
-        """Return the UCT score. This helps balance exploration vs. exploitation of a branch."""
+        """Return the UCT score.
+
+        This helps balance exploration vs. exploitation of a branch.
+        """
         if self.parent is None:
             raise ValueError("Cannot obtain UCT from root node")
         if self.visits == 0:
@@ -100,7 +102,8 @@ class Node:
         # Encourages exploitation of high-value trajectories
         average_reward = self.value / self.visits
         # Encourages exploration of less-visited trajectories
-        exploration_term = math.sqrt(math.log(self.parent.visits) / self.visits)
+        exploration_term = math.sqrt(
+            math.log(self.parent.visits) / self.visits)
         return average_reward + exploration_weight * exploration_term
 
     def backpropagate(self, reward: float):
@@ -108,7 +111,8 @@ class Node:
         node = self
         while node:
             node.visits += 1
-            node.value = (node.value * (node.visits - 1) + reward) / node.visits
+            node.value = (node.value *
+                          (node.visits - 1) + reward) / node.visits
             node = node.parent
 
     def get_messages(self, include_reflections: bool = True):
@@ -116,14 +120,15 @@ class Node:
             return [*self.messages, self.reflection.as_message()]
         return self.messages
 
-    def get_trajectory(self, include_reflections: bool = True) -> list[BaseMessage]:
+    def get_trajectory(self,
+                       include_reflections: bool = True) -> list[BaseMessage]:
         """Get messages representing this search branch."""
         messages = []
         node = self
         while node:
             messages.extend(
-                node.get_messages(include_reflections=include_reflections)[::-1]
-            )
+                node.get_messages(
+                    include_reflections=include_reflections)[::-1], )
             node = node.parent
         # Reverse the final back-tracked trajectory to return in the correct order
         return messages[::-1]  # root solution, reflection, child 1, ...
@@ -145,7 +150,8 @@ class Node:
         best_node = max(
             all_nodes,
             # We filter out all non-terminal, non-solution trajectories
-            key=lambda node: int(node.is_terminal and node.is_solved) * node.value,
+            key=lambda node: int(node.is_terminal and node.is_solved) * node.
+            value,
         )
         return best_node
 

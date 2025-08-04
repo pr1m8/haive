@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import sys
 from pathlib import Path
@@ -9,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class HaiveDependencyManager:
+
     def __init__(self, project_root: Path | None = None):
         """Initialize the Dependency Manager.
 
@@ -29,7 +32,8 @@ class HaiveDependencyManager:
         ]
 
     def extract_top_level_external_dependencies(
-        self, root_pyproject: dict[str, Any]
+        self,
+        root_pyproject: dict[str, Any],
     ) -> dict[str, Any]:
         """Extract top-level external dependencies (excluding Haive packages).
 
@@ -39,9 +43,9 @@ class HaiveDependencyManager:
         Returns:
             Dictionary of external dependencies
         """
-        dependencies = (
-            root_pyproject.get("tool", {}).get("poetry", {}).get("dependencies", {})
-        )
+        dependencies = root_pyproject.get("tool",
+                                          {}).get("poetry",
+                                                  {}).get("dependencies", {})
 
         # Filter out Haive-specific packages
         external_deps = {
@@ -58,15 +62,15 @@ class HaiveDependencyManager:
         Args:
             root_pyproject: Parsed root pyproject configuration
         """
-        external_deps = self.extract_top_level_external_dependencies(root_pyproject)
+        external_deps = self.extract_top_level_external_dependencies(
+            root_pyproject)
 
         core_pyproject_path = self.packages_dir / "haive-core" / "pyproject.toml"
 
         try:
             # Load existing core pyproject
-            core_pyproject = (
-                toml.load(core_pyproject_path) if core_pyproject_path.exists() else {}
-            )
+            core_pyproject = toml.load(
+                core_pyproject_path) if core_pyproject_path.exists() else {}
 
             # Ensure nested structure exists
             core_pyproject.setdefault("tool", {})
@@ -76,13 +80,15 @@ class HaiveDependencyManager:
             core_pyproject["tool"]["poetry"]["dependencies"] = external_deps
 
             # Ensure Python version is specified
-            core_pyproject["tool"]["poetry"]["dependencies"]["python"] = "^3.12"
+            core_pyproject["tool"]["poetry"]["dependencies"][
+                "python"] = "^3.12"
 
             # Write updated configuration
             with open(core_pyproject_path, "w") as f:
                 toml.dump(core_pyproject, f)
 
-            logger.info("✅ Successfully exported external dependencies to haive-core")
+            logger.info(
+                "✅ Successfully exported external dependencies to haive-core")
             for dep, version in external_deps.items():
                 logger.info(f"  - {dep}: {version}")
 

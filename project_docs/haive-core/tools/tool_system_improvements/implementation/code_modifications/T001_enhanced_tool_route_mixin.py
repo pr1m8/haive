@@ -8,14 +8,22 @@ Key improvements:
 3. Better integration with LangGraph patterns
 4. Smart routing based on tool type
 """
+from __future__ import annotations
 
 import inspect
 from collections.abc import Callable
 from datetime import datetime
-from typing import Any, Union, get_type_hints
+from typing import Any
+from typing import get_type_hints
+from typing import Union
 
-from langchain_core.tools import BaseTool, StructuredTool, Tool
-from pydantic import BaseModel, Field, field_validator, model_validator
+from langchain_core.tools import BaseTool
+from langchain_core.tools import StructuredTool
+from langchain_core.tools import Tool
+from pydantic import BaseModel
+from pydantic import Field
+from pydantic import field_validator
+from pydantic import model_validator
 
 # Define proper tool types following LangGraph pattern
 ToolType = Union[BaseTool, Tool, StructuredTool, type[BaseModel], Callable]
@@ -39,12 +47,14 @@ class ToolRouteMixin(BaseModel):
 
     # Tool routes mapping tool names to their types/destinations
     tool_routes: dict[str, str] = Field(
-        default_factory=dict, description="Mapping of tool names to their routes/types"
+        default_factory=dict,
+        description="Mapping of tool names to their routes/types",
     )
 
     # Tool metadata for enhanced management
     tool_metadata: dict[str, dict[str, Any]] = Field(
-        default_factory=dict, description="Metadata for each tool"
+        default_factory=dict,
+        description="Metadata for each tool",
     )
 
     # Tool name to tool instance mapping for quick lookup
@@ -55,11 +65,13 @@ class ToolRouteMixin(BaseModel):
 
     # Configuration
     allow_duplicate_names: bool = Field(
-        default=False, description="Whether to allow tools with duplicate names"
+        default=False,
+        description="Whether to allow tools with duplicate names",
     )
 
     validate_tools_on_add: bool = Field(
-        default=True, description="Whether to validate tools when adding them"
+        default=True,
+        description="Whether to validate tools when adding them",
     )
 
     @field_validator("tools")
@@ -71,7 +83,8 @@ class ToolRouteMixin(BaseModel):
             if isinstance(tool, BaseTool | Tool | StructuredTool):
                 validated_tools.append(tool)
             else:
-                logger.warning(f"Skipping invalid tool type: {type(tool).__name__}")
+                logger.warning(
+                    f"Skipping invalid tool type: {type(tool).__name__}")
 
         return validated_tools
 
@@ -80,7 +93,7 @@ class ToolRouteMixin(BaseModel):
         tool: ToolType,
         route: str | None = None,
         metadata: dict[str, Any] | None = None,
-    ) -> "ToolRouteMixin":
+    ) -> ToolRouteMixin:
         """Add a tool with automatic routing and metadata.
 
         Args:
@@ -187,8 +200,7 @@ class ToolRouteMixin(BaseModel):
                     "class_name": tool.__name__,
                     "module": getattr(tool, "__module__", "unknown"),
                     "field_count": len(getattr(tool, "model_fields", {})),
-                }
-            )
+                }, )
 
         # Regular callable
         elif callable(tool):
@@ -221,7 +233,7 @@ class ToolRouteMixin(BaseModel):
                 hints = get_type_hints(callable_obj)
                 metadata["has_type_hints"] = bool(hints)
                 metadata["has_return_type"] = "return" in hints
-            except:
+            except BaseException:
                 metadata["has_type_hints"] = False
 
             # Determine callable kind
@@ -229,10 +241,8 @@ class ToolRouteMixin(BaseModel):
                 metadata["callable_kind"] = "method"
             elif inspect.isfunction(callable_obj):
                 metadata["callable_kind"] = "function"
-            elif (
-                hasattr(callable_obj, "__name__")
-                and callable_obj.__name__ == "<lambda>"
-            ):
+            elif hasattr(callable_obj,
+                         "__name__") and callable_obj.__name__ == "<lambda>":
                 metadata["callable_kind"] = "lambda"
             else:
                 metadata["callable_kind"] = "callable_object"
@@ -277,8 +287,7 @@ class ToolRouteMixin(BaseModel):
             List of BaseTool/Tool/StructuredTool instances
         """
         return [
-            tool
-            for tool in self.tools
+            tool for tool in self.tools
             if isinstance(tool, BaseTool | Tool | StructuredTool)
         ]
 
@@ -289,8 +298,7 @@ class ToolRouteMixin(BaseModel):
             List of Pydantic model classes
         """
         return [
-            tool
-            for tool in self.tools
+            tool for tool in self.tools
             if isinstance(tool, type) and issubclass(tool, BaseModel)
         ]
 
@@ -301,7 +309,8 @@ class ToolRouteMixin(BaseModel):
             List of callable tools
         """
         return [
-            tool for tool in self.tools if callable(tool) and not isinstance(tool, type)
+            tool for tool in self.tools
+            if callable(tool) and not isinstance(tool, type)
         ]
 
     def convert_to_structured_tools(self) -> list[StructuredTool]:
@@ -328,18 +337,20 @@ class ToolRouteMixin(BaseModel):
             elif isinstance(tool, type) and issubclass(tool, BaseModel):
                 if callable(tool) and callable(tool.__call__):
                     # This would need actual conversion logic
-                    logger.debug(f"Pydantic tool {tool.__name__} needs conversion")
+                    logger.debug(
+                        f"Pydantic tool {tool.__name__} needs conversion")
 
             # Convert regular callables
             elif callable(tool):
                 # This would need actual conversion logic
                 logger.debug(
-                    f"Callable {getattr(tool, '__name__', 'unknown')} needs conversion"
+                    f"Callable {getattr(tool, '__name__', 'unknown')} needs conversion",
                 )
 
         return structured_tools
 
-    def update_tool_route(self, tool_name: str, new_route: str) -> "ToolRouteMixin":
+    def update_tool_route(self, tool_name: str,
+                          new_route: str) -> ToolRouteMixin:
         """Update an existing tool's route dynamically.
 
         Args:
@@ -365,13 +376,13 @@ class ToolRouteMixin(BaseModel):
                 "route_updated": True,
                 "previous_route": old_route,
                 "update_timestamp": datetime.now().isoformat(),
-            }
-        )
+            }, )
 
-        logger.debug(f"Updated route for '{tool_name}': {old_route} -> {new_route}")
+        logger.debug(
+            f"Updated route for '{tool_name}': {old_route} -> {new_route}")
         return self
 
-    def remove_tool(self, tool_name: str) -> "ToolRouteMixin":
+    def remove_tool(self, tool_name: str) -> ToolRouteMixin:
         """Remove a tool by name.
 
         Args:
@@ -399,7 +410,7 @@ class ToolRouteMixin(BaseModel):
         return self
 
     @model_validator(mode="after")
-    def sync_tools_and_routes(self) -> "ToolRouteMixin":
+    def sync_tools_and_routes(self) -> ToolRouteMixin:
         """Ensure tools and routes are synchronized after initialization."""
         # Build tool instances map if not already done
         for tool in self.tools:

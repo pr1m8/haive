@@ -42,7 +42,8 @@ class InputState(BaseModel):
         Who directed The Matrix?
     """
 
-    question: str = Field(description="The user's question in natural language")
+    question: str = Field(
+        description="The user's question in natural language")
 
 
 class OutputState(BaseModel):
@@ -69,7 +70,8 @@ class OutputState(BaseModel):
     """
 
     answer: str = Field(
-        default="", description="The final answer to the user's question"
+        default="",
+        description="The final answer to the user's question",
     )
     steps: list[str] = Field(
         default_factory=list,
@@ -118,11 +120,14 @@ class OverallState(InputState, OutputState):
     """
 
     next_action: str = Field(
-        default="", description="The next action/node to execute in the workflow"
+        default="",
+        description="The next action/node to execute in the workflow",
     )
     cypher_errors: list[str] = Field(
-        default=[], description="Validation errors found in the Cypher statement"
+        default=[],
+        description="Validation errors found in the Cypher statement",
     )
     database_records: list[dict] = Field(
-        default=[], description="Records retrieved from the Neo4j database query"
+        default=[],
+        description="Records retrieved from the Neo4j database query",
     )

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Fix await outside function issues in RST files."""
 
+from __future__ import annotations
+
 from pathlib import Path
 import re
 

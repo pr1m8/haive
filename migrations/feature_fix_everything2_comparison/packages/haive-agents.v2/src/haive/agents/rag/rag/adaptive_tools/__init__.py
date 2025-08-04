@@ -21,7 +21,6 @@ from adaptive_tools.agent import (
     synthesize_adaptive_response,
 )
 
-
 __all__ = [
     "AdaptiveToolsRAGAgent",
     "AdaptiveToolsResult",

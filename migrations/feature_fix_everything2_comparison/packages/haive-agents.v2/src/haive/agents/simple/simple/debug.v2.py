@@ -12,7 +12,6 @@ from langchain_core.prompts import PromptTemplate
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 
-
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -24,8 +23,7 @@ prompt = PromptTemplate.from_template(
     User query: {input}
 
     Please provide a helpful response based on the context and query.
-    """
-)
+    """, )
 
 # Print the prompt's input variables
 
@@ -46,8 +44,15 @@ input_schema = aug_llm.derive_input_schema()
 # Try to process different types of input
 test_inputs = [
     "Just a string",
-    {"input": "What is X?", "context": "X is Y."},
-    {"messages": [], "input": "What is X?", "context": "X is Y."},
+    {
+        "input": "What is X?",
+        "context": "X is Y."
+    },
+    {
+        "messages": [],
+        "input": "What is X?",
+        "context": "X is Y."
+    },
 ]
 
 # Process each input and print results

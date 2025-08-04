@@ -20,7 +20,6 @@ from haive.agents.reasoning_and_critique.self_discover.agent2 import (
     create_self_discover_agent,
 )
 
-
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -31,7 +30,9 @@ def example_math_problem():
     problem = "Lisa has 10 apples. She gives 3 apples to her friend and then buys 5 more apples from the store. How many apples does Lisa have now?"
 
     agent = create_self_discover_agent(
-        name="math_problem_solver", model="gpt-4o", temperature=0.0
+        name="math_problem_solver",
+        model="gpt-4o",
+        temperature=0.0,
     )
 
     agent.run(problem)
@@ -110,7 +111,9 @@ Given the following clues, determine each person\'s favorite color and fruit:
 
 
 def create_custom_domain_agent(
-    domain: str, custom_modules: list[str] | None = None, model: str = "gpt-4o"
+    domain: str,
+    custom_modules: list[str] | None = None,
+    model: str = "gpt-4o",
 ) -> SelfDiscoverAgent:
     """Create a SelfDiscover agent specialized for a particular domain.
 
@@ -180,9 +183,12 @@ def create_custom_domain_agent(
 
 
 def run_batch_problems(
-    agent: SelfDiscoverAgent, problems: list[str], output_file: str | None = None
+    agent: SelfDiscoverAgent,
+    problems: list[str],
+    output_file: str | None = None,
 ):
-    """Run a batch of problems through a SelfDiscover agent and optionally save results.
+    """Run a batch of problems through a SelfDiscover agent and optionally save
+    results.
 
     Args:
         agent: SelfDiscoverAgent to use
@@ -211,7 +217,7 @@ def run_batch_problems(
             # Print just the answer for progress tracking
 
         except Exception as e:
-            logger.exception(f"Error processing problem {i+1}: {e!s}")
+            logger.exception(f"Error processing problem {i + 1}: {e!s}")
             results.append({"problem": problem, "error": str(e)})
 
     # Save to file if requested
@@ -228,12 +234,11 @@ def run_batch_problems(
 def example_advanced_configuration():
     """Example showing advanced configuration of the SelfDiscover agent."""
     # Custom prompts for each stage
-    select_prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", "You are an expert problem solver."),
-            (
-                "human",
-                """Look at the problem below and select the 3-5 most appropriate reasoning techniques from the available options.
+    select_prompt = ChatPromptTemplate.from_messages([
+        ("system", "You are an expert problem solver."),
+        (
+            "human",
+            """Look at the problem below and select the 3-5 most appropriate reasoning techniques from the available options.
         Choose only techniques that will directly contribute to solving this specific problem.
 
         Available reasoning techniques:
@@ -244,16 +249,14 @@ def example_advanced_configuration():
 
         Selected reasoning techniques (list only the numbers of your chosen techniques):
         """,
-            ),
-        ]
-    )
+        ),
+    ], )
 
-    adapt_prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", "You are an expert problem solver."),
-            (
-                "human",
-                """Customize these selected reasoning techniques specifically for the problem at hand:
+    adapt_prompt = ChatPromptTemplate.from_messages([
+        ("system", "You are an expert problem solver."),
+        (
+            "human",
+            """Customize these selected reasoning techniques specifically for the problem at hand:
 
         Selected techniques:
         {selected_modules}
@@ -263,16 +266,14 @@ def example_advanced_configuration():
 
         For each technique, provide a customized version that addresses the specific challenges of this problem:
         """,
-            ),
-        ]
-    )
+        ),
+    ], )
 
-    structure_prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", "You are an expert problem solver."),
-            (
-                "human",
-                """Create a structured reasoning plan as a JSON object to solve this problem.
+    structure_prompt = ChatPromptTemplate.from_messages([
+        ("system", "You are an expert problem solver."),
+        (
+            "human",
+            """Create a structured reasoning plan as a JSON object to solve this problem.
         Your JSON should contain keys for each step of analysis, with explanations for what needs to be determined at each step.
         Do NOT solve the problem yet - only create the plan framework.
 
@@ -284,16 +285,14 @@ def example_advanced_configuration():
 
         JSON reasoning plan structure:
         """,
-            ),
-        ]
-    )
+        ),
+    ], )
 
-    reasoning_prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", "You are an expert problem solver."),
-            (
-                "human",
-                """
+    reasoning_prompt = ChatPromptTemplate.from_messages([
+        ("system", "You are an expert problem solver."),
+        (
+            "human",
+            """
         Follow this reasoning structure to methodically solve the problem.
         Fill in each component of the structure with your actual reasoning and calculations.
 
@@ -305,9 +304,8 @@ def example_advanced_configuration():
 
         Complete solution with all reasoning steps:
         """,
-            ),
-        ]
-    )
+        ),
+    ], )
 
     # Custom set of reasoning modules
     reasoning_modules = [
@@ -345,9 +343,11 @@ def example_advanced_configuration():
 
 
 def analyze_reasoning_process(
-    agent_results: list[dict], output_file: str | None = None
+    agent_results: list[dict],
+    output_file: str | None = None,
 ):
-    """Analyze the reasoning process across multiple problems to identify patterns.
+    """Analyze the reasoning process across multiple problems to identify
+    patterns.
 
     Args:
         agent_results: List of results from run_batch_problems
@@ -372,9 +372,8 @@ def analyze_reasoning_process(
         if result.get("error"):
             analysis["failed_problems"] += 1
             error = result.get("error")
-            analysis["common_errors"][error] = (
-                analysis["common_errors"].get(error, 0) + 1
-            )
+            analysis["common_errors"][error] = analysis["common_errors"].get(
+                error, 0) + 1
         else:
             analysis["successful_problems"] += 1
 
@@ -385,18 +384,23 @@ def analyze_reasoning_process(
 
             module_numbers = re.findall(r"(\d+)\.", selected)
             for num in module_numbers:
-                analysis["module_usage"][num] = analysis["module_usage"].get(num, 0) + 1
+                analysis["module_usage"][num] = analysis["module_usage"].get(
+                    num, 0) + 1
 
     # Calculate module usage percentages
     for module, count in analysis["module_usage"].items():
         analysis["module_usage"][module] = {
-            "count": count,
-            "percentage": round((count / analysis["successful_problems"]) * 100, 2),
+            "count":
+            count,
+            "percentage":
+            round((count / analysis["successful_problems"]) * 100, 2),
         }
 
     # Sort modules by usage
     sorted_modules = sorted(
-        analysis["module_usage"].items(), key=lambda x: x[1]["count"], reverse=True
+        analysis["module_usage"].items(),
+        key=lambda x: x[1]["count"],
+        reverse=True,
     )
 
     # Print analysis
@@ -406,7 +410,9 @@ def analyze_reasoning_process(
 
     if analysis["common_errors"]:
         for error, count in sorted(
-            analysis["common_errors"].items(), key=lambda x: x[1], reverse=True
+                analysis["common_errors"].items(),
+                key=lambda x: x[1],
+                reverse=True,
         )[:3]:
             pass
 
@@ -430,7 +436,9 @@ def example_compare_models():
 
     for model in models:
         agent = create_self_discover_agent(
-            name=f"{model}_sequence_agent", model=model, temperature=0.0
+            name=f"{model}_sequence_agent",
+            model=model,
+            temperature=0.0,
         )
 
         result = agent.run(problem)

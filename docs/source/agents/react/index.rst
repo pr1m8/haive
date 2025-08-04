@@ -15,7 +15,7 @@
    <div class="hero-content">
    <h2>🧠 Reasoning and Acting Agent</h2>
    <p class="hero-description">
-   ReactAgent combines reasoning with action through tool usage. It thinks step-by-step, 
+   ReactAgent combines reasoning with action through tool usage. It thinks step-by-step,
    uses tools to gather information, and produces well-reasoned responses based on real data.
    </p>
    </div>
@@ -296,7 +296,7 @@ Quick Start
            """Custom reasoning implementation."""
            # Initial planning
            plan = await self._plan(input_data)
-           
+
            # Execute plan with tools
            results = []
            for step in plan:
@@ -307,7 +307,7 @@ Quick Start
                    # Custom error handling
                    result = await self._handle_error(e, step)
                    results.append(result)
-           
+
            # Synthesize results
            final_answer = await self._synthesize(results)
            return final_answer
@@ -403,7 +403,7 @@ Quick Start
 
 .. code-block:: python
 
-   
+
 
       # Self-improving responses
       agent = ReactAgent(
@@ -413,7 +413,7 @@ Quick Start
           enable_reflection=True
       )
 
-   
+
 
       async def iterative_solve(agent, problem, max_iter=3):
           solution = None
@@ -421,17 +421,17 @@ Quick Start
               prompt = f"""
               Problem: {problem}
               Current solution: {solution or 'None'}
-              
+
               Improve the solution or indicate if done.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
               solution = await agent.arun(prompt)
-              
+
               if "final answer" in solution.lower():
                   break
-          
+
           return solution
 
-   
+
       .. raw:: html
 
       </div>
@@ -443,7 +443,7 @@ Quick Start
 
 .. code-block:: python
 
-   
+
 
       # Combine multiple tools
       @tool
@@ -454,14 +454,14 @@ Quick Start
           summary = summarizer.invoke(analysis)
           return summary
 
-   
+
 
       agent = ReactAgent(
           name="composer",
           tools=[composite_tool]
       )
 
-   
+
       .. raw:: html
 
       </div>
@@ -569,10 +569,10 @@ Quick Start
 
        def on_tool_start(self, tool_name, tool_input):
            print(f"[TOOL START] {tool_name}: {tool_input}")
-       
+
        def on_tool_end(self, tool_name, tool_output):
            print(f"[TOOL END] {tool_name}: {tool_output[:100]}...")
-       
+
        def on_reasoning_step(self, thought):
            print(f"[REASONING] {thought}")
 

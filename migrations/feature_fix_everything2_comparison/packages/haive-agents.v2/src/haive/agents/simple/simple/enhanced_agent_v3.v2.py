@@ -8,6 +8,8 @@ This version leverages all advanced features from the enhanced base Agent class:
 - Comprehensive persistence and serialization
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any, Literal
 
@@ -17,7 +19,6 @@ from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field, field_validator
 
-# Import the enhanced base Agent
 from haive.agents.base.agent import Agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
@@ -27,9 +28,9 @@ from haive.core.graph.node.validation_node_config_v2 import ValidationNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import LLMConfig
 
+# Import the enhanced base Agent
 
 logger = logging.getLogger(__name__)
-
 
 # ========================================================================
 # HELPER FUNCTIONS
@@ -61,8 +62,8 @@ def should_continue(state: dict[str, Any]) -> bool:
 
     # Check for structured output needs
     return bool(
-        hasattr(state, "structured_output_model") and state.structured_output_model
-    )
+        hasattr(state, "structured_output_model")
+        and state.structured_output_model, )
 
 
 # ========================================================================
@@ -165,7 +166,8 @@ class EnhancedSimpleAgent(Agent):
     # ========================================================================
 
     engine: AugLLMConfig = Field(
-        default_factory=AugLLMConfig, description="Primary AugLLM engine for this agent"
+        default_factory=AugLLMConfig,
+        description="Primary AugLLM engine for this agent",
     )
 
     # ========================================================================
@@ -180,27 +182,34 @@ class EnhancedSimpleAgent(Agent):
     )
 
     max_tokens: int | None = Field(
-        default=None, ge=1, description="Max tokens for the LLM (syncs to engine)"
+        default=None,
+        ge=1,
+        description="Max tokens for the LLM (syncs to engine)",
     )
 
     model_name: str | None = Field(
-        default=None, description="Model name for the LLM (syncs to engine.model)"
+        default=None,
+        description="Model name for the LLM (syncs to engine.model)",
     )
 
     force_tool_use: bool | None = Field(
-        default=None, description="Force tool use (syncs to engine)"
+        default=None,
+        description="Force tool use (syncs to engine)",
     )
 
     structured_output_model: type[BaseModel] | None = Field(
-        default=None, description="Structured output model (syncs to engine)"
+        default=None,
+        description="Structured output model (syncs to engine)",
     )
 
     system_message: str | None = Field(
-        default=None, description="System message (syncs to engine)"
+        default=None,
+        description="System message (syncs to engine)",
     )
 
     llm_config: LLMConfig | dict[str, Any] | None = Field(
-        default=None, description="LLM config (syncs to engine)"
+        default=None,
+        description="LLM config (syncs to engine)",
     )
 
     # ========================================================================
@@ -209,32 +218,39 @@ class EnhancedSimpleAgent(Agent):
 
     # Agent-specific configuration
     output_parser: BaseOutputParser | None = Field(
-        default=None, description="Optional output parser"
+        default=None,
+        description="Optional output parser",
     )
 
     prompt_template: ChatPromptTemplate | PromptTemplate | None = Field(
-        default=None, description="Optional prompt template"
+        default=None,
+        description="Optional prompt template",
     )
 
     # Enhanced capabilities
     multi_engine_mode: bool = Field(
-        default=False, description="Enable multiple engines per agent"
+        default=False,
+        description="Enable multiple engines per agent",
     )
 
     advanced_routing: bool = Field(
-        default=False, description="Enable sophisticated tool/engine routing"
+        default=False,
+        description="Enable sophisticated tool/engine routing",
     )
 
     performance_mode: bool = Field(
-        default=False, description="Enable caching and optimization"
+        default=False,
+        description="Enable caching and optimization",
     )
 
     debug_mode: bool = Field(
-        default=False, description="Enable rich debugging and observability"
+        default=False,
+        description="Enable rich debugging and observability",
     )
 
     persistence_config: dict[str, Any] | None = Field(
-        default=None, description="Advanced persistence configuration"
+        default=None,
+        description="Advanced persistence configuration",
     )
 
     # ========================================================================
@@ -251,8 +267,7 @@ class EnhancedSimpleAgent(Agent):
             return AugLLMConfig(**v)
         if not isinstance(v, AugLLMConfig):
             raise ValueError(
-                f"EnhancedSimpleAgent requires AugLLMConfig, got {type(v)}"
-            )
+                f"EnhancedSimpleAgent requires AugLLMConfig, got {type(v)}", )
         return v
 
     @field_validator("temperature")
@@ -341,12 +356,13 @@ class EnhancedSimpleAgent(Agent):
         if self.structured_output_model is not None:
             self.engine.structured_output_model = self.structured_output_model
             logger.debug(
-                f"Synced structured_output_model: {self.structured_output_model.__name__}"
-            )
+                f"Synced structured_output_model: {
+                    self.structured_output_model.__name__}", )
 
         if self.system_message is not None:
             self.engine.system_message = self.system_message
-            logger.debug(f"Synced system_message: {self.system_message[:50]}...")
+            logger.debug(
+                f"Synced system_message: {self.system_message[:50]}...")
 
         if self.llm_config is not None:
             self.engine.llm_config = self.llm_config
@@ -433,7 +449,7 @@ class EnhancedSimpleAgent(Agent):
         needs_validation = needs_tools or needs_parsing
 
         logger.debug(
-            f"Graph analysis: tools={needs_tools}, parsing={needs_parsing}, validation={needs_validation}"
+            f"Graph analysis: tools={needs_tools}, parsing={needs_parsing}, validation={needs_validation}",
         )
 
         # Simple case - just LLM
@@ -479,9 +495,15 @@ class EnhancedSimpleAgent(Agent):
                 logger.debug("Added direct routing: agent_node → validation")
             else:
                 graph.add_conditional_edges(
-                    "agent_node", should_continue, {True: "validation", False: END}
+                    "agent_node",
+                    should_continue,
+                    {
+                        True: "validation",
+                        False: END
+                    },
                 )
-                logger.debug("Added conditional routing: agent_node → [validation|END]")
+                logger.debug(
+                    "Added conditional routing: agent_node → [validation|END]")
 
         logger.debug(f"Built enhanced graph with {len(graph.nodes)} nodes")
         return graph
@@ -494,8 +516,8 @@ class EnhancedSimpleAgent(Agent):
         """Check if agent has structured output configured."""
         return bool(
             self.structured_output_model
-            or (self.engine and getattr(self.engine, "structured_output_model", None))
-        )
+            or (self.engine
+                and getattr(self.engine, "structured_output_model", None)), )
 
     def _always_needs_validation(self) -> bool:
         """Check if we always need validation routing."""
@@ -532,21 +554,12 @@ class EnhancedSimpleAgent(Agent):
                 "engine_names": list(self.engines.keys()),
             },
             "schemas": {
-                "state_schema": (
-                    getattr(self.state_schema, "__name__", None)
-                    if self.state_schema
-                    else None
-                ),
-                "input_schema": (
-                    getattr(self.input_schema, "__name__", None)
-                    if self.input_schema
-                    else None
-                ),
-                "output_schema": (
-                    getattr(self.output_schema, "__name__", None)
-                    if self.output_schema
-                    else None
-                ),
+                "state_schema": (getattr(self.state_schema, "__name__", None)
+                                 if self.state_schema else None),
+                "input_schema": (getattr(self.input_schema, "__name__", None)
+                                 if self.input_schema else None),
+                "output_schema": (getattr(self.output_schema, "__name__", None)
+                                  if self.output_schema else None),
             },
         }
 
@@ -573,14 +586,18 @@ class EnhancedSimpleAgent(Agent):
         table.add_section()
         table.add_row("Has Tools", "✅" if features["has_tools"] else "❌")
         table.add_row(
-            "Structured Output", "✅" if features["has_structured_output"] else "❌"
+            "Structured Output",
+            "✅" if features["has_structured_output"] else "❌",
         )
-        table.add_row("Multi-Engine", "✅" if features["multi_engine_mode"] else "❌")
+        table.add_row("Multi-Engine",
+                      "✅" if features["multi_engine_mode"] else "❌")
         table.add_row(
-            "Advanced Routing", "✅" if features["advanced_routing"] else "❌"
+            "Advanced Routing",
+            "✅" if features["advanced_routing"] else "❌",
         )
         table.add_row(
-            "Performance Mode", "✅" if features["performance_mode"] else "❌"
+            "Performance Mode",
+            "✅" if features["performance_mode"] else "❌",
         )
         table.add_row("Debug Mode", "✅" if features["debug_mode"] else "❌")
 
@@ -607,4 +624,5 @@ class EnhancedSimpleAgent(Agent):
             features.append("debug")
 
         feature_str = f" ({', '.join(features)})" if features else ""
-        return f"EnhancedSimpleAgent(name='{self.name}', engine={engine_info}{feature_str})"
+        return f"EnhancedSimpleAgent(name='{
+            self.name}', engine={engine_info}{feature_str})"

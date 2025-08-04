@@ -79,7 +79,7 @@ from haive.agents.react.agent import ReactAgent
 ```python
 # Memory modules with complex issues
 "**/agents/memory/models_dir/**/*.py",
-"**/agents/memory/search/**/*.py", 
+"**/agents/memory/search/**/*.py",
 "**/agents/memory_reorganized/**/*.py",
 "**/agents/memory_v2/**/*.py",
 # Multi-agent archive with complex issues
@@ -95,7 +95,7 @@ from haive.agents.react.agent import ReactAgent
 # Missing functions and modules
 "should_refine",
 "kg_extraction_engine",
-"format_search_context", 
+"format_search_context",
 "extract_memory_items",
 "check_domain_relevance",
 # Memory modules
@@ -104,7 +104,7 @@ from haive.agents.react.agent import ReactAgent
 "agents",
 "episodic",
 "procedural",
-"semantic", 
+"semantic",
 "react_v2",
 # Experiment modules
 "haive.agents.experiments.supervisor.base_supervisor",
@@ -126,7 +126,7 @@ From the diagnostics, remaining issues fall into these categories:
    - **Impact**: Experimental modules not essential for core functionality
 
 2. **Multi-Agent Archive**: Pydantic schema generation errors
-   - **Status**: Excluded from documentation build  
+   - **Status**: Excluded from documentation build
    - **Impact**: Legacy/experimental implementations
 
 3. **External Dependencies**: Google search tools, postgres, etc.
@@ -162,7 +162,7 @@ From the diagnostics, remaining issues fall into these categories:
 ## Lessons Learned
 
 1. **Import Path Consistency**: Always use absolute imports from haive.* packages
-2. **Module vs Class Methods**: Don't try to import class methods as module-level functions  
+2. **Module vs Class Methods**: Don't try to import class methods as module-level functions
 3. **Experimental Code**: Consider excluding experimental/deprecated modules from documentation
 4. **Self-Contained Components**: Prefer self-contained definitions over complex dependency chains
 5. **Testing Strategy**: Test individual import paths during development to catch issues early

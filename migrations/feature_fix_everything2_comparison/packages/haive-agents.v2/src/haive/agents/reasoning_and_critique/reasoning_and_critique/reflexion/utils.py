@@ -5,14 +5,20 @@ This module provides utils functionality for the Haive framework.
 Functions:
 """
 
+from __future__ import annotations
+
 from pydantic import BaseModel
 
 
 def _get_num_iterations(state: BaseModel) -> int:
-    """Counts consecutive 'tool' or 'ai' message types from the end of the list."""
+    """Counts consecutive 'tool' or 'ai' message types from the end of the.
+
+    list.
+    """
     i = 0
     for m in reversed(state.messages):  # Reverse iteration for efficiency
-        if isinstance(m, dict):  # Ensure compatibility with dict-based messages
+        if isinstance(m,
+                      dict):  # Ensure compatibility with dict-based messages
             msg_type = m.get("type", "")
         else:
             msg_type = getattr(m, "type", "")

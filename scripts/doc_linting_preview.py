@@ -3,10 +3,8 @@
 
 import argparse
 import json
-import subprocess
-import sys
 from pathlib import Path
-from typing import Dict, List, Tuple
+import subprocess
 
 
 class DocLinter:
@@ -17,7 +15,7 @@ class DocLinter:
         self.dry_run = dry_run
         self.results = {}
 
-    def run_rstcheck(self) -> Dict[str, List[str]]:
+    def run_rstcheck(self) -> dict[str, list[str]]:
         """Run rstcheck on RST files."""
         print("\n🔍 Running rstcheck...")
         issues = {}
@@ -27,29 +25,35 @@ class DocLinter:
         for rst_file in rst_files:
             try:
                 result = subprocess.run(
-                    ["poetry", "run", "rstcheck", str(rst_file), "--report", "warning"],
+                    [
+                        "poetry", "run", "rstcheck",
+                        str(rst_file), "--report", "warning"
+                    ],
                     capture_output=True,
                     text=True,
+                    check=False,
                 )
 
                 if result.returncode != 0 or result.stderr:
                     issues[str(rst_file)] = result.stderr.strip().split("\n")
 
             except Exception as e:
-                issues[str(rst_file)] = [f"Error: {str(e)}"]
+                issues[str(rst_file)] = [f"Error: {e!s}"]
 
         return issues
 
-    def run_sphinx_lint(self) -> Dict[str, List[str]]:
+    def run_sphinx_lint(self) -> dict[str, list[str]]:
         """Run sphinx-lint on documentation."""
         print("\n🔍 Running sphinx-lint...")
         issues = {}
 
         try:
             result = subprocess.run(
-                ["poetry", "run", "sphinx-lint", str(self.docs_dir)],
+                ["poetry", "run", "sphinx-lint",
+                 str(self.docs_dir)],
                 capture_output=True,
                 text=True,
+                check=False,
             )
 
             if result.stdout:
@@ -61,11 +65,11 @@ class DocLinter:
                         issues[file_path].append(issue.strip())
 
         except Exception as e:
-            issues["sphinx-lint"] = [f"Error: {str(e)}"]
+            issues["sphinx-lint"] = [f"Error: {e!s}"]
 
         return issues
 
-    def run_pydocstyle(self) -> Dict[str, List[str]]:
+    def run_pydocstyle(self) -> dict[str, list[str]]:
         """Run pydocstyle on Python files."""
         print("\n🔍 Running pydocstyle...")
         issues = {}
@@ -76,42 +80,45 @@ class DocLinter:
         for py_file in py_files[:50]:  # Limit to first 50 for preview
             try:
                 result = subprocess.run(
-                    ["poetry", "run", "pydocstyle", str(py_file)],
+                    ["poetry", "run", "pydocstyle",
+                     str(py_file)],
                     capture_output=True,
                     text=True,
+                    check=False,
                 )
 
                 if result.stdout:
                     issues[str(py_file)] = result.stdout.strip().split("\n")
 
             except Exception as e:
-                issues[str(py_file)] = [f"Error: {str(e)}"]
+                issues[str(py_file)] = [f"Error: {e!s}"]
 
         return issues
 
-    def preview_rstfmt(self, sample_file: Path) -> Tuple[str, str]:
+    def preview_rstfmt(self, sample_file: Path) -> tuple[str, str]:
         """Preview rstfmt formatting on a sample file."""
         print(f"\n🔍 Preview rstfmt on {sample_file.name}...")
 
         try:
             # Read original
-            with open(sample_file, "r") as f:
+            with open(sample_file) as f:
                 original = f.read()
 
             # Run rstfmt
             result = subprocess.run(
-                ["poetry", "run", "rstfmt", str(sample_file)],
+                ["poetry", "run", "rstfmt",
+                 str(sample_file)],
                 capture_output=True,
                 text=True,
+                check=False,
             )
 
             if result.returncode == 0:
                 return original, result.stdout
-            else:
-                return original, f"Error: {result.stderr}"
+            return original, f"Error: {result.stderr}"
 
         except Exception as e:
-            return "", f"Error: {str(e)}"
+            return "", f"Error: {e!s}"
 
     def test_sphinx_build(self) -> bool:
         """Test if Sphinx can build with current state."""
@@ -132,13 +139,16 @@ class DocLinter:
                 ],
                 capture_output=True,
                 text=True,
-                timeout=60,  # 1 minute timeout for test
+                timeout=60,
+                check=False,  # 1 minute timeout for test
             )
 
             success = result.returncode == 0
 
             # Clean up test build
-            subprocess.run(["rm", "-rf", "docs/test_build"], capture_output=True)
+            subprocess.run(["rm", "-rf", "docs/test_build"],
+                           capture_output=True,
+                           check=False)
 
             return success, result.stderr
 
@@ -160,8 +170,8 @@ class DocLinter:
             rst_issues = self.results["rstcheck"]
             issue_count = sum(len(issues) for issues in rst_issues.values())
             print(
-                f"\n📄 RST Issues (rstcheck): {issue_count} issues in {len(rst_issues)} files"
-            )
+                f"\n📄 RST Issues (rstcheck): {issue_count} issues in {
+                    len(rst_issues)} files", )
 
             # Show first 5 files as examples
             for file, issues in list(rst_issues.items())[:5]:
@@ -183,8 +193,8 @@ class DocLinter:
             py_issues = self.results["pydocstyle"]
             issue_count = sum(len(issues) for issues in py_issues.values())
             print(
-                f"\n🐍 Python Docstring Issues (pydocstyle): {issue_count} issues in {len(py_issues)} files"
-            )
+                f"\n🐍 Python Docstring Issues (pydocstyle): {issue_count} issues in {
+                    len(py_issues)} files", )
             total_issues += issue_count
 
         print(f"\n📊 Total Issues Found: {total_issues}")
@@ -211,16 +221,23 @@ class DocLinter:
 
         print("\n5. To validate all changes:")
         print("   poetry run rstcheck docs/source/ --recursive")
-        print("   poetry run sphinx-build -b html -W docs/source docs/test_build")
+        print(
+            "   poetry run sphinx-build -b html -W docs/source docs/test_build"
+        )
 
 
 def main():
     """Main function."""
-    parser = argparse.ArgumentParser(description="Preview documentation issues")
+    parser = argparse.ArgumentParser(
+        description="Preview documentation issues")
     parser.add_argument(
-        "--fix", action="store_true", help="Apply fixes (not just preview)"
+        "--fix",
+        action="store_true",
+        help="Apply fixes (not just preview)",
     )
-    parser.add_argument("--test-build", action="store_true", help="Test Sphinx build")
+    parser.add_argument("--test-build",
+                        action="store_true",
+                        help="Test Sphinx build")
     args = parser.parse_args()
 
     docs_dir = Path("docs/source")
@@ -234,10 +251,12 @@ def main():
     for tool in ["rstcheck", "sphinx-lint", "pydocstyle", "rstfmt"]:
         try:
             subprocess.run(
-                ["poetry", "run", tool, "--help"], capture_output=True, check=True
+                ["poetry", "run", tool, "--help"],
+                capture_output=True,
+                check=True,
             )
             available_tools.append(tool)
-        except:
+        except BaseException:
             print(f"⚠️  {tool} not available - skipping")
 
     print(f"\n✅ Available tools: {', '.join(available_tools)}")
@@ -258,7 +277,7 @@ def main():
         if sample_files:
             original, formatted = linter.preview_rstfmt(sample_files[0])
             if formatted and not formatted.startswith("Error"):
-                print(f"\n📝 rstfmt preview (first 20 lines):")
+                print("\n📝 rstfmt preview (first 20 lines):")
                 print("BEFORE:")
                 print("\n".join(original.split("\n")[:20]))
                 print("\nAFTER:")
@@ -282,7 +301,7 @@ def main():
     # Save results
     with open("docs/linting_results.json", "w") as f:
         json.dump(linter.results, f, indent=2)
-    print(f"\n💾 Detailed results saved to docs/linting_results.json")
+    print("\n💾 Detailed results saved to docs/linting_results.json")
 
 
 if __name__ == "__main__":

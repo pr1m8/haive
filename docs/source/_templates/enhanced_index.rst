@@ -15,20 +15,20 @@
       Build Intelligent AI Agents with Professional Tools
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-      Professional framework for creating sophisticated AI agents with conversational intelligence, 
+      Professional framework for creating sophisticated AI agents with conversational intelligence,
       tool orchestration, game strategies, and multi-agent coordination.
 
       .. button-ref:: introduction/quickstart
          :ref-type: doc
          :color: primary
          :class:`sd`-rounded-pill
-         
+
          🚀 Get Started
 
       .. button-link:: https://github.com/haive/haive
-         :color: secondary  
+         :color: secondary
          :class:`sd`-rounded-pill
-         
+
          📚 View on GitHub
 
 .. grid:: 1 1 4 4
@@ -43,32 +43,32 @@
       :shadow: lg
       :link: agents/index
       :link-type: doc
-      
+
       Build intelligent agents with memory, reasoning, and tool integration capabilities.
-      
+
       .. list-table::
          :class:`feature`-list
          :widths: 1 2
-         
+
          * - **Types**
            - Simple • React • RAG • Multi-Agent
-         * - **Features** 
+         * - **Features**
            - Auto-persistence • Tool routing • State management
 
-   .. grid-item-card:: 🎮 Game Intelligence  
+   .. grid-item-card:: 🎮 Game Intelligence
 
       :class-header: feature-card-header
       :class-body: feature-card-body
       :shadow: lg
       :link: games/index
       :link-type: doc
-      
+
       Create AI opponents for strategic games with advanced algorithms and decision making.
-      
+
       .. list-table::
          :class:`feature`-list
          :widths: 1 2
-         
+
          * - **Games**
            - Chess • Go • Poker • Board Games
          * - **Features**
@@ -77,17 +77,17 @@
    .. grid-item-card:: 🔧 Tool Orchestration
 
       :class-header: feature-card-header
-      :class-body: feature-card-body  
+      :class-body: feature-card-body
       :shadow: lg
       :link: tools/index
       :link-type: doc
-      
+
       Connect agents to APIs, databases, search engines, and external services seamlessly.
-      
+
       .. list-table::
          :class:`feature`-list
          :widths: 1 2
-         
+
          * - **Types**
            - Web APIs • Databases • File Systems
          * - **Features**
@@ -98,17 +98,17 @@
       :class-header: feature-card-header
       :class-body: feature-card-body
       :shadow: lg
-      :link: mcp/index  
+      :link: mcp/index
       :link-type: doc
-      
+
       1,960+ Model Context Protocol servers with hot-reload and AI-powered discovery.
-      
+
       .. list-table::
          :class:`feature`-list
          :widths: 1 2
-         
+
          * - **Servers**
-           - 1,960+ available • Auto-discovery  
+           - 1,960+ available • Auto-discovery
          * - **Features**
            - Hot-reload • Plugin system • Integration
 
@@ -136,7 +136,7 @@
              max_tokens=1000
          )
 
-         # Create and run agent  
+         # Create and run agent
          agent = SimpleAgent(name="assistant", engine=config)
          response = await agent.arun("Explain quantum computing in simple terms")
          print(response)
@@ -208,44 +208,44 @@
          :class:`benefit`-item
 
          .. container:: benefit-icon
-            
+
             ⚡
 
          **Production Ready**
-         
+
          Battle-tested in production environments with comprehensive error handling.
 
          .. grid-item::
          :class:`benefit`-item
 
          .. container:: benefit-icon
-            
+
             🔒
 
          **Type Safe**
-         
+
          Full type hints and Pydantic models for reliable development.
 
          .. grid-item::
          :class:`benefit`-item
 
          .. container:: benefit-icon
-            
+
             🚀
 
          **High Performance**
-         
+
          Async-first architecture with optimized execution and caching.
 
          .. grid-item::
          :class:`benefit`-item
 
          .. container:: benefit-icon
-            
+
             🎯
 
          **Extensible**
-         
+
          Plugin architecture allows custom agents, tools, and integrations.
 
          .. admonition:: 📊 Performance Metrics
@@ -259,30 +259,30 @@
 
          .. grid-item::
          :class:`metric`-item
-         
+
          **<100ms**
-         
+
          *Average Response Time*
 
          .. grid-item::
          :class:`metric`-item
-         
+
          **10K+**
-         
+
          *Agents per Hour*
 
          .. grid-item::
          :class:`metric`-item
-         
+
          **99.9%**
-         
+
          *System Uptime*
 
          .. grid-item::
          :class:`metric`-item
-         
+
          **86+**
-         
+
          *Documentation Extensions*
 
          📖 Documentation Sections
@@ -299,9 +299,9 @@
          :link: introduction/index
          :link-type: doc
          :class-header: docs-card-header
-      
+
          Installation, quickstart, and core concepts to get you up and running.
-      
+
          * Installation guide*
          * Quick start tutorial  *
          * Core concepts overview*
@@ -313,9 +313,9 @@
          :link: agents/index
          :link-type: doc
          :class-header: docs-card-header
-      
+
          Comprehensive guide to building and deploying AI agents.
-      
+
          * Agent types and patterns*
          * Configuration and setup*
          * Advanced features*
@@ -327,9 +327,9 @@
          :link: api/index
          :link-type: doc
          :class-header: docs-card-header
-      
+
          Complete API documentation with enhanced Pydantic model docs.
-      
+
          * Full API coverage*
          * Pydantic models*
          * Type information*
@@ -341,9 +341,9 @@
          :link: examples/index
          :link-type: doc
          :class-header: docs-card-header
-      
+
          Interactive examples and step-by-step tutorials.
-      
+
          * Live code examples*
          * Jupyter notebooks*
          * Demo applications*
@@ -355,9 +355,9 @@
          :link: tools/index
          :link-type: doc
          :class-header: docs-card-header
-      
+
          Tool creation, integration patterns, and MCP servers.
-      
+
          * Custom tool creation*
          * MCP integration*
          * API connections*
@@ -369,9 +369,9 @@
          :link: games/index
          :link-type: doc
          :class-header: docs-card-header
-      
+
          Game AI development and strategy implementation.
-      
+
          * Game engine integration*
          * Strategy algorithms*
          * Multi-player systems*

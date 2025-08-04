@@ -8,22 +8,25 @@ This implementation provides a sophisticated tree search with language model eva
 - No mocks - all real components
 """
 
+from __future__ import annotations
+
 import asyncio
+from dataclasses import dataclass
+from enum import Enum
 import json
 import logging
 import math
-from dataclasses import dataclass
-from enum import Enum
 from typing import Any
 from uuid import uuid4
+
+from langchain_core.tools import tool
+from pydantic import BaseModel, Field, computed_field
 
 from haive.agents.base.agent import Agent
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.prebuilt.messages_state import MessagesState
-from langchain_core.tools import tool
-from pydantic import BaseModel, Field, computed_field
 
 logger = logging.getLogger(__name__)
 
@@ -69,35 +72,50 @@ class ThoughtNode(BaseModel):
     depth: int = Field(default=0, ge=0, description="Depth in search tree")
 
     # Content and reasoning
-    thought_content: str = Field(..., min_length=10, description="Thought content")
+    thought_content: str = Field(...,
+                                 min_length=10,
+                                 description="Thought content")
     reasoning_type: str = Field(
-        ..., description="Type of reasoning (analytical, creative, etc.)"
+        ...,
+        description="Type of reasoning (analytical, creative, etc.)",
     )
     approach: str = Field(..., description="Approach taken for this thought")
 
     # Tree structure
-    children: list[str] = Field(default_factory=list, description="Child node IDs")
+    children: list[str] = Field(default_factory=list,
+                                description="Child node IDs")
 
     # MCTS properties
     visits: int = Field(default=0, ge=0, description="Number of visits")
-    total_reward: float = Field(default=0.0, description="Total accumulated reward")
+    total_reward: float = Field(default=0.0,
+                                description="Total accumulated reward")
 
     # Evaluation
     evaluation_score: float = Field(
-        default=0.0, ge=0.0, le=1.0, description="Evaluation score"
+        default=0.0,
+        ge=0.0,
+        le=1.0,
+        description="Evaluation score",
     )
     evaluation_confidence: float = Field(
-        default=0.0, ge=0.0, le=1.0, description="Confidence in evaluation"
+        default=0.0,
+        ge=0.0,
+        le=1.0,
+        description="Confidence in evaluation",
     )
     evaluation_feedback: str = Field(
-        default="", description="Detailed evaluation feedback"
+        default="",
+        description="Detailed evaluation feedback",
     )
 
     # Status and metadata
-    status: NodeStatus = Field(default=NodeStatus.UNEXPLORED, description="Node status")
-    is_solution: bool = Field(default=False, description="Is this a valid solution")
+    status: NodeStatus = Field(default=NodeStatus.UNEXPLORED,
+                               description="Node status")
+    is_solution: bool = Field(default=False,
+                              description="Is this a valid solution")
     exploration_priority: float = Field(
-        default=0.5, description="Priority for exploration"
+        default=0.5,
+        description="Priority for exploration",
     )
 
     @computed_field
@@ -119,7 +137,9 @@ class ThoughtNode(BaseModel):
         return len(self.children) == 0
 
     def ucb_score(
-        self, parent_visits: int, exploration_constant: float = 1.41
+        self,
+        parent_visits: int,
+        exploration_constant: float = 1.41,
     ) -> float:
         """Calculate Upper Confidence Bound score."""
         if self.visits == 0:
@@ -127,8 +147,7 @@ class ThoughtNode(BaseModel):
 
         exploitation = self.average_reward
         exploration = exploration_constant * math.sqrt(
-            math.log(parent_visits) / self.visits
-        )
+            math.log(parent_visits) / self.visits, )
         return exploitation + exploration
 
     def update_reward(self, reward: float) -> None:
@@ -147,37 +166,54 @@ class LATSSearchState(BaseModel):
 
     objective: str = Field(..., min_length=10, description="Search objective")
     nodes: dict[str, ThoughtNode] = Field(
-        default_factory=dict, description="All nodes in tree"
+        default_factory=dict,
+        description="All nodes in tree",
     )
     root_id: str = Field(..., description="Root node ID")
 
     # Search configuration
-    max_depth: int = Field(default=5, ge=1, le=10, description="Maximum search depth")
+    max_depth: int = Field(default=5,
+                           ge=1,
+                           le=10,
+                           description="Maximum search depth")
     max_expansions: int = Field(
-        default=50, ge=1, le=200, description="Maximum node expansions"
+        default=50,
+        ge=1,
+        le=200,
+        description="Maximum node expansions",
     )
-    beam_width: int = Field(default=3, ge=1, le=10, description="Beam width for search")
+    beam_width: int = Field(default=3,
+                            ge=1,
+                            le=10,
+                            description="Beam width for search")
     exploration_constant: float = Field(
-        default=1.41, ge=0.1, le=5.0, description="UCB exploration constant"
+        default=1.41,
+        ge=0.1,
+        le=5.0,
+        description="UCB exploration constant",
     )
 
     # Search strategy
     strategy: SearchStrategy = Field(
-        default=SearchStrategy.UCB_GUIDED, description="Search strategy"
+        default=SearchStrategy.UCB_GUIDED,
+        description="Search strategy",
     )
 
     # Runtime state
     current_expansions: int = Field(
-        default=0, description="Current number of expansions"
+        default=0,
+        description="Current number of expansions",
     )
     best_solution_id: str | None = Field(
-        default=None, description="Best solution found"
+        default=None,
+        description="Best solution found",
     )
     best_score: float = Field(default=0.0, description="Best score achieved")
 
     # Metrics
     metrics: SearchMetrics = Field(
-        default_factory=SearchMetrics, description="Search metrics"
+        default_factory=SearchMetrics,
+        description="Search metrics",
     )
 
     @computed_field
@@ -185,8 +221,7 @@ class LATSSearchState(BaseModel):
     def is_complete(self) -> bool:
         """Check if search is complete."""
         return self.current_expansions >= self.max_expansions or (
-            self.best_solution_id is not None and self.best_score >= 0.9
-        )
+            self.best_solution_id is not None and self.best_score >= 0.9)
 
     @computed_field
     @property
@@ -213,7 +248,9 @@ class LATSSearchState(BaseModel):
     def get_best_nodes(self, n: int = 5) -> list[ThoughtNode]:
         """Get top N nodes by evaluation score."""
         return sorted(
-            self.nodes.values(), key=lambda x: x.evaluation_score, reverse=True
+            self.nodes.values(),
+            key=lambda x: x.evaluation_score,
+            reverse=True,
         )[:n]
 
     def get_path_to_root(self, node_id: str) -> list[ThoughtNode]:
@@ -248,7 +285,8 @@ class LATSSearchState(BaseModel):
                 if node.parent_id:
                     parent = self.nodes.get(node.parent_id)
                     if parent:
-                        score = node.ucb_score(parent.visits, self.exploration_constant)
+                        score = node.ucb_score(parent.visits,
+                                               self.exploration_constant)
                         if score > best_score:
                             best_score = score
                             best_node = node
@@ -258,9 +296,8 @@ class LATSSearchState(BaseModel):
     def _select_best_first(self) -> ThoughtNode | None:
         """Select best leaf node."""
         candidates = [
-            node
-            for node in self.nodes.values()
-            if node.is_leaf and not node.is_terminal and node.depth < self.max_depth
+            node for node in self.nodes.values() if node.is_leaf
+            and not node.is_terminal and node.depth < self.max_depth
         ]
 
         if not candidates:
@@ -271,9 +308,8 @@ class LATSSearchState(BaseModel):
     def _select_breadth_first(self) -> ThoughtNode | None:
         """Select shallowest leaf node."""
         candidates = [
-            node
-            for node in self.nodes.values()
-            if node.is_leaf and not node.is_terminal and node.depth < self.max_depth
+            node for node in self.nodes.values() if node.is_leaf
+            and not node.is_terminal and node.depth < self.max_depth
         ]
 
         if not candidates:
@@ -286,21 +322,25 @@ class LATSSearchResult(BaseModel):
     """Final result from LATS search."""
 
     objective: str = Field(..., description="Original objective")
-    best_solution: str | None = Field(default=None, description="Best solution found")
+    best_solution: str | None = Field(default=None,
+                                      description="Best solution found")
     best_score: float = Field(default=0.0, description="Best score achieved")
     solution_path: list[str] = Field(
-        default_factory=list, description="Path to best solution"
+        default_factory=list,
+        description="Path to best solution",
     )
 
     # Search statistics
     total_nodes: int = Field(default=0, description="Total nodes explored")
-    total_evaluations: int = Field(default=0, description="Total evaluations performed")
+    total_evaluations: int = Field(default=0,
+                                   description="Total evaluations performed")
     search_depth: int = Field(default=0, description="Maximum depth reached")
     search_time: float = Field(default=0.0, description="Total search time")
 
     # Alternative solutions
     alternative_solutions: list[dict[str, Any]] = Field(
-        default_factory=list, description="Alternative solutions"
+        default_factory=list,
+        description="Alternative solutions",
     )
 
     @computed_field
@@ -313,7 +353,8 @@ class LATSSearchResult(BaseModel):
 class EnhancedLATSAgent(Agent):
     """Enhanced LATS Agent with sophisticated tree search."""
 
-    def __init__(self, name: str, engine: AugLLMConfig, tools: list[Any], **kwargs):
+    def __init__(self, name: str, engine: AugLLMConfig, tools: list[Any],
+                 **kwargs):
         self.tools = tools
         self.thought_generator = None
         self.thought_evaluator = None
@@ -330,8 +371,7 @@ class EnhancedLATSAgent(Agent):
                 update={
                     "temperature": 0.8,  # More creative for thought generation
                     "system_message": self._create_generation_prompt(),
-                }
-            ),
+                }, ),
             tools=self.tools,
         )
 
@@ -342,20 +382,20 @@ class EnhancedLATSAgent(Agent):
                 update={
                     "temperature": 0.1,  # More deterministic for evaluation
                     "system_message": self._create_evaluation_prompt(),
-                }
-            ),
+                }, ),
         )
 
         # Create solution synthesizer
         self.solution_synthesizer = SimpleAgent(
             name=f"{self.name}_synthesizer",
-            engine=self.engine.model_copy(
-                update={
-                    "structured_output_model": LATSSearchResult,
-                    "structured_output_version": "v2",
-                    "system_message": self._create_synthesis_prompt(),
-                }
-            ),
+            engine=self.engine.model_copy(update={
+                "structured_output_model":
+                LATSSearchResult,
+                "structured_output_version":
+                "v2",
+                "system_message":
+                self._create_synthesis_prompt(),
+            }, ),
         )
 
         # Set up state schema
@@ -493,12 +533,14 @@ Be comprehensive and analytical."""
                 break
 
             logger.info(
-                f"Expanding node {node_to_expand.node_id} at depth {node_to_expand.depth}"
-            )
+                f"Expanding node {
+                    node_to_expand.node_id} at depth {
+                    node_to_expand.depth}", )
 
             # Generate child thoughts
             child_thoughts = await self._generate_child_thoughts(
-                node_to_expand, search_state
+                node_to_expand,
+                search_state,
             )
 
             # Evaluate child thoughts
@@ -523,23 +565,28 @@ Be comprehensive and analytical."""
 
             logger.info(
                 f"Search progress: {search_state.completion_percentage:.1f}% "
-                f"(best score: {search_state.best_score:.3f})"
-            )
+                f"(best score: {search_state.best_score:.3f})", )
 
     async def _generate_child_thoughts(
-        self, parent_node: ThoughtNode, search_state: LATSSearchState
+        self,
+        parent_node: ThoughtNode,
+        search_state: LATSSearchState,
     ) -> list[ThoughtNode]:
         """Generate child thoughts for a node."""
         # Create context from path to root
         path_to_root = search_state.get_path_to_root(parent_node.node_id)
         context = " -> ".join([node.thought_content for node in path_to_root])
 
-        generation_prompt = f"""Generate {search_state.beam_width} diverse child thoughts for exploration.
+        generation_prompt = f"""Generate {
+            search_state.beam_width} diverse child thoughts for exploration.
 
-Objective: {search_state.objective}
+Objective: {
+            search_state.objective}
 Current path: {context}
-Parent thought: {parent_node.thought_content}
-Current depth: {parent_node.depth}
+Parent thought: {
+            parent_node.thought_content}
+Current depth: {
+                parent_node.depth}
 
 Generate different approaches, perspectives, or solutions that build on this path.
 Each thought should explore a different direction or aspect of the problem.
@@ -555,13 +602,18 @@ Make thoughts diverse and creative while staying relevant to the objective."""
 
         # Parse the result to extract child thoughts
         child_thoughts = self._parse_generated_thoughts(
-            result, parent_node, search_state
+            result,
+            parent_node,
+            search_state,
         )
 
         return child_thoughts
 
     def _parse_generated_thoughts(
-        self, result: Any, parent_node: ThoughtNode, search_state: LATSSearchState
+        self,
+        result: Any,
+        parent_node: ThoughtNode,
+        search_state: LATSSearchState,
     ) -> list[ThoughtNode]:
         """Parse generated thoughts from agent result."""
         # This is a simplified parser - in a real implementation,
@@ -578,14 +630,14 @@ Make thoughts diverse and creative while staying relevant to the objective."""
 
         for line in lines:
             line = line.strip()
-            if line and (
-                line.startswith(("1.", "2.", "3.", "-", "*"))
-                or any(word in line.lower() for word in ["thought", "approach", "idea"])
-            ):
+            if line and (line.startswith(("1.", "2.", "3.", "-", "*"))
+                         or any(word in line.lower()
+                                for word in ["thought", "approach", "idea"])):
                 thought_lines.append(line)
 
         # Create thought nodes
-        for i, thought_line in enumerate(thought_lines[: search_state.beam_width]):
+        for i, thought_line in enumerate(
+                thought_lines[:search_state.beam_width]):
             thought_id = f"node_{uuid4().hex[:8]}"
 
             child_thought = ThoughtNode(
@@ -603,7 +655,9 @@ Make thoughts diverse and creative while staying relevant to the objective."""
         return thoughts
 
     async def _evaluate_thought(
-        self, thought: ThoughtNode, search_state: LATSSearchState
+        self,
+        thought: ThoughtNode,
+        search_state: LATSSearchState,
     ) -> None:
         """Evaluate a thought node."""
         evaluation_prompt = f"""Evaluate this thought for the given objective.
@@ -650,7 +704,7 @@ Consider relevance, soundness, creativity, and potential for solving the objecti
                 score_part = result_str.split("score:")[1].split()[0]
                 score = float(score_part.strip("()[]"))
                 score = max(0.0, min(1.0, score))
-            except:
+            except BaseException:
                 pass
 
         # Extract confidence
@@ -660,13 +714,13 @@ Consider relevance, soundness, creativity, and potential for solving the objecti
                 conf_part = result_str.split("confidence:")[1].split()[0]
                 confidence = float(conf_part.strip("()[]"))
                 confidence = max(0.0, min(1.0, confidence))
-            except:
+            except BaseException:
                 pass
 
         # Check if it's a solution
         is_solution = any(
-            word in result_str for word in ["yes", "valid solution", "solution: yes"]
-        )
+            word in result_str
+            for word in ["yes", "valid solution", "solution: yes"])
 
         return {
             "score": score,
@@ -676,7 +730,9 @@ Consider relevance, soundness, creativity, and potential for solving the objecti
         }
 
     async def _backpropagate_rewards(
-        self, node: ThoughtNode, search_state: LATSSearchState
+        self,
+        node: ThoughtNode,
+        search_state: LATSSearchState,
     ) -> None:
         """Backpropagate rewards through the tree."""
         # Simple backpropagation - update all nodes in path to root
@@ -692,13 +748,15 @@ Consider relevance, soundness, creativity, and potential for solving the objecti
                 break
 
     async def _synthesize_results(
-        self, search_state: LATSSearchState
+        self,
+        search_state: LATSSearchState,
     ) -> LATSSearchResult:
         """Synthesize final results from search."""
         # Get best solution path
         best_path = []
         if search_state.best_solution_id:
-            path_nodes = search_state.get_path_to_root(search_state.best_solution_id)
+            path_nodes = search_state.get_path_to_root(
+                search_state.best_solution_id)
             best_path = [node.thought_content for node in path_nodes]
 
         # Get alternative solutions
@@ -707,14 +765,15 @@ Consider relevance, soundness, creativity, and potential for solving the objecti
         for node in best_nodes[1:]:  # Skip the best one
             alternatives.append(
                 {
-                    "thought": node.thought_content,
-                    "score": node.evaluation_score,
+                    "thought":
+                    node.thought_content,
+                    "score":
+                    node.evaluation_score,
                     "path": [
                         n.thought_content
                         for n in search_state.get_path_to_root(node.node_id)
                     ],
-                }
-            )
+                }, )
 
         synthesis_prompt = f"""Synthesize the LATS search results.
 
@@ -769,20 +828,20 @@ async def test_enhanced_lats_agent():
     @tool
     def creative_generator(prompt: str) -> str:
         """Generate creative ideas."""
-        return (
-            f"Creative ideas for '{prompt}': Innovative approaches and novel solutions."
-        )
+        return f"Creative ideas for '{prompt}': Innovative approaches and novel solutions."
 
     # Create agent
     config = AugLLMConfig(temperature=0.7, max_tokens=1000)
 
     agent = EnhancedLATSAgent(
-        name="test_lats", engine=config, tools=[logical_analyzer, creative_generator]
+        name="test_lats",
+        engine=config,
+        tools=[logical_analyzer, creative_generator],
     )
 
     # Test query
     result = await agent.arun(
-        "How can we solve the problem of climate change through innovative technology?"
+        "How can we solve the problem of climate change through innovative technology?",
     )
 
     if result.get("status") == "completed":

@@ -27,7 +27,9 @@ os.environ["HAIVE_DISABLE_CHECKPOINTER"] = "true"
 
 # Create configuration
 config = AugLLMConfig(
-    temperature=0.7, max_tokens=500, system_message="You are a helpful AI assistant."
+    temperature=0.7,
+    max_tokens=500,
+    system_message="You are a helpful AI assistant.",
 )
 
 # Create the agent

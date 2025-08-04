@@ -23,7 +23,6 @@ from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -107,7 +106,8 @@ class MultiAgent(Agent):
     # ========================================================================
 
     agents: dict[str, Agent] = Field(
-        default_factory=dict, description="Dictionary of agents to coordinate"
+        default_factory=dict,
+        description="Dictionary of agents to coordinate",
     )
 
     execution_mode: str = Field(
@@ -117,7 +117,8 @@ class MultiAgent(Agent):
 
     # Coordinator LLM for routing decisions (optional)
     coordinator_config: AugLLMConfig | None = Field(
-        default=None, description="LLM config for coordination decisions"
+        default=None,
+        description="LLM config for coordination decisions",
     )
 
     # ========================================================================
@@ -165,7 +166,8 @@ class MultiAgent(Agent):
         # Start with first agent
         first_agent = agent_names[0]
         first_node = AgentNodeV3Config(
-            name=f"{first_agent}_node", agent=self.agents[first_agent]
+            name=f"{first_agent}_node",
+            agent=self.agents[first_agent],
         )
         graph.add_node(f"{first_agent}_node", first_node)
         graph.add_edge(START, f"{first_agent}_node")
@@ -176,7 +178,8 @@ class MultiAgent(Agent):
             curr_agent = agent_names[i]
 
             curr_node = AgentNodeV3Config(
-                name=f"{curr_agent}_node", agent=self.agents[curr_agent]
+                name=f"{curr_agent}_node",
+                agent=self.agents[curr_agent],
             )
             graph.add_node(f"{curr_agent}_node", curr_node)
             graph.add_edge(f"{prev_agent}_node", f"{curr_agent}_node")
@@ -207,7 +210,8 @@ class MultiAgent(Agent):
         from haive.core.graph.node.engine_node import EngineNodeConfig
 
         coordinator_node = EngineNodeConfig(
-            name="coordinator", engine=self.coordinator_config
+            name="coordinator",
+            engine=self.coordinator_config,
         )
         graph.add_node("coordinator", coordinator_node)
         graph.add_edge(START, "coordinator")
