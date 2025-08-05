@@ -34,16 +34,14 @@
       **Install Haive**
 
 .. code-block:: bash
+   :class: copy-button
 
-         :class:`copy`-button
+   pip install haive-agents
 
-         pip install haive-agents
-
-         **Create Your First Agent**
+**Create Your First Agent**
 
 .. code-block:: python
-
-         :class:`copy`-button
+   :class: copy-button
 
          from haive.agents import SimpleAgent
          from haive.core.engine import AugLLMConfig

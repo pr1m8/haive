@@ -4,6 +4,8 @@ This module organizes all Sphinx extensions into logical groups and
 provides debugging/logging capabilities to test each part procedurally.
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any
 
@@ -65,8 +67,6 @@ def get_autoapi_extensions() -> list[str]:
 
     # Test if autoapi is available
     try:
-        pass
-
         logger.info("✅ AutoAPI available and loaded")
     except ImportError:
         logger.warning("⚠️  AutoAPI not installed, removing from extensions")
@@ -86,9 +86,7 @@ def get_myst_extensions() -> list[str]:
     available_extensions = []
     for ext in extensions:
         try:
-            if ext == "myst_parser":
-                pass
-            elif ext == "myst_nb":
+            if ext == "myst_parser" or ext == "myst_nb":
                 pass
             available_extensions.append(ext)
         except ImportError:
@@ -159,7 +157,7 @@ def get_additional_extensions() -> list[str]:
 
     if unavailable_extensions:
         logger.warning(
-            f"⚠️  {len(unavailable_extensions)} extensions not available")
+            f"⚠️  {len(unavailable_extensions)} extensions not available", )
 
     logger.info(f"✅ Loaded {len(available_extensions)} additional extensions")
     return available_extensions
@@ -196,7 +194,8 @@ def get_development_extensions() -> list[str]:
         # Code Documentation
         "sphinx_argparse": "sphinx_argparse",
         "sphinx_click": "sphinx_click",
-        # REMOVED: sphinx_codeautolink - causes NodeType.MESSAGE_TRANSFORMER error with Sphinx 8.2.3
+        # REMOVED: sphinx_codeautolink - causes NodeType.MESSAGE_TRANSFORMER error
+        # with Sphinx 8.2.3
         "sphinx_codefence": "sphinx_codefence",
         "sphinx_codelinks": "sphinx_codelinks",
         "sphinx_exec_directive": "sphinx_exec_directive",
@@ -462,10 +461,10 @@ def test_extension_compatibility() -> dict[str, Any]:
     # Summary
     if results["failed_extensions"]:
         logger.warning(
-            f"❌ {len(results['failed_extensions'])} extensions failed")
+            f"❌ {len(results['failed_extensions'])} extensions failed", )
     if results["warnings"]:
         logger.warning(
-            f"⚠️  {len(results['warnings'])} extensions have warnings")
+            f"⚠️  {len(results['warnings'])} extensions have warnings", )
 
     logger.info(
         f"✅ {results['working_extensions']}/{results['total_extensions']} extensions working",

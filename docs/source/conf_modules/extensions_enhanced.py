@@ -9,8 +9,6 @@ from typing import Any
 
 # Try to import structured logging
 try:
-    pass
-
     logger = logging.getLogger("sphinx_config.extensions")
 except ImportError:
     # Fallback to basic logging
@@ -37,8 +35,10 @@ EXTENSION_CATEGORIES = {
             "sphinx.ext.inheritance_diagram",
             "sphinx.ext.autosectionlabel",
         ],
-        "description": "Core Sphinx extensions (16 total)",
-        "required": True,
+        "description":
+        "Core Sphinx extensions (16 total)",
+        "required":
+        True,
     },
     "api": {
         "extensions": [
@@ -47,8 +47,10 @@ EXTENSION_CATEGORIES = {
             "sphinx_click",
             "sphinx_argparse",
         ],
-        "description": "API documentation generation (4 total)",
-        "required": True,
+        "description":
+        "API documentation generation (4 total)",
+        "required":
+        True,
     },
     "content": {
         "extensions": [
@@ -61,18 +63,22 @@ EXTENSION_CATEGORIES = {
             "sphinx_prompt",
             "sphinx_jinja2",
         ],
-        "description": "Content enhancement extensions (8 total)",
-        "required": True,
+        "description":
+        "Content enhancement extensions (8 total)",
+        "required":
+        True,
     },
     "interactive": {
         "extensions": [
-            "sphinx_exercise",          # Interactive exercises with solutions
-            "sphinx_proof",             # Mathematical proofs and theorems  
-            "sphinx_hoverxref",         # Hover tooltips for cross-references
-            "sphinx_revealjs",          # Presentation slides from docs
+            "sphinx_exercise",  # Interactive exercises with solutions
+            "sphinx_proof",  # Mathematical proofs and theorems
+            "sphinx_hoverxref",  # Hover tooltips for cross-references
+            "sphinx_revealjs",  # Presentation slides from docs
         ],
-        "description": "Interactive content features (4 total)",
-        "required": False,
+        "description":
+        "Interactive content features (4 total)",
+        "required":
+        False,
     },
     "diagrams": {
         "extensions": [
@@ -80,55 +86,65 @@ EXTENSION_CATEGORIES = {
             "sphinx_design",
             "sphinxcontrib.plantuml",
             "sphinxcontrib.blockdiag",  # Block diagrams (architecture)
-            "sphinxcontrib.seqdiag",    # Sequence diagrams (API flows)
-            "sphinxcontrib.drawio",     # Draw.io integration
+            "sphinxcontrib.seqdiag",  # Sequence diagrams (API flows)
+            "sphinxcontrib.drawio",  # Draw.io integration
         ],
-        "description": "Diagram and design elements (6 total)",
-        "required": False,
+        "description":
+        "Diagram and design elements (6 total)",
+        "required":
+        False,
     },
     "professional": {
         "extensions": [
-            "sphinx_notfound_page",     # Custom 404 pages
-            "sphinx_version_warning",   # Version warnings for old docs
-            "sphinx_contributors",      # Automatic contributor lists
-            "sphinxext.rediraffe",      # Redirect management
-            "sphinx_issues",            # GitHub issues integration
+            "sphinx_notfound_page",  # Custom 404 pages
+            "sphinx_version_warning",  # Version warnings for old docs
+            "sphinx_contributors",  # Automatic contributor lists
+            "sphinxext.rediraffe",  # Redirect management
+            "sphinx_issues",  # GitHub issues integration
             "sphinx_sitemap",
             "sphinx_external_toc",
         ],
-        "description": "Professional polish features (7 total)",
-        "required": False,
+        "description":
+        "Professional polish features (7 total)",
+        "required":
+        False,
     },
     "ux": {
         "extensions": [
-            "sphinxemoji",              # Emoji support in docs 😀
-            "sphinx_substitution_extensions", # Advanced text substitutions
-            "sphinx_math_dollar",       # LaTeX math with $ syntax
-            "sphinxcontrib.images",     # Image thumbnails and galleries
+            "sphinxemoji",  # Emoji support in docs 😀
+            "sphinx_substitution_extensions",  # Advanced text substitutions
+            "sphinx_math_dollar",  # LaTeX math with $ syntax
+            "sphinxcontrib.images",  # Image thumbnails and galleries
             "sphinxcontrib.youtube",
             "sphinxext.opengraph",
         ],
-        "description": "Enhanced user experience (6 total)",
-        "required": False,
+        "description":
+        "Enhanced user experience (6 total)",
+        "required":
+        False,
     },
     "protocols": {
         "extensions": [
             "sphinxcontrib.openapi",
-            "sphinxcontrib.httpdomain", 
-            "sphinx_jsonschema",        # JSON schema documentation
-            "sphinxcontrib.fulltoc",    # Full table of contents
+            "sphinxcontrib.httpdomain",
+            "sphinx_jsonschema",  # JSON schema documentation
+            "sphinxcontrib.fulltoc",  # Full table of contents
         ],
-        "description": "API & protocols documentation (4 total)",
-        "required": False,
+        "description":
+        "API & protocols documentation (4 total)",
+        "required":
+        False,
     },
     "gallery": {
         "extensions": [
             "sphinx_gallery.gen_gallery",
-            "nbsphinx",                 # Jupyter notebook integration
+            "nbsphinx",  # Jupyter notebook integration
             "sphinx_needs",
         ],
-        "description": "Gallery & examples (3 total)",
-        "required": False,
+        "description":
+        "Gallery & examples (3 total)",
+        "required":
+        False,
     },
     "quality": {
         "extensions": [
@@ -146,8 +162,10 @@ EXTENSION_CATEGORIES = {
             "_extensions.games_autodoc",
             "_extensions.namespace_autosummary",
         ],
-        "description": "Custom Haive extensions (5 total)",
-        "required": False,  # Changed to False since these are failing
+        "description":
+        "Custom Haive extensions (5 total)",
+        "required":
+        False,  # Changed to False since these are failing
     },
 }
 
@@ -170,7 +188,7 @@ def get_extension_with_structured_logging(
 
     for category, category_info in EXTENSION_CATEGORIES.items():
         logger.info(
-            f"\n📦 Loading {category} extensions ({category_info['description']}):"
+            f"\n📦 Loading {category} extensions ({category_info['description']}):",
         )
 
         category_loaded = 0
@@ -196,8 +214,10 @@ def get_extension_with_structured_logging(
                         __import__(ext_name)
                     except ImportError:
                         # Try with underscore
-                        module_name = ext_name.replace("sphinxcontrib.",
-                                                       "sphinxcontrib_")
+                        module_name = ext_name.replace(
+                            "sphinxcontrib.",
+                            "sphinxcontrib_",
+                        )
                         __import__(module_name)
 
                 extensions.append(ext_name)
@@ -218,7 +238,7 @@ def get_extension_with_structured_logging(
                         f"  ❌ {ext_name}: Required extension failed - {error_msg}",
                         extra={
                             "category": "extension_error",
-                            "extension": ext_name
+                            "extension": ext_name,
                         },
                     )
                     extension_status["failed"].append(
@@ -235,7 +255,8 @@ def get_extension_with_structured_logging(
                         f"  ⚠️  {ext_name}: Optional extension not available - {error_msg}",
                         extra={
                             "category": "missing_extension",
-                            "extension": ext_name},
+                            "extension": ext_name,
+                        },
                     )
                     extension_status["optional_missing"].append(
                         {
@@ -254,7 +275,7 @@ def get_extension_with_structured_logging(
                     f"  💥 {ext_name}: Unexpected error - {e}",
                     extra={
                         "category": "extension_error",
-                        "extension": ext_name
+                        "extension": ext_name,
                     },
                 )
                 extension_status["failed"].append(
@@ -287,7 +308,8 @@ def get_extension_with_structured_logging(
     logger.info("=" * 80)
     logger.info(f"  ✅ Successfully loaded: {len(extension_status['loaded'])}")
     logger.info(
-        f"  ⚠️  Optional missing: {len(extension_status['optional_missing'])}")
+        f"  ⚠️  Optional missing: {len(extension_status['optional_missing'])}",
+    )
     logger.info(f"  ❌ Failed to load: {len(extension_status['failed'])}")
 
     # List failed required extensions
@@ -296,11 +318,11 @@ def get_extension_with_structured_logging(
         for ext in extension_status["failed"]:
             if ext.get("required", True):
                 logger.error(
-                    f"  - {ext['name']} ({ext['category']}): {ext['error']}")
+                    f"  - {ext['name']} ({ext['category']}): {ext['error']}", )
 
     # Save extension status
-    status_file = Path(
-        __file__).parent.parent / "logs" / "build" / "extension_status.json"
+    status_file = (Path(__file__, ).parent.parent / "logs" / "build" /
+                   "extension_status.json")
     status_file.parent.mkdir(exist_ok=True, parents=True)
     with open(status_file, "w") as f:
         json.dump(extension_status, f, indent=2)

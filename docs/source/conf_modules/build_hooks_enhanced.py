@@ -39,7 +39,8 @@ def on_builder_inited(app):
             getattr(
                 app.builder,
                 'supported_image_types',
-                'N/A')}")
+                'N/A')}",
+    )
 
 
 def on_env_get_outdated(app, env, added, changed, removed):
@@ -79,7 +80,7 @@ def on_env_warning(app, node, msg):
         f"⚠️  {msg}",
         extra={
             "category": "doctree_warning",
-            "docname": getattr(node, "source", "unknown")
+            "docname": getattr(node, "source", "unknown"),
         },
     )
 
@@ -150,13 +151,13 @@ def on_build_finished(app, exception):
         # Error/warning summary
         if error_summary["summary"]["total_errors"] > 0:
             logger.error(
-                f"\n❌ Errors: {error_summary['summary']['total_errors']}")
+                f"\n❌ Errors: {error_summary['summary']['total_errors']}", )
             for category, errors in error_summary["errors"].items():
                 logger.error(f"  - {category}: {len(errors)} errors")
 
         if error_summary["summary"]["total_warnings"] > 0:
             logger.warning(
-                f"\n⚠️  Warnings: {error_summary['summary']['total_warnings']}"
+                f"\n⚠️  Warnings: {error_summary['summary']['total_warnings']}",
             )
             for category, warnings in error_summary["warnings"].items():
                 logger.warning(f"  - {category}: {len(warnings)} warnings")
@@ -185,9 +186,8 @@ def on_build_finished(app, exception):
 def load_extension_status():
     """Load extension status if available."""
     try:
-        status_file = Path(
-            __file__
-        ).parent.parent / "logs" / "build" / "extension_status.json"
+        status_file = (Path(__file__, ).parent.parent / "logs" / "build" /
+                       "extension_status.json")
         if status_file.exists():
             with open(status_file) as f:
                 return json.load(f)
