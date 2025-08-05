@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 """Template for __init__.py module docstrings following Google style guide.
 
 Copy this template and customize it for each module's __init__.py file.

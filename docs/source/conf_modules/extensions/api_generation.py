@@ -55,7 +55,8 @@ def get_config(
             "sphinx.ext.viewcode",  # [source] links
             "sphinx.ext.linkcode",  # GitHub source links
             "sphinx.ext.autosummary",  # Summary tables
-        ], )
+        ],
+    )
 
     config["extensions"] = extensions
     return config
@@ -132,11 +133,9 @@ def _get_autoapi_config(packages: list[str] | None = None) -> dict[str, Any]:
     ]
 
     return {
-        "autoapi_type":
-        "python",
+        "autoapi_type": "python",
         "autoapi_dirs": [f"../../packages/{pkg}/src" for pkg in packages],
-        "autoapi_root":
-        "api",
+        "autoapi_root": "api",
         "autoapi_options": [
             "members",
             "show-inheritance",
@@ -144,20 +143,13 @@ def _get_autoapi_config(packages: list[str] | None = None) -> dict[str, Any]:
             "special-members",  # Show __init__, __call__, etc.
             "private-members",  # Show documented private methods
         ],
-        "autoapi_keep_files":
-        True,
-        "autoapi_add_toctree_entry":
-        True,
-        "autoapi_member_order":
-        "groupwise",
-        "autoapi_python_class_content":
-        "both",
-        "autoapi_python_use_implicit_namespaces":
-        True,
-        "autoapi_generate_api_docs":
-        True,
-        "autoapi_template_dir":
-        "_templates/autoapi",
+        "autoapi_keep_files": True,
+        "autoapi_add_toctree_entry": True,
+        "autoapi_member_order": "groupwise",
+        "autoapi_python_class_content": "both",
+        "autoapi_python_use_implicit_namespaces": True,
+        "autoapi_generate_api_docs": True,
+        "autoapi_template_dir": "_templates/autoapi",
         "autoapi_ignore": [
             "**/__pycache__/**",
             "**/*.pyc",

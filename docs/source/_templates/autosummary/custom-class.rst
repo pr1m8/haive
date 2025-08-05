@@ -15,6 +15,7 @@
 
    .. autosummary::
 
+
       :nosignatures:
 
    {% for item in methods %}
@@ -30,6 +31,7 @@
    .. rubric:: Attributes
 
    .. autosummary::
+
 
       :nosignatures:
 

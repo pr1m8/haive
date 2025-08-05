@@ -4,6 +4,7 @@ This module integrates the memory management capabilities from the
 noxfile system into the Sphinx configuration to optimize documentation
 builds based on available memory.
 """
+
 from __future__ import annotations
 
 import gc
@@ -138,14 +139,14 @@ class SphinxMemoryManager:
                         "\n".join([f"• {rec}" for rec in recommendations]),
                         title="💡 Memory Recommendations",
                         border_style="yellow",
-                    ), )
+                    ),
+                )
         else:
             # Fallback to simple logging
             logger.info(
-                f"💾 Memory: {
-                    info['available_gb']:.1f}GB available ({
-                    100 -
-                    info['percent_used']:.0f}% free)",
+                f"💾 Memory: {info['available_gb']:.1f}GB available ({
+                    100 - info['percent_used']:.0f
+                }% free)",
             )
             logger.info(f"📊 Status: {info['status'].title()}")
 
@@ -154,30 +155,38 @@ class SphinxMemoryManager:
         recommendations = []
 
         if self.current_status == "critical":
-            recommendations.extend([
-                "Consider closing other applications",
-                "Use single-threaded builds only",
-                "Build smaller sections at a time",
-                "Consider upgrading system memory",
-            ], )
+            recommendations.extend(
+                [
+                    "Consider closing other applications",
+                    "Use single-threaded builds only",
+                    "Build smaller sections at a time",
+                    "Consider upgrading system memory",
+                ],
+            )
         elif self.current_status == "low":
-            recommendations.extend([
-                "Use limited parallelism (2-4 workers)",
-                "Avoid building all formats simultaneously",
-                "Monitor memory usage during builds",
-            ], )
+            recommendations.extend(
+                [
+                    "Use limited parallelism (2-4 workers)",
+                    "Avoid building all formats simultaneously",
+                    "Monitor memory usage during builds",
+                ],
+            )
         elif self.current_status == "moderate":
-            recommendations.extend([
-                "Good for most documentation builds",
-                "Can use moderate parallelism",
-                "Consider HTML-only builds for speed",
-            ], )
+            recommendations.extend(
+                [
+                    "Good for most documentation builds",
+                    "Can use moderate parallelism",
+                    "Consider HTML-only builds for speed",
+                ],
+            )
         else:
-            recommendations.extend([
-                "Excellent memory availability",
-                "Can use full parallelism",
-                "Safe to build all formats simultaneously",
-            ], )
+            recommendations.extend(
+                [
+                    "Excellent memory availability",
+                    "Can use full parallelism",
+                    "Safe to build all formats simultaneously",
+                ],
+            )
 
         return recommendations
 
@@ -189,9 +198,9 @@ class SphinxMemoryManager:
         config.update(
             {
                 "keep_warnings": True,
-                "warning_is_error":
-                False,  # Don't fail on warnings in low memory
-            }, )
+                "warning_is_error": False,  # Don't fail on warnings in low memory
+            },
+        )
 
         # Memory-specific optimizations
         if self.current_status == "critical":
@@ -199,27 +208,27 @@ class SphinxMemoryManager:
                 {
                     "html_split_index": True,  # Split large indices
                     "html_compact_lists": True,  # More compact HTML
-                    "autodoc_member_order":
-                    "bysource",  # Faster than alphabetical
+                    "autodoc_member_order": "bysource",  # Faster than alphabetical
                     "autosummary_generate": False,  # Disable to save memory
-                }, )
+                },
+            )
         elif self.current_status == "low":
             config.update(
                 {
                     "html_split_index": True,
                     "autodoc_member_order": "bysource",
                     "autosummary_generate": True,
-                    "autosummary_generate_overwrite":
-                    False,  # Don't regenerate existing
-                }, )
+                    "autosummary_generate_overwrite": False,  # Don't regenerate existing
+                },
+            )
         else:
             config.update(
                 {
-                    "html_split_index":
-                    False,  # Keep unified index for better UX
+                    "html_split_index": False,  # Keep unified index for better UX
                     "autosummary_generate": True,
                     "autosummary_generate_overwrite": True,
-                }, )
+                },
+            )
 
         # Extension-specific memory optimizations
         if self.current_status in ["critical", "low"]:
@@ -273,11 +282,9 @@ class SphinxMemoryManager:
 
         # Memory-intensive extensions to potentially disable
         memory_intensive = {
-            "sphinx_gallery.gen_gallery":
-            "Gallery generation is memory intensive",
+            "sphinx_gallery.gen_gallery": "Gallery generation is memory intensive",
             "sphinx_examples": "Example processing can use significant memory",
-            "sphinxcontrib.versioning":
-            "Version building requires extra memory",
+            "sphinxcontrib.versioning": "Version building requires extra memory",
             "sphinx_jupyterbook_latex": "LaTeX processing is memory intensive",
         }
 
@@ -293,13 +300,13 @@ class SphinxMemoryManager:
         if disabled_extensions and RICH_AVAILABLE and console:
             console.print(
                 Panel.fit(
-                    "\n".join([
-                        f"• {ext}: {reason}"
-                        for ext, reason in disabled_extensions
-                    ], ),
+                    "\n".join(
+                        [f"• {ext}: {reason}" for ext, reason in disabled_extensions],
+                    ),
                     title="⚠️  Extensions Disabled Due to Low Memory",
                     border_style="red",
-                ), )
+                ),
+            )
         elif disabled_extensions:
             logger.warning(
                 f"⚠️  Disabled {len(disabled_extensions)} extensions due to low memory",
@@ -334,7 +341,8 @@ def get_memory_safe_sphinx_config(extensions: list) -> dict[str, Any]:
 
     # Optimize extensions for available memory
     optimized_extensions = sphinx_memory_manager.optimize_extensions_for_memory(
-        extensions, )
+        extensions,
+    )
     config["extensions"] = optimized_extensions
 
     # Add build recommendations
@@ -348,7 +356,6 @@ def monitor_sphinx_build(operation_name: str):
     """Context manager to monitor memory during Sphinx operations."""
 
     class SphinxMemoryMonitor:
-
         def __init__(self, op_name):
             self.operation = op_name
             self.start_memory = None
@@ -360,15 +367,15 @@ def monitor_sphinx_build(operation_name: str):
 
             if RICH_AVAILABLE and console:
                 console.print(
-                    f"🚀 Starting {
-                        self.operation} with {
-                        sphinx_memory_manager.get_memory_gb():.1f}GB available",
+                    f"🚀 Starting {self.operation} with {
+                        sphinx_memory_manager.get_memory_gb():.1f
+                    }GB available",
                 )
             else:
                 logger.info(
-                    f"🚀 Starting {
-                        self.operation} with {
-                        sphinx_memory_manager.get_memory_gb():.1f}GB available",
+                    f"🚀 Starting {self.operation} with {
+                        sphinx_memory_manager.get_memory_gb():.1f
+                    }GB available",
                 )
 
             return self
@@ -379,8 +386,7 @@ def monitor_sphinx_build(operation_name: str):
             elapsed = time.time() - self.start_time
 
             if RICH_AVAILABLE and console:
-                console.print(
-                    f"✅ {self.operation} completed in {elapsed:.1f}s")
+                console.print(f"✅ {self.operation} completed in {elapsed:.1f}s")
                 console.print(f"💾 Memory used: {memory_used:.1f}GB")
             else:
                 logger.info(f"✅ {self.operation} completed in {elapsed:.1f}s")

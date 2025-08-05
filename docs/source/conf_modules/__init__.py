@@ -110,8 +110,8 @@ def create_standard_config(
     config.update(diagrams.get_standard_config())
     config.update(quality.get_standard_config())
     config.update(
-        external.get_standard_config(github_repo=github_repo,
-                                     base_url=base_url), )
+        external.get_standard_config(github_repo=github_repo, base_url=base_url),
+    )
     config.update(content.get_standard_config(packages=packages))
     config.update(export.get_standard_config())
 
@@ -163,8 +163,7 @@ def create_full_config(
     config.update(enhancement.get_full_config())
     config.update(diagrams.get_full_config())
     config.update(quality.get_full_config())
-    config.update(
-        external.get_full_config(github_repo=github_repo, base_url=base_url))
+    config.update(external.get_full_config(github_repo=github_repo, base_url=base_url))
     config.update(content.get_full_config(packages=packages))
     config.update(export.get_full_config())
 
@@ -240,7 +239,8 @@ def create_custom_config(
             export.get_config(
                 enable_pdf=enable_pdf,
                 enable_presentations=enable_presentations,
-            ), )
+            ),
+        )
     else:
         config.update(export.get_minimal_config())
 
@@ -250,8 +250,7 @@ def create_custom_config(
 
     # Optional external integrations
     if github_repo and base_url:
-        config.update(
-            external.get_config(github_repo=github_repo, base_url=base_url))
+        config.update(external.get_config(github_repo=github_repo, base_url=base_url))
 
     # Combine all extensions
     config["extensions"] = _combine_extensions(config)
@@ -309,13 +308,13 @@ def get_all_available_extensions() -> dict[str, list[str]]:
             "sphinx_autodoc_typehints",
         ],
         "enhancement": [
-            "sphinx_design",
+            # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3
             "sphinx_tabs.tabs",
             "sphinx_inline_tabs",
             "sphinx_togglebutton",
             "sphinx_copybutton",
             "sphinx_exec_directive",
-            "sphinx_math_dollar",
+            # "sphinx_math_dollar",  # DISABLED: Incompatible with Sphinx 8.2.3 - causes NotImplementedError
             "sphinxemoji.sphinxemoji",
             "sphinx_prompt",
             "sphinx_substitution_extensions",
@@ -337,7 +336,7 @@ def get_all_available_extensions() -> dict[str, list[str]]:
         "external": [
             "sphinx.ext.intersphinx",
             "sphinxext.opengraph",
-            "sphinx_sitemap",
+            # "sphinx_sitemap",  # DISABLED: Incompatible with Sphinx 8.2.3 - is_directory_builder attribute error
             "sphinx_issues",
             "sphinx_contributors",
             "sphinxcontrib.youtube",

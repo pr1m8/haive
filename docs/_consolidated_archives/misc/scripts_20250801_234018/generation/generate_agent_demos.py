@@ -304,9 +304,7 @@ def get_agent_info(module_path: str, class_name: str) -> dict[str, Any]:
         "agent_class": class_name,
         "agent_type": agent_type,
         "agent_module_import": module_path,  # For Python import (with dots)
-        "agent_module_path": module_path.replace(
-            ".", "/"
-        ),  # For file paths (with slashes)
+        "agent_module_path": module_path.replace(".", "/"),  # For file paths (with slashes)
         "agent_icon": category["icon"],
         "agent_description": f"{class_name} - {category['description']}",
         "agent_features": ["Interactive", "Visualized", "Stateful", "Async"],
@@ -333,9 +331,7 @@ def get_agent_info(module_path: str, class_name: str) -> dict[str, Any]:
 def create_agent_demo_page(agent_info: dict[str, Any], output_dir: Path) -> None:
     """Create a demo page for an agent."""
     # Read template
-    template_path = (
-        Path(__file__).parent / "source" / "_templates" / "agent_demo_template.rst"
-    )
+    template_path = Path(__file__).parent / "source" / "_templates" / "agent_demo_template.rst"
 
     if not template_path.exists():
         return
@@ -385,9 +381,7 @@ def scan_agent_modules() -> list[dict[str, Any]]:
         ("haive.agents.reasoning_and_critique.reflection", "ReflectionAgent"),
     ]
 
-    return [
-        get_agent_info(module_path, class_name) for module_path, class_name in agents
-    ]
+    return [get_agent_info(module_path, class_name) for module_path, class_name in agents]
 
 
 def create_demo_index(agents: list[dict[str, Any]], output_dir: Path) -> None:

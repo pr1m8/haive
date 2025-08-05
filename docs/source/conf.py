@@ -156,15 +156,15 @@ globals().update(conditional_configs)
 # Get packages to build from environment (default: all)
 SPHINX_PACKAGES = os.environ.get("SPHINX_PACKAGES", "all")
 
-# All available packages
+# All available packages - point to the actual package directories
 ALL_PACKAGES = {
-    "core": "../../packages/haive-core/src",
-    "agents": "../../packages/haive-agents/src",
-    "tools": "../../packages/haive-tools/src",
-    "games": "../../packages/haive-games/src",
-    "dataflow": "../../packages/haive-dataflow/src",
-    "mcp": "../../packages/haive-mcp/src",
-    "prebuilt": "../../packages/haive-prebuilt/src",
+    "core": "../../packages/haive-core/src/haive/core",
+    "agents": "../../packages/haive-agents/src/haive/agents", 
+    "tools": "../../packages/haive-tools/src/haive/tools",
+    "games": "../../packages/haive-games/src/haive/games",
+    "dataflow": "../../packages/haive-dataflow/src/haive/dataflow",
+    "mcp": "../../packages/haive-mcp/src/haive/mcp",
+    "prebuilt": "../../packages/haive-prebuilt/src/haive/prebuilt",
 }
 
 autoapi_type = "python"
@@ -439,7 +439,7 @@ autodoc_mock_imports.extend(
     ], )
 
 autoapi_root = "api"
-autoapi_add_toctree_entry = False
+autoapi_add_toctree_entry = True
 autoapi_generate_api_docs = True
 autoapi_python_class_content = "both"
 autoapi_member_order = "bysource"
@@ -462,56 +462,77 @@ autoapi_own_page_level = "module"  # Generate separate pages for modules
 # Ensure autosummary doesn't interfere with AutoAPI
 autosummary_generate = False  # Disabled to prevent conflicts with AutoAPI
 
-# Skip patterns to avoid problematic files during documentation generation
+# Skip patterns to avoid problematic files during documentation generation  
 autoapi_ignore = [
-    # Skip ALL example and test files
+    # Skip ALL example and test files (KEEP - these execute on import)
     "**/examples/**/*.py",
-    "**/example*.py",
+    "**/example*.py", 
     "**/*example*.py",
     "**/demos/**/*.py",
     "**/demo*.py",
     "**/test*.py",
     "**/tests/**/*.py",
-    # Skip all backup files with double extensions
+    # Skip all backup files (KEEP - not real code)
     "**/*.py.backup*",
-    "**/*.backup",
+    "**/*.backup", 
     "**/*.disabled",
-    # Skip MCP data files with problematic names
+    # Skip MCP data files with problematic names (KEEP - data files)
     "**/mcp_servers/**/*.json",
     "**/data/**/*.json",
-    # Game examples that execute code on import (causing freezes)
+    # Game examples that execute code on import (KEEP - they freeze on import)
     "**/games/**/example.py",
     "**/games/**/demo.py",
-    # For tools-only builds, skip core/agents modules that have schema issues
+    # For tools-only builds, skip other packages (KEEP - build mode specific)
     "**/haive/agents/**/*.py" if SPHINX_PACKAGES == "tools" else "",
-    "**/haive/core/**/*.py" if SPHINX_PACKAGES == "tools" else "",
+    "**/haive/core/**/*.py" if SPHINX_PACKAGES == "tools" else "", 
     "**/haive/games/**/*.py" if SPHINX_PACKAGES == "tools" else "",
     "**/haive/dataflow/**/*.py" if SPHINX_PACKAGES == "tools" else "",
     "**/haive/mcp/**/*.py" if SPHINX_PACKAGES == "tools" else "",
     "**/haive/prebuilt/**/*.py" if SPHINX_PACKAGES == "tools" else "",
-    # Skip auto-generated example galleries and archives
+    # Skip auto-generated galleries (KEEP - not real source)
     "**/auto_examples/**",
-    "**/archive/**",
-    "**/archives/**",
-    "**/packages/*/archive/**",
-    "**/packages/*/archives/**",
-    # Skip app.py files that cause logger issues
+    # Skip app.py files that cause logger issues (KEEP - these have side effects)
     "**/app.py",
     "**/app/**/*.py",
-    # Skip files with generic class patterns that cause TypeError
-    "**/supervisor/dynamic_activation_supervisor.py",
-    "**/multi/experiments/implementations/*.py",
-    "**/research/reasoning_agent.py",
-    "**/planning/planning_agent.py",
-    "**/multi/base_multi_agent.py",
-    "**/multi/enhanced_multi_agent_v3.py",
-    "**/multi/enhanced_multi_agent_v4.py",
-    "**/memory_v2/test_*.py",
-    "**/discovery/semantic_discovery.py",
-    "**/discovery/dynamic_tool_selector.py",
-    "**/discovery/selection_strategies.py",
-    # Skip problematic research and wiki-related agents
-    "**/research/**/*.py",
+    
+    # 🎯 TARGETED SKIPS - Only specific problematic files, not entire directories
+    # Multi-agent specific problem files
+    "**/multi/base_multi_agent.py",  # Has generic type issues
+    "**/multi/enhanced_multi_agent_v3.py",  # Superseded by v4
+    "**/supervisor/dynamic_activation_supervisor.py",  # Import issues
+    
+    # Memory specific problem files (not entire directories)
+    "**/memory_v2/test_*.py",  # Test files in non-test directory
+    
+    # Discovery specific problem files  
+    "**/discovery/semantic_discovery.py",  # Missing dependencies
+    "**/discovery/dynamic_tool_selector.py",  # Import issues
+    "**/discovery/selection_strategies.py",  # Import issues
+    
+    # Tools with known missing dependencies (specific files only)
+    "**/tools/google/**/*.py",  # Google API dependencies
+    "**/tools/tools/google/**/*.py",  # Duplicate Google tools
+    
+    # Abstract class instantiation errors (specific files)
+    "**/configurable_config.py",  # Abstract instantiation
+    "**/generic_engines.py",  # Abstract instantiation
+    
+    # Archive directories that are superseded (KEEP - old versions)
+    "**/archive/**",
+    "**/archives/**", 
+    "**/packages/*/archive/**",
+    "**/packages/*/archives/**",
+    "**/agents/archive/**/*.py",
+    "**/agents/multi/archive/**/*.py",
+    
+    # REMOVED BROAD PATTERNS - These were blocking too much:
+    # "**/research/**/*.py",  # 🔥 RE-ENABLE Research agents (58 files)
+    # "**/reasoning_and_critique/**/*.py",  # 🔥 RE-ENABLE Reasoning (113 files) 
+    # "**/dataflow/**/*.py",  # 🔥 RE-ENABLE Dataflow (122 files)
+    # "**/memory_v2/**/*.py",  # 🔥 RE-ENABLE Memory v2 (except tests)  
+    # "**/wiki_writer/**/*.py",  # 🔥 RE-ENABLE Wiki writers
+    # "**/chain/**/*.py",  # 🔥 RE-ENABLE Chain agents
+    # "**/long_term_memory/**/*.py",  # 🔥 RE-ENABLE Long term memory
     "**/tools/search/wikipedia_search.py",
     "**/tools/search/arxiv_search.py",
     "**/tools/search/semantic_search.py",
@@ -590,6 +611,11 @@ autoapi_ignore = [
 def autoapi_skip_member(app, what, name, obj, skip, options):
     """Skip or modify problematic members with robust error handling."""
     try:
+        # Skip if object is None (object not found)
+        if obj is None:
+            logger.warning(f"⚠️ AutoAPI skipping missing object: {name}")
+            return True
+            
         # Skip problematic modules and classes that cause import errors
         problematic_patterns = [
             'haive.core.schema.prebuilt.messages_state',
@@ -602,6 +628,11 @@ def autoapi_skip_member(app, what, name, obj, skip, options):
             'BranchSpec',
             'AgentState',
             'SupervisorReactState',
+            # Skip objects that are frequently missing
+            'ExtendedHuggingFaceDatasetLoader',
+            'HuggingFaceModelCardLoader',
+            'VectorStoreConfig',
+            'Config',  # Generic config objects that may not exist
         ]
         
         # Skip if name matches problematic patterns
@@ -677,34 +708,147 @@ jsmath_path = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?c
 # Remove 'sphinxcontrib.jsmath' from extensions if this still causes problems
 
 # =============================================================================
-# HTML THEME CONFIGURATION
+# HTML THEME CONFIGURATION - FURO PROFESSIONAL SETUP
 # =============================================================================
 
+# Use Read the Docs theme - stable and well-tested with Sphinx 8.x
 html_theme = "furo"
-html_title = f"{project} Documentation"
-html_short_title = "Haive Docs"
+html_title = f"🤖 {project} Documentation"
+html_short_title = "Haive"
 
+# Furo Theme configuration - modern and professional
 html_theme_options = {
-    "source_repository": "https://github.com/yourusername/haive/",
-    "source_branch": "main",
-    "source_directory": "docs/source/",
-    "sidebar_hide_name": True,
     "light_css_variables": {
+        # Essential background colors (fixes 'background_color' error)
+        "color-background-primary": "#ffffff",
+        "color-background-secondary": "#f8fafc",
+        "color-background-border": "#e2e8f0",
+        "color-background-hover": "#f1f5f9",
+        "color-background-item": "#e2e8f0",
+        
+        # Brand colors
         "color-brand-primary": "#2563eb",
         "color-brand-content": "#2563eb",
+        
+        # Foreground/text colors
+        "color-foreground-primary": "#1f2937",
+        "color-foreground-secondary": "#6b7280",
+        "color-foreground-muted": "#9ca3af",
+        "color-foreground-border": "#d1d5db",
+        
+        # Sidebar colors
+        "color-sidebar-background": "#f8fafc",
+        "color-sidebar-background-border": "#e2e8f0",
+        
+        # API documentation colors
+        "color-api-background": "#f8fafc",
+        "color-api-background-hover": "#f1f5f9",
+        "color-api-overall": "#6b7280",
+        "color-api-name": "#1f2937",
+        "color-api-pre-name": "#6b7280",
+        
+        # Code colors
+        "color-inline-code-background": "#f1f5f9",
+        "color-inline-code-foreground": "#374151",
+        
+        # Admonition colors
+        "color-admonition-background": "#f8fafc",
+        
+        # Search colors
+        "color-search-background": "#ffffff",
+        "color-search-foreground": "#1f2937",
+        "color-search-border": "#d1d5db",
+        
+        # Link colors
+        "color-link": "#2563eb",
+        "color-link-underline": "#2563eb",
+        "color-link-hover": "#1d4ed8",
     },
     "dark_css_variables": {
-        "color-brand-primary": "#3b82f6",
-        "color-brand-content": "#3b82f6",
+        # Essential background colors for dark mode
+        "color-background-primary": "#0f172a",
+        "color-background-secondary": "#1e293b",
+        "color-background-border": "#334155",
+        "color-background-hover": "#475569",
+        "color-background-item": "#334155",
+        
+        # Brand colors for dark mode
+        "color-brand-primary": "#60a5fa",
+        "color-brand-content": "#60a5fa",
+        
+        # Foreground/text colors for dark mode
+        "color-foreground-primary": "#f1f5f9",
+        "color-foreground-secondary": "#cbd5e1",
+        "color-foreground-muted": "#94a3b8",
+        "color-foreground-border": "#64748b",
+        
+        # Sidebar colors for dark mode
+        "color-sidebar-background": "#1e293b",
+        "color-sidebar-background-border": "#334155",
+        
+        # API documentation colors for dark mode
+        "color-api-background": "#1e293b",
+        "color-api-background-hover": "#475569",
+        "color-api-overall": "#cbd5e1",
+        "color-api-name": "#f1f5f9",
+        "color-api-pre-name": "#cbd5e1",
+        
+        # Code colors for dark mode
+        "color-inline-code-background": "#475569",
+        "color-inline-code-foreground": "#e2e8f0",
+        
+        # Admonition colors for dark mode
+        "color-admonition-background": "#1e293b",
+        
+        # Search colors for dark mode
+        "color-search-background": "#0f172a",
+        "color-search-foreground": "#f1f5f9",
+        "color-search-border": "#334155",
+        
+        # Link colors for dark mode
+        "color-link": "#60a5fa",
+        "color-link-underline": "#60a5fa",
+        "color-link-hover": "#93c5fd",
     },
+    # Navigation and functionality
+    "sidebar_hide_name": False,
+    "navigation_with_keys": True,
+    "top_of_page_buttons": ["view", "edit"],
+    
+    # Source repository integration
+    "source_repository": "https://github.com/will-astley/haive",
+    "source_branch": "main", 
+    "source_directory": "docs/source/",
 }
 
+# Static files
 html_static_path = ["_static"]
-html_css_files = [
-    ("custom.css", {}),
-    ("enhanced-docs.css", {}),
-]
-html_js_files = [("custom.js", {})]
+html_css_files = []
+html_js_files = []
+
+# Set context for edit buttons
+html_context = {
+    "display_github": True,
+    "github_user": "will-astley",
+    "github_repo": "haive",
+    "github_version": "main",
+    "conf_py_path": "/docs/source/",
+}
+
+# Furo sidebar configuration
+html_sidebars = {
+    "**": [
+        "sidebar/scroll-start.html",
+        "sidebar/brand.html",
+        "sidebar/search.html",
+        "sidebar/navigation.html", 
+        "sidebar/scroll-end.html",
+    ],
+}
+
+# Set Pygments styles for code highlighting (Furo supports both modes)
+pygments_style = "default"
+pygments_dark_style = "monokai"
 
 # =============================================================================
 # MYST CONFIGURATION
@@ -924,6 +1068,111 @@ def _patched_emit(self, event, *args, **kwargs):
 sphinx.events.EventManager.emit = _patched_emit
 logger.info("✅ Applied workaround for Sphinx 8.2.3 NoneType bug in EventManager.emit")
 
+# CRITICAL FIX: Monkey-patch Furo's _html_page_context before it's registered
+try:
+    import furo
+    
+    # Initialize Furo's internal state properly
+    if not hasattr(furo, '_KNOWN_STYLES_IN_USE'):
+        furo._KNOWN_STYLES_IN_USE = {"light": True, "dark": True}
+        logger.info("✅ Initialized Furo _KNOWN_STYLES_IN_USE")
+    else:
+        # Ensure both light and dark are available
+        furo._KNOWN_STYLES_IN_USE.update({"light": True, "dark": True})
+        logger.info("✅ Updated Furo _KNOWN_STYLES_IN_USE")
+    
+    # Store original functions
+    original_get_pygments_stylesheet = getattr(furo, 'get_pygments_stylesheet', None)
+    original_html_page_context = getattr(furo, '_html_page_context', None)
+    
+    def safe_get_pygments_stylesheet(style, *, as_css_variables=False):
+        """Safe wrapper for get_pygments_stylesheet that always returns proper objects."""
+        try:
+            if original_get_pygments_stylesheet:
+                result = original_get_pygments_stylesheet(style, as_css_variables=as_css_variables)
+                # Ensure result is always a proper object, never a boolean
+                if isinstance(result, bool):
+                    logger.warning(f"⚠️ get_pygments_stylesheet returned boolean for {style}, fixing")
+                    return {
+                        "foreground": "#000000" if style == "light" else "#ffffff",
+                        "background": "#ffffff" if style == "light" else "#000000",
+                    }
+                return result
+            else:
+                # Fallback implementation
+                return {
+                    "foreground": "#000000" if style == "light" else "#ffffff",
+                    "background": "#ffffff" if style == "light" else "#000000",
+                }
+        except Exception as e:
+            logger.warning(f"⚠️ Furo pygments stylesheet error: {e}, using fallback")
+            return {
+                "foreground": "#000000" if style == "light" else "#ffffff", 
+                "background": "#ffffff" if style == "light" else "#000000",
+            }
+    
+    def safe_html_page_context(app, pagename, templatename, context, doctree):
+        """Completely safe wrapper for Furo's _html_page_context that fixes all boolean issues."""
+        try:
+            # Pre-process context to fix all potential boolean issues
+            if context:
+                # Fix furo_pygments if it's a boolean or missing
+                if 'furo_pygments' not in context or isinstance(context.get('furo_pygments'), bool):
+                    context['furo_pygments'] = {
+                        'light': {"foreground": "#000000", "background": "#ffffff"},
+                        'dark': {"foreground": "#ffffff", "background": "#000000"}
+                    }
+                    logger.debug(f"Fixed furo_pygments for page: {pagename}")
+                
+                # Fix css_variables if it's a boolean
+                if isinstance(context.get('css_variables'), bool):
+                    context['css_variables'] = {}
+                    logger.debug(f"Fixed css_variables for page: {pagename}")
+                
+                # Ensure style exists
+                if 'style' not in context:
+                    context['style'] = 'light'
+                    
+                # Fix css_files format
+                if 'css_files' in context and context['css_files']:
+                    css_files = context['css_files']
+                    if not isinstance(css_files, list):
+                        css_files = [css_files]
+                    context['css_files'] = [getattr(c, 'filename', str(c)) for c in css_files]
+            
+            # Now call the original handler if it exists
+            if original_html_page_context:
+                try:
+                    return original_html_page_context(app, pagename, templatename, context, doctree)
+                except AttributeError as e:
+                    if 'background_color' in str(e) or "'bool' object has no attribute" in str(e):
+                        logger.warning(f"⚠️ Caught Furo background_color error for page: {pagename}, continuing")
+                        return None
+                    else:
+                        raise
+            return None
+            
+        except Exception as e:
+            logger.warning(f"⚠️ Furo html-page-context handler error for {pagename}: {e}")
+            return None
+    
+    # Replace the functions BEFORE Furo registers them
+    if hasattr(furo, 'get_pygments_stylesheet'):
+        furo.get_pygments_stylesheet = safe_get_pygments_stylesheet
+        logger.info("✅ Applied safe Furo pygments stylesheet wrapper")
+    
+    if hasattr(furo, '_html_page_context'):
+        furo._html_page_context = safe_html_page_context
+        logger.info("✅ Applied safe Furo html-page-context wrapper")
+    
+    logger.info("✅ Comprehensive Furo monkey-patching applied BEFORE registration")
+    
+except ImportError:
+    logger.info("ℹ️ Furo not available - will use fallback theme")
+except Exception as e:
+    logger.warning(f"⚠️ Furo initialization failed: {e} - continuing with default setup")
+
+
 # Enhanced AutoAPI patch based on documentation guide
 try:
     from autoapi.directives import AutoapiSummary
@@ -936,27 +1185,31 @@ try:
         # Ensure autoapi_all_objects exists
         if not hasattr(env, 'autoapi_all_objects'):
             env.autoapi_all_objects = {}
-            logger.info("✅ Initialized missing autoapi_all_objects")
+            logger.debug("✅ Initialized missing autoapi_all_objects")
         
         # Get the all_objects dict
         all_objects = env.autoapi_all_objects
         
-        # Check each name before processing
+        # Check each name before processing (reduce verbosity)
         valid_names = []
+        missing_count = 0
         for name in names:
             if name in all_objects:
                 valid_names.append(name)
             else:
-                logger.warning(f"⚠️ AutoAPI object not found: {name} - skipping from summary")
+                missing_count += 1
+        
+        # Only log if there are missing objects (reduce noise)
+        if missing_count > 0:
+            logger.debug(f"⚠️ AutoAPI: {missing_count} objects not found in summary, using {len(valid_names)} valid objects")
         
         # Only process names that actually exist
         if not valid_names:
-            logger.info("ℹ️ No valid objects found for autoapisummary - returning empty")
+            logger.debug("ℹ️ No valid objects found for autoapisummary - returning empty")
             return []
         
         # Call original with only valid names
         try:
-            # Temporarily replace names with valid ones
             return original_get_items(self, valid_names)
         except Exception as e:
             logger.error(f"❌ AutoAPI get_items failed even with valid names: {e}")
@@ -972,6 +1225,9 @@ except Exception as e:
 
 def setup(app):
     """Setup function for custom Sphinx configuration."""
+    
+    # Note: Furo _html_page_context is now monkey-patched above, no need for duplicate handler
+    
     # Connect autoapi skip member with error handling
     try:
         app.connect("autoapi-skip-member", autoapi_skip_member)
@@ -1013,6 +1269,23 @@ def setup(app):
     except Exception as e:
         logger.error(f"❌ Failed to connect AutoAPI event handlers: {e}")
     
+    # Fix for Sphinx 8.2.3 toc_num_entries KeyError
+    def fix_autoapi_toc_entries(app, env):
+        """Fix AutoAPI compatibility with Sphinx 8.2.3 toc_num_entries KeyError."""
+        # Ensure index document has entry in toc_num_entries
+        if 'index' not in env.toc_num_entries:
+            env.toc_num_entries['index'] = 0
+            logger.info("🔧 Fixed missing toc_num_entries for index document")
+        
+        # Also fix any other missing documents
+        for docname in env.all_docs:
+            if docname not in env.toc_num_entries:
+                env.toc_num_entries[docname] = 0
+                logger.info(f"🔧 Fixed missing toc_num_entries for: {docname}")
+    
+    # Connect the fix to run after environment is updated
+    app.connect('env-updated', fix_autoapi_toc_entries)
+
     # Try to setup enhanced build hooks
     try:
         from build_hooks_enhanced import setup as setup_hooks

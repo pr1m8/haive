@@ -38,6 +38,4 @@ for module in mock_modules:
 
 # Also mock some specific classes that cause issues
 sys.modules["haive.agents.conversation.directed.state"] = MagicMock()
-sys.modules["haive.agents.conversation.directed.state"].DirectedConversationState = (
-    MagicMock
-)
+sys.modules["haive.agents.conversation.directed.state"].DirectedConversationState = MagicMock

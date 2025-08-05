@@ -35,10 +35,8 @@ EXTENSION_CATEGORIES = {
             "sphinx.ext.inheritance_diagram",
             "sphinx.ext.autosectionlabel",
         ],
-        "description":
-        "Core Sphinx extensions (16 total)",
-        "required":
-        True,
+        "description": "Core Sphinx extensions (16 total)",
+        "required": True,
     },
     "api": {
         "extensions": [
@@ -47,10 +45,8 @@ EXTENSION_CATEGORIES = {
             "sphinx_click",
             "sphinx_argparse",
         ],
-        "description":
-        "API documentation generation (4 total)",
-        "required":
-        True,
+        "description": "API documentation generation (4 total)",
+        "required": True,
     },
     "content": {
         "extensions": [
@@ -63,10 +59,8 @@ EXTENSION_CATEGORIES = {
             "sphinx_prompt",
             "sphinx_jinja2",
         ],
-        "description":
-        "Content enhancement extensions (8 total)",
-        "required":
-        True,
+        "description": "Content enhancement extensions (8 total)",
+        "required": True,
     },
     "interactive": {
         "extensions": [
@@ -75,24 +69,20 @@ EXTENSION_CATEGORIES = {
             "sphinx_hoverxref",  # Hover tooltips for cross-references
             "sphinx_revealjs",  # Presentation slides from docs
         ],
-        "description":
-        "Interactive content features (4 total)",
-        "required":
-        False,
+        "description": "Interactive content features (4 total)",
+        "required": False,
     },
     "diagrams": {
         "extensions": [
             "sphinxcontrib.mermaid",
-            # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3 - sphinx_design_css_changed error
+            # # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3  # DISABLED: Incompatible with Sphinx 8.2.3 - sphinx_design_css_changed error
             "sphinxcontrib.plantuml",
             "sphinxcontrib.blockdiag",  # Block diagrams (architecture)
             "sphinxcontrib.seqdiag",  # Sequence diagrams (API flows)
             "sphinxcontrib.drawio",  # Draw.io integration
         ],
-        "description":
-        "Diagram and design elements (5 total)",
-        "required":
-        False,
+        "description": "Diagram and design elements (5 total)",
+        "required": False,
     },
     "professional": {
         "extensions": [
@@ -101,27 +91,23 @@ EXTENSION_CATEGORIES = {
             "sphinx_contributors",  # Automatic contributor lists
             "sphinxext.rediraffe",  # Redirect management
             "sphinx_issues",  # GitHub issues integration
-            "sphinx_sitemap",
+            # "sphinx_sitemap",  # DISABLED: Incompatible with Sphinx 8.2.3 - is_directory_builder attribute error
             "sphinx_external_toc",
         ],
-        "description":
-        "Professional polish features (7 total)",
-        "required":
-        False,
+        "description": "Professional polish features (7 total)",
+        "required": False,
     },
     "ux": {
         "extensions": [
             "sphinxemoji",  # Emoji support in docs 😀
             "sphinx_substitution_extensions",  # Advanced text substitutions
-            "sphinx_math_dollar",  # LaTeX math with $ syntax
+            # "sphinx_math_dollar",  # DISABLED: Incompatible with Sphinx 8.2.3 - causes NotImplementedError
             "sphinxcontrib.images",  # Image thumbnails and galleries
             "sphinxcontrib.youtube",
             "sphinxext.opengraph",
         ],
-        "description":
-        "Enhanced user experience (6 total)",
-        "required":
-        False,
+        "description": "Enhanced user experience (6 total)",
+        "required": False,
     },
     "protocols": {
         "extensions": [
@@ -130,10 +116,8 @@ EXTENSION_CATEGORIES = {
             "sphinx_jsonschema",  # JSON schema documentation
             "sphinxcontrib.fulltoc",  # Full table of contents
         ],
-        "description":
-        "API & protocols documentation (4 total)",
-        "required":
-        False,
+        "description": "API & protocols documentation (4 total)",
+        "required": False,
     },
     "gallery": {
         "extensions": [
@@ -141,10 +125,8 @@ EXTENSION_CATEGORIES = {
             "nbsphinx",  # Jupyter notebook integration
             "sphinx_needs",
         ],
-        "description":
-        "Gallery & examples (3 total)",
-        "required":
-        False,
+        "description": "Gallery & examples (3 total)",
+        "required": False,
     },
     "quality": {
         "extensions": [
@@ -162,16 +144,13 @@ EXTENSION_CATEGORIES = {
             "_extensions.games_autodoc",
             "_extensions.namespace_autosummary",
         ],
-        "description":
-        "Custom Haive extensions (5 total)",
-        "required":
-        False,  # Changed to False since these are failing
+        "description": "Custom Haive extensions (5 total)",
+        "required": False,  # Changed to False since these are failing
     },
 }
 
 
-def get_extension_with_structured_logging(
-) -> tuple[list[str], dict[str, Any]]:
+def get_extension_with_structured_logging() -> tuple[list[str], dict[str, Any]]:
     """Load extensions with structured logging and status tracking."""
 
     extensions = []
@@ -226,7 +205,8 @@ def get_extension_with_structured_logging(
                     {
                         "name": ext_name,
                         "category": category,
-                    }, )
+                    },
+                )
                 category_loaded += 1
 
             except ImportError as e:
@@ -247,7 +227,8 @@ def get_extension_with_structured_logging(
                             "category": category,
                             "error": error_msg,
                             "required": True,
-                        }, )
+                        },
+                    )
                     category_failed += 1
                 else:
                     # Optional extension missing
@@ -264,7 +245,8 @@ def get_extension_with_structured_logging(
                             "category": category,
                             "error": error_msg,
                             "required": False,
-                        }, )
+                        },
+                    )
                     category_optional_missing += 1
                     # Still add to extensions list for Sphinx
                     extensions.append(ext_name)
@@ -284,7 +266,8 @@ def get_extension_with_structured_logging(
                         "category": category,
                         "error": str(e),
                         "type": type(e).__name__,
-                    }, )
+                    },
+                )
                 category_failed += 1
 
         # Category summary
@@ -300,7 +283,8 @@ def get_extension_with_structured_logging(
             f"  📊 {category} summary: "
             f"{category_loaded} loaded, "
             f"{category_failed} failed, "
-            f"{category_optional_missing} optional missing", )
+            f"{category_optional_missing} optional missing",
+        )
 
     # Overall summary
     logger.info("\n" + "=" * 80)
@@ -318,11 +302,11 @@ def get_extension_with_structured_logging(
         for ext in extension_status["failed"]:
             if ext.get("required", True):
                 logger.error(
-                    f"  - {ext['name']} ({ext['category']}): {ext['error']}", )
+                    f"  - {ext['name']} ({ext['category']}): {ext['error']}",
+                )
 
     # Save extension status
-    status_file = Path(
-        __file__).parent.parent / "logs" / "build" / "extension_status.json"
+    status_file = Path(__file__).parent.parent / "logs" / "build" / "extension_status.json"
     status_file.parent.mkdir(exist_ok=True, parents=True)
     with open(status_file, "w") as f:
         json.dump(extension_status, f, indent=2)

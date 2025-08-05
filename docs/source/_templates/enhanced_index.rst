@@ -1,5 +1,6 @@
 🤖 Haive AI Agent Framework Documentation
-========================================
+
+
 
 .. container:: hero-banner
 
@@ -8,12 +9,14 @@
    .. container:: hero-content
 
       .. image:: /_static/images/haive-logo-light.svg
-         :class:``hero-logo``
+         :class:``hero-logo`
+``
          :alt: Haive Logo
          :width: 200px
 
       Build Intelligent AI Agents with Professional Tools
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
       Professional framework for creating sophisticated AI agents with conversational intelligence,
       tool orchestration, game strategies, and multi-agent coordination.
@@ -21,19 +24,23 @@
       .. button-ref:: introduction/quickstart
          :ref-type: doc
          :color: primary
-         :class:``sd-rounded-pill``
+         :class`:``sd-rounded-pill`
+``
 
          🚀 Get Started
 
       .. button-link:: https://github.com/haive/haive
          :color: secondary
-         :class:``sd-rounded-pill``
+         :class`:``sd-rounded-pill`
+``
 
          📚 View on GitHub
 
-.. grid:: 1 1 4 4
+.. note::
 
-   :gutter: 3
+
+   Grid layout removed due to sphinx_design incompatibility.
+
    :class-container: feature-grid
 
    .. grid-item-card:: 🧠 AI Agents
@@ -41,18 +48,19 @@
       :class-header: feature-card-header
       :class-body: feature-card-body
       :shadow: lg
-      :link: agents/index
-      :link-type: doc
+
 
       Build intelligent agents with memory, reasoning, and tool integration capabilities.
 
       .. list-table::
-         :class:``feature-list``
+
+         :class`:``feature-list`
+``
          :widths: 1 2
 
          * - *Types**
            - Simple • React • RAG • Multi-Agent
-         * - *Features**
+         ** - *Features**
            - Auto-persistence • Tool routing • State management
 
    .. grid-item-card:: 🎮 Game Intelligence
@@ -60,18 +68,20 @@
       :class-header: feature-card-header
       :class-body: feature-card-body
       :shadow: lg
-      :link: games/index
-      :link-type: doc
+
 
       Create AI opponents for strategic games with advanced algorithms and decision making.
 
       .. list-table::
-         :class:``feature-list``
+
+         :class`:``feature-list`
+
+``
          :widths: 1 2
 
-         * - *Games**
+         ** - *Games**
            - Chess • Go • Poker • Board Games
-         * - *Features**
+         ** - *Features**
            - Strategy AI • Game state • Player modeling
 
    .. grid-item-card:: 🔧 Tool Orchestration
@@ -79,18 +89,20 @@
       :class-header: feature-card-header
       :class-body: feature-card-body
       :shadow: lg
-      :link: tools/index
-      :link-type: doc
+
 
       Connect agents to APIs, databases, search engines, and external services seamlessly.
 
       .. list-table::
-         :class:``feature-list``
+
+         :class`:``feature-list`
+
+``
          :widths: 1 2
 
-         * - *Types**
+         ** - *Types**
            - Web APIs • Databases • File Systems
-         * - *Features**
+         ** - *Features**
            - Auto-discovery • Type safety • Error handling
 
    .. grid-item-card:: 📡 MCP Integration
@@ -98,21 +110,24 @@
       :class-header: feature-card-header
       :class-body: feature-card-body
       :shadow: lg
-      :link: mcp/index
-      :link-type: doc
+
 
       1,960+ Model Context Protocol servers with hot-reload and AI-powered discovery.
 
       .. list-table::
-         :class:``feature-list``
+
+         :class`:``feature-list`
+
+``
          :widths: 1 2
 
-         * - *Servers**
+         ** - *Servers**
            - 1,960+ available • Auto-discovery
-         * - *Features**
+         ** - *Features**
            - Hot-reload • Plugin system • Integration
 
 .. tab-set::
+
 
    .. tab-item:: 🚀 Quick Start
 
@@ -125,7 +140,8 @@
          :caption: Create your first agent
          :linenos:
          :emphasize-lines: 8-10
-         :class:``copy-button``
+         :class`:``copy-button`
+``
 
          from haive.agents import SimpleAgent
          from haive.core.engine import AugLLMConfig
@@ -154,7 +170,8 @@
          :caption: Agent with tools
          :linenos:
          :emphasize-lines: 13-16
-         :class:``copy-button``
+         :class`:``copy-button`
+``
 
          from haive.agents import ReactAgent
          from haive.tools import WebSearchTool, CalculatorTool
@@ -184,7 +201,8 @@
          :caption: Multi-agent coordination
          :linenos:
          :emphasize-lines: 8-12
-         :class:``copy-button``
+         :class`:``copy-button`
+``
 
          from haive.agents import MultiAgent, SimpleAgent, ReactAgent
 
@@ -208,103 +226,117 @@
 
          .. grid:: 1 2 4 4
 
-         :gutter: 2
 
          .. grid-item::
-         :class:``benefit-item``
+
+         :class`:``benefit-item`
+``
 
          .. container:: benefit-icon
 
             ⚡
 
 
-     **Production Ready*
+     **Production Ready**
 
          Battle-tested in production environments with comprehensive error handling.
 
          .. grid-item::
-         :class:``benefit-item``
+
+         :class`:``benefit-item`
+``
 
          .. container:: benefit-icon
 
             🔒
 
-         **Type Safe*
+         **Type Safe**
 
          Full type hints and Pydantic models for reliable development.
 
          .. grid-item::
-         :class:``benefit-item``
+
+         :class`:``benefit-item`
+``
 
          .. container:: benefit-icon
 
             🚀
 
-         **High Performance*
+         **High Performance**
 
          Async-first architecture with optimized execution and caching.
 
          .. grid-item::
-         :class:``benefit-item``
+
+         :class`:``benefit-item`
+``
 
          .. container:: benefit-icon
 
             🎯
 
-         **Extensible*
+         **Extensible**
 
          Plugin architecture allows custom agents, tools, and integrations.
 
          .. admonition:: 📊 Performance Metrics
 
-         :class:``note``
+         :class`:``note`
+``
 
          .. grid:: 1 2 4 4
 
-         :gutter: 2
          :class-container: metrics-grid
 
          .. grid-item::
-         :class:``metric-item``
 
-         **<100ms*
+         :class`:``metric-item`
+``
+
+         **<100ms**
 
          *Average Response Time*
 
          .. grid-item::
-         :class:``metric-item``
 
-         **10K+*
+         :class`:``metric-item`
+``
+
+         **10K+**
 
          *Agents per Hour*
 
          .. grid-item::
-         :class:``metric-item``
 
-         **99.9%*
+         :class`:``metric-item`
+``
+
+         **99.9%**
 
          *System Uptime*
 
          .. grid-item::
-         :class:``metric-item``
 
-         **86+*
+         :class`:``metric-item`
+``
+
+         **86+**
 
          *Documentation Extensions*
 
          📖 Documentation Sections
-         ==========================
+
+
 
          .. grid:: 1 2 3 3
 
-         :gutter: 3
          :class-container: docs-grid
 
          .. grid-item-card:: 📚 Getting Started
 
          :shadow: md
-         :link: introduction/index
-         :link-type: doc
+
          :class-header: docs-card-header
 
          Installation, quickstart, and core concepts to get you up and running.
@@ -317,8 +349,7 @@
          .. grid-item-card:: 🤖 Agent Development
 
          :shadow: md
-         :link: agents/index
-         :link-type: doc
+
          :class-header: docs-card-header
 
          Comprehensive guide to building and deploying AI agents.
@@ -331,8 +362,7 @@
          .. grid-item-card:: 📖 API Reference
 
          :shadow: md
-         :link: api/index
-         :link-type: doc
+
          :class-header: docs-card-header
 
          Complete API documentation with enhanced Pydantic model docs.
@@ -345,8 +375,7 @@
          .. grid-item-card:: 💻 Examples & Demos
 
          :shadow: md
-         :link: examples/index
-         :link-type: doc
+
          :class-header: docs-card-header
 
          Interactive examples and step-by-step tutorials.
@@ -359,8 +388,7 @@
          .. grid-item-card:: 🔧 Tools & Integrations
 
          :shadow: md
-         :link: tools/index
-         :link-type: doc
+
          :class-header: docs-card-header
 
          Tool creation, integration patterns, and MCP servers.
@@ -373,8 +401,7 @@
          .. grid-item-card:: 🎮 Game Intelligence
 
          :shadow: md
-         :link: games/index
-         :link-type: doc
+
          :class-header: docs-card-header
 
          Game AI development and strategy implementation.
@@ -386,63 +413,9 @@
 
          .. toctree::
 
-         :maxdepth: 2
-         :caption: 📚 Getting Started
-         :hidden:
-
-         introduction/index
-         introduction/installation
-         introduction/quickstart
-         introduction/concepts
-
-         .. toctree::
-
-         :maxdepth: 2
-         :caption: 🤖 Agents
-         :hidden:
-
-         agents/index
-         agents/simple/index
-         agents/react/index
-         agents/rag/index
-         agents/multi/index
-         agents/demos/index
-
-         .. toctree::
-
-         :maxdepth: 2
-         :caption: 🔧 Tools & Integration
-         :hidden:
-
-         tools/index
-         mcp/index
-         mcp/servers
-         mcp/setup
-
-         .. toctree::
-
-         :maxdepth: 2
-         :caption: 🎮 Games & Examples
-         :hidden:
-
-         games/index
-         examples/index
-         gallery
-
-         .. toctree::
-
-         :maxdepth: 2
-         :caption: 📖 Reference
-         :hidden:
-
-         api/index
-         guides/index
-         reference/index
-
-         .. toctree::
-
-         :maxdepth: 1
-         :caption: 🛠️ Development
-         :hidden:
+   :maxdepth: 1
+   :hidden:
 
          development/index
+
+`

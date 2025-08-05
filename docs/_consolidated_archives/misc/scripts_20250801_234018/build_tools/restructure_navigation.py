@@ -264,9 +264,7 @@ This package contains the following module hierarchy:
     return content
 
 
-def create_module_index(
-    package_name: str, module_name: str, submodules: list[str]
-) -> str:
+def create_module_index(package_name: str, module_name: str, submodules: list[str]) -> str:
     """Create index page for a module (e.g., haive/core/engine/index.rst)."""
     module_title = module_name.replace("_", " ").title()
 
@@ -331,9 +329,7 @@ Import
     return content
 
 
-def create_submodule_doc(
-    package_name: str, module_name: str, submodule_name: str
-) -> str:
+def create_submodule_doc(package_name: str, module_name: str, submodule_name: str) -> str:
     """Create documentation for a submodule (e.g., haive/core/engine/base.rst)."""
     title = f"haive.{package_name}.{module_name}.{submodule_name}"
 
@@ -413,9 +409,7 @@ def restructure_docs():
 
             # Create submodule documentation
             for submodule_name in submodules:
-                submodule_doc = create_submodule_doc(
-                    package_name, module_name, submodule_name
-                )
+                submodule_doc = create_submodule_doc(package_name, module_name, submodule_name)
                 (module_dir / f"{submodule_name}.rst").write_text(submodule_doc)
 
     # Update the main API index to point to the new structure

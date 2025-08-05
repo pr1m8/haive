@@ -44,29 +44,25 @@ class BuildErrorCollector:
         self.warnings = defaultdict(list)
         self.info = defaultdict(list)
 
-    def add_error(self,
-                  category: str,
-                  message: str,
-                  details: dict[str, Any] = None):
+    def add_error(self, category: str, message: str, details: dict[str, Any] = None):
         """Add an error with category."""
         self.errors[category].append(
             {
                 "message": message,
                 "details": details or {},
                 "timestamp": datetime.utcnow().isoformat(),
-            }, )
+            },
+        )
 
-    def add_warning(self,
-                    category: str,
-                    message: str,
-                    details: dict[str, Any] = None):
+    def add_warning(self, category: str, message: str, details: dict[str, Any] = None):
         """Add a warning with category."""
         self.warnings[category].append(
             {
                 "message": message,
                 "details": details or {},
                 "timestamp": datetime.utcnow().isoformat(),
-            }, )
+            },
+        )
 
     def get_summary(self) -> dict[str, Any]:
         """Get structured summary of all issues."""
@@ -167,7 +163,8 @@ def setup_sphinx_logging():
     file_handler = logging.FileHandler(log_file)
     file_handler.setLevel(logging.DEBUG)
     file_formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s", )
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    )
     file_handler.setFormatter(file_formatter)
 
     # JSON file handler - structured

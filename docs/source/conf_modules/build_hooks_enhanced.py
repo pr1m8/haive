@@ -35,11 +35,7 @@ def on_builder_inited(app):
     logger.info(f"🔨 Builder initialized: {app.builder.name}")
     logger.debug(f"  Format: {app.builder.format}")
     logger.debug(
-        f"  Supported image types: {
-            getattr(
-                app.builder,
-                'supported_image_types',
-                'N/A')}",
+        f"  Supported image types: {getattr(app.builder, 'supported_image_types', 'N/A')}",
     )
 
 
@@ -151,7 +147,8 @@ def on_build_finished(app, exception):
         # Error/warning summary
         if error_summary["summary"]["total_errors"] > 0:
             logger.error(
-                f"\n❌ Errors: {error_summary['summary']['total_errors']}", )
+                f"\n❌ Errors: {error_summary['summary']['total_errors']}",
+            )
             for category, errors in error_summary["errors"].items():
                 logger.error(f"  - {category}: {len(errors)} errors")
 
@@ -186,9 +183,7 @@ def on_build_finished(app, exception):
 def load_extension_status():
     """Load extension status if available."""
     try:
-        status_file = Path(
-            __file__
-        ).parent.parent / "logs" / "build" / "extension_status.json"
+        status_file = Path(__file__).parent.parent / "logs" / "build" / "extension_status.json"
         if status_file.exists():
             with open(status_file) as f:
                 return json.load(f)

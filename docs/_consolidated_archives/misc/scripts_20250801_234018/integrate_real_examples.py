@@ -61,9 +61,7 @@ class RealExamplesIntegrator:
                     content = path.read_text(encoding="utf-8")
 
                     # Extract agent type from path
-                    agent_type = (
-                        path.parts[-3] if "conversation" in path.parts else None
-                    )
+                    agent_type = path.parts[-3] if "conversation" in path.parts else None
 
                     example = ExampleOutput(
                         name=f"{agent_type}_{path.stem}",
@@ -138,9 +136,7 @@ class RealExamplesIntegrator:
                             content=json.dumps(cache_data, indent=2),
                             metadata={
                                 "agent_type": agent_type,
-                                "execution_count": len(
-                                    cache_data.get("executions", [])
-                                ),
+                                "execution_count": len(cache_data.get("executions", [])),
                                 "generated_at": cache_data.get("generated_at"),
                                 "has_traces": bool(cache_data.get("executions")),
                             },
@@ -225,9 +221,7 @@ These are actual outputs from agents, games, and conversations - not mock data.
             for example in examples:
                 content += f"### {example.name}\n\n"
                 content += f"- **Type**: {example.type}\n"
-                content += (
-                    f"- **Path**: `{example.path.relative_to(self.project_root)}`\n"
-                )
+                content += f"- **Path**: `{example.path.relative_to(self.project_root)}`\n"
 
                 if example.agent_type:
                     content += f"- **Agent Type**: {example.agent_type}\n"
@@ -279,9 +273,7 @@ Real examples and outputs from the {agent_type} agent.
 
         for example in examples:
             content += f"## {example.name}\n\n"
-            content += (
-                f"**Source**: `{example.path.relative_to(self.project_root)}`\n\n"
-            )
+            content += f"**Source**: `{example.path.relative_to(self.project_root)}`\n\n"
 
             # Add example content (truncated if too long)
             example_content = example.content

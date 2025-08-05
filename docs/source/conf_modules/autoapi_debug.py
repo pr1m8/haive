@@ -54,8 +54,7 @@ class AutoAPIDebugger:
             "errors": [],
             "warnings": [],
             "failed_imports": {},  # package -> list of failed modules
-            "package_stats":
-            {},  # package -> {success: int, failed: int, skipped: int}
+            "package_stats": {},  # package -> {success: int, failed: int, skipped: int}
         }
 
         self._setup_logging()
@@ -68,7 +67,8 @@ class AutoAPIDebugger:
 
         # Create formatter
         formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s", )
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        )
 
         # File handler for all AutoAPI logs
         fh = logging.FileHandler(self.log_dir / "autoapi_debug.log")
@@ -151,7 +151,8 @@ class AutoAPIDebugger:
                 "warning": warning,
                 "context": context,
                 "timestamp": datetime.now().isoformat(),
-            }, )
+            },
+        )
 
         # Write to warnings log
         with open(self.warnings_log, "a") as f:
@@ -175,7 +176,8 @@ class AutoAPIDebugger:
                 "error": str(error),
                 "error_type": type(error).__name__,
                 "timestamp": datetime.now().isoformat(),
-            }, )
+            },
+        )
 
         # Write to failed imports log
         with open(self.failed_imports_log, "a") as f:
@@ -252,16 +254,13 @@ class AutoAPIDebugger:
             f.write(f"  ❌ Failed: {self.stats['failed_files']}\n")
             f.write(f"  ⏭️  Skipped: {self.stats['skipped_files']}\n")
             f.write(f"  ⚠️  Warnings: {len(self.stats['warnings'])}\n")
-            f.write(
-                f"  📦 Packages with failed imports: {len(self.stats['failed_imports'])}\n\n"
-            )
+            f.write(f"  📦 Packages with failed imports: {len(self.stats['failed_imports'])}\n\n")
 
             # Package Statistics
             f.write("📦 Per-Package Statistics:\n")
             for package, stats in self.stats["package_stats"].items():
                 total = sum(stats.values())
-                success_rate = (stats["success"] / total *
-                                100) if total > 0 else 0
+                success_rate = (stats["success"] / total * 100) if total > 0 else 0
                 f.write(f"  {package}:\n")
                 f.write(f"    ✅ Success: {stats['success']}\n")
                 f.write(f"    ❌ Failed: {stats['failed']}\n")
@@ -275,9 +274,7 @@ class AutoAPIDebugger:
                 for package, failures in self.stats["failed_imports"].items():
                     f.write(f"  {package} ({len(failures)} failures):\n")
                     for failure in failures[:5]:  # Show first 5
-                        f.write(
-                            f"    - {failure['module']}: {failure['error_type']}\n"
-                        )
+                        f.write(f"    - {failure['module']}: {failure['error_type']}\n")
                     if len(failures) > 5:
                         f.write(f"    ... and {len(failures) - 5} more\n")
                     f.write("\n")
@@ -287,9 +284,7 @@ class AutoAPIDebugger:
                 f.write("🔥 Recent Errors:\n")
                 for error in self.stats["errors"][-10:]:  # Last 10 errors
                     f.write(f"  📁 {error['file']}\n")
-                    f.write(
-                        f"     {error['error_type']}: {error['error_message'][:100]}...\n\n"
-                    )
+                    f.write(f"     {error['error_type']}: {error['error_message'][:100]}...\n\n")
 
         # Write package summaries to separate files
         self._write_package_summaries()
@@ -297,8 +292,7 @@ class AutoAPIDebugger:
         # Create index file pointing to all logs
         self._write_log_index()
 
-        print(f"\n📊 AutoAPI Debug Summary written to: {summary_path}",
-              file=sys.stderr)
+        print(f"\n📊 AutoAPI Debug Summary written to: {summary_path}", file=sys.stderr)
         print(f"📁 Full logs available in: {self.run_dir}", file=sys.stderr)
         print(f"📋 Log index: {self.run_dir}/log_index.html", file=sys.stderr)
 
@@ -319,9 +313,7 @@ class AutoAPIDebugger:
                 f.write("Failed Imports:\n")
                 for failure in failures:
                     f.write(f"  Module: {failure['module']}\n")
-                    f.write(
-                        f"  Error: {failure['error_type']}: {failure['error']}\n"
-                    )
+                    f.write(f"  Error: {failure['error_type']}: {failure['error']}\n")
                     f.write(f"  Time: {failure['timestamp']}\n")
                     f.write("-" * 40 + "\n")
 
@@ -428,8 +420,7 @@ def patch_autoapi_for_debugging():
             timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
 
             # Show relative path for readability
-            rel_path = str(path).replace(
-                "/home/will/Projects/haive/backend/haive/", "")
+            rel_path = str(path).replace("/home/will/Projects/haive/backend/haive/", "")
 
             # Only log parsing of actual project files (not dependencies)
             if "/haive/packages/" in str(path):
@@ -448,23 +439,23 @@ def patch_autoapi_for_debugging():
                 package = debugger._extract_package_name(str(path))
 
                 # Check if this is a critical error that should stop the build
-                is_critical = any(critical in str(e).lower() for critical in [
-                    "syntaxerror",
-                    "indentationerror",
-                    "tabError",
-                ])
+                is_critical = any(
+                    critical in str(e).lower()
+                    for critical in [
+                        "syntaxerror",
+                        "indentationerror",
+                        "tabError",
+                    ]
+                )
 
                 if is_critical:
                     # Log as error and re-raise to stop build
-                    debugger.log_error(str(path),
-                                       e,
-                                       context="Parser.parse_file - CRITICAL")
+                    debugger.log_error(str(path), e, context="Parser.parse_file - CRITICAL")
                     debugger._update_package_stats(str(path), "failed")
                     raise
                 # Log as warning and try to continue gracefully
                 warning_msg = f"Parse failed (non-critical): {type(e).__name__}: {e!s}"
-                debugger.log_warning(str(path), warning_msg,
-                                     "Parser.parse_file - GRACEFUL")
+                debugger.log_warning(str(path), warning_msg, "Parser.parse_file - GRACEFUL")
                 debugger.log_failed_import(package, str(path), e)
                 debugger._update_package_stats(str(path), "skipped")
 
@@ -474,8 +465,7 @@ def patch_autoapi_for_debugging():
         def debug_parse(self, node):
             """Wrapped parse method to track AST parsing."""
             timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-            file_info = f" (file: {current_file['path']})" if current_file[
-                "path"] else ""
+            file_info = f" (file: {current_file['path']})" if current_file["path"] else ""
             debugger.logger.debug(
                 f"[{timestamp}] Parsing AST node: {type(node).__name__}{file_info}",
             )
@@ -492,11 +482,9 @@ def patch_autoapi_for_debugging():
         def debug_parse_file_internal(self, file_path, condition):
             """Wrapped _parse_file to catch internal parsing errors."""
             timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-            debugger.logger.debug(
-                f"[{timestamp}] Internal parse_file: {file_path}")
+            debugger.logger.debug(f"[{timestamp}] Internal parse_file: {file_path}")
             try:
-                return _original_parse_file_with_return(
-                    self, file_path, condition)
+                return _original_parse_file_with_return(self, file_path, condition)
             except Exception as e:
                 debugger.log_error(
                     file_path,
@@ -508,8 +496,7 @@ def patch_autoapi_for_debugging():
         def debug_read_file(self, path=None, **kwargs):
             """Wrapped read_file with error logging."""
             timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-            debugger.log_progress(f"[{timestamp}] Reading file: {path}",
-                                  filepath=path)
+            debugger.log_progress(f"[{timestamp}] Reading file: {path}", filepath=path)
             try:
                 result = _original_read_file(self, path=path, **kwargs)
                 return result
@@ -523,8 +510,10 @@ def patch_autoapi_for_debugging():
             try:
                 module_file = getattr(from_node.root(), "file", "unknown")
                 # Only log for project files - reduce verbosity
-                if ("/haive/packages/" in str(module_file)
-                        and debugger.stats["total_files"] % 100 == 0):
+                if (
+                    "/haive/packages/" in str(module_file)
+                    and debugger.stats["total_files"] % 100 == 0
+                ):
                     debugger.logger.debug(
                         f"[{timestamp}] Resolving import '{name}' in {module_file}",
                     )
@@ -546,11 +535,8 @@ def patch_autoapi_for_debugging():
                 debugger._update_package_stats(str(module_file), "failed")
 
                 # Log as warning instead of stopping build
-                warning_msg = f"Import resolution failed: '{name}' - {
-                    type(e).__name__}: {
-                    e!s}"
-                debugger.log_warning(str(module_file), warning_msg,
-                                     "get_full_import_name")
+                warning_msg = f"Import resolution failed: '{name}' - {type(e).__name__}: {e!s}"
+                debugger.log_warning(str(module_file), warning_msg, "get_full_import_name")
 
                 # Return a safe dummy value to continue processing gracefully
                 return f"ERROR_IMPORT_{name}"
@@ -573,19 +559,16 @@ def patch_autoapi_for_debugging():
                     debugger.log_progress(f"  Processing directory: {d}")
 
             # Track phases
-            current_phase = {
-                "phase": "INITIALIZATION",
-                "start_time": datetime.now()
-            }
+            current_phase = {"phase": "INITIALIZATION", "start_time": datetime.now()}
 
             def update_phase(new_phase):
-                elapsed = (datetime.now() -
-                           current_phase["start_time"]).total_seconds()
+                elapsed = (datetime.now() - current_phase["start_time"]).total_seconds()
                 timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                 current_phase["phase"] = new_phase
                 current_phase["start_time"] = datetime.now()
                 debugger.log_progress(
-                    f"PHASE CHANGE: {current_phase['phase']} -> {new_phase}", )
+                    f"PHASE CHANGE: {current_phase['phase']} -> {new_phase}",
+                )
 
             files_processed = 0
             files_parsed = 0
@@ -594,8 +577,9 @@ def patch_autoapi_for_debugging():
             (self.create_mapper if hasattr(self, "create_mapper") else None)
             (self.read_files if hasattr(self, "read_files") else None)
             original_map = self.map if hasattr(self, "map") else None
-            original_create_objects = (self.create_objects if hasattr(
-                self, "create_objects") else None)
+            original_create_objects = (
+                self.create_objects if hasattr(self, "create_objects") else None
+            )
 
             try:
                 # Phase 1: File Discovery
@@ -615,8 +599,7 @@ def patch_autoapi_for_debugging():
 
                         # Show progress every 50 files with more detail
                         if files_processed % 50 == 0:
-                            timestamp = datetime.now().strftime(
-                                "%H:%M:%S.%f")[:-3]
+                            timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                             # Extract relative path for readability
                             if isinstance(file_path, str | Path):
                                 rel_path = str(file_path).replace(
@@ -625,8 +608,7 @@ def patch_autoapi_for_debugging():
                                 )
                             else:
                                 rel_path = str(file_path)
-                            elapsed = (datetime.now() -
-                                       discovery_start).total_seconds()
+                            elapsed = (datetime.now() - discovery_start).total_seconds()
 
                         # Show every 10th file in debug log
                         if files_processed % 10 == 0:
@@ -653,13 +635,11 @@ def patch_autoapi_for_debugging():
                         nonlocal files_parsed
                         files_parsed += 1
 
-                        if files_parsed == 1 and current_phase[
-                                "phase"] != "FILE_PARSING":
+                        if files_parsed == 1 and current_phase["phase"] != "FILE_PARSING":
                             update_phase("FILE_PARSING")
 
                         if files_parsed % 20 == 0:
-                            timestamp = datetime.now().strftime(
-                                "%H:%M:%S.%f")[:-3]
+                            timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
                             rel_path = str(path).replace(
                                 "/home/will/Projects/haive/backend/haive/",
                                 "",
@@ -688,10 +668,7 @@ def patch_autoapi_for_debugging():
                     self.map = tracking_map
 
                 # Execute the original load
-                result = _original_load(self,
-                                        patterns=patterns,
-                                        dirs=dirs,
-                                        **kwargs)
+                result = _original_load(self, patterns=patterns, dirs=dirs, **kwargs)
 
                 # Final phase
                 update_phase("RENDERING")
@@ -699,7 +676,8 @@ def patch_autoapi_for_debugging():
                 timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
 
                 debugger.log_progress(
-                    f"AutoAPI load completed - Discovered: {files_processed}, Parsed: {files_parsed}", )
+                    f"AutoAPI load completed - Discovered: {files_processed}, Parsed: {files_parsed}",
+                )
                 debugger.write_summary()
                 return result
 
@@ -707,8 +685,10 @@ def patch_autoapi_for_debugging():
                 timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
 
                 debugger.log_progress(
-                    f"AutoAPI FAILED in phase {
-                        current_phase['phase']} - Discovered: {files_processed}, Parsed: {files_parsed}", )
+                    f"AutoAPI FAILED in phase {current_phase['phase']} - Discovered: {
+                        files_processed
+                    }, Parsed: {files_parsed}",
+                )
                 debugger.write_summary()
                 raise
 
@@ -745,15 +725,13 @@ def configure_autoapi_debugging(app: Any) -> dict[str, Any]:
     # Return additional configuration options
     return {
         # More verbose output
-        "autoapi_python_use_implicit_namespaces":
-        False,
+        "autoapi_python_use_implicit_namespaces": False,
         # Keep generated files for inspection
-        "autoapi_keep_files":
-        True,
+        "autoapi_keep_files": True,
         # Add event handlers
-        "autoapi_prepare_jinja_env":
-        lambda jinja_env: debugger.log_progress("Preparing Jinja environment",
-                                                ),
+        "autoapi_prepare_jinja_env": lambda jinja_env: debugger.log_progress(
+            "Preparing Jinja environment",
+        ),
     }
 
 
@@ -774,8 +752,7 @@ def setup_debugging_hooks(app: Any):
     def on_build_finished(app, exception):
         """Log when build is finished."""
         if exception:
-            debugger.log_progress(
-                f"Build finished with exception: {exception}")
+            debugger.log_progress(f"Build finished with exception: {exception}")
         else:
             debugger.log_progress("Build finished successfully")
         debugger.write_summary()

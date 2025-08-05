@@ -18,7 +18,7 @@ try:
     import sys
 
     # Check if output is being piped to avoid BrokenPipeError
-    if hasattr(sys.stdout, 'isatty') and sys.stdout.isatty():
+    if hasattr(sys.stdout, "isatty") and sys.stdout.isatty():
         # Interactive terminal - use Rich
         console = Console()
         logging.basicConfig(
@@ -31,8 +31,7 @@ try:
     else:
         # Piped output - use basic logging to avoid BrokenPipeError
         logging.basicConfig(
-            level=logging.INFO,
-            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+            level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
         )
         console = None
         RICH_AVAILABLE = False
@@ -115,13 +114,13 @@ def get_additional_extensions() -> list[str]:
     extension_tests = {
         # UI/UX Extensions
         "sphinx_copybutton": "sphinx_copybutton",
-        # "sphinx_design": "sphinx_design",  # ERROR: sphinx_design_css_changed attribute error
+        # "sphinx_design": # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3  # ERROR: sphinx_design_css_changed attribute error
         "sphinx_tabs.tabs": "sphinx_tabs",
         "sphinx_togglebutton": "sphinx_togglebutton",
         # "sphinx_external_toc": "sphinx_external_toc",  # DISABLED: requires _toc.yml
         "sphinx_favicon": "sphinx_favicon",
         "sphinx_notfound_page": "sphinx_notfound_page",
-        "sphinxcontrib.fulltoc": "sphinxcontrib.fulltoc",
+        # "sphinxcontrib.fulltoc": "sphinxcontrib.fulltoc",  # DISABLED: May conflict with Furo theme toctree
         "sphinxcontrib.jquery": "sphinxcontrib.jquery",
         # REMOVED: sphinxemoji (no setup function)
         # Diagram Extensions
@@ -139,7 +138,7 @@ def get_additional_extensions() -> list[str]:
         # "sphinxcontrib.images": "sphinxcontrib.images",  # ERROR: BuildEnvironment has no attribute remote_images
         "sphinxcontrib.youtube": "sphinxcontrib.youtube",
         # SEO/Web Extensions
-        "sphinx_sitemap": "sphinx_sitemap",
+        # "sphinx_sitemap": "sphinx_sitemap",  # DISABLED: Incompatible with Sphinx 8.2.3 - is_directory_builder attribute error
         "sphinx_reredirects": "sphinx_reredirects",
         "sphinxext.opengraph": "sphinxext.opengraph",
         "sphinxext.rediraffe": "sphinxext.rediraffe",
@@ -168,7 +167,8 @@ def get_additional_extensions() -> list[str]:
 
     if unavailable_extensions:
         logger.warning(
-            f"⚠️  {len(unavailable_extensions)} extensions not available", )
+            f"⚠️  {len(unavailable_extensions)} extensions not available",
+        )
 
     logger.info(f"✅ Loaded {len(available_extensions)} additional extensions")
     return available_extensions
@@ -261,7 +261,7 @@ def get_enhanced_extensions() -> list[str]:
         "sphinx_data_viewer": "sphinx_data_viewer",
         "sphinx_galleria": "sphinx_galleria",
         "sphinx_hoverxref": "sphinx_hoverxref",
-        "sphinx_tippy": "sphinx_tippy",
+        # "sphinx_tippy": "sphinx_tippy",  # DISABLED: Incompatible with Sphinx 8.2.3 - tippy_config attribute error
         "sphinx_treeview": "sphinx_treeview",
         # "sphinx_visualized": "sphinx_visualized",  # DISABLED: KeyError 'index' in node_map
         # Specialized Content
@@ -290,12 +290,12 @@ def get_enhanced_extensions() -> list[str]:
         # Markdown Integration - DISABLED due to conflict with myst_parser
         # Social and External Integration - REMOVED: No setup() functions
         # "sphinx_disqus": "sphinx_disqus",  # WARNING: no setup() function
-        # "sphinx_social": "sphinx_social",  # WARNING: no setup() function  
+        # "sphinx_social": "sphinx_social",  # WARNING: no setup() function
         # "sphinx_desktop": "sphinx_desktop",  # WARNING: no setup() function
         # Internationalization - REMOVED: sphinx_intl (no setup function)
         "sphinx_tsegsearch": "sphinx_tsegsearch",
         # PDF and Export
-        "sphinx_pdf_generate": "sphinx_pdf_generate",
+        # "sphinx_pdf_generate": "sphinx_pdf_generate",  # DISABLED: Incompatible with Sphinx 8.2.3 - sphinx_pdfgen_data attribute error
         "sphinx_simplepdf": "sphinx_simplepdf",
         "sphinx_revealjs": "sphinx_revealjs",
         # Advanced Features
@@ -327,7 +327,7 @@ def get_enhanced_extensions() -> list[str]:
         "sphinx_refdoc": "sphinx_refdoc",
         "sphinx_removed_in": "sphinx_removed_in",
         # "sphinx_sql": "sphinx_sql",  # WARNING: no setup() function
-        "sphinx_tagtoctree": "sphinx_tagtoctree",
+        # "sphinx_tagtoctree": "sphinx_tagtoctree",  # DISABLED: May conflict with Furo theme toctree
         "sphinx_toggleprompt": "sphinx_toggleprompt",
         # "sphinx_typesafe": "sphinx_typesafe",  # WARNING: no setup() function
     }
@@ -353,7 +353,8 @@ def get_all_extensions() -> list[str]:
             Panel.fit(
                 "🚀 [bold blue]Loading Sphinx Extensions[/bold blue]",
                 border_style="blue",
-            ), )
+            ),
+        )
     else:
         logger.info("🚀 Loading Sphinx Extensions")
 
@@ -410,8 +411,7 @@ def get_all_extensions() -> list[str]:
         console.print(table)
         console.print(
             Panel.fit(
-                f"✅ [bold green]{
-                    len(all_extensions)} extensions ready for use![/bold green]",
+                f"✅ [bold green]{len(all_extensions)} extensions ready for use![/bold green]",
                 border_style="green",
             ),
         )
@@ -435,7 +435,8 @@ def test_extension_compatibility() -> dict[str, Any]:
             Panel.fit(
                 "🧪 [bold yellow]Testing Extension Compatibility[/bold yellow]",
                 border_style="yellow",
-            ), )
+            ),
+        )
     else:
         logger.info("🧪 Testing Extension Compatibility")
 
@@ -472,10 +473,12 @@ def test_extension_compatibility() -> dict[str, Any]:
     # Summary
     if results["failed_extensions"]:
         logger.warning(
-            f"❌ {len(results['failed_extensions'])} extensions failed", )
+            f"❌ {len(results['failed_extensions'])} extensions failed",
+        )
     if results["warnings"]:
         logger.warning(
-            f"⚠️  {len(results['warnings'])} extensions have warnings", )
+            f"⚠️  {len(results['warnings'])} extensions have warnings",
+        )
 
     logger.info(
         f"✅ {results['working_extensions']}/{results['total_extensions']} extensions working",

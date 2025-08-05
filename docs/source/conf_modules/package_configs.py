@@ -68,7 +68,7 @@ def get_haive_core_profile() -> ExtensionProfile:
     # Standard - add useful features
     profile._standard = [
         "sphinx.ext.graphviz",  # For architecture diagrams
-        "sphinx_design",  # For cards/tabs
+        # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3  # For cards/tabs
         "sphinx_copybutton",  # For code copy
         "sphinxcontrib.mermaid",  # For diagrams
         "autodocsumm",  # For better summaries
@@ -101,7 +101,7 @@ def get_haive_agents_profile() -> ExtensionProfile:
     # Standard - add agent-specific features
     profile._standard = [
         "sphinx.ext.graphviz",
-        "sphinx_design",
+        # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3
         "sphinx_copybutton",
         "sphinxcontrib.mermaid",  # For agent flow diagrams
         "autodocsumm",
@@ -117,7 +117,7 @@ def get_haive_agents_profile() -> ExtensionProfile:
         "sphinx_exec_directive",  # For live examples
         "sphinx_examples",  # For example galleries
         "sphinx_collapse",  # For complex examples
-        "sphinx_tippy",  # For tooltips
+        # "sphinx_tippy",  # DISABLED: Incompatible with Sphinx 8.2.3 - tippy_config attribute error
     ]
 
     return profile
@@ -134,7 +134,7 @@ def get_haive_tools_profile() -> ExtensionProfile:
 
     # Standard
     profile._standard = [
-        "sphinx_design",
+        # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3
         "sphinx_copybutton",
         "sphinxcontrib.httpdomain",  # For API documentation
         "sphinx_click",  # For CLI tools
@@ -164,7 +164,7 @@ def get_haive_games_profile() -> ExtensionProfile:
 
     # Standard - add visualization
     profile._standard = [
-        "sphinx_design",
+        # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3
         "sphinx_copybutton",
         "sphinxcontrib.mermaid",  # For game flow
         "sphinxcontrib.images",  # For game screenshots
@@ -194,7 +194,7 @@ def get_haive_mcp_profile() -> ExtensionProfile:
 
     # Standard
     profile._standard = [
-        "sphinx_design",
+        # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3
         "sphinx_copybutton",
         "sphinxcontrib.httpdomain",  # For MCP protocol
         "sphinxcontrib.openapi",  # For API specs
@@ -223,7 +223,7 @@ def get_haive_dataflow_profile() -> ExtensionProfile:
 
     # Standard - add flow visualization
     profile._standard = [
-        "sphinx_design",
+        # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3
         "sphinx_copybutton",
         "sphinxcontrib.mermaid",  # For dataflow diagrams
         "sphinx.ext.graphviz",  # For complex flows
@@ -253,7 +253,7 @@ def get_haive_prebuilt_profile() -> ExtensionProfile:
 
     # Standard - focus on examples
     profile._standard = [
-        "sphinx_design",
+        # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3
         "sphinx_copybutton",
         "sphinx_tabs",  # For multiple examples
         "sphinx_togglebutton",  # For collapsible configs
@@ -326,10 +326,7 @@ def get_extension_usage_map() -> dict[str, list[str]]:
 def get_common_extensions(threshold: int = 3) -> list[str]:
     """Get extensions used by at least 'threshold' packages."""
     usage_map = get_extension_usage_map()
-    return [
-        ext for ext, packages in usage_map.items()
-        if len(packages) >= threshold
-    ]
+    return [ext for ext, packages in usage_map.items() if len(packages) >= threshold]
 
 
 if __name__ == "__main__":

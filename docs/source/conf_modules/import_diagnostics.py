@@ -115,11 +115,13 @@ def diagnose_imports(
 
         if len(sample_modules) < len(all_modules):
             mode_reason = (
-                "fast mode enabled" if fast_mode else f"module count exceeds {sample_limit}")
+                "fast mode enabled" if fast_mode else f"module count exceeds {sample_limit}"
+            )
             logger.info(
-                f"🚀 Optimizing: Testing {
-                    len(sample_modules)} key modules instead of all {
-                    len(all_modules)} ({mode_reason})", )
+                f"🚀 Optimizing: Testing {len(sample_modules)} key modules instead of all {
+                    len(all_modules)
+                } ({mode_reason})",
+            )
             all_modules = sample_modules
 
     # Test each module
@@ -178,8 +180,7 @@ def diagnose_imports(
         error_msg = result["error"]
         if "No module named" in error_msg:
             # Extract module name from "No module named 'module_name'"
-            missing_module = error_msg.split(
-                "'")[1] if "'" in error_msg else error_msg.split()[-1]
+            missing_module = error_msg.split("'")[1] if "'" in error_msg else error_msg.split()[-1]
             mock_imports.add(missing_module)
 
     logger.info(

@@ -44,7 +44,8 @@ def get_config(
             [
                 "sphinx_pdf_generate",  # PDF generation
                 "sphinx_simplepdf",  # Simple PDF export
-            ], )
+            ],
+        )
         config.update(_get_pdf_config())
 
     # Presentation generation
@@ -85,15 +86,11 @@ def _get_pdf_config() -> dict[str, Any]:
     """Get PDF generation configuration."""
     return {
         # LaTeX configuration for PDF output
-        "latex_engine":
-        "pdflatex",
+        "latex_engine": "pdflatex",
         "latex_elements": {
-            "papersize":
-            "letterpaper",
-            "pointsize":
-            "10pt",
-            "preamble":
-            r"""
+            "papersize": "letterpaper",
+            "pointsize": "10pt",
+            "preamble": r"""
 \usepackage{charter}
 \usepackage[defaultsans]{lato}
 \usepackage{inconsolata}
@@ -145,8 +142,7 @@ def _get_multiversion_config() -> dict[str, Any]:
     """Get multi-version documentation configuration."""
     return {
         "smv_tag_whitelist": r"^v\d+\.\d+\.\d+$",  # Only version tags
-        "smv_branch_whitelist":
-        r"^(main|master|develop)$",  # Only main branches
+        "smv_branch_whitelist": r"^(main|master|develop)$",  # Only main branches
         "smv_released_pattern": r"^tags/.*$",  # Released versions
         "smv_outputdir_format": "{config.release}",  # Output directory format
         "smv_prefer_remote_refs": False,  # Use local refs
@@ -159,10 +155,8 @@ def _get_404_config() -> dict[str, Any]:
         "notfound_pagename": "404",
         "notfound_template": "404.html",
         "notfound_context": {
-            "title":
-            "Page Not Found",
-            "body":
-            "The page you're looking for doesn't exist. Try searching or check our main documentation.",
+            "title": "Page Not Found",
+            "body": "The page you're looking for doesn't exist. Try searching or check our main documentation.",
         },
         "notfound_urls_prefix": "/",
     }

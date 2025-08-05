@@ -93,9 +93,7 @@ def get_minimal_config() -> dict[str, Any]:
 
 def get_standard_config() -> dict[str, Any]:
     """Get standard logging configuration."""
-    return get_config(log_level="INFO",
-                      log_file="sphinx.log",
-                      console_output=True)
+    return get_config(log_level="INFO", log_file="sphinx.log", console_output=True)
 
 
 def get_full_config() -> dict[str, Any]:

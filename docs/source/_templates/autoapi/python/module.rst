@@ -10,6 +10,7 @@
       {% if obj.docstring %}
 .. autoapi-nested-parse::
 
+
    {{ obj.docstring|indent(3) }}
 
       {% endif %}
@@ -21,34 +22,12 @@
          {% if visible_submodules %}
 Submodules
 
-----------
+
+---------
 
 .. toctree::
 
    :maxdepth: 1
-
-            {% for submodule in visible_submodules %}
-
-   {{ submodule.include_path | fix_include_path }}
-
-            {% endfor %}
-
-         {% endif %}
-      {% endblock %}
-      {% block content %}
-         {% set visible_children = obj.children|selectattr("display")|list %}
-         {% if visible_children %}
-            {% set visible_attributes = visible_children|selectattr("type", "equalto", "data")|list %}
-            {% if visible_attributes %}
-               {% if "attribute" in own_page_types or "show-module-summary" in autoapi_options %}
-
-Attributes
-
-----------
-
-                  {% if "attribute" in own_page_types %}
-.. toctree::
-
    :hidden:
 
                      {% for attribute in visible_attributes %}
@@ -60,6 +39,7 @@ Attributes
                   {% endif %}
 
 .. autoapisummary::
+
 
                   {% for attribute in visible_attributes %}
 
@@ -74,10 +54,12 @@ Attributes
                {% if "exception" in own_page_types or "show-module-summary" in autoapi_options %}
 Exceptions
 
-----------
+
+---------
 
                   {% if "exception" in own_page_types %}
 .. toctree::
+
 
    :hidden:
 
@@ -90,6 +72,7 @@ Exceptions
                   {% endif %}
 
 .. autoapisummary::
+
 
                   {% for exception in visible_exceptions %}
 
@@ -104,10 +87,12 @@ Exceptions
                {% if "class" in own_page_types or "show-module-summary" in autoapi_options %}
 Classes
 
--------
+
+------
 
                   {% if "class" in own_page_types %}
 .. toctree::
+
 
    :hidden:
 
@@ -120,6 +105,7 @@ Classes
                   {% endif %}
 
 .. autoapisummary::
+
 
                   {% for klass in visible_classes %}
 
@@ -134,10 +120,12 @@ Classes
                {% if "function" in own_page_types or "show-module-summary" in autoapi_options %}
 Functions
 
----------
+
+--------
 
                   {% if "function" in own_page_types %}
 .. toctree::
+
 
    :hidden:
 
@@ -150,6 +138,7 @@ Functions
                   {% endif %}
 
 .. autoapisummary::
+
 
                   {% for function in visible_functions %}
 
@@ -180,6 +169,7 @@ Functions
       {% if obj.docstring %}
 
    .. autoapi-nested-parse::
+
 
       {{ obj.docstring|indent(6) }}
 

@@ -113,9 +113,9 @@ def get_module_members(module_name: str) -> list[str]:
                 try:
                     obj = getattr(module, name)
                     # Only include objects that are actually from this module
-                    if hasattr(obj,
-                               "__module__") and obj.__module__.startswith(
-                                   module_name, ):
+                    if hasattr(obj, "__module__") and obj.__module__.startswith(
+                        module_name,
+                    ):
                         members.append(f"{module_name}.{name}")
                 except Exception:
                     pass
@@ -141,10 +141,10 @@ def process_namespace_packages(app, what, name, obj, options, lines):
                     for item in os.listdir(path):
                         if item.endswith(".py") and not item.startswith("_"):
                             submodules.append(item[:-3])
-                        elif os.path.isdir(os.path.join(
-                                path, item), ) and not item.startswith("_"):
-                            if os.path.exists(
-                                    os.path.join(path, item, "__init__.py")):
+                        elif os.path.isdir(
+                            os.path.join(path, item),
+                        ) and not item.startswith("_"):
+                            if os.path.exists(os.path.join(path, item, "__init__.py")):
                                 submodules.append(item)
 
             if submodules:
@@ -161,9 +161,7 @@ def setup(app):
     app.add_directive("autosummary", NamespaceAutosummary, override=True)
 
     # Add event handler for namespace packages
-    app.connect("autodoc-process-docstring",
-                process_namespace_packages,
-                priority=100)
+    app.connect("autodoc-process-docstring", process_namespace_packages, priority=100)
 
     # Patch the import function
     import sphinx.ext.autosummary

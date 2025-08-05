@@ -86,8 +86,7 @@ def get_config(
                         __import__(package_module)
                         logger.info(f"Successfully imported {package_module}")
                     except Exception as e:
-                        logger.warning(
-                            f"Failed to import {package_module}: {e}")
+                        logger.warning(f"Failed to import {package_module}: {e}")
 
     # Exclude patterns
     config["exclude_patterns"] = [

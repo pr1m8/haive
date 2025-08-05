@@ -141,9 +141,7 @@ class DocstringAnalyzer(ast.NodeVisitor):
         docstring = ast.get_docstring(node)
         if not docstring:
             severity = "high" if not node.name.startswith("_") else "medium"
-            context = (
-                f"class {self.current_class}" if self.current_class else "module-level"
-            )
+            context = f"class {self.current_class}" if self.current_class else "module-level"
             self.issues.append(
                 DocIssue(
                     file_path=self.file_path,
@@ -198,9 +196,7 @@ class DocstringAnalyzer(ast.NodeVisitor):
                 )
             )
 
-    def _check_class_docstring_quality(
-        self, docstring: str, node: ast.ClassDef
-    ) -> None:
+    def _check_class_docstring_quality(self, docstring: str, node: ast.ClassDef) -> None:
         """Check quality of class docstring."""
         lines = docstring.strip().splitlines()
 
@@ -219,15 +215,9 @@ class DocstringAnalyzer(ast.NodeVisitor):
 
         # Check for Args/Attributes sections
         docstring_lower = docstring.lower()
-        has_init = any(
-            isinstance(n, ast.FunctionDef) and n.name == "__init__" for n in node.body
-        )
+        has_init = any(isinstance(n, ast.FunctionDef) and n.name == "__init__" for n in node.body)
 
-        if (
-            has_init
-            and "args:" not in docstring_lower
-            and "parameters:" not in docstring_lower
-        ):
+        if has_init and "args:" not in docstring_lower and "parameters:" not in docstring_lower:
             self.issues.append(
                 DocIssue(
                     file_path=self.file_path,
@@ -254,9 +244,7 @@ class DocstringAnalyzer(ast.NodeVisitor):
                     )
                 )
 
-    def _check_function_docstring_quality(
-        self, docstring: str, node: ast.FunctionDef
-    ) -> None:
+    def _check_function_docstring_quality(self, docstring: str, node: ast.FunctionDef) -> None:
         """Check quality of function docstring."""
         lines = docstring.strip().splitlines()
 
@@ -355,9 +343,7 @@ class DocstringAnalyzer(ast.NodeVisitor):
         # Check return type
         if not node.returns and node.name != "__init__":
             # Check if function has return statements
-            has_return = any(
-                isinstance(n, ast.Return) and n.value for n in ast.walk(node)
-            )
+            has_return = any(isinstance(n, ast.Return) and n.value for n in ast.walk(node))
             if has_return:
                 self.issues.append(
                     DocIssue(
@@ -428,9 +414,7 @@ def analyze_file(file_path: Path) -> FileReport:
     return report
 
 
-def find_python_files(
-    root_dir: Path, exclude_dirs: set[str] | None = None
-) -> list[Path]:
+def find_python_files(root_dir: Path, exclude_dirs: set[str] | None = None) -> list[Path]:
     """Find all Python files in directory tree."""
     if exclude_dirs is None:
         exclude_dirs = {".venv", "__pycache__", ".git", ".nox", "build", "dist", ".tox"}
@@ -516,9 +500,7 @@ def generate_report(reports: list[FileReport], output_format: str = "text") -> s
     output.append(f"  🟢 Low: {total_low}")
     output.append("")
     output.append("Issue Types:")
-    for issue_type, count in sorted(
-        issues_by_type.items(), key=lambda x: x[1], reverse=True
-    ):
+    for issue_type, count in sorted(issues_by_type.items(), key=lambda x: x[1], reverse=True):
         output.append(f"  - {issue_type}: {count}")
     output.append("")
     output.append("=" * 80)
@@ -548,9 +530,7 @@ def generate_report(reports: list[FileReport], output_format: str = "text") -> s
                     "low": "🟢",
                 }.get(issue.severity, "❓")
 
-                output.append(
-                    f"   {severity_icon} Line {issue.line_number}: {issue.message}"
-                )
+                output.append(f"   {severity_icon} Line {issue.line_number}: {issue.message}")
                 if issue.context:
                     output.append(f"      Context: {issue.context}")
 
