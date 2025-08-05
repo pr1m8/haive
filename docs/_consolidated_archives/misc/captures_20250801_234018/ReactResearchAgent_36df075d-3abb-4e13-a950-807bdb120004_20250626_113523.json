@@ -1,0 +1,97 @@
+{
+  "run_id": "36df075d-3abb-4e13-a950-807bdb120004",
+  "agent_name": "ReactResearchAgent",
+  "agent_type": "custom.ReactAgent",
+  "start_time": "2025-06-26 11:35:23.152461",
+  "end_time": "2025-06-26 11:35:23.152747",
+  "input_data": {
+    "task": "Research the latest developments in solar panel technology",
+    "tools_required": ["web_search", "pdf_analysis"],
+    "max_iterations": 5
+  },
+  "final_output": {
+    "messages": [
+      {
+        "content": "Processed: {'task': 'Research the latest developments in solar panel technology', 'tools_required': ['web_search', 'pdf_analysis'], 'max_iterations': 5}",
+        "type": "result"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "step_id": "5763da8b-73e2-4b25-adc1-48df48e42f19",
+      "timestamp": "2025-06-26 11:35:23.152679",
+      "step_type": "input",
+      "node_name": null,
+      "content": {
+        "data": {
+          "task": "Research the latest developments in solar panel technology",
+          "tools_required": ["web_search", "pdf_analysis"],
+          "max_iterations": 5
+        }
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "dfce467f-e21e-4a0d-810c-7f8a5b4bdb40",
+      "timestamp": "2025-06-26 11:35:23.152713",
+      "step_type": "message",
+      "node_name": null,
+      "content": {
+        "messages": [
+          {
+            "content": "Starting processing",
+            "type": "system"
+          }
+        ]
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "b170e578-f71f-4f86-b94b-08c29a72008f",
+      "timestamp": "2025-06-26 11:35:23.152728",
+      "step_type": "node",
+      "node_name": "input_processor",
+      "content": {
+        "node": "input_processor",
+        "content": {
+          "task": "Research the latest developments in solar panel technology",
+          "tools_required": ["web_search", "pdf_analysis"],
+          "max_iterations": 5
+        }
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "ad68d4ba-2906-42bf-94fb-e75ce7ab7424",
+      "timestamp": "2025-06-26 11:35:23.152735",
+      "step_type": "node",
+      "node_name": "main_logic",
+      "content": {
+        "node": "main_logic",
+        "content": {
+          "processing": true
+        }
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "c4f4c11f-a2a7-4f05-90b9-229700c5739f",
+      "timestamp": "2025-06-26 11:35:23.152743",
+      "step_type": "message",
+      "node_name": null,
+      "content": {
+        "messages": [
+          {
+            "content": "Processed: {'task': 'Research the latest developments in solar panel technology', 'tools_required': ['web_search', 'pdf_analysis'], 'max_iterations': 5}",
+            "type": "result"
+          }
+        ]
+      },
+      "metadata": {}
+    }
+  ],
+  "graph_visualization_path": "docs/captures/36df075d-3abb-4e13-a950-807bdb120004_graph.png",
+  "error": null,
+  "metadata": {}
+}
