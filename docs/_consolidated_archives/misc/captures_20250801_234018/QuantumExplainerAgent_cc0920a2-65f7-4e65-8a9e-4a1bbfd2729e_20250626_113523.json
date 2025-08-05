@@ -1,0 +1,94 @@
+{
+  "run_id": "cc0920a2-65f7-4e65-8a9e-4a1bbfd2729e",
+  "agent_name": "QuantumExplainerAgent",
+  "agent_type": "custom.SimpleAgent",
+  "start_time": "2025-06-26 11:35:23.155044",
+  "end_time": "2025-06-26 11:35:23.155307",
+  "input_data": {
+    "query": "Explain quantum computing principles",
+    "format": "beginner"
+  },
+  "final_output": {
+    "messages": [
+      {
+        "content": "Processed: {'query': 'Explain quantum computing principles', 'format': 'beginner'}",
+        "type": "result"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "step_id": "c49679a9-73da-492a-adfd-939e90cca11a",
+      "timestamp": "2025-06-26 11:35:23.155264",
+      "step_type": "input",
+      "node_name": null,
+      "content": {
+        "data": {
+          "query": "Explain quantum computing principles",
+          "format": "beginner"
+        }
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "5b9596db-d364-4cc5-9198-43ec9d720dcb",
+      "timestamp": "2025-06-26 11:35:23.155284",
+      "step_type": "message",
+      "node_name": null,
+      "content": {
+        "messages": [
+          {
+            "content": "Starting processing",
+            "type": "system"
+          }
+        ]
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "6ce8703c-018c-4fb2-870a-dc0414ce264d",
+      "timestamp": "2025-06-26 11:35:23.155291",
+      "step_type": "node",
+      "node_name": "input_processor",
+      "content": {
+        "node": "input_processor",
+        "content": {
+          "query": "Explain quantum computing principles",
+          "format": "beginner"
+        }
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "9b7ee45d-fc7d-48dd-b4c3-cf6d267dccd0",
+      "timestamp": "2025-06-26 11:35:23.155297",
+      "step_type": "node",
+      "node_name": "main_logic",
+      "content": {
+        "node": "main_logic",
+        "content": {
+          "processing": true
+        }
+      },
+      "metadata": {}
+    },
+    {
+      "step_id": "f5cd1f50-9a47-4178-ba29-f2ef31ffc35c",
+      "timestamp": "2025-06-26 11:35:23.155304",
+      "step_type": "message",
+      "node_name": null,
+      "content": {
+        "messages": [
+          {
+            "content": "Processed: {'query': 'Explain quantum computing principles', 'format': 'beginner'}",
+            "type": "result"
+          }
+        ]
+      },
+      "metadata": {}
+    }
+  ],
+  "graph_visualization_path": "docs/captures/cc0920a2-65f7-4e65-8a9e-4a1bbfd2729e_graph.png",
+  "error": null,
+  "metadata": {}
+}

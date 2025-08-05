@@ -37,15 +37,8 @@ from noxfiles.session_docs_examples import (
     docs_prod,
     docs_with_examples,
 )
-from noxfiles.session_docs_package import (
-    docs_multi,
-    docs_package,
-    docs_quick,
-)
-from noxfiles.session_docs_phased import (
-    docs_phased,
-    docs_phased_no_examples,
-)
+from noxfiles.session_docs_package import docs_multi, docs_package, docs_quick
+from noxfiles.session_docs_phased import docs_phased, docs_phased_no_examples
 from noxfiles.session_docs_testing import (
     docs_test_all,
     docs_test_docstrings,
@@ -103,7 +96,6 @@ sys.path.insert(0, str(noxfiles_dir))
 
 # Import memory-aware sessions if available
 try:
-
     MEMORY_SESSIONS_AVAILABLE = True
 except ImportError:
     MEMORY_SESSIONS_AVAILABLE = False

@@ -1,0 +1,86 @@
+{
+  "timestamp": "2025-06-25T16:30:49.061704",
+  "successful": [
+    "haive.agents.conversation.base",
+    "haive.agents.conversation.debate",
+    "haive.agents.conversation.round_robin",
+    "haive.agents.conversation.collaberative",
+    "haive.agents.rag",
+    "haive.agents.rag.base",
+    "haive.agents.rag.adaptive_rag",
+    "haive.agents.rag.filtered",
+    "haive.agents.rag.hyde",
+    "haive.agents.rag.self_corr",
+    "haive.agents.rag.llm_rag",
+    "haive.agents.rag.multi_strategy",
+    "haive.core.engine",
+    "haive.core.engine.base",
+    "haive.core.registry",
+    "haive.core.persistence",
+    "haive.games.framework",
+    "haive.games.poker",
+    "haive.games.mancala",
+    "haive.games.tic_tac_toe"
+  ],
+  "failed": {
+    "haive.agents.conversation": {
+      "error_type": "ImportError",
+      "error_message": "cannot import name 'DirectedState' from 'haive.agents.conversation.directed.state' (/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/directed/state.py)"
+    },
+    "haive.agents.conversation.directed": {
+      "error_type": "ImportError",
+      "error_message": "cannot import name 'Post' from 'haive.agents.conversation.social_media.models' (/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/social_media/models.py)"
+    },
+    "haive.agents.conversation.social_media": {
+      "error_type": "ImportError",
+      "error_message": "cannot import name 'Post' from 'haive.agents.conversation.social_media.models' (/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/social_media/models.py)"
+    },
+    "haive.tools.base": {
+      "error_type": "ModuleNotFoundError",
+      "error_message": "No module named 'haive.tools.base'"
+    },
+    "haive.tools.general": {
+      "error_type": "ModuleNotFoundError",
+      "error_message": "No module named 'haive.tools.general'"
+    },
+    "haive.tools.google": {
+      "error_type": "ModuleNotFoundError",
+      "error_message": "No module named 'haive.tools.google'"
+    },
+    "haive.tools.search": {
+      "error_type": "ModuleNotFoundError",
+      "error_message": "No module named 'haive.tools.search'"
+    },
+    "haive.tools.content": {
+      "error_type": "ModuleNotFoundError",
+      "error_message": "No module named 'haive.tools.content'"
+    },
+    "haive.tools.utility": {
+      "error_type": "ModuleNotFoundError",
+      "error_message": "No module named 'haive.tools.utility'"
+    },
+    "haive.games.base": {
+      "error_type": "SyntaxError",
+      "error_message": "invalid syntax (factory.py, line 10)"
+    },
+    "haive.games.chess": {
+      "error_type": "SyntaxError",
+      "error_message": "invalid syntax (agent.py, line 204)"
+    }
+  },
+  "missing_dependencies": [
+    "haive.tools.base",
+    "haive.tools.general",
+    "haive.tools.google",
+    "haive.tools.search",
+    "haive.tools.content",
+    "haive.tools.utility"
+  ],
+  "syntax_errors": ["haive.games.base", "haive.games.chess"],
+  "type_errors": [],
+  "other_errors": [
+    "haive.agents.conversation",
+    "haive.agents.conversation.directed",
+    "haive.agents.conversation.social_media"
+  ]
+}

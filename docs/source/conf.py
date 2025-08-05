@@ -6,6 +6,11 @@ import os
 from pathlib import Path
 import sys
 
+# Add conf_modules to Python path for imports
+conf_modules_dir = Path(__file__).parent / "conf_modules"
+sys.path.insert(0, str(conf_modules_dir))
+
+# Import after adding path
 from extension_configs import (
     get_all_extension_configs,
     get_conditional_configs,
@@ -14,9 +19,20 @@ from extensions import get_all_extensions
 from import_diagnostics import get_autodoc_mock_imports_from_diagnosis
 from memory import get_memory_safe_sphinx_config
 
-# Add conf_modules to Python path for imports
-conf_modules_dir = Path(__file__).parent / "conf_modules"
-sys.path.insert(0, str(conf_modules_dir))
+# Setup structured logging FIRST
+try:
+    from structured_logging import setup_sphinx_logging
+
+    logger = setup_sphinx_logging()
+    logger.info("=" * 80)
+    logger.info("🚀 Starting Sphinx configuration load")
+    logger.info(f"📁 Config directory: {Path(__file__).parent}")
+    logger.info("=" * 80)
+except ImportError:
+    print("⚠️  Structured logging not available, using basic logging")
+    import logging
+
+    logger = logging.getLogger("sphinx_config")
 
 # =============================================================================
 # PROJECT INFORMATION
@@ -56,8 +72,10 @@ SPHINX_PROFILE = os.environ.get("SPHINX_PROFILE", "full")
 
 # Control example execution (set SPHINX_DISABLE_EXAMPLES=1 to skip
 # computational examples)
-DISABLE_EXAMPLES = os.environ.get("SPHINX_DISABLE_EXAMPLES",
-                                  "0").lower() in ("1", "true", "yes")
+DISABLE_EXAMPLES = os.environ.get(
+    "SPHINX_DISABLE_EXAMPLES",
+    "0",
+).lower() in ("1", "true", "yes")
 
 # Select extensions based on profile
 if SPHINX_PROFILE == "minimal":
@@ -86,8 +104,17 @@ elif SPHINX_PROFILE == "standard":
     print(f"📚 Using STANDARD profile ({len(extensions)} extensions)")
 else:
     # Full set with all extensions
-    extensions = get_all_extensions()
-    print(f"🎯 Using FULL profile ({len(extensions)} extensions)")
+    # Try to use enhanced extensions with structured logging
+    try:
+        from extensions_enhanced import get_extension_with_structured_logging
+
+        extensions, extension_status = get_extension_with_structured_logging()
+        logger.info(
+            f"🎯 Using FULL profile with enhanced logging ({len(extensions)} extensions)"
+        )
+    except ImportError:
+        extensions = get_all_extensions()
+        print(f"🎯 Using FULL profile ({len(extensions)} extensions)")
 
 # Apply memory-safe configuration with extension optimization
 memory_config = get_memory_safe_sphinx_config(extensions)
@@ -141,8 +168,10 @@ else:
 
     for pkg in requested_packages:
         # Support both 'core' and 'haive-core' formats
-        pkg_name = pkg.replace("haive-",
-                               "") if pkg.startswith("haive-") else pkg
+        pkg_name = (pkg.replace(
+            "haive-",
+            "",
+        ) if pkg.startswith("haive-") else pkg)
 
         if pkg_name in ALL_PACKAGES:
             autoapi_dirs.append(ALL_PACKAGES[pkg_name])
@@ -515,7 +544,7 @@ def force_load_lazy_imports():
     # Force load provider classes
     try:
         providers_module = importlib.import_module(
-            "haive.core.models.llm.providers")
+            "haive.core.models.llm.providers", )
         if hasattr(providers_module, "__all__"):
             for name in providers_module.__all__:
                 try:
@@ -528,7 +557,7 @@ def force_load_lazy_imports():
     # Force load retriever/vectorstore configs
     try:
         retriever_module = importlib.import_module(
-            "haive.core.models.retriever")
+            "haive.core.models.retriever", )
         if hasattr(retriever_module, "__all__"):
             for name in retriever_module.__all__:
                 try:
@@ -540,7 +569,7 @@ def force_load_lazy_imports():
 
     try:
         vectorstore_module = importlib.import_module(
-            "haive.core.models.vectorstore")
+            "haive.core.models.vectorstore", )
         if hasattr(vectorstore_module, "__all__"):
             for name in vectorstore_module.__all__:
                 try:
@@ -784,6 +813,17 @@ if "sphinx_sitemap" in extensions:
 def setup(app):
     """Setup function for custom Sphinx configuration."""
     app.connect("autoapi-skip-member", autoapi_skip_member)
+
+    # Try to setup enhanced build hooks
+    try:
+        from build_hooks_enhanced import setup as setup_hooks
+
+        setup_hooks(app)
+        logger.info("🪝 Enhanced build hooks registered")
+    except ImportError:
+        logger.warning("⚠️  Enhanced build hooks not available")
+    except Exception as e:
+        logger.error(f"❌ Failed to setup build hooks: {e}")
 
 
 # =============================================================================

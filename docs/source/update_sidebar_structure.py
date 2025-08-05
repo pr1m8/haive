@@ -1,1 +1,0 @@
-scripts/build_tools/update_sidebar_structure.py
