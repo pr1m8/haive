@@ -48,6 +48,12 @@ postgres_test_*/
 summary_agent/
 test_simple_agent/
 output_file.json
+
+# =============================================================================
+# 📝 CLI Tool Logs
+# =============================================================================
+vault_cli_*.log
+logs/vault_cli_*.log
 retrievers_output.json
 agent_run_*/
 test_run_*/
