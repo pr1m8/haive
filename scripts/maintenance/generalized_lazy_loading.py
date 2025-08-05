@@ -4,6 +4,7 @@
 This script can apply lazy loading to any __init__.py file in the Haive
 codebase, with comprehensive dry-run capabilities for safe execution.
 """
+from __future__ import annotations
 
 import argparse
 import os
@@ -46,8 +47,8 @@ class LazyLoadingGenerator:
         # Find .py modules
         py_modules = {
             f.stem
-            for f in package_dir.glob("*.py")
-            if f.stem != "__init__" and not f.stem.startswith("_")
+            for f in package_dir.glob('*.py')
+            if f.stem != '__init__' and not f.stem.startswith('_')
         }
 
         # Find subpackages
@@ -55,18 +56,18 @@ class LazyLoadingGenerator:
             d.name
             for d in package_dir.iterdir()
             if d.is_dir()
-            and not d.name.startswith("_")
-            and (d / "__init__.py").exists()
+            and not d.name.startswith('_')
+            and (d / '__init__.py').exists()
         }
 
         # Try to find existing exports in current __init__.py
         existing_exports = self._extract_existing_exports(init_file)
 
         return {
-            "modules": py_modules,
-            "packages": subpackages,
-            "all_submodules": py_modules | subpackages,
-            "existing_exports": existing_exports,
+            'modules': py_modules,
+            'packages': subpackages,
+            'all_submodules': py_modules | subpackages,
+            'existing_exports': existing_exports,
         }
 
     def _extract_existing_exports(self, init_file: Path) -> set[str]:
@@ -87,7 +88,7 @@ class LazyLoadingGenerator:
             for node in ast.walk(tree):
                 if isinstance(node, ast.Assign):
                     for target in node.targets:
-                        if isinstance(target, ast.Name) and target.id == "__all__":
+                        if isinstance(target, ast.Name) and target.id == '__all__':
                             if isinstance(node.value, ast.List):
                                 for elt in node.value.elts:
                                     if isinstance(elt, ast.Constant):
@@ -102,17 +103,17 @@ class LazyLoadingGenerator:
         init_file: Path,
         package_name: str,
         structure: dict[str, set[str]],
-        template_type: str = "lazy_loader",
+        template_type: str = 'lazy_loader',
     ) -> str:
         """Generate lazy loading content based on package structure."""
 
-        if template_type == "lazy_loader":
+        if template_type == 'lazy_loader':
             return self._generate_lazy_loader_template(
                 init_file,
                 package_name,
                 structure,
             )
-        if template_type == "pep562":
+        if template_type == 'pep562':
             return self._generate_pep562_template(init_file, package_name, structure)
         raise ValueError(f"Unknown template type: {template_type}")
 
@@ -149,7 +150,7 @@ class LazyLoadingGenerator:
         structure: dict[str, set[str]],
     ) -> str:
         """Generate lazy_loader based template with preserved docstring."""
-        submodules = sorted(structure["all_submodules"])
+        submodules = sorted(structure['all_submodules'])
 
         # Try to preserve existing docstring
         existing_docstring = self._extract_existing_docstring(init_file)
@@ -174,7 +175,7 @@ full compatibility with Sphinx AutoAPI and type checkers.
             submod_attrs_lines.append(
                 f"    '{module}': [],  # TODO: Add specific exports from {module}",
             )
-        submod_attrs_content = "\n".join(submod_attrs_lines)
+        submod_attrs_content = '\n'.join(submod_attrs_lines)
 
         content = f"""{docstring_part}
 
@@ -211,7 +212,7 @@ __getattr__, __dir__, __all__ = lazy.attach(
     ) -> str:
         """Generate PEP 562 __getattr__ based template with preserved
         docstring."""
-        submodules = sorted(structure["all_submodules"])
+        submodules = sorted(structure['all_submodules'])
 
         # Try to preserve existing docstring
         existing_docstring = self._extract_existing_docstring(init_file)
@@ -285,7 +286,7 @@ __all__ = list(_LAZY_IMPORTS.keys())
     def write_lazy_loading(self, init_file: Path, content: str) -> bool:
         """Write lazy loading content to __init__.py file."""
         try:
-            with open(init_file, "w") as f:
+            with open(init_file, 'w') as f:
                 f.write(content)
             return True
         except Exception:
@@ -295,12 +296,12 @@ __all__ = list(_LAZY_IMPORTS.keys())
         """Get timestamp for backup files."""
         from datetime import datetime
 
-        return datetime.now().strftime("%Y%m%d_%H%M%S")
+        return datetime.now().strftime('%Y%m%d_%H%M%S')
 
     def process_init_file(
         self,
         init_file: Path,
-        template_type: str = "lazy_loader",
+        template_type: str = 'lazy_loader',
         preview: bool = False,
     ) -> bool:
         """Process a single __init__.py file."""
@@ -311,11 +312,11 @@ __all__ = list(_LAZY_IMPORTS.keys())
         # Analyze structure
         structure = self.analyze_package_structure(init_file)
 
-        if not structure["all_submodules"]:
+        if not structure['all_submodules']:
             return False
 
         # Determine package name
-        package_name = ".".join(init_file.parent.parts[-3:])  # Approximate
+        package_name = '.'.join(init_file.parent.parts[-3:])  # Approximate
 
         # Generate content
         content = self.generate_lazy_loading_content(
@@ -355,7 +356,7 @@ __all__ = list(_LAZY_IMPORTS.keys())
 
 def find_init_files(
     base_path: Path,
-    pattern: str = "**/haive/*/__init__.py",
+    pattern: str = '**/haive/*/__init__.py',
 ) -> list[Path]:
     """Find __init__.py files in the Haive codebase."""
     return list(base_path.glob(pattern))
@@ -364,7 +365,7 @@ def find_init_files(
 def main():
     """Main entry point with comprehensive argument parsing."""
     parser = argparse.ArgumentParser(
-        description="Apply lazy loading to Haive __init__.py files",
+        description='Apply lazy loading to Haive __init__.py files',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -383,41 +384,41 @@ Examples:
     )
 
     parser.add_argument(
-        "--file",
+        '--file',
         type=Path,
-        help="Specific __init__.py file to process",
+        help='Specific __init__.py file to process',
     )
     parser.add_argument(
-        "--pattern",
-        default="**/haive/*/__init__.py",
-        help="Glob pattern for finding __init__.py files",
+        '--pattern',
+        default='**/haive/*/__init__.py',
+        help='Glob pattern for finding __init__.py files',
     )
     parser.add_argument(
-        "--template",
-        choices=["lazy_loader", "pep562"],
-        default="lazy_loader",
-        help="Template type to use",
+        '--template',
+        choices=['lazy_loader', 'pep562'],
+        default='lazy_loader',
+        help='Template type to use',
     )
     parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Preview changes without applying them",
+        '--dry-run',
+        action='store_true',
+        help='Preview changes without applying them',
     )
     parser.add_argument(
-        "--preview",
-        action="store_true",
-        help="Show generated content preview",
+        '--preview',
+        action='store_true',
+        help='Show generated content preview',
     )
     parser.add_argument(
-        "--auto",
-        action="store_true",
-        help="Process common files automatically",
+        '--auto',
+        action='store_true',
+        help='Process common files automatically',
     )
 
     args = parser.parse_args()
 
     # Check environment variable
-    dry_run = args.dry_run or os.getenv("DRY_RUN", "").lower() in ("1", "true", "yes")
+    dry_run = args.dry_run or os.getenv('DRY_RUN', '').lower() in ('1', 'true', 'yes')
 
     generator = LazyLoadingGenerator(dry_run=dry_run)
 
@@ -425,15 +426,15 @@ Examples:
     if args.file:
         files = [args.file]
     elif args.auto:
-        base = Path("/home/will/Projects/haive/backend/haive/packages")
+        base = Path('/home/will/Projects/haive/backend/haive/packages')
         files = [
-            base / "haive-core/src/haive/core/models/__init__.py",
-            base / "haive-core/src/haive/core/tools/__init__.py",
-            base / "haive-agents/src/haive/agents/__init__.py",
+            base / 'haive-core/src/haive/core/models/__init__.py',
+            base / 'haive-core/src/haive/core/tools/__init__.py',
+            base / 'haive-agents/src/haive/agents/__init__.py',
             # Add more key files as needed
         ]
     else:
-        base = Path("/home/will/Projects/haive/backend/haive")
+        base = Path('/home/will/Projects/haive/backend/haive')
         files = find_init_files(base, args.pattern)
 
     # Process files
@@ -456,5 +457,5 @@ Examples:
         pass  # Changes applied successfully
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

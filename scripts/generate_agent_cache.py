@@ -4,7 +4,6 @@
 This script runs agents with streaming to capture rich execution data
 including state history, execution traces, and visualization data.
 """
-
 from __future__ import annotations
 
 import asyncio
@@ -46,34 +45,34 @@ class AgentExecutionCapture:
         """Capture a streaming event."""
         timestamp = datetime.now().isoformat()
         event_data = {
-            "timestamp": timestamp,
-            "event_type": event.get("event", "unknown"),
-            "event_name": event.get("name", ""),
-            "data": event.get("data", {}),
-            "metadata": event.get("metadata", {}),
+            'timestamp': timestamp,
+            'event_type': event.get('event', 'unknown'),
+            'event_name': event.get('name', ''),
+            'data': event.get('data', {}),
+            'metadata': event.get('metadata', {}),
         }
         self.streaming_events.append(event_data)
 
         # Extract specific data for visualization
-        if event.get("event") == "on_chain_start":
+        if event.get('event') == 'on_chain_start':
             self.execution_trace.append(
                 {
-                    "step": len(self.execution_trace) + 1,
-                    "node": event.get("name", ""),
-                    "action": "start",
-                    "timestamp": timestamp,
-                    "data": event.get("data", {}),
+                    'step': len(self.execution_trace) + 1,
+                    'node': event.get('name', ''),
+                    'action': 'start',
+                    'timestamp': timestamp,
+                    'data': event.get('data', {}),
                 },
             )
 
-        elif event.get("event") == "on_chain_end":
+        elif event.get('event') == 'on_chain_end':
             self.execution_trace.append(
                 {
-                    "step": len(self.execution_trace) + 1,
-                    "node": event.get("name", ""),
-                    "action": "end",
-                    "timestamp": timestamp,
-                    "output": event.get("data", {}).get("output", {}),
+                    'step': len(self.execution_trace) + 1,
+                    'node': event.get('name', ''),
+                    'action': 'end',
+                    'timestamp': timestamp,
+                    'output': event.get('data', {}).get('output', {}),
                 },
             )
 
@@ -81,9 +80,9 @@ class AgentExecutionCapture:
         """Capture state update."""
         timestamp = datetime.now().isoformat()
         state_snapshot = {
-            "timestamp": timestamp,
-            "state": state.copy(),
-            "step": len(self.state_history) + 1,
+            'timestamp': timestamp,
+            'state': state.copy(),
+            'step': len(self.state_history) + 1,
         }
         self.state_history.append(state_snapshot)
 
@@ -102,19 +101,19 @@ class AgentExecutionCapture:
             duration = (self.end_time - self.start_time).total_seconds()
 
         return {
-            "execution_summary": {
-                "start_time": self.start_time.isoformat() if self.start_time else None,
-                "end_time": self.end_time.isoformat() if self.end_time else None,
-                "duration_seconds": duration,
-                "total_events": len(self.streaming_events),
-                "total_steps": len(self.execution_trace),
-                "state_updates": len(self.state_history),
+            'execution_summary': {
+                'start_time': self.start_time.isoformat() if self.start_time else None,
+                'end_time': self.end_time.isoformat() if self.end_time else None,
+                'duration_seconds': duration,
+                'total_events': len(self.streaming_events),
+                'total_steps': len(self.execution_trace),
+                'state_updates': len(self.state_history),
             },
-            "execution_trace": self.execution_trace,
-            "state_history": self.state_history,
-            "graph_data": self.graph_data,
-            "visualization_data": self.visualization_data,
-            "streaming_events": self.streaming_events,
+            'execution_trace': self.execution_trace,
+            'state_history': self.state_history,
+            'graph_data': self.graph_data,
+            'visualization_data': self.visualization_data,
+            'streaming_events': self.streaming_events,
         }
 
 
@@ -138,31 +137,31 @@ async def run_simple_agent_with_streaming(input_text: str) -> dict[str, Any]:
         config = AugLLMConfig(
             temperature=0.7,
             max_tokens=500,
-            system_message="You are a helpful assistant demonstrating SimpleAgent capabilities.",
+            system_message='You are a helpful assistant demonstrating SimpleAgent capabilities.',
         )
 
-        agent = SimpleAgent(name="demo_simple_agent", engine=config)
+        agent = SimpleAgent(name='demo_simple_agent', engine=config)
 
         capture.start_capture()
 
         # Try to get graph visualization if available
         try:
-            if hasattr(agent, "get_graph"):
+            if hasattr(agent, 'get_graph'):
                 graph = agent.get_graph()
-                graph_info = {"nodes": [], "edges": [], "has_graph": True}
+                graph_info = {'nodes': [], 'edges': [], 'has_graph': True}
 
                 # Try to get Mermaid diagram if available
                 try:
-                    if hasattr(graph, "draw_mermaid_png"):
-                        graph_info["mermaid_available"] = True
-                    if hasattr(graph, "nodes"):
-                        graph_info["nodes"] = (
+                    if hasattr(graph, 'draw_mermaid_png'):
+                        graph_info['mermaid_available'] = True
+                    if hasattr(graph, 'nodes'):
+                        graph_info['nodes'] = (
                             list(graph.nodes.keys())
-                            if hasattr(graph.nodes, "keys")
+                            if hasattr(graph.nodes, 'keys')
                             else []
                         )
-                    if hasattr(graph, "edges"):
-                        graph_info["edges"] = list(graph.edges) if graph.edges else []
+                    if hasattr(graph, 'edges'):
+                        graph_info['edges'] = list(graph.edges) if graph.edges else []
                 except Exception as e:
                     logger.warning(f"Could not extract graph details: {e}")
 
@@ -170,27 +169,27 @@ async def run_simple_agent_with_streaming(input_text: str) -> dict[str, Any]:
 
         except Exception as e:
             logger.warning(f"Agent doesn't have graph visualization: {e}")
-            capture.capture_graph_data({"has_graph": False, "error": str(e)})
+            capture.capture_graph_data({'has_graph': False, 'error': str(e)})
 
         # Run agent with timeout protection
         response = None
 
         # Use regular run method with timeout
-        logger.info("Using regular run method with timeout")
+        logger.info('Using regular run method with timeout')
 
         try:
             # Set timeout for LLM call
             response = await asyncio.wait_for(
                 (
                     agent.arun(input_text)
-                    if hasattr(agent, "arun")
+                    if hasattr(agent, 'arun')
                     else asyncio.to_thread(agent.run, input_text)
                 ),
                 timeout=120.0,  # 2 minute timeout
             )
         except TimeoutError:
-            logger.exception("Agent execution timed out after 2 minutes")
-            response = "Agent execution timed out - this would be a real response in production"
+            logger.exception('Agent execution timed out after 2 minutes')
+            response = 'Agent execution timed out - this would be a real response in production'
         except Exception as e:
             logger.exception(f"Agent execution failed: {e}")
             response = f"Agent execution failed: {e}"
@@ -198,9 +197,9 @@ async def run_simple_agent_with_streaming(input_text: str) -> dict[str, Any]:
         # Capture the response as a single event
         capture.capture_stream_event(
             {
-                "event": "agent_response",
-                "name": "simple_agent_run",
-                "data": {"output": response},
+                'event': 'agent_response',
+                'name': 'simple_agent_run',
+                'data': {'output': response},
             },
         )
 
@@ -209,23 +208,23 @@ async def run_simple_agent_with_streaming(input_text: str) -> dict[str, Any]:
             viz_data = {}
 
             # Check for visualization methods
-            if hasattr(agent, "get_visualization_data"):
-                viz_data["visualization_data"] = agent.get_visualization_data()
+            if hasattr(agent, 'get_visualization_data'):
+                viz_data['visualization_data'] = agent.get_visualization_data()
 
-            if hasattr(agent, "get_graph_visualization"):
-                viz_data["graph_visualization"] = agent.get_graph_visualization()
+            if hasattr(agent, 'get_graph_visualization'):
+                viz_data['graph_visualization'] = agent.get_graph_visualization()
 
-            if hasattr(agent, "visualize"):
-                viz_data["visualize_output"] = agent.visualize()
+            if hasattr(agent, 'visualize'):
+                viz_data['visualize_output'] = agent.visualize()
 
             # Check for state/memory access
-            if hasattr(agent, "get_state"):
-                viz_data["final_state"] = agent.get_state()
+            if hasattr(agent, 'get_state'):
+                viz_data['final_state'] = agent.get_state()
 
-            if hasattr(agent, "conversation_history"):
-                viz_data["conversation_history"] = getattr(
+            if hasattr(agent, 'conversation_history'):
+                viz_data['conversation_history'] = getattr(
                     agent,
-                    "conversation_history",
+                    'conversation_history',
                     [],
                 )
 
@@ -233,15 +232,15 @@ async def run_simple_agent_with_streaming(input_text: str) -> dict[str, Any]:
 
         except Exception as e:
             logger.warning(f"Could not extract visualization data: {e}")
-            capture.capture_visualization_data({"error": str(e)})
+            capture.capture_visualization_data({'error': str(e)})
 
         # Capture final state
         capture.capture_state_update(
             {
-                "input": input_text,
-                "output": response,
-                "agent_name": agent.name,
-                "status": "completed",
+                'input': input_text,
+                'output': response,
+                'agent_name': agent.name,
+                'status': 'completed',
             },
         )
 
@@ -249,7 +248,7 @@ async def run_simple_agent_with_streaming(input_text: str) -> dict[str, Any]:
 
         # Return comprehensive execution data
         result = capture.get_summary()
-        result["agent_output"] = response
+        result['agent_output'] = response
 
         return result
 
@@ -259,8 +258,8 @@ async def run_simple_agent_with_streaming(input_text: str) -> dict[str, Any]:
 
         # Return error data
         result = capture.get_summary()
-        result["error"] = str(e)
-        result["agent_output"] = None
+        result['error'] = str(e)
+        result['agent_output'] = None
 
         return result
 
@@ -302,11 +301,11 @@ async def run_react_agent_with_streaming(input_text: str) -> dict[str, Any]:
         config = AugLLMConfig(
             temperature=0.3,
             max_tokens=500,
-            system_message="You are a helpful assistant with access to tools. Think step by step and use tools when appropriate.",
+            system_message='You are a helpful assistant with access to tools. Think step by step and use tools when appropriate.',
         )
 
         agent = ReactAgent(
-            name="demo_react_agent",
+            name='demo_react_agent',
             engine=config,
             tools=[calculator, word_counter],
         )
@@ -315,71 +314,71 @@ async def run_react_agent_with_streaming(input_text: str) -> dict[str, Any]:
 
         # Try to get graph visualization
         try:
-            if hasattr(agent, "get_graph"):
+            if hasattr(agent, 'get_graph'):
                 graph = agent.get_graph()
                 graph_info = {
-                    "has_graph": True,
-                    "nodes": [],
-                    "edges": [],
-                    "graph_type": "react_agent",
+                    'has_graph': True,
+                    'nodes': [],
+                    'edges': [],
+                    'graph_type': 'react_agent',
                 }
 
                 # Extract graph structure
-                if hasattr(graph, "nodes"):
-                    graph_info["nodes"] = [
+                if hasattr(graph, 'nodes'):
+                    graph_info['nodes'] = [
                         {
-                            "id": node,
-                            "type": "agent_node" if "agent" in node else "tool_node",
+                            'id': node,
+                            'type': 'agent_node' if 'agent' in node else 'tool_node',
                         }
                         for node in graph.nodes
                     ]
-                if hasattr(graph, "edges"):
-                    graph_info["edges"] = [
-                        {"from": edge[0], "to": edge[1]} for edge in graph.edges
+                if hasattr(graph, 'edges'):
+                    graph_info['edges'] = [
+                        {'from': edge[0], 'to': edge[1]} for edge in graph.edges
                     ]
 
                 capture.capture_graph_data(graph_info)
 
         except Exception as e:
             logger.warning(f"Could not extract graph data: {e}")
-            capture.capture_graph_data({"has_graph": False, "error": str(e)})
+            capture.capture_graph_data({'has_graph': False, 'error': str(e)})
 
         # Run agent with timeout protection
         response = None
 
         try:
             # Use astream to capture intermediate steps
-            logger.info("Using astream to capture tool calls and reasoning")
+            logger.info('Using astream to capture tool calls and reasoning')
 
             steps = []
-            async for chunk in agent.astream(input_text, stream_mode="values"):
+            async for chunk in agent.astream(input_text, stream_mode='values'):
                 step_data = {
-                    "timestamp": datetime.now().isoformat(),
-                    "messages": [
-                        msg.dict() if hasattr(msg, "dict") else str(msg)
-                        for msg in chunk.get("messages", [])
+                    'timestamp': datetime.now().isoformat(),
+                    'messages': [
+                        msg.dict() if hasattr(msg, 'dict') else str(msg)
+                        for msg in chunk.get('messages', [])
                     ],
-                    "has_tool_calls": any(
-                        hasattr(msg, "tool_calls") and msg.tool_calls
-                        for msg in chunk.get("messages", [])
+                    'has_tool_calls': any(
+                        hasattr(msg, 'tool_calls') and msg.tool_calls
+                        for msg in chunk.get('messages', [])
                     ),
-                    "step_number": len(steps) + 1,
+                    'step_number': len(steps) + 1,
                 }
                 steps.append(step_data)
 
                 # Capture streaming event
                 capture.capture_stream_event(
                     {
-                        "event": "agent_step",
-                        "name": "react_agent_stream",
-                        "data": step_data,
+                        'event': 'agent_step',
+                        'name': 'react_agent_stream',
+                        'data': step_data,
                     },
                 )
 
                 # Extract final response if available
-                if chunk.get("messages"):
-                    last_msg = chunk["messages"][-1]
-                    if hasattr(last_msg, "content"):
+                if chunk.get('messages'):
+                    last_msg = chunk['messages'][-1]
+                    if hasattr(last_msg, 'content'):
                         response = last_msg.content
 
         except Exception as e:
@@ -390,9 +389,9 @@ async def run_react_agent_with_streaming(input_text: str) -> dict[str, Any]:
 
             capture.capture_stream_event(
                 {
-                    "event": "agent_response",
-                    "name": "react_agent_fallback",
-                    "data": {"output": response},
+                    'event': 'agent_response',
+                    'name': 'react_agent_fallback',
+                    'data': {'output': response},
                 },
             )
 
@@ -401,50 +400,50 @@ async def run_react_agent_with_streaming(input_text: str) -> dict[str, Any]:
             viz_data = {}
 
             # Get conversation history
-            if hasattr(agent, "conversation_history"):
-                viz_data["conversation_history"] = getattr(
+            if hasattr(agent, 'conversation_history'):
+                viz_data['conversation_history'] = getattr(
                     agent,
-                    "conversation_history",
+                    'conversation_history',
                     [],
                 )
 
             # Get state information
-            if hasattr(agent, "get_state"):
-                viz_data["final_state"] = agent.get_state()
+            if hasattr(agent, 'get_state'):
+                viz_data['final_state'] = agent.get_state()
 
             # Extract tool calls from messages
             tool_calls = []
-            if hasattr(agent, "get_messages"):
+            if hasattr(agent, 'get_messages'):
                 messages = agent.get_messages()
                 for msg in messages:
-                    if hasattr(msg, "tool_calls") and msg.tool_calls:
+                    if hasattr(msg, 'tool_calls') and msg.tool_calls:
                         for call in msg.tool_calls:
                             tool_calls.append(
                                 {
-                                    "tool_name": call.get("name"),
-                                    "tool_args": call.get("args"),
-                                    "tool_id": call.get("id"),
+                                    'tool_name': call.get('name'),
+                                    'tool_args': call.get('args'),
+                                    'tool_id': call.get('id'),
                                 },
                             )
 
-            viz_data["tool_calls"] = tool_calls
-            viz_data["total_tool_calls"] = len(tool_calls)
+            viz_data['tool_calls'] = tool_calls
+            viz_data['total_tool_calls'] = len(tool_calls)
 
             capture.capture_visualization_data(viz_data)
 
         except Exception as e:
             logger.warning(f"Could not extract visualization data: {e}")
-            capture.capture_visualization_data({"error": str(e)})
+            capture.capture_visualization_data({'error': str(e)})
 
         # Capture final state
         capture.capture_state_update(
             {
-                "input": input_text,
-                "output": response,
-                "agent_name": agent.name,
-                "agent_type": "react",
-                "tools_used": ["calculator", "word_counter"],
-                "status": "completed",
+                'input': input_text,
+                'output': response,
+                'agent_name': agent.name,
+                'agent_type': 'react',
+                'tools_used': ['calculator', 'word_counter'],
+                'status': 'completed',
             },
         )
 
@@ -452,8 +451,8 @@ async def run_react_agent_with_streaming(input_text: str) -> dict[str, Any]:
 
         # Return comprehensive execution data
         result = capture.get_summary()
-        result["agent_output"] = response
-        result["agent_type"] = "react"
+        result['agent_output'] = response
+        result['agent_type'] = 'react'
 
         return result
 
@@ -463,26 +462,26 @@ async def run_react_agent_with_streaming(input_text: str) -> dict[str, Any]:
 
         # Return error data
         result = capture.get_summary()
-        result["error"] = str(e)
-        result["agent_output"] = None
-        result["agent_type"] = "react"
+        result['error'] = str(e)
+        result['agent_output'] = None
+        result['agent_type'] = 'react'
 
         return result
 
 
 async def generate_simple_agent_cache():
     """Generate cached execution data for SimpleAgent."""
-    logger.info("🚀 Starting SimpleAgent cache generation")
+    logger.info('🚀 Starting SimpleAgent cache generation')
 
     # Example inputs to test with (reduced to 1 for initial testing)
-    test_inputs = ["Hello! Can you introduce yourself and explain what you can do?"]
+    test_inputs = ['Hello! Can you introduce yourself and explain what you can do?']
 
     cache_data = {
-        "agent_type": "simple",
-        "agent_name": "SimpleAgent",
-        "agent_class": "haive.agents.simple.SimpleAgent",
-        "generated_at": datetime.now().isoformat(),
-        "executions": [],
+        'agent_type': 'simple',
+        'agent_name': 'SimpleAgent',
+        'agent_class': 'haive.agents.simple.SimpleAgent',
+        'generated_at': datetime.now().isoformat(),
+        'executions': [],
     }
 
     for i, input_text in enumerate(test_inputs):
@@ -491,10 +490,10 @@ async def generate_simple_agent_cache():
         )
 
         execution_data = await run_simple_agent_with_streaming(input_text)
-        execution_data["execution_id"] = f"simple_agent_demo_{i + 1}"
-        execution_data["input_text"] = input_text
+        execution_data['execution_id'] = f"simple_agent_demo_{i + 1}"
+        execution_data['input_text'] = input_text
 
-        cache_data["executions"].append(execution_data)
+        cache_data['executions'].append(execution_data)
 
         # Add delay between executions
         await asyncio.sleep(1)
@@ -503,11 +502,11 @@ async def generate_simple_agent_cache():
 
     # Save to file
     cache_file = (
-        Path(__file__).parent.parent / "docs" / "source" / "agent_cache_simple.json"
+        Path(__file__).parent.parent / 'docs' / 'source' / 'agent_cache_simple.json'
     )
     cache_file.parent.mkdir(parents=True, exist_ok=True)
 
-    with open(cache_file, "w") as f:
+    with open(cache_file, 'w') as f:
         json.dump(cache_data, f, indent=2, default=str)
 
     logger.info(f"✅ SimpleAgent cache saved to {cache_file}")
@@ -517,21 +516,21 @@ async def generate_simple_agent_cache():
 
 async def generate_react_agent_cache():
     """Generate cached execution data for ReactAgent."""
-    logger.info("🚀 Starting ReactAgent cache generation")
+    logger.info('🚀 Starting ReactAgent cache generation')
 
     # Example inputs that will trigger tool usage
     test_inputs = [
-        "What is 15 * 23 + 47? Please calculate step by step.",
+        'What is 15 * 23 + 47? Please calculate step by step.',
         "Count the words in this sentence: 'The quick brown fox jumps over the lazy dog'",
-        "Can you help me with a math problem? Calculate (100 - 25) * 3 and then tell me how many words are in your explanation.",
+        'Can you help me with a math problem? Calculate (100 - 25) * 3 and then tell me how many words are in your explanation.',
     ]
 
     cache_data = {
-        "agent_type": "react",
-        "agent_name": "ReactAgent",
-        "agent_class": "haive.agents.react.ReactAgent",
-        "generated_at": datetime.now().isoformat(),
-        "executions": [],
+        'agent_type': 'react',
+        'agent_name': 'ReactAgent',
+        'agent_class': 'haive.agents.react.ReactAgent',
+        'generated_at': datetime.now().isoformat(),
+        'executions': [],
     }
 
     for i, input_text in enumerate(test_inputs):
@@ -540,10 +539,10 @@ async def generate_react_agent_cache():
         )
 
         execution_data = await run_react_agent_with_streaming(input_text)
-        execution_data["execution_id"] = f"react_agent_demo_{i + 1}"
-        execution_data["input_text"] = input_text
+        execution_data['execution_id'] = f"react_agent_demo_{i + 1}"
+        execution_data['input_text'] = input_text
 
-        cache_data["executions"].append(execution_data)
+        cache_data['executions'].append(execution_data)
 
         # Add delay between executions
         await asyncio.sleep(2)
@@ -552,11 +551,11 @@ async def generate_react_agent_cache():
 
     # Save to file
     cache_file = (
-        Path(__file__).parent.parent / "docs" / "source" / "agent_cache_react.json"
+        Path(__file__).parent.parent / 'docs' / 'source' / 'agent_cache_react.json'
     )
     cache_file.parent.mkdir(parents=True, exist_ok=True)
 
-    with open(cache_file, "w") as f:
+    with open(cache_file, 'w') as f:
         json.dump(cache_data, f, indent=2, default=str)
 
     logger.info(f"✅ ReactAgent cache saved to {cache_file}")
@@ -564,24 +563,24 @@ async def generate_react_agent_cache():
     return cache_data
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import sys
 
     # Determine which agent to generate cache for
-    agent_type = sys.argv[1] if len(sys.argv) > 1 else "simple"
+    agent_type = sys.argv[1] if len(sys.argv) > 1 else 'simple'
 
-    if agent_type == "simple":
-        logger.info("🚀 Generating SimpleAgent cache")
+    if agent_type == 'simple':
+        logger.info('🚀 Generating SimpleAgent cache')
         cache_data = asyncio.run(generate_simple_agent_cache())
-    elif agent_type == "react":
-        logger.info("🚀 Generating ReactAgent cache")
+    elif agent_type == 'react':
+        logger.info('🚀 Generating ReactAgent cache')
         cache_data = asyncio.run(generate_react_agent_cache())
     else:
         logger.error(f"Unknown agent type: {agent_type}. Use 'simple' or 'react'")
         sys.exit(1)
 
     # Print summary
-    for _i, execution in enumerate(cache_data["executions"]):
-        if execution.get("agent_type") == "react":
-            viz_data = execution.get("visualization_data", {})
-            tool_calls = viz_data.get("total_tool_calls", 0)
+    for _i, execution in enumerate(cache_data['executions']):
+        if execution.get('agent_type') == 'react':
+            viz_data = execution.get('visualization_data', {})
+            tool_calls = viz_data.get('total_tool_calls', 0)

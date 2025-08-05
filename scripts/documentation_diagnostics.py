@@ -4,7 +4,6 @@ Documentation Build Diagnostics Report Generator
 Date: August 1, 2025
 Purpose: Comprehensive analysis of Sphinx documentation build issues
 """
-
 from __future__ import annotations
 
 import json
@@ -25,28 +24,28 @@ logger = logging.getLogger(__name__)
 # Add project root to path
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
-sys.path.insert(0, str(PROJECT_ROOT / "docs" / "source"))
+sys.path.insert(0, str(PROJECT_ROOT / 'docs' / 'source'))
 
 # Import the diagnostics module
 
 
 def analyze_import_issues():
     """Analyze all import issues in the project."""
-    logger.info("Starting import analysis...")
+    logger.info('Starting import analysis...')
 
     # AutoAPI directories
     autoapi_dirs = [
-        "../../packages/haive-core/src",
-        "../../packages/haive-agents/src",
-        "../../packages/haive-tools/src",
-        "../../packages/haive-games/src",
-        "../../packages/haive-dataflow/src",
-        "../../packages/haive-mcp/src",
-        "../../packages/haive-prebuilt/src",
+        '../../packages/haive-core/src',
+        '../../packages/haive-agents/src',
+        '../../packages/haive-tools/src',
+        '../../packages/haive-games/src',
+        '../../packages/haive-dataflow/src',
+        '../../packages/haive-mcp/src',
+        '../../packages/haive-prebuilt/src',
     ]
 
     # Convert to absolute paths
-    source_dir = PROJECT_ROOT / "docs" / "source"
+    source_dir = PROJECT_ROOT / 'docs' / 'source'
     absolute_dirs = []
     for dir_path in autoapi_dirs:
         abs_path = (source_dir / dir_path).resolve()
@@ -64,52 +63,52 @@ def analyze_import_issues():
 
 def run_sphinx_diagnostic_build():
     """Run a minimal Sphinx build to collect all warnings and errors."""
-    logger.info("Running Sphinx diagnostic build...")
+    logger.info('Running Sphinx diagnostic build...')
 
-    build_dir = PROJECT_ROOT / "docs" / "build" / "diagnostic"
-    source_dir = PROJECT_ROOT / "docs" / "source"
+    build_dir = PROJECT_ROOT / 'docs' / 'build' / 'diagnostic'
+    source_dir = PROJECT_ROOT / 'docs' / 'source'
 
     # Run sphinx-build with nitpicky mode
     cmd = [
-        "poetry",
-        "run",
-        "sphinx-build",
-        "-n",  # Nitpicky mode
-        "-b",
-        "gettext",  # Use gettext builder for fast analysis
+        'poetry',
+        'run',
+        'sphinx-build',
+        '-n',  # Nitpicky mode
+        '-b',
+        'gettext',  # Use gettext builder for fast analysis
         str(source_dir),
         str(build_dir),
     ]
 
     result = subprocess.run(
-        cmd, capture_output=True, text=True, cwd=PROJECT_ROOT, check=False
+        cmd, capture_output=True, text=True, cwd=PROJECT_ROOT, check=False,
     )
 
     return {
-        "stdout": result.stdout,
-        "stderr": result.stderr,
-        "return_code": result.returncode,
+        'stdout': result.stdout,
+        'stderr': result.stderr,
+        'return_code': result.returncode,
     }
 
 
 def parse_sphinx_warnings(output: str):
     """Parse Sphinx output to categorize warnings and errors."""
     issues = {
-        "missing_references": [],
-        "type_hint_issues": [],
-        "import_errors": [],
-        "cross_reference_issues": [],
-        "autodoc_issues": [],
-        "other_warnings": [],
+        'missing_references': [],
+        'type_hint_issues': [],
+        'import_errors': [],
+        'cross_reference_issues': [],
+        'autodoc_issues': [],
+        'other_warnings': [],
     }
 
-    lines = output.split("\n")
+    lines = output.split('\n')
 
     for line in lines:
-        if "WARNING:" in line:
-            if "missing-reference" in line:
+        if 'WARNING:' in line:
+            if 'missing-reference' in line:
                 # Extract the missing reference
-                if "pending_xref" in line:
+                if 'pending_xref' in line:
                     # Type hint reference
                     if any(
                         t in line
@@ -122,44 +121,44 @@ def parse_sphinx_warnings(output: str):
                             "'dict'",
                         ]
                     ):
-                        issues["type_hint_issues"].append(line)
+                        issues['type_hint_issues'].append(line)
                     else:
-                        issues["missing_references"].append(line)
+                        issues['missing_references'].append(line)
                 else:
-                    issues["missing_references"].append(line)
-            elif "ImportError" in line:
-                issues["import_errors"].append(line)
-            elif "autodoc" in line:
-                issues["autodoc_issues"].append(line)
-            elif "cross-reference" in line or "xref" in line:
-                issues["cross_reference_issues"].append(line)
+                    issues['missing_references'].append(line)
+            elif 'ImportError' in line:
+                issues['import_errors'].append(line)
+            elif 'autodoc' in line:
+                issues['autodoc_issues'].append(line)
+            elif 'cross-reference' in line or 'xref' in line:
+                issues['cross_reference_issues'].append(line)
             else:
-                issues["other_warnings"].append(line)
+                issues['other_warnings'].append(line)
 
     return issues
 
 
 def generate_report(mock_imports, sphinx_output):
     """Generate comprehensive documentation report."""
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     # Parse Sphinx warnings
-    issues = parse_sphinx_warnings(sphinx_output["stderr"] + sphinx_output["stdout"])
+    issues = parse_sphinx_warnings(sphinx_output['stderr'] + sphinx_output['stdout'])
 
     # Count unique type issues
     type_counts = {}
-    for issue in issues["type_hint_issues"]:
+    for issue in issues['type_hint_issues']:
         for type_name in [
-            "str",
-            "int",
-            "bool",
-            "float",
-            "list",
-            "dict",
-            "Any",
-            "Optional",
-            "List",
-            "Dict",
+            'str',
+            'int',
+            'bool',
+            'float',
+            'list',
+            'dict',
+            'Any',
+            'Optional',
+            'List',
+            'Dict',
         ]:
             if f"'{type_name}'" in issue:
                 type_counts[type_name] = type_counts.get(type_name, 0) + 1
@@ -300,7 +299,7 @@ Report generated by: scripts/documentation_diagnostics.py
 
 def main():
     """Run full diagnostics and generate report."""
-    logger.info("Running documentation diagnostics...")
+    logger.info('Running documentation diagnostics...')
 
     # Get import issues
     mock_imports = analyze_import_issues()
@@ -312,20 +311,20 @@ def main():
     report = generate_report(mock_imports, sphinx_output)
 
     # Save report
-    report_path = PROJECT_ROOT / "project_docs" / "documentation_issues_2025_08_01.md"
+    report_path = PROJECT_ROOT / 'project_docs' / 'documentation_issues_2025_08_01.md'
     report_path.parent.mkdir(exist_ok=True)
 
-    with open(report_path, "w") as f:
+    with open(report_path, 'w') as f:
         f.write(report)
 
     logger.info(f"Report saved to: {report_path}")
 
     # Also print summary
-    print("\n=== DOCUMENTATION DIAGNOSTICS SUMMARY ===")
+    print('\n=== DOCUMENTATION DIAGNOSTICS SUMMARY ===')
     print(f"Mock imports needed: {len(mock_imports)}")
     print(f"Report location: {report_path}")
     print("\nRun 'cat {report_path}' to view the full report")
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

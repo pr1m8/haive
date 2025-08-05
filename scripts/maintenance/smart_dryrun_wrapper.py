@@ -21,7 +21,6 @@ Examples:
     # Direct dry-run flag injection
     python scripts/smart_dryrun_wrapper.py --dry-run -- rm -rf logs/
 """
-
 from __future__ import annotations
 
 import os
@@ -35,32 +34,32 @@ class SmartDryRunWrapper:
 
     # Known dry-run flags for common tools
     DRY_RUN_FLAGS = {
-        "absolufy-imports": ["--diff"],  # Shows what would change
-        "ruff": ["--diff"],  # Shows what would be fixed
-        "black": ["--diff"],  # Shows what would be formatted
-        "isort": ["--diff"],  # Shows what would be sorted
-        "autoflake": ["--check"],  # Check mode
-        "autopep8": ["--diff"],  # Shows changes
-        "yapf": ["--diff"],  # Shows changes
-        "git": ["--dry-run"],  # Git operations
-        "rm": ["-i"],  # Interactive mode as fallback
-        "mv": ["-i"],  # Interactive mode as fallback
-        "cp": ["-i"],  # Interactive mode as fallback
-        "rsync": ["--dry-run"],  # rsync dry run
-        "pip": ["--dry-run"],  # pip operations
-        "poetry": ["--dry-run"],  # poetry operations (some commands)
+        'absolufy-imports': ['--diff'],  # Shows what would change
+        'ruff': ['--diff'],  # Shows what would be fixed
+        'black': ['--diff'],  # Shows what would be formatted
+        'isort': ['--diff'],  # Shows what would be sorted
+        'autoflake': ['--check'],  # Check mode
+        'autopep8': ['--diff'],  # Shows changes
+        'yapf': ['--diff'],  # Shows changes
+        'git': ['--dry-run'],  # Git operations
+        'rm': ['-i'],  # Interactive mode as fallback
+        'mv': ['-i'],  # Interactive mode as fallback
+        'cp': ['-i'],  # Interactive mode as fallback
+        'rsync': ['--dry-run'],  # rsync dry run
+        'pip': ['--dry-run'],  # pip operations
+        'poetry': ['--dry-run'],  # poetry operations (some commands)
     }
 
     # Tools that support preview/check modes
     PREVIEW_FLAGS = {
-        "pre-commit": ["--dry-run"],
-        "mypy": ["--no-incremental"],  # Forces full check
-        "pylint": ["--help-msg"],  # Help mode as fallback
+        'pre-commit': ['--dry-run'],
+        'mypy': ['--no-incremental'],  # Forces full check
+        'pylint': ['--help-msg'],  # Help mode as fallback
     }
 
     def __init__(self):
-        self.dry_run = os.getenv("DRY_RUN", "").lower() in ("1", "true", "yes")
-        self.interactive = os.getenv("INTERACTIVE", "").lower() in ("1", "true", "yes")
+        self.dry_run = os.getenv('DRY_RUN', '').lower() in ('1', 'true', 'yes')
+        self.interactive = os.getenv('INTERACTIVE', '').lower() in ('1', 'true', 'yes')
         self.target_path = None
 
     def detect_tool_name(self, command: list[str]) -> str | None:
@@ -69,7 +68,7 @@ class SmartDryRunWrapper:
             return None
 
         # Handle poetry run commands
-        if len(command) >= 3 and command[0] == "poetry" and command[1] == "run":
+        if len(command) >= 3 and command[0] == 'poetry' and command[1] == 'run':
             return command[2]
 
         # Handle direct commands
@@ -87,7 +86,7 @@ class SmartDryRunWrapper:
         else:
             # Try common dry-run flags
             # Just return the most common one
-            flags.append("--dry-run")
+            flags.append('--dry-run')
 
         return flags
 
@@ -95,7 +94,7 @@ class SmartDryRunWrapper:
         """Check if command supports a specific flag."""
         try:
             # Try running with --help to see available options
-            help_cmd = [*command, "--help"]
+            help_cmd = [*command, '--help']
             result = subprocess.run(
                 help_cmd,
                 check=False,
@@ -103,7 +102,7 @@ class SmartDryRunWrapper:
                 text=True,
                 timeout=10,
             )
-            return flag.replace("--", "") in result.stdout.lower()
+            return flag.replace('--', '') in result.stdout.lower()
         except (
             subprocess.TimeoutExpired,
             subprocess.SubprocessError,
@@ -118,7 +117,7 @@ class SmartDryRunWrapper:
 
         # For absolufy-imports, add as positional argument
         tool_name = self.detect_tool_name(command)
-        if tool_name == "absolufy-imports":
+        if tool_name == 'absolufy-imports':
             # Add target as positional argument
             return [*command, str(self.target_path)]
 
@@ -157,10 +156,10 @@ class SmartDryRunWrapper:
             return True
 
         while True:
-            response = input("\n❓ Continue? [y/N]: ").strip().lower()
-            if response in ("y", "yes"):
+            response = input('\n❓ Continue? [y/N]: ').strip().lower()
+            if response in ('y', 'yes'):
                 return True
-            if response in ("n", "no", ""):
+            if response in ('n', 'no', ''):
                 return False
 
     def execute_command(self, command: list[str]) -> int:
@@ -181,7 +180,7 @@ class SmartDryRunWrapper:
         try:
             env = os.environ.copy()
             if self.dry_run and not has_dry_run_flag:
-                env["DRY_RUN"] = "1"
+                env['DRY_RUN'] = '1'
 
             result = subprocess.run(modified_command, check=False, env=env)
             return result.returncode
@@ -205,18 +204,18 @@ def main():
     while i < len(args):
         arg = args[i]
 
-        if arg == "--":
+        if arg == '--':
             # Everything after -- is the command
-            command = args[i + 1 :]
+            command = args[i + 1:]
             break
-        if arg == "--dry-run":
+        if arg == '--dry-run':
             wrapper.dry_run = True
-        elif arg == "--interactive":
+        elif arg == '--interactive':
             wrapper.interactive = True
-        elif arg == "--target" and i + 1 < len(args):
+        elif arg == '--target' and i + 1 < len(args):
             wrapper.target_path = Path(args[i + 1])
             i += 1
-        elif arg in ("--help", "-h"):
+        elif arg in ('--help', '-h'):
             return 1
         else:
             return 1
@@ -228,5 +227,5 @@ def main():
     return wrapper.execute_command(command)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main())

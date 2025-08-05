@@ -7,7 +7,6 @@ This module provides automatic docstring generation including:
 - Module and class docstring generation
 - Smart insertion logic that preserves existing code
 """
-
 from __future__ import annotations
 
 import ast
@@ -21,7 +20,7 @@ from scripts.documentation.docstring_tools.coverage import DocstringTarget
 project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
 
@@ -65,7 +64,7 @@ class DocstringGenerator:
     ) -> bool:
         """Generate docstrings for targets in a specific file."""
         try:
-            with open(file_path, encoding="utf-8") as f:
+            with open(file_path, encoding='utf-8') as f:
                 lines = f.readlines()
 
             # Sort targets by line number (reverse order to maintain line numbers)
@@ -77,7 +76,7 @@ class DocstringGenerator:
                     self._insert_docstring(lines, target, docstring)
 
             # Write updated file
-            with open(file_path, "w", encoding="utf-8") as f:
+            with open(file_path, 'w', encoding='utf-8') as f:
                 f.writelines(lines)
 
             return True
@@ -92,19 +91,19 @@ class DocstringGenerator:
         file_path: Path,
     ) -> str:
         """Create a docstring for a specific target."""
-        if target.target_type == "module":
+        if target.target_type == 'module':
             return self._create_module_docstring(file_path)
-        if target.target_type == "class":
+        if target.target_type == 'class':
             return self._create_class_docstring(target)
-        if target.target_type in ["function", "method"]:
+        if target.target_type in ['function', 'method']:
             return self._create_function_docstring(target, file_path)
 
-        return ""
+        return ''
 
     def _create_module_docstring(self, file_path: Path) -> str:
         """Create a module-level docstring."""
         module_name = file_path.stem
-        if module_name == "__init__":
+        if module_name == '__init__':
             package_name = file_path.parent.name
             return f'"""Package initialization for {package_name}."""\n\n'
         return f'"""Module: {module_name}."""\n\n'
@@ -122,7 +121,7 @@ class DocstringGenerator:
         """Create a function/method docstring."""
         # Try to analyze the function signature for better docstring
         try:
-            with open(file_path, encoding="utf-8") as f:
+            with open(file_path, encoding='utf-8') as f:
                 content = f.read()
 
             tree = ast.parse(content)
@@ -140,7 +139,7 @@ class DocstringGenerator:
             pass
 
         # Fallback to simple docstring
-        indent = "        " if target.target_type == "method" else "    "
+        indent = '        ' if target.target_type == 'method' else '    '
         return f'{indent}"""{target.function_name.replace("_", " ").title()}."""\n'
 
     def _generate_google_style_docstring(
@@ -149,14 +148,14 @@ class DocstringGenerator:
         target: DocstringTarget,
     ) -> str:
         """Generate Google-style docstring from function AST node."""
-        indent = "        " if target.target_type == "method" else "    "
+        indent = '        ' if target.target_type == 'method' else '    '
 
         # Extract function info
         func_name = node.name
         args = []
 
         for arg in node.args.args:
-            if arg.arg == "self":
+            if arg.arg == 'self':
                 continue
             args.append(arg.arg)
 
@@ -166,8 +165,8 @@ class DocstringGenerator:
         if args:
             docstring_lines.extend(
                 [
-                    "",
-                    "    Args:",
+                    '',
+                    '    Args:',
                 ],
             )
             for arg in args:
@@ -179,19 +178,19 @@ class DocstringGenerator:
             for node_child in ast.walk(node)
         )
 
-        if has_return and func_name != "__init__":
+        if has_return and func_name != '__init__':
             docstring_lines.extend(
                 [
-                    "",
-                    "    Returns:",
-                    "        Return value description.",
+                    '',
+                    '    Returns:',
+                    '        Return value description.',
                 ],
             )
 
         docstring_lines.append('    """')
 
         # Join with proper indentation
-        result = "\n".join(docstring_lines) + "\n"
+        result = '\n'.join(docstring_lines) + '\n'
         return result
 
     def _insert_docstring(
@@ -201,16 +200,16 @@ class DocstringGenerator:
         docstring: str,
     ):
         """Insert docstring into file lines."""
-        if target.target_type == "module":
+        if target.target_type == 'module':
             # Insert at the beginning after any imports/comments
             insert_pos = 0
             for i, line in enumerate(lines):
                 if (
                     line.strip()
-                    and not line.strip().startswith("#")
+                    and not line.strip().startswith('#')
                     and not line.strip().startswith('"""')
-                    and not line.strip().startswith("import")
-                    and not line.strip().startswith("from")
+                    and not line.strip().startswith('import')
+                    and not line.strip().startswith('from')
                 ):
                     insert_pos = i
                     break
@@ -225,12 +224,12 @@ def main():
     """CLI entry point for docstring generation."""
     import argparse
 
-    parser = argparse.ArgumentParser(description="Generate missing docstrings")
-    parser.add_argument("--target", required=True, help="Target package")
+    parser = argparse.ArgumentParser(description='Generate missing docstrings')
+    parser.add_argument('--target', required=True, help='Target package')
     parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Show what would be generated",
+        '--dry-run',
+        action='store_true',
+        help='Show what would be generated',
     )
 
     args = parser.parse_args()
@@ -248,9 +247,9 @@ def main():
         )
         logger.info(f"🎉 Generated {generated} docstrings")
         return 0
-    logger.info("✅ No missing docstrings found!")
+    logger.info('✅ No missing docstrings found!')
     return 0
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main())

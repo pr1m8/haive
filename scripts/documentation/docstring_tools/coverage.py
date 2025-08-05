@@ -7,21 +7,21 @@ This module provides comprehensive docstring coverage analysis including:
 - Docstr-coverage for alternative coverage analysis
 - Detailed reporting by file, function, class, and module
 """
-
 from __future__ import annotations
 
 import ast
 import logging
 import subprocess
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from dataclasses import field
 from pathlib import Path
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
 
@@ -30,13 +30,13 @@ class DocstringTarget:
     """Represents a target for docstring analysis/generation."""
 
     file_path: Path
-    function_name: str = ""
-    class_name: str = ""
+    function_name: str = ''
+    class_name: str = ''
     line_number: int = 0
-    current_docstring: str = ""
+    current_docstring: str = ''
     missing_docstring: bool = False
     docstring_issues: list[str] = field(default_factory=list)
-    target_type: str = "function"  # function, method, class, module
+    target_type: str = 'function'  # function, method, class, module
 
 
 @dataclass
@@ -63,12 +63,12 @@ class CoverageAnalyzer(ast.NodeVisitor):
         self.current_class = None
         self.file_path = None
         self.stats = {
-            "functions": 0,
-            "documented_functions": 0,
-            "classes": 0,
-            "documented_classes": 0,
-            "methods": 0,
-            "documented_methods": 0,
+            'functions': 0,
+            'documented_functions': 0,
+            'classes': 0,
+            'documented_classes': 0,
+            'methods': 0,
+            'documented_methods': 0,
         }
 
     def analyze_file(self, file_path: Path) -> list[DocstringTarget]:
@@ -78,7 +78,7 @@ class CoverageAnalyzer(ast.NodeVisitor):
         self.current_class = None
 
         try:
-            with open(file_path, encoding="utf-8") as f:
+            with open(file_path, encoding='utf-8') as f:
                 content = f.read()
 
             tree = ast.parse(content)
@@ -92,7 +92,7 @@ class CoverageAnalyzer(ast.NodeVisitor):
                         file_path=file_path,
                         line_number=1,
                         missing_docstring=True,
-                        target_type="module",
+                        target_type='module',
                     ),
                 )
 
@@ -108,27 +108,27 @@ class CoverageAnalyzer(ast.NodeVisitor):
         docstring = ast.get_docstring(node)
 
         # Skip private functions unless they're special methods
-        if node.name.startswith("_") and not node.name.startswith("__"):
+        if node.name.startswith('_') and not node.name.startswith('__'):
             self.generic_visit(node)
             return
 
         if is_method:
-            self.stats["methods"] += 1
+            self.stats['methods'] += 1
             if docstring:
-                self.stats["documented_methods"] += 1
+                self.stats['documented_methods'] += 1
         else:
-            self.stats["functions"] += 1
+            self.stats['functions'] += 1
             if docstring:
-                self.stats["documented_functions"] += 1
+                self.stats['documented_functions'] += 1
 
         if not docstring:
             target = DocstringTarget(
                 file_path=self.file_path,
                 function_name=node.name,
-                class_name=self.current_class or "",
+                class_name=self.current_class or '',
                 line_number=node.lineno,
                 missing_docstring=True,
-                target_type="method" if is_method else "function",
+                target_type='method' if is_method else 'function',
             )
             self.targets_needing_docs.append(target)
 
@@ -139,18 +139,18 @@ class CoverageAnalyzer(ast.NodeVisitor):
         old_class = self.current_class
         self.current_class = node.name
 
-        self.stats["classes"] += 1
+        self.stats['classes'] += 1
         docstring = ast.get_docstring(node)
 
         if docstring:
-            self.stats["documented_classes"] += 1
+            self.stats['documented_classes'] += 1
         else:
             target = DocstringTarget(
                 file_path=self.file_path,
                 class_name=node.name,
                 line_number=node.lineno,
                 missing_docstring=True,
-                target_type="class",
+                target_type='class',
             )
             self.targets_needing_docs.append(target)
 
@@ -165,13 +165,13 @@ class CoverageAnalyzer(ast.NodeVisitor):
         logger.info(f"📊 Analyzing docstring coverage in {package_path}")
 
         # Convert package path to directory
-        if package_path.startswith("haive."):
-            package_path = package_path.replace(".", "/")
+        if package_path.startswith('haive.'):
+            package_path = package_path.replace('.', '/')
 
-        package_dir = project_root / "packages" / package_path / "src" / "haive"
+        package_dir = project_root / 'packages' / package_path / 'src' / 'haive'
 
         if not package_dir.exists():
-            package_dir = project_root / "packages" / package_path / "src"
+            package_dir = project_root / 'packages' / package_path / 'src'
 
         if not package_dir.exists():
             logger.error(f"❌ Package directory not found: {package_dir}")
@@ -179,22 +179,22 @@ class CoverageAnalyzer(ast.NodeVisitor):
 
         # AST-based analysis
         all_targets = []
-        python_files = list(package_dir.rglob("*.py"))
+        python_files = list(package_dir.rglob('*.py'))
 
         logger.info(f"📁 Found {len(python_files)} Python files to analyze")
 
         total_stats = {
-            "functions": 0,
-            "documented_functions": 0,
-            "classes": 0,
-            "documented_classes": 0,
-            "methods": 0,
-            "documented_methods": 0,
-            "modules": len(python_files),
+            'functions': 0,
+            'documented_functions': 0,
+            'classes': 0,
+            'documented_classes': 0,
+            'methods': 0,
+            'documented_methods': 0,
+            'modules': len(python_files),
         }
 
         for py_file in python_files:
-            if py_file.name == "__init__.py":
+            if py_file.name == '__init__.py':
                 continue  # Handle separately if needed
 
             targets = self.analyze_file(py_file)
@@ -207,12 +207,12 @@ class CoverageAnalyzer(ast.NodeVisitor):
 
         # Calculate coverage
         total_documented = (
-            total_stats["documented_functions"]
-            + total_stats["documented_classes"]
-            + total_stats["documented_methods"]
+            total_stats['documented_functions']
+            + total_stats['documented_classes']
+            + total_stats['documented_methods']
         )
         total_items = (
-            total_stats["functions"] + total_stats["classes"] + total_stats["methods"]
+            total_stats['functions'] + total_stats['classes'] + total_stats['methods']
         )
 
         coverage_percentage = (
@@ -226,11 +226,11 @@ class CoverageAnalyzer(ast.NodeVisitor):
         docstr_coverage_score = self._run_docstr_coverage_analysis(package_dir)
 
         report = CoverageReport(
-            total_functions=total_stats["functions"],
-            documented_functions=total_stats["documented_functions"],
-            total_classes=total_stats["classes"],
-            documented_classes=total_stats["documented_classes"],
-            total_modules=total_stats["modules"],
+            total_functions=total_stats['functions'],
+            documented_functions=total_stats['documented_functions'],
+            total_classes=total_stats['classes'],
+            documented_classes=total_stats['documented_classes'],
+            total_modules=total_stats['modules'],
             missing_targets=all_targets,
             coverage_percentage=coverage_percentage,
             interrogate_score=interrogate_score,
@@ -242,22 +242,22 @@ class CoverageAnalyzer(ast.NodeVisitor):
 
     def _run_interrogate_analysis(self, package_dir: Path) -> float:
         """Run interrogate for professional docstring coverage analysis."""
-        logger.info("🔍 Running interrogate analysis...")
+        logger.info('🔍 Running interrogate analysis...')
 
         try:
             result = subprocess.run(
                 [
-                    "interrogate",
+                    'interrogate',
                     str(package_dir),
-                    "--ignore-init-method",
-                    "--ignore-init-module",
-                    "--ignore-magic",
-                    "--ignore-private",
-                    "--ignore-semiprivate",
-                    "--quiet-level",
-                    "2",
-                    "--output",
-                    "json",
+                    '--ignore-init-method',
+                    '--ignore-init-module',
+                    '--ignore-magic',
+                    '--ignore-private',
+                    '--ignore-semiprivate',
+                    '--quiet-level',
+                    '2',
+                    '--output',
+                    'json',
                 ],
                 capture_output=True,
                 text=True,
@@ -269,14 +269,14 @@ class CoverageAnalyzer(ast.NodeVisitor):
                 import json
 
                 data = json.loads(result.stdout)
-                score = data.get("overall_coverage", 0.0)
+                score = data.get('overall_coverage', 0.0)
                 logger.info(f"📊 Interrogate coverage: {score:.1f}%")
                 return score
-            logger.warning("⚠️ Interrogate analysis failed")
+            logger.warning('⚠️ Interrogate analysis failed')
             return 0.0
 
         except FileNotFoundError:
-            logger.info("ℹ️ interrogate not found (available in poetry dependencies)")
+            logger.info('ℹ️ interrogate not found (available in poetry dependencies)')
             return 0.0
         except Exception as e:
             logger.error(f"❌ Interrogate analysis error: {e}")
@@ -284,11 +284,11 @@ class CoverageAnalyzer(ast.NodeVisitor):
 
     def _run_docstr_coverage_analysis(self, package_dir: Path) -> float:
         """Run docstr-coverage for alternative coverage analysis."""
-        logger.info("🔍 Running docstr-coverage analysis...")
+        logger.info('🔍 Running docstr-coverage analysis...')
 
         try:
             result = subprocess.run(
-                ["docstr-coverage", str(package_dir), "--percentage-only"],
+                ['docstr-coverage', str(package_dir), '--percentage-only'],
                 capture_output=True,
                 text=True,
                 timeout=60,
@@ -296,15 +296,15 @@ class CoverageAnalyzer(ast.NodeVisitor):
             )
 
             if result.returncode == 0 and result.stdout.strip():
-                score = float(result.stdout.strip().replace("%", ""))
+                score = float(result.stdout.strip().replace('%', ''))
                 logger.info(f"📊 Docstr-coverage: {score:.1f}%")
                 return score
-            logger.warning("⚠️ Docstr-coverage analysis failed")
+            logger.warning('⚠️ Docstr-coverage analysis failed')
             return 0.0
 
         except (FileNotFoundError, ValueError):
             logger.info(
-                "ℹ️ docstr-coverage not found (available in poetry dependencies)",
+                'ℹ️ docstr-coverage not found (available in poetry dependencies)',
             )
             return 0.0
         except Exception as e:
@@ -313,7 +313,7 @@ class CoverageAnalyzer(ast.NodeVisitor):
 
     def _report_coverage_results(self, report: CoverageReport):
         """Report comprehensive docstring coverage results."""
-        logger.info("📊 Comprehensive Docstring Coverage Report:")
+        logger.info('📊 Comprehensive Docstring Coverage Report:')
         logger.info(f"  📈 AST Analysis Coverage: {report.coverage_percentage:.1f}%")
 
         if report.interrogate_score > 0:
@@ -350,17 +350,17 @@ def main():
     """CLI entry point for coverage analysis."""
     import argparse
 
-    parser = argparse.ArgumentParser(description="Docstring coverage analysis")
-    parser.add_argument("--target", required=True, help="Target package")
+    parser = argparse.ArgumentParser(description='Docstring coverage analysis')
+    parser.add_argument('--target', required=True, help='Target package')
     parser.add_argument(
-        "--interrogate",
-        action="store_true",
-        help="Use interrogate analysis",
+        '--interrogate',
+        action='store_true',
+        help='Use interrogate analysis',
     )
     parser.add_argument(
-        "--docstr-coverage",
-        action="store_true",
-        help="Use docstr-coverage analysis",
+        '--docstr-coverage',
+        action='store_true',
+        help='Use docstr-coverage analysis',
     )
 
     args = parser.parse_args()
@@ -371,5 +371,5 @@ def main():
     return 0 if report.coverage_percentage > 0 else 1
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main())

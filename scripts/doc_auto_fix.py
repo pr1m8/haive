@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Automatically fix documentation issues using proper tools."""
-
 from __future__ import annotations
 
 import argparse
@@ -25,18 +24,18 @@ class DocAutoFixer:
         """Create backup of docs directory."""
         if self.backup:
             print(f"📦 Creating backup in {self.backup_dir}")
-            shutil.copytree("docs/source", self.backup_dir)
-            print("✅ Backup created")
+            shutil.copytree('docs/source', self.backup_dir)
+            print('✅ Backup created')
 
     def run_rstfmt(self, dry_run: bool = True):
         """Format RST files with rstfmt."""
-        print("\n🔧 Running rstfmt formatter...")
+        print('\n🔧 Running rstfmt formatter...')
 
-        rst_files = list(Path("docs/source").rglob("*.rst"))
+        rst_files = list(Path('docs/source').rglob('*.rst'))
 
-        cmd = ["poetry", "run", "rstfmt"]
+        cmd = ['poetry', 'run', 'rstfmt']
         if not dry_run:
-            cmd.append("--write")
+            cmd.append('--write')
 
         fixed_count = 0
         for rst_file in rst_files:
@@ -69,47 +68,47 @@ class DocAutoFixer:
 
     def run_docformatter(self, dry_run: bool = True):
         """Format Python docstrings with docformatter."""
-        print("\n🔧 Running docformatter...")
+        print('\n🔧 Running docformatter...')
 
-        cmd = ["poetry", "run", "docformatter", "--recursive"]
+        cmd = ['poetry', 'run', 'docformatter', '--recursive']
         if not dry_run:
-            cmd.append("--in-place")
+            cmd.append('--in-place')
         else:
-            cmd.append("--diff")
+            cmd.append('--diff')
 
         # Add options for better formatting
-        cmd.extend(["--wrap-summaries", "79", "--wrap-descriptions", "79", "--blank"])
+        cmd.extend(['--wrap-summaries', '79', '--wrap-descriptions', '79', '--blank'])
 
-        cmd.append("packages/")
+        cmd.append('packages/')
 
         try:
             result = subprocess.run(cmd, capture_output=True, text=True, check=False)
 
             if dry_run and result.stdout:
                 # Count files that would be changed
-                changed_files = result.stdout.count("---")
+                changed_files = result.stdout.count('---')
                 print(f"  Would fix {changed_files} Python files")
 
                 # Show first few examples
-                lines = result.stdout.split("\n")
+                lines = result.stdout.split('\n')
                 for i, line in enumerate(lines[:50]):
-                    if line.startswith("---"):
+                    if line.startswith('---'):
                         print(f"  Example: {line}")
             elif not dry_run:
-                print("  ✅ Fixed Python docstrings")
+                print('  ✅ Fixed Python docstrings')
 
         except Exception as e:
             self.errors.append(f"docformatter error: {e}")
 
     def run_blacken_docs(self, dry_run: bool = True):
         """Format code blocks in documentation with blacken-docs."""
-        print("\n🔧 Running blacken-docs on code blocks...")
+        print('\n🔧 Running blacken-docs on code blocks...')
 
-        rst_files = list(Path("docs/source").rglob("*.rst"))
+        rst_files = list(Path('docs/source').rglob('*.rst'))
 
-        cmd = ["poetry", "run", "blacken-docs"]
+        cmd = ['poetry', 'run', 'blacken-docs']
         if not dry_run:
-            cmd.append("--write")
+            cmd.append('--write')
 
         fixed_count = 0
         for rst_file in rst_files:
@@ -117,7 +116,7 @@ class DocAutoFixer:
                 if dry_run:
                     # Check mode
                     result = subprocess.run(
-                        cmd + ["--diff", str(rst_file)],
+                        cmd + ['--diff', str(rst_file)],
                         capture_output=True,
                         text=True,
                         check=False,
@@ -144,11 +143,11 @@ class DocAutoFixer:
 
     def fix_sphinx_directives(self, dry_run: bool = True):
         """Fix common Sphinx directive issues."""
-        print("\n🔧 Fixing Sphinx directive issues...")
+        print('\n🔧 Fixing Sphinx directive issues...')
 
         fixes_applied = 0
 
-        for rst_file in Path("docs/source").rglob("*.rst"):
+        for rst_file in Path('docs/source').rglob('*.rst'):
             try:
                 with open(rst_file) as f:
                     content = f.read()
@@ -156,31 +155,31 @@ class DocAutoFixer:
                 original = content
 
                 # Fix exec_code -> code-block
-                if ".. exec_code::" in content:
-                    content = content.replace(".. exec_code::", ".. code-block::")
-                    content = content.replace("   :language: python", "")
-                    content = content.replace("   :hide_output:", "")
+                if '.. exec_code::' in content:
+                    content = content.replace('.. exec_code::', '.. code-block::')
+                    content = content.replace('   :language: python', '')
+                    content = content.replace('   :hide_output:', '')
 
                 # Fix jinja directives
-                if ".. jinja::" in content:
-                    lines = content.split("\n")
+                if '.. jinja::' in content:
+                    lines = content.split('\n')
                     fixed_lines = []
                     for line in lines:
-                        if line.strip() == ".. jinja::":
-                            fixed_lines.append(".. .. jinja:: (commented out)")
+                        if line.strip() == '.. jinja::':
+                            fixed_lines.append('.. .. jinja:: (commented out)')
                         else:
                             fixed_lines.append(line)
-                    content = "\n".join(fixed_lines)
+                    content = '\n'.join(fixed_lines)
 
                 # Fix common role issues
                 # :doc:`missing_close -> :doc:`missing_close`
                 import re
 
-                content = re.sub(r":(\w+):`([^`]+)(?!`)", r":\1:`\2`", content)
+                content = re.sub(r':(\w+):`([^`]+)(?!`)', r':\1:`\2`', content)
 
                 if content != original:
                     if not dry_run:
-                        with open(rst_file, "w") as f:
+                        with open(rst_file, 'w') as f:
                             f.write(content)
                         self.fixed_files.append(str(rst_file))
                     print(f"  {'Would fix' if dry_run else 'Fixed'}: {rst_file.name}")
@@ -194,13 +193,13 @@ class DocAutoFixer:
 
     def validate_fixes(self):
         """Validate fixes with rstcheck."""
-        print("\n✔️  Validating fixes with rstcheck...")
+        print('\n✔️  Validating fixes with rstcheck...')
 
         issues_found = 0
-        for rst_file in Path("docs/source").rglob("*.rst")[:10]:  # Check first 10
+        for rst_file in Path('docs/source').rglob('*.rst')[:10]:  # Check first 10
             try:
                 result = subprocess.run(
-                    ["poetry", "run", "rstcheck", str(rst_file)],
+                    ['poetry', 'run', 'rstcheck', str(rst_file)],
                     capture_output=True,
                     text=True,
                     check=False,
@@ -214,15 +213,15 @@ class DocAutoFixer:
                 self.errors.append(f"Validation error: {e}")
 
         if issues_found == 0:
-            print("  ✅ All checked files are valid!")
+            print('  ✅ All checked files are valid!')
         else:
             print(f"  ⚠️  {issues_found} files still have issues")
 
     def summarize(self):
         """Summarize fixes applied."""
-        print("\n" + "=" * 80)
-        print("SUMMARY")
-        print("=" * 80)
+        print('\n' + '=' * 80)
+        print('SUMMARY')
+        print('=' * 80)
 
         print(f"\n✅ Fixed {len(self.fixed_files)} files")
 
@@ -234,29 +233,29 @@ class DocAutoFixer:
         if self.backup:
             print(f"\n📦 Backup saved to: {self.backup_dir}")
             print(
-                "   To restore: rm -rf docs/source && mv {self.backup_dir} docs/source",
+                '   To restore: rm -rf docs/source && mv {self.backup_dir} docs/source',
             )
 
 
 def main():
     """Main function."""
-    parser = argparse.ArgumentParser(description="Auto-fix documentation issues")
+    parser = argparse.ArgumentParser(description='Auto-fix documentation issues')
     parser.add_argument(
-        "--dry-run",
-        action="store_true",
+        '--dry-run',
+        action='store_true',
         default=True,
-        help="Preview changes without applying (default)",
+        help='Preview changes without applying (default)',
     )
-    parser.add_argument("--fix", action="store_true", help="Actually apply fixes")
+    parser.add_argument('--fix', action='store_true', help='Actually apply fixes')
     parser.add_argument(
-        "--no-backup",
-        action="store_true",
+        '--no-backup',
+        action='store_true',
         help="Don't create backup (not recommended)",
     )
     parser.add_argument(
-        "--validate",
-        action="store_true",
-        help="Validate fixes after applying",
+        '--validate',
+        action='store_true',
+        help='Validate fixes after applying',
     )
     args = parser.parse_args()
 
@@ -265,7 +264,7 @@ def main():
 
     fixer = DocAutoFixer(backup=not args.no_backup and not args.dry_run)
 
-    print("🚀 Documentation Auto-Fixer")
+    print('🚀 Documentation Auto-Fixer')
     print(
         f"   Mode: {'DRY RUN - Preview Only' if args.dry_run else '⚠️  APPLYING FIXES'}",
     )
@@ -288,10 +287,10 @@ def main():
     fixer.summarize()
 
     if args.dry_run:
-        print("\n💡 To apply these fixes, run:")
-        print("   python scripts/doc_auto_fix.py --fix")
-        print("\n⚠️  Always review changes before committing!")
+        print('\n💡 To apply these fixes, run:')
+        print('   python scripts/doc_auto_fix.py --fix')
+        print('\n⚠️  Always review changes before committing!')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

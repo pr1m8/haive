@@ -4,7 +4,6 @@
 This script processes the pyright JSON output files and creates readable
 checklists for systematic issue resolution.
 """
-
 from __future__ import annotations
 
 import json
@@ -29,10 +28,10 @@ def group_issues_by_file(
     """Group issues by file path."""
     grouped = defaultdict(list)
     for issue in diagnostics:
-        file_path = issue.get("file", "unknown")
+        file_path = issue.get('file', 'unknown')
         # Get relative path from packages/
-        if "packages/" in file_path:
-            rel_path = file_path.split("packages/")[-1]
+        if 'packages/' in file_path:
+            rel_path = file_path.split('packages/')[-1]
         else:
             rel_path = file_path
         grouped[rel_path].append(issue)
@@ -45,23 +44,23 @@ def group_issues_by_rule(
     """Group issues by pyright rule."""
     grouped = defaultdict(list)
     for issue in diagnostics:
-        rule = issue.get("rule", "unknown")
+        rule = issue.get('rule', 'unknown')
         grouped[rule].append(issue)
     return dict(grouped)
 
 
 def format_issue_location(issue: dict[str, Any]) -> str:
     """Format the file location for an issue."""
-    file_path = issue.get("file", "unknown")
-    if "packages/" in file_path:
-        rel_path = file_path.split("packages/")[-1]
+    file_path = issue.get('file', 'unknown')
+    if 'packages/' in file_path:
+        rel_path = file_path.split('packages/')[-1]
     else:
         rel_path = file_path
 
-    range_info = issue.get("range", {})
-    start = range_info.get("start", {})
-    line = start.get("line", 0) + 1  # Convert to 1-based
-    char = start.get("character", 0)
+    range_info = issue.get('range', {})
+    start = range_info.get('start', {})
+    line = start.get('line', 0) + 1  # Convert to 1-based
+    char = start.get('character', 0)
 
     return f"{rel_path}:{line}:{char}"
 
@@ -73,8 +72,9 @@ def generate_package_checklist(
 ) -> str:
     """Generate a markdown checklist for a package."""
 
-    error_diagnostics = error_data.get("generalDiagnostics", [])
-    warning_diagnostics = warning_data.get("generalDiagnostics", []) if warning_data else []
+    error_diagnostics = error_data.get('generalDiagnostics', [])
+    warning_diagnostics = warning_data.get(
+        'generalDiagnostics', []) if warning_data else []
 
     total_errors = len(error_diagnostics)
     total_warnings = len(warning_diagnostics)
@@ -92,30 +92,30 @@ def generate_package_checklist(
     # Group errors by rule
     if error_diagnostics:
         error_by_rule = group_issues_by_rule(error_diagnostics)
-        md += "### Error Categories\n\n"
+        md += '### Error Categories\n\n'
         for rule, issues in sorted(
             error_by_rule.items(),
             key=lambda x: len(x[1]),
             reverse=True,
         ):
             md += f"- **{rule}**: {len(issues)} issues\n"
-        md += "\n"
+        md += '\n'
 
     # Group warnings by rule
     if warning_diagnostics:
         warning_by_rule = group_issues_by_rule(warning_diagnostics)
-        md += "### Warning Categories\n\n"
+        md += '### Warning Categories\n\n'
         for rule, issues in sorted(
             warning_by_rule.items(),
             key=lambda x: len(x[1]),
             reverse=True,
         ):
             md += f"- **{rule}**: {len(issues)} issues\n"
-        md += "\n"
+        md += '\n'
 
     # Detailed error checklist
     if error_diagnostics:
-        md += "## 🚨 ERRORS (Must Fix)\n\n"
+        md += '## 🚨 ERRORS (Must Fix)\n\n'
 
         # Group by file for better organization
         errors_by_file = group_issues_by_file(error_diagnostics)
@@ -125,8 +125,8 @@ def generate_package_checklist(
 
             for i, issue in enumerate(file_issues, 1):
                 location = format_issue_location(issue)
-                message = issue.get("message", "No message")
-                rule = issue.get("rule", "unknown")
+                message = issue.get('message', 'No message')
+                rule = issue.get('rule', 'unknown')
 
                 md += f"- [ ] **Line {
                     issue.get('range', {}).get('start', {}).get('line', 0) + 1
@@ -136,7 +136,7 @@ def generate_package_checklist(
 
     # Detailed warning checklist
     if warning_diagnostics:
-        md += "## ⚠️ WARNINGS (Should Fix)\n\n"
+        md += '## ⚠️ WARNINGS (Should Fix)\n\n'
 
         warnings_by_file = group_issues_by_file(warning_diagnostics)
 
@@ -145,8 +145,8 @@ def generate_package_checklist(
 
             for i, issue in enumerate(file_issues, 1):
                 location = format_issue_location(issue)
-                message = issue.get("message", "No message")
-                rule = issue.get("rule", "unknown")
+                message = issue.get('message', 'No message')
+                rule = issue.get('rule', 'unknown')
 
                 md += f"- [ ] **Line {
                     issue.get('range', {}).get('start', {}).get('line', 0) + 1
@@ -155,7 +155,7 @@ def generate_package_checklist(
                 md += f"  - **Location**: `{location}`\n\n"
 
     if not error_diagnostics and not warning_diagnostics:
-        md += "## ✅ No Issues Found!\n\nThis package has no pyright errors or warnings.\n\n"
+        md += '## ✅ No Issues Found!\n\nThis package has no pyright errors or warnings.\n\n'
 
     md += f"""
 ## Fix Priority Guidelines
@@ -201,24 +201,24 @@ def main():
 
     # Base directories
     project_root = Path(__file__).parent.parent.parent
-    reports_dir = project_root / "project_docs" / "build-reports" / "pyright-issues"
-    output_dir = project_root / "project_docs" / "build-reports" / "pyright-checklists"
+    reports_dir = project_root / 'project_docs' / 'build-reports' / 'pyright-issues'
+    output_dir = project_root / 'project_docs' / 'build-reports' / 'pyright-checklists'
 
     # Create output directory
     output_dir.mkdir(exist_ok=True)
 
     # Package list
     packages = [
-        "haive-core",
-        "haive-agents",
-        "haive-tools",
-        "haive-games",
-        "haive-mcp",
-        "haive-dataflow",
-        "haive-prebuilt",
+        'haive-core',
+        'haive-agents',
+        'haive-tools',
+        'haive-games',
+        'haive-mcp',
+        'haive-dataflow',
+        'haive-prebuilt',
     ]
 
-    print("Generating pyright issue checklists...")
+    print('Generating pyright issue checklists...')
 
     for package in packages:
         print(f"Processing {package}...")
@@ -229,24 +229,25 @@ def main():
 
         # Load warning report (for critical packages)
         warning_file = reports_dir / f"{package}-warnings.json"
-        warning_data = load_pyright_report(warning_file) if warning_file.exists() else None
+        warning_data = load_pyright_report(
+            warning_file) if warning_file.exists() else None
 
         # Generate checklist
         checklist = generate_package_checklist(package, error_data, warning_data)
 
         # Write checklist file
         output_file = output_dir / f"{package}_issues_checklist.md"
-        with open(output_file, "w") as f:
+        with open(output_file, 'w') as f:
             f.write(checklist)
 
         print(f"  ✅ Generated: {output_file}")
 
     print(f"\n🎉 All checklists generated in: {output_dir}")
-    print("\nNext steps:")
-    print("1. Review package priority in PYRIGHT_ISSUES_SUMMARY.md")
-    print("2. Start with haive-core checklist for critical fixes")
-    print("3. Use checklists to systematically resolve all issues")
+    print('\nNext steps:')
+    print('1. Review package priority in PYRIGHT_ISSUES_SUMMARY.md')
+    print('2. Start with haive-core checklist for critical fixes')
+    print('3. Use checklists to systematically resolve all issues')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

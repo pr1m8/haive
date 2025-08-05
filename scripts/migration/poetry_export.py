@@ -5,7 +5,6 @@ This script provides intelligent dependency management across multiple
 packages, with a focus on monorepo dependency distribution and
 standardization.
 """
-
 from __future__ import annotations
 
 import logging
@@ -19,10 +18,10 @@ import toml
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s: %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
+    format='%(asctime)s - %(levelname)s: %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
 )
-logger = logging.getLogger("haive-dependency-manager")
+logger = logging.getLogger('haive-dependency-manager')
 
 
 class HaiveDependencyManager:
@@ -33,29 +32,29 @@ class HaiveDependencyManager:
             project_root: Root directory of the project. Defaults to script location.
         """
         self.project_root = project_root or Path(__file__).resolve().parents[2]
-        self.packages_dir = self.project_root / "packages"
+        self.packages_dir = self.project_root / 'packages'
 
         # Standard package configurations
         self.PACKAGES = [
-            "haive-core",
-            "haive-agents",
-            "haive-tools",
-            "haive-games",
-            "haive-dataflow",
-            "haive-prebuilt",
+            'haive-core',
+            'haive-agents',
+            'haive-tools',
+            'haive-games',
+            'haive-dataflow',
+            'haive-prebuilt',
         ]
 
         # Toolkit mappings
         self.TOOLKIT_MAPPING = {
-            "gmail_toolkit": "haive-tools",
-            "github_toolkit": "haive-tools",
+            'gmail_toolkit': 'haive-tools',
+            'github_toolkit': 'haive-tools',
             # ... other toolkit mappings ...
         }
 
     def load_root_pyproject(self) -> dict[str, Any]:
         """Load and parse the root pyproject.toml."""
         try:
-            with open(self.project_root / "pyproject.toml") as f:
+            with open(self.project_root / 'pyproject.toml') as f:
                 return toml.load(f)
         except Exception as e:
             logger.exception(f"Failed to load root pyproject.toml: {e}")
@@ -67,7 +66,7 @@ class HaiveDependencyManager:
         Args:
             root_pyproject: Parsed root pyproject configuration
         """
-        core_pyproject_path = self.packages_dir / "haive-core" / "pyproject.toml"
+        core_pyproject_path = self.packages_dir / 'haive-core' / 'pyproject.toml'
 
         try:
             # Load existing core pyproject
@@ -77,28 +76,28 @@ class HaiveDependencyManager:
 
             # Extract dev dependencies from root
             root_dev_deps = (
-                root_pyproject.get("tool", {})
-                .get("poetry", {})
-                .get("group", {})
-                .get("dev", {})
-                .get("dependencies", {})
+                root_pyproject.get('tool', {})
+                .get('poetry', {})
+                .get('group', {})
+                .get('dev', {})
+                .get('dependencies', {})
             )
 
             # Ensure nested structure exists
-            core_pyproject.setdefault("tool", {})
-            core_pyproject["tool"].setdefault("poetry", {})
-            core_pyproject["tool"]["poetry"].setdefault("group", {})
+            core_pyproject.setdefault('tool', {})
+            core_pyproject['tool'].setdefault('poetry', {})
+            core_pyproject['tool']['poetry'].setdefault('group', {})
 
             # Update dev dependencies
-            core_pyproject["tool"]["poetry"]["group"]["dev"] = {
-                "dependencies": root_dev_deps,
+            core_pyproject['tool']['poetry']['group']['dev'] = {
+                'dependencies': root_dev_deps,
             }
 
             # Write updated configuration
-            with open(core_pyproject_path, "w") as f:
+            with open(core_pyproject_path, 'w') as f:
                 toml.dump(core_pyproject, f)
 
-            logger.info("✅ Successfully exported dev dependencies to haive-core")
+            logger.info('✅ Successfully exported dev dependencies to haive-core')
             for dep, version in root_dev_deps.items():
                 logger.info(f"  - {dep}: {version}")
 
@@ -116,7 +115,7 @@ class HaiveDependencyManager:
         for package_name, toolkits in group_packages.items():
             try:
                 package_path = self.packages_dir / package_name
-                pyproject_path = package_path / "pyproject.toml"
+                pyproject_path = package_path / 'pyproject.toml'
 
                 if not pyproject_path.exists():
                     logger.warning(f"No pyproject.toml found for {package_name}")
@@ -125,17 +124,17 @@ class HaiveDependencyManager:
                 package_pyproject = toml.load(pyproject_path)
 
                 # Update package pyproject with toolkit dependencies
-                package_pyproject.setdefault("tool", {})
-                package_pyproject["tool"].setdefault("poetry", {})
-                package_pyproject["tool"]["poetry"].setdefault("group", {})
+                package_pyproject.setdefault('tool', {})
+                package_pyproject['tool'].setdefault('poetry', {})
+                package_pyproject['tool']['poetry'].setdefault('group', {})
 
                 for toolkit_name, toolkit_deps in toolkits.items():
-                    package_pyproject["tool"]["poetry"]["group"][toolkit_name] = {
-                        "dependencies": toolkit_deps,
+                    package_pyproject['tool']['poetry']['group'][toolkit_name] = {
+                        'dependencies': toolkit_deps,
                     }
 
                 # Write updated configuration
-                with open(pyproject_path, "w") as f:
+                with open(pyproject_path, 'w') as f:
                     toml.dump(package_pyproject, f)
 
                 logger.info(f"✅ Updated toolkits for {package_name}")
@@ -157,27 +156,27 @@ class HaiveDependencyManager:
         """
         toolkit_distribution = defaultdict(dict)
 
-        groups = root_pyproject.get("tool", {}).get("poetry", {}).get("group", {})
+        groups = root_pyproject.get('tool', {}).get('poetry', {}).get('group', {})
 
         for group_name, group_data in groups.items():
             target_package = self.TOOLKIT_MAPPING.get(group_name)
 
-            if target_package and "dependencies" in group_data:
+            if target_package and 'dependencies' in group_data:
                 toolkit_distribution[target_package][group_name] = group_data[
-                    "dependencies"
+                    'dependencies'
                 ]
 
         return dict(toolkit_distribution)
 
     def run(self):
         """Main execution method to manage dependencies."""
-        logger.info("🚀 Starting Haive Dependency Management")
+        logger.info('🚀 Starting Haive Dependency Management')
 
         # Load root pyproject
         root_pyproject = self.load_root_pyproject()
 
         if not root_pyproject:
-            logger.error("❌ Cannot proceed without root pyproject.toml")
+            logger.error('❌ Cannot proceed without root pyproject.toml')
             sys.exit(1)
 
         # Export dev dependencies to core
@@ -186,7 +185,7 @@ class HaiveDependencyManager:
         # Distribute toolkits
         self.distribute_toolkits(root_pyproject)
 
-        logger.info("✨ Dependency Management Complete!")
+        logger.info('✨ Dependency Management Complete!')
 
 
 def main():
@@ -194,5 +193,5 @@ def main():
     dependency_manager.run()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
