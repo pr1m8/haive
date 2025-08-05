@@ -189,14 +189,12 @@ def run_with_graceful_handling(
             )
             session.log(f"❌ Found {status['errors']} errors in output")
         else:
-            session.log(
-                f"❌ {operation} failed with exit code: {status['exit_code']}")
+            session.log(f"❌ {operation} failed with exit code: {status['exit_code']}")
 
         session.log(
-            f"📊 Warnings: {
-                status['warnings']}, Errors: {
-                status['errors']}, Files: {
-                status['files_built']}",
+            f"📊 Warnings: {status['warnings']}, Errors: {status['errors']}, Files: {
+                status['files_built']
+            }",
         )
 
         # Show last few errors if any
@@ -241,8 +239,7 @@ def docs_fast(session):
     ]
 
     # Run build with improved error handling
-    status = run_with_graceful_handling(session, cmd, log_file,
-                                        "Fast Sphinx Build")
+    status = run_with_graceful_handling(session, cmd, log_file, "Fast Sphinx Build")
 
     # Check actual results on disk
     if BUILD_DIR.exists():
@@ -476,14 +473,10 @@ def docs_debug(session):
 
     # Count issues
     issues = {
-        "import_errors":
-        content.count("ModuleNotFoundError") + content.count("ImportError"),
-        "syntax_errors":
-        content.count("SyntaxError"),
-        "warnings":
-        content.count("WARNING"),
-        "file_not_found":
-        content.count("FileNotFoundError"),
+        "import_errors": content.count("ModuleNotFoundError") + content.count("ImportError"),
+        "syntax_errors": content.count("SyntaxError"),
+        "warnings": content.count("WARNING"),
+        "file_not_found": content.count("FileNotFoundError"),
     }
 
     session.log("=" * 50)
@@ -493,8 +486,7 @@ def docs_debug(session):
     for issue_type, count in issues.items():
         if count > 0:
             icon = "🚨" if count > 10 else "⚠️"
-            session.log(
-                f"{icon} {issue_type.replace('_', ' ').title()}: {count}")
+            session.log(f"{icon} {issue_type.replace('_', ' ').title()}: {count}")
 
     session.log(f"📋 Full log: {latest_log}")
 
@@ -558,9 +550,7 @@ def docs_logs(session):
     session.log(f"💾 Total log size: {size_mb:.1f} MB")
 
     # Show recent logs
-    recent_logs = sorted(all_logs,
-                         key=lambda f: f.stat().st_mtime,
-                         reverse=True)[:5]
+    recent_logs = sorted(all_logs, key=lambda f: f.stat().st_mtime, reverse=True)[:5]
 
     session.log("\n📋 Recent logs:")
     for log_file in recent_logs:
@@ -597,11 +587,7 @@ def docs_quality(session):
     # Run codespell
     session.log("📝 Running codespell (typo checker)...")
     try:
-        session.run("poetry",
-                    "run",
-                    "codespell",
-                    str(SOURCE_DIR),
-                    external=True)
+        session.run("poetry", "run", "codespell", str(SOURCE_DIR), external=True)
         session.log("✅ codespell: No typos found")
     except Exception as e:
         session.log(f"⚠️  codespell found typos: {e}")
@@ -652,8 +638,7 @@ def docs_linkcheck(session):
 @nox.session(python=PYTHON_VERSIONS)
 def docs_nitpicky(session):
     """Run Sphinx in nitpicky mode to catch all warnings and errors."""
-    session.log(
-        "🔍 Running Sphinx in nitpicky mode (all warnings are errors)...")
+    session.log("🔍 Running Sphinx in nitpicky mode (all warnings are errors)...")
 
     log_file = create_log_file(session, "docs_nitpicky")
 
@@ -676,15 +661,13 @@ def docs_nitpicky(session):
     ]
 
     # Run nitpicky check
-    status = run_with_graceful_handling(session, cmd, log_file,
-                                        "Nitpicky Check")
+    status = run_with_graceful_handling(session, cmd, log_file, "Nitpicky Check")
 
     if status["success"]:
         session.log("✅ All checks passed in nitpicky mode!")
     else:
         session.log(f"❌ Nitpicky check failed with {status['errors']} errors")
-        session.log(
-            "💡 Fix all warnings and errors before building documentation")
+        session.log("💡 Fix all warnings and errors before building documentation")
 
     return status["success"]
 
@@ -765,8 +748,7 @@ def docs_coverage(session):
         str(DOCS_DIR / "build" / "coverage"),
     ]
 
-    status = run_with_graceful_handling(session, cmd, log_file,
-                                        "Coverage Check")
+    status = run_with_graceful_handling(session, cmd, log_file, "Coverage Check")
 
     # Report results
     coverage_file = DOCS_DIR / "build" / "coverage" / "python.txt"

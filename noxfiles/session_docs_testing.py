@@ -1,7 +1,7 @@
 """Documentation testing sessions from original noxfile."""
 
-from datetime import datetime
 import json
+from datetime import datetime
 from pathlib import Path
 
 import nox
@@ -63,8 +63,9 @@ def docs_test_all(session):
 
     # Save results
     report_file = (
-        QUALITY_REPORTS_DIR /
-        f"comprehensive_test_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
+        QUALITY_REPORTS_DIR
+        / f"comprehensive_test_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    )
     with open(report_file, "w") as f:
         json.dump(results, f, indent=2)
 
@@ -176,8 +177,7 @@ def docs_test_examples(session):
     for package in PACKAGE_NAMES:
         src_path = PACKAGES_DIR / package / "src"
         if src_path.exists():
-            os.environ[
-                "PYTHONPATH"] = f"{src_path}:{os.environ.get('PYTHONPATH', '')}"
+            os.environ["PYTHONPATH"] = f"{src_path}:{os.environ.get('PYTHONPATH', '')}"
 
     results = {}
 
@@ -358,7 +358,8 @@ matrix:
     lang: en
   pipeline:
   - pyspelling.filters.markdown:
-""", )
+""",
+        )
 
     _generate_quality_report(session, "spelling_check", results)
 
@@ -396,12 +397,7 @@ def docs_test_prose(session):
     if vale_config.exists():
         session.log("\n🔍 Running vale...")
         try:
-            session.run("poetry",
-                        "run",
-                        "vale",
-                        "README.md",
-                        "docs/",
-                        external=True)
+            session.run("poetry", "run", "vale", "README.md", "docs/", external=True)
             results["vale"] = {"status": "passed"}
             session.log("✅ Vale: Good prose quality")
         except Exception as e:
@@ -427,12 +423,7 @@ def docs_test_metadata(session):
     # 1. pytest-checkdocs
     session.log("\n🔍 Running pytest-checkdocs...")
     try:
-        session.run("poetry",
-                    "run",
-                    "pytest",
-                    "--checkdocs",
-                    "-v",
-                    external=True)
+        session.run("poetry", "run", "pytest", "--checkdocs", "-v", external=True)
         results["checkdocs"] = {"status": "passed"}
         session.log("✅ Package metadata is valid")
     except Exception as e:
@@ -470,13 +461,13 @@ def docs_test_pipeline(session):
             "-v",
             "-o",
             str(
-                QUALITY_REPORTS_DIR /
-                f"pipeline_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json", ),
+                QUALITY_REPORTS_DIR
+                / f"pipeline_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+            ),
             external=True,
         )
     else:
-        session.log(
-            "⚠️ Pipeline script not found at scripts/doc_quality_pipeline.py")
+        session.log("⚠️ Pipeline script not found at scripts/doc_quality_pipeline.py")
 
 
 def _generate_quality_report(session, test_name: str, results: dict):
@@ -487,21 +478,18 @@ def _generate_quality_report(session, test_name: str, results: dict):
         "timestamp": datetime.now().isoformat(),
         "results": results,
         "summary": {
-            "total":
-            len(results),
-            "passed":
-            sum(1 for r in results.values() if r.get("status") == "passed"),
-            "failed":
-            sum(1 for r in results.values() if r.get("status") == "failed"),
-            "skipped":
-            sum(1 for r in results.values() if r.get("status") == "skipped"),
+            "total": len(results),
+            "passed": sum(1 for r in results.values() if r.get("status") == "passed"),
+            "failed": sum(1 for r in results.values() if r.get("status") == "failed"),
+            "skipped": sum(1 for r in results.values() if r.get("status") == "skipped"),
         },
     }
 
     # Save report
     report_file = (
-        QUALITY_REPORTS_DIR /
-        f"{test_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
+        QUALITY_REPORTS_DIR
+        / f"{test_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    )
     with open(report_file, "w") as f:
         json.dump(report, f, indent=2)
 
