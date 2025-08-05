@@ -18,26 +18,26 @@ def generate_setup_py(pyproject_path):
         return False
 
     # Extract information from pyproject.toml
-    package_info = config.get("tool", {}).get("poetry", {})
-    name = package_info.get("name", "unknown")
-    version = package_info.get("version", "0.1.0")
-    description = package_info.get("description", "")
-    authors = package_info.get("authors", [])
-    author = authors[0].split("<")[0].strip() if authors else ""
+    package_info = config.get('tool', {}).get('poetry', {})
+    name = package_info.get('name', 'unknown')
+    version = package_info.get('version', '0.1.0')
+    description = package_info.get('description', '')
+    authors = package_info.get('authors', [])
+    author = authors[0].split('<')[0].strip() if authors else ''
     author_email = (
-        authors[0].split("<")[1].split(">")[0].strip()
-        if authors and "<" in authors[0]
-        else ""
+        authors[0].split('<')[1].split('>')[0].strip()
+        if authors and '<' in authors[0]
+        else ''
     )
 
     # Extract dependencies
     dependencies = {}
-    for dep_name, dep_version in package_info.get("dependencies", {}).items():
-        if dep_name != "python" and not isinstance(dep_version, dict):
+    for dep_name, dep_version in package_info.get('dependencies', {}).items():
+        if dep_name != 'python' and not isinstance(dep_version, dict):
             # Convert ^1.2.3 to >=1.2.3,<2.0.0
-            if isinstance(dep_version, str) and dep_version.startswith("^"):
+            if isinstance(dep_version, str) and dep_version.startswith('^'):
                 major, minor, patch = re.match(
-                    r"\^(\d+)\.(\d+)\.(\d+)",
+                    r'\^(\d+)\.(\d+)\.(\d+)',
                     dep_version,
                 ).groups()
                 dependencies[dep_name] = (
@@ -48,17 +48,17 @@ def generate_setup_py(pyproject_path):
 
     # Check for system requirements
     system_reqs = []
-    sys_req_path = Path(pyproject_path).parent / "system_requirements.txt"
+    sys_req_path = Path(pyproject_path).parent / 'system_requirements.txt'
     if sys_req_path.exists():
         with open(sys_req_path) as f:
             for line in f:
-                if line.strip() and not line.startswith("#"):
+                if line.strip() and not line.startswith('#'):
                     system_reqs.append(line.strip())
 
     # Generate setup.py
-    output_path = Path(pyproject_path).parent / "setup.py"
+    output_path = Path(pyproject_path).parent / 'setup.py'
 
-    with open(output_path, "w") as f:
+    with open(output_path, 'w') as f:
         f.write(
             f"""from setuptools import setup, find_packages
 
@@ -102,7 +102,7 @@ setup(
     return True
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     if len(sys.argv) < 2:
         sys.exit(1)
 

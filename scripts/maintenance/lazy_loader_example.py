@@ -2,45 +2,24 @@
 
 This shows how to implement lazy loading for haive.core.models
 """
-
 # ===== Option 1: Using lazy_loader (Recommended) =====
-
 # haive/core/models/__init__.py
 """Models module with lazy loading for performance."""
 
+from __future__ import annotations
 import importlib
 
+
 # Define submodules to lazy load
-import os
-import sys
-from typing import TYPE_CHECKING
 
-import lazy_loader as lazy
-
-from scripts.maintenance import embeddings as embeddings
-from scripts.maintenance import llm as llm
-from scripts.maintenance import retriever as retriever
-from scripts.maintenance import vectorstore as vectorstore
-from scripts.maintenance.embeddings import BaseEmbeddingConfig as BaseEmbeddingConfig
-from scripts.maintenance.embeddings import EmbeddingProvider as EmbeddingProvider
-from scripts.maintenance.embeddings import (
-    OpenAIEmbeddingConfig as OpenAIEmbeddingConfig,
-)
-from scripts.maintenance.llm import LLMConfig as LLMConfig
-from scripts.maintenance.llm import LLMFactory as LLMFactory
-from scripts.maintenance.llm import LLMProvider as LLMProvider
-from scripts.maintenance.llm import create_llm as create_llm
-from scripts.maintenance.metadata import ModelMetadata as ModelMetadata
-from scripts.maintenance.metadata_mixin import MetadataMixin as MetadataMixin
-
-submodules = ["llm", "embeddings", "retriever", "vectorstore"]
+submodules = ['llm', 'embeddings', 'retriever', 'vectorstore']
 
 # Define specific attributes from submodules
 submod_attrs = {
-    "llm": ["LLMConfig", "LLMFactory", "LLMProvider", "create_llm"],
-    "embeddings": ["BaseEmbeddingConfig", "EmbeddingProvider", "OpenAIEmbeddingConfig"],
-    "retriever": ["RetrieverConfig", "RetrieverType"],
-    "vectorstore": ["VectorStoreConfig", "VectorStoreProvider"],
+    'llm': ['LLMConfig', 'LLMFactory', 'LLMProvider', 'create_llm'],
+    'embeddings': ['BaseEmbeddingConfig', 'EmbeddingProvider', 'OpenAIEmbeddingConfig'],
+    'retriever': ['RetrieverConfig', 'RetrieverType'],
+    'vectorstore': ['VectorStoreConfig', 'VectorStoreProvider'],
 }
 
 # Attach lazy loading - this creates __getattr__, __dir__, and __all__
@@ -53,13 +32,13 @@ __getattr__, __dir__, __all__ = lazy.attach(
 # Add any eagerly loaded items
 
 # Update __all__ to include eager imports
-__all__ += ["MetadataMixin", "ModelMetadata"]
+__all__ += ['MetadataMixin', 'ModelMetadata']
 
 # ===== Option 1B: With Type Stubs (Better for IDEs) =====
 
 # haive/core/models/__init__.py
 
-__getattr__, __dir__, __all__ = lazy.attach_stub(__name__, "__init__.pyi")
+__getattr__, __dir__, __all__ = lazy.attach_stub(__name__, '__init__.pyi')
 
 # haive/core/models/__init__.pyi (type stub file)
 """Type stubs for models module."""
@@ -70,20 +49,20 @@ __getattr__, __dir__, __all__ = lazy.attach_stub(__name__, "__init__.pyi")
 
 __all__ = [
     # Submodules
-    "llm",
-    "embeddings",
-    "retriever",
-    "vectorstore",
+    'llm',
+    'embeddings',
+    'retriever',
+    'vectorstore',
     # Classes
-    "LLMConfig",
-    "LLMFactory",
-    "LLMProvider",
-    "create_llm",
-    "BaseEmbeddingConfig",
-    "EmbeddingProvider",
-    "OpenAIEmbeddingConfig",
-    "ModelMetadata",
-    "MetadataMixin",
+    'LLMConfig',
+    'LLMFactory',
+    'LLMProvider',
+    'create_llm',
+    'BaseEmbeddingConfig',
+    'EmbeddingProvider',
+    'OpenAIEmbeddingConfig',
+    'ModelMetadata',
+    'MetadataMixin',
 ]
 
 # ===== Option 2: PEP 562 Pattern (Built-in, no deps) =====
@@ -102,22 +81,22 @@ if TYPE_CHECKING:
 # Lazy imports mapping
 _LAZY_IMPORTS = {
     # Submodules
-    "llm": "haive.core.models.llm",
-    "embeddings": "haive.core.models.embeddings",
-    "retriever": "haive.core.models.retriever",
-    "vectorstore": "haive.core.models.vectorstore",
+    'llm': 'haive.core.models.llm',
+    'embeddings': 'haive.core.models.embeddings',
+    'retriever': 'haive.core.models.retriever',
+    'vectorstore': 'haive.core.models.vectorstore',
     # Specific classes (module_path, attribute)
-    "LLMConfig": ("haive.core.models.llm", "LLMConfig"),
-    "LLMFactory": ("haive.core.models.llm", "LLMFactory"),
-    "LLMProvider": ("haive.core.models.llm", "LLMProvider"),
-    "create_llm": ("haive.core.models.llm", "create_llm"),
-    "BaseEmbeddingConfig": ("haive.core.models.embeddings", "BaseEmbeddingConfig"),
-    "EmbeddingProvider": ("haive.core.models.embeddings", "EmbeddingProvider"),
-    "OpenAIEmbeddingConfig": ("haive.core.models.embeddings", "OpenAIEmbeddingConfig"),
-    "RetrieverConfig": ("haive.core.models.retriever", "RetrieverConfig"),
-    "RetrieverType": ("haive.core.models.retriever", "RetrieverType"),
-    "VectorStoreConfig": ("haive.core.models.vectorstore", "VectorStoreConfig"),
-    "VectorStoreProvider": ("haive.core.models.vectorstore", "VectorStoreProvider"),
+    'LLMConfig': ('haive.core.models.llm', 'LLMConfig'),
+    'LLMFactory': ('haive.core.models.llm', 'LLMFactory'),
+    'LLMProvider': ('haive.core.models.llm', 'LLMProvider'),
+    'create_llm': ('haive.core.models.llm', 'create_llm'),
+    'BaseEmbeddingConfig': ('haive.core.models.embeddings', 'BaseEmbeddingConfig'),
+    'EmbeddingProvider': ('haive.core.models.embeddings', 'EmbeddingProvider'),
+    'OpenAIEmbeddingConfig': ('haive.core.models.embeddings', 'OpenAIEmbeddingConfig'),
+    'RetrieverConfig': ('haive.core.models.retriever', 'RetrieverConfig'),
+    'RetrieverType': ('haive.core.models.retriever', 'RetrieverType'),
+    'VectorStoreConfig': ('haive.core.models.vectorstore', 'VectorStoreConfig'),
+    'VectorStoreProvider': ('haive.core.models.vectorstore', 'VectorStoreProvider'),
 }
 
 # Eager imports (lightweight)
@@ -150,25 +129,25 @@ def __dir__():
 
 __all__ = [
     # Submodules
-    "llm",
-    "embeddings",
-    "retriever",
-    "vectorstore",
+    'llm',
+    'embeddings',
+    'retriever',
+    'vectorstore',
     # Classes from submodules (lazy)
-    "LLMConfig",
-    "LLMFactory",
-    "LLMProvider",
-    "create_llm",
-    "BaseEmbeddingConfig",
-    "EmbeddingProvider",
-    "OpenAIEmbeddingConfig",
-    "RetrieverConfig",
-    "RetrieverType",
-    "VectorStoreConfig",
-    "VectorStoreProvider",
+    'LLMConfig',
+    'LLMFactory',
+    'LLMProvider',
+    'create_llm',
+    'BaseEmbeddingConfig',
+    'EmbeddingProvider',
+    'OpenAIEmbeddingConfig',
+    'RetrieverConfig',
+    'RetrieverType',
+    'VectorStoreConfig',
+    'VectorStoreProvider',
     # Eager imports
-    "ModelMetadata",
-    "MetadataMixin",
+    'ModelMetadata',
+    'MetadataMixin',
 ]
 
 # ===== Option 3: Hybrid Approach (Safest for Sphinx) =====
@@ -177,7 +156,7 @@ __all__ = [
 """Models module with conditional lazy loading."""
 
 # Check if we're building docs
-BUILDING_DOCS = os.environ.get("READTHEDOCS") == "True" or "sphinx" in sys.modules
+BUILDING_DOCS = os.environ.get('READTHEDOCS') == 'True' or 'sphinx' in sys.modules
 
 if BUILDING_DOCS:
     # For documentation, import everything normally
@@ -198,16 +177,16 @@ else:
 
     __getattr__, __dir__, __all__ = lazy.attach(
         __name__,
-        submodules=["llm", "embeddings", "retriever", "vectorstore"],
+        submodules=['llm', 'embeddings', 'retriever', 'vectorstore'],
         submod_attrs={
-            "llm": ["LLMConfig", "LLMFactory", "LLMProvider", "create_llm"],
-            "embeddings": [
-                "BaseEmbeddingConfig",
-                "EmbeddingProvider",
-                "OpenAIEmbeddingConfig",
+            'llm': ['LLMConfig', 'LLMFactory', 'LLMProvider', 'create_llm'],
+            'embeddings': [
+                'BaseEmbeddingConfig',
+                'EmbeddingProvider',
+                'OpenAIEmbeddingConfig',
             ],
-            "retriever": ["RetrieverConfig", "RetrieverType"],
-            "vectorstore": ["VectorStoreConfig", "VectorStoreProvider"],
+            'retriever': ['RetrieverConfig', 'RetrieverType'],
+            'vectorstore': ['VectorStoreConfig', 'VectorStoreProvider'],
         },
     )
 
@@ -215,7 +194,7 @@ else:
     from scripts.maintenance.metadata import ModelMetadata
     from scripts.maintenance.metadata_mixin import MetadataMixin
 
-    __all__ += ["MetadataMixin", "ModelMetadata"]
+    __all__ += ['MetadataMixin', 'ModelMetadata']
 
 # ===== Testing and Development =====
 

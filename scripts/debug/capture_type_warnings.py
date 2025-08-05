@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Capture type hint warnings from Sphinx build."""
-
 from __future__ import annotations
 
 import re
@@ -89,10 +88,10 @@ def run_test_build():
 
     # Create temp config
     with tempfile.NamedTemporaryFile(
-        mode="w",
-        suffix=".py",
-        prefix="test_conf_",
-        dir="docs/source",
+        mode='w',
+        suffix='.py',
+        prefix='test_conf_',
+        dir='docs/source',
         delete=False,
     ) as f:
         f.write(create_minimal_conf())
@@ -100,26 +99,26 @@ def run_test_build():
 
     try:
         # Create temp build directory
-        temp_build = Path("docs/build/type_test")
+        temp_build = Path('docs/build/type_test')
         temp_build.mkdir(parents=True, exist_ok=True)
 
         # Run build
         cmd = [
-            "poetry",
-            "run",
-            "sphinx-build",
-            "-b",
-            "html",
-            "-c",
-            "docs/source",  # Config directory
-            "-D",
+            'poetry',
+            'run',
+            'sphinx-build',
+            '-b',
+            'html',
+            '-c',
+            'docs/source',  # Config directory
+            '-D',
             f"extensions.conf={Path(temp_conf).stem}",  # Use our config
-            "-n",  # Nitpicky mode
-            "-w",
-            "type_warnings.log",  # Warning log
-            "-E",  # Don't use cached environment
-            "--keep-going",  # Continue on errors
-            "docs/source",
+            '-n',  # Nitpicky mode
+            '-w',
+            'type_warnings.log',  # Warning log
+            '-E',  # Don't use cached environment
+            '--keep-going',  # Continue on errors
+            'docs/source',
             str(temp_build),
         ]
 
@@ -132,7 +131,7 @@ def run_test_build():
             check=False,
         )
 
-        return result.stdout + result.stderr, Path("type_warnings.log")
+        return result.stdout + result.stderr, Path('type_warnings.log')
 
     finally:
         # Clean up
@@ -143,23 +142,23 @@ def extract_type_warnings(text: str):
     """Extract type reference warnings from text."""
 
     patterns = [
-        r"py:class reference target not found: (.+)",
-        r"py:obj reference target not found: (.+)",
-        r"py:attr reference target not found: (.+)",
-        r"py:func reference target not found: (.+)",
-        r"py:meth reference target not found: (.+)",
-        r"py:mod reference target not found: (.+)",
-        r"py:exc reference target not found: (.+)",
-        r"py:data reference target not found: (.+)",
+        r'py:class reference target not found: (.+)',
+        r'py:obj reference target not found: (.+)',
+        r'py:attr reference target not found: (.+)',
+        r'py:func reference target not found: (.+)',
+        r'py:meth reference target not found: (.+)',
+        r'py:mod reference target not found: (.+)',
+        r'py:exc reference target not found: (.+)',
+        r'py:data reference target not found: (.+)',
     ]
 
     warnings = defaultdict(set)
 
-    for line in text.split("\n"):
+    for line in text.split('\n'):
         for pattern in patterns:
             match = re.search(pattern, line)
             if match:
-                ref_type = pattern.split()[0].replace("(", "").replace(")", "")
+                ref_type = pattern.split()[0].replace('(', '').replace(')', '')
                 target = match.group(1).strip()
                 warnings[ref_type].add(target)
 
@@ -170,36 +169,36 @@ def categorize_references(warnings):
     """Categorize missing references by type/module."""
 
     categories = {
-        "langchain_core": [],
-        "langchain": [],
-        "pydantic": [],
-        "typing_extensions": [],
-        "haive_internal": [],
-        "external_libs": [],
-        "generic_types": [],
-        "unknown": [],
+        'langchain_core': [],
+        'langchain': [],
+        'pydantic': [],
+        'typing_extensions': [],
+        'haive_internal': [],
+        'external_libs': [],
+        'generic_types': [],
+        'unknown': [],
     }
 
     for ref_type, targets in warnings.items():
         for target in targets:
-            clean_target = target.split("[")[0].strip()
+            clean_target = target.split('[')[0].strip()
 
-            if "langchain_core" in clean_target:
-                categories["langchain_core"].append((ref_type, clean_target))
-            elif "langchain" in clean_target:
-                categories["langchain"].append((ref_type, clean_target))
-            elif "pydantic" in clean_target:
-                categories["pydantic"].append((ref_type, clean_target))
-            elif "typing_extensions" in clean_target:
-                categories["typing_extensions"].append((ref_type, clean_target))
-            elif clean_target.startswith("haive."):
-                categories["haive_internal"].append((ref_type, clean_target))
+            if 'langchain_core' in clean_target:
+                categories['langchain_core'].append((ref_type, clean_target))
+            elif 'langchain' in clean_target:
+                categories['langchain'].append((ref_type, clean_target))
+            elif 'pydantic' in clean_target:
+                categories['pydantic'].append((ref_type, clean_target))
+            elif 'typing_extensions' in clean_target:
+                categories['typing_extensions'].append((ref_type, clean_target))
+            elif clean_target.startswith('haive.'):
+                categories['haive_internal'].append((ref_type, clean_target))
             elif (len(clean_target) == 1 and clean_target.isupper()) or any(
-                x in clean_target for x in ["T", "~", "TypeVar"]
+                x in clean_target for x in ['T', '~', 'TypeVar']
             ):
-                categories["generic_types"].append((ref_type, clean_target))
+                categories['generic_types'].append((ref_type, clean_target))
             else:
-                categories["external_libs"].append((ref_type, clean_target))
+                categories['external_libs'].append((ref_type, clean_target))
 
     return categories
 
@@ -207,33 +206,33 @@ def categorize_references(warnings):
 def main():
     """Main function."""
 
-    print("Running test build to capture type warnings...")
+    print('Running test build to capture type warnings...')
 
     try:
         output, log_file = run_test_build()
 
         # Read warnings
-        warning_text = ""
+        warning_text = ''
         if log_file and log_file.exists():
             warning_text = log_file.read_text()
             log_file.unlink()  # Clean up
 
         # Also check output
-        full_text = output + "\n" + warning_text
+        full_text = output + '\n' + warning_text
 
         # Extract warnings
         warnings = extract_type_warnings(full_text)
 
         if not warnings:
-            print("No type reference warnings found.")
-            print("This might mean:")
-            print("1. All types are properly resolved")
-            print("2. The build failed before generating warnings")
-            print("3. Warnings are being suppressed")
+            print('No type reference warnings found.')
+            print('This might mean:')
+            print('1. All types are properly resolved')
+            print('2. The build failed before generating warnings')
+            print('3. Warnings are being suppressed')
             return
 
         # Show summary
-        print("\n=== Type Reference Warnings Summary ===")
+        print('\n=== Type Reference Warnings Summary ===')
         total = sum(len(targets) for targets in warnings.values())
         print(f"Total unique missing references: {total}")
 
@@ -244,7 +243,7 @@ def main():
         # Categorize
         categories = categorize_references(warnings)
 
-        print("\n=== By Category ===")
+        print('\n=== By Category ===')
         for category, items in categories.items():
             if items:
                 print(f"{category}: {len(items)} items")
@@ -252,7 +251,7 @@ def main():
         # Generate nitpick_ignore additions
         additions = []
 
-        print("\n=== Suggested nitpick_ignore additions ===")
+        print('\n=== Suggested nitpick_ignore additions ===')
         for category, items in categories.items():
             if not items:
                 continue
@@ -265,15 +264,15 @@ def main():
 
         # Save to file
         if additions:
-            output_file = Path("nitpick_ignore_additions.txt")
-            output_file.write_text("\n".join(additions))
+            output_file = Path('nitpick_ignore_additions.txt')
+            output_file.write_text('\n'.join(additions))
             print(f"\nAdditions saved to: {output_file}")
 
     except subprocess.TimeoutExpired:
-        print("Build timed out - this is common with full builds")
+        print('Build timed out - this is common with full builds')
     except Exception as e:
         print(f"Error: {e}")
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -5,7 +5,6 @@ This module provides comprehensive visualization capabilities for all Haive agen
 regardless of architecture or type. It creates consistent visual outputs including
 workflow diagrams, execution traces, and performance metrics.
 """
-
 from __future__ import annotations
 
 import logging
@@ -14,7 +13,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from scripts.doc_utils.agent_analyzer import AgentArchitecture, AgentInfo
+from scripts.doc_utils.agent_analyzer import AgentArchitecture
+from scripts.doc_utils.agent_analyzer import AgentInfo
 
 logger = logging.getLogger(__name__)
 
@@ -23,11 +23,11 @@ logger = logging.getLogger(__name__)
 class VisualizationConfig:
     """Configuration for visualization generation."""
 
-    output_format: str = "png"  # png, svg, html, mermaid
+    output_format: str = 'png'  # png, svg, html, mermaid
     include_metadata: bool = True
     show_execution_time: bool = True
     show_tool_calls: bool = True
-    theme: str = "default"  # default, dark, minimal
+    theme: str = 'default'  # default, dark, minimal
     width: int = 800
     height: int = 600
     dpi: int = 300
@@ -48,7 +48,7 @@ class VisualizationManager:
 
     def __init__(self):
         """Initialize the visualization manager."""
-        self.supported_formats = ["png", "svg", "html", "mermaid"]
+        self.supported_formats = ['png', 'svg', 'html', 'mermaid']
 
     async def visualize_agent(
         self,
@@ -137,16 +137,16 @@ class VisualizationManager:
             agent = await self._create_agent_instance(agent_info, agent_class)
 
             # Compile if necessary
-            if hasattr(agent, "compile"):
+            if hasattr(agent, 'compile'):
                 agent.compile()
 
             # Generate visualization
-            if hasattr(agent, "visualize_graph"):
+            if hasattr(agent, 'visualize_graph'):
                 agent.visualize_graph(str(output_path))
-            elif hasattr(agent, "visualize"):
+            elif hasattr(agent, 'visualize'):
                 agent.visualize(str(output_path))
             else:
-                raise AttributeError("Agent has no visualization method")
+                raise AttributeError('Agent has no visualization method')
 
             # Add metadata if requested
             metadata = {}
@@ -186,19 +186,19 @@ class VisualizationManager:
         """
         try:
             # Generate different visualizations based on format
-            if config.output_format == "mermaid":
+            if config.output_format == 'mermaid':
                 return await self._create_mermaid_diagram(
                     agent_info,
                     output_path,
                     config,
                 )
-            if config.output_format == "html":
+            if config.output_format == 'html':
                 return await self._create_html_visualization(
                     agent_info,
                     output_path,
                     config,
                 )
-            if config.output_format in ["png", "svg"]:
+            if config.output_format in ['png', 'svg']:
                 return await self._create_graph_visualization(
                     agent_info,
                     output_path,
@@ -232,16 +232,16 @@ class VisualizationManager:
         mermaid_content = self._generate_mermaid_content(agent_info, config)
 
         # Write to file
-        with open(output_path, "w", encoding="utf-8") as f:
+        with open(output_path, 'w', encoding='utf-8') as f:
             f.write(mermaid_content)
 
         return VisualizationResult(
             success=True,
             output_path=output_path,
             metadata={
-                "format": "mermaid",
-                "architecture": agent_info.architecture.value,
-                "base_classes": agent_info.base_classes,
+                'format': 'mermaid',
+                'architecture': agent_info.architecture.value,
+                'base_classes': agent_info.base_classes,
             },
         )
 
@@ -259,60 +259,60 @@ class VisualizationManager:
         Returns:
             Mermaid diagram as string
         """
-        lines = ["graph TD", f"    Start([Start]) --> Agent[{agent_info.name}]"]
+        lines = ['graph TD', f"    Start([Start]) --> Agent[{agent_info.name}]"]
 
         # Add architecture-specific nodes
         if agent_info.architecture == AgentArchitecture.HAIVE_AGENTS_MIXIN:
             lines.extend(
                 [
-                    "    Agent --> Engine[AugLLM Engine]",
-                    "    Engine --> Process[Process Input]",
-                    "    Process --> Response[Generate Response]",
+                    '    Agent --> Engine[AugLLM Engine]',
+                    '    Engine --> Process[Process Input]',
+                    '    Process --> Response[Generate Response]',
                 ],
             )
         elif agent_info.architecture == AgentArchitecture.HAIVE_CORE_ENGINE:
             lines.extend(
                 [
-                    "    Agent --> Config[Agent Config]",
-                    "    Config --> Execute[Execute]",
-                    "    Execute --> Response[Response]",
+                    '    Agent --> Config[Agent Config]',
+                    '    Config --> Execute[Execute]',
+                    '    Execute --> Response[Response]',
                 ],
             )
         elif agent_info.architecture == AgentArchitecture.HAIVE_GAMES:
             lines.extend(
                 [
-                    "    Agent --> GameState[Game State]",
-                    "    GameState --> Action[Generate Action]",
-                    "    Action --> Response[Game Response]",
+                    '    Agent --> GameState[Game State]',
+                    '    GameState --> Action[Generate Action]',
+                    '    Action --> Response[Game Response]',
                 ],
             )
         else:
             lines.extend(
                 [
-                    "    Agent --> Processing[Processing]",
-                    "    Processing --> Response[Response]",
+                    '    Agent --> Processing[Processing]',
+                    '    Processing --> Response[Response]',
                 ],
             )
 
         # Add tools if supported
         if agent_info.tools_support:
-            lines.append("    Processing --> Tools[Tool Execution]")
-            lines.append("    Tools --> Processing")
+            lines.append('    Processing --> Tools[Tool Execution]')
+            lines.append('    Tools --> Processing')
 
         # Add end node
-        lines.append("    Response --> End([End])")
+        lines.append('    Response --> End([End])')
 
         # Add styling based on theme
-        if config.theme == "dark":
+        if config.theme == 'dark':
             lines.extend(
                 [
-                    "    classDef default fill:#2d3748,stroke:#4a5568,stroke-width:2px,color:#e2e8f0",
-                    "    classDef agent fill:#4299e1,stroke:#3182ce,stroke-width:3px,color:#ffffff",
+                    '    classDef default fill:#2d3748,stroke:#4a5568,stroke-width:2px,color:#e2e8f0',
+                    '    classDef agent fill:#4299e1,stroke:#3182ce,stroke-width:3px,color:#ffffff',
                 ],
             )
-            lines.append("    class Agent agent")
+            lines.append('    class Agent agent')
 
-        return "\n".join(lines)
+        return '\n'.join(lines)
 
     async def _create_html_visualization(
         self,
@@ -332,13 +332,13 @@ class VisualizationManager:
         """
         html_content = self._generate_html_content(agent_info, config)
 
-        with open(output_path, "w", encoding="utf-8") as f:
+        with open(output_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
 
         return VisualizationResult(
             success=True,
             output_path=output_path,
-            metadata={"format": "html", "interactive": True},
+            metadata={'format': 'html', 'interactive': True},
         )
 
     def _generate_html_content(
@@ -559,21 +559,21 @@ class VisualizationManager:
         fig, ax = plt.subplots(1, 1, figsize=(config.width / 100, config.height / 100))
 
         # Set theme
-        if config.theme == "dark":
-            fig.patch.set_facecolor("#1a1a1a")
-            ax.set_facecolor("#2d3748")
-            text_color = "#e2e8f0"
+        if config.theme == 'dark':
+            fig.patch.set_facecolor('#1a1a1a')
+            ax.set_facecolor('#2d3748')
+            text_color = '#e2e8f0'
         else:
-            fig.patch.set_facecolor("white")
-            ax.set_facecolor("white")
-            text_color = "#333333"
+            fig.patch.set_facecolor('white')
+            ax.set_facecolor('white')
+            text_color = '#333333'
 
         # Draw workflow boxes
         boxes = [
-            ("Start", 0.1, 0.8, 0.15, 0.1),
+            ('Start', 0.1, 0.8, 0.15, 0.1),
             (agent_info.name, 0.35, 0.6, 0.3, 0.2),
-            ("Process", 0.35, 0.3, 0.3, 0.1),
-            ("Output", 0.35, 0.1, 0.3, 0.1),
+            ('Process', 0.35, 0.3, 0.3, 0.1),
+            ('Output', 0.35, 0.1, 0.3, 0.1),
         ]
 
         for label, x, y, width, height in boxes:
@@ -582,16 +582,16 @@ class VisualizationManager:
                 width,
                 height,
                 linewidth=2,
-                edgecolor="#4299e1",
-                facecolor="#e6f3ff",
+                edgecolor='#4299e1',
+                facecolor='#e6f3ff',
             )
             ax.add_patch(rect)
             ax.text(
                 x + width / 2,
                 y + height / 2,
                 label,
-                ha="center",
-                va="center",
+                ha='center',
+                va='center',
                 fontsize=10,
                 color=text_color,
             )
@@ -605,10 +605,10 @@ class VisualizationManager:
 
         for x1, y1, x2, y2 in arrows:
             ax.annotate(
-                "",
+                '',
                 xy=(x2, y2),
                 xytext=(x1, y1),
-                arrowprops={"arrowstyle": "->", "color": "#4299e1", "lw": 2},
+                arrowprops={'arrowstyle': '->', 'color': '#4299e1', 'lw': 2},
             )
 
         # Add title and metadata
@@ -632,33 +632,33 @@ Visualization: {"Yes" if agent_info.has_visualization else "No"}"""
                 transform=ax.transAxes,
                 fontsize=8,
                 color=text_color,
-                verticalalignment="bottom",
+                verticalalignment='bottom',
                 bbox={
-                    "boxstyle": "round,pad=0.3",
-                    "facecolor": "#f7fafc",
-                    "alpha": 0.8,
+                    'boxstyle': 'round,pad=0.3',
+                    'facecolor': '#f7fafc',
+                    'alpha': 0.8,
                 },
             )
 
         ax.set_xlim(0, 1)
         ax.set_ylim(0, 1)
-        ax.axis("off")
+        ax.axis('off')
 
         # Save the figure
         plt.tight_layout()
         plt.savefig(
             output_path,
             dpi=config.dpi,
-            bbox_inches="tight",
+            bbox_inches='tight',
             facecolor=fig.get_facecolor(),
-            edgecolor="none",
+            edgecolor='none',
         )
         plt.close()
 
         return VisualizationResult(
             success=True,
             output_path=output_path,
-            metadata={"format": config.output_format, "created_with": "matplotlib"},
+            metadata={'format': config.output_format, 'created_with': 'matplotlib'},
         )
 
     async def _create_text_visualization(
@@ -704,14 +704,14 @@ Examples: {len(agent_info.example_files)} files found
 """
 
         # Write as .txt file regardless of requested format
-        txt_path = output_path.with_suffix(".txt")
-        with open(txt_path, "w", encoding="utf-8") as f:
+        txt_path = output_path.with_suffix('.txt')
+        with open(txt_path, 'w', encoding='utf-8') as f:
             f.write(text_content.strip())
 
         return VisualizationResult(
             success=True,
             output_path=txt_path,
-            metadata={"format": "text", "fallback": True},
+            metadata={'format': 'text', 'fallback': True},
         )
 
     async def _create_agent_instance(
@@ -763,20 +763,20 @@ Examples: {len(agent_info.example_files)} files found
             Metadata dictionary
         """
         metadata = {
-            "agent_name": agent_info.name,
-            "has_graph": hasattr(agent, "graph"),
-            "compiled": hasattr(agent, "graph")
-            and getattr(agent, "graph", None) is not None,
+            'agent_name': agent_info.name,
+            'has_graph': hasattr(agent, 'graph'),
+            'compiled': hasattr(agent, 'graph')
+            and getattr(agent, 'graph', None) is not None,
         }
 
         # Try to extract additional info
         try:
-            if hasattr(agent, "engine"):
-                metadata["engine_type"] = type(agent.engine).__name__
-                if hasattr(agent.engine, "model"):
-                    metadata["model"] = agent.engine.model
-                if hasattr(agent.engine, "temperature"):
-                    metadata["temperature"] = agent.engine.temperature
+            if hasattr(agent, 'engine'):
+                metadata['engine_type'] = type(agent.engine).__name__
+                if hasattr(agent.engine, 'model'):
+                    metadata['model'] = agent.engine.model
+                if hasattr(agent.engine, 'temperature'):
+                    metadata['temperature'] = agent.engine.temperature
         except BaseException:
             pass
 
@@ -802,7 +802,7 @@ Examples: {len(agent_info.example_files)} files found
             config = VisualizationConfig()
 
         try:
-            if config.output_format == "html":
+            if config.output_format == 'html':
                 return await self._create_comparison_html(
                     agents_info,
                     output_path,
@@ -882,7 +882,7 @@ Examples: {len(agent_info.example_files)} files found
 """
 
         for agent in agents_info:
-            arch_class = agent.architecture.value.replace(".", "-").replace("_", "-")
+            arch_class = agent.architecture.value.replace('.', '-').replace('_', '-')
             html_content += f"""
             <tr>
                 <td><strong>{agent.name}</strong></td>
@@ -908,15 +908,15 @@ Examples: {len(agent_info.example_files)} files found
 </html>
         """
 
-        with open(output_path, "w", encoding="utf-8") as f:
+        with open(output_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
 
         return VisualizationResult(
             success=True,
             output_path=output_path,
             metadata={
-                "format": "html",
-                "agents_count": len(agents_info),
-                "comparison": True,
+                'format': 'html',
+                'agents_count': len(agents_info),
+                'comparison': True,
             },
         )

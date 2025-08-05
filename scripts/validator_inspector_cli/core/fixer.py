@@ -18,7 +18,7 @@ class ValidatorFixer(cst.CSTTransformer):
     ) -> cst.FunctionDef:
         decorators = [d.decorator for d in updated_node.decorators]
         is_validator = any(
-            m.matches(dec, m.Call(func=m.Name("model_validator"))) for dec in decorators
+            m.matches(dec, m.Call(func=m.Name('model_validator'))) for dec in decorators
         )
         if not is_validator:
             return updated_node
@@ -29,22 +29,22 @@ class ValidatorFixer(cst.CSTTransformer):
         new_decorators = [
             d
             for d in updated_node.decorators
-            if not m.matches(d.decorator, m.Name("classmethod"))
+            if not m.matches(d.decorator, m.Name('classmethod'))
         ]
 
         # Replace 'cls' with 'self' in parameters
         new_params = []
         for param in updated_node.params.params:
-            if param.name.value == "cls":
-                param = param.with_changes(name=cst.Name("self"))
+            if param.name.value == 'cls':
+                param = param.with_changes(name=cst.Name('self'))
             new_params.append(param)
         new_param_list = updated_node.params.with_changes(params=new_params)
 
         # Replace "cls" with "self" in function body
         class ReplaceClsWithSelf(cst.CSTTransformer):
             def leave_Name(self, orig, updated):
-                if updated.value == "cls":
-                    return updated.with_changes(value="self")
+                if updated.value == 'cls':
+                    return updated.with_changes(value='self')
                 return updated
 
         new_body = updated_node.body.visit(ReplaceClsWithSelf())
@@ -53,9 +53,9 @@ class ValidatorFixer(cst.CSTTransformer):
         ret_annot = updated_node.returns
         if not ret_annot or not (
             isinstance(ret_annot.annotation, cst.Name)
-            and ret_annot.annotation.value == "Self"
+            and ret_annot.annotation.value == 'Self'
         ):
-            ret_annot = cst.Annotation(annotation=cst.Name("Self"))
+            ret_annot = cst.Annotation(annotation=cst.Name('Self'))
 
         return updated_node.with_changes(
             decorators=new_decorators,
@@ -77,8 +77,8 @@ class SelfImportAdder(cst.CSTTransformer):
                     if (
                         isinstance(expr, cst.ImportFrom)
                         and expr.module
-                        and expr.module.value == "typing"
-                        and any(name.name.value == "Self" for name in expr.names)
+                        and expr.module.value == 'typing'
+                        and any(name.name.value == 'Self' for name in expr.names)
                     ):
                         return updated_node
 
@@ -89,28 +89,28 @@ class SelfImportAdder(cst.CSTTransformer):
                     if (
                         isinstance(expr, cst.ImportFrom)
                         and expr.module
-                        and expr.module.value == "typing"
+                        and expr.module.value == 'typing'
                     ):
                         names = list(expr.names)
-                        names.append(cst.ImportAlias(name=cst.Name("Self")))
+                        names.append(cst.ImportAlias(name=cst.Name('Self')))
                         updated_import = expr.with_changes(names=names)
                         updated_stmt = stmt.with_changes(body=[updated_import])
                         return updated_node.with_changes(
                             body=[
                                 *updated_node.body[:idx],
                                 updated_stmt,
-                                *updated_node.body[idx + 1 :],
+                                *updated_node.body[idx + 1:],
                             ],
                         )
 
         # If no typing import, prepend one
-        new_import = cst.parse_statement("from typing import Self\n")
+        new_import = cst.parse_statement('from typing import Self\n')
         return updated_node.with_changes(body=[new_import, *list(updated_node.body)])
 
 
 def fix_validators(filepath: str) -> cst.Module:
     try:
-        source = Path(filepath).read_text(encoding="utf-8")
+        source = Path(filepath).read_text(encoding='utf-8')
         tree = cst.parse_module(source)
         fixed_tree = tree.visit(ValidatorFixer())
         final_tree = fixed_tree.visit(SelfImportAdder())
@@ -124,7 +124,7 @@ def fix_validators(filepath: str) -> cst.Module:
 def apply_fixes(filepath: str):
     try:
         fixed_tree = fix_validators(filepath)
-        Path(filepath).write_text(fixed_tree.code, encoding="utf-8")
+        Path(filepath).write_text(fixed_tree.code, encoding='utf-8')
         console.print(f"[green]Applied fixes to {filepath}[/green]")
         log_debug(f"Applied fixes to {filepath}")
     except Exception as e:

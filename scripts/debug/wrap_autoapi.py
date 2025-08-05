@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Wrapper script to debug AutoAPI file processing."""
-
 from __future__ import annotations
 
 import logging
@@ -13,8 +12,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 # Configure logging
 logging.basicConfig(
     level=logging.DEBUG,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[logging.FileHandler("/tmp/autoapi_debug.log"), logging.StreamHandler()],
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[logging.FileHandler('/tmp/autoapi_debug.log'), logging.StreamHandler()],
 )
 
 logger = logging.getLogger(__name__)
@@ -38,14 +37,14 @@ try:
 
     # Replace the method
     Parser.parse_file = logged_parse_file
-    logger.info("Successfully patched AutoAPI Parser")
+    logger.info('Successfully patched AutoAPI Parser')
 
 except ImportError as e:
     logger.error(f"Failed to import autoapi: {e}")
 
 # Now run sphinx-build with the patched parser
-if __name__ == "__main__":
-    logger.info("Starting sphinx-build with AutoAPI debugging")
+if __name__ == '__main__':
+    logger.info('Starting sphinx-build with AutoAPI debugging')
 
     # Run sphinx-build
     from sphinx.cmd.build import main as sphinx_main

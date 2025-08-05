@@ -4,7 +4,6 @@
 This module provides utilities to automatically detect agent types, analyze inheritance
 patterns, and extract metadata from agent implementations across the Haive ecosystem.
 """
-
 from __future__ import annotations
 
 import ast
@@ -20,10 +19,10 @@ logger = logging.getLogger(__name__)
 class AgentArchitecture(Enum):
     """Agent architecture types."""
 
-    HAIVE_AGENTS_MIXIN = "haive.agents"  # Mixin-based architecture
-    HAIVE_CORE_ENGINE = "haive.core.engine"  # Protocol-based architecture
-    HAIVE_GAMES = "haive.games"  # Game-specific agents
-    UNKNOWN = "unknown"
+    HAIVE_AGENTS_MIXIN = 'haive.agents'  # Mixin-based architecture
+    HAIVE_CORE_ENGINE = 'haive.core.engine'  # Protocol-based architecture
+    HAIVE_GAMES = 'haive.games'  # Game-specific agents
+    UNKNOWN = 'unknown'
 
 
 @dataclass
@@ -57,7 +56,7 @@ class AgentAnalyzer:
             # Auto-detect project root
             current = Path(__file__).resolve()
             while current.parent != current:
-                if (current / "pyproject.toml").exists():
+                if (current / 'pyproject.toml').exists():
                     project_root = current
                     break
                 current = current.parent
@@ -65,7 +64,7 @@ class AgentAnalyzer:
                 project_root = Path.cwd()
 
         self.project_root = project_root
-        self.packages_dir = project_root / "packages"
+        self.packages_dir = project_root / 'packages'
         self._agent_cache: dict[str, AgentInfo] = {}
 
     def discover_all_agents(self) -> list[AgentInfo]:
@@ -74,18 +73,18 @@ class AgentAnalyzer:
         Returns:
             List of AgentInfo objects for all discovered agents
         """
-        logger.info("Starting comprehensive agent discovery...")
+        logger.info('Starting comprehensive agent discovery...')
 
         agents = []
 
         # Scan all packages for agent files
         if self.packages_dir.exists():
             for package_dir in self.packages_dir.iterdir():
-                if package_dir.is_dir() and package_dir.name.startswith("haive-"):
+                if package_dir.is_dir() and package_dir.name.startswith('haive-'):
                     agents.extend(self._scan_package_for_agents(package_dir))
 
         # Scan examples directory
-        examples_dir = self.project_root / "examples"
+        examples_dir = self.project_root / 'examples'
         if examples_dir.exists():
             agents.extend(self._scan_examples_for_agents(examples_dir))
 
@@ -104,11 +103,11 @@ class AgentAnalyzer:
         agents = []
 
         # Find all agent.py files
-        agent_files = list(package_dir.rglob("agent.py"))
+        agent_files = list(package_dir.rglob('agent.py'))
 
         # Also check for files named *agent*.py
-        for py_file in package_dir.rglob("*.py"):
-            if "agent" in py_file.stem.lower() and py_file not in agent_files:
+        for py_file in package_dir.rglob('*.py'):
+            if 'agent' in py_file.stem.lower() and py_file not in agent_files:
                 agent_files.append(py_file)
 
         for agent_file in agent_files:
@@ -132,8 +131,8 @@ class AgentAnalyzer:
         """
         agents = []
 
-        for example_file in examples_dir.rglob("*.py"):
-            if "agent" in example_file.stem.lower():
+        for example_file in examples_dir.rglob('*.py'):
+            if 'agent' in example_file.stem.lower():
                 try:
                     agent_info = self._analyze_agent_file(example_file)
                     if agent_info:
@@ -157,7 +156,7 @@ class AgentAnalyzer:
 
         try:
             # Parse the file to extract information
-            with open(file_path, encoding="utf-8") as f:
+            with open(file_path, encoding='utf-8') as f:
                 content = f.read()
 
             # Parse AST for analysis
@@ -219,12 +218,12 @@ class AgentAnalyzer:
             if isinstance(node, ast.ClassDef):
                 # Check if class name suggests it's an agent
                 if (
-                    node.name.endswith("Agent")
-                    or "agent" in node.name.lower()
+                    node.name.endswith('Agent')
+                    or 'agent' in node.name.lower()
                     or any(
-                        base.id.endswith("Agent") if hasattr(base, "id") else False
+                        base.id.endswith('Agent') if hasattr(base, 'id') else False
                         for base in node.bases
-                        if hasattr(base, "id")
+                        if hasattr(base, 'id')
                     )
                 ):
                     agent_classes.append(node)
@@ -243,17 +242,17 @@ class AgentAnalyzer:
         """
         path_str = str(file_path)
 
-        if "haive-games" in path_str or "/games/" in path_str:
+        if 'haive-games' in path_str or '/games/' in path_str:
             return AgentArchitecture.HAIVE_GAMES
-        if "haive-agents" in path_str or "/agents/" in path_str:
+        if 'haive-agents' in path_str or '/agents/' in path_str:
             return AgentArchitecture.HAIVE_AGENTS_MIXIN
-        if "haive-core" in path_str and "/engine/" in path_str:
+        if 'haive-core' in path_str and '/engine/' in path_str:
             return AgentArchitecture.HAIVE_CORE_ENGINE
-        if "from haive.agents" in content:
+        if 'from haive.agents' in content:
             return AgentArchitecture.HAIVE_AGENTS_MIXIN
-        if "from haive.core.engine" in content:
+        if 'from haive.core.engine' in content:
             return AgentArchitecture.HAIVE_CORE_ENGINE
-        if "from haive.games" in content:
+        if 'from haive.games' in content:
             return AgentArchitecture.HAIVE_GAMES
         return AgentArchitecture.UNKNOWN
 
@@ -268,11 +267,11 @@ class AgentAnalyzer:
         """
         bases = []
         for base in class_node.bases:
-            if hasattr(base, "id"):
+            if hasattr(base, 'id'):
                 bases.append(base.id)
-            elif hasattr(base, "attr") and hasattr(base, "value"):
+            elif hasattr(base, 'attr') and hasattr(base, 'value'):
                 # Handle module.ClassName format
-                if hasattr(base.value, "id"):
+                if hasattr(base.value, 'id'):
                     bases.append(f"{base.value.id}.{base.attr}")
                 else:
                     bases.append(base.attr)
@@ -289,9 +288,9 @@ class AgentAnalyzer:
         """
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
-                if "visualize" in node.name.lower() or node.name in [
-                    "visualize_graph",
-                    "generate_graph",
+                if 'visualize' in node.name.lower() or node.name in [
+                    'visualize_graph',
+                    'generate_graph',
                 ]:
                     return True
         return False
@@ -311,20 +310,20 @@ class AgentAnalyzer:
 
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
-                if node.name in ["run", "execute", "process"]:
+                if node.name in ['run', 'execute', 'process']:
                     has_sync = True
-                elif node.name in ["arun", "aexecute", "aprocess"]:
+                elif node.name in ['arun', 'aexecute', 'aprocess']:
                     has_async = True
 
         # Also check for async keywords in content
-        if "async def" in content or "await " in content:
+        if 'async def' in content or 'await ' in content:
             has_async = True
 
         if has_async and has_sync:
-            return "both"
+            return 'both'
         if has_async:
-            return "async"
-        return "sync"
+            return 'async'
+        return 'sync'
 
     def _find_related_examples(self, agent_file: Path) -> list[Path]:
         """Find example files related to this agent.
@@ -339,13 +338,13 @@ class AgentAnalyzer:
 
         # Check in same directory
         agent_dir = agent_file.parent
-        for example_file in agent_dir.glob("example*.py"):
+        for example_file in agent_dir.glob('example*.py'):
             examples.append(example_file)
 
         # Check for examples directory nearby
-        examples_dir = agent_dir / "examples"
+        examples_dir = agent_dir / 'examples'
         if examples_dir.exists():
-            for example_file in examples_dir.glob("*.py"):
+            for example_file in examples_dir.glob('*.py'):
                 examples.append(example_file)
 
         return examples
@@ -366,15 +365,15 @@ class AgentAnalyzer:
         parts = list(relative_path.parts)
 
         # Find src directory if it exists
-        if "src" in parts:
-            src_idx = parts.index("src")
-            parts = parts[src_idx + 1 :]
+        if 'src' in parts:
+            src_idx = parts.index('src')
+            parts = parts[src_idx + 1:]
 
         # Remove .py extension
-        if parts[-1].endswith(".py"):
+        if parts[-1].endswith('.py'):
             parts[-1] = parts[-1][:-3]
 
-        return ".".join(parts)
+        return '.'.join(parts)
 
     def _detect_config_pattern(self, tree: ast.AST, content: str) -> str:
         """Detect configuration pattern used by the agent.
@@ -386,13 +385,13 @@ class AgentAnalyzer:
         Returns:
             Configuration pattern description
         """
-        if "AugLLMConfig" in content:
-            return "AugLLMConfig"
-        if "AgentConfig" in content:
-            return "AgentConfig"
-        if "BaseModel" in content:
-            return "Pydantic"
-        return "Unknown"
+        if 'AugLLMConfig' in content:
+            return 'AugLLMConfig'
+        if 'AgentConfig' in content:
+            return 'AgentConfig'
+        if 'BaseModel' in content:
+            return 'Pydantic'
+        return 'Unknown'
 
     def _has_tools_support(self, tree: ast.AST, content: str) -> bool:
         """Check if agent supports tools.
@@ -404,7 +403,7 @@ class AgentAnalyzer:
         Returns:
             True if tools are supported
         """
-        return "tools" in content.lower() or "Tool" in content or "@tool" in content
+        return 'tools' in content.lower() or 'Tool' in content or '@tool' in content
 
     def _has_streaming_support(self, tree: ast.AST, content: str) -> bool:
         """Check if agent supports streaming.
@@ -417,9 +416,9 @@ class AgentAnalyzer:
             True if streaming is supported
         """
         return (
-            "stream" in content.lower()
-            or "chunk" in content.lower()
-            or "yield" in content
+            'stream' in content.lower()
+            or 'chunk' in content.lower()
+            or 'yield' in content
         )
 
     def _extract_metadata(self, tree: ast.AST, content: str) -> dict[str, Any]:
@@ -441,14 +440,14 @@ class AgentAnalyzer:
             and isinstance(tree.body[0], ast.Expr)
             and isinstance(tree.body[0].value, ast.Constant)
         ):
-            metadata["docstring"] = tree.body[0].value.value
+            metadata['docstring'] = tree.body[0].value.value
 
         # Count methods
         method_count = 0
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
                 method_count += 1
-        metadata["method_count"] = method_count
+        metadata['method_count'] = method_count
 
         # Check for common imports
         imports = []
@@ -459,7 +458,7 @@ class AgentAnalyzer:
                         imports.append(name.name)
                 elif node.module:
                     imports.append(node.module)
-        metadata["imports"] = imports
+        metadata['imports'] = imports
 
         return metadata
 
@@ -525,26 +524,26 @@ class AgentAnalyzer:
         """
         agents = self.discover_all_agents()
 
-        report = ["# Agent Analysis Report", ""]
+        report = ['# Agent Analysis Report', '']
         report.append(f"**Total Agents Found**: {len(agents)}")
-        report.append("")
+        report.append('')
 
         # Architecture breakdown
         arch_counts = {}
         for agent in agents:
             arch_counts[agent.architecture] = arch_counts.get(agent.architecture, 0) + 1
 
-        report.append("## Architecture Distribution")
+        report.append('## Architecture Distribution')
         for arch, count in arch_counts.items():
             report.append(f"- {arch.value}: {count} agents")
-        report.append("")
+        report.append('')
 
         # Visualization support
         viz_count = sum(1 for agent in agents if agent.has_visualization)
-        report.append("## Visualization Support")
+        report.append('## Visualization Support')
         report.append(f"- With visualization: {viz_count}")
         report.append(f"- Without visualization: {len(agents) - viz_count}")
-        report.append("")
+        report.append('')
 
         # Execution patterns
         exec_patterns = {}
@@ -553,14 +552,14 @@ class AgentAnalyzer:
                 exec_patterns.get(agent.execution_pattern, 0) + 1
             )
 
-        report.append("## Execution Patterns")
+        report.append('## Execution Patterns')
         for pattern, count in exec_patterns.items():
             report.append(f"- {pattern}: {count} agents")
-        report.append("")
+        report.append('')
 
         # Top base classes
         inheritance = self.analyze_inheritance_patterns()
-        report.append("## Top Base Classes")
+        report.append('## Top Base Classes')
         sorted_bases = sorted(
             inheritance.items(),
             key=lambda x: len(x[1]),
@@ -569,4 +568,4 @@ class AgentAnalyzer:
         for base_class, derived in sorted_bases[:10]:
             report.append(f"- {base_class}: {len(derived)} agents")
 
-        return "\n".join(report)
+        return '\n'.join(report)

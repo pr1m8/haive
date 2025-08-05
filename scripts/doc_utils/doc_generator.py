@@ -5,7 +5,6 @@ This module provides comprehensive documentation generation capabilities,
 creating consistent documentation across all Haive agent types and examples.
 It integrates with the analyzer and visualization tools to create complete docs.
 """
-
 from __future__ import annotations
 
 import logging
@@ -14,12 +13,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from scripts.doc_utils.agent_analyzer import AgentAnalyzer, AgentArchitecture, AgentInfo
+from scripts.doc_utils.agent_analyzer import AgentAnalyzer
+from scripts.doc_utils.agent_analyzer import AgentArchitecture
+from scripts.doc_utils.agent_analyzer import AgentInfo
 from scripts.doc_utils.example_runner import UniversalExampleRunner
-from scripts.doc_utils.visualization_utils import (
-    VisualizationConfig,
-    VisualizationManager,
-)
+from scripts.doc_utils.visualization_utils import VisualizationConfig
+from scripts.doc_utils.visualization_utils import VisualizationManager
 
 logger = logging.getLogger(__name__)
 
@@ -33,8 +32,8 @@ class DocumentationConfig:
     include_code_snippets: bool = True
     include_api_docs: bool = True
     include_performance_metrics: bool = False
-    output_format: str = "markdown"  # markdown, rst, html
-    template_style: str = "comprehensive"  # minimal, standard, comprehensive
+    output_format: str = 'markdown'  # markdown, rst, html
+    template_style: str = 'comprehensive'  # minimal, standard, comprehensive
     generate_index: bool = True
     cross_reference: bool = True
 
@@ -96,7 +95,7 @@ class DocumentationGenerator:
             )
             doc_content = await self._generate_agent_doc_content(agent_info, config)
 
-            with open(main_doc_path, "w", encoding="utf-8") as f:
+            with open(main_doc_path, 'w', encoding='utf-8') as f:
                 f.write(doc_content)
             output_files.append(main_doc_path)
 
@@ -123,7 +122,7 @@ class DocumentationGenerator:
                     config,
                 )
 
-                with open(examples_doc_path, "w", encoding="utf-8") as f:
+                with open(examples_doc_path, 'w', encoding='utf-8') as f:
                     f.write(examples_content)
                 output_files.append(examples_doc_path)
 
@@ -135,7 +134,7 @@ class DocumentationGenerator:
                 )
                 api_content = await self._generate_api_doc_content(agent_info, config)
 
-                with open(api_doc_path, "w", encoding="utf-8") as f:
+                with open(api_doc_path, 'w', encoding='utf-8') as f:
                     f.write(api_content)
                 output_files.append(api_doc_path)
 
@@ -143,10 +142,10 @@ class DocumentationGenerator:
                 success=True,
                 output_files=output_files,
                 metadata={
-                    "agent_name": agent_info.name,
-                    "architecture": agent_info.architecture.value,
-                    "generated_at": datetime.now().isoformat(),
-                    "visualization_included": viz_path is not None,
+                    'agent_name': agent_info.name,
+                    'architecture': agent_info.architecture.value,
+                    'generated_at': datetime.now().isoformat(),
+                    'visualization_included': viz_path is not None,
                 },
             )
 
@@ -174,7 +173,7 @@ class DocumentationGenerator:
             config = DocumentationConfig()
 
         output_dir.mkdir(parents=True, exist_ok=True)
-        logger.info("Generating project-wide documentation")
+        logger.info('Generating project-wide documentation')
 
         try:
             output_files = []
@@ -197,23 +196,25 @@ class DocumentationGenerator:
             # Generate project index
             index_file = None
             if config.generate_index:
-                index_file = output_dir / f"index.{self._get_file_extension(config.output_format)}"
+                index_file = output_dir / \
+                    f"index.{self._get_file_extension(config.output_format)}"
                 index_content = await self._generate_project_index_content(
                     agents,
                     config,
                 )
 
-                with open(index_file, "w", encoding="utf-8") as f:
+                with open(index_file, 'w', encoding='utf-8') as f:
                     f.write(index_content)
                 output_files.append(index_file)
 
             # Generate comparison documentation
             comparison_file = (
-                output_dir / f"agent_comparison.{self._get_file_extension(config.output_format)}"
+                output_dir /
+                f"agent_comparison.{self._get_file_extension(config.output_format)}"
             )
             comparison_content = await self._generate_comparison_content(agents, config)
 
-            with open(comparison_file, "w", encoding="utf-8") as f:
+            with open(comparison_file, 'w', encoding='utf-8') as f:
                 f.write(comparison_content)
             output_files.append(comparison_file)
 
@@ -224,7 +225,7 @@ class DocumentationGenerator:
             )
             arch_content = await self._generate_architecture_overview(agents, config)
 
-            with open(arch_file, "w", encoding="utf-8") as f:
+            with open(arch_file, 'w', encoding='utf-8') as f:
                 f.write(arch_content)
             output_files.append(arch_file)
 
@@ -233,9 +234,9 @@ class DocumentationGenerator:
                 output_files=output_files,
                 index_file=index_file,
                 metadata={
-                    "total_agents": len(agents),
-                    "generated_at": datetime.now().isoformat(),
-                    "format": config.output_format,
+                    'total_agents': len(agents),
+                    'generated_at': datetime.now().isoformat(),
+                    'format': config.output_format,
                 },
             )
 
@@ -245,8 +246,8 @@ class DocumentationGenerator:
 
     def _get_file_extension(self, format_type: str) -> str:
         """Get file extension for format type."""
-        extensions = {"markdown": "md", "rst": "rst", "html": "html"}
-        return extensions.get(format_type, "md")
+        extensions = {'markdown': 'md', 'rst': 'rst', 'html': 'html'}
+        return extensions.get(format_type, 'md')
 
     async def _generate_agent_doc_content(
         self,
@@ -254,11 +255,11 @@ class DocumentationGenerator:
         config: DocumentationConfig,
     ) -> str:
         """Generate documentation content for a single agent."""
-        if config.output_format == "markdown":
+        if config.output_format == 'markdown':
             return await self._generate_markdown_agent_doc(agent_info, config)
-        if config.output_format == "rst":
+        if config.output_format == 'rst':
             return await self._generate_rst_agent_doc(agent_info, config)
-        if config.output_format == "html":
+        if config.output_format == 'html':
             return await self._generate_html_agent_doc(agent_info, config)
         return await self._generate_markdown_agent_doc(agent_info, config)
 
@@ -270,24 +271,24 @@ class DocumentationGenerator:
         """Generate Markdown documentation for an agent."""
         lines = [
             f"# {agent_info.name}",
-            "",
+            '',
             f"**Architecture**: {agent_info.architecture.value}",
             f"**File**: `{agent_info.file_path}`",
             f"**Module**: `{agent_info.module_path}`",
-            "",
-            "## Overview",
-            "",
+            '',
+            '## Overview',
+            '',
         ]
 
         # Add docstring if available
-        if agent_info.metadata and "docstring" in agent_info.metadata:
-            lines.extend([agent_info.metadata["docstring"], ""])
+        if agent_info.metadata and 'docstring' in agent_info.metadata:
+            lines.extend([agent_info.metadata['docstring'], ''])
         else:
             lines.extend(
                 [
                     f"The {agent_info.name} is a {agent_info.architecture.value} agent that provides",
-                    "specialized functionality within the Haive framework.",
-                    "",
+                    'specialized functionality within the Haive framework.',
+                    '',
                 ],
             )
 
@@ -295,27 +296,27 @@ class DocumentationGenerator:
         if agent_info.base_classes:
             lines.extend(
                 [
-                    "## Inheritance",
-                    "",
-                    "This agent inherits from the following base classes:",
-                    "",
+                    '## Inheritance',
+                    '',
+                    'This agent inherits from the following base classes:',
+                    '',
                 ],
             )
             for base_class in agent_info.base_classes:
                 lines.append(f"- `{base_class}`")
-            lines.append("")
+            lines.append('')
 
         # Add capabilities
         lines.extend(
             [
-                "## Capabilities",
-                "",
+                '## Capabilities',
+                '',
                 f"- **Visualization**: {'✅ Supported' if agent_info.has_visualization else '❌ Not supported'}",
                 f"- **Tools**: {'✅ Supported' if agent_info.tools_support else '❌ Not supported'}",
                 f"- **Streaming**: {'✅ Supported' if agent_info.streaming_support else '❌ Not supported'}",
                 f"- **Execution Pattern**: {agent_info.execution_pattern.title()}",
                 f"- **Configuration**: {agent_info.config_pattern}",
-                "",
+                '',
             ],
         )
 
@@ -323,12 +324,12 @@ class DocumentationGenerator:
         if config.include_code_snippets:
             lines.extend(
                 [
-                    "## Basic Usage",
-                    "",
-                    "```python",
+                    '## Basic Usage',
+                    '',
+                    '```python',
                     self._generate_basic_usage_example(agent_info),
-                    "```",
-                    "",
+                    '```',
+                    '',
                 ],
             )
 
@@ -336,37 +337,37 @@ class DocumentationGenerator:
         if config.include_examples and agent_info.example_files:
             lines.extend(
                 [
-                    "## Examples",
-                    "",
+                    '## Examples',
+                    '',
                     f"This agent has {len(agent_info.example_files)} example file(s):",
-                    "",
+                    '',
                 ],
             )
             for example_file in agent_info.example_files:
                 lines.append(f"- [`{example_file.name}`]({example_file})")
-            lines.append("")
+            lines.append('')
 
         # Add visualization if included
         if config.include_visualizations and agent_info.has_visualization:
             lines.extend(
                 [
-                    "## Workflow Visualization",
-                    "",
+                    '## Workflow Visualization',
+                    '',
                     f"![{agent_info.name} Workflow](./{agent_info.name.lower()}_workflow.png)",
-                    "",
+                    '',
                 ],
             )
 
         # Add technical details
-        if config.template_style == "comprehensive":
+        if config.template_style == 'comprehensive':
             lines.extend(
                 [
-                    "## Technical Details",
-                    "",
+                    '## Technical Details',
+                    '',
                     f"- **Method Count**: {agent_info.metadata.get('method_count', 'Unknown') if agent_info.metadata else 'Unknown'}",
                     f"- **File Size**: {self._get_file_size_info(agent_info.file_path)}",
                     f"- **Last Modified**: {self._get_file_modification_time(agent_info.file_path)}",
-                    "",
+                    '',
                 ],
             )
 
@@ -376,17 +377,17 @@ class DocumentationGenerator:
             if related_agents:
                 lines.extend(
                     [
-                        "## Related Agents",
-                        "",
-                        "Agents with similar architecture or functionality:",
-                        "",
+                        '## Related Agents',
+                        '',
+                        'Agents with similar architecture or functionality:',
+                        '',
                     ],
                 )
                 for related in related_agents:
                     lines.append(f"- [{related.name}](./{related.name.lower()}.md)")
-                lines.append("")
+                lines.append('')
 
-        return "\n".join(lines)
+        return '\n'.join(lines)
 
     def _generate_basic_usage_example(self, agent_info: AgentInfo) -> str:
         """Generate basic usage example based on agent architecture."""
@@ -437,24 +438,24 @@ print(result)"""
         """Generate documentation content for agent examples."""
         lines = [
             f"# {agent_info.name} Examples",
-            "",
+            '',
             f"This document provides comprehensive examples for using the {agent_info.name}.",
-            "",
+            '',
         ]
 
         for example_file in agent_info.example_files:
             lines.extend(
                 [
                     f"## {example_file.stem.replace('_', ' ').title()}",
-                    "",
+                    '',
                     f"**File**: `{example_file}`",
-                    "",
+                    '',
                 ],
             )
 
             # Try to extract example content
             try:
-                with open(example_file, encoding="utf-8") as f:
+                with open(example_file, encoding='utf-8') as f:
                     content = f.read()
 
                 # Extract docstring if available
@@ -463,16 +464,16 @@ print(result)"""
                     docstring_end = content.find('"""', docstring_start)
                     if docstring_end > docstring_start:
                         docstring = content[docstring_start:docstring_end].strip()
-                        lines.extend([docstring, ""])
+                        lines.extend([docstring, ''])
 
                 # Add code snippet if requested
                 if config.include_code_snippets:
-                    lines.extend(["```python", content, "```", ""])
+                    lines.extend(['```python', content, '```', ''])
 
             except Exception as e:
-                lines.extend([f"*Error reading example file: {e}*", ""])
+                lines.extend([f"*Error reading example file: {e}*", ''])
 
-        return "\n".join(lines)
+        return '\n'.join(lines)
 
     async def _generate_api_doc_content(
         self,
@@ -482,9 +483,9 @@ print(result)"""
         """Generate API documentation content."""
         lines = [
             f"# {agent_info.name} API Reference",
-            "",
+            '',
             f"Comprehensive API documentation for the {agent_info.name} class.",
-            "",
+            '',
         ]
 
         try:
@@ -508,41 +509,41 @@ print(result)"""
             lines.extend(
                 [
                     f"*Error generating API documentation: {e}*",
-                    "",
-                    "Please refer to the source code for detailed API information.",
-                    "",
+                    '',
+                    'Please refer to the source code for detailed API information.',
+                    '',
                 ],
             )
 
-        return "\n".join(lines)
+        return '\n'.join(lines)
 
     def _generate_class_api_doc(self, agent_class: type) -> list[str]:
         """Generate API documentation for a class."""
-        lines = [f"## Class: {agent_class.__name__}", ""]
+        lines = [f"## Class: {agent_class.__name__}", '']
 
         # Add class docstring
         if agent_class.__doc__:
-            lines.extend([agent_class.__doc__.strip(), ""])
+            lines.extend([agent_class.__doc__.strip(), ''])
 
         # Add methods
         methods = inspect.getmembers(agent_class, predicate=inspect.isfunction)
         if methods:
-            lines.extend(["### Methods", ""])
+            lines.extend(['### Methods', ''])
 
             for method_name, method in methods:
-                if not method_name.startswith("_"):  # Skip private methods
-                    lines.extend([f"#### `{method_name}`", ""])
+                if not method_name.startswith('_'):  # Skip private methods
+                    lines.extend([f"#### `{method_name}`", ''])
 
                     # Add method signature
                     try:
                         sig = inspect.signature(method)
-                        lines.extend(["```python", f"{method_name}{sig}", "```", ""])
+                        lines.extend(['```python', f"{method_name}{sig}", '```', ''])
                     except BaseException:
                         pass
 
                     # Add method docstring
                     if method.__doc__:
-                        lines.extend([method.__doc__.strip(), ""])
+                        lines.extend([method.__doc__.strip(), ''])
 
         return lines
 
@@ -553,18 +554,18 @@ print(result)"""
     ) -> str:
         """Generate project index documentation."""
         lines = [
-            "# Haive Agent Documentation Index",
-            "",
+            '# Haive Agent Documentation Index',
+            '',
             f"This is the comprehensive documentation index for all {
                 len(agents)
             } agents in the Haive framework.",
             f"Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.",
-            "",
-            "## Quick Navigation",
-            "",
-            "- [Agent Comparison](./agent_comparison.md)",
-            "- [Architecture Overview](./architecture_overview.md)",
-            "",
+            '',
+            '## Quick Navigation',
+            '',
+            '- [Agent Comparison](./agent_comparison.md)',
+            '- [Architecture Overview](./architecture_overview.md)',
+            '',
         ]
 
         # Group by architecture
@@ -577,7 +578,7 @@ print(result)"""
 
         # Generate sections for each architecture
         for arch, arch_agents in arch_groups.items():
-            lines.extend([f"## {arch.value} Agents ({len(arch_agents)} agents)", ""])
+            lines.extend([f"## {arch.value} Agents ({len(arch_agents)} agents)", ''])
 
             # Sort agents by name
             arch_agents.sort(key=lambda x: x.name)
@@ -585,13 +586,13 @@ print(result)"""
             for agent in arch_agents:
                 capabilities = []
                 if agent.has_visualization:
-                    capabilities.append("Visualization")
+                    capabilities.append('Visualization')
                 if agent.tools_support:
-                    capabilities.append("Tools")
+                    capabilities.append('Tools')
                 if agent.streaming_support:
-                    capabilities.append("Streaming")
+                    capabilities.append('Streaming')
 
-                cap_str = f" ({', '.join(capabilities)})" if capabilities else ""
+                cap_str = f" ({', '.join(capabilities)})" if capabilities else ''
 
                 lines.extend(
                     [
@@ -601,9 +602,9 @@ print(result)"""
                     ],
                 )
 
-            lines.append("")
+            lines.append('')
 
-        return "\n".join(lines)
+        return '\n'.join(lines)
 
     async def _generate_comparison_content(
         self,
@@ -612,12 +613,12 @@ print(result)"""
     ) -> str:
         """Generate agent comparison documentation."""
         lines = [
-            "# Agent Comparison",
-            "",
-            "Comprehensive comparison of all Haive agents across different dimensions.",
-            "",
-            "## Summary Statistics",
-            "",
+            '# Agent Comparison',
+            '',
+            'Comprehensive comparison of all Haive agents across different dimensions.',
+            '',
+            '## Summary Statistics',
+            '',
         ]
 
         # Calculate statistics
@@ -632,7 +633,7 @@ print(result)"""
                 f"- **With Visualization**: {with_viz} ({with_viz / total * 100:.1f}%)",
                 f"- **With Tools Support**: {with_tools} ({with_tools / total * 100:.1f}%)",
                 f"- **With Streaming**: {with_streaming} ({with_streaming / total * 100:.1f}%)",
-                "",
+                '',
             ],
         )
 
@@ -641,18 +642,19 @@ print(result)"""
         for agent in agents:
             arch_counts[agent.architecture] = arch_counts.get(agent.architecture, 0) + 1
 
-        lines.extend(["## Architecture Distribution", ""])
+        lines.extend(['## Architecture Distribution', ''])
 
         for arch, count in arch_counts.items():
-            lines.append(f"- **{arch.value}**: {count} agents ({count / total * 100:.1f}%)")
+            lines.append(
+                f"- **{arch.value}**: {count} agents ({count / total * 100:.1f}%)")
 
         lines.extend(
             [
-                "",
-                "## Detailed Comparison",
-                "",
-                "| Agent | Architecture | Viz | Tools | Streaming | Execution | Examples |",
-                "|-------|-------------|-----|-------|-----------|-----------|----------|",
+                '',
+                '## Detailed Comparison',
+                '',
+                '| Agent | Architecture | Viz | Tools | Streaming | Execution | Examples |',
+                '|-------|-------------|-----|-------|-----------|-----------|----------|',
             ],
         )
 
@@ -660,11 +662,11 @@ print(result)"""
         sorted_agents = sorted(agents, key=lambda x: x.name)
 
         for agent in sorted_agents:
-            viz_icon = "✅" if agent.has_visualization else "❌"
-            tools_icon = "✅" if agent.tools_support else "❌"
-            streaming_icon = "✅" if agent.streaming_support else "❌"
+            viz_icon = '✅' if agent.has_visualization else '❌'
+            tools_icon = '✅' if agent.tools_support else '❌'
+            streaming_icon = '✅' if agent.streaming_support else '❌'
 
-            arch_short = agent.architecture.value.split(".")[-1]
+            arch_short = agent.architecture.value.split('.')[-1]
 
             lines.append(
                 f"| [{agent.name}](./{agent.name.lower()}/{agent.name.lower()}.md) "
@@ -676,7 +678,7 @@ print(result)"""
                 f"| {len(agent.example_files)} |",
             )
 
-        return "\n".join(lines)
+        return '\n'.join(lines)
 
     async def _generate_architecture_overview(
         self,
@@ -685,10 +687,10 @@ print(result)"""
     ) -> str:
         """Generate architecture overview documentation."""
         lines = [
-            "# Architecture Overview",
-            "",
-            "This document provides an overview of the different agent architectures in Haive.",
-            "",
+            '# Architecture Overview',
+            '',
+            'This document provides an overview of the different agent architectures in Haive.',
+            '',
         ]
 
         # Analyze inheritance patterns
@@ -696,10 +698,10 @@ print(result)"""
 
         lines.extend(
             [
-                "## Inheritance Patterns",
-                "",
-                "The most common base classes across all agents:",
-                "",
+                '## Inheritance Patterns',
+                '',
+                'The most common base classes across all agents:',
+                '',
             ],
         )
 
@@ -711,7 +713,7 @@ print(result)"""
         for base_class, derived in sorted_bases[:10]:
             lines.append(f"- **{base_class}**: {len(derived)} agents")
 
-        lines.extend(["", "## Architecture Details", ""])
+        lines.extend(['', '## Architecture Details', ''])
 
         # Group by architecture and provide detailed info
         arch_groups = {}
@@ -723,39 +725,39 @@ print(result)"""
 
         for arch, arch_agents in arch_groups.items():
             lines.extend(
-                [f"### {arch.value}", "", f"**Agent Count**: {len(arch_agents)}", ""],
+                [f"### {arch.value}", '', f"**Agent Count**: {len(arch_agents)}", ''],
             )
 
             # Architecture-specific characteristics
             if arch == AgentArchitecture.HAIVE_AGENTS_MIXIN:
                 lines.extend(
                     [
-                        "**Characteristics**:",
-                        "- Mixin-based architecture with ExecutionMixin, StateMixin, PersistenceMixin",
-                        "- Uses AugLLMConfig for engine configuration",
-                        "- Built-in visualization support through visualize_graph() method",
-                        "- Supports both sync and async execution patterns",
-                        "",
+                        '**Characteristics**:',
+                        '- Mixin-based architecture with ExecutionMixin, StateMixin, PersistenceMixin',
+                        '- Uses AugLLMConfig for engine configuration',
+                        '- Built-in visualization support through visualize_graph() method',
+                        '- Supports both sync and async execution patterns',
+                        '',
                     ],
                 )
             elif arch == AgentArchitecture.HAIVE_CORE_ENGINE:
                 lines.extend(
                     [
-                        "**Characteristics**:",
-                        "- Protocol-based architecture with registry pattern",
-                        "- Flexible configuration system",
-                        "- Focus on composability and modularity",
-                        "",
+                        '**Characteristics**:',
+                        '- Protocol-based architecture with registry pattern',
+                        '- Flexible configuration system',
+                        '- Focus on composability and modularity',
+                        '',
                     ],
                 )
             elif arch == AgentArchitecture.HAIVE_GAMES:
                 lines.extend(
                     [
-                        "**Characteristics**:",
-                        "- Game-specific agent implementations",
-                        "- Inherits from game base classes",
-                        "- Optimized for game state processing",
-                        "",
+                        '**Characteristics**:',
+                        '- Game-specific agent implementations',
+                        '- Inherits from game base classes',
+                        '- Optimized for game state processing',
+                        '',
                     ],
                 )
 
@@ -767,11 +769,11 @@ print(result)"""
                 [
                     f"**Configuration Patterns**: {', '.join(config_patterns)}",
                     f"**Execution Patterns**: {', '.join(exec_patterns)}",
-                    "",
+                    '',
                 ],
             )
 
-        return "\n".join(lines)
+        return '\n'.join(lines)
 
     async def _find_related_agents(self, agent_info: AgentInfo) -> list[AgentInfo]:
         """Find agents related to the given agent."""
@@ -816,18 +818,18 @@ print(result)"""
         """Get human-readable file size information."""
         try:
             size = file_path.stat().st_size
-            for unit in ["B", "KB", "MB"]:
+            for unit in ['B', 'KB', 'MB']:
                 if size < 1024:
                     return f"{size:.1f} {unit}"
                 size /= 1024
             return f"{size:.1f} GB"
         except BaseException:
-            return "Unknown"
+            return 'Unknown'
 
     def _get_file_modification_time(self, file_path: Path) -> str:
         """Get file modification time."""
         try:
             mtime = file_path.stat().st_mtime
-            return datetime.fromtimestamp(mtime).strftime("%Y-%m-%d %H:%M:%S")
+            return datetime.fromtimestamp(mtime).strftime('%Y-%m-%d %H:%M:%S')
         except BaseException:
-            return "Unknown"
+            return 'Unknown'

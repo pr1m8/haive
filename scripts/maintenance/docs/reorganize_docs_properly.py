@@ -6,6 +6,7 @@ This script completely restructures the docs folder to be clean and logical:
 - Archives all the messy accumulated files
 - Creates a proper structure for ongoing work
 """
+from __future__ import annotations
 
 import shutil
 from datetime import datetime
@@ -14,10 +15,10 @@ from pathlib import Path
 
 def reorganize_docs_directory():
     """Completely reorganize the docs directory."""
-    docs_root = Path("/home/will/Projects/haive/backend/haive/docs")
+    docs_root = Path('/home/will/Projects/haive/backend/haive/docs')
 
-    print("🧹 MAJOR DOCS REORGANIZATION")
-    print("=" * 50)
+    print('🧹 MAJOR DOCS REORGANIZATION')
+    print('=' * 50)
 
     # First, let's see what we're dealing with
     show_current_mess(docs_root)
@@ -55,14 +56,14 @@ def show_current_mess(docs_root):
 
 def create_clean_structure(docs_root):
     """Create the clean target structure."""
-    print("📁 Creating clean target structure...")
+    print('📁 Creating clean target structure...')
 
     # Target structure
     clean_structure = [
-        "build",  # Sphinx build output
-        "source",  # Sphinx source files
-        "archive",  # All the mess goes here
-        "tools",  # Scripts and utilities
+        'build',  # Sphinx build output
+        'source',  # Sphinx source files
+        'archive',  # All the mess goes here
+        'tools',  # Scripts and utilities
     ]
 
     for dir_name in clean_structure:
@@ -71,16 +72,16 @@ def create_clean_structure(docs_root):
 
     # Create archive subdirectories for the mess
     archive_structure = [
-        "archive/logs",
-        "archive/screenshots",
-        "archive/scripts",
-        "archive/data",
-        "archive/guides",
-        "archive/reports",
-        "archive/captures",
-        "archive/images",
-        "archive/notes",
-        "archive/misc",
+        'archive/logs',
+        'archive/screenshots',
+        'archive/scripts',
+        'archive/data',
+        'archive/guides',
+        'archive/reports',
+        'archive/captures',
+        'archive/images',
+        'archive/notes',
+        'archive/misc',
     ]
 
     for subdir in archive_structure:
@@ -91,37 +92,37 @@ def create_clean_structure(docs_root):
 
 def archive_the_mess(docs_root):
     """Move all the messy directories to archive."""
-    print("📦 Archiving the mess...")
+    print('📦 Archiving the mess...')
 
     # Directories to archive (move to archive/)
     dirs_to_archive = [
-        "logs",
-        "screenshots",
-        "data",
-        "guides",
-        "reports",
-        "captures",
-        "images",
-        "notes",
-        "quality-reports",
-        "scripts",
-        "resources",
-        "test_nitpick",
-        "test_type_hints",
-        "architecture",
-        "examples",
-        "current",  # Even our current attempt was messy
+        'logs',
+        'screenshots',
+        'data',
+        'guides',
+        'reports',
+        'captures',
+        'images',
+        'notes',
+        'quality-reports',
+        'scripts',
+        'resources',
+        'test_nitpick',
+        'test_type_hints',
+        'architecture',
+        'examples',
+        'current',  # Even our current attempt was messy
     ]
 
     archived_count = 0
     for dir_name in dirs_to_archive:
         source_dir = docs_root / dir_name
         if source_dir.exists() and source_dir.is_dir():
-            target_dir = docs_root / "archive" / dir_name
+            target_dir = docs_root / 'archive' / dir_name
             if target_dir.exists():
                 # Merge if target exists
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                target_dir = docs_root / "archive" / f"{dir_name}_{timestamp}"
+                timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+                target_dir = docs_root / 'archive' / f"{dir_name}_{timestamp}"
 
             shutil.move(str(source_dir), str(target_dir))
             archived_count += 1
@@ -132,15 +133,15 @@ def archive_the_mess(docs_root):
 
 def keep_essentials_only(docs_root):
     """Keep only essential files in root."""
-    print("📄 Cleaning up root files...")
+    print('📄 Cleaning up root files...')
 
     # Files that should stay in root
     essential_files = [
-        "Makefile",
-        "make.bat",
-        "README.md",
-        "requirements.txt",
-        "requirements-dev.txt",
+        'Makefile',
+        'make.bat',
+        'README.md',
+        'requirements.txt',
+        'requirements-dev.txt',
     ]
 
     # Files to archive
@@ -151,7 +152,7 @@ def keep_essentials_only(docs_root):
 
     # Move non-essential files to archive
     for file_path in files_to_archive:
-        target_path = docs_root / "archive" / "misc" / file_path.name
+        target_path = docs_root / 'archive' / 'misc' / file_path.name
         shutil.move(str(file_path), str(target_path))
         print(f"   📦 Archived file: {file_path.name}")
 
@@ -162,45 +163,45 @@ def keep_essentials_only(docs_root):
 
 def show_clean_result(docs_root):
     """Show the final clean structure."""
-    print("\n🎉 CLEAN DOCS DIRECTORY STRUCTURE:")
-    print("=" * 50)
+    print('\n🎉 CLEAN DOCS DIRECTORY STRUCTURE:')
+    print('=' * 50)
 
     for item in sorted(docs_root.iterdir()):
         if item.is_dir():
-            file_count = len([f for f in item.rglob("*") if f.is_file()])
+            file_count = len([f for f in item.rglob('*') if f.is_file()])
             print(f"📁 {item.name}/ ({file_count} files)")
         else:
             print(f"📄 {item.name}")
 
-    print("\n✅ REORGANIZATION COMPLETE!")
-    print("Now you have:")
-    print("  📁 build/     - Sphinx HTML output")
-    print("  📁 source/    - Sphinx source files")
-    print("  📁 archive/   - All the old mess (safely stored)")
-    print("  📁 tools/     - Scripts and utilities")
-    print("  📄 Essential files only in root")
+    print('\n✅ REORGANIZATION COMPLETE!')
+    print('Now you have:')
+    print('  📁 build/     - Sphinx HTML output')
+    print('  📁 source/    - Sphinx source files')
+    print('  📁 archive/   - All the old mess (safely stored)')
+    print('  📁 tools/     - Scripts and utilities')
+    print('  📄 Essential files only in root')
 
 
 def handle_git_lfs():
     """Handle Git LFS if present."""
-    docs_root = Path("/home/will/Projects/haive/backend/haive/docs")
-    git_dir = docs_root / ".git"
+    docs_root = Path('/home/will/Projects/haive/backend/haive/docs')
+    git_dir = docs_root / '.git'
 
     if git_dir.exists():
-        print("\n⚠️  Found .git directory (probably Git LFS)")
-        print("   This might be tracking large files like screenshots")
-        print("   Keeping .git directory but archiving LFS content")
+        print('\n⚠️  Found .git directory (probably Git LFS)')
+        print('   This might be tracking large files like screenshots')
+        print('   Keeping .git directory but archiving LFS content')
 
         # Move large files to archive but keep .git
-        large_file_patterns = ["*.png", "*.jpg", "*.jpeg", "*.gif", "*.mp4"]
+        large_file_patterns = ['*.png', '*.jpg', '*.jpeg', '*.gif', '*.mp4']
         for pattern in large_file_patterns:
             for file_path in docs_root.glob(pattern):
-                target_path = docs_root / "archive" / "misc" / file_path.name
+                target_path = docs_root / 'archive' / 'misc' / file_path.name
                 if not target_path.exists():
                     shutil.move(str(file_path), str(target_path))
                     print(f"   📦 Moved large file: {file_path.name}")
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     reorganize_docs_directory()
     handle_git_lfs()

@@ -7,7 +7,6 @@ This module provides comprehensive documentation quality checking including:
 - Documentation link validation
 - Writing style consistency analysis
 """
-
 from __future__ import annotations
 
 import logging
@@ -20,7 +19,7 @@ from typing import Any
 project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
 
@@ -35,23 +34,23 @@ class QualityChecker:
         logger.info(f"📖 Running Vale prose linting on {package_path}")
 
         # Look for documentation files
-        doc_patterns = ["*.md", "*.rst", "*.txt"]
-        package_dir = project_root / "packages" / package_path.replace("-", "_")
+        doc_patterns = ['*.md', '*.rst', '*.txt']
+        package_dir = project_root / 'packages' / package_path.replace('-', '_')
 
         doc_files = []
         for pattern in doc_patterns:
             doc_files.extend(package_dir.rglob(pattern))
 
         if not doc_files:
-            logger.info("ℹ️ No documentation files found for Vale analysis")
+            logger.info('ℹ️ No documentation files found for Vale analysis')
             return True
 
         try:
             result = subprocess.run(
                 [
-                    "vale",
-                    "--config",
-                    str(project_root / ".vale.ini"),
+                    'vale',
+                    '--config',
+                    str(project_root / '.vale.ini'),
                     *[str(f) for f in doc_files[:10]],  # Limit to first 10 files
                 ],
                 capture_output=True,
@@ -61,15 +60,15 @@ class QualityChecker:
             )
 
             if result.stdout:
-                logger.info("📖 Vale prose analysis:")
+                logger.info('📖 Vale prose analysis:')
                 print(result.stdout)
             else:
-                logger.info("✅ No Vale issues found!")
+                logger.info('✅ No Vale issues found!')
 
             return True
 
         except FileNotFoundError:
-            logger.info("ℹ️ Vale not found. Install from: https://vale.sh/")
+            logger.info('ℹ️ Vale not found. Install from: https://vale.sh/')
             return False
         except Exception as e:
             logger.error(f"❌ Vale check failed: {e}")
@@ -79,11 +78,11 @@ class QualityChecker:
         """Check markdown files for quality issues."""
         logger.info(f"📝 Running markdown quality check on {package_path}")
 
-        package_dir = project_root / "packages" / package_path.replace("-", "_")
-        md_files = list(package_dir.rglob("*.md"))
+        package_dir = project_root / 'packages' / package_path.replace('-', '_')
+        md_files = list(package_dir.rglob('*.md'))
 
         if not md_files:
-            logger.info("ℹ️ No markdown files found")
+            logger.info('ℹ️ No markdown files found')
             return []
 
         issues = []
@@ -91,18 +90,18 @@ class QualityChecker:
         # Basic markdown quality checks
         for md_file in md_files:
             try:
-                with open(md_file, encoding="utf-8") as f:
+                with open(md_file, encoding='utf-8') as f:
                     content = f.read()
 
                 # Check for common issues
-                lines = content.split("\n")
+                lines = content.split('\n')
                 for i, line in enumerate(lines, 1):
                     # Check for missing spaces after hash headers
-                    if line.startswith("#") and not line.startswith("# "):
+                    if line.startswith('#') and not line.startswith('# '):
                         issues.append(f"{md_file}:{i}: Missing space after # in header")
 
                     # Check for trailing whitespace
-                    if line.endswith(" "):
+                    if line.endswith(' '):
                         issues.append(f"{md_file}:{i}: Trailing whitespace")
 
                     # Check for very long lines (> 120 chars)
@@ -121,7 +120,7 @@ class QualityChecker:
             if len(issues) > 10:
                 logger.info(f"  ... and {len(issues) - 10} more issues")
         else:
-            logger.info("✅ No markdown quality issues found!")
+            logger.info('✅ No markdown quality issues found!')
 
         return issues
 
@@ -129,15 +128,15 @@ class QualityChecker:
         """Validate links in documentation files."""
         logger.info(f"🔗 Running link validation on {package_path}")
 
-        package_dir = project_root / "packages" / package_path.replace("-", "_")
+        package_dir = project_root / 'packages' / package_path.replace('-', '_')
         doc_files = []
 
         # Find documentation files
-        for pattern in ["*.md", "*.rst"]:
+        for pattern in ['*.md', '*.rst']:
             doc_files.extend(package_dir.rglob(pattern))
 
         if not doc_files:
-            logger.info("ℹ️ No documentation files found for link validation")
+            logger.info('ℹ️ No documentation files found for link validation')
             return []
 
         broken_links = []
@@ -145,25 +144,25 @@ class QualityChecker:
         # Simple link validation (could be enhanced with actual HTTP checking)
         import re
 
-        link_pattern = re.compile(r"\[([^\]]*)\]\(([^)]*)\)")
+        link_pattern = re.compile(r'\[([^\]]*)\]\(([^)]*)\)')
 
         for doc_file in doc_files:
             try:
-                with open(doc_file, encoding="utf-8") as f:
+                with open(doc_file, encoding='utf-8') as f:
                     content = f.read()
 
-                lines = content.split("\n")
+                lines = content.split('\n')
                 for i, line in enumerate(lines, 1):
                     matches = link_pattern.findall(line)
                     for text, url in matches:
                         # Check for obviously broken links
-                        if not url or url.startswith("TODO") or url == "#":
+                        if not url or url.startswith('TODO') or url == '#':
                             broken_links.append(
                                 f"{doc_file}:{i}: Broken link '{text}' -> '{url}'",
                             )
 
                         # Check for relative links to missing files
-                        if not url.startswith(("http", "https", "mailto", "#")):
+                        if not url.startswith(('http', 'https', 'mailto', '#')):
                             link_file = doc_file.parent / url
                             if not link_file.exists():
                                 broken_links.append(
@@ -180,7 +179,7 @@ class QualityChecker:
             if len(broken_links) > 10:
                 logger.info(f"  ... and {len(broken_links) - 10} more broken links")
         else:
-            logger.info("✅ No broken links found!")
+            logger.info('✅ No broken links found!')
 
         return broken_links
 
@@ -191,40 +190,40 @@ class QualityChecker:
         )
 
         quality_results = {
-            "vale_passed": False,
-            "markdown_issues": [],
-            "broken_links": [],
-            "total_issues": 0,
-            "tools_used": [],
+            'vale_passed': False,
+            'markdown_issues': [],
+            'broken_links': [],
+            'total_issues': 0,
+            'tools_used': [],
         }
 
         # 1. Vale prose linting
         vale_result = self.run_vale_check(package_path)
-        quality_results["vale_passed"] = vale_result
+        quality_results['vale_passed'] = vale_result
         if vale_result:
-            quality_results["tools_used"].append("vale")
+            quality_results['tools_used'].append('vale')
 
         # 2. Markdown quality check
         markdown_issues = self.run_markdown_quality_check(package_path)
-        quality_results["markdown_issues"] = markdown_issues
+        quality_results['markdown_issues'] = markdown_issues
         if markdown_issues:
-            quality_results["tools_used"].append("markdown-quality")
+            quality_results['tools_used'].append('markdown-quality')
 
         # 3. Link validation
         broken_links = self.run_link_validation(package_path)
-        quality_results["broken_links"] = broken_links
+        quality_results['broken_links'] = broken_links
         if broken_links:
-            quality_results["tools_used"].append("link-validation")
+            quality_results['tools_used'].append('link-validation')
 
         # Calculate total issues
-        quality_results["total_issues"] = len(markdown_issues) + len(broken_links)
+        quality_results['total_issues'] = len(markdown_issues) + len(broken_links)
 
         self._report_quality_results(quality_results)
         return quality_results
 
     def _report_quality_results(self, results: dict[str, Any]):
         """Report comprehensive quality check results."""
-        logger.info("📖 Comprehensive Documentation Quality Report:")
+        logger.info('📖 Comprehensive Documentation Quality Report:')
         logger.info(f"  🔍 Total Issues Found: {results['total_issues']}")
         logger.info(
             f"  🛠️ Tools Used: {
@@ -232,21 +231,21 @@ class QualityChecker:
             }",
         )
 
-        if results["vale_passed"]:
-            logger.info("  📖 Vale: Passed")
+        if results['vale_passed']:
+            logger.info('  📖 Vale: Passed')
         else:
-            logger.info("  📖 Vale: Not available or failed")
+            logger.info('  📖 Vale: Not available or failed')
 
-        if results["markdown_issues"]:
+        if results['markdown_issues']:
             logger.info(
                 f"  📝 Markdown Quality Issues: {len(results['markdown_issues'])}",
             )
 
-        if results["broken_links"]:
+        if results['broken_links']:
             logger.info(f"  🔗 Broken Links: {len(results['broken_links'])}")
 
-        if results["total_issues"] == 0 and results["vale_passed"]:
-            logger.info("  🎉 All documentation quality checks passed!")
+        if results['total_issues'] == 0 and results['vale_passed']:
+            logger.info('  🎉 All documentation quality checks passed!')
 
 
 def main():
@@ -254,20 +253,20 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Documentation quality checking with Vale and other tools",
+        description='Documentation quality checking with Vale and other tools',
     )
-    parser.add_argument("--target", required=True, help="Target package")
-    parser.add_argument("--vale", action="store_true", help="Use Vale only")
+    parser.add_argument('--target', required=True, help='Target package')
+    parser.add_argument('--vale', action='store_true', help='Use Vale only')
     parser.add_argument(
-        "--markdown",
-        action="store_true",
-        help="Check markdown quality only",
+        '--markdown',
+        action='store_true',
+        help='Check markdown quality only',
     )
-    parser.add_argument("--links", action="store_true", help="Validate links only")
+    parser.add_argument('--links', action='store_true', help='Validate links only')
     parser.add_argument(
-        "--comprehensive",
-        action="store_true",
-        help="Use all quality checks",
+        '--comprehensive',
+        action='store_true',
+        help='Use all quality checks',
     )
 
     args = parser.parse_args()
@@ -277,7 +276,7 @@ def main():
     if args.comprehensive or (not args.vale and not args.markdown and not args.links):
         # Default to comprehensive
         results = checker.comprehensive_quality_check(args.target)
-        return 0 if results["total_issues"] == 0 and results["vale_passed"] else 1
+        return 0 if results['total_issues'] == 0 and results['vale_passed'] else 1
     if args.vale:
         passed = checker.run_vale_check(args.target)
         return 0 if passed else 1
@@ -289,5 +288,5 @@ def main():
         return 0 if len(broken_links) == 0 else 1
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main())

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Minimal documentation build script."""
-
 from __future__ import annotations
 
 import os
@@ -14,21 +13,21 @@ def build_minimal_docs():
     os.chdir(Path(__file__).parent)
 
     # Clean previous build
-    subprocess.run(["rm", "-rf", "docs/build"], check=False)
+    subprocess.run(['rm', '-rf', 'docs/build'], check=False)
 
     # Build with minimal settings
     subprocess.run(
         [
-            "poetry",
-            "run",
-            "sphinx-build",
-            "-b",
-            "html",
-            "-E",  # Rebuild all files
-            "-a",  # Rebuild all files
-            "--keep-going",
-            "docs/source",
-            "docs/build",
+            'poetry',
+            'run',
+            'sphinx-build',
+            '-b',
+            'html',
+            '-E',  # Rebuild all files
+            '-a',  # Rebuild all files
+            '--keep-going',
+            'docs/source',
+            'docs/build',
         ],
         check=False,
         capture_output=True,
@@ -36,10 +35,10 @@ def build_minimal_docs():
     )
 
     # Check if HTML files were generated
-    html_files = list(Path("docs/build").rglob("*.html"))
+    html_files = list(Path('docs/build').rglob('*.html'))
 
     return bool(html_files)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     build_minimal_docs()
