@@ -6,18 +6,20 @@ import os
 from pathlib import Path
 import sys
 
-# Add conf_modules to Python path for imports
-conf_modules_dir = Path(__file__).parent / "conf_modules"
-sys.path.insert(0, str(conf_modules_dir))
-
-# Import after adding path
 from extension_configs import (
     get_all_extension_configs,
     get_conditional_configs,
 )
 from extensions import get_all_extensions
-from import_diagnostics import get_autodoc_mock_imports_from_diagnosis
 from memory import get_memory_safe_sphinx_config
+
+from import_diagnostics import get_autodoc_mock_imports_from_diagnosis
+
+# Add conf_modules to Python path for imports
+conf_modules_dir = Path(__file__).parent / "conf_modules"
+sys.path.insert(0, str(conf_modules_dir))
+
+# Import after adding path
 
 # Setup structured logging FIRST
 try:
@@ -79,7 +81,7 @@ DISABLE_EXAMPLES = os.environ.get(
 
 # Control import diagnostics speed (set SPHINX_FAST_IMPORTS=1 for faster builds)
 FAST_IMPORTS = os.environ.get(
-    "SPHINX_FAST_IMPORTS", 
+    "SPHINX_FAST_IMPORTS",
     "1",  # Default to fast mode for better developer experience
 ).lower() in ("1", "true", "yes")
 
@@ -112,14 +114,14 @@ elif SPHINX_PROFILE == "standard":
     ], )
     print(f"📚 Using STANDARD profile ({len(extensions)} extensions)")
 else:
-    # Full set with all extensions - use comprehensive extensions.py 
+    # Full set with all extensions - use comprehensive extensions.py
     extensions = get_all_extensions()
     logger.info(f"🎯 Using FULL profile ({len(extensions)} extensions)")
 
 # Apply memory-safe configuration with extension optimization
 memory_config = get_memory_safe_sphinx_config(extensions)
 # PRESERVE the selected extensions - don't overwrite with memory config
-# extensions = memory_config["extensions"]  # REMOVED: This was overwriting our selection
+# overwriting our selection
 build_recommendations = memory_config["build_recommendations"]
 
 # Log what we're actually using
@@ -393,7 +395,7 @@ autodoc_mock_imports.extend(
         # Additional API wrappers and keys
         "langchain_community.agent_toolkits.load_tools",
         "google-finance",
-        "google-jobs", 
+        "google-jobs",
         "google-scholar",
         "google-trends",
         "google-serper",
