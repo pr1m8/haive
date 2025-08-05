@@ -9,6 +9,10 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+# Add project root to Python path to import noxfiles package
+project_root = Path(__file__).parent
+sys.path.insert(0, str(project_root.absolute()))
+
 from noxfiles.session_docs import (
     docs,
     docs_autobuild,
@@ -39,6 +43,8 @@ from noxfiles.session_docs_examples import (
 )
 from noxfiles.session_docs_package import docs_multi, docs_package, docs_quick
 from noxfiles.session_docs_phased import docs_phased, docs_phased_no_examples
+from noxfiles.session_docs_modular import docs_fast_build
+from noxfiles.session_docs_debug import docs_debug_enhanced, docs_minimal_test
 from noxfiles.session_docs_testing import (
     docs_test_all,
     docs_test_docstrings,
@@ -60,10 +66,6 @@ from noxfiles.session_examples import (
 )
 from noxfiles.session_lint import format, lint, mypy, security
 from noxfiles.session_test import test, test_integration, test_package, test_quick
-
-# Add noxfiles to Python path to import session modules
-noxfiles_dir = Path(__file__).parent / "noxfiles"
-sys.path.insert(0, str(noxfiles_dir))
 
 # Import all documentation sessions
 
