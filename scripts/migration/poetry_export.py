@@ -8,10 +8,10 @@ standardization.
 
 from __future__ import annotations
 
-from collections import defaultdict
 import logging
-from pathlib import Path
 import sys
+from collections import defaultdict
+from pathlib import Path
 from typing import Any
 
 import toml
@@ -26,7 +26,6 @@ logger = logging.getLogger("haive-dependency-manager")
 
 
 class HaiveDependencyManager:
-
     def __init__(self, project_root: Path | None = None):
         """Initialize the Dependency Manager.
 
@@ -72,13 +71,18 @@ class HaiveDependencyManager:
 
         try:
             # Load existing core pyproject
-            core_pyproject = toml.load(
-                core_pyproject_path) if core_pyproject_path.exists() else {}
+            core_pyproject = (
+                toml.load(core_pyproject_path) if core_pyproject_path.exists() else {}
+            )
 
             # Extract dev dependencies from root
-            root_dev_deps = (root_pyproject.get("tool", {}).get(
-                "poetry", {}).get("group", {}).get("dev",
-                                                   {}).get("dependencies", {}))
+            root_dev_deps = (
+                root_pyproject.get("tool", {})
+                .get("poetry", {})
+                .get("group", {})
+                .get("dev", {})
+                .get("dependencies", {})
+            )
 
             # Ensure nested structure exists
             core_pyproject.setdefault("tool", {})
@@ -94,8 +98,7 @@ class HaiveDependencyManager:
             with open(core_pyproject_path, "w") as f:
                 toml.dump(core_pyproject, f)
 
-            logger.info(
-                "✅ Successfully exported dev dependencies to haive-core")
+            logger.info("✅ Successfully exported dev dependencies to haive-core")
             for dep, version in root_dev_deps.items():
                 logger.info(f"  - {dep}: {version}")
 
@@ -116,8 +119,7 @@ class HaiveDependencyManager:
                 pyproject_path = package_path / "pyproject.toml"
 
                 if not pyproject_path.exists():
-                    logger.warning(
-                        f"No pyproject.toml found for {package_name}")
+                    logger.warning(f"No pyproject.toml found for {package_name}")
                     continue
 
                 package_pyproject = toml.load(pyproject_path)
@@ -128,9 +130,8 @@ class HaiveDependencyManager:
                 package_pyproject["tool"]["poetry"].setdefault("group", {})
 
                 for toolkit_name, toolkit_deps in toolkits.items():
-                    package_pyproject["tool"]["poetry"]["group"][
-                        toolkit_name] = {
-                            "dependencies": toolkit_deps,
+                    package_pyproject["tool"]["poetry"]["group"][toolkit_name] = {
+                        "dependencies": toolkit_deps,
                     }
 
                 # Write updated configuration
@@ -156,15 +157,15 @@ class HaiveDependencyManager:
         """
         toolkit_distribution = defaultdict(dict)
 
-        groups = root_pyproject.get("tool", {}).get("poetry",
-                                                    {}).get("group", {})
+        groups = root_pyproject.get("tool", {}).get("poetry", {}).get("group", {})
 
         for group_name, group_data in groups.items():
             target_package = self.TOOLKIT_MAPPING.get(group_name)
 
             if target_package and "dependencies" in group_data:
                 toolkit_distribution[target_package][group_name] = group_data[
-                    "dependencies"]
+                    "dependencies"
+                ]
 
         return dict(toolkit_distribution)
 

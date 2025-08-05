@@ -25,6 +25,5 @@ def validate_fixed_file(filepath: str) -> bool:
         code = Path(filepath).read_text(encoding="utf-8")
         return validate_fixed_code(code, original_path=filepath)
     except Exception as e:
-        console.print(
-            f"[red]❌ Failed to read {filepath} for validation: {e}[/red]")
+        console.print(f"[red]❌ Failed to read {filepath} for validation: {e}[/red]")
         return False

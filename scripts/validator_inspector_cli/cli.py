@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from rich.console import Console
 from validator_inspector_cli.core.discovery import analyze_validators
@@ -29,8 +29,7 @@ def process_path(input_path: Path, action: str):
     elif input_path.is_dir():
         py_files = list(input_path.rglob("*.py"))
         if not py_files:
-            console.print(
-                f"[yellow]No Python files found in {input_path}[/yellow]")
+            console.print(f"[yellow]No Python files found in {input_path}[/yellow]")
         for f in py_files:
             process_file(f, action)
     else:

@@ -11,9 +11,9 @@ This module provides comprehensive docstring formatting including:
 from __future__ import annotations
 
 import logging
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent.parent

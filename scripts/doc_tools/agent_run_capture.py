@@ -5,6 +5,7 @@ This module provides utilities for capturing agent execution outputs,
 including logs, state transitions, and graph visualizations for
 documentation.
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -18,8 +19,7 @@ from typing import Any
 from uuid import uuid4
 
 import yaml
-from pydantic import BaseModel
-from pydantic import Field
+from pydantic import BaseModel, Field
 
 # Ensure haive packages are in path
 workspace_root = Path(__file__).resolve().parents[2]

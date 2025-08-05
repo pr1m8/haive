@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from datetime import datetime
 import json
 import os
+from datetime import datetime
 from pathlib import Path
 
 from rich.console import Console
@@ -48,10 +48,7 @@ def write_report(filepath: str, issues: list[tuple[str, str]]) -> None:
 
     report_data = {
         "file": rel_path,
-        "issues": [{
-            "function": name,
-            "message": msg
-        } for name, msg in issues],
+        "issues": [{"function": name, "message": msg} for name, msg in issues],
         "timestamp": datetime.now().isoformat(),
     }
 
@@ -67,8 +64,8 @@ def report_and_log(filepath: str, issues: list[tuple[str, str]]) -> None:
 
     if issues:
         console.print(
-            Panel(f"Issues found in [bold]{filepath}[/bold]",
-                  title="Validator Issues"), )
+            Panel(f"Issues found in [bold]{filepath}[/bold]", title="Validator Issues"),
+        )
         for name, issue in issues:
             console.print(f"  [red]{name}[/red]: {issue}")
         write_report(filepath, issues)

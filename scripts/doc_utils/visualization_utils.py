@@ -8,10 +8,10 @@ workflow diagrams, execution traces, and performance metrics.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import logging
-from pathlib import Path
 import time
+from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 from scripts.doc_utils.agent_analyzer import AgentArchitecture, AgentInfo
@@ -553,8 +553,8 @@ class VisualizationManager:
         Returns:
             Visualization result
         """
-        from matplotlib import patches
         import matplotlib.pyplot as plt
+        from matplotlib import patches
 
         fig, ax = plt.subplots(1, 1, figsize=(config.width / 100, config.height / 100))
 

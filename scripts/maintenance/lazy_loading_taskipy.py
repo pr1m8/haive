@@ -7,8 +7,8 @@ capabilities.
 """
 
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from safe_lazy_loading_deployment import SafeLazyLoadingDeployment
 
@@ -48,8 +48,7 @@ def lazy_loading_dry_run():
     print("\n🧪 Running pre-deployment tests...")
     if deployer.test_imports_before_deployment(files):
         print("✅ All tests passed - deployment would be safe!")
-        print(
-            "\n💡 To actually deploy, run: poetry run task lazy-loading-deploy")
+        print("\n💡 To actually deploy, run: poetry run task lazy-loading-deploy")
         return True
     print("❌ Tests failed - deployment not recommended")
     return False
@@ -126,8 +125,7 @@ def lazy_loading_deploy():
             raise Exception("Pre-deployment tests failed")
 
         # Deploy files
-        deployment_success = deployer.deploy_incremental(files,
-                                                         test_after_each=True)
+        deployment_success = deployer.deploy_incremental(files, test_after_each=True)
 
         if not deployment_success:
             raise Exception("Deployment failed")
@@ -179,8 +177,7 @@ def lazy_loading_rollback():
             print(f"📦 Available backups in {deployer.backup_dir}:")
             import json
 
-            for manifest in sorted(manifests,
-                                   reverse=True)[:10]:  # Show last 10
+            for manifest in sorted(manifests, reverse=True)[:10]:  # Show last 10
                 with open(manifest) as f:
                     data = json.load(f)
                 print(
@@ -211,6 +208,5 @@ if __name__ == "__main__":
         lazy_loading_rollback()
         sys.exit(0)
     else:
-        print(
-            "Usage: python lazy_loading_taskipy.py {dry|test|deploy|rollback}")
+        print("Usage: python lazy_loading_taskipy.py {dry|test|deploy|rollback}")
         sys.exit(1)

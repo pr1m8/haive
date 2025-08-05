@@ -10,10 +10,10 @@ This script organizes the docs folder by:
 
 from __future__ import annotations
 
-from datetime import datetime
 import os
-from pathlib import Path
 import shutil
+from datetime import datetime
+from pathlib import Path
 
 
 def cleanup_docs_directory():
@@ -108,7 +108,8 @@ def clean_duplicate_files(docs_root):
     source_dir = docs_root / "source"
     if source_dir.exists():
         backup_files = list(source_dir.glob("conf_backup*.py")) + list(
-            source_dir.glob("conf_*.py"), )
+            source_dir.glob("conf_*.py"),
+        )
         for backup_file in backup_files:
             if backup_file.name != "conf.py" and backup_file.exists():
                 try:

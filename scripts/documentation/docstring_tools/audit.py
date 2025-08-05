@@ -10,8 +10,8 @@ This module provides comprehensive documentation auditing including:
 """
 
 import logging
-from pathlib import Path
 import sys
+from pathlib import Path
 from typing import Any
 
 from scripts.documentation.docstring_tools.coverage import CoverageAnalyzer
@@ -41,8 +41,7 @@ class DocumentationAuditor:
 
     def comprehensive_audit(self, package_path: str) -> dict[str, Any]:
         """Run comprehensive documentation audit with all tools."""
-        logger.info(
-            f"🔍 Running comprehensive documentation audit on {package_path}")
+        logger.info(f"🔍 Running comprehensive documentation audit on {package_path}")
 
         audit_results = {
             "coverage_report": None,
@@ -57,8 +56,7 @@ class DocumentationAuditor:
 
         # 1. Coverage analysis with multiple tools
         logger.info("📊 Step 1: Analyzing docstring coverage...")
-        coverage_report = self.coverage_analyzer.analyze_package_coverage(
-            package_path)
+        coverage_report = self.coverage_analyzer.analyze_package_coverage(package_path)
         audit_results["coverage_report"] = coverage_report
         audit_results["tools_used"].extend(["ast-analysis"])
 
@@ -70,14 +68,14 @@ class DocumentationAuditor:
         # 2. PEP 257 compliance validation
         logger.info("📋 Step 2: Validating PEP 257 compliance...")
         validation_results = self.compliance_checker.comprehensive_validation(
-            package_path, )
+            package_path,
+        )
         audit_results["validation_results"] = validation_results
         audit_results["tools_used"].extend(validation_results["tools_used"])
 
         # 3. Documentation quality analysis
         logger.info("📖 Step 3: Analyzing documentation quality...")
-        quality_results = self.quality_checker.comprehensive_quality_check(
-            package_path)
+        quality_results = self.quality_checker.comprehensive_quality_check(package_path)
         audit_results["quality_results"] = quality_results
         audit_results["tools_used"].extend(quality_results["tools_used"])
 
@@ -87,8 +85,7 @@ class DocumentationAuditor:
             # Temporarily set dry_run to check formatting
             original_dry_run = self.formatter.dry_run
             self.formatter.dry_run = True
-            formatting_result = self.formatter.format_with_docformatter(
-                package_path)
+            formatting_result = self.formatter.format_with_docformatter(package_path)
             self.formatter.dry_run = original_dry_run
             audit_results["formatting_needed"] = formatting_result
 
@@ -109,8 +106,7 @@ class DocumentationAuditor:
 
         return audit_results
 
-    def _generate_recommendations(self, audit_results: dict[str,
-                                                            Any]) -> list[str]:
+    def _generate_recommendations(self, audit_results: dict[str, Any]) -> list[str]:
         """Generate actionable recommendations based on audit results."""
         recommendations = []
 
@@ -133,17 +129,20 @@ class DocumentationAuditor:
         if validation_results and validation_results["total_issues"] > 50:
             recommendations.append(
                 f"📋 Many PEP 257 issues ({validation_results['total_issues']}) - "
-                "Run docformatter to fix formatting issues", )
+                "Run docformatter to fix formatting issues",
+            )
         elif validation_results and validation_results["total_issues"] > 0:
             recommendations.append(
                 f"📋 {validation_results['total_issues']} PEP 257 issues found - "
-                "Review and fix compliance issues", )
+                "Review and fix compliance issues",
+            )
 
         # Quality recommendations
         if quality_results and quality_results["total_issues"] > 20:
             recommendations.append(
                 f"📖 Many documentation quality issues ({quality_results['total_issues']}) - "
-                "Review markdown formatting and broken links", )
+                "Review markdown formatting and broken links",
+            )
 
         # Tool-specific recommendations
         if coverage_report and coverage_report.interrogate_score == 0.0:
@@ -153,12 +152,14 @@ class DocumentationAuditor:
 
         if not quality_results or not quality_results["vale_passed"]:
             recommendations.append(
-                "📖 Consider installing Vale for prose quality analysis", )
+                "📖 Consider installing Vale for prose quality analysis",
+            )
 
         # Generation recommendations
         if audit_results["generation_needed"]:
-            missing_count = len(
-                coverage_report.missing_targets) if coverage_report else 0
+            missing_count = (
+                len(coverage_report.missing_targets) if coverage_report else 0
+            )
             recommendations.append(
                 f"🚀 Generate {missing_count} missing docstrings to improve coverage",
             )
@@ -166,12 +167,12 @@ class DocumentationAuditor:
         # Formatting recommendations
         if audit_results["formatting_needed"]:
             recommendations.append(
-                "🔧 Apply docformatter to improve docstring formatting", )
+                "🔧 Apply docformatter to improve docstring formatting",
+            )
 
         # Overall recommendations
         if not recommendations:
-            recommendations.append(
-                "✅ Documentation is in excellent condition!")
+            recommendations.append("✅ Documentation is in excellent condition!")
 
         return recommendations
 
@@ -216,8 +217,7 @@ class DocumentationAuditor:
 
         # Calculate weighted average
         if score_components:
-            weighted_sum = sum(score * weight
-                               for _, score, weight in score_components)
+            weighted_sum = sum(score * weight for _, score, weight in score_components)
             total_weight = sum(weight for _, _, weight in score_components)
             overall_score = weighted_sum / total_weight if total_weight > 0 else 0
         else:
@@ -225,8 +225,7 @@ class DocumentationAuditor:
 
         return round(overall_score, 1)
 
-    def _report_comprehensive_audit_results(self, audit_results: dict[str,
-                                                                      Any]):
+    def _report_comprehensive_audit_results(self, audit_results: dict[str, Any]):
         """Report comprehensive audit results with summary."""
         logger.info("=" * 60)
         logger.info("📊 COMPREHENSIVE DOCUMENTATION AUDIT REPORT")
@@ -234,26 +233,25 @@ class DocumentationAuditor:
 
         # Overall score
         overall_score = audit_results["overall_score"]
-        score_emoji = ("🎉" if overall_score >= 90 else "👍" if overall_score
-                       >= 70 else "⚠️" if overall_score >= 50 else "❌")
-        logger.info(
-            f"{score_emoji} Overall Documentation Score: {overall_score}/100")
+        score_emoji = (
+            "🎉"
+            if overall_score >= 90
+            else "👍" if overall_score >= 70 else "⚠️" if overall_score >= 50 else "❌"
+        )
+        logger.info(f"{score_emoji} Overall Documentation Score: {overall_score}/100")
 
         # Tools used
         tools_used = list(set(audit_results["tools_used"]))
-        logger.info(
-            f"🛠️ Tools Used: {', '.join(tools_used) if tools_used else 'None'}"
-        )
+        logger.info(f"🛠️ Tools Used: {', '.join(tools_used) if tools_used else 'None'}")
 
         # Coverage summary
         coverage_report = audit_results["coverage_report"]
         if coverage_report:
             logger.info(
-                f"📈 Coverage: {
-                    coverage_report.coverage_percentage:.1f}% (AST analysis)", )
+                f"📈 Coverage: {coverage_report.coverage_percentage:.1f}% (AST analysis)",
+            )
             if coverage_report.interrogate_score > 0:
-                logger.info(
-                    f"🔍 Interrogate: {coverage_report.interrogate_score:.1f}%")
+                logger.info(f"🔍 Interrogate: {coverage_report.interrogate_score:.1f}%")
             if coverage_report.docstr_coverage_score > 0:
                 logger.info(
                     f"📋 Docstr-Coverage: {coverage_report.docstr_coverage_score:.1f}%",
@@ -262,8 +260,7 @@ class DocumentationAuditor:
         # Validation summary
         validation_results = audit_results["validation_results"]
         if validation_results:
-            logger.info(
-                f"📋 PEP 257 Issues: {validation_results['total_issues']}")
+            logger.info(f"📋 PEP 257 Issues: {validation_results['total_issues']}")
 
         # Quality summary
         quality_results = audit_results["quality_results"]
@@ -336,7 +333,8 @@ Examples:
         if coverage_report and coverage_report.missing_targets:
             logger.info("🚀 Generating missing docstrings...")
             generated = auditor.generator.generate_missing_docstrings(
-                coverage_report.missing_targets, )
+                coverage_report.missing_targets,
+            )
             logger.info(f"✅ Generated {generated} docstrings")
 
     if args.format and results["formatting_needed"]:

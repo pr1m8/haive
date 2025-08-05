@@ -3,11 +3,11 @@
 
 from __future__ import annotations
 
-from collections import defaultdict
-from pathlib import Path
 import re
 import subprocess
 import tempfile
+from collections import defaultdict
+from pathlib import Path
 
 
 def create_minimal_conf():
@@ -89,11 +89,11 @@ def run_test_build():
 
     # Create temp config
     with tempfile.NamedTemporaryFile(
-            mode="w",
-            suffix=".py",
-            prefix="test_conf_",
-            dir="docs/source",
-            delete=False,
+        mode="w",
+        suffix=".py",
+        prefix="test_conf_",
+        dir="docs/source",
+        delete=False,
     ) as f:
         f.write(create_minimal_conf())
         temp_conf = f.name
@@ -191,12 +191,12 @@ def categorize_references(warnings):
             elif "pydantic" in clean_target:
                 categories["pydantic"].append((ref_type, clean_target))
             elif "typing_extensions" in clean_target:
-                categories["typing_extensions"].append(
-                    (ref_type, clean_target))
+                categories["typing_extensions"].append((ref_type, clean_target))
             elif clean_target.startswith("haive."):
                 categories["haive_internal"].append((ref_type, clean_target))
             elif (len(clean_target) == 1 and clean_target.isupper()) or any(
-                    x in clean_target for x in ["T", "~", "TypeVar"]):
+                x in clean_target for x in ["T", "~", "TypeVar"]
+            ):
                 categories["generic_types"].append((ref_type, clean_target))
             else:
                 categories["external_libs"].append((ref_type, clean_target))

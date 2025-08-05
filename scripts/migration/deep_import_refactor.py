@@ -11,7 +11,6 @@ import astor
 
 
 class ImportTransformer(ast.NodeTransformer):
-
     def __init__(self, import_map):
         self.import_map = import_map
         self.changes = 0
@@ -20,13 +19,14 @@ class ImportTransformer(ast.NodeTransformer):
         new_names = []
         for name in node.names:
             for old_path, new_path in self.import_map.items():
-                if name.name == old_path or name.name.startswith(old_path +
-                                                                 "."):
-                    suffix = (name.name[len(old_path):]
-                              if name.name.startswith(old_path + ".") else "")
+                if name.name == old_path or name.name.startswith(old_path + "."):
+                    suffix = (
+                        name.name[len(old_path) :]
+                        if name.name.startswith(old_path + ".")
+                        else ""
+                    )
                     new_name = new_path + suffix
-                    new_names.append(
-                        ast.alias(name=new_name, asname=name.asname))
+                    new_names.append(ast.alias(name=new_name, asname=name.asname))
                     self.changes += 1
                     break
             else:
@@ -38,10 +38,12 @@ class ImportTransformer(ast.NodeTransformer):
     def visit_ImportFrom(self, node):
         if node.module:
             for old_path, new_path in self.import_map.items():
-                if node.module == old_path or node.module.startswith(old_path +
-                                                                     "."):
-                    suffix = (node.module[len(old_path):] if
-                              node.module.startswith(old_path + ".") else "")
+                if node.module == old_path or node.module.startswith(old_path + "."):
+                    suffix = (
+                        node.module[len(old_path) :]
+                        if node.module.startswith(old_path + ".")
+                        else ""
+                    )
                     node.module = new_path + suffix
                     self.changes += 1
                     break

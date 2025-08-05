@@ -7,6 +7,7 @@ This module provides automatic docstring generation including:
 - Module and class docstring generation
 - Smart insertion logic that preserves existing code
 """
+
 from __future__ import annotations
 
 import ast

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Find all Pydantic validator issues by trying to import modules."""
 
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 
 
 def find_python_modules(root_dir: Path) -> list[str]:
@@ -20,14 +20,15 @@ def find_python_modules(root_dir: Path) -> list[str]:
 
         # Convert file path to module path
         try:
-            relative_path = py_file.relative_to(root_dir.parent.parent,
-                                                )  # relative to packages/
+            relative_path = py_file.relative_to(
+                root_dir.parent.parent,
+            )  # relative to packages/
             module_parts = list(relative_path.parts)
 
             # Remove 'src' if present
             if "src" in module_parts:
                 src_idx = module_parts.index("src")
-                module_parts = module_parts[src_idx + 1:]
+                module_parts = module_parts[src_idx + 1 :]
 
             # Remove .py extension
             module_parts[-1] = module_parts[-1][:-3]
@@ -89,8 +90,7 @@ def test_imports():
                     lines = error_text.strip().split("\n")
                     for i, line in enumerate(lines):
                         if "PydanticUserError:" in line:
-                            error_msg = line.split(
-                                "PydanticUserError:")[1].strip()
+                            error_msg = line.split("PydanticUserError:")[1].strip()
 
                             # Try to find the exact location
                             location = "Unknown"
@@ -102,10 +102,8 @@ def test_imports():
                             # Extract method name from error
                             method_match = None
                             if "for <bound method" in error_msg:
-                                method_part = error_msg.split(
-                                    "for <bound method")[1]
-                                method_match = method_part.split(
-                                    " of ")[0].strip()
+                                method_part = error_msg.split("for <bound method")[1]
+                                method_match = method_part.split(" of ")[0].strip()
 
                             all_errors.append(
                                 {
@@ -114,7 +112,8 @@ def test_imports():
                                     "error": error_msg,
                                     "method": method_match,
                                     "location": location,
-                                }, )
+                                },
+                            )
 
                             print(f"\n❌ Validator error in {module_name}")
                             print(f"   File: {file_path}")
@@ -132,8 +131,9 @@ def test_imports():
     # Group by error type
     error_types = {}
     for error in all_errors:
-        error_type = error["error"].split(
-            ":")[0] if ":" in error["error"] else error["error"]
+        error_type = (
+            error["error"].split(":")[0] if ":" in error["error"] else error["error"]
+        )
         if error_type not in error_types:
             error_types[error_type] = []
         error_types[error_type].append(error)

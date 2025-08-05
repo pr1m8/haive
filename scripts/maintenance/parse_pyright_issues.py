@@ -7,8 +7,8 @@ checklists for systematic issue resolution.
 
 from __future__ import annotations
 
-from collections import defaultdict
 import json
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -24,7 +24,8 @@ def load_pyright_report(json_file: Path) -> dict[str, Any]:
 
 
 def group_issues_by_file(
-        diagnostics: list[dict[str, Any]], ) -> dict[str, list[dict[str, Any]]]:
+    diagnostics: list[dict[str, Any]],
+) -> dict[str, list[dict[str, Any]]]:
     """Group issues by file path."""
     grouped = defaultdict(list)
     for issue in diagnostics:
@@ -39,7 +40,8 @@ def group_issues_by_file(
 
 
 def group_issues_by_rule(
-        diagnostics: list[dict[str, Any]], ) -> dict[str, list[dict[str, Any]]]:
+    diagnostics: list[dict[str, Any]],
+) -> dict[str, list[dict[str, Any]]]:
     """Group issues by pyright rule."""
     grouped = defaultdict(list)
     for issue in diagnostics:
@@ -72,8 +74,7 @@ def generate_package_checklist(
     """Generate a markdown checklist for a package."""
 
     error_diagnostics = error_data.get("generalDiagnostics", [])
-    warning_diagnostics = warning_data.get("generalDiagnostics",
-                                           []) if warning_data else []
+    warning_diagnostics = warning_data.get("generalDiagnostics", []) if warning_data else []
 
     total_errors = len(error_diagnostics)
     total_warnings = len(warning_diagnostics)
@@ -93,9 +94,9 @@ def generate_package_checklist(
         error_by_rule = group_issues_by_rule(error_diagnostics)
         md += "### Error Categories\n\n"
         for rule, issues in sorted(
-                error_by_rule.items(),
-                key=lambda x: len(x[1]),
-                reverse=True,
+            error_by_rule.items(),
+            key=lambda x: len(x[1]),
+            reverse=True,
         ):
             md += f"- **{rule}**: {len(issues)} issues\n"
         md += "\n"
@@ -105,9 +106,9 @@ def generate_package_checklist(
         warning_by_rule = group_issues_by_rule(warning_diagnostics)
         md += "### Warning Categories\n\n"
         for rule, issues in sorted(
-                warning_by_rule.items(),
-                key=lambda x: len(x[1]),
-                reverse=True,
+            warning_by_rule.items(),
+            key=lambda x: len(x[1]),
+            reverse=True,
         ):
             md += f"- **{rule}**: {len(issues)} issues\n"
         md += "\n"
@@ -127,10 +128,9 @@ def generate_package_checklist(
                 message = issue.get("message", "No message")
                 rule = issue.get("rule", "unknown")
 
-                md += f"- [ ] **Line {issue.get('range',
-                                                {}).get('start',
-                                                        {}).get('line',
-                                                                0) + 1}** (`{rule}`)\n"
+                md += f"- [ ] **Line {
+                    issue.get('range', {}).get('start', {}).get('line', 0) + 1
+                }** (`{rule}`)\n"
                 md += f"  - **Issue**: {message}\n"
                 md += f"  - **Location**: `{location}`\n\n"
 
@@ -148,10 +148,9 @@ def generate_package_checklist(
                 message = issue.get("message", "No message")
                 rule = issue.get("rule", "unknown")
 
-                md += f"- [ ] **Line {issue.get('range',
-                                                {}).get('start',
-                                                        {}).get('line',
-                                                                0) + 1}** (`{rule}`)\n"
+                md += f"- [ ] **Line {
+                    issue.get('range', {}).get('start', {}).get('line', 0) + 1
+                }** (`{rule}`)\n"
                 md += f"  - **Issue**: {message}\n"
                 md += f"  - **Location**: `{location}`\n\n"
 
@@ -230,12 +229,10 @@ def main():
 
         # Load warning report (for critical packages)
         warning_file = reports_dir / f"{package}-warnings.json"
-        warning_data = load_pyright_report(
-            warning_file) if warning_file.exists() else None
+        warning_data = load_pyright_report(warning_file) if warning_file.exists() else None
 
         # Generate checklist
-        checklist = generate_package_checklist(package, error_data,
-                                               warning_data)
+        checklist = generate_package_checklist(package, error_data, warning_data)
 
         # Write checklist file
         output_file = output_dir / f"{package}_issues_checklist.md"

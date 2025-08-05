@@ -15,9 +15,8 @@ from __future__ import annotations
 
 import ast
 import importlib.util
-from pathlib import Path
 import sys
-
+from pathlib import Path
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent
@@ -152,12 +151,7 @@ class ImportAnalyzer:
                 self.missing_modules.add(module_name)
 
             # Check if it's an external dependency
-            if any(
-                ext in module_name for ext in [
-                    "google",
-                    "openai",
-                    "anthropic",
-                    "langchain"]):
+            if any(ext in module_name for ext in ["google", "openai", "anthropic", "langchain"]):
                 self.external_dependencies.add(module_name)
 
     def check_relative_import(self, file_path: Path, import_info: dict):
@@ -175,7 +169,7 @@ class ImportAnalyzer:
             # Remove 'src' and file extension
             if "src" in parts:
                 src_index = parts.index("src")
-                parts = parts[src_index + 1:]
+                parts = parts[src_index + 1 :]
             parts[-1] = parts[-1].replace(".py", "")
 
             # Calculate relative path
@@ -185,11 +179,9 @@ class ImportAnalyzer:
                         "file": str(file_path),
                         "line": line,
                         "issue": f"Relative import level {level} too high for module depth {
-                            len(parts) -
-                            1}",
-                        "import": f"{
-                            '.' *
-                            level}{module_name}",
+                            len(parts) - 1
+                        }",
+                        "import": f"{'.' * level}{module_name}",
                     },
                 )
 
@@ -280,8 +272,7 @@ class ImportAnalyzer:
         print("   - Check module structure and __init__.py files")
 
         print("\n3. Create missing core modules:")
-        core_missing = [
-            m for m in self.missing_modules if m.startswith("haive.core")][:5]
+        core_missing = [m for m in self.missing_modules if m.startswith("haive.core")][:5]
         for module in core_missing:
             print(f"   - {module}")
 

@@ -7,12 +7,12 @@ Purpose: Comprehensive analysis of Sphinx documentation build issues
 
 from __future__ import annotations
 
-from datetime import datetime
 import json
 import logging
-from pathlib import Path
 import subprocess
 import sys
+from datetime import datetime
+from pathlib import Path
 
 from conf_modules.import_diagnostics import (
     get_autodoc_mock_imports_from_diagnosis,

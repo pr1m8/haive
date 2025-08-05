@@ -4,8 +4,8 @@
 from __future__ import annotations
 
 import ast
-from pathlib import Path
 import sys
+from pathlib import Path
 
 
 def check_file_syntax(file_path: Path) -> tuple[bool, str]:
@@ -36,7 +36,9 @@ def scan_directory(directory: Path) -> list[tuple[Path, str]]:
 
     for py_file in directory.rglob("*.py"):
         # Skip some directories
-        if any(skip in str(py_file) for skip in [
+        if any(
+            skip in str(py_file)
+            for skip in [
                 "__pycache__",
                 ".git",
                 ".tox",
@@ -45,7 +47,8 @@ def scan_directory(directory: Path) -> list[tuple[Path, str]]:
                 "dist",
                 ".egg",
                 ".venv",
-        ]):
+            ]
+        ):
             continue
 
         success, error_msg = check_file_syntax(py_file)
