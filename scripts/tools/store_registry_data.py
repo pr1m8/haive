@@ -10,12 +10,11 @@ This script demonstrates:
 
 from __future__ import annotations
 
-from datetime import datetime
 import logging
 import os
+from datetime import datetime
 
 from dotenv import load_dotenv
-
 from haive.haive.dataflow.registry import (
     ComponentRegistry,
     extract_agent_graph,
@@ -50,8 +49,7 @@ def setup_supabase():
     """Setup Supabase connection and verify it's working."""
     # Check if Supabase environment variables are set
     supabase_url = os.getenv("SUPABASE_URL")
-    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv(
-        "SUPABASE_ANON_KEY")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
 
     if not supabase_url or not supabase_key:
         logger.error(
@@ -149,8 +147,7 @@ def store_agent_data(agent_name):
             )
             graph_id = registry_db.upsert_agent_graph(agent_graph)
             if graph_id:
-                logger.info(
-                    f"Stored graph for agent {agent_name} with ID: {graph_id}")
+                logger.info(f"Stored graph for agent {agent_name} with ID: {graph_id}")
             else:
                 logger.warning(f"Failed to store graph for agent {agent_name}")
 
@@ -195,12 +192,12 @@ def store_component_data(component_name):
 
         registry_item_id = registry_db.upsert_registry_item(registry_item)
         if not registry_item_id:
-            logger.error(
-                f"Failed to store component {component_name} in registry")
+            logger.error(f"Failed to store component {component_name} in registry")
             return False
 
         logger.info(
-            f"Stored component {component_name} in registry with ID: {registry_item_id}", )
+            f"Stored component {component_name} in registry with ID: {registry_item_id}",
+        )
 
         # 2. Store component schemas
         if schema:
@@ -212,8 +209,7 @@ def store_component_data(component_name):
                     timestamp=datetime.now(),
                 )
                 registry_db.upsert_schema_definition(input_schema)
-                logger.info(
-                    f"Stored input schema for component {component_name}")
+                logger.info(f"Stored input schema for component {component_name}")
 
             if schema.output_schema:
                 output_schema = SchemaDefinition(
@@ -223,8 +219,7 @@ def store_component_data(component_name):
                     timestamp=datetime.now(),
                 )
                 registry_db.upsert_schema_definition(output_schema)
-                logger.info(
-                    f"Stored output schema for component {component_name}")
+                logger.info(f"Stored output schema for component {component_name}")
 
             if schema.state_schema:
                 state_schema = SchemaDefinition(
@@ -234,14 +229,12 @@ def store_component_data(component_name):
                     timestamp=datetime.now(),
                 )
                 registry_db.upsert_schema_definition(state_schema)
-                logger.info(
-                    f"Stored state schema for component {component_name}")
+                logger.info(f"Stored state schema for component {component_name}")
 
         return True
 
     except Exception as e:
-        logger.error(f"Error storing component {component_name}: {e}",
-                     exc_info=True)
+        logger.error(f"Error storing component {component_name}: {e}", exc_info=True)
         return False
 
 

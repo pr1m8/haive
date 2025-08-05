@@ -3,8 +3,8 @@
 
 import argparse
 import json
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
 
 class DocLinter:
@@ -25,10 +25,7 @@ class DocLinter:
         for rst_file in rst_files:
             try:
                 result = subprocess.run(
-                    [
-                        "poetry", "run", "rstcheck",
-                        str(rst_file), "--report", "warning"
-                    ],
+                    ["poetry", "run", "rstcheck", str(rst_file), "--report", "warning"],
                     capture_output=True,
                     text=True,
                     check=False,
@@ -49,8 +46,7 @@ class DocLinter:
 
         try:
             result = subprocess.run(
-                ["poetry", "run", "sphinx-lint",
-                 str(self.docs_dir)],
+                ["poetry", "run", "sphinx-lint", str(self.docs_dir)],
                 capture_output=True,
                 text=True,
                 check=False,
@@ -80,8 +76,7 @@ class DocLinter:
         for py_file in py_files[:50]:  # Limit to first 50 for preview
             try:
                 result = subprocess.run(
-                    ["poetry", "run", "pydocstyle",
-                     str(py_file)],
+                    ["poetry", "run", "pydocstyle", str(py_file)],
                     capture_output=True,
                     text=True,
                     check=False,
@@ -106,8 +101,7 @@ class DocLinter:
 
             # Run rstfmt
             result = subprocess.run(
-                ["poetry", "run", "rstfmt",
-                 str(sample_file)],
+                ["poetry", "run", "rstfmt", str(sample_file)],
                 capture_output=True,
                 text=True,
                 check=False,
@@ -146,9 +140,7 @@ class DocLinter:
             success = result.returncode == 0
 
             # Clean up test build
-            subprocess.run(["rm", "-rf", "docs/test_build"],
-                           capture_output=True,
-                           check=False)
+            subprocess.run(["rm", "-rf", "docs/test_build"], capture_output=True, check=False)
 
             return success, result.stderr
 
@@ -170,8 +162,8 @@ class DocLinter:
             rst_issues = self.results["rstcheck"]
             issue_count = sum(len(issues) for issues in rst_issues.values())
             print(
-                f"\n📄 RST Issues (rstcheck): {issue_count} issues in {
-                    len(rst_issues)} files", )
+                f"\n📄 RST Issues (rstcheck): {issue_count} issues in {len(rst_issues)} files",
+            )
 
             # Show first 5 files as examples
             for file, issues in list(rst_issues.items())[:5]:
@@ -194,7 +186,9 @@ class DocLinter:
             issue_count = sum(len(issues) for issues in py_issues.values())
             print(
                 f"\n🐍 Python Docstring Issues (pydocstyle): {issue_count} issues in {
-                    len(py_issues)} files", )
+                    len(py_issues)
+                } files",
+            )
             total_issues += issue_count
 
         print(f"\n📊 Total Issues Found: {total_issues}")
@@ -221,23 +215,18 @@ class DocLinter:
 
         print("\n5. To validate all changes:")
         print("   poetry run rstcheck docs/source/ --recursive")
-        print(
-            "   poetry run sphinx-build -b html -W docs/source docs/test_build"
-        )
+        print("   poetry run sphinx-build -b html -W docs/source docs/test_build")
 
 
 def main():
     """Main function."""
-    parser = argparse.ArgumentParser(
-        description="Preview documentation issues")
+    parser = argparse.ArgumentParser(description="Preview documentation issues")
     parser.add_argument(
         "--fix",
         action="store_true",
         help="Apply fixes (not just preview)",
     )
-    parser.add_argument("--test-build",
-                        action="store_true",
-                        help="Test Sphinx build")
+    parser.add_argument("--test-build", action="store_true", help="Test Sphinx build")
     args = parser.parse_args()
 
     docs_dir = Path("docs/source")

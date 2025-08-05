@@ -7,8 +7,8 @@ intelligent analysis of function signatures and naming patterns.
 
 import argparse
 import ast
-from pathlib import Path
 import re
+from pathlib import Path
 
 
 class TypeHintFixer:
@@ -29,9 +29,7 @@ class TypeHintFixer:
             "Callable": "from typing import Callable",
         }
 
-    def fix_function_signature(self,
-                               file_path: Path,
-                               dry_run: bool = True) -> bool:
+    def fix_function_signature(self, file_path: Path, dry_run: bool = True) -> bool:
         """Fix type hints in a single file."""
         try:
             with open(file_path, encoding="utf-8") as f:
@@ -84,9 +82,7 @@ class TypeHintFixer:
     ) -> dict | None:
         """Analyze a function to determine what fixes are needed."""
         # Skip private methods (except __init__)
-        if node.name.startswith("_") and node.name not in [
-                "__init__", "__call__"
-        ]:
+        if node.name.startswith("_") and node.name not in ["__init__", "__call__"]:
             return None
 
         # Get the original function signature line
@@ -99,10 +95,7 @@ class TypeHintFixer:
             if arg.annotation is None and arg.arg not in ["self", "cls"]:
                 suggested_type = self._suggest_param_type(arg.arg, node.name)
                 if suggested_type:
-                    missing_params.append({
-                        "name": arg.arg,
-                        "type": suggested_type
-                    })
+                    missing_params.append({"name": arg.arg, "type": suggested_type})
 
         # Check return type
         missing_return = None
@@ -113,18 +106,12 @@ class TypeHintFixer:
 
         if missing_params or missing_return:
             return {
-                "line":
-                node.lineno,
-                "function_name":
-                node.name,
-                "original_line":
-                original_line.strip(),
-                "missing_params":
-                missing_params,
-                "missing_return":
-                missing_return,
-                "description":
-                self._generate_fix_description(
+                "line": node.lineno,
+                "function_name": node.name,
+                "original_line": original_line.strip(),
+                "missing_params": missing_params,
+                "missing_return": missing_return,
+                "description": self._generate_fix_description(
                     node.name,
                     missing_params,
                     missing_return,
@@ -133,8 +120,7 @@ class TypeHintFixer:
 
         return None
 
-    def _suggest_param_type(self, param_name: str,
-                            func_name: str) -> str | None:
+    def _suggest_param_type(self, param_name: str, func_name: str) -> str | None:
         """Suggest parameter type based on naming patterns."""
         # Enhanced pattern matching
         patterns = {
@@ -214,8 +200,7 @@ class TypeHintFixer:
             return "Any"  # Agent types vary
 
         # LLM-specific patterns
-        if any(term in param_name.lower()
-               for term in ["llm", "model", "engine"]):
+        if any(term in param_name.lower() for term in ["llm", "model", "engine"]):
             return "Any"
 
         return None
@@ -256,8 +241,9 @@ class TypeHintFixer:
             return "Any"
         if func_name.startswith(("list_", "all_")):
             return "List[Any]"
-        if func_name == "__init__" or (func_name.startswith("_")
-                                       and not has_explicit_return):
+        if func_name == "__init__" or (
+            func_name.startswith("_") and not has_explicit_return
+        ):
             return "None"
 
         # Based on return analysis
@@ -317,8 +303,7 @@ class TypeHintFixer:
                 self._track_needed_imports(param["type"], needed_imports)
 
             if fix["missing_return"]:
-                self._track_needed_imports(fix["missing_return"],
-                                           needed_imports)
+                self._track_needed_imports(fix["missing_return"], needed_imports)
 
         # Add imports at the top
         if needed_imports:
@@ -349,22 +334,24 @@ class TypeHintFixer:
             if colon_pos != -1:
                 paren_pos = line.rfind(")", 0, colon_pos)
                 if paren_pos != -1:
-                    line = line[:paren_pos +
-                                1] + f" -> {missing_return}" + line[paren_pos +
-                                                                    1:]
+                    line = (
+                        line[: paren_pos + 1]
+                        + f" -> {missing_return}"
+                        + line[paren_pos + 1 :]
+                    )
 
         return line
 
     def _track_needed_imports(self, type_hint: str, needed_imports: set):
         """Track what imports are needed for type hints."""
         for typing_type in [
-                "List",
-                "Dict",
-                "Optional",
-                "Union",
-                "Any",
-                "Tuple",
-                "Callable",
+            "List",
+            "Dict",
+            "Optional",
+            "Union",
+            "Any",
+            "Tuple",
+            "Callable",
         ]:
             if typing_type in type_hint:
                 needed_imports.add(typing_type)
@@ -379,8 +366,11 @@ class TypeHintFixer:
 
         # Skip docstring and comments at top
         for i, line in enumerate(lines):
-            if (line.strip() and not line.strip().startswith("#")
-                    and not line.strip().startswith('"""')):
+            if (
+                line.strip()
+                and not line.strip().startswith("#")
+                and not line.strip().startswith('"""')
+            ):
                 if line.startswith(("from ", "import ")):
                     insert_pos = i + 1
                 else:
@@ -389,14 +379,12 @@ class TypeHintFixer:
 
         # Check if typing import already exists
         existing_typing_imports = set()
-        for line in lines[:insert_pos + 5]:  # Check first few lines
+        for line in lines[: insert_pos + 5]:  # Check first few lines
             if "from typing import" in line:
                 # Extract existing imports
                 match = re.search(r"from typing import (.+)", line)
                 if match:
-                    imports = [
-                        imp.strip() for imp in match.group(1).split(",")
-                    ]
+                    imports = [imp.strip() for imp in match.group(1).split(",")]
                     existing_typing_imports.update(imports)
 
         # Add missing imports
@@ -410,8 +398,7 @@ class TypeHintFixer:
 
 def main():
     """Main fixer function."""
-    parser = argparse.ArgumentParser(
-        description="Fix type hints in Python files")
+    parser = argparse.ArgumentParser(description="Fix type hints in Python files")
     parser.add_argument("target", help="File or directory to fix")
     parser.add_argument(
         "--dry-run",

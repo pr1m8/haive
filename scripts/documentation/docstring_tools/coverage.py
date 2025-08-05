@@ -11,11 +11,11 @@ This module provides comprehensive docstring coverage analysis including:
 from __future__ import annotations
 
 import ast
-from dataclasses import dataclass, field
 import logging
-from pathlib import Path
 import subprocess
 import sys
+from dataclasses import dataclass, field
+from pathlib import Path
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent.parent

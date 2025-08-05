@@ -7,6 +7,7 @@ This module provides comprehensive documentation quality checking including:
 - Documentation link validation
 - Writing style consistency analysis
 """
+
 from __future__ import annotations
 
 import logging
@@ -35,8 +36,7 @@ class QualityChecker:
 
         # Look for documentation files
         doc_patterns = ["*.md", "*.rst", "*.txt"]
-        package_dir = project_root / "packages" / package_path.replace(
-            "-", "_")
+        package_dir = project_root / "packages" / package_path.replace("-", "_")
 
         doc_files = []
         for pattern in doc_patterns:
@@ -52,8 +52,7 @@ class QualityChecker:
                     "vale",
                     "--config",
                     str(project_root / ".vale.ini"),
-                    *[str(f)
-                      for f in doc_files[:10]],  # Limit to first 10 files
+                    *[str(f) for f in doc_files[:10]],  # Limit to first 10 files
                 ],
                 capture_output=True,
                 text=True,
@@ -80,8 +79,7 @@ class QualityChecker:
         """Check markdown files for quality issues."""
         logger.info(f"📝 Running markdown quality check on {package_path}")
 
-        package_dir = project_root / "packages" / package_path.replace(
-            "-", "_")
+        package_dir = project_root / "packages" / package_path.replace("-", "_")
         md_files = list(package_dir.rglob("*.md"))
 
         if not md_files:
@@ -101,8 +99,7 @@ class QualityChecker:
                 for i, line in enumerate(lines, 1):
                     # Check for missing spaces after hash headers
                     if line.startswith("#") and not line.startswith("# "):
-                        issues.append(
-                            f"{md_file}:{i}: Missing space after # in header")
+                        issues.append(f"{md_file}:{i}: Missing space after # in header")
 
                     # Check for trailing whitespace
                     if line.endswith(" "):
@@ -132,8 +129,7 @@ class QualityChecker:
         """Validate links in documentation files."""
         logger.info(f"🔗 Running link validation on {package_path}")
 
-        package_dir = project_root / "packages" / package_path.replace(
-            "-", "_")
+        package_dir = project_root / "packages" / package_path.replace("-", "_")
         doc_files = []
 
         # Find documentation files
@@ -167,12 +163,12 @@ class QualityChecker:
                             )
 
                         # Check for relative links to missing files
-                        if not url.startswith(
-                                ("http", "https", "mailto", "#")):
+                        if not url.startswith(("http", "https", "mailto", "#")):
                             link_file = doc_file.parent / url
                             if not link_file.exists():
                                 broken_links.append(
-                                    f"{doc_file}:{i}: Missing file '{url}' linked as '{text}'", )
+                                    f"{doc_file}:{i}: Missing file '{url}' linked as '{text}'",
+                                )
 
             except Exception as e:
                 logger.error(f"❌ Failed to validate links in {doc_file}: {e}")
@@ -182,8 +178,7 @@ class QualityChecker:
             for link in broken_links[:10]:
                 logger.warning(f"  ⚠️ {link}")
             if len(broken_links) > 10:
-                logger.info(
-                    f"  ... and {len(broken_links) - 10} more broken links")
+                logger.info(f"  ... and {len(broken_links) - 10} more broken links")
         else:
             logger.info("✅ No broken links found!")
 
@@ -222,8 +217,7 @@ class QualityChecker:
             quality_results["tools_used"].append("link-validation")
 
         # Calculate total issues
-        quality_results["total_issues"] = len(markdown_issues) + len(
-            broken_links)
+        quality_results["total_issues"] = len(markdown_issues) + len(broken_links)
 
         self._report_quality_results(quality_results)
         return quality_results
@@ -234,8 +228,8 @@ class QualityChecker:
         logger.info(f"  🔍 Total Issues Found: {results['total_issues']}")
         logger.info(
             f"  🛠️ Tools Used: {
-                ', '.join(
-                    results['tools_used']) if results['tools_used'] else 'None'}",
+                ', '.join(results['tools_used']) if results['tools_used'] else 'None'
+            }",
         )
 
         if results["vale_passed"]:
@@ -269,9 +263,7 @@ def main():
         action="store_true",
         help="Check markdown quality only",
     )
-    parser.add_argument("--links",
-                        action="store_true",
-                        help="Validate links only")
+    parser.add_argument("--links", action="store_true", help="Validate links only")
     parser.add_argument(
         "--comprehensive",
         action="store_true",
@@ -282,12 +274,10 @@ def main():
 
     checker = QualityChecker()
 
-    if args.comprehensive or (not args.vale and not args.markdown
-                              and not args.links):
+    if args.comprehensive or (not args.vale and not args.markdown and not args.links):
         # Default to comprehensive
         results = checker.comprehensive_quality_check(args.target)
-        return 0 if results["total_issues"] == 0 and results[
-            "vale_passed"] else 1
+        return 0 if results["total_issues"] == 0 and results["vale_passed"] else 1
     if args.vale:
         passed = checker.run_vale_check(args.target)
         return 0 if passed else 1

@@ -9,7 +9,6 @@ from typing import Any
 
 
 class ValidatorAuditor(ast.NodeVisitor):
-
     def __init__(self, file_path: Path):
         self.file_path = file_path
         self.issues = []
@@ -42,7 +41,8 @@ class ValidatorAuditor(ast.NodeVisitor):
                             "function": node.name,
                             "issue": "field_validator missing @classmethod",
                             "severity": "error",
-                        }, )
+                        },
+                    )
                 elif has_self:
                     self.issues.append(
                         {
@@ -52,7 +52,8 @@ class ValidatorAuditor(ast.NodeVisitor):
                             "function": node.name,
                             "issue": "field_validator has self instead of cls",
                             "severity": "error",
-                        }, )
+                        },
+                    )
 
             elif validator_info["type"] == "model_validator":
                 mode = validator_info.get("mode", "after")
@@ -65,15 +66,14 @@ class ValidatorAuditor(ast.NodeVisitor):
                                 "line": node.lineno,
                                 "class": self.current_class,
                                 "function": node.name,
-                                "issue":
-                                'model_validator(mode="before") missing @classmethod',
+                                "issue": 'model_validator(mode="before") missing @classmethod',
                                 "severity": "error",
-                            }, )
+                            },
+                        )
                     elif has_self:
                         self.issues.append(
                             {
-                                "file": str(
-                                    self.file_path),
+                                "file": str(self.file_path),
                                 "line": node.lineno,
                                 "class": self.current_class,
                                 "function": node.name,
@@ -86,8 +86,7 @@ class ValidatorAuditor(ast.NodeVisitor):
                     if validator_info["has_classmethod"]:
                         self.issues.append(
                             {
-                                "file": str(
-                                    self.file_path),
+                                "file": str(self.file_path),
                                 "line": node.lineno,
                                 "class": self.current_class,
                                 "function": node.name,
@@ -102,17 +101,16 @@ class ValidatorAuditor(ast.NodeVisitor):
                                 "line": node.lineno,
                                 "class": self.current_class,
                                 "function": node.name,
-                                "issue":
-                                'model_validator(mode="after") has cls instead of self',
+                                "issue": 'model_validator(mode="after") has cls instead of self',
                                 "severity": "error",
-                            }, )
+                            },
+                        )
 
                 elif mode == "wrap":
                     if validator_info["has_classmethod"]:
                         self.issues.append(
                             {
-                                "file": str(
-                                    self.file_path),
+                                "file": str(self.file_path),
                                 "line": node.lineno,
                                 "class": self.current_class,
                                 "function": node.name,
@@ -197,11 +195,7 @@ def main():
         # Show first 3 examples
         for issue in issues[:3]:
             print(
-                f"  - {
-                    issue['file']}:{
-                    issue['line']} in {
-                    issue['class']}.{
-                    issue['function']}",
+                f"  - {issue['file']}:{issue['line']} in {issue['class']}.{issue['function']}",
             )
         if len(issues) > 3:
             print(f"  ... and {len(issues) - 3} more")

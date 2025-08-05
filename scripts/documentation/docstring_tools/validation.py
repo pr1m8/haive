@@ -9,9 +9,9 @@ This module provides comprehensive docstring validation including:
 """
 
 import logging
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 from typing import Any
 
 # Add project root to path
@@ -130,8 +130,7 @@ class ComplianceChecker:
 
     def comprehensive_validation(self, package_path: str) -> dict[str, Any]:
         """Run comprehensive docstring validation with multiple tools."""
-        logger.info(
-            f"🔍 Running comprehensive docstring validation on {package_path}")
+        logger.info(f"🔍 Running comprehensive docstring validation on {package_path}")
 
         validation_results = {
             "pydocstyle_issues": [],
@@ -153,8 +152,7 @@ class ComplianceChecker:
             validation_results["tools_used"].append("flake8-docstrings")
 
         # Calculate total issues
-        validation_results["total_issues"] = len(pydocstyle_issues) + len(
-            flake8_issues)
+        validation_results["total_issues"] = len(pydocstyle_issues) + len(flake8_issues)
 
         self._report_validation_results(validation_results)
         return validation_results
@@ -165,13 +163,12 @@ class ComplianceChecker:
         logger.info(f"  🔍 Total Issues Found: {results['total_issues']}")
         logger.info(
             f"  🛠️ Tools Used: {
-                ', '.join(
-                    results['tools_used']) if results['tools_used'] else 'None'}",
+                ', '.join(results['tools_used']) if results['tools_used'] else 'None'
+            }",
         )
 
         if results["pydocstyle_issues"]:
-            logger.info(
-                f"  📝 pydocstyle Issues: {len(results['pydocstyle_issues'])}")
+            logger.info(f"  📝 pydocstyle Issues: {len(results['pydocstyle_issues'])}")
 
         if results["flake8_docstring_issues"]:
             logger.info(
@@ -187,11 +184,10 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Docstring PEP 257 compliance checking", )
+        description="Docstring PEP 257 compliance checking",
+    )
     parser.add_argument("--target", required=True, help="Target package")
-    parser.add_argument("--pydocstyle",
-                        action="store_true",
-                        help="Use pydocstyle only")
+    parser.add_argument("--pydocstyle", action="store_true", help="Use pydocstyle only")
     parser.add_argument(
         "--flake8",
         action="store_true",

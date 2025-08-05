@@ -13,9 +13,8 @@ Usage:
 
 from __future__ import annotations
 
-from pathlib import Path
 import re
-
+from pathlib import Path
 
 # Project root
 project_root = Path(__file__).parent.parent.parent
@@ -171,11 +170,11 @@ Location: {relative_path}
                         f.write(content)
 
                     self.fixes_applied.append(
-                        f"Fixed relative imports in {
-                            file_path.relative_to(project_root)}", )
+                        f"Fixed relative imports in {file_path.relative_to(project_root)}",
+                    )
                     print(
-                        f"✅ Fixed relative imports in {
-                            file_path.relative_to(project_root)}", )
+                        f"✅ Fixed relative imports in {file_path.relative_to(project_root)}",
+                    )
 
             except Exception as e:
                 self.errors_encountered.append(
@@ -333,8 +332,8 @@ def {func_name}(*args, **kwargs):
                                 f.write(content)
 
                             self.fixes_applied.append(
-                                f"Fixed Pydantic validators in {
-                                    py_file.relative_to(project_root)}", )
+                                f"Fixed Pydantic validators in {py_file.relative_to(project_root)}",
+                            )
                             print(
                                 f"✅ Fixed Pydantic validators in {
                                     py_file.relative_to(project_root)

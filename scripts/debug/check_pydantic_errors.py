@@ -12,8 +12,8 @@ Run before documentation builds to catch errors early.
 from __future__ import annotations
 
 import ast
-from pathlib import Path
 import sys
+from pathlib import Path
 
 
 def check_file_for_pydantic_errors(filepath: Path) -> list[str]:
@@ -37,7 +37,8 @@ def check_file_for_pydantic_errors(filepath: Path) -> list[str]:
         for line_num, line in enumerate(lines, 1):
             if "@field_validatorvalidate_" in line:
                 errors.append(
-                    f"{filepath}:{line_num}: Invalid @field_validator syntax - missing parentheses", )
+                    f"{filepath}:{line_num}: Invalid @field_validator syntax - missing parentheses",
+                )
 
         # 2. Check for args_schema direct assignment in BaseTool classes
         for node in ast.walk(tree):

@@ -7,10 +7,10 @@ proposed fixes.
 from __future__ import annotations
 
 import ast
-from collections import defaultdict
 import json
-from pathlib import Path
 import sys
+from collections import defaultdict
+from pathlib import Path
 from typing import Any
 
 
@@ -48,30 +48,23 @@ def analyze_file(file_path: Path) -> dict[str, Any]:
                         context_after.append(line_info)
 
         return {
-            "file":
-            str(file_path),
-            "line":
-            e.lineno,
-            "error_type":
-            type(e).__name__,
-            "msg":
-            e.msg,
-            "text":
-            e.text.strip() if e.text else None,
-            "category":
-            categorize_error(e.msg),
-            "context_before":
-            context_before,
-            "context_after":
-            context_after,
-            "error_line": (lines[e.lineno - 1].rstrip()
-                           if e.lineno and e.lineno <= len(lines) else None),
-            "proposed_fix":
-            propose_fix(
+            "file": str(file_path),
+            "line": e.lineno,
+            "error_type": type(e).__name__,
+            "msg": e.msg,
+            "text": e.text.strip() if e.text else None,
+            "category": categorize_error(e.msg),
+            "context_before": context_before,
+            "context_after": context_after,
+            "error_line": (
+                lines[e.lineno - 1].rstrip()
+                if e.lineno and e.lineno <= len(lines)
+                else None
+            ),
+            "proposed_fix": propose_fix(
                 e.msg,
                 e.text,
-                lines[e.lineno -
-                      1] if e.lineno and e.lineno <= len(lines) else None,
+                lines[e.lineno - 1] if e.lineno and e.lineno <= len(lines) else None,
             ),
         }
     except Exception as e:
@@ -103,8 +96,7 @@ def categorize_error(msg: str) -> str:
         return "invalid_syntax"
     if "closing parenthesis" in msg_lower and "does not match" in msg_lower:
         return "mismatched_parenthesis"
-    if "expected" in msg_lower and ("except" in msg_lower
-                                    or "finally" in msg_lower):
+    if "expected" in msg_lower and ("except" in msg_lower or "finally" in msg_lower):
         return "missing_except_finally"
     return "other"
 
@@ -133,14 +125,11 @@ def propose_fix(msg: str, error_text: str, full_line: str) -> dict[str, str]:
         if full_line and "\\" in full_line:
             # Show what needs to be escaped
             return {
-                "type":
-                "escape_backslash",
-                "description":
-                "Escape backslash or remove line continuation",
-                "example":
-                full_line.replace("\\n", "\\\\n").replace("\\d",
-                                                          "\\\\d").replace(
-                                                              "\\w", "\\\\w"),
+                "type": "escape_backslash",
+                "description": "Escape backslash or remove line continuation",
+                "example": full_line.replace("\\n", "\\\\n")
+                .replace("\\d", "\\\\d")
+                .replace("\\w", "\\\\w"),
             }
 
     elif "expected an indented block" in msg_lower:
@@ -198,7 +187,9 @@ def main():
     # Scan all Python files
     for py_file in search_path.rglob("*.py"):
         # Skip cache directories
-        if any(skip in str(py_file) for skip in [
+        if any(
+            skip in str(py_file)
+            for skip in [
                 "__pycache__",
                 ".git",
                 ".tox",
@@ -207,7 +198,8 @@ def main():
                 "dist",
                 ".egg",
                 ".venv",
-        ]):
+            ]
+        ):
             continue
 
         error = analyze_file(py_file)
@@ -218,10 +210,7 @@ def main():
     # Create detailed catalog
     catalog = {
         "total_errors": len(errors),
-        "categories": {
-            cat: len(errs)
-            for cat, errs in error_by_category.items()
-        },
+        "categories": {cat: len(errs) for cat, errs in error_by_category.items()},
         "errors_by_category": {},
     }
 
@@ -245,8 +234,7 @@ def main():
 
         # Summary
         f.write("ERROR CATEGORIES:\n")
-        for cat, count in sorted(error_by_category.items(),
-                                 key=lambda x: -len(x[1])):
+        for cat, count in sorted(error_by_category.items(), key=lambda x: -len(x[1])):
             f.write(f"  - {cat}: {count} errors\n")
         f.write("\n")
 
@@ -287,15 +275,12 @@ def main():
     # Print summary
     print(f"📊 Found {len(errors)} syntax errors\n")
     print("📈 Error Categories:")
-    for cat, count in sorted(error_by_category.items(),
-                             key=lambda x: -len(x[1])):
+    for cat, count in sorted(error_by_category.items(), key=lambda x: -len(x[1])):
         print(f"   {cat}: {count} errors")
 
     print("\n📄 Detailed catalog saved to:")
     print("   - syntax_errors_catalog.json (machine-readable)")
-    print(
-        "   - syntax_errors_report_detailed.txt (human-readable with examples)"
-    )
+    print("   - syntax_errors_report_detailed.txt (human-readable with examples)")
 
     # Show a few examples
     print("\n📌 Sample Fixes:")

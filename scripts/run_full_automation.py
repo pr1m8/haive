@@ -7,10 +7,10 @@ maximize code quality improvements.
 
 from __future__ import annotations
 
-from datetime import datetime
-from pathlib import Path
 import subprocess
 import time
+from datetime import datetime
+from pathlib import Path
 
 
 class AutomationRunner:
@@ -21,15 +21,11 @@ class AutomationRunner:
         self.results: dict[str, dict] = {}
         self.start_time = time.time()
 
-    def run_command(self, cmd: list[str],
-                    description: str) -> tuple[bool, str, float]:
+    def run_command(self, cmd: list[str], description: str) -> tuple[bool, str, float]:
         """Run a command and track results."""
         start = time.time()
         try:
-            result = subprocess.run(cmd,
-                                    capture_output=True,
-                                    text=True,
-                                    check=True)
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
             elapsed = time.time() - start
             return True, result.stdout, elapsed
         except subprocess.CalledProcessError as e:
@@ -91,15 +87,10 @@ class AutomationRunner:
 
         # Sort imports with isort
         success, output, elapsed = self.run_command(
-            ["poetry", "run", "isort",
-             str(self.target_path)],
+            ["poetry", "run", "isort", str(self.target_path)],
             "Sorting imports with isort",
         )
-        self.results["isort"] = {
-            "success": success,
-            "time": elapsed,
-            "output": output
-        }
+        self.results["isort"] = {"success": success, "time": elapsed, "output": output}
 
     def phase3_type_hints(self):
         """Phase 3: Add and fix type hints."""
@@ -125,10 +116,7 @@ class AutomationRunner:
 
         # Run autotyping for additional hints
         success, output, elapsed = self.run_command(
-            [
-                "poetry", "run", "autotyping", "--safe-imports",
-                str(self.target_path)
-            ],
+            ["poetry", "run", "autotyping", "--safe-imports", str(self.target_path)],
             "Running autotyping",
         )
         self.results["autotyping"] = {
@@ -141,15 +129,10 @@ class AutomationRunner:
         """Phase 4: Format code consistently."""
         # Format with black
         success, output, elapsed = self.run_command(
-            ["poetry", "run", "black",
-             str(self.target_path)],
+            ["poetry", "run", "black", str(self.target_path)],
             "Formatting with black",
         )
-        self.results["black"] = {
-            "success": success,
-            "time": elapsed,
-            "output": output
-        }
+        self.results["black"] = {"success": success, "time": elapsed, "output": output}
 
         # Additional formatting with autopep8
         success, output, elapsed = self.run_command(
@@ -174,8 +157,7 @@ class AutomationRunner:
         """Phase 5: Check and improve documentation."""
         # Check docstring coverage
         success, output, elapsed = self.run_command(
-            ["poetry", "run", "interrogate",
-             str(self.target_path), "-vv"],
+            ["poetry", "run", "interrogate", str(self.target_path), "-vv"],
             "Checking docstring coverage",
         )
         self.results["interrogate"] = {
@@ -203,8 +185,7 @@ class AutomationRunner:
 
         # Check docstring/implementation match
         success, output, elapsed = self.run_command(
-            ["poetry", "run", "darglint",
-             str(self.target_path)],
+            ["poetry", "run", "darglint", str(self.target_path)],
             "Checking docstring accuracy",
         )
         self.results["darglint"] = {
@@ -217,15 +198,10 @@ class AutomationRunner:
         """Phase 6: Run quality and type checks."""
         # Run ruff linter
         success, output, elapsed = self.run_command(
-            ["poetry", "run", "ruff", "check",
-             str(self.target_path)],
+            ["poetry", "run", "ruff", "check", str(self.target_path)],
             "Running ruff linter",
         )
-        self.results["ruff"] = {
-            "success": success,
-            "time": elapsed,
-            "output": output
-        }
+        self.results["ruff"] = {"success": success, "time": elapsed, "output": output}
 
         # Run mypy type checker
         success, output, elapsed = self.run_command(
@@ -238,16 +214,11 @@ class AutomationRunner:
             ],
             "Running mypy type checker",
         )
-        self.results["mypy"] = {
-            "success": success,
-            "time": elapsed,
-            "output": output
-        }
+        self.results["mypy"] = {"success": success, "time": elapsed, "output": output}
 
         # Run pyright type checker
         success, output, elapsed = self.run_command(
-            ["poetry", "run", "pyright",
-             str(self.target_path)],
+            ["poetry", "run", "pyright", str(self.target_path)],
             "Running pyright type checker",
         )
         self.results["pyright"] = {
@@ -263,11 +234,7 @@ class AutomationRunner:
             ["poetry", "run", "pytest", "--cov=haive", "-n", "auto"],
             "Running tests with coverage",
         )
-        self.results["pytest"] = {
-            "success": success,
-            "time": elapsed,
-            "output": output
-        }
+        self.results["pytest"] = {"success": success, "time": elapsed, "output": output}
 
     def generate_report(self):
         """Generate summary report."""
@@ -293,9 +260,7 @@ class AutomationRunner:
             for tool, result in self.results.items():
                 f.write(f"\n{'=' * 40}\n")
                 f.write(f"Tool: {tool}\n")
-                f.write(
-                    f"Status: {'Success' if result['success'] else 'Failed'}\n"
-                )
+                f.write(f"Status: {'Success' if result['success'] else 'Failed'}\n")
                 f.write(f"Time: {result['time']:.1f}s\n")
                 f.write(f"Output:\n{result['output'][:1000]}\n")
 
@@ -318,16 +283,13 @@ def main():
     """Main entry point."""
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Run full automation workflow")
+    parser = argparse.ArgumentParser(description="Run full automation workflow")
     parser.add_argument(
         "--target",
         default="packages/",
         help="Target directory to process",
     )
-    parser.add_argument("--skip-tests",
-                        action="store_true",
-                        help="Skip running tests")
+    parser.add_argument("--skip-tests", action="store_true", help="Skip running tests")
 
     args = parser.parse_args()
 

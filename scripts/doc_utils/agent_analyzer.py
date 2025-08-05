@@ -8,9 +8,9 @@ patterns, and extract metadata from agent implementations across the Haive ecosy
 from __future__ import annotations
 
 import ast
+import logging
 from dataclasses import dataclass
 from enum import Enum
-import logging
 from pathlib import Path
 from typing import Any
 

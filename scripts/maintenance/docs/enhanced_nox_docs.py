@@ -4,11 +4,11 @@ styling."""
 
 from __future__ import annotations
 
-from datetime import datetime
 import os
-from pathlib import Path
 import shutil
 import subprocess
+from datetime import datetime
+from pathlib import Path
 
 import nox
 
@@ -80,8 +80,7 @@ def run_sphinx_build(session, cmd, operation, log_file):
                     session.log(f"✅ {line}")
                 elif "AutoAPI" in line and "Reading files" in line:
                     session.log(f"📚 {line}")
-                elif line and not line.startswith(
-                        ("Running Sphinx", "loading")):
+                elif line and not line.startswith(("Running Sphinx", "loading")):
                     session.log(f"📄 {line}")
 
         status["returncode"] = process.poll()
@@ -124,8 +123,7 @@ def run_sphinx_build(session, cmd, operation, log_file):
 def docs_enhanced(session):
     """Enhanced sphinx-build with comprehensive error handling, syntax
     checking, and beautiful output."""
-    session.log(
-        "🎨 Running ENHANCED sphinx-build with comprehensive features...")
+    session.log("🎨 Running ENHANCED sphinx-build with comprehensive features...")
     session.log("=" * 60)
     session.log("🚀 HAIVE DOCUMENTATION BUILD - ENHANCED MODE")
     session.log("=" * 60)
@@ -213,8 +211,7 @@ def docs_enhanced(session):
         session.log("🌐 Access your documentation:")
         session.log(f"   📁 Local file: {BUILD_DIR / 'index.html'}")
         session.log("   🌐 HTTP server: Run 'nox -s docs_serve' to serve")
-        session.log(
-            "   🔄 Auto-rebuild: Run 'nox -s docs_autobuild' for live updates")
+        session.log("   🔄 Auto-rebuild: Run 'nox -s docs_autobuild' for live updates")
         session.log("")
         session.log("✨ Features available:")
         session.log("   🌙 Dark/Light mode toggle")
@@ -235,8 +232,7 @@ def docs_enhanced(session):
         session.log("   No documentation output was generated")
         session.log(f"   📋 Check log file: {log_file}")
         session.log("   🔧 Common fixes:")
-        session.log(
-            "     - Run 'poetry run python fix_critical_syntax_errors.py'")
+        session.log("     - Run 'poetry run python fix_critical_syntax_errors.py'")
         session.log("     - Check for missing dependencies")
         session.log("     - Verify Python imports")
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Automatically fix documentation issues using proper tools."""
+
 from __future__ import annotations
 
 import argparse
@@ -15,7 +16,8 @@ class DocAutoFixer:
     def __init__(self, backup: bool = True):
         self.backup = backup
         self.backup_dir = Path(
-            f"docs/backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}", )
+            f"docs/backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+        )
         self.fixed_files = []
         self.errors = []
 
@@ -76,16 +78,12 @@ class DocAutoFixer:
             cmd.append("--diff")
 
         # Add options for better formatting
-        cmd.extend(
-            ["--wrap-summaries", "79", "--wrap-descriptions", "79", "--blank"])
+        cmd.extend(["--wrap-summaries", "79", "--wrap-descriptions", "79", "--blank"])
 
         cmd.append("packages/")
 
         try:
-            result = subprocess.run(cmd,
-                                    capture_output=True,
-                                    text=True,
-                                    check=False)
+            result = subprocess.run(cmd, capture_output=True, text=True, check=False)
 
             if dry_run and result.stdout:
                 # Count files that would be changed
@@ -159,8 +157,7 @@ class DocAutoFixer:
 
                 # Fix exec_code -> code-block
                 if ".. exec_code::" in content:
-                    content = content.replace(".. exec_code::",
-                                              ".. code-block::")
+                    content = content.replace(".. exec_code::", ".. code-block::")
                     content = content.replace("   :language: python", "")
                     content = content.replace("   :hide_output:", "")
 
@@ -186,9 +183,7 @@ class DocAutoFixer:
                         with open(rst_file, "w") as f:
                             f.write(content)
                         self.fixed_files.append(str(rst_file))
-                    print(
-                        f"  {'Would fix' if dry_run else 'Fixed'}: {rst_file.name}"
-                    )
+                    print(f"  {'Would fix' if dry_run else 'Fixed'}: {rst_file.name}")
                     fixes_applied += 1
 
             except Exception as e:
@@ -202,12 +197,10 @@ class DocAutoFixer:
         print("\n✔️  Validating fixes with rstcheck...")
 
         issues_found = 0
-        for rst_file in Path("docs/source").rglob(
-                "*.rst")[:10]:  # Check first 10
+        for rst_file in Path("docs/source").rglob("*.rst")[:10]:  # Check first 10
             try:
                 result = subprocess.run(
-                    ["poetry", "run", "rstcheck",
-                     str(rst_file)],
+                    ["poetry", "run", "rstcheck", str(rst_file)],
                     capture_output=True,
                     text=True,
                     check=False,
@@ -247,17 +240,14 @@ class DocAutoFixer:
 
 def main():
     """Main function."""
-    parser = argparse.ArgumentParser(
-        description="Auto-fix documentation issues")
+    parser = argparse.ArgumentParser(description="Auto-fix documentation issues")
     parser.add_argument(
         "--dry-run",
         action="store_true",
         default=True,
         help="Preview changes without applying (default)",
     )
-    parser.add_argument("--fix",
-                        action="store_true",
-                        help="Actually apply fixes")
+    parser.add_argument("--fix", action="store_true", help="Actually apply fixes")
     parser.add_argument(
         "--no-backup",
         action="store_true",
@@ -277,8 +267,7 @@ def main():
 
     print("🚀 Documentation Auto-Fixer")
     print(
-        f"   Mode: {
-            'DRY RUN - Preview Only' if args.dry_run else '⚠️  APPLYING FIXES'}",
+        f"   Mode: {'DRY RUN - Preview Only' if args.dry_run else '⚠️  APPLYING FIXES'}",
     )
 
     # Create backup if fixing

@@ -24,7 +24,6 @@ except ImportError:
         _DRY_RUN_MODE = enabled
 
     def sham(func):
-
         def wrapper(*args, **kwargs):
             if _DRY_RUN_MODE:
                 return None
@@ -40,8 +39,7 @@ class LazyLoadingGenerator:
         self.dry_run = dry_run
         dryrun(dry_run)
 
-    def analyze_package_structure(self,
-                                  init_file: Path) -> dict[str, set[str]]:
+    def analyze_package_structure(self, init_file: Path) -> dict[str, set[str]]:
         """Analyze package structure to find submodules and classes."""
         package_dir = init_file.parent
 
@@ -56,8 +54,9 @@ class LazyLoadingGenerator:
         subpackages = {
             d.name
             for d in package_dir.iterdir()
-            if d.is_dir() and not d.name.startswith("_") and (
-                d / "__init__.py").exists()
+            if d.is_dir()
+            and not d.name.startswith("_")
+            and (d / "__init__.py").exists()
         }
 
         # Try to find existing exports in current __init__.py
@@ -88,8 +87,7 @@ class LazyLoadingGenerator:
             for node in ast.walk(tree):
                 if isinstance(node, ast.Assign):
                     for target in node.targets:
-                        if isinstance(target,
-                                      ast.Name) and target.id == "__all__":
+                        if isinstance(target, ast.Name) and target.id == "__all__":
                             if isinstance(node.value, ast.List):
                                 for elt in node.value.elts:
                                     if isinstance(elt, ast.Constant):
@@ -115,8 +113,7 @@ class LazyLoadingGenerator:
                 structure,
             )
         if template_type == "pep562":
-            return self._generate_pep562_template(init_file, package_name,
-                                                  structure)
+            return self._generate_pep562_template(init_file, package_name, structure)
         raise ValueError(f"Unknown template type: {template_type}")
 
     def _extract_existing_docstring(self, init_file: Path) -> str | None:
@@ -133,9 +130,12 @@ class LazyLoadingGenerator:
             tree = ast.parse(content)
 
             # Get the first statement if it's a docstring
-            if (tree.body and isinstance(tree.body[0], ast.Expr)
-                    and isinstance(tree.body[0].value, ast.Constant)
-                    and isinstance(tree.body[0].value.value, str)):
+            if (
+                tree.body
+                and isinstance(tree.body[0], ast.Expr)
+                and isinstance(tree.body[0].value, ast.Constant)
+                and isinstance(tree.body[0].value.value, str)
+            ):
                 return tree.body[0].value.value
 
             return None
@@ -271,8 +271,7 @@ __all__ = list(_LAZY_IMPORTS.keys())
     @sham
     def backup_file(self, file_path: Path) -> Path:
         """Create backup of original file."""
-        backup_path = file_path.with_suffix(
-            f".py.backup.{self._get_timestamp()}")
+        backup_path = file_path.with_suffix(f".py.backup.{self._get_timestamp()}")
 
         if file_path.exists():
             import shutil
@@ -418,8 +417,7 @@ Examples:
     args = parser.parse_args()
 
     # Check environment variable
-    dry_run = args.dry_run or os.getenv("DRY_RUN",
-                                        "").lower() in ("1", "true", "yes")
+    dry_run = args.dry_run or os.getenv("DRY_RUN", "").lower() in ("1", "true", "yes")
 
     generator = LazyLoadingGenerator(dry_run=dry_run)
 

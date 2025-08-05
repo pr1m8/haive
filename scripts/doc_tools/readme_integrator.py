@@ -4,6 +4,7 @@
 This script discovers README files throughout the codebase and
 integrates them into the Sphinx documentation.
 """
+
 from __future__ import annotations
 
 import re

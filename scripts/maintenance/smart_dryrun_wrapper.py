@@ -21,6 +21,7 @@ Examples:
     # Direct dry-run flag injection
     python scripts/smart_dryrun_wrapper.py --dry-run -- rm -rf logs/
 """
+
 from __future__ import annotations
 
 import os
@@ -59,8 +60,7 @@ class SmartDryRunWrapper:
 
     def __init__(self):
         self.dry_run = os.getenv("DRY_RUN", "").lower() in ("1", "true", "yes")
-        self.interactive = os.getenv("INTERACTIVE",
-                                     "").lower() in ("1", "true", "yes")
+        self.interactive = os.getenv("INTERACTIVE", "").lower() in ("1", "true", "yes")
         self.target_path = None
 
     def detect_tool_name(self, command: list[str]) -> str | None:
@@ -69,8 +69,7 @@ class SmartDryRunWrapper:
             return None
 
         # Handle poetry run commands
-        if len(command
-               ) >= 3 and command[0] == "poetry" and command[1] == "run":
+        if len(command) >= 3 and command[0] == "poetry" and command[1] == "run":
             return command[2]
 
         # Handle direct commands
@@ -106,9 +105,9 @@ class SmartDryRunWrapper:
             )
             return flag.replace("--", "") in result.stdout.lower()
         except (
-                subprocess.TimeoutExpired,
-                subprocess.SubprocessError,
-                FileNotFoundError,
+            subprocess.TimeoutExpired,
+            subprocess.SubprocessError,
+            FileNotFoundError,
         ):
             return False
 
@@ -126,8 +125,7 @@ class SmartDryRunWrapper:
         # For other tools, add at the end
         return [*command, str(self.target_path)]
 
-    def build_dry_run_command(self,
-                              command: list[str]) -> tuple[list[str], bool]:
+    def build_dry_run_command(self, command: list[str]) -> tuple[list[str], bool]:
         """Build command with dry-run flags if possible."""
         if not command:
             return command, False
@@ -167,8 +165,7 @@ class SmartDryRunWrapper:
 
     def execute_command(self, command: list[str]) -> int:
         """Execute the command with appropriate handling."""
-        modified_command, has_dry_run_flag = self.build_dry_run_command(
-            command)
+        modified_command, has_dry_run_flag = self.build_dry_run_command(command)
 
         # Show what we're about to do
         if self.dry_run and not has_dry_run_flag:
@@ -210,7 +207,7 @@ def main():
 
         if arg == "--":
             # Everything after -- is the command
-            command = args[i + 1:]
+            command = args[i + 1 :]
             break
         if arg == "--dry-run":
             wrapper.dry_run = True

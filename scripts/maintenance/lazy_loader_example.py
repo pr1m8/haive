@@ -8,40 +8,37 @@ This shows how to implement lazy loading for haive.core.models
 # haive/core/models/__init__.py
 """Models module with lazy loading for performance."""
 
+import importlib
+
 # Define submodules to lazy load
 import os
-import importlib
 import sys
 from typing import TYPE_CHECKING
+
 import lazy_loader as lazy
-from scripts.maintenance import (
-    embeddings as embeddings,
-    llm as llm,
-    retriever as retriever,
-    vectorstore as vectorstore,
-)
+
+from scripts.maintenance import embeddings as embeddings
+from scripts.maintenance import llm as llm
+from scripts.maintenance import retriever as retriever
+from scripts.maintenance import vectorstore as vectorstore
+from scripts.maintenance.embeddings import BaseEmbeddingConfig as BaseEmbeddingConfig
+from scripts.maintenance.embeddings import EmbeddingProvider as EmbeddingProvider
 from scripts.maintenance.embeddings import (
-    BaseEmbeddingConfig as BaseEmbeddingConfig,
-    EmbeddingProvider as EmbeddingProvider,
     OpenAIEmbeddingConfig as OpenAIEmbeddingConfig,
 )
-from scripts.maintenance.llm import (
-    LLMConfig as LLMConfig,
-    LLMFactory as LLMFactory,
-    LLMProvider as LLMProvider,
-    create_llm as create_llm,
-)
-from scripts.maintenance.metadata_mixin import MetadataMixin as MetadataMixin
+from scripts.maintenance.llm import LLMConfig as LLMConfig
+from scripts.maintenance.llm import LLMFactory as LLMFactory
+from scripts.maintenance.llm import LLMProvider as LLMProvider
+from scripts.maintenance.llm import create_llm as create_llm
 from scripts.maintenance.metadata import ModelMetadata as ModelMetadata
-
+from scripts.maintenance.metadata_mixin import MetadataMixin as MetadataMixin
 
 submodules = ["llm", "embeddings", "retriever", "vectorstore"]
 
 # Define specific attributes from submodules
 submod_attrs = {
     "llm": ["LLMConfig", "LLMFactory", "LLMProvider", "create_llm"],
-    "embeddings":
-    ["BaseEmbeddingConfig", "EmbeddingProvider", "OpenAIEmbeddingConfig"],
+    "embeddings": ["BaseEmbeddingConfig", "EmbeddingProvider", "OpenAIEmbeddingConfig"],
     "retriever": ["RetrieverConfig", "RetrieverType"],
     "vectorstore": ["VectorStoreConfig", "VectorStoreProvider"],
 }
@@ -105,30 +102,22 @@ if TYPE_CHECKING:
 # Lazy imports mapping
 _LAZY_IMPORTS = {
     # Submodules
-    "llm":
-    "haive.core.models.llm",
-    "embeddings":
-    "haive.core.models.embeddings",
-    "retriever":
-    "haive.core.models.retriever",
-    "vectorstore":
-    "haive.core.models.vectorstore",
+    "llm": "haive.core.models.llm",
+    "embeddings": "haive.core.models.embeddings",
+    "retriever": "haive.core.models.retriever",
+    "vectorstore": "haive.core.models.vectorstore",
     # Specific classes (module_path, attribute)
     "LLMConfig": ("haive.core.models.llm", "LLMConfig"),
     "LLMFactory": ("haive.core.models.llm", "LLMFactory"),
     "LLMProvider": ("haive.core.models.llm", "LLMProvider"),
     "create_llm": ("haive.core.models.llm", "create_llm"),
-    "BaseEmbeddingConfig":
-    ("haive.core.models.embeddings", "BaseEmbeddingConfig"),
+    "BaseEmbeddingConfig": ("haive.core.models.embeddings", "BaseEmbeddingConfig"),
     "EmbeddingProvider": ("haive.core.models.embeddings", "EmbeddingProvider"),
-    "OpenAIEmbeddingConfig":
-    ("haive.core.models.embeddings", "OpenAIEmbeddingConfig"),
+    "OpenAIEmbeddingConfig": ("haive.core.models.embeddings", "OpenAIEmbeddingConfig"),
     "RetrieverConfig": ("haive.core.models.retriever", "RetrieverConfig"),
     "RetrieverType": ("haive.core.models.retriever", "RetrieverType"),
-    "VectorStoreConfig":
-    ("haive.core.models.vectorstore", "VectorStoreConfig"),
-    "VectorStoreProvider":
-    ("haive.core.models.vectorstore", "VectorStoreProvider"),
+    "VectorStoreConfig": ("haive.core.models.vectorstore", "VectorStoreConfig"),
+    "VectorStoreProvider": ("haive.core.models.vectorstore", "VectorStoreProvider"),
 }
 
 # Eager imports (lightweight)
@@ -188,8 +177,7 @@ __all__ = [
 """Models module with conditional lazy loading."""
 
 # Check if we're building docs
-BUILDING_DOCS = os.environ.get(
-    "READTHEDOCS") == "True" or "sphinx" in sys.modules
+BUILDING_DOCS = os.environ.get("READTHEDOCS") == "True" or "sphinx" in sys.modules
 
 if BUILDING_DOCS:
     # For documentation, import everything normally
