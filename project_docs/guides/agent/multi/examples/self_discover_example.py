@@ -24,19 +24,17 @@ from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 class SelectedModules(BaseModel):
     """Output from the module selection agent."""
 
-    selected_modules: list[str] = Field(
-        description="Selected reasoning modules")
+    selected_modules: list[str] = Field(description="Selected reasoning modules")
     rationale: str = Field(description="Why these modules were selected")
-    confidence: float = Field(ge=0.0,
-                              le=1.0,
-                              description="Confidence in selection")
+    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in selection")
 
 
 class AdaptedModules(BaseModel):
     """Output from the module adaptation agent."""
 
     adapted_modules: list[dict[str, str]] = Field(
-        description="Modules adapted for the task", )
+        description="Modules adapted for the task",
+    )
     task_context: str = Field(description="Context of the task")
     adaptation_notes: str = Field(description="Notes about adaptations made")
 
@@ -45,7 +43,8 @@ class ReasoningStructure(BaseModel):
     """Output from the reasoning structure agent."""
 
     reasoning_structure: dict[str, Any] = Field(
-        description="Complete reasoning structure", )
+        description="Complete reasoning structure",
+    )
     steps: list[str] = Field(description="Reasoning steps")
     methodology: str = Field(description="Overall methodology")
     expected_outcome: str = Field(description="What outcome is expected")

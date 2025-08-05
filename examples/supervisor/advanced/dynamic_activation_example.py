@@ -27,8 +27,7 @@ from haive.tools.tools.search_tools import tavily_search_tool
 
 
 # Mock langgraph_supervisor tools until real implementation is available
-def create_handoff_tool(target_agent_name: str, target_agent: Any,
-                        description: str):
+def create_handoff_tool(target_agent_name: str, target_agent: Any, description: str):
     """Create a handoff tool for transferring control to another agent."""
 
     @tool
@@ -70,24 +69,18 @@ def multiply(a: int, b: int) -> int:
 
 
 @tool
-def calculate_compound_interest(principal: float, rate: float,
-                                years: int) -> float:
+def calculate_compound_interest(principal: float, rate: float, years: int) -> float:
     """Calculate compound interest."""
-    return principal * ((1 + rate)**years)
+    return principal * ((1 + rate) ** years)
 
 
 # Enhanced Agent Registry with activation tracking
 class EnhancedAgentRegistry:
-
     def __init__(self):
         self.agents = {}
         self.active_agents = set()
 
-    def register(self,
-                 name: str,
-                 agent: Any,
-                 description: str,
-                 active: bool = True):
+    def register(self, name: str, agent: Any, description: str, active: bool = True):
         """Register an agent with active/inactive state."""
         self.agents[name] = {
             "agent": agent,
@@ -107,18 +100,11 @@ class EnhancedAgentRegistry:
 
     def get_active_agents(self) -> dict[str, Any]:
         """Get only active agents."""
-        return {
-            name: info
-            for name, info in self.agents.items() if name in self.active_agents
-        }
+        return {name: info for name, info in self.agents.items() if name in self.active_agents}
 
     def get_inactive_agents(self) -> dict[str, Any]:
         """Get inactive agents."""
-        return {
-            name: info
-            for name, info in self.agents.items()
-            if name not in self.active_agents
-        }
+        return {name: info for name, info in self.agents.items() if name not in self.active_agents}
 
     def is_agent_available(self, name: str) -> bool:
         """Check if agent exists (active or inactive)."""
@@ -136,8 +122,7 @@ class SupervisorState(StateSchema):
 
 # Dynamic Supervisor with Activation Logic
 class DynamicActivationSupervisor(ReactAgent):
-    agent_registry: EnhancedAgentRegistry = Field(
-        default_factory=EnhancedAgentRegistry)
+    agent_registry: EnhancedAgentRegistry = Field(default_factory=EnhancedAgentRegistry)
     capability_model: DynamicChoiceModel | None = Field(default=None)
 
     @model_validator(mode="after")
@@ -151,13 +136,15 @@ class DynamicActivationSupervisor(ReactAgent):
     def _update_available_tools(self):
         """Update tools based on active agents."""
         # Clear existing handoff/forward tools
-        if hasattr(self, "engine") and self.engine and hasattr(
-                self.engine, "tools"):
+        if hasattr(self, "engine") and self.engine and hasattr(self.engine, "tools"):
             self.engine.tools = [
-                tool for tool in self.engine.tools
-                if not (tool.name.startswith("transfer_to_")
-                        or tool.name.startswith("forward_to_")
-                        or tool.name == "forward_message")
+                tool
+                for tool in self.engine.tools
+                if not (
+                    tool.name.startswith("transfer_to_")
+                    or tool.name.startswith("forward_to_")
+                    or tool.name == "forward_message"
+                )
             ]
 
         # Add handoff tools for active agents only
@@ -169,8 +156,7 @@ class DynamicActivationSupervisor(ReactAgent):
             transfer_tool = create_handoff_tool(
                 target_agent_name=agent_name,
                 target_agent=agent_info["agent"],
-                description=f"Transfer control to {agent_name}: {
-                    agent_info['description']}",
+                description=f"Transfer control to {agent_name}: {agent_info['description']}",
             )
             handoff_tools.append(transfer_tool)
 
@@ -183,26 +169,19 @@ class DynamicActivationSupervisor(ReactAgent):
 
         # Add capability check tool
         @tool
-        def check_required_capabilities(
-                task_description: str) -> dict[str, Any]:
+        def check_required_capabilities(task_description: str) -> dict[str, Any]:
             """Analyze task and identify required capabilities."""
             capabilities = []
 
             # Simple capability detection
-            if "research" in task_description.lower(
-            ) or "find" in task_description.lower():
+            if "research" in task_description.lower() or "find" in task_description.lower():
                 capabilities.append("research")
-            if "calculate" in task_description.lower(
-            ) or "math" in task_description.lower():
+            if "calculate" in task_description.lower() or "math" in task_description.lower():
                 capabilities.append("math")
-            if "write" in task_description.lower(
-            ) or "essay" in task_description.lower():
+            if "write" in task_description.lower() or "essay" in task_description.lower():
                 capabilities.append("essay_writing")
 
-            return {
-                "required_capabilities": capabilities,
-                "task": task_description
-            }
+            return {"required_capabilities": capabilities, "task": task_description}
 
         # Add activation tool
         @tool
@@ -275,8 +254,7 @@ async def test_dynamic_activation():
         word_count: int
 
     essay_engine = create_structured_output_engine(
-        model_config=LLMConfig(
-            model="gpt-4"),
+        model_config=LLMConfig(model="gpt-4"),
         output_schema=Essay,
         system_message="You are an essay writing specialist. Create well-structured essays.",
     )
@@ -284,8 +262,7 @@ async def test_dynamic_activation():
     essay_writer_agent = SimpleAgent(
         name="essay_writer_agent",
         engine=essay_engine,
-        config=SimpleAgentConfig(
-            system_message="Essay writer with structured output"),
+        config=SimpleAgentConfig(system_message="Essay writer with structured output"),
     )
 
     # Create supervisor
@@ -336,7 +313,8 @@ Important: Always check required capabilities before attempting to route tasks."
 
     # Test 1: Task that only needs active agents
     await supervisor.arun(
-        "Calculate the compound interest on $10,000 at 5% for 10 years", )
+        "Calculate the compound interest on $10,000 at 5% for 10 years",
+    )
 
     # Test 2: Task that requires inactive agent
     await supervisor.arun(

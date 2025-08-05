@@ -63,12 +63,17 @@ def main():
     ]
 
     agent = DynamicReactAgent.create_with_tools(
-        name="demo_agent", tools=tools, engine=AugLLMConfig(
-            system_message="You are a helpful assistant with dynamic tool capabilities.", ), )
+        name="demo_agent",
+        tools=tools,
+        engine=AugLLMConfig(
+            system_message="You are a helpful assistant with dynamic tool capabilities.",
+        ),
+    )
 
     # Show that the agent has the discovery tool
     discovery_tools = [
-        tool for tool in agent.engine.tools
+        tool
+        for tool in agent.engine.tools
         if hasattr(tool, "name") and "discover_and_load_tools" in tool.name
     ]
 

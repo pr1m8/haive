@@ -49,32 +49,30 @@ class ExecuteAgentNode:
         payload = state.execution_payload
 
         if not agent_name:
-            state.agent_response = 'No agent specified for execution'
-            return {'state': state}
+            state.agent_response = "No agent specified for execution"
+            return {"state": state}
 
         if agent_name not in state.available_agents:
             state.agent_response = (
-                f"Agent '{agent_name}' not found. Available: {
-                    list(
-                        state.available_agents.keys())}")
+                f"Agent '{agent_name}' not found. Available: {list(state.available_agents.keys())}"
+            )
             state.agent_to_execute = None
             state.execution_payload = None
-            return {'state': state}
+            return {"state": state}
 
         agent = state.available_agents[agent_name]
-        task = payload or 'No task specified'
+        task = payload or "No task specified"
 
         try:
             # Execute the agent
-            if hasattr(agent, 'arun'):
+            if hasattr(agent, "arun"):
                 result = await agent.arun(task)
-            elif hasattr(agent, 'invoke'):
-                result = await agent.ainvoke(
-                    {'messages': [HumanMessage(content=task)]})
+            elif hasattr(agent, "invoke"):
+                result = await agent.ainvoke({"messages": [HumanMessage(content=task)]})
                 # Extract content if result has messages
-                if isinstance(result, dict) and 'messages' in result:
-                    last_msg = result['messages'][-1]
-                    result = getattr(last_msg, 'content', str(last_msg))
+                if isinstance(result, dict) and "messages" in result:
+                    last_msg = result["messages"][-1]
+                    result = getattr(last_msg, "content", str(last_msg))
             else:
                 result = f"Agent {agent_name} has no runnable interface"
 
@@ -83,17 +81,19 @@ class ExecuteAgentNode:
             # Add to conversation
             state.messages.append(
                 {
-                    'role': 'assistant',
-                    'content': state.agent_response,
-                    'agent': agent_name,
-                    'timestamp': datetime.now().isoformat(),
-                }, )
+                    "role": "assistant",
+                    "content": state.agent_response,
+                    "agent": agent_name,
+                    "timestamp": datetime.now().isoformat(),
+                },
+            )
 
             # Update usage metadata
             if agent_name in state.agent_metadata:
-                state.agent_metadata[agent_name]['usage_count'] = (
-                    state.agent_metadata[agent_name].get('usage_count', 0) + 1)
-                state.agent_metadata[agent_name]['last_used'] = datetime.now()
+                state.agent_metadata[agent_name]["usage_count"] = (
+                    state.agent_metadata[agent_name].get("usage_count", 0) + 1
+                )
+                state.agent_metadata[agent_name]["last_used"] = datetime.now()
 
         except Exception as e:
             state.agent_response = f"Error executing {agent_name}: {e!s}"
@@ -102,7 +102,7 @@ class ExecuteAgentNode:
         state.agent_to_execute = None
         state.execution_payload = None
 
-        return {'state': state}
+        return {"state": state}
 
 
 class AddAgentNode:
@@ -113,37 +113,36 @@ class AddAgentNode:
         agent_spec = state.agent_to_add
 
         if not agent_spec:
-            return {'state': state}
+            return {"state": state}
 
         try:
             # Extract agent specification
-            name = agent_spec.get('name')
-            agent_type = agent_spec.get('type', 'simple')
-            description = agent_spec.get('description', '')
-            system_message = agent_spec.get('system_message', '')
-            tools = agent_spec.get('tools', [])
+            name = agent_spec.get("name")
+            agent_type = agent_spec.get("type", "simple")
+            description = agent_spec.get("description", "")
+            system_message = agent_spec.get("system_message", "")
+            tools = agent_spec.get("tools", [])
 
             if not name:
-                state.agent_response = 'Agent name is required'
+                state.agent_response = "Agent name is required"
                 state.agent_to_add = None
-                return {'state': state}
+                return {"state": state}
 
             if name in state.available_agents:
                 state.agent_response = f"Agent '{name}' already exists"
                 state.agent_to_add = None
-                return {'state': state}
+                return {"state": state}
 
             # Create engine for the agent
             engine = AugLLMConfig(
                 name=f"{name}_engine",
-                model='gpt-4',
+                model="gpt-4",
                 tools=tools,
-                system_message=system_message
-                or f"You are {name}, {description}",
+                system_message=system_message or f"You are {name}, {description}",
             ).create()
 
             # Create agent based on type
-            if agent_type == 'react':
+            if agent_type == "react":
                 from haive.agents.react.agent import ReactAgent
 
                 agent = ReactAgent(name=name, engine=engine)
@@ -153,11 +152,11 @@ class AddAgentNode:
             # Register in state
             state.available_agents[name] = agent
             state.agent_metadata[name] = {
-                'description': description,
-                'type': agent_type,
-                'created_at': datetime.now(),
-                'usage_count': 0,
-                'last_used': None,
+                "description": description,
+                "type": agent_type,
+                "created_at": datetime.now(),
+                "usage_count": 0,
+                "last_used": None,
             }
 
             state.agent_response = (
@@ -167,11 +166,12 @@ class AddAgentNode:
             # Add to conversation
             state.messages.append(
                 {
-                    'role': 'assistant',
-                    'content': state.agent_response,
-                    'action': 'agent_created',
-                    'timestamp': datetime.now().isoformat(),
-                }, )
+                    "role": "assistant",
+                    "content": state.agent_response,
+                    "action": "agent_created",
+                    "timestamp": datetime.now().isoformat(),
+                },
+            )
 
         except Exception as e:
             state.agent_response = f"Error creating agent: {e!s}"
@@ -179,7 +179,7 @@ class AddAgentNode:
         # Clear creation state
         state.agent_to_add = None
 
-        return {'state': state}
+        return {"state": state}
 
 
 class ThreeNodeSupervisor(ReactAgent):
@@ -208,8 +208,8 @@ class ThreeNodeSupervisor(ReactAgent):
         def add_new_agent(
             name: str,
             description: str,
-            agent_type: str = 'simple',
-            system_message: str = '',
+            agent_type: str = "simple",
+            system_message: str = "",
         ) -> str:
             """Add a new agent to the system.
 
@@ -221,7 +221,7 @@ class ThreeNodeSupervisor(ReactAgent):
         def list_agents() -> list[str]:
             """List all available agents and their descriptions."""
             # This would access state in real implementation
-            return ['Use this tool to see available agents']
+            return ["Use this tool to see available agents"]
 
         @tool
         def agent_status(agent_name: str) -> str:
@@ -231,7 +231,7 @@ class ThreeNodeSupervisor(ReactAgent):
         @tool
         def finish_conversation() -> str:
             """End the conversation."""
-            return 'Conversation will end'
+            return "Conversation will end"
 
         self.engine.tools = [
             execute_agent,
@@ -246,27 +246,23 @@ class ThreeNodeSupervisor(ReactAgent):
         graph = BaseGraph(name=self.name)
 
         # The 3 nodes
-        graph.add_node('supervisor', self._supervisor_node)
-        graph.add_node('execute_agent', ExecuteAgentNode())
-        graph.add_node('add_agent', AddAgentNode())
+        graph.add_node("supervisor", self._supervisor_node)
+        graph.add_node("execute_agent", ExecuteAgentNode())
+        graph.add_node("add_agent", AddAgentNode())
 
         # Entry point
-        graph.set_entry_point('supervisor')
+        graph.set_entry_point("supervisor")
 
         # Supervisor routes to one of 3 destinations
         graph.add_conditional_edges(
-            'supervisor',
+            "supervisor",
             self._route_supervisor,
-            {
-                'execute': 'execute_agent',
-                'add': 'add_agent',
-                'end': END
-            },
+            {"execute": "execute_agent", "add": "add_agent", "end": END},
         )
 
         # Both execution nodes loop back to supervisor
-        graph.add_edge('execute_agent', 'supervisor')
-        graph.add_edge('add_agent', 'supervisor')
+        graph.add_edge("execute_agent", "supervisor")
+        graph.add_edge("add_agent", "supervisor")
 
         return graph.compile()
 
@@ -276,15 +272,18 @@ class ThreeNodeSupervisor(ReactAgent):
         if state.messages:
             last_msg = state.messages[-1]
             if isinstance(last_msg, dict):
-                user_input = last_msg.get('content', '')
+                user_input = last_msg.get("content", "")
             else:
                 user_input = str(last_msg)
         else:
-            user_input = ''
+            user_input = ""
 
         # Create context prompt
-        agent_list = (list(state.available_agents.keys())
-                      if state.available_agents else ['No agents registered'])
+        agent_list = (
+            list(state.available_agents.keys())
+            if state.available_agents
+            else ["No agents registered"]
+        )
 
         prompt = f"""
 You are a supervisor managing agents. Current user request: {user_input}
@@ -305,53 +304,54 @@ Important: After using a tool, set the appropriate state fields:
 """
 
         # Invoke LLM with tools
-        result = await self.engine.ainvoke(
-            {'messages': [HumanMessage(content=prompt)]})
+        result = await self.engine.ainvoke({"messages": [HumanMessage(content=prompt)]})
 
         # Parse result to set state (simplified - in real implementation would
         # parse tool calls)
         result_str = str(result)
 
-        if 'execute_agent' in result_str:
+        if "execute_agent" in result_str:
             # Extract agent name and task (simplified parsing)
             # In real implementation, would parse actual tool calls
-            if 'math' in user_input.lower():
-                state.agent_to_execute = ('math_agent' if 'math_agent'
-                                          in state.available_agents else None)
-            elif 'search' in user_input.lower():
-                state.agent_to_execute = ('search_agent' if 'search_agent'
-                                          in state.available_agents else None)
+            if "math" in user_input.lower():
+                state.agent_to_execute = (
+                    "math_agent" if "math_agent" in state.available_agents else None
+                )
+            elif "search" in user_input.lower():
+                state.agent_to_execute = (
+                    "search_agent" if "search_agent" in state.available_agents else None
+                )
             state.execution_payload = user_input
 
-        elif 'add_new_agent' in result_str:
+        elif "add_new_agent" in result_str:
             # Set agent creation spec
-            if 'math' in user_input.lower():
+            if "math" in user_input.lower():
                 state.agent_to_add = {
-                    'name': 'math_agent',
-                    'type': 'simple',
-                    'description': 'Mathematical calculations',
-                    'system_message': 'You are a math assistant',
+                    "name": "math_agent",
+                    "type": "simple",
+                    "description": "Mathematical calculations",
+                    "system_message": "You are a math assistant",
                 }
-            elif 'search' in user_input.lower():
+            elif "search" in user_input.lower():
                 state.agent_to_add = {
-                    'name': 'search_agent',
-                    'type': 'simple',
-                    'description': 'Information search',
-                    'system_message': 'You are a search assistant',
+                    "name": "search_agent",
+                    "type": "simple",
+                    "description": "Information search",
+                    "system_message": "You are a search assistant",
                 }
 
-        return {'state': state}
+        return {"state": state}
 
     def _route_supervisor(
         self,
         state: SupervisorState,
-    ) -> Literal['execute', 'add', 'end']:
+    ) -> Literal["execute", "add", "end"]:
         """Route to one of the 3 destinations."""
         if state.agent_to_execute:
-            return 'execute'
+            return "execute"
         if state.agent_to_add:
-            return 'add'
-        return 'end'
+            return "add"
+        return "end"
 
 
 # Demo the clean 3-node pattern
@@ -359,14 +359,14 @@ async def demo_three_node_supervisor():
     """Demonstrate the 3-node supervisor pattern."""
     # Create supervisor
     supervisor_engine = AugLLMConfig(
-        name='supervisor_engine',
-        model='gpt-4',
+        name="supervisor_engine",
+        model="gpt-4",
         tools=[],  # Tools added by supervisor
-        system_message='You are a task routing supervisor with 3 actions: execute, add, or end.',
+        system_message="You are a task routing supervisor with 3 actions: execute, add, or end.",
     ).create()
 
     ThreeNodeSupervisor(
-        name='three_node_supervisor',
+        name="three_node_supervisor",
         engine=supervisor_engine,
         state_schema=SupervisorState,
     )
@@ -375,14 +375,14 @@ async def demo_three_node_supervisor():
     initial_state = SupervisorState()
 
     # Test 1: Try to execute non-existent agent (should route to add)
-    initial_state.messages = [{'role': 'user', 'content': 'Calculate 5 + 3'}]
+    initial_state.messages = [{"role": "user", "content": "Calculate 5 + 3"}]
 
     # Simulate supervisor decision
     initial_state.agent_to_add = {
-        'name': 'math_agent',
-        'type': 'simple',
-        'description': 'Math calculations',
-        'system_message': 'You are a math assistant',
+        "name": "math_agent",
+        "type": "simple",
+        "description": "Math calculations",
+        "system_message": "You are a math assistant",
     }
 
     # Execute add_agent node
@@ -390,14 +390,14 @@ async def demo_three_node_supervisor():
     await add_node(initial_state)
 
     # Test 2: Now execute the created agent
-    initial_state.agent_to_execute = 'math_agent'
-    initial_state.execution_payload = 'Calculate 5 + 3'
+    initial_state.agent_to_execute = "math_agent"
+    initial_state.execution_payload = "Calculate 5 + 3"
 
     execute_node = ExecuteAgentNode()
     await execute_node(initial_state)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Show the routing logic
 
     asyncio.run(demo_three_node_supervisor())

@@ -44,15 +44,13 @@ def _sync_tools_with_routes(self):
         if self.structured_output_model and tool == self.structured_output_model:
             route = "structured_output_tool" if self.structured_output_version == "v2" else "parser"
             metadata["is_structured_output"] = True
-            metadata[
-                "structured_output_version"] = self.structured_output_version
+            metadata["structured_output_version"] = self.structured_output_version
 
         # Set the route
         self.tool_routes[tool_name] = route
         self.tool_metadata[tool_name] = metadata
 
-    debug_print(
-        f"✅ [green]Synced {len(self.tool_routes)} tools with routes[/green]")
+    debug_print(f"✅ [green]Synced {len(self.tool_routes)} tools with routes[/green]")
 
 
 # Override _analyze_tool to handle AugLLM-specific cases:
@@ -69,8 +67,7 @@ def _analyze_tool(self, tool: Any) -> Tuple[str, Optional[Dict[str, Any]]]:
         route = "structured_output_tool" if self.structured_output_version == "v2" else "parser"
 
         metadata = {
-            "class_name":
-            tool.__name__ if hasattr(tool, "__name__") else str(tool),
+            "class_name": tool.__name__ if hasattr(tool, "__name__") else str(tool),
             "purpose": "structured_output",
             "version": self.structured_output_version,
         }
@@ -131,17 +128,18 @@ def get_tools_for_binding(self) -> List[Any]:
 
         # Include tools based on their route
         if route in [
-                "langchain_tool",
-                "function",
-                "pydantic_tool",
-                "structured_output_tool",
+            "langchain_tool",
+            "function",
+            "pydantic_tool",
+            "structured_output_tool",
         ]:
             binding_tools.append(tool)
         elif route == "pydantic_model":
             # Only include if it's meant for tool use
             metadata = self.tool_metadata.get(tool_name, {})
             if metadata.get("in_pydantic_tools") or metadata.get(
-                    "is_structured_output", ):
+                "is_structured_output",
+            ):
                 binding_tools.append(tool)
 
     return binding_tools
@@ -159,15 +157,13 @@ def has_tool_capability(self, capability: str) -> bool:
     Returns:
         True if any tool has this capability
     """
-    return any(
-        metadata.get(capability) for metadata in self.tool_metadata.values())
+    return any(metadata.get(capability) for metadata in self.tool_metadata.values())
 
 
 # Update create_runnable to use routing:
 
 
-def create_runnable(self,
-                    runnable_config: Optional[RunnableConfig] = None) -> Any:
+def create_runnable(self, runnable_config: Optional[RunnableConfig] = None) -> Any:
     """Create runnable with route-aware tool binding."""
     # ... existing code ...
 
@@ -184,8 +180,7 @@ def create_runnable(self,
 
             # Check tool routes for insights
             tool_routes = [
-                self.tool_routes.get(getattr(t, "name", str(t)), "unknown")
-                for t in binding_tools
+                self.tool_routes.get(getattr(t, "name", str(t)), "unknown") for t in binding_tools
             ]
             debug_print(f"📊 [dim]Tool routes: {Counter(tool_routes)}[/dim]")
 

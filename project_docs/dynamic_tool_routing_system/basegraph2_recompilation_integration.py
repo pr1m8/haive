@@ -3,6 +3,7 @@
 This demonstrates how to integrate dynamic tool routing with
 BaseGraph2's recompilation tracking system.
 """
+
 from __future__ import annotations
 
 import logging
@@ -30,12 +31,12 @@ class ToolRouteAwareBaseGraph(BaseGraph):
     # Additional fields for tool route tracking
     tool_routes: dict[str, str] = Field(
         default_factory=dict,
-        description='Current tool routes in the graph',
+        description="Current tool routes in the graph",
     )
     _tool_route_hash: str | None = Field(
         default=None,
         exclude=True,
-        description='Hash of tool routes at last compilation',
+        description="Hash of tool routes at last compilation",
     )
 
     def __init__(self, **kwargs):
@@ -58,15 +59,13 @@ class ToolRouteAwareBaseGraph(BaseGraph):
         # Check if routes actually changed
         if old_routes != self.tool_routes:
             logger.info(f"Tool routes updated in graph '{self.name}'")
-            self._mark_needs_recompile('Tool routes changed')
+            self._mark_needs_recompile("Tool routes changed")
 
     def add_tool_route(self, tool_name: str, route: str) -> None:
         """Add or update a single tool route."""
-        if tool_name not in self.tool_routes or self.tool_routes[
-                tool_name] != route:
+        if tool_name not in self.tool_routes or self.tool_routes[tool_name] != route:
             self.tool_routes[tool_name] = route
-            self._mark_needs_recompile(
-                f"Tool route added/updated: {tool_name}")
+            self._mark_needs_recompile(f"Tool route added/updated: {tool_name}")
 
     def remove_tool_route(self, tool_name: str) -> None:
         """Remove a tool route."""
@@ -104,10 +103,11 @@ class ToolRouteAwareBaseGraph(BaseGraph):
         info = super().get_compilation_info()
         info.update(
             {
-                'tool_routes': self.tool_routes,
-                'tool_route_count': len(self.tool_routes),
-                'tool_route_hash': self._tool_route_hash,
-            }, )
+                "tool_routes": self.tool_routes,
+                "tool_route_count": len(self.tool_routes),
+                "tool_route_hash": self._tool_route_hash,
+            },
+        )
         return info
 
 
@@ -123,25 +123,24 @@ class DynamicToolNode:
         self.graph = graph
         self.local_routes: dict[str, str] = {}
 
-    def __call__(self, state: dict[str,
-                                   Any]) -> dict[str, Any] | Send | Command:
+    def __call__(self, state: dict[str, Any]) -> dict[str, Any] | Send | Command:
         """Process state and handle dynamic tool routing."""
         # Check for tool route updates in state
-        if 'update_tool_routes' in state:
-            new_routes = state['update_tool_routes']
+        if "update_tool_routes" in state:
+            new_routes = state["update_tool_routes"]
             self.graph.update_tool_routes(new_routes)
 
             # Signal recompilation if needed
             if self.graph.needs_recompile():
-                logger.info('Tool routes changed - recompilation needed')
+                logger.info("Tool routes changed - recompilation needed")
                 return Command(
-                    update={'needs_recompilation': True},
-                    goto='recompilation_handler',
+                    update={"needs_recompilation": True},
+                    goto="recompilation_handler",
                 )
 
         # Check for dynamic tool calls
-        if 'tool_call' in state:
-            tool_name = state['tool_call']['name']
+        if "tool_call" in state:
+            tool_name = state["tool_call"]["name"]
 
             # Look up route dynamically
             if tool_name in self.graph.tool_routes:
@@ -151,12 +150,12 @@ class DynamicToolNode:
                 return Send(
                     route,
                     {
-                        'tool_name': tool_name,
-                        'args': state['tool_call']['args'],
-                        'state': state,
+                        "tool_name": tool_name,
+                        "args": state["tool_call"]["args"],
+                        "state": state,
                     },
                 )
-            return {'error': f"No route found for tool: {tool_name}"}
+            return {"error": f"No route found for tool: {tool_name}"}
 
         return state
 
@@ -170,15 +169,12 @@ class GraphIntegratedAgent(SimpleAgent):
     """Agent that integrates with ToolRouteAwareBaseGraph for dynamic
     updates."""
 
-    def __init__(self,
-                 *args,
-                 graph: ToolRouteAwareBaseGraph | None = None,
-                 **kwargs):
+    def __init__(self, *args, graph: ToolRouteAwareBaseGraph | None = None, **kwargs):
         super().__init__(*args, **kwargs)
         self.integrated_graph = graph
 
         # Register callback if graph provided
-        if self.integrated_graph and hasattr(self.engine, 'add_tool'):
+        if self.integrated_graph and hasattr(self.engine, "add_tool"):
             self._register_tool_change_callback()
 
     def _register_tool_change_callback(self):
@@ -188,19 +184,17 @@ class GraphIntegratedAgent(SimpleAgent):
     def add_tool_with_graph_update(
         self,
         tool_func: Any,
-        route: str = 'tool_node',
+        route: str = "tool_node",
     ) -> None:
         """Add tool to agent and update graph's tool routes."""
         # Add to engine
-        if hasattr(self.engine, 'add_tool'):
+        if hasattr(self.engine, "add_tool"):
             self.engine.add_tool(tool_func, route)
 
             # Update graph if integrated
             if self.integrated_graph:
-                tool_name = tool_func.name if hasattr(
-                    tool_func, 'name') else tool_func.__name__
-                self.integrated_graph.add_tool_route(tool_name,
-                                                     f"{self.name}.{route}")
+                tool_name = tool_func.name if hasattr(tool_func, "name") else tool_func.__name__
+                self.integrated_graph.add_tool_route(tool_name, f"{self.name}.{route}")
 
                 logger.info(
                     f"Added tool {tool_name} to agent {self.name} and updated graph",
@@ -222,39 +216,38 @@ def web_search(query: str) -> str:
 def code_analyzer(code: str) -> dict[str, Any]:
     """Analyze code and return insights."""
     return {
-        'lines': len(code.split('\n')),
-        'complexity': 'medium',
-        'suggestions': ['Add type hints', 'Improve error handling'],
+        "lines": len(code.split("\n")),
+        "complexity": "medium",
+        "suggestions": ["Add type hints", "Improve error handling"],
     }
 
 
 def demonstrate_basegraph2_integration():
     """Demonstrate BaseGraph2 integration with dynamic tool routing."""
     # Create tool-route-aware graph
-    graph = ToolRouteAwareBaseGraph(name='dynamic_tool_graph')
+    graph = ToolRouteAwareBaseGraph(name="dynamic_tool_graph")
 
     # Create agents with initial tools
     simple_engine = AugLLMConfig(tools=[web_search])
     simple_agent = GraphIntegratedAgent(
-        name='simple_agent',
+        name="simple_agent",
         engine=simple_engine,
         graph=graph,
     )
 
     # Add initial nodes to graph
-    graph.add_node('start', lambda state: state)
-    graph.add_node('tool_router', DynamicToolNode(graph))
-    graph.add_node('agent_node', simple_agent.create_runnable())
+    graph.add_node("start", lambda state: state)
+    graph.add_node("tool_router", DynamicToolNode(graph))
+    graph.add_node("agent_node", simple_agent.create_runnable())
 
     # Add edges
-    graph.add_edge('start', 'tool_router')
+    graph.add_edge("start", "tool_router")
     graph.add_conditional_edges(
-        'tool_router',
-        lambda state: 'agent_node'
-        if 'tool_call' not in state else 'tool_handler',
+        "tool_router",
+        lambda state: "agent_node" if "tool_call" not in state else "tool_handler",
         {
-            'agent_node': 'agent_node',
-            'tool_handler': END,  # Dynamic routing would handle this
+            "agent_node": "agent_node",
+            "tool_handler": END,  # Dynamic routing would handle this
         },
     )
 
@@ -265,23 +258,23 @@ def demonstrate_basegraph2_integration():
     graph.get_compilation_info()
 
     # Add tool dynamically
-    simple_agent.add_tool_with_graph_update(code_analyzer, 'analysis_route')
+    simple_agent.add_tool_with_graph_update(code_analyzer, "analysis_route")
 
     # Demonstrate state-based tool route updates
     state = {
-        'update_tool_routes': {
-            'web_search': 'search_handler',
-            'code_analyzer': 'analyzer_handler',
+        "update_tool_routes": {
+            "web_search": "search_handler",
+            "code_analyzer": "analyzer_handler",
         },
     }
 
-    tool_router = graph.nodes['tool_router']
+    tool_router = graph.nodes["tool_router"]
     tool_router(state)
 
     # Show final compilation info
     final_info = graph.get_compilation_info()
     for key, _value in final_info.items():
-        if key != 'nodes':  # Skip nodes for brevity
+        if key != "nodes":  # Skip nodes for brevity
             pass
 
 
@@ -294,36 +287,34 @@ def build_advanced_multi_agent_graph():
     """Build an advanced graph with multiple agents and dynamic tool
     routing."""
     # Create the graph
-    graph = ToolRouteAwareBaseGraph(name='multi_agent_dynamic')
+    graph = ToolRouteAwareBaseGraph(name="multi_agent_dynamic")
 
     # Create multiple agents
     agents = {}
     for i in range(3):
         engine = AugLLMConfig(tools=[], system_message=f"Agent {i}")
-        agent = GraphIntegratedAgent(name=f"agent_{i}",
-                                     engine=engine,
-                                     graph=graph)
+        agent = GraphIntegratedAgent(name=f"agent_{i}", engine=engine, graph=graph)
         agents[f"agent_{i}"] = agent
 
     # Dynamic agent selector using Send
     def agent_selector(state: dict[str, Any]) -> Send | Command:
         """Select agent dynamically based on state."""
         # Check if specific agent requested
-        if 'target_agent' in state:
-            agent_name = state['target_agent']
+        if "target_agent" in state:
+            agent_name = state["target_agent"]
             if agent_name in agents:
                 return Send(f"{agent_name}_executor", state)
 
         # Check tool requirements
-        if 'required_tools' in state:
-            required = set(state['required_tools'])
+        if "required_tools" in state:
+            required = set(state["required_tools"])
 
             # Find agent with most matching tools
             best_agent = None
             best_score = 0
 
             for name, agent in agents.items():
-                if hasattr(agent.engine, 'tool_routes'):
+                if hasattr(agent.engine, "tool_routes"):
                     agent_tools = set(agent.engine.tool_routes.keys())
                     score = len(required.intersection(agent_tools))
                     if score > best_score:
@@ -334,17 +325,17 @@ def build_advanced_multi_agent_graph():
                 return Send(f"{best_agent}_executor", state)
 
         # Default to first agent
-        return Send('agent_0_executor', state)
+        return Send("agent_0_executor", state)
 
     # Add nodes
-    graph.add_node('selector', agent_selector)
+    graph.add_node("selector", agent_selector)
 
     # Add executor nodes for each agent
     for name, agent in agents.items():
         graph.add_node(f"{name}_executor", agent.create_runnable())
 
     # Set up flow
-    graph.set_entry_point('selector')
+    graph.set_entry_point("selector")
     for name in agents:
         graph.add_edge(f"{name}_executor", END)
 
@@ -356,17 +347,16 @@ def demonstrate_advanced_pattern():
     graph, agents = build_advanced_multi_agent_graph()
 
     # Add tools dynamically to different agents
-    agents['agent_0'].add_tool_with_graph_update(web_search, 'search_route')
-    agents['agent_1'].add_tool_with_graph_update(code_analyzer,
-                                                 'analyze_route')
+    agents["agent_0"].add_tool_with_graph_update(web_search, "search_route")
+    agents["agent_1"].add_tool_with_graph_update(code_analyzer, "analyze_route")
 
     for _name, agent in agents.items():
-        if hasattr(agent.engine, 'tool_routes'):
+        if hasattr(agent.engine, "tool_routes"):
             list(agent.engine.tool_routes.keys())
 
     # The graph would route to appropriate agents based on tool requirements
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     demonstrate_basegraph2_integration()
     demonstrate_advanced_pattern()

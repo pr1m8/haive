@@ -94,9 +94,7 @@ print()
 response3 = agent.run(
     "Can you help me write a Python function to calculate fibonacci numbers?",
 )
-print(
-    "You: Can you help me write a Python function to calculate fibonacci numbers?"
-)
+print("You: Can you help me write a Python function to calculate fibonacci numbers?")
 print(f"Agent: {response3}")
 
 # %%
@@ -180,8 +178,9 @@ print(f"Total messages in history: {len(agent.messages)}")
 print("\nConversation summary:")
 for i, msg in enumerate(agent.messages):
     role = msg.type if hasattr(msg, "type") else "unknown"
-    content_preview = (str(msg.content)[:50] + "..."
-                       if len(str(msg.content)) > 50 else str(msg.content))
+    content_preview = (
+        str(msg.content)[:50] + "..." if len(str(msg.content)) > 50 else str(msg.content)
+    )
     print(f"{i + 1}. {role}: {content_preview}")
 
 # %%

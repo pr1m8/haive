@@ -77,15 +77,13 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
         metadata = self.get_tool_metadata(tool_name) or {}
         metadata["route_updated"] = True
         metadata["previous_route"] = old_route
-        metadata["update_timestamp"] = __import__(
-            "datetime").datetime.now().isoformat()
+        metadata["update_timestamp"] = __import__("datetime").datetime.now().isoformat()
 
         if tool_name not in self.tool_metadata:
             self.tool_metadata[tool_name] = {}
         self.tool_metadata[tool_name].update(metadata)
 
-        logger.debug(
-            f"Updated route for '{tool_name}': {old_route} -> {new_route}")
+        logger.debug(f"Updated route for '{tool_name}': {old_route} -> {new_route}")
         return self
 
     def _analyze_tool(self, tool: Any) -> tuple[str, dict[str, Any] | None]:
@@ -139,9 +137,11 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
             Dictionary of metadata about the callable
         """
         # Check cache first
-        cache_key = (f"{callable_obj.__module__}.{callable_obj.__qualname__}"
-                     if hasattr(callable_obj, "__qualname__") else
-                     str(callable_obj))
+        cache_key = (
+            f"{callable_obj.__module__}.{callable_obj.__qualname__}"
+            if hasattr(callable_obj, "__qualname__")
+            else str(callable_obj)
+        )
         if cache_key in self.callable_metadata_cache:
             return self.callable_metadata_cache[cache_key]
 
@@ -182,8 +182,10 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
             if callable_obj.__doc__:
                 metadata["has_docstring"] = True
                 metadata["docstring_preview"] = (
-                    callable_obj.__doc__[:100] + "..." if len(
-                        callable_obj.__doc__) > 100 else callable_obj.__doc__)
+                    callable_obj.__doc__[:100] + "..."
+                    if len(callable_obj.__doc__) > 100
+                    else callable_obj.__doc__
+                )
 
         except Exception as e:
             logger.debug(f"Error analyzing callable: {e}")
@@ -193,8 +195,7 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
 
         return metadata
 
-    def _analyze_pydantic_model(self,
-                                model: type[BaseModel]) -> dict[str, Any]:
+    def _analyze_pydantic_model(self, model: type[BaseModel]) -> dict[str, Any]:
         """Enhanced Pydantic model analysis.
 
         Args:
@@ -228,14 +229,13 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
 
             # Check for special methods
             metadata["has_validators"] = any(
-                name.startswith(("validate_", "validator_"))
-                for name in dir(model))
+                name.startswith(("validate_", "validator_")) for name in dir(model)
+            )
 
             # Get model config
             if hasattr(model, "model_config"):
                 metadata["has_config"] = True
-                metadata["config_extras"] = getattr(model.model_config,
-                                                    "extra", None)
+                metadata["config_extras"] = getattr(model.model_config, "extra", None)
 
         except Exception as e:
             logger.debug(f"Error analyzing Pydantic model: {e}")
@@ -288,8 +288,7 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
         # Set route with metadata
         self.set_tool_route(tool_name, route, final_metadata)
 
-        logger.debug(
-            f"Added enhanced routed tool '{tool_name}' with route '{route}'")
+        logger.debug(f"Added enhanced routed tool '{tool_name}' with route '{route}'")
         return self
 
     def route_pydantic_model_smart(
@@ -320,8 +319,7 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
         # Use suggested route from analysis
         return metadata.get("suggested_route", "pydantic_model")
 
-    def get_tools_by_capability(self,
-                                capability: str) -> list[tuple[str, Any]]:
+    def get_tools_by_capability(self, capability: str) -> list[tuple[str, Any]]:
         """Get tools that have a specific capability.
 
         Args:

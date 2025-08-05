@@ -82,7 +82,8 @@ def example_2_multi_agent_workflow():
         engine=AugLLMConfig(
             system_message="""You are a project planning expert.
             Create comprehensive project plans with objectives, phases,
-            timelines, budgets, and risk assessments.""", ),
+            timelines, budgets, and risk assessments.""",
+        ),
         tools=[],  # Could add project planning tools
     )
 
@@ -115,8 +116,7 @@ def example_3_analysis_workflow():
     # Create a simple analyst agent (no structured output)
     analyst = SimpleAgent(
         name="data_analyst",
-        engine=AugLLMConfig(
-            system_message="Analyze data and provide insights."),
+        engine=AugLLMConfig(system_message="Analyze data and provide insights."),
         # No structured_output_model
     )
 
@@ -158,21 +158,19 @@ def example_4_custom_model():
 
     # Define custom model for code review
     class CodeReviewOutput(BaseModel):
-        overall_quality: int = Field(ge=1,
-                                     le=10,
-                                     description="Code quality score")
+        overall_quality: int = Field(ge=1, le=10, description="Code quality score")
         issues_found: list[str] = Field(description="List of issues")
         suggestions: list[str] = Field(description="Improvement suggestions")
         security_concerns: list[str] = Field(default_factory=list)
         performance_notes: list[str] = Field(default_factory=list)
-        approval_status: str = Field(
-            description="approved/needs_work/rejected")
+        approval_status: str = Field(description="approved/needs_work/rejected")
 
     # Create code reviewer (any agent type)
     SimpleAgent(
         name="code_reviewer",
         engine=AugLLMConfig(
-            system_message="Review code for quality, security, and performance.", ),
+            system_message="Review code for quality, security, and performance.",
+        ),
     )
 
     # Create structurer with custom model

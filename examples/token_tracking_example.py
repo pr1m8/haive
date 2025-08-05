@@ -66,12 +66,8 @@ def main():
 
     # First message
     result1 = agent.invoke(
-        {
-            "messages": [{
-                "role": "user",
-                "content": "What is quantum computing?"
-            }]
-        }, )
+        {"messages": [{"role": "user", "content": "What is quantum computing?"}]},
+    )
 
     # Get token usage after first interaction
     agent.get_token_usage_summary()
@@ -80,20 +76,12 @@ def main():
     agent.invoke(
         {
             "messages": [
-                {
-                    "role": "user",
-                    "content": "What is quantum computing?"
-                },
-                {
-                    "role": "assistant",
-                    "content": result1["messages"][-1].content
-                },
-                {
-                    "role": "user",
-                    "content": "Can you explain superposition?"
-                },
+                {"role": "user", "content": "What is quantum computing?"},
+                {"role": "assistant", "content": result1["messages"][-1].content},
+                {"role": "user", "content": "Can you explain superposition?"},
             ],
-        }, )
+        },
+    )
 
     # Get cumulative token usage
     agent.get_token_usage_summary()

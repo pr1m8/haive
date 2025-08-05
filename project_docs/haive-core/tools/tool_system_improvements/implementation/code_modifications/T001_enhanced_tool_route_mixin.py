@@ -8,6 +8,7 @@ Key improvements:
 3. Better integration with LangGraph patterns
 4. Smart routing based on tool type
 """
+
 from __future__ import annotations
 
 import inspect
@@ -83,8 +84,7 @@ class ToolRouteMixin(BaseModel):
             if isinstance(tool, BaseTool | Tool | StructuredTool):
                 validated_tools.append(tool)
             else:
-                logger.warning(
-                    f"Skipping invalid tool type: {type(tool).__name__}")
+                logger.warning(f"Skipping invalid tool type: {type(tool).__name__}")
 
         return validated_tools
 
@@ -200,7 +200,8 @@ class ToolRouteMixin(BaseModel):
                     "class_name": tool.__name__,
                     "module": getattr(tool, "__module__", "unknown"),
                     "field_count": len(getattr(tool, "model_fields", {})),
-                }, )
+                },
+            )
 
         # Regular callable
         elif callable(tool):
@@ -241,8 +242,7 @@ class ToolRouteMixin(BaseModel):
                 metadata["callable_kind"] = "method"
             elif inspect.isfunction(callable_obj):
                 metadata["callable_kind"] = "function"
-            elif hasattr(callable_obj,
-                         "__name__") and callable_obj.__name__ == "<lambda>":
+            elif hasattr(callable_obj, "__name__") and callable_obj.__name__ == "<lambda>":
                 metadata["callable_kind"] = "lambda"
             else:
                 metadata["callable_kind"] = "callable_object"
@@ -286,10 +286,7 @@ class ToolRouteMixin(BaseModel):
         Returns:
             List of BaseTool/Tool/StructuredTool instances
         """
-        return [
-            tool for tool in self.tools
-            if isinstance(tool, BaseTool | Tool | StructuredTool)
-        ]
+        return [tool for tool in self.tools if isinstance(tool, BaseTool | Tool | StructuredTool)]
 
     def get_pydantic_tools(self) -> list[type[BaseModel]]:
         """Get only Pydantic model tools.
@@ -298,8 +295,7 @@ class ToolRouteMixin(BaseModel):
             List of Pydantic model classes
         """
         return [
-            tool for tool in self.tools
-            if isinstance(tool, type) and issubclass(tool, BaseModel)
+            tool for tool in self.tools if isinstance(tool, type) and issubclass(tool, BaseModel)
         ]
 
     def get_callable_tools(self) -> list[Callable]:
@@ -308,10 +304,7 @@ class ToolRouteMixin(BaseModel):
         Returns:
             List of callable tools
         """
-        return [
-            tool for tool in self.tools
-            if callable(tool) and not isinstance(tool, type)
-        ]
+        return [tool for tool in self.tools if callable(tool) and not isinstance(tool, type)]
 
     def convert_to_structured_tools(self) -> list[StructuredTool]:
         """Convert all tools to StructuredTool format where possible.
@@ -337,8 +330,7 @@ class ToolRouteMixin(BaseModel):
             elif isinstance(tool, type) and issubclass(tool, BaseModel):
                 if callable(tool) and callable(tool.__call__):
                     # This would need actual conversion logic
-                    logger.debug(
-                        f"Pydantic tool {tool.__name__} needs conversion")
+                    logger.debug(f"Pydantic tool {tool.__name__} needs conversion")
 
             # Convert regular callables
             elif callable(tool):
@@ -349,8 +341,7 @@ class ToolRouteMixin(BaseModel):
 
         return structured_tools
 
-    def update_tool_route(self, tool_name: str,
-                          new_route: str) -> ToolRouteMixin:
+    def update_tool_route(self, tool_name: str, new_route: str) -> ToolRouteMixin:
         """Update an existing tool's route dynamically.
 
         Args:
@@ -376,10 +367,10 @@ class ToolRouteMixin(BaseModel):
                 "route_updated": True,
                 "previous_route": old_route,
                 "update_timestamp": datetime.now().isoformat(),
-            }, )
+            },
+        )
 
-        logger.debug(
-            f"Updated route for '{tool_name}': {old_route} -> {new_route}")
+        logger.debug(f"Updated route for '{tool_name}': {old_route} -> {new_route}")
         return self
 
     def remove_tool(self, tool_name: str) -> ToolRouteMixin:

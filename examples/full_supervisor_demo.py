@@ -3,6 +3,7 @@
 
 This shows the supervisor actually executing agent handoffs with real state management.
 """
+
 """"""
 
 
@@ -12,7 +13,7 @@ import asyncio
 # Enable info logging to see the workflow
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 
 
@@ -21,7 +22,7 @@ async def demonstrate_full_workflow():
     # 1. Create supervisor
     registry = create_test_registry()
     supervisor = DynamicSupervisorAgent(
-        name='Workflow Demo Supervisor',
+        name="Workflow Demo Supervisor",
         agent_registry=registry,
         debug=True,
     )
@@ -30,14 +31,12 @@ async def demonstrate_full_workflow():
     from haive.agents.simple.agent import SimpleAgent
 
     supervisor.add_agent_to_registry(
-        name='creative_writer',
-        description='Specializes in creative writing, storytelling, and content creation',
+        name="creative_writer",
+        description="Specializes in creative writing, storytelling, and content creation",
         agent_class=SimpleAgent,
         config={
-            'name':
-            'Creative Writer',
-            'system_message':
-            'You are a creative writing specialist. Help with stories, poems, and creative content.',
+            "name": "Creative Writer",
+            "system_message": "You are a creative writing specialist. Help with stories, poems, and creative content.",
         },
     )
 
@@ -45,7 +44,7 @@ async def demonstrate_full_workflow():
     initial_state = SupervisorState(
         messages=[
             HumanMessage(
-                content='I need help with a math problem and then writing a story about it.',
+                content="I need help with a math problem and then writing a story about it.",
             ),
         ],
         agent_registry=supervisor.agent_registry.to_state_format(),
@@ -61,44 +60,45 @@ async def demonstrate_full_workflow():
     # 4. Test tools with state
 
     # Test list_agents tool
-    list_tool = next(t for t in supervisor.tools if t.name == 'list_agents')
+    list_tool = next(t for t in supervisor.tools if t.name == "list_agents")
     list_tool.invoke({})
 
     # Test handoff tool simulation
-    next(t for t in supervisor.tools if t.name == 'handoff_to_math_agent')
+    next(t for t in supervisor.tools if t.name == "handoff_to_math_agent")
 
     # 5. Simulate state updates
 
     # Simulate math agent execution
-    initial_state.current_agent_name = 'math_agent'
-    initial_state.current_task = 'Solve: What is 15 * 23 + 47?'
+    initial_state.current_agent_name = "math_agent"
+    initial_state.current_task = "Solve: What is 15 * 23 + 47?"
     initial_state.current_iteration = 1
 
     # Add execution history
     initial_state.execution_history.append(
         {
-            'agent_name': 'math_agent',
-            'task': 'Solve: What is 15 * 23 + 47?',
-            'result': '15 * 23 = 345, then 345 + 47 = 392. The answer is 392.',
-            'success': True,
-        }, )
-    initial_state.completed_agents.add('math_agent')
+            "agent_name": "math_agent",
+            "task": "Solve: What is 15 * 23 + 47?",
+            "result": "15 * 23 = 345, then 345 + 47 = 392. The answer is 392.",
+            "success": True,
+        },
+    )
+    initial_state.completed_agents.add("math_agent")
 
     # Simulate creative writer handoff
-    initial_state.current_agent_name = 'creative_writer'
-    initial_state.current_task = 'Write a short story about the number 392'
+    initial_state.current_agent_name = "creative_writer"
+    initial_state.current_task = "Write a short story about the number 392"
     initial_state.current_iteration = 2
 
     # Add execution history
     initial_state.execution_history.append(
         {
-            'agent_name': 'creative_writer',
-            'task': 'Write a short story about the number 392',
-            'result':
-            'Once upon a time, in a digital realm, there lived a number named 392. This number was special because it was the result of a magical calculation...',
-            'success': True,
-        }, )
-    initial_state.completed_agents.add('creative_writer')
+            "agent_name": "creative_writer",
+            "task": "Write a short story about the number 392",
+            "result": "Once upon a time, in a digital realm, there lived a number named 392. This number was special because it was the result of a magical calculation...",
+            "success": True,
+        },
+    )
+    initial_state.completed_agents.add("creative_writer")
 
     # 6. Final state
     initial_state.task_complete = True
@@ -120,7 +120,7 @@ async def main():
         # Save workflow summary
 
         tool_names = [t.name for t in supervisor.tools]
-        [name for name in tool_names if name.startswith('handoff_to_')]
+        [name for name in tool_names if name.startswith("handoff_to_")]
 
     except Exception:
         import traceback
@@ -128,5 +128,5 @@ async def main():
         traceback.print_exc()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())

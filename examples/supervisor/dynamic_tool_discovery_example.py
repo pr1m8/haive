@@ -55,14 +55,10 @@ def text_analyzer(text: str) -> dict[str, Any]:
     """
     words = text.split()
     return {
-        "word_count":
-        len(words),
-        "character_count":
-        len(text),
-        "average_word_length":
-        (sum(len(word) for word in words) / len(words) if words else 0),
-        "unique_words":
-        len(set(words)),
+        "word_count": len(words),
+        "character_count": len(text),
+        "average_word_length": (sum(len(word) for word in words) / len(words) if words else 0),
+        "unique_words": len(set(words)),
     }
 
 
@@ -106,7 +102,8 @@ async def basic_supervisor_example():
 
     # Run task that needs tool discovery
     await supervisor.arun(
-        "I need to calculate 25 * 4 and analyze the word 'supervisor'", )
+        "I need to calculate 25 * 4 and analyze the word 'supervisor'",
+    )
 
     # Check discovered tools
 
@@ -158,7 +155,8 @@ async def factory_method_example():
 - Function: scrape_url(url: str) -> str
 - Description: Extract content from a URL
 - Returns: Cleaned text content
-""", )
+""",
+            )
 
         # Create supervisor with discovery configuration
         supervisor = DynamicToolDiscoverySupervisor.create_with_discovery(
@@ -194,20 +192,9 @@ async def multi_agent_tool_routing_example():
 
     # Create specialized agents
     agent_configs = [
-        {
-            "type": "ReactAgent",
-            "name": "math_specialist",
-            "tools": [calculator]
-        },
-        {
-            "type": "ReactAgent",
-            "name": "text_specialist",
-            "tools": [text_analyzer]
-        },
-        {
-            "type": "SimpleAgent",
-            "name": "general_assistant"
-        },
+        {"type": "ReactAgent", "name": "math_specialist", "tools": [calculator]},
+        {"type": "ReactAgent", "name": "text_specialist", "tools": [text_analyzer]},
+        {"type": "SimpleAgent", "name": "general_assistant"},
     ]
 
     # Create supervisor with agents and tools
@@ -275,12 +262,9 @@ async def performance_monitoring_example():
     supervisor = DynamicToolDiscoverySupervisor(
         name="monitoring_supervisor",
         agents={
-            "fast_agent":
-            SimpleAgent(name="fast_agent", engine=config),
-            "slow_agent":
-            SimpleAgent(name="slow_agent", engine=config),
-            "reliable_agent":
-            ReactAgent(
+            "fast_agent": SimpleAgent(name="fast_agent", engine=config),
+            "slow_agent": SimpleAgent(name="slow_agent", engine=config),
+            "reliable_agent": ReactAgent(
                 name="reliable_agent",
                 engine=config,
                 tools=[calculator],

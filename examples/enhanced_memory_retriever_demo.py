@@ -12,6 +12,7 @@ Key Features Demonstrated:
 
 This represents Phase 2 of our incremental memory system implementation.
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -27,7 +28,8 @@ async def demo_enhanced_memory_retriever():
     try:
         # Import our memory system components
         from haive.agents.memory import (
-            create_enhanced_memory_retriever, )
+            create_enhanced_memory_retriever,
+        )
         from haive.core.tools.store_tools import StoreManager
 
         # Phase 1: Setup Memory Infrastructure
@@ -76,14 +78,8 @@ async def demo_enhanced_memory_retriever():
         for i, memory_content in enumerate(sample_memories):
             memory_id = await retriever.memory_store.store_memory(
                 content=memory_content,
-                user_context={
-                    "demo_session": "enhanced_retriever",
-                    "memory_index": i
-                },
-                conversation_context={
-                    "session_id": "demo_2024",
-                    "context": "learning"
-                },
+                user_context={"demo_session": "enhanced_retriever", "memory_index": i},
+                conversation_context={"session_id": "demo_2024", "context": "learning"},
             )
             memory_ids.append(memory_id)
 
@@ -127,11 +123,12 @@ async def demo_enhanced_memory_retriever():
 
             # Show top results
             for i, memory in enumerate(result.memories[:2]):
-                (memory.get("content", "")[:80] +
-                 "..." if len(memory.get("content", "")) > 80 else memory.get(
-                     "content", ""))
-                (result.final_scores[i]
-                 if i < len(result.final_scores) else 0.0)
+                (
+                    memory.get("content", "")[:80] + "..."
+                    if len(memory.get("content", "")) > 80
+                    else memory.get("content", "")
+                )
+                (result.final_scores[i] if i < len(result.final_scores) else 0.0)
                 memory.get("metadata", {}).get("memory_types", [])
 
         # Phase 4: Performance Analysis

@@ -64,25 +64,18 @@ class RecompilationAwareGraph:
             self._needs_recompile = True
             self._notify_recompile_needed(
                 "tool_routes_changed",
-                {
-                    "old_routes": old_routes,
-                    "new_routes": self.tool_routes
-                },
+                {"old_routes": old_routes, "new_routes": self.tool_routes},
             )
 
     def add_tool_route(self, tool_name: str, route: str) -> None:
         """Add a single tool route."""
-        if tool_name not in self.tool_routes or self.tool_routes[
-                tool_name] != route:
+        if tool_name not in self.tool_routes or self.tool_routes[tool_name] != route:
             self.tool_routes[tool_name] = route
             if self.check_tool_routes_changed():
                 self._needs_recompile = True
                 self._notify_recompile_needed(
                     "tool_route_added",
-                    {
-                        "tool_name": tool_name,
-                        "route": route
-                    },
+                    {"tool_name": tool_name, "route": route},
                 )
 
     def remove_tool_route(self, tool_name: str) -> None:
@@ -92,10 +85,7 @@ class RecompilationAwareGraph:
             self._needs_recompile = True
             self._notify_recompile_needed(
                 "tool_route_removed",
-                {
-                    "tool_name": tool_name,
-                    "old_route": old_route
-                },
+                {"tool_name": tool_name, "old_route": old_route},
             )
 
     def register_recompile_callback(
@@ -105,8 +95,7 @@ class RecompilationAwareGraph:
         """Register a callback for recompilation events."""
         self._recompile_callbacks.append(callback)
 
-    def _notify_recompile_needed(self, reason: str,
-                                 details: dict[str, Any]) -> None:
+    def _notify_recompile_needed(self, reason: str, details: dict[str, Any]) -> None:
         """Notify all callbacks that recompilation is needed."""
         for callback in self._recompile_callbacks:
             try:
@@ -193,8 +182,7 @@ class DynamicToolAgent:
         # Register for recompilation events
         self.graph.register_recompile_callback(self._handle_recompile_event)
 
-    def _handle_recompile_event(self, reason: str, details: dict[str,
-                                                                 Any]) -> None:
+    def _handle_recompile_event(self, reason: str, details: dict[str, Any]) -> None:
         """Handle recompilation events from the graph."""
         logger.info(f"Agent {self.name} notified of recompilation: {reason}")
         if reason == "tool_routes_changed":
@@ -205,8 +193,7 @@ class DynamicToolAgent:
         """Update agent's internal routing based on graph routes."""
         # Agent-specific logic to handle route updates
 
-    def add_tool(self, tool_name: str, tool_func: Callable,
-                 route: str) -> None:
+    def add_tool(self, tool_name: str, tool_func: Callable, route: str) -> None:
         """Add a tool to the agent and update graph routes.
 
         This will trigger recompilation if the route is new or changed.
@@ -267,14 +254,8 @@ def demonstrate_recompilation_hooks():
     # Dynamic tool addition through state
     state = {
         "dynamic_tools": [
-            {
-                "name": "formatter",
-                "route": "format_route"
-            },
-            {
-                "name": "validator",
-                "route": "validate_route"
-            },
+            {"name": "formatter", "route": "format_route"},
+            {"name": "validator", "route": "validate_route"},
         ],
     }
     validation_node(state)

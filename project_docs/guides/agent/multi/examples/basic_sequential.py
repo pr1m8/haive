@@ -38,9 +38,7 @@ class ExecutionResult(BaseModel):
 class ReviewResult(BaseModel):
     """Output from the review agent."""
 
-    review_score: float = Field(ge=0.0,
-                                le=10.0,
-                                description="Quality score (0-10)")
+    review_score: float = Field(ge=0.0, le=10.0, description="Quality score (0-10)")
     strengths: list[str] = Field(description="Identified strengths")
     improvements: list[str] = Field(description="Suggested improvements")
     final_recommendation: str = Field(description="Overall recommendation")

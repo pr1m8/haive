@@ -1,0 +1,2 @@
+🔍 Extracting import errors from: /tmp/docs_build_verification.log
+📝 Report written to: /home/will/Projects/haive/backend/haive/comprehensive_import_error_analysis.md
