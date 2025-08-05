@@ -153,7 +153,7 @@ def create_research_config(
         "sphinx_exercise",  # Interactive exercises
         "sphinx_proof",  # Mathematical proofs
         "sphinxcontrib.bibtex",  # Bibliography support
-        "sphinx_math_dollar",  # LaTeX math support
+        # "sphinx_math_dollar",  # DISABLED: Incompatible with Sphinx 8.2.3 - causes NotImplementedError
     ]
 
     config["extensions"].extend(research_extensions)
@@ -165,7 +165,8 @@ def create_research_config(
             "bibtex_default_style": "alpha",
             "math_number_all": True,
             "math_eqref_format": "Eq. {number}",
-        }, )
+        },
+    )
 
     return config
 
@@ -212,12 +213,13 @@ def create_blog_config(
         {
             "html_title": f"📝 {project_name}",
             "html_short_title": project_name.split()[0],  # Use first word
-        }, )
+        },
+    )
 
     # Enhanced social features
     blog_extensions = [
         "sphinxext.opengraph",  # Social sharing
-        "sphinx_sitemap",  # SEO
+        # "sphinx_sitemap",  # DISABLED: Incompatible with Sphinx 8.2.3 - is_directory_builder attribute error
         "ablog",  # Blog features (if available)
     ]
 
@@ -278,7 +280,8 @@ def create_multilang_config(
             "locale_dirs": ["locale/"],
             "gettext_compact": False,
             "gettext_additional_targets": ["index"],
-        }, )
+        },
+    )
 
     return config
 
@@ -323,7 +326,8 @@ def create_corporate_config(
             "html_show_sphinx": False,  # Hide "Created with Sphinx"
             "html_show_copyright": True,
             "html_last_updated_fmt": "%Y-%m-%d %H:%M:%S",
-        }, )
+        },
+    )
 
     # Add corporate extensions
     corporate_extensions = [
@@ -366,8 +370,7 @@ def get_preset(preset_name: str, **kwargs) -> dict[str, Any]:
     """
     if preset_name not in PRESETS:
         available = ", ".join(PRESETS.keys())
-        raise ValueError(
-            f"Unknown preset '{preset_name}'. Available: {available}")
+        raise ValueError(f"Unknown preset '{preset_name}'. Available: {available}")
 
     return PRESETS[preset_name](**kwargs)
 

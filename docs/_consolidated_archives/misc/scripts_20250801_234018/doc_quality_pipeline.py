@@ -78,9 +78,7 @@ class DocumentationQualityPipeline:
         stage["output"].append(output)
 
         status_emoji = "✅" if success else "❌"
-        logger.info(
-            f"{status_emoji} Stage '{stage['name']}' completed in {stage['duration']:.2f}s"
-        )
+        logger.info(f"{status_emoji} Stage '{stage['name']}' completed in {stage['duration']:.2f}s")
 
     def run_command(
         self, cmd: list[str], stage_id: str | None = None, timeout: int = 600
@@ -346,9 +344,7 @@ else:
 
                     # Track warnings
                     elif "WARNING" in line:
-                        analysis["warnings"].append(
-                            {"line_number": i + 1, "warning": line}
-                        )
+                        analysis["warnings"].append({"line_number": i + 1, "warning": line})
 
                     # Track pages by package
                     elif "reading sources" in line:
@@ -368,11 +364,7 @@ else:
             for error in analysis["errors"]:
                 for context_line in error["context"]:
                     if "reading sources" in context_line:
-                        page = (
-                            context_line.split("] ")[-1]
-                            if "] " in context_line
-                            else "unknown"
-                        )
+                        page = context_line.split("] ")[-1] if "] " in context_line else "unknown"
                         error_pages[page] = error_pages.get(page, 0) + 1
 
             analysis["problematic_pages"] = sorted(
@@ -381,8 +373,7 @@ else:
 
             # Save analysis report
             report_file = (
-                self.reports_dir
-                / f"build_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+                self.reports_dir / f"build_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
             )
             with open(report_file, "w") as f:
                 json.dump(analysis, f, indent=2)
@@ -424,9 +415,7 @@ else:
 
             # Generate final report
             self.metrics["end_time"] = time.time()
-            self.metrics["duration"] = (
-                self.metrics["end_time"] - self.metrics["start_time"]
-            )
+            self.metrics["duration"] = self.metrics["end_time"] - self.metrics["start_time"]
 
             report_file = (
                 self.reports_dir

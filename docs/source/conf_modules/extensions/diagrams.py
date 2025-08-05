@@ -65,10 +65,8 @@ def get_config(
 def _get_mermaid_config() -> dict[str, Any]:
     """Get Mermaid diagram configuration."""
     return {
-        "mermaid_version":
-        "10.6.1",
-        "mermaid_init_js":
-        """
+        "mermaid_version": "10.6.1",
+        "mermaid_init_js": """
 mermaid.initialize({
     startOnLoad: true,
     theme: 'default',

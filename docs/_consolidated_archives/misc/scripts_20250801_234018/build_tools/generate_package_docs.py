@@ -438,9 +438,7 @@ Usage Example
     return content
 
 
-def create_module_direct_doc(
-    package_name: str, module_name: str, package_prefix: str
-) -> str:
+def create_module_direct_doc(package_name: str, module_name: str, package_prefix: str) -> str:
     """Create module.rst for direct module documentation."""
     content = f"""{module_name} module
 {"=" * (len(module_name) + 7)}
@@ -480,9 +478,7 @@ def generate_docs():
             (module_dir / "index.rst").write_text(module_index)
 
             # Create module.rst for direct documentation
-            module_doc = create_module_direct_doc(
-                package_name, module_name, package_prefix
-            )
+            module_doc = create_module_direct_doc(package_name, module_name, package_prefix)
             (module_dir / "module.rst").write_text(module_doc)
 
             # Create submodule directories and files

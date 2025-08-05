@@ -182,15 +182,10 @@ def generate_module_docstring(module_path: Path, analysis: dict) -> str:
 
     # Generate descriptions based on analysis
     if analysis.get("classes"):
-        brief_desc = (
-            f"Implementation of {', '.join(analysis['classes'])} for Haive framework"
-        )
+        brief_desc = f"Implementation of {', '.join(analysis['classes'])} for Haive framework"
         main_functionality = f"{analysis['classes'][0]} implementation"
         key_components = "\n".join(
-            [
-                f"    - {cls}: Main {cls.lower()} implementation"
-                for cls in analysis["classes"]
-            ]
+            [f"    - {cls}: Main {cls.lower()} implementation" for cls in analysis["classes"]]
         )
     elif analysis.get("functions"):
         brief_desc = f"Utility functions for {module_name.lower()}"

@@ -47,6 +47,7 @@
 
    .. autosummary::
 
+
       :nosignatures:
       :toctree: .
       :template: method.rst
@@ -64,6 +65,7 @@
    .. rubric:: {{ _('Attributes') }}
 
    .. autosummary::
+
 
       :toctree: .
       :template: attribute.rst
@@ -112,6 +114,8 @@
 
 
       For more examples, see the :doc:`agent examples </agents/demos/index>.`
+`
       {% else %}
       The Examples section from the class docstring will be displayed here automatically if present.
       {% endif %}
+`

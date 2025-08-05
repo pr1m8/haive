@@ -720,9 +720,7 @@ autodoc_type_aliases = {
 # No additional configuration needed - works out of the box
 
 # === COPY BUTTON ===
-copybutton_prompt_text = (
-    r">>> |\\.\\.\\. |\\$ |In \\[\\d*\\]: | {2,5}\\.\\.\\.: | {5,8}: "
-)
+copybutton_prompt_text = r">>> |\\.\\.\\. |\\$ |In \\[\\d*\\]: | {2,5}\\.\\.\\.: | {5,8}: "
 copybutton_prompt_is_regexp = True
 copybutton_exclude = ".linenos, .gp"
 
@@ -1023,9 +1021,7 @@ def linkcode_resolve(domain, info):
 
     submodule_path = "/".join(module_parts[2:]) if len(module_parts) > 2 else ""
     if submodule_path:
-        filename = (
-            f"packages/{package_dir}/src/haive/{package_name}/{submodule_path}.py"
-        )
+        filename = f"packages/{package_dir}/src/haive/{package_name}/{submodule_path}.py"
     else:
         filename = f"packages/{package_dir}/src/haive/{package_name}/__init__.py"
 

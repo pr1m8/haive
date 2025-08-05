@@ -103,7 +103,6 @@ def mock_missing_modules():
 
             # Create a mock class that can be instantiated
             class MockClass:
-
                 def __init__(self, *args, **kwargs):
                     pass
 
@@ -369,8 +368,8 @@ def initialize_mocks():
     mock_specific_imports()
     logger.info(
         f"Documentation mocks initialized: {
-            len(MISSING_HAIVE_MODULES) +
-            len(EXTERNAL_DEPENDENCIES)} modules mocked",
+            len(MISSING_HAIVE_MODULES) + len(EXTERNAL_DEPENDENCIES)
+        } modules mocked",
     )
 
 

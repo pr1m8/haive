@@ -93,13 +93,9 @@ class CSSValidator:
         self.results["built_css"] = []
 
         if source_content == built_content:
-            self.results["built_css"].append(
-                ("CSS file copied correctly", True, "Files match")
-            )
+            self.results["built_css"].append(("CSS file copied correctly", True, "Files match"))
         else:
-            self.results["built_css"].append(
-                ("CSS file copied correctly", False, "Files differ")
-            )
+            self.results["built_css"].append(("CSS file copied correctly", False, "Files differ"))
             return False
 
         return True
@@ -165,7 +161,6 @@ class CSSValidator:
     def print_report(self):
         """Print validation report."""
         for _section, checks in self.results.items():
-
             passed = sum(1 for _, p, _ in checks if p)
             len(checks)
 

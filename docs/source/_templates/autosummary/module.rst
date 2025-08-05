@@ -8,6 +8,7 @@
 .. automodule:: {{ fullname }}
 
 {# Module path for breadcrumb #}
+
    <div class="module-path" style="margin-bottom: 1rem; color: var(--color-foreground-secondary);">
    <code>{{ fullname }}</code>
    </div>
@@ -53,6 +54,7 @@
 
    .. autosummary::
 
+
       :nosignatures:
       :toctree: .
       :template: attribute.rst
@@ -79,6 +81,7 @@
 
    .. autosummary::
 
+
       :nosignatures:
       :toctree: .
       :template: function.rst
@@ -102,6 +105,7 @@
    .. rubric:: {{ _('Classes') }}
 
    .. autosummary::
+
 
       :nosignatures:
       :toctree: .
@@ -127,6 +131,7 @@
       .. rubric:: Examples
 
       .. note::
+
          See the class docstring for usage examples.
 
    {%- endfor %}
@@ -138,6 +143,7 @@
    .. rubric:: {{ _('Exceptions') }}
 
    .. autosummary::
+
 
       :nosignatures:
       :toctree: .
@@ -165,6 +171,7 @@
 
 .. autosummary::
 
+
    :toctree: .
    :template: module.rst
 
@@ -177,6 +184,7 @@
 
 {# Also show submodule details inline for better navigation #}
 .. toctree::
+
 
    :maxdepth: 1
    :caption: Submodules

@@ -89,9 +89,7 @@ class GameInfo:
                                 # Check next few lines for description
                                 desc_lines = []
                                 for j in range(i + 1, min(i + 5, len(lines))):
-                                    if lines[j].strip() and not lines[j].startswith(
-                                        "#"
-                                    ):
+                                    if lines[j].strip() and not lines[j].startswith("#"):
                                         desc_lines.append(lines[j].strip())
                                     elif desc_lines:
                                         break
@@ -182,12 +180,8 @@ class GameCategorizer:
     """Categorizes games into logical groups."""
 
     CATEGORIES = {
-        "board_games": GameCategory(
-            "Board Games", "Classic board games with strategic depth", "♟️"
-        ),
-        "card_games": GameCategory(
-            "Card Games", "Traditional and modern card games", "🃏"
-        ),
+        "board_games": GameCategory("Board Games", "Classic board games with strategic depth", "♟️"),
+        "card_games": GameCategory("Card Games", "Traditional and modern card games", "🃏"),
         "single_player": GameCategory(
             "Single Player Games", "Puzzle and single-player challenges", "🧩"
         ),
@@ -197,12 +191,8 @@ class GameCategorizer:
         "strategy_games": GameCategory(
             "Strategy Games", "Complex strategic and tactical games", "🏰"
         ),
-        "arcade_games": GameCategory(
-            "Arcade Games", "Fast-paced action and reaction games", "🕹️"
-        ),
-        "other_games": GameCategory(
-            "Other Games", "Miscellaneous and experimental games", "🎲"
-        ),
+        "arcade_games": GameCategory("Arcade Games", "Fast-paced action and reaction games", "🕹️"),
+        "other_games": GameCategory("Other Games", "Miscellaneous and experimental games", "🎲"),
     }
 
     # Game name patterns for categorization
@@ -416,9 +406,7 @@ class GameDocumentationGenerator:
         lines.append("🎮 Haive Games")
         lines.append("==============")
         lines.append("")
-        lines.append(
-            "Comprehensive game environments for AI agents with LLM integration."
-        )
+        lines.append("Comprehensive game environments for AI agents with LLM integration.")
         lines.append("")
 
         # Count games by quality
@@ -428,9 +416,7 @@ class GameDocumentationGenerator:
 
         quality_counts = {}
         for game in all_games:
-            quality_counts[game.quality_level] = (
-                quality_counts.get(game.quality_level, 0) + 1
-            )
+            quality_counts[game.quality_level] = quality_counts.get(game.quality_level, 0) + 1
 
         lines.append(".. note::")
         lines.append("")
@@ -465,9 +451,7 @@ class GameDocumentationGenerator:
 
         for category_name, category in self.categories.items():
             if category.games:
-                lines.append(
-                    f"   .. grid-item-card:: {category.icon} **{category.name}**"
-                )
+                lines.append(f"   .. grid-item-card:: {category.icon} **{category.name}**")
                 lines.append(f"      :link: {category_name}")
                 lines.append("      :link-type: doc")
                 lines.append("      ")
@@ -578,9 +562,7 @@ class GamesAutoDocDirective(SphinxDirective):
             # Generate specific category
             category_name = self.options["category"]
             if category_name in generator.categories:
-                content = generator.generate_category_index(
-                    generator.categories[category_name]
-                )
+                content = generator.generate_category_index(generator.categories[category_name])
             else:
                 content = f"Category '{category_name}' not found."
         else:

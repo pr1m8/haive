@@ -62,9 +62,7 @@ class GameDemoValidator:
                 found = re.search(pattern, content, re.IGNORECASE | re.MULTILINE)
                 passed = found is not None
                 details = (
-                    f"Line {content[:found.start()].count(chr(10)) + 1}"
-                    if found
-                    else "Not found"
+                    f"Line {content[: found.start()].count(chr(10)) + 1}" if found else "Not found"
                 )
                 self.results["source_files"].append(
                     (f"{demo_file}: {description}", passed, details)
@@ -87,9 +85,7 @@ class GameDemoValidator:
             file_path = self.build_dir / html_file
 
             if not file_path.exists():
-                self.results["built_html"].append(
-                    (f"{html_file} exists", False, "File not found")
-                )
+                self.results["built_html"].append((f"{html_file} exists", False, "File not found"))
                 all_passed = False
                 continue
 
@@ -126,11 +122,7 @@ class GameDemoValidator:
                 (
                     f"{html_file}: Has streaming content",
                     streaming_found,
-                    (
-                        "Streaming element found"
-                        if streaming_found
-                        else "No streaming elements"
-                    ),
+                    ("Streaming element found" if streaming_found else "No streaming elements"),
                 )
             )
 
@@ -211,11 +203,7 @@ class GameDemoValidator:
 
                 for description, passed, details in file_checks:
                     if not passed:
-                        (
-                            description.split(": ", 1)[1]
-                            if ": " in description
-                            else description
-                        )
+                        (description.split(": ", 1)[1] if ": " in description else description)
 
         # Overall summary
         all_checks = []

@@ -273,9 +273,7 @@ class AgentDocDirective(SphinxDirective):
             config_title += nodes.strong(text="Configuration:")
             section += config_title
 
-            config_code = self._format_config_example(
-                agent_name, metadata["example_config"]
-            )
+            config_code = self._format_config_example(agent_name, metadata["example_config"])
             literal = nodes.literal_block(config_code, config_code)
             literal["language"] = "python"
             section += literal
@@ -286,9 +284,7 @@ class AgentDocDirective(SphinxDirective):
             usage_title += nodes.strong(text="Usage:")
             section += usage_title
 
-            literal = nodes.literal_block(
-                metadata["example_usage"], metadata["example_usage"]
-            )
+            literal = nodes.literal_block(metadata["example_usage"], metadata["example_usage"])
             literal["language"] = "python"
             section += literal
 
@@ -403,9 +399,7 @@ class AgentGalleryDirective(SphinxDirective):
 
         return content
 
-    def _create_agent_card(
-        self, agent_name: str, metadata: dict[str, Any]
-    ) -> nodes.container:
+    def _create_agent_card(self, agent_name: str, metadata: dict[str, Any]) -> nodes.container:
         """Create a card for an agent."""
         card = nodes.container()
         card["classes"] = ["agent-card"]

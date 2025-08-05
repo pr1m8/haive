@@ -77,22 +77,16 @@ class AgentCacheLoader:
                     # Find the last AIMessage content
                     import re
 
-                    ai_messages = re.findall(
-                        r"AIMessage\(content='([^']*)'", agent_output
-                    )
+                    ai_messages = re.findall(r"AIMessage\(content='([^']*)'", agent_output)
                     if ai_messages:
                         execution["clean_response"] = ai_messages[-1]
                     else:
                         # Try with double quotes
-                        ai_messages = re.findall(
-                            r'AIMessage\(content="([^"]*)"', agent_output
-                        )
+                        ai_messages = re.findall(r'AIMessage\(content="([^"]*)"', agent_output)
                         if ai_messages:
                             execution["clean_response"] = ai_messages[-1]
                         else:
-                            execution["clean_response"] = (
-                                "AI response extraction failed"
-                            )
+                            execution["clean_response"] = "AI response extraction failed"
                 except Exception as e:
                     logger.warning(f"Could not extract clean response: {e}")
                     execution["clean_response"] = "Response text unavailable"
@@ -206,9 +200,7 @@ class AgentCacheLoader:
             "react": "A reasoning and acting agent with tool use capabilities",
             "rag": "A retrieval-augmented generation agent with knowledge base integration",
         }
-        return descriptions.get(
-            agent_type, f"A {agent_type} agent for specialized tasks"
-        )
+        return descriptions.get(agent_type, f"A {agent_type} agent for specialized tasks")
 
     def _get_agent_icon(self, agent_type: str) -> str:
         """Get agent icon emoji."""

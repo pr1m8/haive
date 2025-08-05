@@ -12,6 +12,7 @@
 
 .. toctree::
 
+
    :hidden:
 
       {% for child in own_page_children %}
@@ -68,9 +69,11 @@
       {% if visible_attributes %}
 Attributes
 
-----------
+
+---------
 
 .. autoapisummary::
+
 
          {% for attribute in visible_attributes %}
 
@@ -83,9 +86,11 @@ Attributes
       {% if visible_exceptions %}
 Exceptions
 
-----------
+
+---------
 
 .. autoapisummary::
+
 
          {% for exception in visible_exceptions %}
 
@@ -98,9 +103,11 @@ Exceptions
       {% if visible_classes %}
 Classes
 
--------
+
+------
 
 .. autoapisummary::
+
 
          {% for klass in visible_classes %}
 
@@ -113,9 +120,11 @@ Classes
       {% if visible_methods %}
 Methods
 
--------
+
+------
 
 .. autoapisummary::
+
 
             {% for method in visible_methods %}
 

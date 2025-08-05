@@ -155,9 +155,7 @@ async def run_simple_agent_with_streaming(input_text: str) -> dict[str, Any]:
                         graph_info["mermaid_available"] = True
                     if hasattr(graph, "nodes"):
                         graph_info["nodes"] = (
-                            list(graph.nodes.keys())
-                            if hasattr(graph.nodes, "keys")
-                            else []
+                            list(graph.nodes.keys()) if hasattr(graph.nodes, "keys") else []
                         )
                     if hasattr(graph, "edges"):
                         graph_info["edges"] = list(graph.edges) if graph.edges else []
@@ -221,9 +219,7 @@ async def run_simple_agent_with_streaming(input_text: str) -> dict[str, Any]:
                 viz_data["final_state"] = agent.get_state()
 
             if hasattr(agent, "conversation_history"):
-                viz_data["conversation_history"] = getattr(
-                    agent, "conversation_history", []
-                )
+                viz_data["conversation_history"] = getattr(agent, "conversation_history", [])
 
             capture.capture_visualization_data(viz_data)
 
@@ -301,9 +297,7 @@ async def run_react_agent_with_streaming(input_text: str) -> dict[str, Any]:
             system_message="You are a helpful assistant with access to tools. Think step by step and use tools when appropriate.",
         )
 
-        agent = ReactAgent(
-            name="demo_react_agent", engine=config, tools=[calculator, word_counter]
-        )
+        agent = ReactAgent(name="demo_react_agent", engine=config, tools=[calculator, word_counter])
 
         capture.start_capture()
 
@@ -328,9 +322,7 @@ async def run_react_agent_with_streaming(input_text: str) -> dict[str, Any]:
                         for node in graph.nodes
                     ]
                 if hasattr(graph, "edges"):
-                    graph_info["edges"] = [
-                        {"from": edge[0], "to": edge[1]} for edge in graph.edges
-                    ]
+                    graph_info["edges"] = [{"from": edge[0], "to": edge[1]} for edge in graph.edges]
 
                 capture.capture_graph_data(graph_info)
 
@@ -396,9 +388,7 @@ async def run_react_agent_with_streaming(input_text: str) -> dict[str, Any]:
 
             # Get conversation history
             if hasattr(agent, "conversation_history"):
-                viz_data["conversation_history"] = getattr(
-                    agent, "conversation_history", []
-                )
+                viz_data["conversation_history"] = getattr(agent, "conversation_history", [])
 
             # Get state information
             if hasattr(agent, "get_state"):
@@ -478,12 +468,10 @@ async def generate_simple_agent_cache():
     }
 
     for i, input_text in enumerate(test_inputs):
-        logger.info(
-            f"🎯 Running execution {i+1}/{len(test_inputs)}: {input_text[:50]}..."
-        )
+        logger.info(f"🎯 Running execution {i + 1}/{len(test_inputs)}: {input_text[:50]}...")
 
         execution_data = await run_simple_agent_with_streaming(input_text)
-        execution_data["execution_id"] = f"simple_agent_demo_{i+1}"
+        execution_data["execution_id"] = f"simple_agent_demo_{i + 1}"
         execution_data["input_text"] = input_text
 
         cache_data["executions"].append(execution_data)
@@ -491,12 +479,10 @@ async def generate_simple_agent_cache():
         # Add delay between executions
         await asyncio.sleep(1)
 
-        logger.info(f"✅ Execution {i+1} completed successfully")
+        logger.info(f"✅ Execution {i + 1} completed successfully")
 
     # Save to file
-    cache_file = (
-        Path(__file__).parent.parent / "docs" / "source" / "agent_cache_simple.json"
-    )
+    cache_file = Path(__file__).parent.parent / "docs" / "source" / "agent_cache_simple.json"
     cache_file.parent.mkdir(parents=True, exist_ok=True)
 
     with open(cache_file, "w") as f:
@@ -527,12 +513,10 @@ async def generate_react_agent_cache():
     }
 
     for i, input_text in enumerate(test_inputs):
-        logger.info(
-            f"🎯 Running execution {i+1}/{len(test_inputs)}: {input_text[:50]}..."
-        )
+        logger.info(f"🎯 Running execution {i + 1}/{len(test_inputs)}: {input_text[:50]}...")
 
         execution_data = await run_react_agent_with_streaming(input_text)
-        execution_data["execution_id"] = f"react_agent_demo_{i+1}"
+        execution_data["execution_id"] = f"react_agent_demo_{i + 1}"
         execution_data["input_text"] = input_text
 
         cache_data["executions"].append(execution_data)
@@ -540,12 +524,10 @@ async def generate_react_agent_cache():
         # Add delay between executions
         await asyncio.sleep(2)
 
-        logger.info(f"✅ Execution {i+1} completed successfully")
+        logger.info(f"✅ Execution {i + 1} completed successfully")
 
     # Save to file
-    cache_file = (
-        Path(__file__).parent.parent / "docs" / "source" / "agent_cache_react.json"
-    )
+    cache_file = Path(__file__).parent.parent / "docs" / "source" / "agent_cache_react.json"
     cache_file.parent.mkdir(parents=True, exist_ok=True)
 
     with open(cache_file, "w") as f:

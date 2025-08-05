@@ -7,7 +7,8 @@
 {% if examples %}
 
 Examples
---------
+
+
 
 {{ examples }}
 
@@ -16,7 +17,8 @@ Examples
 {% if see_also %}
 
 See Also
---------
+
+
 
 {{ see_also }}
 

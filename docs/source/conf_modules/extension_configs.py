@@ -52,12 +52,9 @@ def get_bibtex_config() -> dict[str, Any]:
 def get_openapi_config() -> dict[str, Any]:
     """Configuration for OpenAPI documentation."""
     return {
-        "openapi_spec_url":
-        "/openapi.json",
-        "openapi_title":
-        "Haive API Documentation",
-        "openapi_description":
-        "Complete API reference for Haive AI Agent Framework",
+        "openapi_spec_url": "/openapi.json",
+        "openapi_title": "Haive API Documentation",
+        "openapi_description": "Complete API reference for Haive AI Agent Framework",
     }
 
 
@@ -95,8 +92,7 @@ def get_youtube_config() -> dict[str, Any]:
 def get_copybutton_config() -> dict[str, Any]:
     """Configuration for copy button."""
     return {
-        "copybutton_prompt_text":
-        r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: ",
+        "copybutton_prompt_text": r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: ",
         "copybutton_prompt_is_regexp": True,
         "copybutton_line_continuation_character": "\\",
         "copybutton_here_doc_delimiter": "EOT",
@@ -134,16 +130,11 @@ def get_sitemap_config() -> dict[str, Any]:
 def get_opengraph_config() -> dict[str, Any]:
     """Configuration for OpenGraph meta tags."""
     return {
-        "ogp_site_url":
-        "https://haive.readthedocs.io/",
-        "ogp_site_name":
-        "Haive AI Agent Framework",
-        "ogp_description_length":
-        160,
-        "ogp_type":
-        "website",
-        "ogp_image":
-        "https://haive.readthedocs.io/_static/og-image.png",
+        "ogp_site_url": "https://haive.readthedocs.io/",
+        "ogp_site_name": "Haive AI Agent Framework",
+        "ogp_description_length": 160,
+        "ogp_type": "website",
+        "ogp_image": "https://haive.readthedocs.io/_static/og-image.png",
         "ogp_custom_meta_tags": [
             '<meta name="twitter:card" content="summary_large_image">',
             '<meta name="twitter:site" content="@haive_ai">',
@@ -155,7 +146,7 @@ def get_versioning_config() -> dict[str, Any]:
     """Configuration for documentation versioning."""
     return {
         "scv_root_ref": "main",
-        "scv_sort": ("semver", ),
+        "scv_sort": ("semver",),
         "scv_banner_greatest_tag": True,
         "scv_show_banner": True,
         "scv_banner_main_ref": "main",
@@ -186,16 +177,11 @@ def get_autodoc_typehints_config() -> dict[str, Any]:
     """Configuration for sphinx-autodoc-typehints to handle generics."""
     return {
         # Enable type hints in descriptions rather than signatures
-        "autodoc_typehints":
-        "description",  # Show type hints in descriptions
-        "typehints_formatter":
-        None,  # Use default formatter
-        "typehints_fully_qualified":
-        False,  # Use short names
-        "always_use_bars_union":
-        True,  # Use | instead of Union for Python 3.10+ style
-        "autodoc_typehints_description_target":
-        "documented",
+        "autodoc_typehints": "description",  # Show type hints in descriptions
+        "typehints_formatter": None,  # Use default formatter
+        "typehints_fully_qualified": False,  # Use short names
+        "always_use_bars_union": True,  # Use | instead of Union for Python 3.10+ style
+        "autodoc_typehints_description_target": "documented",
         "autodoc_type_aliases": {
             # Add aliases for complex generic types
             "InvokableEngine": "haive.core.engine.base.base.InvokableEngine",
@@ -211,21 +197,15 @@ def get_autodoc_typehints_config() -> dict[str, Any]:
             "autodoc.import_object",
         ],
         # Additional typehints settings to handle generics
-        "typehints_defaults":
-        "comma",
-        "always_document_param_types":
-        True,  # Document parameter types
-        "typehints_use_signature":
-        True,  # Include type info in signatures
-        "simplify_optional_unions":
-        True,  # Simplify complex union types
-        "typehints_document_rtype":
-        True,  # Document return types
+        "typehints_defaults": "comma",
+        "always_document_param_types": True,  # Document parameter types
+        "typehints_use_signature": True,  # Include type info in signatures
+        "simplify_optional_unions": True,  # Simplify complex union types
+        "typehints_document_rtype": True,  # Document return types
     }
 
 
-def get_all_extension_configs(
-        available_extensions: list[str]) -> dict[str, Any]:
+def get_all_extension_configs(available_extensions: list[str]) -> dict[str, Any]:
     """Get all configuration for available extensions."""
     configs = {}
 
@@ -249,8 +229,7 @@ def get_all_extension_configs(
         "sphinxcontrib.autodoc_pydantic": get_autodoc_pydantic_config,
         "autodocsumm": get_autodocsumm_config,
         "sphinx_autoindex": get_sphinx_autoindex_config,  # Required config
-        "sphinx_autodoc_typehints":
-        get_autodoc_typehints_config,  # CRITICAL for generics
+        "sphinx_autodoc_typehints": get_autodoc_typehints_config,  # CRITICAL for generics
     }
 
     # Get configs for available extensions
@@ -343,13 +322,16 @@ def get_conditional_configs(extensions: list[str]) -> dict[str, Any]:
             {
                 "html_css_files": [("diagrams.css", {})],
                 "html_js_files": [("diagram-utils.js", {})],
-            }, )
+            },
+        )
 
     # If versioning and sitemap are both available, enhance SEO
     if "sphinxcontrib.versioning" in extensions and "sphinx_sitemap" in extensions:
-        configs.update({
-            "html_extra_path": ["robots.txt"],
-        }, )
+        configs.update(
+            {
+                "html_extra_path": ["robots.txt"],
+            },
+        )
 
     # If multiple API doc extensions available, create unified API section
     api_extensions = [
@@ -364,7 +346,8 @@ def get_conditional_configs(extensions: list[str]) -> dict[str, Any]:
                     "navigation_with_keys": True,
                     "show_navbar_depth": 3,
                 },
-            }, )
+            },
+        )
 
     # If Pydantic documentation extensions are available, optimize for Python APIs
     pydantic_extensions = ["sphinxcontrib.autodoc_pydantic", "autodocsumm"]
@@ -387,7 +370,8 @@ def get_conditional_configs(extensions: list[str]) -> dict[str, Any]:
                 # Better class documentation
                 "autoclass_content": "both",
                 "autodoc_class_signature": "mixed",
-            }, )
+            },
+        )
 
     # If both Pydantic and autosummary extensions are available, create
     # comprehensive API docs
@@ -405,6 +389,7 @@ def get_conditional_configs(extensions: list[str]) -> dict[str, Any]:
                 # Better TOC generation
                 "toctree_show_hidden": True,
                 "toctree_titles_only": False,
-            }, )
+            },
+        )
 
     return configs

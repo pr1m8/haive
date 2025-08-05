@@ -97,10 +97,8 @@ except ImportError:
 def _get_coverage_config() -> dict[str, Any]:
     """Get documentation coverage configuration."""
     return {
-        "coverage_write_headline":
-        False,  # Don't write "Undocumented" headline
-        "coverage_show_missing_items":
-        True,  # Show what's missing
+        "coverage_write_headline": False,  # Don't write "Undocumented" headline
+        "coverage_show_missing_items": True,  # Show what's missing
         "coverage_ignore_modules": [
             "haive.*.tests.*",  # Ignore test modules
             "haive.*.__main__",  # Ignore main modules
@@ -148,12 +146,9 @@ def get_linkcheck_config() -> dict[str, Any]:
             r"https://github\.com/.*/edit/.*",  # Ignore edit links
             r"mailto:.*",  # Ignore email links
         ],
-        "linkcheck_timeout":
-        10,
-        "linkcheck_retries":
-        2,
-        "linkcheck_workers":
-        5,
+        "linkcheck_timeout": 10,
+        "linkcheck_retries": 2,
+        "linkcheck_workers": 5,
     }
 
 

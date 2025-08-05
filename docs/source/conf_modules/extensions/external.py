@@ -52,7 +52,7 @@ def get_config(
 
     # SEO sitemap
     if enable_sitemap:
-        extensions.append("sphinx_sitemap")
+        # extensions.append("sphinx_sitemap")  # DISABLED: Incompatible with Sphinx 8.2.3
         config.update(_get_sitemap_config(base_url))
 
     # GitHub integration
@@ -61,7 +61,8 @@ def get_config(
             [
                 "sphinx_issues",  # GitHub issues integration
                 "sphinx_contributors",  # Automatic contributor lists
-            ], )
+            ],
+        )
         config.update(_get_github_config(github_repo))
 
     # YouTube videos
@@ -74,7 +75,8 @@ def get_config(
             [
                 "sphinxcontrib.openapi",  # OpenAPI/Swagger docs
                 "sphinxcontrib.httpdomain",  # HTTP API documentation
-            ], )
+            ],
+        )
 
     config["extensions"] = extensions
     return config
@@ -134,8 +136,7 @@ def get_hover_config() -> dict[str, Any]:
     return {
         "hoverxref_auto_ref": True,  # Enable automatic hover references
         "hoverxref_domains": ["py"],  # Enable for Python domain
-        "hoverxref_roles":
-        ["ref", "class", "func", "meth", "attr", "exc", "data"],
+        "hoverxref_roles": ["ref", "class", "func", "meth", "attr", "exc", "data"],
     }
 
 
@@ -215,7 +216,8 @@ def get_full_config() -> dict[str, Any]:
         [
             "hoverxref.extension",  # Hover tooltips
             "sphinx_needs",  # Requirements management
-        ], )
+        ],
+    )
 
     config.update(get_hover_config())
     config.update(get_needs_config())

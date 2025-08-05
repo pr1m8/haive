@@ -36,7 +36,7 @@ def get_config(
 
     # Design and layout
     if enable_design:
-        extensions.append("sphinx_design")
+        # extensions.append("sphinx_design")  # DISABLED: Incompatible with Sphinx 8.2.3
 
     # Interactive content
     if enable_interactive:
@@ -54,7 +54,7 @@ def get_config(
 
     # Math support
     if enable_math:
-        extensions.append("sphinx_math_dollar")  # LaTeX math with $ syntax
+        # extensions.append("sphinx_math_dollar")  # DISABLED: Incompatible with Sphinx 8.2.3
 
     # Emoji support
     if enable_emoji:

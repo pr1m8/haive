@@ -116,7 +116,6 @@ class DocumentationTestRunner:
 
         # Recommendations
         if total - passed > 0:
-
             if not self.results.get("Documentation Build", (True, ""))[0]:
                 pass
 
@@ -171,17 +170,13 @@ class DocumentationTestRunner:
 
 def main():
     """Main entry point."""
-    parser = argparse.ArgumentParser(
-        description="Run comprehensive documentation tests"
-    )
+    parser = argparse.ArgumentParser(description="Run comprehensive documentation tests")
     parser.add_argument(
         "--screenshots",
         action="store_true",
         help="Run screenshot tests (requires Playwright)",
     )
-    parser.add_argument(
-        "--visual", action="store_true", help="Run visual check (opens browser)"
-    )
+    parser.add_argument("--visual", action="store_true", help="Run visual check (opens browser)")
     parser.add_argument(
         "--all",
         action="store_true",
@@ -194,9 +189,7 @@ def main():
         args.screenshots = True
         args.visual = True
 
-    runner = DocumentationTestRunner(
-        run_screenshots=args.screenshots, run_visual=args.visual
-    )
+    runner = DocumentationTestRunner(run_screenshots=args.screenshots, run_visual=args.visual)
 
     success = runner.run_all_tests()
     sys.exit(0 if success else 1)

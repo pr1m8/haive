@@ -58,19 +58,19 @@ ALL_EXTENSIONS = [
     "sphinxcontrib.seqdiag",  # Sequence diagrams (API flows)
     "sphinxcontrib.plantuml",  # UML diagrams (system design)
     "sphinxcontrib.drawio",  # Draw.io integration
-    "sphinx_design",
+    # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3
     # === PROFESSIONAL POLISH (7) ===
     "sphinx_notfound_page",  # Custom 404 pages
     "sphinx_version_warning",  # Version warnings for old docs
     "sphinx_contributors",  # Automatic contributor lists
     "sphinxext.rediraffe",  # Redirect management
     "sphinx_issues",  # GitHub issues integration
-    "sphinx_sitemap",
+    # "sphinx_sitemap",  # DISABLED: Incompatible with Sphinx 8.2.3 - is_directory_builder attribute error
     "sphinx_external_toc",
     # === ENHANCED UX (6) ===
     "sphinxemoji",  # Emoji support in docs 😀
     "sphinx_substitution_extensions",  # Advanced text substitutions
-    "sphinx_math_dollar",  # LaTeX math with $ syntax
+    # "sphinx_math_dollar",  # DISABLED: Incompatible with Sphinx 8.2.3 - causes NotImplementedError
     "sphinxcontrib.images",  # Image thumbnails and galleries
     "sphinxcontrib.youtube",
     "sphinxext.opengraph",
@@ -105,7 +105,7 @@ WORKING_EXTENSIONS = [
     "sphinx.ext.doctest",
     "sphinx.ext.coverage",
     "sphinx.ext.todo",
-    "sphinx_design",
+    # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3
     "sphinx_tabs.tabs",
     "sphinx_inline_tabs",
     "sphinx_togglebutton",
@@ -114,7 +114,7 @@ WORKING_EXTENSIONS = [
     "myst_parser",
     "sphinxcontrib.mermaid",
     "sphinxcontrib.youtube",
-    "sphinx_sitemap",
+    # "sphinx_sitemap",  # DISABLED: Incompatible with Sphinx 8.2.3 - is_directory_builder attribute error
     "sphinxcontrib.openapi",
     "sphinxcontrib.httpdomain",
     "sphinxext.opengraph",
@@ -283,7 +283,8 @@ def test_extension_compatibility() -> dict[str, Any]:
         except ImportError as e:
             results["high_value_status"][ext] = f"missing: {e}"
             results["warnings"].append(
-                (ext, f"High-value extension missing: {e}"), )
+                (ext, f"High-value extension missing: {e}"),
+            )
 
     # Get working extensions count
     working_exts = get_all_extensions()
@@ -296,11 +297,13 @@ def test_extension_compatibility() -> dict[str, Any]:
         results["status"] = "good"
     else:
         results["status"] = "partial"
-        results["warnings"].append((
-            "system",
-            f"Only {results['working_extensions']} extensions active, "
-            f"original had {results['original_working_count']}+",
-        ), )
+        results["warnings"].append(
+            (
+                "system",
+                f"Only {results['working_extensions']} extensions active, "
+                f"original had {results['original_working_count']}+",
+            ),
+        )
 
     return results
 
