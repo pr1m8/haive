@@ -77,6 +77,15 @@ DISABLE_EXAMPLES = os.environ.get(
     "0",
 ).lower() in ("1", "true", "yes")
 
+# Control import diagnostics speed (set SPHINX_FAST_IMPORTS=1 for faster builds)
+FAST_IMPORTS = os.environ.get(
+    "SPHINX_FAST_IMPORTS", 
+    "1",  # Default to fast mode for better developer experience
+).lower() in ("1", "true", "yes")
+
+# Import diagnostics sample limit
+IMPORT_SAMPLE_LIMIT = int(os.environ.get("SPHINX_IMPORT_SAMPLE_LIMIT", "300"))
+
 # Select extensions based on profile
 if SPHINX_PROFILE == "minimal":
     # Minimal set for fast builds
@@ -103,23 +112,19 @@ elif SPHINX_PROFILE == "standard":
     ], )
     print(f"📚 Using STANDARD profile ({len(extensions)} extensions)")
 else:
-    # Full set with all extensions
-    # Try to use enhanced extensions with structured logging
-    try:
-        from extensions_enhanced import get_extension_with_structured_logging
-
-        extensions, extension_status = get_extension_with_structured_logging()
-        logger.info(
-            f"🎯 Using FULL profile with enhanced logging ({len(extensions)} extensions)"
-        )
-    except ImportError:
-        extensions = get_all_extensions()
-        print(f"🎯 Using FULL profile ({len(extensions)} extensions)")
+    # Full set with all extensions - use comprehensive extensions.py 
+    extensions = get_all_extensions()
+    logger.info(f"🎯 Using FULL profile ({len(extensions)} extensions)")
 
 # Apply memory-safe configuration with extension optimization
 memory_config = get_memory_safe_sphinx_config(extensions)
-extensions = memory_config["extensions"]  # Use memory-optimized extensions
+# PRESERVE the selected extensions - don't overwrite with memory config
+# extensions = memory_config["extensions"]  # REMOVED: This was overwriting our selection
 build_recommendations = memory_config["build_recommendations"]
+
+# Log what we're actually using
+logger.info(f"📋 Final extensions count: {len(extensions)}")
+logger.info(f"🧠 Memory recommendations: {build_recommendations}")
 
 # Remove sphinx_gallery if examples are disabled
 if DISABLE_EXAMPLES:
@@ -187,6 +192,8 @@ else:
 autodoc_mock_imports = get_autodoc_mock_imports_from_diagnosis(
     autoapi_dirs,
     str(Path(__file__).parent),
+    fast_mode=FAST_IMPORTS,
+    sample_limit=IMPORT_SAMPLE_LIMIT,
 )
 # Add additional mocks for problematic dependencies
 autodoc_mock_imports.extend(
@@ -359,6 +366,10 @@ autodoc_mock_imports.extend(
         "Any",
         "GamePiece",
         # API tools and dependencies that require credentials
+        "google_search_results",
+        "google-search-results",
+        "serpapi",
+        "googlesearch",
         "TavilyClient",
         "TavilySearchResults",
         "RedditSearchAPIWrapper",
@@ -380,6 +391,13 @@ autodoc_mock_imports.extend(
         "SERP_API_KEY",
         "SERPAPI_API_KEY",
         # Additional API wrappers and keys
+        "langchain_community.agent_toolkits.load_tools",
+        "google-finance",
+        "google-jobs", 
+        "google-scholar",
+        "google-trends",
+        "google-serper",
+        "google-search",
         "AlphaVantageAPIWrapper",
         "AskNewsAPIWrapper",
         "ElevenLabsText2SpeechTool",
@@ -483,10 +501,8 @@ autoapi_ignore = [
     "**/agents/multi/archive/**/*.py",
     "**/agents/multi/enhanced_clean_multi_agent.py",
     # Tools with missing dependencies
-    "**/tools/google/google_finance.py",
-    "**/tools/google/google_jobs.py",
-    "**/tools/google/google_scholar.py",
-    "**/tools/google/google_trends.py",
+    "**/tools/google/**/*.py",
+    "**/tools/tools/google/**/*.py",
     # Search tools with issues
     "**/tools/search/**/*.py",
     # Reasoning and wiki agents
