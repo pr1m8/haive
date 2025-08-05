@@ -1,5 +1,6 @@
 # Error Index by File
 
+
 ## /home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py (822 errors)
 
 - Line 28: ruff:UP007 - Use `X | Y` for type annotations
@@ -986,7 +987,7 @@
 - Line 1564: ruff:Q000 - Single quotes found but double quotes preferred
   - Category: lint
   - ID: c521d395
-- Line 1567: ruff:SIM108 - Use ternary operator `use_default = None if isinstance(destinations, dict) else
+- Line 1567: ruff:SIM108 - Use ternary operator `use_default = None if isinstance(destinations, dict) else 
   - Category: lint
   - ID: 389132e1
 - Line 1574: ruff:PLR2004 - Magic value used in comparison, consider replacing `2` with a constant variable
@@ -1625,7 +1626,7 @@
 - Line 2195: ruff:Q000 - Single quotes found but double quotes preferred
   - Category: lint
   - ID: f1fd828a
-- Line 2199: ruff:B904 - Within an `except` clause, raise exceptions with `raise ... from err` or `raise
+- Line 2199: ruff:B904 - Within an `except` clause, raise exceptions with `raise ... from err` or `raise 
   - Category: lint
   - ID: e3cd8c81
 - Line 2199: ruff:Q000 - Single quotes found but double quotes preferred
@@ -1685,7 +1686,7 @@
 - Line 2244: ruff:Q000 - Single quotes found but double quotes preferred
   - Category: lint
   - ID: d5d4e26f
-- Line 2245: ruff:B904 - Within an `except` clause, raise exceptions with `raise ... from err` or `raise
+- Line 2245: ruff:B904 - Within an `except` clause, raise exceptions with `raise ... from err` or `raise 
   - Category: lint
   - ID: 39d26f7c
 - Line 2245: ruff:Q000 - Single quotes found but double quotes preferred
@@ -3854,7 +3855,7 @@
 - Line 1290: ruff:Q000 - Single quotes found but double quotes preferred
   - Category: lint
   - ID: 7cb9e282
-- Line 1300: ruff:B904 - Within an `except` clause, raise exceptions with `raise ... from err` or `raise
+- Line 1300: ruff:B904 - Within an `except` clause, raise exceptions with `raise ... from err` or `raise 
   - Category: lint
   - ID: b7b2d48d
 - Line 1300: ruff:Q000 - Single quotes found but double quotes preferred
@@ -4358,6 +4359,9 @@
 
 ## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/base/models.py (473 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 0832644a
 - Line 12: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 3e7eb1bc
@@ -4442,9 +4446,6 @@
 - Line 106: ruff:T201 - `print` found
   - Category: lint
   - ID: 037f75a9
-- Line 113: NameError - Fields must not use names with leading underscores; e.g., use 'event_emitter' in
-  - Category: import
-  - ID: d0f5f6c1
 - Line 115: ruff:W293 - Blank line contains whitespace
   - Category: lint
   - ID: 88339a61
@@ -4571,7 +4572,7 @@
 - Line 177: ruff:Q000 - Single quotes found but double quotes preferred
   - Category: lint
   - ID: 0c07b9b0
-- Line 177: ruff:B009 - Do not call `getattr` with a constant attribute value. It is not any safer than
+- Line 177: ruff:B009 - Do not call `getattr` with a constant attribute value. It is not any safer than 
   - Category: lint
   - ID: ab492ac6
 - Line 177: ruff:Q000 - Single quotes found but double quotes preferred
@@ -4592,7 +4593,7 @@
 - Line 186: ruff:Q000 - Single quotes found but double quotes preferred
   - Category: lint
   - ID: e05a69ce
-- Line 187: ruff:B009 - Do not call `getattr` with a constant attribute value. It is not any safer than
+- Line 187: ruff:B009 - Do not call `getattr` with a constant attribute value. It is not any safer than 
   - Category: lint
   - ID: 4660a28b
 - Line 187: ruff:Q000 - Single quotes found but double quotes preferred
@@ -4628,7 +4629,7 @@
 - Line 210: ruff:Q000 - Single quotes found but double quotes preferred
   - Category: lint
   - ID: 0f84776b
-- Line 210: ruff:B009 - Do not call `getattr` with a constant attribute value. It is not any safer than
+- Line 210: ruff:B009 - Do not call `getattr` with a constant attribute value. It is not any safer than 
   - Category: lint
   - ID: e01a3742
 - Line 210: ruff:Q000 - Single quotes found but double quotes preferred
@@ -4637,7 +4638,7 @@
 - Line 212: ruff:W293 - Blank line contains whitespace
   - Category: lint
   - ID: c1616f11
-- Line 213: ruff:B009 - Do not call `getattr` with a constant attribute value. It is not any safer than
+- Line 213: ruff:B009 - Do not call `getattr` with a constant attribute value. It is not any safer than 
   - Category: lint
   - ID: ade047a8
 - Line 213: ruff:Q000 - Single quotes found but double quotes preferred
@@ -7071,8 +7072,11 @@
   - Category: lint
   - ID: e95e8fab
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py (304 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py (305 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 83d7f6c7
 - Line 7: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 62ef4f91
@@ -7986,8 +7990,11 @@
   - Category: lint
   - ID: 82b1d9c6
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/rewoo_tree_agent.py (262 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/rewoo_tree_agent.py (263 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: cd6dff62
 - Line 17: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 9d226930
@@ -8777,208 +8784,208 @@
 
 ## packages/haive-core/src/haive/core/engine/aug_llm/config.py (233 errors)
 
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e106ba9f
 - Line 60: mypy:import-untyped - error: Skipping analyzing "haive.core.common.mixins.structured_output_mixin": mo
@@ -8993,82 +9000,82 @@
 - Line 75: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.base": module is installed, but mis
   - Category: type
   - ID: 07f7f2f9
-- Line 82: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 82: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 6729f868
-- Line 96: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 96: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 3680bb9e
-- Line 102: mypy:misc - error: Invalid base class [misc]
+- Line 102: mypy:misc - error: Invalid base class  [misc]
   - Category: type
   - ID: 500a40b4
-- Line 212: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 212: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: dbea98f5
-- Line 218: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 218: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: d0b69f4d
 - Line 218: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 2782dfdb
-- Line 224: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 224: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 347ed161
 - Line 224: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 3f109881
-- Line 226: mypy:has-type - error: Cannot determine type of "tools" [has-type]
+- Line 226: mypy:has-type - error: Cannot determine type of "tools"  [has-type]
   - Category: type
   - ID: 749172a8
-- Line 229: mypy:has-type - error: Cannot determine type of "tools" [has-type]
+- Line 229: mypy:has-type - error: Cannot determine type of "tools"  [has-type]
   - Category: type
   - ID: 575c2666
-- Line 237: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 237: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: cd7d9bb5
 - Line 237: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: de0de6cf
-- Line 250: mypy:has-type - error: Cannot determine type of "tools" [has-type]
+- Line 250: mypy:has-type - error: Cannot determine type of "tools"  [has-type]
   - Category: type
   - ID: 27e96558
-- Line 261: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 261: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 40fdd3c6
-- Line 275: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 275: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 2427226a
-- Line 283: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 283: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 68d288ee
-- Line 293: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 293: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 9eec4238
-- Line 334: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 334: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 71a3de28
-- Line 345: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 345: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 40bb5b68
-- Line 367: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 367: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 20293eb3
 - Line 414: mypy:str, dict[str, Any - error: Returning Any from function declared to return "tuple[str, dict[str, Any]
   - Category: type
   - ID: 15e2fbee
-- Line 416: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 416: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 21708a02
 - Line 416: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: dfb22888
-- Line 419: mypy:has-type - error: Cannot determine type of "tools" [has-type]
+- Line 419: mypy:has-type - error: Cannot determine type of "tools"  [has-type]
   - Category: type
   - ID: a0289f0e
-- Line 429: mypy:has-type - error: Cannot determine type of "tools" [has-type]
+- Line 429: mypy:has-type - error: Cannot determine type of "tools"  [has-type]
   - Category: type
   - ID: db662d59
-- Line 449: mypy:Any - error: Incompatible types in assignment (expression has type "bool", target has
+- Line 449: mypy:Any - error: Incompatible types in assignment (expression has type "bool", target has 
   - Category: type
   - ID: 955771ca
 - Line 450: mypy:Any - error: Incompatible types in assignment (expression has type "int", target has t
@@ -9077,97 +9084,97 @@
 - Line 451: mypy:Any, Any - error: Incompatible types in assignment (expression has type "dict[Any, Any]", t
   - Category: type
   - ID: fd187819
-- Line 454: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 454: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 1ffc6391
 - Line 454: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 1c0d5a7b
-- Line 465: mypy:BaseModel - error: Item "None" of "type[BaseModel] | None" has no attribute "**name**" [uni
+- Line 465: mypy:BaseModel - error: Item "None" of "type[BaseModel] | None" has no attribute "__name__"  [uni
   - Category: type
   - ID: 77c86ed4
 - Line 466: mypy:BaseModel - error: Argument "pydantic_object" to "PydanticOutputParser" has incompatible typ
   - Category: type
   - ID: 5637f9a6
-- Line 488: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 488: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 85afdbff
 - Line 488: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 148097d6
-- Line 529: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 529: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 86fbec77
 - Line 529: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: cb182bc0
-- Line 531: mypy:BaseModel - error: Item "None" of "type[BaseModel] | None" has no attribute "**name**" [uni
+- Line 531: mypy:BaseModel - error: Item "None" of "type[BaseModel] | None" has no attribute "__name__"  [uni
   - Category: type
   - ID: eac0a7e9
-- Line 532: mypy:has-type - error: Cannot determine type of "tools" [has-type]
+- Line 532: mypy:has-type - error: Cannot determine type of "tools"  [has-type]
   - Category: type
   - ID: 44d57ea6
-- Line 533: mypy:has-type - error: Cannot determine type of "tools" [has-type]
+- Line 533: mypy:has-type - error: Cannot determine type of "tools"  [has-type]
   - Category: type
   - ID: 97010a0d
-- Line 535: mypy:BaseModel - error: Item "None" of "type[BaseModel] | None" has no attribute "**name**" [uni
+- Line 535: mypy:BaseModel - error: Item "None" of "type[BaseModel] | None" has no attribute "__name__"  [uni
   - Category: type
   - ID: 3e231c3d
 - Line 537: mypy:BaseModel - error: Argument 1 to "append" of "list" has incompatible type "type[BaseModel] |
   - Category: type
   - ID: d24948f7
-- Line 543: mypy:BaseModel - error: Item "None" of "type[BaseModel] | None" has no attribute "**name**" [uni
+- Line 543: mypy:BaseModel - error: Item "None" of "type[BaseModel] | None" has no attribute "__name__"  [uni
   - Category: type
   - ID: 908b63c6
 - Line 550: mypy:BaseModel - error: Argument "pydantic_object" to "PydanticOutputParser" has incompatible typ
   - Category: type
   - ID: 4002de7a
-- Line 559: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 559: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 73ee0eff
 - Line 559: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: a6a581e2
-- Line 561: mypy:BaseModel - error: Item "None" of "type[BaseModel] | None" has no attribute "**name**" [uni
+- Line 561: mypy:BaseModel - error: Item "None" of "type[BaseModel] | None" has no attribute "__name__"  [uni
   - Category: type
   - ID: c4530baa
 - Line 563: mypy:BaseModel - error: Argument "pydantic_object" to "PydanticOutputParser" has incompatible typ
   - Category: type
   - ID: 9dbe74e4
-- Line 565: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 565: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 925cc3d2
 - Line 565: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 8711d0db
-- Line 606: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 606: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 48322847
 - Line 606: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: c59dcfab
-- Line 620: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 620: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: b7385533
 - Line 620: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 65aae408
-- Line 629: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 629: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 0f38ee5e
 - Line 629: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 22e1a002
-- Line 638: mypy:unreachable - error: Statement is unreachable [unreachable]
+- Line 638: mypy:unreachable - error: Statement is unreachable  [unreachable]
   - Category: type
   - ID: 2d394509
-- Line 647: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 647: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: b4d145cc
 - Line 647: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 72dd3835
-- Line 664: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 664: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: f0902bb3
 - Line 664: mypy:error - note: Use "-> None" if function does not return a value
@@ -9179,16 +9186,16 @@
 - Line 666: mypy:Any - error: Item "None" of "BasePromptTemplate[Any] | None" has no attribute "message
   - Category: type
   - ID: 9e43b7f0
-- Line 688: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 688: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 47e74475
-- Line 696: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 696: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 60a2ef2e
 - Line 696: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: efd437a5
-- Line 703: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 703: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: d95d0f85
 - Line 703: mypy:error - note: Use "-> None" if function does not return a value
@@ -9200,13 +9207,13 @@
 - Line 708: mypy:arg-type - error: Argument 1 to "append" of "list" has incompatible type "MessagesPlacehold
   - Category: type
   - ID: c2de9547
-- Line 712: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 712: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 6b466492
 - Line 712: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 440a729f
-- Line 717: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 717: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 85eda019
 - Line 717: mypy:error - note: Use "-> None" if function does not return a value
@@ -9218,31 +9225,31 @@
 - Line 727: mypy:Serializable - error: Argument 1 to "from_messages" of "ChatPromptTemplate" has incompatible ty
   - Category: type
   - ID: 83a070a3
-- Line 730: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 730: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 3980e4c8
 - Line 730: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: a593be46
-- Line 739: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 739: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 6269e443
 - Line 739: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 89a7243d
-- Line 750: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 750: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 72fb6ea1
 - Line 750: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: dee68c1b
-- Line 783: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 783: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 9d723344
 - Line 783: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 76623199
-- Line 795: mypy:<type>, <type> - error: Need type annotation for "fields" (hint: "fields: dict[<type>, <type>] =
+- Line 795: mypy:<type>, <type> - error: Need type annotation for "fields" (hint: "fields: dict[<type>, <type>] = 
   - Category: type
   - ID: 5daee308
 - Line 797: mypy:<type>, <type> - error: Need type annotation for "partial_vars" (hint: "partial_vars: dict[<type>
@@ -9254,7 +9261,7 @@
 - Line 814: mypy:<typing special form>, Any - error: Incompatible types in assignment (expression has type "tuple[<typing spec
   - Category: type
   - ID: 5ed424a0
-- Line 815: mypy:str, tuple[type[Any - error: Incompatible return value type (got "dict[str, tuple[type[Any], None]]",
+- Line 815: mypy:str, tuple[type[Any - error: Incompatible return value type (got "dict[str, tuple[type[Any], None]]", 
   - Category: type
   - ID: cde9705b
 - Line 815: mypy:error - note: "dict" is invariant -- see https://mypy.readthedocs.io/en/stable/common_is
@@ -9266,7 +9273,7 @@
 - Line 815: mypy:str, tuple[type, Any - note: Perhaps you need a type annotation for "fields"? Suggestion: "dict[str, tu
   - Category: type
   - ID: 774d51b9
-- Line 820: mypy:<type>, <type> - error: Need type annotation for "fields" (hint: "fields: dict[<type>, <type>] =
+- Line 820: mypy:<type>, <type> - error: Need type annotation for "fields" (hint: "fields: dict[<type>, <type>] = 
   - Category: type
   - ID: 7d05f37a
 - Line 830: mypy:type[dict[str, Any - error: Incompatible types in assignment (expression has type "tuple[type[dict[st
@@ -9281,7 +9288,7 @@
 - Line 846: mypy:type[list[BaseMessage - error: Incompatible types in assignment (expression has type "tuple[type[list[Ba
   - Category: type
   - ID: 4bde0773
-- Line 847: mypy:str, tuple[type[str - error: Incompatible return value type (got "dict[str, tuple[type[str], None]]",
+- Line 847: mypy:str, tuple[type[str - error: Incompatible return value type (got "dict[str, tuple[type[str], None]]", 
   - Category: type
   - ID: b73cc185
 - Line 847: mypy:error - note: "dict" is invariant -- see https://mypy.readthedocs.io/en/stable/common_is
@@ -9296,7 +9303,7 @@
 - Line 848: mypy:type[list[BaseMessage - error: Incompatible types in assignment (expression has type "tuple[type[list[Ba
   - Category: type
   - ID: 480c42c9
-- Line 849: mypy:str, tuple[type[str - error: Incompatible return value type (got "dict[str, tuple[type[str], None]]",
+- Line 849: mypy:str, tuple[type[str - error: Incompatible return value type (got "dict[str, tuple[type[str], None]]", 
   - Category: type
   - ID: c26fb90e
 - Line 849: mypy:error - note: "dict" is invariant -- see https://mypy.readthedocs.io/en/stable/common_is
@@ -9311,28 +9318,28 @@
 - Line 853: mypy:<type> - error: Need type annotation for "all_vars" (hint: "all_vars: set[<type>] = ...")
   - Category: type
   - ID: 32cba89a
-- Line 879: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 879: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: d29ca66d
 - Line 879: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: b5b80def
-- Line 919: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 919: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 4c711653
 - Line 919: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 678a803e
-- Line 947: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 947: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: da775f39
 - Line 986: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.aug_llm.factory": module is install
   - Category: type
   - ID: e79934ce
-- Line 989: mypy:Any, Any - error: Returning Any from function declared to return "Runnable[Any, Any]" [no-
+- Line 989: mypy:Any, Any - error: Returning Any from function declared to return "Runnable[Any, Any]"  [no-
   - Category: type
   - ID: a890f0d0
-- Line 1000: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]" [no-any-
+- Line 1000: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-
   - Category: type
   - ID: 133c2b24
 - Line 1016: mypy:HumanMessage - error: Incompatible types in assignment (expression has type "str", target has t
@@ -9350,64 +9357,64 @@
 - Line 1104: mypy:arg-type - error: Argument 1 to "append" of "list" has incompatible type "MessagesPlacehold
   - Category: type
   - ID: 0a0f9c78
-- Line 1174: mypy:ModelValidatorDecoratorInfo - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable [ope
+- Line 1174: mypy:ModelValidatorDecoratorInfo - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable  [ope
   - Category: type
   - ID: dc6c83f6
-- Line 1194: mypy:ModelValidatorDecoratorInfo - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable [ope
+- Line 1194: mypy:ModelValidatorDecoratorInfo - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable  [ope
   - Category: type
   - ID: 9d63071d
-- Line 1219: mypy:ModelValidatorDecoratorInfo - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable [ope
+- Line 1219: mypy:ModelValidatorDecoratorInfo - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable  [ope
   - Category: type
   - ID: 88ad9f39
-- Line 1227: mypy:ModelValidatorDecoratorInfo - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable [ope
+- Line 1227: mypy:ModelValidatorDecoratorInfo - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable  [ope
   - Category: type
   - ID: bee8d81c
-- Line 1262: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1262: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 93216e3c
-- Line 1277: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1277: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 26bde50a
-- Line 1292: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1292: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 226d20c0
-- Line 1302: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1302: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 743bdec8
-- Line 1321: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1321: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 8606b4d3
-- Line 1343: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1343: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 26807f61
-- Line 1343: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1343: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 26807f61
-- Line 1348: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1348: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 0adfa0f9
-- Line 1348: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1348: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 0adfa0f9
-- Line 1373: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1373: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: ea05e8c1
-- Line 1373: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1373: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: ea05e8c1
 - Line 1384: mypy:arg-type - error: Argument 1 to "append" of "list" has incompatible type "MessagesPlacehold
   - Category: type
   - ID: 6fa7f3bc
-- Line 1389: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1389: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 0226f0b4
-- Line 1389: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1389: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 0226f0b4
-- Line 1401: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1401: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 0c639a12
-- Line 1401: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1401: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 0c639a12
 - Line 1414: mypy:arg-type - error: Argument 1 to "append" of "list" has incompatible type "FewShotChatMessag
@@ -9416,69 +9423,72 @@
 - Line 1417: mypy:arg-type - error: Argument 1 to "append" of "list" has incompatible type "MessagesPlacehold
   - Category: type
   - ID: fd6f4ba6
-- Line 1422: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1422: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: b80e648a
-- Line 1422: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1422: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: b80e648a
-- Line 1435: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1435: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: bd93c81b
-- Line 1435: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1435: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: bd93c81b
 - Line 1450: mypy:arg-type - error: Argument 1 to "append" of "list" has incompatible type "MessagesPlacehold
   - Category: type
   - ID: 43e07ec1
-- Line 1456: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1456: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 449b2a48
-- Line 1456: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1456: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 449b2a48
 - Line 1475: mypy:arg-type - error: Argument 1 to "append" of "list" has incompatible type "MessagesPlacehold
   - Category: type
   - ID: bfeeb2af
-- Line 1484: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1484: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: fbaed0a6
-- Line 1484: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1484: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: fbaed0a6
-- Line 1494: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1494: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 8c2575d4
-- Line 1494: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1494: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 8c2575d4
 - Line 1514: mypy:arg-type - error: Argument 1 to "append" of "list" has incompatible type "MessagesPlacehold
   - Category: type
   - ID: 89b644ec
-- Line 1522: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1522: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: e7478e83
-- Line 1522: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1522: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: e7478e83
 - Line 1548: mypy:arg-type - error: Argument 1 to "append" of "list" has incompatible type "MessagesPlacehold
   - Category: type
   - ID: f48c63eb
-- Line 1602: mypy:no-redef - error: Name "add_prompt_template" already defined on line 1222 [no-redef]
+- Line 1602: mypy:no-redef - error: Name "add_prompt_template" already defined on line 1222  [no-redef]
   - Category: type
   - ID: ff6be6f5
-- Line 1679: mypy:no-redef - error: Name "add_tool" already defined on line 1231 [no-redef]
+- Line 1679: mypy:no-redef - error: Name "add_tool" already defined on line 1231  [no-redef]
   - Category: type
   - ID: 9b961da2
-- Line 1694: mypy:no-redef - error: Name "remove_tool" already defined on line 1243 [no-redef]
+- Line 1694: mypy:no-redef - error: Name "remove_tool" already defined on line 1243  [no-redef]
   - Category: type
   - ID: 5acf7c27
-- Line 1723: mypy:no-redef - error: Name "instantiate_llm" already defined on line 1258 [no-redef]
+- Line 1723: mypy:no-redef - error: Name "instantiate_llm" already defined on line 1258  [no-redef]
   - Category: type
   - ID: 658c75b8
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/discovery/semantic_discovery.py (226 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/discovery/semantic_discovery.py (227 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: c22a2ce9
 - Line 14: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 35773519
@@ -10803,8 +10813,11 @@
   - Category: lint
   - ID: 5d0c68d5
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/debate/agent.py (205 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/debate/agent.py (206 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: c956cd29
 - Line 7: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 51c72e0a
@@ -12026,166 +12039,166 @@
 
 ## packages/haive-agents/src/haive/agents/rag/factories/compatible_rag_factory.py (194 errors)
 
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: e2b97bf8
-- Line 21: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.aug_llm": module is installed, but
+- Line 21: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.aug_llm": module is installed, but 
   - Category: type
   - ID: 4b561493
-- Line 22: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.state_graph.base_graph2": module is
+- Line 22: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.state_graph.base_graph2": module is 
   - Category: type
   - ID: 0625b10b
 - Line 23: mypy:import-untyped - error: Skipping analyzing "haive.core.models.llm.base": module is installed, but
@@ -12227,390 +12240,393 @@
 - Line 53: mypy:import-untyped - error: Skipping analyzing "haive.agents.rag.query_decomposition.agent": module i
   - Category: type
   - ID: 5c3d0177
-- Line 59: mypy:import-untyped - error: Skipping analyzing "haive.agents.rag.simple.agent": module is installed,
+- Line 59: mypy:import-untyped - error: Skipping analyzing "haive.agents.rag.simple.agent": module is installed, 
   - Category: type
   - ID: 139b8453
-- Line 60: mypy:import-untyped - error: Skipping analyzing "haive.agents.simple.agent": module is installed, but
+- Line 60: mypy:import-untyped - error: Skipping analyzing "haive.agents.simple.agent": module is installed, but 
   - Category: type
   - ID: e3b15032
-- Line 201: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 201: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 9587254f
-- Line 227: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 227: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 82e6c60b
-- Line 258: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 258: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 34f30a5f
-- Line 285: mypy:no-any-return - error: Returning Any from function declared to return "bool" [no-any-return]
+- Line 285: mypy:no-any-return - error: Returning Any from function declared to return "bool"  [no-any-return]
   - Category: type
   - ID: 40ec36b3
-- Line 301: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]" [no-any-
+- Line 301: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-
   - Category: type
   - ID: 055e93b8
-- Line 376: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 376: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 52bab9da
-- Line 382: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 382: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: b97f15d5
-- Line 392: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 392: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 5e2a1355
-- Line 396: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 396: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 41420054
-- Line 400: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 400: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 3bb032ab
-- Line 406: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 406: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 0dde59f2
-- Line 410: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 410: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: d5ea67cd
-- Line 421: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 421: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 75ab89bd
-- Line 458: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 458: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 591bfda8
-- Line 477: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 477: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 5fdf782e
-- Line 484: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 484: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 56af1d58
-- Line 490: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 490: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: a3fb6518
-- Line 496: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 496: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: b8993e03
-- Line 504: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 504: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: a77ae168
-- Line 512: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 512: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 8c38e4f8
-- Line 520: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 520: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 9aedda64
-- Line 524: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 524: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: a66c7b60
-- Line 534: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 534: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 6faf67a3
-- Line 543: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 543: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 264d3039
-- Line 547: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 547: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 3b6a2d9d
-- Line 556: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 556: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: a0cb1a4d
-- Line 562: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 562: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: d08db68a
-- Line 571: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 571: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: fd1c457d
-- Line 583: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 583: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 62c12905
-- Line 594: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 594: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: be61351b
-- Line 598: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 598: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 8a360ecc
-- Line 604: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 604: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: d03015bc
-- Line 610: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 610: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 90989973
-- Line 614: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 614: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 79c7bb39
-- Line 653: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 653: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 5cf9a68d
-- Line 689: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 689: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 841b8866
-- Line 698: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 698: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 00ed0bd2
-- Line 731: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 731: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: af483326
-- Line 752: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 752: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: cc442152
-- Line 777: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 777: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: dfc0b03a
-- Line 794: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 794: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: e5a82c08
-- Line 805: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 805: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 04b89d66
-- Line 828: mypy:attr-defined - error: "CompatibleRAGFactory" has no attribute "name" [attr-defined]
+- Line 828: mypy:attr-defined - error: "CompatibleRAGFactory" has no attribute "name"  [attr-defined]
   - Category: type
   - ID: a872f30e
-- Line 831: mypy:attr-defined - error: "CompatibleRAGFactory" has no attribute "input_mappings" [attr-defined]
+- Line 831: mypy:attr-defined - error: "CompatibleRAGFactory" has no attribute "input_mappings"  [attr-defined]
   - Category: type
   - ID: 0777327d
-- Line 832: mypy:name-defined - error: Name "CallableNodeConfig" is not defined [name-defined]
+- Line 832: mypy:name-defined - error: Name "CallableNodeConfig" is not defined  [name-defined]
   - Category: type
   - ID: 167453a1
-- Line 838: mypy:name-defined - error: Name "START" is not defined [name-defined]
+- Line 838: mypy:name-defined - error: Name "START" is not defined  [name-defined]
   - Category: type
   - ID: 8c7b40ef
-- Line 840: mypy:name-defined - error: Name "START" is not defined [name-defined]
+- Line 840: mypy:name-defined - error: Name "START" is not defined  [name-defined]
   - Category: type
   - ID: 12d35689
-- Line 843: mypy:attr-defined - error: "CompatibleRAGFactory" has no attribute "callables" [attr-defined]
+- Line 843: mypy:attr-defined - error: "CompatibleRAGFactory" has no attribute "callables"  [attr-defined]
   - Category: type
   - ID: 2569a229
-- Line 846: mypy:name-defined - error: Name "CallableNodeConfig" is not defined [name-defined]
+- Line 846: mypy:name-defined - error: Name "CallableNodeConfig" is not defined  [name-defined]
   - Category: type
   - ID: 5fff0ea7
-- Line 855: mypy:attr-defined - error: "CompatibleRAGFactory" has no attribute "output_mappings" [attr-defined]
+- Line 855: mypy:attr-defined - error: "CompatibleRAGFactory" has no attribute "output_mappings"  [attr-defined]
   - Category: type
   - ID: 0cb7c9f4
-- Line 856: mypy:name-defined - error: Name "CallableNodeConfig" is not defined [name-defined]
+- Line 856: mypy:name-defined - error: Name "CallableNodeConfig" is not defined  [name-defined]
   - Category: type
   - ID: 44fd7ff1
-- Line 862: mypy:name-defined - error: Name "END" is not defined [name-defined]
+- Line 862: mypy:name-defined - error: Name "END" is not defined  [name-defined]
   - Category: type
   - ID: 542fa754
-- Line 864: mypy:name-defined - error: Name "END" is not defined [name-defined]
+- Line 864: mypy:name-defined - error: Name "END" is not defined  [name-defined]
   - Category: type
   - ID: b8d1c0bb
-- Line 879: mypy:attr-defined - error: "CompatibleRAGFactory" has no attribute "input_mappings" [attr-defined]
+- Line 879: mypy:attr-defined - error: "CompatibleRAGFactory" has no attribute "input_mappings"  [attr-defined]
   - Category: type
   - ID: e912de21
-- Line 899: mypy:attr-defined - error: "CompatibleRAGFactory" has no attribute "output_mappings" [attr-defined]
+- Line 899: mypy:attr-defined - error: "CompatibleRAGFactory" has no attribute "output_mappings"  [attr-defined]
   - Category: type
   - ID: dd5635f6
-- Line 914: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 914: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 929fe807
-- Line 989: mypy:str, list[str - error: Returning Any from function declared to return "dict[str, list[str]]" [n
+- Line 989: mypy:str, list[str - error: Returning Any from function declared to return "dict[str, list[str]]"  [n
   - Category: type
   - ID: d126abf9
-- Line 999: mypy:unreachable - error: Statement is unreachable [unreachable]
+- Line 999: mypy:unreachable - error: Statement is unreachable  [unreachable]
   - Category: type
   - ID: 624ad627
-- Line 1002: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1002: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: a84bf183
-- Line 1006: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1006: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: e11d8a94
-- Line 1012: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1012: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: ddf95001
-- Line 1016: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1016: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: 86526663
-- Line 1021: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1021: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: 07b8c8ae
-- Line 1027: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1027: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: 31f17122
-- Line 1033: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1033: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: 42567649
-- Line 1039: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1039: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: 3b860fbd
-- Line 1114: mypy:name-defined - error: Name "advanced_document_grader" is not defined [name-defined]
+- Line 1114: mypy:name-defined - error: Name "advanced_document_grader" is not defined  [name-defined]
   - Category: type
   - ID: 162e3397
-- Line 1115: mypy:name-defined - error: Name "relevance_threshold_check" is not defined [name-defined]
+- Line 1115: mypy:name-defined - error: Name "relevance_threshold_check" is not defined  [name-defined]
   - Category: type
   - ID: 268eddab
-- Line 1116: mypy:name-defined - error: Name "requery_decision_maker" is not defined [name-defined]
+- Line 1116: mypy:name-defined - error: Name "requery_decision_maker" is not defined  [name-defined]
   - Category: type
   - ID: b49fc86a
-- Line 1117: mypy:name-defined - error: Name "web_search_simulator" is not defined [name-defined]
+- Line 1117: mypy:name-defined - error: Name "web_search_simulator" is not defined  [name-defined]
   - Category: type
   - ID: d508032c
-- Line 1118: mypy:name-defined - error: Name "response_generator" is not defined [name-defined]
+- Line 1118: mypy:name-defined - error: Name "response_generator" is not defined  [name-defined]
   - Category: type
   - ID: 354546b5
-- Line 1119: mypy:name-defined - error: Name "hallucination_detector" is not defined [name-defined]
+- Line 1119: mypy:name-defined - error: Name "hallucination_detector" is not defined  [name-defined]
   - Category: type
   - ID: adaffef2
-- Line 1123: mypy:name-defined - error: Name "create_rag_field_mappings" is not defined [name-defined]
+- Line 1123: mypy:name-defined - error: Name "create_rag_field_mappings" is not defined  [name-defined]
   - Category: type
   - ID: 98d21e65
-- Line 1125: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1125: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: c5143464
-- Line 1129: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1129: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: 5e580ec7
-- Line 1133: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1133: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: d640f476
-- Line 1140: mypy:name-defined - error: Name "CompatibleRAGAgent" is not defined [name-defined]
+- Line 1140: mypy:name-defined - error: Name "CompatibleRAGAgent" is not defined  [name-defined]
   - Category: type
   - ID: 3aa0aa30
-- Line 1145: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined [name-defined]
+- Line 1145: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined  [name-defined]
   - Category: type
   - ID: b4db5e39
-- Line 1149: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined [name-defined]
+- Line 1149: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined  [name-defined]
   - Category: type
   - ID: 29ecdfc7
-- Line 1181: mypy:name-defined - error: Name "advanced_document_grader" is not defined [name-defined]
+- Line 1181: mypy:name-defined - error: Name "advanced_document_grader" is not defined  [name-defined]
   - Category: type
   - ID: 93488990
-- Line 1182: mypy:name-defined - error: Name "response_generator" is not defined [name-defined]
+- Line 1182: mypy:name-defined - error: Name "response_generator" is not defined  [name-defined]
   - Category: type
   - ID: 90d5be94
-- Line 1183: mypy:name-defined - error: Name "hallucination_detector" is not defined [name-defined]
+- Line 1183: mypy:name-defined - error: Name "hallucination_detector" is not defined  [name-defined]
   - Category: type
   - ID: 64578919
-- Line 1188: mypy:name-defined - error: Name "create_rag_field_mappings" is not defined [name-defined]
+- Line 1188: mypy:name-defined - error: Name "create_rag_field_mappings" is not defined  [name-defined]
   - Category: type
   - ID: cf45c0f1
-- Line 1189: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1189: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: 53d054b6
-- Line 1193: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1193: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: 0a9eddf4
-- Line 1197: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1197: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: 0be97505
-- Line 1209: mypy:name-defined - error: Name "CompatibleRAGAgent" is not defined [name-defined]
+- Line 1209: mypy:name-defined - error: Name "CompatibleRAGAgent" is not defined  [name-defined]
   - Category: type
   - ID: d8401070
-- Line 1214: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined [name-defined]
+- Line 1214: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined  [name-defined]
   - Category: type
   - ID: 6b1eeb2b
-- Line 1219: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined [name-defined]
+- Line 1219: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined  [name-defined]
   - Category: type
   - ID: 2f15b2be
-- Line 1230: mypy:name-defined - error: Name "query_rewriter" is not defined [name-defined]
+- Line 1230: mypy:name-defined - error: Name "query_rewriter" is not defined  [name-defined]
   - Category: type
   - ID: de1510ca
-- Line 1230: mypy:name-defined - error: Name "response_generator" is not defined [name-defined]
+- Line 1230: mypy:name-defined - error: Name "response_generator" is not defined  [name-defined]
   - Category: type
   - ID: de1510ca
-- Line 1232: mypy:name-defined - error: Name "create_rag_field_mappings" is not defined [name-defined]
+- Line 1232: mypy:name-defined - error: Name "create_rag_field_mappings" is not defined  [name-defined]
   - Category: type
   - ID: 79b0391d
-- Line 1233: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1233: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: b3a9e455
-- Line 1239: mypy:name-defined - error: Name "CompatibleRAGAgent" is not defined [name-defined]
+- Line 1239: mypy:name-defined - error: Name "CompatibleRAGAgent" is not defined  [name-defined]
   - Category: type
   - ID: 2f8d958e
-- Line 1243: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined [name-defined]
+- Line 1243: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined  [name-defined]
   - Category: type
   - ID: bc446330
-- Line 1249: mypy:name-defined - error: Name "query_complexity_analyzer" is not defined [name-defined]
+- Line 1249: mypy:name-defined - error: Name "query_complexity_analyzer" is not defined  [name-defined]
   - Category: type
   - ID: 86dfc536
-- Line 1251: mypy:name-defined - error: Name "create_rag_field_mappings" is not defined [name-defined]
+- Line 1251: mypy:name-defined - error: Name "create_rag_field_mappings" is not defined  [name-defined]
   - Category: type
   - ID: 13fe56de
-- Line 1252: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1252: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: b7fea116
-- Line 1255: mypy:name-defined - error: Name "QueryComplexity" is not defined [name-defined]
+- Line 1255: mypy:name-defined - error: Name "QueryComplexity" is not defined  [name-defined]
   - Category: type
   - ID: eb66c549
-- Line 1256: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1256: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: 3dcbda2e
-- Line 1262: mypy:name-defined - error: Name "CompatibleRAGAgent" is not defined [name-defined]
+- Line 1262: mypy:name-defined - error: Name "CompatibleRAGAgent" is not defined  [name-defined]
   - Category: type
   - ID: 4a580369
-- Line 1266: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined [name-defined]
+- Line 1266: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined  [name-defined]
   - Category: type
   - ID: 18317e40
-- Line 1274: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined [name-defined]
+- Line 1274: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined  [name-defined]
   - Category: type
   - ID: 2c3fa98c
-- Line 1283: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1283: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 5734547e
-- Line 1284: mypy:name-defined - error: Name "Dict" is not defined [name-defined]
+- Line 1284: mypy:name-defined - error: Name "Dict" is not defined  [name-defined]
   - Category: type
   - ID: e8c81ce2
 - Line 1284: mypy:error - note: Did you forget to import it from "typing"? (Suggestion: "from typing impor
   - Category: type
   - ID: f0b35046
-- Line 1285: mypy:name-defined - error: Name "QueryComplexity" is not defined [name-defined]
+- Line 1285: mypy:name-defined - error: Name "QueryComplexity" is not defined  [name-defined]
   - Category: type
   - ID: 72bce02e
-- Line 1287: mypy:name-defined - error: Name "QueryComplexity" is not defined [name-defined]
+- Line 1287: mypy:name-defined - error: Name "QueryComplexity" is not defined  [name-defined]
   - Category: type
   - ID: 3cf844f7
-- Line 1288: mypy:no-any-return - error: Returning Any from function declared to return "str" [no-any-return]
+- Line 1288: mypy:no-any-return - error: Returning Any from function declared to return "str"  [no-any-return]
   - Category: type
   - ID: 7e6b4a11
-- Line 1289: mypy:name-defined - error: Name "QueryComplexity" is not defined [name-defined]
+- Line 1289: mypy:name-defined - error: Name "QueryComplexity" is not defined  [name-defined]
   - Category: type
   - ID: c6208968
-- Line 1290: mypy:no-any-return - error: Returning Any from function declared to return "str" [no-any-return]
+- Line 1290: mypy:no-any-return - error: Returning Any from function declared to return "str"  [no-any-return]
   - Category: type
   - ID: 8da9a744
-- Line 1291: mypy:no-any-return - error: Returning Any from function declared to return "str" [no-any-return]
+- Line 1291: mypy:no-any-return - error: Returning Any from function declared to return "str"  [no-any-return]
   - Category: type
   - ID: a25b7f82
-- Line 1313: mypy:name-defined - error: Name "create_rag_field_mappings" is not defined [name-defined]
+- Line 1313: mypy:name-defined - error: Name "create_rag_field_mappings" is not defined  [name-defined]
   - Category: type
   - ID: 7edc8cf3
-- Line 1314: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1314: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: 304a6a89
-- Line 1318: mypy:name-defined - error: Name "FieldMapping" is not defined [name-defined]
+- Line 1318: mypy:name-defined - error: Name "FieldMapping" is not defined  [name-defined]
   - Category: type
   - ID: 4997683b
-- Line 1325: mypy:name-defined - error: Name "CompatibleRAGAgent" is not defined [name-defined]
+- Line 1325: mypy:name-defined - error: Name "CompatibleRAGAgent" is not defined  [name-defined]
   - Category: type
   - ID: c66b4efb
-- Line 1327: mypy:name-defined - error: Name "hyde_hypothesis_generator" is not defined [name-defined]
+- Line 1327: mypy:name-defined - error: Name "hyde_hypothesis_generator" is not defined  [name-defined]
   - Category: type
   - ID: 9c84595d
-- Line 1329: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined [name-defined]
+- Line 1329: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined  [name-defined]
   - Category: type
   - ID: 35d6c4aa
-- Line 1335: mypy:name-defined - error: Name "CompatibleRAGAgent" is not defined [name-defined]
+- Line 1335: mypy:name-defined - error: Name "CompatibleRAGAgent" is not defined  [name-defined]
   - Category: type
   - ID: 9522b3f4
-- Line 1337: mypy:name-defined - error: Name "response_generator" is not defined [name-defined]
+- Line 1337: mypy:name-defined - error: Name "response_generator" is not defined  [name-defined]
   - Category: type
   - ID: b096f91e
-- Line 1339: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined [name-defined]
+- Line 1339: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined  [name-defined]
   - Category: type
   - ID: 4ce1da33
-- Line 1344: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined [name-defined]
+- Line 1344: mypy:name-defined - error: Name "MultiAgentRAGState" is not defined  [name-defined]
   - Category: type
   - ID: c742e14e
-- Line 1357: mypy:name-defined - error: Name "Dict" is not defined [name-defined]
+- Line 1357: mypy:name-defined - error: Name "Dict" is not defined  [name-defined]
   - Category: type
   - ID: bc690060
 - Line 1357: mypy:error - note: Did you forget to import it from "typing"? (Suggestion: "from typing impor
   - Category: type
   - ID: 07da2568
-- Line 1419: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1419: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 735f2bea
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py (179 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py (180 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: d6e2ff84
 - Line 6: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: f58d3a3c
@@ -13149,7 +13165,7 @@
   - Category: lint
   - ID: 6241c463
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/enhanced_agent.py (176 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/enhanced_agent.py (177 errors)
 
 - Line 14: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
@@ -13157,6 +13173,9 @@
 - Line 26: ruff:F811 - Redefinition of unused `TypeVar` from line 17
   - Category: lint
   - ID: fde52a3e
+- Line 32: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: d8479065
 - Line 35: ruff:SIM105 - Use `contextlib.suppress(ImportError)` instead of `try`-`except`-`pass`
   - Category: lint
   - ID: ddb1671e
@@ -13680,503 +13699,11 @@
   - Category: lint
   - ID: 133710bd
 
-## packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py (164 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/task_analysis/branching.py (165 errors)
 
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 320a8dff
-- Line 19: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.branches.branch": module is installe
-  - Category: type
-  - ID: 9dd3e41f
-- Line 20: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.branches.types": module is installed
-  - Category: type
-  - ID: 9d3d6786
-- Line 21: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.common.references": module is instal
-  - Category: type
-  - ID: 178f72a7
-- Line 22: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.common.types": module is installed,
-  - Category: type
-  - ID: 78f28891
-- Line 23: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.node.agent_node_v3": module is insta
-  - Category: type
-  - ID: b99b5a24
-- Line 24: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.node.config": module is installed, b
-  - Category: type
-  - ID: e0c67c3f
-- Line 25: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.state_graph.graph_path": module is i
-  - Category: type
-  - ID: 3efd67b6
-- Line 26: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.state_graph.validation_mixin": modul
-  - Category: type
-  - ID: 2bb849a3
-- Line 47: mypy:... - error: Free type variable expected in Generic[...] [misc]
-  - Category: type
-  - ID: 77787ee8
-- Line 175: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: d545ae28
-- Line 252: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 7d5500f5
-- Line 326: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 6beb5b18
-- Line 359: mypy:str, Any - error: Dict entry 1 has incompatible type "str": "dict[str, Any]"; expected "str
-  - Category: type
-  - ID: 50551e43
-- Line 361: mypy:str, Any - error: Dict entry 1 has incompatible type "str": "dict[str, Any]"; expected "str
-  - Category: type
-  - ID: bdff6782
-- Line 365: mypy:str, Any - error: Dict entry 1 has incompatible type "str": "dict[str, Any]"; expected "str
-  - Category: type
-  - ID: 5271e09e
-- Line 366: mypy:str, str - error: Argument 1 to "Node" has incompatible type "\*\*dict[str, str]"; expected "
-  - Category: type
-  - ID: 10c15eae
-- Line 366: mypy:error - note: "dict" is invariant -- see https://mypy.readthedocs.io/en/stable/common_is
-  - Category: type
-  - ID: 92eceb98
-- Line 366: mypy:error - note: Consider using "Mapping" instead, which is covariant in the value type
-  - Category: type
-  - ID: 92eceb98
-- Line 366: mypy:str, str - error: Argument 1 to "Node" has incompatible type "\*\*dict[str, str]"; expected "
-  - Category: type
-  - ID: 10c15eae
-- Line 366: mypy:str, str - error: Argument 1 to "Node" has incompatible type "\*\*dict[str, str]"; expected "
-  - Category: type
-  - ID: 10c15eae
-- Line 366: mypy:str, str - error: Argument 1 to "Node" has incompatible type "\*\*dict[str, str]"; expected "
-  - Category: type
-  - ID: 10c15eae
-- Line 371: mypy:str, str - error: Argument 1 to "Node" has incompatible type "\*\*dict[str, str]"; expected "
-  - Category: type
-  - ID: 49c8417f
-- Line 371: mypy:error - note: "dict" is invariant -- see https://mypy.readthedocs.io/en/stable/common_is
-  - Category: type
-  - ID: e5d0d963
-- Line 371: mypy:error - note: Consider using "Mapping" instead, which is covariant in the value type
-  - Category: type
-  - ID: e5d0d963
-- Line 371: mypy:str, str - error: Argument 1 to "Node" has incompatible type "\*\*dict[str, str]"; expected "
-  - Category: type
-  - ID: 49c8417f
-- Line 371: mypy:str, str - error: Argument 1 to "Node" has incompatible type "\*\*dict[str, str]"; expected "
-  - Category: type
-  - ID: 49c8417f
-- Line 371: mypy:str, str - error: Argument 1 to "Node" has incompatible type "\*\*dict[str, str]"; expected "
-  - Category: type
-  - ID: 49c8417f
-- Line 616: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 16612a8d
-- Line 631: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 695907fd
-- Line 697: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 5002bdce
-- Line 764: mypy:union-attr - error: Item "None" of "Node | Any | Any | None" has no attribute "metadata" [un
-  - Category: type
-  - ID: 652fbd80
-- Line 778: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: b3743fa3
-- Line 841: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: ebd7d199
-- Line 906: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: e7f96df7
-- Line 952: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 7d0ce309
-- Line 1003: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 2fc6656e
-- Line 1055: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 0788b891
-- Line 1077: mypy:str - error: Argument 1 to "add_sequence" of "BaseGraph" has incompatible type "list[s
-  - Category: type
-  - ID: ea132ff3
-- Line 1199: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
-  - Category: type
-  - ID: dbfb2c2e
-- Line 1217: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 9ade7102
-- Line 1345: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 7711416a
-- Line 1413: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 98b8cc75
-- Line 1581: mypy:bool | str | int, str - error: Incompatible types in assignment (expression has type "dict[bool | str |
-  - Category: type
-  - ID: c2abd1fc
-- Line 1614: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
-  - Category: type
-  - ID: 570b0f78
-- Line 1624: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 933187d1
-- Line 1677: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
-  - Category: type
-  - ID: 802a6e12
-- Line 1683: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 8c40fd6f
-- Line 1813: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 21232552
-- Line 1945: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 46ae3bb4
-- Line 2008: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 373a4788
-- Line 2053: mypy:dict[Any, Any - error: Argument 3 to "getattr" has incompatible type "type[dict[Any, Any]]"; exp
-  - Category: type
-  - ID: 4e661dfb
-- Line 2056: mypy:BaseModel - error: Item "None" of "type[BaseModel] | Any | None" has no attribute "**name**"
-  - Category: type
-  - ID: 18506d0a
-- Line 2058: mypy:BaseModel - error: Item "None" of "type[BaseModel] | None" has no attribute "**name**" [uni
-  - Category: type
-  - ID: e6c89cc5
-- Line 2065: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 967337fb
-- Line 2065: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 967337fb
-- Line 2071: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 255f3de6
-- Line 2106: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: c5b9ba2f
-- Line 2133: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
-  - Category: type
-  - ID: 43801581
-- Line 2135: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 8cfadb58
-- Line 2145: mypy:attr-defined - error: "Send" has no attribute "target" [attr-defined]
-  - Category: type
-  - ID: 51482f8d
-- Line 2215: mypy:arg-type - error: Argument "name" to "BaseGraph" has incompatible type "str | Any | None";
-  - Category: type
-  - ID: 9a39c8ed
-- Line 2253: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.state_graph.serializable": module is
-  - Category: type
-  - ID: a9237723
-- Line 2255: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]" [no-any-
-  - Category: type
-  - ID: 2f69bf84
-- Line 2269: mypy:no-any-return - error: Returning Any from function declared to return "BaseGraph" [no-any-retur
-  - Category: type
-  - ID: 7ea6169f
-- Line 2271: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 881c78b4
-- Line 2282: mypy:no-any-return - error: Returning Any from function declared to return "str" [no-any-return]
-  - Category: type
-  - ID: bf8838c8
-- Line 2296: mypy:no-any-return - error: Returning Any from function declared to return "BaseGraph" [no-any-retur
-  - Category: type
-  - ID: 01a1cc75
-- Line 2319: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.state_graph.graph_visualizer": modul
-  - Category: type
-  - ID: 0a4bf339
-- Line 2320: mypy:import-untyped - error: Skipping analyzing "haive.core.utils.mermaid_utils": module is installed,
-  - Category: type
-  - ID: 0f0f454f
-- Line 2424: mypy:no-any-return - error: Returning Any from function declared to return "str" [no-any-return]
-  - Category: type
-  - ID: 9054ae83
-- Line 2439: mypy:no-any-return - error: Returning Any from function declared to return "str" [no-any-return]
-  - Category: type
-  - ID: bcb97275
-- Line 2445: mypy:<type> - error: Need type annotation for "path" (hint: "path: list[<type>] = ...") [var-
-  - Category: type
-  - ID: c83265ec
-- Line 2448: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 4ac48f76
-- Line 2547: mypy:ModelValidatorDecoratorInfo - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable [ope
-  - Category: type
-  - ID: b5347a5a
-- Line 2586: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [in
-  - Category: type
-  - ID: a7458627
-- Line 2587: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [in
-  - Category: type
-  - ID: b7611451
-- Line 2588: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [in
-  - Category: type
-  - ID: 155d3286
-- Line 2589: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [in
-  - Category: type
-  - ID: 1822d503
-- Line 2590: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [in
-  - Category: type
-  - ID: f87c6e17
-- Line 2591: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [in
-  - Category: type
-  - ID: bd24a3cf
-- Line 2592: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [in
-  - Category: type
-  - ID: 831ceb55
-- Line 2593: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [in
-  - Category: type
-  - ID: e5217bd4
-- Line 2595: mypy:bool, str - error: Argument "destinations" to "add_conditional_edges" of "BaseGraph" has inc
-  - Category: type
-  - ID: 87023700
-- Line 2618: mypy:attr-defined - error: "Logger" has no attribute "table" [attr-defined]
-  - Category: type
-  - ID: 82cf8e92
-- Line 2623: mypy:call-arg - error: Unexpected keyword argument "title" for "info" of "Logger" [call-arg]
-  - Category: type
-  - ID: 8ba31f07
-- Line 2623: mypy:call-arg - error: Unexpected keyword argument "style" for "info" of "Logger" [call-arg]
-  - Category: type
-  - ID: 8ba31f07
-- Line 2657: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: ec91e951
-- Line 2663: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 1f8dc0e6
-- Line 2668: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: af69c7cf
-- Line 2679: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 6f381c63
-- Line 2687: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 9afec996
-- Line 2704: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 28d0dd8b
-- Line 2714: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 5edd2688
-- Line 2716: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 61ba8da9
-- Line 2725: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 17ee2e93
-- Line 2732: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 20b5cd4e
-- Line 2791: mypy:<type>, <type> - error: Need type annotation for "dependencies" (hint: "dependencies: dict[<type>
-  - Category: type
-  - ID: b1b3eac3
-- Line 2862: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: c67fe5c2
-- Line 2872: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 1be88028
-- Line 2875: mypy:call-arg - error: Unexpected keyword argument "style" for "info" of "Logger" [call-arg]
-  - Category: type
-  - ID: 86249a85
-- Line 2876: mypy:name-defined - error: Name "state" is not defined [name-defined]
-  - Category: type
-  - ID: b4e26ae2
-- Line 2877: mypy:name-defined - error: Name "state" is not defined [name-defined]
-  - Category: type
-  - ID: 56bc7f67
-- Line 2878: mypy:name-defined - error: Name "state" is not defined [name-defined]
-  - Category: type
-  - ID: 930fe80d
-- Line 2880: mypy:assignment - error: Incompatible types in assignment (expression has type "int", target has t
-  - Category: type
-  - ID: 2f0ce156
-- Line 2881: mypy:name-defined - error: Name "state" is not defined [name-defined]
-  - Category: type
-  - ID: 514a7c5c
-- Line 2882: mypy:name-defined - error: Name "state" is not defined [name-defined]
-  - Category: type
-  - ID: a27a8037
-- Line 2884: mypy:assignment - error: Incompatible types in assignment (expression has type "int", target has t
-  - Category: type
-  - ID: a309a686
-- Line 2894: mypy:attr-defined - error: "Logger" has no attribute "table" [attr-defined]
-  - Category: type
-  - ID: 82cbdfa3
-- Line 2922: mypy:attr-defined - error: "Logger" has no attribute "table" [attr-defined]
-  - Category: type
-  - ID: efacab78
-- Line 2925: mypy:name-defined - error: Name "state" is not defined [name-defined]
-  - Category: type
-  - ID: 71490395
-- Line 2926: mypy:name-defined - error: Name "state" is not defined [name-defined]
-  - Category: type
-  - ID: a0b56e69
-- Line 2928: mypy:attr-defined - error: "Logger" has no attribute "table" [attr-defined]
-  - Category: type
-  - ID: 7e82b445
-- Line 2936: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: e7a38acb
-
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/task_analysis/branching.py (164 errors)
-
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 7b102bfb
 - Line 7: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: f0c208b5
@@ -14670,8 +14197,506 @@
   - Category: lint
   - ID: 24367a14
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/discovery/component_discovery_agent.py (148 errors)
+## packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py (164 errors)
 
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: 320a8dff
+- Line 19: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.branches.branch": module is installe
+  - Category: type
+  - ID: 9dd3e41f
+- Line 20: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.branches.types": module is installed
+  - Category: type
+  - ID: 9d3d6786
+- Line 21: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.common.references": module is instal
+  - Category: type
+  - ID: 178f72a7
+- Line 22: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.common.types": module is installed, 
+  - Category: type
+  - ID: 78f28891
+- Line 23: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.node.agent_node_v3": module is insta
+  - Category: type
+  - ID: b99b5a24
+- Line 24: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.node.config": module is installed, b
+  - Category: type
+  - ID: e0c67c3f
+- Line 25: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.state_graph.graph_path": module is i
+  - Category: type
+  - ID: 3efd67b6
+- Line 26: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.state_graph.validation_mixin": modul
+  - Category: type
+  - ID: 2bb849a3
+- Line 47: mypy:... - error: Free type variable expected in Generic[...]  [misc]
+  - Category: type
+  - ID: 77787ee8
+- Line 175: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: d545ae28
+- Line 252: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 7d5500f5
+- Line 326: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 6beb5b18
+- Line 359: mypy:str, Any - error: Dict entry 1 has incompatible type "str": "dict[str, Any]"; expected "str
+  - Category: type
+  - ID: 50551e43
+- Line 361: mypy:str, Any - error: Dict entry 1 has incompatible type "str": "dict[str, Any]"; expected "str
+  - Category: type
+  - ID: bdff6782
+- Line 365: mypy:str, Any - error: Dict entry 1 has incompatible type "str": "dict[str, Any]"; expected "str
+  - Category: type
+  - ID: 5271e09e
+- Line 366: mypy:str, str - error: Argument 1 to "Node" has incompatible type "**dict[str, str]"; expected "
+  - Category: type
+  - ID: 10c15eae
+- Line 366: mypy:error - note: "dict" is invariant -- see https://mypy.readthedocs.io/en/stable/common_is
+  - Category: type
+  - ID: 92eceb98
+- Line 366: mypy:error - note: Consider using "Mapping" instead, which is covariant in the value type
+  - Category: type
+  - ID: 92eceb98
+- Line 366: mypy:str, str - error: Argument 1 to "Node" has incompatible type "**dict[str, str]"; expected "
+  - Category: type
+  - ID: 10c15eae
+- Line 366: mypy:str, str - error: Argument 1 to "Node" has incompatible type "**dict[str, str]"; expected "
+  - Category: type
+  - ID: 10c15eae
+- Line 366: mypy:str, str - error: Argument 1 to "Node" has incompatible type "**dict[str, str]"; expected "
+  - Category: type
+  - ID: 10c15eae
+- Line 371: mypy:str, str - error: Argument 1 to "Node" has incompatible type "**dict[str, str]"; expected "
+  - Category: type
+  - ID: 49c8417f
+- Line 371: mypy:error - note: "dict" is invariant -- see https://mypy.readthedocs.io/en/stable/common_is
+  - Category: type
+  - ID: e5d0d963
+- Line 371: mypy:error - note: Consider using "Mapping" instead, which is covariant in the value type
+  - Category: type
+  - ID: e5d0d963
+- Line 371: mypy:str, str - error: Argument 1 to "Node" has incompatible type "**dict[str, str]"; expected "
+  - Category: type
+  - ID: 49c8417f
+- Line 371: mypy:str, str - error: Argument 1 to "Node" has incompatible type "**dict[str, str]"; expected "
+  - Category: type
+  - ID: 49c8417f
+- Line 371: mypy:str, str - error: Argument 1 to "Node" has incompatible type "**dict[str, str]"; expected "
+  - Category: type
+  - ID: 49c8417f
+- Line 616: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 16612a8d
+- Line 631: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 695907fd
+- Line 697: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 5002bdce
+- Line 764: mypy:union-attr - error: Item "None" of "Node | Any | Any | None" has no attribute "metadata"  [un
+  - Category: type
+  - ID: 652fbd80
+- Line 778: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: b3743fa3
+- Line 841: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: ebd7d199
+- Line 906: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: e7f96df7
+- Line 952: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 7d0ce309
+- Line 1003: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 2fc6656e
+- Line 1055: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 0788b891
+- Line 1077: mypy:str - error: Argument 1 to "add_sequence" of "BaseGraph" has incompatible type "list[s
+  - Category: type
+  - ID: ea132ff3
+- Line 1199: mypy:no-untyped-def - error: Function is missing a type annotation  [no-untyped-def]
+  - Category: type
+  - ID: dbfb2c2e
+- Line 1217: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 9ade7102
+- Line 1345: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 7711416a
+- Line 1413: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 98b8cc75
+- Line 1581: mypy:bool | str | int, str - error: Incompatible types in assignment (expression has type "dict[bool | str | 
+  - Category: type
+  - ID: c2abd1fc
+- Line 1614: mypy:no-untyped-def - error: Function is missing a type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 570b0f78
+- Line 1624: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 933187d1
+- Line 1677: mypy:no-untyped-def - error: Function is missing a type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 802a6e12
+- Line 1683: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 8c40fd6f
+- Line 1813: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 21232552
+- Line 1945: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 46ae3bb4
+- Line 2008: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 373a4788
+- Line 2053: mypy:dict[Any, Any - error: Argument 3 to "getattr" has incompatible type "type[dict[Any, Any]]"; exp
+  - Category: type
+  - ID: 4e661dfb
+- Line 2056: mypy:BaseModel - error: Item "None" of "type[BaseModel] | Any | None" has no attribute "__name__"
+  - Category: type
+  - ID: 18506d0a
+- Line 2058: mypy:BaseModel - error: Item "None" of "type[BaseModel] | None" has no attribute "__name__"  [uni
+  - Category: type
+  - ID: e6c89cc5
+- Line 2065: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 967337fb
+- Line 2065: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 967337fb
+- Line 2071: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 255f3de6
+- Line 2106: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: c5b9ba2f
+- Line 2133: mypy:no-untyped-def - error: Function is missing a type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 43801581
+- Line 2135: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 8cfadb58
+- Line 2145: mypy:attr-defined - error: "Send" has no attribute "target"  [attr-defined]
+  - Category: type
+  - ID: 51482f8d
+- Line 2215: mypy:arg-type - error: Argument "name" to "BaseGraph" has incompatible type "str | Any | None"; 
+  - Category: type
+  - ID: 9a39c8ed
+- Line 2253: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.state_graph.serializable": module is
+  - Category: type
+  - ID: a9237723
+- Line 2255: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-
+  - Category: type
+  - ID: 2f69bf84
+- Line 2269: mypy:no-any-return - error: Returning Any from function declared to return "BaseGraph"  [no-any-retur
+  - Category: type
+  - ID: 7ea6169f
+- Line 2271: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 881c78b4
+- Line 2282: mypy:no-any-return - error: Returning Any from function declared to return "str"  [no-any-return]
+  - Category: type
+  - ID: bf8838c8
+- Line 2296: mypy:no-any-return - error: Returning Any from function declared to return "BaseGraph"  [no-any-retur
+  - Category: type
+  - ID: 01a1cc75
+- Line 2319: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.state_graph.graph_visualizer": modul
+  - Category: type
+  - ID: 0a4bf339
+- Line 2320: mypy:import-untyped - error: Skipping analyzing "haive.core.utils.mermaid_utils": module is installed,
+  - Category: type
+  - ID: 0f0f454f
+- Line 2424: mypy:no-any-return - error: Returning Any from function declared to return "str"  [no-any-return]
+  - Category: type
+  - ID: 9054ae83
+- Line 2439: mypy:no-any-return - error: Returning Any from function declared to return "str"  [no-any-return]
+  - Category: type
+  - ID: bcb97275
+- Line 2445: mypy:<type> - error: Need type annotation for "path" (hint: "path: list[<type>] = ...")  [var-
+  - Category: type
+  - ID: c83265ec
+- Line 2448: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 4ac48f76
+- Line 2547: mypy:ModelValidatorDecoratorInfo - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable  [ope
+  - Category: type
+  - ID: b5347a5a
+- Line 2586: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [in
+  - Category: type
+  - ID: a7458627
+- Line 2587: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [in
+  - Category: type
+  - ID: b7611451
+- Line 2588: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [in
+  - Category: type
+  - ID: 155d3286
+- Line 2589: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [in
+  - Category: type
+  - ID: 1822d503
+- Line 2590: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [in
+  - Category: type
+  - ID: f87c6e17
+- Line 2591: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [in
+  - Category: type
+  - ID: bd24a3cf
+- Line 2592: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [in
+  - Category: type
+  - ID: 831ceb55
+- Line 2593: mypy:bool, str - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [in
+  - Category: type
+  - ID: e5217bd4
+- Line 2595: mypy:bool, str - error: Argument "destinations" to "add_conditional_edges" of "BaseGraph" has inc
+  - Category: type
+  - ID: 87023700
+- Line 2618: mypy:attr-defined - error: "Logger" has no attribute "table"  [attr-defined]
+  - Category: type
+  - ID: 82cf8e92
+- Line 2623: mypy:call-arg - error: Unexpected keyword argument "title" for "info" of "Logger"  [call-arg]
+  - Category: type
+  - ID: 8ba31f07
+- Line 2623: mypy:call-arg - error: Unexpected keyword argument "style" for "info" of "Logger"  [call-arg]
+  - Category: type
+  - ID: 8ba31f07
+- Line 2657: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: ec91e951
+- Line 2663: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 1f8dc0e6
+- Line 2668: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: af69c7cf
+- Line 2679: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 6f381c63
+- Line 2687: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 9afec996
+- Line 2704: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 28d0dd8b
+- Line 2714: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 5edd2688
+- Line 2716: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 61ba8da9
+- Line 2725: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 17ee2e93
+- Line 2732: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 20b5cd4e
+- Line 2791: mypy:<type>, <type> - error: Need type annotation for "dependencies" (hint: "dependencies: dict[<type>
+  - Category: type
+  - ID: b1b3eac3
+- Line 2862: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: c67fe5c2
+- Line 2872: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 1be88028
+- Line 2875: mypy:call-arg - error: Unexpected keyword argument "style" for "info" of "Logger"  [call-arg]
+  - Category: type
+  - ID: 86249a85
+- Line 2876: mypy:name-defined - error: Name "state" is not defined  [name-defined]
+  - Category: type
+  - ID: b4e26ae2
+- Line 2877: mypy:name-defined - error: Name "state" is not defined  [name-defined]
+  - Category: type
+  - ID: 56bc7f67
+- Line 2878: mypy:name-defined - error: Name "state" is not defined  [name-defined]
+  - Category: type
+  - ID: 930fe80d
+- Line 2880: mypy:assignment - error: Incompatible types in assignment (expression has type "int", target has t
+  - Category: type
+  - ID: 2f0ce156
+- Line 2881: mypy:name-defined - error: Name "state" is not defined  [name-defined]
+  - Category: type
+  - ID: 514a7c5c
+- Line 2882: mypy:name-defined - error: Name "state" is not defined  [name-defined]
+  - Category: type
+  - ID: a27a8037
+- Line 2884: mypy:assignment - error: Incompatible types in assignment (expression has type "int", target has t
+  - Category: type
+  - ID: a309a686
+- Line 2894: mypy:attr-defined - error: "Logger" has no attribute "table"  [attr-defined]
+  - Category: type
+  - ID: 82cbdfa3
+- Line 2922: mypy:attr-defined - error: "Logger" has no attribute "table"  [attr-defined]
+  - Category: type
+  - ID: efacab78
+- Line 2925: mypy:name-defined - error: Name "state" is not defined  [name-defined]
+  - Category: type
+  - ID: 71490395
+- Line 2926: mypy:name-defined - error: Name "state" is not defined  [name-defined]
+  - Category: type
+  - ID: a0b56e69
+- Line 2928: mypy:attr-defined - error: "Logger" has no attribute "table"  [attr-defined]
+  - Category: type
+  - ID: 7e82b445
+- Line 2936: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: e7a38acb
+
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/discovery/component_discovery_agent.py (149 errors)
+
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 0327db56
 - Line 9: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: feca936a
@@ -15117,8 +15142,11 @@
   - Category: lint
   - ID: c5a934f8
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/task_analysis/solvability.py (147 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/task_analysis/solvability.py (148 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 848ef734
 - Line 6: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 711bf0f4
@@ -15563,112 +15591,112 @@
 
 ## packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py (146 errors)
 
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 948998fa
 - Line 31: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.state_schema": module is installed,
@@ -15704,52 +15732,52 @@
 - Line 162: mypy:BaseMessage - error: Incompatible return value type (got "list[BaseMessage]", expected "list[A
   - Category: type
   - ID: 47065c1a
+- Line 168: mypy:Any, Any - error: Subclass of "ToolMessage" and "dict[Any, Any]" cannot exist: would have i
+  - Category: type
+  - ID: 1ee2cff6
+- Line 168: mypy:Any, Any - error: Subclass of "SystemMessage" and "dict[Any, Any]" cannot exist: would have
+  - Category: type
+  - ID: 1ee2cff6
+- Line 168: mypy:Any, Any - error: Subclass of "HumanMessage" and "dict[Any, Any]" cannot exist: would have 
+  - Category: type
+  - ID: 1ee2cff6
 - Line 168: mypy:Any, Any - error: Subclass of "ChatMessage" and "dict[Any, Any]" cannot exist: would have i
   - Category: type
   - ID: 1ee2cff6
 - Line 168: mypy:Any, Any - error: Subclass of "FunctionMessage" and "dict[Any, Any]" cannot exist: would ha
   - Category: type
   - ID: 1ee2cff6
-- Line 168: mypy:Any, Any - error: Subclass of "SystemMessage" and "dict[Any, Any]" cannot exist: would have
-  - Category: type
-  - ID: 1ee2cff6
-- Line 168: mypy:Any, Any - error: Subclass of "ToolMessage" and "dict[Any, Any]" cannot exist: would have i
-  - Category: type
-  - ID: 1ee2cff6
-- Line 168: mypy:Any, Any - error: Subclass of "HumanMessage" and "dict[Any, Any]" cannot exist: would have
-  - Category: type
-  - ID: 1ee2cff6
 - Line 168: mypy:Any, Any - error: Subclass of "AIMessage" and "dict[Any, Any]" cannot exist: would have inc
   - Category: type
   - ID: 1ee2cff6
-- Line 169: mypy:unreachable - error: Statement is unreachable [unreachable]
+- Line 169: mypy:unreachable - error: Statement is unreachable  [unreachable]
   - Category: type
   - ID: a06ed6a2
-- Line 245: mypy:truthy-function - error: Function "last_ai" could always be true in boolean context [truthy-funct
+- Line 245: mypy:truthy-function - error: Function "last_ai" could always be true in boolean context  [truthy-funct
   - Category: type
   - ID: 5a4af052
-- Line 246: mypy:unreachable - error: Statement is unreachable [unreachable]
+- Line 246: mypy:unreachable - error: Statement is unreachable  [unreachable]
   - Category: type
   - ID: 8508d1cb
-- Line 264: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
+- Line 264: mypy:prop-decorator - error: Decorators on top of @property are not supported  [prop-decorator]
   - Category: type
   - ID: 275b2cf9
-- Line 270: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
+- Line 270: mypy:prop-decorator - error: Decorators on top of @property are not supported  [prop-decorator]
   - Category: type
   - ID: 2745db32
-- Line 276: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
+- Line 276: mypy:prop-decorator - error: Decorators on top of @property are not supported  [prop-decorator]
   - Category: type
   - ID: 390d38c9
-- Line 286: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
+- Line 286: mypy:prop-decorator - error: Decorators on top of @property are not supported  [prop-decorator]
   - Category: type
   - ID: f4da399b
-- Line 292: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
+- Line 292: mypy:prop-decorator - error: Decorators on top of @property are not supported  [prop-decorator]
   - Category: type
   - ID: 734dc6b2
-- Line 298: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
+- Line 298: mypy:prop-decorator - error: Decorators on top of @property are not supported  [prop-decorator]
   - Category: type
   - ID: c604c16c
-- Line 308: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
+- Line 308: mypy:prop-decorator - error: Decorators on top of @property are not supported  [prop-decorator]
   - Category: type
   - ID: b9d22511
 - Line 318: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> - error: Return type "Iterator[AIMessage | HumanMessage | ChatMessage | SystemMess
@@ -15758,25 +15786,25 @@
 - Line 370: mypy:override - error: Signature of "copy" incompatible with supertype "pydantic.main.BaseModel"
   - Category: type
   - ID: bf0ebee8
-- Line 370: mypy:error - note: Superclass:
+- Line 370: mypy:error - note:      Superclass:
   - Category: type
   - ID: 555248a7
-- Line 370: mypy:int - note: def copy(self, \*, include: AbstractSet[int] | AbstractSet[str] |
+- Line 370: mypy:int - note:          def copy(self, *, include: AbstractSet[int] | AbstractSet[str] | 
   - Category: type
   - ID: bdadceae
-- Line 370: mypy:error - note: Subclass:
+- Line 370: mypy:error - note:      Subclass:
   - Category: type
   - ID: 555248a7
-- Line 370: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> - note: def copy(self) -> list[AIMessage | HumanMessage | ChatMessage | S
+- Line 370: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> - note:          def copy(self) -> list[AIMessage | HumanMessage | ChatMessage | S
   - Category: type
   - ID: fc2fcffd
-- Line 411: mypy:str | dict[Any, Any - error: Argument 2 to "search" has incompatible type "str | list[str | dict[Any,
+- Line 411: mypy:str | dict[Any, Any - error: Argument 2 to "search" has incompatible type "str | list[str | dict[Any, 
   - Category: type
   - ID: 4ed44cf3
-- Line 459: mypy:truthy-function - error: Function "last_human_message" could always be true in boolean context [t
+- Line 459: mypy:truthy-function - error: Function "last_human_message" could always be true in boolean context  [t
   - Category: type
   - ID: bf76bd9b
-- Line 460: mypy:unreachable - error: Statement is unreachable [unreachable]
+- Line 460: mypy:unreachable - error: Statement is unreachable  [unreachable]
   - Category: type
   - ID: 184184d5
 - Line 477: mypy:AIMessage - error: Argument 1 to "extend" of "list" has incompatible type "list[AIMessage]";
@@ -15797,31 +15825,31 @@
 - Line 479: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> - note: Perhaps you need a type annotation for "messages"? Suggestion: "list[AIMes
   - Category: type
   - ID: bfa08be1
-- Line 500: mypy:unreachable - error: Statement is unreachable [unreachable]
+- Line 500: mypy:unreachable - error: Statement is unreachable  [unreachable]
   - Category: type
   - ID: 98060904
-- Line 519: mypy:unreachable - error: Statement is unreachable [unreachable]
+- Line 519: mypy:unreachable - error: Statement is unreachable  [unreachable]
   - Category: type
   - ID: e698e323
 - Line 521: mypy:ToolCall - error: Incompatible return value type (got "list[ToolCall] | Any", expected "lis
   - Category: type
   - ID: ee5ef18e
-- Line 525: mypy:dict[Any, Any - error: Returning Any from function declared to return "list[dict[Any, Any]]" [n
+- Line 525: mypy:dict[Any, Any - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [n
   - Category: type
   - ID: b3ea0053
-- Line 607: mypy:no-any-return - error: Returning Any from function declared to return "bool" [no-any-return]
+- Line 607: mypy:no-any-return - error: Returning Any from function declared to return "bool"  [no-any-return]
   - Category: type
   - ID: 5472eba9
-- Line 642: mypy:unreachable - error: Statement is unreachable [unreachable]
+- Line 642: mypy:unreachable - error: Statement is unreachable  [unreachable]
   - Category: type
   - ID: 7c2269f7
-- Line 648: mypy:str, Any - error: Argument "tool_call" to "ToolCallInfo" has incompatible type "ToolCall";
+- Line 648: mypy:str, Any - error: Argument "tool_call" to "ToolCallInfo" has incompatible type "ToolCall"; 
   - Category: type
   - ID: 9e1c4fe0
 - Line 649: mypy:arg-type - error: Argument "tool_message" to "ToolCallInfo" has incompatible type "object";
   - Category: type
   - ID: 8807b17b
-- Line 674: mypy:ToolCall - error: Argument 1 to "extend" of "list" has incompatible type "list[ToolCall]";
+- Line 674: mypy:ToolCall - error: Argument 1 to "extend" of "list" has incompatible type "list[ToolCall]"; 
   - Category: type
   - ID: b1554639
 - Line 711: mypy:Any, Any - error: Incompatible types in assignment (expression has type "dict[Any, Any]", t
@@ -15833,31 +15861,31 @@
 - Line 716: mypy:str | dict[Any, Any - error: Unsupported target for indexed assignment ("str | list[str | dict[Any, An
   - Category: type
   - ID: c6a05807
-- Line 716: mypy:call-overload - error: No overload variant of "**setitem**" of "list" matches argument types "st
+- Line 716: mypy:call-overload - error: No overload variant of "__setitem__" of "list" matches argument types "st
   - Category: type
   - ID: 6d655111
 - Line 716: mypy:error - note: Possible overload variants:
   - Category: type
   - ID: 601f0054
-- Line 716: mypy:Any, Any - note: def **setitem**(self, SupportsIndex, str | dict[Any, Any], /) -> None
+- Line 716: mypy:Any, Any - note:     def __setitem__(self, SupportsIndex, str | dict[Any, Any], /) -> None
   - Category: type
   - ID: f1a7ffd4
-- Line 716: mypy:Any, Any, Any - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, A
+- Line 716: mypy:Any, Any, Any - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, A
   - Category: type
   - ID: cd36d519
 - Line 718: mypy:str | dict[Any, Any - error: Unsupported target for indexed assignment ("str | list[str | dict[Any, An
   - Category: type
   - ID: 13d675a8
-- Line 718: mypy:call-overload - error: No overload variant of "**setitem**" of "list" matches argument types "st
+- Line 718: mypy:call-overload - error: No overload variant of "__setitem__" of "list" matches argument types "st
   - Category: type
   - ID: 56d1e7d3
 - Line 718: mypy:error - note: Possible overload variants:
   - Category: type
   - ID: 8f6b61b5
-- Line 718: mypy:Any, Any - note: def **setitem**(self, SupportsIndex, str | dict[Any, Any], /) -> None
+- Line 718: mypy:Any, Any - note:     def __setitem__(self, SupportsIndex, str | dict[Any, Any], /) -> None
   - Category: type
   - ID: e94d2b67
-- Line 718: mypy:Any, Any, Any - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, A
+- Line 718: mypy:Any, Any, Any - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, A
   - Category: type
   - ID: b94f0159
 - Line 723: mypy:arg-type - error: Argument 1 to "append" of "list" has incompatible type "HumanMessage | Ch
@@ -15887,16 +15915,16 @@
 - Line 772: mypy:str | dict[Any, Any - error: Unsupported target for indexed assignment ("str | list[str | dict[Any, An
   - Category: type
   - ID: 2a4a093c
-- Line 772: mypy:call-overload - error: No overload variant of "**setitem**" of "list" matches argument types "st
+- Line 772: mypy:call-overload - error: No overload variant of "__setitem__" of "list" matches argument types "st
   - Category: type
   - ID: fa05fbf7
 - Line 772: mypy:error - note: Possible overload variants:
   - Category: type
   - ID: 76e23fe5
-- Line 772: mypy:Any, Any - note: def **setitem**(self, SupportsIndex, str | dict[Any, Any], /) -> None
+- Line 772: mypy:Any, Any - note:     def __setitem__(self, SupportsIndex, str | dict[Any, Any], /) -> None
   - Category: type
   - ID: 5534c628
-- Line 772: mypy:Any, Any, Any - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, A
+- Line 772: mypy:Any, Any, Any - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, A
   - Category: type
   - ID: 3a7e1bcf
 - Line 775: mypy:arg-type - error: Argument 1 to "append" of "list" has incompatible type "HumanMessage | Ch
@@ -15914,7 +15942,7 @@
 - Line 784: mypy:Any, Any - error: Incompatible types in assignment (expression has type "BaseMessage", vari
   - Category: type
   - ID: 0cc15c04
-- Line 785: mypy:Any, Any - error: Argument 1 to "append" of "MessageList" has incompatible type "AIMessage
+- Line 785: mypy:Any, Any - error: Argument 1 to "append" of "MessageList" has incompatible type "AIMessage 
   - Category: type
   - ID: 3d0f6093
 - Line 793: mypy:str, Any - error: Incompatible types in assignment (expression has type "dict[str, Any]", t
@@ -15923,7 +15951,7 @@
 - Line 816: mypy:Any, Any - error: Incompatible return value type (got "dict[Any, Any] | list[dict[Any, Any]
   - Category: type
   - ID: e4a58680
-- Line 822: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 822: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: c8074d77
 - Line 827: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> - error: Returning Any from function declared to return "list[AIMessage | HumanMes
@@ -15932,19 +15960,19 @@
 - Line 828: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> - error: Returning Any from function declared to return "list[AIMessage | HumanMes
   - Category: type
   - ID: 20eebd60
-- Line 833: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> | str - error: Argument "root" to "MessageList" has incompatible type "list[AIMessage |
+- Line 833: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> | str - error: Argument "root" to "MessageList" has incompatible type "list[AIMessage | 
   - Category: type
   - ID: 93228ae6
 - Line 841: mypy:dict[Any, Any - error: Argument "root" to "MessageList" has incompatible type "list[dict[Any, An
   - Category: type
   - ID: 66920e4e
-- Line 872: mypy:unreachable - error: Statement is unreachable [unreachable]
+- Line 872: mypy:unreachable - error: Statement is unreachable  [unreachable]
   - Category: type
   - ID: 21eb66f5
-- Line 878: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
+- Line 878: mypy:no-untyped-def - error: Function is missing a type annotation  [no-untyped-def]
   - Category: type
   - ID: dd8c6aee
-- Line 881: mypy:BaseMessage | list[str - error: Argument "root" to "MessageList" has incompatible type "list[BaseMessage
+- Line 881: mypy:BaseMessage | list[str - error: Argument "root" to "MessageList" has incompatible type "list[BaseMessage 
   - Category: type
   - ID: 8059c13a
 - Line 881: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> - error: Argument 1 to "add_messages" has incompatible type "list[AIMessage | Huma
@@ -15959,7 +15987,7 @@
 - Line 881: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> - error: Argument 2 to "add_messages" has incompatible type "list[AIMessage | Huma
   - Category: type
   - ID: d6e0eb8a
-- Line 883: mypy:BaseMessage | list[str - error: Argument "root" to "MessageList" has incompatible type "list[BaseMessage
+- Line 883: mypy:BaseMessage | list[str - error: Argument "root" to "MessageList" has incompatible type "list[BaseMessage 
   - Category: type
   - ID: 9672cdd4
 - Line 883: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> - error: Argument 1 to "add_messages" has incompatible type "list[AIMessage | Huma
@@ -15971,19 +15999,19 @@
 - Line 883: mypy:error - note: Consider using "Sequence" instead, which is covariant
   - Category: type
   - ID: 590e0d8d
-- Line 904: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 904: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: ce5470a9
 - Line 913: mypy:[ - error: Incompatible return value type (got "Callable[[], AIMessage | HumanMessag
   - Category: type
   - ID: d1a0dd5f
-- Line 918: mypy:[ - error: Incompatible return value type (got "Callable[[], HumanMessage | None]",
+- Line 918: mypy:[ - error: Incompatible return value type (got "Callable[[], HumanMessage | None]", 
   - Category: type
   - ID: c05a2470
 - Line 923: mypy:[ - error: Incompatible return value type (got "Callable[[], AIMessage | None]", exp
   - Category: type
   - ID: fc569abd
-- Line 928: mypy:[ - error: Incompatible return value type (got "Callable[[], HumanMessage | None]",
+- Line 928: mypy:[ - error: Incompatible return value type (got "Callable[[], HumanMessage | None]", 
   - Category: type
   - ID: 15b75642
 - Line 933: mypy:[ - error: Incompatible return value type (got "Callable[[], SystemMessage | None]",
@@ -15998,12 +16026,15 @@
 - Line 1093: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> | str - error: Argument "messages" to "MessagesState" has incompatible type "list[AIMess
   - Category: type
   - ID: ac61b133
-- Line 1114: mypy:str, Any - error: List item 0 has incompatible type "str"; expected "dict[str, Any]" [list
+- Line 1114: mypy:str, Any - error: List item 0 has incompatible type "str"; expected "dict[str, Any]"  [list
   - Category: type
   - ID: 2b1e1f12
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/smart_output_parsing.py (142 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/smart_output_parsing.py (143 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 20306948
 - Line 7: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: fc0393b4
@@ -16016,7 +16047,7 @@
 - Line 8: ruff:F401 - `typing.Union` imported but unused
   - Category: lint
   - ID: 282c5b42
-- Line 18: ruff:F401 - `haive.core.graph.node.output_parsing_v2.PydanticParserNodeConfig` imported but
+- Line 18: ruff:F401 - `haive.core.graph.node.output_parsing_v2.PydanticParserNodeConfig` imported but 
   - Category: lint
   - ID: e75ee333
 - Line 19: ruff:F401 - `haive.core.graph.node.output_parsing_v2.create_pydantic_parser_node` imported b
@@ -16433,9 +16464,9 @@
 
 ## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/rag/hyde/enhanced_agent_v2.py (141 errors)
 
-- Line 0: ImportError - cannot import name 'SequentialAgent' from 'haive.agents.multi.base' (/home/will/
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
   - Category: import
-  - ID: 0f016d28
+  - ID: d5cd2cdc
 - Line 10: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 1e25eb37
@@ -16857,8 +16888,11 @@
   - Category: lint
   - ID: b17bee86
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/research/perplexity/pro_search/tasks/models.py (137 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/research/perplexity/pro_search/tasks/models.py (138 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: b250a16b
 - Line 4: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 19fb1b59
@@ -17271,8 +17305,11 @@
   - Category: lint
   - ID: 19053ac0
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/discovery/dynamic_tool_selector.py (129 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/discovery/dynamic_tool_selector.py (130 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: abe7ad93
 - Line 14: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 6539aa80
@@ -17660,6 +17697,387 @@
 - Line 422: ruff:W292 - No newline at end of file
   - Category: lint
   - ID: f4644eaf
+
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/agent.py (126 errors)
+
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 019fbdf0
+- Line 8: ruff:I001 - Import block is un-sorted or un-formatted
+  - Category: lint
+  - ID: bba69bd0
+- Line 11: ruff:UP035 - Import from `collections.abc` instead: `Callable`
+  - Category: lint
+  - ID: d96ff325
+- Line 11: ruff:UP035 - `typing.Dict` is deprecated, use `dict` instead
+  - Category: lint
+  - ID: d96ff325
+- Line 11: ruff:UP035 - `typing.List` is deprecated, use `list` instead
+  - Category: lint
+  - ID: d96ff325
+- Line 11: ruff:F401 - `typing.Union` imported but unused
+  - Category: lint
+  - ID: ac4610f4
+- Line 11: ruff:F401 - `typing.Callable` imported but unused
+  - Category: lint
+  - ID: ac4610f4
+- Line 14: ruff:F401 - `pydantic.BaseModel` imported but unused
+  - Category: lint
+  - ID: 574d8d6f
+- Line 18: ruff:F401 - `haive.core.engine.aug_llm.AugLLMConfig` imported but unused
+  - Category: lint
+  - ID: 45c6363b
+- Line 35: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 9443de35
+- Line 36: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 7b93c48d
+- Line 37: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: e04e9bb3
+- Line 38: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: 78aaec6a
+- Line 39: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 26477864
+- Line 42: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 8c5bbebb
+- Line 43: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 52e5d193
+- Line 49: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 45864799
+- Line 50: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: b2e13ed1
+- Line 53: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 581132ee
+- Line 55: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 9e6ca009
+- Line 56: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: cf666e3b
+- Line 59: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: 6d56542d
+- Line 59: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: 6d56542d
+- Line 62: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cea85fd3
+- Line 63: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 108771ce
+- Line 63: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 108771ce
+- Line 72: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 092a676c
+- Line 75: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 6f342c0a
+- Line 78: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: d02ecef3
+- Line 83: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: d430b013
+- Line 89: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 3a7f8ac7
+- Line 92: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 42e0ae8d
+- Line 94: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 3f211049
+- Line 101: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 9e325dff
+- Line 111: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 541db25c
+- Line 114: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 62316e82
+- Line 115: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: ae6fc1d5
+- Line 116: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 36c8acdc
+- Line 129: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 464fc463
+- Line 131: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: ea238a8f
+- Line 135: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 82b11726
+- Line 136: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: a4ff7d8f
+- Line 140: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: a09a4cdf
+- Line 141: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 030ca74e
+- Line 145: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: e2bfd659
+- Line 149: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 10dd82e6
+- Line 153: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 9c324225
+- Line 154: ruff:PLR0911 - Too many return statements (7 > 6)
+  - Category: lint
+  - ID: 2d1deaa1
+- Line 156: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 2f16e452
+- Line 157: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 2880d8b7
+- Line 162: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: ba232863
+- Line 166: ruff:RET505 - Unnecessary `elif` after `return` statement
+  - Category: lint
+  - ID: 467864cb
+- Line 176: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: a42908e8
+- Line 178: ruff:TRY400 - Use `logging.exception` instead of `logging.error`
+  - Category: lint
+  - ID: f5319851
+- Line 178: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 602d655a
+- Line 182: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: b8646b9b
+- Line 187: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 0b02492f
+- Line 190: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 52530e16
+- Line 192: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: d9f03e5e
+- Line 193: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: e569441c
+- Line 198: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: de394520
+- Line 206: ruff:TRY301 - Abstract `raise` to an inner function
+  - Category: lint
+  - ID: bede39a5
+- Line 207: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 2a831125
+- Line 210: ruff:TRY400 - Use `logging.exception` instead of `logging.error`
+  - Category: lint
+  - ID: ab4a3af5
+- Line 214: ruff:RET506 - Unnecessary `elif` after `raise` statement
+  - Category: lint
+  - ID: b3dc8a91
+- Line 217: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 0dce5d61
+- Line 226: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 73559ee3
+- Line 229: ruff:F401 - `asyncio` imported but unused
+  - Category: lint
+  - ID: 3f8330cd
+- Line 231: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: e540a1ed
+- Line 233: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 01fb59af
+- Line 236: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 43e36afc
+- Line 239: ruff:RET505 - Unnecessary `else` after `return` statement
+  - Category: lint
+  - ID: c01aba7e
+- Line 243: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 6b936451
+- Line 247: ruff:W291 - Trailing whitespace
+  - Category: lint
+  - ID: bc70fe2f
+- Line 250: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 61bf6bf0
+- Line 262: ruff:TRY400 - Use `logging.exception` instead of `logging.error`
+  - Category: lint
+  - ID: 32c1de86
+- Line 262: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 7e0d8606
+- Line 265: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 69d5dfaf
+- Line 273: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 7391d578
+- Line 278: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 11e0f8e0
+- Line 283: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 98af6cde
+- Line 294: ruff:TRY400 - Use `logging.exception` instead of `logging.error`
+  - Category: lint
+  - ID: 4c2d80a6
+- Line 294: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: df18603c
+- Line 297: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 825c7d08
+- Line 304: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 77f125c5
+- Line 310: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: d463dc13
+- Line 316: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 6a0a959c
+- Line 321: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 17ef1a7c
+- Line 331: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 9afbbbc4
+- Line 333: ruff:TRY400 - Use `logging.exception` instead of `logging.error`
+  - Category: lint
+  - ID: 59f3d467
+- Line 333: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 341d7a71
+- Line 337: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: fad9a176
+- Line 345: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: f9513495
+- Line 352: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: b1ea47f6
+- Line 355: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 7d0e01bd
+- Line 358: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 182253f1
+- Line 361: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 7cb3521c
+- Line 362: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: c4bd60f9
+- Line 368: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: ea8c8eb3
+- Line 373: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 34d6b8c1
+- Line 380: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 07936956
+- Line 382: ruff:TRY400 - Use `logging.exception` instead of `logging.error`
+  - Category: lint
+  - ID: 9d56e80a
+- Line 382: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 5addd94c
+- Line 385: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: e6dfbf19
+- Line 386: ruff:ARG002 - Unused method argument: `agent`
+  - Category: lint
+  - ID: 4d3be535
+- Line 386: ruff:ARG002 - Unused method argument: `input_data`
+  - Category: lint
+  - ID: 4d3be535
+- Line 391: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: d6f82ad5
+- Line 392: ruff:ARG002 - Unused method argument: `result`
+  - Category: lint
+  - ID: dcd9c76c
+- Line 396: ruff:PLR2004 - Magic value used in comparison, consider replacing `2` with a constant variable
+  - Category: lint
+  - ID: 6737c1ad
+- Line 397: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: d0ecedc7
+- Line 401: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: d2df5b5b
+- Line 402: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 426459be
+- Line 403: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 47992096
+- Line 407: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: ca1322cc
+- Line 410: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 737783ee
+- Line 411: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 71de2042
+- Line 414: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 69c06cb3
+- Line 415: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 2355a1df
+- Line 422: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 8db5d391
+- Line 433: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 430c7a0a
+- Line 444: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 473caabd
+- Line 448: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: b201cfad
+- Line 458: ruff:RUF022 - `__all__` is not sorted
+  - Category: lint
+  - ID: 8b4fb639
+- Line 460: ruff:W291 - Trailing whitespace
+  - Category: lint
+  - ID: 24652ad8
+- Line 464: ruff:W291 - Trailing whitespace
+  - Category: lint
+  - ID: 36d56f18
+- Line 466: ruff:W292 - No newline at end of file
+  - Category: lint
+  - ID: 94088e90
 
 ## /home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/schema/prebuilt/multi_agent_state.py (123 errors)
 
@@ -18281,7 +18699,7 @@
 - Line 171: ruff:Q000 - Single quotes found but double quotes preferred
   - Category: lint
   - ID: 30b32640
-- Line 174: ruff:B904 - Within an `except` clause, raise exceptions with `raise ... from err` or `raise
+- Line 174: ruff:B904 - Within an `except` clause, raise exceptions with `raise ... from err` or `raise 
   - Category: lint
   - ID: 2b8dd495
 - Line 174: ruff:Q000 - Single quotes found but double quotes preferred
@@ -19125,362 +19543,11 @@
   - Category: lint
   - ID: b7a58acb
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/archive/dynamic_agent_discovery_supervisor.py (117 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/simple/agent_v3.py (118 errors)
 
-- Line 0: ImportError - cannot import name 'build_graph' from 'haive.agents.supervisor.simple_supervisor
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
   - Category: import
-  - ID: 2e1dc56e
-- Line 59: ruff:I001 - Import block is un-sorted or un-formatted
-  - Category: lint
-  - ID: d98fcd9f
-- Line 61: ruff:UP035 - `typing.Dict` is deprecated, use `dict` instead
-  - Category: lint
-  - ID: 37c040b8
-- Line 61: ruff:F401 - `typing.Optional` imported but unused
-  - Category: lint
-  - ID: 7f439e68
-- Line 61: ruff:F401 - `typing.Dict` imported but unused
-  - Category: lint
-  - ID: 7f439e68
-- Line 83: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bec30c5f
-- Line 84: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d98eb5e5
-- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 61d6c875
-- Line 86: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: aa1ccd64
-- Line 90: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 824b1611
-- Line 91: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: f8614c43
-- Line 92: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0a752a0d
-- Line 93: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: cb9e40e2
-- Line 94: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bfc9b7f0
-- Line 95: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: ded95502
-- Line 142: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 7be1c307
-- Line 143: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d1a55cf1
-- Line 147: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b7755190
-- Line 148: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c5098f60
-- Line 154: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5d1b6a3c
-- Line 155: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 72fea177
-- Line 157: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 2ba68da6
-- Line 157: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 2ba68da6
-- Line 178: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 6bd2a341
-- Line 178: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 6bd2a341
-- Line 179: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0f9b6d52
-- Line 179: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0f9b6d52
-- Line 183: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: ae7c06e7
-- Line 183: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 1d367592
-- Line 186: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: f91635d9
-- Line 187: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: eea63236
-- Line 188: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b60a5dfd
-- Line 192: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: dc28cdeb
-- Line 192: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: dc28cdeb
-- Line 192: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: dc28cdeb
-- Line 192: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: dc28cdeb
-- Line 194: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: e43ca383
-- Line 194: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 37831a30
-- Line 195: ruff:TRY300 - Consider moving this statement to an `else` block
-  - Category: lint
-  - ID: a30b6dc3
-- Line 197: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 8d487ef8
-- Line 197: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 7078ebd6
-- Line 197: ruff:TRY401 - Redundant exception object included in `logging.exception` call
-  - Category: lint
-  - ID: ec72f2b5
-- Line 201: ruff:C901 - `_add_discovery_tool` is too complex (16 > 12)
-  - Category: lint
-  - ID: 3988bd73
-- Line 205: ruff:C901 - `discover_and_add_agents` is too complex (14 > 12)
-  - Category: lint
-  - ID: 597166aa
-- Line 205: ruff:PLR0912 - Too many branches (13 > 12)
-  - Category: lint
-  - ID: 7cfcfeae
-- Line 220: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0e9745db
-- Line 220: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0e9745db
-- Line 223: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 03045a18
-- Line 225: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: a31bdcb9
-- Line 226: ruff:SIM102 - Use a single `if` statement instead of nested `if` statements
-  - Category: lint
-  - ID: fb8c31c4
-- Line 229: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b8a5aee1
-- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 45a57170
-- Line 231: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bc116774
-- Line 233: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 07c190b1
-- Line 236: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: ec13932f
-- Line 236: ruff:ARG005 - Unused lambda argument: `x`
-  - Category: lint
-  - ID: 6bd79aa3
-- Line 239: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 2d5b3b5b
-- Line 241: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c86f525c
-- Line 243: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 77f4a956
-- Line 244: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 96dd6edc
-- Line 245: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 14ced982
-- Line 245: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 14ced982
-- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 752925e6
-- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 752925e6
-- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 752925e6
-- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 752925e6
-- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 752925e6
-- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 752925e6
-- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 752925e6
-- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 752925e6
-- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 752925e6
-- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 752925e6
-- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 752925e6
-- Line 266: ruff:UP034 - Avoid extraneous parentheses
-  - Category: lint
-  - ID: 462a3c94
-- Line 267: ruff:UP034 - Avoid extraneous parentheses
-  - Category: lint
-  - ID: 435269ab
-- Line 268: ruff:PLR2004 - Magic value used in comparison, consider replacing `10` with a constant variable
-  - Category: lint
-  - ID: 4e8204e3
-- Line 269: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 88940201
-- Line 269: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 88940201
-- Line 281: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 306f58f7
-- Line 281: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 306f58f7
-- Line 282: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b48d34b4
-- Line 282: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b48d34b4
-- Line 283: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 415ef055
-- Line 285: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: cb923121
-- Line 287: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: abb3804f
-- Line 290: ruff:ARG002 - Unused method argument: `state`
-  - Category: lint
-  - ID: a006ae07
-- Line 292: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: e39fb9db
-- Line 294: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1efe70c0
-- Line 298: ruff:PLW2901 - `for` loop variable `line` overwritten by assignment target
-  - Category: lint
-  - ID: 2d15fac6
-- Line 299: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d9951276
-- Line 300: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 7425005a
-- Line 300: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 7425005a
-- Line 301: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: fc16dc0d
-- Line 302: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: aa62f1c6
-- Line 302: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: aa62f1c6
-- Line 303: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: f8aa8672
-- Line 305: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3b6deac2
-- Line 305: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3b6deac2
-- Line 308: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 42f9cc11
-- Line 309: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 6df51d8e
-- Line 309: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 6df51d8e
-- Line 312: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: a5bea5ff
-- Line 315: ruff:PLR0913 - Too many arguments in function definition (7 > 5)
-  - Category: lint
-  - ID: 4b1efb7d
-- Line 315: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3b704624
-- Line 349: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 9edc2d87
-- Line 354: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d539ab3f
-- Line 394: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: e219baee
-- Line 395: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: ba8b042f
-- Line 395: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: ba8b042f
-- Line 396: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: df225957
-- Line 398: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 59f9862f
-- Line 401: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 14950e30
-- Line 401: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 5a216de3
-- Line 403: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 9c981328
-- Line 404: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0411ec66
-- Line 405: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 8abe8ad5
-- Line 408: ruff:W292 - No newline at end of file
-  - Category: lint
-  - ID: 77303810
-
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/simple/agent_v3.py (117 errors)
-
+  - ID: 11b0553a
 - Line 32: ruff:E402 - Module level import not at top of file
   - Category: lint
   - ID: 1f6c2da0
@@ -19833,105 +19900,459 @@
   - Category: lint
   - ID: f11f8d03
 
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/archive/dynamic_agent_discovery_supervisor.py (117 errors)
+
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: acbf4af3
+- Line 59: ruff:I001 - Import block is un-sorted or un-formatted
+  - Category: lint
+  - ID: d98fcd9f
+- Line 61: ruff:UP035 - `typing.Dict` is deprecated, use `dict` instead
+  - Category: lint
+  - ID: 37c040b8
+- Line 61: ruff:F401 - `typing.Optional` imported but unused
+  - Category: lint
+  - ID: 7f439e68
+- Line 61: ruff:F401 - `typing.Dict` imported but unused
+  - Category: lint
+  - ID: 7f439e68
+- Line 83: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bec30c5f
+- Line 84: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d98eb5e5
+- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 61d6c875
+- Line 86: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: aa1ccd64
+- Line 90: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 824b1611
+- Line 91: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: f8614c43
+- Line 92: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0a752a0d
+- Line 93: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cb9e40e2
+- Line 94: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bfc9b7f0
+- Line 95: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: ded95502
+- Line 142: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 7be1c307
+- Line 143: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d1a55cf1
+- Line 147: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b7755190
+- Line 148: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c5098f60
+- Line 154: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5d1b6a3c
+- Line 155: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 72fea177
+- Line 157: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 2ba68da6
+- Line 157: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 2ba68da6
+- Line 178: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6bd2a341
+- Line 178: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6bd2a341
+- Line 179: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0f9b6d52
+- Line 179: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0f9b6d52
+- Line 183: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: ae7c06e7
+- Line 183: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 1d367592
+- Line 186: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: f91635d9
+- Line 187: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: eea63236
+- Line 188: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b60a5dfd
+- Line 192: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: dc28cdeb
+- Line 192: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: dc28cdeb
+- Line 192: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: dc28cdeb
+- Line 192: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: dc28cdeb
+- Line 194: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: e43ca383
+- Line 194: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 37831a30
+- Line 195: ruff:TRY300 - Consider moving this statement to an `else` block
+  - Category: lint
+  - ID: a30b6dc3
+- Line 197: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 8d487ef8
+- Line 197: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 7078ebd6
+- Line 197: ruff:TRY401 - Redundant exception object included in `logging.exception` call
+  - Category: lint
+  - ID: ec72f2b5
+- Line 201: ruff:C901 - `_add_discovery_tool` is too complex (16 > 12)
+  - Category: lint
+  - ID: 3988bd73
+- Line 205: ruff:C901 - `discover_and_add_agents` is too complex (14 > 12)
+  - Category: lint
+  - ID: 597166aa
+- Line 205: ruff:PLR0912 - Too many branches (13 > 12)
+  - Category: lint
+  - ID: 7cfcfeae
+- Line 220: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0e9745db
+- Line 220: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0e9745db
+- Line 223: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 03045a18
+- Line 225: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: a31bdcb9
+- Line 226: ruff:SIM102 - Use a single `if` statement instead of nested `if` statements
+  - Category: lint
+  - ID: fb8c31c4
+- Line 229: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b8a5aee1
+- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 45a57170
+- Line 231: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bc116774
+- Line 233: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 07c190b1
+- Line 236: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: ec13932f
+- Line 236: ruff:ARG005 - Unused lambda argument: `x`
+  - Category: lint
+  - ID: 6bd79aa3
+- Line 239: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 2d5b3b5b
+- Line 241: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c86f525c
+- Line 243: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 77f4a956
+- Line 244: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 96dd6edc
+- Line 245: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 14ced982
+- Line 245: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 14ced982
+- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 752925e6
+- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 752925e6
+- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 752925e6
+- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 752925e6
+- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 752925e6
+- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 752925e6
+- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 752925e6
+- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 752925e6
+- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 752925e6
+- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 752925e6
+- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 752925e6
+- Line 266: ruff:UP034 - Avoid extraneous parentheses
+  - Category: lint
+  - ID: 462a3c94
+- Line 267: ruff:UP034 - Avoid extraneous parentheses
+  - Category: lint
+  - ID: 435269ab
+- Line 268: ruff:PLR2004 - Magic value used in comparison, consider replacing `10` with a constant variable
+  - Category: lint
+  - ID: 4e8204e3
+- Line 269: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 88940201
+- Line 269: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 88940201
+- Line 281: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 306f58f7
+- Line 281: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 306f58f7
+- Line 282: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b48d34b4
+- Line 282: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b48d34b4
+- Line 283: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 415ef055
+- Line 285: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cb923121
+- Line 287: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: abb3804f
+- Line 290: ruff:ARG002 - Unused method argument: `state`
+  - Category: lint
+  - ID: a006ae07
+- Line 292: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: e39fb9db
+- Line 294: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1efe70c0
+- Line 298: ruff:PLW2901 - `for` loop variable `line` overwritten by assignment target
+  - Category: lint
+  - ID: 2d15fac6
+- Line 299: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d9951276
+- Line 300: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 7425005a
+- Line 300: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 7425005a
+- Line 301: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: fc16dc0d
+- Line 302: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: aa62f1c6
+- Line 302: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: aa62f1c6
+- Line 303: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: f8aa8672
+- Line 305: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3b6deac2
+- Line 305: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3b6deac2
+- Line 308: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 42f9cc11
+- Line 309: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6df51d8e
+- Line 309: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6df51d8e
+- Line 312: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: a5bea5ff
+- Line 315: ruff:PLR0913 - Too many arguments in function definition (7 > 5)
+  - Category: lint
+  - ID: 4b1efb7d
+- Line 315: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3b704624
+- Line 349: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9edc2d87
+- Line 354: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d539ab3f
+- Line 394: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: e219baee
+- Line 395: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: ba8b042f
+- Line 395: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: ba8b042f
+- Line 396: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: df225957
+- Line 398: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 59f9862f
+- Line 401: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 14950e30
+- Line 401: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 5a216de3
+- Line 403: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9c981328
+- Line 404: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0411ec66
+- Line 405: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 8abe8ad5
+- Line 408: ruff:W292 - No newline at end of file
+  - Category: lint
+  - ID: 77303810
+
 ## packages/haive-core/src/haive/core/engine/agent/agent.py (115 errors)
 
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 40d5de1a
 - Line 29: mypy:import-untyped - error: Skipping analyzing "haive.core.config.runnable": module is installed, but
@@ -19955,73 +20376,73 @@
 - Line 45: mypy:import-untyped - error: Skipping analyzing "haive.core.utils.pydantic_utils": module is installed
   - Category: type
   - ID: ab794e1c
-- Line 75: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 75: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: af63c135
-- Line 78: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 78: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: ea736316
-- Line 81: mypy:Agent[Any - error: "type[Agent[Any]]" has no attribute "config_class" [attr-defined]
+- Line 81: mypy:Agent[Any - error: "type[Agent[Any]]" has no attribute "config_class"  [attr-defined]
   - Category: type
   - ID: 09c0d9ae
-- Line 120: mypy:<type>, <type> - error: Need type annotation for "\_async_context_managers" (hint: "\_async_context
+- Line 120: mypy:<type>, <type> - error: Need type annotation for "_async_context_managers" (hint: "_async_context
   - Category: type
   - ID: 75533175
-- Line 204: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 204: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 1e03097a
-- Line 222: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 222: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 74c5a84b
-- Line 234: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 234: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: aaf197fb
 - Line 234: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: b44a35bf
-- Line 266: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 266: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 980becd1
 - Line 266: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: a695ee98
-- Line 328: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 328: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 2b3e8d22
 - Line 328: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: f0c1e51e
-- Line 365: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 365: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: bec3696e
 - Line 365: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: b474b58c
-- Line 390: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 390: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 431c1378
 - Line 390: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 393bef26
-- Line 420: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 420: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 95e977c8
 - Line 420: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: a182440a
-- Line 764: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 764: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: d0fc1d0a
-- Line 777: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 777: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 3ba4ffc7
-- Line 831: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 831: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: a6be04ff
 - Line 831: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: edae7f4c
-- Line 940: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 940: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 86965f7a
 - Line 940: mypy:error - note: Use "-> None" if function does not return a value
@@ -20033,7 +20454,7 @@
 - Line 1002: mypy:abstract - error: Cannot instantiate abstract class "BaseStore" with abstract attributes "a
   - Category: type
   - ID: a54c8940
-- Line 1005: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1005: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 989a603a
 - Line 1005: mypy:error - note: Use "-> None" if function does not return a value
@@ -20045,46 +20466,46 @@
 - Line 1145: mypy:abstract - error: Cannot instantiate abstract class "BaseStore" with abstract attributes "a
   - Category: type
   - ID: 0ac915f1
-- Line 1148: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1148: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 275888c0
-- Line 1215: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1215: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 6fc4ef25
 - Line 1215: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 0c50aa33
-- Line 1236: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1236: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: dd96f541
 - Line 1236: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 8f7e0ca6
-- Line 1273: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1273: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 5542bef0
 - Line 1273: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: c380df8d
-- Line 1294: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1294: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 129e82e2
 - Line 1294: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 130ee0c6
-- Line 1344: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1344: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: f7851655
 - Line 1344: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 2bf3b771
-- Line 1398: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 1398: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 8165d226
 - Line 1572: mypy:import-untyped - error: Skipping analyzing "haive.core.config.constants": module is installed, bu
   - Category: type
   - ID: b861405b
-- Line 1617: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1617: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: c5364b45
 - Line 1638: mypy:assignment - error: Incompatible types in assignment (expression has type "None", variable ha
@@ -20105,768 +20526,87 @@
 - Line 1750: mypy:HumanMessage - error: Incompatible types in assignment (expression has type "str", target has t
   - Category: type
   - ID: e73adb66
-- Line 1851: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1851: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 01087e8b
-- Line 1961: mypy:no-any-return - error: Returning Any from function declared to return "RunnableConfig" [no-any-
+- Line 1961: mypy:no-any-return - error: Returning Any from function declared to return "RunnableConfig"  [no-any-
   - Category: type
   - ID: 940822ac
-- Line 2007: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 2007: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 872c2b1a
 - Line 2014: mypy:type-var - error: A function returning TypeVar should receive at least one argument contain
   - Category: type
   - ID: 55077e66
-- Line 2174: mypy:no-any-return - error: Returning Any from function declared to return "TOut" [no-any-return]
+- Line 2174: mypy:no-any-return - error: Returning Any from function declared to return "TOut"  [no-any-return]
   - Category: type
   - ID: c535fc80
-- Line 2190: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 2190: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 26c4836c
-- Line 2266: mypy:unreachable - error: Right operand of "and" is never evaluated [unreachable]
+- Line 2266: mypy:unreachable - error: Right operand of "and" is never evaluated  [unreachable]
   - Category: type
   - ID: c9b1a279
-- Line 2267: mypy:unreachable - error: Statement is unreachable [unreachable]
+- Line 2267: mypy:unreachable - error: Statement is unreachable  [unreachable]
   - Category: type
   - ID: 86359096
-- Line 2276: mypy:unreachable - error: Statement is unreachable [unreachable]
+- Line 2276: mypy:unreachable - error: Statement is unreachable  [unreachable]
   - Category: type
   - ID: 60dfb6bb
 - Line 2305: mypy:Any - error: Incompatible types in "await" (actual type "StateSnapshot", expected type
   - Category: type
   - ID: 5b24cb63
-- Line 2355: mypy:no-any-return - error: Returning Any from function declared to return "TOut" [no-any-return]
+- Line 2355: mypy:no-any-return - error: Returning Any from function declared to return "TOut"  [no-any-return]
   - Category: type
   - ID: e5186159
-- Line 2425: mypy:no-any-return - error: Returning Any from function declared to return "TOut" [no-any-return]
+- Line 2425: mypy:no-any-return - error: Returning Any from function declared to return "TOut"  [no-any-return]
   - Category: type
   - ID: 2e11cb66
-- Line 2468: mypy:unreachable - error: Statement is unreachable [unreachable]
+- Line 2468: mypy:unreachable - error: Statement is unreachable  [unreachable]
   - Category: type
   - ID: c79638ac
-- Line 2473: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 2473: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 87b598d5
-- Line 2660: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]" [no-any-
+- Line 2660: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-
   - Category: type
   - ID: bdaca5c0
-- Line 2664: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]" [no-any-
+- Line 2664: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-
   - Category: type
   - ID: 3ae460ee
-- Line 2665: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]" [no-any-
+- Line 2665: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-
   - Category: type
   - ID: 982d2666
-- Line 2669: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]" [no-any-
+- Line 2669: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-
   - Category: type
   - ID: a61a8948
-- Line 2672: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]" [no-any-
+- Line 2672: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-
   - Category: type
   - ID: 19e77f66
-- Line 2684: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]" [no-any-
+- Line 2684: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-
   - Category: type
   - ID: 3938cb3a
-- Line 2686: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]" [no-any-
+- Line 2686: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-
   - Category: type
   - ID: 254ff5d0
-- Line 2688: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 2688: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 47514e0a
-- Line 2808: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 2808: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 69d5fd80
-- Line 2904: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 2904: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 60a86946
-- Line 3594: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
+- Line 3594: mypy:no-untyped-def - error: Function is missing a type annotation  [no-untyped-def]
   - Category: type
   - ID: 96a14571
 
-## packages/haive-core/src/haive/core/schema/schema_composer.py (113 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/dynamic_agent_discovery_supervisor.py (114 errors)
 
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ece2f21f
-- Line 85: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.field_definition": module is instal
-  - Category: type
-  - ID: 85f01f23
-- Line 86: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.state_schema": module is installed,
-  - Category: type
-  - ID: 6a981897
-- Line 89: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.schema_manager": module is installe
-  - Category: type
-  - ID: 7f92d05a
-- Line 164: mypy:<type>, <type> - error: Need type annotation for "fields" (hint: "fields: dict[<type>, <type>] =
-  - Category: type
-  - ID: ba77ab68
-- Line 165: mypy:<type> - error: Need type annotation for "shared_fields" (hint: "shared_fields: set[<type
-  - Category: type
-  - ID: 0f1369ab
-- Line 166: mypy:var-annotated - error: Need type annotation for "field_sources" [var-annotated]
-  - Category: type
-  - ID: 4b4fb5c3
-- Line 169: mypy:var-annotated - error: Need type annotation for "input_fields" [var-annotated]
-  - Category: type
-  - ID: 4976752c
-- Line 170: mypy:var-annotated - error: Need type annotation for "output_fields" [var-annotated]
-  - Category: type
-  - ID: f1b7a9a1
-- Line 171: mypy:<type>, <type> - error: Need type annotation for "engine_io_mappings" (hint: "engine_io_mappings:
-  - Category: type
-  - ID: 9d4fcb9d
-- Line 174: mypy:<type>, <type> - error: Need type annotation for "structured_models" (hint: "structured_models: d
-  - Category: type
-  - ID: e5ebfa16
-- Line 175: mypy:var-annotated - error: Need type annotation for "structured_model_fields" [var-annotated]
-  - Category: type
-  - ID: 980b9cce
-- Line 178: mypy:<type>, <type> - error: Need type annotation for "nested_schemas" (hint: "nested_schemas: dict[<t
-  - Category: type
-  - ID: 0b4ac90d
-- Line 185: mypy:<type>, <type> - error: Need type annotation for "engines" (hint: "engines: dict[<type>, <type>]
-  - Category: type
-  - ID: 6bdef032
-- Line 186: mypy:var-annotated - error: Need type annotation for "engines_by_type" [var-annotated]
-  - Category: type
-  - ID: 4442143a
-- Line 203: mypy:<type> - error: Need type annotation for "processing_history" (hint: "processing_history:
-  - Category: type
-  - ID: f2dcd5a0
-- Line 206: mypy:<type>, <type> - error: Need type annotation for "metadata" (hint: "metadata: dict[<type>, <type>
-  - Category: type
-  - ID: 0fcbbdc1
-- Line 211: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: cf6e84d6
-- Line 211: mypy:error - note: Use "-> None" if function does not return a value
-  - Category: type
-  - ID: 8cc6b9d8
-- Line 249: mypy:Any - error: Item "None" of "type[Any] | None" has no attribute "**name**" [union-att
-  - Category: type
-  - ID: 5bcca074
-- Line 289: mypy:union-attr - error: Item "None" of "Any | None" has no attribute "**name**" [union-attr]
-  - Category: type
-  - ID: 1790fde4
-- Line 367: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.prebuilt.llm_state": module is inst
-  - Category: type
-  - ID: af5b7577
-- Line 374: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.prebuilt.tool_state": module is ins
-  - Category: type
-  - ID: 5d175d3b
-- Line 380: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.prebuilt.messages.messages_with_tok
-  - Category: type
-  - ID: af1e522c
-- Line 470: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.base": module is installed, but mis
-  - Category: type
-  - ID: 53e38d93
-- Line 492: mypy:valid-type - error: Variable "engine_union_type" is not valid as a type [valid-type]
-  - Category: type
-  - ID: 41be84e6
-- Line 492: mypy:error - note: See https://mypy.readthedocs.io/en/stable/common_issues.html#variables-vs-
-  - Category: type
-  - ID: d3e1d3f9
-- Line 654: mypy:unreachable - error: Statement is unreachable [unreachable]
-  - Category: type
-  - ID: bf6d4b65
-- Line 655: mypy:unreachable - error: Right operand of "and" is never evaluated [unreachable]
-  - Category: type
-  - ID: 353c84f7
-- Line 658: mypy:unreachable - error: Statement is unreachable [unreachable]
-  - Category: type
-  - ID: 20fbd458
-- Line 718: mypy:attr-defined - error: "type" has no attribute "**args**"; maybe "**flags**"? [attr-defined]
-  - Category: type
-  - ID: 20923567
-- Line 723: mypy:attr-defined - error: "type" has no attribute "**args**"; maybe "**flags**"? [attr-defined]
-  - Category: type
-  - ID: 1cbbe890
-- Line 791: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 6a899231
-- Line 801: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.field_registry": module is installe
-  - Category: type
-  - ID: a0af9447
-- Line 935: mypy:<type> - error: Need type annotation for "shared_fields" (hint: "shared_fields: list[<typ
-  - Category: type
-  - ID: 2cb77e2b
-- Line 936: mypy:<type>, <type> - error: Need type annotation for "reducers" (hint: "reducers: dict[<type>, <type>
-  - Category: type
-  - ID: 52715420
-- Line 937: mypy:<type>, <type> - error: Need type annotation for "engine_io" (hint: "engine_io: dict[<type>, <typ
-  - Category: type
-  - ID: 91b18e46
-- Line 1016: mypy:unreachable - error: Statement is unreachable [unreachable]
-  - Category: type
-  - ID: c1479f51
-- Line 1070: mypy:[ - error: Argument "default_factory" to "add_field" of "SchemaComposer" has incompa
-  - Category: type
-  - ID: b78c90f0
-- Line 1188: mypy:attr-defined - error: "BaseModel" has no attribute "**name**"; maybe "**repr_name**"? [attr-de
-  - Category: type
-  - ID: fe3b5356
-- Line 1205: mypy:attr-defined - error: "BaseModel" has no attribute "**name**"; maybe "**repr_name**"? [attr-de
-  - Category: type
-  - ID: 67e6df7f
-- Line 1221: mypy:Any, Any - error: Subclass of "BaseModel" and "dict[Any, Any]" cannot exist: would have inc
-  - Category: type
-  - ID: 703e83ed
-- Line 1225: mypy:BaseModel - error: Argument 1 to "add_fields_from_model" of "SchemaComposer" has incompatibl
-  - Category: type
-  - ID: 34651951
-- Line 1255: mypy:Any, Any - error: Subclass of "BaseModel" and "dict[Any, Any]" cannot exist: would have inc
-  - Category: type
-  - ID: d453d1c1
-- Line 1261: mypy:BaseModel - error: Argument 1 to "add_fields_from_model" of "SchemaComposer" has incompatibl
-  - Category: type
-  - ID: 09446e68
-- Line 1295: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.field_utils": module is installed,
-  - Category: type
-  - ID: 3b8d0e55
-- Line 1323: mypy:valid-type - error: Variable "model" is not valid as a type [valid-type]
-  - Category: type
-  - ID: 1bc29bff
-- Line 1323: mypy:error - note: See https://mypy.readthedocs.io/en/stable/common_issues.html#variables-vs-
-  - Category: type
-  - ID: 51f7ac43
-- Line 1327: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
-  - Category: type
-  - ID: 35d67557
-- Line 1336: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
-  - Category: type
-  - ID: 876d597d
-- Line 1682: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
-  - Category: type
-  - ID: fd29c133
-- Line 1714: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
-  - Category: type
-  - ID: 19f69f7b
-- Line 1911: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
-  - Category: type
-  - ID: 6781c431
-- Line 1977: mypy:Any - error: Incompatible types in assignment (expression has type "<typing special fo
-  - Category: type
-  - ID: 750817c3
-- Line 2067: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 1ec984c7
-- Line 2205: mypy:Any - error: Argument 1 to "issubclass" has incompatible type "type[Any] | None"; expe
-  - Category: type
-  - ID: 1ff79971
-- Line 2213: mypy:Any - error: Item "None" of "type[Any] | None" has no attribute "**name**" [union-att
-  - Category: type
-  - ID: c3f3a985
-- Line 2236: mypy:Any - error: No overload variant of "create_model" matches argument types "str", "type
-  - Category: type
-  - ID: a2b4f184
-- Line 2236: mypy:error - note: Possible overload variants:
-  - Category: type
-  - ID: 84d97d91
-- Line 2236: mypy:str, Callable[..., Any - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
-  - Category: type
-  - ID: 4fa85dc0
-- Line 2236: mypy:ModelT: BaseModel - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict
-  - Category: type
-  - ID: f6e8fe9c
-- Line 2240: mypy:Any - error: Argument 1 to "issubclass" has incompatible type "type[Any] | None"; expe
-  - Category: type
-  - ID: bff38b72
-- Line 2316: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 8aae479c
-- Line 2345: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 70640ed4
-- Line 2397: mypy:misc - error: "model_post_init" undefined in superclass [misc]
-  - Category: type
-  - ID: 41a8cc6b
-- Line 2563: mypy:Any - error: Returning Any from function declared to return "type[Any]" [no-any-retur
-  - Category: type
-  - ID: cfa2ec27
-- Line 3099: mypy:BaseModel - error: Returning Any from function declared to return "type[BaseModel]" [no-any
-  - Category: type
-  - ID: d33ff078
-- Line 3099: mypy:str, tuple[Any, Any - error: No overload variant of "create_model" matches argument types "str", "dict
-  - Category: type
-  - ID: 723b5918
-- Line 3099: mypy:error - note: Possible overload variants:
-  - Category: type
-  - ID: 4ebc1250
-- Line 3099: mypy:str, Callable[..., Any - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
-  - Category: type
-  - ID: 6088b40d
-- Line 3099: mypy:ModelT: BaseModel - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict
-  - Category: type
-  - ID: bbe0fe31
-- Line 3180: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
-  - Category: type
-  - ID: dc1f25c0
-- Line 3223: mypy:BaseModel - error: Returning Any from function declared to return "type[BaseModel]" [no-any
-  - Category: type
-  - ID: dff8c363
-- Line 3223: mypy:str, tuple[Any, Any - error: No overload variant of "create_model" matches argument types "str", "dict
-  - Category: type
-  - ID: 0a60e00f
-- Line 3223: mypy:error - note: Possible overload variants:
-  - Category: type
-  - ID: 8cdbc0d3
-- Line 3223: mypy:str, Callable[..., Any - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
-  - Category: type
-  - ID: 66769d2c
-- Line 3223: mypy:ModelT: BaseModel - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict
-  - Category: type
-  - ID: 84dbe6e7
-- Line 3263: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 5dae436b
-- Line 3335: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 3ecedff4
-- Line 3372: mypy:Any, type[BaseModel - error: No overload variant of "create_model" matches argument types "str", "tupl
-  - Category: type
-  - ID: a3750de0
-- Line 3372: mypy:error - note: Possible overload variants:
-  - Category: type
-  - ID: f42147e8
-- Line 3372: mypy:str, Callable[..., Any - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
-  - Category: type
-  - ID: 6c2df585
-- Line 3372: mypy:ModelT: BaseModel - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict
-  - Category: type
-  - ID: 80c8b455
-- Line 3415: mypy:Any - error: Returning Any from function declared to return "type[Any]" [no-any-retur
-  - Category: type
-  - ID: f637b87a
-- Line 3450: mypy:no-redef - error: Name "extract_tool_schemas" already defined on line 1609 [no-redef]
-  - Category: type
-  - ID: 9fbf5e35
-- Line 3494: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
-  - Category: type
-  - ID: 9cb9f901
-- Line 3525: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
-  - Category: type
-  - ID: 34bfdff3
-- Line 3531: mypy:BaseModel - error: "type[BaseModel]" has no attribute "tool_name" [attr-defined]
-  - Category: type
-  - ID: e365369c
-
-## packages/haive-core/src/haive/core/graph/NodeFactory.py (113 errors)
-
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 0: mypy:error -
-  - Category: type
-  - ID: d4534e42
-- Line 14: mypy:import-untyped - error: Skipping analyzing "haive.core.config.runnable": module is installed, but
-  - Category: type
-  - ID: 202e2ac1
-- Line 15: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.aug_llm": module is installed, but
-  - Category: type
-  - ID: df584cf9
-- Line 16: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.base": module is installed, but mis
-  - Category: type
-  - ID: 8237184e
-- Line 23: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.embeddings": module is installed, b
-  - Category: type
-  - ID: d921ec45
-- Line 24: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.retriever": module is installed, bu
-  - Category: type
-  - ID: d2f2c9c8
-- Line 25: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.vectorstore.vectorstore": module is
-  - Category: type
-  - ID: b56c6fe4
-- Line 26: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.graph_pattern_registry": module is i
-  - Category: type
-  - ID: 90d57217
-- Line 176: mypy:no-redef - error: Name "create_node_function" already defined on line 47 [no-redef]
-  - Category: type
-  - ID: f6776952
-- Line 305: mypy:no-redef - error: Name "create_node_function" already defined on line 47 [no-redef]
-  - Category: type
-  - ID: 12023573
-- Line 318: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.base.registry": module is installed
-  - Category: type
-  - ID: 64017ec5
-- Line 453: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 987c733c
-- Line 482: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: 7456fb0a
-- Line 484: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
-  - Category: type
-  - ID: 2c8a3089
-- Line 484: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(
-  - Category: type
-  - ID: 75e4a873
-- Line 500: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: e80a3034
-- Line 509: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: ebb75010
-- Line 531: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 65c9e447
-- Line 539: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: 9e898836
-- Line 585: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: ba7d054b
-- Line 590: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: ec43bbe7
-- Line 635: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 239d0feb
-- Line 643: mypy:str, str - error: Argument 2 to "\_extract_input" of "NodeFactory" has incompatible type "di
-  - Category: type
-  - ID: aa852d13
-- Line 654: mypy:str, str - error: Argument 3 to "\_process_result" of "NodeFactory" has incompatible type "d
-  - Category: type
-  - ID: 1250c23a
-- Line 657: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: fc2a3c75
-- Line 659: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
-  - Category: type
-  - ID: d12f8787
-- Line 659: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(
-  - Category: type
-  - ID: ff8cc311
-- Line 683: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 7e358c36
-- Line 691: mypy:str, str - error: Argument 2 to "\_extract_input" of "NodeFactory" has incompatible type "di
-  - Category: type
-  - ID: 0d686c25
-- Line 706: mypy:str, str - error: Argument 3 to "\_process_result" of "NodeFactory" has incompatible type "d
-  - Category: type
-  - ID: b92ed48f
-- Line 709: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: 27655f52
-- Line 711: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
-  - Category: type
-  - ID: d26b7c27
-- Line 711: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(
-  - Category: type
-  - ID: 4a3200a5
-- Line 735: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 84d96abc
-- Line 743: mypy:str, str - error: Argument 2 to "\_extract_input" of "NodeFactory" has incompatible type "di
-  - Category: type
-  - ID: c89828d9
-- Line 774: mypy:str, str - error: Argument 3 to "\_process_vectorstore_result" of "NodeFactory" has incompat
-  - Category: type
-  - ID: 4bf5b66c
-- Line 778: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: 568a0032
-- Line 780: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
-  - Category: type
-  - ID: 4005438c
-- Line 780: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(
-  - Category: type
-  - ID: f0f7ecd6
-- Line 804: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 793375a4
-- Line 812: mypy:str, str - error: Argument 2 to "\_extract_input" of "NodeFactory" has incompatible type "di
-  - Category: type
-  - ID: f2ad99bd
-- Line 843: mypy:str, str - error: Argument 3 to "\_process_vectorstore_result" of "NodeFactory" has incompat
-  - Category: type
-  - ID: 8007c4bd
-- Line 847: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: e302be7e
-- Line 849: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
-  - Category: type
-  - ID: b43a96a8
-- Line 849: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(
-  - Category: type
-  - ID: 8295d2aa
-- Line 873: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 0997ef94
-- Line 881: mypy:str, str - error: Argument 2 to "\_extract_input" of "NodeFactory" has incompatible type "di
-  - Category: type
-  - ID: 2e3759c4
-- Line 892: mypy:str, str - error: Argument 3 to "\_process_result" of "NodeFactory" has incompatible type "d
-  - Category: type
-  - ID: b2d15b40
-- Line 895: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: 8ee2ac2a
-- Line 897: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
-  - Category: type
-  - ID: 95554413
-- Line 897: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(
-  - Category: type
-  - ID: ec1947b2
-- Line 927: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: bfd2e9b3
-- Line 935: mypy:str, str - error: Argument 2 to "\_extract_input" of "NodeFactory" has incompatible type "di
-  - Category: type
-  - ID: 65630039
-- Line 949: mypy:str, str - error: Argument 3 to "\_process_result" of "NodeFactory" has incompatible type "d
-  - Category: type
-  - ID: 88930fd1
-- Line 952: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: 705ac64d
-- Line 954: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
-  - Category: type
-  - ID: d1b54577
-- Line 954: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(
-  - Category: type
-  - ID: 1434d0ac
-- Line 978: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: ad580af6
-- Line 986: mypy:str, str - error: Argument 2 to "\_extract_input" of "NodeFactory" has incompatible type "di
-  - Category: type
-  - ID: 6c765622
-- Line 1032: mypy:str, str - error: Argument 3 to "\_process_embeddings_result" of "NodeFactory" has incompati
-  - Category: type
-  - ID: 550fa505
-- Line 1035: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: 6c5377b9
-- Line 1037: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
-  - Category: type
-  - ID: 144739c8
-- Line 1037: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(
-  - Category: type
-  - ID: 50d025de
-- Line 1040: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
-  - Category: type
-  - ID: af92dd30
-- Line 1093: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 067a7cee
-- Line 1101: mypy:str, str - error: Argument 2 to "\_extract_input" of "NodeFactory" has incompatible type "di
-  - Category: type
-  - ID: a9109e83
-- Line 1120: mypy:str, str - error: Argument 3 to "\_process_result" of "NodeFactory" has incompatible type "d
-  - Category: type
-  - ID: 34a0c26e
-- Line 1123: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: b9d3ec7b
-- Line 1125: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
-  - Category: type
-  - ID: 723890dc
-- Line 1125: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(
-  - Category: type
-  - ID: 74e8720f
-- Line 1128: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: abdbc735
-- Line 1181: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: b1e37afe
-- Line 1268: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 6a9e6dd5
-- Line 1320: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 9692b2a3
-- Line 1354: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 03b6c9bc
-- Line 1380: mypy:Any - error: Incompatible types in assignment (expression has type "list[Any]", target
-  - Category: type
-  - ID: 53597ce8
-- Line 1382: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: e5b45b9e
-- Line 1409: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 68211f29
-- Line 1419: mypy:unreachable - error: Statement is unreachable [unreachable]
-  - Category: type
-  - ID: 249a90a6
-- Line 1423: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: e589dfb3
-- Line 1429: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 48584ab9
-- Line 1436: mypy:unreachable - error: Statement is unreachable [unreachable]
-  - Category: type
-  - ID: 84361479
-- Line 1440: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
-  - Category: type
-  - ID: b2ef73e0
-- Line 1469: mypy:no-any-return - error: Returning Any from function declared to return "RunnableConfig | None" [
-  - Category: type
-  - ID: 97396182
-
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/dynamic_agent_discovery_supervisor.py (113 errors)
-
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 75aa5acf
 - Line 59: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 7317cca6
@@ -21206,6 +20946,690 @@
 - Line 408: ruff:W292 - No newline at end of file
   - Category: lint
   - ID: a81b7315
+
+## packages/haive-core/src/haive/core/schema/schema_composer.py (113 errors)
+
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: ece2f21f
+- Line 85: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.field_definition": module is instal
+  - Category: type
+  - ID: 85f01f23
+- Line 86: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.state_schema": module is installed,
+  - Category: type
+  - ID: 6a981897
+- Line 89: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.schema_manager": module is installe
+  - Category: type
+  - ID: 7f92d05a
+- Line 164: mypy:<type>, <type> - error: Need type annotation for "fields" (hint: "fields: dict[<type>, <type>] = 
+  - Category: type
+  - ID: ba77ab68
+- Line 165: mypy:<type> - error: Need type annotation for "shared_fields" (hint: "shared_fields: set[<type
+  - Category: type
+  - ID: 0f1369ab
+- Line 166: mypy:var-annotated - error: Need type annotation for "field_sources"  [var-annotated]
+  - Category: type
+  - ID: 4b4fb5c3
+- Line 169: mypy:var-annotated - error: Need type annotation for "input_fields"  [var-annotated]
+  - Category: type
+  - ID: 4976752c
+- Line 170: mypy:var-annotated - error: Need type annotation for "output_fields"  [var-annotated]
+  - Category: type
+  - ID: f1b7a9a1
+- Line 171: mypy:<type>, <type> - error: Need type annotation for "engine_io_mappings" (hint: "engine_io_mappings:
+  - Category: type
+  - ID: 9d4fcb9d
+- Line 174: mypy:<type>, <type> - error: Need type annotation for "structured_models" (hint: "structured_models: d
+  - Category: type
+  - ID: e5ebfa16
+- Line 175: mypy:var-annotated - error: Need type annotation for "structured_model_fields"  [var-annotated]
+  - Category: type
+  - ID: 980b9cce
+- Line 178: mypy:<type>, <type> - error: Need type annotation for "nested_schemas" (hint: "nested_schemas: dict[<t
+  - Category: type
+  - ID: 0b4ac90d
+- Line 185: mypy:<type>, <type> - error: Need type annotation for "engines" (hint: "engines: dict[<type>, <type>] 
+  - Category: type
+  - ID: 6bdef032
+- Line 186: mypy:var-annotated - error: Need type annotation for "engines_by_type"  [var-annotated]
+  - Category: type
+  - ID: 4442143a
+- Line 203: mypy:<type> - error: Need type annotation for "processing_history" (hint: "processing_history:
+  - Category: type
+  - ID: f2dcd5a0
+- Line 206: mypy:<type>, <type> - error: Need type annotation for "metadata" (hint: "metadata: dict[<type>, <type>
+  - Category: type
+  - ID: 0fcbbdc1
+- Line 211: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: cf6e84d6
+- Line 211: mypy:error - note: Use "-> None" if function does not return a value
+  - Category: type
+  - ID: 8cc6b9d8
+- Line 249: mypy:Any - error: Item "None" of "type[Any] | None" has no attribute "__name__"  [union-att
+  - Category: type
+  - ID: 5bcca074
+- Line 289: mypy:union-attr - error: Item "None" of "Any | None" has no attribute "__name__"  [union-attr]
+  - Category: type
+  - ID: 1790fde4
+- Line 367: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.prebuilt.llm_state": module is inst
+  - Category: type
+  - ID: af5b7577
+- Line 374: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.prebuilt.tool_state": module is ins
+  - Category: type
+  - ID: 5d175d3b
+- Line 380: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.prebuilt.messages.messages_with_tok
+  - Category: type
+  - ID: af1e522c
+- Line 470: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.base": module is installed, but mis
+  - Category: type
+  - ID: 53e38d93
+- Line 492: mypy:valid-type - error: Variable "engine_union_type" is not valid as a type  [valid-type]
+  - Category: type
+  - ID: 41be84e6
+- Line 492: mypy:error - note: See https://mypy.readthedocs.io/en/stable/common_issues.html#variables-vs-
+  - Category: type
+  - ID: d3e1d3f9
+- Line 654: mypy:unreachable - error: Statement is unreachable  [unreachable]
+  - Category: type
+  - ID: bf6d4b65
+- Line 655: mypy:unreachable - error: Right operand of "and" is never evaluated  [unreachable]
+  - Category: type
+  - ID: 353c84f7
+- Line 658: mypy:unreachable - error: Statement is unreachable  [unreachable]
+  - Category: type
+  - ID: 20fbd458
+- Line 718: mypy:attr-defined - error: "type" has no attribute "__args__"; maybe "__flags__"?  [attr-defined]
+  - Category: type
+  - ID: 20923567
+- Line 723: mypy:attr-defined - error: "type" has no attribute "__args__"; maybe "__flags__"?  [attr-defined]
+  - Category: type
+  - ID: 1cbbe890
+- Line 791: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 6a899231
+- Line 801: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.field_registry": module is installe
+  - Category: type
+  - ID: a0af9447
+- Line 935: mypy:<type> - error: Need type annotation for "shared_fields" (hint: "shared_fields: list[<typ
+  - Category: type
+  - ID: 2cb77e2b
+- Line 936: mypy:<type>, <type> - error: Need type annotation for "reducers" (hint: "reducers: dict[<type>, <type>
+  - Category: type
+  - ID: 52715420
+- Line 937: mypy:<type>, <type> - error: Need type annotation for "engine_io" (hint: "engine_io: dict[<type>, <typ
+  - Category: type
+  - ID: 91b18e46
+- Line 1016: mypy:unreachable - error: Statement is unreachable  [unreachable]
+  - Category: type
+  - ID: c1479f51
+- Line 1070: mypy:[ - error: Argument "default_factory" to "add_field" of "SchemaComposer" has incompa
+  - Category: type
+  - ID: b78c90f0
+- Line 1188: mypy:attr-defined - error: "BaseModel" has no attribute "__name__"; maybe "__repr_name__"?  [attr-de
+  - Category: type
+  - ID: fe3b5356
+- Line 1205: mypy:attr-defined - error: "BaseModel" has no attribute "__name__"; maybe "__repr_name__"?  [attr-de
+  - Category: type
+  - ID: 67e6df7f
+- Line 1221: mypy:Any, Any - error: Subclass of "BaseModel" and "dict[Any, Any]" cannot exist: would have inc
+  - Category: type
+  - ID: 703e83ed
+- Line 1225: mypy:BaseModel - error: Argument 1 to "add_fields_from_model" of "SchemaComposer" has incompatibl
+  - Category: type
+  - ID: 34651951
+- Line 1255: mypy:Any, Any - error: Subclass of "BaseModel" and "dict[Any, Any]" cannot exist: would have inc
+  - Category: type
+  - ID: d453d1c1
+- Line 1261: mypy:BaseModel - error: Argument 1 to "add_fields_from_model" of "SchemaComposer" has incompatibl
+  - Category: type
+  - ID: 09446e68
+- Line 1295: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.field_utils": module is installed, 
+  - Category: type
+  - ID: 3b8d0e55
+- Line 1323: mypy:valid-type - error: Variable "model" is not valid as a type  [valid-type]
+  - Category: type
+  - ID: 1bc29bff
+- Line 1323: mypy:error - note: See https://mypy.readthedocs.io/en/stable/common_issues.html#variables-vs-
+  - Category: type
+  - ID: 51f7ac43
+- Line 1327: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
+  - Category: type
+  - ID: 35d67557
+- Line 1336: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
+  - Category: type
+  - ID: 876d597d
+- Line 1682: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
+  - Category: type
+  - ID: fd29c133
+- Line 1714: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
+  - Category: type
+  - ID: 19f69f7b
+- Line 1911: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
+  - Category: type
+  - ID: 6781c431
+- Line 1977: mypy:Any - error: Incompatible types in assignment (expression has type "<typing special fo
+  - Category: type
+  - ID: 750817c3
+- Line 2067: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 1ec984c7
+- Line 2205: mypy:Any - error: Argument 1 to "issubclass" has incompatible type "type[Any] | None"; expe
+  - Category: type
+  - ID: 1ff79971
+- Line 2213: mypy:Any - error: Item "None" of "type[Any] | None" has no attribute "__name__"  [union-att
+  - Category: type
+  - ID: c3f3a985
+- Line 2236: mypy:Any - error: No overload variant of "create_model" matches argument types "str", "type
+  - Category: type
+  - ID: a2b4f184
+- Line 2236: mypy:error - note: Possible overload variants:
+  - Category: type
+  - ID: 84d97d91
+- Line 2236: mypy:str, Callable[..., Any - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
+  - Category: type
+  - ID: 4fa85dc0
+- Line 2236: mypy:ModelT: BaseModel - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict
+  - Category: type
+  - ID: f6e8fe9c
+- Line 2240: mypy:Any - error: Argument 1 to "issubclass" has incompatible type "type[Any] | None"; expe
+  - Category: type
+  - ID: bff38b72
+- Line 2316: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 8aae479c
+- Line 2345: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 70640ed4
+- Line 2397: mypy:misc - error: "model_post_init" undefined in superclass  [misc]
+  - Category: type
+  - ID: 41a8cc6b
+- Line 2563: mypy:Any - error: Returning Any from function declared to return "type[Any]"  [no-any-retur
+  - Category: type
+  - ID: cfa2ec27
+- Line 3099: mypy:BaseModel - error: Returning Any from function declared to return "type[BaseModel]"  [no-any
+  - Category: type
+  - ID: d33ff078
+- Line 3099: mypy:str, tuple[Any, Any - error: No overload variant of "create_model" matches argument types "str", "dict
+  - Category: type
+  - ID: 723b5918
+- Line 3099: mypy:error - note: Possible overload variants:
+  - Category: type
+  - ID: 4ebc1250
+- Line 3099: mypy:str, Callable[..., Any - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
+  - Category: type
+  - ID: 6088b40d
+- Line 3099: mypy:ModelT: BaseModel - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict
+  - Category: type
+  - ID: bbe0fe31
+- Line 3180: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
+  - Category: type
+  - ID: dc1f25c0
+- Line 3223: mypy:BaseModel - error: Returning Any from function declared to return "type[BaseModel]"  [no-any
+  - Category: type
+  - ID: dff8c363
+- Line 3223: mypy:str, tuple[Any, Any - error: No overload variant of "create_model" matches argument types "str", "dict
+  - Category: type
+  - ID: 0a60e00f
+- Line 3223: mypy:error - note: Possible overload variants:
+  - Category: type
+  - ID: 8cdbc0d3
+- Line 3223: mypy:str, Callable[..., Any - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
+  - Category: type
+  - ID: 66769d2c
+- Line 3223: mypy:ModelT: BaseModel - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict
+  - Category: type
+  - ID: 84dbe6e7
+- Line 3263: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 5dae436b
+- Line 3335: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 3ecedff4
+- Line 3372: mypy:Any, type[BaseModel - error: No overload variant of "create_model" matches argument types "str", "tupl
+  - Category: type
+  - ID: a3750de0
+- Line 3372: mypy:error - note: Possible overload variants:
+  - Category: type
+  - ID: f42147e8
+- Line 3372: mypy:str, Callable[..., Any - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
+  - Category: type
+  - ID: 6c2df585
+- Line 3372: mypy:ModelT: BaseModel - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict
+  - Category: type
+  - ID: 80c8b455
+- Line 3415: mypy:Any - error: Returning Any from function declared to return "type[Any]"  [no-any-retur
+  - Category: type
+  - ID: f637b87a
+- Line 3450: mypy:no-redef - error: Name "extract_tool_schemas" already defined on line 1609  [no-redef]
+  - Category: type
+  - ID: 9fbf5e35
+- Line 3494: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
+  - Category: type
+  - ID: 9cb9f901
+- Line 3525: mypy:arg-type - error: Argument "field_type" to "add_field" of "SchemaComposer" has incompatible
+  - Category: type
+  - ID: 34bfdff3
+- Line 3531: mypy:BaseModel - error: "type[BaseModel]" has no attribute "tool_name"  [attr-defined]
+  - Category: type
+  - ID: e365369c
+
+## packages/haive-core/src/haive/core/graph/NodeFactory.py (113 errors)
+
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 0: mypy:error - 
+  - Category: type
+  - ID: d4534e42
+- Line 14: mypy:import-untyped - error: Skipping analyzing "haive.core.config.runnable": module is installed, but
+  - Category: type
+  - ID: 202e2ac1
+- Line 15: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.aug_llm": module is installed, but 
+  - Category: type
+  - ID: df584cf9
+- Line 16: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.base": module is installed, but mis
+  - Category: type
+  - ID: 8237184e
+- Line 23: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.embeddings": module is installed, b
+  - Category: type
+  - ID: d921ec45
+- Line 24: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.retriever": module is installed, bu
+  - Category: type
+  - ID: d2f2c9c8
+- Line 25: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.vectorstore.vectorstore": module is
+  - Category: type
+  - ID: b56c6fe4
+- Line 26: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.graph_pattern_registry": module is i
+  - Category: type
+  - ID: 90d57217
+- Line 176: mypy:no-redef - error: Name "create_node_function" already defined on line 47  [no-redef]
+  - Category: type
+  - ID: f6776952
+- Line 305: mypy:no-redef - error: Name "create_node_function" already defined on line 47  [no-redef]
+  - Category: type
+  - ID: 12023573
+- Line 318: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.base.registry": module is installed
+  - Category: type
+  - ID: 64017ec5
+- Line 453: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 987c733c
+- Line 482: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: 7456fb0a
+- Line 484: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
+  - Category: type
+  - ID: 2c8a3089
+- Line 484: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(
+  - Category: type
+  - ID: 75e4a873
+- Line 500: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: e80a3034
+- Line 509: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: ebb75010
+- Line 531: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 65c9e447
+- Line 539: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: 9e898836
+- Line 585: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: ba7d054b
+- Line 590: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: ec43bbe7
+- Line 635: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 239d0feb
+- Line 643: mypy:str, str - error: Argument 2 to "_extract_input" of "NodeFactory" has incompatible type "di
+  - Category: type
+  - ID: aa852d13
+- Line 654: mypy:str, str - error: Argument 3 to "_process_result" of "NodeFactory" has incompatible type "d
+  - Category: type
+  - ID: 1250c23a
+- Line 657: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: fc2a3c75
+- Line 659: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
+  - Category: type
+  - ID: d12f8787
+- Line 659: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(
+  - Category: type
+  - ID: ff8cc311
+- Line 683: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 7e358c36
+- Line 691: mypy:str, str - error: Argument 2 to "_extract_input" of "NodeFactory" has incompatible type "di
+  - Category: type
+  - ID: 0d686c25
+- Line 706: mypy:str, str - error: Argument 3 to "_process_result" of "NodeFactory" has incompatible type "d
+  - Category: type
+  - ID: b92ed48f
+- Line 709: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: 27655f52
+- Line 711: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
+  - Category: type
+  - ID: d26b7c27
+- Line 711: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(
+  - Category: type
+  - ID: 4a3200a5
+- Line 735: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 84d96abc
+- Line 743: mypy:str, str - error: Argument 2 to "_extract_input" of "NodeFactory" has incompatible type "di
+  - Category: type
+  - ID: c89828d9
+- Line 774: mypy:str, str - error: Argument 3 to "_process_vectorstore_result" of "NodeFactory" has incompat
+  - Category: type
+  - ID: 4bf5b66c
+- Line 778: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: 568a0032
+- Line 780: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
+  - Category: type
+  - ID: 4005438c
+- Line 780: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(
+  - Category: type
+  - ID: f0f7ecd6
+- Line 804: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 793375a4
+- Line 812: mypy:str, str - error: Argument 2 to "_extract_input" of "NodeFactory" has incompatible type "di
+  - Category: type
+  - ID: f2ad99bd
+- Line 843: mypy:str, str - error: Argument 3 to "_process_vectorstore_result" of "NodeFactory" has incompat
+  - Category: type
+  - ID: 8007c4bd
+- Line 847: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: e302be7e
+- Line 849: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
+  - Category: type
+  - ID: b43a96a8
+- Line 849: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(
+  - Category: type
+  - ID: 8295d2aa
+- Line 873: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 0997ef94
+- Line 881: mypy:str, str - error: Argument 2 to "_extract_input" of "NodeFactory" has incompatible type "di
+  - Category: type
+  - ID: 2e3759c4
+- Line 892: mypy:str, str - error: Argument 3 to "_process_result" of "NodeFactory" has incompatible type "d
+  - Category: type
+  - ID: b2d15b40
+- Line 895: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: 8ee2ac2a
+- Line 897: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
+  - Category: type
+  - ID: 95554413
+- Line 897: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(
+  - Category: type
+  - ID: ec1947b2
+- Line 927: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: bfd2e9b3
+- Line 935: mypy:str, str - error: Argument 2 to "_extract_input" of "NodeFactory" has incompatible type "di
+  - Category: type
+  - ID: 65630039
+- Line 949: mypy:str, str - error: Argument 3 to "_process_result" of "NodeFactory" has incompatible type "d
+  - Category: type
+  - ID: 88930fd1
+- Line 952: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: 705ac64d
+- Line 954: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
+  - Category: type
+  - ID: d1b54577
+- Line 954: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(
+  - Category: type
+  - ID: 1434d0ac
+- Line 978: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: ad580af6
+- Line 986: mypy:str, str - error: Argument 2 to "_extract_input" of "NodeFactory" has incompatible type "di
+  - Category: type
+  - ID: 6c765622
+- Line 1032: mypy:str, str - error: Argument 3 to "_process_embeddings_result" of "NodeFactory" has incompati
+  - Category: type
+  - ID: 550fa505
+- Line 1035: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: 6c5377b9
+- Line 1037: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
+  - Category: type
+  - ID: 144739c8
+- Line 1037: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(
+  - Category: type
+  - ID: 50d025de
+- Line 1040: mypy:no-untyped-def - error: Function is missing a type annotation  [no-untyped-def]
+  - Category: type
+  - ID: af92dd30
+- Line 1093: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 067a7cee
+- Line 1101: mypy:str, str - error: Argument 2 to "_extract_input" of "NodeFactory" has incompatible type "di
+  - Category: type
+  - ID: a9109e83
+- Line 1120: mypy:str, str - error: Argument 3 to "_process_result" of "NodeFactory" has incompatible type "d
+  - Category: type
+  - ID: 34a0c26e
+- Line 1123: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: b9d3ec7b
+- Line 1125: mypy:[Any, RunnableConfig | None - error: Incompatible return value type (got "Callable[[Any, RunnableConfig | None
+  - Category: type
+  - ID: 723890dc
+- Line 1125: mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(
+  - Category: type
+  - ID: 74e8720f
+- Line 1128: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: abdbc735
+- Line 1181: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: b1e37afe
+- Line 1268: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 6a9e6dd5
+- Line 1320: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 9692b2a3
+- Line 1354: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
+  - Category: type
+  - ID: 03b6c9bc
+- Line 1380: mypy:Any - error: Incompatible types in assignment (expression has type "list[Any]", target
+  - Category: type
+  - ID: 53597ce8
+- Line 1382: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: e5b45b9e
+- Line 1409: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 68211f29
+- Line 1419: mypy:unreachable - error: Statement is unreachable  [unreachable]
+  - Category: type
+  - ID: 249a90a6
+- Line 1423: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: e589dfb3
+- Line 1429: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
+  - Category: type
+  - ID: 48584ab9
+- Line 1436: mypy:unreachable - error: Statement is unreachable  [unreachable]
+  - Category: type
+  - ID: 84361479
+- Line 1440: mypy:Send | str - error: Argument "goto" to "Command" has incompatible type "str | None"; expected
+  - Category: type
+  - ID: b2ef73e0
+- Line 1469: mypy:no-any-return - error: Returning Any from function declared to return "RunnableConfig | None"  [
+  - Category: type
+  - ID: 97396182
 
 ## /home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/schema/prebuilt/meta_state.py (113 errors)
 
@@ -21551,6 +21975,9 @@
 
 ## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/enhanced_clean_multi_agent.py (109 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 33281321
 - Line 12: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 72f88178
@@ -21584,9 +22011,6 @@
 - Line 40: ruff:UP006 - Use `list` instead of `List` for type annotation
   - Category: lint
   - ID: d7cc290d
-- Line 43: PydanticSchemaGenerationError - Unable to generate pydantic-core schema for <class 'haive.agents.simple.enhanced
-  - Category: import
-  - ID: 184e32fa
 - Line 45: ruff:W293 - Blank line contains whitespace
   - Category: lint
   - ID: 540cb5a1
@@ -21881,6 +22305,9 @@
 
 ## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/smart_parsing_example.py (107 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 1c6a8cee
 - Line 7: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 51e9468a
@@ -21893,9 +22320,6 @@
 - Line 17: ruff:F401 - `haive.agents.base.smart_output_parsing.detect_content_type` imported but unused
   - Category: lint
   - ID: 80ac55c9
-- Line 21: NameError - Fields must not use names with leading underscores; e.g., use 'event_emitter' in
-  - Category: import
-  - ID: 4fa74fbe
 - Line 23: ruff:F401 - `haive.agents.planning.base.models.BasePlan` imported but unused
   - Category: lint
   - ID: f4ae9da2
@@ -22529,9 +22953,9 @@
 
 ## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/archive/dynamic_tool_discovery_supervisor.py (104 errors)
 
-- Line 0: ImportError - cannot import name 'build_graph' from 'haive.agents.supervisor.simple_supervisor
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
   - Category: import
-  - ID: f9b5e2b8
+  - ID: e0097266
 - Line 76: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: d3badde4
@@ -22844,6 +23268,9 @@
 
 ## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/rag/simple/sequential_agent.py (102 errors)
 
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: e947a97f
 - Line 55: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 26469e40
@@ -22865,9 +23292,6 @@
 - Line 82: ruff:Q000 - Single quotes found but double quotes preferred
   - Category: lint
   - ID: eef5a6f1
-- Line 84: NameError - Fields must not use names with leading underscores; e.g., use 'retriever_agent'
-  - Category: import
-  - ID: 2c28d2f0
 - Line 130: ruff:Q000 - Single quotes found but double quotes preferred
   - Category: lint
   - ID: 63418695
@@ -22991,7 +23415,7 @@
 - Line 244: ruff:TRY401 - Redundant exception object included in `logging.exception` call
   - Category: lint
   - ID: a7365dec
-- Line 245: ruff:B904 - Within an `except` clause, raise exceptions with `raise ... from err` or `raise
+- Line 245: ruff:B904 - Within an `except` clause, raise exceptions with `raise ... from err` or `raise 
   - Category: lint
   - ID: 08c6e12f
 - Line 245: ruff:Q000 - Single quotes found but double quotes preferred
@@ -23151,114 +23575,420 @@
   - Category: lint
   - ID: c724f0ba
 
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py (101 errors)
+
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 956f2888
+- Line 7: ruff:I001 - Import block is un-sorted or un-formatted
+  - Category: lint
+  - ID: 57ecc8c5
+- Line 9: ruff:F401 - `json` imported but unused
+  - Category: lint
+  - ID: 28ae0d0f
+- Line 13: ruff:UP035 - `typing.Dict` is deprecated, use `dict` instead
+  - Category: lint
+  - ID: 0b8d1d8a
+- Line 13: ruff:UP035 - `typing.List` is deprecated, use `list` instead
+  - Category: lint
+  - ID: 0b8d1d8a
+- Line 16: ruff:F401 - `pydantic.model_validator` imported but unused
+  - Category: lint
+  - ID: 81cb735f
+- Line 24: ruff:W291 - Trailing whitespace
+  - Category: lint
+  - ID: 67d66fc9
+- Line 42: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: f30c06f5
+- Line 47: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: fc8bdd02
+- Line 49: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: f78e7591
+- Line 53: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 49d9a9a5
+- Line 54: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: 44aa73b3
+- Line 64: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 970bf2f0
+- Line 66: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: 108551c7
+- Line 66: ruff:UP037 - Remove quotes from type annotation
+  - Category: lint
+  - ID: f2de9347
+- Line 75: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 920bc84b
+- Line 83: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 7973889b
+- Line 84: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: 89fe363e
+- Line 85: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: db3012fe
+- Line 87: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 35e373a4
+- Line 88: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 6a63e411
+- Line 89: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 7e14af46
+- Line 91: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: caa5ba02
+- Line 92: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 2eb25d2a
+- Line 93: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: a77945fa
+- Line 94: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: c679c0a0
+- Line 102: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 9dffd5a5
+- Line 105: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: e6c67b2e
+- Line 105: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: e6c67b2e
+- Line 108: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: e3669428
+- Line 111: ruff:DTZ005 - `datetime.datetime.now()` called without a `tz` argument
+  - Category: lint
+  - ID: c63e9bbe
+- Line 113: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 8e3ed6b2
+- Line 119: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 27388795
+- Line 127: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: d4f6c592
+- Line 133: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 4da05b07
+- Line 138: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: f9bd4d2f
+- Line 139: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: 4168cd43
+- Line 157: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 8191b182
+- Line 159: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: 01142330
+- Line 159: ruff:UP037 - Remove quotes from type annotation
+  - Category: lint
+  - ID: 22780a33
+- Line 165: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 6b83179a
+- Line 171: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: fb3a34c5
+- Line 175: ruff:W291 - Trailing whitespace
+  - Category: lint
+  - ID: f3620f6f
+- Line 178: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 3ad553c7
+- Line 184: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: c54bcb6c
+- Line 188: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 71aa8da7
+- Line 188: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 35c5aaa5
+- Line 189: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 5eb3f33a
+- Line 191: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 9a411686
+- Line 192: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 0530687a
+- Line 193: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 79ad4b07
+- Line 194: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 83c6135d
+- Line 197: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 6236497a
+- Line 198: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 2b316e0a
+- Line 199: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 1e2ef60a
+- Line 200: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 45748385
+- Line 202: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 94d1a1ab
+- Line 204: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 20b53e1a
+- Line 205: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 27b48f1e
+- Line 208: ruff:DTZ005 - `datetime.datetime.now()` called without a `tz` argument
+  - Category: lint
+  - ID: ee16eae3
+- Line 213: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 124920a7
+- Line 222: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: ae59b7b9
+- Line 232: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 70aa0962
+- Line 235: ruff:DTZ005 - `datetime.datetime.now()` called without a `tz` argument
+  - Category: lint
+  - ID: cadc0868
+- Line 239: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 0a7a2e71
+- Line 242: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 3def2a50
+- Line 251: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 004b82e6
+- Line 253: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: b0fd3748
+- Line 258: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: c82998d6
+- Line 262: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 14c444f7
+- Line 267: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 2fd2dd7f
+- Line 273: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 1405c00e
+- Line 274: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: f4588d94
+- Line 294: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 5e886763
+- Line 296: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: c7cbf920
+- Line 296: ruff:UP037 - Remove quotes from type annotation
+  - Category: lint
+  - ID: 91abd005
+- Line 301: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 5a766dee
+- Line 305: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 1863a280
+- Line 307: ruff:UP037 - Remove quotes from type annotation
+  - Category: lint
+  - ID: c8f0b81f
+- Line 314: ruff:PLR0913 - Too many arguments in function definition (8 > 5)
+  - Category: lint
+  - ID: 43bb5bd6
+- Line 318: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 160b672a
+- Line 318: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 57e58eff
+- Line 319: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 374a7af5
+- Line 320: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: fa4213b0
+- Line 321: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 7d9c26be
+- Line 323: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: d110c61c
+- Line 325: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: b061639a
+- Line 335: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 506f0169
+- Line 338: ruff:RET505 - Unnecessary `else` after `return` statement
+  - Category: lint
+  - ID: 5737a821
+- Line 347: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: bc6881c3
+- Line 359: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 25efcb75
+- Line 363: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: ee1eaf0c
+- Line 366: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: e235d49a
+- Line 373: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 1ae63529
+- Line 379: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 3084ed56
+- Line 382: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 2805eb6f
+- Line 396: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 4e3f6661
+- Line 399: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 6aa7743a
+- Line 404: ruff:RUF022 - `__all__` is not sorted
+  - Category: lint
+  - ID: 4f866880
+- Line 406: ruff:W291 - Trailing whitespace
+  - Category: lint
+  - ID: ef9c238e
+- Line 413: ruff:W292 - No newline at end of file
+  - Category: lint
+  - ID: c76e8463
+
 ## packages/haive-agents/src/haive/agents/simple/agent_v3.py (100 errors)
 
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: b5c17f00
 - Line 37: mypy:import-untyped - error: Skipping analyzing "haive.core.common.mixins.dynamic_tool_route_mixin": m
   - Category: type
   - ID: 987dbfbb
-- Line 38: mypy:import-untyped - error: Skipping analyzing "haive.core.common.mixins.recompile_mixin": module is
+- Line 38: mypy:import-untyped - error: Skipping analyzing "haive.core.common.mixins.recompile_mixin": module is 
   - Category: type
   - ID: 028d3a59
-- Line 39: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.aug_llm": module is installed, but
+- Line 39: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.aug_llm": module is installed, but 
   - Category: type
   - ID: 34d246f1
 - Line 40: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.base": module is installed, but mis
@@ -23270,7 +24000,7 @@
 - Line 42: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.node.engine_node_generic": module is
   - Category: type
   - ID: 6d060b73
-- Line 44: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.node.parser_node_config_v2": module
+- Line 44: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.node.parser_node_config_v2": module 
   - Category: type
   - ID: 89376f6e
 - Line 45: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.node.tool_node_config_v2": module is
@@ -23279,7 +24009,7 @@
 - Line 46: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.node.validation_node_config_v2": mod
   - Category: type
   - ID: d4dfd933
-- Line 47: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.state_graph.base_graph2": module is
+- Line 47: mypy:import-untyped - error: Skipping analyzing "haive.core.graph.state_graph.base_graph2": module is 
   - Category: type
   - ID: 17360584
 - Line 48: mypy:import-untyped - error: Skipping analyzing "haive.core.schema.prebuilt.llm_state": module is inst
@@ -23300,165 +24030,165 @@
 - Line 59: mypy:import-untyped - error: Skipping analyzing "haive.agents.base.hooks": module is installed, but mi
   - Category: type
   - ID: e1dd26dc
-- Line 210: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
+- Line 210: mypy:no-untyped-def - error: Function is missing a type annotation  [no-untyped-def]
   - Category: type
   - ID: 0f665070
-- Line 301: mypy:misc - error: Untyped decorator makes function "log_setup_start" untyped [misc]
+- Line 301: mypy:misc - error: Untyped decorator makes function "log_setup_start" untyped  [misc]
   - Category: type
   - ID: 7ef3a19d
-- Line 302: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 302: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 5af65f09
-- Line 305: mypy:misc - error: Untyped decorator makes function "log_setup_complete" untyped [misc]
+- Line 305: mypy:misc - error: Untyped decorator makes function "log_setup_complete" untyped  [misc]
   - Category: type
   - ID: a933d7c3
-- Line 306: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 306: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 4a694dea
-- Line 309: mypy:misc - error: Untyped decorator makes function "log_graph_build_start" untyped [misc]
+- Line 309: mypy:misc - error: Untyped decorator makes function "log_graph_build_start" untyped  [misc]
   - Category: type
   - ID: 55744b9c
-- Line 310: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 310: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: ba56020a
-- Line 313: mypy:misc - error: Untyped decorator makes function "log_graph_build_complete" untyped [mis
+- Line 313: mypy:misc - error: Untyped decorator makes function "log_graph_build_complete" untyped  [mis
   - Category: type
   - ID: 3b91bc59
-- Line 314: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 314: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 9746cdfc
-- Line 318: mypy:misc - error: Untyped decorator makes function "log_execution_start" untyped [misc]
+- Line 318: mypy:misc - error: Untyped decorator makes function "log_execution_start" untyped  [misc]
   - Category: type
   - ID: 2adc7d82
-- Line 319: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 319: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: d469aaeb
-- Line 324: mypy:misc - error: Untyped decorator makes function "log_execution_complete" untyped [misc]
+- Line 324: mypy:misc - error: Untyped decorator makes function "log_execution_complete" untyped  [misc]
   - Category: type
   - ID: 05cb798d
-- Line 325: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 325: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 99f83710
-- Line 330: mypy:misc - error: Untyped decorator makes function "log_execution_error" untyped [misc]
+- Line 330: mypy:misc - error: Untyped decorator makes function "log_execution_error" untyped  [misc]
   - Category: type
   - ID: 9ee32a41
-- Line 331: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 331: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: c0e6860e
-- Line 335: mypy:misc - error: Untyped decorator makes function "log_state_update_start" untyped [misc]
+- Line 335: mypy:misc - error: Untyped decorator makes function "log_state_update_start" untyped  [misc]
   - Category: type
   - ID: f4f94c63
-- Line 336: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 336: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 430a8bb5
-- Line 340: mypy:misc - error: Untyped decorator makes function "log_state_update_complete" untyped [mi
+- Line 340: mypy:misc - error: Untyped decorator makes function "log_state_update_complete" untyped  [mi
   - Category: type
   - ID: 322a81b4
-- Line 341: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 341: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 057ca8d1
-- Line 440: mypy:has-type - error: Cannot determine type of "state_schema" [has-type]
+- Line 440: mypy:has-type - error: Cannot determine type of "state_schema"  [has-type]
   - Category: type
   - ID: e33da134
-- Line 549: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 549: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: bd201132
-- Line 568: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 568: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 2dcc3852
-- Line 596: mypy:misc - error: Untyped decorator makes function "handle_structured_output" untyped [mis
+- Line 596: mypy:misc - error: Untyped decorator makes function "handle_structured_output" untyped  [mis
   - Category: type
   - ID: 510b4dfb
-- Line 597: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 597: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: cf2654b7
-- Line 715: mypy:True - error: Argument 4 to "\_add_validation_nodes" of "SimpleAgentV3" has incompatible
+- Line 715: mypy:True - error: Argument 4 to "_add_validation_nodes" of "SimpleAgentV3" has incompatible
   - Category: type
   - ID: 872b544e
-- Line 735: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 735: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: ff76d220
-- Line 735: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 735: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: ff76d220
-- Line 751: mypy:name-defined - error: Name "context" is not defined [name-defined]
+- Line 751: mypy:name-defined - error: Name "context" is not defined  [name-defined]
   - Category: type
   - ID: 7fa4f70f
-- Line 908: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 908: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 75a14b02
-- Line 949: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 949: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 94235b53
-- Line 1192: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1192: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 76aaadd0
-- Line 1207: mypy:call-overload - error: No overload variant of "tool" matches argument types "str", "str" [call-
+- Line 1207: mypy:call-overload - error: No overload variant of "tool" matches argument types "str", "str"  [call-
   - Category: type
   - ID: 0ce94ece
 - Line 1207: mypy:error - note: Possible overload variants:
   - Category: type
   - ID: 810fa43e
-- Line 1207: mypy:BaseModel - note: def tool(\*, description: str | None = ..., return_direct: bool = ...,
+- Line 1207: mypy:BaseModel - note:     def tool(*, description: str | None = ..., return_direct: bool = ..., 
   - Category: type
   - ID: 094cdac7
-- Line 1207: mypy:Any, Any - note: def tool(name_or_callable: str, runnable: Runnable[Any, Any], \*, descr
+- Line 1207: mypy:Any, Any - note:     def tool(name_or_callable: str, runnable: Runnable[Any, Any], *, descr
   - Category: type
   - ID: 19c36c33
-- Line 1207: mypy:..., Any - note: def tool(name_or_callable: Callable[..., Any], \*, description: str | N
+- Line 1207: mypy:..., Any - note:     def tool(name_or_callable: Callable[..., Any], *, description: str | N
   - Category: type
   - ID: 738b9fc3
-- Line 1207: mypy:BaseModel - note: def tool(name_or_callable: str, \*, description: str | None = ..., retu
+- Line 1207: mypy:BaseModel - note:     def tool(name_or_callable: str, *, description: str | None = ..., retu
   - Category: type
   - ID: 094cdac7
-- Line 1207: mypy:misc - error: Untyped decorator makes function "agent_tool" untyped [misc]
+- Line 1207: mypy:misc - error: Untyped decorator makes function "agent_tool" untyped  [misc]
   - Category: type
   - ID: 8da40761
-- Line 1237: mypy:no-any-return - error: Returning Any from function declared to return "BaseTool" [no-any-return
+- Line 1237: mypy:no-any-return - error: Returning Any from function declared to return "BaseTool"  [no-any-return
   - Category: type
   - ID: 0f6340cb
-- Line 1240: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1240: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 84704b9e
-- Line 1258: mypy:call-overload - error: No overload variant of "tool" matches argument types "str", "str" [call-
+- Line 1258: mypy:call-overload - error: No overload variant of "tool" matches argument types "str", "str"  [call-
   - Category: type
   - ID: a94174d3
 - Line 1258: mypy:error - note: Possible overload variants:
   - Category: type
   - ID: c42a53e3
-- Line 1258: mypy:BaseModel - note: def tool(\*, description: str | None = ..., return_direct: bool = ...,
+- Line 1258: mypy:BaseModel - note:     def tool(*, description: str | None = ..., return_direct: bool = ..., 
   - Category: type
   - ID: 7f98d55f
-- Line 1258: mypy:Any, Any - note: def tool(name_or_callable: str, runnable: Runnable[Any, Any], \*, descr
+- Line 1258: mypy:Any, Any - note:     def tool(name_or_callable: str, runnable: Runnable[Any, Any], *, descr
   - Category: type
   - ID: 80de74fb
-- Line 1258: mypy:..., Any - note: def tool(name_or_callable: Callable[..., Any], \*, description: str | N
+- Line 1258: mypy:..., Any - note:     def tool(name_or_callable: Callable[..., Any], *, description: str | N
   - Category: type
   - ID: a31dde19
-- Line 1258: mypy:BaseModel - note: def tool(name_or_callable: str, \*, description: str | None = ..., retu
+- Line 1258: mypy:BaseModel - note:     def tool(name_or_callable: str, *, description: str | None = ..., retu
   - Category: type
   - ID: 7f98d55f
-- Line 1258: mypy:misc - error: Untyped decorator makes function "structured_agent_tool" untyped [misc]
+- Line 1258: mypy:misc - error: Untyped decorator makes function "structured_agent_tool" untyped  [misc]
   - Category: type
   - ID: 7161bb2c
-- Line 1299: mypy:no-any-return - error: Returning Any from function declared to return "BaseTool" [no-any-return
+- Line 1299: mypy:no-any-return - error: Returning Any from function declared to return "BaseTool"  [no-any-return
   - Category: type
   - ID: ed20e513
-- Line 1407: mypy:True - error: Argument 4 to "\_add_complex_routing" of "SimpleAgentV3" has incompatible
+- Line 1407: mypy:True - error: Argument 4 to "_add_complex_routing" of "SimpleAgentV3" has incompatible 
   - Category: type
   - ID: 2d3effab
-- Line 1504: mypy:has-type - error: Cannot determine type of "\_is_compiled" [has-type]
+- Line 1504: mypy:has-type - error: Cannot determine type of "_is_compiled"  [has-type]
   - Category: type
   - ID: a8a9d026
-- Line 1532: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
+- Line 1532: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments  [no-unty
   - Category: type
   - ID: 066a5d47
 
 ## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/dynamic_tool_discovery_supervisor.py (99 errors)
 
-- Line 0: ImportError - cannot import name 'build_graph' from 'haive.agents.supervisor.simple_supervisor
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
   - Category: import
-  - ID: a1f4a113
+  - ID: e883e2b1
 - Line 76: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 3b396677
@@ -23754,305 +24484,11 @@
   - Category: lint
   - ID: 0505d004
 
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/utils/compatibility_bridge.py (98 errors)
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/compatibility_bridge.py (99 errors)
 
-- Line 0: ImportError - cannot import name 'build_graph' from 'haive.agents.supervisor.simple_supervisor
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
   - Category: import
-  - ID: 28f72f95
-- Line 6: ruff:I001 - Import block is un-sorted or un-formatted
-  - Category: lint
-  - ID: 4972a41a
-- Line 29: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: ec76242e
-- Line 30: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 611bbc2d
-- Line 31: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d04c5d8d
-- Line 34: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 6fb13a33
-- Line 35: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 55d41315
-- Line 38: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 195c1b5d
-- Line 38: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 195c1b5d
-- Line 40: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0daadeb0
-- Line 41: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 6880c332
-- Line 41: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: b824854c
-- Line 48: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3ca32f25
-- Line 60: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: ca286846
-- Line 60: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: bdb41ac8
-- Line 61: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1e036f1a
-- Line 62: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 9ce0f0ac
-- Line 64: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: cfd6d5cd
-- Line 64: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: aeb6c695
-- Line 64: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: cfd6d5cd
-- Line 65: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 038a0bb3
-- Line 65: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 038a0bb3
-- Line 66: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 55f7ced4
-- Line 66: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 55f7ced4
-- Line 68: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 57fefe3f
-- Line 68: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: b3f01e49
-- Line 78: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 29df014a
-- Line 80: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 7dc3f888
-- Line 83: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3bba87fa
-- Line 84: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 8b403e72
-- Line 84: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 8b403e72
-- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 4f05a235
-- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 4f05a235
-- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 18c92d01
-- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 9cfde329
-- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 9cfde329
-- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 9697e39f
-- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 9697e39f
-- Line 95: ruff:ARG001 - Unused function argument: `config`
-  - Category: lint
-  - ID: e107202e
-- Line 97: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bba1bdf4
-- Line 100: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 24b8981c
-- Line 102: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 9a7f8200
-- Line 102: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 9a7f8200
-- Line 102: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 9a7f8200
-- Line 102: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 9a7f8200
-- Line 102: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 9a7f8200
-- Line 104: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3f49b3dc
-- Line 104: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3f49b3dc
-- Line 104: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3f49b3dc
-- Line 106: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: fcb0f56e
-- Line 115: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c39fed03
-- Line 115: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 5f67d5db
-- Line 124: ruff:ARG001 - Unused function argument: `config`
-  - Category: lint
-  - ID: 557573fd
-- Line 126: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 8dd08282
-- Line 129: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d3cb46fc
-- Line 129: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d3cb46fc
-- Line 130: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1f2a9a26
-- Line 131: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 59ac77d6
-- Line 132: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: cd0d92a0
-- Line 132: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: cd0d92a0
-- Line 132: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: cd0d92a0
-- Line 132: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: cd0d92a0
-- Line 132: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: cd0d92a0
-- Line 133: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 559b1d52
-- Line 134: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: a9f2b63e
-- Line 135: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 832ddef1
-- Line 136: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 6b5d364b
-- Line 137: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b24eefcc
-- Line 138: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bc7f3dec
-- Line 145: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5c4941db
-- Line 148: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: ee15a90c
-- Line 151: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1adcb8d1
-- Line 151: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 0aa1c160
-- Line 152: ruff:TRY300 - Consider moving this statement to an `else` block
-  - Category: lint
-  - ID: 38e9c1c7
-- Line 154: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: cbc7c6b6
-- Line 154: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 10a0ff18
-- Line 154: ruff:TRY401 - Redundant exception object included in `logging.exception` call
-  - Category: lint
-  - ID: 9433495f
-- Line 160: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 2d9f3d43
-- Line 166: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: cabed81a
-- Line 166: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 8eedc914
-- Line 167: ruff:TRY300 - Consider moving this statement to an `else` block
-  - Category: lint
-  - ID: 0e1f9376
-- Line 169: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1d0f4387
-- Line 169: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 8ead11fe
-- Line 169: ruff:TRY401 - Redundant exception object included in `logging.exception` call
-  - Category: lint
-  - ID: 2cd42cee
-- Line 174: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: e79f7d60
-- Line 174: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: e79f7d60
-- Line 174: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: e79f7d60
-- Line 174: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: e79f7d60
-- Line 176: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 69e14a73
-- Line 176: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 69e14a73
-- Line 190: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0733ef64
-- Line 192: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 4b0e8c20
-- Line 192: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 4b0e8c20
-- Line 196: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 2d2ec20f
-- Line 221: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: aa888d4b
-- Line 221: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: aa888d4b
-- Line 221: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: aa888d4b
-- Line 221: ruff:W292 - No newline at end of file
-  - Category: lint
-  - ID: e8312be5
-
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/compatibility_bridge.py (98 errors)
-
+  - ID: 20b29d5f
 - Line 6: ruff:I001 - Import block is un-sorted or un-formatted
   - Category: lint
   - ID: 0be49764
@@ -24348,132 +24784,1317 @@
   - Category: lint
   - ID: 26ac7208
 
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/experiments/supervisor/tools.py (99 errors)
+
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 8ca4335b
+- Line 7: ruff:UP035 - `typing.Dict` is deprecated, use `dict` instead
+  - Category: lint
+  - ID: 8a3277e0
+- Line 7: ruff:UP035 - `typing.List` is deprecated, use `list` instead
+  - Category: lint
+  - ID: 8a3277e0
+- Line 7: ruff:I001 - Import block is un-sorted or un-formatted
+  - Category: lint
+  - ID: 82136b1d
+- Line 8: ruff:F401 - `langchain_core.tools.tool` imported but unused
+  - Category: lint
+  - ID: 31005f38
+- Line 11: ruff:F401 - `haive.agents.experiments.supervisor.state_models.AgentMetadata` imported but un
+  - Category: lint
+  - ID: e794c587
+- Line 11: ruff:F401 - `haive.agents.experiments.supervisor.state_models.ExecutionContext` imported but
+  - Category: lint
+  - ID: e794c587
+- Line 16: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 8bd275a8
+- Line 19: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: ab05c307
+- Line 19: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: 4c67651b
+- Line 24: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 56c8c893
+- Line 28: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: f0d64cd5
+- Line 28: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: 1e0cd615
+- Line 33: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 7d4f5911
+- Line 35: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: d8237569
+- Line 40: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 647cf314
+- Line 43: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 40052fbb
+- Line 47: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 68efd236
+- Line 48: ruff:ARG001 - Unused function argument: `context`
+  - Category: lint
+  - ID: e5e657d8
+- Line 48: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: b8982366
+- Line 48: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: 03e8b006
+- Line 50: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 634273b4
+- Line 55: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: da08daae
+- Line 64: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 52f9bf19
+- Line 67: ruff:TRY300 - Consider moving this statement to an `else` block
+  - Category: lint
+  - ID: 1e5a8d90
+- Line 68: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: b071feb7
+- Line 70: ruff:RUF010 - Use explicit conversion flag
+  - Category: lint
+  - ID: 6a607beb
+- Line 71: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: f2091400
+- Line 81: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 9918f4cb
+- Line 84: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 2d6c8e61
+- Line 88: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 9312a464
+- Line 89: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: 0d353d3f
+- Line 91: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 985c192a
+- Line 95: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 0acbb90a
+- Line 101: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: efc94991
+- Line 104: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 496292ba
+- Line 111: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: a7ea48fa
+- Line 115: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 887a88a6
+- Line 117: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 75c323e9
+- Line 120: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: cbf9129a
+- Line 128: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 8a60d775
+- Line 130: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 42ace8e0
+- Line 132: ruff:RUF010 - Use explicit conversion flag
+  - Category: lint
+  - ID: 08252a85
+- Line 133: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 4d1a93f6
+- Line 143: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 5d934f67
+- Line 146: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 516dcd17
+- Line 150: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: f7735e57
+- Line 153: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 8efa9542
+- Line 159: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: bfccf796
+- Line 163: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 743507d2
+- Line 164: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9cf8a396
+- Line 168: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6890efb5
+- Line 168: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6890efb5
+- Line 169: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c81288dc
+- Line 169: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c81288dc
+- Line 169: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c81288dc
+- Line 169: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c81288dc
+- Line 169: ruff:PLR2004 - Magic value used in comparison, consider replacing `50` with a constant variable
+  - Category: lint
+  - ID: 33976264
+- Line 169: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c81288dc
+- Line 169: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c81288dc
+- Line 170: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: af516fa4
+- Line 170: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: af516fa4
+- Line 174: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 0bef6dd0
+- Line 176: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 073db436
+- Line 178: ruff:RUF010 - Use explicit conversion flag
+  - Category: lint
+  - ID: 0fa4695d
+- Line 179: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 7d4fb100
+- Line 189: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: a5b11153
+- Line 192: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 5fce8795
+- Line 196: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: a835bb9a
+- Line 197: ruff:ARG001 - Unused function argument: `config`
+  - Category: lint
+  - ID: fea049e9
+- Line 197: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: eef69d10
+- Line 197: ruff:UP006 - Use `dict` instead of `Dict` for type annotation
+  - Category: lint
+  - ID: 9a754c4a
+- Line 199: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 07d30f53
+- Line 205: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 1ddab934
+- Line 211: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c06b41d3
+- Line 213: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 18922a6e
+- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 43d9e2a3
+- Line 216: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 561ebfeb
+- Line 220: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 7d5e90cd
+- Line 223: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 360de1d9
+- Line 226: ruff:RET505 - Unnecessary `else` after `return` statement
+  - Category: lint
+  - ID: 521d1df2
+- Line 228: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: e19acd80
+- Line 230: ruff:RUF010 - Use explicit conversion flag
+  - Category: lint
+  - ID: d46e7ce8
+- Line 231: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 077e3836
+- Line 239: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: 4be44eb1
+- Line 241: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: ef9c66ad
+- Line 244: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: d53c52b4
+- Line 253: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 4776887c
+- Line 255: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 70ed7d63
+- Line 257: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: bf2e32bb
+- Line 261: ruff:UP006 - Use `list` instead of `List` for type annotation
+  - Category: lint
+  - ID: c004be53
+- Line 263: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 66c7005f
+- Line 265: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 4727d50d
+- Line 272: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: 26ef7c1d
+- Line 275: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: e315a39c
+- Line 282: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 923fcbe6
+- Line 285: ruff:W293 - Blank line contains whitespace
+  - Category: lint
+  - ID: adc28443
+- Line 286: ruff:F841 - Local variable `e` is assigned to but never used
+  - Category: lint
+  - ID: b14af48b
+- Line 288: ruff:W292 - No newline at end of file
+  - Category: lint
+  - ID: 941fcef2
+
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/utils/compatibility_bridge.py (98 errors)
+
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 6d7396a7
+- Line 6: ruff:I001 - Import block is un-sorted or un-formatted
+  - Category: lint
+  - ID: 4972a41a
+- Line 29: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: ec76242e
+- Line 30: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 611bbc2d
+- Line 31: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d04c5d8d
+- Line 34: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6fb13a33
+- Line 35: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 55d41315
+- Line 38: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 195c1b5d
+- Line 38: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 195c1b5d
+- Line 40: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0daadeb0
+- Line 41: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6880c332
+- Line 41: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: b824854c
+- Line 48: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3ca32f25
+- Line 60: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: ca286846
+- Line 60: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: bdb41ac8
+- Line 61: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1e036f1a
+- Line 62: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9ce0f0ac
+- Line 64: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cfd6d5cd
+- Line 64: ruff:UP007 - Use `X | Y` for type annotations
+  - Category: lint
+  - ID: aeb6c695
+- Line 64: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cfd6d5cd
+- Line 65: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 038a0bb3
+- Line 65: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 038a0bb3
+- Line 66: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 55f7ced4
+- Line 66: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 55f7ced4
+- Line 68: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 57fefe3f
+- Line 68: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: b3f01e49
+- Line 78: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 29df014a
+- Line 80: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 7dc3f888
+- Line 83: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3bba87fa
+- Line 84: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 8b403e72
+- Line 84: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 8b403e72
+- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 4f05a235
+- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 4f05a235
+- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 18c92d01
+- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9cfde329
+- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9cfde329
+- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9697e39f
+- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9697e39f
+- Line 95: ruff:ARG001 - Unused function argument: `config`
+  - Category: lint
+  - ID: e107202e
+- Line 97: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bba1bdf4
+- Line 100: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 24b8981c
+- Line 102: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9a7f8200
+- Line 102: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9a7f8200
+- Line 102: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9a7f8200
+- Line 102: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9a7f8200
+- Line 102: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 9a7f8200
+- Line 104: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3f49b3dc
+- Line 104: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3f49b3dc
+- Line 104: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3f49b3dc
+- Line 106: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: fcb0f56e
+- Line 115: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c39fed03
+- Line 115: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 5f67d5db
+- Line 124: ruff:ARG001 - Unused function argument: `config`
+  - Category: lint
+  - ID: 557573fd
+- Line 126: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 8dd08282
+- Line 129: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d3cb46fc
+- Line 129: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d3cb46fc
+- Line 130: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1f2a9a26
+- Line 131: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 59ac77d6
+- Line 132: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cd0d92a0
+- Line 132: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cd0d92a0
+- Line 132: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cd0d92a0
+- Line 132: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cd0d92a0
+- Line 132: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cd0d92a0
+- Line 133: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 559b1d52
+- Line 134: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: a9f2b63e
+- Line 135: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 832ddef1
+- Line 136: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6b5d364b
+- Line 137: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b24eefcc
+- Line 138: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bc7f3dec
+- Line 145: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5c4941db
+- Line 148: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: ee15a90c
+- Line 151: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1adcb8d1
+- Line 151: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 0aa1c160
+- Line 152: ruff:TRY300 - Consider moving this statement to an `else` block
+  - Category: lint
+  - ID: 38e9c1c7
+- Line 154: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cbc7c6b6
+- Line 154: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 10a0ff18
+- Line 154: ruff:TRY401 - Redundant exception object included in `logging.exception` call
+  - Category: lint
+  - ID: 9433495f
+- Line 160: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 2d9f3d43
+- Line 166: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cabed81a
+- Line 166: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 8eedc914
+- Line 167: ruff:TRY300 - Consider moving this statement to an `else` block
+  - Category: lint
+  - ID: 0e1f9376
+- Line 169: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1d0f4387
+- Line 169: ruff:G004 - Logging statement uses f-string
+  - Category: lint
+  - ID: 8ead11fe
+- Line 169: ruff:TRY401 - Redundant exception object included in `logging.exception` call
+  - Category: lint
+  - ID: 2cd42cee
+- Line 174: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: e79f7d60
+- Line 174: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: e79f7d60
+- Line 174: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: e79f7d60
+- Line 174: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: e79f7d60
+- Line 176: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 69e14a73
+- Line 176: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 69e14a73
+- Line 190: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0733ef64
+- Line 192: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 4b0e8c20
+- Line 192: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 4b0e8c20
+- Line 196: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 2d2ec20f
+- Line 221: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: aa888d4b
+- Line 221: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: aa888d4b
+- Line 221: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: aa888d4b
+- Line 221: ruff:W292 - No newline at end of file
+  - Category: lint
+  - ID: e8312be5
+
+## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/grade/qualitative.py (97 errors)
+
+- Line 0: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: a4e56000
+- Line 6: ruff:I001 - Import block is un-sorted or un-formatted
+  - Category: lint
+  - ID: 9b58072c
+- Line 22: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d8ad0d69
+- Line 23: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 08951496
+- Line 24: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5d5daec8
+- Line 25: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 62d0b366
+- Line 26: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d6e1e716
+- Line 27: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3e5988d3
+- Line 39: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 08a7b497
+- Line 40: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 867e6ec0
+- Line 41: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3185c5ba
+- Line 42: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c83a267e
+- Line 43: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b9f5fde3
+- Line 84: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c8886bf7
+- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1db1e182
+- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1db1e182
+- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1db1e182
+- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1db1e182
+- Line 86: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3990cecd
+- Line 86: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3990cecd
+- Line 86: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3990cecd
+- Line 86: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3990cecd
+- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b0c473e0
+- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b0c473e0
+- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b0c473e0
+- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b0c473e0
+- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b0c473e0
+- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b0c473e0
+- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b0c473e0
+- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: da2fd762
+- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: da2fd762
+- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: da2fd762
+- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: da2fd762
+- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: da2fd762
+- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: da2fd762
+- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: da2fd762
+- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 17a5b2f1
+- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 17a5b2f1
+- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 17a5b2f1
+- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 17a5b2f1
+- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 17a5b2f1
+- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 17a5b2f1
+- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 17a5b2f1
+- Line 90: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5fca77a2
+- Line 90: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5fca77a2
+- Line 90: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5fca77a2
+- Line 92: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0d10d818
+- Line 92: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0d10d818
+- Line 92: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0d10d818
+- Line 108: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: cf12a01e
+- Line 111: ruff:PLR2004 - Magic value used in comparison, consider replacing `3` with a constant variable
+  - Category: lint
+  - ID: 33b51d3a
+- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 90a1d919
+- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 90a1d919
+- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 90a1d919
+- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 90a1d919
+- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 90a1d919
+- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 90a1d919
+- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 90a1d919
+- Line 119: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6a1ae51f
+- Line 120: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c4dc2f9e
+- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1c94ad53
+- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1c94ad53
+- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1c94ad53
+- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1c94ad53
+- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1c94ad53
+- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1c94ad53
+- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1c94ad53
+- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1c94ad53
+- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1c94ad53
+- Line 178: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: afa9ea9a
+- Line 180: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 2cb9b844
+- Line 182: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: da059143
+- Line 184: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: ea614cf5
+- Line 186: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: f3816840
+- Line 187: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5e8728fe
+- Line 200: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 796156d3
+- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3c294413
+- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3c294413
+- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3c294413
+- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3c294413
+- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3c294413
+- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3c294413
+- Line 215: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 782f9f26
+- Line 217: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6c154841
+- Line 219: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c95da63d
+- Line 221: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 70579185
+- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 81aae2e6
+- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 81aae2e6
+- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 81aae2e6
+- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 81aae2e6
+- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 81aae2e6
+- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 81aae2e6
+- Line 233: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 7d390167
+- Line 250: ruff:TRY300 - Consider moving this statement to an `else` block
+  - Category: lint
+  - ID: 2898f29e
+- Line 255: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0d4cf222
+- Line 271: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: e72f9de9
+- Line 285: ruff:W292 - No newline at end of file
+  - Category: lint
+  - ID: fc6fb831
+
+## /home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/dynamic_activation_mcp.py (97 errors)
+
+- Line 12: ruff:I001 - Import block is un-sorted or un-formatted
+  - Category: lint
+  - ID: d06759d9
+- Line 15: ModuleNotFoundError - No module named 'haive.agents.simple.models'
+  - Category: import
+  - ID: 51116c8c
+- Line 44: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 47aa16c1
+- Line 45: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6821f155
+- Line 46: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: b3f6516b
+- Line 47: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 36ebfc75
+- Line 48: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 4c9f0ad4
+- Line 97: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 8be61a75
+- Line 149: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 77d069dc
+- Line 150: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 2efc0de6
+- Line 151: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 18930a6a
+- Line 151: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 18930a6a
+- Line 152: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d8ea2523
+- Line 171: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0d4f3b06
+- Line 171: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0d4f3b06
+- Line 171: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0d4f3b06
+- Line 171: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0d4f3b06
+- Line 171: ruff:DTZ005 - `datetime.datetime.now()` called without a `tz` argument
+  - Category: lint
+  - ID: 7a560f9e
+- Line 171: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0d4f3b06
+- Line 171: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 0d4f3b06
+- Line 225: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: dababf68
+- Line 226: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 6bdfc091
+- Line 227: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 66b58a02
+- Line 228: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1824513b
+- Line 229: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: f8a70403
+- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1ddc1d15
+- Line 235: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 23d597a4
+- Line 236: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3a51bb99
+- Line 246: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 7110b89d
+- Line 246: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 7110b89d
+- Line 246: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 7110b89d
+- Line 246: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 7110b89d
+- Line 251: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5b1921c9
+- Line 251: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5b1921c9
+- Line 251: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5b1921c9
+- Line 251: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5b1921c9
+- Line 251: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5b1921c9
+- Line 251: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5b1921c9
+- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 28e5eff1
+- Line 269: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 3906ce8c
+- Line 283: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c09bbe8f
+- Line 306: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 879aa280
+- Line 307: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1eb9eb39
+- Line 308: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 20ccbe71
+- Line 310: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c5edae6d
+- Line 310: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c5edae6d
+- Line 321: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: afd40f46
+- Line 322: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 2a788a6d
+- Line 322: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 2a788a6d
+- Line 322: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 2a788a6d
+- Line 324: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d0839c71
+- Line 324: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d0839c71
+- Line 324: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d0839c71
+- Line 324: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: d0839c71
+- Line 326: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: e113b601
+- Line 327: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 06f3ec73
+- Line 328: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 8b199096
+- Line 328: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 8b199096
+- Line 339: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 89a6a413
+- Line 357: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 17e0cc05
+- Line 360: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1c283680
+- Line 360: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 1c283680
+- Line 362: ruff:TRY300 - Consider moving this statement to an `else` block
+  - Category: lint
+  - ID: e960720c
+- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bc38e690
+- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bc38e690
+- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bc38e690
+- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bc38e690
+- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bc38e690
+- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bc38e690
+- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bc38e690
+- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: bc38e690
+- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 27d22387
+- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 27d22387
+- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 27d22387
+- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 27d22387
+- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 27d22387
+- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 27d22387
+- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 27d22387
+- Line 389: ruff:SIM105 - Use `contextlib.suppress(Exception)` instead of `try`-`except`-`pass`
+  - Category: lint
+  - ID: c8363e1e
+- Line 406: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: af67ce45
+- Line 440: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c8cac704
+- Line 440: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c8cac704
+- Line 440: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c8cac704
+- Line 440: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c8cac704
+- Line 458: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5548778c
+- Line 458: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5548778c
+- Line 458: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5548778c
+- Line 458: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5548778c
+- Line 458: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5548778c
+- Line 458: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: 5548778c
+- Line 482: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c848f0bc
+- Line 482: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c848f0bc
+- Line 482: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c848f0bc
+- Line 482: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c848f0bc
+- Line 482: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c848f0bc
+- Line 482: ruff:Q000 - Single quotes found but double quotes preferred
+  - Category: lint
+  - ID: c848f0bc
+- Line 499: ruff:W292 - No newline at end of file
+  - Category: lint
+  - ID: f1b5f614
+
 ## packages/haive-agents/src/haive/agents/patterns/react_structured_reflection_patterns.py (97 errors)
 
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 0: mypy:error -
+- Line 0: mypy:error - 
   - Category: type
   - ID: 657a4490
-- Line 17: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.aug_llm": module is installed, but
+- Line 17: mypy:import-untyped - error: Skipping analyzing "haive.core.engine.aug_llm": module is installed, but 
   - Category: type
   - ID: 4d93a0b1
 - Line 22: mypy:import-untyped - error: Skipping analyzing "haive.agents.base.hooks": module is installed, but mi
@@ -24491,73 +26112,73 @@
 - Line 28: mypy:import-untyped - error: Skipping analyzing "haive.agents.simple.agent_v3": module is installed, b
   - Category: type
   - ID: 1e944575
-- Line 137: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 137: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: b2c6ee86
 - Line 137: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: e6b96d89
-- Line 140: mypy:misc - error: Untyped decorator makes function "log_reasoning_start" untyped [misc]
+- Line 140: mypy:misc - error: Untyped decorator makes function "log_reasoning_start" untyped  [misc]
   - Category: type
   - ID: 6c39883b
-- Line 141: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 141: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: b71ce9d7
-- Line 144: mypy:misc - error: Untyped decorator makes function "log_reasoning_complete" untyped [misc]
+- Line 144: mypy:misc - error: Untyped decorator makes function "log_reasoning_complete" untyped  [misc]
   - Category: type
   - ID: 5ccc86d6
-- Line 145: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 145: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 31709aa0
-- Line 148: mypy:misc - error: Untyped decorator makes function "log_structuring_start" untyped [misc]
+- Line 148: mypy:misc - error: Untyped decorator makes function "log_structuring_start" untyped  [misc]
   - Category: type
   - ID: 5a6f7d03
-- Line 149: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 149: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 7682ae61
-- Line 152: mypy:misc - error: Untyped decorator makes function "log_structuring_complete" untyped [mis
+- Line 152: mypy:misc - error: Untyped decorator makes function "log_structuring_complete" untyped  [mis
   - Category: type
   - ID: 3b4f121d
-- Line 153: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 153: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 1f2c5280
-- Line 166: mypy:no-any-return - error: Returning Any from function declared to return "BaseModel" [no-any-retur
+- Line 166: mypy:no-any-return - error: Returning Any from function declared to return "BaseModel"  [no-any-retur
   - Category: type
   - ID: 528fda0b
-- Line 187: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
+- Line 187: mypy:no-untyped-def - error: Function is missing a type annotation  [no-untyped-def]
   - Category: type
   - ID: 85d3b6ee
-- Line 201: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 201: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 8242e2d6
 - Line 201: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 555f7e6e
-- Line 204: mypy:misc - error: Untyped decorator makes function "log_v4_start" untyped [misc]
+- Line 204: mypy:misc - error: Untyped decorator makes function "log_v4_start" untyped  [misc]
   - Category: type
   - ID: 6f683d96
-- Line 205: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 205: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 9063c802
-- Line 208: mypy:misc - error: Untyped decorator makes function "log_v4_complete" untyped [misc]
+- Line 208: mypy:misc - error: Untyped decorator makes function "log_v4_complete" untyped  [misc]
   - Category: type
   - ID: 9f35105d
-- Line 209: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 209: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: a03e0f9f
-- Line 212: mypy:misc - error: Untyped decorator makes function "track_reasoning_stage" untyped [misc]
+- Line 212: mypy:misc - error: Untyped decorator makes function "track_reasoning_stage" untyped  [misc]
   - Category: type
   - ID: c48529ae
-- Line 213: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 213: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 08174cb8
-- Line 216: mypy:misc - error: Untyped decorator makes function "track_structuring_stage" untyped [misc
+- Line 216: mypy:misc - error: Untyped decorator makes function "track_structuring_stage" untyped  [misc
   - Category: type
   - ID: 2996fe00
-- Line 217: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 217: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: eafe555b
-- Line 289: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 289: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 31d51a8e
 - Line 289: mypy:error - note: Use "-> None" if function does not return a value
@@ -24566,76 +26187,76 @@
 - Line 292: mypy:misc - error: Untyped decorator makes function "log_reasoning_with_reflection_start" un
   - Category: type
   - ID: 343c4aa0
-- Line 293: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 293: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 796ca950
 - Line 296: mypy:misc - error: Untyped decorator makes function "log_reasoning_with_reflection_complete"
   - Category: type
   - ID: f48fa5a0
-- Line 297: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 297: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: e4bf7e84
-- Line 300: mypy:misc - error: Untyped decorator makes function "log_reflection_start" untyped [misc]
+- Line 300: mypy:misc - error: Untyped decorator makes function "log_reflection_start" untyped  [misc]
   - Category: type
   - ID: 1cef8376
-- Line 301: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 301: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 931dd25d
-- Line 304: mypy:misc - error: Untyped decorator makes function "log_reflection_complete" untyped [misc
+- Line 304: mypy:misc - error: Untyped decorator makes function "log_reflection_complete" untyped  [misc
   - Category: type
   - ID: f7d15d76
-- Line 305: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 305: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 398a853a
-- Line 318: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]" [no-any-
+- Line 318: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-
   - Category: type
   - ID: 3d484c21
-- Line 358: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 358: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 3ca1c3ec
 - Line 358: mypy:error - note: Use "-> None" if function does not return a value
   - Category: type
   - ID: 617f8e75
-- Line 361: mypy:misc - error: Untyped decorator makes function "log_grading_start" untyped [misc]
+- Line 361: mypy:misc - error: Untyped decorator makes function "log_grading_start" untyped  [misc]
   - Category: type
   - ID: ee282ec6
-- Line 362: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 362: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: c0702cef
-- Line 365: mypy:misc - error: Untyped decorator makes function "log_grading_complete" untyped [misc]
+- Line 365: mypy:misc - error: Untyped decorator makes function "log_grading_complete" untyped  [misc]
   - Category: type
   - ID: e8032e45
-- Line 366: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 366: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 83db9403
 - Line 369: mypy:misc - error: Untyped decorator makes function "log_reflection_with_grade_start" untype
   - Category: type
   - ID: c2ba0ce8
-- Line 370: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 370: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: b6d1fa0a
 - Line 373: mypy:misc - error: Untyped decorator makes function "log_reflection_with_grade_complete" unt
   - Category: type
   - ID: abf76f81
-- Line 374: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 374: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 4f9f9711
-- Line 387: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]" [no-any-
+- Line 387: mypy:str, Any - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-
   - Category: type
   - ID: a4030655
-- Line 440: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 440: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: f5037b0c
-- Line 454: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 454: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 1d53f915
-- Line 468: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 468: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 8353cd0d
-- Line 484: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 484: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 2455270c
-- Line 500: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
+- Line 500: mypy:no-untyped-def - error: Function is missing a return type annotation  [no-untyped-def]
   - Category: type
   - ID: 78e5ae30
 - Line 500: mypy:error - note: Use "-> None" if function does not return a value
@@ -24935,1446 +26556,3 @@
 - Line 1741: ruff:PLW0603 - Using the global statement to update `_registry_system` is discouraged
   - Category: lint
   - ID: cdf7e236
-
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/enhanced_plan_execute_v6.py (96 errors)
-
-- Line 12: ruff:W291 - Trailing whitespace
-  - Category: lint
-  - ID: 75bbaf3c
-- Line 22: ruff:W291 - Trailing whitespace
-  - Category: lint
-  - ID: 827c153c
-- Line 58: ruff:W291 - Trailing whitespace
-  - Category: lint
-  - ID: 2bc1f74f
-- Line 83: ruff:I001 - Import block is un-sorted or un-formatted
-  - Category: lint
-  - ID: c8434f05
-- Line 87: ruff:F401 - `typing.Any` imported but unused
-  - Category: lint
-  - ID: e5bc68e5
-- Line 90: NameError - Fields must not use names with leading underscores; e.g., use 'event_emitter' in
-  - Category: import
-  - ID: 51872639
-- Line 91: ruff:W291 - Trailing whitespace
-  - Category: lint
-  - ID: 1ff41265
-- Line 107: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 31cb1a19
-- Line 114: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: 4cf73f07
-- Line 130: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: a6f6522c
-- Line 136: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: 80223efd
-- Line 139: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: 1ab9c296
-- Line 146: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 6c5959fc
-- Line 149: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: c2b1a85e
-- Line 155: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: 84eef847
-- Line 158: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 54a4e4b2
-- Line 168: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 8408c91f
-- Line 170: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: c0b07bd3
-- Line 173: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: d5d990de
-- Line 182: ruff:PLR0911 - Too many return statements (9 > 6)
-  - Category: lint
-  - ID: 6880a43d
-- Line 187: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: b61b4c44
-- Line 192: ruff:RET505 - Unnecessary `elif` after `return` statement
-  - Category: lint
-  - ID: b4ae1484
-- Line 196: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: c9453628
-- Line 204: ruff:RET505 - Unnecessary `else` after `return` statement
-  - Category: lint
-  - ID: a513e009
-- Line 207: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: c54322bf
-- Line 211: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 1b9bc709
-- Line 215: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 61381800
-- Line 220: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: c011e15d
-- Line 224: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 810f03b0
-- Line 227: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 03bc0189
-- Line 229: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 98a09fe9
-- Line 235: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: bf0843f1
-- Line 246: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 65fdef91
-- Line 249: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: c3b2e921
-- Line 253: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 321ebe2b
-- Line 255: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 7dffb244
-- Line 260: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: f0de7e63
-- Line 267: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: bb457a70
-- Line 273: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 9ca7c06f
-- Line 284: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: b885b1b8
-- Line 291: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 854fdc00
-- Line 299: ruff:PLR0913 - Too many arguments in function definition (6 > 5)
-  - Category: lint
-  - ID: d3381b17
-- Line 301: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: 627550a6
-- Line 302: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: c59ea9e2
-- Line 303: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: 320c8702
-- Line 304: ruff:ARG001 - Unused function argument: `max_iterations`
-  - Category: lint
-  - ID: 8135e7f0
-- Line 307: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: ad8322e0
-- Line 315: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 175e2df2
-- Line 318: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: fa94ac17
-- Line 321: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 650e7637
-- Line 324: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: b9d3140e
-- Line 326: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 2fdd42a1
-- Line 342: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 685c9ea2
-- Line 349: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 6047f29e
-- Line 352: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 5110e775
-- Line 354: ruff:F841 - Local variable `base_planner` is assigned to but never used
-  - Category: lint
-  - ID: 6014d847
-- Line 358: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: ab6b816e
-- Line 365: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 8bbe1591
-- Line 366: ruff:W291 - Trailing whitespace
-  - Category: lint
-  - ID: d7cfa8fe
-- Line 373: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: e6519084
-- Line 379: ruff:W291 - Trailing whitespace
-  - Category: lint
-  - ID: 6a5b557b
-- Line 387: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 70ce4bb2
-- Line 390: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 42467025
-- Line 400: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 8bd9da4f
-- Line 406: ruff:W291 - Trailing whitespace
-  - Category: lint
-  - ID: 1097b081
-- Line 410: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 116aa97d
-- Line 414: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 7cf2b169
-- Line 415: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 913393f0
-- Line 419: ruff:C901 - `_add_monitoring_hooks_v6` is too complex (14 > 12)
-  - Category: lint
-  - ID: 0c17d42d
-- Line 421: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 7897b6cf
-- Line 425: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 11a7a9c1
-- Line 426: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d15babba
-- Line 427: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d2549a2c
-- Line 428: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 65bb7a48
-- Line 432: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: a4e75493
-- Line 432: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: a4e75493
-- Line 434: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 39a4e9f1
-- Line 435: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: fae6022c
-- Line 438: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 65a9c178
-- Line 439: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 2c975905
-- Line 440: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 2eee7251
-- Line 441: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 08b1c61f
-- Line 444: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 7096c568
-- Line 447: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 411073f3
-- Line 451: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: f4a490d0
-- Line 453: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 38e2390f
-- Line 455: ruff:G004 - Logging statement uses f-string
-  - Category: lint
-  - ID: 9a6a9d5b
-- Line 457: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: a800675a
-- Line 468: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: f47b3e97
-- Line 473: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: f417ae62
-- Line 485: ruff:UP007 - Use `X | Y` for type annotations
-  - Category: lint
-  - ID: 0fe569d2
-- Line 499: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: d5e42b2d
-- Line 504: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: fff1961c
-- Line 507: ruff:T201 - `print` found
-  - Category: lint
-  - ID: 73950602
-- Line 508: ruff:W293 - Blank line contains whitespace
-  - Category: lint
-  - ID: 222c36fe
-- Line 510: ruff:W292 - No newline at end of file
-  - Category: lint
-  - ID: 07507af9
-
-## /home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/grade/qualitative.py (96 errors)
-
-- Line 6: ruff:I001 - Import block is un-sorted or un-formatted
-  - Category: lint
-  - ID: 9b58072c
-- Line 22: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d8ad0d69
-- Line 23: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 08951496
-- Line 24: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5d5daec8
-- Line 25: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 62d0b366
-- Line 26: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d6e1e716
-- Line 27: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3e5988d3
-- Line 39: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 08a7b497
-- Line 40: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 867e6ec0
-- Line 41: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3185c5ba
-- Line 42: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c83a267e
-- Line 43: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b9f5fde3
-- Line 84: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c8886bf7
-- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1db1e182
-- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1db1e182
-- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1db1e182
-- Line 85: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1db1e182
-- Line 86: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3990cecd
-- Line 86: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3990cecd
-- Line 86: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3990cecd
-- Line 86: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3990cecd
-- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b0c473e0
-- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b0c473e0
-- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b0c473e0
-- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b0c473e0
-- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b0c473e0
-- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b0c473e0
-- Line 87: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b0c473e0
-- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: da2fd762
-- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: da2fd762
-- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: da2fd762
-- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: da2fd762
-- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: da2fd762
-- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: da2fd762
-- Line 88: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: da2fd762
-- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 17a5b2f1
-- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 17a5b2f1
-- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 17a5b2f1
-- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 17a5b2f1
-- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 17a5b2f1
-- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 17a5b2f1
-- Line 89: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 17a5b2f1
-- Line 90: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5fca77a2
-- Line 90: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5fca77a2
-- Line 90: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5fca77a2
-- Line 92: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0d10d818
-- Line 92: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0d10d818
-- Line 92: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0d10d818
-- Line 108: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: cf12a01e
-- Line 111: ruff:PLR2004 - Magic value used in comparison, consider replacing `3` with a constant variable
-  - Category: lint
-  - ID: 33b51d3a
-- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 90a1d919
-- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 90a1d919
-- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 90a1d919
-- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 90a1d919
-- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 90a1d919
-- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 90a1d919
-- Line 113: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 90a1d919
-- Line 119: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 6a1ae51f
-- Line 120: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c4dc2f9e
-- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1c94ad53
-- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1c94ad53
-- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1c94ad53
-- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1c94ad53
-- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1c94ad53
-- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1c94ad53
-- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1c94ad53
-- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1c94ad53
-- Line 167: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1c94ad53
-- Line 178: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: afa9ea9a
-- Line 180: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 2cb9b844
-- Line 182: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: da059143
-- Line 184: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: ea614cf5
-- Line 186: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: f3816840
-- Line 187: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5e8728fe
-- Line 200: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 796156d3
-- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3c294413
-- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3c294413
-- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3c294413
-- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3c294413
-- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3c294413
-- Line 214: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3c294413
-- Line 215: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 782f9f26
-- Line 217: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 6c154841
-- Line 219: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c95da63d
-- Line 221: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 70579185
-- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 81aae2e6
-- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 81aae2e6
-- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 81aae2e6
-- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 81aae2e6
-- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 81aae2e6
-- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 81aae2e6
-- Line 233: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 7d390167
-- Line 250: ruff:TRY300 - Consider moving this statement to an `else` block
-  - Category: lint
-  - ID: 2898f29e
-- Line 255: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0d4cf222
-- Line 271: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: e72f9de9
-- Line 285: ruff:W292 - No newline at end of file
-  - Category: lint
-  - ID: fc6fb831
-
-## /home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/dynamic_activation_mcp.py (96 errors)
-
-- Line 12: ruff:I001 - Import block is un-sorted or un-formatted
-  - Category: lint
-  - ID: d06759d9
-- Line 44: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 47aa16c1
-- Line 45: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 6821f155
-- Line 46: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: b3f6516b
-- Line 47: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 36ebfc75
-- Line 48: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 4c9f0ad4
-- Line 97: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 8be61a75
-- Line 149: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 77d069dc
-- Line 150: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 2efc0de6
-- Line 151: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 18930a6a
-- Line 151: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 18930a6a
-- Line 152: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d8ea2523
-- Line 171: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0d4f3b06
-- Line 171: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0d4f3b06
-- Line 171: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0d4f3b06
-- Line 171: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0d4f3b06
-- Line 171: ruff:DTZ005 - `datetime.datetime.now()` called without a `tz` argument
-  - Category: lint
-  - ID: 7a560f9e
-- Line 171: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0d4f3b06
-- Line 171: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 0d4f3b06
-- Line 225: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: dababf68
-- Line 226: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 6bdfc091
-- Line 227: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 66b58a02
-- Line 228: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1824513b
-- Line 229: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: f8a70403
-- Line 230: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1ddc1d15
-- Line 235: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 23d597a4
-- Line 236: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3a51bb99
-- Line 246: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 7110b89d
-- Line 246: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 7110b89d
-- Line 246: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 7110b89d
-- Line 246: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 7110b89d
-- Line 251: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5b1921c9
-- Line 251: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5b1921c9
-- Line 251: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5b1921c9
-- Line 251: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5b1921c9
-- Line 251: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5b1921c9
-- Line 251: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5b1921c9
-- Line 265: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 28e5eff1
-- Line 269: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 3906ce8c
-- Line 283: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c09bbe8f
-- Line 306: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 879aa280
-- Line 307: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1eb9eb39
-- Line 308: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 20ccbe71
-- Line 310: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c5edae6d
-- Line 310: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c5edae6d
-- Line 321: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: afd40f46
-- Line 322: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 2a788a6d
-- Line 322: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 2a788a6d
-- Line 322: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 2a788a6d
-- Line 324: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d0839c71
-- Line 324: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d0839c71
-- Line 324: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d0839c71
-- Line 324: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: d0839c71
-- Line 326: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: e113b601
-- Line 327: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 06f3ec73
-- Line 328: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 8b199096
-- Line 328: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 8b199096
-- Line 339: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 89a6a413
-- Line 357: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 17e0cc05
-- Line 360: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1c283680
-- Line 360: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 1c283680
-- Line 362: ruff:TRY300 - Consider moving this statement to an `else` block
-  - Category: lint
-  - ID: e960720c
-- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bc38e690
-- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bc38e690
-- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bc38e690
-- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bc38e690
-- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bc38e690
-- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bc38e690
-- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bc38e690
-- Line 376: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: bc38e690
-- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 27d22387
-- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 27d22387
-- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 27d22387
-- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 27d22387
-- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 27d22387
-- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 27d22387
-- Line 377: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 27d22387
-- Line 389: ruff:SIM105 - Use `contextlib.suppress(Exception)` instead of `try`-`except`-`pass`
-  - Category: lint
-  - ID: c8363e1e
-- Line 406: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: af67ce45
-- Line 440: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c8cac704
-- Line 440: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c8cac704
-- Line 440: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c8cac704
-- Line 440: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c8cac704
-- Line 458: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5548778c
-- Line 458: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5548778c
-- Line 458: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5548778c
-- Line 458: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5548778c
-- Line 458: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5548778c
-- Line 458: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: 5548778c
-- Line 482: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c848f0bc
-- Line 482: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c848f0bc
-- Line 482: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c848f0bc
-- Line 482: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c848f0bc
-- Line 482: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c848f0bc
-- Line 482: ruff:Q000 - Single quotes found but double quotes preferred
-  - Category: lint
-  - ID: c848f0bc
-- Line 499: ruff:W292 - No newline at end of file
-  - Category: lint
-  - ID: f1b5f614
-
-## packages/haive-core/src/haive/core/models/llm/base.py (94 errors)
-
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 0: mypy:error -
-  - Category: type
-  - ID: 6aadb1a2
-- Line 22: mypy:import-untyped - error: Skipping analyzing "haive.core.common.mixins.secure_config": module is in
-  - Category: type
-  - ID: 21dc5c6e
-- Line 23: mypy:import-untyped - error: Skipping analyzing "haive.core.models.llm.provider_types": module is inst
-  - Category: type
-  - ID: fc1effca
-- Line 24: mypy:import-untyped - error: Skipping analyzing "haive.core.models.llm.rate_limiting_mixin": module is
-  - Category: type
-  - ID: b41ea3e4
-- Line 25: mypy:import-untyped - error: Skipping analyzing "haive.core.models.metadata_mixin": module is installe
-  - Category: type
-  - ID: 515bc924
-- Line 39: mypy:assignment - error: Incompatible types in assignment (expression has type "None", variable ha
-  - Category: type
-  - ID: e7fd4d18
-- Line 211: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
-  - Category: type
-  - ID: 2f694137
-- Line 325: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 789d6478
-- Line 383: mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> - error: Argument 1 to "get_num_tokens_from_messages" of "BaseLanguageModel" has i
-  - Category: type
-  - ID: d710cec7
-- Line 695: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: b3b3142b
-- Line 722: mypy:call-arg - error: Unexpected keyword argument "deployment_name" for "AzureChatOpenAI" [cal
-  - Category: type
-  - ID: da3ef8d6
-- Line 762: mypy:Model - error: Incompatible return value type (got "list[Model]", expected "list[str]")
-  - Category: type
-  - ID: 40199ae7
-- Line 764: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: e80747e0
-- Line 766: mypy:attr-defined - error: Module "langchain_openai" has no attribute "OpenAIChat" [attr-defined]
-  - Category: type
-  - ID: e04d065b
-- Line 825: mypy:ModelInfo - error: Incompatible return value type (got "list[ModelInfo]", expected "list[str
-  - Category: type
-  - ID: fd1041d0
-- Line 827: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 0ff550cd
-- Line 839: mypy:call-arg - error: Unexpected keyword argument "model" for "ChatAnthropic" [call-arg]
-  - Category: type
-  - ID: adb29b2f
-- Line 869: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: ed500958
-- Line 905: mypy:import-untyped - error: Skipping analyzing "deepseek": module is installed, but missing library s
-  - Category: type
-  - ID: da0ea71d
-- Line 908: mypy:str - error: Returning Any from function declared to return "list[str]" [no-any-retur
-  - Category: type
-  - ID: 956ca28d
-- Line 910: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 5df22ea7
-- Line 960: mypy:str - error: Incompatible return value type (got "ModelList", expected "list[str]") [
-  - Category: type
-  - ID: 2ed1d833
-- Line 962: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 4f452041
-- Line 974: mypy:call-arg - error: Unexpected keyword argument "model" for "ChatMistralAI" [call-arg]
-  - Category: type
-  - ID: 6ab8be03
-- Line 1004: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: d3d65b47
-- Line 1046: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: d211418d
-- Line 1058: mypy:call-arg - error: Unexpected keyword argument "api_key" for "ChatCohere" [call-arg]
-  - Category: type
-  - ID: edbdd1dd
-- Line 1090: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: f3d087da
-- Line 1134: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: b433c0c2
-- Line 1180: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 7ed6174a
-- Line 1225: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: a822a3ff
-- Line 1289: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: b2a99352
-- Line 1337: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 166c3482
-- Line 1379: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 6dbe0f1d
-- Line 1427: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: decc5a53
-- Line 1471: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: eedd6cfd
-- Line 1519: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 42f89930
-- Line 1549: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: bcc0be15
-- Line 1586: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 52c7248d
-- Line 1629: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: e83c24dc
-- Line 1689: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 6a3af97e
-- Line 1692: mypy:import-not-found - error: Cannot find implementation or library stub for module named "langchain_aw
-  - Category: type
-  - ID: a23ff66d
-- Line 1738: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 93b5b5c9
-- Line 1777: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 63ee205c
-- Line 1809: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: ece3c012
-- Line 1846: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 3ebeb2e2
-- Line 1849: mypy:import-not-found - error: Cannot find implementation or library stub for module named "langchain_up
-  - Category: type
-  - ID: 9397776c
-- Line 1891: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 0c11e617
-- Line 1894: mypy:import-not-found - error: Cannot find implementation or library stub for module named "langchain_da
-  - Category: type
-  - ID: 7309e31c
-- Line 1941: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 3a4db67f
-- Line 1944: mypy:import-not-found - error: Cannot find implementation or library stub for module named "langchain_ib
-  - Category: type
-  - ID: f5a600d0
-- Line 1988: mypy:no-untyped-def - error: Function is missing a type annotation for one or more arguments [no-unty
-  - Category: type
-  - ID: 79623f4a
-- Line 1991: mypy:import-not-found - error: Cannot find implementation or library stub for module named "langchain_xa
-  - Category: type
-  - ID: 13335541
-
-## packages/haive-agents/src/haive/agents/planning/base/models.py (94 errors)
-
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 0: mypy:error -
-  - Category: type
-  - ID: ac291019
-- Line 88: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: a4c82115
-- Line 88: mypy:error - note: Use "-> None" if function does not return a value
-  - Category: type
-  - ID: 45d0f142
-- Line 92: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 385cb300
-- Line 98: mypy:no-untyped-def - error: Function is missing a return type annotation [no-untyped-def]
-  - Category: type
-  - ID: 72de948b
-- Line 137: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
-  - Category: type
-  - ID: 86756d8f
-- Line 162: mypy:has-type - error: Cannot determine type of "priority" [has-type]
-  - Category: type
-  - ID: 29badf89
-- Line 198: mypy:<type>, <type> - error: Need type annotation for "execution_context" (hint: "execution_context: d
-  - Category: type
-  - ID: c08b2f60
-- Line 310: mypy:T - error: Incompatible default for argument "items" (default has type "None", argum
-  - Category: type
-  - ID: d8c7be33
-- Line 310: mypy:error - note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its def
-  - Category: type
-  - ID: 993ebcd9
-- Line 310: mypy:error - note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically
-  - Category: type
-  - ID: 993ebcd9
-- Line 323: mypy:method-assign - error: Cannot assign to a method [method-assign]
-  - Category: type
-  - ID: 47478ecf
-- Line 327: mypy:assignment - error: Incompatible default for argument "index" (default has type "None", argum
-  - Category: type
-  - ID: 06747a7f
-- Line 327: mypy:error - note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its def
-  - Category: type
-  - ID: 337cc6b1
-- Line 327: mypy:error - note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically
-  - Category: type
-  - ID: 337cc6b1
-- Line 368: mypy:Any - error: Incompatible return value type (got "BasePlan[Any] | BaseStep | list[Base
-  - Category: type
-  - ID: fd18c5a4
-- Line 370: mypy:Any - error: Argument 1 of "append" is incompatible with supertype "builtins.list"; su
-  - Category: type
-  - ID: 4e7dbf63
-- Line 370: mypy:error - note: This violates the Liskov substitution principle
-  - Category: type
-  - ID: a0f12062
-- Line 370: mypy:error - note: See https://mypy.readthedocs.io/en/stable/common_issues.html#incompatible-
-  - Category: type
-  - ID: a0f12062
-- Line 370: mypy:Any - error: Argument 1 of "append" is incompatible with supertype "typing.MutableSequ
-  - Category: type
-  - ID: 4e7dbf63
-- Line 391: mypy:override - error: Argument 1 of "insert" is incompatible with supertype "builtins.list"; su
-  - Category: type
-  - ID: 6c0fc8ec
-- Line 391: mypy:error - note: This violates the Liskov substitution principle
-  - Category: type
-  - ID: 866e2f59
-- Line 391: mypy:error - note: See https://mypy.readthedocs.io/en/stable/common_issues.html#incompatible-
-  - Category: type
-  - ID: 866e2f59
-- Line 391: mypy:Any - error: Argument 2 of "insert" is incompatible with supertype "builtins.list"; su
-  - Category: type
-  - ID: f53bf81d
-- Line 391: mypy:Any - error: Argument 2 of "insert" is incompatible with supertype "typing.MutableSequ
-  - Category: type
-  - ID: f53bf81d
-- Line 406: mypy:Any - error: Argument 1 of "remove" is incompatible with supertype "builtins.list"; su
-  - Category: type
-  - ID: 18a98be4
-- Line 406: mypy:error - note: This violates the Liskov substitution principle
-  - Category: type
-  - ID: 239580ba
-- Line 406: mypy:error - note: See https://mypy.readthedocs.io/en/stable/common_issues.html#incompatible-
-  - Category: type
-  - ID: 239580ba
-- Line 406: mypy:Any - error: Argument 1 of "remove" is incompatible with supertype "typing.MutableSequ
-  - Category: type
-  - ID: 18a98be4
-- Line 419: mypy:override - error: Argument 1 of "pop" is incompatible with supertype "builtins.list"; super
-  - Category: type
-  - ID: 5cf18c34
-- Line 419: mypy:error - note: This violates the Liskov substitution principle
-  - Category: type
-  - ID: 3bee8747
-- Line 419: mypy:error - note: See https://mypy.readthedocs.io/en/stable/common_issues.html#incompatible-
-  - Category: type
-  - ID: 3bee8747
-- Line 424: mypy:Any - error: Argument 2 to "\_raw_insert" of "IntelligentSequence" has incompatible typ
-  - Category: type
-  - ID: f83bca03
-- Line 446: mypy:BasePlan[Any - error: Argument 1 to "\_restore_state" of "IntelligentSequence" has incompatible
-  - Category: type
-  - ID: 97798a3b
-- Line 531: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
-  - Category: type
-  - ID: f01d6299
-- Line 550: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
-  - Category: type
-  - ID: c6a98b8f
-- Line 582: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
-  - Category: type
-  - ID: 9c14edd1
-- Line 679: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
-  - Category: type
-  - ID: 688c8a1f
-- Line 685: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
-  - Category: type
-  - ID: 9270dd19
-- Line 691: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
-  - Category: type
-  - ID: da4077cb
-- Line 699: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
-  - Category: type
-  - ID: 3c47a882
-- Line 716: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
-  - Category: type
-  - ID: b6ddeac8
-- Line 733: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
-  - Category: type
-  - ID: 5a30d514
-- Line 745: mypy:BasePlan[Any - error: Incompatible return value type (got "list[BasePlan[Any] | BaseStep | list
-  - Category: type
-  - ID: c4f04426
-- Line 755: mypy:Any - error: Item "BaseStep" of "BasePlan[Any] | Any | BaseStep | list[BaseStep] | Cal
-  - Category: type
-  - ID: c0c569aa
-- Line 755: mypy:BaseStep - error: Item "list[BaseStep]" of "BasePlan[Any] | Any | BaseStep | list[BaseStep]
-  - Category: type
-  - ID: b1b9ddb6
-- Line 755: mypy:Any - error: Item "function" of "BasePlan[Any] | Any | BaseStep | list[BaseStep] | Cal
-  - Category: type
-  - ID: c0c569aa
-- Line 755: mypy:Any - error: Item "str" of "BasePlan[Any] | Any | BaseStep | list[BaseStep] | Callable
-  - Category: type
-  - ID: c0c569aa
-- Line 755: mypy:str, Any - error: Item "dict[str, Any]" of "BasePlan[Any] | Any | BaseStep | list[BaseStep]
-  - Category: type
-  - ID: 577bd4d7
-- Line 775: mypy:no-any-return - error: Returning Any from function declared to return "bool" [no-any-return]
-  - Category: type
-  - ID: 7737dbe6
-- Line 779: mypy:no-any-return - error: Returning Any from function declared to return "bool" [no-any-return]
-  - Category: type
-  - ID: 959cd709
-- Line 804: mypy:unreachable - error: Statement is unreachable [unreachable]
-  - Category: type
-  - ID: dcc18661
-- Line 810: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
-  - Category: type
-  - ID: fb3a3dd4
-- Line 854: mypy:no-untyped-def - error: Function is missing a type annotation [no-untyped-def]
-  - Category: type
-  - ID: 2720c22a
-- Line 908: mypy:index - error: Unsupported target for indexed assignment ("object") [index]
-  - Category: type
-  - ID: dae54ac6
-- Line 908: mypy:attr-defined - error: "object" has no attribute "get" [attr-defined]
-  - Category: type
-  - ID: 061e343b
-- Line 914: mypy:index - error: Unsupported target for indexed assignment ("object") [index]
-  - Category: type
-  - ID: 16436aad
-- Line 914: mypy:attr-defined - error: "object" has no attribute "get" [attr-defined]
-  - Category: type
-  - ID: 2b20da26
-- Line 919: mypy:index - error: Unsupported target for indexed assignment ("object") [index]
-  - Category: type
-  - ID: f96f5412
-- Line 919: mypy:attr-defined - error: "object" has no attribute "get" [attr-defined]
-  - Category: type
-  - ID: 702a4e74
-- Line 923: mypy:assignment - error: Incompatible default for argument "mode" (default has type "None", argume
-  - Category: type
-  - ID: 58efedf6
-- Line 923: mypy:error - note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its def
-  - Category: type
-  - ID: 5c238892
-- Line 923: mypy:error - note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically
-  - Category: type
-  - ID: 5c238892
-- Line 1063: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
-  - Category: type
-  - ID: 2ff8e41d
-- Line 1071: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
-  - Category: type
-  - ID: 6caa0d7c
-- Line 1085: mypy:prop-decorator - error: Decorators on top of @property are not supported [prop-decorator]
-  - Category: type
-  - ID: 128ae264
-- Line 1090: mypy:Any - error: Incompatible return value type (got "BasePlan[Any] | bool | None", expect
-  - Category: type
-  - ID: 637a46eb

@@ -1,11 +1,8 @@
 # Error Index by Type
 
-## AttributeError (5 errors)
 
-### haive-agents
+## AttributeError (4 errors)
 
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/react_class/react/agent.py:231` - 'NoneType' object has no attribute 'items'
-  - ID: c029e7ba
 
 ### haive-prebuilt
 
@@ -18,31 +15,8 @@
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/essay_grading/agent.py:0` - 'NoneType' object has no attribute 'with_structured_output'
   - ID: 4f8fafb0
 
-## ImportError (346 errors)
+## ImportError (120 errors)
 
-### haive-agents
-
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/qa_agent.py:11` - cannot import name 'SimpleAgentConfig' from 'haive.agents.simple.agent' (/home/will/Projects/haive/b
-  - ID: 05ee1572
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/routing_agent.py:7` - cannot import name 'SimpleAgentSchema' from 'haive.agents.simple.agent' (/home/will/Projects/haive/b
-  - ID: 2974bd6b
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/reflection/state.py:0` - cannot import name 'add_improvement' from 'haive.agents.reflection.state' (/home/will/Projects/haive
-  - ID: 3cd4c60b
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/reflection/multi_agent_reflection.py:0` - cannot import name 'add_improvement' from 'haive.agents.reflection.state' (/home/will/Projects/haive
-  - ID: 551f0775
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/reflection/__init__.py:32` - cannot import name 'add_improvement' from 'haive.agents.reflection.state' (/home/will/Projects/haive
-  - ID: c3d979e9
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/reflection/message_transformer_posthook.py:0` - cannot import name 'add_improvement' from 'haive.agents.reflection.state' (/home/will/Projects/haive
-  - ID: b2ddf194
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/reflection/structured_output.py:0` - cannot import name 'add_improvement' from 'haive.agents.reflection.state' (/home/will/Projects/haive
-  - ID: 4f3994de
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/example_integrated.py:0` - cannot import name 'build_graph' from 'haive.agents.supervisor.simple_supervisor' (/home/will/Projec
-  - ID: a916a0b3
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/dynamic_tool_discovery_supervisor.py:0` - cannot import name 'build_graph' from 'haive.agents.supervisor.simple_supervisor' (/home/will/Projec
-  - ID: a1f4a113
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/example_dynamic_supervisor.py:0` - cannot import name 'build_graph' from 'haive.agents.supervisor.simple_supervisor' (/home/will/Projec
-  - ID: de7ee543
-- ... and 190 more
 
 ### haive-core
 
@@ -83,8 +57,6 @@
 
 ### haive-games
 
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/benchmark.py:16` - cannot import name 'MonopolyGame' from 'haive.games.monopoly.game' (/home/will/Projects/haive/backen
-  - ID: 705c576c
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/example.py:19` - cannot import name 'GameAgent' from 'haive.games.framework' (/home/will/Projects/haive/backend/haive
   - ID: 4ba84a90
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/clue/controller.py:11` - cannot import name 'AugLLMEngine' from 'haive.core.engine.aug_llm' (/home/will/Projects/haive/backen
@@ -95,26 +67,22 @@
   - ID: 1e034ebc
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/mafia/aug_llms.py:25` - cannot import name 'MafiaAnalysis' from 'haive.games.mafia.models' (/home/will/Projects/haive/backen
   - ID: 26e2deb4
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/monopoly/config.py:0` - cannot import name 'MonopolyGame' from 'haive.games.monopoly.game' (/home/will/Projects/haive/backen
-  - ID: 9a5d3fd1
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/monopoly/simple_demo.py:0` - cannot import name 'MonopolyGame' from 'haive.games.monopoly.game' (/home/will/Projects/haive/backen
-  - ID: 7c29447e
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/monopoly/standalone_demo.py:0` - cannot import name 'MonopolyGame' from 'haive.games.monopoly.game' (/home/will/Projects/haive/backen
-  - ID: a95b051b
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/monopoly/configurable_config.py:0` - cannot import name 'MonopolyGame' from 'haive.games.monopoly.game' (/home/will/Projects/haive/backen
-  - ID: 116cc1a0
-- ... and 25 more
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/among_us/configurable_config.py:12` - cannot import name 'AmongUsConfig' from 'haive.games.among_us.config' (/home/will/Projects/haive/bac
+  - ID: 5b8b6ccc
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/chess/ui.py:18` - cannot import name 'ChessAgentConfig' from 'haive.games.chess.config' (/home/will/Projects/haive/bac
+  - ID: 872f9022
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/single_player/state_manager.py:5` - cannot import name 'WordConnectionsState' from 'haive.games.base.state' (/home/will/Projects/haive/b
+  - ID: f1959abd
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/cards/standard/bs/config.py:7` - cannot import name 'Any' from 'haive.games.cards.standard.bs.models' (/home/will/Projects/haive/back
+  - ID: 3bff8759
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/core/base/config.py:6` - cannot import name 'GameState' from 'haive.games.core.base.state' (/home/will/Projects/haive/backend
+  - ID: 1eeb208b
+- ... and 4 more
 
 ### haive-mcp
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/manager.py:74` - cannot import name 'stdio_client' from 'langchain_mcp_adapters.client' (/home/will/Projects/haive/ba
   - ID: 5da62c3f
-- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_selector.py:0` - cannot import name 'explain_recommendation' from 'haive.mcp.tools.ai_assistant' (/home/will/Projects
-  - ID: b1834300
-- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/__init__.py:3` - cannot import name 'explain_recommendation' from 'haive.mcp.tools.ai_assistant' (/home/will/Projects
-  - ID: ed537f45
-- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_tester.py:0` - cannot import name 'explain_recommendation' from 'haive.mcp.tools.ai_assistant' (/home/will/Projects
-  - ID: eb8d087f
 - `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integration/aug_llm_mcp_extension.py:16` - cannot import name 'stdio_client' from 'langchain_mcp_adapters.client' (/home/will/Projects/haive/ba
   - ID: da96ee58
 - `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/http_server.py:15` - cannot import name 'SSEServerTransport' from 'mcp.server.sse' (/home/will/Projects/haive/backend/hai
@@ -127,12 +95,13 @@
   - ID: 6bbfec1b
 - `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/example_server_fastmcp.py:0` - cannot import name 'SSEServerTransport' from 'mcp.server.sse' (/home/will/Projects/haive/backend/hai
   - ID: 2b80ef85
-- ... and 2 more
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py:0` - cannot import name 'compute_content_hash' from 'haive.mcp.utils.extract_mcp_github_repos' (/home/wil
+  - ID: 30ece397
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/utils/__init__.py:3` - cannot import name 'compute_content_hash' from 'haive.mcp.utils.extract_mcp_github_repos' (/home/wil
+  - ID: 0f4504fd
 
 ### haive-prebuilt
 
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/contract_analysis/agent.py:1` - cannot import name 'AgentArchitecture' from 'haive.agents.base' (/home/will/Projects/haive/backend/h
-  - ID: 2ea4b423
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/nodes.py:3` - cannot import name 'Send' from 'langgraph.graph' (/home/will/Projects/haive/backend/haive/.venv/lib/
   - ID: 14c5478a
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/agent.py:4` - cannot import name 'Send' from 'langgraph.graph' (/home/will/Projects/haive/backend/haive/.venv/lib/
@@ -148,29 +117,30 @@
 
 ### haive-tools
 
-- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/google_calendar.py:0` - cannot import name 'create_client' from 'haive.tools.tools.toolkits.amadues_toolkit' (/home/will/Pro
+- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/google_calendar.py:0` - cannot import name 'from_config' from 'haive.tools.tools.toolkits.base' (/home/will/Projects/haive/b
   - ID: 256f79bd
-- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/base.py:0` - cannot import name 'create_client' from 'haive.tools.tools.toolkits.amadues_toolkit' (/home/will/Pro
-  - ID: c8a39fb3
-- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/nasa_toolkit.py:0` - cannot import name 'create_client' from 'haive.tools.tools.toolkits.amadues_toolkit' (/home/will/Pro
+- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/nasa_toolkit.py:0` - cannot import name 'from_config' from 'haive.tools.tools.toolkits.base' (/home/will/Projects/haive/b
   - ID: e04deb1f
-- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py:0` - cannot import name 'create_client' from 'haive.tools.tools.toolkits.amadues_toolkit' (/home/will/Pro
+- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py:0` - cannot import name 'from_config' from 'haive.tools.tools.toolkits.base' (/home/will/Projects/haive/b
   - ID: 7a368698
-- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/nla_toolkit.py:0` - cannot import name 'create_client' from 'haive.tools.tools.toolkits.amadues_toolkit' (/home/will/Pro
+- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/nla_toolkit.py:0` - cannot import name 'from_config' from 'haive.tools.tools.toolkits.base' (/home/will/Projects/haive/b
   - ID: ef75fb34
-- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/gmail_toolkit.py:0` - cannot import name 'create_client' from 'haive.tools.tools.toolkits.amadues_toolkit' (/home/will/Pro
+- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/gmail_toolkit.py:0` - cannot import name 'from_config' from 'haive.tools.tools.toolkits.base' (/home/will/Projects/haive/b
   - ID: 3b5ab859
-- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/twilio_toolkit.py:0` - cannot import name 'create_client' from 'haive.tools.tools.toolkits.amadues_toolkit' (/home/will/Pro
+- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/twilio_toolkit.py:0` - cannot import name 'from_config' from 'haive.tools.tools.toolkits.base' (/home/will/Projects/haive/b
   - ID: f6d6d42e
-- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/free_to_game_toolkit.py:0` - cannot import name 'create_client' from 'haive.tools.tools.toolkits.amadues_toolkit' (/home/will/Pro
+- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/free_to_game_toolkit.py:0` - cannot import name 'from_config' from 'haive.tools.tools.toolkits.base' (/home/will/Projects/haive/b
   - ID: 7a3152a5
-- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/rick_and_morty_toolkit.py:0` - cannot import name 'create_client' from 'haive.tools.tools.toolkits.amadues_toolkit' (/home/will/Pro
+- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/rick_and_morty_toolkit.py:0` - cannot import name 'from_config' from 'haive.tools.tools.toolkits.base' (/home/will/Projects/haive/b
   - ID: 162a0d3c
-- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/yugiioh_toolkit.py:0` - cannot import name 'create_client' from 'haive.tools.tools.toolkits.amadues_toolkit' (/home/will/Pro
+- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/yugiioh_toolkit.py:0` - cannot import name 'from_config' from 'haive.tools.tools.toolkits.base' (/home/will/Projects/haive/b
   - ID: 8800e74a
-- ... and 53 more
+- `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/citydsk_toolkit.py:0` - cannot import name 'from_config' from 'haive.tools.tools.toolkits.base' (/home/will/Projects/haive/b
+  - ID: 71199624
+- ... and 52 more
 
 ## KeyError (3 errors)
+
 
 ### haive-prebuilt
 
@@ -181,31 +151,32 @@
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/agent.py:3` - 'CORE_API_KEY'
   - ID: 1ac72618
 
-## ModuleNotFoundError (483 errors)
+## ModuleNotFoundError (1367 errors)
+
 
 ### haive-agents
 
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/state.py:4` - No module named 'haive.agents.web_nav'
-  - ID: 45691ebf
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/task_analysis/__init__.py:3` - No module named 'task_analysis'
-  - ID: 60cb8143
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/task_analysis/agent.py:0` - No module named 'task_analysis'
-  - ID: 12949897
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/task_analysis/prompts.py:0` - No module named 'task_analysis'
-  - ID: 999ef40f
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/sequential/example.py:19` - No module named 'haive_agents_dep'
-  - ID: 431ce803
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/simple/factory.v2.py:0` - No module named 'haive.agents.simple.factory.v2'; 'haive.agents.simple.factory' is not a package
-  - ID: c3559ee5
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/simple/clean_enhanced_simple.v2.py:0` - No module named 'haive.agents.simple.clean*enhanced_simple.v2'; 'haive.agents.simple.clean_enhanced*
-  - ID: ba2c0022
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/simple/ultra_lazy_agent.v2.py:0` - No module named 'haive.agents.simple.ultra_lazy_agent.v2'; 'haive.agents.simple.ultra_lazy_agent' is
-  - ID: b8a5c5d7
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/simple/enhanced_simple_minimal.v2.py:0` - No module named 'haive.agents.simple.enhanced_simple_minimal.v2'; 'haive.agents.simple.enhanced_simp
-  - ID: 3ec46401
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/simple/agent_v2.v2.py:0` - No module named 'haive.agents.simple.agent_v2.v2'; 'haive.agents.simple.agent_v2' is not a package
-  - ID: cb9a80ec
-- ... and 261 more
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/state.py:0` - No module named 'haive.agents.simple.models'
+  - ID: 6aecc315
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base.py:0` - No module named 'haive.agents.simple.models'
+  - ID: 14667ec9
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/config.py:0` - No module named 'haive.agents.simple.models'
+  - ID: 6a49f067
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/models.py:0` - No module named 'haive.agents.simple.models'
+  - ID: 3306a833
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/factory.py:0` - No module named 'haive.agents.simple.models'
+  - ID: 238ac816
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/tool_utils.py:0` - No module named 'haive.agents.simple.models'
+  - ID: ac0f744b
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/__init__.py:98` - No module named 'haive.agents.simple.models'
+  - ID: 6d37f5aa
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/state_wrapper.py:0` - No module named 'haive.agents.simple.models'
+  - ID: 165b554f
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/qa_agent.py:0` - No module named 'haive.agents.simple.models'
+  - ID: 910e2871
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/agent.py:0` - No module named 'haive.agents.simple.models'
+  - ID: ce782d42
+- ... and 1098 more
 
 ### haive-core
 
@@ -229,7 +200,7 @@
   - ID: ca4261e4
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/document/transformers/types.py:0` - No module named 'haive.core.common.config'
   - ID: 9368ac49
-- ... and 60 more
+- ... and 62 more
 
 ### haive-dataflow
 
@@ -257,6 +228,8 @@
 
 ### haive-games
 
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/benchmark.py:16` - No module named 'haive.games.monopoly.test'
+  - ID: c7f5847d
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/llm_config_factory.py:12` - No module named 'haive.games.models'
   - ID: 9392ca51
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/common/voting_system.py:18` - No module named 'haive.games.simple'
@@ -271,61 +244,59 @@
   - ID: 787f491b
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/api/general_api.py:20` - No module named 'haive.dataflow.api.engine'
   - ID: c3ffbd96
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/chess/example_configurable.py:12` - No module named 'haive.games.models'
-  - ID: cb554f28
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/chess/llm_utils.py:14` - No module named 'haive.games.models'
-  - ID: 6364c5f6
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/chess/api_example.py:20` - No module named 'haive.games.models'
-  - ID: 2ed6be35
-- ... and 36 more
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/debate_v2/example_with_judges.py:0` - No module named 'haive.agents.simple.models'
+  - ID: 40fe29bd
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/debate_v2/__init__.py:3` - No module named 'haive.agents.simple.models'
+  - ID: b060b7fc
+- ... and 46 more
 
 ### haive-mcp
 
-- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py:16` - No module named 'plotly'
-  - ID: 2679118b
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py:18` - No module named 'csv_viewer'
+  - ID: 0069842a
 - `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/haive_agent_mcp_integration.py:16` - No module named 'fastmcp_runner'
   - ID: c051b9c1
-- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/dynamic_mcp_tool.py:22` - No module named 'mixins'
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mcp_simple_tool_agent.py:12` - No module named 'haive.agents.simple.models'
+  - ID: d986af01
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/enhanced_parent_self_query_retriever.py:26` - No module named 'haive.agents.simple.models'
+  - ID: 5b6b8fa5
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/simple_faiss_retriever.py:17` - No module named 'haive.agents.simple.models'
+  - ID: df9c82e5
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/dynamic_mcp_tool.py:22` - No module named 'haive.agents.simple.models'
   - ID: 2ff7311e
-- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/csv_viewer.py:15` - No module named 'streamlit'
-  - ID: 4700599a
-- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py:24` - No module named 'plotly'
-  - ID: 21e5ec99
-- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/production_mcp_tool.py:24` - No module named 'mixins'
-  - ID: a427cdd0
-- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/cli.py:0` - No module named 'mixins'
-  - ID: 6583be8b
-- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/mcp_agent.py:0` - No module named 'mixins'
-  - ID: 710d94a0
-- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py:0` - No module named 'mixins'
-  - ID: 1dddcc33
-- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/__init__.py:3` - No module named 'mixins'
-  - ID: 3e458bb5
-- ... and 14 more
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mcp_rag_agent.py:13` - No module named 'haive.agents.simple.models'
+  - ID: 885e92a4
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/working_enhanced_retriever.py:21` - No module named 'haive.agents.simple.models'
+  - ID: aae31a40
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py:24` - No module named 'haive.agents.simple.models'
+  - ID: 32545dcb
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py:26` - No module named 'csv_viewer'
+  - ID: 8370dfaa
+- ... and 29 more
 
 ### haive-prebuilt
 
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/project_manager/agent.py:1` - No module named 'haive.agents.project_manager'
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/project_manager/agent.py:1` - No module named 'haive.agents.simple.models'
   - ID: 3b31adce
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/contract_analysis/agent.py:1` - No module named 'haive.agents.simple.models'
+  - ID: dadd86cd
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/state.py:7` - No module named 'haive.haive'
   - ID: 2b2afb1a
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:6` - No module named 'pymupdf4llm'
-  - ID: 7972a531
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/agent.py:7` - No module named 'pymupdf4llm'
-  - ID: eef9d47a
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:31` - No module named 'haive.haive'
+  - ID: a53b565f
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/agent.py:4` - No module named 'haive.agents.simple.models'
+  - ID: 2adb8669
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/startup/agent.py:16` - No module named 'haive.prebuilt.startup.business_model_subgraph'
   - ID: e3f8721d
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/state.py:7` - No module named 'haive.haive'
   - ID: 36060875
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/misc/agent_utilities_prompts.py:9` - No module named 'haive.agents.simple.models'
+  - ID: bb36395b
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/misc/__init__.py:50` - No module named 'haive.agents.simple.models'
+  - ID: 2f42334f
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/company_researcher/config.py:15` - No module named 'haive.prebuilt.prompts'
   - ID: 3f432f2f
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/company_researcher/agent.py:7` - No module named 'haive.prebuilt.prompts'
-  - ID: 02ffec93
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/engines.py:1` - No module named 'haive.agents.react_agent2'
-  - ID: 420b1deb
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/config.py:7` - No module named 'haive.haive'
-  - ID: febdcad3
-- ... and 7 more
+- ... and 27 more
 
 ### haive-tools
 
@@ -340,31 +311,8 @@
 - `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/ionic_tool.py:19` - No module named 'ionic_langchain'
   - ID: e627bd4f
 
-## NameError (47 errors)
+## NameError (22 errors)
 
-### haive-agents
-
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/smart_parsing_example.py:21` - Fields must not use names with leading underscores; e.g., use 'event_emitter' instead of '\_event_emi
-  - ID: 4fa74fbe
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/enhanced_plan_execute_v6.py:90` - Fields must not use names with leading underscores; e.g., use 'event_emitter' instead of '\_event_emi
-  - ID: 51872639
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/simple/example.v2.py:0` - name 'Console' is not defined
-  - ID: d8625486
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/simple/example.py:38` - name 'Console' is not defined
-  - ID: ffce57b0
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/self_healing_code/state.py:0` - name 'AgentArchitectureConfig' is not defined
-  - ID: d019d1d3
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - name 'AgentArchitectureConfig' is not defined
-  - ID: aa111375
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/self_healing_code/agent.py:4` - name 'AgentArchitectureConfig' is not defined
-  - ID: 753747ba
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/self_healing_code/branches.py:0` - name 'AgentArchitectureConfig' is not defined
-  - ID: 9a59a6cd
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/research/storm/related_topics_generator/prompt.py:1` - name 'gen_related_topics_prompt' is not defined
-  - ID: 541c60cb
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/research/storm/section_writer/agent.py:2` - name 'ChatPromptTemplate' is not defined
-  - ID: ecb5e6ee
-- ... and 16 more
 
 ### haive-core
 
@@ -403,75 +351,26 @@
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/single_player/crossword_puzzle/game/board.py:5` - name 'GridBoard' is not defined
   - ID: 74d1cdd8
 
-## PydanticSchemaGenerationError (2 errors)
+### haive-prebuilt
 
-### haive-agents
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/simple/questiona_and_answer_generator/models.py:6` - Unexpected field with name 'question'; only 'root' is allowed as a field of a `RootModel`
+  - ID: 3eed350e
 
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/enhanced_clean_multi_agent.py:43` - Unable to generate pydantic-core schema for <class 'haive.agents.simple.enhanced_simple_real.Enhance
-  - ID: 184e32fa
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/archive/enhanced_clean_multi_agent.py:35` - Unable to generate pydantic-core schema for <class 'haive.agents.simple.enhanced_simple_real.Enhance
-  - ID: c1efdd3f
+## PydanticUserError (1 errors)
 
-## PydanticUndefinedAnnotation (1 errors)
-
-### haive-agents
-
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/react/agent_v4.py:64` - name 'Agent' is not defined
-
-For further information visit https://errors.pydantic.dev/2.11/u/undefi
-
-- ID: 7e229027
-
-## PydanticUserError (3 errors)
-
-### haive-agents
-
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/archive/experiments/implementations/clean_multi_agent.py:159` - `const` is removed, use `Literal` instead
-
-For further information visit https://errors.pydantic.dev
-
-- ID: 3065c61c
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/experiments/implementations/clean_multi_agent.py:159` - `const` is removed, use `Literal` instead
-
-For further information visit https://errors.pydantic.dev
-
-- ID: 2addf9ef
 
 ### haive-tools
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/discord_tools.py:28` - Field 'name' defined on a base class was overridden by a non-annotated attribute. All field definiti
   - ID: fe3e7e69
 
-## TypeError (58 errors)
+## TypeError (36 errors)
 
-### haive-agents
-
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory_reorganized/models/base.py:21` - metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclas
-  - ID: fdf71564
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/models_dir/base.py:8` - metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclas
-  - ID: d7b3da3e
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/models_dir/__init__.py:3` - metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclas
-  - ID: 66442915
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/models_dir/procedural/models.py:0` - metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclas
-  - ID: 00004f61
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/models_dir/procedural/__init__.py:0` - metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclas
-  - ID: 452e0635
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/models_dir/semantic/models.py:0` - metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclas
-  - ID: 5e68def0
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/models_dir/semantic/__init__.py:0` - metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclas
-  - ID: 9460e058
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/models_dir/semantic/mixins.py:0` - metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclas
-  - ID: 4e6d298b
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/models_dir/episodic/models.py:0` - metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclas
-  - ID: 334a5ea2
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/models_dir/episodic/__init__.py:0` - metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclas
-  - ID: 22d7485c
-- ... and 1 more
 
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/types/tree_leaf.py:52` - Cannot create a consistent method resolution
-  order (MRO) for bases BaseModel, Generic, NodeMixin
+order (MRO) for bases BaseModel, Generic, NodeMixin
   - ID: 7abdfdaa
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/schema/typed_state_schema.py:24` - All parameters must be present on typing.Generic; you should inherit from typing.Generic[~TEngine, ~
   - ID: f9ad2399
@@ -481,8 +380,6 @@ For further information visit https://errors.pydantic.dev
   - ID: f7284e51
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/document/loaders/sources/database/types.py:4` - new enumerations should be created as `EnumName([mixin_type, ...] [data_type,] enum_type)`
   - ID: 19a1fee7
-- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/node/stateful_integration_example.py:12` - unsupported operand type(s) for |: 'builtin_function_or_method' and 'NoneType'
-  - ID: dfde4ab3
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/node/stateful_node_config.py:31` - unsupported operand type(s) for |: 'builtin_function_or_method' and 'NoneType'
   - ID: 895d2211
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/gb/__init__.py:21` - Callable must be used as Callable[[arg, ...], result].
@@ -492,9 +389,9 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-games
 
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/clue/configurable_config.py:13` - Can't instantiate abstract class CluePromptGenerator without an implementation for abstract methods
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/clue/configurable_config.py:13` - Can't instantiate abstract class CluePromptGenerator without an implementation for abstract methods 
   - ID: dc4c604b
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/clue/generic_engines.py:112` - Can't instantiate abstract class CluePromptGenerator without an implementation for abstract methods
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/clue/generic_engines.py:112` - Can't instantiate abstract class CluePromptGenerator without an implementation for abstract methods 
   - ID: 76e37ceb
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/mastermind/configurable_config.py:14` - Can't instantiate abstract class MastermindPromptGenerator without an implementation for abstract me
   - ID: 65a92507
@@ -518,118 +415,78 @@ For further information visit https://errors.pydantic.dev
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/taskifier/agent.py:12` - NoneType takes no arguments
   - ID: 74a6653c
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/query/query_to_sql.py:33` - BaseModel.**init**() takes 1 positional argument but 2 were given
-  - ID: 6c21446a
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/query/query_batch.py:38` - BaseModel.**init**() takes 1 positional argument but 2 were given
-  - ID: 1c4763bd
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/query/query_type_detector.py:42` - BaseModel.**init**() takes 1 positional argument but 2 were given
-  - ID: 59679cab
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/query/query_enhance.py:37` - BaseModel.**init**() takes 1 positional argument but 2 were given
-  - ID: 2abce58a
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/query/query_rewriter.py:35` - BaseModel.**init**() takes 1 positional argument but 2 were given
-  - ID: 1bff6558
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/query/query_decomposer.py:35` - BaseModel.**init**() takes 1 positional argument but 2 were given
-  - ID: 72647ffa
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/content/document_extractor.py:48` - BaseModel.**init**() takes 1 positional argument but 2 were given
-  - ID: 03d6b699
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/content/summarizer.py:16` - BaseModel.**init**() takes 1 positional argument but 2 were given
-  - ID: ff0750bd
-- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/content/qa_for_rag.py:47` - BaseModel.**init**() takes 1 positional argument but 2 were given
-  - ID: 8545065f
-- ... and 1 more
 
 ### haive-tools
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/brave_search.py:24` - 'module' object is not callable
   - ID: 71409bee
 
-## ValidationError (8 errors)
+## ValidationError (2 errors)
 
-### haive-agents
-
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/simple/debug.v2.py:0` - 1 validation error for AugLLMConfig
-  system_prompt
-  Extra inputs are not permitted [type=extra_forbi
-  - ID: 4902d57d
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/simple/debug.py:26` - 1 validation error for AugLLMConfig
-  system_prompt
-  Extra inputs are not permitted [type=extra_forbi
-  - ID: 07492422
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/v2/state.py:0` - 2 validation errors for AugLLMConfig
-  structured_output_model_version
-  Extra inputs are not permitte
-  - ID: 94cfbe5e
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/v2/engines.py:0` - 2 validation errors for AugLLMConfig
-  structured_output_model_version
-  Extra inputs are not permitte
-  - ID: eb3520f0
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/v2/__init__.py:3` - 2 validation errors for AugLLMConfig
-  structured_output_model_version
-  Extra inputs are not permitte
-  - ID: 44ab0b66
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/v2/agent.py:26` - 2 validation errors for AugLLMConfig
-  structured_output_model_version
-  Extra inputs are not permitte
-  - ID: 6cb01f88
 
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/node/test.py:21` - 1 validation error for AugLLMConfig
-  system_prompt
+system_prompt
   Extra inputs are not permitted [type=extra_forbi
   - ID: 33ed920b
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/routers/test.py:3` - 2 validation errors for StateValueCondition
-  key
-  Field required [type=missing, input*value={'state*
+key
+  Field required [type=missing, input_value={'state_
   - ID: 9b46a8f0
 
 ## mypy:'=', '!=', '>', '<', '>=', '<=' (1 errors)
+
 
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/models.py:91` - error: Returning Any from function declared to return "Literal['=', '!=', '>', '<', '>=', '<='] | No
   - ID: aff0287a
 
-## mypy:'**end**' (4 errors)
+## mypy:'__end__' (4 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agent.py:520` - error: Returning Any from function declared to return "str | Literal['__end__']" [no-any-return]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agent.py:520` - error: Returning Any from function declared to return "str | Literal['__end__']"  [no-any-return]
   - ID: 2b51f900
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agent.py:534` - error: Incompatible return value type (got "str", expected "Literal['__end__'] | list[Send]") [retu
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agent.py:534` - error: Incompatible return value type (got "str", expected "Literal['__end__'] | list[Send]")  [retu
   - ID: adb56495
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agent.py:543` - error: Incompatible return value type (got "str", expected "Literal['__end__'] | list[Send]") [retu
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agent.py:543` - error: Incompatible return value type (got "str", expected "Literal['__end__'] | list[Send]")  [retu
   - ID: febab021
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agent.py:590` - error: Returning Any from function declared to return "str | Literal['__end__']" [no-any-return]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agent.py:590` - error: Returning Any from function declared to return "str | Literal['__end__']"  [no-any-return]
   - ID: 30ec5330
 
 ## mypy:'after' (4 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:67` - note: def field_validator(str, /, \*fields: str, mode: Literal['after'] = ..., check_fields: bool
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:67` - note:     def field_validator(str, /, *fields: str, mode: Literal['after'] = ..., check_fields: bool
   - ID: cda3136a
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:80` - note: def field_validator(str, /, \*fields: str, mode: Literal['after'] = ..., check_fields: bool
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:80` - note:     def field_validator(str, /, *fields: str, mode: Literal['after'] = ..., check_fields: bool
   - ID: f6d8ee01
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:90` - note: def field_validator(str, /, \*fields: str, mode: Literal['after'] = ..., check_fields: bool
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:90` - note:     def field_validator(str, /, *fields: str, mode: Literal['after'] = ..., check_fields: bool
   - ID: dee944cc
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:105` - note: def field_validator(str, /, \*fields: str, mode: Literal['after'] = ..., check_fields: bool
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:105` - note:     def field_validator(str, /, *fields: str, mode: Literal['after'] = ..., check_fields: bool
   - ID: 1fd6a195
 
 ## mypy:'before', 'plain' (4 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:67` - note: def field_validator(str, /, \*fields: str, mode: Literal['before', 'plain'], check_fields:
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:67` - note:     def field_validator(str, /, *fields: str, mode: Literal['before', 'plain'], check_fields: 
   - ID: a18a88c1
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:80` - note: def field_validator(str, /, \*fields: str, mode: Literal['before', 'plain'], check_fields:
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:80` - note:     def field_validator(str, /, *fields: str, mode: Literal['before', 'plain'], check_fields: 
   - ID: d8eae43c
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:90` - note: def field_validator(str, /, \*fields: str, mode: Literal['before', 'plain'], check_fields:
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:90` - note:     def field_validator(str, /, *fields: str, mode: Literal['before', 'plain'], check_fields: 
   - ID: 29b28819
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:105` - note: def field_validator(str, /, \*fields: str, mode: Literal['before', 'plain'], check_fields:
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:105` - note:     def field_validator(str, /, *fields: str, mode: Literal['before', 'plain'], check_fields: 
   - ID: 203e5d0e
 
 ## mypy:'beginner', 'intermediate', 'expert', 'world-class' (1 errors)
+
 
 ### haive-agents
 
@@ -638,12 +495,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:'critical', 'high', 'medium', 'low' (1 errors)
 
+
 ### haive-prebuilt
 
 - `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:450` - error: Argument "severity" to "ProblemStatement" has incompatible type "str"; expected "Literal['cri
   - ID: 27a3e0ed
 
 ## mypy:'off', 'moderate', 'strict' (1 errors)
+
 
 ### haive-core
 
@@ -652,6 +511,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:'open', 'closed', 'all' (1 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/research/open_perplexity/structured_tools.py:470` - error: Argument "state" to "EnhancedGitHubIssuesLoader" has incompatible type "str"; expected "Liter
@@ -659,24 +519,26 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:'pass' (7 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/dominoes/state_manager.py:109` - error: Item "str" of "Any | Literal['pass']" has no attribute "tile" [union-attr]
+- `packages/haive-games/src/haive/games/dominoes/state_manager.py:109` - error: Item "str" of "Any | Literal['pass']" has no attribute "tile"  [union-attr]
   - ID: 837fb2d5
-- `packages/haive-games/src/haive/games/dominoes/state_manager.py:110` - error: Item "str" of "Any | Literal['pass']" has no attribute "location" [union-attr]
+- `packages/haive-games/src/haive/games/dominoes/state_manager.py:110` - error: Item "str" of "Any | Literal['pass']" has no attribute "location"  [union-attr]
   - ID: 87b741fa
-- `packages/haive-games/src/haive/games/dominoes/agent.py:210` - error: Item "str" of "Any | Literal['pass']" has no attribute "tile" [union-attr]
+- `packages/haive-games/src/haive/games/dominoes/agent.py:210` - error: Item "str" of "Any | Literal['pass']" has no attribute "tile"  [union-attr]
   - ID: 27dc5972
-- `packages/haive-games/src/haive/games/dominoes/agent.py:211` - error: Item "str" of "Any | Literal['pass']" has no attribute "tile" [union-attr]
+- `packages/haive-games/src/haive/games/dominoes/agent.py:211` - error: Item "str" of "Any | Literal['pass']" has no attribute "tile"  [union-attr]
   - ID: 4bd5619b
-- `packages/haive-games/src/haive/games/dominoes/agent.py:214` - error: Item "str" of "Any | Literal['pass']" has no attribute "tile" [union-attr]
+- `packages/haive-games/src/haive/games/dominoes/agent.py:214` - error: Item "str" of "Any | Literal['pass']" has no attribute "tile"  [union-attr]
   - ID: 5b5a37d8
-- `packages/haive-games/src/haive/games/dominoes/agent.py:215` - error: Item "str" of "Any | Literal['pass']" has no attribute "tile" [union-attr]
+- `packages/haive-games/src/haive/games/dominoes/agent.py:215` - error: Item "str" of "Any | Literal['pass']" has no attribute "tile"  [union-attr]
   - ID: 7d7151b9
-- `packages/haive-games/src/haive/games/dominoes/agent.py:217` - error: Item "str" of "Any | Literal['pass']" has no attribute "location" [union-attr]
+- `packages/haive-games/src/haive/games/dominoes/agent.py:217` - error: Item "str" of "Any | Literal['pass']" has no attribute "location"  [union-attr]
   - ID: 98902c71
 
 ## mypy:'v1', 'v2' (2 errors)
+
 
 ### haive-agents
 
@@ -687,62 +549,65 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:'wrap' (4 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:67` - note: def field_validator(str, /, \*fields: str, mode: Literal['wrap'], check_fields: bool | None
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:67` - note:     def field_validator(str, /, *fields: str, mode: Literal['wrap'], check_fields: bool | None
   - ID: bba760fe
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:80` - note: def field_validator(str, /, \*fields: str, mode: Literal['wrap'], check_fields: bool | None
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:80` - note:     def field_validator(str, /, *fields: str, mode: Literal['wrap'], check_fields: bool | None
   - ID: 65ab254e
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:90` - note: def field_validator(str, /, \*fields: str, mode: Literal['wrap'], check_fields: bool | None
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:90` - note:     def field_validator(str, /, *fields: str, mode: Literal['wrap'], check_fields: bool | None
   - ID: 39f2bbb0
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:105` - note: def field_validator(str, /, \*fields: str, mode: Literal['wrap'], check_fields: bool | None
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:105` - note:     def field_validator(str, /, *fields: str, mode: Literal['wrap'], check_fields: bool | None
   - ID: b4399d7e
 
 ## mypy:() (2 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:33` - error: Incompatible return value type (got "tuple[()]", expected "list[Any]") [return-value]
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:33` - error: Incompatible return value type (got "tuple[()]", expected "list[Any]")  [return-value]
   - ID: b215eba1
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:35` - error: Incompatible return value type (got "tuple[()]", expected "list[Any]") [return-value]
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:35` - error: Incompatible return value type (got "tuple[()]", expected "list[Any]")  [return-value]
   - ID: a50be9e3
 
 ## mypy:... (42 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/base/mixins/hooks_mixin.py:24` - error: Free type variable expected in Generic[...] [misc]
+- `packages/haive-agents/src/haive/agents/base/mixins/hooks_mixin.py:24` - error: Free type variable expected in Generic[...]  [misc]
   - ID: 840700ad
-- `packages/haive-agents/src/haive/agents/base/compiled_agent.py:46` - error: Parameter 1 of Literal[...] cannot be of type "Any" [valid-type]
+- `packages/haive-agents/src/haive/agents/base/compiled_agent.py:46` - error: Parameter 1 of Literal[...] cannot be of type "Any"  [valid-type]
   - ID: 6bc26879
-- `packages/haive-agents/src/haive/agents/base/enhanced_agent.py:111` - error: Parameter 1 of Literal[...] cannot be of type "Any" [valid-type]
-  - ID: ec237f22
-- `packages/haive-agents/src/haive/agents/base/agent.py:89` - error: Parameter 1 of Literal[...] cannot be of type "Any" [valid-type]
-  - ID: e87beb84
-- `packages/haive-agents/src/haive/agents/research/person/agent.py:477` - error: Parameter 1 of Literal[...] is invalid [valid-type]
-  - ID: 10f18b4f
-- `packages/haive-agents/src/haive/agents/discovery/semantic_discovery.py:33` - error: Cannot assign multiple types to name "UnifiedHaiveDiscovery" without an explicit "type[...]"
+- `packages/haive-agents/src/haive/agents/discovery/semantic_discovery.py:33` - error: Cannot assign multiple types to name "UnifiedHaiveDiscovery" without an explicit "type[...]" 
   - ID: 42791746
+- `packages/haive-agents/src/haive/agents/base/enhanced_agent.py:111` - error: Parameter 1 of Literal[...] cannot be of type "Any"  [valid-type]
+  - ID: ec237f22
+- `packages/haive-agents/src/haive/agents/base/agent.py:89` - error: Parameter 1 of Literal[...] cannot be of type "Any"  [valid-type]
+  - ID: e87beb84
+- `packages/haive-agents/src/haive/agents/research/person/agent.py:477` - error: Parameter 1 of Literal[...] is invalid  [valid-type]
+  - ID: 10f18b4f
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/state_graph/mixin.py:10` - error: Free type variable expected in Generic[...] [misc]
+- `packages/haive-core/src/haive/core/graph/state_graph/mixin.py:10` - error: Free type variable expected in Generic[...]  [misc]
   - ID: 87f4ac45
-- `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:314` - error: Cannot assign multiple types to name "base_type" without an explicit "type[...]" annotation
+- `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:314` - error: Cannot assign multiple types to name "base_type" without an explicit "type[...]" annotation  
   - ID: 143b890a
-- `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:319` - error: Cannot assign multiple types to name "base_type" without an explicit "type[...]" annotation
+- `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:319` - error: Cannot assign multiple types to name "base_type" without an explicit "type[...]" annotation  
   - ID: 1151be5e
-- `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:323` - error: Cannot assign multiple types to name "base_type" without an explicit "type[...]" annotation
+- `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:323` - error: Cannot assign multiple types to name "base_type" without an explicit "type[...]" annotation  
   - ID: 773bfb82
-- `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:328` - error: Cannot assign multiple types to name "base_type" without an explicit "type[...]" annotation
+- `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:328` - error: Cannot assign multiple types to name "base_type" without an explicit "type[...]" annotation  
   - ID: e9c6ea3c
 - `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:346` - error: Cannot assign multiple types to name "output_type" without an explicit "type[...]" annotation
   - ID: 9f88ae6e
-- `packages/haive-core/src/haive/core/graph/branches/types.py:45` - error: Free type variable expected in Generic[...] [misc]
+- `packages/haive-core/src/haive/core/graph/branches/types.py:45` - error: Free type variable expected in Generic[...]  [misc]
   - ID: 9c1707be
-- `packages/haive-core/src/haive/core/engine/agent/persistence/memory_config.py:17` - error: Parameter 1 of Literal[...] cannot be of type "Any" [valid-type]
+- `packages/haive-core/src/haive/core/engine/agent/persistence/memory_config.py:17` - error: Parameter 1 of Literal[...] cannot be of type "Any"  [valid-type]
   - ID: 976105e9
-- `packages/haive-core/src/haive/core/engine/agent/persistence/mongodb_config.py:28` - error: Parameter 1 of Literal[...] cannot be of type "Any" [valid-type]
+- `packages/haive-core/src/haive/core/engine/agent/persistence/mongodb_config.py:28` - error: Parameter 1 of Literal[...] cannot be of type "Any"  [valid-type]
   - ID: 68a786db
 - `packages/haive-core/src/haive/core/schema/field_utils.py:520` - note: Perhaps you need "Callable[...]" or a callback protocol?
   - ID: b2ea1e80
@@ -750,21 +615,21 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:14` - error: Free type variable expected in Generic[...] [misc]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:14` - error: Free type variable expected in Generic[...]  [misc]
   - ID: 6f2eebb3
-- `packages/haive-games/src/haive/games/core/game/piece.py:12` - error: Free type variable expected in Generic[...] [misc]
+- `packages/haive-games/src/haive/games/core/game/piece.py:12` - error: Free type variable expected in Generic[...]  [misc]
   - ID: 869cf247
-- `packages/haive-games/src/haive/games/core/components/cards/turns.py:21` - error: Free type variable expected in Generic[...] [misc]
+- `packages/haive-games/src/haive/games/core/components/cards/turns.py:21` - error: Free type variable expected in Generic[...]  [misc]
   - ID: c1918dd5
-- `packages/haive-games/src/haive/games/core/components/cards/turns.py:54` - error: Free type variable expected in Generic[...] [misc]
+- `packages/haive-games/src/haive/games/core/components/cards/turns.py:54` - error: Free type variable expected in Generic[...]  [misc]
   - ID: a39d5ee3
-- `packages/haive-games/src/haive/games/core/components/cards/scoring.py:10` - error: Free type variable expected in Generic[...] [misc]
+- `packages/haive-games/src/haive/games/core/components/cards/scoring.py:10` - error: Free type variable expected in Generic[...]  [misc]
   - ID: df48487e
-- `packages/haive-games/src/haive/games/core/components/cards/scoring.py:29` - error: Free type variable expected in Generic[...] [misc]
+- `packages/haive-games/src/haive/games/core/components/cards/scoring.py:29` - error: Free type variable expected in Generic[...]  [misc]
   - ID: 9083e42f
-- `packages/haive-games/src/haive/games/core/components/cards/actions.py:12` - error: Free type variable expected in Generic[...] [misc]
+- `packages/haive-games/src/haive/games/core/components/cards/actions.py:12` - error: Free type variable expected in Generic[...]  [misc]
   - ID: 529bd839
-- `packages/haive-games/src/haive/games/hold_em/player_agent.py:635` - error: Parameter 1 of Literal[...] is invalid [valid-type]
+- `packages/haive-games/src/haive/games/hold_em/player_agent.py:635` - error: Parameter 1 of Literal[...] is invalid  [valid-type]
   - ID: b64ea57a
 
 ### haive-prebuilt
@@ -793,52 +658,54 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:..., Any (33 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/base/mixins/hooks_mixin.py:238` - error: "Callable[..., Any]" has no attribute "\_hook_metadata" [attr-defined]
+- `packages/haive-agents/src/haive/agents/base/mixins/hooks_mixin.py:238` - error: "Callable[..., Any]" has no attribute "_hook_metadata"  [attr-defined]
   - ID: e20617e5
-- `packages/haive-agents/src/haive/agents/memory_v2/standalone_rag_memory.py:670` - note: def tool(name_or_callable: Callable[..., Any], \*, description: str | None = ..., return_di
+- `packages/haive-agents/src/haive/agents/memory_v2/standalone_rag_memory.py:670` - note:     def tool(name_or_callable: Callable[..., Any], *, description: str | None = ..., return_di
   - ID: b69f1c78
-- `packages/haive-agents/src/haive/agents/memory_v2/long_term_memory_agent.py:475` - note: def tool(name_or_callable: Callable[..., Any], \*, description: str | None = ..., return_di
+- `packages/haive-agents/src/haive/agents/memory_v2/long_term_memory_agent.py:475` - note:     def tool(name_or_callable: Callable[..., Any], *, description: str | None = ..., return_di
   - ID: 838654c0
-- `packages/haive-agents/src/haive/agents/memory_reorganized/agents/ltm.py:464` - note: def tool(name_or_callable: Callable[..., Any], \*, description: str | None = ..., return_di
+- `packages/haive-agents/src/haive/agents/memory_reorganized/agents/ltm.py:464` - note:     def tool(name_or_callable: Callable[..., Any], *, description: str | None = ..., return_di
   - ID: acb5692b
-- `packages/haive-agents/src/haive/agents/memory_v2/rag_memory_agent.py:633` - note: def tool(name_or_callable: Callable[..., Any], \*, description: str | None = ..., return_di
+- `packages/haive-agents/src/haive/agents/memory_v2/rag_memory_agent.py:633` - note:     def tool(name_or_callable: Callable[..., Any], *, description: str | None = ..., return_di
   - ID: 24771bb4
-- `packages/haive-agents/src/haive/agents/simple/agent_v3.py:1207` - note: def tool(name_or_callable: Callable[..., Any], \*, description: str | None = ..., return_di
+- `packages/haive-agents/src/haive/agents/simple/agent_v3.py:1207` - note:     def tool(name_or_callable: Callable[..., Any], *, description: str | None = ..., return_di
   - ID: 738b9fc3
-- `packages/haive-agents/src/haive/agents/simple/agent_v3.py:1258` - note: def tool(name_or_callable: Callable[..., Any], \*, description: str | None = ..., return_di
+- `packages/haive-agents/src/haive/agents/simple/agent_v3.py:1258` - note:     def tool(name_or_callable: Callable[..., Any], *, description: str | None = ..., return_di
   - ID: a31dde19
-- `packages/haive-agents/src/haive/agents/react_class/react_v2/agent.py:115` - note: def tool(name_or_callable: Callable[..., Any], \*, description: str | None = ..., return_di
+- `packages/haive-agents/src/haive/agents/react_class/react_v2/agent.py:115` - note:     def tool(name_or_callable: Callable[..., Any], *, description: str | None = ..., return_di
   - ID: a775cab3
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/v2/agents.py:64` - error: List item 0 has incompatible type "str"; expected "BaseTool | Callable[..., Any]" [list-item
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/v2/agents.py:64` - error: List item 0 has incompatible type "str"; expected "BaseTool | Callable[..., Any]"  [list-item
   - ID: 5f79040b
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/debugkit/debug/decorators.py:47` - error: Returning Any from function declared to return "Callable[..., Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/debugkit/debug/decorators.py:47` - error: Returning Any from function declared to return "Callable[..., Any]"  [no-any-return]
   - ID: 0c8277ff
-- `packages/haive-core/src/haive/core/utils/debugkit/tracing/execution.py:293` - error: Returning Any from function declared to return "Callable[..., Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/debugkit/tracing/execution.py:293` - error: Returning Any from function declared to return "Callable[..., Any]"  [no-any-return]
   - ID: e38a634d
-- `packages/haive-core/src/haive/core/utils/debugkit/tracing/execution.py:295` - error: Returning Any from function declared to return "Callable[..., Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/debugkit/tracing/execution.py:295` - error: Returning Any from function declared to return "Callable[..., Any]"  [no-any-return]
   - ID: 1c00124f
-- `packages/haive-core/src/haive/core/utils/debugkit/profiling/performance.py:191` - error: Returning Any from function declared to return "Callable[..., Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/debugkit/profiling/performance.py:191` - error: Returning Any from function declared to return "Callable[..., Any]"  [no-any-return]
   - ID: 1e8d3f61
-- `packages/haive-core/src/haive/core/graph/common/references.py:78` - error: "Callable[..., Any]" has no attribute "func" [attr-defined]
+- `packages/haive-core/src/haive/core/graph/common/references.py:78` - error: "Callable[..., Any]" has no attribute "func"  [attr-defined]
   - ID: ca68fdf1
-- `packages/haive-core/src/haive/core/graph/common/references.py:82` - error: "Callable[..., Any]" has no attribute "args" [attr-defined]
+- `packages/haive-core/src/haive/core/graph/common/references.py:82` - error: "Callable[..., Any]" has no attribute "args"  [attr-defined]
   - ID: 81eed49c
-- `packages/haive-core/src/haive/core/graph/common/references.py:83` - error: "Callable[..., Any]" has no attribute "keywords" [attr-defined]
+- `packages/haive-core/src/haive/core/graph/common/references.py:83` - error: "Callable[..., Any]" has no attribute "keywords"  [attr-defined]
   - ID: 35eb5833
-- `packages/haive-core/src/haive/core/graph/common/references.py:114` - error: Returning Any from function declared to return "Callable[..., Any] | None" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/common/references.py:114` - error: Returning Any from function declared to return "Callable[..., Any] | None"  [no-any-return]
   - ID: 4f2d0677
-- `packages/haive-core/src/haive/core/graph/common/references.py:132` - error: Returning Any from function declared to return "Callable[..., Any] | None" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/common/references.py:132` - error: Returning Any from function declared to return "Callable[..., Any] | None"  [no-any-return]
   - ID: 253df5c2
-- `packages/haive-core/src/haive/core/graph/common/references.py:145` - error: Returning Any from function declared to return "Callable[..., Any] | None" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/common/references.py:145` - error: Returning Any from function declared to return "Callable[..., Any] | None"  [no-any-return]
   - ID: 9c071e8b
 - ... and 14 more
 
 ## mypy:..., Awaitable[Any (2 errors)
+
 
 ### haive-agents
 
@@ -849,180 +716,182 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:<type> (195 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:186` - error: Need type annotation for "processed" (hint: "processed: set[<type>] = ...") [var-annotated]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:186` - error: Need type annotation for "processed" (hint: "processed: set[<type>] = ...")  [var-annotated]
   - ID: 63638301
-- `packages/haive-agents/src/haive/agents/task_analysis/decomposer/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-agents/src/haive/agents/task_analysis/decomposer/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 566e33ed
-- `packages/haive-agents/src/haive/agents/task_analysis/analysis/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-agents/src/haive/agents/task_analysis/analysis/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 31ae2e86
-- `packages/haive-agents/src/haive/agents/research/storm/wiki_writer/__init__.py:1` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-agents/src/haive/agents/research/storm/wiki_writer/__init__.py:1` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 9dd8affd
-- `packages/haive-agents/src/haive/agents/research/storm/outline_refiner/__init__.py:1` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-agents/src/haive/agents/research/storm/outline_refiner/__init__.py:1` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: f226d7cb
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/logic/engines/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/logic/engines/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: dd20f950
-- `packages/haive-agents/src/haive/agents/react_class/__init__.py:22` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-agents/src/haive/agents/react_class/__init__.py:22` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 5bf1b15f
-- `packages/haive-agents/src/haive/agents/rag/simple/__init__.py:6` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-agents/src/haive/agents/rag/simple/__init__.py:6` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 6c19e14e
-- `packages/haive-agents/src/haive/agents/rag/db_rag/__init__.py:10` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-agents/src/haive/agents/rag/db_rag/__init__.py:10` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 539fb257
-- `packages/haive-agents/src/haive/agents/rag/common/document_graders/binary_grader/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-agents/src/haive/agents/rag/common/document_graders/binary_grader/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 5427f755
 - ... and 51 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/mixins/__init__.py:12` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-core/src/haive/core/schema/mixins/__init__.py:12` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: cd923305
-- `packages/haive-core/src/haive/core/models/embeddings/filter/__init__.py:122` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-core/src/haive/core/models/embeddings/filter/__init__.py:122` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: b05a0ac5
-- `packages/haive-core/src/haive/core/graph/state_graph/utils/__init__.py:8` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-core/src/haive/core/graph/state_graph/utils/__init__.py:8` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: c857ce99
-- `packages/haive-core/src/haive/core/schema/compatibility/field_mapping.py:266` - error: Need type annotation for "mapped_sources" (hint: "mapped_sources: set[<type>] = ...") [var-a
+- `packages/haive-core/src/haive/core/schema/compatibility/field_mapping.py:266` - error: Need type annotation for "mapped_sources" (hint: "mapped_sources: set[<type>] = ...")  [var-a
   - ID: e42ff05b
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:851` - error: Need type annotation for "hotspots" (hint: "hotspots: list[<type>] = ...") [var-annotated]
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:851` - error: Need type annotation for "hotspots" (hint: "hotspots: list[<type>] = ...")  [var-annotated]
   - ID: 968b8620
-- `packages/haive-core/src/haive/core/utils/haive_discovery/discovery_engine.py:37` - error: Need type annotation for "failed_modules" (hint: "failed_modules: list[<type>] = ...") [var-
+- `packages/haive-core/src/haive/core/utils/haive_discovery/discovery_engine.py:37` - error: Need type annotation for "failed_modules" (hint: "failed_modules: list[<type>] = ...")  [var-
   - ID: 17061cf3
-- `packages/haive-core/src/haive/core/utils/haive_discovery/discovery_engine.py:38` - error: Need type annotation for "discovered_components" (hint: "discovered_components: list[<type>]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/discovery_engine.py:38` - error: Need type annotation for "discovered_components" (hint: "discovered_components: list[<type>] 
   - ID: 195a409b
-- `packages/haive-core/src/haive/core/utils/haive_discovery/discovery_engine.py:104` - error: Need type annotation for "components" (hint: "components: list[<type>] = ...") [var-annotate
+- `packages/haive-core/src/haive/core/utils/haive_discovery/discovery_engine.py:104` - error: Need type annotation for "components" (hint: "components: list[<type>] = ...")  [var-annotate
   - ID: 142043c2
-- `packages/haive-core/src/haive/core/schema/composer/engine/engine_detector.py:26` - error: Need type annotation for "base_class_fields" (hint: "base_class_fields: set[<type>] = ...")
+- `packages/haive-core/src/haive/core/schema/composer/engine/engine_detector.py:26` - error: Need type annotation for "base_class_fields" (hint: "base_class_fields: set[<type>] = ...")  
   - ID: 9fa653b0
-- `packages/haive-core/src/haive/core/graph/state_graph/components/edge_manager.py:300` - error: Need type annotation for "visited" (hint: "visited: set[<type>] = ...") [var-annotated]
+- `packages/haive-core/src/haive/core/graph/state_graph/components/edge_manager.py:300` - error: Need type annotation for "visited" (hint: "visited: set[<type>] = ...")  [var-annotated]
   - ID: f15e5140
 - ... and 26 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/registry/registries/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-dataflow/src/haive/dataflow/registry/registries/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 5d11a422
-- `packages/haive-dataflow/src/haive/dataflow/registry/providers/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-dataflow/src/haive/dataflow/registry/providers/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: ceab4e27
-- `packages/haive-dataflow/src/haive/dataflow/registries/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-dataflow/src/haive/dataflow/registries/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: d9353557
-- `packages/haive-dataflow/src/haive/dataflow/providers/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-dataflow/src/haive/dataflow/providers/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: b5ac026d
-- `packages/haive-dataflow/src/haive/dataflow/persistence/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-dataflow/src/haive/dataflow/persistence/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 54f09057
-- `packages/haive-dataflow/src/haive/dataflow/llms/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-dataflow/src/haive/dataflow/llms/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 942726a6
-- `packages/haive-dataflow/src/haive/dataflow/internal_websockets/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-dataflow/src/haive/dataflow/internal_websockets/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: e68ed646
-- `packages/haive-dataflow/src/haive/dataflow/fetchers/__init__.py:16` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-dataflow/src/haive/dataflow/fetchers/__init__.py:16` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: d18c8d88
-- `packages/haive-dataflow/src/haive/dataflow/db/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-dataflow/src/haive/dataflow/db/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 45fbdbf5
-- `packages/haive-dataflow/src/haive/dataflow/conversations/__init__.py:17` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-dataflow/src/haive/dataflow/conversations/__init__.py:17` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 5884c225
 - ... and 10 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/utils/__init__.py:12` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-games/src/haive/games/utils/__init__.py:12` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 574ad4fa
-- `packages/haive-games/src/haive/games/tic_tac_toe/__init__.py:3` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-games/src/haive/games/tic_tac_toe/__init__.py:3` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: dd2b93b9
-- `packages/haive-games/src/haive/games/single_player/wordle/__init__.py:3` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-games/src/haive/games/single_player/wordle/__init__.py:3` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 5885c2c4
-- `packages/haive-games/src/haive/games/single_player/twenty_fourty_eight/game/__init__.py:3` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-games/src/haive/games/single_player/twenty_fourty_eight/game/__init__.py:3` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: ac4df4d9
-- `packages/haive-games/src/haive/games/single_player/twenty_fourty_eight/__init__.py:3` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-games/src/haive/games/single_player/twenty_fourty_eight/__init__.py:3` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 81fb9f28
-- `packages/haive-games/src/haive/games/single_player/sudoku/game/__init__.py:3` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-games/src/haive/games/single_player/sudoku/game/__init__.py:3` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 5dd57f69
-- `packages/haive-games/src/haive/games/single_player/rubiks/__init__.py:3` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-games/src/haive/games/single_player/rubiks/__init__.py:3` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 57f056b7
-- `packages/haive-games/src/haive/games/single_player/mine_sweeper/__init__.py:3` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-games/src/haive/games/single_player/mine_sweeper/__init__.py:3` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 9f867d07
-- `packages/haive-games/src/haive/games/single_player/logic_grid/game/__init__.py:3` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-games/src/haive/games/single_player/logic_grid/game/__init__.py:3` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 4f7eb4f3
-- `packages/haive-games/src/haive/games/single_player/flow_free/__init__.py:3` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-games/src/haive/games/single_player/flow_free/__init__.py:3` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: c3cb4c9f
 - ... and 56 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:359` - error: Need type annotation for "capabilities" (hint: "capabilities: set[<type>] = ...") [var-annot
+- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:359` - error: Need type annotation for "capabilities" (hint: "capabilities: set[<type>] = ...")  [var-annot
   - ID: 9802a30b
-- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:318` - error: Need type annotation for "current_content" (hint: "current_content: list[<type>] = ...") [va
+- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:318` - error: Need type annotation for "current_content" (hint: "current_content: list[<type>] = ...")  [va
   - ID: 5dc2ea02
-- `packages/haive-mcp/src/haive/mcp/downloader/discovery.py:547` - error: Need type annotation for "tags" (hint: "tags: set[<type>] = ...") [var-annotated]
+- `packages/haive-mcp/src/haive/mcp/downloader/discovery.py:547` - error: Need type annotation for "tags" (hint: "tags: set[<type>] = ...")  [var-annotated]
   - ID: 86275f59
-- `packages/haive-mcp/src/haive/mcp/mcp_simple_rag_agent.py:42` - error: Need type annotation for "documents" (hint: "documents: list[<type>] = ...") [var-annotated]
+- `packages/haive-mcp/src/haive/mcp/mcp_simple_rag_agent.py:42` - error: Need type annotation for "documents" (hint: "documents: list[<type>] = ...")  [var-annotated]
   - ID: 00714694
-- `packages/haive-mcp/src/haive/mcp/documentation/doc_loader.py:389` - error: Need type annotation for "current_example" (hint: "current_example: list[<type>] = ...") [va
+- `packages/haive-mcp/src/haive/mcp/documentation/doc_loader.py:389` - error: Need type annotation for "current_example" (hint: "current_example: list[<type>] = ...")  [va
   - ID: fcacfd23
-- `packages/haive-mcp/src/haive/mcp/simple_faiss_retriever.py:33` - error: Need type annotation for "documents" (hint: "documents: list[<type>] = ...") [var-annotated]
+- `packages/haive-mcp/src/haive/mcp/simple_faiss_retriever.py:33` - error: Need type annotation for "documents" (hint: "documents: list[<type>] = ...")  [var-annotated]
   - ID: b96c6be8
-- `packages/haive-mcp/src/haive/mcp/mcp_simple_tool_agent.py:39` - error: Need type annotation for "documents" (hint: "documents: list[<type>] = ...") [var-annotated]
+- `packages/haive-mcp/src/haive/mcp/mcp_simple_tool_agent.py:39` - error: Need type annotation for "documents" (hint: "documents: list[<type>] = ...")  [var-annotated]
   - ID: b05d267b
-- `packages/haive-mcp/src/haive/mcp/enhanced_parent_self_query_retriever.py:48` - error: Need type annotation for "metadata_fields" (hint: "metadata_fields: list[<type>] = ...") [va
+- `packages/haive-mcp/src/haive/mcp/enhanced_parent_self_query_retriever.py:48` - error: Need type annotation for "metadata_fields" (hint: "metadata_fields: list[<type>] = ...")  [va
   - ID: 5d75fa85
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:371` - error: Need type annotation for "routes" (hint: "routes: list[<type>] = ...") [var-annotated]
+- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:371` - error: Need type annotation for "routes" (hint: "routes: list[<type>] = ...")  [var-annotated]
   - ID: 9bfe49f9
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/__init__.py:13` - error: Need type annotation for "**all**" (hint: "**all**: list[<type>] = ...") [var-annotated]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/__init__.py:13` - error: Need type annotation for "__all__" (hint: "__all__: list[<type>] = ...")  [var-annotated]
   - ID: 6e52c490
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/background_process_manager.py:249` - error: Need type annotation for "stdout" (hint: "stdout: list[<type>] = ...") [var-annotated]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/background_process_manager.py:249` - error: Need type annotation for "stdout" (hint: "stdout: list[<type>] = ...")  [var-annotated]
   - ID: 1e9e7e8f
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/background_process_manager.py:249` - error: Need type annotation for "stdout" (hint: "stdout: list[<type>] = ...") [var-annotated]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/background_process_manager.py:249` - error: Need type annotation for "stdout" (hint: "stdout: list[<type>] = ...")  [var-annotated]
   - ID: 1e9e7e8f
 
 ## mypy:<type>, <type> (207 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:101` - error: Need type annotation for "dep_map" (hint: "dep_map: dict[<type>, <type>] = ...") [var-annota
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:101` - error: Need type annotation for "dep_map" (hint: "dep_map: dict[<type>, <type>] = ...")  [var-annota
   - ID: c5760053
-- `packages/haive-agents/src/haive/agents/self_healing_code/agent.py:194` - error: Need type annotation for "namespace" (hint: "namespace: dict[<type>, <type>] = ...") [var-an
+- `packages/haive-agents/src/haive/agents/self_healing_code/agent.py:194` - error: Need type annotation for "namespace" (hint: "namespace: dict[<type>, <type>] = ...")  [var-an
   - ID: 42174177
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/compatibility.py:81` - error: Need type annotation for "\_test_cache" (hint: "\_test_cache: dict[<type>, <type>] = ...") [va
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/compatibility.py:81` - error: Need type annotation for "_test_cache" (hint: "_test_cache: dict[<type>, <type>] = ...")  [va
   - ID: c57d9d13
-- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:25` - error: Need type annotation for "tool_routes" (hint: "tool_routes: dict[<type>, <type>] = ...") [va
+- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:25` - error: Need type annotation for "tool_routes" (hint: "tool_routes: dict[<type>, <type>] = ...")  [va
   - ID: 66110325
-- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:104` - error: Need type annotation for "agents" (hint: "agents: dict[<type>, <type>] = ...") [var-annotate
+- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:104` - error: Need type annotation for "agents" (hint: "agents: dict[<type>, <type>] = ...")  [var-annotate
   - ID: b7f3a90f
-- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:105` - error: Need type annotation for "agent_configs" (hint: "agent_configs: dict[<type>, <type>] = ...")
+- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:105` - error: Need type annotation for "agent_configs" (hint: "agent_configs: dict[<type>, <type>] = ...") 
   - ID: 496eda8a
-- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:107` - error: Need type annotation for "tool_to_agent_mapping" (hint: "tool_to_agent_mapping: dict[<type>,
+- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:107` - error: Need type annotation for "tool_to_agent_mapping" (hint: "tool_to_agent_mapping: dict[<type>, 
   - ID: dea00ec9
-- `packages/haive-agents/src/haive/agents/supervisor/archive/simple_test_runner.py:25` - error: Need type annotation for "tool_routes" (hint: "tool_routes: dict[<type>, <type>] = ...") [va
+- `packages/haive-agents/src/haive/agents/supervisor/archive/simple_test_runner.py:25` - error: Need type annotation for "tool_routes" (hint: "tool_routes: dict[<type>, <type>] = ...")  [va
   - ID: 5ec30536
-- `packages/haive-agents/src/haive/agents/supervisor/archive/simple_test_runner.py:104` - error: Need type annotation for "agents" (hint: "agents: dict[<type>, <type>] = ...") [var-annotate
+- `packages/haive-agents/src/haive/agents/supervisor/archive/simple_test_runner.py:104` - error: Need type annotation for "agents" (hint: "agents: dict[<type>, <type>] = ...")  [var-annotate
   - ID: 007fdabd
-- `packages/haive-agents/src/haive/agents/supervisor/archive/simple_test_runner.py:105` - error: Need type annotation for "agent_configs" (hint: "agent_configs: dict[<type>, <type>] = ...")
+- `packages/haive-agents/src/haive/agents/supervisor/archive/simple_test_runner.py:105` - error: Need type annotation for "agent_configs" (hint: "agent_configs: dict[<type>, <type>] = ...") 
   - ID: a89245dc
 - ... and 42 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/node/composer/update_functions.py:107` - error: Need type annotation for "updates" (hint: "updates: dict[<type>, <type>] = ...") [var-annota
+- `packages/haive-core/src/haive/core/graph/node/composer/update_functions.py:107` - error: Need type annotation for "updates" (hint: "updates: dict[<type>, <type>] = ...")  [var-annota
   - ID: e5526caa
-- `packages/haive-core/src/haive/core/utils/inspection.py:85` - error: Need type annotation for "present" (hint: "present: dict[<type>, <type>] = ...") [var-annota
+- `packages/haive-core/src/haive/core/utils/inspection.py:85` - error: Need type annotation for "present" (hint: "present: dict[<type>, <type>] = ...")  [var-annota
   - ID: 068d44c6
-- `packages/haive-core/src/haive/core/utils/inspection.py:86` - error: Need type annotation for "missing" (hint: "missing: dict[<type>, <type>] = ...") [var-annota
+- `packages/haive-core/src/haive/core/utils/inspection.py:86` - error: Need type annotation for "missing" (hint: "missing: dict[<type>, <type>] = ...")  [var-annota
   - ID: dc29dfc4
-- `packages/haive-core/src/haive/core/utils/haive_discovery/documentation_writer.py:30` - error: Need type annotation for "saved_files" (hint: "saved_files: dict[<type>, <type>] = ...") [va
+- `packages/haive-core/src/haive/core/utils/haive_discovery/documentation_writer.py:30` - error: Need type annotation for "saved_files" (hint: "saved_files: dict[<type>, <type>] = ...")  [va
   - ID: bf08962a
-- `packages/haive-core/src/haive/core/utils/haive_discovery/documentation_writer.py:33` - error: Need type annotation for "by_type" (hint: "by_type: dict[<type>, <type>] = ...") [var-annota
+- `packages/haive-core/src/haive/core/utils/haive_discovery/documentation_writer.py:33` - error: Need type annotation for "by_type" (hint: "by_type: dict[<type>, <type>] = ...")  [var-annota
   - ID: f2d1e369
 - `packages/haive-core/src/haive/core/utils/haive_discovery/documentation_writer.py:162` - error: Need type annotation for "tools_by_source" (hint: "tools_by_source: dict[<type>, <type>] = ..
   - ID: f033a7e2
 - `packages/haive-core/src/haive/core/utils/haive_discovery/documentation_writer.py:228` - error: Need type annotation for "engines_by_type" (hint: "engines_by_type: dict[<type>, <type>] = ..
   - ID: af0d99a9
-- `packages/haive-core/src/haive/core/registry/memory.py:19` - error: Need type annotation for "engine_ids" (hint: "engine_ids: dict[<type>, <type>] = ...") [var-
+- `packages/haive-core/src/haive/core/registry/memory.py:19` - error: Need type annotation for "engine_ids" (hint: "engine_ids: dict[<type>, <type>] = ...")  [var-
   - ID: ee2cd941
-- `packages/haive-core/src/haive/core/registry/manager.py:14` - error: Need type annotation for "\_registry_types" (hint: "\_registry_types: dict[<type>, <type>] = ..
+- `packages/haive-core/src/haive/core/registry/manager.py:14` - error: Need type annotation for "_registry_types" (hint: "_registry_types: dict[<type>, <type>] = ..
   - ID: bb634f32
 - `packages/haive-core/src/haive/core/registry/factory.py:13` - error: Need type annotation for "registry_types" (hint: "registry_types: dict[<type>, <type>] = ..."
   - ID: 5d07445b
@@ -1030,86 +899,87 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:1337` - error: Need type annotation for "env_matches" (hint: "env_matches: dict[<type>, <type>] = ...") [va
+- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:1337` - error: Need type annotation for "env_matches" (hint: "env_matches: dict[<type>, <type>] = ...")  [va
   - ID: 8bb2da0f
-- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:1337` - error: Need type annotation for "env_matches" (hint: "env_matches: dict[<type>, <type>] = ...") [va
+- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:1337` - error: Need type annotation for "env_matches" (hint: "env_matches: dict[<type>, <type>] = ...")  [va
   - ID: 0cb63c08
-- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:327` - error: Need type annotation for "patterns_by_type" (hint: "patterns_by_type: dict[<type>, <type>] =
+- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:327` - error: Need type annotation for "patterns_by_type" (hint: "patterns_by_type: dict[<type>, <type>] = 
   - ID: db2e4b75
-- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:539` - error: Need type annotation for "patterns_by_type" (hint: "patterns_by_type: dict[<type>, <type>] =
+- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:539` - error: Need type annotation for "patterns_by_type" (hint: "patterns_by_type: dict[<type>, <type>] = 
   - ID: 3c53580f
-- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:563` - error: Need type annotation for "patterns_by_type" (hint: "patterns_by_type: dict[<type>, <type>] =
+- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:563` - error: Need type annotation for "patterns_by_type" (hint: "patterns_by_type: dict[<type>, <type>] = 
   - ID: 66952a4a
-- `packages/haive-dataflow/src/haive/dataflow/registry/bin/registry_cli.py:579` - error: Need type annotation for "entities_by_type" (hint: "entities_by_type: dict[<type>, <type>] =
+- `packages/haive-dataflow/src/haive/dataflow/registry/bin/registry_cli.py:579` - error: Need type annotation for "entities_by_type" (hint: "entities_by_type: dict[<type>, <type>] = 
   - ID: 33666111
-- `packages/haive-dataflow/src/haive/dataflow/registry/bin/registry_cli.py:767` - error: Need type annotation for "entities_by_type" (hint: "entities_by_type: dict[<type>, <type>] =
+- `packages/haive-dataflow/src/haive/dataflow/registry/bin/registry_cli.py:767` - error: Need type annotation for "entities_by_type" (hint: "entities_by_type: dict[<type>, <type>] = 
   - ID: ece76a47
-- `packages/haive-dataflow/src/haive/dataflow/bin/registry_cli.py:581` - error: Need type annotation for "entities_by_type" (hint: "entities_by_type: dict[<type>, <type>] =
+- `packages/haive-dataflow/src/haive/dataflow/bin/registry_cli.py:581` - error: Need type annotation for "entities_by_type" (hint: "entities_by_type: dict[<type>, <type>] = 
   - ID: e2bc8938
-- `packages/haive-dataflow/src/haive/dataflow/bin/registry_cli.py:769` - error: Need type annotation for "entities_by_type" (hint: "entities_by_type: dict[<type>, <type>] =
+- `packages/haive-dataflow/src/haive/dataflow/bin/registry_cli.py:769` - error: Need type annotation for "entities_by_type" (hint: "entities_by_type: dict[<type>, <type>] = 
   - ID: 62b68aa7
-- `packages/haive-dataflow/src/haive/dataflow/serialization.py:25` - error: Need type annotation for "\_serializers" (hint: "\_serializers: dict[<type>, <type>] = ...") [
+- `packages/haive-dataflow/src/haive/dataflow/serialization.py:25` - error: Need type annotation for "_serializers" (hint: "_serializers: dict[<type>, <type>] = ...")  [
   - ID: 42ade8d3
 - ... and 25 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/cards/standard/poker/scoring.py:165` - error: Need type annotation for "by_suit" (hint: "by_suit: dict[<type>, <type>] = ...") [var-annota
+- `packages/haive-games/src/haive/games/cards/standard/poker/scoring.py:165` - error: Need type annotation for "by_suit" (hint: "by_suit: dict[<type>, <type>] = ...")  [var-annota
   - ID: f8997879
-- `packages/haive-games/src/haive/games/cards/standard/poker/scoring.py:273` - error: Need type annotation for "by_suit" (hint: "by_suit: dict[<type>, <type>] = ...") [var-annota
+- `packages/haive-games/src/haive/games/cards/standard/poker/scoring.py:273` - error: Need type annotation for "by_suit" (hint: "by_suit: dict[<type>, <type>] = ...")  [var-annota
   - ID: 51f177bd
-- `packages/haive-games/src/haive/games/poker/debug.py:116` - error: Need type annotation for "action_counts" (hint: "action_counts: dict[<type>, <type>] = ...")
+- `packages/haive-games/src/haive/games/poker/debug.py:116` - error: Need type annotation for "action_counts" (hint: "action_counts: dict[<type>, <type>] = ...") 
   - ID: d91e57f6
 - `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:764` - error: Need type annotation for "property_owners" (hint: "property_owners: dict[<type>, <type>] = ..
   - ID: b786c26f
-- `packages/haive-games/src/haive/games/monopoly/main_agent.py:142` - error: Need type annotation for "event_counts" (hint: "event_counts: dict[<type>, <type>] = ...") [
+- `packages/haive-games/src/haive/games/monopoly/main_agent.py:142` - error: Need type annotation for "event_counts" (hint: "event_counts: dict[<type>, <type>] = ...")  [
   - ID: 34f4a143
-- `packages/haive-games/src/haive/games/mastermind/state_manager.py:157` - error: Need type annotation for "secret_counts" (hint: "secret_counts: dict[<type>, <type>] = ...")
+- `packages/haive-games/src/haive/games/mastermind/state_manager.py:157` - error: Need type annotation for "secret_counts" (hint: "secret_counts: dict[<type>, <type>] = ...") 
   - ID: 6ed619b8
-- `packages/haive-games/src/haive/games/mastermind/state_manager.py:158` - error: Need type annotation for "guess_counts" (hint: "guess_counts: dict[<type>, <type>] = ...") [
+- `packages/haive-games/src/haive/games/mastermind/state_manager.py:158` - error: Need type annotation for "guess_counts" (hint: "guess_counts: dict[<type>, <type>] = ...")  [
   - ID: a76bfc34
-- `packages/haive-games/src/haive/games/hold_em/utils.py:107` - error: Need type annotation for "rank_counts" (hint: "rank_counts: dict[<type>, <type>] = ...") [va
+- `packages/haive-games/src/haive/games/hold_em/utils.py:107` - error: Need type annotation for "rank_counts" (hint: "rank_counts: dict[<type>, <type>] = ...")  [va
   - ID: 3354ac57
-- `packages/haive-games/src/haive/games/hold_em/utils.py:108` - error: Need type annotation for "suit_counts" (hint: "suit_counts: dict[<type>, <type>] = ...") [va
+- `packages/haive-games/src/haive/games/hold_em/utils.py:108` - error: Need type annotation for "suit_counts" (hint: "suit_counts: dict[<type>, <type>] = ...")  [va
   - ID: 2f99142e
-- `packages/haive-games/src/haive/games/hold_em/utils.py:322` - error: Need type annotation for "suit_counts" (hint: "suit_counts: dict[<type>, <type>] = ...") [va
+- `packages/haive-games/src/haive/games/hold_em/utils.py:322` - error: Need type annotation for "suit_counts" (hint: "suit_counts: dict[<type>, <type>] = ...")  [va
   - ID: ad135781
 - ... and 19 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:100` - error: Need type annotation for "by_prefix" (hint: "by_prefix: dict[<type>, <type>] = ...") [var-an
+- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:100` - error: Need type annotation for "by_prefix" (hint: "by_prefix: dict[<type>, <type>] = ...")  [var-an
   - ID: c96cf962
-- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:101` - error: Need type annotation for "by_category" (hint: "by_category: dict[<type>, <type>] = ...") [va
+- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:101` - error: Need type annotation for "by_category" (hint: "by_category: dict[<type>, <type>] = ...")  [va
   - ID: df64029c
-- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:102` - error: Need type annotation for "by_capability" (hint: "by_capability: dict[<type>, <type>] = ...")
+- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:102` - error: Need type annotation for "by_capability" (hint: "by_capability: dict[<type>, <type>] = ...") 
   - ID: e03de9f7
 - `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:308` - error: Need type annotation for "category_scores" (hint: "category_scores: dict[<type>, <type>] = ..
   - ID: f58338c6
-- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:643` - error: Need type annotation for "categories" (hint: "categories: dict[<type>, <type>] = ...") [var-
+- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:643` - error: Need type annotation for "categories" (hint: "categories: dict[<type>, <type>] = ...")  [var-
   - ID: 01f8b69b
 - `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:278` - error: Need type annotation for "cached_configs" (hint: "cached_configs: dict[<type>, <type>] = ..."
   - ID: 26444240
-- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:479` - error: Need type annotation for "by_server" (hint: "by_server: dict[<type>, <type>] = ...") [var-an
+- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:479` - error: Need type annotation for "by_server" (hint: "by_server: dict[<type>, <type>] = ...")  [var-an
   - ID: 2d4a59e1
-- `packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py:592` - error: Need type annotation for "categories" (hint: "categories: dict[<type>, <type>] = ...") [var-
+- `packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py:592` - error: Need type annotation for "categories" (hint: "categories: dict[<type>, <type>] = ...")  [var-
   - ID: 416c57eb
-- `packages/haive-mcp/src/haive/mcp/integrated_launcher.py:138` - error: Need type annotation for "categories" (hint: "categories: dict[<type>, <type>] = ...") [var-
+- `packages/haive-mcp/src/haive/mcp/integrated_launcher.py:138` - error: Need type annotation for "categories" (hint: "categories: dict[<type>, <type>] = ...")  [var-
   - ID: ffaab99c
-- `packages/haive-mcp/src/haive/mcp/servers/dataflow_mcp_server.py:300` - error: Need type annotation for "grouped" (hint: "grouped: dict[<type>, <type>] = ...") [var-annota
+- `packages/haive-mcp/src/haive/mcp/servers/dataflow_mcp_server.py:300` - error: Need type annotation for "grouped" (hint: "grouped: dict[<type>, <type>] = ...")  [var-annota
   - ID: 041011de
 - ... and 1 more
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/tools.py:168` - error: Need type annotation for "grouped" (hint: "grouped: dict[<type>, <type>] = ...") [var-annota
+- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/tools.py:168` - error: Need type annotation for "grouped" (hint: "grouped: dict[<type>, <type>] = ...")  [var-annota
   - ID: 9900c1b3
 - `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:434` - error: Need type annotation for "speaker_counts" (hint: "speaker_counts: dict[<type>, <type>] = ..."
   - ID: 0fdb9cdf
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/agent.py:294` - error: Need type annotation for "sources" (hint: "sources: dict[<type>, <type>] = ...") [var-annota
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/agent.py:294` - error: Need type annotation for "sources" (hint: "sources: dict[<type>, <type>] = ...")  [var-annota
   - ID: eca0c349
 
 ## mypy:<typing special form>, Any (1 errors)
+
 
 ### haive-core
 
@@ -1118,12 +988,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:<typing special form>, FieldMetadata | None (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/schema/field_utils.py:766` - error: Incompatible return value type (got "tuple[<typing special form>, FieldMetadata | None]", exp
   - ID: e66d336d
 
 ## mypy:<typing special form>, None (5 errors)
+
 
 ### haive-core
 
@@ -1140,6 +1012,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:AIMessage (12 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/simple/state.v2.py:63` - error: Argument 2 to "add_messages" has incompatible type "list[AIMessage]"; expected "list[BaseMess
@@ -1149,13 +1022,13 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:281` - error: Incompatible return value type (got "list[AIMessage]", expected "list[BaseMessage]") [return
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:281` - error: Incompatible return value type (got "list[AIMessage]", expected "list[BaseMessage]")  [return
   - ID: 7a11bb19
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:388` - error: Incompatible return value type (got "list[AIMessage]", expected "list[BaseMessage]") [return
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:388` - error: Incompatible return value type (got "list[AIMessage]", expected "list[BaseMessage]")  [return
   - ID: 4a80c790
-- `packages/haive-core/src/haive/core/graph/node/message_transformation.py:210` - error: Incompatible return value type (got "list[AIMessage]", expected "list[BaseMessage]") [return
+- `packages/haive-core/src/haive/core/graph/node/message_transformation.py:210` - error: Incompatible return value type (got "list[AIMessage]", expected "list[BaseMessage]")  [return
   - ID: 933e02e2
-- `packages/haive-core/src/haive/core/graph/node/message_transformation.py:317` - error: Incompatible return value type (got "list[AIMessage]", expected "list[BaseMessage]") [return
+- `packages/haive-core/src/haive/core/graph/node/message_transformation.py:317` - error: Incompatible return value type (got "list[AIMessage]", expected "list[BaseMessage]")  [return
   - ID: 88b91cb0
 - `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:477` - error: Argument 1 to "extend" of "list" has incompatible type "list[AIMessage]"; expected "Iterable[
   - ID: 752011f2
@@ -1175,6 +1048,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> (14 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/schema/agent_schema_composer.py:88` - error: Returning Any from function declared to return "list[AIMessage | HumanMessage | ChatMessage |
@@ -1189,9 +1063,9 @@ For further information visit https://errors.pydantic.dev
   - ID: 41150ae1
 - `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:318` - error: Return type "Iterator[AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessag
   - ID: b09728db
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:370` - note: def copy(self) -> list[AIMessage | HumanMessage | ChatMessage | SystemMessage | Funct
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:370` - note:          def copy(self) -> list[AIMessage | HumanMessage | ChatMessage | SystemMessage | Funct
   - ID: fc2fcffd
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:479` - note: Perhaps you need a type annotation for "messages"? Suggestion: "list[AIMessage | HumanMessage
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:479` - note: Perhaps you need a type annotation for "messages"? Suggestion: "list[AIMessage | HumanMessage 
   - ID: bfa08be1
 - `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:827` - error: Returning Any from function declared to return "list[AIMessage | HumanMessage | ChatMessage |
   - ID: 2cbb7a4c
@@ -1200,6 +1074,7 @@ For further information visit https://errors.pydantic.dev
 - ... and 4 more
 
 ## mypy:AIMessage | HumanMessage | ChatMessage | SystemMessage | FunctionMessage | <7 more items> | str (2 errors)
+
 
 ### haive-core
 
@@ -1210,6 +1085,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:AIMessage | HumanMessage | SystemMessage | ToolMessage (1 errors)
 
+
 ### haive-prebuilt
 
 - `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:81` - error: Returning Any from function declared to return "list[AIMessage | HumanMessage | SystemMessage
@@ -1217,132 +1093,135 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Agent[Any (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/agent/agent.py:81` - error: "type[Agent[Any]]" has no attribute "config_class" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/agent/agent.py:81` - error: "type[Agent[Any]]" has no attribute "config_class"  [attr-defined]
   - ID: 09c0d9ae
 
 ## mypy:AgenticRAGCoordinator (1 errors)
+
 
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/memory_reorganized/__init__.py:79` - error: Incompatible types in assignment (expression has type "None", variable has type "type[Agentic
   - ID: c8d3b4e5
 
-## mypy:Any (236 errors)
+## mypy:Any (241 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/proper_plan_execute.py:208` - error: Incompatible types in assignment (expression has type "None", target has type "list[Any]") [
+- `packages/haive-agents/src/haive/agents/planning/proper_plan_execute.py:208` - error: Incompatible types in assignment (expression has type "None", target has type "list[Any]")  [
   - ID: d2878ca8
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:126` - note: def **add**(self, list[Any], /) -> list[Any]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:126` - note:     def __add__(self, list[Any], /) -> list[Any]
   - ID: 8b63d4e1
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:126` - note: def **add**(self, list[Any], /) -> list[Any]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:126` - note:     def __add__(self, list[Any], /) -> list[Any]
   - ID: 8b63d4e1
 - `packages/haive-agents/src/haive/agents/planning/base/models.py:368` - error: Incompatible return value type (got "BasePlan[Any] | BaseStep | list[BaseStep] | Callable[...
   - ID: fd18c5a4
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:370` - error: Argument 1 of "append" is incompatible with supertype "builtins.list"; supertype defines the
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:370` - error: Argument 1 of "append" is incompatible with supertype "builtins.list"; supertype defines the 
   - ID: 4e7dbf63
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:370` - error: Argument 1 of "append" is incompatible with supertype "builtins.list"; supertype defines the
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:370` - error: Argument 1 of "append" is incompatible with supertype "builtins.list"; supertype defines the 
   - ID: 4e7dbf63
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:391` - error: Argument 2 of "insert" is incompatible with supertype "builtins.list"; supertype defines the
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:391` - error: Argument 2 of "insert" is incompatible with supertype "builtins.list"; supertype defines the 
   - ID: f53bf81d
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:391` - error: Argument 2 of "insert" is incompatible with supertype "builtins.list"; supertype defines the
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:391` - error: Argument 2 of "insert" is incompatible with supertype "builtins.list"; supertype defines the 
   - ID: f53bf81d
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:406` - error: Argument 1 of "remove" is incompatible with supertype "builtins.list"; supertype defines the
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:406` - error: Argument 1 of "remove" is incompatible with supertype "builtins.list"; supertype defines the 
   - ID: 18a98be4
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:406` - error: Argument 1 of "remove" is incompatible with supertype "builtins.list"; supertype defines the
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:406` - error: Argument 1 of "remove" is incompatible with supertype "builtins.list"; supertype defines the 
   - ID: 18a98be4
-- ... and 80 more
+- ... and 85 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:106` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:106` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 0df610da
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:60` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:60` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: a3a85135
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:73` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:73` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 6ddd6be1
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:82` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:82` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 0368e783
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:91` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:91` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: fb783070
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:100` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:100` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: c3496db2
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:109` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:109` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 0f448752
-- `packages/haive-core/src/haive/core/utils/haive_discovery/haive_discovery.py:35` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/haive_discovery.py:35` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: c4ffa905
-- `packages/haive-core/src/haive/core/utils/haive_discovery/haive_discovery.py:52` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/haive_discovery.py:52` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 8fb59bce
-- `packages/haive-core/src/haive/core/utils/haive_discovery/haive_discovery.py:187` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/haive_discovery.py:187` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: aaafaf62
 - ... and 85 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/mcp/client.py:193` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/mcp/client.py:193` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 50bd4476
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:122` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:122` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 887ca2c5
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_enhanced.py:148` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_enhanced.py:148` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 390a3e0c
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_enhanced.py:162` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_enhanced.py:162` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 93506749
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes.py:469` - error: Item "None" of "type[Any] | None" has no attribute "args_schema" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes.py:469` - error: Item "None" of "type[Any] | None" has no attribute "args_schema"  [union-attr]
   - ID: f0e05a6c
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_discovery_routes_enhanced.py:166` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_discovery_routes_enhanced.py:166` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 314db5d7
-- `packages/haive-dataflow/src/haive/dataflow/api/middleware/supabase_logging.py:210` - error: Incompatible types in assignment (expression has type "list[Any]", target has type "str") [a
+- `packages/haive-dataflow/src/haive/dataflow/api/middleware/supabase_logging.py:210` - error: Incompatible types in assignment (expression has type "list[Any]", target has type "str")  [a
   - ID: a997bea9
-- `packages/haive-dataflow/src/haive/dataflow/api/registry.py:270` - error: Returning Any from function declared to return "type[Any] | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/api/registry.py:270` - error: Returning Any from function declared to return "type[Any] | None"  [no-any-return]
   - ID: 64f9e174
 
 ### haive-games
 
 - `packages/haive-games/src/haive/games/checkers/example.py:496` - error: Incompatible return value type (got "object", expected "SupportsDunderLT[Any] | SupportsDunde
   - ID: 0595adbf
-- `packages/haive-games/src/haive/games/chess/dynamic_config.py:137` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/chess/dynamic_config.py:137` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 174721f4
-- `packages/haive-games/src/haive/games/chess/dynamic_config.py:173` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/chess/dynamic_config.py:173` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 2962f107
-- `packages/haive-games/src/haive/games/chess/config.py:79` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/chess/config.py:79` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: be1d2df8
-- `packages/haive-games/src/haive/games/chess/config.py:89` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/chess/config.py:89` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 5a9555e8
-- `packages/haive-games/src/haive/games/monopoly/state.py:563` - error: Unsupported target for indexed assignment ("Collection[Any]") [index]
+- `packages/haive-games/src/haive/games/monopoly/state.py:563` - error: Unsupported target for indexed assignment ("Collection[Any]")  [index]
   - ID: 2f14729a
-- `packages/haive-games/src/haive/games/monopoly/state.py:569` - error: "Collection[Any]" has no attribute "append" [attr-defined]
+- `packages/haive-games/src/haive/games/monopoly/state.py:569` - error: "Collection[Any]" has no attribute "append"  [attr-defined]
   - ID: d3c8d6e5
-- `packages/haive-games/src/haive/games/monopoly/state.py:579` - error: "Collection[Any]" has no attribute "append" [attr-defined]
+- `packages/haive-games/src/haive/games/monopoly/state.py:579` - error: "Collection[Any]" has no attribute "append"  [attr-defined]
   - ID: 5565eee5
-- `packages/haive-games/src/haive/games/connect4/agent.py:165` - error: Returning Any from function declared to return "Command[Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/connect4/agent.py:165` - error: Returning Any from function declared to return "Command[Any]"  [no-any-return]
   - ID: 2122a1b1
-- `packages/haive-games/src/haive/games/connect4/agent.py:173` - error: Returning Any from function declared to return "Command[Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/connect4/agent.py:173` - error: Returning Any from function declared to return "Command[Any]"  [no-any-return]
   - ID: 20e402bc
 - ... and 3 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/fastmcp_runner.py:242` - error: Incompatible types in assignment (expression has type "Task[Any]", variable has type "None")
+- `packages/haive-mcp/src/haive/mcp/fastmcp_runner.py:242` - error: Incompatible types in assignment (expression has type "Task[Any]", variable has type "None") 
   - ID: 6da23de7
-- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:126` - error: Incompatible types in assignment (expression has type "Task[Any]", variable has type "None")
+- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:126` - error: Incompatible types in assignment (expression has type "Task[Any]", variable has type "None") 
   - ID: d4eb2d26
-- `packages/haive-mcp/src/haive/mcp/downloader/core.py:440` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:440` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 27cab0c6
-- `packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py:402` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py:402` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: aaa9b3d8
-- `packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py:454` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py:454` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: 67ba8529
-- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:504` - error: Unsupported target for indexed assignment ("list[Any] | dict[Any, Any] | str | None") [index
+- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:504` - error: Unsupported target for indexed assignment ("list[Any] | dict[Any, Any] | str | None")  [index
   - ID: 819900e9
-- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:519` - error: Item "list[Any]" of "list[Any] | dict[Any, Any] | str | None" has no attribute "values" [uni
+- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:519` - error: Item "list[Any]" of "list[Any] | dict[Any, Any] | str | None" has no attribute "values"  [uni
   - ID: 2f922273
-- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:519` - error: Item "list[Any]" of "list[Any] | dict[Any, Any] | str | None" has no attribute "values" [uni
+- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:519` - error: Item "list[Any]" of "list[Any] | dict[Any, Any] | str | None" has no attribute "values"  [uni
   - ID: 2f922273
-- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:519` - error: Item "list[Any]" of "list[Any] | dict[Any, Any] | str | None" has no attribute "values" [uni
+- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:519` - error: Item "list[Any]" of "list[Any] | dict[Any, Any] | str | None" has no attribute "values"  [uni
   - ID: 2f922273
-- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:524` - error: Item "str" of "list[Any] | dict[Any, Any] | str | None" has no attribute "extend" [union-att
+- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:524` - error: Item "str" of "list[Any] | dict[Any, Any] | str | None" has no attribute "extend"  [union-att
   - ID: 17772606
 - ... and 12 more
 
@@ -1350,69 +1229,74 @@ For further information visit https://errors.pydantic.dev
 
 - `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:438` - error: Incompatible return value type (got "float | Any | None", expected "SupportsDunderLT[Any] | S
   - ID: d8943dca
-- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:374` - error: "list[Any]" has no attribute "values" [attr-defined]
+- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:374` - error: "list[Any]" has no attribute "values"  [attr-defined]
   - ID: 43879e0e
-- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:385` - error: Incompatible return value type (got "list[Any]", expected "str") [return-value]
+- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:385` - error: Incompatible return value type (got "list[Any]", expected "str")  [return-value]
   - ID: 644a8547
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/report_of_the_week_tool.py:58` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/report_of_the_week_tool.py:58` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: edc3aed7
-- `packages/haive-tools/src/haive/tools/tools/report_of_the_week_tool.py:109` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/report_of_the_week_tool.py:109` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: c6c01ac1
-- `packages/haive-tools/src/haive/tools/tools/report_of_the_week_tool.py:157` - error: Returning Any from function declared to return "list[Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/report_of_the_week_tool.py:157` - error: Returning Any from function declared to return "list[Any]"  [no-any-return]
   - ID: a1519d1d
-- `packages/haive-tools/src/haive/tools/tools/toolkits/amadues_toolkit.py:91` - error: Returning Any from function declared to return "BaseLanguageModel[Any] | None" [no-any-retur
+- `packages/haive-tools/src/haive/tools/tools/toolkits/amadues_toolkit.py:91` - error: Returning Any from function declared to return "BaseLanguageModel[Any] | None"  [no-any-retur
   - ID: 62868674
-- `packages/haive-tools/src/haive/tools/tools/toolkits/nla_toolkit.py:79` - error: Returning Any from function declared to return "BaseLanguageModel[Any] | None" [no-any-retur
+- `packages/haive-tools/src/haive/tools/tools/toolkits/nla_toolkit.py:79` - error: Returning Any from function declared to return "BaseLanguageModel[Any] | None"  [no-any-retur
   - ID: 2aca6205
 
 ## mypy:Any | BaseException (2 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/multi/enhanced_parallel_agent.py:256` - error: Argument 1 to "\_aggregate_results" of "ParallelAgent" has incompatible type "list[Any | BaseE
+- `packages/haive-agents/src/haive/agents/multi/enhanced_parallel_agent.py:256` - error: Argument 1 to "_aggregate_results" of "ParallelAgent" has incompatible type "list[Any | BaseE
   - ID: c3bd4b55
-- `packages/haive-agents/src/haive/agents/multi/archive/enhanced_parallel_agent.py:256` - error: Argument 1 to "\_aggregate_results" of "ParallelAgent" has incompatible type "list[Any | BaseE
+- `packages/haive-agents/src/haive/agents/multi/archive/enhanced_parallel_agent.py:256` - error: Argument 1 to "_aggregate_results" of "ParallelAgent" has incompatible type "list[Any | BaseE
   - ID: aed645b1
 
 ## mypy:Any | None (1 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/battleship/utils.py:198` - error: Argument 1 to "set" has incompatible type "list[Any | None]"; expected "Iterable[str]" [arg-
+- `packages/haive-games/src/haive/games/battleship/utils.py:198` - error: Argument 1 to "set" has incompatible type "list[Any | None]"; expected "Iterable[str]"  [arg-
   - ID: 03831e82
 
 ## mypy:Any | None, Any (1 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:54` - error: Incompatible return value type (got "dict[Any | None, Any]", expected "list[Any]") [return-v
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:54` - error: Incompatible return value type (got "dict[Any | None, Any]", expected "list[Any]")  [return-v
   - ID: 59d53863
 
 ## mypy:Any, ... (8 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/types.py:48` - note: def get_args(tp: Any) -> tuple[Any, ...]
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/types.py:48` - note:     def get_args(tp: Any) -> tuple[Any, ...]
   - ID: 39477347
 - `packages/haive-core/src/haive/core/utils/haive_collections.py:48` - error: Subclass of "tuple[Any, ...]" and "dict[Any, Any]" cannot exist: would have incompatible meth
   - ID: ac1e17c8
 - `packages/haive-core/src/haive/core/common/structures/named_dict.py:40` - error: Subclass of "tuple[Any, ...]" and "dict[Any, Any]" cannot exist: would have incompatible meth
   - ID: 16e632a3
-- `packages/haive-core/src/haive/core/persistence/serializers.py:159` - note: def \_encode_constructor_args(self, constructor: str, method: str, args: tuple[Any, ..
+- `packages/haive-core/src/haive/core/persistence/serializers.py:159` - note:          def _encode_constructor_args(self, constructor: str, method: str, args: tuple[Any, ..
   - ID: 9aea2a41
-- `packages/haive-core/src/haive/core/schema/state_schema.py:1213` - error: No overload variant of "**add**" of "list" matches argument type "tuple[Any, ...]" [operator
+- `packages/haive-core/src/haive/core/schema/state_schema.py:1213` - error: No overload variant of "__add__" of "list" matches argument type "tuple[Any, ...]"  [operator
   - ID: f374ffe4
-- `packages/haive-core/src/haive/core/schema/state_schema.py:1213` - error: No overload variant of "**add**" of "list" matches argument type "tuple[Any, ...]" [operator
+- `packages/haive-core/src/haive/core/schema/state_schema.py:1213` - error: No overload variant of "__add__" of "list" matches argument type "tuple[Any, ...]"  [operator
   - ID: f374ffe4
-- `packages/haive-core/src/haive/core/schema/field_utils.py:955` - error: No overload variant of "**add**" of "list" matches argument type "tuple[Any, ...]" [operator
+- `packages/haive-core/src/haive/core/schema/field_utils.py:955` - error: No overload variant of "__add__" of "list" matches argument type "tuple[Any, ...]"  [operator
   - ID: d51d8e9a
-- `packages/haive-core/src/haive/core/schema/field_utils.py:955` - error: No overload variant of "**add**" of "list" matches argument type "tuple[Any, ...]" [operator
+- `packages/haive-core/src/haive/core/schema/field_utils.py:955` - error: No overload variant of "__add__" of "list" matches argument type "tuple[Any, ...]"  [operator
   - ID: d51d8e9a
 
-## mypy:Any, Any (208 errors)
+## mypy:Any, Any (209 errors)
+
 
 ### haive-agents
 
@@ -1422,35 +1306,35 @@ For further information visit https://errors.pydantic.dev
   - ID: 6ba98bb5
 - `packages/haive-agents/src/haive/agents/react_class/react_agent2/debug.py:147` - error: Incompatible types in assignment (expression has type "dict[Any, Any]", variable has type "To
   - ID: e68d3c57
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:129` - error: Incompatible types in "yield from" (actual type "dict[Any, Any]", expected type "Task") [mis
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:129` - error: Incompatible types in "yield from" (actual type "dict[Any, Any]", expected type "Task")  [mis
   - ID: 566157a8
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/tools/math_tools.py:121` - error: Item "dict[Any, Any]" of "dict[Any, Any] | Any" has no attribute "code" [union-attr]
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/tools/math_tools.py:121` - error: Item "dict[Any, Any]" of "dict[Any, Any] | Any" has no attribute "code"  [union-attr]
   - ID: 4c94482b
-- `packages/haive-agents/src/haive/agents/memory_v2/standalone_rag_memory.py:670` - note: def tool(name_or_callable: str, runnable: Runnable[Any, Any], \*, description: str | None =
+- `packages/haive-agents/src/haive/agents/memory_v2/standalone_rag_memory.py:670` - note:     def tool(name_or_callable: str, runnable: Runnable[Any, Any], *, description: str | None =
   - ID: 63a9e85b
-- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:636` - error: Item "int" of "int | dict[Any, Any] | list[Any] | str | None" has no attribute "append" [uni
+- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:636` - error: Item "int" of "int | dict[Any, Any] | list[Any] | str | None" has no attribute "append"  [uni
   - ID: 81ac785d
-- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:636` - error: Item "int" of "int | dict[Any, Any] | list[Any] | str | None" has no attribute "append" [uni
+- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:636` - error: Item "int" of "int | dict[Any, Any] | list[Any] | str | None" has no attribute "append"  [uni
   - ID: 81ac785d
-- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:636` - error: Item "int" of "int | dict[Any, Any] | list[Any] | str | None" has no attribute "append" [uni
+- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:636` - error: Item "int" of "int | dict[Any, Any] | list[Any] | str | None" has no attribute "append"  [uni
   - ID: 81ac785d
-- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:636` - error: Item "int" of "int | dict[Any, Any] | list[Any] | str | None" has no attribute "append" [uni
+- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:636` - error: Item "int" of "int | dict[Any, Any] | list[Any] | str | None" has no attribute "append"  [uni
   - ID: 81ac785d
-- ... and 47 more
+- ... and 48 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:83` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:83` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: 6c3220b1
-- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:87` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:87` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: c6a1c47a
-- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:114` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:114` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: f8e7a904
 - `packages/haive-core/src/haive/core/graph/node/composer/update_functions.py:61` - error: Incompatible types in assignment (expression has type "dict[Any, Any]", variable has type "li
   - ID: b5349755
-- `packages/haive-core/src/haive/core/engine/embedding/providers/__init__.py:164` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/embedding/providers/__init__.py:164` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: c842e437
-- `packages/haive-core/src/haive/core/engine/embedding/providers/__init__.py:165` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/embedding/providers/__init__.py:165` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: fedc907b
 - `packages/haive-core/src/haive/core/schema/compatibility/field_mapping.py:135` - error: Incompatible types in assignment (expression has type "dict[Any, Any] | None", variable has t
   - ID: 88317a41
@@ -1458,28 +1342,28 @@ For further information visit https://errors.pydantic.dev
   - ID: 864f3f69
 - `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_with_token_usage.py:68` - error: Incompatible types in assignment (expression has type "BaseMessage", variable has type "AIMes
   - ID: d66ea754
-- `packages/haive-core/src/haive/core/models/llm/providers/openai.py:178` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/models/llm/providers/openai.py:178` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: ae2de8c7
 - ... and 81 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/mcp/client.py:335` - error: Item "dict[Any, Any]" of "Any | dict[Any, Any]" has no attribute "schema" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/mcp/client.py:335` - error: Item "dict[Any, Any]" of "Any | dict[Any, Any]" has no attribute "schema"  [union-attr]
   - ID: f4660eae
-- `packages/haive-dataflow/src/haive/dataflow/mcp/client.py:394` - error: Item "dict[Any, Any]" of "Any | dict[Any, Any]" has no attribute "schema" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/mcp/client.py:394` - error: Item "dict[Any, Any]" of "Any | dict[Any, Any]" has no attribute "schema"  [union-attr]
   - ID: 1999c9ae
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/cards/standard/blackjack/factory.py:87` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/cards/standard/blackjack/factory.py:87` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: 400a4f72
-- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:308` - error: Incompatible return value type (got "object", expected "dict[Any, Any] | None") [return-valu
+- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:308` - error: Incompatible return value type (got "object", expected "dict[Any, Any] | None")  [return-valu
   - ID: b04221ec
 - `packages/haive-games/src/haive/games/mafia/agent.py:594` - error: Subclass of "str" and "dict[Any, Any]" cannot exist: would have incompatible method signature
   - ID: 658137fc
-- `packages/haive-games/src/haive/games/core/game/core_position.py:198` - error: "dict[Any, Any]" has no attribute "data" [attr-defined]
+- `packages/haive-games/src/haive/games/core/game/core_position.py:198` - error: "dict[Any, Any]" has no attribute "data"  [attr-defined]
   - ID: b0c6acc5
-- `packages/haive-games/src/haive/games/core/game/core_position.py:199` - error: "dict[Any, Any]" has no attribute "data" [attr-defined]
+- `packages/haive-games/src/haive/games/core/game/core_position.py:199` - error: "dict[Any, Any]" has no attribute "data"  [attr-defined]
   - ID: 9a60e910
 - `packages/haive-games/src/haive/games/core/components/cards/standard.py:204` - error: Incompatible default for argument "context" (default has type "None", argument has type "dict
   - ID: 3225b21d
@@ -1495,195 +1379,200 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py:123` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py:123` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: d514711e
-- `packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py:164` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py:164` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: b15f2c92
-- `packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py:285` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py:285` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: e9c269b6
-- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:524` - error: Item "dict[Any, Any]" of "list[Any] | dict[Any, Any] | str | None" has no attribute "extend"
+- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:524` - error: Item "dict[Any, Any]" of "list[Any] | dict[Any, Any] | str | None" has no attribute "extend" 
   - ID: 4d543947
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/models.py:32` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/models.py:32` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: 5579d494
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:245` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "city" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:245` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "city"  [union-attr]
   - ID: d0cc67ed
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:245` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "city" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:245` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "city"  [union-attr]
   - ID: d0cc67ed
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:246` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "messages" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:246` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "messages"  [union-attr]
   - ID: bd3ce9e8
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:246` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "messages" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:246` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "messages"  [union-attr]
   - ID: bd3ce9e8
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:251` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "city" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:251` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "city"  [union-attr]
   - ID: 8ec4de57
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:251` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "city" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:251` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "city"  [union-attr]
   - ID: 8ec4de57
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:252` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "country" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:252` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "country"  [union-attr]
   - ID: 09ae7bf6
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:252` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "country" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:252` - error: Item "BaseModel" of "BaseModel | dict[Any, Any]" has no attribute "country"  [union-attr]
   - ID: 09ae7bf6
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/techy_phrase_tool.py:54` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/techy_phrase_tool.py:54` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: 0b812dcb
-- `packages/haive-tools/src/haive/tools/tools/openaq_tool.py:55` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/openaq_tool.py:55` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: 1755129d
-- `packages/haive-tools/src/haive/tools/tools/open_food_tool.py:58` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/open_food_tool.py:58` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: fbe9dec1
-- `packages/haive-tools/src/haive/tools/tools/binlist_lookup.py:74` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/binlist_lookup.py:74` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: ab1762e0
-- `packages/haive-tools/src/haive/tools/tools/toolkits/rps_101_toolkit.py:92` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/rps_101_toolkit.py:92` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: 0bf120cd
-- `packages/haive-tools/src/haive/tools/tools/toolkits/rps_101_toolkit.py:140` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/rps_101_toolkit.py:140` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: 67104c72
-- `packages/haive-tools/src/haive/tools/tools/toolkits/poetry_db_toolkit.py:95` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/poetry_db_toolkit.py:95` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: 1ffff39b
-- `packages/haive-tools/src/haive/tools/tools/toolkits/lcbo_toolkit.py:51` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/lcbo_toolkit.py:51` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: a54aa998
-- `packages/haive-tools/src/haive/tools/tools/toolkits/lcbo_toolkit.py:97` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/lcbo_toolkit.py:97` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: f6a8288e
-- `packages/haive-tools/src/haive/tools/tools/toolkits/free_to_game_toolkit.py:111` - error: Returning Any from function declared to return "dict[Any, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/free_to_game_toolkit.py:111` - error: Returning Any from function declared to return "dict[Any, Any]"  [no-any-return]
   - ID: a8b96287
 - ... and 7 more
 
 ## mypy:Any, Any, Any (60 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:641` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[Any], /) -> None
+- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:641` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[Any], /) -> None
   - ID: 754f5ea4
-- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:655` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[Any], /) -> None
+- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:655` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[Any], /) -> None
   - ID: b69e8640
-- `packages/haive-agents/src/haive/agents/common/utils/pydantic_prompt_utils.py:89` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[Any], /) -> None
+- `packages/haive-agents/src/haive/agents/common/utils/pydantic_prompt_utils.py:89` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[Any], /) -> None
   - ID: dc3081fd
-- `packages/haive-agents/src/haive/agents/base/agent.py:859` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str], /) -> None
+- `packages/haive-agents/src/haive/agents/base/agent.py:859` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str], /) -> None
   - ID: e90a129b
-- `packages/haive-agents/src/haive/agents/base/agent.py:863` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str], /) -> None
+- `packages/haive-agents/src/haive/agents/base/agent.py:863` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str], /) -> None
   - ID: 532e1d8d
-- `packages/haive-agents/src/haive/agents/base/agent.py:864` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str], /) -> None
+- `packages/haive-agents/src/haive/agents/base/agent.py:864` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str], /) -> None
   - ID: 900a80c4
-- `packages/haive-agents/src/haive/agents/base/agent.py:866` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str], /) -> None
+- `packages/haive-agents/src/haive/agents/base/agent.py:866` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str], /) -> None
   - ID: fa528da5
-- `packages/haive-agents/src/haive/agents/base/agent.py:870` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str], /) -> None
+- `packages/haive-agents/src/haive/agents/base/agent.py:870` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str], /) -> None
   - ID: 88d0799b
-- `packages/haive-agents/src/haive/agents/base/agent.py:872` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str], /) -> None
+- `packages/haive-agents/src/haive/agents/base/agent.py:872` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str], /) -> None
   - ID: 67889e5a
-- `packages/haive-agents/src/haive/agents/memory_v2/simple_memory_agent.py:794` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]" [in
+- `packages/haive-agents/src/haive/agents/memory_v2/simple_memory_agent.py:794` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]"  [in
   - ID: 3af3f6a5
 - ... and 1 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:239` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:239` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
   - ID: 4d3b4120
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:243` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:243` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
   - ID: 317e876c
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:267` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:267` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
   - ID: f221f746
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:271` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:271` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
   - ID: db157cf9
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:354` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:354` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
   - ID: ec0fd0f6
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:374` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:374` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
   - ID: e99b75f9
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:376` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:376` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
   - ID: f268fde7
-- `packages/haive-core/src/haive/core/graph/node/message_transformation.py:168` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
+- `packages/haive-core/src/haive/core/graph/node/message_transformation.py:168` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
   - ID: 96b8b0b7
-- `packages/haive-core/src/haive/core/graph/node/message_transformation.py:172` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
+- `packages/haive-core/src/haive/core/graph/node/message_transformation.py:172` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
   - ID: fa6b7d1f
-- `packages/haive-core/src/haive/core/graph/node/message_transformation.py:196` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
+- `packages/haive-core/src/haive/core/graph/node/message_transformation.py:196` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[str | dict[Any, Any]], /) -> None
   - ID: 6af8ecef
 - ... and 16 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:206` - note: def **getitem**(self, slice[Any, Any, Any], /) -> list[Any]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:206` - note:     def __getitem__(self, slice[Any, Any, Any], /) -> list[Any]
   - ID: c2ef4dc5
-- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:207` - note: def **getitem**(self, slice[Any, Any, Any], /) -> list[Any]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:207` - note:     def __getitem__(self, slice[Any, Any, Any], /) -> list[Any]
   - ID: c9f009ef
-- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:208` - note: def **getitem**(self, slice[Any, Any, Any], /) -> list[Any]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:208` - note:     def __getitem__(self, slice[Any, Any, Any], /) -> list[Any]
   - ID: bdf279b7
-- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:213` - note: def **getitem**(self, slice[Any, Any, Any], /) -> list[Any]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:213` - note:     def __getitem__(self, slice[Any, Any, Any], /) -> list[Any]
   - ID: 4488b9fe
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/reversi/state_manager.py:51` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[None], /) -> None
+- `packages/haive-games/src/haive/games/reversi/state_manager.py:51` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[None], /) -> None
   - ID: de53af64
-- `packages/haive-games/src/haive/games/reversi/state_manager.py:52` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[None], /) -> None
+- `packages/haive-games/src/haive/games/reversi/state_manager.py:52` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[None], /) -> None
   - ID: b6d95468
-- `packages/haive-games/src/haive/games/reversi/state_manager.py:53` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[None], /) -> None
+- `packages/haive-games/src/haive/games/reversi/state_manager.py:53` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[None], /) -> None
   - ID: 1c0d25a6
-- `packages/haive-games/src/haive/games/reversi/state_manager.py:54` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[None], /) -> None
+- `packages/haive-games/src/haive/games/reversi/state_manager.py:54` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[None], /) -> None
   - ID: a57d256f
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:504` - note: def **setitem**(self, slice[Any, Any, Any], Iterable[Any], /) -> None
+- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:504` - note:     def __setitem__(self, slice[Any, Any, Any], Iterable[Any], /) -> None
   - ID: e28a92ba
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/tools.py:375` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]" [in
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/tools.py:375` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]"  [in
   - ID: 47852ab9
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:495` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]" [in
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:495` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]"  [in
   - ID: fcffb3cc
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:497` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]" [in
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:497` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]"  [in
   - ID: 4ab88e95
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:499` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]" [in
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:499` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]"  [in
   - ID: 07acdaec
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:504` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]" [in
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:504` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]"  [in
   - ID: 7521d415
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:505` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]" [in
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:505` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]"  [in
   - ID: 0de39ecc
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:507` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]" [in
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:507` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]"  [in
   - ID: 9e688cdc
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:515` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]" [in
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:515` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]"  [in
   - ID: c47a0873
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:516` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]" [in
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:516` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]"  [in
   - ID: a3858e98
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:517` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]" [in
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:517` - error: Invalid index type "str" for "str"; expected type "SupportsIndex | slice[Any, Any, Any]"  [in
   - ID: a104a415
 - ... and 3 more
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/translate_tools.py:190` - note: def \_arun(self, \*args: Any, \*\*kwargs: Any) -> Coroutine[Any, Any, Any]
+- `packages/haive-tools/src/haive/tools/tools/translate_tools.py:190` - note:          def _arun(self, *args: Any, **kwargs: Any) -> Coroutine[Any, Any, Any]
   - ID: 9c64e3c2
 
 ## mypy:Any, Any, AsyncPostgresSaverNoPreparedStatements (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/persistence/postgres_saver_override.py:86` - note: def from_conn_string(cls, conn_string: str) -> Coroutine[Any, Any, AsyncPostgresSaver
+- `packages/haive-core/src/haive/core/persistence/postgres_saver_override.py:86` - note:          def from_conn_string(cls, conn_string: str) -> Coroutine[Any, Any, AsyncPostgresSaver
   - ID: b978b9b1
 
 ## mypy:Any, Any, None (2 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/utils/utils.py:33` - error: Value of type "Coroutine[Any, Any, None]" must be used [unused-coroutine]
+- `packages/haive-agents/src/haive/agents/utils/utils.py:33` - error: Value of type "Coroutine[Any, Any, None]" must be used  [unused-coroutine]
   - ID: d712020c
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/auto_loader.py:1267` - error: Value of type "Coroutine[Any, Any, None]" must be used [unused-coroutine]
+- `packages/haive-core/src/haive/core/engine/document/loaders/auto_loader.py:1267` - error: Value of type "Coroutine[Any, Any, None]" must be used  [unused-coroutine]
   - ID: 16b52038
 
 ## mypy:Any, Any, O (2 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/runtime/base/base.py:41` - note: def ainvoke(self, input: I, config: RunnableConfig | None = ..., \*\*kwargs: Any) -> Co
+- `packages/haive-core/src/haive/core/runtime/base/base.py:41` - note:          def ainvoke(self, input: I, config: RunnableConfig | None = ..., **kwargs: Any) -> Co
   - ID: eb2d0e6b
-- `packages/haive-core/src/haive/core/runtime/base/base.py:41` - note: def ainvoke(self, input: I, config: RunnableConfig | None = ..., \*\*kwargs: Any) -> Co
+- `packages/haive-core/src/haive/core/runtime/base/base.py:41` - note:          def ainvoke(self, input: I, config: RunnableConfig | None = ..., **kwargs: Any) -> Co
   - ID: eb2d0e6b
 
 ## mypy:Any, Any, VectorStore (2 errors)
+
 
 ### haive-core
 
@@ -1694,12 +1583,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Any, list[Any (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/state_graph_manager.py:43` - error: Value of type "defaultdict[Any, list[Any]] | list[Any] | Any | dict[Any, Any] | bool | None"
+- `packages/haive-core/src/haive/core/graph/state_graph_manager.py:43` - error: Value of type "defaultdict[Any, list[Any]] | list[Any] | Any | dict[Any, Any] | bool | None" 
   - ID: 635c031e
 
 ## mypy:Any, str (1 errors)
+
 
 ### haive-agents
 
@@ -1708,12 +1599,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Any, tuple[<typing special form>, None (1 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/research/person/agent.py:408` - error: No overload variant of "create_model" matches argument types "str", "dict[Any, tuple[<typing
+- `packages/haive-agents/src/haive/agents/research/person/agent.py:408` - error: No overload variant of "create_model" matches argument types "str", "dict[Any, tuple[<typing 
   - ID: 59861258
 
 ## mypy:Any, tuple[Any, Any (3 errors)
+
 
 ### haive-agents
 
@@ -1729,6 +1622,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Any, type[BaseModel (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/schema/schema_composer.py:3372` - error: No overload variant of "create_model" matches argument types "str", "tuple[Any, type[BaseMode
@@ -1736,12 +1630,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:ArangoDBSource (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:607` - error: Argument 1 has incompatible type "type[ArangoDBSource]"; expected "type[DatabaseSource]" [ar
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:607` - error: Argument 1 has incompatible type "type[ArangoDBSource]"; expected "type[DatabaseSource]"  [ar
   - ID: 099a2ffa
 
 ## mypy:AsyncConnection[tuple[Any, ... (4 errors)
+
 
 ### haive-core
 
@@ -1756,21 +1652,24 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:AsyncMongoDBSaver, None (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/agent/persistence/mongodb_config.py:74` - error: Incompatible types in "await" (actual type "\_AsyncGeneratorContextManager[AsyncMongoDBSaver,
+- `packages/haive-core/src/haive/core/engine/agent/persistence/mongodb_config.py:74` - error: Incompatible types in "await" (actual type "_AsyncGeneratorContextManager[AsyncMongoDBSaver, 
   - ID: 1d9579a1
 
 ## mypy:AsyncPostgresSaver, None (2 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/persistence/postgres_saver_override.py:86` - note: def from_conn_string(conn_string: str, \*, pipeline: bool = ..., serde: SerializerProt
+- `packages/haive-core/src/haive/core/persistence/postgres_saver_override.py:86` - note:          def from_conn_string(conn_string: str, *, pipeline: bool = ..., serde: SerializerProt
   - ID: 733a0c1e
-- `packages/haive-core/src/haive/core/engine/agent/persistence/manager.py:138` - error: Incompatible types in assignment (expression has type "\_AsyncGeneratorContextManager[AsyncPos
+- `packages/haive-core/src/haive/core/engine/agent/persistence/manager.py:138` - error: Incompatible types in assignment (expression has type "_AsyncGeneratorContextManager[AsyncPos
   - ID: 732bc614
 
 ## mypy:AsyncPostgresStoreWrapper (1 errors)
+
 
 ### haive-core
 
@@ -1779,34 +1678,38 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:BaseCallbackHandler (4 errors)
 
+
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/tools.py:108` - error: Argument 2 to "**call**" of "BaseTool" has incompatible type "int"; expected "list[BaseCallba
+- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/tools.py:108` - error: Argument 2 to "__call__" of "BaseTool" has incompatible type "int"; expected "list[BaseCallba
   - ID: 8abdb2e6
-- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/tools.py:125` - error: Argument 2 to "**call**" of "BaseTool" has incompatible type "int"; expected "list[BaseCallba
+- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/tools.py:125` - error: Argument 2 to "__call__" of "BaseTool" has incompatible type "int"; expected "list[BaseCallba
   - ID: 26cfe280
-- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/tools.py:142` - error: Argument 2 to "**call**" of "BaseTool" has incompatible type "int"; expected "list[BaseCallba
+- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/tools.py:142` - error: Argument 2 to "__call__" of "BaseTool" has incompatible type "int"; expected "list[BaseCallba
   - ID: 8624c232
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:489` - error: Argument 2 to "**call**" of "BaseTool" has incompatible type "int"; expected "list[BaseCallba
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:489` - error: Argument 2 to "__call__" of "BaseTool" has incompatible type "int"; expected "list[BaseCallba
   - ID: 6bcbde2a
 
 ## mypy:BaseException (1 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/utils.py:153` - note: def format_exception(type[BaseException] | None, /, value: BaseException | None = ..., tb:
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/utils.py:153` - note:     def format_exception(type[BaseException] | None, /, value: BaseException | None = ..., tb:
   - ID: f722dee7
 
 ## mypy:BaseLoader (2 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/registry.py:282` - error: "type[BaseLoader]" has no attribute "Config" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/loaders/registry.py:282` - error: "type[BaseLoader]" has no attribute "Config"  [attr-defined]
   - ID: 577c2894
-- `packages/haive-core/src/haive/core/engine/document/loaders/base_new.py:165` - error: Returning Any from function declared to return "type[BaseLoader]" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/document/loaders/base_new.py:165` - error: Returning Any from function declared to return "type[BaseLoader]"  [no-any-return]
   - ID: ab93378e
 
 ## mypy:BaseMessage (27 errors)
+
 
 ### haive-agents
 
@@ -1820,9 +1723,9 @@ For further information visit https://errors.pydantic.dev
   - ID: 7d7e6245
 - `packages/haive-agents/src/haive/agents/simple/state.py:50` - error: Argument 1 to "add_messages" has incompatible type "Sequence[BaseMessage]"; expected "list[Ba
   - ID: 7a7993e8
-- `packages/haive-agents/src/haive/agents/document_modifiers/complex_extraction/agent.py:303` - error: Returning Any from function declared to return "list[BaseMessage]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/document_modifiers/complex_extraction/agent.py:303` - error: Returning Any from function declared to return "list[BaseMessage]"  [no-any-return]
   - ID: a97d8edd
-- `packages/haive-agents/src/haive/agents/document_modifiers/complex_extraction/agent.py:305` - error: Returning Any from function declared to return "list[BaseMessage]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/document_modifiers/complex_extraction/agent.py:305` - error: Returning Any from function declared to return "list[BaseMessage]"  [no-any-return]
   - ID: 2c89581c
 
 ### haive-core
@@ -1851,6 +1754,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:BaseMessage | list[str (6 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/simple/state.v2.py:47` - error: Incompatible types in assignment (expression has type "list[BaseMessage | list[str] | tuple[s
@@ -1871,84 +1775,87 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:BaseModel (134 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/memory_v2/standalone_rag_memory.py:670` - note: def tool(\*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
+- `packages/haive-agents/src/haive/agents/memory_v2/standalone_rag_memory.py:670` - note:     def tool(*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
   - ID: d8a894ad
-- `packages/haive-agents/src/haive/agents/memory_v2/standalone_rag_memory.py:670` - note: def tool(\*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
+- `packages/haive-agents/src/haive/agents/memory_v2/standalone_rag_memory.py:670` - note:     def tool(*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
   - ID: d8a894ad
-- `packages/haive-agents/src/haive/agents/memory_v2/long_term_memory_agent.py:475` - note: def tool(\*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
+- `packages/haive-agents/src/haive/agents/memory_v2/long_term_memory_agent.py:475` - note:     def tool(*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
   - ID: a2118e25
-- `packages/haive-agents/src/haive/agents/memory_v2/long_term_memory_agent.py:475` - note: def tool(\*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
+- `packages/haive-agents/src/haive/agents/memory_v2/long_term_memory_agent.py:475` - note:     def tool(*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
   - ID: a2118e25
-- `packages/haive-agents/src/haive/agents/memory_reorganized/agents/ltm.py:464` - note: def tool(\*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
+- `packages/haive-agents/src/haive/agents/memory_reorganized/agents/ltm.py:464` - note:     def tool(*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
   - ID: 6873d7de
-- `packages/haive-agents/src/haive/agents/memory_reorganized/agents/ltm.py:464` - note: def tool(\*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
+- `packages/haive-agents/src/haive/agents/memory_reorganized/agents/ltm.py:464` - note:     def tool(*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
   - ID: 6873d7de
-- `packages/haive-agents/src/haive/agents/long_term_memory/tools.py:52` - error: Incompatible return value type (got "list[BaseModel]", expected "str") [return-value]
+- `packages/haive-agents/src/haive/agents/long_term_memory/tools.py:52` - error: Incompatible return value type (got "list[BaseModel]", expected "str")  [return-value]
   - ID: 88bfb055
 - `packages/haive-agents/src/haive/agents/common/utils/pydantic_prompt_utils.py:147` - error: Incompatible types in assignment (expression has type "type[BaseModel]", target has type "lis
   - ID: 843ef420
-- `packages/haive-agents/src/haive/agents/memory_v2/rag_memory_agent.py:633` - note: def tool(\*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
+- `packages/haive-agents/src/haive/agents/memory_v2/rag_memory_agent.py:633` - note:     def tool(*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
   - ID: 4340da7a
-- `packages/haive-agents/src/haive/agents/memory_v2/rag_memory_agent.py:633` - note: def tool(\*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
+- `packages/haive-agents/src/haive/agents/memory_v2/rag_memory_agent.py:633` - note:     def tool(*, description: str | None = ..., return_direct: bool = ..., args_schema: type[Ba
   - ID: 4340da7a
 - ... and 11 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/pydantic_utils/ui.py:34` - error: Item "BaseModel" of "type[BaseModel] | BaseModel | overloaded function" has no attribute "\_\_n
+- `packages/haive-core/src/haive/core/utils/pydantic_utils/ui.py:34` - error: Item "BaseModel" of "type[BaseModel] | BaseModel | overloaded function" has no attribute "__n
   - ID: 04bc242c
-- `packages/haive-core/src/haive/core/utils/pydantic_utils/ui.py:38` - error: Item "BaseModel" of "type[BaseModel] | BaseModel | overloaded function" has no attribute "\_\_n
+- `packages/haive-core/src/haive/core/utils/pydantic_utils/ui.py:38` - error: Item "BaseModel" of "type[BaseModel] | BaseModel | overloaded function" has no attribute "__n
   - ID: 7041cef8
 - `packages/haive-core/src/haive/core/utils/pydantic_utils/ui.py:45` - error: Item "function" of "type[BaseModel] | BaseModel | overloaded function" has no attribute "mode
   - ID: 10272a14
 - `packages/haive-core/src/haive/core/utils/pydantic_utils/ui.py:92` - error: Item "function" of "type[BaseModel] | BaseModel | overloaded function" has no attribute "mode
   - ID: 4acf2a55
-- `packages/haive-core/src/haive/core/utils/haive_discovery/base_analyzer.py:159` - error: Returning Any from function declared to return "type[BaseModel]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/base_analyzer.py:159` - error: Returning Any from function declared to return "type[BaseModel]"  [no-any-return]
   - ID: 26aecb92
-- `packages/haive-core/src/haive/core/schema/utils.py:306` - error: No overload variant of "create_model" matches argument types "str", "type[BaseModel] | Any",
+- `packages/haive-core/src/haive/core/schema/utils.py:306` - error: No overload variant of "create_model" matches argument types "str", "type[BaseModel] | Any", 
   - ID: 2924296b
-- `packages/haive-core/src/haive/core/schema/utils.py:325` - error: Returning Any from function declared to return "type[BaseModel]" [no-any-return]
+- `packages/haive-core/src/haive/core/schema/utils.py:325` - error: Returning Any from function declared to return "type[BaseModel]"  [no-any-return]
   - ID: 1a3ae41b
-- `packages/haive-core/src/haive/core/schema/utils.py:392` - error: Returning Any from function declared to return "type[BaseModel]" [no-any-return]
+- `packages/haive-core/src/haive/core/schema/utils.py:392` - error: Returning Any from function declared to return "type[BaseModel]"  [no-any-return]
   - ID: f19629f4
 - `packages/haive-core/src/haive/core/schema/ui.py:129` - error: Argument 1 to "issubclass" has incompatible type "overloaded function | type[BaseModel] | Bas
   - ID: 1c5daaa1
-- `packages/haive-core/src/haive/core/schema/ui.py:132` - error: Item "BaseModel" of "type[BaseModel] | BaseModel | overloaded function" has no attribute "\_\_n
+- `packages/haive-core/src/haive/core/schema/ui.py:132` - error: Item "BaseModel" of "type[BaseModel] | BaseModel | overloaded function" has no attribute "__n
   - ID: 4b18aff5
 - ... and 96 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/serialization.py:357` - error: Returning Any from function declared to return "type[BaseModel] | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/serialization.py:357` - error: Returning Any from function declared to return "type[BaseModel] | None"  [no-any-return]
   - ID: dc7bbbdd
-- `packages/haive-dataflow/src/haive/dataflow/registry/serialization.py:438` - error: Returning Any from function declared to return "type[BaseModel] | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/serialization.py:438` - error: Returning Any from function declared to return "type[BaseModel] | None"  [no-any-return]
   - ID: a3444f2f
-- `packages/haive-dataflow/src/haive/dataflow/game_agent.py:372` - error: Item "ModelMetaclass" of "type[BaseModel] | None" has no attribute "initialize" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/game_agent.py:372` - error: Item "ModelMetaclass" of "type[BaseModel] | None" has no attribute "initialize"  [union-attr]
   - ID: 9a806f98
-- `packages/haive-dataflow/src/haive/dataflow/game_agent.py:372` - error: Item "ModelMetaclass" of "type[BaseModel] | None" has no attribute "initialize" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/game_agent.py:372` - error: Item "ModelMetaclass" of "type[BaseModel] | None" has no attribute "initialize"  [union-attr]
   - ID: 9a806f98
-- `packages/haive-dataflow/src/haive/dataflow/api/game_agent.py:372` - error: Item "ModelMetaclass" of "type[BaseModel] | None" has no attribute "initialize" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_agent.py:372` - error: Item "ModelMetaclass" of "type[BaseModel] | None" has no attribute "initialize"  [union-attr]
   - ID: 08c30071
-- `packages/haive-dataflow/src/haive/dataflow/api/game_agent.py:372` - error: Item "ModelMetaclass" of "type[BaseModel] | None" has no attribute "initialize" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_agent.py:372` - error: Item "ModelMetaclass" of "type[BaseModel] | None" has no attribute "initialize"  [union-attr]
   - ID: 08c30071
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/company_researcher/config.py:124` - error: Returning Any from function declared to return "type[BaseModel]" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/company_researcher/config.py:124` - error: Returning Any from function declared to return "type[BaseModel]"  [no-any-return]
   - ID: 08973d4c
 
 ## mypy:BasePlan[Any (2 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:446` - error: Argument 1 to "\_restore_state" of "IntelligentSequence" has incompatible type "list[BasePlan[
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:446` - error: Argument 1 to "_restore_state" of "IntelligentSequence" has incompatible type "list[BasePlan[
   - ID: 97798a3b
 - `packages/haive-agents/src/haive/agents/planning/base/models.py:745` - error: Incompatible return value type (got "list[BasePlan[Any] | BaseStep | list[BaseStep] | Callabl
   - ID: c4f04426
 
 ## mypy:BaseStatement (1 errors)
+
 
 ### haive-tools
 
@@ -1957,6 +1864,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:BaseStep (1 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/planning/base/models.py:755` - error: Item "list[BaseStep]" of "BasePlan[Any] | Any | BaseStep | list[BaseStep] | Callable[..., Any
@@ -1964,9 +1872,10 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:BaseTool (6 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/react_class/react/agent.py:183` - error: Returning Any from function declared to return "list[BaseTool]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/react_class/react/agent.py:183` - error: Returning Any from function declared to return "list[BaseTool]"  [no-any-return]
   - ID: f9d5b580
 
 ### haive-core
@@ -1985,10 +1894,11 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/financialdatasets_toolkit.py:108` - error: Incompatible return value type (got "list[BaseTool]", expected "list[Tool]") [return-value]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/financialdatasets_toolkit.py:108` - error: Incompatible return value type (got "list[BaseTool]", expected "list[Tool]")  [return-value]
   - ID: c924450b
 
 ## mypy:BaseTool | Tool | StructuredTool (1 errors)
+
 
 ### haive-core
 
@@ -1997,6 +1907,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:BaseToolkit (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/utils/tools/tool_schema_generator.py:31` - error: Incompatible types in assignment (expression has type "None", variable has type "type[BaseToo
@@ -2004,62 +1915,70 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:BasicInfo (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/compatibility/examples.py:159` - error: List item 0 has incompatible type "type[BasicInfo]"; expected "type[BaseModel]" [list-item]
+- `packages/haive-core/src/haive/core/schema/compatibility/examples.py:159` - error: List item 0 has incompatible type "type[BasicInfo]"; expected "type[BaseModel]"  [list-item]
   - ID: 74ce0310
 
 ## mypy:BigQuerySource (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:653` - error: Argument 1 has incompatible type "type[BigQuerySource]"; expected "type[DatabaseSource]" [ar
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:653` - error: Argument 1 has incompatible type "type[BigQuerySource]"; expected "type[DatabaseSource]"  [ar
   - ID: 93d137f8
 
 ## mypy:C (2 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/core/game/containers/deck.py:108` - error: Returning Any from function declared to return "list[C]" [no-any-return]
+- `packages/haive-games/src/haive/games/core/game/containers/deck.py:108` - error: Returning Any from function declared to return "list[C]"  [no-any-return]
   - ID: 900d13ce
-- `packages/haive-games/src/haive/games/core/game/containers/deck.py:120` - error: Returning Any from function declared to return "list[C]" [no-any-return]
+- `packages/haive-games/src/haive/games/core/game/containers/deck.py:120` - error: Returning Any from function declared to return "list[C]"  [no-any-return]
   - ID: 20d6c038
 
 ## mypy:CardContainer[TCard (2 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/core/components/cards/base.py:88` - error: Returning Any from function declared to return "type[CardContainer[TCard]]" [no-any-return]
+- `packages/haive-games/src/haive/games/core/components/cards/base.py:88` - error: Returning Any from function declared to return "type[CardContainer[TCard]]"  [no-any-return]
   - ID: 91dd319a
-- `packages/haive-games/src/haive/games/core/components/cards/base.py:88` - error: Returning Any from function declared to return "type[CardContainer[TCard]]" [no-any-return]
+- `packages/haive-games/src/haive/games/core/components/cards/base.py:88` - error: Returning Any from function declared to return "type[CardContainer[TCard]]"  [no-any-return]
   - ID: 91dd319a
 
 ## mypy:CardGameTurn (1 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/core/components/cards/turns.py:78` - error: The type "type[CardGameTurn]" is not generic and not indexable [misc]
+- `packages/haive-games/src/haive/games/core/components/cards/turns.py:78` - error: The type "type[CardGameTurn]" is not generic and not indexable  [misc]
   - ID: 12160dfd
 
 ## mypy:CassandraSource (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:484` - error: Argument 1 has incompatible type "type[CassandraSource]"; expected "type[DatabaseSource]" [a
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:484` - error: Argument 1 has incompatible type "type[CassandraSource]"; expected "type[DatabaseSource]"  [a
   - ID: b45633a2
 
 ## mypy:ChatState (3 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/compatibility/examples.py:260` - error: "type[ChatState]" has no attribute "**shared_fields**" [attr-defined]
+- `packages/haive-core/src/haive/core/schema/compatibility/examples.py:260` - error: "type[ChatState]" has no attribute "__shared_fields__"  [attr-defined]
   - ID: 28796815
-- `packages/haive-core/src/haive/core/schema/compatibility/examples.py:261` - error: "type[ChatState]" has no attribute "**reducer_fields**" [attr-defined]
+- `packages/haive-core/src/haive/core/schema/compatibility/examples.py:261` - error: "type[ChatState]" has no attribute "__reducer_fields__"  [attr-defined]
   - ID: 2a8e52ce
-- `packages/haive-core/src/haive/core/schema/compatibility/examples.py:262` - error: "type[ChatState]" has no attribute "**engine_io_mappings**" [attr-defined]
+- `packages/haive-core/src/haive/core/schema/compatibility/examples.py:262` - error: "type[ChatState]" has no attribute "__engine_io_mappings__"  [attr-defined]
   - ID: e1e44a9e
 
 ## mypy:CheckpointTuple (1 errors)
+
 
 ### haive-core
 
@@ -2068,12 +1987,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Collection[str (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/vectorstore/providers/WeaviateVectorStoreConfig.py:239` - error: "Sequence[Collection[str]]" has no attribute "append" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/vectorstore/providers/WeaviateVectorStoreConfig.py:239` - error: "Sequence[Collection[str]]" has no attribute "append"  [attr-defined]
   - ID: c05a7f84
 
 ## mypy:ComplexityHotspot (1 errors)
+
 
 ### haive-core
 
@@ -2082,12 +2003,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Connection[dict[str, Any (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py:78` - error: Item "ConnectionPool[Connection[dict[str, Any]]]" of "Connection[dict[str, Any]] | Connection
   - ID: fbd79baf
 
 ## mypy:Connection[tuple[Any, ... (1 errors)
+
 
 ### haive-core
 
@@ -2096,12 +2019,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:DataProcessingState (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/schema/base_state_schemas.py:427` - error: Incompatible return value type (got "type[DataProcessingState]", expected "type[AgentState]")
   - ID: 7495ba0e
 
 ## mypy:DocArrayHnswSearch (1 errors)
+
 
 ### haive-core
 
@@ -2110,62 +2035,65 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:DocArrayRetriever (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/retriever/providers/DocArrayRetrieverConfig.py:195` - error: "type[DocArrayRetriever]" has no attribute "from_documents" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/retriever/providers/DocArrayRetrieverConfig.py:195` - error: "type[DocArrayRetriever]" has no attribute "from_documents"  [attr-defined]
   - ID: 02b14960
 
 ## mypy:Document (22 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/rag/simple/multi_agent_simple_rag.py:195` - error: Returning Any from function declared to return "list[Document]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/simple/multi_agent_simple_rag.py:195` - error: Returning Any from function declared to return "list[Document]"  [no-any-return]
   - ID: d3d77b76
-- `packages/haive-agents/src/haive/agents/rag/simple/clean_simple_rag.py:221` - error: Returning Any from function declared to return "list[Document]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/simple/clean_simple_rag.py:221` - error: Returning Any from function declared to return "list[Document]"  [no-any-return]
   - ID: eb5a1823
-- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/retriever_agent.py:181` - error: Returning Any from function declared to return "list[Document]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/retriever_agent.py:181` - error: Returning Any from function declared to return "list[Document]"  [no-any-return]
   - ID: 2bb412e4
-- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/retriever_agent.py:183` - error: Returning Any from function declared to return "list[Document]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/retriever_agent.py:183` - error: Returning Any from function declared to return "list[Document]"  [no-any-return]
   - ID: ecdf2ee8
-- `packages/haive-agents/src/haive/agents/document_modifiers/base/state.py:198` - error: Unsupported left operand type for - ("list[Document]") [operator]
+- `packages/haive-agents/src/haive/agents/document_modifiers/base/state.py:198` - error: Unsupported left operand type for - ("list[Document]")  [operator]
   - ID: 11975cca
-- `packages/haive-agents/src/haive/agents/document_modifiers/base/state.py:213` - error: Unsupported left operand type for - ("list[Document]") [operator]
+- `packages/haive-agents/src/haive/agents/document_modifiers/base/state.py:213` - error: Unsupported left operand type for - ("list[Document]")  [operator]
   - ID: e219b210
-- `packages/haive-agents/src/haive/agents/document_modifiers/kg/kg_base/models.py:62` - note: def transform_documents(self, documents: Sequence[Document], \*\*kwargs: Any) -> Sequen
+- `packages/haive-agents/src/haive/agents/document_modifiers/kg/kg_base/models.py:62` - note:          def transform_documents(self, documents: Sequence[Document], **kwargs: Any) -> Sequen
   - ID: 549c2fcf
-- `packages/haive-agents/src/haive/agents/document_modifiers/kg/kg_base/models.py:62` - note: def transform_documents(self, documents: Sequence[Document], \*\*kwargs: Any) -> Sequen
+- `packages/haive-agents/src/haive/agents/document_modifiers/kg/kg_base/models.py:62` - note:          def transform_documents(self, documents: Sequence[Document], **kwargs: Any) -> Sequen
   - ID: 549c2fcf
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/engine.py:167` - error: Returning Any from function declared to return "list[Document]" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/document/engine.py:167` - error: Returning Any from function declared to return "list[Document]"  [no-any-return]
   - ID: 3ade9e74
-- `packages/haive-core/src/haive/core/engine/document/loaders/adapters/base.py:71` - error: Returning Any from function declared to return "list[Document]" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/document/loaders/adapters/base.py:71` - error: Returning Any from function declared to return "list[Document]"  [no-any-return]
   - ID: 371bc6f5
-- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:194` - error: "list[Document]" has no attribute "documents" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:194` - error: "list[Document]" has no attribute "documents"  [attr-defined]
   - ID: 5215815b
-- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:208` - error: "list[Document]" has no attribute "loader_name" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:208` - error: "list[Document]" has no attribute "loader_name"  [attr-defined]
   - ID: ae97329e
-- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:213` - error: "list[Document]" has no attribute "source_type" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:213` - error: "list[Document]" has no attribute "source_type"  [attr-defined]
   - ID: 51174c83
-- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:234` - error: "list[Document]" has no attribute "source_type" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:234` - error: "list[Document]" has no attribute "source_type"  [attr-defined]
   - ID: 8d36052e
-- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:235` - error: "list[Document]" has no attribute "loader_name" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:235` - error: "list[Document]" has no attribute "loader_name"  [attr-defined]
   - ID: 76f1e404
-- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:251` - error: "list[Document]" has no attribute "source_type" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:251` - error: "list[Document]" has no attribute "source_type"  [attr-defined]
   - ID: fd7ba192
-- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:270` - error: "list[Document]" has no attribute "loader_name" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:270` - error: "list[Document]" has no attribute "loader_name"  [attr-defined]
   - ID: 149d3db8
-- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:271` - error: "list[Document]" has no attribute "source_type" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/loaders/engine.py:271` - error: "list[Document]" has no attribute "source_type"  [attr-defined]
   - ID: 8b8e7329
 - ... and 3 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/simple_rag_mcp_agent.py:84` - error: Returning Any from function declared to return "list[Document]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/simple_rag_mcp_agent.py:84` - error: Returning Any from function declared to return "list[Document]"  [no-any-return]
   - ID: af51bfaf
 
 ## mypy:DocumentLike (1 errors)
+
 
 ### haive-core
 
@@ -2174,6 +2102,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:ElasticsearchSource (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:516` - error: Argument 1 has incompatible type "type[ElasticsearchSource]"; expected "type[DatabaseSource]"
@@ -2181,12 +2110,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:EnhancedMemoryItem (1 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/memory_v2/memory_state_original.py:206` - error: "type[EnhancedMemoryItem]" has no attribute "from_schema_memory" [attr-defined]
+- `packages/haive-agents/src/haive/agents/memory_v2/memory_state_original.py:206` - error: "type[EnhancedMemoryItem]" has no attribute "from_schema_memory"  [attr-defined]
   - ID: a7a2649c
 
 ## mypy:ExecutionResult (3 errors)
+
 
 ### haive-agents
 
@@ -2199,6 +2130,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:FAISS (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/models/vectorstore/base.py:71` - error: Incompatible types in assignment (expression has type "type[FAISS]", variable has type "type[
@@ -2206,12 +2138,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:FlowGridSpace (1 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/single_player/flow_free/base.py:177` - error: The type "type[FlowGridSpace]" is not generic and not indexable [misc]
+- `packages/haive-games/src/haive/games/single_player/flow_free/base.py:177` - error: The type "type[FlowGridSpace]" is not generic and not indexable  [misc]
   - ID: 8a0c17ea
 
 ## mypy:GetCardInfoInput (1 errors)
+
 
 ### haive-tools
 
@@ -2220,12 +2154,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:GraphDocument (1 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/memory_v2/graph_memory_agent.py:330` - error: Returning Any from function declared to return "list[GraphDocument]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/memory_v2/graph_memory_agent.py:330` - error: Returning Any from function declared to return "list[GraphDocument]"  [no-any-return]
   - ID: 0b39575b
 
 ## mypy:GraphMemoryAgent (1 errors)
+
 
 ### haive-agents
 
@@ -2234,6 +2170,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:GraphMemoryConfig (1 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_agent.py:32` - error: Incompatible types in assignment (expression has type "None", variable has type "type[GraphMe
@@ -2241,9 +2178,10 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:HumanMessage (38 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/reflection/multi_agent_reflection.py:412` - error: Incompatible return value type (got "list[HumanMessage]", expected "list[BaseMessage]") [ret
+- `packages/haive-agents/src/haive/agents/reflection/multi_agent_reflection.py:412` - error: Incompatible return value type (got "list[HumanMessage]", expected "list[BaseMessage]")  [ret
   - ID: 9919abf9
 - `packages/haive-agents/src/haive/agents/memory_v2/react_memory_coordinator.py:432` - error: Argument 1 to "add_conversation_batch" of "ReactMemoryCoordinator" has incompatible type "lis
   - ID: c1c90fc1
@@ -2286,23 +2224,25 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/router.py:201` - error: Dict entry 0 has incompatible type "str": "str"; expected "str": "list[HumanMessage]" [dict-
+- `packages/haive-dataflow/src/haive/dataflow/router.py:201` - error: Dict entry 0 has incompatible type "str": "str"; expected "str": "list[HumanMessage]"  [dict-
   - ID: 345656fb
-- `packages/haive-dataflow/src/haive/dataflow/router.py:206` - error: Dict entry 0 has incompatible type "str": "str"; expected "str": "list[HumanMessage]" [dict-
+- `packages/haive-dataflow/src/haive/dataflow/router.py:206` - error: Dict entry 0 has incompatible type "str": "str"; expected "str": "list[HumanMessage]"  [dict-
   - ID: f005a95f
-- `packages/haive-dataflow/src/haive/dataflow/api/router.py:201` - error: Dict entry 0 has incompatible type "str": "str"; expected "str": "list[HumanMessage]" [dict-
+- `packages/haive-dataflow/src/haive/dataflow/api/router.py:201` - error: Dict entry 0 has incompatible type "str": "str"; expected "str": "list[HumanMessage]"  [dict-
   - ID: 28f3e94c
-- `packages/haive-dataflow/src/haive/dataflow/api/router.py:206` - error: Dict entry 0 has incompatible type "str": "str"; expected "str": "list[HumanMessage]" [dict-
+- `packages/haive-dataflow/src/haive/dataflow/api/router.py:206` - error: Dict entry 0 has incompatible type "str": "str"; expected "str": "list[HumanMessage]"  [dict-
   - ID: 63d5d7e1
 
 ## mypy:ImportAlias (1 errors)
 
+
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:74` - error: Item "ImportStar" of "Sequence[ImportAlias] | ImportStar" has no attribute "**iter**" (not it
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:74` - error: Item "ImportStar" of "Sequence[ImportAlias] | ImportStar" has no attribute "__iter__" (not it
   - ID: 09d33ea6
 
 ## mypy:InMemoryVectorStore (1 errors)
+
 
 ### haive-core
 
@@ -2311,18 +2251,20 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Input, Output (4 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/aug_llm/utils.py:208` - note: def [Input, Output] chain(func: Callable[[Input], Coroutine[Any, Any, Output]]) -> Runnabl
+- `packages/haive-core/src/haive/core/engine/aug_llm/utils.py:208` - note:     def [Input, Output] chain(func: Callable[[Input], Coroutine[Any, Any, Output]]) -> Runnabl
   - ID: e70fc091
-- `packages/haive-core/src/haive/core/engine/aug_llm/utils.py:208` - note: def [Input, Output] chain(func: Callable[[Input], Coroutine[Any, Any, Output]]) -> Runnabl
+- `packages/haive-core/src/haive/core/engine/aug_llm/utils.py:208` - note:     def [Input, Output] chain(func: Callable[[Input], Coroutine[Any, Any, Output]]) -> Runnabl
   - ID: e70fc091
-- `packages/haive-core/src/haive/core/engine/aug_llm/utils.py:208` - note: def [Input, Output] chain(func: Callable[[Input], Coroutine[Any, Any, Output]]) -> Runnabl
+- `packages/haive-core/src/haive/core/engine/aug_llm/utils.py:208` - note:     def [Input, Output] chain(func: Callable[[Input], Coroutine[Any, Any, Output]]) -> Runnabl
   - ID: e70fc091
-- `packages/haive-core/src/haive/core/engine/aug_llm/utils.py:208` - note: def [Input, Output] chain(func: Callable[[Input], Coroutine[Any, Any, Output]]) -> Runnabl
+- `packages/haive-core/src/haive/core/engine/aug_llm/utils.py:208` - note:     def [Input, Output] chain(func: Callable[[Input], Coroutine[Any, Any, Output]]) -> Runnabl
   - ID: e70fc091
 
 ## mypy:LTMAgent (1 errors)
+
 
 ### haive-agents
 
@@ -2331,26 +2273,30 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Literal['make_decision' (1 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/hold_em/player_agent.py:540` - error: Returning Any from function declared to return "Command[Literal['make_decision']]" [no-any-r
+- `packages/haive-games/src/haive/games/hold_em/player_agent.py:540` - error: Returning Any from function declared to return "Command[Literal['make_decision']]"  [no-any-r
   - ID: 892e4202
 
 ## mypy:LoaderCapability (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/auto_loader.py:1323` - error: Returning Any from function declared to return "list[LoaderCapability]" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/document/loaders/auto_loader.py:1323` - error: Returning Any from function declared to return "list[LoaderCapability]"  [no-any-return]
   - ID: c3c2ee20
 
 ## mypy:LogicGridSpace (1 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/single_player/logic_grid/base.py:144` - error: The type "type[LogicGridSpace]" is not generic and not indexable [misc]
+- `packages/haive-games/src/haive/games/single_player/logic_grid/base.py:144` - error: The type "type[LogicGridSpace]" is not generic and not indexable  [misc]
   - ID: 2a58319c
 
 ## mypy:LongTermMemoryAgent (1 errors)
+
 
 ### haive-agents
 
@@ -2358,6 +2304,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 59c3f18f
 
 ## mypy:M (3 errors)
+
 
 ### haive-games
 
@@ -2370,12 +2317,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:MemoryRAGConfig (1 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_agent.py:40` - error: Incompatible types in assignment (expression has type "None", variable has type "type[MemoryR
   - ID: 315afbaf
 
 ## mypy:MemoryStateWithTokens (1 errors)
+
 
 ### haive-agents
 
@@ -2384,12 +2333,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:MemoryType (1 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/memory_reorganized/__init__.py:63` - error: Incompatible types in assignment (expression has type "None", variable has type "type[MemoryT
   - ID: 4b13dd47
 
 ## mypy:Milvus (1 errors)
+
 
 ### haive-core
 
@@ -2398,85 +2349,92 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Model (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/models/llm/base.py:762` - error: Incompatible return value type (got "list[Model]", expected "list[str]") [return-value]
+- `packages/haive-core/src/haive/core/models/llm/base.py:762` - error: Incompatible return value type (got "list[Model]", expected "list[str]")  [return-value]
   - ID: 40199ae7
 
 ## mypy:ModelInfo (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/models/llm/base.py:825` - error: Incompatible return value type (got "list[ModelInfo]", expected "list[str]") [return-value]
+- `packages/haive-core/src/haive/core/models/llm/base.py:825` - error: Incompatible return value type (got "list[ModelInfo]", expected "list[str]")  [return-value]
   - ID: fd1041d0
 
 ## mypy:ModelT: BaseModel (25 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/base/agent.py:348` - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
+- `packages/haive-agents/src/haive/agents/base/agent.py:348` - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
   - ID: 50d67e2d
-- `packages/haive-agents/src/haive/agents/research/person/agent.py:408` - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
+- `packages/haive-agents/src/haive/agents/research/person/agent.py:408` - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
   - ID: 128bbb62
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/haive_discovery/base_analyzer.py:159` - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
+- `packages/haive-core/src/haive/core/utils/haive_discovery/base_analyzer.py:159` - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
   - ID: f745a795
-- `packages/haive-core/src/haive/core/schema/utils.py:306` - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
+- `packages/haive-core/src/haive/core/schema/utils.py:306` - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
   - ID: 4291af83
-- `packages/haive-core/src/haive/core/schema/utils.py:363` - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
+- `packages/haive-core/src/haive/core/schema/utils.py:363` - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
   - ID: bb6b6d4b
-- `packages/haive-core/src/haive/core/schema/schema_manager.py:915` - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
+- `packages/haive-core/src/haive/core/schema/schema_manager.py:915` - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
   - ID: 7fac3f2d
-- `packages/haive-core/src/haive/core/schema/multi_agent_state_schema.py:111` - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
+- `packages/haive-core/src/haive/core/schema/multi_agent_state_schema.py:111` - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
   - ID: 00356fa4
-- `packages/haive-core/src/haive/core/schema/composer/schema_composer.py:188` - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
+- `packages/haive-core/src/haive/core/schema/composer/schema_composer.py:188` - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
   - ID: f05a9e6a
-- `packages/haive-core/src/haive/core/schema/composer/_base.py:152` - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
+- `packages/haive-core/src/haive/core/schema/composer/_base.py:152` - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
   - ID: 4816b9d6
-- `packages/haive-core/src/haive/core/schema/compatibility/mergers.py:395` - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
+- `packages/haive-core/src/haive/core/schema/compatibility/mergers.py:395` - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
   - ID: b9bc4140
-- `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:294` - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
+- `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:294` - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
   - ID: 3258d3ce
-- `packages/haive-core/src/haive/core/engine/document/loaders/registry.py:275` - note: def [ModelT: BaseModel] create_model(str, /, \*, **config**: ConfigDict | None = ..., \_\_doc
+- `packages/haive-core/src/haive/core/engine/document/loaders/registry.py:275` - note:     def [ModelT: BaseModel] create_model(str, /, *, __config__: ConfigDict | None = ..., __doc
   - ID: cbe4f345
 - ... and 13 more
 
 ## mypy:ModelValidatorDecoratorInfo (6 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/state_graph/models/state_graph_model.py:226` - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable [operator]
+- `packages/haive-core/src/haive/core/graph/state_graph/models/state_graph_model.py:226` - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable  [operator]
   - ID: 02bef517
-- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:1174` - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable [operator]
+- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:1174` - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable  [operator]
   - ID: dc6c83f6
-- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:1194` - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable [operator]
+- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:1194` - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable  [operator]
   - ID: 9d63071d
-- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:1219` - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable [operator]
+- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:1219` - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable  [operator]
   - ID: 88ad9f39
-- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:1227` - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable [operator]
+- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:1227` - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable  [operator]
   - ID: bee8d81c
-- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2547` - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable [operator]
+- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2547` - error: "PydanticDescriptorProxy[ModelValidatorDecoratorInfo]" not callable  [operator]
   - ID: b5347a5a
 
 ## mypy:MongoDBSource (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:433` - error: Argument 1 has incompatible type "type[MongoDBSource]"; expected "type[DatabaseSource]" [arg
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:433` - error: Argument 1 has incompatible type "type[MongoDBSource]"; expected "type[DatabaseSource]"  [arg
   - ID: 2ecd8df9
 
 ## mypy:MultiAgentStateSchema (2 errors)
+
 
 ### haive-core
 
 - `packages/haive-core/src/haive/core/schema/multi_agent_state_schema.py:111` - error: No overload variant of "create_model" matches argument types "str", "type[MultiAgentStateSche
   - ID: 9a555484
-- `packages/haive-core/src/haive/core/schema/multi_agent_state_schema.py:142` - error: Returning Any from function declared to return "type[MultiAgentStateSchema]" [no-any-return]
+- `packages/haive-core/src/haive/core/schema/multi_agent_state_schema.py:142` - error: Returning Any from function declared to return "type[MultiAgentStateSchema]"  [no-any-return]
   - ID: 51f10585
 
 ## mypy:MultiMemoryAgent (1 errors)
+
 
 ### haive-agents
 
@@ -2485,41 +2443,44 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:MySQLSource (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:364` - error: Argument 1 has incompatible type "type[MySQLSource]"; expected "type[DatabaseSource]" [arg-t
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:364` - error: Argument 1 has incompatible type "type[MySQLSource]"; expected "type[DatabaseSource]"  [arg-t
   - ID: 542465ff
 
 ## mypy:Neo4jSource (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:570` - error: Argument 1 has incompatible type "type[Neo4jSource]"; expected "type[DatabaseSource]" [arg-t
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:570` - error: Argument 1 has incompatible type "type[Neo4jSource]"; expected "type[DatabaseSource]"  [arg-t
   - ID: ea25580e
 
 ## mypy:Never (15 errors)
+
 
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/conversation/directed/agent.py:383` - error: Incompatible types in assignment (expression has type "list[Never]", target has type "dict[An
   - ID: 4a5fc4de
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:182` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]") [return-val
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:182` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]")  [return-val
   - ID: b80a99b4
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:195` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]") [return-val
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:195` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]")  [return-val
   - ID: 5b78b3b2
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:232` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]") [return-val
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:232` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]")  [return-val
   - ID: 4aaf32ed
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:234` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]") [return-val
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:234` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]")  [return-val
   - ID: 98d2c1cc
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:238` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]") [return-val
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:238` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]")  [return-val
   - ID: 8511e110
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:385` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]") [return-val
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:385` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]")  [return-val
   - ID: 3f7844bf
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:392` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]") [return-val
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:392` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]")  [return-val
   - ID: 1b5565e7
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:398` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]") [return-val
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/reflection/agent.py:398` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]")  [return-val
   - ID: c4a79f98
-- `packages/haive-agents/src/haive/agents/document_modifiers/complex_extraction/utils.py:21` - error: Incompatible return value type (got "Command[Never]", expected "dict[Any, Any]") [return-val
+- `packages/haive-agents/src/haive/agents/document_modifiers/complex_extraction/utils.py:21` - error: Incompatible return value type (got "Command[Never]", expected "dict[Any, Any]")  [return-val
   - ID: e4535278
 - ... and 2 more
 
@@ -2532,19 +2493,21 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/fox_and_geese/agent.py:147` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]") [return-val
+- `packages/haive-games/src/haive/games/fox_and_geese/agent.py:147` - error: Incompatible return value type (got "Command[Never]", expected "dict[str, Any]")  [return-val
   - ID: cacaec53
 
 ## mypy:Never, ... (2 errors)
 
+
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/background_process_manager.py:208` - error: Item "tuple[Never, ...]" of "addr | tuple[()]" has no attribute "port" [union-attr]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/background_process_manager.py:208` - error: Item "tuple[Never, ...]" of "addr | tuple[()]" has no attribute "port"  [union-attr]
   - ID: 00d2ee26
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/background_process_manager.py:211` - error: Item "tuple[Never, ...]" of "addr | tuple[()]" has no attribute "ip" [union-attr]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/background_process_manager.py:211` - error: Item "tuple[Never, ...]" of "addr | tuple[()]" has no attribute "ip"  [union-attr]
   - ID: a3c1c520
 
 ## mypy:Never, Never (18 errors)
+
 
 ### haive-agents
 
@@ -2579,33 +2542,38 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:NodeStatus (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/dynamic_graph_builder.py:1919` - error: "type[NodeStatus]" has no attribute "DEAD_END" [attr-defined]
+- `packages/haive-core/src/haive/core/graph/dynamic_graph_builder.py:1919` - error: "type[NodeStatus]" has no attribute "DEAD_END"  [attr-defined]
   - ID: bc1c3b15
 
 ## mypy:None, int, None (1 errors)
 
+
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:159` - error: Invalid index type "slice[None, int, None]" for "dict[str, Any]"; expected type "str" [index
+- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:159` - error: Invalid index type "slice[None, int, None]" for "dict[str, Any]"; expected type "str"  [index
   - ID: f5e42f1e
 
 ## mypy:PathAnalyzer (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/path_analyzer.py:554` - error: "type[PathAnalyzer]" has no attribute "analyze_path" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/loaders/path_analyzer.py:554` - error: "type[PathAnalyzer]" has no attribute "analyze_path"  [attr-defined]
   - ID: 7d338574
 
 ## mypy:PegSpace (1 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:197` - error: The type "type[PegSpace]" is not generic and not indexable [misc]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:197` - error: The type "type[PegSpace]" is not generic and not indexable  [misc]
   - ID: be5d965f
 
 ## mypy:Pinecone (1 errors)
+
 
 ### haive-core
 
@@ -2614,6 +2582,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Player (1 errors)
 
+
 ### haive-games
 
 - `packages/haive-games/src/haive/games/core/agent/game_config.py:27` - note: (Hint: Use "Generic[Player]" or "Protocol[Player]" base class to bind "Player" inside a class)
@@ -2621,21 +2590,24 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:PostgreSQLSource (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:321` - error: Argument 1 has incompatible type "type[PostgreSQLSource]"; expected "type[DatabaseSource]" [
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:321` - error: Argument 1 has incompatible type "type[PostgreSQLSource]"; expected "type[DatabaseSource]"  [
   - ID: 36902dcc
 
 ## mypy:PostgresSaver, None, None (2 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/persistence/postgres_saver_override.py:65` - note: def from_conn_string(conn_string: str, \*, pipeline: bool = ...) -> \_GeneratorContextM
+- `packages/haive-core/src/haive/core/persistence/postgres_saver_override.py:65` - note:          def from_conn_string(conn_string: str, *, pipeline: bool = ...) -> _GeneratorContextM
   - ID: 80c9c730
-- `packages/haive-core/src/haive/core/engine/agent/persistence/manager.py:150` - error: Incompatible types in assignment (expression has type "\_GeneratorContextManager[PostgresSaver
+- `packages/haive-core/src/haive/core/engine/agent/persistence/manager.py:150` - error: Incompatible types in assignment (expression has type "_GeneratorContextManager[PostgresSaver
   - ID: d35a6fe6
 
 ## mypy:PostgresStoreWrapper (1 errors)
+
 
 ### haive-core
 
@@ -2644,12 +2616,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:ProSearchAgent (1 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/memory_reorganized/__init__.py:71` - error: Incompatible types in assignment (expression has type "None", variable has type "type[ProSear
   - ID: dbe82b97
 
 ## mypy:Qdrant (1 errors)
+
 
 ### haive-core
 
@@ -2658,6 +2632,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:QuickSearchAgent (1 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/memory_reorganized/__init__.py:70` - error: Incompatible types in assignment (expression has type "None", variable has type "type[QuickSe
@@ -2665,20 +2640,22 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:RAGStrategy, Any (5 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/rag/agentic_router/agent.py:443` - error: Value of type "dict[RAGStrategy, Any] | None" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/rag/agentic_router/agent.py:443` - error: Value of type "dict[RAGStrategy, Any] | None" is not indexable  [index]
   - ID: 08dd39e0
-- `packages/haive-agents/src/haive/agents/rag/agentic_router/agent.py:449` - error: Value of type "dict[RAGStrategy, Any] | None" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/rag/agentic_router/agent.py:449` - error: Value of type "dict[RAGStrategy, Any] | None" is not indexable  [index]
   - ID: 47d51db3
-- `packages/haive-agents/src/haive/agents/rag/agentic_router/agent.py:457` - error: Value of type "dict[RAGStrategy, Any] | None" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/rag/agentic_router/agent.py:457` - error: Value of type "dict[RAGStrategy, Any] | None" is not indexable  [index]
   - ID: c9ffa50f
-- `packages/haive-agents/src/haive/agents/rag/agentic_router/agent.py:463` - error: Value of type "dict[RAGStrategy, Any] | None" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/rag/agentic_router/agent.py:463` - error: Value of type "dict[RAGStrategy, Any] | None" is not indexable  [index]
   - ID: 12ae3611
-- `packages/haive-agents/src/haive/agents/rag/agentic_router/agent.py:469` - error: Value of type "dict[RAGStrategy, Any] | None" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/rag/agentic_router/agent.py:469` - error: Value of type "dict[RAGStrategy, Any] | None" is not indexable  [index]
   - ID: 08fcfbde
 
 ## mypy:ReactMemoryAgent (1 errors)
+
 
 ### haive-agents
 
@@ -2687,41 +2664,45 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Runnable[Any, Any (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/aug_llm/utils.py:208` - error: No overload variant of "chain" matches argument type "list[Runnable[Any, Any]]" [call-overlo
+- `packages/haive-core/src/haive/core/engine/aug_llm/utils.py:208` - error: No overload variant of "chain" matches argument type "list[Runnable[Any, Any]]"  [call-overlo
   - ID: 014a0131
 
 ## mypy:SQLiteSource (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:394` - error: Argument 1 has incompatible type "type[SQLiteSource]"; expected "type[DatabaseSource]" [arg-
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:394` - error: Argument 1 has incompatible type "type[SQLiteSource]"; expected "type[DatabaseSource]"  [arg-
   - ID: 77b1e53a
 
 ## mypy:Send (7 errors)
+
 
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agent.py:563` - error: Incompatible return value type (got "list[Send] | str", expected "Literal['__end__'] | list[S
   - ID: 4bb73d65
-- `packages/haive-agents/src/haive/agents/react_class/react_v2/agent.py:328` - error: Returning Any from function declared to return "str | list[Send]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/react_class/react_v2/agent.py:328` - error: Returning Any from function declared to return "str | list[Send]"  [no-any-return]
   - ID: 08782058
-- `packages/haive-agents/src/haive/agents/react_class/react_agent2/agent3.py:378` - error: Returning Any from function declared to return "str | list[Send] | Literal['END']" [no-any-r
+- `packages/haive-agents/src/haive/agents/react_class/react_agent2/agent3.py:378` - error: Returning Any from function declared to return "str | list[Send] | Literal['END']"  [no-any-r
   - ID: 1d235fa9
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:145` - error: Returning Any from function declared to return "list[Send] | str" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:145` - error: Returning Any from function declared to return "list[Send] | str"  [no-any-return]
   - ID: 4e5bbc10
-- `packages/haive-core/src/haive/core/graph/node/routing_validation_node.py:79` - error: Returning Any from function declared to return "list[Send] | str" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/node/routing_validation_node.py:79` - error: Returning Any from function declared to return "list[Send] | str"  [no-any-return]
   - ID: 7798c6a4
-- `packages/haive-core/src/haive/core/graph/node/routing_validation_node.py:234` - error: Returning Any from function declared to return "list[Send] | str" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/node/routing_validation_node.py:234` - error: Returning Any from function declared to return "list[Send] | str"  [no-any-return]
   - ID: 116eed41
-- `packages/haive-core/src/haive/core/graph/node/routing_validation_node.py:260` - error: Returning Any from function declared to return "list[Send] | str" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/node/routing_validation_node.py:260` - error: Returning Any from function declared to return "list[Send] | str"  [no-any-return]
   - ID: 238d6997
 
 ## mypy:Send | str (28 errors)
+
 
 ### haive-agents
 
@@ -2748,13 +2729,14 @@ For further information visit https://errors.pydantic.dev
   - ID: bdf41196
 - `packages/haive-core/src/haive/core/schema/state_schema.py:1616` - error: Argument "goto" to "Command" has incompatible type "str | None"; expected "Send | Sequence[Se
   - ID: 600b1417
-- `packages/haive-core/src/haive/core/graph/graph_builder2.py:1146` - error: Incompatible return value type (got "Send | Sequence[Send | str]", expected "str") [return-v
+- `packages/haive-core/src/haive/core/graph/graph_builder2.py:1146` - error: Incompatible return value type (got "Send | Sequence[Send | str]", expected "str")  [return-v
   - ID: 8a06b98b
 - `packages/haive-core/src/haive/core/graph/branches/branch.py:354` - error: Argument "goto" to "Command" has incompatible type "str | None"; expected "Send | Sequence[Se
   - ID: 233cfaab
 - ... and 16 more
 
 ## mypy:Serializable (7 errors)
+
 
 ### haive-agents
 
@@ -2778,6 +2760,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:SimpleAgent (8 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_standalone.py:492` - error: Type argument "list[SimpleAgent]" of "MultiAgent" must be a subtype of "dict[str, Agent] | li
@@ -2799,6 +2782,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:SimpleMemoryAgent (1 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/memory_reorganized/__init__.py:44` - error: Incompatible types in assignment (expression has type "None", variable has type "type[SimpleM
@@ -2806,37 +2790,41 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:SnowflakeSource (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:696` - error: Argument 1 has incompatible type "type[SnowflakeSource]"; expected "type[DatabaseSource]" [a
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:696` - error: Argument 1 has incompatible type "type[SnowflakeSource]"; expected "type[DatabaseSource]"  [a
   - ID: d4310b47
 
 ## mypy:Step (1 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/plan_and_execute/models.py:32` - error: Argument 2 to "map" has incompatible type "list[Step] | None"; expected "Iterable[Step]" [ar
+- `packages/haive-agents/src/haive/agents/planning/plan_and_execute/models.py:32` - error: Argument 2 to "map" has incompatible type "list[Step] | None"; expected "Iterable[Step]"  [ar
   - ID: b80f561a
 
 ## mypy:StepStatus (1 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/plan_execute_v3/engines.py:277` - error: "type[StepStatus]" has no attribute "RUNNING" [attr-defined]
+- `packages/haive-agents/src/haive/agents/planning/plan_execute_v3/engines.py:277` - error: "type[StepStatus]" has no attribute "RUNNING"  [attr-defined]
   - ID: ec8f5996
 
 ## mypy:StructuredTool (9 errors)
+
 
 ### haive-core
 
 - `packages/haive-core/src/haive/core/utils/tools/tool_schema_generator.py:30` - error: Incompatible types in assignment (expression has type "None", variable has type "type[Structu
   - ID: cab45115
-- `packages/haive-core/src/haive/core/engine/tool/base.py:148` - error: Incompatible return value type (got "list[StructuredTool]", expected "list[BaseTool | Tool |
+- `packages/haive-core/src/haive/core/engine/tool/base.py:148` - error: Incompatible return value type (got "list[StructuredTool]", expected "list[BaseTool | Tool | 
   - ID: e83ab1d9
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/perplexity/base/engines.py:316` - error: Returning Any from function declared to return "list[StructuredTool]" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/perplexity/base/engines.py:316` - error: Returning Any from function declared to return "list[StructuredTool]"  [no-any-return]
   - ID: cdc28d0b
 
 ### haive-tools
@@ -2856,12 +2844,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:SystemMessage (1 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/tools/math_tools.py:118` - error: Incompatible types in assignment (expression has type "list[SystemMessage]", target has type
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/tools/math_tools.py:118` - error: Incompatible types in assignment (expression has type "list[SystemMessage]", target has type 
   - ID: 3c59ce6d
 
 ## mypy:T (42 errors)
+
 
 ### haive-agents
 
@@ -2870,71 +2860,74 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/registry/decorators.py:95` - error: "type[T]" has no attribute "register_instance" [attr-defined]
+- `packages/haive-core/src/haive/core/registry/decorators.py:95` - error: "type[T]" has no attribute "register_instance"  [attr-defined]
   - ID: 2362eb03
-- `packages/haive-core/src/haive/core/registry/decorators.py:98` - error: "type[T]" has no attribute "**registry_info**" [attr-defined]
+- `packages/haive-core/src/haive/core/registry/decorators.py:98` - error: "type[T]" has no attribute "__registry_info__"  [attr-defined]
   - ID: a202bc84
-- `packages/haive-core/src/haive/core/types/tree_leaf.py:48` - error: "NodeMixin[T]" has no attribute "children" [attr-defined]
+- `packages/haive-core/src/haive/core/types/tree_leaf.py:48` - error: "NodeMixin[T]" has no attribute "children"  [attr-defined]
   - ID: f1b24746
 - `packages/haive-core/src/haive/core/types/tree_leaf.py:52` - note: (Hint: Use "Generic[T]" or "Protocol[T]" base class to bind "T" inside a class)
   - ID: e62382d2
 - `packages/haive-core/src/haive/core/types/tree_leaf.py:53` - note: (Hint: Use "Generic[T]" or "Protocol[T]" base class to bind "T" inside a class)
   - ID: 3ca03410
-- `packages/haive-core/src/haive/core/registry/dynamic_registry.py:548` - error: Item "RegistryItem[T]" of "RegistryItem[T] | dict[Never, Never]" has no attribute "get" [uni
+- `packages/haive-core/src/haive/core/registry/dynamic_registry.py:548` - error: Item "RegistryItem[T]" of "RegistryItem[T] | dict[Never, Never]" has no attribute "get"  [uni
   - ID: 205b657c
 - `packages/haive-core/src/haive/core/common/models/named_list.py:76` - error: Argument 1 to "process_single_item" of "NamedList" has incompatible type "Sequence[T]"; expec
   - ID: 09f1fcaf
-- `packages/haive-core/src/haive/core/common/models/named_list.py:93` - error: "Sequence[T]" has no attribute "append" [attr-defined]
+- `packages/haive-core/src/haive/core/common/models/named_list.py:93` - error: "Sequence[T]" has no attribute "append"  [attr-defined]
   - ID: faca1975
-- `packages/haive-core/src/haive/core/common/models/named_list.py:96` - error: "Sequence[T]" has no attribute "append" [attr-defined]
+- `packages/haive-core/src/haive/core/common/models/named_list.py:96` - error: "Sequence[T]" has no attribute "append"  [attr-defined]
   - ID: 5120ccd0
-- `packages/haive-core/src/haive/core/common/models/named_list.py:110` - error: "Sequence[T]" has no attribute "append" [attr-defined]
+- `packages/haive-core/src/haive/core/common/models/named_list.py:110` - error: "Sequence[T]" has no attribute "append"  [attr-defined]
   - ID: 1c11f5f5
 - ... and 16 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:73` - error: "Registry[T]" has no attribute "entries" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:73` - error: "Registry[T]" has no attribute "entries"  [attr-defined]
   - ID: dafeb0a6
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:75` - error: "Registry[T]" has no attribute "\_disabled_discovery" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:75` - error: "Registry[T]" has no attribute "_disabled_discovery"  [attr-defined]
   - ID: bddbb4b8
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:133` - error: "Registry[T]" has no attribute "entries" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:133` - error: "Registry[T]" has no attribute "entries"  [attr-defined]
   - ID: adde1eab
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:189` - error: "Registry[T]" has no attribute "\_disabled_discovery" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:189` - error: "Registry[T]" has no attribute "_disabled_discovery"  [attr-defined]
   - ID: 27c01a03
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:193` - error: "Registry[T]" has no attribute "entries" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:193` - error: "Registry[T]" has no attribute "entries"  [attr-defined]
   - ID: 156bf17f
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:195` - error: Returning Any from function declared to return "type[T] | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:195` - error: Returning Any from function declared to return "type[T] | None"  [no-any-return]
   - ID: c8f95327
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:205` - error: Returning Any from function declared to return "type[T] | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:205` - error: Returning Any from function declared to return "type[T] | None"  [no-any-return]
   - ID: 1289141c
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:242` - error: "Registry[T]" has no attribute "entries" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:242` - error: "Registry[T]" has no attribute "entries"  [attr-defined]
   - ID: 20d4bba2
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:244` - error: Returning Any from function declared to return "type[T] | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:244` - error: Returning Any from function declared to return "type[T] | None"  [no-any-return]
   - ID: 58a808d5
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:286` - error: "Registry[T]" has no attribute "\_disabled_discovery" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:286` - error: "Registry[T]" has no attribute "_disabled_discovery"  [attr-defined]
   - ID: 3d1720a7
 - ... and 5 more
 
 ## mypy:TCard | None (1 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/core/components/cards/base.py:106` - error: List comprehension has incompatible type List[TCard | None]; expected List[TCard] [misc]
+- `packages/haive-games/src/haive/games/core/components/cards/base.py:106` - error: List comprehension has incompatible type List[TCard | None]; expected List[TCard]  [misc]
   - ID: d95850d4
 
 ## mypy:TNode (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/state_graph/state_graph.py:467` - note: def validate(cls, value: Any) -> StateGraphSerializable[TNode]
+- `packages/haive-core/src/haive/core/graph/state_graph/state_graph.py:467` - note:          def validate(cls, value: Any) -> StateGraphSerializable[TNode]
   - ID: ee8974b6
 
 ## mypy:Task (3 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:106` - error: Return type "Iterator[Task]" of "\_transform" incompatible with return type "Iterator[dict[Any
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:106` - error: Return type "Iterator[Task]" of "_transform" incompatible with return type "Iterator[dict[Any
   - ID: 6569b91d
 - `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:121` - error: Return type "list[Task]" of "parse" incompatible with return type "dict[Any, Any]" in superty
   - ID: 5621d2bb
@@ -2943,12 +2936,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:TavilySearchResults (1 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/research/open_perplexity/structured_tools.py:26` - error: Incompatible types in assignment (expression has type "None", variable has type "type[TavilyS
   - ID: 7f00bfd5
 
 ## mypy:TestResult | BaseException (1 errors)
+
 
 ### haive-mcp
 
@@ -2957,6 +2952,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:TextIO | Any (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/common/logging_config.py:171` - error: Incompatible types in assignment (expression has type "StreamHandler[TextIO | Any]", variable
@@ -2964,45 +2960,49 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:TextResult (1 errors)
 
+
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/translate_tools.py:186` - error: Item "list[TextResult]" of "TextResult | list[TextResult]" has no attribute "text" [union-at
+- `packages/haive-tools/src/haive/tools/tools/translate_tools.py:186` - error: Item "list[TextResult]" of "TextResult | list[TextResult]" has no attribute "text"  [union-at
   - ID: 3701a06a
 
 ## mypy:ToolCall (9 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/react_class/react_agent2/tool_utils.py:36` - error: Incompatible return value type (got "list[ToolCall]", expected "list[dict[str, Any]]") [retu
+- `packages/haive-agents/src/haive/agents/react_class/react_agent2/tool_utils.py:36` - error: Incompatible return value type (got "list[ToolCall]", expected "list[dict[str, Any]]")  [retu
   - ID: 3426aa25
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages/utils.py:123` - error: Incompatible return value type (got "list[ToolCall]", expected "list[dict[str, Any]]") [retu
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages/utils.py:123` - error: Incompatible return value type (got "list[ToolCall]", expected "list[dict[str, Any]]")  [retu
   - ID: ba0a98d6
-- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:199` - error: Incompatible return value type (got "list[ToolCall]", expected "list[dict[str, Any]]") [retu
+- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:199` - error: Incompatible return value type (got "list[ToolCall]", expected "list[dict[str, Any]]")  [retu
   - ID: 1537310b
-- `packages/haive-core/src/haive/core/graph/node/routing_validation_node.py:163` - error: Incompatible return value type (got "list[ToolCall]", expected "list[dict[str, Any]]") [retu
+- `packages/haive-core/src/haive/core/graph/node/routing_validation_node.py:163` - error: Incompatible return value type (got "list[ToolCall]", expected "list[dict[str, Any]]")  [retu
   - ID: cca5eb5e
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:380` - error: Incompatible types in assignment (expression has type "list[ToolCall]", target has type "str
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:380` - error: Incompatible types in assignment (expression has type "list[ToolCall]", target has type "str 
   - ID: 9f8e5b1d
-- `packages/haive-core/src/haive/core/graph/node/message_transformation.py:309` - error: Incompatible types in assignment (expression has type "list[ToolCall]", target has type "str
+- `packages/haive-core/src/haive/core/graph/node/message_transformation.py:309` - error: Incompatible types in assignment (expression has type "list[ToolCall]", target has type "str 
   - ID: dee8736d
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages_state.py:294` - error: Incompatible return value type (got "list[ToolCall]", expected "list[dict[Any, Any]]") [retu
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages_state.py:294` - error: Incompatible return value type (got "list[ToolCall]", expected "list[dict[Any, Any]]")  [retu
   - ID: 6b9e1369
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:521` - error: Incompatible return value type (got "list[ToolCall] | Any", expected "list[dict[Any, Any]]")
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:521` - error: Incompatible return value type (got "list[ToolCall] | Any", expected "list[dict[Any, Any]]") 
   - ID: ee5ef18e
 - `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:674` - error: Argument 1 to "extend" of "list" has incompatible type "list[ToolCall]"; expected "Iterable[d
   - ID: b1554639
 
 ## mypy:ToolExecutorState (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/base_state_schemas.py:425` - error: Incompatible return value type (got "type[ToolExecutorState]", expected "type[AgentState]")
+- `packages/haive-core/src/haive/core/schema/base_state_schemas.py:425` - error: Incompatible return value type (got "type[ToolExecutorState]", expected "type[AgentState]")  
   - ID: e3c16f0f
 
 ## mypy:ToolMessage (2 errors)
+
 
 ### haive-core
 
@@ -3013,6 +3013,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:ToolNode (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/utils/tools/tool_schema_generator.py:32` - error: Incompatible types in assignment (expression has type "None", variable has type "type[ToolNod
@@ -3020,21 +3021,24 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:True (2 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/simple/agent_v3.py:715` - error: Argument 4 to "\_add_validation_nodes" of "SimpleAgentV3" has incompatible type "Literal[True]
+- `packages/haive-agents/src/haive/agents/simple/agent_v3.py:715` - error: Argument 4 to "_add_validation_nodes" of "SimpleAgentV3" has incompatible type "Literal[True]
   - ID: 872b544e
-- `packages/haive-agents/src/haive/agents/simple/agent_v3.py:1407` - error: Argument 4 to "\_add_complex_routing" of "SimpleAgentV3" has incompatible type "Literal[True]
+- `packages/haive-agents/src/haive/agents/simple/agent_v3.py:1407` - error: Argument 4 to "_add_complex_routing" of "SimpleAgentV3" has incompatible type "Literal[True] 
   - ID: 2d3effab
 
 ## mypy:TwitterTweetLoader (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/specific/web_social.py:167` - error: "type[TwitterTweetLoader]" has no attribute "from_username" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/loaders/specific/web_social.py:167` - error: "type[TwitterTweetLoader]" has no attribute "from_username"  [attr-defined]
   - ID: 1620c7fc
 
 ## mypy:TypeReference | None (1 errors)
+
 
 ### haive-core
 
@@ -3043,6 +3047,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Weaviate (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/models/vectorstore/base.py:79` - error: Incompatible types in assignment (expression has type "type[Weaviate]", variable has type "ty
@@ -3050,12 +3055,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:Zilliz (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/models/vectorstore/base.py:83` - error: Incompatible types in assignment (expression has type "type[Zilliz]", variable has type "type
   - ID: 7d715bdd
 
 ## mypy:[ (25 errors)
+
 
 ### haive-agents
 
@@ -3070,17 +3077,17 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/state_graph/models/state_graph_model.py:41` - error: Argument "default_factory" to "Field" has incompatible type "Callable[[], defaultdict[Never,
+- `packages/haive-core/src/haive/core/graph/state_graph/models/state_graph_model.py:41` - error: Argument "default_factory" to "Field" has incompatible type "Callable[[], defaultdict[Never, 
   - ID: 02e94b14
-- `packages/haive-core/src/haive/core/engine/document/sources/local.py:74` - error: Invalid index type "Callable[[], str]" for "dict[str, str]"; expected type "str" [index]
+- `packages/haive-core/src/haive/core/engine/document/sources/local.py:74` - error: Invalid index type "Callable[[], str]" for "dict[str, str]"; expected type "str"  [index]
   - ID: c1bb6d8a
-- `packages/haive-core/src/haive/core/engine/document/sources/local.py:86` - error: "Callable[[], datetime]" has no attribute "isoformat" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/sources/local.py:86` - error: "Callable[[], datetime]" has no attribute "isoformat"  [attr-defined]
   - ID: e219d1a0
-- `packages/haive-core/src/haive/core/engine/document/sources/local.py:155` - error: "Callable[[], datetime]" has no attribute "isoformat" [attr-defined]
+- `packages/haive-core/src/haive/core/engine/document/sources/local.py:155` - error: "Callable[[], datetime]" has no attribute "isoformat"  [attr-defined]
   - ID: a2831f11
 - `packages/haive-core/src/haive/core/schema/schema_composer.py:1070` - error: Argument "default_factory" to "add_field" of "SchemaComposer" has incompatible type "Callable
   - ID: b78c90f0
-- `packages/haive-core/src/haive/core/schema/field_utils.py:702` - error: No overload variant of "Field" matches argument types "Callable[[], T]", "dict[str, str]" [c
+- `packages/haive-core/src/haive/core/schema/field_utils.py:702` - error: No overload variant of "Field" matches argument types "Callable[[], T]", "dict[str, str]"  [c
   - ID: 4a7adde9
 - `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:913` - error: Incompatible return value type (got "Callable[[], AIMessage | HumanMessage | ChatMessage | Sy
   - ID: d1a0dd5f
@@ -3094,9 +3101,9 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/registry/lazy_core.py:192` - error: "Callable[[], LazyRegistrySystem]" has no attribute "\_instance" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/lazy_core.py:192` - error: "Callable[[], LazyRegistrySystem]" has no attribute "_instance"  [attr-defined]
   - ID: 707994bc
-- `packages/haive-dataflow/src/haive/dataflow/registry/lazy_core.py:193` - error: "Callable[[], LazyRegistrySystem]" has no attribute "\_instance" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/lazy_core.py:193` - error: "Callable[[], LazyRegistrySystem]" has no attribute "_instance"  [attr-defined]
   - ID: 555a3691
 
 ### haive-games
@@ -3105,19 +3112,21 @@ For further information visit https://errors.pydantic.dev
   - ID: 2186b406
 - `packages/haive-games/src/haive/games/chess/state.py:92` - error: Argument "default_factory" to "Field" has incompatible type "Callable[[], dict[str, list[Neve
   - ID: cd247e25
-- `packages/haive-games/src/haive/games/checkers/state.py:225` - error: Argument "default_factory" to "Field" has incompatible type "Callable[[], list[list[int]]]";
+- `packages/haive-games/src/haive/games/checkers/state.py:225` - error: Argument "default_factory" to "Field" has incompatible type "Callable[[], list[list[int]]]"; 
   - ID: 66a2d442
 - `packages/haive-games/src/haive/games/checkers/state.py:267` - error: Argument "default_factory" to "Field" has incompatible type "Callable[[], dict[str, list[Neve
   - ID: 4317efb8
 
 ## mypy:[<parameters> (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/gb/__init__.py:21` - error: Please use "Callable[[<parameters>], <return type>]" or "Callable" [misc]
+- `packages/haive-core/src/haive/core/graph/gb/__init__.py:21` - error: Please use "Callable[[<parameters>], <return type>]" or "Callable"  [misc]
   - ID: 9903d243
 
 ## mypy:[Any, RunnableConfig | None (9 errors)
+
 
 ### haive-core
 
@@ -3142,28 +3151,30 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:[Arg(Any, 'state'), DefaultArg(dict[str, Any (9 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/NodeFactory.py:484` - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
+- `packages/haive-core/src/haive/core/graph/NodeFactory.py:484` - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
   - ID: 75e4a873
-- `packages/haive-core/src/haive/core/graph/NodeFactory.py:659` - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
+- `packages/haive-core/src/haive/core/graph/NodeFactory.py:659` - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
   - ID: ff8cc311
-- `packages/haive-core/src/haive/core/graph/NodeFactory.py:711` - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
+- `packages/haive-core/src/haive/core/graph/NodeFactory.py:711` - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
   - ID: 4a3200a5
-- `packages/haive-core/src/haive/core/graph/NodeFactory.py:780` - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
+- `packages/haive-core/src/haive/core/graph/NodeFactory.py:780` - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
   - ID: f0f7ecd6
-- `packages/haive-core/src/haive/core/graph/NodeFactory.py:849` - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
+- `packages/haive-core/src/haive/core/graph/NodeFactory.py:849` - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
   - ID: 8295d2aa
-- `packages/haive-core/src/haive/core/graph/NodeFactory.py:897` - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
+- `packages/haive-core/src/haive/core/graph/NodeFactory.py:897` - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
   - ID: ec1947b2
-- `packages/haive-core/src/haive/core/graph/NodeFactory.py:954` - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
+- `packages/haive-core/src/haive/core/graph/NodeFactory.py:954` - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
   - ID: 1434d0ac
-- `packages/haive-core/src/haive/core/graph/NodeFactory.py:1037` - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
+- `packages/haive-core/src/haive/core/graph/NodeFactory.py:1037` - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
   - ID: 50d025de
-- `packages/haive-core/src/haive/core/graph/NodeFactory.py:1125` - note: "NodeFunction.**call**" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
+- `packages/haive-core/src/haive/core/graph/NodeFactory.py:1125` - note: "NodeFunction.__call__" has type "Callable[[Arg(Any, 'state'), DefaultArg(dict[str, Any] | Non
   - ID: 74e8720f
 
 ## mypy:[BaseException, dict[str, Any (1 errors)
+
 
 ### haive-agents
 
@@ -3172,28 +3183,30 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:[BaseModel (6 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:562` - error: Unsupported right operand type for in ("Callable[[BaseModel], dict[str, FieldInfo]]") [opera
+- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:562` - error: Unsupported right operand type for in ("Callable[[BaseModel], dict[str, FieldInfo]]")  [opera
   - ID: 0311fc1b
-- `packages/haive-agents/src/haive/agents/memory/enhanced_retriever.py:536` - error: Unsupported right operand type for in ("Callable[[BaseModel], dict[str, FieldInfo]]") [opera
+- `packages/haive-agents/src/haive/agents/memory/enhanced_retriever.py:536` - error: Unsupported right operand type for in ("Callable[[BaseModel], dict[str, FieldInfo]]")  [opera
   - ID: b5184fbb
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/StateSchema.py:83` - error: "Callable[[BaseModel], dict[str, FieldInfo]]" has no attribute "items" [attr-defined]
+- `packages/haive-core/src/haive/core/graph/StateSchema.py:83` - error: "Callable[[BaseModel], dict[str, FieldInfo]]" has no attribute "items"  [attr-defined]
   - ID: 0e3662f3
 - `packages/haive-core/src/haive/core/engine/agent/utils/input_handling.py:39` - error: Incompatible types in assignment (expression has type "Callable[[BaseModel], dict[str, FieldI
   - ID: 2ec8bc41
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/serialization.py:328` - error: "Callable[[BaseModel], dict[str, FieldInfo]]" has no attribute "items" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/serialization.py:328` - error: "Callable[[BaseModel], dict[str, FieldInfo]]" has no attribute "items"  [attr-defined]
   - ID: 5351cf7e
-- `packages/haive-dataflow/src/haive/dataflow/registry/serialization.py:409` - error: "Callable[[BaseModel], dict[str, FieldInfo]]" has no attribute "items" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/serialization.py:409` - error: "Callable[[BaseModel], dict[str, FieldInfo]]" has no attribute "items"  [attr-defined]
   - ID: cc9e3605
 
 ## mypy:[ChatPromptValue, RunnableConfig (1 errors)
+
 
 ### haive-agents
 
@@ -3202,12 +3215,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:[JudgeScore (1 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/debate_v2/judges.py:421` - note: def sort(self, \*, key: Callable[[JudgeScore], SupportsDunderLT[Any] | SupportsDunderGT[Any
+- `packages/haive-games/src/haive/games/debate_v2/judges.py:421` - note:     def sort(self, *, key: Callable[[JudgeScore], SupportsDunderLT[Any] | SupportsDunderGT[Any
   - ID: 6b70864d
 
 ## mypy:[StartupIdea (1 errors)
+
 
 ### haive-prebuilt
 
@@ -3216,16 +3231,18 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:[VarArg(Any), KwArg(Any) (3 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/debugkit/core/unified.py:539` - error: "\_Wrapped[[VarArg(Any), KwArg(Any)], Any, [VarArg(Any), KwArg(Any)], Any]" has no attribute "
+- `packages/haive-core/src/haive/core/utils/debugkit/core/unified.py:539` - error: "_Wrapped[[VarArg(Any), KwArg(Any)], Any, [VarArg(Any), KwArg(Any)], Any]" has no attribute "
   - ID: 7d3d5d7b
-- `packages/haive-core/src/haive/core/schema/compatibility/utils.py:339` - error: "\_Wrapped[[VarArg(Any), KwArg(Any)], T, [VarArg(Any), KwArg(Any)], Any]" has no attribute "ca
+- `packages/haive-core/src/haive/core/schema/compatibility/utils.py:339` - error: "_Wrapped[[VarArg(Any), KwArg(Any)], T, [VarArg(Any), KwArg(Any)], Any]" has no attribute "ca
   - ID: 895cd5cc
-- `packages/haive-core/src/haive/core/schema/compatibility/utils.py:340` - error: "\_Wrapped[[VarArg(Any), KwArg(Any)], T, [VarArg(Any), KwArg(Any)], Any]" has no attribute "cl
+- `packages/haive-core/src/haive/core/schema/compatibility/utils.py:340` - error: "_Wrapped[[VarArg(Any), KwArg(Any)], T, [VarArg(Any), KwArg(Any)], Any]" has no attribute "cl
   - ID: c3ac6f1a
 
 ## mypy:[bool, str (4 errors)
+
 
 ### haive-core
 
@@ -3240,12 +3257,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:[dict[Any, Any (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/loaders/specific/web_api.py:127` - error: Argument "dataset_mapping_function" to "ApifyDatasetLoader" has incompatible type "callable?
+- `packages/haive-core/src/haive/core/engine/document/loaders/specific/web_api.py:127` - error: Argument "dataset_mapping_function" to "ApifyDatasetLoader" has incompatible type "callable? 
   - ID: adafc1cf
 
 ## mypy:[dict[str, Any (14 errors)
+
 
 ### haive-agents
 
@@ -3256,29 +3275,30 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/node/factory.py:115` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "**node_config**"
+- `packages/haive-core/src/haive/core/graph/node/factory.py:115` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "__node_config__"  
   - ID: dc6a8175
-- `packages/haive-core/src/haive/core/graph/node/factory.py:116` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "**engine_id**" [a
+- `packages/haive-core/src/haive/core/graph/node/factory.py:116` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "__engine_id__"  [a
   - ID: 5de91ace
-- `packages/haive-core/src/haive/core/graph/node/factory.py:175` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "**node_config**"
+- `packages/haive-core/src/haive/core/graph/node/factory.py:175` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "__node_config__"  
   - ID: 65f7ada9
-- `packages/haive-core/src/haive/core/graph/node/factory.py:176` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "**engine_id**" [a
+- `packages/haive-core/src/haive/core/graph/node/factory.py:176` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "__engine_id__"  [a
   - ID: 94df230b
-- `packages/haive-core/src/haive/core/graph/node/factory.py:286` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "ainvoke" [attr-de
+- `packages/haive-core/src/haive/core/graph/node/factory.py:286` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "ainvoke"  [attr-de
   - ID: 7b8a4bcc
-- `packages/haive-core/src/haive/core/graph/node/factory.py:289` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "**node_config**"
+- `packages/haive-core/src/haive/core/graph/node/factory.py:289` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "__node_config__"  
   - ID: e1163436
-- `packages/haive-core/src/haive/core/graph/node/factory.py:406` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "ainvoke" [attr-de
+- `packages/haive-core/src/haive/core/graph/node/factory.py:406` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "ainvoke"  [attr-de
   - ID: 3c03a939
-- `packages/haive-core/src/haive/core/graph/node/factory.py:409` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "**node_config**"
+- `packages/haive-core/src/haive/core/graph/node/factory.py:409` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "__node_config__"  
   - ID: 746fa5b3
-- `packages/haive-core/src/haive/core/graph/node/factory.py:485` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "**node_config**"
+- `packages/haive-core/src/haive/core/graph/node/factory.py:485` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "__node_config__"  
   - ID: 81a07a4c
-- `packages/haive-core/src/haive/core/graph/node/factory.py:553` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "**node_config**"
+- `packages/haive-core/src/haive/core/graph/node/factory.py:553` - error: "Callable[[dict[str, Any], dict[str, Any] | None], Any]" has no attribute "__node_config__"  
   - ID: 52193ac3
 - ... and 2 more
 
 ## mypy:[dict[str, object (1 errors)
+
 
 ### haive-agents
 
@@ -3286,6 +3306,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 5960e2cb
 
 ## mypy:[list[BaseMessage | list[str (2 errors)
+
 
 ### haive-core
 
@@ -3296,6 +3317,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:[object (2 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/planning/plan_and_execute/models.py:32` - error: Argument 1 to "filter" has incompatible type "Callable[[object], bool]"; expected "Callable[[
@@ -3305,6 +3327,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:[str (1 errors)
 
+
 ### haive-games
 
 - `packages/haive-games/src/haive/games/checkers/example.py:496` - error: Argument "key" to "min" has incompatible type "Callable[[str], object]"; expected "Callable[[
@@ -3312,300 +3335,307 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:[str, FieldInfo (62 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/tot_multi_agent.py:35` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/tot_multi_agent.py:35` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: a5222bc0
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/tot_multi_agent.py:35` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/tot_multi_agent.py:35` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: a5222bc0
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:142` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:142` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 149749f8
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:142` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:142` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 149749f8
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:257` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:257` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 55592f1f
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:257` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:257` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 55592f1f
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/solution_scorer.py:30` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/solution_scorer.py:30` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 51a9e2ad
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/solution_scorer.py:30` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/solution_scorer.py:30` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 51a9e2ad
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/candidate_generator.py:19` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/candidate_generator.py:19` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 3bcc684d
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/candidate_generator.py:19` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/candidate_generator.py:19` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 3bcc684d
 - ... and 12 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/field_utils.py:702` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-core/src/haive/core/schema/field_utils.py:702` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: b5271a46
-- `packages/haive-core/src/haive/core/schema/field_utils.py:702` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-core/src/haive/core/schema/field_utils.py:702` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: b5271a46
-- `packages/haive-core/src/haive/core/schema/field_utils.py:704` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-core/src/haive/core/schema/field_utils.py:704` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 0150822d
-- `packages/haive-core/src/haive/core/schema/field_utils.py:704` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-core/src/haive/core/schema/field_utils.py:704` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 0150822d
-- `packages/haive-core/src/haive/core/engine/retriever/providers/MergerRetrieverConfig.py:70` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-core/src/haive/core/engine/retriever/providers/MergerRetrieverConfig.py:70` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: eaafc62a
-- `packages/haive-core/src/haive/core/engine/retriever/providers/MergerRetrieverConfig.py:70` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-core/src/haive/core/engine/retriever/providers/MergerRetrieverConfig.py:70` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: eaafc62a
-- `packages/haive-core/src/haive/core/engine/retriever/providers/EnsembleRetrieverConfig.py:72` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-core/src/haive/core/engine/retriever/providers/EnsembleRetrieverConfig.py:72` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: b2e90320
-- `packages/haive-core/src/haive/core/engine/retriever/providers/EnsembleRetrieverConfig.py:72` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-core/src/haive/core/engine/retriever/providers/EnsembleRetrieverConfig.py:72` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: b2e90320
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/base.py:139` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-dataflow/src/haive/dataflow/base.py:139` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 2a685ad6
-- `packages/haive-dataflow/src/haive/dataflow/base.py:139` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-dataflow/src/haive/dataflow/base.py:139` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 2a685ad6
-- `packages/haive-dataflow/src/haive/dataflow/api/base.py:139` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-dataflow/src/haive/dataflow/api/base.py:139` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: c7637b5e
-- `packages/haive-dataflow/src/haive/dataflow/api/base.py:139` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-dataflow/src/haive/dataflow/api/base.py:139` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: c7637b5e
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/llm_routes.py:114` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/llm_routes.py:114` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 07636ca2
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/llm_routes.py:114` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/llm_routes.py:114` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 07636ca2
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/mastermind/state.py:96` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-games/src/haive/games/mastermind/state.py:96` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 8663aaa3
-- `packages/haive-games/src/haive/games/mastermind/state.py:96` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-games/src/haive/games/mastermind/state.py:96` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 8663aaa3
-- `packages/haive-games/src/haive/games/mastermind/models.py:163` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-games/src/haive/games/mastermind/models.py:163` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: f1595559
-- `packages/haive-games/src/haive/games/mastermind/models.py:163` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-games/src/haive/games/mastermind/models.py:163` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: f1595559
-- `packages/haive-games/src/haive/games/mastermind/models.py:240` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-games/src/haive/games/mastermind/models.py:240` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: f3f6fff6
-- `packages/haive-games/src/haive/games/mastermind/models.py:240` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-games/src/haive/games/mastermind/models.py:240` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: f3f6fff6
-- `packages/haive-games/src/haive/games/dominoes/state.py:190` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-games/src/haive/games/dominoes/state.py:190` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: ffbc9f8e
-- `packages/haive-games/src/haive/games/dominoes/state.py:190` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-games/src/haive/games/dominoes/state.py:190` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: ffbc9f8e
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:143` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:143` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: d173ff7a
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:143` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:143` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: d173ff7a
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:176` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:176` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: fe52ed60
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:176` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:176` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: fe52ed60
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:177` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:177` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 11dec08a
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:177` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:177` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 11dec08a
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:200` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:200` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 02c383ef
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:200` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:200` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: 02c383ef
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:201` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:201` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: b4a42551
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:201` - note: def Field(default: EllipsisType, \*, alias: str | None = ..., alias_priority: int | None =
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:201` - note:     def Field(default: EllipsisType, *, alias: str | None = ..., alias_priority: int | None = 
   - ID: b4a42551
 - ... and 8 more
 
 ## mypy:[type[HexPosition (1 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/core/game/core_position.py:194` - error: Value of type variable "\_V2BeforeAfterOrPlainValidatorType" of function cannot be "Callable[[
+- `packages/haive-games/src/haive/games/core/game/core_position.py:194` - error: Value of type variable "_V2BeforeAfterOrPlainValidatorType" of function cannot be "Callable[[
   - ID: 2d7ab2f0
 
-## mypy:\_KT, \_VT (16 errors)
+## mypy:_KT, _VT (16 errors)
+
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note: def [_KT, _VT] dict(self) -> dict[_KT, _VT]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note:     def [_KT, _VT] dict(self) -> dict[_KT, _VT]
   - ID: 586bfa17
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note: def [_KT, _VT] dict(self) -> dict[_KT, _VT]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note:     def [_KT, _VT] dict(self) -> dict[_KT, _VT]
   - ID: 586bfa17
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note: def [_KT, _VT] dict(self) -> dict[_KT, _VT]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note:     def [_KT, _VT] dict(self) -> dict[_KT, _VT]
   - ID: 586bfa17
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note: def [_KT, _VT] dict(self) -> dict[_KT, _VT]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note:     def [_KT, _VT] dict(self) -> dict[_KT, _VT]
   - ID: 586bfa17
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note: def [_KT, _VT] dict(self) -> dict[_KT, _VT]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note:     def [_KT, _VT] dict(self) -> dict[_KT, _VT]
   - ID: 586bfa17
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note: def [_KT, _VT] dict(self) -> dict[_KT, _VT]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note:     def [_KT, _VT] dict(self) -> dict[_KT, _VT]
   - ID: 586bfa17
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note: def [_KT, _VT] dict(self) -> dict[_KT, _VT]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note:     def [_KT, _VT] dict(self) -> dict[_KT, _VT]
   - ID: 586bfa17
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note: def [_KT, _VT] dict(self) -> dict[_KT, _VT]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - note:     def [_KT, _VT] dict(self) -> dict[_KT, _VT]
   - ID: 586bfa17
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:422` - note: def [_KT, _VT] dict(self) -> dict[_KT, _VT]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:422` - note:     def [_KT, _VT] dict(self) -> dict[_KT, _VT]
   - ID: 2d2b6c87
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:422` - note: def [_KT, _VT] dict(self) -> dict[_KT, _VT]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:422` - note:     def [_KT, _VT] dict(self) -> dict[_KT, _VT]
   - ID: 2d2b6c87
 - ... and 6 more
 
-## mypy:\_S (5 errors)
+## mypy:_S (5 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:126` - note: def [_S] **add**(self, list[_S], /) -> list[_S | Any]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:126` - note:     def [_S] __add__(self, list[_S], /) -> list[_S | Any]
   - ID: 554e9a47
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/modular/state.py:37` - note: def [_S] **add**(self, list[_S], /) -> list[_S | Any]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/modular/state.py:37` - note:     def [_S] __add__(self, list[_S], /) -> list[_S | Any]
   - ID: 5daadd8f
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/state_schema.py:1213` - note: def [_S] **add**(self, list[_S], /) -> list[_S | Any]
+- `packages/haive-core/src/haive/core/schema/state_schema.py:1213` - note:     def [_S] __add__(self, list[_S], /) -> list[_S | Any]
   - ID: 6e974425
-- `packages/haive-core/src/haive/core/schema/field_utils.py:955` - note: def [_S] **add**(self, list[_S], /) -> list[_S | Any]
+- `packages/haive-core/src/haive/core/schema/field_utils.py:955` - note:     def [_S] __add__(self, list[_S], /) -> list[_S | Any]
   - ID: 75780dcc
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:332` - note: def [_S] **add**(self, list[_S], /) -> list[\_S | str | dict[Any, Any]]
+- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:332` - note:     def [_S] __add__(self, list[_S], /) -> list[_S | str | dict[Any, Any]]
   - ID: 40e0a2bd
 
-## mypy:\_T (67 errors)
+## mypy:_T (67 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/tot_multi_agent.py:35` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/tot_multi_agent.py:35` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: ae9523f1
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/tot_multi_agent.py:35` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/tot_multi_agent.py:35` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: ae9523f1
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:142` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:142` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: e13f78c5
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:142` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:142` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: e13f78c5
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:257` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:257` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 19f30367
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:257` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:257` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 19f30367
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/solution_scorer.py:30` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/solution_scorer.py:30` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 4c75dfec
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/solution_scorer.py:30` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/solution_scorer.py:30` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 4c75dfec
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/candidate_generator.py:19` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/candidate_generator.py:19` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: ba1c6ec2
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/candidate_generator.py:19` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/candidate_generator.py:19` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: ba1c6ec2
 - ... and 12 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/registry/dynamic_registry.py:548` - note: def [_T] get(self, Never, \_T, /) -> \_T
+- `packages/haive-core/src/haive/core/registry/dynamic_registry.py:548` - note:     def [_T] get(self, Never, _T, /) -> _T
   - ID: c58b4970
-- `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:69` - note: def [_T] get(self, ModelMetaclass, \_T, /) -> int | \_T
+- `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:69` - note:     def [_T] get(self, ModelMetaclass, _T, /) -> int | _T
   - ID: 7552b73f
-- `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:70` - note: def [_T] get(self, ModelMetaclass, \_T, /) -> int | \_T
+- `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:70` - note:     def [_T] get(self, ModelMetaclass, _T, /) -> int | _T
   - ID: 59c042ac
-- `packages/haive-core/src/haive/core/schema/state_schema.py:1213` - note: def [_T] **add**(self, tuple[_T, ...], /) -> tuple[Any | _T, ...]
+- `packages/haive-core/src/haive/core/schema/state_schema.py:1213` - note:     def [_T] __add__(self, tuple[_T, ...], /) -> tuple[Any | _T, ...]
   - ID: 12c56164
-- `packages/haive-core/src/haive/core/schema/field_utils.py:702` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-core/src/haive/core/schema/field_utils.py:702` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 21dcd345
-- `packages/haive-core/src/haive/core/schema/field_utils.py:702` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-core/src/haive/core/schema/field_utils.py:702` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 21dcd345
-- `packages/haive-core/src/haive/core/schema/field_utils.py:704` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-core/src/haive/core/schema/field_utils.py:704` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 061e6f89
-- `packages/haive-core/src/haive/core/schema/field_utils.py:704` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-core/src/haive/core/schema/field_utils.py:704` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 061e6f89
-- `packages/haive-core/src/haive/core/schema/field_utils.py:955` - note: def [_T] **add**(self, tuple[_T, ...], /) -> tuple[Any | _T, ...]
+- `packages/haive-core/src/haive/core/schema/field_utils.py:955` - note:     def [_T] __add__(self, tuple[_T, ...], /) -> tuple[Any | _T, ...]
   - ID: c9532974
-- `packages/haive-core/src/haive/core/engine/retriever/providers/MergerRetrieverConfig.py:70` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-core/src/haive/core/engine/retriever/providers/MergerRetrieverConfig.py:70` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 7fad6416
 - ... and 3 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/base.py:139` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-dataflow/src/haive/dataflow/base.py:139` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 4493d396
-- `packages/haive-dataflow/src/haive/dataflow/base.py:139` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-dataflow/src/haive/dataflow/base.py:139` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 4493d396
-- `packages/haive-dataflow/src/haive/dataflow/api/base.py:139` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-dataflow/src/haive/dataflow/api/base.py:139` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 1be2b904
-- `packages/haive-dataflow/src/haive/dataflow/api/base.py:139` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-dataflow/src/haive/dataflow/api/base.py:139` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 1be2b904
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/llm_routes.py:114` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/llm_routes.py:114` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 87d1d2a3
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/llm_routes.py:114` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/llm_routes.py:114` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 87d1d2a3
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/mastermind/state.py:96` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-games/src/haive/games/mastermind/state.py:96` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 13251358
-- `packages/haive-games/src/haive/games/mastermind/state.py:96` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-games/src/haive/games/mastermind/state.py:96` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 13251358
-- `packages/haive-games/src/haive/games/mastermind/models.py:163` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-games/src/haive/games/mastermind/models.py:163` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 401840c3
-- `packages/haive-games/src/haive/games/mastermind/models.py:163` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-games/src/haive/games/mastermind/models.py:163` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 401840c3
-- `packages/haive-games/src/haive/games/mastermind/models.py:240` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-games/src/haive/games/mastermind/models.py:240` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 5239675e
-- `packages/haive-games/src/haive/games/mastermind/models.py:240` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-games/src/haive/games/mastermind/models.py:240` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 5239675e
-- `packages/haive-games/src/haive/games/dominoes/state.py:190` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-games/src/haive/games/dominoes/state.py:190` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 1d6beb01
-- `packages/haive-games/src/haive/games/dominoes/state.py:190` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-games/src/haive/games/dominoes/state.py:190` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 1d6beb01
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:143` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:143` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 3627c519
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:143` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:143` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 3627c519
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:176` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:176` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: e325415a
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:176` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:176` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: e325415a
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:177` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:177` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: d2e44133
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:177` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:177` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: d2e44133
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:200` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:200` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 01d681d3
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:200` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:200` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 01d681d3
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:201` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:201` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 1bb1b1df
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:201` - note: def [_T] Field(default: \_T, \*, alias: str | None = ..., alias_priority: int | None = ...,
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:201` - note:     def [_T] Field(default: _T, *, alias: str | None = ..., alias_priority: int | None = ..., 
   - ID: 1bb1b1df
 - ... and 8 more
 
 ## mypy:abstract (9 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/base/typed_agent.py:492` - error: Cannot instantiate abstract class "WorkflowAgent" with abstract attribute "run_engine" [abst
+- `packages/haive-agents/src/haive/agents/base/typed_agent.py:492` - error: Cannot instantiate abstract class "WorkflowAgent" with abstract attribute "run_engine"  [abst
   - ID: 13618f94
-- `packages/haive-agents/src/haive/agents/base/typed_agent.py:494` - error: Cannot instantiate abstract class "MetaAgent" with abstract attribute "run_engine" [abstract
+- `packages/haive-agents/src/haive/agents/base/typed_agent.py:494` - error: Cannot instantiate abstract class "MetaAgent" with abstract attribute "run_engine"  [abstract
   - ID: 49039d58
-- `packages/haive-agents/src/haive/agents/base/typed_agent.py:498` - error: Cannot instantiate abstract class "AdaptiveAgent" with abstract attribute "run_engine" [abst
+- `packages/haive-agents/src/haive/agents/base/typed_agent.py:498` - error: Cannot instantiate abstract class "AdaptiveAgent" with abstract attribute "run_engine"  [abst
   - ID: c25aef3a
-- `packages/haive-agents/src/haive/agents/base/typed_agent.py:499` - error: Cannot instantiate abstract class "BaseAgent" with abstract attribute "run_engine" [abstract
+- `packages/haive-agents/src/haive/agents/base/typed_agent.py:499` - error: Cannot instantiate abstract class "BaseAgent" with abstract attribute "run_engine"  [abstract
   - ID: 5abf577e
-- `packages/haive-agents/src/haive/agents/base/mixins/persistence_mixin.py:368` - error: Cannot instantiate abstract class "BaseStore" with abstract attributes "abatch" and "batch"
+- `packages/haive-agents/src/haive/agents/base/mixins/persistence_mixin.py:368` - error: Cannot instantiate abstract class "BaseStore" with abstract attributes "abatch" and "batch"  
   - ID: 25f89420
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/agent/agent.py:967` - error: Cannot instantiate abstract class "BaseStore" with abstract attributes "abatch" and "batch"
+- `packages/haive-core/src/haive/core/engine/agent/agent.py:967` - error: Cannot instantiate abstract class "BaseStore" with abstract attributes "abatch" and "batch"  
   - ID: 925a2d5a
-- `packages/haive-core/src/haive/core/engine/agent/agent.py:1002` - error: Cannot instantiate abstract class "BaseStore" with abstract attributes "abatch" and "batch"
+- `packages/haive-core/src/haive/core/engine/agent/agent.py:1002` - error: Cannot instantiate abstract class "BaseStore" with abstract attributes "abatch" and "batch"  
   - ID: a54c8940
-- `packages/haive-core/src/haive/core/engine/agent/agent.py:1086` - error: Cannot instantiate abstract class "BaseStore" with abstract attributes "abatch" and "batch"
+- `packages/haive-core/src/haive/core/engine/agent/agent.py:1086` - error: Cannot instantiate abstract class "BaseStore" with abstract attributes "abatch" and "batch"  
   - ID: f80f5f3a
-- `packages/haive-core/src/haive/core/engine/agent/agent.py:1145` - error: Cannot instantiate abstract class "BaseStore" with abstract attributes "abatch" and "batch"
+- `packages/haive-core/src/haive/core/engine/agent/agent.py:1145` - error: Cannot instantiate abstract class "BaseStore" with abstract attributes "abatch" and "batch"  
   - ID: 0ac915f1
 
 ## mypy:arg-type (169 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/example.py:489` - error: Argument 1 to "exit" has incompatible type "int | float"; expected "str | int | None" [arg-t
+- `packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/example.py:489` - error: Argument 1 to "exit" has incompatible type "int | float"; expected "str | int | None"  [arg-t
   - ID: d3ea8d3a
 - `packages/haive-agents/src/haive/agents/memory_v2/memory_state_original.py:130` - error: Argument "memory_type" to "UnifiedMemoryEntry" has incompatible type "agents.memory_v2.memory
   - ID: 20e9daf2
@@ -3613,39 +3643,39 @@ For further information visit https://errors.pydantic.dev
   - ID: 4c631a50
 - `packages/haive-agents/src/haive/agents/react_class/react_v2/graph_utils.py:69` - error: Argument "name" to "add_human_node" of "ReactGraphBuilder" has incompatible type "str | None"
   - ID: beaab389
-- `packages/haive-agents/src/haive/agents/react_class/react_agent2/config2.py:270` - error: Argument 1 to "append" of "list" has incompatible type "str"; expected "SystemMessage" [arg-
+- `packages/haive-agents/src/haive/agents/react_class/react_agent2/config2.py:270` - error: Argument 1 to "append" of "list" has incompatible type "str"; expected "SystemMessage"  [arg-
   - ID: 608999e2
 - `packages/haive-agents/src/haive/agents/react_class/react_agent2/config2.py:273` - error: Argument 1 to "append" of "list" has incompatible type "MessagesPlaceholder"; expected "Syste
   - ID: e1e8cbed
-- `packages/haive-agents/src/haive/agents/rag/unified_factory.py:292` - error: Argument "style" to "create_rag_pipeline" has incompatible type "str"; expected "RAGStyle" [
+- `packages/haive-agents/src/haive/agents/rag/unified_factory.py:292` - error: Argument "style" to "create_rag_pipeline" has incompatible type "str"; expected "RAGStyle"  [
   - ID: bfa3fe37
-- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:559` - error: Argument 1 to "len" has incompatible type "object"; expected "Sized" [arg-type]
+- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:559` - error: Argument 1 to "len" has incompatible type "object"; expected "Sized"  [arg-type]
   - ID: 2a9fe3b9
 - `packages/haive-agents/src/haive/agents/memory_v2/message_document_converter.py:142` - error: Argument "estimated_tokens" to "MessageMetadata" has incompatible type "float"; expected "int
   - ID: f27db9f8
-- `packages/haive-agents/src/haive/agents/memory_v2/memory_tools.py:206` - error: Argument "importance" to "MemoryMetadata" has incompatible type "str"; expected "float" [arg
+- `packages/haive-agents/src/haive/agents/memory_v2/memory_tools.py:206` - error: Argument "importance" to "MemoryMetadata" has incompatible type "str"; expected "float"  [arg
   - ID: 21235729
 - ... and 25 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/node/engine_node_test.py:98` - error: Argument 1 to "exit" has incompatible type "int | float"; expected "str | int | None" [arg-t
+- `packages/haive-core/src/haive/core/graph/node/engine_node_test.py:98` - error: Argument 1 to "exit" has incompatible type "int | float"; expected "str | int | None"  [arg-t
   - ID: 138586c0
 - `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:67` - error: Argument 1 to "getframeinfo" has incompatible type "FrameType | Any | None"; expected "FrameT
   - ID: ca3784db
-- `packages/haive-core/src/haive/core/types/dynamic_literal.py:92` - error: Argument "base" to "PaintJob" has incompatible type "str"; expected "Colour" [arg-type]
+- `packages/haive-core/src/haive/core/types/dynamic_literal.py:92` - error: Argument "base" to "PaintJob" has incompatible type "str"; expected "Colour"  [arg-type]
   - ID: 2cb2f7ae
-- `packages/haive-core/src/haive/core/types/dynamic_literal.py:92` - error: Argument "base" to "PaintJob" has incompatible type "str"; expected "Colour" [arg-type]
+- `packages/haive-core/src/haive/core/types/dynamic_literal.py:92` - error: Argument "base" to "PaintJob" has incompatible type "str"; expected "Colour"  [arg-type]
   - ID: 2cb2f7ae
-- `packages/haive-core/src/haive/core/types/dynamic_literal.py:95` - error: Argument "base" to "PaintJob" has incompatible type "str"; expected "Colour" [arg-type]
+- `packages/haive-core/src/haive/core/types/dynamic_literal.py:95` - error: Argument "base" to "PaintJob" has incompatible type "str"; expected "Colour"  [arg-type]
   - ID: 5e05238e
-- `packages/haive-core/src/haive/core/types/dynamic_literal.py:95` - error: Argument "base" to "PaintJob" has incompatible type "str"; expected "Colour" [arg-type]
+- `packages/haive-core/src/haive/core/types/dynamic_literal.py:95` - error: Argument "base" to "PaintJob" has incompatible type "str"; expected "Colour"  [arg-type]
   - ID: 5e05238e
-- `packages/haive-core/src/haive/core/types/dynamic_literal.py:98` - error: Argument "base" to "PaintJob" has incompatible type "str"; expected "Colour" [arg-type]
+- `packages/haive-core/src/haive/core/types/dynamic_literal.py:98` - error: Argument "base" to "PaintJob" has incompatible type "str"; expected "Colour"  [arg-type]
   - ID: 2d15020e
-- `packages/haive-core/src/haive/core/types/dynamic_literal.py:98` - error: Argument "base" to "PaintJob" has incompatible type "str"; expected "Colour" [arg-type]
+- `packages/haive-core/src/haive/core/types/dynamic_literal.py:98` - error: Argument "base" to "PaintJob" has incompatible type "str"; expected "Colour"  [arg-type]
   - ID: 2d15020e
-- `packages/haive-core/src/haive/core/types/advanced_registry.py:129` - error: Argument 1 to "get_class" of "Registered" has incompatible type "str | None"; expected "str"
+- `packages/haive-core/src/haive/core/types/advanced_registry.py:129` - error: Argument 1 to "get_class" of "Registered" has incompatible type "str | None"; expected "str" 
   - ID: d0b41e9b
 - `packages/haive-core/src/haive/core/graph/StateSchema.py:132` - error: Argument 2 to "add_field" of "StateSchema" has incompatible type "<typing special form>"; exp
   - ID: 0045113a
@@ -3655,21 +3685,21 @@ For further information visit https://errors.pydantic.dev
 
 - `packages/haive-dataflow/src/haive/dataflow/core.py:1526` - error: Argument 1 to "get_entities_by_type" of "RegistrySystem" has incompatible type "str"; expecte
   - ID: 7b84cb1c
-- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:737` - error: Argument 1 to "getenv" has incompatible type "Any | None"; expected "str" [arg-type]
+- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:737` - error: Argument 1 to "getenv" has incompatible type "Any | None"; expected "str"  [arg-type]
   - ID: d74881e4
-- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:814` - error: Argument 1 to "getenv" has incompatible type "Any | None"; expected "str" [arg-type]
+- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:814` - error: Argument 1 to "getenv" has incompatible type "Any | None"; expected "str"  [arg-type]
   - ID: 39a54759
 - `packages/haive-dataflow/src/haive/dataflow/registry/bin/vault_cli.py:60` - error: Argument 1 to "module_from_spec" has incompatible type "ModuleSpec | None"; expected "ModuleS
   - ID: d5d24d63
-- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:737` - error: Argument 1 to "getenv" has incompatible type "Any | None"; expected "str" [arg-type]
+- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:737` - error: Argument 1 to "getenv" has incompatible type "Any | None"; expected "str"  [arg-type]
   - ID: def79d1c
-- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:814` - error: Argument 1 to "getenv" has incompatible type "Any | None"; expected "str" [arg-type]
+- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:814` - error: Argument 1 to "getenv" has incompatible type "Any | None"; expected "str"  [arg-type]
   - ID: 36059883
 - `packages/haive-dataflow/src/haive/dataflow/bin/vault_cli.py:60` - error: Argument 1 to "module_from_spec" has incompatible type "ModuleSpec | None"; expected "ModuleS
   - ID: 84f5f60e
-- `packages/haive-dataflow/src/haive/dataflow/registry/importers/litellm_importer.py:492` - error: Argument 1 to "int" has incompatible type "str | None"; expected "str | Buffer | SupportsInt
+- `packages/haive-dataflow/src/haive/dataflow/registry/importers/litellm_importer.py:492` - error: Argument 1 to "int" has incompatible type "str | None"; expected "str | Buffer | SupportsInt 
   - ID: 91e985c5
-- `packages/haive-dataflow/src/haive/dataflow/importers/litellm_importer.py:449` - error: Argument 1 to "int" has incompatible type "str | None"; expected "str | Buffer | SupportsInt
+- `packages/haive-dataflow/src/haive/dataflow/importers/litellm_importer.py:449` - error: Argument 1 to "int" has incompatible type "str | None"; expected "str | Buffer | SupportsInt 
   - ID: 2e2e3def
 - `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1597` - error: Argument 1 to "get_entities_by_type" of "RegistrySystem" has incompatible type "str"; expecte
   - ID: db21aec2
@@ -3677,21 +3707,21 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/monopoly/game/game.py:816` - error: Argument 2 to "\_handle_sell_house_action" of "MonopolyGame" has incompatible type "Any | None
+- `packages/haive-games/src/haive/games/monopoly/game/game.py:816` - error: Argument 2 to "_handle_sell_house_action" of "MonopolyGame" has incompatible type "Any | None
   - ID: fe22e4a2
-- `packages/haive-games/src/haive/games/monopoly/game/game.py:820` - error: Argument 2 to "\_handle_build_house_action" of "MonopolyGame" has incompatible type "Any | Non
+- `packages/haive-games/src/haive/games/monopoly/game/game.py:820` - error: Argument 2 to "_handle_build_house_action" of "MonopolyGame" has incompatible type "Any | Non
   - ID: 5a24180b
-- `packages/haive-games/src/haive/games/monopoly/game/game.py:824` - error: Argument 2 to "\_handle_mortgage_action" of "MonopolyGame" has incompatible type "Any | None";
+- `packages/haive-games/src/haive/games/monopoly/game/game.py:824` - error: Argument 2 to "_handle_mortgage_action" of "MonopolyGame" has incompatible type "Any | None";
   - ID: ab286782
-- `packages/haive-games/src/haive/games/monopoly/game/game.py:828` - error: Argument 2 to "\_handle_unmortgage_action" of "MonopolyGame" has incompatible type "Any | None
+- `packages/haive-games/src/haive/games/monopoly/game/game.py:828` - error: Argument 2 to "_handle_unmortgage_action" of "MonopolyGame" has incompatible type "Any | None
   - ID: 6484416b
-- `packages/haive-games/src/haive/games/monopoly/game/game.py:850` - error: Argument 2 to "\_handle_trade_action" of "MonopolyGame" has incompatible type "Any | None"; ex
+- `packages/haive-games/src/haive/games/monopoly/game/game.py:850` - error: Argument 2 to "_handle_trade_action" of "MonopolyGame" has incompatible type "Any | None"; ex
   - ID: 9fb144b2
-- `packages/haive-games/src/haive/games/monopoly/game/game.py:859` - error: Argument 1 to "\_handle_auction_action" of "MonopolyGame" has incompatible type "Any | None";
+- `packages/haive-games/src/haive/games/monopoly/game/game.py:859` - error: Argument 1 to "_handle_auction_action" of "MonopolyGame" has incompatible type "Any | None"; 
   - ID: c026b701
-- `packages/haive-games/src/haive/games/hold_em/ui.py:137` - error: Argument 2 to "\_get_player_at_position" of "HoldemRichUI" has incompatible type "str | int";
+- `packages/haive-games/src/haive/games/hold_em/ui.py:137` - error: Argument 2 to "_get_player_at_position" of "HoldemRichUI" has incompatible type "str | int"; 
   - ID: 68060344
-- `packages/haive-games/src/haive/games/hold_em/ui.py:151` - error: Argument 2 to "\_get_player_at_position" of "HoldemRichUI" has incompatible type "str | int";
+- `packages/haive-games/src/haive/games/hold_em/ui.py:151` - error: Argument 2 to "_get_player_at_position" of "HoldemRichUI" has incompatible type "str | int"; 
   - ID: d3cdf4b3
 - `packages/haive-games/src/haive/games/hold_em/ui.py:157` - error: Argument 1 to "append" of "Text" has incompatible type "str | Any | int"; expected "Text | st
   - ID: 754be210
@@ -3703,9 +3733,9 @@ For further information visit https://errors.pydantic.dev
 
 - `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:311` - error: Argument 1 to "append" of "list" has incompatible type "TestResult | BaseException"; expected
   - ID: dbf4ea27
-- `packages/haive-mcp/src/haive/mcp/servers/dataflow_mcp_server.py:151` - error: Argument 1 to "len" has incompatible type "object"; expected "Sized" [arg-type]
+- `packages/haive-mcp/src/haive/mcp/servers/dataflow_mcp_server.py:151` - error: Argument 1 to "len" has incompatible type "object"; expected "Sized"  [arg-type]
   - ID: 4665bc67
-- `packages/haive-mcp/src/haive/mcp/installers/advanced_code_installer.py:389` - error: Argument 1 to "append" of "list" has incompatible type "BaseTool"; expected "StructuredTool"
+- `packages/haive-mcp/src/haive/mcp/installers/advanced_code_installer.py:389` - error: Argument 1 to "append" of "list" has incompatible type "BaseTool"; expected "StructuredTool" 
   - ID: 7eb538f2
 - `packages/haive-mcp/src/haive/mcp/working_enhanced_retriever.py:144` - error: Argument "vectorstore" to "from_llm" of "SelfQueryRetriever" has incompatible type "Any | Non
   - ID: 8746a076
@@ -3716,45 +3746,46 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:79` - error: Argument 1 to "append" of "list" has incompatible type "AIMessage"; expected "HumanMessage"
+- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:79` - error: Argument 1 to "append" of "list" has incompatible type "AIMessage"; expected "HumanMessage"  
   - ID: 32ef1d5a
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:130` - error: Argument 1 to "login" of "SMTP" has incompatible type "str | None"; expected "str" [arg-type
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:130` - error: Argument 1 to "login" of "SMTP" has incompatible type "str | None"; expected "str"  [arg-type
   - ID: bea41f52
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:130` - error: Argument 1 to "login" of "SMTP" has incompatible type "str | None"; expected "str" [arg-type
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:130` - error: Argument 1 to "login" of "SMTP" has incompatible type "str | None"; expected "str"  [arg-type
   - ID: bea41f52
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:132` - error: Argument 1 to "sendmail" of "SMTP" has incompatible type "str | None"; expected "str" [arg-t
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:132` - error: Argument 1 to "sendmail" of "SMTP" has incompatible type "str | None"; expected "str"  [arg-t
   - ID: 2c9b36ae
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:59` - error: Argument 1 to "add" of "set" has incompatible type "BaseExpression | str"; expected "str" [a
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:59` - error: Argument 1 to "add" of "set" has incompatible type "BaseExpression | str"; expected "str"  [a
   - ID: 076e6ebe
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:60` - error: Argument 1 to "add" of "set" has incompatible type "BaseExpression | str"; expected "str" [a
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:60` - error: Argument 1 to "add" of "set" has incompatible type "BaseExpression | str"; expected "str"  [a
   - ID: fb34ee59
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:76` - error: Argument 1 to "add" of "set" has incompatible type "BaseExpression | str"; expected "str" [a
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:76` - error: Argument 1 to "add" of "set" has incompatible type "BaseExpression | str"; expected "str"  [a
   - ID: 52bd4ce4
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:77` - error: Argument 1 to "add" of "set" has incompatible type "BaseExpression | str"; expected "str" [a
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:77` - error: Argument 1 to "add" of "set" has incompatible type "BaseExpression | str"; expected "str"  [a
   - ID: 683fec41
 - `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:78` - error: Argument 1 to "add" of "set" has incompatible type "BaseExpression | str | Any"; expected "st
   - ID: c217d38b
 - `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/transformers/import_consolidator.py:59` - error: Argument "asname" to "ImportAlias" has incompatible type "Any | Name"; expected "AsName | Non
   - ID: 01cd7262
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1215` - error: Argument "name" to "ExceptHandler" has incompatible type "Name"; expected "AsName | None" [a
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1215` - error: Argument "name" to "ExceptHandler" has incompatible type "Name"; expected "AsName | None"  [a
   - ID: e91c2e1a
 
-## mypy:assignment (266 errors)
+## mypy:assignment (269 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:84` - error: Incompatible types in assignment (expression has type "float", variable has type "int") [ass
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:84` - error: Incompatible types in assignment (expression has type "float", variable has type "int")  [ass
   - ID: 6c3be760
-- `packages/haive-agents/src/haive/agents/simple/lazy_simple_agent.v2.py:199` - error: Incompatible types in assignment (expression has type "str", target has type "float") [assig
+- `packages/haive-agents/src/haive/agents/simple/lazy_simple_agent.v2.py:199` - error: Incompatible types in assignment (expression has type "str", target has type "float")  [assig
   - ID: 42315627
-- `packages/haive-agents/src/haive/agents/simple/lazy_simple_agent.py:184` - error: Incompatible types in assignment (expression has type "str", target has type "float") [assig
+- `packages/haive-agents/src/haive/agents/simple/lazy_simple_agent.py:184` - error: Incompatible types in assignment (expression has type "str", target has type "float")  [assig
   - ID: 3a312f44
-- `packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/example.py:330` - error: Incompatible types in assignment (expression has type "float", variable has type "int") [ass
+- `packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/example.py:330` - error: Incompatible types in assignment (expression has type "float", variable has type "int")  [ass
   - ID: 95e099c5
-- `packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/example.py:335` - error: Incompatible types in assignment (expression has type "float", variable has type "int") [ass
+- `packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/example.py:335` - error: Incompatible types in assignment (expression has type "float", variable has type "int")  [ass
   - ID: 8416d7e0
 - `packages/haive-agents/src/haive/agents/research/storm/state.py:98` - error: Incompatible types in assignment (expression has type "TopicState", base class "TopicState" d
   - ID: fc659a9c
@@ -3766,19 +3797,19 @@ For further information visit https://errors.pydantic.dev
   - ID: 56091c03
 - `packages/haive-agents/src/haive/agents/research/storm/config.py:126` - error: Incompatible types in assignment (expression has type "None", variable has type "InterviewAge
   - ID: 81d3105c
-- ... and 86 more
+- ... and 89 more
 
 ### haive-core
 
 - `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:281` - error: Incompatible types in assignment (expression has type "None", variable has type "ComplexityMe
   - ID: b88ede79
-- `packages/haive-core/src/haive/core/graph/common/field_utils.py:46` - error: Incompatible types in assignment (expression has type "int", variable has type "str") [assig
+- `packages/haive-core/src/haive/core/graph/common/field_utils.py:46` - error: Incompatible types in assignment (expression has type "int", variable has type "str")  [assig
   - ID: 1da762b6
-- `packages/haive-core/src/haive/core/graph/common/field_utils.py:48` - error: Incompatible types in assignment (expression has type "int", variable has type "str") [assig
+- `packages/haive-core/src/haive/core/graph/common/field_utils.py:48` - error: Incompatible types in assignment (expression has type "int", variable has type "str")  [assig
   - ID: a0d88ead
-- `packages/haive-core/src/haive/core/graph/branches/utils.py:46` - error: Incompatible types in assignment (expression has type "int", variable has type "str") [assig
+- `packages/haive-core/src/haive/core/graph/branches/utils.py:46` - error: Incompatible types in assignment (expression has type "int", variable has type "str")  [assig
   - ID: 4d85f662
-- `packages/haive-core/src/haive/core/graph/branches/utils.py:48` - error: Incompatible types in assignment (expression has type "int", variable has type "str") [assig
+- `packages/haive-core/src/haive/core/graph/branches/utils.py:48` - error: Incompatible types in assignment (expression has type "int", variable has type "str")  [assig
   - ID: aa113705
 - `packages/haive-core/src/haive/core/engine/document/loaders/sources/registry.py:235` - error: Incompatible types in assignment (expression has type "SourceRegistration | None", variable h
   - ID: 3aa93681
@@ -3786,31 +3817,31 @@ For further information visit https://errors.pydantic.dev
   - ID: 65af9a4a
 - `packages/haive-core/src/haive/core/utils/debugkit/core/unified.py:411` - error: Incompatible default for argument "trace" (default has type "None", argument has type "bool")
   - ID: dbde0b89
-- `packages/haive-core/src/haive/core/utils/debugkit/core/unified.py:412` - error: Incompatible default for argument "log" (default has type "None", argument has type "bool")
+- `packages/haive-core/src/haive/core/utils/debugkit/core/unified.py:412` - error: Incompatible default for argument "log" (default has type "None", argument has type "bool")  
   - ID: 09896621
-- `packages/haive-core/src/haive/core/common/logging_config.py:49` - error: Incompatible types in assignment (expression has type "None", variable has type "Console") [
+- `packages/haive-core/src/haive/core/common/logging_config.py:49` - error: Incompatible types in assignment (expression has type "None", variable has type "Console")  [
   - ID: a9691bb4
 - ... and 75 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/utils/vault_migration_script.py:239` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str")
+- `packages/haive-dataflow/src/haive/dataflow/utils/vault_migration_script.py:239` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str") 
   - ID: 2720c775
-- `packages/haive-dataflow/src/haive/dataflow/utils/vault_migration_script.py:458` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str")
+- `packages/haive-dataflow/src/haive/dataflow/utils/vault_migration_script.py:458` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str") 
   - ID: ef933d51
-- `packages/haive-dataflow/src/haive/dataflow/utils/vault_migration_script.py:598` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str")
+- `packages/haive-dataflow/src/haive/dataflow/utils/vault_migration_script.py:598` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str") 
   - ID: 1ddcbe1e
-- `packages/haive-dataflow/src/haive/dataflow/registry/utils/vault_migration_script.py:239` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str")
+- `packages/haive-dataflow/src/haive/dataflow/registry/utils/vault_migration_script.py:239` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str") 
   - ID: 0aa680d8
-- `packages/haive-dataflow/src/haive/dataflow/registry/utils/vault_migration_script.py:458` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str")
+- `packages/haive-dataflow/src/haive/dataflow/registry/utils/vault_migration_script.py:458` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str") 
   - ID: 1ba32668
-- `packages/haive-dataflow/src/haive/dataflow/registry/utils/vault_migration_script.py:598` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str")
+- `packages/haive-dataflow/src/haive/dataflow/registry/utils/vault_migration_script.py:598` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str") 
   - ID: 639f635e
-- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:267` - error: Incompatible types in assignment (expression has type "bool", target has type "str") [assign
+- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:267` - error: Incompatible types in assignment (expression has type "bool", target has type "str")  [assign
   - ID: 11d04efb
 - `packages/haive-dataflow/src/haive/dataflow/registry/importers/litellm_importer.py:489` - error: Incompatible types in assignment (expression has type "object", variable has type "str | None
   - ID: 69f031ad
-- `packages/haive-dataflow/src/haive/dataflow/registry/importers/litellm_importer.py:492` - error: Incompatible types in assignment (expression has type "int", variable has type "str | None")
+- `packages/haive-dataflow/src/haive/dataflow/registry/importers/litellm_importer.py:492` - error: Incompatible types in assignment (expression has type "int", variable has type "str | None") 
   - ID: be815bd4
 - `packages/haive-dataflow/src/haive/dataflow/registry/importers/litellm_importer.py:495` - error: Incompatible types in assignment (expression has type "object", variable has type "str | None
   - ID: 17def756
@@ -3818,9 +3849,9 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/chess/llm_utils.py:173` - error: Incompatible types in assignment (expression has type "float", target has type "str") [assig
+- `packages/haive-games/src/haive/games/chess/llm_utils.py:173` - error: Incompatible types in assignment (expression has type "float", target has type "str")  [assig
   - ID: 635f821d
-- `packages/haive-games/src/haive/games/chess/llm_utils.py:179` - error: Incompatible types in assignment (expression has type "float", target has type "str") [assig
+- `packages/haive-games/src/haive/games/chess/llm_utils.py:179` - error: Incompatible types in assignment (expression has type "float", target has type "str")  [assig
   - ID: 466a8c68
 - `packages/haive-games/src/haive/games/framework/base/template_generator.py:98` - error: Incompatible default for argument "output_dir" (default has type "None", argument has type "s
   - ID: 941dcbb6
@@ -3830,25 +3861,25 @@ For further information visit https://errors.pydantic.dev
   - ID: a1336363
 - `packages/haive-games/src/haive/games/chess/example.py:23` - error: Incompatible default for argument "thread_id" (default has type "None", argument has type "st
   - ID: 3751f423
-- `packages/haive-games/src/haive/games/checkers/example.py:265` - error: Incompatible types in assignment (expression has type "int | float", target has type "int")
+- `packages/haive-games/src/haive/games/checkers/example.py:265` - error: Incompatible types in assignment (expression has type "int | float", target has type "int")  
   - ID: 0455d765
 - `packages/haive-games/src/haive/games/checkers/example.py:266` - error: Incompatible types in assignment (expression has type "Any | float | int", target has type "i
   - ID: c910e383
-- `packages/haive-games/src/haive/games/checkers/example.py:271` - error: Incompatible types in assignment (expression has type "int | float", target has type "int")
+- `packages/haive-games/src/haive/games/checkers/example.py:271` - error: Incompatible types in assignment (expression has type "int | float", target has type "int")  
   - ID: ee83f308
-- `packages/haive-games/src/haive/games/checkers/example.py:273` - error: Incompatible types in assignment (expression has type "int | float", target has type "int")
+- `packages/haive-games/src/haive/games/checkers/example.py:273` - error: Incompatible types in assignment (expression has type "int | float", target has type "int")  
   - ID: 6c80bd87
 - ... and 30 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:206` - error: Incompatible types in assignment (expression has type "float", variable has type "int") [ass
+- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:206` - error: Incompatible types in assignment (expression has type "float", variable has type "int")  [ass
   - ID: 6800ec2c
 - `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:43` - error: Incompatible types in assignment (expression has type "ClientSession", variable has type "Non
   - ID: 1aae5aad
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:33` - error: Incompatible types in assignment (expression has type "None", variable has type Module) [ass
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:33` - error: Incompatible types in assignment (expression has type "None", variable has type Module)  [ass
   - ID: 124a129c
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:38` - error: Incompatible types in assignment (expression has type "None", variable has type Module) [ass
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:38` - error: Incompatible types in assignment (expression has type "None", variable has type Module)  [ass
   - ID: 9dc56f50
 - `packages/haive-mcp/src/haive/mcp/simple_rag_mcp_agent.py:76` - error: Incompatible types in assignment (expression has type "ChatOpenAI", variable has type "None")
   - ID: 4ef2e091
@@ -3856,197 +3887,199 @@ For further information visit https://errors.pydantic.dev
   - ID: 466ca19d
 - `packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py:602` - error: Incompatible types in assignment (expression has type "ClientSession", variable has type "Non
   - ID: ed4b074e
-- `packages/haive-mcp/src/haive/mcp/simple_faiss_retriever.py:42` - error: Incompatible types in assignment (expression has type "FAISS", variable has type "None") [as
+- `packages/haive-mcp/src/haive/mcp/simple_faiss_retriever.py:42` - error: Incompatible types in assignment (expression has type "FAISS", variable has type "None")  [as
   - ID: e365cf1c
-- `packages/haive-mcp/src/haive/mcp/simple_faiss_retriever.py:106` - error: Incompatible types in assignment (expression has type "FAISS", variable has type "None") [as
+- `packages/haive-mcp/src/haive/mcp/simple_faiss_retriever.py:106` - error: Incompatible types in assignment (expression has type "FAISS", variable has type "None")  [as
   - ID: 2f50bc85
 - `packages/haive-mcp/src/haive/mcp/enhanced_parent_self_query_retriever.py:180` - error: Incompatible types in assignment (expression has type "ParentDocumentRetriever", variable has
   - ID: 21260609
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/open_researcher/models.py:26` - error: Incompatible types in assignment (expression has type "None", variable has type "str") [assi
+- `packages/haive-prebuilt/src/haive/prebuilt/open_researcher/models.py:26` - error: Incompatible types in assignment (expression has type "None", variable has type "str")  [assi
   - ID: 9c9d5e32
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/tools.py:200` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str")
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/tools.py:200` - error: Incompatible types in assignment (expression has type "str | None", variable has type "str") 
   - ID: e5d202bf
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:118` - error: Incompatible types in assignment (expression has type "str | None", target has type "str") [
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:118` - error: Incompatible types in assignment (expression has type "str | None", target has type "str")  [
   - ID: 7f0bf50d
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:119` - error: Incompatible types in assignment (expression has type "str | None", target has type "str") [
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:119` - error: Incompatible types in assignment (expression has type "str | None", target has type "str")  [
   - ID: cd8f5e22
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1023` - error: Incompatible types in assignment (expression has type "Annotation | None", variable has type
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1023` - error: Incompatible types in assignment (expression has type "Annotation | None", variable has type 
   - ID: daf45af5
 - `packages/haive-tools/src/haive/tools/tools/toolkits/polygon_toolkit.py:85` - error: Incompatible types in assignment (expression has type "None", variable has type "PolygonToolk
   - ID: 314f01d9
 
-## mypy:attr-defined (492 errors)
+## mypy:attr-defined (515 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/specialized_workflows_v2.py:286` - error: "object" has no attribute "**iter**"; maybe "**dir**" or "**str**"? (not iterable) [attr-def
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/specialized_workflows_v2.py:286` - error: "object" has no attribute "__iter__"; maybe "__dir__" or "__str__"? (not iterable)  [attr-def
   - ID: e8f10469
-- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node" [attr-defined]
+- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node"  [attr-defined]
   - ID: f60e49af
-- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node" [attr-defined]
+- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node"  [attr-defined]
   - ID: f60e49af
-- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node" [attr-defined]
+- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node"  [attr-defined]
   - ID: f60e49af
-- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node" [attr-defined]
+- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node"  [attr-defined]
   - ID: f60e49af
-- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node" [attr-defined]
+- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node"  [attr-defined]
   - ID: f60e49af
-- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node" [attr-defined]
+- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node"  [attr-defined]
   - ID: f60e49af
-- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node" [attr-defined]
+- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node"  [attr-defined]
   - ID: f60e49af
-- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node" [attr-defined]
+- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node"  [attr-defined]
   - ID: f60e49af
-- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node" [attr-defined]
+- `packages/haive-agents/src/haive/agents/self_healing_code/__init__.py:3` - error: Module "agents.self_healing_code.agent" has no attribute "bug_report_node"  [attr-defined]
   - ID: f60e49af
-- ... and 203 more
+- ... and 222 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/models/llm/export_llm_models_to_csv.py:71` - error: "type" has no attribute "get_models" [attr-defined]
+- `packages/haive-core/src/haive/core/models/llm/export_llm_models_to_csv.py:71` - error: "type" has no attribute "get_models"  [attr-defined]
   - ID: 7582da5c
-- `packages/haive-core/src/haive/core/schema/composer/field/field_manager.py:152` - error: "type" has no attribute "**args**"; maybe "**flags**"? [attr-defined]
+- `packages/haive-core/src/haive/core/schema/composer/field/field_manager.py:152` - error: "type" has no attribute "__args__"; maybe "__flags__"?  [attr-defined]
   - ID: a7fefe33
-- `packages/haive-core/src/haive/core/schema/composer/field/field_manager.py:157` - error: "type" has no attribute "**args**"; maybe "**flags**"? [attr-defined]
+- `packages/haive-core/src/haive/core/schema/composer/field/field_manager.py:157` - error: "type" has no attribute "__args__"; maybe "__flags__"?  [attr-defined]
   - ID: 8973bf44
-- `packages/haive-core/src/haive/core/schema/composer/engine/engine_manager.py:170` - error: "EngineComposerMixin" has no attribute "fields" [attr-defined]
+- `packages/haive-core/src/haive/core/schema/composer/engine/engine_manager.py:170` - error: "EngineComposerMixin" has no attribute "fields"  [attr-defined]
   - ID: 1b57a7a8
-- `packages/haive-core/src/haive/core/schema/composer/engine/engine_manager.py:170` - error: "EngineComposerMixin" has no attribute "fields" [attr-defined]
+- `packages/haive-core/src/haive/core/schema/composer/engine/engine_manager.py:170` - error: "EngineComposerMixin" has no attribute "fields"  [attr-defined]
   - ID: 1b57a7a8
-- `packages/haive-core/src/haive/core/schema/composer/engine/engine_manager.py:171` - error: "EngineComposerMixin" has no attribute "add_field" [attr-defined]
+- `packages/haive-core/src/haive/core/schema/composer/engine/engine_manager.py:171` - error: "EngineComposerMixin" has no attribute "add_field"  [attr-defined]
   - ID: b9fb594c
-- `packages/haive-core/src/haive/core/schema/composer/engine/engine_manager.py:181` - error: "EngineComposerMixin" has no attribute "fields" [attr-defined]
+- `packages/haive-core/src/haive/core/schema/composer/engine/engine_manager.py:181` - error: "EngineComposerMixin" has no attribute "fields"  [attr-defined]
   - ID: ed68cda8
-- `packages/haive-core/src/haive/core/schema/composer/engine/engine_manager.py:181` - error: "EngineComposerMixin" has no attribute "fields" [attr-defined]
+- `packages/haive-core/src/haive/core/schema/composer/engine/engine_manager.py:181` - error: "EngineComposerMixin" has no attribute "fields"  [attr-defined]
   - ID: ed68cda8
-- `packages/haive-core/src/haive/core/schema/composer/engine/engine_manager.py:182` - error: "EngineComposerMixin" has no attribute "add_field" [attr-defined]
+- `packages/haive-core/src/haive/core/schema/composer/engine/engine_manager.py:182` - error: "EngineComposerMixin" has no attribute "add_field"  [attr-defined]
   - ID: 48aad147
-- `packages/haive-core/src/haive/core/schema/composer/engine/engine_detector.py:39` - error: "EngineDetectorMixin" has no attribute "fields" [attr-defined]
+- `packages/haive-core/src/haive/core/schema/composer/engine/engine_detector.py:39` - error: "EngineDetectorMixin" has no attribute "fields"  [attr-defined]
   - ID: 98cfcfcd
 - ... and 107 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/registry/importers/embeddings_importer.py:264` - error: "object" has no attribute "upper" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/importers/embeddings_importer.py:264` - error: "object" has no attribute "upper"  [attr-defined]
   - ID: c6f7574e
-- `packages/haive-dataflow/src/haive/dataflow/registry/importers/embeddings_importer.py:289` - error: "object" has no attribute "title" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/importers/embeddings_importer.py:289` - error: "object" has no attribute "title"  [attr-defined]
   - ID: 457a674f
-- `packages/haive-dataflow/src/haive/dataflow/registry/importers/embeddings_importer.py:513` - error: "object" has no attribute "replace" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/importers/embeddings_importer.py:513` - error: "object" has no attribute "replace"  [attr-defined]
   - ID: d5079720
-- `packages/haive-dataflow/src/haive/dataflow/importers/embeddings_importer.py:273` - error: "object" has no attribute "upper" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/importers/embeddings_importer.py:273` - error: "object" has no attribute "upper"  [attr-defined]
   - ID: 58b28d41
-- `packages/haive-dataflow/src/haive/dataflow/importers/embeddings_importer.py:298` - error: "object" has no attribute "title" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/importers/embeddings_importer.py:298` - error: "object" has no attribute "title"  [attr-defined]
   - ID: 1425208e
-- `packages/haive-dataflow/src/haive/dataflow/importers/embeddings_importer.py:522` - error: "object" has no attribute "replace" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/importers/embeddings_importer.py:522` - error: "object" has no attribute "replace"  [attr-defined]
   - ID: d28c9c28
-- `packages/haive-dataflow/src/haive/dataflow/api/db.py:51` - error: "None" has no attribute "cursor" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/api/db.py:51` - error: "None" has no attribute "cursor"  [attr-defined]
   - ID: 26ea476c
-- `packages/haive-dataflow/src/haive/dataflow/api/db.py:58` - error: "None" has no attribute "commit" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/api/db.py:58` - error: "None" has no attribute "commit"  [attr-defined]
   - ID: 5d76879c
-- `packages/haive-dataflow/src/haive/dataflow/api/db.py:63` - error: "None" has no attribute "rollback" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/api/db.py:63` - error: "None" has no attribute "rollback"  [attr-defined]
   - ID: 681aa249
-- `packages/haive-dataflow/src/haive/dataflow/api/db.py:76` - error: "None" has no attribute "cursor" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/api/db.py:76` - error: "None" has no attribute "cursor"  [attr-defined]
   - ID: 9266950c
 - ... and 20 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:74` - error: T? has no attribute "hint_count" [attr-defined]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:74` - error: T? has no attribute "hint_count"  [attr-defined]
   - ID: 1b25c28f
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:131` - error: T? has no attribute "error_message" [attr-defined]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:131` - error: T? has no attribute "error_message"  [attr-defined]
   - ID: d4f5653b
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:133` - error: T? has no attribute "game_status" [attr-defined]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:133` - error: T? has no attribute "game_status"  [attr-defined]
   - ID: 28ef7196
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:134` - error: T? has no attribute "error_message" [attr-defined]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:134` - error: T? has no attribute "error_message"  [attr-defined]
   - ID: 8d572723
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:136` - error: T? has no attribute "move_count" [attr-defined]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:136` - error: T? has no attribute "move_count"  [attr-defined]
   - ID: f93c1340
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:137` - error: T? has no attribute "hint_count" [attr-defined]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:137` - error: T? has no attribute "hint_count"  [attr-defined]
   - ID: 82926a2d
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:138` - error: T? has no attribute "error_message" [attr-defined]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:138` - error: T? has no attribute "error_message"  [attr-defined]
   - ID: 5f9300a4
-- `packages/haive-games/src/haive/games/single_player/wordle/state_manager.py:140` - error: "object" has no attribute "values" [attr-defined]
+- `packages/haive-games/src/haive/games/single_player/wordle/state_manager.py:140` - error: "object" has no attribute "values"  [attr-defined]
   - ID: 147a4bd4
-- `packages/haive-games/src/haive/games/poker/debug.py:314` - error: "object" has no attribute "append" [attr-defined]
+- `packages/haive-games/src/haive/games/poker/debug.py:314` - error: "object" has no attribute "append"  [attr-defined]
   - ID: 4fedc641
-- `packages/haive-games/src/haive/games/poker/debug.py:320` - error: "object" has no attribute "append" [attr-defined]
+- `packages/haive-games/src/haive/games/poker/debug.py:320` - error: "object" has no attribute "append"  [attr-defined]
   - ID: a3124adb
 - ... and 65 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:696` - error: "object" has no attribute "append" [attr-defined]
+- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:696` - error: "object" has no attribute "append"  [attr-defined]
   - ID: 6533c437
-- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:701` - error: "object" has no attribute "extend" [attr-defined]
+- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:701` - error: "object" has no attribute "extend"  [attr-defined]
   - ID: cfe7e9ef
-- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:707` - error: "object" has no attribute "append" [attr-defined]
+- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:707` - error: "object" has no attribute "append"  [attr-defined]
   - ID: 9c39850a
-- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:711` - error: "object" has no attribute "append" [attr-defined]
+- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:711` - error: "object" has no attribute "append"  [attr-defined]
   - ID: 5d80314d
-- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:716` - error: "object" has no attribute "append" [attr-defined]
+- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:716` - error: "object" has no attribute "append"  [attr-defined]
   - ID: d4b78b2a
-- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:78` - error: "None" has no attribute "get" [attr-defined]
+- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:78` - error: "None" has no attribute "get"  [attr-defined]
   - ID: 62af8340
-- `packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py:557` - error: "object" has no attribute "append" [attr-defined]
+- `packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py:557` - error: "object" has no attribute "append"  [attr-defined]
   - ID: 797377fc
-- `packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py:333` - error: "FastMCP" has no attribute "server_info" [attr-defined]
-  - ID: aa285e3d
-- `packages/haive-mcp/src/haive/mcp/servers/http_server.py:15` - error: Module "mcp.server.sse" has no attribute "SSEServerTransport"; maybe "SseServerTransport"? [
-  - ID: f710cfa4
-- `packages/haive-mcp/src/haive/mcp/servers/dataflow_mcp_server.py:345` - error: "object" has no attribute "get" [attr-defined]
-  - ID: 8dd487ea
-- ... and 12 more
+- `packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py:480` - error: "DataframeState" has no attribute "selection"  [attr-defined]
+  - ID: a2bcf259
+- `packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py:481` - error: "DataframeState" has no attribute "selection"  [attr-defined]
+  - ID: 46d7bb93
+- `packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py:376` - error: "DataframeState" has no attribute "selection"  [attr-defined]
+  - ID: 83bf1936
+- ... and 16 more
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:230` - error: "TContent" has no attribute "headline" [attr-defined]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:230` - error: "TContent" has no attribute "headline"  [attr-defined]
   - ID: 32ec6cb1
-- `packages/haive-prebuilt/src/haive/prebuilt/constituional_agent/utils.py:102` - error: "Lexer" has no attribute "name" [attr-defined]
+- `packages/haive-prebuilt/src/haive/prebuilt/constituional_agent/utils.py:102` - error: "Lexer" has no attribute "name"  [attr-defined]
   - ID: 647640c3
-- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/tools.py:145` - error: "str" has no attribute "query" [attr-defined]
+- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/tools.py:145` - error: "str" has no attribute "query"  [attr-defined]
   - ID: d1da8f78
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:508` - error: "str" has no attribute "get" [attr-defined]
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:508` - error: "str" has no attribute "get"  [attr-defined]
   - ID: 1d7aeedf
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:519` - error: "str" has no attribute "get" [attr-defined]
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/tools.py:519` - error: "str" has no attribute "get"  [attr-defined]
   - ID: 697d67c4
-- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/utils.py:5` - error: Module "langgraph.graph" has no attribute "CompiledStateGraph" [attr-defined]
+- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/utils.py:5` - error: Module "langgraph.graph" has no attribute "CompiledStateGraph"  [attr-defined]
   - ID: 2b00235a
-- `packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/nodes.py:3` - error: Module "langgraph.graph" has no attribute "Send" [attr-defined]
+- `packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/nodes.py:3` - error: Module "langgraph.graph" has no attribute "Send"  [attr-defined]
   - ID: 91eefe35
-- `packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/nodes.py:49` - error: "None" has no attribute "send_message" [attr-defined]
+- `packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/nodes.py:49` - error: "None" has no attribute "send_message"  [attr-defined]
   - ID: 630858df
-- `packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/nodes.py:66` - error: "None" has no attribute "send_message" [attr-defined]
+- `packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/nodes.py:66` - error: "None" has no attribute "send_message"  [attr-defined]
   - ID: 5284f35f
-- `packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/nodes.py:83` - error: "None" has no attribute "send_message" [attr-defined]
+- `packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/nodes.py:83` - error: "None" has no attribute "send_message"  [attr-defined]
   - ID: 483448bc
 - ... and 17 more
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/type_checking.py:62` - error: "BaseExpression" has no attribute "value" [attr-defined]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/type_checking.py:62` - error: "BaseExpression" has no attribute "value"  [attr-defined]
   - ID: 97cdaa0c
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:58` - error: "AsName" has no attribute "value" [attr-defined]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:58` - error: "AsName" has no attribute "value"  [attr-defined]
   - ID: 608fb9bb
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:810` - error: "CSTNode" has no attribute "body" [attr-defined]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:810` - error: "CSTNode" has no attribute "body"  [attr-defined]
   - ID: 7eda2be0
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:885` - error: "CSTNode" has no attribute "body" [attr-defined]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:885` - error: "CSTNode" has no attribute "body"  [attr-defined]
   - ID: d5872078
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/permission.py:234` - error: "ValidationError" has no attribute "model" [attr-defined]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/permission.py:234` - error: "ValidationError" has no attribute "model"  [attr-defined]
   - ID: 4a3f97c0
-- `packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py:116` - error: "JiraAPIWrapper" has no attribute "projects"; maybe "project"? [attr-defined]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py:116` - error: "JiraAPIWrapper" has no attribute "projects"; maybe "project"?  [attr-defined]
   - ID: f5f2c688
-- `packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py:146` - error: "JiraAPIWrapper" has no attribute "create_issue" [attr-defined]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py:146` - error: "JiraAPIWrapper" has no attribute "create_issue"  [attr-defined]
   - ID: 7394ccd1
-- `packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py:158` - error: "JiraAPIWrapper" has no attribute "jql_query" [attr-defined]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py:158` - error: "JiraAPIWrapper" has no attribute "jql_query"  [attr-defined]
   - ID: 8f1dcd9c
 
 ## mypy:bool | str | int, str (1 errors)
+
 
 ### haive-core
 
@@ -4055,38 +4088,46 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:bool, str (11 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/state_graph/serializable.py:478` - error: Invalid index type "int" for "dict[bool, str]"; expected type "bool" [index]
+- `packages/haive-core/src/haive/core/graph/state_graph/serializable.py:478` - error: Invalid index type "int" for "dict[bool, str]"; expected type "bool"  [index]
   - ID: 53889008
-- `packages/haive-core/src/haive/core/graph/state_graph/serializable.py:481` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [index]
+- `packages/haive-core/src/haive/core/graph/state_graph/serializable.py:481` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [index]
   - ID: 5a8161c3
-- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2586` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [index]
+- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2586` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [index]
   - ID: a7458627
-- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2587` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [index]
+- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2587` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [index]
   - ID: b7611451
-- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2588` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [index]
+- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2588` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [index]
   - ID: 155d3286
-- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2589` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [index]
+- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2589` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [index]
   - ID: 1822d503
-- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2590` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [index]
+- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2590` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [index]
   - ID: f87c6e17
-- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2591` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [index]
+- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2591` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [index]
   - ID: bd24a3cf
-- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2592` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [index]
+- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2592` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [index]
   - ID: 831ceb55
-- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2593` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool" [index]
+- `packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:2593` - error: Invalid index type "str" for "dict[bool, str]"; expected type "bool"  [index]
   - ID: e5217bd4
 - ... and 1 more
 
-## mypy:call-arg (281 errors)
+## mypy:call-arg (292 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/sequential/example.py:47` - error: Too many arguments for "pretty_print" [call-arg]
+- `packages/haive-agents/src/haive/agents/sequential/example.py:47` - error: Too many arguments for "pretty_print"  [call-arg]
   - ID: c8b09119
-- `packages/haive-agents/src/haive/agents/sequential/example.py:49` - error: Too many arguments for "pretty_print" [call-arg]
+- `packages/haive-agents/src/haive/agents/sequential/example.py:49` - error: Too many arguments for "pretty_print"  [call-arg]
   - ID: 7de9e235
+- `packages/haive-agents/src/haive/agents/experiments/supervisor/state_models.py:100` - error: Missing named argument "completed_at" for "ExecutionContext"  [call-arg]
+  - ID: 21d22644
+- `packages/haive-agents/src/haive/agents/experiments/supervisor/state_models.py:100` - error: Missing named argument "completed_at" for "ExecutionContext"  [call-arg]
+  - ID: 21d22644
+- `packages/haive-agents/src/haive/agents/experiments/supervisor/state_models.py:100` - error: Missing named argument "completed_at" for "ExecutionContext"  [call-arg]
+  - ID: 21d22644
 - `packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py:363` - error: Unexpected keyword argument "dimension_scores" for "TaskComplexity"; did you mean "dimensions
   - ID: 14a4cec3
 - `packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py:363` - error: Unexpected keyword argument "dimension_scores" for "TaskComplexity"; did you mean "dimensions
@@ -4095,318 +4136,315 @@ For further information visit https://errors.pydantic.dev
   - ID: 14a4cec3
 - `packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py:363` - error: Unexpected keyword argument "dimension_scores" for "TaskComplexity"; did you mean "dimensions
   - ID: 14a4cec3
-- `packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py:419` - error: Unexpected keyword argument "planning_depth" for "PlanningRequirement" [call-arg]
+- `packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py:419` - error: Unexpected keyword argument "planning_depth" for "PlanningRequirement"  [call-arg]
   - ID: 581b526d
-- `packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py:419` - error: Unexpected keyword argument "planning_depth" for "PlanningRequirement" [call-arg]
-  - ID: 581b526d
-- `packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py:419` - error: Unexpected keyword argument "planning_depth" for "PlanningRequirement" [call-arg]
-  - ID: 581b526d
-- `packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py:419` - error: Unexpected keyword argument "planning_depth" for "PlanningRequirement" [call-arg]
-  - ID: 581b526d
-- ... and 73 more
+- ... and 84 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/env_utils.py:111` - error: Too many arguments for "object" [call-arg]
+- `packages/haive-core/src/haive/core/utils/env_utils.py:111` - error: Too many arguments for "object"  [call-arg]
   - ID: ab10da3d
-- `packages/haive-core/src/haive/core/utils/env_utils.py:112` - error: Too many arguments for "object" [call-arg]
+- `packages/haive-core/src/haive/core/utils/env_utils.py:112` - error: Too many arguments for "object"  [call-arg]
   - ID: ef8d5fb1
-- `packages/haive-core/src/haive/core/schema/utils.py:154` - error: Too few arguments [call-arg]
+- `packages/haive-core/src/haive/core/schema/utils.py:154` - error: Too few arguments  [call-arg]
   - ID: 6b63821e
-- `packages/haive-core/src/haive/core/graph/graph_pattern_registry.py:212` - error: Unexpected keyword argument "\_apply_func" for "GraphPattern"; did you mean "apply_func"? [ca
+- `packages/haive-core/src/haive/core/graph/graph_pattern_registry.py:212` - error: Unexpected keyword argument "_apply_func" for "GraphPattern"; did you mean "apply_func"?  [ca
   - ID: c9d62043
-- `packages/haive-core/src/haive/core/graph/graph_pattern_registry.py:247` - error: Unexpected keyword argument "\_condition_func" for "BranchDefinition"; did you mean "condition
+- `packages/haive-core/src/haive/core/graph/graph_pattern_registry.py:247` - error: Unexpected keyword argument "_condition_func" for "BranchDefinition"; did you mean "condition
   - ID: 4b8b7a91
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/implementation.py:321` - error: Missing named argument "source_type" for "EnhancedSource" [call-arg]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/implementation.py:321` - error: Missing named argument "source_type" for "EnhancedSource"  [call-arg]
   - ID: 0ad371f8
-- `packages/haive-core/src/haive/core/engine/retriever/mixins.py:63` - error: Unexpected keyword argument "engine" for "RetrieverMixin" [call-arg]
+- `packages/haive-core/src/haive/core/engine/retriever/mixins.py:63` - error: Unexpected keyword argument "engine" for "RetrieverMixin"  [call-arg]
   - ID: 629939e2
-- `packages/haive-core/src/haive/core/engine/retriever/mixins.py:111` - error: Unexpected keyword argument "engine" for "RetrieverMixin" [call-arg]
+- `packages/haive-core/src/haive/core/engine/retriever/mixins.py:111` - error: Unexpected keyword argument "engine" for "RetrieverMixin"  [call-arg]
   - ID: 4c0700aa
-- `packages/haive-core/src/haive/core/engine/retriever/mixins.py:124` - error: Unexpected keyword argument "engine" for "RetrieverMixin" [call-arg]
+- `packages/haive-core/src/haive/core/engine/retriever/mixins.py:124` - error: Unexpected keyword argument "engine" for "RetrieverMixin"  [call-arg]
   - ID: 4ffaac49
-- `packages/haive-core/src/haive/core/engine/aug_llm/factory.py:255` - error: Unexpected keyword argument "partial_variables" for "from_messages" of "ChatPromptTemplate"
+- `packages/haive-core/src/haive/core/engine/aug_llm/factory.py:255` - error: Unexpected keyword argument "partial_variables" for "from_messages" of "ChatPromptTemplate"  
   - ID: efa4cd65
 - ... and 80 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:368` - error: Missing named argument "result" for "ToolInvokeResponse" [call-arg]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:368` - error: Missing named argument "result" for "ToolInvokeResponse"  [call-arg]
   - ID: 92b68dc3
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:397` - error: Missing named argument "result" for "ToolInvokeResponse" [call-arg]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:397` - error: Missing named argument "result" for "ToolInvokeResponse"  [call-arg]
   - ID: a0424b54
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:401` - error: Missing named argument "error" for "ToolInvokeResponse" [call-arg]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:401` - error: Missing named argument "error" for "ToolInvokeResponse"  [call-arg]
   - ID: 1b114653
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:405` - error: Missing named argument "result" for "ToolInvokeResponse" [call-arg]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:405` - error: Missing named argument "result" for "ToolInvokeResponse"  [call-arg]
   - ID: 84007a1f
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:409` - error: Missing named argument "result" for "ToolInvokeResponse" [call-arg]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:409` - error: Missing named argument "result" for "ToolInvokeResponse"  [call-arg]
   - ID: 4ac04ce9
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes.py:720` - error: Missing named argument "result" for "ToolInvokeResponse" [call-arg]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes.py:720` - error: Missing named argument "result" for "ToolInvokeResponse"  [call-arg]
   - ID: db4c18db
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes.py:727` - error: Missing named argument "error" for "ToolInvokeResponse" [call-arg]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes.py:727` - error: Missing named argument "error" for "ToolInvokeResponse"  [call-arg]
   - ID: 43e1f068
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes.py:731` - error: Missing named argument "result" for "ToolInvokeResponse" [call-arg]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes.py:731` - error: Missing named argument "result" for "ToolInvokeResponse"  [call-arg]
   - ID: 73dc1794
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_routes.py:583` - error: Missing named argument "system_prompt" for "AgentChatConfig" [call-arg]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_routes.py:583` - error: Missing named argument "system_prompt" for "AgentChatConfig"  [call-arg]
   - ID: f21306ea
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_routes.py:640` - error: Missing named argument "thread_id" for "WSMessage" [call-arg]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_routes.py:640` - error: Missing named argument "thread_id" for "WSMessage"  [call-arg]
   - ID: a99b0b1d
 - ... and 17 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/among_us/ui.py:400` - error: Unexpected keyword argument "size" for "Text" [call-arg]
+- `packages/haive-games/src/haive/games/among_us/ui.py:400` - error: Unexpected keyword argument "size" for "Text"  [call-arg]
   - ID: ff095f80
-- `packages/haive-games/src/haive/games/risk/models.py:616` - error: Missing named argument "territory_name" for "Card" [call-arg]
+- `packages/haive-games/src/haive/games/risk/models.py:616` - error: Missing named argument "territory_name" for "Card"  [call-arg]
   - ID: c0396834
-- `packages/haive-games/src/haive/games/risk/models.py:874` - error: Missing named argument "territory_name" for "Card" [call-arg]
+- `packages/haive-games/src/haive/games/risk/models.py:874` - error: Missing named argument "territory_name" for "Card"  [call-arg]
   - ID: 05df1471
-- `packages/haive-games/src/haive/games/risk/models.py:875` - error: Missing named argument "territory_name" for "Card" [call-arg]
+- `packages/haive-games/src/haive/games/risk/models.py:875` - error: Missing named argument "territory_name" for "Card"  [call-arg]
   - ID: 1cbef053
-- `packages/haive-games/src/haive/games/risk/models.py:876` - error: Missing named argument "territory_name" for "Card" [call-arg]
+- `packages/haive-games/src/haive/games/risk/models.py:876` - error: Missing named argument "territory_name" for "Card"  [call-arg]
   - ID: 91edb17d
-- `packages/haive-games/src/haive/games/battleship/models.py:1015` - error: Missing named argument "sunk_ship" for "MoveOutcome" [call-arg]
+- `packages/haive-games/src/haive/games/battleship/models.py:1015` - error: Missing named argument "sunk_ship" for "MoveOutcome"  [call-arg]
   - ID: 1472580f
-- `packages/haive-games/src/haive/games/battleship/models.py:1018` - error: Missing named argument "sunk_ship" for "MoveOutcome" [call-arg]
+- `packages/haive-games/src/haive/games/battleship/models.py:1018` - error: Missing named argument "sunk_ship" for "MoveOutcome"  [call-arg]
   - ID: 839f3b3c
-- `packages/haive-games/src/haive/games/battleship/models.py:1027` - error: Missing named argument "sunk_ship" for "MoveOutcome" [call-arg]
+- `packages/haive-games/src/haive/games/battleship/models.py:1027` - error: Missing named argument "sunk_ship" for "MoveOutcome"  [call-arg]
   - ID: 314ce7d9
-- `packages/haive-games/src/haive/games/battleship/models.py:1029` - error: Missing named argument "sunk_ship" for "MoveOutcome" [call-arg]
+- `packages/haive-games/src/haive/games/battleship/models.py:1029` - error: Missing named argument "sunk_ship" for "MoveOutcome"  [call-arg]
   - ID: 27b14745
-- `packages/haive-games/src/haive/games/mancala/agent_original.py:342` - error: Unexpected keyword argument "stop" for "Command" [call-arg]
+- `packages/haive-games/src/haive/games/mancala/agent_original.py:342` - error: Unexpected keyword argument "stop" for "Command"  [call-arg]
   - ID: 2ee120f3
 - ... and 3 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/downloader/core.py:722` - error: Missing named argument "last_check" for "ServerStatus" [call-arg]
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:722` - error: Missing named argument "last_check" for "ServerStatus"  [call-arg]
   - ID: b90c4a4e
-- `packages/haive-mcp/src/haive/mcp/downloader/core.py:722` - error: Missing named argument "last_check" for "ServerStatus" [call-arg]
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:722` - error: Missing named argument "last_check" for "ServerStatus"  [call-arg]
   - ID: b90c4a4e
-- `packages/haive-mcp/src/haive/mcp/downloader/core.py:722` - error: Missing named argument "last_check" for "ServerStatus" [call-arg]
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:722` - error: Missing named argument "last_check" for "ServerStatus"  [call-arg]
   - ID: b90c4a4e
-- `packages/haive-mcp/src/haive/mcp/downloader/core.py:722` - error: Missing named argument "last_check" for "ServerStatus" [call-arg]
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:722` - error: Missing named argument "last_check" for "ServerStatus"  [call-arg]
   - ID: b90c4a4e
-- `packages/haive-mcp/src/haive/mcp/downloader/core.py:722` - error: Missing named argument "last_check" for "ServerStatus" [call-arg]
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:722` - error: Missing named argument "last_check" for "ServerStatus"  [call-arg]
   - ID: b90c4a4e
-- `packages/haive-mcp/src/haive/mcp/downloader/core.py:869` - error: Missing named argument "config_file" for "DownloadResult" [call-arg]
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:869` - error: Missing named argument "config_file" for "DownloadResult"  [call-arg]
   - ID: 1f9e1a25
-- `packages/haive-mcp/src/haive/mcp/downloader/core.py:908` - error: Missing named argument "last_check" for "ServerStatus" [call-arg]
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:908` - error: Missing named argument "last_check" for "ServerStatus"  [call-arg]
   - ID: c314da05
-- `packages/haive-mcp/src/haive/mcp/downloader/core.py:908` - error: Missing named argument "last_check" for "ServerStatus" [call-arg]
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:908` - error: Missing named argument "last_check" for "ServerStatus"  [call-arg]
   - ID: c314da05
-- `packages/haive-mcp/src/haive/mcp/downloader/core.py:908` - error: Missing named argument "last_check" for "ServerStatus" [call-arg]
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:908` - error: Missing named argument "last_check" for "ServerStatus"  [call-arg]
   - ID: c314da05
-- `packages/haive-mcp/src/haive/mcp/downloader/core.py:908` - error: Missing named argument "last_check" for "ServerStatus" [call-arg]
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:908` - error: Missing named argument "last_check" for "ServerStatus"  [call-arg]
   - ID: c314da05
 - ... and 9 more
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:394` - error: Missing named argument "quality_score" for "Slide" [call-arg]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:394` - error: Missing named argument "quality_score" for "Slide"  [call-arg]
   - ID: 0d38c4d5
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:394` - error: Missing named argument "quality_score" for "Slide" [call-arg]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:394` - error: Missing named argument "quality_score" for "Slide"  [call-arg]
   - ID: 0d38c4d5
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:394` - error: Missing named argument "quality_score" for "Slide" [call-arg]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:394` - error: Missing named argument "quality_score" for "Slide"  [call-arg]
   - ID: 0d38c4d5
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:394` - error: Missing named argument "quality_score" for "Slide" [call-arg]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:394` - error: Missing named argument "quality_score" for "Slide"  [call-arg]
   - ID: 0d38c4d5
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:394` - error: Missing named argument "quality_score" for "Slide" [call-arg]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:394` - error: Missing named argument "quality_score" for "Slide"  [call-arg]
   - ID: 0d38c4d5
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:394` - error: Missing named argument "quality_score" for "Slide" [call-arg]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:394` - error: Missing named argument "quality_score" for "Slide"  [call-arg]
   - ID: 0d38c4d5
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:450` - error: Missing named argument "emotional_impact" for "ProblemStatement" [call-arg]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:450` - error: Missing named argument "emotional_impact" for "ProblemStatement"  [call-arg]
   - ID: 6a2f1005
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:450` - error: Missing named argument "emotional_impact" for "ProblemStatement" [call-arg]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:450` - error: Missing named argument "emotional_impact" for "ProblemStatement"  [call-arg]
   - ID: 6a2f1005
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:450` - error: Missing named argument "emotional_impact" for "ProblemStatement" [call-arg]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:450` - error: Missing named argument "emotional_impact" for "ProblemStatement"  [call-arg]
   - ID: 6a2f1005
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:455` - error: Missing named argument "technical_feasibility" for "SolutionConcept" [call-arg]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:455` - error: Missing named argument "technical_feasibility" for "SolutionConcept"  [call-arg]
   - ID: 1aeeeec5
 - ... and 4 more
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1400` - error: Missing named argument "line_length" for "CodeStyleConfig" [call-arg]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1400` - error: Missing named argument "line_length" for "CodeStyleConfig"  [call-arg]
   - ID: 825ce56b
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1400` - error: Missing named argument "line_length" for "CodeStyleConfig" [call-arg]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1400` - error: Missing named argument "line_length" for "CodeStyleConfig"  [call-arg]
   - ID: 825ce56b
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1400` - error: Missing named argument "line_length" for "CodeStyleConfig" [call-arg]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1400` - error: Missing named argument "line_length" for "CodeStyleConfig"  [call-arg]
   - ID: 825ce56b
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1400` - error: Missing named argument "line_length" for "CodeStyleConfig" [call-arg]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1400` - error: Missing named argument "line_length" for "CodeStyleConfig"  [call-arg]
   - ID: 825ce56b
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1400` - error: Missing named argument "line_length" for "CodeStyleConfig" [call-arg]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1400` - error: Missing named argument "line_length" for "CodeStyleConfig"  [call-arg]
   - ID: 825ce56b
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1400` - error: Missing named argument "line_length" for "CodeStyleConfig" [call-arg]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1400` - error: Missing named argument "line_length" for "CodeStyleConfig"  [call-arg]
   - ID: 825ce56b
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1461` - error: Missing named argument "diff" for "EditResult" [call-arg]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1461` - error: Missing named argument "diff" for "EditResult"  [call-arg]
   - ID: 3a68dedb
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1461` - error: Missing named argument "diff" for "EditResult" [call-arg]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1461` - error: Missing named argument "diff" for "EditResult"  [call-arg]
   - ID: 3a68dedb
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1490` - error: Missing named argument "diff" for "EditResult" [call-arg]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1490` - error: Missing named argument "diff" for "EditResult"  [call-arg]
   - ID: 7c2a516d
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1490` - error: Missing named argument "diff" for "EditResult" [call-arg]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:1490` - error: Missing named argument "diff" for "EditResult"  [call-arg]
   - ID: 7c2a516d
 - ... and 25 more
 
 ## mypy:call-overload (79 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/tot_multi_agent.py:35` - error: No overload variant of "Field" matches argument types "str", "int", "int" [call-overload]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/tot_multi_agent.py:35` - error: No overload variant of "Field" matches argument types "str", "int", "int"  [call-overload]
   - ID: 8f438f35
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:142` - error: No overload variant of "Field" matches argument types "str", "int" [call-overload]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:142` - error: No overload variant of "Field" matches argument types "str", "int"  [call-overload]
   - ID: 12e65a4e
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:257` - error: No overload variant of "Field" matches argument types "str", "int" [call-overload]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:257` - error: No overload variant of "Field" matches argument types "str", "int"  [call-overload]
   - ID: d4bac1a4
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/solution_scorer.py:30` - error: No overload variant of "Field" matches argument types "str", "int" [call-overload]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/solution_scorer.py:30` - error: No overload variant of "Field" matches argument types "str", "int"  [call-overload]
   - ID: ce5142b5
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/candidate_generator.py:19` - error: No overload variant of "Field" matches argument types "str", "int", "int" [call-overload]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/agents/candidate_generator.py:19` - error: No overload variant of "Field" matches argument types "str", "int", "int"  [call-overload]
   - ID: 158182cd
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/models.py:14` - error: No overload variant of "Field" matches argument types "str", "int", "int" [call-overload]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/models.py:14` - error: No overload variant of "Field" matches argument types "str", "int", "int"  [call-overload]
   - ID: c9086e53
-- `packages/haive-agents/src/haive/agents/memory_v2/standalone_rag_memory.py:670` - error: No overload variant of "tool" matches argument types "str", "str" [call-overload]
+- `packages/haive-agents/src/haive/agents/memory_v2/standalone_rag_memory.py:670` - error: No overload variant of "tool" matches argument types "str", "str"  [call-overload]
   - ID: 2add17e4
-- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:641` - error: No overload variant of "**setitem**" of "list" matches argument types "str", "Any | BaseExcep
+- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:641` - error: No overload variant of "__setitem__" of "list" matches argument types "str", "Any | BaseExcep
   - ID: 5c37702d
-- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:655` - error: No overload variant of "**setitem**" of "list" matches argument types "str", "Any" [call-ove
+- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:655` - error: No overload variant of "__setitem__" of "list" matches argument types "str", "Any"  [call-ove
   - ID: 3c3033f8
-- `packages/haive-agents/src/haive/agents/memory_v2/long_term_memory_agent.py:475` - error: No overload variant of "tool" matches argument types "str", "str" [call-overload]
+- `packages/haive-agents/src/haive/agents/memory_v2/long_term_memory_agent.py:475` - error: No overload variant of "tool" matches argument types "str", "str"  [call-overload]
   - ID: 7ed97090
 - ... and 15 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - error: No overload variant of "dict" matches argument type "object" [call-overload]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:421` - error: No overload variant of "dict" matches argument type "object"  [call-overload]
   - ID: e7963487
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:422` - error: No overload variant of "dict" matches argument type "object" [call-overload]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:422` - error: No overload variant of "dict" matches argument type "object"  [call-overload]
   - ID: 08aa8c1c
-- `packages/haive-core/src/haive/core/registry/dynamic_registry.py:548` - error: No overload variant of "get" of "dict" matches argument types "str", "str" [call-overload]
+- `packages/haive-core/src/haive/core/registry/dynamic_registry.py:548` - error: No overload variant of "get" of "dict" matches argument types "str", "str"  [call-overload]
   - ID: fce28f7d
-- `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:69` - error: No overload variant of "get" of "dict" matches argument types "type", "int" [call-overload]
+- `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:69` - error: No overload variant of "get" of "dict" matches argument types "type", "int"  [call-overload]
   - ID: ba9f325b
-- `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:70` - error: No overload variant of "get" of "dict" matches argument types "type", "int" [call-overload]
+- `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:70` - error: No overload variant of "get" of "dict" matches argument types "type", "int"  [call-overload]
   - ID: 093269dd
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:239` - error: No overload variant of "**setitem**" of "list" matches argument types "str", "str" [call-ove
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:239` - error: No overload variant of "__setitem__" of "list" matches argument types "str", "str"  [call-ove
   - ID: d15fd47e
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:243` - error: No overload variant of "**setitem**" of "list" matches argument types "str", "str" [call-ove
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:243` - error: No overload variant of "__setitem__" of "list" matches argument types "str", "str"  [call-ove
   - ID: fb03f425
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:267` - error: No overload variant of "**setitem**" of "list" matches argument types "str", "str" [call-ove
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:267` - error: No overload variant of "__setitem__" of "list" matches argument types "str", "str"  [call-ove
   - ID: cb32b3a9
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:271` - error: No overload variant of "**setitem**" of "list" matches argument types "str", "str" [call-ove
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:271` - error: No overload variant of "__setitem__" of "list" matches argument types "str", "str"  [call-ove
   - ID: fb6c107a
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:354` - error: No overload variant of "**setitem**" of "list" matches argument types "str", "str" [call-ove
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:354` - error: No overload variant of "__setitem__" of "list" matches argument types "str", "str"  [call-ove
   - ID: 1adda6b9
 - ... and 16 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:206` - error: No overload variant of "**getitem**" of "list" matches argument type "str" [call-overload]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:206` - error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
   - ID: 8bc878a9
-- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:207` - error: No overload variant of "**getitem**" of "list" matches argument type "str" [call-overload]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:207` - error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
   - ID: d73b7ef1
-- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:208` - error: No overload variant of "**getitem**" of "list" matches argument type "str" [call-overload]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:208` - error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
   - ID: 9dfd1832
-- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:213` - error: No overload variant of "**getitem**" of "list" matches argument type "str" [call-overload]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:213` - error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
   - ID: 6cdcf559
-- `packages/haive-dataflow/src/haive/dataflow/base.py:139` - error: No overload variant of "Field" matches argument types "EllipsisType", "str", "str" [call-ove
+- `packages/haive-dataflow/src/haive/dataflow/base.py:139` - error: No overload variant of "Field" matches argument types "EllipsisType", "str", "str"  [call-ove
   - ID: c1fb047c
-- `packages/haive-dataflow/src/haive/dataflow/api/base.py:139` - error: No overload variant of "Field" matches argument types "EllipsisType", "str", "str" [call-ove
+- `packages/haive-dataflow/src/haive/dataflow/api/base.py:139` - error: No overload variant of "Field" matches argument types "EllipsisType", "str", "str"  [call-ove
   - ID: 25d356c6
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/llm_routes.py:114` - error: No overload variant of "Field" matches argument types "EllipsisType", "str", "str" [call-ove
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/llm_routes.py:114` - error: No overload variant of "Field" matches argument types "EllipsisType", "str", "str"  [call-ove
   - ID: eb040981
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/reversi/state_manager.py:51` - error: No overload variant of "**setitem**" of "list" matches argument types "int", "str" [call-ove
+- `packages/haive-games/src/haive/games/reversi/state_manager.py:51` - error: No overload variant of "__setitem__" of "list" matches argument types "int", "str"  [call-ove
   - ID: b541c1dd
-- `packages/haive-games/src/haive/games/reversi/state_manager.py:52` - error: No overload variant of "**setitem**" of "list" matches argument types "int", "str" [call-ove
+- `packages/haive-games/src/haive/games/reversi/state_manager.py:52` - error: No overload variant of "__setitem__" of "list" matches argument types "int", "str"  [call-ove
   - ID: 8998ecac
-- `packages/haive-games/src/haive/games/reversi/state_manager.py:53` - error: No overload variant of "**setitem**" of "list" matches argument types "int", "str" [call-ove
+- `packages/haive-games/src/haive/games/reversi/state_manager.py:53` - error: No overload variant of "__setitem__" of "list" matches argument types "int", "str"  [call-ove
   - ID: b296edb8
-- `packages/haive-games/src/haive/games/reversi/state_manager.py:54` - error: No overload variant of "**setitem**" of "list" matches argument types "int", "str" [call-ove
+- `packages/haive-games/src/haive/games/reversi/state_manager.py:54` - error: No overload variant of "__setitem__" of "list" matches argument types "int", "str"  [call-ove
   - ID: 37ea7120
-- `packages/haive-games/src/haive/games/mastermind/state.py:96` - error: No overload variant of "Field" matches argument types "EllipsisType", "int", "int", "str" [c
+- `packages/haive-games/src/haive/games/mastermind/state.py:96` - error: No overload variant of "Field" matches argument types "EllipsisType", "int", "int", "str"  [c
   - ID: 4b6aa213
-- `packages/haive-games/src/haive/games/mastermind/models.py:163` - error: No overload variant of "Field" matches argument types "EllipsisType", "int", "int", "str" [c
+- `packages/haive-games/src/haive/games/mastermind/models.py:163` - error: No overload variant of "Field" matches argument types "EllipsisType", "int", "int", "str"  [c
   - ID: fd978acf
-- `packages/haive-games/src/haive/games/mastermind/models.py:240` - error: No overload variant of "Field" matches argument types "EllipsisType", "int", "int", "str" [c
+- `packages/haive-games/src/haive/games/mastermind/models.py:240` - error: No overload variant of "Field" matches argument types "EllipsisType", "int", "int", "str"  [c
   - ID: 01390e7d
-- `packages/haive-games/src/haive/games/dominoes/state.py:190` - error: No overload variant of "Field" matches argument types "EllipsisType", "int", "int", "str" [c
+- `packages/haive-games/src/haive/games/dominoes/state.py:190` - error: No overload variant of "Field" matches argument types "EllipsisType", "int", "int", "str"  [c
   - ID: 91724dd8
-- `packages/haive-games/src/haive/games/debate_v2/judges.py:421` - error: No overload variant of "sort" of "list" matches argument type "bool" [call-overload]
+- `packages/haive-games/src/haive/games/debate_v2/judges.py:421` - error: No overload variant of "sort" of "list" matches argument type "bool"  [call-overload]
   - ID: 0a7d035a
-- `packages/haive-games/src/haive/games/core/components/cards/standard.py:67` - error: No overload variant of "field_validator" matches argument types "str", "bool", "bool" [call-
+- `packages/haive-games/src/haive/games/core/components/cards/standard.py:67` - error: No overload variant of "field_validator" matches argument types "str", "bool", "bool"  [call-
   - ID: b48f2be5
 - ... and 3 more
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:143` - error: No overload variant of "Field" matches argument types "str", "int", "int" [call-overload]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:143` - error: No overload variant of "Field" matches argument types "str", "int", "int"  [call-overload]
   - ID: 62b07e44
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:176` - error: No overload variant of "Field" matches argument types "str", "int" [call-overload]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:176` - error: No overload variant of "Field" matches argument types "str", "int"  [call-overload]
   - ID: eb1ea41a
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:177` - error: No overload variant of "Field" matches argument types "str", "int" [call-overload]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:177` - error: No overload variant of "Field" matches argument types "str", "int"  [call-overload]
   - ID: c83947ee
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:200` - error: No overload variant of "Field" matches argument types "str", "int" [call-overload]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:200` - error: No overload variant of "Field" matches argument types "str", "int"  [call-overload]
   - ID: 25485516
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:201` - error: No overload variant of "Field" matches argument types "str", "int" [call-overload]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:201` - error: No overload variant of "Field" matches argument types "str", "int"  [call-overload]
   - ID: c6a1be82
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:101` - error: No overload variant of "Field" matches argument types "str", "int", "int" [call-overload]
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:101` - error: No overload variant of "Field" matches argument types "str", "int", "int"  [call-overload]
   - ID: a0350863
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:122` - error: No overload variant of "Field" matches argument types "str", "int", "int" [call-overload]
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:122` - error: No overload variant of "Field" matches argument types "str", "int", "int"  [call-overload]
   - ID: 46eef27b
-- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:380` - error: No overload variant of "**getitem**" of "list" matches argument type "str" [call-overload]
+- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:380` - error: No overload variant of "__getitem__" of "list" matches argument type "str"  [call-overload]
   - ID: 84f3a640
 
 ## mypy:dict-item (15 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_v3.py:437` - error: Dict entry 3 has incompatible type "str": "None"; expected "str": "float" [dict-item]
+- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_v3.py:437` - error: Dict entry 3 has incompatible type "str": "None"; expected "str": "float"  [dict-item]
   - ID: 400ac4c8
-- `packages/haive-agents/src/haive/agents/multi/enhanced/multi_agent_v3.py:484` - error: Dict entry 3 has incompatible type "str": "None"; expected "str": "float" [dict-item]
+- `packages/haive-agents/src/haive/agents/multi/enhanced/multi_agent_v3.py:484` - error: Dict entry 3 has incompatible type "str": "None"; expected "str": "float"  [dict-item]
   - ID: 33ed8d4f
-- `packages/haive-agents/src/haive/agents/memory_reorganized/api/unified_memory_api.py:974` - error: Dict entry 1 has incompatible type "str": "int"; expected "str": "str" [dict-item]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/api/unified_memory_api.py:974` - error: Dict entry 1 has incompatible type "str": "int"; expected "str": "str"  [dict-item]
   - ID: 0d66c683
-- `packages/haive-agents/src/haive/agents/memory/unified_memory_api.py:972` - error: Dict entry 1 has incompatible type "str": "int"; expected "str": "str" [dict-item]
+- `packages/haive-agents/src/haive/agents/memory/unified_memory_api.py:972` - error: Dict entry 1 has incompatible type "str": "int"; expected "str": "str"  [dict-item]
   - ID: 862bfe41
-- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/state.py:244` - error: Dict entry 0 has incompatible type "str": "int | None"; expected "str": "int" [dict-item]
+- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/state.py:244` - error: Dict entry 0 has incompatible type "str": "int | None"; expected "str": "int"  [dict-item]
   - ID: dda89406
-- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/state.py:245` - error: Dict entry 1 has incompatible type "str": "int | None"; expected "str": "int" [dict-item]
+- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/state.py:245` - error: Dict entry 1 has incompatible type "str": "int | None"; expected "str": "int"  [dict-item]
   - ID: b1c7e264
-- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/state.py:246` - error: Dict entry 2 has incompatible type "str": "int | None"; expected "str": "int" [dict-item]
+- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/state.py:246` - error: Dict entry 2 has incompatible type "str": "int | None"; expected "str": "int"  [dict-item]
   - ID: 9ef4b5c6
-- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/state.py:247` - error: Dict entry 3 has incompatible type "str": "float | None"; expected "str": "int" [dict-item]
+- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/state.py:247` - error: Dict entry 3 has incompatible type "str": "float | None"; expected "str": "int"  [dict-item]
   - ID: 5a950541
-- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/state.py:248` - error: Dict entry 4 has incompatible type "str": "str | None"; expected "str": "int" [dict-item]
+- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/state.py:248` - error: Dict entry 4 has incompatible type "str": "str | None"; expected "str": "int"  [dict-item]
   - ID: a1d55bcd
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/common/mixins/identifier.py:232` - error: Dict entry 4 has incompatible type "str": "bool"; expected "str": "str" [dict-item]
+- `packages/haive-core/src/haive/core/common/mixins/identifier.py:232` - error: Dict entry 4 has incompatible type "str": "bool"; expected "str": "str"  [dict-item]
   - ID: 74827d57
-- `packages/haive-core/src/haive/core/graph/node/practical_stateful_example.py:76` - error: Dict entry 0 has incompatible type "str": "Any | None"; expected "str": "str" [dict-item]
+- `packages/haive-core/src/haive/core/graph/node/practical_stateful_example.py:76` - error: Dict entry 0 has incompatible type "str": "Any | None"; expected "str": "str"  [dict-item]
   - ID: cf82f840
-- `packages/haive-core/src/haive/core/graph/node/practical_stateful_example.py:77` - error: Dict entry 1 has incompatible type "str": "Any | None"; expected "str": "str" [dict-item]
+- `packages/haive-core/src/haive/core/graph/node/practical_stateful_example.py:77` - error: Dict entry 1 has incompatible type "str": "Any | None"; expected "str": "str"  [dict-item]
   - ID: 551fb30b
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/debate/factory.py:138` - error: Dict entry 0 has incompatible type "str": "Any | None"; expected "str": "str" [dict-item]
+- `packages/haive-games/src/haive/games/debate/factory.py:138` - error: Dict entry 0 has incompatible type "str": "Any | None"; expected "str": "str"  [dict-item]
   - ID: 224c2f65
-- `packages/haive-games/src/haive/games/debate/factory.py:139` - error: Dict entry 1 has incompatible type "str": "Any | None"; expected "str": "str" [dict-item]
+- `packages/haive-games/src/haive/games/debate/factory.py:139` - error: Dict entry 1 has incompatible type "str": "Any | None"; expected "str": "str"  [dict-item]
   - ID: 247e15d5
-- `packages/haive-games/src/haive/games/debate/state_manager.py:213` - error: Dict entry 1 has incompatible type "str": "bool"; expected "str": "str" [dict-item]
+- `packages/haive-games/src/haive/games/debate/state_manager.py:213` - error: Dict entry 1 has incompatible type "str": "bool"; expected "str": "str"  [dict-item]
   - ID: 907f444d
 
 ## mypy:dict[Any, Any (16 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages_state.py:298` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages_state.py:298` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: 31db2258
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:525` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:525` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: b3ea0053
 - `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:841` - error: Argument "root" to "MessageList" has incompatible type "list[dict[Any, Any]]"; expected "list
   - ID: 66920e4e
@@ -4417,75 +4455,76 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/db/supabase.py:221` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/db/supabase.py:221` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: 34dbc3d1
-- `packages/haive-dataflow/src/haive/dataflow/db/supabase.py:246` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/db/supabase.py:246` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: 1b434a54
-- `packages/haive-dataflow/src/haive/dataflow/db/supabase.py:272` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/db/supabase.py:272` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: 5f5e8e54
-- `packages/haive-dataflow/src/haive/dataflow/db/supabase.py:293` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/db/supabase.py:293` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: 88b6360a
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/poetry_db_toolkit.py:55` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/poetry_db_toolkit.py:55` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: 92131458
-- `packages/haive-tools/src/haive/tools/tools/toolkits/poetry_db_toolkit.py:134` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/poetry_db_toolkit.py:134` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: 0529f2fe
-- `packages/haive-tools/src/haive/tools/tools/toolkits/poetry_db_toolkit.py:173` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/poetry_db_toolkit.py:173` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: e663670f
-- `packages/haive-tools/src/haive/tools/tools/toolkits/free_to_game_toolkit.py:82` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/free_to_game_toolkit.py:82` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: c5145adc
-- `packages/haive-tools/src/haive/tools/tools/toolkits/free_to_game_toolkit.py:149` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/free_to_game_toolkit.py:149` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: c7b7fd2f
-- `packages/haive-tools/src/haive/tools/tools/toolkits/yugiioh_toolkit.py:104` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/yugiioh_toolkit.py:104` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: 210a0406
-- `packages/haive-tools/src/haive/tools/tools/toolkits/yugiioh_toolkit.py:117` - error: Returning Any from function declared to return "list[dict[Any, Any]]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/yugiioh_toolkit.py:117` - error: Returning Any from function declared to return "list[dict[Any, Any]]"  [no-any-return]
   - ID: 1f317011
 
 ## mypy:dict[str, Any (61 errors)
+
 
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/base/typed_agent.py:496` - error: Argument 2 to "ReactiveAgent" has incompatible type "Any | None"; expected "list[dict[str, An
   - ID: aa0f8c10
-- `packages/haive-agents/src/haive/agents/planning/rewoo/models/join_step.py:334` - error: Dict entry 2 has incompatible type "str": "list[dict[str, Any]]"; expected "str": "str" [dic
+- `packages/haive-agents/src/haive/agents/planning/rewoo/models/join_step.py:334` - error: Dict entry 2 has incompatible type "str": "list[dict[str, Any]]"; expected "str": "str"  [dic
   - ID: 58ae00d4
-- `packages/haive-agents/src/haive/agents/react_class/react_agent2/tool_utils.py:43` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/react_class/react_agent2/tool_utils.py:43` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: d77443d5
-- `packages/haive-agents/src/haive/agents/react_class/react_agent2/tool_utils.py:48` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/react_class/react_agent2/tool_utils.py:48` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 80565619
-- `packages/haive-agents/src/haive/agents/memory_reorganized/coordination/multi_agent_coordinator.py:1342` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/coordination/multi_agent_coordinator.py:1342` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: ae747122
-- `packages/haive-agents/src/haive/agents/memory_reorganized/coordination/agentic_rag_coordinator.py:1239` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/coordination/agentic_rag_coordinator.py:1239` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 6b69d1d4
-- `packages/haive-agents/src/haive/agents/memory_reorganized/coordination/agentic_rag_coordinator.py:1241` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/coordination/agentic_rag_coordinator.py:1241` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 8d4917ad
-- `packages/haive-agents/src/haive/agents/memory_reorganized/coordination/agentic_rag_coordinator.py:1262` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/coordination/agentic_rag_coordinator.py:1262` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: a99c369a
-- `packages/haive-agents/src/haive/agents/memory_reorganized/coordination/agentic_rag_coordinator.py:1264` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/coordination/agentic_rag_coordinator.py:1264` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 6c49ada7
-- `packages/haive-agents/src/haive/agents/memory_reorganized/coordination/agentic_rag_coordinator.py:1280` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/coordination/agentic_rag_coordinator.py:1280` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: beb7181b
 - ... and 12 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages/utils.py:129` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages/utils.py:129` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 9230c54c
-- `packages/haive-core/src/haive/core/graph/node/validation_node_with_routing.py:309` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/node/validation_node_with_routing.py:309` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 50c8f3f4
-- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:189` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:189` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: c1895e51
-- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:201` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:201` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 2b47769f
-- `packages/haive-core/src/haive/core/graph/node/routing_validation_node.py:150` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/node/routing_validation_node.py:150` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: eb78682f
-- `packages/haive-core/src/haive/core/graph/node/routing_validation_node.py:165` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/node/routing_validation_node.py:165` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 5630970d
 - `packages/haive-core/src/haive/core/graph/node/composer/advanced_node_composer.py:206` - error: Incompatible default for argument "config_type" (default has type "type[dict[str, Any]]", arg
   - ID: 21388c06
-- `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py:66` - error: "BaseConnection[dict[str, Any]]" not callable [operator]
+- `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py:66` - error: "BaseConnection[dict[str, Any]]" not callable  [operator]
   - ID: 9b9845ac
 - `packages/haive-core/src/haive/core/persistence/factory.py:102` - error: Argument 1 to "ShallowPostgresSaver" has incompatible type "Any | None"; expected "Connection
   - ID: 60aa6c40
@@ -4494,59 +4533,60 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/core.py:1331` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:1331` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 2ed867fc
-- `packages/haive-dataflow/src/haive/dataflow/core.py:1409` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:1409` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: e28c95ce
-- `packages/haive-dataflow/src/haive/dataflow/core.py:1518` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:1518` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 520e0172
-- `packages/haive-dataflow/src/haive/dataflow/core.py:1552` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:1552` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 8db1d921
-- `packages/haive-dataflow/src/haive/dataflow/core.py:1618` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:1618` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 1cb0ba62
-- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:709` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:709` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: fd217bea
-- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:726` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:726` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 1402ad4d
-- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:763` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:763` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 607a1dae
-- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:709` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:709` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: f19a0695
-- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:726` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:726` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 85229885
 - ... and 7 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:142` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:142` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 35932259
-- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:153` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:153` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 8b6b90ea
-- `packages/haive-mcp/src/haive/mcp/fastmcp_runner.py:327` - error: "list[dict[str, Any]]" has no attribute "items" [attr-defined]
+- `packages/haive-mcp/src/haive/mcp/fastmcp_runner.py:327` - error: "list[dict[str, Any]]" has no attribute "items"  [attr-defined]
   - ID: 4aa4ca3a
-- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:241` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:241` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: c069605a
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:642` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:642` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 1a03c488
-- `packages/haive-mcp/src/haive/mcp/csv_viewer.py:29` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/csv_viewer.py:29` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 3e9b1e6b
-- `packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py:243` - error: List comprehension has incompatible type List[dict[str, Any]]; expected List[str] [misc]
+- `packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py:243` - error: List comprehension has incompatible type List[dict[str, Any]]; expected List[str]  [misc]
   - ID: 3c9ab14d
-- `packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py:262` - error: List comprehension has incompatible type List[dict[str, Any]]; expected List[str] [misc]
+- `packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py:262` - error: List comprehension has incompatible type List[dict[str, Any]]; expected List[str]  [misc]
   - ID: 00d663d0
-- `packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py:270` - error: List comprehension has incompatible type List[dict[str, Any]]; expected List[str] [misc]
+- `packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py:270` - error: List comprehension has incompatible type List[dict[str, Any]]; expected List[str]  [misc]
   - ID: 024c4235
 
 ### haive-tools
 
 - `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:605` - error: Incompatible types in assignment (expression has type "None", variable has type "list[dict[st
   - ID: 758708a2
-- `packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py:116` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py:116` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 2f5bb001
-- `packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py:158` - error: Returning Any from function declared to return "list[dict[str, Any]]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/jira_toolkit.py:158` - error: Returning Any from function declared to return "list[dict[str, Any]]"  [no-any-return]
   - ID: 43adbadf
 
 ## mypy:dict[str, Sequence[str (1 errors)
+
 
 ### haive-prebuilt
 
@@ -4555,12 +4595,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:dict[str, list[str (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/graph/ToolManager.py:623` - error: Incompatible return value type (got "list[dict[str, list[str] | str | Any | None]]", expected
   - ID: cd474ecc
 
 ## mypy:dict[str, object (2 errors)
+
 
 ### haive-core
 
@@ -4571,6 +4613,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:dict[str, str (1 errors)
 
+
 ### haive-prebuilt
 
 - `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:192` - error: Argument "content" to "AIMessage" has incompatible type "list[dict[str, str]]"; expected "str
@@ -4578,80 +4621,82 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:empty-body (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/prebuilt/structured_output_state.py:195` - error: Missing return statement [empty-body]
+- `packages/haive-core/src/haive/core/schema/prebuilt/structured_output_state.py:195` - error: Missing return statement  [empty-body]
   - ID: fe8d0e36
 
-## mypy:error (8662 errors)
+## mypy:error (8713 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/wiki_writer/utils.py:0` -
+- `packages/haive-agents/src/haive/agents/wiki_writer/utils.py:0` - 
   - ID: dd6c05bc
-- `packages/haive-agents/src/haive/agents/wiki_writer/utils.py:0` -
+- `packages/haive-agents/src/haive/agents/wiki_writer/utils.py:0` - 
   - ID: dd6c05bc
-- `packages/haive-agents/src/haive/agents/wiki_writer/utils.py:0` -
+- `packages/haive-agents/src/haive/agents/wiki_writer/utils.py:0` - 
   - ID: dd6c05bc
-- `packages/haive-agents/src/haive/agents/wiki_writer/interview/utils.py:0` -
+- `packages/haive-agents/src/haive/agents/wiki_writer/interview/utils.py:0` - 
   - ID: 01ba3dd4
-- `packages/haive-agents/src/haive/agents/wiki_writer/interview/utils.py:0` -
+- `packages/haive-agents/src/haive/agents/wiki_writer/interview/utils.py:0` - 
   - ID: 01ba3dd4
-- `packages/haive-agents/src/haive/agents/wiki_writer/interview/utils.py:0` -
+- `packages/haive-agents/src/haive/agents/wiki_writer/interview/utils.py:0` - 
   - ID: 01ba3dd4
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:0` -
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:0` - 
   - ID: dcd8779e
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:0` -
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:0` - 
   - ID: dcd8779e
 - `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:26` - note: Use "-> None" if function does not return a value
   - ID: ed42c6ef
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:0` -
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:0` - 
   - ID: dcd8779e
-- ... and 3127 more
+- ... and 3197 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/errors.py:0` -
+- `packages/haive-core/src/haive/core/errors.py:0` - 
   - ID: 120f0503
-- `packages/haive-core/src/haive/core/utils/visualize_graph_utils.py:0` -
+- `packages/haive-core/src/haive/core/utils/visualize_graph_utils.py:0` - 
   - ID: 0f8daecb
-- `packages/haive-core/src/haive/core/utils/state_utils.py:0` -
+- `packages/haive-core/src/haive/core/utils/state_utils.py:0` - 
   - ID: 330e7a56
-- `packages/haive-core/src/haive/core/utils/getter_mixin.py:0` -
+- `packages/haive-core/src/haive/core/utils/getter_mixin.py:0` - 
   - ID: d5eb97e8
-- `packages/haive-core/src/haive/core/utils/getter_mixin.py:0` -
+- `packages/haive-core/src/haive/core/utils/getter_mixin.py:0` - 
   - ID: d5eb97e8
-- `packages/haive-core/src/haive/core/utils/pydantic_utils/sync_properties.py:0` -
+- `packages/haive-core/src/haive/core/utils/pydantic_utils/sync_properties.py:0` - 
   - ID: a4080e22
-- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:0` -
+- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:0` - 
   - ID: 142d00a5
 - `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:43` - note: Use "-> None" if function does not return a value
   - ID: 38ee36b4
-- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:0` -
+- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:0` - 
   - ID: 142d00a5
-- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:0` -
+- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:0` - 
   - ID: 142d00a5
-- ... and 2608 more
+- ... and 2589 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/db/inspect_supabase.py:0` -
+- `packages/haive-dataflow/src/haive/dataflow/db/inspect_supabase.py:0` - 
   - ID: 37793fc8
 - `packages/haive-dataflow/src/haive/dataflow/db/inspect_supabase.py:10` - note: Use "-> None" if function does not return a value
   - ID: 1a74e9ce
 - `packages/haive-dataflow/src/haive/dataflow/__init__.py:45` - note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
   - ID: 62749808
-- `packages/haive-dataflow/src/haive/dataflow/__init__.py:0` -
+- `packages/haive-dataflow/src/haive/dataflow/__init__.py:0` - 
   - ID: 67c015e1
-- `packages/haive-dataflow/src/haive/dataflow/registry/providers/agent_provider.py:0` -
+- `packages/haive-dataflow/src/haive/dataflow/registry/providers/agent_provider.py:0` - 
   - ID: 21aa7845
 - `packages/haive-dataflow/src/haive/dataflow/registry/providers/agent_provider.py:35` - note: Use "-> None" if function does not return a value
   - ID: fefab567
-- `packages/haive-dataflow/src/haive/dataflow/providers/agent_provider.py:0` -
+- `packages/haive-dataflow/src/haive/dataflow/providers/agent_provider.py:0` - 
   - ID: 35b73a40
 - `packages/haive-dataflow/src/haive/dataflow/providers/agent_provider.py:35` - note: Use "-> None" if function does not return a value
   - ID: e7c14d54
-- `packages/haive-dataflow/src/haive/dataflow/core.py:0` -
+- `packages/haive-dataflow/src/haive/dataflow/core.py:0` - 
   - ID: 7ac408d9
 - `packages/haive-dataflow/src/haive/dataflow/core.py:74` - note: Use "-> None" if function does not return a value
   - ID: b05164f6
@@ -4659,21 +4704,21 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/llm_config_factory.py:0` -
+- `packages/haive-games/src/haive/games/llm_config_factory.py:0` - 
   - ID: 17e29c24
-- `packages/haive-games/src/haive/games/tic_tac_toe/state_manager.py:0` -
+- `packages/haive-games/src/haive/games/tic_tac_toe/state_manager.py:0` - 
   - ID: 36a44366
-- `packages/haive-games/src/haive/games/tic_tac_toe/state_manager.py:0` -
+- `packages/haive-games/src/haive/games/tic_tac_toe/state_manager.py:0` - 
   - ID: 36a44366
-- `packages/haive-games/src/haive/games/single_player/example.py:0` -
+- `packages/haive-games/src/haive/games/single_player/example.py:0` - 
   - ID: 8422ef20
-- `packages/haive-games/src/haive/games/single_player/example.py:1` - note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no*implicit*
+- `packages/haive-games/src/haive/games/single_player/example.py:1` - note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_
   - ID: f6e15efe
-- `packages/haive-games/src/haive/games/single_player/example.py:1` - note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no*implicit*
+- `packages/haive-games/src/haive/games/single_player/example.py:1` - note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_
   - ID: f6e15efe
-- `packages/haive-games/src/haive/games/single_player/example.py:0` -
+- `packages/haive-games/src/haive/games/single_player/example.py:0` - 
   - ID: 8422ef20
-- `packages/haive-games/src/haive/games/reversi/state_manager.py:0` -
+- `packages/haive-games/src/haive/games/reversi/state_manager.py:0` - 
   - ID: 5cc8122f
 - `packages/haive-games/src/haive/games/reversi/state_manager.py:51` - note: Possible overload variants:
   - ID: a732264a
@@ -4683,45 +4728,45 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/discovery/server_discovery.py:0` -
+- `packages/haive-mcp/src/haive/mcp/discovery/server_discovery.py:0` - 
   - ID: 40854195
 - `packages/haive-mcp/src/haive/mcp/discovery/server_discovery.py:9` - note: Use "-> None" if function does not return a value
   - ID: 249f45e4
 - `packages/haive-mcp/src/haive/mcp/__init__.py:3` - note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
   - ID: 46129cbb
-- `packages/haive-mcp/src/haive/mcp/launcher.py:0` -
+- `packages/haive-mcp/src/haive/mcp/launcher.py:0` - 
   - ID: 4ee7cd3c
 - `packages/haive-mcp/src/haive/mcp/launcher.py:13` - note: Use "-> None" if function does not return a value
   - ID: 066db0f0
-- `packages/haive-mcp/src/haive/mcp/launcher.py:0` -
+- `packages/haive-mcp/src/haive/mcp/launcher.py:0` - 
   - ID: 4ee7cd3c
 - `packages/haive-mcp/src/haive/mcp/launcher.py:19` - note: Use "-> None" if function does not return a value
   - ID: 3f664a88
-- `packages/haive-mcp/src/haive/mcp/launcher.py:0` -
+- `packages/haive-mcp/src/haive/mcp/launcher.py:0` - 
   - ID: 4ee7cd3c
 - `packages/haive-mcp/src/haive/mcp/launcher.py:25` - note: Use "-> None" if function does not return a value
   - ID: 69ed0a94
-- `packages/haive-mcp/src/haive/mcp/launcher.py:0` -
+- `packages/haive-mcp/src/haive/mcp/launcher.py:0` - 
   - ID: 4ee7cd3c
 - ... and 351 more
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/project_manager/aug_llms.py:0` -
+- `packages/haive-prebuilt/src/haive/prebuilt/project_manager/aug_llms.py:0` - 
   - ID: b3f99a7c
-- `packages/haive-prebuilt/src/haive/prebuilt/project_manager/aug_llms.py:0` -
+- `packages/haive-prebuilt/src/haive/prebuilt/project_manager/aug_llms.py:0` - 
   - ID: b3f99a7c
-- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:0` -
+- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:0` - 
   - ID: 01bf5461
-- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:0` -
+- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:0` - 
   - ID: 01bf5461
 - `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:62` - note: Use "-> None" if function does not return a value
   - ID: 6464c273
-- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:0` -
+- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:0` - 
   - ID: 01bf5461
 - `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:112` - note: Use "-> None" if function does not return a value
   - ID: a7939cc8
-- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:0` -
+- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:0` - 
   - ID: 01bf5461
 - `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:157` - note: Use "-> None" if function does not return a value
   - ID: c1ab627e
@@ -4735,287 +4780,290 @@ For further information visit https://errors.pydantic.dev
   - ID: 6d1aead1
 - `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:14` - note: Hint: "python3 -m pip install types-paramiko"
   - ID: 6d1aead1
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:0` -
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:0` - 
   - ID: dbc8a640
 - `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:27` - note: Use "-> None" if function does not return a value
   - ID: ab458797
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:0` -
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:0` - 
   - ID: dbc8a640
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:0` -
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:0` - 
   - ID: dbc8a640
 - `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:41` - note: Use "-> None" if function does not return a value
   - ID: 4d7e4871
 - `packages/haive-tools/src/haive/tools/__init__.py:79` - note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
   - ID: 8cabb5c2
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/logger.py:0` -
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/logger.py:0` - 
   - ID: df64ce77
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/logger.py:0` -
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/logger.py:0` - 
   - ID: df64ce77
 - ... and 157 more
 
 ## mypy:float, dict[str, float (2 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/timing.py:133` - error: Argument 1 to "\_display_comparison" of "TimingBenchmark" has incompatible type "dict[float, d
+- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/timing.py:133` - error: Argument 1 to "_display_comparison" of "TimingBenchmark" has incompatible type "dict[float, d
   - ID: b24ce74a
 - `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/timing.py:134` - error: Incompatible return value type (got "dict[float, dict[str, float]]", expected "dict[str, dict
   - ID: da8dfcac
 
 ## mypy:func-returns-value (5 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/experiments/static_supervisor_with_sync.py:179` - error: "\_update_engine_tools" of "StaticSupervisor" does not return a value (it only ever returns No
+- `packages/haive-agents/src/haive/agents/experiments/static_supervisor_with_sync.py:179` - error: "_update_engine_tools" of "StaticSupervisor" does not return a value (it only ever returns No
   - ID: 0a441653
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/agent.py:539` - error: "main" does not return a value (it only ever returns None) [func-returns-value]
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/agent.py:539` - error: "main" does not return a value (it only ever returns None)  [func-returns-value]
   - ID: 36d95283
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py:285` - error: "put_writes" of "AsyncPostgresSaver" does not return a value (it only ever returns None) [fu
+- `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py:285` - error: "put_writes" of "AsyncPostgresSaver" does not return a value (it only ever returns None)  [fu
   - ID: b83c79c6
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/dominoes/ui.py:306` - error: "split" of "Layout" does not return a value (it only ever returns None) [func-returns-value]
+- `packages/haive-games/src/haive/games/dominoes/ui.py:306` - error: "split" of "Layout" does not return a value (it only ever returns None)  [func-returns-value]
   - ID: 5851eab5
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py:364` - error: "run" of "FastMCP" does not return a value (it only ever returns None) [func-returns-value]
+- `packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py:364` - error: "run" of "FastMCP" does not return a value (it only ever returns None)  [func-returns-value]
   - ID: 2d8dcb4a
 
 ## mypy:has-type (122 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/multi/experiments/implementations/compatibility_enhanced_base.py:102` - error: Cannot determine type of "agents" [has-type]
+- `packages/haive-agents/src/haive/agents/multi/experiments/implementations/compatibility_enhanced_base.py:102` - error: Cannot determine type of "agents"  [has-type]
   - ID: c8cbbf96
-- `packages/haive-agents/src/haive/agents/multi/experiments/implementations/compatibility_enhanced_base.py:128` - error: Cannot determine type of "agents" [has-type]
+- `packages/haive-agents/src/haive/agents/multi/experiments/implementations/compatibility_enhanced_base.py:128` - error: Cannot determine type of "agents"  [has-type]
   - ID: 46c9aa3a
-- `packages/haive-agents/src/haive/agents/multi/archive/experiments/implementations/compatibility_enhanced_base.py:102` - error: Cannot determine type of "agents" [has-type]
+- `packages/haive-agents/src/haive/agents/multi/archive/experiments/implementations/compatibility_enhanced_base.py:102` - error: Cannot determine type of "agents"  [has-type]
   - ID: a298b382
-- `packages/haive-agents/src/haive/agents/multi/archive/experiments/implementations/compatibility_enhanced_base.py:128` - error: Cannot determine type of "agents" [has-type]
+- `packages/haive-agents/src/haive/agents/multi/archive/experiments/implementations/compatibility_enhanced_base.py:128` - error: Cannot determine type of "agents"  [has-type]
   - ID: e14a8598
-- `packages/haive-agents/src/haive/agents/supervisor/compatibility_bridge.py:39` - error: Cannot determine type of "agents" [has-type]
+- `packages/haive-agents/src/haive/agents/supervisor/compatibility_bridge.py:39` - error: Cannot determine type of "agents"  [has-type]
   - ID: 3ae46f36
-- `packages/haive-agents/src/haive/agents/supervisor/compatibility_bridge.py:59` - error: Cannot determine type of "agents" [has-type]
+- `packages/haive-agents/src/haive/agents/supervisor/compatibility_bridge.py:59` - error: Cannot determine type of "agents"  [has-type]
   - ID: a1c2335e
-- `packages/haive-agents/src/haive/agents/supervisor/compatibility_bridge.py:81` - error: Cannot determine type of "agents" [has-type]
+- `packages/haive-agents/src/haive/agents/supervisor/compatibility_bridge.py:81` - error: Cannot determine type of "agents"  [has-type]
   - ID: be872f29
-- `packages/haive-agents/src/haive/agents/supervisor/compatibility_bridge.py:150` - error: Cannot determine type of "agents" [has-type]
+- `packages/haive-agents/src/haive/agents/supervisor/compatibility_bridge.py:150` - error: Cannot determine type of "agents"  [has-type]
   - ID: d9a92d8c
-- `packages/haive-agents/src/haive/agents/supervisor/utils/compatibility_bridge.py:39` - error: Cannot determine type of "agents" [has-type]
+- `packages/haive-agents/src/haive/agents/supervisor/utils/compatibility_bridge.py:39` - error: Cannot determine type of "agents"  [has-type]
   - ID: 666b99fe
-- `packages/haive-agents/src/haive/agents/supervisor/utils/compatibility_bridge.py:59` - error: Cannot determine type of "agents" [has-type]
+- `packages/haive-agents/src/haive/agents/supervisor/utils/compatibility_bridge.py:59` - error: Cannot determine type of "agents"  [has-type]
   - ID: bde7ea44
 - ... and 58 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/typed_state_schema.py:150` - error: Cannot determine type of "engine" [has-type]
+- `packages/haive-core/src/haive/core/schema/typed_state_schema.py:150` - error: Cannot determine type of "engine"  [has-type]
   - ID: bb89b6a7
-- `packages/haive-core/src/haive/core/engine/aug_llm/mcp_config.py:112` - error: Cannot determine type of "tools" [has-type]
+- `packages/haive-core/src/haive/core/engine/aug_llm/mcp_config.py:112` - error: Cannot determine type of "tools"  [has-type]
   - ID: 304443ad
-- `packages/haive-core/src/haive/core/engine/aug_llm/mcp_config.py:130` - error: Cannot determine type of "system_message" [has-type]
+- `packages/haive-core/src/haive/core/engine/aug_llm/mcp_config.py:130` - error: Cannot determine type of "system_message"  [has-type]
   - ID: 409c91f5
-- `packages/haive-core/src/haive/core/engine/aug_llm/mcp_config.py:131` - error: Cannot determine type of "system_message" [has-type]
+- `packages/haive-core/src/haive/core/engine/aug_llm/mcp_config.py:131` - error: Cannot determine type of "system_message"  [has-type]
   - ID: 3a44d32a
-- `packages/haive-core/src/haive/core/engine/aug_llm/mcp_config.py:151` - error: Cannot determine type of "tools" [has-type]
+- `packages/haive-core/src/haive/core/engine/aug_llm/mcp_config.py:151` - error: Cannot determine type of "tools"  [has-type]
   - ID: 29289f73
-- `packages/haive-core/src/haive/core/schema/prebuilt/tool_state.py:85` - error: Cannot determine type of "tools" [has-type]
+- `packages/haive-core/src/haive/core/schema/prebuilt/tool_state.py:85` - error: Cannot determine type of "tools"  [has-type]
   - ID: 9a5bcd11
-- `packages/haive-core/src/haive/core/schema/prebuilt/tool_state.py:87` - error: Cannot determine type of "tool_routes" [has-type]
+- `packages/haive-core/src/haive/core/schema/prebuilt/tool_state.py:87` - error: Cannot determine type of "tool_routes"  [has-type]
   - ID: d14555b4
-- `packages/haive-core/src/haive/core/schema/prebuilt/tool_state.py:91` - error: Cannot determine type of "tool_metadata" [has-type]
+- `packages/haive-core/src/haive/core/schema/prebuilt/tool_state.py:91` - error: Cannot determine type of "tool_metadata"  [has-type]
   - ID: f4fd9c51
-- `packages/haive-core/src/haive/core/schema/prebuilt/tool_state.py:96` - error: Cannot determine type of "tool_instances" [has-type]
+- `packages/haive-core/src/haive/core/schema/prebuilt/tool_state.py:96` - error: Cannot determine type of "tool_instances"  [has-type]
   - ID: bafd9240
-- `packages/haive-core/src/haive/core/schema/prebuilt/tool_state.py:99` - error: Cannot determine type of "tools_dict" [has-type]
+- `packages/haive-core/src/haive/core/schema/prebuilt/tool_state.py:99` - error: Cannot determine type of "tools_dict"  [has-type]
   - ID: a1c5c5c7
 - ... and 30 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/registry/db.py:83` - error: Cannot determine type of "\_tables_created" [has-type]
+- `packages/haive-dataflow/src/haive/dataflow/registry/db.py:83` - error: Cannot determine type of "_tables_created"  [has-type]
   - ID: 8d3ac31b
-- `packages/haive-dataflow/src/haive/dataflow/registry/db.py:106` - error: Cannot determine type of "\_tables_created" [has-type]
+- `packages/haive-dataflow/src/haive/dataflow/registry/db.py:106` - error: Cannot determine type of "_tables_created"  [has-type]
   - ID: 107eab08
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:74` - error: Cannot determine type of "\_discovered" [has-type]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:74` - error: Cannot determine type of "_discovered"  [has-type]
   - ID: ad5601fc
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:189` - error: Cannot determine type of "\_discovered" [has-type]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:189` - error: Cannot determine type of "_discovered"  [has-type]
   - ID: a2f31200
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:286` - error: Cannot determine type of "\_discovered" [has-type]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:286` - error: Cannot determine type of "_discovered"  [has-type]
   - ID: ce2cf4bd
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:337` - error: Cannot determine type of "\_discovered" [has-type]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:337` - error: Cannot determine type of "_discovered"  [has-type]
   - ID: 30e45123
-- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:412` - error: Cannot determine type of "\_discovered" [has-type]
+- `packages/haive-dataflow/src/haive/dataflow/registry/base.py:412` - error: Cannot determine type of "_discovered"  [has-type]
   - ID: 8a08ad7e
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/hold_em/engine_logging.py:276` - error: Cannot determine type of "invoke" [has-type]
+- `packages/haive-games/src/haive/games/hold_em/engine_logging.py:276` - error: Cannot determine type of "invoke"  [has-type]
   - ID: 512ad60a
-- `packages/haive-games/src/haive/games/single_player/logic_grid/base.py:237` - error: Cannot determine type of "status" [has-type]
+- `packages/haive-games/src/haive/games/single_player/logic_grid/base.py:237` - error: Cannot determine type of "status"  [has-type]
   - ID: ba693da5
-- `packages/haive-games/src/haive/games/single_player/flow_free/base.py:453` - error: Cannot determine type of "status" [has-type]
+- `packages/haive-games/src/haive/games/single_player/flow_free/base.py:453` - error: Cannot determine type of "status"  [has-type]
   - ID: d0c8187b
-- `packages/haive-games/src/haive/games/single_player/crossword_puzzle/base.py:117` - error: Cannot determine type of "status" [has-type]
+- `packages/haive-games/src/haive/games/single_player/crossword_puzzle/base.py:117` - error: Cannot determine type of "status"  [has-type]
   - ID: 74868fbf
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py:174` - error: Cannot determine type of "engine" [has-type]
+- `packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py:174` - error: Cannot determine type of "engine"  [has-type]
   - ID: 918963ae
-- `packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py:177` - error: Cannot determine type of "engine" [has-type]
+- `packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py:177` - error: Cannot determine type of "engine"  [has-type]
   - ID: b0779d85
-- `packages/haive-mcp/src/haive/mcp/integration/aug_llm_mcp_extension.py:175` - error: Cannot determine type of "tools" [has-type]
+- `packages/haive-mcp/src/haive/mcp/integration/aug_llm_mcp_extension.py:175` - error: Cannot determine type of "tools"  [has-type]
   - ID: 2c997910
 
-## mypy:import-not-found (241 errors)
+## mypy:import-not-found (188 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/wiki_writer/interview/__init__.py:3` - error: Cannot find implementation or library stub for module named "interview.agent" [import-not-fo
+- `packages/haive-agents/src/haive/agents/wiki_writer/interview/__init__.py:3` - error: Cannot find implementation or library stub for module named "interview.agent"  [import-not-fo
   - ID: 941aabae
-- `packages/haive-agents/src/haive/agents/wiki_writer/interview/__init__.py:4` - error: Cannot find implementation or library stub for module named "interview.models" [import-not-f
+- `packages/haive-agents/src/haive/agents/wiki_writer/interview/__init__.py:4` - error: Cannot find implementation or library stub for module named "interview.models"  [import-not-f
   - ID: 71ea4b6a
-- `packages/haive-agents/src/haive/agents/wiki_writer/interview/__init__.py:5` - error: Cannot find implementation or library stub for module named "interview.state" [import-not-fo
+- `packages/haive-agents/src/haive/agents/wiki_writer/interview/__init__.py:5` - error: Cannot find implementation or library stub for module named "interview.state"  [import-not-fo
   - ID: 1e4d37ac
-- `packages/haive-agents/src/haive/agents/wiki_writer/interview/__init__.py:6` - error: Cannot find implementation or library stub for module named "interview.utils" [import-not-fo
+- `packages/haive-agents/src/haive/agents/wiki_writer/interview/__init__.py:6` - error: Cannot find implementation or library stub for module named "interview.utils"  [import-not-fo
   - ID: ba6dc7cf
-- `packages/haive-agents/src/haive/agents/wiki_writer/__init__.py:3` - error: Cannot find implementation or library stub for module named "wiki_writer.agent" [import-not-
+- `packages/haive-agents/src/haive/agents/wiki_writer/__init__.py:3` - error: Cannot find implementation or library stub for module named "wiki_writer.agent"  [import-not-
   - ID: 676da81c
-- `packages/haive-agents/src/haive/agents/wiki_writer/__init__.py:4` - error: Cannot find implementation or library stub for module named "wiki_writer.models" [import-not
+- `packages/haive-agents/src/haive/agents/wiki_writer/__init__.py:4` - error: Cannot find implementation or library stub for module named "wiki_writer.models"  [import-not
   - ID: 834bff52
-- `packages/haive-agents/src/haive/agents/wiki_writer/__init__.py:14` - error: Cannot find implementation or library stub for module named "wiki_writer.state" [import-not-
+- `packages/haive-agents/src/haive/agents/wiki_writer/__init__.py:14` - error: Cannot find implementation or library stub for module named "wiki_writer.state"  [import-not-
   - ID: 4d400315
-- `packages/haive-agents/src/haive/agents/wiki_writer/__init__.py:15` - error: Cannot find implementation or library stub for module named "wiki_writer.utils" [import-not-
+- `packages/haive-agents/src/haive/agents/wiki_writer/__init__.py:15` - error: Cannot find implementation or library stub for module named "wiki_writer.utils"  [import-not-
   - ID: e1755a95
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/__init__.py:3` - error: Cannot find implementation or library stub for module named "tree.models" [import-not-found]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/__init__.py:3` - error: Cannot find implementation or library stub for module named "tree.models"  [import-not-found]
   - ID: 6ac6605e
-- `packages/haive-agents/src/haive/agents/task_analysis/execution/__init__.py:3` - error: Cannot find implementation or library stub for module named "execution.models" [import-not-f
+- `packages/haive-agents/src/haive/agents/task_analysis/execution/__init__.py:3` - error: Cannot find implementation or library stub for module named "execution.models"  [import-not-f
   - ID: 23545012
-- ... and 114 more
+- ... and 75 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/models/llm/export_llm_models_to_csv.py:21` - error: Cannot find implementation or library stub for module named "base" [import-not-found]
+- `packages/haive-core/src/haive/core/models/llm/export_llm_models_to_csv.py:21` - error: Cannot find implementation or library stub for module named "base"  [import-not-found]
   - ID: b41928a5
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:26` - error: Cannot find implementation or library stub for module named "radon.complexity" [import-not-f
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:26` - error: Cannot find implementation or library stub for module named "radon.complexity"  [import-not-f
   - ID: 2d2d5e45
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:26` - error: Cannot find implementation or library stub for module named "radon.complexity" [import-not-f
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:26` - error: Cannot find implementation or library stub for module named "radon.complexity"  [import-not-f
   - ID: 2d2d5e45
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:27` - error: Cannot find implementation or library stub for module named "radon.metrics" [import-not-foun
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:27` - error: Cannot find implementation or library stub for module named "radon.metrics"  [import-not-foun
   - ID: b5eaf6b1
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:28` - error: Cannot find implementation or library stub for module named "radon.visitors" [import-not-fou
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:28` - error: Cannot find implementation or library stub for module named "radon.visitors"  [import-not-fou
   - ID: fbdb6321
-- `packages/haive-core/src/haive/core/utils/debugkit/debug/interactive.py:33` - error: Cannot find implementation or library stub for module named "pudb" [import-not-found]
+- `packages/haive-core/src/haive/core/utils/debugkit/debug/interactive.py:33` - error: Cannot find implementation or library stub for module named "pudb"  [import-not-found]
   - ID: 99848874
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/static.py:34` - error: Cannot find implementation or library stub for module named "radon.complexity" [import-not-f
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/static.py:34` - error: Cannot find implementation or library stub for module named "radon.complexity"  [import-not-f
   - ID: 538583d4
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/static.py:34` - error: Cannot find implementation or library stub for module named "radon.complexity" [import-not-f
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/static.py:34` - error: Cannot find implementation or library stub for module named "radon.complexity"  [import-not-f
   - ID: 538583d4
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/static.py:35` - error: Cannot find implementation or library stub for module named "radon.metrics" [import-not-foun
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/static.py:35` - error: Cannot find implementation or library stub for module named "radon.metrics"  [import-not-foun
   - ID: 236932b1
-- `packages/haive-core/src/haive/core/models/llm/providers/xai.py:100` - error: Cannot find implementation or library stub for module named "langchain_xai" [import-not-foun
+- `packages/haive-core/src/haive/core/models/llm/providers/xai.py:100` - error: Cannot find implementation or library stub for module named "langchain_xai"  [import-not-foun
   - ID: ae7e9eb1
 - ... and 34 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/api/run_chess_api.py:23` - error: Cannot find implementation or library stub for module named "game_api" [import-not-found]
+- `packages/haive-dataflow/src/haive/dataflow/api/run_chess_api.py:23` - error: Cannot find implementation or library stub for module named "game_api"  [import-not-found]
   - ID: 98423729
-- `packages/haive-dataflow/src/haive/dataflow/api/run_simple.py:13` - error: Cannot find implementation or library stub for module named "game_router" [import-not-found]
+- `packages/haive-dataflow/src/haive/dataflow/api/run_simple.py:13` - error: Cannot find implementation or library stub for module named "game_router"  [import-not-found]
   - ID: 2e355453
-- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:10` - error: Cannot find implementation or library stub for module named "haive_games.tic_tac_toe.agent"
+- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:10` - error: Cannot find implementation or library stub for module named "haive_games.tic_tac_toe.agent"  
   - ID: 6d9bfea4
-- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:11` - error: Cannot find implementation or library stub for module named "haive_games.tic_tac_toe.config"
+- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:11` - error: Cannot find implementation or library stub for module named "haive_games.tic_tac_toe.config" 
   - ID: e69ef8d6
-- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:12` - error: Cannot find implementation or library stub for module named "haive_games.tic_tac_toe.state"
+- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:12` - error: Cannot find implementation or library stub for module named "haive_games.tic_tac_toe.state"  
   - ID: 45e0f722
 - `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:13` - error: Cannot find implementation or library stub for module named "haive_games.tic_tac_toe.state_ma
   - ID: 49cc64b9
-- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:13` - error: Cannot find implementation or library stub for module named "haive_games.connect4.agent" [im
+- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:13` - error: Cannot find implementation or library stub for module named "haive_games.connect4.agent"  [im
   - ID: 41acd6a4
-- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:14` - error: Cannot find implementation or library stub for module named "haive_games.connect4.config" [i
+- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:14` - error: Cannot find implementation or library stub for module named "haive_games.connect4.config"  [i
   - ID: 85213be0
-- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:15` - error: Cannot find implementation or library stub for module named "haive_games.connect4.state" [im
+- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:15` - error: Cannot find implementation or library stub for module named "haive_games.connect4.state"  [im
   - ID: 8ca4b0bb
-- `packages/haive-dataflow/src/haive/dataflow/api/tic_tac_toe_api.py:10` - error: Cannot find implementation or library stub for module named "haive_games.tic_tac_toe.agent"
+- `packages/haive-dataflow/src/haive/dataflow/api/tic_tac_toe_api.py:10` - error: Cannot find implementation or library stub for module named "haive_games.tic_tac_toe.agent"  
   - ID: 1c63d93e
 - ... and 7 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/mafia/verify_imports.py:8` - error: Cannot find implementation or library stub for module named "models" [import-not-found]
+- `packages/haive-games/src/haive/games/mafia/verify_imports.py:8` - error: Cannot find implementation or library stub for module named "models"  [import-not-found]
   - ID: 4e838c83
-- `packages/haive-games/src/haive/games/single_player/mine_sweeper/base.py:8` - error: Cannot find implementation or library stub for module named "game_framework_base" [import-no
+- `packages/haive-games/src/haive/games/single_player/mine_sweeper/base.py:8` - error: Cannot find implementation or library stub for module named "game_framework_base"  [import-no
   - ID: be93e4d7
-- `packages/haive-games/src/haive/games/single_player/logic_grid/base.py:4` - error: Cannot find implementation or library stub for module named "game_framework_base" [import-no
+- `packages/haive-games/src/haive/games/single_player/logic_grid/base.py:4` - error: Cannot find implementation or library stub for module named "game_framework_base"  [import-no
   - ID: f1f6ed22
-- `packages/haive-games/src/haive/games/single_player/flow_free/base.py:7` - error: Cannot find implementation or library stub for module named "game_framework_base" [import-no
+- `packages/haive-games/src/haive/games/single_player/flow_free/base.py:7` - error: Cannot find implementation or library stub for module named "game_framework_base"  [import-no
   - ID: acc8c9ec
-- `packages/haive-games/src/haive/games/single_player/crossword_puzzle/base.py:5` - error: Cannot find implementation or library stub for module named "game_framework_base" [import-no
+- `packages/haive-games/src/haive/games/single_player/crossword_puzzle/base.py:5` - error: Cannot find implementation or library stub for module named "game_framework_base"  [import-no
   - ID: 5d7e5861
-- `packages/haive-games/src/haive/games/framework/core/container.py:9` - error: Cannot find implementation or library stub for module named "game_framework.core.piece" [imp
+- `packages/haive-games/src/haive/games/framework/core/container.py:9` - error: Cannot find implementation or library stub for module named "game_framework.core.piece"  [imp
   - ID: da977365
-- `packages/haive-games/src/haive/games/core/game/core_space.py:13` - error: Cannot find implementation or library stub for module named "game.core.piece" [import-not-fo
+- `packages/haive-games/src/haive/games/core/game/core_space.py:13` - error: Cannot find implementation or library stub for module named "game.core.piece"  [import-not-fo
   - ID: d90ddd00
-- `packages/haive-games/src/haive/games/core/game/core_space.py:14` - error: Cannot find implementation or library stub for module named "game.core.position" [import-not
+- `packages/haive-games/src/haive/games/core/game/core_space.py:14` - error: Cannot find implementation or library stub for module named "game.core.position"  [import-not
   - ID: 842a0eb2
-- `packages/haive-games/src/haive/games/core/game/core_game.py:16` - error: Cannot find implementation or library stub for module named "game.core.board" [import-not-fo
+- `packages/haive-games/src/haive/games/core/game/core_game.py:16` - error: Cannot find implementation or library stub for module named "game.core.board"  [import-not-fo
   - ID: 41232473
-- `packages/haive-games/src/haive/games/core/game/core_game.py:17` - error: Cannot find implementation or library stub for module named "game.core.container" [import-no
+- `packages/haive-games/src/haive/games/core/game/core_game.py:17` - error: Cannot find implementation or library stub for module named "game.core.container"  [import-no
   - ID: 67c97b01
-- ... and 18 more
+- ... and 15 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/mixins/__init__.py:3` - error: Cannot find implementation or library stub for module named "mixins.mcp_mixin" [import-not-f
-  - ID: 2e87ca96
 - `packages/haive-mcp/src/haive/mcp/installers/__init__.py:3` - error: Cannot find implementation or library stub for module named "installers.advanced_code_install
   - ID: 95c208d4
-- `packages/haive-mcp/src/haive/mcp/installers/__init__.py:16` - error: Cannot find implementation or library stub for module named "installers.config_manager" [imp
+- `packages/haive-mcp/src/haive/mcp/installers/__init__.py:16` - error: Cannot find implementation or library stub for module named "installers.config_manager"  [imp
   - ID: 046cb1c5
 - `packages/haive-mcp/src/haive/mcp/installers/__init__.py:28` - error: Cannot find implementation or library stub for module named "installers.safe_pattern_installe
   - ID: ea0c9bac
-- `packages/haive-mcp/src/haive/mcp/discovery/__init__.py:3` - error: Cannot find implementation or library stub for module named "discovery.analyzer" [import-not
+- `packages/haive-mcp/src/haive/mcp/discovery/__init__.py:3` - error: Cannot find implementation or library stub for module named "discovery.analyzer"  [import-not
   - ID: 68eb62d3
-- `packages/haive-mcp/src/haive/mcp/discovery/__init__.py:11` - error: Cannot find implementation or library stub for module named "discovery.server_discovery" [im
+- `packages/haive-mcp/src/haive/mcp/discovery/__init__.py:11` - error: Cannot find implementation or library stub for module named "discovery.server_discovery"  [im
   - ID: b180c769
-- `packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py:16` - error: Cannot find implementation or library stub for module named "plotly.express" [import-not-fou
-  - ID: 555dc39c
-- `packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py:16` - error: Cannot find implementation or library stub for module named "plotly.express" [import-not-fou
-  - ID: 555dc39c
-- `packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py:17` - error: Cannot find implementation or library stub for module named "streamlit" [import-not-found]
-  - ID: cb09cb9d
-- `packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py:18` - error: Cannot find implementation or library stub for module named "csv_viewer" [import-not-found]
+- `packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py:26` - error: Cannot find implementation or library stub for module named "csv_viewer"  [import-not-found]
+  - ID: 01165bfc
+- `packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py:27` - error: Cannot find implementation or library stub for module named "self_query_mcp_agent"  [import-n
+  - ID: ce4c77ca
+- `packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py:18` - error: Cannot find implementation or library stub for module named "csv_viewer"  [import-not-found]
   - ID: 57b488fb
-- ... and 11 more
+- `packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py:19` - error: Cannot find implementation or library stub for module named "self_query_mcp_agent"  [import-n
+  - ID: f99de183
+- `packages/haive-mcp/src/haive/mcp/haive_agent_mcp_integration.py:16` - error: Cannot find implementation or library stub for module named "fastmcp_runner"  [import-not-fou
+  - ID: d77950a3
+- ... and 1 more
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/tools.py:30` - error: Cannot find implementation or library stub for module named "newsapi" [import-not-found]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/tools.py:30` - error: Cannot find implementation or library stub for module named "newsapi"  [import-not-found]
   - ID: 9435dd4d
-- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:6` - error: Cannot find implementation or library stub for module named "pymupdf4llm" [import-not-found]
-  - ID: d1050c42
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/ionic_tool.py:19` - error: Cannot find implementation or library stub for module named "ionic_langchain.tool" [import-n
+- `packages/haive-tools/src/haive/tools/tools/ionic_tool.py:19` - error: Cannot find implementation or library stub for module named "ionic_langchain.tool"  [import-n
   - ID: 49c3efe5
-- `packages/haive-tools/src/haive/tools/tools/hinge_tools.py:22` - error: Cannot find implementation or library stub for module named "squeaky_hinge" [import-not-foun
+- `packages/haive-tools/src/haive/tools/tools/hinge_tools.py:22` - error: Cannot find implementation or library stub for module named "squeaky_hinge"  [import-not-foun
   - ID: 3c17b86f
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/project_creation/__init__.py:3` - error: Cannot find implementation or library stub for module named "project_creation.github" [impor
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/project_creation/__init__.py:3` - error: Cannot find implementation or library stub for module named "project_creation.github"  [impor
   - ID: df2d21e2
 - `packages/haive-tools/src/haive/tools/tools/toolkits/mongodb_toolkit.py:26` - error: Cannot find implementation or library stub for module named "langchain_mongodb.agent_toolkit.
   - ID: 651623d6
 - `packages/haive-tools/src/haive/tools/tools/toolkits/mongodb_toolkit.py:27` - error: Cannot find implementation or library stub for module named "langchain_mongodb.agent_toolkit.
   - ID: f00385d2
 
-## mypy:import-untyped (5959 errors)
+## mypy:import-untyped (6010 errors)
+
 
 ### haive-agents
 
@@ -5039,7 +5087,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 8876468d
 - `packages/haive-agents/src/haive/agents/task_analysis/execution/engines.py:10` - error: Skipping analyzing "haive.agents.task_analysis.execution.prompts": module is installed, but m
   - ID: 253d63e4
-- ... and 2930 more
+- ... and 2969 more
 
 ### haive-core
 
@@ -5051,7 +5099,7 @@ For further information visit https://errors.pydantic.dev
   - ID: c304fb99
 - `packages/haive-core/src/haive/core/utils/haive_discovery/__init__.py:8` - error: Skipping analyzing "haive.core.utils.haive_discovery.component_info": module is installed, bu
   - ID: 52fd517c
-- `packages/haive-core/src/haive/core/utils/haive_discovery/__init__.py:9` - error: Skipping analyzing "haive.core.utils.haive_discovery.discovery_engine": module is installed,
+- `packages/haive-core/src/haive/core/utils/haive_discovery/__init__.py:9` - error: Skipping analyzing "haive.core.utils.haive_discovery.discovery_engine": module is installed, 
   - ID: 07edc4d7
 - `packages/haive-core/src/haive/core/utils/haive_discovery/__init__.py:10` - error: Skipping analyzing "haive.core.utils.haive_discovery.documentation_writer": module is install
   - ID: 8e84fcea
@@ -5073,11 +5121,11 @@ For further information visit https://errors.pydantic.dev
   - ID: f34db366
 - `packages/haive-dataflow/src/haive/dataflow/__init___lazy.py:56` - error: Skipping analyzing "haive.dataflow.registry.models": module is installed, but missing library
   - ID: fe3966d2
-- `packages/haive-dataflow/src/haive/dataflow/__init___lazy.py:74` - error: Skipping analyzing "haive.dataflow.registry.serialization": module is installed, but missing
+- `packages/haive-dataflow/src/haive/dataflow/__init___lazy.py:74` - error: Skipping analyzing "haive.dataflow.registry.serialization": module is installed, but missing 
   - ID: e1c96fae
 - `packages/haive-dataflow/src/haive/dataflow/utils/__init__.py:7` - error: Skipping analyzing "haive.dataflow.utils.logging": module is installed, but missing library s
   - ID: d3e3e38c
-- `packages/haive-dataflow/src/haive/dataflow/registry/utils/__init__.py:7` - error: Skipping analyzing "haive.dataflow.registry.utils.logging": module is installed, but missing
+- `packages/haive-dataflow/src/haive/dataflow/registry/utils/__init__.py:7` - error: Skipping analyzing "haive.dataflow.registry.utils.logging": module is installed, but missing 
   - ID: 1a703d93
 - `packages/haive-dataflow/src/haive/dataflow/registry/importers/__init__.py:8` - error: Skipping analyzing "haive.dataflow.registry.importers.litellm_importer": module is installed,
   - ID: 7547d02f
@@ -5103,7 +5151,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 60b2a89b
 - `packages/haive-games/src/haive/games/tic_tac_toe/state_manager.py:9` - error: Skipping analyzing "haive.games.tic_tac_toe.models": module is installed, but missing library
   - ID: 5632a017
-- `packages/haive-games/src/haive/games/tic_tac_toe/state_manager.py:10` - error: Skipping analyzing "haive.games.tic_tac_toe.state": module is installed, but missing library
+- `packages/haive-games/src/haive/games/tic_tac_toe/state_manager.py:10` - error: Skipping analyzing "haive.games.tic_tac_toe.state": module is installed, but missing library 
   - ID: af6c92db
 - `packages/haive-games/src/haive/games/single_player/agent.py:10` - error: Skipping analyzing "haive.games.base.agent": module is installed, but missing library stubs o
   - ID: 9a5fdc93
@@ -5111,7 +5159,7 @@ For further information visit https://errors.pydantic.dev
   - ID: aae9999d
 - `packages/haive-games/src/haive/games/single_player/sudoku/game/board.py:5` - error: Skipping analyzing "haive.games.core.board.base": module is installed, but missing library st
   - ID: 2cedc0b9
-- ... and 1030 more
+- ... and 1034 more
 
 ### haive-mcp
 
@@ -5121,21 +5169,21 @@ For further information visit https://errors.pydantic.dev
   - ID: a66ff332
 - `packages/haive-mcp/src/haive/mcp/tools/__init__.py:13` - error: Skipping analyzing "haive.mcp.tools.server_selector": module is installed, but missing librar
   - ID: a743db55
-- `packages/haive-mcp/src/haive/mcp/tools/__init__.py:30` - error: Skipping analyzing "haive.mcp.tools.server_tester": module is installed, but missing library
+- `packages/haive-mcp/src/haive/mcp/tools/__init__.py:30` - error: Skipping analyzing "haive.mcp.tools.server_tester": module is installed, but missing library 
   - ID: e4aa902d
-- `packages/haive-mcp/src/haive/mcp/servers/__init__.py:3` - error: Skipping analyzing "haive.mcp.servers.dataflow_mcp_server": module is installed, but missing
+- `packages/haive-mcp/src/haive/mcp/servers/__init__.py:3` - error: Skipping analyzing "haive.mcp.servers.dataflow_mcp_server": module is installed, but missing 
   - ID: 4f9eb1e2
-- `packages/haive-mcp/src/haive/mcp/servers/__init__.py:4` - error: Skipping analyzing "haive.mcp.servers.http_server": module is installed, but missing library
+- `packages/haive-mcp/src/haive/mcp/servers/__init__.py:4` - error: Skipping analyzing "haive.mcp.servers.http_server": module is installed, but missing library 
   - ID: a54b3f01
 - `packages/haive-mcp/src/haive/mcp/servers/__init__.py:5` - error: Skipping analyzing "haive.mcp.servers.simple_http_server": module is installed, but missing l
   - ID: 01c8ff81
+- `packages/haive-mcp/src/haive/mcp/mixins/__init__.py:3` - error: Skipping analyzing "haive.mcp.mixins.mcp_mixin": module is installed, but missing library stu
+  - ID: 346e4810
 - `packages/haive-mcp/src/haive/mcp/downloader/__init__.py:3` - error: Skipping analyzing "haive.mcp.downloader.config": module is installed, but missing library st
   - ID: 03ace28f
 - `packages/haive-mcp/src/haive/mcp/downloader/__init__.py:12` - error: Skipping analyzing "haive.mcp.downloader.core": module is installed, but missing library stub
   - ID: e16098bd
-- `packages/haive-mcp/src/haive/mcp/downloader/__init__.py:17` - error: Skipping analyzing "haive.mcp.downloader.discovery": module is installed, but missing library
-  - ID: cc8c0544
-- ... and 111 more
+- ... and 117 more
 
 ### haive-prebuilt
 
@@ -5145,13 +5193,13 @@ For further information visit https://errors.pydantic.dev
   - ID: 284cd688
 - `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/engines.py:4` - error: Skipping analyzing "haive.haive.tools.search_tools": module is installed, but missing library
   - ID: e4a70e08
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/engines.py:5` - error: Skipping analyzing "haive.prebuilt.weather_disaster_management.models": module is installed,
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/engines.py:5` - error: Skipping analyzing "haive.prebuilt.weather_disaster_management.models": module is installed, 
   - ID: 04ab49b9
 - `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/engines.py:9` - error: Skipping analyzing "haive.prebuilt.weather_disaster_management.prompts": module is installed,
   - ID: c9b24b3d
 - `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/branches.py:1` - error: Skipping analyzing "haive.core.graph.branches": module is installed, but missing library stub
   - ID: bc00c93b
-- `packages/haive-prebuilt/src/haive/prebuilt/project_manager/aug_llms.py:2` - error: Skipping analyzing "haive.prebuilt.project_manager.models": module is installed, but missing
+- `packages/haive-prebuilt/src/haive/prebuilt/project_manager/aug_llms.py:2` - error: Skipping analyzing "haive.prebuilt.project_manager.models": module is installed, but missing 
   - ID: a127522b
 - `packages/haive-prebuilt/src/haive/prebuilt/misc/__init__.py:19` - error: Skipping analyzing "haive.prebuilt.misc.agent_utilities_models": module is installed, but mis
   - ID: 5890dafd
@@ -5159,7 +5207,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 10cd78ac
 - `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:6` - error: Skipping analyzing "haive.prebuilt.ai_insight.agent": module is installed, but missing librar
   - ID: 026222ef
-- ... and 172 more
+- ... and 174 more
 
 ### haive-tools
 
@@ -5167,7 +5215,7 @@ For further information visit https://errors.pydantic.dev
   - ID: fe21e824
 - `packages/haive-tools/src/haive/tools/tools/toolkits/gmail_toolkit.py:27` - error: Skipping analyzing "langchain_google_community.gmail.toolkit": module is installed, but missi
   - ID: 733cccda
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:14` - error: Library stubs not installed for "paramiko" [import-untyped]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:14` - error: Library stubs not installed for "paramiko"  [import-untyped]
   - ID: d7629fe6
 - `packages/haive-tools/src/haive/tools/tools/toolkits/dev/__init__.py:3` - error: Skipping analyzing "haive.tools.toolkits.dev.tools": module is installed, but missing library
   - ID: bd3ad1fc
@@ -5187,118 +5235,120 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:index (107 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:908` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:908` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: dae54ac6
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:914` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:914` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: 16436aad
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:919` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:919` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: f96f5412
-- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_v3.py:885` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_v3.py:885` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: 925c34ad
-- `packages/haive-agents/src/haive/agents/multi/enhanced/multi_agent_v3.py:932` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-agents/src/haive/agents/multi/enhanced/multi_agent_v3.py:932` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: 32852708
-- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:471` - error: Value of type "object" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:471` - error: Value of type "object" is not indexable  [index]
   - ID: a7a89346
-- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:471` - error: Value of type "object" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:471` - error: Value of type "object" is not indexable  [index]
   - ID: a7a89346
-- `packages/haive-agents/src/haive/agents/memory_reorganized/core/stores.py:505` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/core/stores.py:505` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: 18acdea5
-- `packages/haive-agents/src/haive/agents/memory_reorganized/core/stores.py:510` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/core/stores.py:510` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: e1811c1f
-- `packages/haive-agents/src/haive/agents/memory_reorganized/agents/multi.py:566` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/agents/multi.py:566` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: 5601c181
 - ... and 63 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:417` - error: Value of type "object" is not indexable [index]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:417` - error: Value of type "object" is not indexable  [index]
   - ID: 7f29800c
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:417` - error: Value of type "object" is not indexable [index]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:417` - error: Value of type "object" is not indexable  [index]
   - ID: 7f29800c
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:419` - error: Value of type "object" is not indexable [index]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:419` - error: Value of type "object" is not indexable  [index]
   - ID: 6441363a
-- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:419` - error: Value of type "object" is not indexable [index]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/utils.py:419` - error: Value of type "object" is not indexable  [index]
   - ID: 6441363a
-- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:153` - error: Value of type any? is not indexable [index]
+- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:153` - error: Value of type any? is not indexable  [index]
   - ID: f7412f6a
-- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:154` - error: Value of type any? is not indexable [index]
+- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:154` - error: Value of type any? is not indexable  [index]
   - ID: ecb43fb0
-- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:155` - error: Value of type any? is not indexable [index]
+- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:155` - error: Value of type any? is not indexable  [index]
   - ID: bb0957f5
-- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:198` - error: Value of type any? is not indexable [index]
+- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:198` - error: Value of type any? is not indexable  [index]
   - ID: 250a9d11
-- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:199` - error: Value of type any? is not indexable [index]
+- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:199` - error: Value of type any? is not indexable  [index]
   - ID: 283ee815
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/source_base.py:167` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/source_base.py:167` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: d2033878
 - ... and 1 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:532` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:532` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: d56676fb
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:533` - error: Value of type "object" is not indexable [index]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:533` - error: Value of type "object" is not indexable  [index]
   - ID: d6425ea9
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:533` - error: Value of type "object" is not indexable [index]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:533` - error: Value of type "object" is not indexable  [index]
   - ID: d6425ea9
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:541` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:541` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: 909c55a3
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:542` - error: Value of type "object" is not indexable [index]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:542` - error: Value of type "object" is not indexable  [index]
   - ID: 94bcf897
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:542` - error: Value of type "object" is not indexable [index]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:542` - error: Value of type "object" is not indexable  [index]
   - ID: 94bcf897
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_discovery_routes_fixed.py:525` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_discovery_routes_fixed.py:525` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: 353994c9
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_discovery_routes_fixed.py:526` - error: Value of type "object" is not indexable [index]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_discovery_routes_fixed.py:526` - error: Value of type "object" is not indexable  [index]
   - ID: afde3460
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_discovery_routes_fixed.py:526` - error: Value of type "object" is not indexable [index]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_discovery_routes_fixed.py:526` - error: Value of type "object" is not indexable  [index]
   - ID: afde3460
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_discovery_routes_fixed.py:534` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/agent_discovery_routes_fixed.py:534` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: d7be9b79
 - ... and 2 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:256` - error: Value of type "object" is not indexable [index]
+- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:256` - error: Value of type "object" is not indexable  [index]
   - ID: ddf089a8
-- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:260` - error: Value of type "object" is not indexable [index]
+- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:260` - error: Value of type "object" is not indexable  [index]
   - ID: 2db2ab49
-- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:261` - error: Value of type "object" is not indexable [index]
+- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:261` - error: Value of type "object" is not indexable  [index]
   - ID: 0ea34534
-- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:264` - error: Value of type "object" is not indexable [index]
+- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:264` - error: Value of type "object" is not indexable  [index]
   - ID: f5febeb7
-- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:272` - error: Value of type "object" is not indexable [index]
+- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:272` - error: Value of type "object" is not indexable  [index]
   - ID: 13d8abb8
-- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:273` - error: Value of type "object" is not indexable [index]
+- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:273` - error: Value of type "object" is not indexable  [index]
   - ID: 817cb4b3
-- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:276` - error: Value of type "object" is not indexable [index]
+- `packages/haive-games/src/haive/games/monopoly/standalone_demo.py:276` - error: Value of type "object" is not indexable  [index]
   - ID: f534355c
-- `packages/haive-games/src/haive/games/single_player/crossword_puzzle/base.py:107` - error: Value of type any? is not indexable [index]
+- `packages/haive-games/src/haive/games/single_player/crossword_puzzle/base.py:107` - error: Value of type any? is not indexable  [index]
   - ID: 2031bf80
-- `packages/haive-games/src/haive/games/single_player/crossword_puzzle/base.py:121` - error: Value of type any? is not indexable [index]
+- `packages/haive-games/src/haive/games/single_player/crossword_puzzle/base.py:121` - error: Value of type any? is not indexable  [index]
   - ID: fdef1276
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/downloader/github_mass_downloader.py:311` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-mcp/src/haive/mcp/downloader/github_mass_downloader.py:311` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: 99fc04d9
-- `packages/haive-mcp/src/haive/mcp/servers/dataflow_mcp_server.py:345` - error: Unsupported target for indexed assignment ("object") [index]
+- `packages/haive-mcp/src/haive/mcp/servers/dataflow_mcp_server.py:345` - error: Unsupported target for indexed assignment ("object")  [index]
   - ID: 8fd40273
 
 ## mypy:int (4 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:68` - error: Incompatible return value type (got "list[int]", expected "dict[str, list[str]]") [return-va
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:68` - error: Incompatible return value type (got "list[int]", expected "dict[str, list[str]]")  [return-va
   - ID: 2fc042c6
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:69` - error: Incompatible return value type (got "list[int]", expected "dict[str, list[str]]") [return-va
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:69` - error: Incompatible return value type (got "list[int]", expected "dict[str, list[str]]")  [return-va
   - ID: 877f40df
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:370` - note: def copy(self, \*, include: AbstractSet[int] | AbstractSet[str] | Mapping[int, Any] |
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:370` - note:          def copy(self, *, include: AbstractSet[int] | AbstractSet[str] | Mapping[int, Any] | 
   - ID: bdadceae
 
 ### haive-games
@@ -5308,6 +5358,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:int, Any (2 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/multi/enhanced_parallel_agent.py:293` - error: Incompatible types in assignment (expression has type "tuple[int, Any]", variable has type "t
@@ -5316,6 +5367,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 44905532
 
 ## mypy:int, None (3 errors)
+
 
 ### haive-agents
 
@@ -5328,12 +5380,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:int, dict[str, int (1 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/chain/chain_agent_simple.py:166` - error: Argument 1 to "append" of "list" has incompatible type "tuple[int, dict[str, int], Callable[.
   - ID: 8dfc3ce8
 
 ## mypy:langchain_community.graphs.graph_document.GraphDocument (1 errors)
+
 
 ### haive-agents
 
@@ -5342,12 +5396,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:langchain_community.vectorstores.mongodb_atlas.MongoDBAtlasVectorSearch (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/engine/vectorstore/providers/MongoDBAtlasVectorStoreConfig.py:173` - error: Incompatible import of "MongoDBAtlasVectorSearch" (imported name has type "type[langchain_com
   - ID: 6786caa5
 
 ## mypy:langchain_community.vectorstores.neo4j_vector.Neo4jVector (1 errors)
+
 
 ### haive-core
 
@@ -5356,6 +5412,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:langchain_neo4j.graphs.graph_document.GraphDocument (1 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/document_modifiers/kg/kg_map_merge/utils.py:9` - error: Incompatible import of "GraphDocument" (imported name has type "type[langchain_neo4j.graphs.g
@@ -5363,25 +5420,26 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:list-item (15 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/memory_reorganized/search/labs/agent.py:284` - error: List item 0 has incompatible type "BaseTool"; expected "Tool" [list-item]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/search/labs/agent.py:284` - error: List item 0 has incompatible type "BaseTool"; expected "Tool"  [list-item]
   - ID: e16c02dc
-- `packages/haive-agents/src/haive/agents/memory_reorganized/search/labs/agent.py:285` - error: List item 1 has incompatible type "BaseTool"; expected "Tool" [list-item]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/search/labs/agent.py:285` - error: List item 1 has incompatible type "BaseTool"; expected "Tool"  [list-item]
   - ID: e0e67290
-- `packages/haive-agents/src/haive/agents/memory_reorganized/search/labs/agent.py:286` - error: List item 2 has incompatible type "BaseTool"; expected "Tool" [list-item]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/search/labs/agent.py:286` - error: List item 2 has incompatible type "BaseTool"; expected "Tool"  [list-item]
   - ID: b2bcb086
-- `packages/haive-agents/src/haive/agents/memory_reorganized/search/labs/agent.py:287` - error: List item 3 has incompatible type "BaseTool"; expected "Tool" [list-item]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/search/labs/agent.py:287` - error: List item 3 has incompatible type "BaseTool"; expected "Tool"  [list-item]
   - ID: 969df45d
-- `packages/haive-agents/src/haive/agents/memory/search/labs/agent.py:282` - error: List item 0 has incompatible type "BaseTool"; expected "Tool" [list-item]
+- `packages/haive-agents/src/haive/agents/memory/search/labs/agent.py:282` - error: List item 0 has incompatible type "BaseTool"; expected "Tool"  [list-item]
   - ID: 44b59954
-- `packages/haive-agents/src/haive/agents/memory/search/labs/agent.py:283` - error: List item 1 has incompatible type "BaseTool"; expected "Tool" [list-item]
+- `packages/haive-agents/src/haive/agents/memory/search/labs/agent.py:283` - error: List item 1 has incompatible type "BaseTool"; expected "Tool"  [list-item]
   - ID: ea3ea1fe
-- `packages/haive-agents/src/haive/agents/memory/search/labs/agent.py:284` - error: List item 2 has incompatible type "BaseTool"; expected "Tool" [list-item]
+- `packages/haive-agents/src/haive/agents/memory/search/labs/agent.py:284` - error: List item 2 has incompatible type "BaseTool"; expected "Tool"  [list-item]
   - ID: 7ac4f8e3
-- `packages/haive-agents/src/haive/agents/memory/search/labs/agent.py:285` - error: List item 3 has incompatible type "BaseTool"; expected "Tool" [list-item]
+- `packages/haive-agents/src/haive/agents/memory/search/labs/agent.py:285` - error: List item 3 has incompatible type "BaseTool"; expected "Tool"  [list-item]
   - ID: 37329a86
-- `packages/haive-agents/src/haive/agents/document_modifiers/complex_extraction/agent.py:745` - error: List item 0 has incompatible type "None"; expected "Tool" [list-item]
+- `packages/haive-agents/src/haive/agents/document_modifiers/complex_extraction/agent.py:745` - error: List item 0 has incompatible type "None"; expected "Tool"  [list-item]
   - ID: ce9ba12b
 
 ### haive-core
@@ -5391,40 +5449,43 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:380` - error: List item 0 has incompatible type "float"; expected "bool" [list-item]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:380` - error: List item 0 has incompatible type "float"; expected "bool"  [list-item]
   - ID: 17c0501c
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:380` - error: List item 0 has incompatible type "float"; expected "bool" [list-item]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:380` - error: List item 0 has incompatible type "float"; expected "bool"  [list-item]
   - ID: 17c0501c
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:380` - error: List item 0 has incompatible type "float"; expected "bool" [list-item]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:380` - error: List item 0 has incompatible type "float"; expected "bool"  [list-item]
   - ID: 17c0501c
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:380` - error: List item 0 has incompatible type "float"; expected "bool" [list-item]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:380` - error: List item 0 has incompatible type "float"; expected "bool"  [list-item]
   - ID: 17c0501c
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:380` - error: List item 0 has incompatible type "float"; expected "bool" [list-item]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:380` - error: List item 0 has incompatible type "float"; expected "bool"  [list-item]
   - ID: 17c0501c
 
-## mypy:list[\_T (2 errors)
+## mypy:list[_T (2 errors)
+
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:41` - error: No overload variant of "Field" matches argument types "str", "type[list[_T]]", "int" [call-o
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:41` - error: No overload variant of "Field" matches argument types "str", "type[list[_T]]", "int"  [call-o
   - ID: b43aed8e
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:226` - error: No overload variant of "Field" matches argument types "str", "type[list[_T]]", "int" [call-o
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:226` - error: No overload variant of "Field" matches argument types "str", "type[list[_T]]", "int"  [call-o
   - ID: 3b883ee3
 
 ## mypy:list[float (4 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/persistence/store/embeddings.py:77` - error: Returning Any from function declared to return "list[list[float]]" [no-any-return]
+- `packages/haive-core/src/haive/core/persistence/store/embeddings.py:77` - error: Returning Any from function declared to return "list[list[float]]"  [no-any-return]
   - ID: 78b09eea
-- `packages/haive-core/src/haive/core/persistence/store/embeddings.py:93` - error: Returning Any from function declared to return "list[list[float]]" [no-any-return]
+- `packages/haive-core/src/haive/core/persistence/store/embeddings.py:93` - error: Returning Any from function declared to return "list[list[float]]"  [no-any-return]
   - ID: b9b767c1
-- `packages/haive-core/src/haive/core/persistence/store/embeddings.py:148` - error: Returning Any from function declared to return "list[list[float]]" [no-any-return]
+- `packages/haive-core/src/haive/core/persistence/store/embeddings.py:148` - error: Returning Any from function declared to return "list[list[float]]"  [no-any-return]
   - ID: de15b28a
-- `packages/haive-core/src/haive/core/persistence/store/embeddings.py:157` - error: Returning Any from function declared to return "list[list[float]]" [no-any-return]
+- `packages/haive-core/src/haive/core/persistence/store/embeddings.py:157` - error: Returning Any from function declared to return "list[list[float]]"  [no-any-return]
   - ID: cb936dd9
 
 ## mypy:list[int (1 errors)
+
 
 ### haive-games
 
@@ -5433,12 +5494,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:list[str (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:314` - error: Incompatible types in assignment (expression has type "type[list[str]]", variable has type "t
   - ID: 79121d1a
 
 ## mypy:literal-required (2 errors)
+
 
 ### haive-core
 
@@ -5449,99 +5512,101 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:method-assign (5 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:323` - error: Cannot assign to a method [method-assign]
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:323` - error: Cannot assign to a method  [method-assign]
   - ID: 47478ecf
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/registry/decorators.py:77` - error: Cannot assign to a method [method-assign]
+- `packages/haive-core/src/haive/core/registry/decorators.py:77` - error: Cannot assign to a method  [method-assign]
   - ID: d0f99e74
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/api/general_games_api.py:493` - error: Cannot assign to a method [method-assign]
+- `packages/haive-dataflow/src/haive/dataflow/api/general_games_api.py:493` - error: Cannot assign to a method  [method-assign]
   - ID: e3a38266
-- `packages/haive-dataflow/src/haive/dataflow/api/middleware/supabase_logging.py:266` - error: Cannot assign to a method [method-assign]
+- `packages/haive-dataflow/src/haive/dataflow/api/middleware/supabase_logging.py:266` - error: Cannot assign to a method  [method-assign]
   - ID: 877901f7
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/api/general_api.py:428` - error: Cannot assign to a method [method-assign]
+- `packages/haive-games/src/haive/games/api/general_api.py:428` - error: Cannot assign to a method  [method-assign]
   - ID: 558f53f0
 
 ## mypy:misc (263 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:27` - error: Untyped decorator makes function "validate_instruction_clarity" untyped [misc]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:27` - error: Untyped decorator makes function "validate_instruction_clarity" untyped  [misc]
   - ID: 2b978cc5
-- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:63` - error: Untyped decorator makes function "validate_reflection_logic" untyped [misc]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:63` - error: Untyped decorator makes function "validate_reflection_logic" untyped  [misc]
   - ID: 1e502857
-- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:103` - error: Untyped decorator makes function "validate_instruction_set" untyped [misc]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:103` - error: Untyped decorator makes function "validate_instruction_set" untyped  [misc]
   - ID: 86deff60
-- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:129` - error: Untyped decorator makes function "validate_procedural_integrity" untyped [misc]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:129` - error: Untyped decorator makes function "validate_procedural_integrity" untyped  [misc]
   - ID: 55c18876
-- `packages/haive-agents/src/haive/agents/simple/lazy_simple_agent.v2.py:127` - error: "None" not callable [misc]
+- `packages/haive-agents/src/haive/agents/simple/lazy_simple_agent.v2.py:127` - error: "None" not callable  [misc]
   - ID: a0328843
-- `packages/haive-agents/src/haive/agents/simple/lazy_simple_agent.py:112` - error: "None" not callable [misc]
+- `packages/haive-agents/src/haive/agents/simple/lazy_simple_agent.py:112` - error: "None" not callable  [misc]
   - ID: da308aec
-- `packages/haive-agents/src/haive/agents/models.py:8` - error: Right hand side values are not supported in TypedDict [misc]
+- `packages/haive-agents/src/haive/agents/models.py:8` - error: Right hand side values are not supported in TypedDict  [misc]
   - ID: 10cde474
-- `packages/haive-agents/src/haive/agents/models.py:9` - error: Right hand side values are not supported in TypedDict [misc]
+- `packages/haive-agents/src/haive/agents/models.py:9` - error: Right hand side values are not supported in TypedDict  [misc]
   - ID: 8cd66f34
-- `packages/haive-agents/src/haive/agents/models.py:10` - error: Right hand side values are not supported in TypedDict [misc]
+- `packages/haive-agents/src/haive/agents/models.py:10` - error: Right hand side values are not supported in TypedDict  [misc]
   - ID: ab48fab8
-- `packages/haive-agents/src/haive/agents/models.py:11` - error: Right hand side values are not supported in TypedDict [misc]
+- `packages/haive-agents/src/haive/agents/models.py:11` - error: Right hand side values are not supported in TypedDict  [misc]
   - ID: d5380c45
 - ... and 99 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/node/composer/update_functions.py:325` - error: callable? not callable [misc]
+- `packages/haive-core/src/haive/core/graph/node/composer/update_functions.py:325` - error: callable? not callable  [misc]
   - ID: d3ee562d
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database/types.py:4` - error: No non-enum mixin classes are allowed after "enum.Enum" [misc]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/database/types.py:4` - error: No non-enum mixin classes are allowed after "enum.Enum"  [misc]
   - ID: 56c16271
-- `packages/haive-core/src/haive/core/engine/base/protocols.py:17` - error: Invariant type variable "I" used in protocol where contravariant one is expected [misc]
+- `packages/haive-core/src/haive/core/engine/base/protocols.py:17` - error: Invariant type variable "I" used in protocol where contravariant one is expected  [misc]
   - ID: e50b677a
-- `packages/haive-core/src/haive/core/engine/base/protocols.py:17` - error: Invariant type variable "I" used in protocol where contravariant one is expected [misc]
+- `packages/haive-core/src/haive/core/engine/base/protocols.py:17` - error: Invariant type variable "I" used in protocol where contravariant one is expected  [misc]
   - ID: e50b677a
-- `packages/haive-core/src/haive/core/engine/base/protocols.py:58` - error: Invariant type variable "I" used in protocol where contravariant one is expected [misc]
+- `packages/haive-core/src/haive/core/engine/base/protocols.py:58` - error: Invariant type variable "I" used in protocol where contravariant one is expected  [misc]
   - ID: 4eda1039
-- `packages/haive-core/src/haive/core/engine/base/protocols.py:58` - error: Invariant type variable "I" used in protocol where contravariant one is expected [misc]
+- `packages/haive-core/src/haive/core/engine/base/protocols.py:58` - error: Invariant type variable "I" used in protocol where contravariant one is expected  [misc]
   - ID: 4eda1039
-- `packages/haive-core/src/haive/core/registry/decorators.py:80` - error: "classmethod" used with a non-method [misc]
+- `packages/haive-core/src/haive/core/registry/decorators.py:80` - error: "classmethod" used with a non-method  [misc]
   - ID: 8f48aedb
-- `packages/haive-core/src/haive/core/graph/patterns/integration.py:161` - error: "classmethod" used with a non-method [misc]
+- `packages/haive-core/src/haive/core/graph/patterns/integration.py:161` - error: "classmethod" used with a non-method  [misc]
   - ID: 87306b9a
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/types.py:48` - error: All conditional function variants must have identical signatures [misc]
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/types.py:48` - error: All conditional function variants must have identical signatures  [misc]
   - ID: d0bd6995
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/static.py:1010` - error: Generator has incompatible item type "int"; expected "bool" [misc]
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/static.py:1010` - error: Generator has incompatible item type "int"; expected "bool"  [misc]
   - ID: f8476b7b
 - ... and 88 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:741` - error: All conditional function variants must have identical signatures [misc]
+- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:741` - error: All conditional function variants must have identical signatures  [misc]
   - ID: e8593a3c
-- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:65` - error: Untyped decorator makes function "create_game" untyped [misc]
+- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:65` - error: Untyped decorator makes function "create_game" untyped  [misc]
   - ID: 39644a0d
-- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:101` - error: Untyped decorator makes function "make_move" untyped [misc]
+- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:101` - error: Untyped decorator makes function "make_move" untyped  [misc]
   - ID: 756e6d8e
-- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:128` - error: Untyped decorator makes function "ai_move" untyped [misc]
+- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:128` - error: Untyped decorator makes function "ai_move" untyped  [misc]
   - ID: caa6c62c
-- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:146` - error: Untyped decorator makes function "get_game" untyped [misc]
+- `packages/haive-dataflow/src/haive/dataflow/tic_tac_toe_api.py:146` - error: Untyped decorator makes function "get_game" untyped  [misc]
   - ID: a3e0ff9f
-- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:91` - error: Untyped decorator makes function "create_game" untyped [misc]
+- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:91` - error: Untyped decorator makes function "create_game" untyped  [misc]
   - ID: f7c70de9
-- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:137` - error: Untyped decorator makes function "make_move" untyped [misc]
+- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:137` - error: Untyped decorator makes function "make_move" untyped  [misc]
   - ID: 70903e9b
-- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:166` - error: Untyped decorator makes function "make_ai_move" untyped [misc]
+- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:166` - error: Untyped decorator makes function "make_ai_move" untyped  [misc]
   - ID: dbd76e92
-- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:190` - error: Untyped decorator makes function "get_game" untyped [misc]
+- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:190` - error: Untyped decorator makes function "get_game" untyped  [misc]
   - ID: 697aa242
-- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:228` - error: Untyped decorator makes function "connect4_websocket" untyped [misc]
+- `packages/haive-dataflow/src/haive/dataflow/connect4_api.py:228` - error: Untyped decorator makes function "connect4_websocket" untyped  [misc]
   - ID: 86830ddb
 - ... and 10 more
 
@@ -5549,7 +5614,7 @@ For further information visit https://errors.pydantic.dev
 
 - `packages/haive-games/src/haive/games/tic_tac_toe/configurable_config.py:312` - error: Value expression in dictionary comprehension has incompatible type "object"; expected type "s
   - ID: 1d6b6290
-- `packages/haive-games/src/haive/games/single_player/crossword_puzzle/game/board.py:188` - error: Untyped decorator makes function "is_complete" untyped [misc]
+- `packages/haive-games/src/haive/games/single_player/crossword_puzzle/game/board.py:188` - error: Untyped decorator makes function "is_complete" untyped  [misc]
   - ID: fc7b3bac
 - `packages/haive-games/src/haive/games/risk/configurable_config.py:319` - error: Value expression in dictionary comprehension has incompatible type "object"; expected type "s
   - ID: 46fdd015
@@ -5571,563 +5636,569 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/agents/mcp_agent.py:314` - error: Exception must be derived from BaseException [misc]
+- `packages/haive-mcp/src/haive/mcp/agents/mcp_agent.py:314` - error: Exception must be derived from BaseException  [misc]
   - ID: f0d8e897
-- `packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py:333` - error: Untyped decorator makes function "get_server_info" untyped [misc]
+- `packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py:333` - error: Untyped decorator makes function "get_server_info" untyped  [misc]
   - ID: 7c6eb815
-- `packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py:732` - error: callable? not callable [misc]
+- `packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py:732` - error: callable? not callable  [misc]
   - ID: dbca715f
-- `packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py:68` - error: Cannot assign to a type [misc]
+- `packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py:68` - error: Cannot assign to a type  [misc]
   - ID: 2f8dfd84
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/state.py:18` - error: Cannot determine consistent method resolution order (MRO) for "EssayGradingState" [misc]
+- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/state.py:18` - error: Cannot determine consistent method resolution order (MRO) for "EssayGradingState"  [misc]
   - ID: 9953d447
-- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/tools.py:30` - error: "None" not callable [misc]
+- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/tools.py:30` - error: "None" not callable  [misc]
   - ID: 5268d167
-- `packages/haive-prebuilt/src/haive/prebuilt/taskifier/agent.py:12` - error: Invalid base class "Agent" [misc]
+- `packages/haive-prebuilt/src/haive/prebuilt/taskifier/agent.py:12` - error: Invalid base class "Agent"  [misc]
   - ID: b1d29f24
-- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/utils.py:11` - error: All conditional function variants must have identical signatures [misc]
+- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/utils.py:11` - error: All conditional function variants must have identical signatures  [misc]
   - ID: b7b9feb7
-- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/agent.py:18` - error: Invalid base class "Agent" [misc]
+- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/agent.py:18` - error: Invalid base class "Agent"  [misc]
   - ID: 7f71c29a
-- `packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/agent.py:20` - error: Invalid base class "Agent" [misc]
+- `packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/agent.py:20` - error: Invalid base class "Agent"  [misc]
   - ID: a67bbd9d
-- `packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/interview/agent.py:16` - error: Invalid base class "Agent" [misc]
+- `packages/haive-prebuilt/src/haive/prebuilt/podcast_generator/interview/agent.py:16` - error: Invalid base class "Agent"  [misc]
   - ID: 61804a00
 
-## mypy:name-defined (722 errors)
+## mypy:name-defined (711 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/research/storm/wiki_writer/prompt.py:1` - error: Name "ChatPromptTemplate" is not defined [name-defined]
+- `packages/haive-agents/src/haive/agents/research/storm/wiki_writer/prompt.py:1` - error: Name "ChatPromptTemplate" is not defined  [name-defined]
   - ID: 096d121d
-- `packages/haive-agents/src/haive/agents/research/storm/section_writer/prompt.py:1` - error: Name "ChatPromptTemplate" is not defined [name-defined]
+- `packages/haive-agents/src/haive/agents/research/storm/section_writer/prompt.py:1` - error: Name "ChatPromptTemplate" is not defined  [name-defined]
   - ID: 22e217a9
-- `packages/haive-agents/src/haive/agents/research/storm/section_writer/agent.py:4` - error: Name "BaseGraph" is not defined [name-defined]
+- `packages/haive-agents/src/haive/agents/research/storm/section_writer/agent.py:4` - error: Name "BaseGraph" is not defined  [name-defined]
   - ID: 95adfdfa
-- `packages/haive-agents/src/haive/agents/research/storm/section_writer/agent.py:8` - error: Name "retriever" is not defined [name-defined]
+- `packages/haive-agents/src/haive/agents/research/storm/section_writer/agent.py:8` - error: Name "retriever" is not defined  [name-defined]
   - ID: 5d6c2260
-- `packages/haive-agents/src/haive/agents/research/storm/section_writer/agent.py:21` - error: Name "long_context_llm" is not defined [name-defined]
+- `packages/haive-agents/src/haive/agents/research/storm/section_writer/agent.py:21` - error: Name "long_context_llm" is not defined  [name-defined]
   - ID: efca8d12
-- `packages/haive-agents/src/haive/agents/research/storm/related_topics_generator/prompt.py:1` - error: Name "gen_related_topics_prompt" is not defined [name-defined]
+- `packages/haive-agents/src/haive/agents/research/storm/related_topics_generator/prompt.py:1` - error: Name "gen_related_topics_prompt" is not defined  [name-defined]
   - ID: 587289d1
-- `packages/haive-agents/src/haive/agents/research/storm/related_topics_generator/prompt.py:1` - error: Name "gen_related_topics_prompt" is not defined [name-defined]
+- `packages/haive-agents/src/haive/agents/research/storm/related_topics_generator/prompt.py:1` - error: Name "gen_related_topics_prompt" is not defined  [name-defined]
   - ID: 587289d1
-- `packages/haive-agents/src/haive/agents/research/storm/related_topics_generator/prompt.py:2` - error: Name "RelatedSubjects" is not defined [name-defined]
+- `packages/haive-agents/src/haive/agents/research/storm/related_topics_generator/prompt.py:2` - error: Name "RelatedSubjects" is not defined  [name-defined]
   - ID: 07939c93
-- `packages/haive-agents/src/haive/agents/research/storm/outline_refiner/agent.py:4` - error: Name "refine_outline_prompt" is not defined [name-defined]
+- `packages/haive-agents/src/haive/agents/research/storm/outline_refiner/agent.py:4` - error: Name "refine_outline_prompt" is not defined  [name-defined]
   - ID: 2802d805
-- `packages/haive-agents/src/haive/agents/research/storm/outline_refiner/agent.py:4` - error: Name "refine_outline_prompt" is not defined [name-defined]
+- `packages/haive-agents/src/haive/agents/research/storm/outline_refiner/agent.py:4` - error: Name "refine_outline_prompt" is not defined  [name-defined]
   - ID: 2802d805
-- ... and 419 more
+- ... and 408 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:6` - error: Name "PatternDefinition" is not defined [name-defined]
+- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:6` - error: Name "PatternDefinition" is not defined  [name-defined]
   - ID: 40ea8720
-- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:20` - error: Name "PatternDefinition" is not defined [name-defined]
+- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:20` - error: Name "PatternDefinition" is not defined  [name-defined]
   - ID: 3ba7eafc
-- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:21` - error: Name "PatternDefinition" is not defined [name-defined]
+- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:21` - error: Name "PatternDefinition" is not defined  [name-defined]
   - ID: 76b375ed
-- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:24` - error: Name "PatternDefinition" is not defined [name-defined]
+- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:24` - error: Name "PatternDefinition" is not defined  [name-defined]
   - ID: e162d94c
-- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:36` - error: Name "PatternDefinition" is not defined [name-defined]
+- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:36` - error: Name "PatternDefinition" is not defined  [name-defined]
   - ID: 3fb18f2b
-- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:40` - error: Name "PatternDefinition" is not defined [name-defined]
+- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:40` - error: Name "PatternDefinition" is not defined  [name-defined]
   - ID: cc6f576b
-- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:48` - error: Name "PatternDefinition" is not defined [name-defined]
+- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:48` - error: Name "PatternDefinition" is not defined  [name-defined]
   - ID: 0ed09c1b
-- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:58` - error: Name "builtins" is not defined [name-defined]
+- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:58` - error: Name "builtins" is not defined  [name-defined]
   - ID: b23abddd
-- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:62` - error: Name "PatternDefinition" is not defined [name-defined]
+- `packages/haive-core/src/haive/core/graph/state_graph/pattern_registry.py:62` - error: Name "PatternDefinition" is not defined  [name-defined]
   - ID: d9bb07b2
-- `packages/haive-core/src/haive/core/graph/state_graph/pattern_definition.py:1` - error: Name "SerializableModel" is not defined [name-defined]
+- `packages/haive-core/src/haive/core/graph/state_graph/pattern_definition.py:1` - error: Name "SerializableModel" is not defined  [name-defined]
   - ID: 0978f1b8
 - ... and 144 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/single_player/example.py:1` - error: Name "SinglePlayerGameAgent" is not defined [name-defined]
+- `packages/haive-games/src/haive/games/single_player/example.py:1` - error: Name "SinglePlayerGameAgent" is not defined  [name-defined]
   - ID: 99801251
-- `packages/haive-games/src/haive/games/single_player/example.py:89` - error: Name "SinglePlayerGameAgent" is not defined [name-defined]
+- `packages/haive-games/src/haive/games/single_player/example.py:89` - error: Name "SinglePlayerGameAgent" is not defined  [name-defined]
   - ID: 3925e988
-- `packages/haive-games/src/haive/games/framework/base/utils.py:23` - error: Name "GameAgent" is not defined [name-defined]
+- `packages/haive-games/src/haive/games/framework/base/utils.py:23` - error: Name "GameAgent" is not defined  [name-defined]
   - ID: dbac3a8c
-- `packages/haive-games/src/haive/games/core/piece/tile.py:1` - error: Name "GamePiece" is not defined [name-defined]
+- `packages/haive-games/src/haive/games/core/piece/tile.py:1` - error: Name "GamePiece" is not defined  [name-defined]
   - ID: 46b0961c
-- `packages/haive-games/src/haive/games/core/piece/tile.py:1` - error: Name "GamePiece" is not defined [name-defined]
+- `packages/haive-games/src/haive/games/core/piece/tile.py:1` - error: Name "GamePiece" is not defined  [name-defined]
   - ID: 46b0961c
-- `packages/haive-games/src/haive/games/core/piece/tile.py:11` - error: Name "P" is not defined [name-defined]
+- `packages/haive-games/src/haive/games/core/piece/tile.py:11` - error: Name "P" is not defined  [name-defined]
   - ID: d9972700
-- `packages/haive-games/src/haive/games/core/piece/tile.py:11` - error: Name "P" is not defined [name-defined]
+- `packages/haive-games/src/haive/games/core/piece/tile.py:11` - error: Name "P" is not defined  [name-defined]
   - ID: d9972700
-- `packages/haive-games/src/haive/games/base/utils.py:23` - error: Name "GameAgent" is not defined [name-defined]
+- `packages/haive-games/src/haive/games/base/utils.py:23` - error: Name "GameAgent" is not defined  [name-defined]
   - ID: ccec24e4
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:28` - error: Name "GameDifficulty" is not defined [name-defined]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:28` - error: Name "GameDifficulty" is not defined  [name-defined]
   - ID: d4b28178
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:29` - error: Name "PlayerType" is not defined [name-defined]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:29` - error: Name "PlayerType" is not defined  [name-defined]
   - ID: 4cbfe705
 - ... and 123 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:112` - error: Name "StdioServerParameters" is not defined [name-defined]
+- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:112` - error: Name "StdioServerParameters" is not defined  [name-defined]
   - ID: 89d6e7ce
-- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:118` - error: Name "stdio_client" is not defined [name-defined]
+- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:118` - error: Name "stdio_client" is not defined  [name-defined]
   - ID: 0c74cdfd
-- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:124` - error: Name "SSEConnection" is not defined [name-defined]
+- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:124` - error: Name "SSEConnection" is not defined  [name-defined]
   - ID: d5e44764
-- `packages/haive-mcp/src/haive/mcp/agents/intelligent_mcp_agent.py:546` - error: Name "discover_mcp_servers" is not defined [name-defined]
+- `packages/haive-mcp/src/haive/mcp/agents/intelligent_mcp_agent.py:546` - error: Name "discover_mcp_servers" is not defined  [name-defined]
   - ID: 07eb27eb
-- `packages/haive-mcp/src/haive/mcp/agents/intelligent_mcp_agent.py:560` - error: Name "install_mcp_server" is not defined [name-defined]
+- `packages/haive-mcp/src/haive/mcp/agents/intelligent_mcp_agent.py:560` - error: Name "install_mcp_server" is not defined  [name-defined]
   - ID: 545c2770
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/logger.py:49` - error: Name "SecureShellExecutor" is not defined [name-defined]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/logger.py:49` - error: Name "SecureShellExecutor" is not defined  [name-defined]
   - ID: f29f0ac8
 
 ## mypy:no-any-return (758 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:160` - error: Returning Any from function declared to return "float" [no-any-return]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:160` - error: Returning Any from function declared to return "float"  [no-any-return]
   - ID: 84ff055e
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:162` - error: Returning Any from function declared to return "float" [no-any-return]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:162` - error: Returning Any from function declared to return "float"  [no-any-return]
   - ID: be54a4c3
-- `packages/haive-agents/src/haive/agents/reflection/simple_agent.py:73` - error: Returning Any from function declared to return "ReflectionAgent" [no-any-return]
+- `packages/haive-agents/src/haive/agents/reflection/simple_agent.py:73` - error: Returning Any from function declared to return "ReflectionAgent"  [no-any-return]
   - ID: 2e426c1d
-- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:73` - error: Returning Any from function declared to return "ReflectionCycle" [no-any-return]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:73` - error: Returning Any from function declared to return "ReflectionCycle"  [no-any-return]
   - ID: 701b1263
-- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:146` - error: Returning Any from function declared to return "ProceduralMemory" [no-any-return]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:146` - error: Returning Any from function declared to return "ProceduralMemory"  [no-any-return]
   - ID: 7b6202a2
-- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:157` - error: Returning Any from function declared to return "bool" [no-any-return]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/models/procedural/models.py:157` - error: Returning Any from function declared to return "bool"  [no-any-return]
   - ID: 00659f81
-- `packages/haive-agents/src/haive/agents/document_modifiers/kg/kg_iterative_refinement/__init__.py:14` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-agents/src/haive/agents/document_modifiers/kg/kg_iterative_refinement/__init__.py:14` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: 73c8e9f3
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/compatibility.py:102` - error: Returning Any from function declared to return "AgentCompatibilityReport" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/compatibility.py:102` - error: Returning Any from function declared to return "AgentCompatibilityReport"  [no-any-return]
   - ID: 7cc74e69
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/compatibility.py:282` - error: Returning Any from function declared to return "type | None" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/compatibility.py:282` - error: Returning Any from function declared to return "type | None"  [no-any-return]
   - ID: 3e9d03ed
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/compatibility.py:284` - error: Returning Any from function declared to return "type | None" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/compatibility.py:284` - error: Returning Any from function declared to return "type | None"  [no-any-return]
   - ID: d04c4039
 - ... and 275 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:79` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/debugkit/debugging.py:79` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: 78ee2d2b
-- `packages/haive-core/src/haive/core/utils/debugkit/fallbacks.py:554` - error: Returning Any from function declared to return "float" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/debugkit/fallbacks.py:554` - error: Returning Any from function declared to return "float"  [no-any-return]
   - ID: 022226b7
-- `packages/haive-core/src/haive/core/registry/memory.py:42` - error: Returning Any from function declared to return "E | None" [no-any-return]
+- `packages/haive-core/src/haive/core/registry/memory.py:42` - error: Returning Any from function declared to return "E | None"  [no-any-return]
   - ID: fb9fc628
-- `packages/haive-core/src/haive/core/models/metadata_mixin.py:33` - error: Returning Any from function declared to return "int" [no-any-return]
+- `packages/haive-core/src/haive/core/models/metadata_mixin.py:33` - error: Returning Any from function declared to return "int"  [no-any-return]
   - ID: 3db025c6
-- `packages/haive-core/src/haive/core/models/metadata_mixin.py:41` - error: Returning Any from function declared to return "int" [no-any-return]
+- `packages/haive-core/src/haive/core/models/metadata_mixin.py:41` - error: Returning Any from function declared to return "int"  [no-any-return]
   - ID: 3bb6ed2e
-- `packages/haive-core/src/haive/core/models/metadata_mixin.py:45` - error: Returning Any from function declared to return "int" [no-any-return]
+- `packages/haive-core/src/haive/core/models/metadata_mixin.py:45` - error: Returning Any from function declared to return "int"  [no-any-return]
   - ID: f792f863
-- `packages/haive-core/src/haive/core/models/metadata_mixin.py:47` - error: Returning Any from function declared to return "int" [no-any-return]
+- `packages/haive-core/src/haive/core/models/metadata_mixin.py:47` - error: Returning Any from function declared to return "int"  [no-any-return]
   - ID: 07c1cc91
-- `packages/haive-core/src/haive/core/models/metadata_mixin.py:60` - error: Returning Any from function declared to return "int" [no-any-return]
+- `packages/haive-core/src/haive/core/models/metadata_mixin.py:60` - error: Returning Any from function declared to return "int"  [no-any-return]
   - ID: 5d7ba7c2
-- `packages/haive-core/src/haive/core/models/metadata_mixin.py:69` - error: Returning Any from function declared to return "int" [no-any-return]
+- `packages/haive-core/src/haive/core/models/metadata_mixin.py:69` - error: Returning Any from function declared to return "int"  [no-any-return]
   - ID: 23b66ce6
-- `packages/haive-core/src/haive/core/models/metadata_mixin.py:175` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-core/src/haive/core/models/metadata_mixin.py:175` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: 2abb7d78
 - ... and 208 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/core.py:902` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:902` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: 8154a887
-- `packages/haive-dataflow/src/haive/dataflow/utils/vault_migration_script.py:170` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/utils/vault_migration_script.py:170` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: 6a490b92
-- `packages/haive-dataflow/src/haive/dataflow/registry/lazy_core.py:193` - error: Returning Any from function declared to return "LazyRegistrySystem" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/lazy_core.py:193` - error: Returning Any from function declared to return "LazyRegistrySystem"  [no-any-return]
   - ID: fb6a2715
-- `packages/haive-dataflow/src/haive/dataflow/registry/utils/vault_migration_script.py:170` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/utils/vault_migration_script.py:170` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: 4a5c21e0
-- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:596` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:596` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: f0e604f0
-- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:619` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:619` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: e6e67bff
-- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:670` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:670` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: 13ff5107
-- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:685` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:685` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: 6e05883c
-- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:596` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:596` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: 8bbb0dba
-- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:619` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:619` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: 4b71af86
 - ... and 44 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/tic_tac_toe/state_manager.py:186` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-games/src/haive/games/tic_tac_toe/state_manager.py:186` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: 95090f37
-- `packages/haive-games/src/haive/games/reversi/state_manager.py:211` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-games/src/haive/games/reversi/state_manager.py:211` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: 0cd4eefa
-- `packages/haive-games/src/haive/games/framework/core/spaces/grid.py:24` - error: Returning Any from function declared to return "int" [no-any-return]
+- `packages/haive-games/src/haive/games/framework/core/spaces/grid.py:24` - error: Returning Any from function declared to return "int"  [no-any-return]
   - ID: 6338d8fc
-- `packages/haive-games/src/haive/games/framework/core/spaces/grid.py:28` - error: Returning Any from function declared to return "int" [no-any-return]
+- `packages/haive-games/src/haive/games/framework/core/spaces/grid.py:28` - error: Returning Any from function declared to return "int"  [no-any-return]
   - ID: b696a637
-- `packages/haive-games/src/haive/games/framework/core/spaces/grid.py:37` - error: Returning Any from function declared to return "bool" [no-any-return]
+- `packages/haive-games/src/haive/games/framework/core/spaces/grid.py:37` - error: Returning Any from function declared to return "bool"  [no-any-return]
   - ID: 9bac0ef6
-- `packages/haive-games/src/haive/games/clue/state_manager.py:117` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-games/src/haive/games/clue/state_manager.py:117` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: 6ab5d64e
-- `packages/haive-games/src/haive/games/cards/models/card.py:261` - error: Returning Any from function declared to return "int" [no-any-return]
+- `packages/haive-games/src/haive/games/cards/models/card.py:261` - error: Returning Any from function declared to return "int"  [no-any-return]
   - ID: f6b595e5
-- `packages/haive-games/src/haive/games/hold_em/state_manager.py:662` - error: Returning Any from function declared to return "int | None" [no-any-return]
+- `packages/haive-games/src/haive/games/hold_em/state_manager.py:662` - error: Returning Any from function declared to return "int | None"  [no-any-return]
   - ID: 7974d5e9
-- `packages/haive-games/src/haive/games/monopoly/utils.py:473` - error: Returning Any from function declared to return "int" [no-any-return]
+- `packages/haive-games/src/haive/games/monopoly/utils.py:473` - error: Returning Any from function declared to return "int"  [no-any-return]
   - ID: 7e91bb3f
-- `packages/haive-games/src/haive/games/monopoly/utils.py:491` - error: Returning Any from function declared to return "int" [no-any-return]
+- `packages/haive-games/src/haive/games/monopoly/utils.py:491` - error: Returning Any from function declared to return "int"  [no-any-return]
   - ID: e8a2db51
 - ... and 153 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:302` - error: Returning Any from function declared to return "SmartConfiguration" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:302` - error: Returning Any from function declared to return "SmartConfiguration"  [no-any-return]
   - ID: c854d910
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:186` - error: Returning Any from function declared to return "bool" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:186` - error: Returning Any from function declared to return "bool"  [no-any-return]
   - ID: e60efe72
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:452` - error: Returning Any from function declared to return "bool" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:452` - error: Returning Any from function declared to return "bool"  [no-any-return]
   - ID: ff3aa14f
-- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:192` - error: Returning Any from function declared to return "bool" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:192` - error: Returning Any from function declared to return "bool"  [no-any-return]
   - ID: 3c170226
-- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:315` - error: Returning Any from function declared to return "bool" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:315` - error: Returning Any from function declared to return "bool"  [no-any-return]
   - ID: 29f8c77d
-- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:377` - error: Returning Any from function declared to return "bool" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:377` - error: Returning Any from function declared to return "bool"  [no-any-return]
   - ID: 95284f86
-- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:400` - error: Returning Any from function declared to return "bool" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:400` - error: Returning Any from function declared to return "bool"  [no-any-return]
   - ID: a52d5199
-- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:492` - error: Returning Any from function declared to return "bool" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:492` - error: Returning Any from function declared to return "bool"  [no-any-return]
   - ID: 97932d5e
-- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:515` - error: Returning Any from function declared to return "bool" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:515` - error: Returning Any from function declared to return "bool"  [no-any-return]
   - ID: d9521a1c
-- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:586` - error: Returning Any from function declared to return "bool" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/downloader/installers.py:586` - error: Returning Any from function declared to return "bool"  [no-any-return]
   - ID: 70705d97
 - ... and 13 more
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/state.py:71` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/state.py:71` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: 76b9ec68
-- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/state.py:75` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/state.py:75` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: ca64aca5
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/state.py:204` - error: Returning Any from function declared to return "float | None" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/state.py:204` - error: Returning Any from function declared to return "float | None"  [no-any-return]
   - ID: 8a6add74
-- `packages/haive-prebuilt/src/haive/prebuilt/constituional_agent/utils.py:102` - error: Returning Any from function declared to return "str | None" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/constituional_agent/utils.py:102` - error: Returning Any from function declared to return "str | None"  [no-any-return]
   - ID: a545be73
-- `packages/haive-prebuilt/src/haive/prebuilt/constituional_agent/utils.py:114` - error: Returning Any from function declared to return "bool" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/constituional_agent/utils.py:114` - error: Returning Any from function declared to return "bool"  [no-any-return]
   - ID: e9c6508d
-- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/state.py:78` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/state.py:78` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: fc1b2f94
-- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/tools.py:30` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/tools.py:30` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: a42a9c13
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/agent.py:457` - error: Returning Any from function declared to return "StartupDevelopmentResponse" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/agent.py:457` - error: Returning Any from function declared to return "StartupDevelopmentResponse"  [no-any-return]
   - ID: 9603a2c3
-- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/utils.py:49` - error: Returning Any from function declared to return "BaseMessage | None" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/utils.py:49` - error: Returning Any from function declared to return "BaseMessage | None"  [no-any-return]
   - ID: 4c949d1c
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/reddit_search.py:113` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/reddit_search.py:113` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: db5ba52a
-- `packages/haive-tools/src/haive/tools/tools/geek_jokes_tool.py:57` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/geek_jokes_tool.py:57` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: c835ecd7
-- `packages/haive-tools/src/haive/tools/tools/toolkits/useless_facts_toolkit.py:66` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/useless_facts_toolkit.py:66` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: 828c47b8
-- `packages/haive-tools/src/haive/tools/tools/toolkits/useless_facts_toolkit.py:88` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/useless_facts_toolkit.py:88` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: 53c69360
-- `packages/haive-tools/src/haive/tools/tools/search_tools.py:85` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/search_tools.py:85` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: 12fe69b2
-- `packages/haive-tools/src/haive/tools/tools/search_tools.py:164` - error: Returning Any from function declared to return "str" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/search_tools.py:164` - error: Returning Any from function declared to return "str"  [no-any-return]
   - ID: d98cd048
 
 ## mypy:no-overload-impl (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/node/engine_node_generic.py:730` - error: An overloaded function outside a stub file must have an implementation [no-overload-impl]
+- `packages/haive-core/src/haive/core/graph/node/engine_node_generic.py:730` - error: An overloaded function outside a stub file must have an implementation  [no-overload-impl]
   - ID: eed33b72
 
-## mypy:no-redef (62 errors)
+## mypy:no-redef (67 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/reflection/message_transformer.py:35` - error: Name "TransformationType" already defined (possibly by an import) [no-redef]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/core/classifier.py:14` - error: Name "Union" already defined (possibly by an import)  [no-redef]
+  - ID: 281bf759
+- `packages/haive-agents/src/haive/agents/reflection/message_transformer.py:35` - error: Name "TransformationType" already defined (possibly by an import)  [no-redef]
   - ID: 53feef57
-- `packages/haive-agents/src/haive/agents/memory_v2/memory_state_with_tokens.py:36` - error: Name "EntityNode" already defined (possibly by an import) [no-redef]
+- `packages/haive-agents/src/haive/agents/memory_v2/memory_state_with_tokens.py:36` - error: Name "EntityNode" already defined (possibly by an import)  [no-redef]
   - ID: 400275e8
-- `packages/haive-agents/src/haive/agents/memory_v2/memory_state_with_tokens.py:39` - error: Name "EntityRelationship" already defined (possibly by an import) [no-redef]
+- `packages/haive-agents/src/haive/agents/memory_v2/memory_state_with_tokens.py:39` - error: Name "EntityRelationship" already defined (possibly by an import)  [no-redef]
   - ID: 31a14fab
-- `packages/haive-agents/src/haive/agents/memory_v2/memory_state_with_tokens.py:42` - error: Name "KnowledgeGraph" already defined (possibly by an import) [no-redef]
+- `packages/haive-agents/src/haive/agents/memory_v2/memory_state_with_tokens.py:42` - error: Name "KnowledgeGraph" already defined (possibly by an import)  [no-redef]
   - ID: 2fdddd93
-- `packages/haive-agents/src/haive/agents/memory_reorganized/base/token_state.py:35` - error: Name "EntityNode" already defined (possibly by an import) [no-redef]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/token_state.py:35` - error: Name "EntityNode" already defined (possibly by an import)  [no-redef]
   - ID: f1cffb47
-- `packages/haive-agents/src/haive/agents/memory_reorganized/base/token_state.py:38` - error: Name "EntityRelationship" already defined (possibly by an import) [no-redef]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/token_state.py:38` - error: Name "EntityRelationship" already defined (possibly by an import)  [no-redef]
   - ID: 869f6dcb
-- `packages/haive-agents/src/haive/agents/memory_reorganized/base/token_state.py:41` - error: Name "KnowledgeGraph" already defined (possibly by an import) [no-redef]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/token_state.py:41` - error: Name "KnowledgeGraph" already defined (possibly by an import)  [no-redef]
   - ID: 4f3a4fc2
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/utils.py:157` - error: Name "schedule_pending_task" already defined on line 11 [no-redef]
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/utils.py:157` - error: Name "schedule_pending_task" already defined on line 11  [no-redef]
   - ID: 5f3c7f0d
-- `packages/haive-agents/src/haive/agents/simple/agent_with_validation.v2.py:8` - error: Name "Dict" already defined (possibly by an import) [no-redef]
+- `packages/haive-agents/src/haive/agents/simple/agent_with_validation.v2.py:8` - error: Name "Dict" already defined (possibly by an import)  [no-redef]
   - ID: 26f9a543
-- `packages/haive-agents/src/haive/agents/memory_v2/simple_memory_agent.py:48` - error: Name "EntityNode" already defined (possibly by an import) [no-redef]
-  - ID: 10b6f7c5
-- ... and 6 more
+- ... and 10 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/models/embeddings/__init__.py:117` - error: Name "TestEmbeddingProviders" already defined (possibly by an import) [no-redef]
+- `packages/haive-core/src/haive/core/models/embeddings/__init__.py:117` - error: Name "TestEmbeddingProviders" already defined (possibly by an import)  [no-redef]
   - ID: b07afbaa
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/types.py:45` - error: Name "get_origin" already defined (possibly by an import) [no-redef]
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/types.py:45` - error: Name "get_origin" already defined (possibly by an import)  [no-redef]
   - ID: 5ca083be
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/types.py:51` - error: Name "get_origin" already defined (possibly by an import) [no-redef]
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/types.py:51` - error: Name "get_origin" already defined (possibly by an import)  [no-redef]
   - ID: 28b84d48
-- `packages/haive-core/src/haive/core/schema/compatibility/mergers.py:68` - error: Name "MergeStrategy" already defined (possibly by an import) [no-redef]
+- `packages/haive-core/src/haive/core/schema/compatibility/mergers.py:68` - error: Name "MergeStrategy" already defined (possibly by an import)  [no-redef]
   - ID: 9edd948d
-- `packages/haive-core/src/haive/core/persistence/handlers.py:636` - error: Name "close_async_pool_if_needed" already defined on line 478 [no-redef]
+- `packages/haive-core/src/haive/core/persistence/handlers.py:636` - error: Name "close_async_pool_if_needed" already defined on line 478  [no-redef]
   - ID: 5efd179f
-- `packages/haive-core/src/haive/core/persistence/handlers.py:768` - error: Name "register_async_thread_if_needed" already defined on line 520 [no-redef]
+- `packages/haive-core/src/haive/core/persistence/handlers.py:768` - error: Name "register_async_thread_if_needed" already defined on line 520  [no-redef]
   - ID: b7ca8bd2
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/local/base.py:50` - error: Name "is_file" already defined on line 35 [no-redef]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/local/base.py:50` - error: Name "is_file" already defined on line 35  [no-redef]
   - ID: cb097d85
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/base/base.py:42` - error: Name "source_class" already defined on line 33 [no-redef]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/base/base.py:42` - error: Name "source_class" already defined on line 33  [no-redef]
   - ID: 93870f5b
-- `packages/haive-core/src/haive/core/graph/state_graph_manager.py:268` - error: Name "get_metadata" already defined on line 160 [no-redef]
+- `packages/haive-core/src/haive/core/graph/state_graph_manager.py:268` - error: Name "get_metadata" already defined on line 160  [no-redef]
   - ID: a7cff68f
-- `packages/haive-core/src/haive/core/schema/prebuilt/query_state.py:197` - error: Name "QueryState" already defined on line 192 [no-redef]
-  - ID: f53d1b82
-- ... and 17 more
+- `packages/haive-core/src/haive/core/tools/__init__.py:36` - error: Name "tool" already defined (possibly by an import)  [no-redef]
+  - ID: 98396b03
+- ... and 18 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/core.py:971` - error: Name "\_ensure_registry_schema" already defined on line 99 [no-redef]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:971` - error: Name "_ensure_registry_schema" already defined on line 99  [no-redef]
   - ID: 64d55af4
-- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1040` - error: Name "\_ensure_registry_schema" already defined on line 163 [no-redef]
+- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1040` - error: Name "_ensure_registry_schema" already defined on line 163  [no-redef]
   - ID: 36e0c85b
-- `packages/haive-dataflow/src/haive/dataflow/internal_websockets/handlers.py:28` - error: Name "AgentRegistry" already defined (possibly by an import) [no-redef]
+- `packages/haive-dataflow/src/haive/dataflow/internal_websockets/handlers.py:28` - error: Name "AgentRegistry" already defined (possibly by an import)  [no-redef]
   - ID: 102f529e
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/conversation_routes.py:69` - error: Name "AgentRegistry" already defined (possibly by an import) [no-redef]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/conversation_routes.py:69` - error: Name "AgentRegistry" already defined (possibly by an import)  [no-redef]
   - ID: 6a58b5b1
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:14` - error: Name "Game" already defined (possibly by an import) [no-redef]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:14` - error: Name "Game" already defined (possibly by an import)  [no-redef]
   - ID: a38e6119
-- `packages/haive-games/src/haive/games/mastermind/demo.py:283` - error: Name "MastermindUI" already defined on line 132 [no-redef]
+- `packages/haive-games/src/haive/games/mastermind/demo.py:283` - error: Name "MastermindUI" already defined on line 132  [no-redef]
   - ID: 38f75601
-- `packages/haive-games/src/haive/games/multi_player/agent.py:625` - error: Name "get_player_role" already defined on line 181 [no-redef]
+- `packages/haive-games/src/haive/games/multi_player/agent.py:625` - error: Name "get_player_role" already defined on line 181  [no-redef]
   - ID: 26fe1709
-- `packages/haive-games/src/haive/games/framework/multi_player/agent.py:669` - error: Name "get_player_role" already defined on line 182 [no-redef]
+- `packages/haive-games/src/haive/games/framework/multi_player/agent.py:669` - error: Name "get_player_role" already defined on line 182  [no-redef]
   - ID: a743ec64
-- `packages/haive-games/src/haive/games/battleship/agent.py:699` - error: Name "analyze_position" already defined on line 310 [no-redef]
+- `packages/haive-games/src/haive/games/battleship/agent.py:699` - error: Name "analyze_position" already defined on line 310  [no-redef]
   - ID: 394bba0d
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:190` - error: Name "\_run_command" already defined on line 119 [no-redef]
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:190` - error: Name "_run_command" already defined on line 119  [no-redef]
   - ID: 696c914d
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:275` - error: Name "\_run_command" already defined on line 223 [no-redef]
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:275` - error: Name "_run_command" already defined on line 223  [no-redef]
   - ID: 9e864474
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:369` - error: Name "\_run_command" already defined on line 303 [no-redef]
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:369` - error: Name "_run_command" already defined on line 303  [no-redef]
   - ID: d95ba9e4
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:456` - error: Name "\_run_command" already defined on line 402 [no-redef]
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:456` - error: Name "_run_command" already defined on line 402  [no-redef]
   - ID: f03351ac
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/utils.py:14` - error: Name "Markdown" already defined (possibly by an import) [no-redef]
+- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/utils.py:14` - error: Name "Markdown" already defined (possibly by an import)  [no-redef]
   - ID: 0889c390
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/vbible_toolkit.py:53` - error: Name "query_bible_by_reference" already defined (possibly by an import) [no-redef]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/vbible_toolkit.py:53` - error: Name "query_bible_by_reference" already defined (possibly by an import)  [no-redef]
   - ID: 38aa54b9
-- `packages/haive-tools/src/haive/tools/tools/toolkits/vbible_toolkit.py:102` - error: Name "get_random_verse" already defined (possibly by an import) [no-redef]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/vbible_toolkit.py:102` - error: Name "get_random_verse" already defined (possibly by an import)  [no-redef]
   - ID: f2986ac6
-- `packages/haive-tools/src/haive/tools/tools/toolkits/vbible_toolkit.py:139` - error: Name "list_translations" already defined (possibly by an import) [no-redef]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/vbible_toolkit.py:139` - error: Name "list_translations" already defined (possibly by an import)  [no-redef]
   - ID: 5916f0ec
-- `packages/haive-tools/src/haive/tools/tools/toolkits/vbible_toolkit.py:179` - error: Name "list_books" already defined (possibly by an import) [no-redef]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/vbible_toolkit.py:179` - error: Name "list_books" already defined (possibly by an import)  [no-redef]
   - ID: eaeeb58c
-- `packages/haive-tools/src/haive/tools/tools/toolkits/vbible_toolkit.py:225` - error: Name "get_chapter_verses" already defined (possibly by an import) [no-redef]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/vbible_toolkit.py:225` - error: Name "get_chapter_verses" already defined (possibly by an import)  [no-redef]
   - ID: 6f167567
 
-## mypy:no-untyped-def (4519 errors)
+## mypy:no-untyped-def (4566 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/wiki_writer/utils.py:6` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-agents/src/haive/agents/wiki_writer/utils.py:6` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: 05a6f6f9
-- `packages/haive-agents/src/haive/agents/wiki_writer/utils.py:13` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-agents/src/haive/agents/wiki_writer/utils.py:13` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: c829b3a1
-- `packages/haive-agents/src/haive/agents/wiki_writer/utils.py:20` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-agents/src/haive/agents/wiki_writer/utils.py:20` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: 821858b8
-- `packages/haive-agents/src/haive/agents/wiki_writer/interview/utils.py:4` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-agents/src/haive/agents/wiki_writer/interview/utils.py:4` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: 8f393de2
-- `packages/haive-agents/src/haive/agents/wiki_writer/interview/utils.py:12` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-agents/src/haive/agents/wiki_writer/interview/utils.py:12` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: 7c656ef6
-- `packages/haive-agents/src/haive/agents/wiki_writer/interview/utils.py:19` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-agents/src/haive/agents/wiki_writer/interview/utils.py:19` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: 1e8e9a3d
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:18` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:18` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: d9f75df0
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:26` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:26` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 16de0f08
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:32` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:32` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 4f180a4a
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:50` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:50` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: a4ad5f82
-- ... and 1760 more
+- ... and 1805 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/errors.py:4` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-core/src/haive/core/errors.py:4` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: 24d10d4e
-- `packages/haive-core/src/haive/core/utils/visualize_graph_utils.py:9` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-core/src/haive/core/utils/visualize_graph_utils.py:9` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: 87d1c98f
-- `packages/haive-core/src/haive/core/utils/state_utils.py:1` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-core/src/haive/core/utils/state_utils.py:1` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: b039aa35
-- `packages/haive-core/src/haive/core/utils/getter_mixin.py:61` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-core/src/haive/core/utils/getter_mixin.py:61` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: 6c4a0c0c
-- `packages/haive-core/src/haive/core/utils/getter_mixin.py:137` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-core/src/haive/core/utils/getter_mixin.py:137` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: a7ad3b95
-- `packages/haive-core/src/haive/core/utils/pydantic_utils/sync_properties.py:7` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-core/src/haive/core/utils/pydantic_utils/sync_properties.py:7` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 7f2209a8
-- `packages/haive-core/src/haive/core/utils/pydantic_utils/sync_properties.py:10` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-core/src/haive/core/utils/pydantic_utils/sync_properties.py:10` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: 1919410a
-- `packages/haive-core/src/haive/core/utils/pydantic_utils/sync_properties.py:13` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-core/src/haive/core/utils/pydantic_utils/sync_properties.py:13` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: 993a53c1
-- `packages/haive-core/src/haive/core/utils/pydantic_utils/sync_properties.py:14` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-core/src/haive/core/utils/pydantic_utils/sync_properties.py:14` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: 6ff3c32a
-- `packages/haive-core/src/haive/core/utils/pydantic_utils/sync_properties.py:17` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-core/src/haive/core/utils/pydantic_utils/sync_properties.py:17` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 2e31a1d2
-- ... and 1250 more
+- ... and 1252 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/db/inspect_supabase.py:10` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-dataflow/src/haive/dataflow/db/inspect_supabase.py:10` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 9186fdc5
-- `packages/haive-dataflow/src/haive/dataflow/__init__.py:112` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-dataflow/src/haive/dataflow/__init__.py:112` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: 72cd9729
-- `packages/haive-dataflow/src/haive/dataflow/registry/providers/agent_provider.py:35` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-dataflow/src/haive/dataflow/registry/providers/agent_provider.py:35` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 0707d7ad
-- `packages/haive-dataflow/src/haive/dataflow/providers/agent_provider.py:35` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-dataflow/src/haive/dataflow/providers/agent_provider.py:35` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 531ac8ed
-- `packages/haive-dataflow/src/haive/dataflow/core.py:74` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:74` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 6cd2a5e8
-- `packages/haive-dataflow/src/haive/dataflow/core.py:99` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:99` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 59caf38b
-- `packages/haive-dataflow/src/haive/dataflow/core.py:208` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:208` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 97de981b
-- `packages/haive-dataflow/src/haive/dataflow/core.py:502` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:502` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: 460efcf4
-- `packages/haive-dataflow/src/haive/dataflow/core.py:563` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:563` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: a7a58bf3
-- `packages/haive-dataflow/src/haive/dataflow/core.py:672` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:672` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: 40c547ae
 - ... and 395 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/llm_config_factory.py:64` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-games/src/haive/games/llm_config_factory.py:64` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: d3b2a6e3
-- `packages/haive-games/src/haive/games/tic_tac_toe/state_manager.py:17` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-games/src/haive/games/tic_tac_toe/state_manager.py:17` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: 0f30c763
-- `packages/haive-games/src/haive/games/single_player/example.py:1` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-games/src/haive/games/single_player/example.py:1` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 68217493
-- `packages/haive-games/src/haive/games/single_player/example.py:89` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-games/src/haive/games/single_player/example.py:89` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: d7736aa4
-- `packages/haive-games/src/haive/games/reversi/state_manager.py:29` - error: Function is missing a type annotation for one or more arguments [no-untyped-def]
+- `packages/haive-games/src/haive/games/reversi/state_manager.py:29` - error: Function is missing a type annotation for one or more arguments  [no-untyped-def]
   - ID: e984a103
-- `packages/haive-games/src/haive/games/reversi/example.py:42` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-games/src/haive/games/reversi/example.py:42` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: c39db0ac
-- `packages/haive-games/src/haive/games/multi_player/factory.py:128` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-games/src/haive/games/multi_player/factory.py:128` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: 47a15250
-- `packages/haive-games/src/haive/games/framework/multi_player/factory.py:128` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-games/src/haive/games/framework/multi_player/factory.py:128` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: 152a0b69
-- `packages/haive-games/src/haive/games/framework/core/agent.py:18` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-games/src/haive/games/framework/core/agent.py:18` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: f8141b1e
-- `packages/haive-games/src/haive/games/framework/base/utils.py:23` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-games/src/haive/games/framework/base/utils.py:23` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: e2f5bcb9
 - ... and 715 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/discovery/server_discovery.py:9` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-mcp/src/haive/mcp/discovery/server_discovery.py:9` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 9a765c98
-- `packages/haive-mcp/src/haive/mcp/launcher.py:13` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-mcp/src/haive/mcp/launcher.py:13` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 25007f02
-- `packages/haive-mcp/src/haive/mcp/launcher.py:19` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-mcp/src/haive/mcp/launcher.py:19` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 8ec2171f
-- `packages/haive-mcp/src/haive/mcp/launcher.py:25` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-mcp/src/haive/mcp/launcher.py:25` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 621691f6
-- `packages/haive-mcp/src/haive/mcp/launcher.py:31` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-mcp/src/haive/mcp/launcher.py:31` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: f0da9f82
-- `packages/haive-mcp/src/haive/mcp/launcher.py:42` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-mcp/src/haive/mcp/launcher.py:42` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 941681e6
-- `packages/haive-mcp/src/haive/mcp/launcher.py:48` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-mcp/src/haive/mcp/launcher.py:48` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 8ccb2941
-- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:98` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:98` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: a97c3467
-- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:236` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:236` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: e2487c52
-- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:87` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:87` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: b47a53b8
 - ... and 161 more
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/project_manager/aug_llms.py:5` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-prebuilt/src/haive/prebuilt/project_manager/aug_llms.py:5` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: 00bf5606
-- `packages/haive-prebuilt/src/haive/prebuilt/project_manager/aug_llms.py:26` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-prebuilt/src/haive/prebuilt/project_manager/aug_llms.py:26` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: da04ef7a
-- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:15` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:15` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 2439a6e7
-- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:62` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:62` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: f561f219
-- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:112` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:112` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 7dd14c38
-- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:157` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-prebuilt/src/haive/prebuilt/ai_insight/example.py:157` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 1727f4d2
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:103` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:103` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: 8b5d1e22
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:127` - error: Function is missing a type annotation [no-untyped-def]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:127` - error: Function is missing a type annotation  [no-untyped-def]
   - ID: 571e941d
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:156` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:156` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 385c2cfa
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:214` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:214` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 0d3ff2aa
 - ... and 110 more
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:27` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:27` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: bfc9fb6b
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:33` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:33` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 688903b8
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:41` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/remote_execution.py:41` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: f310b372
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/logger.py:25` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/logger.py:25` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 63e52a0e
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/background_process_manager.py:41` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/background_process_manager.py:41` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: c435a895
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/type_checking.py:32` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/type_checking.py:32` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: ae85d4b0
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:37` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:37` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: f0ed51bb
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/function_call_analyzer.py:33` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/function_call_analyzer.py:33` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: f1565fcf
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/complexity_analyzer.py:39` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/complexity_analyzer.py:39` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 69cdf6b7
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/code_smell_detector.py:30` - error: Function is missing a return type annotation [no-untyped-def]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/code_smell_detector.py:30` - error: Function is missing a return type annotation  [no-untyped-def]
   - ID: 15ec3678
 - ... and 58 more
 
 ## mypy:object (6 errors)
+
 
 ### haive-agents
 
@@ -6135,154 +6206,156 @@ For further information visit https://errors.pydantic.dev
   - ID: 6be87d60
 - `packages/haive-agents/src/haive/agents/patterns/react_structured_agent_variants.py:415` - error: Argument "stages" to "create_multi_stage_reasoning_agent" has incompatible type "list[object]
   - ID: dea2fade
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/agent.py:491` - error: Argument "content" to "HumanMessage" has incompatible type "Sequence[object]"; expected "str
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/agent.py:491` - error: Argument "content" to "HumanMessage" has incompatible type "Sequence[object]"; expected "str 
   - ID: 07000aac
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/agent.py:519` - error: Argument "content" to "HumanMessage" has incompatible type "Sequence[object]"; expected "str
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/agent.py:519` - error: Argument "content" to "HumanMessage" has incompatible type "Sequence[object]"; expected "str 
   - ID: 87ebad79
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/nim/example.py:825` - error: Argument 1 to "sum" has incompatible type "list[object]"; expected "Iterable[bool]" [arg-typ
+- `packages/haive-games/src/haive/games/nim/example.py:825` - error: Argument 1 to "sum" has incompatible type "list[object]"; expected "Iterable[bool]"  [arg-typ
   - ID: 690087cf
-- `packages/haive-games/src/haive/games/nim/example.py:827` - error: Argument 1 to "sum" has incompatible type "list[object]"; expected "Iterable[bool]" [arg-typ
+- `packages/haive-games/src/haive/games/nim/example.py:827` - error: Argument 1 to "sum" has incompatible type "list[object]"; expected "Iterable[bool]"  [arg-typ
   - ID: 44939a4c
 
 ## mypy:operator (118 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/rag/self_rag2/nodes/grade_generation_v_documents_and_question.py:31` - error: Module not callable [operator]
+- `packages/haive-agents/src/haive/agents/rag/self_rag2/nodes/grade_generation_v_documents_and_question.py:31` - error: Module not callable  [operator]
   - ID: 3fa481d1
-- `packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/example.py:463` - error: Unsupported operand types for - ("float" and "None") [operator]
+- `packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/example.py:463` - error: Unsupported operand types for - ("float" and "None")  [operator]
   - ID: 09750691
-- `packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/example.py:463` - error: Unsupported operand types for - ("float" and "None") [operator]
+- `packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/example.py:463` - error: Unsupported operand types for - ("float" and "None")  [operator]
   - ID: 09750691
-- `packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/example.py:463` - error: Unsupported operand types for - ("float" and "None") [operator]
+- `packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/example.py:463` - error: Unsupported operand types for - ("float" and "None")  [operator]
   - ID: 09750691
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:126` - error: No overload variant of "**add**" of "list" matches argument type "str" [operator]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/models.py:126` - error: No overload variant of "__add__" of "list" matches argument type "str"  [operator]
   - ID: fb893ad7
-- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:458` - error: Unsupported operand types for + ("object" and "int") [operator]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:458` - error: Unsupported operand types for + ("object" and "int")  [operator]
   - ID: 263d0fcf
-- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:463` - error: Unsupported operand types for \* ("object" and "int") [operator]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:463` - error: Unsupported operand types for * ("object" and "int")  [operator]
   - ID: 3765a5f7
-- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:464` - error: Unsupported operand types for - ("object" and "int") [operator]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:464` - error: Unsupported operand types for - ("object" and "int")  [operator]
   - ID: 71848944
-- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:464` - error: Unsupported operand types for - ("object" and "int") [operator]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:464` - error: Unsupported operand types for - ("object" and "int")  [operator]
   - ID: 71848944
-- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:466` - error: Unsupported operand types for \* ("object" and "int") [operator]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/retrieval/enhanced_retriever.py:466` - error: Unsupported operand types for * ("object" and "int")  [operator]
   - ID: 5b108afc
 - ... and 45 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:97` - error: Unsupported operand types for - ("float" and "object") [operator]
+- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:97` - error: Unsupported operand types for - ("float" and "object")  [operator]
   - ID: 53e202cb
-- `packages/haive-core/src/haive/core/schema/compatibility/types.py:232` - error: "str" not callable [operator]
+- `packages/haive-core/src/haive/core/schema/compatibility/types.py:232` - error: "str" not callable  [operator]
   - ID: f0e81169
-- `packages/haive-core/src/haive/core/schema/compatibility/types.py:242` - error: "str" not callable [operator]
+- `packages/haive-core/src/haive/core/schema/compatibility/types.py:242` - error: "str" not callable  [operator]
   - ID: 399d2cc5
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/final_sources.py:1057` - error: Unsupported operand types for in ("LoaderCapability" and "SourceCapabilities") [operator]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/final_sources.py:1057` - error: Unsupported operand types for in ("LoaderCapability" and "SourceCapabilities")  [operator]
   - ID: 59a53674
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/final_sources.py:1067` - error: Unsupported operand types for in ("LoaderCapability" and "SourceCapabilities") [operator]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/final_sources.py:1067` - error: Unsupported operand types for in ("LoaderCapability" and "SourceCapabilities")  [operator]
   - ID: 1e91234e
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/communication_sources.py:1056` - error: Unsupported operand types for in ("LoaderCapability" and "SourceCapabilities") [operator]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/communication_sources.py:1056` - error: Unsupported operand types for in ("LoaderCapability" and "SourceCapabilities")  [operator]
   - ID: 35326669
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/cloud_storage_sources.py:967` - error: Unsupported operand types for in ("LoaderCapability" and "SourceCapabilities") [operator]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/cloud_storage_sources.py:967` - error: Unsupported operand types for in ("LoaderCapability" and "SourceCapabilities")  [operator]
   - ID: 77825236
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/analytics_sources.py:995` - error: Unsupported operand types for in ("LoaderCapability" and "SourceCapabilities") [operator]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/analytics_sources.py:995` - error: Unsupported operand types for in ("LoaderCapability" and "SourceCapabilities")  [operator]
   - ID: 2d79000c
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/analytics_sources.py:1005` - error: Unsupported operand types for in ("LoaderCapability" and "SourceCapabilities") [operator]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/analytics_sources.py:1005` - error: Unsupported operand types for in ("LoaderCapability" and "SourceCapabilities")  [operator]
   - ID: 82d85672
-- `packages/haive-core/src/haive/core/engine/document/loaders/auto_loader.py:1451` - error: "AutoLoader" not callable [operator]
+- `packages/haive-core/src/haive/core/engine/document/loaders/auto_loader.py:1451` - error: "AutoLoader" not callable  [operator]
   - ID: 86768ecd
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1257` - error: Unsupported operand types for + ("str" and "None") [operator]
+- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1257` - error: Unsupported operand types for + ("str" and "None")  [operator]
   - ID: 332102a4
-- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1259` - error: Unsupported operand types for + ("str" and "None") [operator]
+- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1259` - error: Unsupported operand types for + ("str" and "None")  [operator]
   - ID: 13cd3e6f
-- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1260` - error: Unsupported operand types for + ("str" and "None") [operator]
+- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1260` - error: Unsupported operand types for + ("str" and "None")  [operator]
   - ID: 8f6dca6d
-- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1261` - error: Unsupported operand types for + ("str" and "None") [operator]
+- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1261` - error: Unsupported operand types for + ("str" and "None")  [operator]
   - ID: 37dfa63d
-- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1262` - error: Unsupported operand types for + ("str" and "None") [operator]
+- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1262` - error: Unsupported operand types for + ("str" and "None")  [operator]
   - ID: 72bd901a
-- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1265` - error: Unsupported operand types for + ("str" and "None") [operator]
+- `packages/haive-dataflow/src/haive/dataflow/registry/core.py:1265` - error: Unsupported operand types for + ("str" and "None")  [operator]
   - ID: c72c1e4e
-- `packages/haive-dataflow/src/haive/dataflow/api/game_router.py:213` - error: "object" not callable [operator]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_router.py:213` - error: "object" not callable  [operator]
   - ID: 57f5e11e
-- `packages/haive-dataflow/src/haive/dataflow/api/game_router.py:216` - error: "object" not callable [operator]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_router.py:216` - error: "object" not callable  [operator]
   - ID: f5ff5f3a
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:531` - error: Unsupported right operand type for in ("object") [operator]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:531` - error: Unsupported right operand type for in ("object")  [operator]
   - ID: 267fd1e3
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:540` - error: Unsupported right operand type for in ("object") [operator]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_fixed.py:540` - error: Unsupported right operand type for in ("object")  [operator]
   - ID: e07755f2
 - ... and 2 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/nim/example.py:812` - error: Unsupported operand types for / ("object" and "int") [operator]
+- `packages/haive-games/src/haive/games/nim/example.py:812` - error: Unsupported operand types for / ("object" and "int")  [operator]
   - ID: 9d496240
-- `packages/haive-games/src/haive/games/hold_em/ui.py:157` - error: Unsupported operand types for + ("int" and "str") [operator]
+- `packages/haive-games/src/haive/games/hold_em/ui.py:157` - error: Unsupported operand types for + ("int" and "str")  [operator]
   - ID: 3451bb70
-- `packages/haive-games/src/haive/games/tic_tac_toe/configurable_config.py:301` - error: "object" not callable [operator]
+- `packages/haive-games/src/haive/games/tic_tac_toe/configurable_config.py:301` - error: "object" not callable  [operator]
   - ID: 3d49f4a0
-- `packages/haive-games/src/haive/games/single_player/sudoku/game/cell.py:27` - error: "bool" not callable [operator]
+- `packages/haive-games/src/haive/games/single_player/sudoku/game/cell.py:27` - error: "bool" not callable  [operator]
   - ID: 4e83e09b
-- `packages/haive-games/src/haive/games/single_player/sudoku/game/cell.py:40` - error: "bool" not callable [operator]
+- `packages/haive-games/src/haive/games/single_player/sudoku/game/cell.py:40` - error: "bool" not callable  [operator]
   - ID: 81391d53
-- `packages/haive-games/src/haive/games/single_player/sudoku/game/cell.py:52` - error: "bool" not callable [operator]
+- `packages/haive-games/src/haive/games/single_player/sudoku/game/cell.py:52` - error: "bool" not callable  [operator]
   - ID: 431ea8e0
-- `packages/haive-games/src/haive/games/single_player/flow_free/base.py:328` - error: Unsupported left operand type for == (any?) [operator]
+- `packages/haive-games/src/haive/games/single_player/flow_free/base.py:328` - error: Unsupported left operand type for == (any?)  [operator]
   - ID: 77b5a1c6
-- `packages/haive-games/src/haive/games/risk/configurable_config.py:308` - error: "object" not callable [operator]
+- `packages/haive-games/src/haive/games/risk/configurable_config.py:308` - error: "object" not callable  [operator]
   - ID: 07053ba9
-- `packages/haive-games/src/haive/games/reversi/configurable_config.py:306` - error: "object" not callable [operator]
+- `packages/haive-games/src/haive/games/reversi/configurable_config.py:306` - error: "object" not callable  [operator]
   - ID: ada6d366
-- `packages/haive-games/src/haive/games/poker/configurable_config.py:308` - error: "object" not callable [operator]
+- `packages/haive-games/src/haive/games/poker/configurable_config.py:308` - error: "object" not callable  [operator]
   - ID: 88916f13
 - ... and 15 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:702` - error: Unsupported operand types for + ("object" and "int") [operator]
+- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:702` - error: Unsupported operand types for + ("object" and "int")  [operator]
   - ID: 6b2269fa
-- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:715` - error: Unsupported operand types for < ("int" and "object") [operator]
+- `packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py:715` - error: Unsupported operand types for < ("int" and "object")  [operator]
   - ID: 32996707
-- `packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py:556` - error: Unsupported operand types for + ("object" and "int") [operator]
+- `packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py:556` - error: Unsupported operand types for + ("object" and "int")  [operator]
   - ID: 8c06319d
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:161` - error: Unsupported operand types for > ("float" and "None") [operator]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:161` - error: Unsupported operand types for > ("float" and "None")  [operator]
   - ID: 62c053d2
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:161` - error: Unsupported operand types for > ("float" and "None") [operator]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:161` - error: Unsupported operand types for > ("float" and "None")  [operator]
   - ID: 62c053d2
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:161` - error: Unsupported operand types for > ("float" and "None") [operator]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:161` - error: Unsupported operand types for > ("float" and "None")  [operator]
   - ID: 62c053d2
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:164` - error: Unsupported operand types for > ("float" and "None") [operator]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:164` - error: Unsupported operand types for > ("float" and "None")  [operator]
   - ID: afa00cd8
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:164` - error: Unsupported operand types for > ("float" and "None") [operator]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:164` - error: Unsupported operand types for > ("float" and "None")  [operator]
   - ID: afa00cd8
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:164` - error: Unsupported operand types for > ("float" and "None") [operator]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:164` - error: Unsupported operand types for > ("float" and "None")  [operator]
   - ID: afa00cd8
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:380` - error: Unsupported operand types for \* ("None" and "float") [operator]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:380` - error: Unsupported operand types for * ("None" and "float")  [operator]
   - ID: 6597bfd9
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/tools.py:459` - error: Unsupported operand types for <= ("float" and "object") [operator]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/tools.py:459` - error: Unsupported operand types for <= ("float" and "object")  [operator]
   - ID: bd232444
-- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:332` - error: No overload variant of "**add**" of "list" matches argument type "str" [operator]
+- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:332` - error: No overload variant of "__add__" of "list" matches argument type "str"  [operator]
   - ID: ea16c2e3
-- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:142` - error: Unsupported operand types for | ("PromptTemplate" and "None") [operator]
+- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:142` - error: Unsupported operand types for | ("PromptTemplate" and "None")  [operator]
   - ID: 1565da12
 - ... and 2 more
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/brave_search.py:24` - error: Module not callable [operator]
+- `packages/haive-tools/src/haive/tools/tools/brave_search.py:24` - error: Module not callable  [operator]
   - ID: b82254db
 
 ## mypy:overload-cannot-match (1 errors)
+
 
 ### haive-core
 
@@ -6291,28 +6364,29 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:override (25 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:391` - error: Argument 1 of "insert" is incompatible with supertype "builtins.list"; supertype defines the
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:391` - error: Argument 1 of "insert" is incompatible with supertype "builtins.list"; supertype defines the 
   - ID: 6c0fc8ec
 - `packages/haive-agents/src/haive/agents/planning/base/models.py:419` - error: Argument 1 of "pop" is incompatible with supertype "builtins.list"; supertype defines the arg
   - ID: 5cf18c34
-- `packages/haive-agents/src/haive/agents/reflection/message_transformer_posthook.py:207` - error: Signature of "**call**" incompatible with supertype "MessageTransformerPostHook" [override]
+- `packages/haive-agents/src/haive/agents/reflection/message_transformer_posthook.py:207` - error: Signature of "__call__" incompatible with supertype "MessageTransformerPostHook"  [override]
   - ID: 699654a2
 - `packages/haive-agents/src/haive/agents/document_modifiers/kg/kg_base/models.py:62` - error: Signature of "transform_documents" incompatible with supertype "langchain_core.documents.tran
   - ID: 682fbf46
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/state_graph/state_graph.py:467` - error: Signature of "validate" incompatible with supertype "pydantic.main.BaseModel" [override]
+- `packages/haive-core/src/haive/core/graph/state_graph/state_graph.py:467` - error: Signature of "validate" incompatible with supertype "pydantic.main.BaseModel"  [override]
   - ID: a1b890bb
-- `packages/haive-core/src/haive/core/engine/document/sources/base.py:40` - error: Signature of "validate" incompatible with supertype "pydantic.main.BaseModel" [override]
+- `packages/haive-core/src/haive/core/engine/document/sources/base.py:40` - error: Signature of "validate" incompatible with supertype "pydantic.main.BaseModel"  [override]
   - ID: 6214b18c
-- `packages/haive-core/src/haive/core/runtime/base/base.py:36` - error: Signature of "invoke" incompatible with supertype "langchain_core.runnables.base.Runnable" [
+- `packages/haive-core/src/haive/core/runtime/base/base.py:36` - error: Signature of "invoke" incompatible with supertype "langchain_core.runnables.base.Runnable"  [
   - ID: 77eea9cc
-- `packages/haive-core/src/haive/core/runtime/base/base.py:41` - error: Signature of "ainvoke" incompatible with supertype "langchain_core.runnables.base.Runnable"
+- `packages/haive-core/src/haive/core/runtime/base/base.py:41` - error: Signature of "ainvoke" incompatible with supertype "langchain_core.runnables.base.Runnable"  
   - ID: ad19c6bf
-- `packages/haive-core/src/haive/core/persistence/serializers.py:159` - error: Signature of "\_encode_constructor_args" incompatible with supertype "langgraph.checkpoint.ser
+- `packages/haive-core/src/haive/core/persistence/serializers.py:159` - error: Signature of "_encode_constructor_args" incompatible with supertype "langgraph.checkpoint.ser
   - ID: b3c007d8
 - `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py:99` - error: Argument 1 of "put" is incompatible with supertype "langgraph.checkpoint.postgres.PostgresSav
   - ID: ef16dc46
@@ -6328,262 +6402,266 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/framework/core/rule.py:26` - error: Signature of "validate" incompatible with supertype "pydantic.main.BaseModel" [override]
+- `packages/haive-games/src/haive/games/framework/core/rule.py:26` - error: Signature of "validate" incompatible with supertype "pydantic.main.BaseModel"  [override]
   - ID: 28f1f196
 - `packages/haive-games/src/haive/games/framework/core/player.py:96` - error: Return type "M@AIPlayer | None" of "get_move" incompatible with return type "M | None" in sup
   - ID: 21c59526
 - `packages/haive-games/src/haive/games/framework/core/player.py:96` - error: Return type "M@AIPlayer | None" of "get_move" incompatible with return type "M | None" in sup
   - ID: 21c59526
-- `packages/haive-games/src/haive/games/framework/core/player.py:117` - error: Return type "M@RandomAIPlayer | None" of "get_move" incompatible with return type "M | None"
+- `packages/haive-games/src/haive/games/framework/core/player.py:117` - error: Return type "M@RandomAIPlayer | None" of "get_move" incompatible with return type "M | None" 
   - ID: b29c853d
-- `packages/haive-games/src/haive/games/framework/core/player.py:117` - error: Return type "M@RandomAIPlayer | None" of "get_move" incompatible with return type "M | None"
+- `packages/haive-games/src/haive/games/framework/core/player.py:117` - error: Return type "M@RandomAIPlayer | None" of "get_move" incompatible with return type "M | None" 
   - ID: b29c853d
 - `packages/haive-games/src/haive/games/framework/core/player.py:143` - error: Return type "M@RuleBasedAIPlayer | None" of "get_move" incompatible with return type "M | Non
   - ID: b6b5baf1
 - `packages/haive-games/src/haive/games/framework/core/player.py:143` - error: Return type "M@RuleBasedAIPlayer | None" of "get_move" incompatible with return type "M | Non
   - ID: b6b5baf1
-- `packages/haive-games/src/haive/games/core/components/cards/scoring.py:23` - error: Argument 1 of "**eq**" is incompatible with supertype "builtins.object"; supertype defines th
+- `packages/haive-games/src/haive/games/core/components/cards/scoring.py:23` - error: Argument 1 of "__eq__" is incompatible with supertype "builtins.object"; supertype defines th
   - ID: c9cf8f85
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/translate_tools.py:190` - error: Signature of "\_arun" incompatible with supertype "langchain_core.tools.base.BaseTool" [overr
+- `packages/haive-tools/src/haive/tools/tools/translate_tools.py:190` - error: Signature of "_arun" incompatible with supertype "langchain_core.tools.base.BaseTool"  [overr
   - ID: d0a43fc5
 
 ## mypy:prop-decorator (387 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/research/storm/state.py:109` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-agents/src/haive/agents/research/storm/state.py:109` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: d71e3cf6
-- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:17` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:17` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 325502d7
-- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:108` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:108` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: bf13e55f
-- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:114` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:114` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 020b4896
-- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:130` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:130` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: b4f24ac8
-- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:138` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:138` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 456278ed
-- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:151` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:151` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: c87dbabb
-- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:157` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:157` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 5929726a
-- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:190` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:190` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 38fd2e8a
-- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:199` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-agents/src/haive/agents/research/perplexity/pro_search/models.py:199` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: f6823f3a
 - ... and 139 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:53` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:53` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: bb5779ab
-- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:62` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:62` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: f421be99
-- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:71` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:71` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 2b8a8e1f
-- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:90` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:90` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 58434141
-- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:109` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:109` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 86fa25f6
-- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:115` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:115` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: ac624e39
-- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:125` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:125` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 43f1d1cf
-- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:139` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-core/src/haive/core/schema/prebuilt/validation_aware_tool_state.py:139` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 807c2d01
-- `packages/haive-core/src/haive/core/schema/prebuilt/multi_agent_state.py:390` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-core/src/haive/core/schema/prebuilt/multi_agent_state.py:390` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 8fc6c544
-- `packages/haive-core/src/haive/core/schema/prebuilt/multi_agent_state.py:396` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-core/src/haive/core/schema/prebuilt/multi_agent_state.py:396` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 4fed4a2c
 - ... and 28 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:138` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:138` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 771c9501
-- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:154` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:154` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 87126963
-- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:165` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:165` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: c210c622
-- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:176` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:176` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: df879e51
-- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:408` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:408` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 6f10b2fc
-- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:419` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:419` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: dbe627d1
-- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:437` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-games/src/haive/games/tic_tac_toe/models.py:437` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 157382d3
-- `packages/haive-games/src/haive/games/tic_tac_toe/config.py:212` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-games/src/haive/games/tic_tac_toe/config.py:212` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 0c1f034c
-- `packages/haive-games/src/haive/games/tic_tac_toe/config.py:230` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-games/src/haive/games/tic_tac_toe/config.py:230` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 21a60fcf
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/position.py:28` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/position.py:28` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: e573fac8
 - ... and 162 more
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:148` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:148` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 30f8c736
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:155` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:155` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 590e8e4c
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:162` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:162` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 48e73a93
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:178` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:178` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: be018f44
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:185` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:185` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: e2618f5a
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:200` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:200` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 3b561f70
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:207` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/state.py:207` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: e11f5118
-- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/state.py:66` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/state.py:66` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: b2119efb
-- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/state.py:78` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/state.py:78` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 3d1cd667
-- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/state.py:89` - error: Decorators on top of @property are not supported [prop-decorator]
+- `packages/haive-prebuilt/src/haive/prebuilt/search_and_summarize/state.py:89` - error: Decorators on top of @property are not supported  [prop-decorator]
   - ID: 2ddeec52
 - ... and 18 more
 
 ## mypy:return (8 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/rewoo/tests/test_tool_step.py:278` - error: Missing return statement [return]
+- `packages/haive-agents/src/haive/agents/planning/rewoo/tests/test_tool_step.py:278` - error: Missing return statement  [return]
   - ID: aa6bb9b5
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/common/mixins/timestamp_mixin.py:164` - error: Missing return statement [return]
+- `packages/haive-core/src/haive/core/common/mixins/timestamp_mixin.py:164` - error: Missing return statement  [return]
   - ID: 2aec4a43
-- `packages/haive-core/src/haive/core/graph/node/callable_node.py:138` - error: Missing return statement [return]
+- `packages/haive-core/src/haive/core/graph/node/callable_node.py:138` - error: Missing return statement  [return]
   - ID: 6cf20eee
-- `packages/haive-core/src/haive/core/graph/dynamic_graph_builder.py:1876` - error: Missing return statement [return]
+- `packages/haive-core/src/haive/core/graph/dynamic_graph_builder.py:1876` - error: Missing return statement  [return]
   - ID: d5b01398
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/chess/agent.py:127` - error: Missing return statement [return]
+- `packages/haive-games/src/haive/games/chess/agent.py:127` - error: Missing return statement  [return]
   - ID: 73325162
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/documentation/doc_loader.py:197` - error: Missing return statement [return]
+- `packages/haive-mcp/src/haive/mcp/documentation/doc_loader.py:197` - error: Missing return statement  [return]
   - ID: 86ce2e4b
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/models.py:19` - error: Missing return statement [return]
+- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/models.py:19` - error: Missing return statement  [return]
   - ID: 86f293de
-- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/tools.py:36` - error: Missing return statement [return]
+- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/tools.py:36` - error: Missing return statement  [return]
   - ID: f48c60bf
 
 ## mypy:return-value (60 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/archive/meta/agent.py:168` - error: Incompatible return value type (got "None", expected "TAgent") [return-value]
+- `packages/haive-agents/src/haive/agents/archive/meta/agent.py:168` - error: Incompatible return value type (got "None", expected "TAgent")  [return-value]
   - ID: 635c39da
-- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/agent.py:236` - error: Incompatible return value type (got "object", expected "RetrieverAgent") [return-value]
+- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/agent.py:236` - error: Incompatible return value type (got "object", expected "RetrieverAgent")  [return-value]
   - ID: 0e68d758
-- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/agent.py:240` - error: Incompatible return value type (got "object", expected "SimpleAnswerAgent") [return-value]
+- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/agent.py:240` - error: Incompatible return value type (got "object", expected "SimpleAnswerAgent")  [return-value]
   - ID: 81ff359f
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:774` - error: Incompatible return value type (got "None", expected "str") [return-value]
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:774` - error: Incompatible return value type (got "None", expected "str")  [return-value]
   - ID: bc3f1d1c
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:792` - error: Incompatible return value type (got "None", expected "str") [return-value]
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:792` - error: Incompatible return value type (got "None", expected "str")  [return-value]
   - ID: f292af5e
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/composer/engine/engine_detector.py:151` - error: Incompatible return value type (got "None", expected "type") [return-value]
+- `packages/haive-core/src/haive/core/schema/composer/engine/engine_detector.py:151` - error: Incompatible return value type (got "None", expected "type")  [return-value]
   - ID: 38a0a038
-- `packages/haive-core/src/haive/core/tools/store_tools.py:145` - error: Incompatible return value type (got "BaseTool", expected "Tool") [return-value]
+- `packages/haive-core/src/haive/core/tools/store_tools.py:145` - error: Incompatible return value type (got "BaseTool", expected "Tool")  [return-value]
   - ID: 7951f616
-- `packages/haive-core/src/haive/core/tools/store_tools.py:227` - error: Incompatible return value type (got "BaseTool", expected "Tool") [return-value]
+- `packages/haive-core/src/haive/core/tools/store_tools.py:227` - error: Incompatible return value type (got "BaseTool", expected "Tool")  [return-value]
   - ID: ce2a62fc
-- `packages/haive-core/src/haive/core/tools/store_tools.py:292` - error: Incompatible return value type (got "BaseTool", expected "Tool") [return-value]
+- `packages/haive-core/src/haive/core/tools/store_tools.py:292` - error: Incompatible return value type (got "BaseTool", expected "Tool")  [return-value]
   - ID: 93390e5b
-- `packages/haive-core/src/haive/core/tools/store_tools.py:367` - error: Incompatible return value type (got "BaseTool", expected "Tool") [return-value]
+- `packages/haive-core/src/haive/core/tools/store_tools.py:367` - error: Incompatible return value type (got "BaseTool", expected "Tool")  [return-value]
   - ID: e499aa03
-- `packages/haive-core/src/haive/core/tools/store_tools.py:422` - error: Incompatible return value type (got "BaseTool", expected "Tool") [return-value]
+- `packages/haive-core/src/haive/core/tools/store_tools.py:422` - error: Incompatible return value type (got "BaseTool", expected "Tool")  [return-value]
   - ID: 9bc0cace
-- `packages/haive-core/src/haive/core/graph/node/validation_node_with_routing.py:527` - error: Incompatible return value type (got "Any | None", expected "str") [return-value]
+- `packages/haive-core/src/haive/core/graph/node/validation_node_with_routing.py:527` - error: Incompatible return value type (got "Any | None", expected "str")  [return-value]
   - ID: 93288c6a
-- `packages/haive-core/src/haive/core/persistence/serializers.py:254` - error: Incompatible return value type (got "EncryptedSerializer", expected "JsonPlusSerializer") [r
+- `packages/haive-core/src/haive/core/persistence/serializers.py:254` - error: Incompatible return value type (got "EncryptedSerializer", expected "JsonPlusSerializer")  [r
   - ID: e56071ef
-- `packages/haive-core/src/haive/core/persistence/serializers.py:328` - error: Incompatible return value type (got "EncryptedSerializer", expected "JsonPlusSerializer") [r
+- `packages/haive-core/src/haive/core/persistence/serializers.py:328` - error: Incompatible return value type (got "EncryptedSerializer", expected "JsonPlusSerializer")  [r
   - ID: 0d5fc20e
-- `packages/haive-core/src/haive/core/models/vectorstore/base.py:176` - error: Incompatible return value type (got "VectorStoreConfig", expected "VectorStore") [return-val
+- `packages/haive-core/src/haive/core/models/vectorstore/base.py:176` - error: Incompatible return value type (got "VectorStoreConfig", expected "VectorStore")  [return-val
   - ID: e585c654
 - ... and 39 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/checkers/example.py:574` - error: Incompatible return value type (got "None", expected "str") [return-value]
+- `packages/haive-games/src/haive/games/checkers/example.py:574` - error: Incompatible return value type (got "None", expected "str")  [return-value]
   - ID: b7dbb65e
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/downloader/discovery.py:624` - error: Incompatible return value type (got "None", expected "str") [return-value]
+- `packages/haive-mcp/src/haive/mcp/downloader/discovery.py:624` - error: Incompatible return value type (got "None", expected "str")  [return-value]
   - ID: 98dda5c8
-- `packages/haive-mcp/src/haive/mcp/installers/advanced_code_installer.py:333` - error: Incompatible return value type (got "BaseTool", expected "StructuredTool") [return-value]
+- `packages/haive-mcp/src/haive/mcp/installers/advanced_code_installer.py:333` - error: Incompatible return value type (got "BaseTool", expected "StructuredTool")  [return-value]
   - ID: a56e2bce
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/perplexity/base/engines.py:103` - error: Incompatible return value type (got "TavilySearchResults", expected "StructuredTool") [retur
+- `packages/haive-prebuilt/src/haive/prebuilt/perplexity/base/engines.py:103` - error: Incompatible return value type (got "TavilySearchResults", expected "StructuredTool")  [retur
   - ID: 54810ba5
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/agent.py:349` - error: Incompatible return value type (got "CompiledStateGraph", expected "StateGraph") [return-val
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/agent.py:349` - error: Incompatible return value type (got "CompiledStateGraph", expected "StateGraph")  [return-val
   - ID: 81f8702d
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/market_research/agent.py:266` - error: Incompatible return value type (got "CompiledStateGraph", expected "StateGraph") [return-val
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/market_research/agent.py:266` - error: Incompatible return value type (got "CompiledStateGraph", expected "StateGraph")  [return-val
   - ID: 673edc9f
 
-## mypy:str (182 errors)
+## mypy:str (183 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/base/typed_agent.py:498` - error: Argument 2 to "AdaptiveAgent" has incompatible type "Any | None"; expected "list[str]" [arg-
+- `packages/haive-agents/src/haive/agents/base/typed_agent.py:498` - error: Argument 2 to "AdaptiveAgent" has incompatible type "Any | None"; expected "list[str]"  [arg-
   - ID: 86292aab
-- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:428` - error: Value of type "Collection[str]" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:428` - error: Value of type "Collection[str]" is not indexable  [index]
   - ID: fb4170ac
-- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:429` - error: Value of type "Collection[str]" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:429` - error: Value of type "Collection[str]" is not indexable  [index]
   - ID: d28ee633
-- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:430` - error: Value of type "Collection[str]" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:430` - error: Value of type "Collection[str]" is not indexable  [index]
   - ID: 79e6b5fa
-- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:433` - error: Value of type "Collection[str]" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:433` - error: Value of type "Collection[str]" is not indexable  [index]
   - ID: 586397cd
-- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:436` - error: Value of type "Collection[str]" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:436` - error: Value of type "Collection[str]" is not indexable  [index]
   - ID: 79929728
-- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:440` - error: Value of type "Collection[str]" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:440` - error: Value of type "Collection[str]" is not indexable  [index]
   - ID: 6479ee94
-- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:442` - error: Value of type "Collection[str]" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/supervisor/simple_test_runner.py:442` - error: Value of type "Collection[str]" is not indexable  [index]
   - ID: 4d478b71
-- `packages/haive-agents/src/haive/agents/supervisor/archive/simple_test_runner.py:428` - error: Value of type "Collection[str]" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/supervisor/archive/simple_test_runner.py:428` - error: Value of type "Collection[str]" is not indexable  [index]
   - ID: e6dd8e82
-- `packages/haive-agents/src/haive/agents/supervisor/archive/simple_test_runner.py:429` - error: Value of type "Collection[str]" is not indexable [index]
+- `packages/haive-agents/src/haive/agents/supervisor/archive/simple_test_runner.py:429` - error: Value of type "Collection[str]" is not indexable  [index]
   - ID: 30cba156
-- ... and 59 more
+- ... and 60 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:71` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]")
+- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:71` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]") 
   - ID: 2710c0d0
-- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:72` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]")
+- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:72` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]") 
   - ID: 699920b7
-- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:75` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]")
+- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:75` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]") 
   - ID: 24db1563
-- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:76` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]")
+- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:76` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]") 
   - ID: 15aa6cbe
-- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:79` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]")
+- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:79` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]") 
   - ID: 1030b524
-- `packages/haive-core/src/haive/core/engine/embedding/providers/__init__.py:237` - error: Returning Any from function declared to return "list[str]" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/embedding/providers/__init__.py:237` - error: Returning Any from function declared to return "list[str]"  [no-any-return]
   - ID: 1abeca1b
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:284` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]")
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:284` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]") 
   - ID: af0ff50c
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:290` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]")
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:290` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]") 
   - ID: 9ab67779
 - `packages/haive-core/src/haive/core/utils/haive_discovery/component_info.py:59` - error: Incompatible types in assignment (expression has type "bool", target has type "Sequence[str]"
   - ID: 17b8c430
@@ -6593,25 +6671,25 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:814` - error: Unsupported target for indexed assignment ("Collection[str]") [index]
+- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:814` - error: Unsupported target for indexed assignment ("Collection[str]")  [index]
   - ID: bd42589e
-- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:816` - error: Value of type "Collection[str]" is not indexable [index]
+- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:816` - error: Value of type "Collection[str]" is not indexable  [index]
   - ID: 6cdb6bfc
-- `packages/haive-dataflow/src/haive/dataflow/mcp/health.py:420` - error: Returning Any from function declared to return "list[str]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/mcp/health.py:420` - error: Returning Any from function declared to return "list[str]"  [no-any-return]
   - ID: 42ccae28
-- `packages/haive-dataflow/src/haive/dataflow/mcp/discovery.py:163` - error: Argument 1 to "\_check_npm_package_available" of "MCPDiscovery" has incompatible type "Sequenc
+- `packages/haive-dataflow/src/haive/dataflow/mcp/discovery.py:163` - error: Argument 1 to "_check_npm_package_available" of "MCPDiscovery" has incompatible type "Sequenc
   - ID: 74718e9d
-- `packages/haive-dataflow/src/haive/dataflow/mcp/discovery.py:208` - error: Argument 1 to "\_check_pip_package_available" of "MCPDiscovery" has incompatible type "Sequenc
+- `packages/haive-dataflow/src/haive/dataflow/mcp/discovery.py:208` - error: Argument 1 to "_check_pip_package_available" of "MCPDiscovery" has incompatible type "Sequenc
   - ID: 4e8c455a
-- `packages/haive-dataflow/src/haive/dataflow/mcp/client.py:484` - error: Returning Any from function declared to return "list[str]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/mcp/client.py:484` - error: Returning Any from function declared to return "list[str]"  [no-any-return]
   - ID: 76812e12
-- `packages/haive-dataflow/src/haive/dataflow/serialization.py:326` - error: "Sequence[str]" has no attribute "append" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/serialization.py:326` - error: "Sequence[str]" has no attribute "append"  [attr-defined]
   - ID: e66673b1
-- `packages/haive-dataflow/src/haive/dataflow/serialization.py:329` - error: "Sequence[str]" has no attribute "append" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/serialization.py:329` - error: "Sequence[str]" has no attribute "append"  [attr-defined]
   - ID: bf80e130
-- `packages/haive-dataflow/src/haive/dataflow/registry/serialization.py:407` - error: "Sequence[str]" has no attribute "append" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/serialization.py:407` - error: "Sequence[str]" has no attribute "append"  [attr-defined]
   - ID: 4b58469a
-- `packages/haive-dataflow/src/haive/dataflow/registry/serialization.py:410` - error: "Sequence[str]" has no attribute "append" [attr-defined]
+- `packages/haive-dataflow/src/haive/dataflow/registry/serialization.py:410` - error: "Sequence[str]" has no attribute "append"  [attr-defined]
   - ID: 8e6b9611
 - ... and 2 more
 
@@ -6619,19 +6697,19 @@ For further information visit https://errors.pydantic.dev
 
 - `packages/haive-games/src/haive/games/single_player/example.py:1` - error: Incompatible default for argument "commands" (default has type "None", argument has type "lis
   - ID: 383697d6
-- `packages/haive-games/src/haive/games/chess/llm_utils.py:195` - error: Returning Any from function declared to return "list[str]" [no-any-return]
+- `packages/haive-games/src/haive/games/chess/llm_utils.py:195` - error: Returning Any from function declared to return "list[str]"  [no-any-return]
   - ID: cc86a4b1
-- `packages/haive-games/src/haive/games/dominoes/state_manager.py:20` - error: Incompatible default for argument "player_names" (default has type "None", argument has type
+- `packages/haive-games/src/haive/games/dominoes/state_manager.py:20` - error: Incompatible default for argument "player_names" (default has type "None", argument has type 
   - ID: 90d04e35
-- `packages/haive-games/src/haive/games/mafia/agent.py:329` - error: Incompatible types in assignment (expression has type "list[str]", target has type "str") [a
+- `packages/haive-games/src/haive/games/mafia/agent.py:329` - error: Incompatible types in assignment (expression has type "list[str]", target has type "str")  [a
   - ID: 5dc9754d
-- `packages/haive-games/src/haive/games/connect4/ui.py:126` - error: Argument "style" to "Text" has incompatible type "Collection[str]"; expected "str | Style" [
+- `packages/haive-games/src/haive/games/connect4/ui.py:126` - error: Argument "style" to "Text" has incompatible type "Collection[str]"; expected "str | Style"  [
   - ID: 7206627e
-- `packages/haive-games/src/haive/games/connect4/ui.py:127` - error: Argument "style" to "Text" has incompatible type "Collection[str]"; expected "str | Style" [
+- `packages/haive-games/src/haive/games/connect4/ui.py:127` - error: Argument "style" to "Text" has incompatible type "Collection[str]"; expected "str | Style"  [
   - ID: 3e3e79b9
-- `packages/haive-games/src/haive/games/connect4/ui.py:130` - error: Value of type "Collection[str]" is not indexable [index]
+- `packages/haive-games/src/haive/games/connect4/ui.py:130` - error: Value of type "Collection[str]" is not indexable  [index]
   - ID: cbdedcc6
-- `packages/haive-games/src/haive/games/connect4/ui.py:133` - error: Value of type "Collection[str]" is not indexable [index]
+- `packages/haive-games/src/haive/games/connect4/ui.py:133` - error: Value of type "Collection[str]" is not indexable  [index]
   - ID: 59e11d0c
 - `packages/haive-games/src/haive/games/connect4/ui.py:148` - error: Argument "border_style" to "Panel" has incompatible type "Collection[str]"; expected "str | S
   - ID: b0157389
@@ -6641,47 +6719,49 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:333` - error: List comprehension has incompatible type List[str]; expected List[tuple[str, int]] [misc]
+- `packages/haive-mcp/src/haive/mcp/tools/server_selector.py:333` - error: List comprehension has incompatible type List[str]; expected List[tuple[str, int]]  [misc]
   - ID: 6364e79b
-- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:75` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]")
+- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:75` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]") 
   - ID: 6c8c213f
-- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:76` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]")
+- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:76` - error: Incompatible types in assignment (expression has type "None", variable has type "list[str]") 
   - ID: 83b7d75a
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:861` - error: Unsupported target for indexed assignment ("Collection[str]") [index]
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:861` - error: Unsupported target for indexed assignment ("Collection[str]")  [index]
   - ID: a1b53b55
-- `packages/haive-mcp/src/haive/mcp/downloader/core.py:782` - error: Unsupported target for indexed assignment ("Collection[str]") [index]
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:782` - error: Unsupported target for indexed assignment ("Collection[str]")  [index]
   - ID: 40713dca
-- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:636` - error: Returning Any from function declared to return "list[str]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:636` - error: Returning Any from function declared to return "list[str]"  [no-any-return]
   - ID: 575f2d0a
-- `packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py:256` - error: Unsupported target for indexed assignment ("Collection[str]") [index]
+- `packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py:256` - error: Unsupported target for indexed assignment ("Collection[str]")  [index]
   - ID: ab219b0f
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/constituional_agent/utils.py:159` - error: Argument 1 to "list" has incompatible type "set[str] | None"; expected "Iterable[str]" [arg-
+- `packages/haive-prebuilt/src/haive/prebuilt/constituional_agent/utils.py:159` - error: Argument 1 to "list" has incompatible type "set[str] | None"; expected "Iterable[str]"  [arg-
   - ID: 9a881fe3
 - `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:132` - error: Argument 2 to "sendmail" of "SMTP" has incompatible type "str | None"; expected "str | Sequen
   - ID: 5816d63e
-- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:338` - error: Returning Any from function declared to return "list[str]" [no-any-return]
+- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:338` - error: Returning Any from function declared to return "list[str]"  [no-any-return]
   - ID: f6731748
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/dependency_analyzer.py:77` - error: Returning Any from function declared to return "set[str]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/dependency_analyzer.py:77` - error: Returning Any from function declared to return "set[str]"  [no-any-return]
   - ID: 92d6e1e8
-- `packages/haive-tools/src/haive/tools/tools/toolkits/rps_101_toolkit.py:50` - error: Returning Any from function declared to return "list[str]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/rps_101_toolkit.py:50` - error: Returning Any from function declared to return "list[str]"  [no-any-return]
   - ID: 45e18442
-- `packages/haive-tools/src/haive/tools/tools/toolkits/chuck_norris_jokes_toolkit.py:88` - error: Returning Any from function declared to return "list[str]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/chuck_norris_jokes_toolkit.py:88` - error: Returning Any from function declared to return "list[str]"  [no-any-return]
   - ID: 0b7415f8
 
 ## mypy:str | Any (1 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/multi/archive/enhanced_base.py:521` - error: Item "None" of "list[str | Any] | None" has no attribute "**iter**" (not iterable) [union-at
+- `packages/haive-agents/src/haive/agents/multi/archive/enhanced_base.py:521` - error: Item "None" of "list[str | Any] | None" has no attribute "__iter__" (not iterable)  [union-at
   - ID: c2c7b203
 
 ## mypy:str | BaseMessage (1 errors)
+
 
 ### haive-agents
 
@@ -6690,12 +6770,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str | None, str | None (1 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/memory_v2/kg_memory_agent.py:159` - error: Argument "auth" to "driver" of "AsyncGraphDatabase" has incompatible type "tuple[str | None,
+- `packages/haive-agents/src/haive/agents/memory_v2/kg_memory_agent.py:159` - error: Argument "auth" to "driver" of "AsyncGraphDatabase" has incompatible type "tuple[str | None, 
   - ID: acbeff78
 
 ## mypy:str | dict[Any, Any (63 errors)
+
 
 ### haive-agents
 
@@ -6705,11 +6787,11 @@ For further information visit https://errors.pydantic.dev
   - ID: 8b40670d
 - `packages/haive-agents/src/haive/agents/reflection/message_transformer.py:215` - error: Argument 1 to "loads" has incompatible type "str | list[str | dict[Any, Any]]"; expected "str
   - ID: a2619c4d
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/v2/state.py:91` - error: Incompatible return value type (got "str | list[str | dict[Any, Any]]", expected "str") [ret
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/v2/state.py:91` - error: Incompatible return value type (got "str | list[str | dict[Any, Any]]", expected "str")  [ret
   - ID: 700cba06
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/v2/state.py:68` - error: Incompatible return value type (got "str | list[str | dict[Any, Any]]", expected "str") [ret
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/v2/state.py:68` - error: Incompatible return value type (got "str | list[str | dict[Any, Any]]", expected "str")  [ret
   - ID: 0af761c9
-- `packages/haive-agents/src/haive/agents/dynamic_supervisor/tools.py:175` - error: Argument "content" to "HumanMessage" has incompatible type "Any | str | None"; expected "str
+- `packages/haive-agents/src/haive/agents/dynamic_supervisor/tools.py:175` - error: Argument "content" to "HumanMessage" has incompatible type "Any | str | None"; expected "str 
   - ID: 904d038d
 - `packages/haive-agents/src/haive/agents/discovery/dynamic_tool_selector.py:395` - error: Item "list[str | dict[Any, Any]]" of "str | list[str | dict[Any, Any]]" has no attribute "low
   - ID: ac5150e0
@@ -6717,7 +6799,7 @@ For further information visit https://errors.pydantic.dev
   - ID: c967be4b
 - `packages/haive-agents/src/haive/agents/base/agent_structured_output_mixin.py:231` - error: Incompatible types in assignment (expression has type "str | list[str | dict[Any, Any]]", var
   - ID: 4e4db9ae
-- `packages/haive-agents/src/haive/agents/simple/state.v2.py:76` - error: Incompatible return value type (got "str | list[str | dict[Any, Any]] | None", expected "str
+- `packages/haive-agents/src/haive/agents/simple/state.v2.py:76` - error: Incompatible return value type (got "str | list[str | dict[Any, Any]] | None", expected "str 
   - ID: 295b0b3f
 - ... and 12 more
 
@@ -6727,9 +6809,9 @@ For further information visit https://errors.pydantic.dev
   - ID: 10324aa6
 - `packages/haive-core/src/haive/core/schema/prebuilt/structured_output_state.py:136` - error: Argument 1 to "parse" of "PydanticOutputParser" has incompatible type "str | list[str | dict[
   - ID: 622c6bc7
-- `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:133` - error: Argument 1 to "\_generate_id" of "MessageConverter" has incompatible type "str | list[str | di
+- `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:133` - error: Argument 1 to "_generate_id" of "MessageConverter" has incompatible type "str | list[str | di
   - ID: bff8989c
-- `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:142` - error: Argument 1 to "\_generate_id" of "MessageConverter" has incompatible type "str | list[str | di
+- `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:142` - error: Argument 1 to "_generate_id" of "MessageConverter" has incompatible type "str | list[str | di
   - ID: ccbe1e80
 - `packages/haive-core/src/haive/core/schema/compatibility/langchain_converters.py:309` - error: Argument "page_content" to "Document" has incompatible type "str | list[str | dict[Any, Any]]
   - ID: 50c6511a
@@ -6741,19 +6823,19 @@ For further information visit https://errors.pydantic.dev
   - ID: 9d9395e0
 - `packages/haive-core/src/haive/core/graph/node/output_parsing.py:130` - error: Incompatible return value type (got "str | list[str | dict[Any, Any]]", expected "str | None"
   - ID: 5bbcc796
-- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:239` - error: Unsupported target for indexed assignment ("str | list[str | dict[Any, Any]]") [index]
+- `packages/haive-core/src/haive/core/graph/node/message_transformation_v2.py:239` - error: Unsupported target for indexed assignment ("str | list[str | dict[Any, Any]]")  [index]
   - ID: 7ceea6ed
 - ... and 23 more
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:222` - error: Unsupported operand types for + ("str" and "list[str | dict[Any, Any]]") [operator]
+- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:222` - error: Unsupported operand types for + ("str" and "list[str | dict[Any, Any]]")  [operator]
   - ID: 34912061
-- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:222` - error: Unsupported operand types for + ("str" and "list[str | dict[Any, Any]]") [operator]
+- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:222` - error: Unsupported operand types for + ("str" and "list[str | dict[Any, Any]]")  [operator]
   - ID: 34912061
-- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:332` - note: def **add**(self, list[str | dict[Any, Any]], /) -> list[str | dict[Any, Any]]
+- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:332` - note:     def __add__(self, list[str | dict[Any, Any]], /) -> list[str | dict[Any, Any]]
   - ID: 2af079e2
-- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:332` - note: def **add**(self, list[str | dict[Any, Any]], /) -> list[str | dict[Any, Any]]
+- `packages/haive-prebuilt/src/haive/prebuilt/systemic_review_of_scientific_articles/nodes.py:332` - note:     def __add__(self, list[str | dict[Any, Any]], /) -> list[str | dict[Any, Any]]
   - ID: 2af079e2
 - `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/nodes.py:30` - error: Argument 1 to "extract_score" has incompatible type "str | list[str | dict[Any, Any]]"; expec
   - ID: 1dca8f10
@@ -6766,6 +6848,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, Agent? (2 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_generic.py:334` - error: Type argument "ReportTeamAgents" of "MultiAgent" must be a subtype of "dict[str, Agent?] | li
@@ -6774,6 +6857,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 4676943e
 
 ## mypy:str, AnalysisResult (17 errors)
+
 
 ### haive-core
 
@@ -6801,182 +6885,184 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, Any (583 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/specialized_workflows_v2.py:96` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/specialized_workflows_v2.py:96` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 28ec0cab
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/specialized_workflows_v2.py:183` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/specialized_workflows_v2.py:183` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 6e9452e8
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/specialized_workflows_v2.py:289` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/specialized_workflows_v2.py:289` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 4183c9c2
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/specialized_workflows_v2.py:376` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/specialized_workflows_v2.py:376` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 9138e71b
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/graded_rag_workflows_v2.py:124` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/graded_rag_workflows_v2.py:124` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 7fe3de7d
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/graded_rag_workflows_v2.py:190` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/graded_rag_workflows_v2.py:190` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: c0724b52
-- `packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/example.py:85` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/example.py:85` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 8fc67601
-- `packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/example.py:129` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/example.py:129` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 4dbfb1d7
-- `packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/example.py:162` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/example.py:162` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 402e8de3
-- `packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/example.py:215` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/example.py:215` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 28f5b162
 - ... and 197 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/node/composer/update_functions.py:102` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/node/composer/update_functions.py:102` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 4d450693
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/local/pdf.py:94` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/local/pdf.py:94` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 32e673bd
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/local/pdf.py:156` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/local/pdf.py:156` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 898c5aae
 - `packages/haive-core/src/haive/core/schema/compatibility/field_mapping.py:144` - error: Incompatible types in assignment (expression has type "Any | None", variable has type "dict[s
   - ID: 0d6d0aac
 - `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:231` - error: Incompatible types in assignment (expression has type "None", variable has type "dict[str, An
   - ID: 2645e63f
-- `packages/haive-core/src/haive/core/models/metadata_mixin.py:193` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/models/metadata_mixin.py:193` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: fdc3da41
-- `packages/haive-core/src/haive/core/graph/state_graph/components/node_manager.py:439` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/state_graph/components/node_manager.py:439` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 9a99b5d9
-- `packages/haive-core/src/haive/core/graph/state_graph/components/edge_manager.py:414` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/state_graph/components/edge_manager.py:414` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: daa00feb
-- `packages/haive-core/src/haive/core/engine/document/loaders/cache_manager.py:87` - error: Returning Any from function declared to return "dict[str, Any] | None" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/document/loaders/cache_manager.py:87` - error: Returning Any from function declared to return "dict[str, Any] | None"  [no-any-return]
   - ID: c8a358ae
-- `packages/haive-core/src/haive/core/engine/agent/persistence/factory.py:100` - error: Returning Any from function declared to return "dict[str, Any] | None" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/agent/persistence/factory.py:100` - error: Returning Any from function declared to return "dict[str, Any] | None"  [no-any-return]
   - ID: 5325cced
 - ... and 179 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/core.py:1251` - error: Returning Any from function declared to return "dict[str, Any] | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:1251` - error: Returning Any from function declared to return "dict[str, Any] | None"  [no-any-return]
   - ID: a1c80710
-- `packages/haive-dataflow/src/haive/dataflow/core.py:1265` - error: Returning Any from function declared to return "dict[str, Any] | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:1265` - error: Returning Any from function declared to return "dict[str, Any] | None"  [no-any-return]
   - ID: 695d8814
 - `packages/haive-dataflow/src/haive/dataflow/utils/logging.py:178` - error: Incompatible types in assignment (expression has type "dict[str, Any]", target has type "str"
   - ID: 939a1550
 - `packages/haive-dataflow/src/haive/dataflow/registry/utils/logging.py:178` - error: Incompatible types in assignment (expression has type "dict[str, Any]", target has type "str"
   - ID: fbd4e16d
-- `packages/haive-dataflow/src/haive/dataflow/registry/importers/litellm_importer.py:148` - error: Returning Any from function declared to return "dict[str, Any] | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/importers/litellm_importer.py:148` - error: Returning Any from function declared to return "dict[str, Any] | None"  [no-any-return]
   - ID: 713c01f6
-- `packages/haive-dataflow/src/haive/dataflow/registry/importers/litellm_importer.py:193` - error: Returning Any from function declared to return "dict[str, Any] | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/importers/litellm_importer.py:193` - error: Returning Any from function declared to return "dict[str, Any] | None"  [no-any-return]
   - ID: 712385f2
-- `packages/haive-dataflow/src/haive/dataflow/importers/litellm_importer.py:105` - error: Returning Any from function declared to return "dict[str, Any] | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/importers/litellm_importer.py:105` - error: Returning Any from function declared to return "dict[str, Any] | None"  [no-any-return]
   - ID: 34c75952
-- `packages/haive-dataflow/src/haive/dataflow/importers/litellm_importer.py:150` - error: Returning Any from function declared to return "dict[str, Any] | None" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/importers/litellm_importer.py:150` - error: Returning Any from function declared to return "dict[str, Any] | None"  [no-any-return]
   - ID: 26ee3614
 - `packages/haive-dataflow/src/haive/dataflow/serialization.py:341` - error: Incompatible types in assignment (expression has type "dict[str, Any]", target has type "Sequ
   - ID: 6d35cb6d
-- `packages/haive-dataflow/src/haive/dataflow/serialization.py:362` - error: Incompatible return value type (got "dict[str, Any]", expected "type[BaseModel] | None") [re
+- `packages/haive-dataflow/src/haive/dataflow/serialization.py:362` - error: Incompatible return value type (got "dict[str, Any]", expected "type[BaseModel] | None")  [re
   - ID: ec12be77
 - ... and 21 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/debate/state_manager.py:327` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/debate/state_manager.py:327` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 7a27f229
-- `packages/haive-games/src/haive/games/clue/agent.py:264` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/clue/agent.py:264` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 1a2bef85
-- `packages/haive-games/src/haive/games/clue/agent.py:475` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/clue/agent.py:475` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: b4607fb3
-- `packages/haive-games/src/haive/games/clue/agent.py:476` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/clue/agent.py:476` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: d6a85c53
-- `packages/haive-games/src/haive/games/mafia/agent.py:1271` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/mafia/agent.py:1271` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 482ffb37
-- `packages/haive-games/src/haive/games/mafia/agent.py:1273` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-games/src/haive/games/mafia/agent.py:1273` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: b1b0e41e
-- `packages/haive-games/src/haive/games/tic_tac_toe/ui.py:407` - error: Incompatible return value type (got "Any | None", expected "dict[str, Any]") [return-value]
+- `packages/haive-games/src/haive/games/tic_tac_toe/ui.py:407` - error: Incompatible return value type (got "Any | None", expected "dict[str, Any]")  [return-value]
   - ID: c617bddd
-- `packages/haive-games/src/haive/games/hold_em/ui.py:84` - error: Item "dict[str, Any]" of "dict[str, Any] | Any" has no attribute "current_phase" [union-attr
+- `packages/haive-games/src/haive/games/hold_em/ui.py:84` - error: Item "dict[str, Any]" of "dict[str, Any] | Any" has no attribute "current_phase"  [union-attr
   - ID: 4d7b37ae
-- `packages/haive-games/src/haive/games/hold_em/ui.py:85` - error: Item "dict[str, Any]" of "dict[str, Any] | Any" has no attribute "hand_number" [union-attr]
+- `packages/haive-games/src/haive/games/hold_em/ui.py:85` - error: Item "dict[str, Any]" of "dict[str, Any] | Any" has no attribute "hand_number"  [union-attr]
   - ID: e56d6fb9
-- `packages/haive-games/src/haive/games/hold_em/ui.py:160` - error: "dict[str, Any]" has no attribute "dealer_position" [attr-defined]
+- `packages/haive-games/src/haive/games/hold_em/ui.py:160` - error: "dict[str, Any]" has no attribute "dealer_position"  [attr-defined]
   - ID: a407ee4f
 - ... and 117 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/fastmcp_runner.py:43` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/fastmcp_runner.py:43` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 963b450a
 - `packages/haive-mcp/src/haive/mcp/fastmcp_runner.py:323` - error: Incompatible types in assignment (expression has type "dict[str, Any]", variable has type "li
   - ID: a80f8810
-- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:90` - error: Returning Any from function declared to return "dict[str, Any] | None" [no-any-return]
+- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:90` - error: Returning Any from function declared to return "dict[str, Any] | None"  [no-any-return]
   - ID: 2e3a916c
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:755` - error: Item "BaseException" of "dict[str, Any] | BaseException" has no attribute "get" [union-attr]
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:755` - error: Item "BaseException" of "dict[str, Any] | BaseException" has no attribute "get"  [union-attr]
   - ID: 0b7e9d7a
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:761` - error: Item "BaseException" of "dict[str, Any] | BaseException" has no attribute "get" [union-attr]
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:761` - error: Item "BaseException" of "dict[str, Any] | BaseException" has no attribute "get"  [union-attr]
   - ID: a74286c8
 - `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:898` - error: Incompatible types in assignment (expression has type "ServerConfig", variable has type "dict
   - ID: 59b4f820
-- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:899` - error: "dict[str, Any]" has no attribute "name" [attr-defined]
+- `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:899` - error: "dict[str, Any]" has no attribute "name"  [attr-defined]
   - ID: e70fd91b
 - `packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py:900` - error: Argument 1 to "append" of "list" has incompatible type "dict[str, Any]"; expected "ServerConf
   - ID: e6a6d9d8
-- `packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py:296` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
-  - ID: c8fca9af
 - `packages/haive-mcp/src/haive/mcp/downloader/core.py:542` - error: Incompatible types in assignment (expression has type "DownloadResult", variable has type "di
   - ID: 94074eaf
+- `packages/haive-mcp/src/haive/mcp/downloader/core.py:554` - error: Item "dict[str, Any]" of "dict[str, Any] | BaseException" has no attribute "success_rate"  [u
+  - ID: 9930be04
 - ... and 8 more
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/project_creation/github.py:175` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/project_creation/github.py:175` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: af0f46c0
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/project_creation/github.py:224` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/project_creation/github.py:224` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 75a986f1
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/project_creation/github.py:253` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/project_creation/github.py:253` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 24825a08
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/project_creation/github.py:289` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/project_creation/github.py:289` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 66e80517
-- `packages/haive-tools/src/haive/tools/tools/fruityvice_tool.py:57` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/fruityvice_tool.py:57` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 16ff6be2
-- `packages/haive-tools/src/haive/tools/tools/toolkits/rick_and_morty_toolkit.py:75` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/rick_and_morty_toolkit.py:75` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 8380ad62
-- `packages/haive-tools/src/haive/tools/tools/toolkits/rick_and_morty_toolkit.py:137` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/rick_and_morty_toolkit.py:137` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 6778bdfe
-- `packages/haive-tools/src/haive/tools/tools/toolkits/rick_and_morty_toolkit.py:210` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/rick_and_morty_toolkit.py:210` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: 4488097d
-- `packages/haive-tools/src/haive/tools/tools/toolkits/rick_and_morty_toolkit.py:262` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/rick_and_morty_toolkit.py:262` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: dbff7eaa
-- `packages/haive-tools/src/haive/tools/tools/toolkits/fred_toolkit.py:66` - error: Returning Any from function declared to return "dict[str, Any]" [no-any-return]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/fred_toolkit.py:66` - error: Returning Any from function declared to return "dict[str, Any]"  [no-any-return]
   - ID: e98d4c41
 - ... and 1 more
 
 ## mypy:str, Callable[..., Any (28 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/base/agent.py:348` - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., **doc**: str | None = ...
+- `packages/haive-agents/src/haive/agents/base/agent.py:348` - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc__: str | None = ...
   - ID: a1e36670
-- `packages/haive-agents/src/haive/agents/research/person/agent.py:408` - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., **doc**: str | None = ...
+- `packages/haive-agents/src/haive/agents/research/person/agent.py:408` - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc__: str | None = ...
   - ID: 564d3c71
-- `packages/haive-agents/src/haive/agents/multi/archive/enhanced_base.py:517` - error: Item "None" of "dict[str, Callable[..., Any]] | None" has no attribute "items" [union-attr]
+- `packages/haive-agents/src/haive/agents/multi/archive/enhanced_base.py:517` - error: Item "None" of "dict[str, Callable[..., Any]] | None" has no attribute "items"  [union-attr]
   - ID: 06cdd86e
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/haive_discovery/base_analyzer.py:159` - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., **doc**: str | None = ...
+- `packages/haive-core/src/haive/core/utils/haive_discovery/base_analyzer.py:159` - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc__: str | None = ...
   - ID: f023cc2d
-- `packages/haive-core/src/haive/core/schema/utils.py:306` - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., **doc**: str | None = ...
+- `packages/haive-core/src/haive/core/schema/utils.py:306` - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc__: str | None = ...
   - ID: 624ab847
-- `packages/haive-core/src/haive/core/schema/utils.py:363` - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., **doc**: str | None = ...
+- `packages/haive-core/src/haive/core/schema/utils.py:363` - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc__: str | None = ...
   - ID: 09b7c4d1
-- `packages/haive-core/src/haive/core/schema/schema_manager.py:915` - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., **doc**: str | None = ...
+- `packages/haive-core/src/haive/core/schema/schema_manager.py:915` - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc__: str | None = ...
   - ID: f501a104
-- `packages/haive-core/src/haive/core/schema/multi_agent_state_schema.py:111` - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., **doc**: str | None = ...
+- `packages/haive-core/src/haive/core/schema/multi_agent_state_schema.py:111` - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc__: str | None = ...
   - ID: 49c904b6
-- `packages/haive-core/src/haive/core/schema/composer/schema_composer.py:188` - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., **doc**: str | None = ...
+- `packages/haive-core/src/haive/core/schema/composer/schema_composer.py:188` - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc__: str | None = ...
   - ID: a0d8b80e
-- `packages/haive-core/src/haive/core/schema/composer/_base.py:152` - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., **doc**: str | None = ...
+- `packages/haive-core/src/haive/core/schema/composer/_base.py:152` - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc__: str | None = ...
   - ID: ea133a96
-- `packages/haive-core/src/haive/core/schema/compatibility/mergers.py:395` - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., **doc**: str | None = ...
+- `packages/haive-core/src/haive/core/schema/compatibility/mergers.py:395` - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc__: str | None = ...
   - ID: 3c80051c
-- `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:294` - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., **doc**: str | None = ...
+- `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:294` - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc__: str | None = ...
   - ID: 34b47de1
-- `packages/haive-core/src/haive/core/engine/document/loaders/registry.py:275` - note: def create_model(str, /, \*, **config**: ConfigDict | None = ..., **doc**: str | None = ...
+- `packages/haive-core/src/haive/core/engine/document/loaders/registry.py:275` - note:     def create_model(str, /, *, __config__: ConfigDict | None = ..., __doc__: str | None = ...
   - ID: ab28bcf0
 - ... and 13 more
 
@@ -6989,47 +7075,50 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, Callable[[BaseCursor[Any, Any (12 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/persistence/store/postgres.py:112` - error: Argument 2 has incompatible type "\*\*dict[str, Callable[[BaseCursor[Any, Any]], RowMaker[dict[
+- `packages/haive-core/src/haive/core/persistence/store/postgres.py:112` - error: Argument 2 has incompatible type "**dict[str, Callable[[BaseCursor[Any, Any]], RowMaker[dict[
   - ID: f4d67063
-- `packages/haive-core/src/haive/core/persistence/store/postgres.py:112` - error: Argument 2 has incompatible type "\*\*dict[str, Callable[[BaseCursor[Any, Any]], RowMaker[dict[
+- `packages/haive-core/src/haive/core/persistence/store/postgres.py:112` - error: Argument 2 has incompatible type "**dict[str, Callable[[BaseCursor[Any, Any]], RowMaker[dict[
   - ID: f4d67063
-- `packages/haive-core/src/haive/core/persistence/store/postgres.py:112` - error: Argument 2 has incompatible type "\*\*dict[str, Callable[[BaseCursor[Any, Any]], RowMaker[dict[
+- `packages/haive-core/src/haive/core/persistence/store/postgres.py:112` - error: Argument 2 has incompatible type "**dict[str, Callable[[BaseCursor[Any, Any]], RowMaker[dict[
   - ID: f4d67063
-- `packages/haive-core/src/haive/core/persistence/store/postgres.py:112` - error: Argument 2 has incompatible type "\*\*dict[str, Callable[[BaseCursor[Any, Any]], RowMaker[dict[
+- `packages/haive-core/src/haive/core/persistence/store/postgres.py:112` - error: Argument 2 has incompatible type "**dict[str, Callable[[BaseCursor[Any, Any]], RowMaker[dict[
   - ID: f4d67063
-- `packages/haive-core/src/haive/core/persistence/store/postgres.py:112` - error: Argument 2 has incompatible type "\*\*dict[str, Callable[[BaseCursor[Any, Any]], RowMaker[dict[
+- `packages/haive-core/src/haive/core/persistence/store/postgres.py:112` - error: Argument 2 has incompatible type "**dict[str, Callable[[BaseCursor[Any, Any]], RowMaker[dict[
   - ID: f4d67063
-- `packages/haive-core/src/haive/core/persistence/store/postgres.py:112` - error: Argument 2 has incompatible type "\*\*dict[str, Callable[[BaseCursor[Any, Any]], RowMaker[dict[
+- `packages/haive-core/src/haive/core/persistence/store/postgres.py:112` - error: Argument 2 has incompatible type "**dict[str, Callable[[BaseCursor[Any, Any]], RowMaker[dict[
   - ID: f4d67063
-- `packages/haive-core/src/haive/core/persistence/store/postgres.py:263` - error: Argument 2 to "connect" of "AsyncConnection" has incompatible type "\*\*dict[str, Callable[[Bas
+- `packages/haive-core/src/haive/core/persistence/store/postgres.py:263` - error: Argument 2 to "connect" of "AsyncConnection" has incompatible type "**dict[str, Callable[[Bas
   - ID: 35b5a73f
-- `packages/haive-core/src/haive/core/persistence/store/postgres.py:263` - error: Argument 2 to "connect" of "AsyncConnection" has incompatible type "\*\*dict[str, Callable[[Bas
+- `packages/haive-core/src/haive/core/persistence/store/postgres.py:263` - error: Argument 2 to "connect" of "AsyncConnection" has incompatible type "**dict[str, Callable[[Bas
   - ID: 35b5a73f
-- `packages/haive-core/src/haive/core/persistence/store/postgres.py:263` - error: Argument 2 to "connect" of "AsyncConnection" has incompatible type "\*\*dict[str, Callable[[Bas
+- `packages/haive-core/src/haive/core/persistence/store/postgres.py:263` - error: Argument 2 to "connect" of "AsyncConnection" has incompatible type "**dict[str, Callable[[Bas
   - ID: 35b5a73f
-- `packages/haive-core/src/haive/core/persistence/store/postgres.py:263` - error: Argument 2 to "connect" of "AsyncConnection" has incompatible type "\*\*dict[str, Callable[[Bas
+- `packages/haive-core/src/haive/core/persistence/store/postgres.py:263` - error: Argument 2 to "connect" of "AsyncConnection" has incompatible type "**dict[str, Callable[[Bas
   - ID: 35b5a73f
 - ... and 2 more
 
 ## mypy:str, Collection[str (4 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/memory_v2/kg_memory_agent.py:134` - error: Incompatible types in assignment (expression has type "dict[str, Collection[str]]", variable
+- `packages/haive-agents/src/haive/agents/memory_v2/kg_memory_agent.py:134` - error: Incompatible types in assignment (expression has type "dict[str, Collection[str]]", variable 
   - ID: 8969b036
-- `packages/haive-agents/src/haive/agents/memory_v2/kg_memory_agent.py:142` - error: Incompatible types in assignment (expression has type "dict[str, Collection[str]]", variable
+- `packages/haive-agents/src/haive/agents/memory_v2/kg_memory_agent.py:142` - error: Incompatible types in assignment (expression has type "dict[str, Collection[str]]", variable 
   - ID: 2db9bcc0
-- `packages/haive-agents/src/haive/agents/memory_v2/kg_memory_agent.py:186` - error: Incompatible types in assignment (expression has type "dict[str, Collection[str]]", variable
+- `packages/haive-agents/src/haive/agents/memory_v2/kg_memory_agent.py:186` - error: Incompatible types in assignment (expression has type "dict[str, Collection[str]]", variable 
   - ID: 1b7fac6e
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/connect4/ui.py:287` - error: Invalid index type "str | None" for "dict[str, Collection[str]]"; expected type "str" [index
+- `packages/haive-games/src/haive/games/connect4/ui.py:287` - error: Invalid index type "str | None" for "dict[str, Collection[str]]"; expected type "str"  [index
   - ID: ecea82d5
 
 ## mypy:str, Coroutine[Any, Any, list[dict[str, Any (2 errors)
+
 
 ### haive-agents
 
@@ -7040,6 +7129,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, Coroutine[Any, Any, str (2 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/memory_v2/standalone_rag_memory.py:631` - error: Argument 1 to "append" of "list" has incompatible type "tuple[str, Coroutine[Any, Any, str]]"
@@ -7049,12 +7139,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, SerializableModel (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/state_graph/base.py:110` - error: Returning Any from function declared to return "dict[str, SerializableModel]" [no-any-return
+- `packages/haive-core/src/haive/core/graph/state_graph/base.py:110` - error: Returning Any from function declared to return "dict[str, SerializableModel]"  [no-any-return
   - ID: ce2c4c0f
 
 ## mypy:str, SimpleAgent (4 errors)
+
 
 ### haive-agents
 
@@ -7069,20 +7161,22 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, StoreType (5 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/persistence/store/factory.py:160` - error: Argument 1 to "StoreConfig" has incompatible type "\*\*dict[str, StoreType]"; expected "dict[st
+- `packages/haive-core/src/haive/core/persistence/store/factory.py:160` - error: Argument 1 to "StoreConfig" has incompatible type "**dict[str, StoreType]"; expected "dict[st
   - ID: 054f0a42
-- `packages/haive-core/src/haive/core/persistence/store/factory.py:160` - error: Argument 1 to "StoreConfig" has incompatible type "\*\*dict[str, StoreType]"; expected "dict[st
+- `packages/haive-core/src/haive/core/persistence/store/factory.py:160` - error: Argument 1 to "StoreConfig" has incompatible type "**dict[str, StoreType]"; expected "dict[st
   - ID: 054f0a42
-- `packages/haive-core/src/haive/core/persistence/store/factory.py:160` - error: Argument 1 to "StoreConfig" has incompatible type "\*\*dict[str, StoreType]"; expected "dict[st
+- `packages/haive-core/src/haive/core/persistence/store/factory.py:160` - error: Argument 1 to "StoreConfig" has incompatible type "**dict[str, StoreType]"; expected "dict[st
   - ID: 054f0a42
-- `packages/haive-core/src/haive/core/persistence/store/factory.py:160` - error: Argument 1 to "StoreConfig" has incompatible type "\*\*dict[str, StoreType]"; expected "dict[st
+- `packages/haive-core/src/haive/core/persistence/store/factory.py:160` - error: Argument 1 to "StoreConfig" has incompatible type "**dict[str, StoreType]"; expected "dict[st
   - ID: 054f0a42
-- `packages/haive-core/src/haive/core/persistence/store/factory.py:160` - error: Argument 1 to "StoreConfig" has incompatible type "\*\*dict[str, StoreType]"; expected "dict[st
+- `packages/haive-core/src/haive/core/persistence/store/factory.py:160` - error: Argument 1 to "StoreConfig" has incompatible type "**dict[str, StoreType]"; expected "dict[st
   - ID: 054f0a42
 
 ## mypy:str, TypeInfo (1 errors)
+
 
 ### haive-core
 
@@ -7091,9 +7185,10 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, bool (2 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/base/universal_agent.py:143` - error: Returning Any from function declared to return "dict[str, bool]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/base/universal_agent.py:143` - error: Returning Any from function declared to return "dict[str, bool]"  [no-any-return]
   - ID: 2279209a
 
 ### haive-core
@@ -7103,28 +7198,32 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, datetime (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/prebuilt/query_state.py:480` - error: Incompatible types in assignment (expression has type "dict[str, datetime]", target has type
+- `packages/haive-core/src/haive/core/schema/prebuilt/query_state.py:480` - error: Incompatible types in assignment (expression has type "dict[str, datetime]", target has type 
   - ID: 91d092d6
 
 ## mypy:str, dict[str, Any (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:414` - error: Returning Any from function declared to return "tuple[str, dict[str, Any] | None]" [no-any-r
+- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:414` - error: Returning Any from function declared to return "tuple[str, dict[str, Any] | None]"  [no-any-r
   - ID: 15e2fbee
 
 ## mypy:str, dict[str, Collection[str (2 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/types/advanced_registry.py:174` - error: Argument 1 to "TextPipeline" has incompatible type "\*\*dict[str, dict[str, Collection[str]]]";
+- `packages/haive-core/src/haive/core/types/advanced_registry.py:174` - error: Argument 1 to "TextPipeline" has incompatible type "**dict[str, dict[str, Collection[str]]]";
   - ID: 39a1b550
-- `packages/haive-core/src/haive/core/types/advanced_registry.py:174` - error: Argument 1 to "TextPipeline" has incompatible type "\*\*dict[str, dict[str, Collection[str]]]";
+- `packages/haive-core/src/haive/core/types/advanced_registry.py:174` - error: Argument 1 to "TextPipeline" has incompatible type "**dict[str, dict[str, Collection[str]]]";
   - ID: 39a1b550
 
 ## mypy:str, dict[str, int (2 errors)
+
 
 ### haive-games
 
@@ -7135,12 +7234,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, dict[str, int | None (1 errors)
 
+
 ### haive-games
 
 - `packages/haive-games/src/haive/games/battleship/config.py:132` - error: Incompatible types in assignment (expression has type "dict[str, dict[str, int | None]]", var
   - ID: 7a161f2f
 
 ## mypy:str, dict[str, object (2 errors)
+
 
 ### haive-agents
 
@@ -7154,6 +7255,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, dict[str, str (5 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/react_class/react_agent2/config2.py:82` - error: Incompatible types in assignment (expression has type "dict[str, dict[str, str]]", variable h
@@ -7165,21 +7267,22 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/config/auth_runnable.py:533` - error: Incompatible return value type (got "dict[str, dict[str, str]]", expected "RunnableConfig")
+- `packages/haive-core/src/haive/core/config/auth_runnable.py:533` - error: Incompatible return value type (got "dict[str, dict[str, str]]", expected "RunnableConfig")  
   - ID: cb72fc44
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/debate/factory.py:137` - error: Invalid index type "Any | None" for "dict[str, dict[str, str]]"; expected type "str" [index]
+- `packages/haive-games/src/haive/games/debate/factory.py:137` - error: Invalid index type "Any | None" for "dict[str, dict[str, str]]"; expected type "str"  [index]
   - ID: 8174d189
 
 ## mypy:str, float (4 errors)
+
 
 ### haive-core
 
 - `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:130` - error: Incompatible types in assignment (expression has type "None", variable has type "dict[str, fl
   - ID: 57514d64
-- `packages/haive-core/src/haive/core/models/metadata_mixin.py:130` - error: Returning Any from function declared to return "dict[str, float]" [no-any-return]
+- `packages/haive-core/src/haive/core/models/metadata_mixin.py:130` - error: Returning Any from function declared to return "dict[str, float]"  [no-any-return]
   - ID: dc2bba5a
 - `packages/haive-core/src/haive/core/tools/store_manager.py:264` - error: Incompatible types in assignment (expression has type "dict[str, float]", target has type "st
   - ID: 743e7a8d
@@ -7191,90 +7294,94 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, int (46 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/react/dynamic_react_agent.v2.py:1048` - error: Returning Any from function declared to return "dict[str, int]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/react/dynamic_react_agent.v2.py:1048` - error: Returning Any from function declared to return "dict[str, int]"  [no-any-return]
   - ID: ba58b680
-- `packages/haive-agents/src/haive/agents/react/dynamic_react_agent.py:1041` - error: Returning Any from function declared to return "dict[str, int]" [no-any-return]
+- `packages/haive-agents/src/haive/agents/react/dynamic_react_agent.py:1041` - error: Returning Any from function declared to return "dict[str, int]"  [no-any-return]
   - ID: c26f36e8
-- `packages/haive-agents/src/haive/agents/common/utils/pydantic_prompt_utils.py:272` - error: Item "None" of "dict[str, int] | None" has no attribute "get" [union-attr]
+- `packages/haive-agents/src/haive/agents/common/utils/pydantic_prompt_utils.py:272` - error: Item "None" of "dict[str, int] | None" has no attribute "get"  [union-attr]
   - ID: 5efe6573
 - `packages/haive-agents/src/haive/agents/memory_v2/graph_memory_agent.py:701` - error: Incompatible types in assignment (expression has type "dict[str, int]", target has type "str"
   - ID: 37c1cf08
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:417` - error: Argument 3 to "CharacterTextSplitter" has incompatible type "\*\*dict[str, int]"; expected "boo
+- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:417` - error: Argument 3 to "CharacterTextSplitter" has incompatible type "**dict[str, int]"; expected "boo
   - ID: cdabb010
-- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:425` - error: Argument 3 to "RecursiveCharacterTextSplitter" has incompatible type "\*\*dict[str, int]"; expe
+- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:425` - error: Argument 3 to "RecursiveCharacterTextSplitter" has incompatible type "**dict[str, int]"; expe
   - ID: a7c01f24
-- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:429` - error: Argument 1 to "TokenTextSplitter" has incompatible type "\*\*dict[str, int]"; expected "str" [
+- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:429` - error: Argument 1 to "TokenTextSplitter" has incompatible type "**dict[str, int]"; expected "str"  [
   - ID: 3da648f8
-- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:429` - error: Argument 1 to "TokenTextSplitter" has incompatible type "\*\*dict[str, int]"; expected "str" [
+- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:429` - error: Argument 1 to "TokenTextSplitter" has incompatible type "**dict[str, int]"; expected "str"  [
   - ID: 3da648f8
-- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:429` - error: Argument 1 to "TokenTextSplitter" has incompatible type "\*\*dict[str, int]"; expected "str" [
+- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:429` - error: Argument 1 to "TokenTextSplitter" has incompatible type "**dict[str, int]"; expected "str"  [
   - ID: 3da648f8
-- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:429` - error: Argument 1 to "TokenTextSplitter" has incompatible type "\*\*dict[str, int]"; expected "str" [
+- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:429` - error: Argument 1 to "TokenTextSplitter" has incompatible type "**dict[str, int]"; expected "str"  [
   - ID: 3da648f8
-- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:432` - error: Argument 1 to "NLTKTextSplitter" has incompatible type "\*\*dict[str, int]"; expected "str" [a
+- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:432` - error: Argument 1 to "NLTKTextSplitter" has incompatible type "**dict[str, int]"; expected "str"  [a
   - ID: 85ba7f0e
-- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:432` - error: Argument 1 to "NLTKTextSplitter" has incompatible type "\*\*dict[str, int]"; expected "str" [a
+- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:432` - error: Argument 1 to "NLTKTextSplitter" has incompatible type "**dict[str, int]"; expected "str"  [a
   - ID: 85ba7f0e
-- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:435` - error: Argument 1 to "SpacyTextSplitter" has incompatible type "\*\*dict[str, int]"; expected "str" [
+- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:435` - error: Argument 1 to "SpacyTextSplitter" has incompatible type "**dict[str, int]"; expected "str"  [
   - ID: cafddac7
-- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:435` - error: Argument 1 to "SpacyTextSplitter" has incompatible type "\*\*dict[str, int]"; expected "str" [
+- `packages/haive-core/src/haive/core/engine/document/splitters/engine.py:435` - error: Argument 1 to "SpacyTextSplitter" has incompatible type "**dict[str, int]"; expected "str"  [
   - ID: cafddac7
 - ... and 19 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/checkers/example.py:265` - error: Unsupported operand types for + ("int" and "dict[str, int]") [operator]
+- `packages/haive-games/src/haive/games/checkers/example.py:265` - error: Unsupported operand types for + ("int" and "dict[str, int]")  [operator]
   - ID: 5fda1b6f
-- `packages/haive-games/src/haive/games/checkers/example.py:265` - error: Unsupported operand types for + ("int" and "dict[str, int]") [operator]
+- `packages/haive-games/src/haive/games/checkers/example.py:265` - error: Unsupported operand types for + ("int" and "dict[str, int]")  [operator]
   - ID: 5fda1b6f
-- `packages/haive-games/src/haive/games/checkers/example.py:266` - error: Unsupported left operand type for \* ("dict[str, int]") [operator]
+- `packages/haive-games/src/haive/games/checkers/example.py:266` - error: Unsupported left operand type for * ("dict[str, int]")  [operator]
   - ID: 7103e89a
-- `packages/haive-games/src/haive/games/checkers/example.py:266` - error: Unsupported left operand type for \* ("dict[str, int]") [operator]
+- `packages/haive-games/src/haive/games/checkers/example.py:266` - error: Unsupported left operand type for * ("dict[str, int]")  [operator]
   - ID: 7103e89a
-- `packages/haive-games/src/haive/games/checkers/example.py:266` - error: Unsupported left operand type for \* ("dict[str, int]") [operator]
+- `packages/haive-games/src/haive/games/checkers/example.py:266` - error: Unsupported left operand type for * ("dict[str, int]")  [operator]
   - ID: 7103e89a
-- `packages/haive-games/src/haive/games/checkers/example.py:266` - error: Unsupported left operand type for \* ("dict[str, int]") [operator]
+- `packages/haive-games/src/haive/games/checkers/example.py:266` - error: Unsupported left operand type for * ("dict[str, int]")  [operator]
   - ID: 7103e89a
-- `packages/haive-games/src/haive/games/checkers/example.py:266` - error: Unsupported left operand type for \* ("dict[str, int]") [operator]
+- `packages/haive-games/src/haive/games/checkers/example.py:266` - error: Unsupported left operand type for * ("dict[str, int]")  [operator]
   - ID: 7103e89a
-- `packages/haive-games/src/haive/games/checkers/example.py:270` - error: Value of type "dict[str, int] | float | int" is not indexable [index]
+- `packages/haive-games/src/haive/games/checkers/example.py:270` - error: Value of type "dict[str, int] | float | int" is not indexable  [index]
   - ID: 3dc2e579
-- `packages/haive-games/src/haive/games/checkers/example.py:271` - error: Unsupported operand types for + ("int" and "dict[str, int]") [operator]
+- `packages/haive-games/src/haive/games/checkers/example.py:271` - error: Unsupported operand types for + ("int" and "dict[str, int]")  [operator]
   - ID: 21e1698c
-- `packages/haive-games/src/haive/games/checkers/example.py:271` - error: Unsupported operand types for + ("int" and "dict[str, int]") [operator]
+- `packages/haive-games/src/haive/games/checkers/example.py:271` - error: Unsupported operand types for + ("int" and "dict[str, int]")  [operator]
   - ID: 21e1698c
 - ... and 3 more
 
 ## mypy:str, int | list[dict[str, object (6 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/retriever/providers/CohereRagRetrieverConfig.py:211` - error: Argument 2 to "CohereRagRetriever" has incompatible type "\*\*dict[str, int | list[dict[str, ob
+- `packages/haive-core/src/haive/core/engine/retriever/providers/CohereRagRetrieverConfig.py:211` - error: Argument 2 to "CohereRagRetriever" has incompatible type "**dict[str, int | list[dict[str, ob
   - ID: f98b782b
-- `packages/haive-core/src/haive/core/engine/retriever/providers/CohereRagRetrieverConfig.py:211` - error: Argument 2 to "CohereRagRetriever" has incompatible type "\*\*dict[str, int | list[dict[str, ob
+- `packages/haive-core/src/haive/core/engine/retriever/providers/CohereRagRetrieverConfig.py:211` - error: Argument 2 to "CohereRagRetriever" has incompatible type "**dict[str, int | list[dict[str, ob
   - ID: f98b782b
-- `packages/haive-core/src/haive/core/engine/retriever/providers/CohereRagRetrieverConfig.py:211` - error: Argument 2 to "CohereRagRetriever" has incompatible type "\*\*dict[str, int | list[dict[str, ob
+- `packages/haive-core/src/haive/core/engine/retriever/providers/CohereRagRetrieverConfig.py:211` - error: Argument 2 to "CohereRagRetriever" has incompatible type "**dict[str, int | list[dict[str, ob
   - ID: f98b782b
-- `packages/haive-core/src/haive/core/engine/retriever/providers/CohereRagRetrieverConfig.py:211` - error: Argument 2 to "CohereRagRetriever" has incompatible type "\*\*dict[str, int | list[dict[str, ob
+- `packages/haive-core/src/haive/core/engine/retriever/providers/CohereRagRetrieverConfig.py:211` - error: Argument 2 to "CohereRagRetriever" has incompatible type "**dict[str, int | list[dict[str, ob
   - ID: f98b782b
-- `packages/haive-core/src/haive/core/engine/retriever/providers/CohereRagRetrieverConfig.py:211` - error: Argument 2 to "CohereRagRetriever" has incompatible type "\*\*dict[str, int | list[dict[str, ob
+- `packages/haive-core/src/haive/core/engine/retriever/providers/CohereRagRetrieverConfig.py:211` - error: Argument 2 to "CohereRagRetriever" has incompatible type "**dict[str, int | list[dict[str, ob
   - ID: f98b782b
-- `packages/haive-core/src/haive/core/engine/retriever/providers/CohereRagRetrieverConfig.py:211` - error: Argument 2 to "CohereRagRetriever" has incompatible type "\*\*dict[str, int | list[dict[str, ob
+- `packages/haive-core/src/haive/core/engine/retriever/providers/CohereRagRetrieverConfig.py:211` - error: Argument 2 to "CohereRagRetriever" has incompatible type "**dict[str, int | list[dict[str, ob
   - ID: f98b782b
 
 ## mypy:str, int | list[str (1 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/config.py:175` - error: Argument 2 to "from_uri" of "SQLDatabase" has incompatible type "\*\*dict[str, int | list[str]
+- `packages/haive-agents/src/haive/agents/rag/db_rag/sql_rag/config.py:175` - error: Argument 2 to "from_uri" of "SQLDatabase" has incompatible type "**dict[str, int | list[str] 
   - ID: 344329ec
 
 ## mypy:str, list[Any (6 errors)
+
 
 ### haive-agents
 
@@ -7293,23 +7400,44 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, list[BaseTool | Tool | StructuredTool (4 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/tool/base.py:101` - error: Argument 1 to "ToolNode" has incompatible type "\*\*dict[str, list[BaseTool | Tool | Structured
+- `packages/haive-core/src/haive/core/engine/tool/base.py:101` - error: Argument 1 to "ToolNode" has incompatible type "**dict[str, list[BaseTool | Tool | Structured
   - ID: 975696fc
-- `packages/haive-core/src/haive/core/engine/tool/base.py:101` - error: Argument 1 to "ToolNode" has incompatible type "\*\*dict[str, list[BaseTool | Tool | Structured
+- `packages/haive-core/src/haive/core/engine/tool/base.py:101` - error: Argument 1 to "ToolNode" has incompatible type "**dict[str, list[BaseTool | Tool | Structured
   - ID: 975696fc
-- `packages/haive-core/src/haive/core/engine/tool/base.py:101` - error: Argument 1 to "ToolNode" has incompatible type "\*\*dict[str, list[BaseTool | Tool | Structured
+- `packages/haive-core/src/haive/core/engine/tool/base.py:101` - error: Argument 1 to "ToolNode" has incompatible type "**dict[str, list[BaseTool | Tool | Structured
   - ID: 975696fc
-- `packages/haive-core/src/haive/core/engine/tool/base.py:101` - error: Argument 1 to "ToolNode" has incompatible type "\*\*dict[str, list[BaseTool | Tool | Structured
+- `packages/haive-core/src/haive/core/engine/tool/base.py:101` - error: Argument 1 to "ToolNode" has incompatible type "**dict[str, list[BaseTool | Tool | Structured
   - ID: 975696fc
 
-## mypy:str, list[str (2 errors)
+## mypy:str, list[str (23 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/rag/factories/compatible_rag_factory.py:989` - error: Returning Any from function declared to return "dict[str, list[str]]" [no-any-return]
-  - ID: d126abf9
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:337` - error: Argument 1 to "EnhancedMemoryItem" has incompatible type "**dict[str, list[str] | str | None]
+  - ID: 324f44cc
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:337` - error: Argument 1 to "EnhancedMemoryItem" has incompatible type "**dict[str, list[str] | str | None]
+  - ID: 324f44cc
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:337` - error: Argument 1 to "EnhancedMemoryItem" has incompatible type "**dict[str, list[str] | str | None]
+  - ID: 324f44cc
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:337` - error: Argument 1 to "EnhancedMemoryItem" has incompatible type "**dict[str, list[str] | str | None]
+  - ID: 324f44cc
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:337` - error: Argument 1 to "EnhancedMemoryItem" has incompatible type "**dict[str, list[str] | str | None]
+  - ID: 324f44cc
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:337` - error: Argument 1 to "EnhancedMemoryItem" has incompatible type "**dict[str, list[str] | str | None]
+  - ID: 324f44cc
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:337` - error: Argument 1 to "EnhancedMemoryItem" has incompatible type "**dict[str, list[str] | str | None]
+  - ID: 324f44cc
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:337` - error: Argument 1 to "EnhancedMemoryItem" has incompatible type "**dict[str, list[str] | str | None]
+  - ID: 324f44cc
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:337` - error: Argument 1 to "EnhancedMemoryItem" has incompatible type "**dict[str, list[str] | str | None]
+  - ID: 324f44cc
+- `packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:337` - error: Argument 1 to "EnhancedMemoryItem" has incompatible type "**dict[str, list[str] | str | None]
+  - ID: 324f44cc
+- ... and 12 more
 
 ### haive-core
 
@@ -7318,11 +7446,12 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, object (91 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/memory_v2/kg_memory_agent.py:165` - error: Incompatible types in assignment (expression has type "dict[str, object]", variable has type
+- `packages/haive-agents/src/haive/agents/memory_v2/kg_memory_agent.py:165` - error: Incompatible types in assignment (expression has type "dict[str, object]", variable has type 
   - ID: 4e9c09ba
-- `packages/haive-agents/src/haive/agents/planning/rewoo_tree_agent.py:515` - error: Argument 1 to "\_format_final_response" of "ReWOOTreeAgent" has incompatible type "dict[str, o
+- `packages/haive-agents/src/haive/agents/planning/rewoo_tree_agent.py:515` - error: Argument 1 to "_format_final_response" of "ReWOOTreeAgent" has incompatible type "dict[str, o
   - ID: d5a06cb7
 - `packages/haive-agents/src/haive/agents/memory_v2/simple_memory_agent.py:767` - error: Incompatible types in assignment (expression has type "dict[str, object]", target has type "s
   - ID: 6f11d57d
@@ -7332,30 +7461,30 @@ For further information visit https://errors.pydantic.dev
   - ID: b0f27c66
 - `packages/haive-agents/src/haive/agents/memory_reorganized/agents/simple.py:775` - error: Incompatible types in assignment (expression has type "dict[str, object]", target has type "s
   - ID: 8cfe0089
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/structured_tools.py:380` - error: Incompatible return value type (got "dict[str, object]", expected "list[dict[str, Any]]") [r
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/structured_tools.py:380` - error: Incompatible return value type (got "dict[str, object]", expected "list[dict[str, Any]]")  [r
   - ID: 3fc292d8
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/timing.py:102` - error: Incompatible return value type (got "dict[str, object]", expected "dict[str, float]") [retur
+- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/timing.py:102` - error: Incompatible return value type (got "dict[str, object]", expected "dict[str, float]")  [retur
   - ID: 35a2b35d
-- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "\*\*dict[str, object]"; expected "str" [arg-type]
+- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "**dict[str, object]"; expected "str"  [arg-type]
   - ID: 8b9679cf
-- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "\*\*dict[str, object]"; expected "str" [arg-type]
+- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "**dict[str, object]"; expected "str"  [arg-type]
   - ID: 8b9679cf
-- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "\*\*dict[str, object]"; expected "str" [arg-type]
+- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "**dict[str, object]"; expected "str"  [arg-type]
   - ID: 8b9679cf
-- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "\*\*dict[str, object]"; expected "str" [arg-type]
+- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "**dict[str, object]"; expected "str"  [arg-type]
   - ID: 8b9679cf
-- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "\*\*dict[str, object]"; expected "str" [arg-type]
+- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "**dict[str, object]"; expected "str"  [arg-type]
   - ID: 8b9679cf
-- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "\*\*dict[str, object]"; expected "str" [arg-type]
+- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "**dict[str, object]"; expected "str"  [arg-type]
   - ID: 8b9679cf
-- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "\*\*dict[str, object]"; expected "str" [arg-type]
+- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "**dict[str, object]"; expected "str"  [arg-type]
   - ID: 8b9679cf
-- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "\*\*dict[str, object]"; expected "str" [arg-type]
+- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "**dict[str, object]"; expected "str"  [arg-type]
   - ID: 8b9679cf
-- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "\*\*dict[str, object]"; expected "str" [arg-type]
+- `packages/haive-core/src/haive/core/engine/vectorstore/providers/RedisVectorStoreConfig.py:232` - error: Argument 1 to "Redis" has incompatible type "**dict[str, object]"; expected "str"  [arg-type]
   - ID: 8b9679cf
 - ... and 71 more
 
@@ -7373,36 +7502,38 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, set[str (2 errors)
 
+
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:58` - error: Invalid index type "BaseExpression | str" for "dict[str, set[str]]"; expected type "str" [in
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:58` - error: Invalid index type "BaseExpression | str" for "dict[str, set[str]]"; expected type "str"  [in
   - ID: d5a8c32e
 - `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/import_analyzer.py:77` - error: Invalid index type "BaseExpression | str | Any" for "dict[str, set[str]]"; expected type "str
   - ID: fa38e8bb
 
 ## mypy:str, str (78 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:176` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]") [return-value
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:176` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]")  [return-value
   - ID: 3adf6d19
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:202` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]") [return-value
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:202` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]")  [return-value
   - ID: b5e46888
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:241` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]") [return-value
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:241` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]")  [return-value
   - ID: f9b0a747
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:250` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]") [return-value
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:250` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]")  [return-value
   - ID: 31dd2802
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:284` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]") [return-value
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:284` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]")  [return-value
   - ID: 4e442794
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:328` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]") [return-value
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:328` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]")  [return-value
   - ID: 3c6b4070
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:333` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]") [return-value
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:333` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]")  [return-value
   - ID: 7c9c9b81
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:414` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]") [return-value
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:414` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]")  [return-value
   - ID: 02dc0a55
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:477` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]") [return-value
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:477` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]")  [return-value
   - ID: 3f03e654
-- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:486` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]") [return-value
+- `packages/haive-agents/src/haive/agents/research/open_perplexity/agent.py:486` - error: Incompatible return value type (got "dict[str, str]", expected "Command[Any]")  [return-value
   - ID: c9de8836
 - ... and 9 more
 
@@ -7410,7 +7541,7 @@ For further information visit https://errors.pydantic.dev
 
 - `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:283` - error: Incompatible types in assignment (expression has type "None", variable has type "dict[str, st
   - ID: 77880f93
-- `packages/haive-core/src/haive/core/utils/haive_discovery/haive_discovery.py:209` - error: Returning Any from function declared to return "dict[str, str]" [no-any-return]
+- `packages/haive-core/src/haive/core/utils/haive_discovery/haive_discovery.py:209` - error: Returning Any from function declared to return "dict[str, str]"  [no-any-return]
   - ID: 7d61d8a9
 - `packages/haive-core/src/haive/core/utils/haive_discovery/component_info.py:48` - error: Incompatible types in assignment (expression has type "dict[str, str]", target has type "Sequ
   - ID: 8a433d30
@@ -7426,7 +7557,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 6911ef89
 - `packages/haive-core/src/haive/core/engine/aug_llm/factory.py:476` - error: Argument 1 to "append" of "list" has incompatible type "tuple[str, str]"; expected "tuple[typ
   - ID: ea9f2ea6
-- `packages/haive-core/src/haive/core/graph/node/validation_node_v2.py:119` - error: Returning Any from function declared to return "dict[str, str]" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/node/validation_node_v2.py:119` - error: Returning Any from function declared to return "dict[str, str]"  [no-any-return]
   - ID: 48b77759
 - ... and 43 more
 
@@ -7441,7 +7572,7 @@ For further information visit https://errors.pydantic.dev
 
 - `packages/haive-mcp/src/haive/mcp/installers/config_manager.py:287` - error: Incompatible types in assignment (expression has type "dict[str, str]", target has type "list
   - ID: 67deeb30
-- `packages/haive-mcp/src/haive/mcp/agents/mcp_agent.py:399` - error: Dict entry 3 has incompatible type "str": "dict[str, str]"; expected "str": "Sequence[str]"
+- `packages/haive-mcp/src/haive/mcp/agents/mcp_agent.py:399` - error: Dict entry 3 has incompatible type "str": "dict[str, str]"; expected "str": "Sequence[str]"  
   - ID: 15c04e3c
 
 ### haive-prebuilt
@@ -7453,6 +7584,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, str | Any (4 errors)
 
+
 ### haive-agents
 
 - `packages/haive-agents/src/haive/agents/multi/experiments/routing_patterns.py:134` - error: Argument 3 to "add_route" of "RoutingMultiAgent" has incompatible type "dict[str, str | Any]"
@@ -7462,31 +7594,33 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/weather.py:194` - error: Argument 1 to "WeatherData" has incompatible type "\*\*dict[str, str | Any]"; expected "float |
+- `packages/haive-tools/src/haive/tools/tools/toolkits/weather.py:194` - error: Argument 1 to "WeatherData" has incompatible type "**dict[str, str | Any]"; expected "float |
   - ID: 402a461e
-- `packages/haive-tools/src/haive/tools/tools/toolkits/weather.py:194` - error: Argument 1 to "WeatherData" has incompatible type "\*\*dict[str, str | Any]"; expected "float |
+- `packages/haive-tools/src/haive/tools/tools/toolkits/weather.py:194` - error: Argument 1 to "WeatherData" has incompatible type "**dict[str, str | Any]"; expected "float |
   - ID: 402a461e
 
 ## mypy:str, str | float | None (7 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "\*\*dict[str, str | float | None]"; expecte
+- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "**dict[str, str | float | None]"; expecte
   - ID: 4c4cbf99
-- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "\*\*dict[str, str | float | None]"; expecte
+- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "**dict[str, str | float | None]"; expecte
   - ID: 4c4cbf99
-- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "\*\*dict[str, str | float | None]"; expecte
+- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "**dict[str, str | float | None]"; expecte
   - ID: 4c4cbf99
-- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "\*\*dict[str, str | float | None]"; expecte
+- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "**dict[str, str | float | None]"; expecte
   - ID: 4c4cbf99
-- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "\*\*dict[str, str | float | None]"; expecte
+- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "**dict[str, str | float | None]"; expecte
   - ID: 4c4cbf99
-- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "\*\*dict[str, str | float | None]"; expecte
+- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "**dict[str, str | float | None]"; expecte
   - ID: 4c4cbf99
-- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "\*\*dict[str, str | float | None]"; expecte
+- `packages/haive-core/src/haive/core/engine/retriever/providers/QdrantSparseVectorRetrieverConfig.py:192` - error: Argument 1 to "QdrantClient" has incompatible type "**dict[str, str | float | None]"; expecte
   - ID: 4c4cbf99
 
 ## mypy:str, str | list[str | dict[Any, Any (2 errors)
+
 
 ### haive-agents
 
@@ -7497,6 +7631,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, tuple[<typing special form>, None (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/engine/embeddings.py:220` - error: Incompatible return value type (got "dict[str, tuple[<typing special form>, None]]", expected
@@ -7504,9 +7639,10 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, tuple[Any, Any (5 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/composer/_base.py:152` - error: No overload variant of "create_model" matches argument types "str", "Any | type", "dict[str,
+- `packages/haive-core/src/haive/core/schema/composer/_base.py:152` - error: No overload variant of "create_model" matches argument types "str", "Any | type", "dict[str, 
   - ID: e0916192
 - `packages/haive-core/src/haive/core/engine/prompt_template/prompt_engine.py:294` - error: No overload variant of "create_model" matches argument types "str", "dict[str, tuple[Any, Any
   - ID: 956eb336
@@ -7519,12 +7655,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, tuple[Any, EllipsisType | Any (1 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/engine/document/loaders/registry.py:275` - error: No overload variant of "create_model" matches argument types "str", "dict[str, tuple[Any, Ell
   - ID: b8076e07
 
 ## mypy:str, tuple[type, Any (7 errors)
+
 
 ### haive-core
 
@@ -7538,12 +7676,13 @@ For further information visit https://errors.pydantic.dev
   - ID: e534780b
 - `packages/haive-core/src/haive/core/engine/aug_llm/config.py:849` - note: Perhaps you need a type annotation for "fields"? Suggestion: "dict[str, tuple[type, Any]]"
   - ID: 77750ae6
-- `packages/haive-core/src/haive/core/engine/agent/config.py:617` - error: Returning Any from function declared to return "dict[str, tuple[type, Any]]" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/agent/config.py:617` - error: Returning Any from function declared to return "dict[str, tuple[type, Any]]"  [no-any-return]
   - ID: 1f637b72
-- `packages/haive-core/src/haive/core/engine/agent/config.py:619` - error: Returning Any from function declared to return "dict[str, tuple[type, Any]]" [no-any-return]
+- `packages/haive-core/src/haive/core/engine/agent/config.py:619` - error: Returning Any from function declared to return "dict[str, tuple[type, Any]]"  [no-any-return]
   - ID: e311d427
 
 ## mypy:str, tuple[type[Any (10 errors)
+
 
 ### haive-agents
 
@@ -7562,7 +7701,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 7d1ad179
 - `packages/haive-core/src/haive/core/engine/retriever/retriever.py:201` - error: Incompatible return value type (got "dict[str, tuple[type[Any] | None, Any]]", expected "dict
   - ID: a200a9c2
-- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:815` - error: Incompatible return value type (got "dict[str, tuple[type[Any], None]]", expected "dict[str,
+- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:815` - error: Incompatible return value type (got "dict[str, tuple[type[Any], None]]", expected "dict[str, 
   - ID: cde9705b
 - `packages/haive-core/src/haive/core/common/mixins/prompt_template_mixin.py:386` - error: No overload variant of "create_model" matches argument types "str", "dict[str, tuple[type[Any
   - ID: b2dac187
@@ -7573,40 +7712,44 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:str, tuple[type[str (2 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:847` - error: Incompatible return value type (got "dict[str, tuple[type[str], None]]", expected "dict[str,
+- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:847` - error: Incompatible return value type (got "dict[str, tuple[type[str], None]]", expected "dict[str, 
   - ID: b73cc185
-- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:849` - error: Incompatible return value type (got "dict[str, tuple[type[str], None]]", expected "dict[str,
+- `packages/haive-core/src/haive/core/engine/aug_llm/config.py:849` - error: Incompatible return value type (got "dict[str, tuple[type[str], None]]", expected "dict[str, 
   - ID: c26fb90e
 
 ## mypy:truthy-function (4 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/agent.py:275` - error: Function "state_schema" could always be true in boolean context [truthy-function]
+- `packages/haive-agents/src/haive/agents/rag/simple/enhanced_v3/agent.py:275` - error: Function "state_schema" could always be true in boolean context  [truthy-function]
   - ID: b70d48d8
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:245` - error: Function "last_ai" could always be true in boolean context [truthy-function]
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:245` - error: Function "last_ai" could always be true in boolean context  [truthy-function]
   - ID: 5a4af052
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:459` - error: Function "last_human_message" could always be true in boolean context [truthy-function]
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages/messages_state.py:459` - error: Function "last_human_message" could always be true in boolean context  [truthy-function]
   - ID: bf76bd9b
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:50` - error: Function "handler" could always be true in boolean context [truthy-function]
+- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:50` - error: Function "handler" could always be true in boolean context  [truthy-function]
   - ID: b5b0d564
 
 ## mypy:tuple[Any, ... (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py:35` - error: Argument 1 to "**init**" of "PostgresSaver" has incompatible type "Connection[tuple[Any, ...]
+- `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py:35` - error: Argument 1 to "__init__" of "PostgresSaver" has incompatible type "Connection[tuple[Any, ...]
   - ID: 6fe0b9f9
 
 ## mypy:tuple[int, Any | BaseException (2 errors)
+
 
 ### haive-agents
 
@@ -7617,14 +7760,16 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:tuple[str, Any (2 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py:126` - note: def put*writes(self, config: RunnableConfig, writes: Sequence[tuple[str, Any]], task*
+- `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py:126` - note:          def put_writes(self, config: RunnableConfig, writes: Sequence[tuple[str, Any]], task_
   - ID: 0f206251
-- `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py:126` - note: def put*writes(self, config: RunnableConfig, writes: Sequence[tuple[str, Any]], task*
+- `packages/haive-core/src/haive/core/persistence/postgres_saver_with_thread_creation.py:126` - note:          def put_writes(self, config: RunnableConfig, writes: Sequence[tuple[str, Any]], task_
   - ID: 0f206251
 
 ## mypy:tuple[str, float (1 errors)
+
 
 ### haive-agents
 
@@ -7632,6 +7777,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 1b62c4b0
 
 ## mypy:tuple[str, int (2 errors)
+
 
 ### haive-agents
 
@@ -7645,46 +7791,50 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:tuple[str, str (3 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/state_graph/components/edge_manager.py:212` - error: Returning Any from function declared to return "list[tuple[str, str]]" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/state_graph/components/edge_manager.py:212` - error: Returning Any from function declared to return "list[tuple[str, str]]"  [no-any-return]
   - ID: 5e0cdf7f
-- `packages/haive-core/src/haive/core/graph/state_graph/components/modular_base_graph.py:229` - error: Returning Any from function declared to return "list[tuple[str, str]]" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/state_graph/components/modular_base_graph.py:229` - error: Returning Any from function declared to return "list[tuple[str, str]]"  [no-any-return]
   - ID: 6ba98770
-- `packages/haive-core/src/haive/core/graph/state_graph/components/modular_base_graph.py:241` - error: Returning Any from function declared to return "list[tuple[str, str]]" [no-any-return]
+- `packages/haive-core/src/haive/core/graph/state_graph/components/modular_base_graph.py:241` - error: Returning Any from function declared to return "list[tuple[str, str]]"  [no-any-return]
   - ID: f0bbb86a
 
 ## mypy:type (2 errors)
 
+
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:353` - error: Returning Any from function declared to return "list[type]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:353` - error: Returning Any from function declared to return "list[type]"  [no-any-return]
   - ID: 70f96416
-- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:353` - error: Returning Any from function declared to return "list[type]" [no-any-return]
+- `packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:353` - error: Returning Any from function declared to return "list[type]"  [no-any-return]
   - ID: 13065f7e
 
 ## mypy:type-arg (8 errors)
 
+
 ### haive-games
 
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:160` - error: "PegSpace" expects no type arguments, but 1 given [type-arg]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:160` - error: "PegSpace" expects no type arguments, but 1 given  [type-arg]
   - ID: 08d1c96d
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:167` - error: "PegSpace" expects no type arguments, but 1 given [type-arg]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:167` - error: "PegSpace" expects no type arguments, but 1 given  [type-arg]
   - ID: 58a304e0
-- `packages/haive-games/src/haive/games/single_player/logic_grid/base.py:127` - error: "LogicGridSpace" expects no type arguments, but 1 given [type-arg]
+- `packages/haive-games/src/haive/games/single_player/logic_grid/base.py:127` - error: "LogicGridSpace" expects no type arguments, but 1 given  [type-arg]
   - ID: e041c205
-- `packages/haive-games/src/haive/games/single_player/logic_grid/base.py:129` - error: "LogicGridSpace" expects no type arguments, but 1 given [type-arg]
+- `packages/haive-games/src/haive/games/single_player/logic_grid/base.py:129` - error: "LogicGridSpace" expects no type arguments, but 1 given  [type-arg]
   - ID: 06ad5896
-- `packages/haive-games/src/haive/games/core/components/cards/turns.py:57` - error: "CardGameTurn" expects no type arguments, but 3 given [type-arg]
+- `packages/haive-games/src/haive/games/core/components/cards/turns.py:57` - error: "CardGameTurn" expects no type arguments, but 3 given  [type-arg]
   - ID: f25945f9
-- `packages/haive-games/src/haive/games/core/components/cards/scoring.py:36` - error: "HandRank" expects no type arguments, but 1 given [type-arg]
+- `packages/haive-games/src/haive/games/core/components/cards/scoring.py:36` - error: "HandRank" expects no type arguments, but 1 given  [type-arg]
   - ID: 89974e3d
-- `packages/haive-games/src/haive/games/core/components/cards/actions.py:33` - error: "CardAction" expects no type arguments, but 2 given [type-arg]
+- `packages/haive-games/src/haive/games/core/components/cards/actions.py:33` - error: "CardAction" expects no type arguments, but 2 given  [type-arg]
   - ID: fe41c8f4
-- `packages/haive-games/src/haive/games/core/components/cards/actions.py:58` - error: "CardAction" expects no type arguments, but 2 given [type-arg]
+- `packages/haive-games/src/haive/games/core/components/cards/actions.py:58` - error: "CardAction" expects no type arguments, but 2 given  [type-arg]
   - ID: 24856f1c
 
 ## mypy:type-var (10 errors)
+
 
 ### haive-core
 
@@ -7693,29 +7843,30 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/discovery.py:59` - error: Value of type variable "AnyOrLiteralStr" of "dirname" cannot be "str | None" [type-var]
+- `packages/haive-dataflow/src/haive/dataflow/discovery.py:59` - error: Value of type variable "AnyOrLiteralStr" of "dirname" cannot be "str | None"  [type-var]
   - ID: fdd01098
-- `packages/haive-dataflow/src/haive/dataflow/registry/discovery.py:102` - error: Value of type variable "AnyOrLiteralStr" of "dirname" cannot be "str | None" [type-var]
+- `packages/haive-dataflow/src/haive/dataflow/registry/discovery.py:102` - error: Value of type variable "AnyOrLiteralStr" of "dirname" cannot be "str | None"  [type-var]
   - ID: aa514f7f
-- `packages/haive-dataflow/src/haive/dataflow/registry/providers/base.py:151` - error: Value of type variable "AnyOrLiteralStr" of "dirname" cannot be "str | None" [type-var]
+- `packages/haive-dataflow/src/haive/dataflow/registry/providers/base.py:151` - error: Value of type variable "AnyOrLiteralStr" of "dirname" cannot be "str | None"  [type-var]
   - ID: 8bc906c8
-- `packages/haive-dataflow/src/haive/dataflow/providers/base.py:80` - error: Value of type variable "AnyOrLiteralStr" of "dirname" cannot be "str | None" [type-var]
+- `packages/haive-dataflow/src/haive/dataflow/providers/base.py:80` - error: Value of type variable "AnyOrLiteralStr" of "dirname" cannot be "str | None"  [type-var]
   - ID: 8faa8120
-- `packages/haive-dataflow/src/haive/dataflow/api/game_router.py:105` - error: Value of type variable "AnyOrLiteralStr" of "dirname" cannot be "str | None" [type-var]
+- `packages/haive-dataflow/src/haive/dataflow/api/game_router.py:105` - error: Value of type variable "AnyOrLiteralStr" of "dirname" cannot be "str | None"  [type-var]
   - ID: e46fdc6a
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/nim/example.py:826` - error: Value of type variable "SupportsRichComparisonT" of "min" cannot be "object" [type-var]
+- `packages/haive-games/src/haive/games/nim/example.py:826` - error: Value of type variable "SupportsRichComparisonT" of "min" cannot be "object"  [type-var]
   - ID: 134fb346
-- `packages/haive-games/src/haive/games/nim/example.py:826` - error: Value of type variable "SupportsRichComparisonT" of "min" cannot be "object" [type-var]
+- `packages/haive-games/src/haive/games/nim/example.py:826` - error: Value of type variable "SupportsRichComparisonT" of "min" cannot be "object"  [type-var]
   - ID: 134fb346
-- `packages/haive-games/src/haive/games/nim/example.py:828` - error: Value of type variable "SupportsRichComparisonT" of "min" cannot be "object" [type-var]
+- `packages/haive-games/src/haive/games/nim/example.py:828` - error: Value of type variable "SupportsRichComparisonT" of "min" cannot be "object"  [type-var]
   - ID: af5fef2f
-- `packages/haive-games/src/haive/games/nim/example.py:828` - error: Value of type variable "SupportsRichComparisonT" of "min" cannot be "object" [type-var]
+- `packages/haive-games/src/haive/games/nim/example.py:828` - error: Value of type variable "SupportsRichComparisonT" of "min" cannot be "object"  [type-var]
   - ID: af5fef2f
 
 ## mypy:type[Any (7 errors)
+
 
 ### haive-core
 
@@ -7736,6 +7887,7 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:type[dict[str, Any (2 errors)
 
+
 ### haive-core
 
 - `packages/haive-core/src/haive/core/engine/aug_llm/config.py:830` - error: Incompatible types in assignment (expression has type "tuple[type[dict[str, Any]], None]", ta
@@ -7744,6 +7896,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 4a0f58e3
 
 ## mypy:type[list[BaseMessage (2 errors)
+
 
 ### haive-core
 
@@ -7754,26 +7907,27 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:typeddict-item (14 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/react_class/react_agent2/tool_utils.py:237` - error: TypedDict "ToolCall" has no key "function" [typeddict-item]
+- `packages/haive-agents/src/haive/agents/react_class/react_agent2/tool_utils.py:237` - error: TypedDict "ToolCall" has no key "function"  [typeddict-item]
   - ID: 2f10815f
-- `packages/haive-agents/src/haive/agents/react_class/react_agent2/debug.py:98` - error: TypedDict "ToolCall" has no key "function" [typeddict-item]
+- `packages/haive-agents/src/haive/agents/react_class/react_agent2/debug.py:98` - error: TypedDict "ToolCall" has no key "function"  [typeddict-item]
   - ID: bf2e2713
-- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:97` - error: Incompatible types (expression has type "str", TypedDict item "tool" has type "BaseTool") [t
+- `packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:97` - error: Incompatible types (expression has type "str", TypedDict item "tool" has type "BaseTool")  [t
   - ID: f584fef9
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages/token_usage.py:120` - error: TypedDict "UsageMetadata" has no key "usage" [typeddict-item]
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages/token_usage.py:120` - error: TypedDict "UsageMetadata" has no key "usage"  [typeddict-item]
   - ID: ba4ecb50
-- `packages/haive-core/src/haive/core/schema/prebuilt/messages/token_usage.py:128` - error: TypedDict "UsageMetadata" has no key "usage" [typeddict-item]
+- `packages/haive-core/src/haive/core/schema/prebuilt/messages/token_usage.py:128` - error: TypedDict "UsageMetadata" has no key "usage"  [typeddict-item]
   - ID: 65da84d9
-- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:392` - error: TypedDict "ToolCall" has no key "metadata" [typeddict-item]
+- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:392` - error: TypedDict "ToolCall" has no key "metadata"  [typeddict-item]
   - ID: 67441a4c
-- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:393` - error: TypedDict "ToolCall" has no key "metadata" [typeddict-item]
+- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:393` - error: TypedDict "ToolCall" has no key "metadata"  [typeddict-item]
   - ID: 11185e7a
-- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:396` - error: TypedDict "ToolCall" has no key "metadata" [typeddict-item]
+- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:396` - error: TypedDict "ToolCall" has no key "metadata"  [typeddict-item]
   - ID: e6cd5702
 - `packages/haive-core/src/haive/core/persistence/factory.py:586` - error: Missing keys ("v", "id", "ts", "channel_versions", "versions_seen") for TypedDict "Checkpoint
   - ID: 3032edaa
@@ -7793,12 +7947,14 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:typeddict-unknown-key (1 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:390` - error: TypedDict "ToolCall" has no key "metadata" [typeddict-unknown-key]
+- `packages/haive-core/src/haive/core/graph/node/state_updating_validation_node.py:390` - error: TypedDict "ToolCall" has no key "metadata"  [typeddict-unknown-key]
   - ID: 4297db11
 
 ## mypy:typing_extensions.TypeVar (2 errors)
+
 
 ### haive-agents
 
@@ -7809,515 +7965,522 @@ For further information visit https://errors.pydantic.dev
 
 ## mypy:union-attr (303 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/plan_and_execute/state.py:25` - error: Item "None" of "Any | None" has no attribute "remove_completed_steps" [union-attr]
+- `packages/haive-agents/src/haive/agents/planning/plan_and_execute/state.py:25` - error: Item "None" of "Any | None" has no attribute "remove_completed_steps"  [union-attr]
   - ID: 2c1495c5
-- `packages/haive-agents/src/haive/agents/planning/plan_and_execute/state.py:26` - error: Item "None" of "Any | None" has no attribute "update_status" [union-attr]
+- `packages/haive-agents/src/haive/agents/planning/plan_and_execute/state.py:26` - error: Item "None" of "Any | None" has no attribute "update_status"  [union-attr]
   - ID: 61479486
-- `packages/haive-agents/src/haive/agents/supervisor/registry_supervisor.py:232` - error: Item "None" of "Any | None" has no attribute "option_names" [union-attr]
+- `packages/haive-agents/src/haive/agents/supervisor/registry_supervisor.py:232` - error: Item "None" of "Any | None" has no attribute "option_names"  [union-attr]
   - ID: 7b6a918c
-- `packages/haive-agents/src/haive/agents/supervisor/registry_supervisor.py:233` - error: Item "None" of "Any | None" has no attribute "option_descriptions" [union-attr]
+- `packages/haive-agents/src/haive/agents/supervisor/registry_supervisor.py:233` - error: Item "None" of "Any | None" has no attribute "option_descriptions"  [union-attr]
   - ID: 931f1042
-- `packages/haive-agents/src/haive/agents/supervisor/choice_model_supervisor.py:207` - error: Item "None" of "Any | None" has no attribute "option_names" [union-attr]
+- `packages/haive-agents/src/haive/agents/supervisor/choice_model_supervisor.py:207` - error: Item "None" of "Any | None" has no attribute "option_names"  [union-attr]
   - ID: 29c6b40c
-- `packages/haive-agents/src/haive/agents/supervisor/choice_model_supervisor.py:208` - error: Item "None" of "Any | None" has no attribute "option_descriptions" [union-attr]
+- `packages/haive-agents/src/haive/agents/supervisor/choice_model_supervisor.py:208` - error: Item "None" of "Any | None" has no attribute "option_descriptions"  [union-attr]
   - ID: 3b1f164e
-- `packages/haive-agents/src/haive/agents/supervisor/archive/registry_supervisor.py:232` - error: Item "None" of "Any | None" has no attribute "option_names" [union-attr]
+- `packages/haive-agents/src/haive/agents/supervisor/archive/registry_supervisor.py:232` - error: Item "None" of "Any | None" has no attribute "option_names"  [union-attr]
   - ID: 9c8f270c
-- `packages/haive-agents/src/haive/agents/supervisor/archive/registry_supervisor.py:233` - error: Item "None" of "Any | None" has no attribute "option_descriptions" [union-attr]
+- `packages/haive-agents/src/haive/agents/supervisor/archive/registry_supervisor.py:233` - error: Item "None" of "Any | None" has no attribute "option_descriptions"  [union-attr]
   - ID: bfd03c45
-- `packages/haive-agents/src/haive/agents/supervisor/archive/choice_model_supervisor.py:207` - error: Item "None" of "Any | None" has no attribute "option_names" [union-attr]
+- `packages/haive-agents/src/haive/agents/supervisor/archive/choice_model_supervisor.py:207` - error: Item "None" of "Any | None" has no attribute "option_names"  [union-attr]
   - ID: e99a0991
-- `packages/haive-agents/src/haive/agents/supervisor/archive/choice_model_supervisor.py:208` - error: Item "None" of "Any | None" has no attribute "option_descriptions" [union-attr]
+- `packages/haive-agents/src/haive/agents/supervisor/archive/choice_model_supervisor.py:208` - error: Item "None" of "Any | None" has no attribute "option_descriptions"  [union-attr]
   - ID: a215259a
 - ... and 69 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:32` - error: Item "None" of "FrameType | None" has no attribute "f_back" [union-attr]
+- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:32` - error: Item "None" of "FrameType | None" has no attribute "f_back"  [union-attr]
   - ID: 1ecea407
-- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:33` - error: Item "None" of "FrameType | Any | None" has no attribute "f_locals" [union-attr]
+- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:33` - error: Item "None" of "FrameType | Any | None" has no attribute "f_locals"  [union-attr]
   - ID: b8341003
-- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:49` - error: Item "None" of "FrameType | None" has no attribute "f_back" [union-attr]
+- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:49` - error: Item "None" of "FrameType | None" has no attribute "f_back"  [union-attr]
   - ID: a20c73a6
-- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:50` - error: Item "None" of "FrameType | Any | None" has no attribute "f_globals" [union-attr]
+- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:50` - error: Item "None" of "FrameType | Any | None" has no attribute "f_globals"  [union-attr]
   - ID: a51dd5aa
-- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:66` - error: Item "None" of "FrameType | None" has no attribute "f_back" [union-attr]
+- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:66` - error: Item "None" of "FrameType | None" has no attribute "f_back"  [union-attr]
   - ID: 80d92b7f
-- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:74` - error: Item "None" of "FrameType | Any | None" has no attribute "f_locals" [union-attr]
+- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:74` - error: Item "None" of "FrameType | Any | None" has no attribute "f_locals"  [union-attr]
   - ID: 544444db
-- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:75` - error: Item "None" of "FrameType | Any | None" has no attribute "f_globals" [union-attr]
+- `packages/haive-core/src/haive/core/utils/debugkit/debug/inspection.py:75` - error: Item "None" of "FrameType | Any | None" has no attribute "f_globals"  [union-attr]
   - ID: 46f09722
-- `packages/haive-core/src/haive/core/utils/debugkit/debug/interactive.py:80` - error: Item "None" of "FrameType | None" has no attribute "f_back" [union-attr]
+- `packages/haive-core/src/haive/core/utils/debugkit/debug/interactive.py:80` - error: Item "None" of "FrameType | None" has no attribute "f_back"  [union-attr]
   - ID: df18ebc1
-- `packages/haive-core/src/haive/core/schema/composer/engine/engine_detector.py:70` - error: Item "None" of "Any | None" has no attribute "**name**" [union-attr]
+- `packages/haive-core/src/haive/core/schema/composer/engine/engine_detector.py:70` - error: Item "None" of "Any | None" has no attribute "__name__"  [union-attr]
   - ID: 639d2d68
-- `packages/haive-core/src/haive/core/utils/env_utils.py:167` - error: Item "None" of "str | None" has no attribute "lower" [union-attr]
+- `packages/haive-core/src/haive/core/utils/env_utils.py:167` - error: Item "None" of "str | None" has no attribute "lower"  [union-attr]
   - ID: ad8e6bf4
 - ... and 98 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/core.py:105` - error: Item "None" of "Any | None" has no attribute "rpc" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:105` - error: Item "None" of "Any | None" has no attribute "rpc"  [union-attr]
   - ID: cc99f697
-- `packages/haive-dataflow/src/haive/dataflow/core.py:114` - error: Item "None" of "Any | None" has no attribute "rpc" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:114` - error: Item "None" of "Any | None" has no attribute "rpc"  [union-attr]
   - ID: 03664f23
-- `packages/haive-dataflow/src/haive/dataflow/core.py:186` - error: Item "None" of "Any | None" has no attribute "rpc" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:186` - error: Item "None" of "Any | None" has no attribute "rpc"  [union-attr]
   - ID: 23c66a0a
-- `packages/haive-dataflow/src/haive/dataflow/core.py:195` - error: Item "None" of "Any | None" has no attribute "rpc" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:195` - error: Item "None" of "Any | None" has no attribute "rpc"  [union-attr]
   - ID: 9c9de971
-- `packages/haive-dataflow/src/haive/dataflow/core.py:212` - error: Item "None" of "Any | None" has no attribute "rpc" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:212` - error: Item "None" of "Any | None" has no attribute "rpc"  [union-attr]
   - ID: 13586cc6
-- `packages/haive-dataflow/src/haive/dataflow/core.py:542` - error: Item "None" of "Any | None" has no attribute "query" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:542` - error: Item "None" of "Any | None" has no attribute "query"  [union-attr]
   - ID: eac403c0
-- `packages/haive-dataflow/src/haive/dataflow/core.py:603` - error: Item "None" of "Any | None" has no attribute "query" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:603` - error: Item "None" of "Any | None" has no attribute "query"  [union-attr]
   - ID: 0e39ce27
-- `packages/haive-dataflow/src/haive/dataflow/core.py:977` - error: Item "None" of "Any | None" has no attribute "rpc" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:977` - error: Item "None" of "Any | None" has no attribute "rpc"  [union-attr]
   - ID: fd518150
-- `packages/haive-dataflow/src/haive/dataflow/core.py:986` - error: Item "None" of "Any | None" has no attribute "rpc" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:986` - error: Item "None" of "Any | None" has no attribute "rpc"  [union-attr]
   - ID: 607e2fab
-- `packages/haive-dataflow/src/haive/dataflow/core.py:1059` - error: Item "None" of "Any | None" has no attribute "rpc" [union-attr]
+- `packages/haive-dataflow/src/haive/dataflow/core.py:1059` - error: Item "None" of "Any | None" has no attribute "rpc"  [union-attr]
   - ID: de4e7e00
 - ... and 44 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/monopoly/game/game.py:1243` - error: Item "None" of "Any | None" has no attribute "owner" [union-attr]
+- `packages/haive-games/src/haive/games/monopoly/game/game.py:1243` - error: Item "None" of "Any | None" has no attribute "owner"  [union-attr]
   - ID: e9767669
-- `packages/haive-games/src/haive/games/monopoly/game/game.py:1249` - error: Item "None" of "Any | None" has no attribute "owner" [union-attr]
+- `packages/haive-games/src/haive/games/monopoly/game/game.py:1249` - error: Item "None" of "Any | None" has no attribute "owner"  [union-attr]
   - ID: 91bc5427
-- `packages/haive-games/src/haive/games/among_us/state_manager.py:1239` - error: Item "None" of "Any | None" has no attribute "upper" [union-attr]
+- `packages/haive-games/src/haive/games/among_us/state_manager.py:1239` - error: Item "None" of "Any | None" has no attribute "upper"  [union-attr]
   - ID: 213882a7
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:54` - error: Item "None" of "Any | None" has no attribute "is_solved" [union-attr]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:54` - error: Item "None" of "Any | None" has no attribute "is_solved"  [union-attr]
   - ID: 01d9a115
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:81` - error: Item "None" of "Any | None" has no attribute "is_solved" [union-attr]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:81` - error: Item "None" of "Any | None" has no attribute "is_solved"  [union-attr]
   - ID: eea6551f
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:83` - error: Item "None" of "Any | None" has no attribute "moves" [union-attr]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:83` - error: Item "None" of "Any | None" has no attribute "moves"  [union-attr]
   - ID: ab2f0bbd
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:84` - error: Item "None" of "Any | None" has no attribute "optimal_moves" [union-attr]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:84` - error: Item "None" of "Any | None" has no attribute "optimal_moves"  [union-attr]
   - ID: 31390731
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:85` - error: Item "None" of "Any | None" has no attribute "optimal_moves" [union-attr]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:85` - error: Item "None" of "Any | None" has no attribute "optimal_moves"  [union-attr]
   - ID: b3ab9035
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:85` - error: Item "None" of "Any | None" has no attribute "optimal_moves" [union-attr]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:85` - error: Item "None" of "Any | None" has no attribute "optimal_moves"  [union-attr]
   - ID: b3ab9035
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:98` - error: Item "None" of "Any | None" has no attribute "format_board_state" [union-attr]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/ui.py:98` - error: Item "None" of "Any | None" has no attribute "format_board_state"  [union-attr]
   - ID: 099d38cb
 - ... and 39 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/dynamic_activation_mcp.py:322` - error: Item "None" of "Any | None" has no attribute "execute_agent" [union-attr]
+- `packages/haive-mcp/src/haive/mcp/dynamic_activation_mcp.py:322` - error: Item "None" of "Any | None" has no attribute "execute_agent"  [union-attr]
   - ID: fd1d83c8
-- `packages/haive-mcp/src/haive/mcp/manager.py:607` - error: Item "None" of "MCPHealthStatus | None" has no attribute "dict" [union-attr]
+- `packages/haive-mcp/src/haive/mcp/manager.py:607` - error: Item "None" of "MCPHealthStatus | None" has no attribute "dict"  [union-attr]
   - ID: a7327089
-- `packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py:103` - error: Item "None" of "Any | None" has no attribute "enhanced_query" [union-attr]
+- `packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py:103` - error: Item "None" of "Any | None" has no attribute "enhanced_query"  [union-attr]
   - ID: f7be2885
-- `packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py:165` - error: Item "None" of "Any | None" has no attribute "lazy_init" [union-attr]
+- `packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py:165` - error: Item "None" of "Any | None" has no attribute "lazy_init"  [union-attr]
   - ID: ff9e6f04
-- `packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py:260` - error: Item "None" of "Any | None" has no attribute "servers" [union-attr]
+- `packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py:260` - error: Item "None" of "Any | None" has no attribute "servers"  [union-attr]
   - ID: 5f2e9317
-- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:162` - error: Item "None" of "Any | None" has no attribute "list_tools" [union-attr]
+- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:162` - error: Item "None" of "Any | None" has no attribute "list_tools"  [union-attr]
   - ID: 078fa887
-- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:170` - error: Item "None" of "Any | None" has no attribute "list_resources" [union-attr]
+- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:170` - error: Item "None" of "Any | None" has no attribute "list_resources"  [union-attr]
   - ID: 943eaaf6
-- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:176` - error: Item "None" of "Any | None" has no attribute "list_prompts" [union-attr]
+- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:176` - error: Item "None" of "Any | None" has no attribute "list_prompts"  [union-attr]
   - ID: 9f0944d1
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:438` - error: Item "None" of "IdeaMetrics | None" has no attribute "overall_score" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:438` - error: Item "None" of "IdeaMetrics | None" has no attribute "overall_score"  [union-attr]
   - ID: 3ea8394e
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/tools.py:202` - error: Item "None" of "PageElement | None" has no attribute "get_text" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/tools.py:202` - error: Item "None" of "PageElement | None" has no attribute "get_text"  [union-attr]
   - ID: bfdb1aff
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/agent.py:76` - error: Item "None" of "Any | None" has no attribute "to_pitch_deck_brief" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/agent.py:76` - error: Item "None" of "Any | None" has no attribute "to_pitch_deck_brief"  [union-attr]
   - ID: b41f3871
-- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/agent.py:289` - error: Item "None" of "Any | None" has no attribute "slides" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/agent.py:289` - error: Item "None" of "Any | None" has no attribute "slides"  [union-attr]
   - ID: db74109d
-- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/example.py:29` - error: Item "None" of "BaseMessage | None" has no attribute "content" [union-attr]
+- `packages/haive-prebuilt/src/haive/prebuilt/scientific_paper_agent/example.py:29` - error: Item "None" of "BaseMessage | None" has no attribute "content"  [union-attr]
   - ID: 3e24dced
 
-## mypy:unreachable (251 errors)
+## mypy:unreachable (253 errors)
+
 
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/planning/base/models.py:804` - error: Statement is unreachable [unreachable]
+- `packages/haive-agents/src/haive/agents/planning/base/models.py:804` - error: Statement is unreachable  [unreachable]
   - ID: dcc18661
-- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_v3.py:255` - error: Statement is unreachable [unreachable]
+- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_v3.py:255` - error: Statement is unreachable  [unreachable]
   - ID: fd9c3270
-- `packages/haive-agents/src/haive/agents/multi/clean.py:185` - error: Statement is unreachable [unreachable]
+- `packages/haive-agents/src/haive/agents/multi/clean.py:185` - error: Statement is unreachable  [unreachable]
   - ID: 1d69535d
-- `packages/haive-agents/src/haive/agents/multi/enhanced/multi_agent_v3.py:302` - error: Statement is unreachable [unreachable]
+- `packages/haive-agents/src/haive/agents/multi/enhanced/multi_agent_v3.py:302` - error: Statement is unreachable  [unreachable]
   - ID: 930d5146
-- `packages/haive-agents/src/haive/agents/multi/core/clean_multi_agent.py:188` - error: Statement is unreachable [unreachable]
+- `packages/haive-agents/src/haive/agents/multi/core/clean_multi_agent.py:188` - error: Statement is unreachable  [unreachable]
   - ID: c7f16bf5
-- `packages/haive-agents/src/haive/agents/memory_reorganized/agents/multi.py:432` - error: Statement is unreachable [unreachable]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/agents/multi.py:432` - error: Statement is unreachable  [unreachable]
   - ID: 77a7d797
-- `packages/haive-agents/src/haive/agents/planning/rewoo/models/join_step.py:359` - error: Statement is unreachable [unreachable]
+- `packages/haive-agents/src/haive/agents/planning/rewoo/models/join_step.py:359` - error: Statement is unreachable  [unreachable]
   - ID: b2605299
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/utils.py:108` - error: Statement is unreachable [unreachable]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/utils.py:108` - error: Statement is unreachable  [unreachable]
   - ID: 13ceb3f3
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/utils.py:110` - error: Statement is unreachable [unreachable]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/utils.py:110` - error: Statement is unreachable  [unreachable]
   - ID: c2bcb5c9
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/utils.py:112` - error: Statement is unreachable [unreachable]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/utils.py:112` - error: Statement is unreachable  [unreachable]
   - ID: 9c856307
-- ... and 60 more
+- ... and 62 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/types/serializable_callable.py:23` - error: Statement is unreachable [unreachable]
+- `packages/haive-core/src/haive/core/types/serializable_callable.py:23` - error: Statement is unreachable  [unreachable]
   - ID: 7c0b38b4
-- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:85` - error: Statement is unreachable [unreachable]
+- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:85` - error: Statement is unreachable  [unreachable]
   - ID: 7bc7beab
-- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:87` - error: Statement is unreachable [unreachable]
+- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:87` - error: Statement is unreachable  [unreachable]
   - ID: 70e3156e
-- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:89` - error: Statement is unreachable [unreachable]
+- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:89` - error: Statement is unreachable  [unreachable]
   - ID: 262f36af
-- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:91` - error: Statement is unreachable [unreachable]
+- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:91` - error: Statement is unreachable  [unreachable]
   - ID: 52c0c373
-- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:93` - error: Statement is unreachable [unreachable]
+- `packages/haive-core/src/haive/core/engine/vectorstore/discovery.py:93` - error: Statement is unreachable  [unreachable]
   - ID: ed10b817
-- `packages/haive-core/src/haive/core/schema/compatibility/field_mapping.py:101` - error: Statement is unreachable [unreachable]
+- `packages/haive-core/src/haive/core/schema/compatibility/field_mapping.py:101` - error: Statement is unreachable  [unreachable]
   - ID: 29654bf9
-- `packages/haive-core/src/haive/core/schema/compatibility/field_mapping.py:145` - error: Statement is unreachable [unreachable]
+- `packages/haive-core/src/haive/core/schema/compatibility/field_mapping.py:145` - error: Statement is unreachable  [unreachable]
   - ID: 0cbf427b
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:157` - error: Statement is unreachable [unreachable]
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:157` - error: Statement is unreachable  [unreachable]
   - ID: 6148a93e
-- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:236` - error: Statement is unreachable [unreachable]
+- `packages/haive-core/src/haive/core/utils/debugkit/analysis/complexity.py:236` - error: Statement is unreachable  [unreachable]
   - ID: 3ff2ca05
 - ... and 125 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/api/db.py:306` - error: Statement is unreachable [unreachable]
+- `packages/haive-dataflow/src/haive/dataflow/api/db.py:306` - error: Statement is unreachable  [unreachable]
   - ID: 2f28a290
-- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:51` - error: Statement is unreachable [unreachable]
+- `packages/haive-dataflow/src/haive/dataflow/api/auto_discovery.py:51` - error: Statement is unreachable  [unreachable]
   - ID: 675d1609
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/conversation_routes.py:167` - error: Statement is unreachable [unreachable]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/conversation_routes.py:167` - error: Statement is unreachable  [unreachable]
   - ID: 1cf888a8
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/cards/models/card.py:194` - error: Statement is unreachable [unreachable]
+- `packages/haive-games/src/haive/games/cards/models/card.py:194` - error: Statement is unreachable  [unreachable]
   - ID: a67d228a
-- `packages/haive-games/src/haive/games/cards/models/card.py:208` - error: Statement is unreachable [unreachable]
+- `packages/haive-games/src/haive/games/cards/models/card.py:208` - error: Statement is unreachable  [unreachable]
   - ID: 56ea8926
-- `packages/haive-games/src/haive/games/mafia/agent.py:595` - error: Statement is unreachable [unreachable]
+- `packages/haive-games/src/haive/games/mafia/agent.py:595` - error: Statement is unreachable  [unreachable]
   - ID: 65a9dda6
-- `packages/haive-games/src/haive/games/mafia/state_manager.py:455` - error: Statement is unreachable [unreachable]
+- `packages/haive-games/src/haive/games/mafia/state_manager.py:455` - error: Statement is unreachable  [unreachable]
   - ID: 84ddfb2e
-- `packages/haive-games/src/haive/games/mafia/state_manager.py:460` - error: Statement is unreachable [unreachable]
+- `packages/haive-games/src/haive/games/mafia/state_manager.py:460` - error: Statement is unreachable  [unreachable]
   - ID: f00a4361
-- `packages/haive-games/src/haive/games/tic_tac_toe/state.py:114` - error: Statement is unreachable [unreachable]
+- `packages/haive-games/src/haive/games/tic_tac_toe/state.py:114` - error: Statement is unreachable  [unreachable]
   - ID: 734e0b71
-- `packages/haive-games/src/haive/games/tic_tac_toe/state.py:116` - error: Statement is unreachable [unreachable]
+- `packages/haive-games/src/haive/games/tic_tac_toe/state.py:116` - error: Statement is unreachable  [unreachable]
   - ID: 090e116d
-- `packages/haive-games/src/haive/games/risk/models.py:958` - error: Statement is unreachable [unreachable]
+- `packages/haive-games/src/haive/games/risk/models.py:958` - error: Statement is unreachable  [unreachable]
   - ID: 35462438
-- `packages/haive-games/src/haive/games/mafia/models.py:190` - error: Statement is unreachable [unreachable]
+- `packages/haive-games/src/haive/games/mafia/models.py:190` - error: Statement is unreachable  [unreachable]
   - ID: 921eddb6
-- `packages/haive-games/src/haive/games/core/components/cards/scoring.py:20` - error: Statement is unreachable [unreachable]
+- `packages/haive-games/src/haive/games/core/components/cards/scoring.py:20` - error: Statement is unreachable  [unreachable]
   - ID: 8c66486c
 - ... and 23 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/fastmcp_runner.py:248` - error: Statement is unreachable [unreachable]
+- `packages/haive-mcp/src/haive/mcp/fastmcp_runner.py:248` - error: Statement is unreachable  [unreachable]
   - ID: 2d3d0bab
-- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:80` - error: Statement is unreachable [unreachable]
+- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:80` - error: Statement is unreachable  [unreachable]
   - ID: e3e008cb
-- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:82` - error: Statement is unreachable [unreachable]
+- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:82` - error: Statement is unreachable  [unreachable]
   - ID: d58b5f21
-- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:134` - error: Statement is unreachable [unreachable]
+- `packages/haive-mcp/src/haive/mcp/tools/server_tester.py:134` - error: Statement is unreachable  [unreachable]
   - ID: 7f026836
-- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:48` - error: Statement is unreachable [unreachable]
+- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:48` - error: Statement is unreachable  [unreachable]
   - ID: 20b66ad7
-- `packages/haive-mcp/src/haive/mcp/mcp_simple_rag_agent.py:570` - error: Statement is unreachable [unreachable]
+- `packages/haive-mcp/src/haive/mcp/mcp_simple_rag_agent.py:570` - error: Statement is unreachable  [unreachable]
   - ID: 3a03efcb
-- `packages/haive-mcp/src/haive/mcp/simple_faiss_retriever.py:122` - error: Statement is unreachable [unreachable]
+- `packages/haive-mcp/src/haive/mcp/simple_faiss_retriever.py:122` - error: Statement is unreachable  [unreachable]
   - ID: 3543ea6f
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:493` - error: Statement is unreachable [unreachable]
+- `packages/haive-prebuilt/src/haive/prebuilt/weather_disaster_management/agent.py:493` - error: Statement is unreachable  [unreachable]
   - ID: 77c5f1db
-- `packages/haive-prebuilt/src/haive/prebuilt/project_manager/agent.py:48` - error: Statement is unreachable [unreachable]
+- `packages/haive-prebuilt/src/haive/prebuilt/project_manager/agent.py:48` - error: Statement is unreachable  [unreachable]
   - ID: 429c6785
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:610` - error: Statement is unreachable [unreachable]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/tools.py:610` - error: Statement is unreachable  [unreachable]
   - ID: 70f115a7
 
 ## mypy:unused-ignore (20 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:35` - Unused "type: ignore" comment [unused-ignore]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:35` - Unused "type: ignore" comment  [unused-ignore]
   - ID: 04709a9c
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:103` - Unused "type: ignore" comment [unused-ignore]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:103` - Unused "type: ignore" comment  [unused-ignore]
   - ID: 089759df
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:115` - Unused "type: ignore" comment [unused-ignore]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:115` - Unused "type: ignore" comment  [unused-ignore]
   - ID: 3e350315
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:149` - Unused "type: ignore" comment [unused-ignore]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:149` - Unused "type: ignore" comment  [unused-ignore]
   - ID: 1b800f65
-- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:231` - Unused "type: ignore" comment [unused-ignore]
+- `packages/haive-agents/src/haive/agents/task_analysis/tree/models.py:231` - Unused "type: ignore" comment  [unused-ignore]
   - ID: 8d77af0a
-- `packages/haive-agents/src/haive/agents/conversation/collaberative/example.py:111` - Unused "type: ignore" comment [unused-ignore]
+- `packages/haive-agents/src/haive/agents/conversation/collaberative/example.py:111` - Unused "type: ignore" comment  [unused-ignore]
   - ID: 34a1173a
-- `packages/haive-agents/src/haive/agents/conversation/collaberative/example.py:173` - Unused "type: ignore" comment [unused-ignore]
+- `packages/haive-agents/src/haive/agents/conversation/collaberative/example.py:173` - Unused "type: ignore" comment  [unused-ignore]
   - ID: 9bccb194
-- `packages/haive-agents/src/haive/agents/conversation/collaberative/example.py:238` - Unused "type: ignore" comment [unused-ignore]
+- `packages/haive-agents/src/haive/agents/conversation/collaberative/example.py:238` - Unused "type: ignore" comment  [unused-ignore]
   - ID: 570f0e3f
-- `packages/haive-agents/src/haive/agents/memory_v2/test_deepseek_integration.py:95` - Unused "type: ignore" comment [unused-ignore]
+- `packages/haive-agents/src/haive/agents/memory_v2/test_deepseek_integration.py:95` - Unused "type: ignore" comment  [unused-ignore]
   - ID: b8233547
-- `packages/haive-agents/src/haive/agents/memory_v2/test_deepseek_integration.py:130` - Unused "type: ignore" comment [unused-ignore]
+- `packages/haive-agents/src/haive/agents/memory_v2/test_deepseek_integration.py:130` - Unused "type: ignore" comment  [unused-ignore]
   - ID: 61a28b7f
 - ... and 8 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/schema/__init__.py:159` - Unused "type: ignore" comment [unused-ignore]
+- `packages/haive-core/src/haive/core/schema/__init__.py:159` - Unused "type: ignore" comment  [unused-ignore]
   - ID: bd2bb326
-- `packages/haive-core/src/haive/core/types/tree_leaf.py:47` - Unused "type: ignore" comment [unused-ignore]
+- `packages/haive-core/src/haive/core/types/tree_leaf.py:47` - Unused "type: ignore" comment  [unused-ignore]
   - ID: 5f4b6517
 
 ## mypy:used-before-def (38 errors)
 
+
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/node/handlers.py:215` - error: Name "updates" is used before definition [used-before-def]
+- `packages/haive-core/src/haive/core/graph/node/handlers.py:215` - error: Name "updates" is used before definition  [used-before-def]
   - ID: 3cba51e3
-- `packages/haive-core/src/haive/core/graph/node/handlers.py:217` - error: Name "updates" is used before definition [used-before-def]
+- `packages/haive-core/src/haive/core/graph/node/handlers.py:217` - error: Name "updates" is used before definition  [used-before-def]
   - ID: 9b29293f
-- `packages/haive-core/src/haive/core/graph/node/handlers.py:233` - error: Name "updates" is used before definition [used-before-def]
+- `packages/haive-core/src/haive/core/graph/node/handlers.py:233` - error: Name "updates" is used before definition  [used-before-def]
   - ID: 6e6df588
-- `packages/haive-core/src/haive/core/graph/node/handlers.py:243` - error: Name "updates" is used before definition [used-before-def]
+- `packages/haive-core/src/haive/core/graph/node/handlers.py:243` - error: Name "updates" is used before definition  [used-before-def]
   - ID: e46ff1be
-- `packages/haive-core/src/haive/core/graph/node/handlers.py:255` - error: Name "updates" is used before definition [used-before-def]
+- `packages/haive-core/src/haive/core/graph/node/handlers.py:255` - error: Name "updates" is used before definition  [used-before-def]
   - ID: a0a58b6e
-- `packages/haive-core/src/haive/core/graph/node/handlers.py:256` - error: Name "updates" is used before definition [used-before-def]
+- `packages/haive-core/src/haive/core/graph/node/handlers.py:256` - error: Name "updates" is used before definition  [used-before-def]
   - ID: bca3baf1
-- `packages/haive-core/src/haive/core/graph/node/handlers.py:262` - error: Name "updates" is used before definition [used-before-def]
+- `packages/haive-core/src/haive/core/graph/node/handlers.py:262` - error: Name "updates" is used before definition  [used-before-def]
   - ID: f0dbd455
-- `packages/haive-core/src/haive/core/graph/node/handlers.py:270` - error: Name "updates" is used before definition [used-before-def]
+- `packages/haive-core/src/haive/core/graph/node/handlers.py:270` - error: Name "updates" is used before definition  [used-before-def]
   - ID: ef67b47c
-- `packages/haive-core/src/haive/core/graph/node/handlers.py:281` - error: Name "updates" is used before definition [used-before-def]
+- `packages/haive-core/src/haive/core/graph/node/handlers.py:281` - error: Name "updates" is used before definition  [used-before-def]
   - ID: a9556d51
-- `packages/haive-core/src/haive/core/graph/node/handlers.py:293` - error: Name "updates" is used before definition [used-before-def]
+- `packages/haive-core/src/haive/core/graph/node/handlers.py:293` - error: Name "updates" is used before definition  [used-before-def]
   - ID: 722111ce
 - ... and 26 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_enhanced.py:147` - error: Name "\_discovery_cache" is used before definition [used-before-def]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_enhanced.py:147` - error: Name "_discovery_cache" is used before definition  [used-before-def]
   - ID: 8d1a0663
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_enhanced.py:148` - error: Name "\_discovery_cache" is used before definition [used-before-def]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_enhanced.py:148` - error: Name "_discovery_cache" is used before definition  [used-before-def]
   - ID: a9c7364f
 
 ## mypy:valid-type (99 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/memory_reorganized/models/meta.py:24` - error: Function "builtins.callable" is not valid as a type [valid-type]
+- `packages/haive-agents/src/haive/agents/memory_reorganized/models/meta.py:24` - error: Function "builtins.callable" is not valid as a type  [valid-type]
   - ID: 559490f9
-- `packages/haive-agents/src/haive/agents/memory/models_dir/meta.py:12` - error: Function "builtins.callable" is not valid as a type [valid-type]
+- `packages/haive-agents/src/haive/agents/memory/models_dir/meta.py:12` - error: Function "builtins.callable" is not valid as a type  [valid-type]
   - ID: 7c07a103
-- `packages/haive-agents/src/haive/agents/patterns/sequential_workflow_agent.py:128` - error: Function "builtins.callable" is not valid as a type [valid-type]
+- `packages/haive-agents/src/haive/agents/patterns/sequential_workflow_agent.py:128` - error: Function "builtins.callable" is not valid as a type  [valid-type]
   - ID: 6d0d72ee
-- `packages/haive-agents/src/haive/agents/patterns/sequential_workflow_agent.py:286` - error: Function "builtins.callable" is not valid as a type [valid-type]
+- `packages/haive-agents/src/haive/agents/patterns/sequential_workflow_agent.py:286` - error: Function "builtins.callable" is not valid as a type  [valid-type]
   - ID: e712707d
-- `packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py:27` - error: Variable "agents.common.models.task_analysis.analysis.ComplexityType" is not valid as a type
+- `packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py:27` - error: Variable "agents.common.models.task_analysis.analysis.ComplexityType" is not valid as a type 
   - ID: 3d2af07b
-- `packages/haive-agents/src/haive/agents/research/person/agent.py:402` - error: Variable "python_item_type" is not valid as a type [valid-type]
+- `packages/haive-agents/src/haive/agents/research/person/agent.py:402` - error: Variable "python_item_type" is not valid as a type  [valid-type]
   - ID: edf592b2
-- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_generic.py:27` - error: Variable "agents.multi.enhanced_multi_agent_generic.Agent" is not valid as a type [valid-typ
+- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_generic.py:27` - error: Variable "agents.multi.enhanced_multi_agent_generic.Agent" is not valid as a type  [valid-typ
   - ID: 175b73a3
-- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_generic.py:30` - error: Variable "agents.multi.enhanced_multi_agent_generic.Agent" is not valid as a type [valid-typ
+- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_generic.py:30` - error: Variable "agents.multi.enhanced_multi_agent_generic.Agent" is not valid as a type  [valid-typ
   - ID: 2ea71cb9
-- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_generic.py:132` - error: Variable "agents.multi.enhanced_multi_agent_generic.Agent" is not valid as a type [valid-typ
+- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_generic.py:132` - error: Variable "agents.multi.enhanced_multi_agent_generic.Agent" is not valid as a type  [valid-typ
   - ID: 464a1703
-- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_generic.py:163` - error: Variable "agents.multi.enhanced_multi_agent_generic.Agent" is not valid as a type [valid-typ
+- `packages/haive-agents/src/haive/agents/multi/enhanced_multi_agent_generic.py:163` - error: Variable "agents.multi.enhanced_multi_agent_generic.Agent" is not valid as a type  [valid-typ
   - ID: 74c4c04c
 - ... and 14 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/graph/node/protocols.py:12` - error: Function "builtins.callable" is not valid as a type [valid-type]
+- `packages/haive-core/src/haive/core/graph/node/protocols.py:12` - error: Function "builtins.callable" is not valid as a type  [valid-type]
   - ID: 01adf755
-- `packages/haive-core/src/haive/core/graph/node/composer/update_functions.py:297` - error: Function "builtins.callable" is not valid as a type [valid-type]
+- `packages/haive-core/src/haive/core/graph/node/composer/update_functions.py:297` - error: Function "builtins.callable" is not valid as a type  [valid-type]
   - ID: c652c618
-- `packages/haive-core/src/haive/core/graph/common/field_utils.py:101` - error: Function "builtins.callable" is not valid as a type [valid-type]
+- `packages/haive-core/src/haive/core/graph/common/field_utils.py:101` - error: Function "builtins.callable" is not valid as a type  [valid-type]
   - ID: e58f0872
-- `packages/haive-core/src/haive/core/graph/branches/utils.py:101` - error: Function "builtins.callable" is not valid as a type [valid-type]
+- `packages/haive-core/src/haive/core/graph/branches/utils.py:101` - error: Function "builtins.callable" is not valid as a type  [valid-type]
   - ID: e0db3d1f
-- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/timing.py:104` - error: Function "builtins.any" is not valid as a type [valid-type]
+- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/timing.py:104` - error: Function "builtins.any" is not valid as a type  [valid-type]
   - ID: 86c00b8a
-- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:35` - error: Function "builtins.any" is not valid as a type [valid-type]
+- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:35` - error: Function "builtins.any" is not valid as a type  [valid-type]
   - ID: cae294d5
-- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:136` - error: Function "builtins.any" is not valid as a type [valid-type]
+- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:136` - error: Function "builtins.any" is not valid as a type  [valid-type]
   - ID: 3f647a64
-- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:167` - error: Function "builtins.any" is not valid as a type [valid-type]
+- `packages/haive-core/src/haive/core/utils/debugkit/benchmarking/load.py:167` - error: Function "builtins.any" is not valid as a type  [valid-type]
   - ID: 20bd0d36
-- `packages/haive-core/src/haive/core/types/tree_leaf.py:52` - error: Type variable "core.types.tree_leaf.T" is unbound [valid-type]
+- `packages/haive-core/src/haive/core/types/tree_leaf.py:52` - error: Type variable "core.types.tree_leaf.T" is unbound  [valid-type]
   - ID: e747db76
-- `packages/haive-core/src/haive/core/types/tree_leaf.py:53` - error: Type variable "core.types.tree_leaf.T" is unbound [valid-type]
+- `packages/haive-core/src/haive/core/types/tree_leaf.py:53` - error: Type variable "core.types.tree_leaf.T" is unbound  [valid-type]
   - ID: 8159dcea
 - ... and 25 more
 
 ### haive-dataflow
 
-- `packages/haive-dataflow/src/haive/dataflow/mcp/health.py:129` - error: Function "builtins.any" is not valid as a type [valid-type]
+- `packages/haive-dataflow/src/haive/dataflow/mcp/health.py:129` - error: Function "builtins.any" is not valid as a type  [valid-type]
   - ID: c10e072a
-- `packages/haive-dataflow/src/haive/dataflow/api/routes/example_tool.py:20` - error: Function "builtins.any" is not valid as a type [valid-type]
+- `packages/haive-dataflow/src/haive/dataflow/api/routes/example_tool.py:20` - error: Function "builtins.any" is not valid as a type  [valid-type]
   - ID: 0afe43de
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:31` - error: Variable "re.T" is not valid as a type [valid-type]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:31` - error: Variable "re.T" is not valid as a type  [valid-type]
   - ID: e15deb02
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:46` - error: Variable "re.T" is not valid as a type [valid-type]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:46` - error: Variable "re.T" is not valid as a type  [valid-type]
   - ID: 1fdb69ce
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:60` - error: Variable "re.T" is not valid as a type [valid-type]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:60` - error: Variable "re.T" is not valid as a type  [valid-type]
   - ID: 83d48d04
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:82` - error: Variable "re.T" is not valid as a type [valid-type]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:82` - error: Variable "re.T" is not valid as a type  [valid-type]
   - ID: 01fa402e
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:95` - error: Variable "re.T" is not valid as a type [valid-type]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:95` - error: Variable "re.T" is not valid as a type  [valid-type]
   - ID: eb2c647c
-- `packages/haive-games/src/haive/games/single_player/state_manager.py:108` - error: Variable "re.T" is not valid as a type [valid-type]
+- `packages/haive-games/src/haive/games/single_player/state_manager.py:108` - error: Variable "re.T" is not valid as a type  [valid-type]
   - ID: e93daf48
-- `packages/haive-games/src/haive/games/hold_em/utils.py:86` - error: Function "builtins.any" is not valid as a type [valid-type]
+- `packages/haive-games/src/haive/games/hold_em/utils.py:86` - error: Function "builtins.any" is not valid as a type  [valid-type]
   - ID: 73fdbc32
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:22` - error: Function "builtins.any" is not valid as a type [valid-type]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:22` - error: Function "builtins.any" is not valid as a type  [valid-type]
   - ID: 16d92a17
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:28` - error: Function "builtins.any" is not valid as a type [valid-type]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:28` - error: Function "builtins.any" is not valid as a type  [valid-type]
   - ID: 2d4cec5e
-- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:32` - error: Function "builtins.any" is not valid as a type [valid-type]
+- `packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:32` - error: Function "builtins.any" is not valid as a type  [valid-type]
   - ID: 47bc3157
 - ... and 8 more
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py:665` - error: Function "builtins.callable" is not valid as a type [valid-type]
+- `packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py:665` - error: Function "builtins.callable" is not valid as a type  [valid-type]
   - ID: fe826320
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:53` - error: Invalid type comment or annotation [valid-type]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:53` - error: Invalid type comment or annotation  [valid-type]
   - ID: 50c4a676
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:119` - error: Invalid type comment or annotation [valid-type]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:119` - error: Invalid type comment or annotation  [valid-type]
   - ID: 42d8a4be
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:144` - error: Invalid type comment or annotation [valid-type]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:144` - error: Invalid type comment or annotation  [valid-type]
   - ID: 3d25c25b
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:160` - error: Invalid type comment or annotation [valid-type]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:160` - error: Invalid type comment or annotation  [valid-type]
   - ID: cdd9ba84
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:179` - error: Invalid type comment or annotation [valid-type]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:179` - error: Invalid type comment or annotation  [valid-type]
   - ID: 6aa2daee
-- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:203` - error: Invalid type comment or annotation [valid-type]
+- `packages/haive-prebuilt/src/haive/prebuilt/tldr2/models.py:203` - error: Invalid type comment or annotation  [valid-type]
   - ID: 2516a276
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:42` - error: Invalid type comment or annotation [valid-type]
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:42` - error: Invalid type comment or annotation  [valid-type]
   - ID: 210c8315
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:72` - error: Invalid type comment or annotation [valid-type]
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:72` - error: Invalid type comment or annotation  [valid-type]
   - ID: 15eca7e3
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:121` - error: Invalid type comment or annotation [valid-type]
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:121` - error: Invalid type comment or annotation  [valid-type]
   - ID: 4feeeaa3
-- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:124` - error: Invalid type comment or annotation [valid-type]
+- `packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:124` - error: Invalid type comment or annotation  [valid-type]
   - ID: f1ceadc6
 - ... and 9 more
 
 ## mypy:var-annotated (69 errors)
 
+
 ### haive-agents
 
-- `packages/haive-agents/src/haive/agents/supervisor/multi_agent_dynamic_state.py:330` - error: Need type annotation for "results" [var-annotated]
+- `packages/haive-agents/src/haive/agents/supervisor/multi_agent_dynamic_state.py:330` - error: Need type annotation for "results"  [var-annotated]
   - ID: dfc462d7
-- `packages/haive-agents/src/haive/agents/supervisor/archive/multi_agent_dynamic_state.py:330` - error: Need type annotation for "results" [var-annotated]
+- `packages/haive-agents/src/haive/agents/supervisor/archive/multi_agent_dynamic_state.py:330` - error: Need type annotation for "results"  [var-annotated]
   - ID: 52cf88b6
-- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/models.py:119` - error: Need type annotation for "nodes" [var-annotated]
+- `packages/haive-agents/src/haive/agents/reasoning_and_critique/lats/models.py:119` - error: Need type annotation for "nodes"  [var-annotated]
   - ID: 81f0eb1a
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/agents.py:535` - error: Need type annotation for "run_grading" [var-annotated]
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/agents.py:535` - error: Need type annotation for "run_grading"  [var-annotated]
   - ID: ae3c8aff
-- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/agents.py:536` - error: Need type annotation for "run_iterative_grading" [var-annotated]
+- `packages/haive-agents/src/haive/agents/rag/multi_agent_rag/agents.py:536` - error: Need type annotation for "run_iterative_grading"  [var-annotated]
   - ID: 24d960be
-- `packages/haive-agents/src/haive/agents/planning/rewoo/models/tool_step.py:160` - error: Need type annotation for "issues" [var-annotated]
+- `packages/haive-agents/src/haive/agents/planning/rewoo/models/tool_step.py:160` - error: Need type annotation for "issues"  [var-annotated]
   - ID: 9473d7bf
-- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:611` - error: Need type annotation for "results" [var-annotated]
+- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:611` - error: Need type annotation for "results"  [var-annotated]
   - ID: bfc9342f
-- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:788` - error: Need type annotation for "migration_result" [var-annotated]
+- `packages/haive-agents/src/haive/agents/memory_v2/multi_memory_coordinator.py:788` - error: Need type annotation for "migration_result"  [var-annotated]
   - ID: ae19d519
-- `packages/haive-agents/src/haive/agents/memory_v2/integrated_memory_system.py:262` - error: Need type annotation for "results" [var-annotated]
+- `packages/haive-agents/src/haive/agents/memory_v2/integrated_memory_system.py:262` - error: Need type annotation for "results"  [var-annotated]
   - ID: 00618470
-- `packages/haive-agents/src/haive/agents/memory_v2/integrated_memory_system.py:323` - error: Need type annotation for "results" [var-annotated]
+- `packages/haive-agents/src/haive/agents/memory_v2/integrated_memory_system.py:323` - error: Need type annotation for "results"  [var-annotated]
   - ID: ff617d32
 - ... and 15 more
 
 ### haive-core
 
-- `packages/haive-core/src/haive/core/tools/__init__.py:14` - error: Need type annotation for "submod_attrs" [var-annotated]
-  - ID: 4f5c4ab7
-- `packages/haive-core/src/haive/core/registry/memory.py:18` - error: Need type annotation for "engines" [var-annotated]
+- `packages/haive-core/src/haive/core/registry/memory.py:18` - error: Need type annotation for "engines"  [var-annotated]
   - ID: 545a2d00
-- `packages/haive-core/src/haive/core/graph/state_graph/components/edge_manager.py:292` - error: Need type annotation for "adjacency" [var-annotated]
+- `packages/haive-core/src/haive/core/graph/state_graph/components/edge_manager.py:292` - error: Need type annotation for "adjacency"  [var-annotated]
   - ID: ae232334
-- `packages/haive-core/src/haive/core/engine/base/registry.py:59` - error: Need type annotation for "engines" [var-annotated]
+- `packages/haive-core/src/haive/core/engine/base/registry.py:59` - error: Need type annotation for "engines"  [var-annotated]
   - ID: aa0d016f
-- `packages/haive-core/src/haive/core/schema/compatibility/utils.py:265` - error: Need type annotation for "diff" [var-annotated]
+- `packages/haive-core/src/haive/core/schema/compatibility/utils.py:265` - error: Need type annotation for "diff"  [var-annotated]
   - ID: f2c9b1a7
-- `packages/haive-core/src/haive/core/graph/state_graph/state_graph.py:389` - error: Need type annotation for "result" [var-annotated]
+- `packages/haive-core/src/haive/core/graph/state_graph/state_graph.py:389` - error: Need type annotation for "result"  [var-annotated]
   - ID: 8eb8c80b
-- `packages/haive-core/src/haive/core/graph/state_graph_manager.py:23` - error: Need type annotation for "metadata" [var-annotated]
+- `packages/haive-core/src/haive/core/graph/state_graph_manager.py:23` - error: Need type annotation for "metadata"  [var-annotated]
   - ID: 1d7e1561
-- `packages/haive-core/src/haive/core/graph/state_graph_manager.py:174` - error: Need type annotation for "G" [var-annotated]
+- `packages/haive-core/src/haive/core/graph/state_graph_manager.py:174` - error: Need type annotation for "G"  [var-annotated]
   - ID: 3032db05
-- `packages/haive-core/src/haive/core/engine/document/loaders/sources/analytics_sources.py:730` - error: Need type annotation for "range_query" [var-annotated]
+- `packages/haive-core/src/haive/core/engine/document/loaders/sources/analytics_sources.py:730` - error: Need type annotation for "range_query"  [var-annotated]
   - ID: 92b90053
-- `packages/haive-core/src/haive/core/utils/tool_list.py:402` - error: Need type annotation for "categories" [var-annotated]
+- `packages/haive-core/src/haive/core/utils/tool_list.py:402` - error: Need type annotation for "categories"  [var-annotated]
   - ID: eb564ef9
+- `packages/haive-core/src/haive/core/utils/model_utils.py:7` - error: Need type annotation for "parser"  [var-annotated]
+  - ID: 4087d142
 - ... and 19 more
 
 ### haive-games
 
-- `packages/haive-games/src/haive/games/__init__.py:90` - error: Need type annotation for "submod_attrs" [var-annotated]
+- `packages/haive-games/src/haive/games/__init__.py:90` - error: Need type annotation for "submod_attrs"  [var-annotated]
   - ID: 7e5e4dce
-- `packages/haive-games/src/haive/games/core/game/containers/deck.py:68` - error: Need type annotation for "hands" [var-annotated]
+- `packages/haive-games/src/haive/games/core/game/containers/deck.py:68` - error: Need type annotation for "hands"  [var-annotated]
   - ID: ae6814ea
-- `packages/haive-games/src/haive/games/core/game/containers/container.py:98` - error: Need type annotation for "hands" [var-annotated]
+- `packages/haive-games/src/haive/games/core/game/containers/container.py:98` - error: Need type annotation for "hands"  [var-annotated]
   - ID: 9e3a25db
-- `packages/haive-games/src/haive/games/core/game/containers/base.py:226` - error: Need type annotation for "hands" [var-annotated]
+- `packages/haive-games/src/haive/games/core/game/containers/base.py:226` - error: Need type annotation for "hands"  [var-annotated]
   - ID: 5b1db628
-- `packages/haive-games/src/haive/games/monopoly/state.py:551` - error: Need type annotation for "analysis" [var-annotated]
+- `packages/haive-games/src/haive/games/monopoly/state.py:551` - error: Need type annotation for "analysis"  [var-annotated]
   - ID: 7a03c515
 
 ### haive-mcp
 
-- `packages/haive-mcp/src/haive/mcp/__init__.py:44` - error: Need type annotation for "submod_attrs" [var-annotated]
+- `packages/haive-mcp/src/haive/mcp/__init__.py:44` - error: Need type annotation for "submod_attrs"  [var-annotated]
   - ID: aa3e1f26
-- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:170` - error: Need type annotation for "dependencies" [var-annotated]
+- `packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py:170` - error: Need type annotation for "dependencies"  [var-annotated]
   - ID: ab3e69fe
-- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:325` - error: Need type annotation for "result" [var-annotated]
+- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:325` - error: Need type annotation for "result"  [var-annotated]
   - ID: 85ce146d
-- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:492` - error: Need type annotation for "guide" [var-annotated]
+- `packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py:492` - error: Need type annotation for "guide"  [var-annotated]
   - ID: f81e74d4
-- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:157` - error: Need type annotation for "capabilities" [var-annotated]
+- `packages/haive-mcp/src/haive/mcp/downloader/integration.py:157` - error: Need type annotation for "capabilities"  [var-annotated]
   - ID: 3cd3d19f
 
 ### haive-prebuilt
 
-- `packages/haive-prebuilt/src/haive/prebuilt/__init__.py:172` - error: Need type annotation for "submod_attrs" [var-annotated]
+- `packages/haive-prebuilt/src/haive/prebuilt/__init__.py:172` - error: Need type annotation for "submod_attrs"  [var-annotated]
   - ID: a44bea03
-- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:142` - error: Need type annotation for "tone_pipeline" [var-annotated]
+- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:142` - error: Need type annotation for "tone_pipeline"  [var-annotated]
   - ID: c3764456
-- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:173` - error: Need type annotation for "quote_extraction_pipeline" [var-annotated]
+- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:173` - error: Need type annotation for "quote_extraction_pipeline"  [var-annotated]
   - ID: 048fbe02
-- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:204` - error: Need type annotation for "grammar_and_bias_review" [var-annotated]
+- `packages/haive-prebuilt/src/haive/prebuilt/essay_grading/__init__.py:204` - error: Need type annotation for "grammar_and_bias_review"  [var-annotated]
   - ID: 7d4def07
 
 ### haive-tools
 
-- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/dependency_analyzer.py:41` - error: Need type annotation for "imports" [var-annotated]
+- `packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/visitors/dependency_analyzer.py:41` - error: Need type annotation for "imports"  [var-annotated]
   - ID: d6f508d6
 
 ## ruff:A001 (3 errors)
+
 
 ### haive-core
 
@@ -8329,6 +8492,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 2d4a336a
 
 ## ruff:A002 (29 errors)
+
 
 ### haive-core
 
@@ -8354,7 +8518,8 @@ For further information visit https://errors.pydantic.dev
   - ID: 4856886c
 - ... and 19 more
 
-## ruff:ARG001 (197 errors)
+## ruff:ARG001 (210 errors)
+
 
 ### haive-agents
 
@@ -8372,13 +8537,13 @@ For further information visit https://errors.pydantic.dev
   - ID: e4c7dd29
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/chain_examples.py:167` - Unused function argument: `s`
   - ID: e0994341
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/examples.py:102` - Unused function argument: `documents`
-  - ID: 4697d56b
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/examples.py:110` - Unused function argument: `state`
-  - ID: 5ba7ca32
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/examples.py:171` - Unused function argument: `documents`
-  - ID: e747ce4b
-- ... and 81 more
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/examples.py:35` - Unused function argument: `state`
+  - ID: f499dfe1
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/examples.py:174` - Unused function argument: `documents`
+  - ID: 1dafeb71
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/examples.py:205` - Unused function argument: `documents`
+  - ID: 41b87461
+- ... and 94 more
 
 ### haive-core
 
@@ -8414,18 +8579,18 @@ For further information visit https://errors.pydantic.dev
   - ID: 3fb4eba8
 - `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/bin/registry_cli.py:486` - Unused function argument: `args`
   - ID: cd6046f9
-- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/bin/vault_cli.py:172` - Unused function argument: `args`
-  - ID: a7150b7e
-- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/bin/vault_cli.py:244` - Unused function argument: `args`
-  - ID: 99f318b4
-- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/bin/vault_cli.py:273` - Unused function argument: `args`
-  - ID: 29bd2921
+- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/bin/vault_cli.py:175` - Unused function argument: `args`
+  - ID: 27d61a34
+- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/bin/vault_cli.py:247` - Unused function argument: `args`
+  - ID: e290cc11
+- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/bin/vault_cli.py:276` - Unused function argument: `args`
+  - ID: 4b38c116
 - `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/registry/bin/registry_cli.py:484` - Unused function argument: `args`
   - ID: aaeb57ec
-- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/registry/bin/vault_cli.py:172` - Unused function argument: `args`
-  - ID: 12a08d52
-- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/registry/bin/vault_cli.py:244` - Unused function argument: `args`
-  - ID: 1de576e5
+- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/registry/bin/vault_cli.py:175` - Unused function argument: `args`
+  - ID: c4b7e28c
+- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/registry/bin/vault_cli.py:247` - Unused function argument: `args`
+  - ID: 170d5974
 - ... and 1 more
 
 ### haive-mcp
@@ -8463,7 +8628,8 @@ For further information visit https://errors.pydantic.dev
   - ID: 75e081aa
 - ... and 8 more
 
-## ruff:ARG002 (384 errors)
+## ruff:ARG002 (388 errors)
+
 
 ### haive-agents
 
@@ -8487,7 +8653,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 610a2239
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/typed_agent.py:315` - Unused method argument: `state`
   - ID: 807e332b
-- ... and 180 more
+- ... and 184 more
 
 ### haive-core
 
@@ -8499,8 +8665,8 @@ For further information visit https://errors.pydantic.dev
   - ID: a4ccf1b6
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/common/models/named_list.py:118` - Unused method argument: `default_name`
   - ID: ac6b4572
-- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/agent/persistence/postgres_config.py:111` - Unused method argument: `name`
-  - ID: d35af65b
+- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/agent/persistence/postgres_config.py:134` - Unused method argument: `name`
+  - ID: 22b16ae4
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/aug_llm/config.py:1302` - Unused method argument: `description`
   - ID: 4434767b
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/aug_llm/config.py:1302` - Unused method argument: `description`
@@ -8571,6 +8737,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:ARG003 (38 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/grade/rubric.py:43` - Unused class method argument: `info`
@@ -8621,6 +8788,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:ARG004 (11 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/models_dir/meta.py:15` - Unused static method argument: `kwargs`
@@ -8654,6 +8822,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:ARG005 (84 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/smart_output_parsing.py:392` - Unused lambda argument: `x`
@@ -8674,8 +8843,8 @@ For further information visit https://errors.pydantic.dev
   - ID: 9525c43d
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/chain_examples.py:137` - Unused lambda argument: `s`
   - ID: e3524fab
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/examples.py:244` - Unused lambda argument: `s`
-  - ID: 4410ad7e
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/examples.py:252` - Unused lambda argument: `s`
+  - ID: c05ef6af
 - ... and 52 more
 
 ### haive-core
@@ -8722,6 +8891,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:B004 (2 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/utils/interrupt_utils.py:111` - Using `hasattr(x, "__call__")` to test if x is callable is unreliable. Use `callable(x)` for consist
@@ -8731,12 +8901,14 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:B005 (1 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/schema/utils.py:121` - Using `.strip()` with multi-character strings is misleading
   - ID: cb82696c
 
 ## ruff:B007 (79 errors)
+
 
 ### haive-agents
 
@@ -8834,6 +9006,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:B008 (50 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/complex_extraction/agent.py:158` - Do not perform function call `ComplexExtractionAgentConfig` in argument defaults; instead, perform t
@@ -8842,11 +9015,11 @@ For further information visit https://errors.pydantic.dev
   - ID: 40d7d1dc
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/kg/kg_iterative_refinement/agent.py:127` - Do not perform function call `IterativeGraphTransformerConfig` in argument defaults; instead, perfor
   - ID: 704e4010
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/summarizer/iterative_refinement/agent.py:20` - Do not perform function call `IterativeSummarizerConfig` in argument defaults; instead, perform the
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/summarizer/iterative_refinement/agent.py:20` - Do not perform function call `IterativeSummarizerConfig` in argument defaults; instead, perform the 
   - ID: 8e53aeff
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/summarizer/map_branch/agent.py:138` - Do not perform function call `SummarizerAgentConfig` in argument defaults; instead, perform the call
   - ID: 4ac8be53
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/plan_and_execute/agent.py:15` - Do not perform function call `PlanAndExecuteConfig` in argument defaults; instead, perform the call
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/plan_and_execute/agent.py:15` - Do not perform function call `PlanAndExecuteConfig` in argument defaults; instead, perform the call 
   - ID: 28103cfa
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/agent.py:123` - Do not perform function call `GraphDBRAGConfig` in argument defaults; instead, perform the call with
   - ID: 9d9ef5a3
@@ -8897,7 +9070,7 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-games
 
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/cards/standard/blackjack/agent.py:19` - Do not perform function call `BlackjackAgentConfig` in argument defaults; instead, perform the call
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/cards/standard/blackjack/agent.py:19` - Do not perform function call `BlackjackAgentConfig` in argument defaults; instead, perform the call 
   - ID: 7bf04e18
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/cards/standard/bs/agent.py:21` - Do not perform function call `BullshitAgentConfig` in argument defaults; instead, perform the call w
   - ID: 1d5678b1
@@ -8909,17 +9082,18 @@ For further information visit https://errors.pydantic.dev
   - ID: 87dc776e
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/fox_and_geese/agent.py:102` - Do not perform function call `FoxAndGeeseConfig` in argument defaults; instead, perform the call wit
   - ID: 22d4edec
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/mancala/agent_original.py:84` - Do not perform function call `MancalaConfig` in argument defaults; instead, perform the call within
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/mancala/agent_original.py:84` - Do not perform function call `MancalaConfig` in argument defaults; instead, perform the call within 
   - ID: f9b0f0b6
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/mastermind/agent.py:82` - Do not perform function call `MastermindConfig` in argument defaults; instead, perform the call with
   - ID: c3c2c1c1
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/nim/agent.py:82` - Do not perform function call `NimConfig` in argument defaults; instead, perform the call within the
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/nim/agent.py:82` - Do not perform function call `NimConfig` in argument defaults; instead, perform the call within the 
   - ID: feb5e02d
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/poker/agent.py:61` - Do not perform function call `PokerAgentConfig` in argument defaults; instead, perform the call with
   - ID: 3a5042e2
 - ... and 3 more
 
 ## ruff:B009 (4 errors)
+
 
 ### haive-agents
 
@@ -8933,6 +9107,7 @@ For further information visit https://errors.pydantic.dev
   - ID: ade047a8
 
 ## ruff:B018 (9 errors)
+
 
 ### haive-agents
 
@@ -8960,12 +9135,14 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:B020 (1 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/llm_compiler/output_parser.py:113` - Loop control variable `thought` overrides iterable it iterates
   - ID: 477b88a7
 
 ## ruff:B021 (3 errors)
+
 
 ### haive-agents
 
@@ -8980,6 +9157,7 @@ For further information visit https://errors.pydantic.dev
   - ID: ed3f8d3a
 
 ## ruff:B023 (12 errors)
+
 
 ### haive-agents
 
@@ -9016,6 +9194,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:B024 (1 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/state_graph/components/base_component.py:14` - `BaseGraphComponent` is an abstract base class, but it has no abstract methods or properties
@@ -9023,12 +9202,14 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:B025 (1 errors)
 
+
 ### haive-dataflow
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes.py:236` - try-except block with duplicate exception `ImportError`
   - ID: 2c7bdb0e
 
 ## ruff:B904 (287 errors)
+
 
 ### haive-agents
 
@@ -9151,6 +9332,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:C901 (215 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/agent.py:215` - `update_scratchpad` is too complex (18 > 12)
@@ -9224,6 +9406,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:DTZ001 (2 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_processing/examples/comprehensive_query_example.py:325` - `datetime.datetime()` called without a `tzinfo` argument
@@ -9231,7 +9414,8 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_processing/examples/comprehensive_query_example.py:326` - `datetime.datetime()` called without a `tzinfo` argument
   - ID: 40c1c745
 
-## ruff:DTZ003 (81 errors)
+## ruff:DTZ003 (86 errors)
+
 
 ### haive-agents
 
@@ -9255,7 +9439,7 @@ For further information visit https://errors.pydantic.dev
   - ID: d32ca354
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/core/stores.py:543` - `datetime.datetime.utcnow()` used
   - ID: 0262e911
-- ... and 66 more
+- ... and 71 more
 
 ### haive-dataflow
 
@@ -9270,7 +9454,8 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/api/routes/agent_routes.py:535` - `datetime.datetime.utcnow()` used
   - ID: 06a4b2cb
 
-## ruff:DTZ005 (619 errors)
+## ruff:DTZ005 (628 errors)
+
 
 ### haive-agents
 
@@ -9294,7 +9479,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 40027db2
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_processing/examples/comprehensive_query_example.py:113` - `datetime.datetime.now()` called without a `tz` argument
   - ID: a4b32b10
-- ... and 321 more
+- ... and 330 more
 
 ### haive-dataflow
 
@@ -9351,6 +9536,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:DTZ901 (2 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/core/stores.py:489` - Use of `datetime.datetime.min` without timezone information
@@ -9358,7 +9544,8 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory_reorganized/core/stores.py:495` - Use of `datetime.datetime.min` without timezone information
   - ID: 5201b209
 
-## ruff:E402 (159 errors)
+## ruff:E402 (163 errors)
+
 
 ### haive-agents
 
@@ -9410,10 +9597,19 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-games
 
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/debate_v2/__init__.py:7` - Module level import not at top of file
+  - ID: 6ad46606
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/debate_v2/__init__.py:8` - Module level import not at top of file
+  - ID: 613364cf
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/debate_v2/__init__.py:9` - Module level import not at top of file
+  - ID: 16c3a210
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/debate_v2/__init__.py:10` - Module level import not at top of file
+  - ID: 2147a1c5
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/fox_and_geese/enhanced_example.py:273` - Module level import not at top of file
   - ID: 26af4d0f
 
-## ruff:E501 (1249 errors)
+## ruff:E501 (1250 errors)
+
 
 ### haive-games
 
@@ -9437,9 +9633,10 @@ For further information visit https://errors.pydantic.dev
   - ID: 000f247b
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/among_us/enhanced_ui.py:152` - Line too long (89 > 88)
   - ID: c6f80a0e
-- ... and 1239 more
+- ... and 1240 more
 
 ## ruff:E721 (28 errors)
+
 
 ### haive-core
 
@@ -9467,6 +9664,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:E722 (6 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory_reorganized/agents/react.py:58` - Do not use bare `except`
@@ -9483,6 +9681,7 @@ For further information visit https://errors.pydantic.dev
   - ID: c3264506
 
 ## ruff:E731 (15 errors)
+
 
 ### haive-agents
 
@@ -9510,6 +9709,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:E741 (13 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/base/protocols.py:12` - Ambiguous variable name: `I`
@@ -9534,7 +9734,8 @@ For further information visit https://errors.pydantic.dev
   - ID: 19ecf2fd
 - ... and 3 more
 
-## ruff:ERA001 (187 errors)
+## ruff:ERA001 (189 errors)
+
 
 ### haive-agents
 
@@ -9554,11 +9755,11 @@ For further information visit https://errors.pydantic.dev
   - ID: 0f0f229d
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/types.py:185` - Found commented-out code
   - ID: 42951bfa
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:62` - Found commented-out code
-  - ID: cd40b786
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:63` - Found commented-out code
+  - ID: a89262cb
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/chain_examples.py:19` - Found commented-out code
   - ID: 70bcba7f
-- ... and 90 more
+- ... and 91 more
 
 ### haive-core
 
@@ -9611,6 +9812,8 @@ For further information visit https://errors.pydantic.dev
   - ID: 98e5d513
 - `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/advanced_code_installer.py:25` - Found commented-out code
   - ID: 941f3a0d
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/__init__.py:6` - Found commented-out code
+  - ID: f8f49cc9
 
 ### haive-tools
 
@@ -9636,7 +9839,8 @@ For further information visit https://errors.pydantic.dev
   - ID: e91f222c
 - ... and 8 more
 
-## ruff:F401 (182 errors)
+## ruff:F401 (225 errors)
+
 
 ### haive-agents
 
@@ -9650,31 +9854,31 @@ For further information visit https://errors.pydantic.dev
   - ID: f2efdbc7
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/declarative_chain.py:9` - `pydantic.BaseModel` imported but unused
   - ID: 00da3ab9
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/__init__.py:132` - `collections.abc.Callable` imported but unused
-  - ID: 10afb560
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/__init__.py:136` - `typing.Dict` imported but unused
-  - ID: 5cc4835a
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/__init__.py:137` - `typing.List` imported but unused
-  - ID: 8ad150e2
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/__init__.py:141` - `typing.Type` imported but unused
-  - ID: fb5839a9
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/__init__.py:142` - `typing.TypeAlias` imported but unused
-  - ID: 2ed28bc7
-- ... and 99 more
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:9` - `typing.Union` imported but unused
+  - ID: 98de4e07
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:10` - `abc.ABC` imported but unused
+  - ID: 48246f1e
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:10` - `abc.ABC` imported but unused
+  - ID: 48246f1e
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:13` - `langchain_core.messages.BaseMessage` imported but unused
+  - ID: 9c62ca51
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:14` - `langchain_core.prompts.ChatPromptTemplate` imported but unused
+  - ID: da0e55d2
+- ... and 136 more
 
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/__init__.py:58` - `pkgutil` imported but unused
   - ID: 19c4c4b6
-- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/__init__.py:65` - `haive.core.engine.aug_llm.AugLLMFactory` imported but unused; consider removing, adding to `**all**
+- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/__init__.py:65` - `haive.core.engine.aug_llm.AugLLMFactory` imported but unused; consider removing, adding to `__all__
   - ID: 668e1910
-- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/__init__.py:66` - `haive.core.engine.aug_llm.compose_runnable` imported but unused; consider removing, adding to `\_\_al
+- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/__init__.py:66` - `haive.core.engine.aug_llm.compose_runnable` imported but unused; consider removing, adding to `__al
   - ID: 9280f9d2
-- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/__init__.py:67` - `haive.core.engine.aug_llm.merge_configs` imported but unused; consider removing, adding to `**all**
+- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/__init__.py:67` - `haive.core.engine.aug_llm.merge_configs` imported but unused; consider removing, adding to `__all__
   - ID: 70967381
-- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/__init__.py:74` - `haive.core.engine.base.NonInvokableEngine` imported but unused; consider removing, adding to `\_\_all
+- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/__init__.py:74` - `haive.core.engine.base.NonInvokableEngine` imported but unused; consider removing, adding to `__all
   - ID: 149cc672
-- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/__init__.py:87` - `haive.core.engine.tool.ToolEngine` imported but unused; consider removing, adding to `__all__`, or
+- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/__init__.py:87` - `haive.core.engine.tool.ToolEngine` imported but unused; consider removing, adding to `__all__`, or 
   - ID: b6992abb
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/document/loaders/sources/database_sources.py:13` - `pydantic.validator` imported but unused
   - ID: 67147bad
@@ -9699,27 +9903,27 @@ For further information visit https://errors.pydantic.dev
 
 ### haive-games
 
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/core/config/__init__.py:4` - `haive.games.core.config.base.BaseGameConfig` imported but unused; consider removing, adding to `\_\_a
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/core/config/__init__.py:4` - `haive.games.core.config.base.BaseGameConfig` imported but unused; consider removing, adding to `__a
   - ID: d680b69a
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/core/config/__init__.py:5` - `haive.games.core.config.base.ConfigMode` imported but unused; consider removing, adding to `**all**
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/core/config/__init__.py:5` - `haive.games.core.config.base.ConfigMode` imported but unused; consider removing, adding to `__all__
   - ID: 78471152
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/core/config/__init__.py:6` - `haive.games.core.config.base.GamePlayerRole` imported but unused; consider removing, adding to `\_\_a
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/core/config/__init__.py:6` - `haive.games.core.config.base.GamePlayerRole` imported but unused; consider removing, adding to `__a
   - ID: c4e2f444
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/core/config/__init__.py:7` - `haive.games.core.config.base.create_advanced_config` imported but unused; consider removing, adding
   - ID: 0ab34517
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/core/config/__init__.py:8` - `haive.games.core.config.base.create_example_config` imported but unused; consider removing, adding
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/core/config/__init__.py:8` - `haive.games.core.config.base.create_example_config` imported but unused; consider removing, adding 
   - ID: 821fc7a5
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/core/config/__init__.py:9` - `haive.games.core.config.base.create_llm_config` imported but unused; consider removing, adding to `
   - ID: a053f854
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/core/config/__init__.py:10` - `haive.games.core.config.base.create_simple_config` imported but unused; consider removing, adding t
   - ID: 6bfe68b3
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/debate_v2/__init__.py:3` - `haive.games.debate_v2.agent.GameDebateAgent` imported but unused; consider removing, adding to `__a
+  - ID: abbde084
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/reversi/state.py:16` - `haive.games.reversi.state_manager.ReversiStateManager` imported but unused
   - ID: febf7b31
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/utils/__init__.py:4` - `haive.games.utils.recursion_config.RecursionConfig` imported but unused; consider removing, adding
+- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/utils/__init__.py:4` - `haive.games.utils.recursion_config.RecursionConfig` imported but unused; consider removing, adding 
   - ID: b7bf3610
-- `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/utils/__init__.py:7` - `haive.games.utils.test_helpers.create_test_aug_llm_config` imported but unused; consider removing,
-  - ID: 0ec9a0b8
-- ... and 2 more
+- ... and 3 more
 
 ### haive-mcp
 
@@ -9742,8 +9946,19 @@ For further information visit https://errors.pydantic.dev
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/misc/agent_utilities_prompts.py:7` - `typing.List` imported but unused
   - ID: a71736ae
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/simple/questiona_and_answer_generator/models.py:1` - `pydantic.BaseModel` imported but unused
+  - ID: 63c3a8d7
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/simple/questiona_and_answer_generator/models.py:2` - `typing.List` imported but unused
+  - ID: 8eca9555
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/simple/questiona_and_answer_generator/models.py:2` - `typing.List` imported but unused
+  - ID: 8eca9555
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/simple/tagger/prompts.py:1` - `langchain_core.prompts.ChatPromptTemplate` imported but unused
+  - ID: 75aaa439
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/simple/tagger/prompts.py:1` - `langchain_core.prompts.ChatPromptTemplate` imported but unused
+  - ID: 75aaa439
 
 ## ruff:F402 (3 errors)
+
 
 ### haive-agents
 
@@ -9755,6 +9970,7 @@ For further information visit https://errors.pydantic.dev
   - ID: f21a5f9d
 
 ## ruff:F403 (7 errors)
+
 
 ### haive-agents
 
@@ -9777,6 +9993,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 24904b09
 
 ## ruff:F405 (54 errors)
+
 
 ### haive-agents
 
@@ -9809,6 +10026,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:F541 (2 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/utils/debugkit/analysis/static.py:1017` - f-string without any placeholders
@@ -9816,12 +10034,17 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/utils/debugkit/analysis/static.py:1042` - f-string without any placeholders
   - ID: 9d953954
 
-## ruff:F811 (195 errors)
+## ruff:F811 (170 errors)
+
 
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/enhanced_agent.py:26` - Redefinition of unused `TypeVar` from line 17
   - ID: fde52a3e
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/multi_integration.py:165` - Redefinition of unused `multi_to_chain` from line 100
+  - ID: be8693a0
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/multi_integration.py:169` - Redefinition of unused `chain_to_multi` from line 95
+  - ID: 0b1ccb33
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/task_analysis/__init__.py:27` - Redefinition of unused `ExecutionStrategy` from line 5
   - ID: 0f10b804
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/social_media/__init__.py:16` - Redefinition of unused `SocialMediaState` from line 15
@@ -9836,11 +10059,7 @@ For further information visit https://errors.pydantic.dev
   - ID: d0655eb5
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/summarizer/map_branch/agent.py:58` - Redefinition of unused `Send` from line 56
   - ID: a278f935
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/long_term_memory/__init__.py:9` - Redefinition of unused `load_memories` from line 6
-  - ID: cb0f1656
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/models_dir/semantic/__init__.py:17` - Redefinition of unused `get_context_summary` from line 9
-  - ID: 75948336
-- ... and 116 more
+- ... and 91 more
 
 ### haive-core
 
@@ -9938,7 +10157,8 @@ For further information visit https://errors.pydantic.dev
   - ID: 04090fdd
 - ... and 7 more
 
-## ruff:F821 (738 errors)
+## ruff:F821 (727 errors)
+
 
 ### haive-agents
 
@@ -9962,7 +10182,7 @@ For further information visit https://errors.pydantic.dev
   - ID: c377faa6
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/universal_agent.py:131` - Undefined name `is_reasoning_agent`
   - ID: c2293814
-- ... and 421 more
+- ... and 410 more
 
 ### haive-core
 
@@ -10030,10 +10250,17 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/shell/logger.py:49` - Undefined name `SecureShellExecutor`
   - ID: 45a56669
 
-## ruff:F822 (25 errors)
+## ruff:F822 (28 errors)
+
 
 ### haive-agents
 
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/plan_and_execute_multi.py:85` - Undefined name `create_plan_and_execute_agent` in `__all__`
+  - ID: 82f1d01f
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/models.py:326` - Undefined name `QueryValidationOutput` in `__all__`
+  - ID: dacd0ece
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/rag/db_rag/graph_db/models.py:327` - Undefined name `DomainRelevanceOutput` in `__all__`
+  - ID: ae47b983
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/rag/factories/compatible_rag_factory.py:1451` - Undefined name `CompatibleRAGFactory.create_agentic_search_workflow` in `__all__`
   - ID: c4890b85
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/rag/factories/compatible_rag_factory.py:1452` - Undefined name `CompatibleRAGFactory.create_decomposed_graded_workflow` in `__all__`
@@ -10069,10 +10296,15 @@ For further information visit https://errors.pydantic.dev
   - ID: 3a885529
 - ... and 10 more
 
-## ruff:F841 (9 errors)
+## ruff:F841 (11 errors)
+
 
 ### haive-agents
 
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/experiments/supervisor/tools.py:286` - Local variable `e` is assigned to but never used
+  - ID: b14af48b
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/search/labs/agent.py:827` - Local variable `agent` is assigned to but never used
+  - ID: e745d739
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/base/models.py:938` - Local variable `e` is assigned to but never used
   - ID: 458e6fe5
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/base/models.py:1168` - Local variable `e` is assigned to but never used
@@ -10100,12 +10332,14 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:G002 (1 errors)
 
+
 ### haive-dataflow
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/api/serve_chess_client.py:62` - Logging statement uses `%`
   - ID: c05247d6
 
-## ruff:G004 (3301 errors)
+## ruff:G004 (3320 errors)
+
 
 ### haive-agents
 
@@ -10129,7 +10363,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 3bae72e9
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/agent.py:670` - Logging statement uses f-string
   - ID: 36417bda
-- ... and 1845 more
+- ... and 1864 more
 
 ### haive-dataflow
 
@@ -10205,6 +10439,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:G201 (75 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/complex_extraction/agent.py:613` - Logging `.exception(...)` should be used instead of `.error(..., exc_info=True)`
@@ -10253,7 +10488,8 @@ For further information visit https://errors.pydantic.dev
   - ID: 03c86b97
 - ... and 48 more
 
-## ruff:I001 (1360 errors)
+## ruff:I001 (1372 errors)
+
 
 ### haive-agents
 
@@ -10277,7 +10513,7 @@ For further information visit https://errors.pydantic.dev
   - ID: e71238e9
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/agent_with_token_tracking.py:8` - Import block is un-sorted or un-formatted
   - ID: aa3d78f3
-- ... and 939 more
+- ... and 948 more
 
 ### haive-core
 
@@ -10336,7 +10572,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 11f9230a
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/base/config.py:20` - Import block is un-sorted or un-formatted
   - ID: a0b665d1
-- ... and 165 more
+- ... and 166 more
 
 ### haive-mcp
 
@@ -10384,7 +10620,7 @@ For further information visit https://errors.pydantic.dev
   - ID: d21514c9
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/contract_analysis/aug_llms.py:1` - Import block is un-sorted or un-formatted
   - ID: bb30c126
-- ... and 35 more
+- ... and 37 more
 
 ### haive-tools
 
@@ -10412,12 +10648,14 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:N801 (1 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/document/loaders/sources/extended_sources.py:1010` - Class name `phpBBSource` should use CapWords convention
   - ID: 23102492
 
 ## ruff:N802 (49 errors)
+
 
 ### haive-agents
 
@@ -10473,6 +10711,7 @@ For further information visit https://errors.pydantic.dev
 - ... and 26 more
 
 ## ruff:N806 (47 errors)
+
 
 ### haive-agents
 
@@ -10544,6 +10783,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:N815 (1 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/agent.py:45` - Variable `ariaLabel` in class scope should not be mixedCase
@@ -10551,12 +10791,14 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:N817 (1 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/discovery/selection_strategies.py:27` - CamelCase `ToolSelectionResult` imported as acronym `TSR`
   - ID: 6ced5807
 
 ## ruff:N999 (105 errors)
+
 
 ### haive-agents
 
@@ -10611,31 +10853,32 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/bing_search_tool_INC.py:1` - Invalid module name: 'bing_search_tool_INC'
   - ID: c4733786
 
-## ruff:PIE790 (25 errors)
+## ruff:PIE790 (43 errors)
+
 
 ### haive-agents
 
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:67` - Unnecessary `pass` statement
-  - ID: 153ff23e
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:71` - Unnecessary `pass` statement
-  - ID: c0fe393b
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:75` - Unnecessary `pass` statement
-  - ID: 84c9acdc
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:79` - Unnecessary `pass` statement
-  - ID: b7947989
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:83` - Unnecessary `pass` statement
-  - ID: e8d82d8a
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:87` - Unnecessary `pass` statement
-  - ID: 39913311
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/declarative_chain.py:136` - Unnecessary `pass` statement
-  - ID: f2882e9e
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/base/example.py:17` - Unnecessary `pass` statement
-  - ID: 5c15f116
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_processing/agent.py:659` - Unnecessary `pass` statement
-  - ID: bf1db49e
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/rag/factories/compatible_rag_factory.py:573` - Unnecessary `pass` statement
-  - ID: ec1894b4
-- ... and 2 more
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:68` - Unnecessary `pass` statement
+  - ID: 604e9d51
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:72` - Unnecessary `pass` statement
+  - ID: 395d51b2
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:76` - Unnecessary `pass` statement
+  - ID: d7f0a37c
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:80` - Unnecessary `pass` statement
+  - ID: af1d6525
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:84` - Unnecessary `pass` statement
+  - ID: 7a0c2690
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:88` - Unnecessary `pass` statement
+  - ID: 11960cd8
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:93` - Unnecessary `pass` statement
+  - ID: 1e426aca
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:97` - Unnecessary `pass` statement
+  - ID: 3984b4ad
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:101` - Unnecessary `pass` statement
+  - ID: ca2e71c5
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:105` - Unnecessary `pass` statement
+  - ID: 0f2d9872
+- ... and 20 more
 
 ### haive-core
 
@@ -10663,6 +10906,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:PIE796 (2 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/persistence/types.py:61` - Enum contains duplicate value: `"async"`
@@ -10672,6 +10916,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:PIE807 (2 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/discovery/semantic_discovery.py:31` - Prefer `list` over useless lambda
@@ -10680,6 +10925,7 @@ For further information visit https://errors.pydantic.dev
   - ID: d6f078d6
 
 ## ruff:PLC0206 (3 errors)
+
 
 ### haive-core
 
@@ -10695,12 +10941,14 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:PLE0605 (1 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/reasoning_and_critique/tot/__init__.py:118` - Invalid format for `__all__`, must be `tuple` or `list`
   - ID: de44b7d7
 
-## ruff:PLR0911 (140 errors)
+## ruff:PLR0911 (141 errors)
+
 
 ### haive-agents
 
@@ -10724,7 +10972,7 @@ For further information visit https://errors.pydantic.dev
   - ID: f4aacb6d
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory_reorganized/base/token_state.py:338` - Too many return statements (8 > 6)
   - ID: 46be8e23
-- ... and 26 more
+- ... and 27 more
 
 ### haive-core
 
@@ -10756,12 +11004,12 @@ For further information visit https://errors.pydantic.dev
   - ID: ddac4b81
 - `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/api/routes/tools_routes_enhanced.py:169` - Too many return statements (12 > 6)
   - ID: b62635ff
-- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/bin/vault_cli.py:452` - Too many return statements (7 > 6)
-  - ID: a795cb28
+- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/bin/vault_cli.py:455` - Too many return statements (7 > 6)
+  - ID: 1145ce66
 - `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/registries/model_registry.py:625` - Too many return statements (7 > 6)
   - ID: 9d059872
-- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/registry/bin/vault_cli.py:452` - Too many return statements (7 > 6)
-  - ID: d4785ddc
+- `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/registry/bin/vault_cli.py:455` - Too many return statements (7 > 6)
+  - ID: fd479089
 - `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/registry/registries/model_registry.py:625` - Too many return statements (7 > 6)
   - ID: 513434e1
 - `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/registry/serialization.py:170` - Too many return statements (14 > 6)
@@ -10785,6 +11033,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 123e1b19
 
 ## ruff:PLR0912 (364 errors)
+
 
 ### haive-agents
 
@@ -10877,7 +11126,8 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_selector.py:482` - Too many branches (14 > 12)
   - ID: 4875e821
 
-## ruff:PLR0913 (200 errors)
+## ruff:PLR0913 (201 errors)
+
 
 ### haive-agents
 
@@ -10901,7 +11151,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 1c9a829e
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/enhanced_retriever.py:176` - Too many arguments in function definition (7 > 5)
   - ID: 3feed683
-- ... and 80 more
+- ... and 81 more
 
 ### haive-core
 
@@ -10961,6 +11211,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 64668202
 
 ## ruff:PLR0915 (164 errors)
+
 
 ### haive-agents
 
@@ -11049,6 +11300,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:PLR1704 (9 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/react_class/react_agent2/config.py:111` - Redefining argument with the local name `name`
@@ -11076,7 +11328,8 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/api/game_router_enhanced.py:202` - Redefining argument with the local name `components`
   - ID: 2f25738a
 
-## ruff:PLR2004 (697 errors)
+## ruff:PLR2004 (700 errors)
+
 
 ### haive-agents
 
@@ -11100,7 +11353,7 @@ For further information visit https://errors.pydantic.dev
   - ID: e177dede
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/chain_agent_simple.py:127` - Magic value used in comparison, consider replacing `3` with a constant variable
   - ID: fbb17388
-- ... and 442 more
+- ... and 445 more
 
 ### haive-core
 
@@ -11187,12 +11440,14 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:PLR5501 (1 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/schema/prebuilt/enhanced_multi_agent_state.py:225` - Use `elif` instead of `else` then `if`, to reduce indentation
   - ID: 5b86839d
 
 ## ruff:PLW0127 (1 errors)
+
 
 ### haive-core
 
@@ -11201,12 +11456,14 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:PLW0128 (1 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:1237` - Redeclared variable `new_path` in assignment
   - ID: 3256fc16
 
 ## ruff:PLW0602 (10 errors)
+
 
 ### haive-agents
 
@@ -11235,6 +11492,7 @@ For further information visit https://errors.pydantic.dev
   - ID: c720020c
 
 ## ruff:PLW0603 (45 errors)
+
 
 ### haive-agents
 
@@ -11324,12 +11582,14 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:PLW1508 (1 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/agent/persistence/manager.py:832` - Invalid type for environment variable default; expected `str` or `None`
   - ID: eaedb8fe
 
 ## ruff:PLW1510 (2 errors)
+
 
 ### haive-core
 
@@ -11339,6 +11599,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 0e6fda9a
 
 ## ruff:PLW2901 (33 errors)
+
 
 ### haive-agents
 
@@ -11392,7 +11653,8 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/toolkits/dev/python/cst_toolkit/transformers/type_hints.py:77` - `for` loop variable `param` overwritten by assignment target
   - ID: 4c36ae3e
 
-## ruff:Q000 (7783 errors)
+## ruff:Q000 (7811 errors)
+
 
 ### haive-agents
 
@@ -11416,7 +11678,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 7d3eeca1
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/agent.py:96` - Single quotes found but double quotes preferred
   - ID: 8c0c082a
-- ... and 5164 more
+- ... and 5192 more
 
 ### haive-core
 
@@ -11466,7 +11728,16 @@ For further information visit https://errors.pydantic.dev
   - ID: 18930a6a
 - ... and 81 more
 
-## ruff:RET505 (21 errors)
+## ruff:RET501 (1 errors)
+
+
+### haive-agents
+
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/rag/hyde/enhanced_agent.py:30` - Do not explicitly `return None` in function if it is the only possible return value
+  - ID: 89b8bc14
+
+## ruff:RET505 (28 errors)
+
 
 ### haive-agents
 
@@ -11480,19 +11751,28 @@ For further information visit https://errors.pydantic.dev
   - ID: bb346728
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/smart_output_parsing.py:410` - Unnecessary `elif` after `return` statement
   - ID: a73587b4
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:109` - Unnecessary `else` after `return` statement
+  - ID: 5e6d2f4c
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/base/utils.py:28` - Unnecessary `elif` after `return` statement
   - ID: 6fe7ffdd
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/experiments/supervisor/tools.py:226` - Unnecessary `else` after `return` statement
+  - ID: 521d1df2
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/search/base.py:34` - Unnecessary `elif` after `return` statement
   - ID: 7fbb3694
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/search/base.py:37` - Unnecessary `elif` after `return` statement
   - ID: 314a17f9
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/enhanced_clean_multi_agent.py:166` - Unnecessary `elif` after `return` statement
-  - ID: dedceb40
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/base/models.py:341` - Unnecessary `elif` after `return` statement
-  - ID: 3f455d11
-- ... and 11 more
+- ... and 18 more
+
+## ruff:RET506 (1 errors)
+
+
+### haive-agents
+
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/agent.py:214` - Unnecessary `elif` after `raise` statement
+  - ID: b3dc8a91
 
 ## ruff:RUF001 (36 errors)
+
 
 ### haive-agents
 
@@ -11551,6 +11831,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:RUF002 (10 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/summarizer/iterative_refinement/state.py:9` - Docstring contains ambiguous `–` (EN DASH). Did you mean `-` (HYPHEN-MINUS)?
@@ -11579,6 +11860,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:RUF003 (3 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/schema/field_definition.py:114` - Comment contains ambiguous `–` (EN DASH). Did you mean `-` (HYPHEN-MINUS)?
@@ -11590,6 +11872,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:RUF005 (2 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/rewoo/tests/test_tool_step.py:228` - Consider `[*available_tools, calculator]` instead of concatenation
@@ -11598,6 +11881,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 4d7d8385
 
 ## ruff:RUF006 (4 errors)
+
 
 ### haive-dataflow
 
@@ -11615,6 +11899,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:RUF009 (4 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/declarative_chain.py:49` - Do not perform function call `Field` in dataclass defaults
@@ -11626,10 +11911,21 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/declarative_chain.py:53` - Do not perform function call `Field` in dataclass defaults
   - ID: 3b9a18e2
 
-## ruff:RUF010 (10 errors)
+## ruff:RUF010 (15 errors)
+
 
 ### haive-agents
 
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/experiments/supervisor/base_supervisor.py:150` - Use explicit conversion flag
+  - ID: c90d59f3
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/experiments/supervisor/tools.py:70` - Use explicit conversion flag
+  - ID: 6a607beb
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/experiments/supervisor/tools.py:132` - Use explicit conversion flag
+  - ID: 08252a85
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/experiments/supervisor/tools.py:178` - Use explicit conversion flag
+  - ID: 0fa4695d
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/experiments/supervisor/tools.py:230` - Use explicit conversion flag
+  - ID: d46e7ce8
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/archive/example_dynamic_supervisor.py:211` - Use explicit conversion flag
   - ID: 1d123188
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/supervisor/example_dynamic_supervisor.py:211` - Use explicit conversion flag
@@ -11655,6 +11951,7 @@ For further information visit https://errors.pydantic.dev
   - ID: f466a49c
 
 ## ruff:RUF012 (201 errors)
+
 
 ### haive-agents
 
@@ -11717,7 +12014,8 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-dataflow/src/haive/dataflow/serialization.py:26` - Mutable class attributes should be annotated with `typing.ClassVar`
   - ID: f6b56bc8
 
-## ruff:RUF013 (20 errors)
+## ruff:RUF013 (27 errors)
+
 
 ### haive-agents
 
@@ -11741,7 +12039,7 @@ For further information visit https://errors.pydantic.dev
   - ID: bd7dc1dc
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/enhanced_plan_execute_v5/planner/prompts.py:191` - PEP 484 prohibits implicit `Optional`
   - ID: 2bce6bf0
-- ... and 7 more
+- ... and 14 more
 
 ### haive-core
 
@@ -11754,6 +12052,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:RUF015 (2 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/utils/debugkit/analysis/static.py:1006` - Prefer `next(iter(results.values()))` over single element slice
@@ -11762,6 +12061,7 @@ For further information visit https://errors.pydantic.dev
   - ID: a58c1886
 
 ## ruff:RUF021 (9 errors)
+
 
 ### haive-agents
 
@@ -11787,14 +12087,17 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/schema/prebuilt/tool_state.py:294` - Parenthesize `a and b` expressions when chaining `and` and `or` together, to make the precedence cle
   - ID: 117f042d
 
-## ruff:RUF022 (30 errors)
+## ruff:RUF022 (39 errors)
+
 
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/__init__.py:104` - `__all__` is not sorted
   - ID: d738d637
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:89` - `__all__` is not sorted
-  - ID: 8235e013
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/__init__.py:119` - `__all__` is not sorted
+  - ID: edfe03de
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:171` - `__all__` is not sorted
+  - ID: fbd1225d
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/grade/__init__.py:28` - `__all__` is not sorted
   - ID: 1dd218b2
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/__init__.py:231` - `__all__` is not sorted
@@ -11805,13 +12108,11 @@ For further information visit https://errors.pydantic.dev
   - ID: 58968c94
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory_reorganized/__init__.py:87` - `__all__` is not sorted
   - ID: a6b3f017
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:404` - `__all__` is not sorted
+  - ID: 4f866880
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_state_original.py:274` - `__all__` is not sorted
   - ID: b4d215ca
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/compatibility.py:6` - `__all__` is not sorted
-  - ID: 712887bb
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/utils/__init__.py:12` - `__all__` is not sorted
-  - ID: bb0296ea
-- ... and 5 more
+- ... and 13 more
 
 ### haive-core
 
@@ -11837,6 +12138,11 @@ For further information visit https://errors.pydantic.dev
   - ID: 60ce456c
 - ... and 4 more
 
+### haive-mcp
+
+- `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/__init__.py:8` - `__all__` is not sorted
+  - ID: 5947a288
+
 ### haive-tools
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/search/__init__.py:24` - `__all__` is not sorted
@@ -11844,12 +12150,14 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:RUF100 (1 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/compatibility.py:4` - Unused `noqa` directive (unused: `F401`)
   - ID: ebf8e32c
 
-## ruff:SIM102 (128 errors)
+## ruff:SIM102 (129 errors)
+
 
 ### haive-agents
 
@@ -11863,6 +12171,8 @@ For further information visit https://errors.pydantic.dev
   - ID: 417f4c15
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/universal_agent.py:183` - Use a single `if` statement instead of nested `if` statements
   - ID: 445c504d
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:116` - Use a single `if` statement instead of nested `if` statements
+  - ID: af4d7188
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/grade/composite.py:91` - Use a single `if` statement instead of nested `if` statements
   - ID: fa8b6578
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/grade/numeric.py:71` - Use a single `if` statement instead of nested `if` statements
@@ -11871,9 +12181,7 @@ For further information visit https://errors.pydantic.dev
   - ID: fbfe0abd
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/task_analysis/solvability.py:123` - Use a single `if` statement instead of nested `if` statements
   - ID: c3920dcf
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/utils/pydantic_prompt_utils.py:92` - Use a single `if` statement instead of nested `if` statements
-  - ID: 1a891e4e
-- ... and 53 more
+- ... and 54 more
 
 ### haive-core
 
@@ -11930,6 +12238,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:SIM103 (7 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/rag/llm_rag/agent.py:246` - Return the negated condition directly
@@ -11951,6 +12260,7 @@ For further information visit https://errors.pydantic.dev
   - ID: a1080d4e
 
 ## ruff:SIM105 (37 errors)
+
 
 ### haive-agents
 
@@ -12030,6 +12340,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:SIM108 (10 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain_agent.py:279` - Use ternary operator `result_str = result["output"] if "output" in result else json.dumps(result)` i
@@ -12049,7 +12360,7 @@ For further information visit https://errors.pydantic.dev
   - ID: d09fa9c8
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/node/meta_agent_node.py:384` - Use ternary operator `updated_state = state.model_copy() if hasattr(state, "model_copy") else dict(s
   - ID: 2cd6ff96
-- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:1567` - Use ternary operator `use_default = None if isinstance(destinations, dict) else default` instead of
+- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/state_graph/base_graph2.py:1567` - Use ternary operator `use_default = None if isinstance(destinations, dict) else default` instead of 
   - ID: 389132e1
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/utils/debugkit/config.py:18` - Use ternary operator `env_name = "development" if env_var.endswith(".env") or "/" in env_var else en
   - ID: 75dd233f
@@ -12057,6 +12368,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 83640089
 
 ## ruff:SIM113 (4 errors)
+
 
 ### haive-agents
 
@@ -12074,6 +12386,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:SIM114 (2 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/smart_output_parsing.py:318` - Combine `if` branches using logical `or` operator
@@ -12082,6 +12395,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 80bb4d16
 
 ## ruff:SIM117 (13 errors)
+
 
 ### haive-core
 
@@ -12093,8 +12407,8 @@ For further information visit https://errors.pydantic.dev
   - ID: 0521eb01
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/agent/persistence/manager.py:341` - Use a single `with` statement with multiple contexts instead of nested `with` statements
   - ID: d7ab5db8
-- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/agent/persistence/postgres_config.py:141` - Use a single `with` statement with multiple contexts instead of nested `with` statements
-  - ID: d1b7fb38
+- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/engine/agent/persistence/postgres_config.py:164` - Use a single `with` statement with multiple contexts instead of nested `with` statements
+  - ID: 7948d519
 
 ### haive-dataflow
 
@@ -12120,6 +12434,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:SIM401 (3 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/archive/experiments/routing_patterns.py:195` - Use `node_routes[key] = agent_nodes.get(dest, dest)` instead of an `if` block
@@ -12130,6 +12445,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 3414ced4
 
 ## ruff:T201 (128 errors)
+
 
 ### haive-agents
 
@@ -12181,6 +12497,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:TID252 (2 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/base/agents/planner.py:12` - Prefer absolute imports over relative imports from parent modules
@@ -12189,6 +12506,7 @@ For further information visit https://errors.pydantic.dev
   - ID: d0d5c14c
 
 ## ruff:TRY002 (18 errors)
+
 
 ### haive-agents
 
@@ -12240,6 +12558,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:TRY004 (21 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/grade/rubric.py:351` - Prefer `TypeError` exception for invalid type
@@ -12266,6 +12585,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:TRY203 (3 errors)
 
+
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/archive/experiments/test_proper_usage.py:312` - Remove exception handler; error is immediately re-raised
@@ -12275,7 +12595,8 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/rag/multi_agent_rag/enhanced_multi_rag.py:312` - Remove exception handler; error is immediately re-raised
   - ID: 861fbf48
 
-## ruff:TRY300 (446 errors)
+## ruff:TRY300 (448 errors)
+
 
 ### haive-agents
 
@@ -12299,7 +12620,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 2480633f
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/mixins/execution_mixin.py:106` - Consider moving this statement to an `else` block
   - ID: 60845947
-- ... and 246 more
+- ... and 248 more
 
 ### haive-dataflow
 
@@ -12362,7 +12683,8 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/tools/translate_tools.py:186` - Consider moving this statement to an `else` block
   - ID: 517ead23
 
-## ruff:TRY301 (69 errors)
+## ruff:TRY301 (70 errors)
+
 
 ### haive-agents
 
@@ -12386,7 +12708,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 1334aeea
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory/unified_memory_api.py:904` - Abstract `raise` to an inner function
   - ID: b9f02b27
-- ... and 18 more
+- ... and 19 more
 
 ### haive-dataflow
 
@@ -12423,10 +12745,23 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/production_mcp_tool.py:404` - Abstract `raise` to an inner function
   - ID: 9fa7f318
 
-## ruff:TRY400 (3 errors)
+## ruff:TRY400 (9 errors)
+
 
 ### haive-agents
 
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/agent.py:178` - Use `logging.exception` instead of `logging.error`
+  - ID: f5319851
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/agent.py:210` - Use `logging.exception` instead of `logging.error`
+  - ID: ab4a3af5
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/agent.py:262` - Use `logging.exception` instead of `logging.error`
+  - ID: 32c1de86
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/agent.py:294` - Use `logging.exception` instead of `logging.error`
+  - ID: 4c2d80a6
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/agent.py:333` - Use `logging.exception` instead of `logging.error`
+  - ID: 59f3d467
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/agent.py:382` - Use `logging.exception` instead of `logging.error`
+  - ID: 9d56e80a
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/smart_parsing_example.py:337` - Use `logging.exception` instead of `logging.error`
   - ID: 9571ceaa
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/research/open_perplexity/structured_tools.py:674` - Use `logging.exception` instead of `logging.error`
@@ -12435,6 +12770,7 @@ For further information visit https://errors.pydantic.dev
   - ID: d99eebf3
 
 ## ruff:TRY401 (908 errors)
+
 
 ### haive-agents
 
@@ -12508,7 +12844,8 @@ For further information visit https://errors.pydantic.dev
   - ID: 7766449c
 - ... and 64 more
 
-## ruff:UP006 (287 errors)
+## ruff:UP006 (371 errors)
+
 
 ### haive-agents
 
@@ -12532,7 +12869,7 @@ For further information visit https://errors.pydantic.dev
   - ID: c50638f3
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/declarative_chain.py:61` - Use `list` instead of `List` for type annotation
   - ID: c1336633
-- ... and 115 more
+- ... and 199 more
 
 ### haive-core
 
@@ -12558,7 +12895,8 @@ For further information visit https://errors.pydantic.dev
   - ID: ed90bf65
 - ... and 152 more
 
-## ruff:UP007 (285 errors)
+## ruff:UP007 (333 errors)
+
 
 ### haive-agents
 
@@ -12582,7 +12920,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 4e9f7661
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/chain_agent_simple.py:27` - Use `X | Y` for type annotations
   - ID: 2cbbda74
-- ... and 117 more
+- ... and 165 more
 
 ### haive-core
 
@@ -12615,12 +12953,14 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:UP015 (1 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/utils/debugkit/analysis/types.py:597` - Unnecessary mode argument
   - ID: 46ad78eb
 
 ## ruff:UP034 (132 errors)
+
 
 ### haive-agents
 
@@ -12689,7 +13029,8 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-games/src/haive/games/single_player/towers_of_hanoi/base.py:188` - Avoid extraneous parentheses
   - ID: a30bfb49
 
-## ruff:UP035 (72 errors)
+## ruff:UP035 (104 errors)
+
 
 ### haive-agents
 
@@ -12701,19 +13042,19 @@ For further information visit https://errors.pydantic.dev
   - ID: 57269219
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/declarative_chain.py:8` - Import from `collections.abc` instead: `Callable`
   - ID: 57269219
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:9` - Import from `collections.abc` instead: `Callable`
+  - ID: 7d15e881
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:9` - Import from `collections.abc` instead: `Callable`
+  - ID: 7d15e881
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:9` - Import from `collections.abc` instead: `Callable`
+  - ID: 7d15e881
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/__init__.py:133` - `typing.Dict` is deprecated, use `dict` instead
   - ID: 8d2ef6c0
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/__init__.py:133` - `typing.Dict` is deprecated, use `dict` instead
   - ID: 8d2ef6c0
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/conversation/__init__.py:133` - `typing.Dict` is deprecated, use `dict` instead
   - ID: 8d2ef6c0
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/base/utils.py:3` - `typing.List` is deprecated, use `list` instead
-  - ID: 798d8690
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/long_term_memory/agent.py:13` - `typing.Dict` is deprecated, use `dict` instead
-  - ID: a8908d7b
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/archive/enhanced_multi_agent_generic.py:18` - `typing.List` is deprecated, use `list` instead
-  - ID: e9f7372b
-- ... and 25 more
+- ... and 57 more
 
 ### haive-core
 
@@ -12739,10 +13080,23 @@ For further information visit https://errors.pydantic.dev
   - ID: 42d02a78
 - ... and 27 more
 
-## ruff:UP037 (6 errors)
+## ruff:UP037 (12 errors)
+
 
 ### haive-agents
 
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:64` - Remove quotes from type annotation
+  - ID: f3b963c2
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:70` - Remove quotes from type annotation
+  - ID: 209b8826
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:66` - Remove quotes from type annotation
+  - ID: f2de9347
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:159` - Remove quotes from type annotation
+  - ID: 22780a33
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:296` - Remove quotes from type annotation
+  - ID: 91abd005
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/memory_reorganized/base/memory_models_standalone.py:307` - Remove quotes from type annotation
+  - ID: c8f0b81f
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/base/models.py:134` - Remove quotes from type annotation
   - ID: 391f8625
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/base/models.py:310` - Remove quotes from type annotation
@@ -12761,6 +13115,7 @@ For further information visit https://errors.pydantic.dev
 
 ## ruff:UP038 (3 errors)
 
+
 ### haive-core
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/persistence/handlers.py:320` - Use `X | Y` in `isinstance` call instead of `(X, Y)`
@@ -12770,12 +13125,15 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/utils/debugkit/config.py:478` - Use `X | Y` in `isinstance` call instead of `(X, Y)`
   - ID: 0fb8909f
 
-## ruff:W291 (46 errors)
+## ruff:W291 (76 errors)
+
 
 ### haive-agents
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/smart_output_parsing.py:176` - Trailing whitespace
   - ID: 16ad18b3
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:173` - Trailing whitespace
+  - ID: 542d064b
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/__init__.py:62` - Trailing whitespace
   - ID: 47078928
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/__init__.py:73` - Trailing whitespace
@@ -12786,17 +13144,23 @@ For further information visit https://errors.pydantic.dev
   - ID: 92e16c24
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/document_modifiers/kg/kg_map_merge/config.py:96` - Trailing whitespace
   - ID: 4378fb31
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/archive/enhanced_multi_agent_generic.py:12` - Trailing whitespace
-  - ID: e7adaba8
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/enhanced/multi_agent_v4.py:4` - Trailing whitespace
-  - ID: f18eff6b
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/multi/utils/compatibility.py:28` - Trailing whitespace
-  - ID: 0b6cc4f0
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/planning/__init__.py:33` - Trailing whitespace
-  - ID: 568e4ca0
-- ... and 36 more
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/experiments/supervisor/state_models.py:62` - Trailing whitespace
+  - ID: 4f109203
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/experiments/supervisor/state_models.py:66` - Trailing whitespace
+  - ID: b9c49627
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/experiments/supervisor/state_models.py:70` - Trailing whitespace
+  - ID: bd60f853
+- ... and 64 more
 
-## ruff:W292 (132 errors)
+### haive-prebuilt
+
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/simple/tagger/prompts.py:7` - Trailing whitespace
+  - ID: c298face
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/simple/tagger/prompts.py:8` - Trailing whitespace
+  - ID: 870dda2c
+
+## ruff:W292 (142 errors)
+
 
 ### haive-agents
 
@@ -12808,6 +13172,8 @@ For further information visit https://errors.pydantic.dev
   - ID: 133710bd
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/smart_output_parsing.py:448` - No newline at end of file
   - ID: f2db9a62
+- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/chain/extended_chain.py:182` - No newline at end of file
+  - ID: b05d16b2
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/grade/composite.py:315` - No newline at end of file
   - ID: fdd806bf
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/grade/numeric.py:266` - No newline at end of file
@@ -12818,9 +13184,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 487a5104
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/grade/scale.py:324` - No newline at end of file
   - ID: 4fce8cf5
-- `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/common/models/task_analysis/analysis.py:441` - No newline at end of file
-  - ID: 82b1d9c6
-- ... and 88 more
+- ... and 97 more
 
 ### haive-core
 
@@ -12879,6 +13243,8 @@ For further information visit https://errors.pydantic.dev
 
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/journalism_/models.py:354` - No newline at end of file
   - ID: efa927ff
+- `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/simple/questiona_and_answer_generator/models.py:12` - No newline at end of file
+  - ID: aa53e4bd
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/startup/ideation/models.py:470` - No newline at end of file
   - ID: 32751c6c
 - `/home/will/Projects/haive/backend/haive/packages/haive-prebuilt/src/haive/prebuilt/startup/pitchdeck/models.py:415` - No newline at end of file
@@ -12891,7 +13257,8 @@ For further information visit https://errors.pydantic.dev
 - `/home/will/Projects/haive/backend/haive/packages/haive-tools/src/haive/tools/search/__init__.py:35` - No newline at end of file
   - ID: 5f2ba3cc
 
-## ruff:W293 (603 errors)
+## ruff:W293 (915 errors)
+
 
 ### haive-agents
 
@@ -12915,14 +13282,7 @@ For further information visit https://errors.pydantic.dev
   - ID: 7781b613
 - `/home/will/Projects/haive/backend/haive/packages/haive-agents/src/haive/agents/base/smart_output_parsing.py:63` - Blank line contains whitespace
   - ID: d09c3347
-- ... and 575 more
-
-### haive-core
-
-- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/node/types.py:36` - Blank line contains whitespace
-  - ID: 7866bb4b
-- `/home/will/Projects/haive/backend/haive/packages/haive-core/src/haive/core/graph/node/types.py:40` - Blank line contains whitespace
-  - ID: aa7d0e75
+- ... and 889 more
 
 ### haive-tools
 
