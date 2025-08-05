@@ -12,7 +12,7 @@ Quick Install
 -------------
 
 Using Poetry (Recommended)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -71,7 +71,7 @@ Using Poetry (Recommended)
     Configuration
     -------------
 
-    Create a `.env` file in your project root:
+    Create a ``.env file in your project root:``
 
 .. code-block:: bash
 
@@ -90,6 +90,8 @@ Using Poetry (Recommended)
 
 .. code-block:: python
 
+    # Code example here
+
     from haive.agents.simple import SimpleAgent
     from haive.core.engine import create_engine
 
@@ -100,15 +102,16 @@ Using Poetry (Recommended)
     print("✅ Haive installed successfully!")
 
     Troubleshooting
-    ---------------
+
+---------------
 
     Common issues and solutions:
 
-    **Import Errors**
+    **Import Errors*
     Ensure you're in the correct virtual environment and all packages are installed
 
-    **Missing Dependencies**
-    Run ``poetry install --all-extras`` to install all optional dependencies
+    **Missing Dependencies*
+    Run ``poetry install --all-extras`` to install all optional dependencies`
 
-    **API Key Issues**
+    **API Key Issues*
     Verify your API keys are set correctly in your environment

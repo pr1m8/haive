@@ -2,15 +2,9 @@
 .. _react-agent:
 
 🧠 ReactAgent Documentation
-============================
-
-.. raw:: html
-
-   .. raw:: html
+==========================
 
    <div class="agent-hero-section">
-
-.. raw:: html
 
    <div class="hero-content">
    <h2>🧠 Reasoning and Acting Agent</h2>
@@ -19,8 +13,6 @@
    uses tools to gather information, and produces well-reasoned responses based on real data.
    </p>
    </div>
-
-.. raw:: html
 
    </div>
 
@@ -35,23 +27,13 @@ ReactAgent implements the ReAct (Reasoning and Acting) paradigm, allowing agents
 - Self-correct and retry when needed
 - Provide transparent reasoning chains
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-.. raw:: html
 
    <div class="showcase-header">
    <h2>✨ Key Features</h2>
    </div>
 
-.. raw:: html
-
    <div class="api-grid">
-
-.. raw:: html
 
    <div class="api-section">
    <h4>🔧 Tool Integration</h4>
@@ -63,8 +45,6 @@ ReactAgent implements the ReAct (Reasoning and Acting) paradigm, allowing agents
    </ul>
    </div>
 
-.. raw:: html
-
    <div class="api-section">
    <h4>🤔 Reasoning Capabilities</h4>
    <ul>
@@ -74,8 +54,6 @@ ReactAgent implements the ReAct (Reasoning and Acting) paradigm, allowing agents
    <li>Chain-of-thought</li>
    </ul>
    </div>
-
-.. raw:: html
 
    <div class="api-section">
    <h4>🎯 Advanced Features</h4>
@@ -87,22 +65,18 @@ ReactAgent implements the ReAct (Reasoning and Acting) paradigm, allowing agents
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
 
 Quick Start
 -----------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="code-example-section">
    <h4>🚀 Basic Usage with Tools</h4>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.agents.react import ReactAgent
    from haive.core.engine.aug_llm import AugLLMConfig
@@ -153,21 +127,17 @@ Quick Start
    # 2. Use calculator to compute daylight hours
    # 3. Combine results into final answer
 
-   .. raw:: html
-
    </div>
 
    Tool Management
    ---------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="custom-section">
    <h3>🔧 Working with Tools</h3>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.tools.search import WebSearchTool
    from haive.tools.code import PythonREPLTool
@@ -226,26 +196,20 @@ Quick Start
 
    agent.add_tool(new_tool)
 
-   .. raw:: html
-
    </div>
 
    Reasoning Patterns
    ------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>🤔 Reasoning Strategies</h2>
    </div>
 
 .. code-block:: python
+
+    # Code example here
 
    # Configure reasoning behavior
    agent = ReactAgent(
@@ -292,7 +256,7 @@ Quick Start
    # Custom reasoning loop
    class CustomReactAgent(ReactAgent):
 
-       async def _arun(self, input_data: Dict[str, Any], **kwargs):**
+       async def _arun(self, input_data: Dict[str, Any], **kwargs):*
            """Custom reasoning implementation."""
            # Initial planning
            plan = await self._plan(input_data)
@@ -312,21 +276,17 @@ Quick Start
            final_answer = await self._synthesize(results)
            return final_answer
 
-   .. raw:: html
-
    </div>
 
    Error Handling and Recovery
    ---------------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="warning-section">
    <h3>⚠️ Robust Error Handling</h3>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.agents.react import ReactAgent
    from langchain_core.tools import tool
@@ -383,27 +343,19 @@ Quick Start
    # Fallback to reasoning without tool
    return await self._reason_without_tool(tool_input)
 
-   .. raw:: html
-
    </div>
 
    Advanced Patterns
    -----------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="api-grid">
-
-   .. raw:: html
 
    <div class="api-section">
    <h4>🔄 Iterative Refinement</h4>
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Self-improving responses
       agent = ReactAgent(
@@ -422,8 +374,8 @@ Quick Start
               Problem: {problem}
               Current solution: {solution or 'None'}
 
-              Improve the solution or indicate if done.
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Improve the solution or indicate if done.
+"""""""""""""""""""""""""""""""""""""""""
               solution = await agent.arun(prompt)
 
               if "final answer" in solution.lower():
@@ -432,18 +384,14 @@ Quick Start
           return solution
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       <div class="api-section">
       <h4>🌐 Tool Composition</h4>
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Combine multiple tools
       @tool
@@ -462,25 +410,20 @@ Quick Start
       )
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       </div>
 
       Performance Optimization
-      ------------------------
 
-      .. raw:: html
-
-      .. raw:: html
+  ------------------------
 
       <div class="custom-section">
       <h3>⚡ Optimization Strategies</h3>
 
 .. code-block:: python
+
+    # Code example here
 
    # Parallel tool execution
    agent = ReactAgent(
@@ -524,26 +467,20 @@ Quick Start
    async for chunk in agent.astream("Complex query"):
    print(chunk, end="", flush=True)
 
-   .. raw:: html
-
    </div>
 
    Monitoring and Debugging
    ------------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>🔍 Debugging ReactAgent</h2>
    </div>
 
 .. code-block:: python
+
+    # Code example here
 
    import logging
    from haive.agents.react import ReactAgent
@@ -586,21 +523,17 @@ Quick Start
    print(f"Tool calls: {result['metadata']['tool_calls']}")
    print(f"Tokens used: {result['metadata']['tokens']}")
 
-   .. raw:: html
-
    </div>
 
    Complete Example
    ----------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="code-example-section">
    <h4>🎯 Full Research Assistant Example</h4>
 
 .. code-block:: python
+
+    # Code example here
 
    import asyncio
    from haive.agents.react import ReactAgent
@@ -700,8 +633,6 @@ Quick Start
    if __name__ == "__main__":
    asyncio.run(main())
 
-   .. raw:: html
-
    </div>
 
    API Reference
@@ -715,6 +646,6 @@ Quick Start
 
    .. seealso::
 
-   - :doc:`../../tools/index` - Available tools for ReactAgent
-   - :doc:`../../guides/building_react_agents` - Advanced ReactAgent patterns
-   - :doc:`../planning/index` - Planning agents that extend ReactAgent
+   - :doc:`../../tools/index - Available tools for ReactAgent`
+   - :doc:`../../guides/building_react_agents - Advanced ReactAgent patterns`
+   - :doc:`../planning/index - Planning agents that extend ReactAgent`

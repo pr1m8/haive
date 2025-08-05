@@ -8,7 +8,7 @@ Viral Tech News Discussion
 
 A breaking tech news story with multiple perspectives and reactions.
 
-**Full Example Code:**
+**Full Example Code:*
 
 .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/social_media/example.py
 
@@ -16,13 +16,13 @@ A breaking tech news story with multiple perspectives and reactions.
    :pyobject: example_tech_news_discussion
    :caption: Tech News Social Media Simulation
 
-**Running the Example:**
+**Running the Example:*
 
 .. code-block:: bash
 
     poetry run python packages/haive-agents/src/haive/agents/conversation/social_media/example.py
 
-    **Sample Output:**
+    **Sample Output:*
 
 .. code-block:: text
 
@@ -119,7 +119,7 @@ A breaking tech news story with multiple perspectives and reactions.
 
     A coordinated product launch with influencers and community reactions.
 
-    **Full Example Code:**
+    **Full Example Code:*
 
     .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/social_media/example.py
 
@@ -127,7 +127,7 @@ A breaking tech news story with multiple perspectives and reactions.
     :pyobject: example_product_launch
     :caption: Product Launch Social Campaign
 
-    **Sample Output:**
+    **Sample Output:*
 
 .. code-block:: text
 
@@ -205,9 +205,11 @@ A breaking tech news story with multiple perspectives and reactions.
 
     A controversial topic sparking heated community discussion.
 
-    **Example Code:**
+    **Example Code:*
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.conversation.social_media import SocialMediaConversation
     from haive.agents.simple import SimpleAgent
@@ -253,7 +255,8 @@ A breaking tech news story with multiple perspectives and reactions.
 
     result = drama.simulate(hours=6)
 
-    **Sample Output:**
+
+**Sample Output:*
 
 .. code-block:: text
 
@@ -280,16 +283,18 @@ A breaking tech news story with multiple perspectives and reactions.
     Key Features Demonstrated
     -------------------------
 
-    1. **Platform Dynamics**: Different behavior on different platforms
-    2. **Viral Mechanics**: Content spread based on engagement
-    3. **User Types**: Influencers, trolls, brands, regular users
-    4. **Reactions**: Likes, shares, comments with threading
-    5. **Metrics**: Real-time engagement tracking
+    1. **Platform Dynamics*: Different behavior on different platforms
+    2. **Viral Mechanics*: Content spread based on engagement
+    3. **User Types*: Influencers, trolls, brands, regular users
+    4. **Reactions*: Likes, shares, comments with threading
+    5. **Metrics*: Real-time engagement tracking
 
     Configuration Options
     ---------------------
 
 .. code-block:: python
+
+    # Code example here
 
     SocialMediaConversation(
     platform="twitter",           # Platform behavior model
@@ -308,29 +313,32 @@ A breaking tech news story with multiple perspectives and reactions.
     )
 
     Best Practices
-    --------------
 
-    1. **Realistic Personas**: Create diverse, believable social media personalities
-    2. **Platform Authenticity**: Match platform-specific behaviors and constraints
-    3. **Engagement Patterns**: Model realistic timing and interaction patterns
-    4. **Content Variety**: Mix text, media, links, and emoji
-    5. **Metrics Tracking**: Monitor reach, engagement, and sentiment
+--------------
+
+    1. **Realistic Personas*: Create diverse, believable social media personalities
+    2. **Platform Authenticity*: Match platform-specific behaviors and constraints
+    3. **Engagement Patterns*: Model realistic timing and interaction patterns
+    4. **Content Variety*: Mix text, media, links, and emoji
+    5. **Metrics Tracking*: Monitor reach, engagement, and sentiment
 
     Common Use Cases
     ----------------
 
-    - **Marketing Simulation**: Test campaign strategies before launch
-    - **Crisis Management**: Practice handling negative viral events
-    - **Community Building**: Understand discussion dynamics
-    - **Trend Analysis**: Study how topics spread and evolve
-    - **Training**: Teach social media best practices
+    - **Marketing Simulation*: Test campaign strategies before launch
+    - **Crisis Management*: Practice handling negative viral events
+    - **Community Building*: Understand discussion dynamics
+    - **Trend Analysis*: Study how topics spread and evolve
+    - **Training*: Teach social media best practices
 
     Advanced Features
     -----------------
 
-    **Influencer Networks**
+    **Influencer Networks*
 
 .. code-block:: python
+
+    # Code example here
 
     # Model influencer impact
     conversation.add_influencer_network(
@@ -339,9 +347,12 @@ A breaking tech news story with multiple perspectives and reactions.
     follower_overlap=0.3
     )
 
-    **Trend Modeling**
+
+**Trend Modeling*
 
 .. code-block:: python
+
+    # Code example here
 
     # Simulate trending topics
     conversation.inject_trending_topic(
@@ -350,9 +361,12 @@ A breaking tech news story with multiple perspectives and reactions.
     decay_rate=0.8
     )
 
-    **Platform Algorithms**
+
+**Platform Algorithms*
 
 .. code-block:: python
+
+    # Code example here
 
     # Custom algorithm behavior
     conversation.set_algorithm(
@@ -364,9 +378,12 @@ A breaking tech news story with multiple perspectives and reactions.
     )
 
     Analytics and Insights
-    ----------------------
+
+----------------------
 
 .. code-block:: python
+
+    # Code example here
 
     # Get detailed analytics
     analytics = conversation.get_analytics()
@@ -386,9 +403,10 @@ A breaking tech news story with multiple perspectives and reactions.
     conversation.generate_wordcloud()
 
     See Also
-    --------
 
-    - :doc:`directed` - Orchestrated conversations
-    - :doc:`debate` - Structured argumentation
-    - :doc:`examples/marketing` - Marketing campaign examples
-    - :doc:`../api_reference` - Full API documentation
+--------
+
+    - :doc:`directed - Orchestrated conversations`
+    - :doc:`debate - Structured argumentation`
+    - :doc:`examples/marketing - Marketing campaign examples`
+    - :doc:`../../api/index - Full API documentation`

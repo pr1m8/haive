@@ -1,3 +1,5 @@
+:orphan:
+
 Debate Conversation Examples
 ============================
 
@@ -8,7 +10,7 @@ Formal Debate Example
 
 A formal debate on AI regulation with opening statements, rebuttals, and closing arguments.
 
-**Full Example Code:**
+**Full Example Code:*
 
 .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/debate/example.py
 
@@ -16,13 +18,13 @@ A formal debate on AI regulation with opening statements, rebuttals, and closing
    :pyobject: example_formal_debate
    :caption: Formal Debate Implementation
 
-**Running the Example:**
+**Running the Example:*
 
 .. code-block:: bash
 
     poetry run python packages/haive-agents/src/haive/agents/conversation/debate/example.py
 
-    **Sample Output:**
+    **Sample Output:*
 
 .. code-block:: text
 
@@ -131,7 +133,7 @@ A formal debate on AI regulation with opening statements, rebuttals, and closing
 
     A multi-agent panel debate on climate solutions.
 
-    **Full Example Code:**
+    **Full Example Code:*
 
     .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/debate/example.py
 
@@ -139,7 +141,7 @@ A formal debate on AI regulation with opening statements, rebuttals, and closing
     :pyobject: example_panel_debate
     :caption: Panel Debate Implementation
 
-    **Sample Output:**
+    **Sample Output:*
 
 .. code-block:: text
 
@@ -184,9 +186,11 @@ A formal debate on AI regulation with opening statements, rebuttals, and closing
 
     A structured academic debate with research citations.
 
-    **Example Code:**
+    **Example Code:*
 
 .. code-block:: python
+
+    # Code example here
 
     def example_academic_debate():
     """Academic debate with evidence and citations."""
@@ -220,7 +224,8 @@ A formal debate on AI regulation with opening statements, rebuttals, and closing
 
     result = debate.run({})
 
-    **Sample Output:**
+
+**Sample Output:*
 
 .. code-block:: text
 
@@ -251,16 +256,18 @@ A formal debate on AI regulation with opening statements, rebuttals, and closing
     Key Features Demonstrated
     -------------------------
 
-    1. **Structured Format**: Clear rounds with specific purposes
-    2. **Position Advocacy**: Agents strongly defend assigned positions
-    3. **Evidence-Based**: Arguments supported by facts and logic
-    4. **Dynamic Rebuttals**: Agents respond to opponent's points
-    5. **Judged Outcomes**: Optional scoring based on multiple criteria
+    1. **Structured Format*: Clear rounds with specific purposes
+    2. **Position Advocacy*: Agents strongly defend assigned positions
+    3. **Evidence-Based*: Arguments supported by facts and logic
+    4. **Dynamic Rebuttals*: Agents respond to opponent's points
+    5. **Judged Outcomes*: Optional scoring based on multiple criteria
 
     Configuration Options
     ---------------------
 
 .. code-block:: python
+
+    # Code example here
 
     DebateConversation(
     debaters=agent_dict,              # Position -> Agent mapping
@@ -278,27 +285,30 @@ A formal debate on AI regulation with opening statements, rebuttals, and closing
     )
 
     Best Practices
-    --------------
 
-    1. **Clear Positions**: Define specific, opposing stances
-    2. **Balanced Agents**: Similar capability levels for fair debate
-    3. **Structured Rounds**: Use progressive round structure
-    4. **Judgment Criteria**: Define clear scoring criteria
-    5. **Time Management**: Set appropriate time limits
+--------------
+
+    1. **Clear Positions*: Define specific, opposing stances
+    2. **Balanced Agents*: Similar capability levels for fair debate
+    3. **Structured Rounds*: Use progressive round structure
+    4. **Judgment Criteria*: Define clear scoring criteria
+    5. **Time Management*: Set appropriate time limits
 
     Common Use Cases
     ----------------
 
-    - **Decision Making**: Exploring pros/cons of important decisions
-    - **Education**: Teaching critical thinking and argumentation
-    - **Research**: Examining different theoretical positions
-    - **Policy**: Evaluating policy proposals from multiple angles
-    - **Entertainment**: Engaging audiences with intellectual content
+    - **Decision Making*: Exploring pros/cons of important decisions
+    - **Education*: Teaching critical thinking and argumentation
+    - **Research*: Examining different theoretical positions
+    - **Policy*: Evaluating policy proposals from multiple angles
+    - **Entertainment*: Engaging audiences with intellectual content
 
     Advanced Example: Multi-Position Debate
     ---------------------------------------
 
 .. code-block:: python
+
+    # Code example here
 
     def example_multi_position_debate():
     """Debate with more than two positions."""
@@ -320,9 +330,12 @@ A formal debate on AI regulation with opening statements, rebuttals, and closing
     winner = debate.run_tournament()
 
     Customizing Debate Styles
-    -------------------------
+
+-------------------------
 
 .. code-block:: python
+
+    # Code example here
 
     # British Parliamentary style
     bp_debate = DebateConversation(
@@ -347,9 +360,10 @@ A formal debate on AI regulation with opening statements, rebuttals, and closing
     )
 
     See Also
-    --------
 
-    - :doc:`conversation_directed` - Orchestrated multi-agent discussions
-    - :doc:`conversation_collaborative` - Cooperative problem solving
-    - :doc:`conversation_social_media` - Online discussion dynamics
-    - :doc:`../api_reference` - Full API documentation
+--------
+
+    - :doc:`conversation_directed - Orchestrated multi-agent discussions`
+    - :doc:`conversation_collaborative - Cooperative problem solving`
+    - :doc:`conversation_social_media - Online discussion dynamics`
+    - :doc:`../../api/index - Full API documentation`

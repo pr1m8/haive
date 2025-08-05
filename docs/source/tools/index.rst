@@ -4,13 +4,7 @@
 🛠️ Haive Tools Ecosystem
 ========================
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="agent-hero-section">
-
-.. raw:: html
 
    <div class="hero-content">
    <h2>🔧 Powerful Tools for Intelligent Agents</h2>
@@ -19,16 +13,10 @@
    </p>
    </div>
 
-.. raw:: html
-
    </div>
 
 Tool Categories
 ---------------
-
-.. raw:: html
-
-   .. raw:: html
 
    <div class="showcase-tabs">
    <button class="showcase-tab active">All Tools</button>
@@ -39,42 +27,26 @@ Tool Categories
    <button class="showcase-tab">Utility Tools</button>
    </div>
 
-.. raw:: html
-
    <div class="showcase-content active">
    <h3>🔧 All Tools</h3>
 
-.. raw:: html
-
    <div class="agent-showcase">
-
-.. raw:: html
 
    <div class="agent-card">
 
-.. raw:: html
-
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🔍</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Search Tools</h3>
    <p class="agent-subtitle">Web & Information Retrieval</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
                Powerful search capabilities for web content, documentation, and structured data retrieval with source verification.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Web search integration</li>
@@ -85,33 +57,21 @@ Tool Categories
    <a href="../api/tools/search/index.html" class="agent-link">View Documentation</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">💻</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Code Tools</h3>
    <p class="agent-subtitle">Development & Execution</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
                Code execution, analysis, and development tools for building and testing software with sandboxed environments.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Python execution</li>
@@ -122,33 +82,21 @@ Tool Categories
    <a href="../api/tools/code/index.html" class="agent-link">View Documentation</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🌐</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">API Tools</h3>
    <p class="agent-subtitle">External Service Integration</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
                Connect to external APIs and services with built-in authentication, error handling, and rate limiting.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>REST API calls</li>
@@ -159,33 +107,21 @@ Tool Categories
    <a href="../api/tools/api/index.html" class="agent-link">View Documentation</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">📊</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Data Tools</h3>
    <p class="agent-subtitle">Analysis & Processing</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
                Data processing, analysis, and visualization tools for working with various data formats and sources.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>CSV/JSON processing</li>
@@ -196,33 +132,21 @@ Tool Categories
    <a href="../api/tools/data/index.html" class="agent-link">View Documentation</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🧮</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Math Tools</h3>
    <p class="agent-subtitle">Computation & Analysis</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
                Mathematical computation, symbolic algebra, and numerical analysis capabilities for complex calculations.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Calculator functions</li>
@@ -233,33 +157,21 @@ Tool Categories
    <a href="../api/tools/math/index.html" class="agent-link">View Documentation</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">⚡</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Utility Tools</h3>
    <p class="agent-subtitle">General Purpose Helpers</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
                General-purpose utilities for file operations, time management, text processing, and system interactions.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>File operations</li>
@@ -272,13 +184,9 @@ Tool Categories
    </div>
    </div>
 
-.. raw:: html
-
    <div class="showcase-content">
    <h3>🔍 Search Tools</h3>
    <p>Tools for finding and retrieving information from various sources.</p>
-
-.. raw:: html
 
    <div class="tool-list">
    <ul>
@@ -290,17 +198,11 @@ Tool Categories
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="showcase-content">
    <h3>💻 Code Tools</h3>
    <p>Tools for code execution, analysis, and development.</p>
-
-.. raw:: html
 
    <div class="tool-list">
    <ul>
@@ -312,17 +214,11 @@ Tool Categories
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="showcase-content">
    <h3>📊 Data Tools</h3>
    <p>Tools for data processing, analysis, and visualization.</p>
-
-.. raw:: html
 
    <div class="tool-list">
    <ul>
@@ -334,17 +230,11 @@ Tool Categories
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="showcase-content">
    <h3>🌐 API Tools</h3>
    <p>Tools for interacting with external APIs and services.</p>
-
-.. raw:: html
 
    <div class="tool-list">
    <ul>
@@ -356,17 +246,11 @@ Tool Categories
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="showcase-content">
    <h3>⚡ Utility Tools</h3>
    <p>General-purpose tools for various utility functions.</p>
-
-.. raw:: html
 
    <div class="tool-list">
    <ul>
@@ -378,58 +262,34 @@ Tool Categories
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
 
 Featured Tools
 --------------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-.. raw:: html
 
    <div class="showcase-header">
    <h2>🌟 Most Popular Tools</h2>
    <p>The tools most frequently used by agents in production</p>
    </div>
 
-.. raw:: html
-
    <div class="games-showcase">
-
-.. raw:: html
 
    <div class="game-card">
 
-.. raw:: html
-
    <div class="game-header">
-
-.. raw:: html
 
    <div class="game-emoji">🌐</div>
    <h3 class="game-title">WebSearchTool</h3>
 
-.. raw:: html
-
    <div class="game-category">Search</div>
    </div>
-
-.. raw:: html
 
    <p class="game-description">
 
                Real-time web search with filtering, ranking, and snippet extraction for accurate information retrieval.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="game-features">
    <span class="game-feature">Real-time search</span>
@@ -438,74 +298,46 @@ Featured Tools
    <span class="game-feature">Safe search</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">95%</span>
    <span class="game-stat-label">Accuracy</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">< 2s</span>
    <span class="game-stat-label">Response</span>
    </div>
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">10K+</span>
    <span class="game-stat-label">Daily Uses</span>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="game-actions">
    <a href="../guides/using_tools.html#websearch" class="game-action primary">Documentation</a>
    <a href="../examples/search_example.html" class="game-action secondary">Examples</a>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="game-card">
 
-.. raw:: html
-
    <div class="game-header">
-
-.. raw:: html
 
    <div class="game-emoji">🐍</div>
    <h3 class="game-title">PythonREPLTool</h3>
 
-.. raw:: html
-
    <div class="game-category">Code</div>
    </div>
-
-.. raw:: html
 
    <p class="game-description">
 
                Execute Python code in a sandboxed environment with full library support and result capture.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="game-features">
    <span class="game-feature">Sandboxed execution</span>
@@ -514,74 +346,46 @@ Featured Tools
    <span class="game-feature">Error handling</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">100+</span>
    <span class="game-stat-label">Libraries</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">< 1s</span>
    <span class="game-stat-label">Execution</span>
    </div>
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">5K+</span>
    <span class="game-stat-label">Daily Uses</span>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="game-actions">
    <a href="../guides/using_tools.html#python" class="game-action primary">Documentation</a>
    <a href="../examples/code_example.html" class="game-action secondary">Examples</a>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="game-card">
 
-.. raw:: html
-
    <div class="game-header">
-
-.. raw:: html
 
    <div class="game-emoji">🧮</div>
    <h3 class="game-title">CalculatorTool</h3>
 
-.. raw:: html
-
    <div class="game-category">Math</div>
    </div>
-
-.. raw:: html
 
    <p class="game-description">
 
                Advanced mathematical calculations with symbolic math, statistics, and complex operations.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="game-features">
    <span class="game-feature">Symbolic math</span>
@@ -590,43 +394,29 @@ Featured Tools
    <span class="game-feature">Unit conversion</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">1000+</span>
    <span class="game-stat-label">Functions</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">< 0.1s</span>
    <span class="game-stat-label">Response</span>
    </div>
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">8K+</span>
    <span class="game-stat-label">Daily Uses</span>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="game-actions">
    <a href="../guides/using_tools.html#calculator" class="game-action primary">Documentation</a>
    <a href="../examples/math_example.html" class="game-action secondary">Examples</a>
    </div>
-
-.. raw:: html
 
    </div>
    </div>
@@ -635,14 +425,12 @@ Featured Tools
 Quick Start
 -----------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="code-example-section">
    <h4>🚀 Use Tools in 30 Seconds</h4>
 
 .. code-block:: python
+
+    # Code example here
 
    from langchain_core.tools import tool
    from haive.tools.search import WebSearchTool
@@ -681,22 +469,18 @@ Quick Start
    "and calculate the reading time at 200 words per minute"
    )
 
-   .. raw:: html
-
    </div>
 
    Creating Custom Tools
    ---------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>🛠️ Build Your Own Tools</h3>
    <p>Create custom tools tailored to your specific needs.</p>
 
 .. code-block:: python
+
+    # Code example here
 
    from langchain_core.tools import tool
    from pydantic import BaseModel, Field
@@ -792,20 +576,12 @@ Quick Start
    results = await self._connection.execute(sql, params)
    return [dict(row) for row in results]
 
-   .. raw:: html
-
    </div>
 
    Tool Patterns
    -------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="api-grid">
-
-   .. raw:: html
 
    <div class="api-section">
    <h4>🎯 Input/Output Patterns</h4>
@@ -817,8 +593,6 @@ Quick Start
    </ul>
    </div>
 
-   .. raw:: html
-
    <div class="api-section">
    <h4>🔒 Security Patterns</h4>
    <ul>
@@ -828,8 +602,6 @@ Quick Start
    <li><strong>Authentication</strong> - Secure access</li>
    </ul>
    </div>
-
-   .. raw:: html
 
    <div class="api-section">
    <h4>⚡ Performance Patterns</h4>
@@ -841,20 +613,12 @@ Quick Start
    </ul>
    </div>
 
-   .. raw:: html
-
    </div>
 
    Tool Best Practices
    -------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>✅ Best Practices for Tool Development</h2>
@@ -862,6 +626,8 @@ Quick Start
    </div>
 
 .. code-block:: python
+
+    # Code example here
 
    from langchain_core.tools import tool
    from pydantic import BaseModel, Field, validator
@@ -895,8 +661,8 @@ Quick Start
 
        Examples:
            >>> analyze_sentiment("I love this product!")
-           {'sentiment': 'positive', 'score': 0.95, 'emotions': {'joy': 0.8}}
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+{'sentiment': 'positive', 'score': 0.95, 'emotions': {'joy': 0.8}}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
        if not text or len(text) > 5000:
            raise ValueError("Text must be 1-5000 characters")
 
@@ -971,21 +737,17 @@ Quick Start
            logger.error(f"Network error: {e}")
            raise
 
-   .. raw:: html
-
    </div>
 
    Tool Testing
    ------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="custom-section">
    <h3>🧪 Test Your Tools</h3>
 
 .. code-block:: python
+
+    # Code example here
 
    import pytest
    from unittest.mock import Mock, patch
@@ -1034,8 +796,6 @@ Quick Start
    result = await agent.arun("Use the custom tool with input 'test'")
    assert "custom tool" in result.lower()
 
-   .. raw:: html
-
    </div>
 
    API Reference
@@ -1053,13 +813,13 @@ Quick Start
    Quick Links
    ^^^^^^^^^^^
 
-   - :doc:`Tool API Reference <../api/tools/index>` - Complete API documentation
-   - :doc:`Using Tools Guide <../guides/using_tools>` - How to use tools effectively
-   - :doc:`Custom Tools Guide <../guides/custom_tools>` - Build your own tools
-   - :doc:`Tool Examples <../examples/tools/index>` - Example implementations
+   - :doc:`Tool API Reference <../api/tools/index> - Complete API documentation`
+   - :doc:`Using Tools Guide <../guides/using_tools> - How to use tools effectively`
+   - :doc:`Custom Tools Guide <../guides/custom_tools> - Build your own tools`
+   - :doc:`Tool Examples <../examples/tools/index> - Example implementations`
 
    .. seealso::
 
-   - :doc:`../agents/index` - Agents that use tools
-   - :doc:`../guides/tool_routing` - Advanced tool selection
-   - :doc:`../api/tools/toolkits/index` - Pre-built tool collections
+   - :doc:`../agents/index - Agents that use tools`
+   - :doc:`../guides/tool_routing - Advanced tool selection`
+   - :doc:`../api/tools/toolkits/index - Pre-built tool collections`

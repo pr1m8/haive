@@ -3,35 +3,21 @@ Sequential Agent Demo
 
 Executes tasks in sequential order
 
-.. raw:: html
-
    <div class="agent-demo-container">
    <!-- Agent Overview -->
 
-.. raw:: html
-
    <div class="agent-overview-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-icon">➡️</div>
-
-.. raw:: html
 
    <div>
    <h2>Sequential Agent</h2>
    <p class="agent-category">Category: Workflow</p>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">Order preservation</span>
@@ -40,78 +26,46 @@ Executes tasks in sequential order
    <span class="feature-tag">Progress tracking</span>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <!-- Interactive Demo -->
 
-.. raw:: html
-
    <div class="agent-interface">
-
-.. raw:: html
 
    <div class="demo-controls">
    <h3>Try Sequential Agent</h3>
-
-.. raw:: html
 
    <div class="input-area">
    <textarea id="sequential-input" placeholder="Enter your input here..." rows="4"></textarea>
    </div>
 
-.. raw:: html
-
    <button onclick="runAgent('sequential')" class="run-agent-btn">
 
                     Run Agent
-.. raw:: html
-
    </button>
    </div>
 
-.. raw:: html
-
    <div id="sequential-output" class="agent-output">
    <!-- Agent output will appear here -->
-
-.. raw:: html
 
    <div class="output-placeholder">
    <p>Enter input and click "Run Agent" to see results</p>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
-
-.. raw:: html
 
    <!-- Live Execution Stream -->
-
-.. raw:: html
 
    <div class="agent-streaming">
    <h3>Live Execution</h3>
 
-.. raw:: html
-
    <div class="streaming-indicator">
 
                    Live Stream
-.. raw:: html
-
    </div>
 
-.. raw:: html
-
    <div class="execution-display">
-
-.. raw:: html
 
    <pre id="sequential-execution">
 
@@ -125,37 +79,25 @@ Executes tasks in sequential order
 
    Progress: 80% complete
 
-.. raw:: html
-
    </pre>
    </div>
 
-.. raw:: html
-
    <div class="execution-stats">
-
-.. raw:: html
 
    <div class="stat">
    <label>Status:</label>
    <span class="status-active">Active</span>
    </div>
 
-.. raw:: html
-
    <div class="stat">
    <label>Runtime:</label>
    <span>1.2s</span>
    </div>
 
-.. raw:: html
-
    <div class="stat">
    <label>Tokens:</label>
    <span>847</span>
    </div>
-
-.. raw:: html
 
    </div>
    </div>
@@ -183,6 +125,8 @@ Code Example
 
 .. code-block:: python
 
+    # Code example here
+
     from haive.agents.sequential.agent import SequentialAgent
     from haive.core.engine import AugLLMConfig
 
@@ -197,9 +141,12 @@ Code Example
     print(result)
 
     Configuration Options
-    ---------------------
+
+---------------------
 
 .. code-block:: python
+
+    # Code example here
 
     config = {
         "temperature": 0.7,
@@ -209,8 +156,9 @@ Code Example
     }
 
     See Also
-    --------
 
-    - :doc:`/api/haive/agents/sequential/index` - API documentation
-    - :doc:`/guides/building_agents` - Agent development guide
-    - :doc:`/examples/agent_patterns` - Common patterns
+--------
+
+    - :doc:`/api/haive/agents/sequential/index - API documentation`
+    - :doc:`/guides/building_agents - Agent development guide`
+    - :doc:`/examples/agent_patterns - Common patterns`

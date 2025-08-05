@@ -44,16 +44,16 @@ def get_config(
 
     # CSS and JS files
     config['html_css_files'] = [
-        'haive-minimal.css',  # Custom styling
+        ('haive-minimal.css', {}),  # Custom styling
     ]
 
     config['html_js_files'] = [
-        'haive-graph-visualizations.js',
-        'agent-visualization.js',
-        'enhanced-search.js',
-        'showcase-interactions.js',
-        'enhanced-interface.js',
-        'agent-demo-utils.js',
+        ('haive-graph-visualizations.js', {}),
+        ('agent-visualization.js', {}),
+        ('enhanced-search.js', {}),
+        ('showcase-interactions.js', {}),
+        ('enhanced-interface.js', {}),
+        ('agent-demo-utils.js', {}),
     ]
 
     # Theme options

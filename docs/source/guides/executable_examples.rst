@@ -10,6 +10,8 @@ Here's a simple example that runs live:
 
 .. code-block:: python
 
+    # Code example here
+
    # This code runs when building docs!
    import sys
    print(f"Python version: {sys.version}")
@@ -21,6 +23,8 @@ Here's a simple example that runs live:
    Let's create a simple agent (note: this requires proper API keys):
 
 .. code-block:: python
+
+    # Code example here
 
    # Import Haive components
    from haive.agents.simple import SimpleAgent
@@ -68,6 +72,8 @@ Here's a simple example that runs live:
 
 .. code-block:: python
 
+    # Code example here
+
    import numpy as np
 
    # Create sample data
@@ -85,6 +91,8 @@ Here's a simple example that runs live:
 
 .. code-block:: python
 
+    # Code example here
+
    try:
 
        # This will raise an error
@@ -98,4 +106,4 @@ Here's a simple example that runs live:
    Interactive Examples Gallery
    ----------------------------
 
-   For more complex examples, see our :doc:`/auto_examples_agents/index` gallery.
+   For more complex examples, see our :doc:`/auto_examples_agents/index gallery.`

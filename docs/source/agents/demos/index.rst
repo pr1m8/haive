@@ -14,7 +14,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Discovers patterns and insights in data
 
-      **Category**: Analysis
+      **Category*: Analysis
 
    .. grid-item-card:: 🤔 Reasoning & Critique Agent
 
@@ -23,7 +23,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Provides logical reasoning and critical analysis
 
-      **Category**: Analysis
+      **Category*: Analysis
 
    .. grid-item-card:: ✍️ Wiki Writer Agent
 
@@ -32,7 +32,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Creates wiki-style documentation
 
-      **Category**: Content
+      **Category*: Content
 
    .. grid-item-card:: 🔄 React Agent
 
@@ -41,7 +41,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Reasoning and action agent
 
-      **Category**: Core
+      **Category*: Core
 
    .. grid-item-card:: 💬 Simple Agent
 
@@ -50,7 +50,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Basic conversational agent
 
-      **Category**: Core
+      **Category*: Core
 
    .. grid-item-card:: 📊 Structured Output
 
@@ -59,7 +59,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Schema-compliant outputs
 
-      **Category**: Data
+      **Category*: Data
 
    .. grid-item-card:: 📊 Structured Output Agent
 
@@ -68,7 +68,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Generates structured, schema-compliant outputs
 
-      **Category**: Data
+      **Category*: Data
 
    .. grid-item-card:: 🔧 Self-Healing Code Agent
 
@@ -77,7 +77,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Automatically fixes code errors and issues
 
-      **Category**: Development
+      **Category*: Development
 
    .. grid-item-card:: 💭 Conversation Agent
 
@@ -86,7 +86,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Manages multi-turn conversations with context
 
-      **Category**: Dialogue
+      **Category*: Dialogue
 
    .. grid-item-card:: 📄 Document Agent
 
@@ -95,7 +95,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Processes and analyzes documents
 
-      **Category**: Document Processing
+      **Category*: Document Processing
 
    .. grid-item-card:: 🔬 Research Agent
 
@@ -104,7 +104,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Conducts comprehensive research on topics
 
-      **Category**: Investigation
+      **Category*: Investigation
 
    .. grid-item-card:: 🎯 Adaptive RAG
 
@@ -113,7 +113,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Adaptive retrieval
 
-      **Category**: Knowledge
+      **Category*: Knowledge
 
    .. grid-item-card:: 📚 Base RAG
 
@@ -122,7 +122,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Basic RAG implementation
 
-      **Category**: Knowledge
+      **Category*: Knowledge
 
    .. grid-item-card:: 📚 RAG Agent
 
@@ -131,7 +131,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Retrieval-Augmented Generation for accurate responses
 
-      **Category**: Knowledge
+      **Category*: Knowledge
 
    .. grid-item-card:: 🧠 Long-Term Memory Agent
 
@@ -140,7 +140,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Manages persistent memory across sessions
 
-      **Category**: Memory
+      **Category*: Memory
 
    .. grid-item-card:: 👔 Dynamic Supervisor
 
@@ -149,7 +149,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Dynamically manages and coordinates multiple agents
 
-      **Category**: Orchestration
+      **Category*: Orchestration
 
    .. grid-item-card:: 👨‍💼 Supervisor Agent
 
@@ -158,7 +158,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Supervises and coordinates agent teams
 
-      **Category**: Orchestration
+      **Category*: Orchestration
 
    .. grid-item-card:: 📈 Task Analysis Agent
 
@@ -167,7 +167,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Analyzes and decomposes complex tasks
 
-      **Category**: Planning
+      **Category*: Planning
 
    .. grid-item-card:: 🪞 Reflection Agent
 
@@ -176,7 +176,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Self-reflects on outputs and improves them
 
-      **Category**: Quality
+      **Category*: Quality
 
    .. grid-item-card:: 📋 Planning Agent
 
@@ -185,7 +185,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Creates and executes strategic plans
 
-      **Category**: Strategy
+      **Category*: Strategy
 
    .. grid-item-card:: 🔗 Chain Agent
 
@@ -194,7 +194,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Executes chains of operations in sequence
 
-      **Category**: Workflow
+      **Category*: Workflow
 
    .. grid-item-card:: ➡️ Sequential Agent
 
@@ -203,7 +203,7 @@ Interactive demonstrations of all Haive agents with live execution and state tra
 
       Executes tasks in sequential order
 
-      **Category**: Workflow
+      **Category*: Workflow
 
 .. toctree::
 

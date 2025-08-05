@@ -6,22 +6,24 @@ Retrieval-Augmented Generation agents combine the power of LLMs with external kn
 .. note::
 
 
-   This is the user guide for RAG agents. For API documentation, see :doc:`/api/haive/agents/rag/index`.
+   This is the user guide for RAG agents. For API documentation, see :doc:`/api/haive/agents/rag/index.`
 
 Overview
 --------
 
 RAG agents in Haive provide intelligent document retrieval and question-answering capabilities:
 
-- **BaseRAGAgent** - Foundation for all RAG implementations
-- **HybridRAGAgent** - Combines multiple retrieval strategies
-- **AdaptiveRAGAgent** - Dynamically adjusts retrieval based on query
-- **GraphRAGAgent** - Uses knowledge graphs for enhanced retrieval
+- **BaseRAGAgent* - Foundation for all RAG implementations
+- **HybridRAGAgent* - Combines multiple retrieval strategies
+- **AdaptiveRAGAgent* - Dynamically adjusts retrieval based on query
+- **GraphRAGAgent* - Uses knowledge graphs for enhanced retrieval
 
 Quick Start
 -----------
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.agents.rag import BaseRAGAgent
    from haive.core.vectorstore import ChromaStore
@@ -79,7 +81,7 @@ Quick Start
    Examples
    --------
 
-   See our :doc:`/guides/rag_agents` guide for detailed examples and best practices.
+   See our :doc:`/guides/rag_agents guide for detailed examples and best practices.`
 
    .. toctree::
 

@@ -89,16 +89,16 @@
    .. rubric:: {{ _('Related') }}
 
    {% if fullname is match('.*\.agents\..*') %}
-   * :doc:`Agent Demos </agents/demos/index>`*
-   * :doc:`Agent Examples </examples/agents/index>`*
-   * :doc:`Agent Development Guide </guides/agent_development>`*
+   * :doc:`Agent Demos </agents/demos/index>*`
+   * :doc:`Agent Examples </examples/agents/index>*`
+   * :doc:`Agent Development Guide </guides/agent_development>*`
    {% elif fullname is match('.*\.tools\..*') %}
-   * :doc:`Tool Creation Guide </guides/tool_creation>`*
-   * :doc:`Using Tools </guides/using_tools>`*
-   * :doc:`Custom Tools </guides/custom_tools>`*
+   * :doc:`Tool Creation Guide </guides/tool_creation>*`
+   * :doc:`Using Tools </guides/using_tools>*`
+   * :doc:`Custom Tools </guides/custom_tools>*`
    {% elif fullname is match('.*\.games\..*') %}
-   * :doc:`Game Demos </games/demos/index>`*
-   * :doc:`Game Examples </examples/games/index>`*
-   * :doc:`Agent Games Guide </guides/agent_games>`*
+   * :doc:`Game Demos </games/demos/index>*`
+   * :doc:`Game Examples </examples/games/index>*`
+   * :doc:`Agent Games Guide </guides/agent_games>*`
    {% endif %}
    {% endblock %}

@@ -3,7 +3,7 @@ Agent Visualization Guide
 
 This guide explains how to standardize agent output visualization for documentation using the
 
-``haive.core.utils.doc_util``s`` module.
+``haive.core.utils.doc_utils`` module.
 
 Overview
 
@@ -18,7 +18,7 @@ The agent visualization utilities help you:
 3. Generate standardized documentation pages for agent examples
 4. Create galleries of agent examples
 
-These tools work with both`` ``haive.core.engine.agen``t`` and`` ``haive.agents.base.agen``t`` patterns.
+These tools work with both`` haive.core.engine.agen``t`` and ``haive.agents.base.agen``t`` patterns.
 
 Basic Usage
 
@@ -29,6 +29,8 @@ From a Python Script
 ~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.core.utils.doc_utils import visualize_agent_run
 
@@ -51,7 +53,8 @@ From a Python Script
 
     From the Command Line
 
-    ~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~
 
     Use the provided script to process existing state history files or run agents:
 
@@ -77,9 +80,11 @@ From a Python Script
 
     ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    You can create a custom`` ``AgentVisualize``r`` instance with specific output directories:
+    You can create a custom`` AgentVisualize``r`` instance with specific output directories:
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.core.utils.doc_utils import AgentVisualizer
 
@@ -106,11 +111,14 @@ From a Python Script
 
     Creating Documentation Pages
 
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     Generate complete documentation pages for agent examples:
 
 .. code-block:: python
+
+    # Code example here
 
     # Generate a documentation page
     doc_path = visualizer.generate_agent_visualization_page(
@@ -126,7 +134,8 @@ From a Python Script
 
     Implementation Details
 
-    ----------------------
+
+----------------------
 
     State History Format
 
@@ -161,7 +170,7 @@ From a Python Script
 
     The utility supports multiple graph formats:
 
-    1. LangGraph Graph objects (using`` ``get_graph(``)``)
+    1. LangGraph Graph objects (using`` get_graph(``)``)
 
     2. Graphviz Digraph objects
 
@@ -196,13 +205,13 @@ From a Python Script
 
     --------------
 
-    1. **Consistent Agent Name***s**: Use descriptive, consistent names for agents**
+    1. **Consistent Agent Name*s**: Use descriptive, consistent names for agents*
 
-    2.*** **Add Metadata***a**: Include relevant metadata with each agent run
+    2.*** *Add Metadata**a*: Include relevant metadata with each agent run
 
-    3.*** **Limit State Histor***y**: For documentation, limit to 5-10 states to keep pages concise
-    4.*** **Use SVG Graph***s**: SVG format provides the best quality for documentation
-    5.*** **Add Description***s**: Provide clear descriptions of what each agent example demonstrates
+    3.*** *Limit State Histor**y*: For documentation, limit to 5-10 states to keep pages concise
+    4.*** *Use SVG Graph**s*: SVG format provides the best quality for documentation
+    5.*** *Add Description**s*: Provide clear descriptions of what each agent example demonstrates
 
     Example Gallery
 
@@ -243,4 +252,4 @@ From a Python Script
       :link-type: doc
       :class-card: agent-card
 
-      Task decomposition agent example``***
+      Task decomposition agent example``***`

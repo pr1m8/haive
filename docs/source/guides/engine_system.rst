@@ -6,17 +6,17 @@ Engine System
 
 .. warning::
 
-   **This page is under development.**
+   **This page is under development.*
 
    We're actively working on this documentation section and it will be available soon.
 
 .. note::
 
-   **BETA STATUS**: The Haive engine system is currently in beta. APIs and functionality may change.
+   **BETA STATUS*: The Haive engine system is currently in beta. APIs and functionality may change.
 
 .. admonition:: Future Content
 
-   :class:`tip`
+   :class:``tip``
 
    This section will include:
 
@@ -28,7 +28,7 @@ Engine System
 
 .. admonition:: TODO
 
-   :class:`todo`
+   :class:``todo``
 
    * Document the VectorStore engine configuration*
    * Add examples for retriever engine setup*
@@ -38,6 +38,6 @@ Engine System
 
 -------
 
-**Want to contribute?** We welcome contributions to our documentation.
+**Want to contribute?* We welcome contributions to our documentation.
 
-`See our contribution guidelines <https://github.com/will-astley/haive/blob/main/CONTRIBUTING.md>`_.
+``See our contribution guidelines <https://github.com/will-astley/haive/blob/main/CONTRIBUTING.md>_.``

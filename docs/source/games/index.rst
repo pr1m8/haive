@@ -2,15 +2,15 @@
 .. _games:
 
 🎮 Haive Games Framework
-========================
+=======================
 
 🎯 Strategic Game Environments for AI Testing
-==============================================
+============================================
 
 Beautiful, interactive game environments with intelligent AI opponents. Test your agents in strategic scenarios from classic board games to complex multiplayer environments.
 
 🎲 All Games
-============
+===========
 
 .. grid:: 1 2 3 3
 
@@ -21,123 +21,119 @@ Beautiful, interactive game environments with intelligent AI opponents. Test you
       :link: ../api/games/chess/index
       :shadow: lg
 
-      **Strategy Game**
+      **Strategy Game*
 
       Play interactive chess against AI opponents of varying skill levels with advanced position evaluation and opening theory.
 
       +++
 
       ✓ Position Analysis • ✓ Opening Theory • ✓ Endgame AI
-      **8x8 Board • 2 Players • 60+ Min**
+      **8x8 Board • 2 Players • 60+ Min*
 
    .. grid-item-card:: 🎯 Tic-Tac-Toe
 
       :link: ../api/games/tic_tac_toe/index
       :shadow: lg
 
-      **Quick Game**
+      **Quick Game*
 
       Classic 3x3 strategy game with perfect AI opponent using minimax algorithm for optimal play.
 
       +++
 
       ✓ Perfect AI • ✓ Minimax Algorithm • ✓ Quick Play
-      **3x3 Board • 2 Players • 2 Min**
+      **3x3 Board • 2 Players • 2 Min*
 
    .. grid-item-card:: 🔴 Connect Four
 
       :link: ../api/games/connect4/index
       :shadow: lg
 
-      **Strategy Game**
+      **Strategy Game*
 
       Classic connection game with strategic depth and AI that uses pattern recognition for competitive play.
 
       +++
 
       ✓ Pattern Recognition • ✓ Strategic Depth • ✓ Threat Detection
-      **7x6 Board • 2 Players • 10 Min**
+      **7x6 Board • 2 Players • 10 Min*
 
    .. grid-item-card:: 🃏 Poker
 
       :link: ../api/games/poker/index
       :shadow: lg
 
-      **Card Game**
+      **Card Game*
 
       Texas Hold'em with betting, bluffing, and AI psychology that adapts to player patterns and behavior.
 
       +++
 
       ✓ Bluffing AI • ✓ Psychology • ✓ Betting Strategy
-      **52 Cards • 2-8 Players • 30 Min**
+      **52 Cards • 2-8 Players • 30 Min*
 
    .. grid-item-card:: 🕵️ Among Us
 
       :link: ../api/games/among_us/index
       :shadow: lg
 
-      **Social Deduction**
+      **Social Deduction*
 
       Social deduction game with intelligent AI crewmates and imposters using behavioral analysis and deception.
 
       +++
 
       ✓ Behavioral Analysis • ✓ Deception AI • ✓ Role Playing
-      **4-10 Players • 1-3 Imposters • 15 Min**
+      **4-10 Players • 1-3 Imposters • 15 Min*
 
    .. grid-item-card:: 🌍 Risk
 
       :link: ../api/games/risk/index
       :shadow: lg
 
-      **Strategy Game**
+      **Strategy Game*
 
       World domination strategy with AI diplomacy, warfare tactics, and long-term strategic planning.
 
       +++
 
       ✓ Diplomacy AI • ✓ Warfare Tactics • ✓ Territory Control
-      **42 Territories • 2-6 Players • 120 Min**
+      **42 Territories • 2-6 Players • 120 Min*
 
    .. grid-item-card:: 🎲 Monopoly
 
       :link: ../api/games/monopoly/index
       :shadow: lg
 
-      **Economic Game**
+      **Economic Game*
 
       Economic strategy game with AI negotiation, property trading, and financial optimization algorithms.
 
       +++
 
       ✓ AI Negotiation • ✓ Property Trading • ✓ Financial Strategy
-      **40 Spaces • 2-8 Players • 90 Min**
+      **40 Spaces • 2-8 Players • 90 Min*
 
    .. grid-item-card:: 🧩 Mastermind
 
       :link: ../api/games/mastermind/index
       :shadow: lg
 
-      **Logic Game**
+      **Logic Game*
 
       Code-breaking game with AI logical deduction, pattern analysis, and optimal guessing strategies.
 
       +++
 
       ✓ Logical Deduction • ✓ Pattern Analysis • ✓ Optimal Guessing
-      **4 Code Length • 2 Players • 20 Min**
+      **4 Code Length • 2 Players • 20 Min*
 
 Game Categories
 ===============
 
-.. raw:: html
-
    <div class="showcase-content">
    <h3>🎯 Board Games</h3>
    <p>Classic board games with advanced AI opponents.</p>
-
-.. raw:: html
 
    <div class="game-list">
    <ul>
@@ -150,17 +146,11 @@ Game Categories
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="showcase-content">
    <h3>🃏 Card Games</h3>
    <p>Card games with probabilistic reasoning and bluffing AI.</p>
-
-.. raw:: html
 
    <div class="game-list">
    <ul>
@@ -171,17 +161,11 @@ Game Categories
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="showcase-content">
    <h3>🌍 Strategy Games</h3>
    <p>Complex strategy games requiring long-term planning.</p>
-
-.. raw:: html
 
    <div class="game-list">
    <ul>
@@ -191,17 +175,11 @@ Game Categories
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="showcase-content">
    <h3>🕵️ Social Games</h3>
    <p>Games focusing on social interaction and deduction.</p>
-
-.. raw:: html
 
    <div class="game-list">
    <ul>
@@ -211,21 +189,17 @@ Game Categories
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
 
 Quick Start Example
 -------------------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="code-example-section">
    <h4>🚀 Start Playing in 30 Seconds</h4>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.games.tic_tac_toe import TicTacToeGame
    from haive.games.tic_tac_toe.agent import TicTacToeAgent
@@ -259,22 +233,18 @@ Quick Start Example
    import asyncio
    asyncio.run(play())
 
-   .. raw:: html
-
    </div>
 
    Game Development Guide
    ----------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>🎨 Creating Your Own Game</h3>
    <p>Build custom game environments for your agents to play in.</p>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.games.base import BaseGame, GameState, Move
    from typing import List, Optional, Tuple
@@ -313,33 +283,19 @@ Quick Start Example
    return -1.0
    return 0.0
 
-   .. raw:: html
-
    </div>
 
    AI Strategies
    -------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>🧠 AI Strategies and Algorithms</h2>
    <p>Different AI approaches used in our game implementations</p>
    </div>
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="api-grid">
-
-   .. raw:: html
 
    <div class="api-section">
    <h4>🎯 Minimax Algorithm</h4>
@@ -352,8 +308,6 @@ Quick Start Example
    </ul>
    </div>
 
-   .. raw:: html
-
    <div class="api-section">
    <h4>🌳 Monte Carlo Tree Search</h4>
    <p>Probabilistic game tree exploration</p>
@@ -364,8 +318,6 @@ Quick Start Example
    <li>Neural network guidance</li>
    </ul>
    </div>
-
-   .. raw:: html
 
    <div class="api-section">
    <h4>🤖 Neural Networks</h4>
@@ -378,20 +330,12 @@ Quick Start Example
    </ul>
    </div>
 
-   .. raw:: html
-
    </div>
-
-   .. raw:: html
 
    </div>
 
    Performance Benchmarks
    ----------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="performance-section">
    <h3>⚡ AI Performance Metrics</h3>
@@ -494,13 +438,13 @@ Quick Start Example
    Quick Links
    ^^^^^^^^^^^
 
-   - :doc:`Game Base Classes <../api/games/base/index>` - Abstract base classes for games
-   - :doc:`Board Games API <../api/games/board/index>` - Board game implementations
-   - :doc:`Card Games API <../api/games/cards/index>` - Card game systems
-   - :doc:`Game Demos <demos/index>` - Interactive demonstrations
+   - :doc:`Game Base Classes <../api/games/base/index> - Abstract base classes for games`
+   - :doc:`Board Games API <../api/games/board/index> - Board game implementations`
+   - :doc:`Card Games API <../api/games/cards/index> - Card game systems`
+   - :doc:`Game Demos <demos/index> - Interactive demonstrations`
 
    .. seealso::
 
-   - :doc:`../agents/index` - AI agents that play games
-   - :doc:`../guides/agent_games` - Building game-playing agents
-   - :doc:`../examples/index` - Example game implementations
+   - :doc:`../agents/index - AI agents that play games`
+   - :doc:`../guides/agent_games - Building game-playing agents`
+   - :doc:`../examples/index - Example game implementations`

@@ -18,4 +18,4 @@ This section contains auto-generated API reference documentation.
 
 
    This documentation is automatically generated from the source code using
-   `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_.
+   ``sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>_.``

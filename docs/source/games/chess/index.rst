@@ -4,13 +4,7 @@
 ♟️ Chess Game Documentation
 ===========================
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="agent-hero-section">
-
-.. raw:: html
 
    <div class="hero-content">
    <h2>♟️ Advanced Chess Engine & AI</h2>
@@ -20,8 +14,6 @@
    </p>
    </div>
 
-.. raw:: html
-
    </div>
 
 Overview
@@ -29,30 +21,20 @@ Overview
 
 The Chess game in Haive provides a full-featured chess environment with:
 
-- **Complete Rule Implementation**: All chess rules including castling, en passant, and promotion
-- **Advanced AI**: Multiple difficulty levels with different playing styles
-- **Analysis Tools**: Position evaluation, best move suggestions, and game analysis
-- **Opening Library**: Extensive opening book with common variations
-- **Endgame Tables**: Perfect play in endgame positions
-- **Interactive Visualization**: Beautiful board rendering and move animations
-
-.. raw:: html
-
-   .. raw:: html
+- **Complete Rule Implementation*: All chess rules including castling, en passant, and promotion
+- **Advanced AI*: Multiple difficulty levels with different playing styles
+- **Analysis Tools*: Position evaluation, best move suggestions, and game analysis
+- **Opening Library*: Extensive opening book with common variations
+- **Endgame Tables*: Perfect play in endgame positions
+- **Interactive Visualization*: Beautiful board rendering and move animations
 
    <div class="showcase-section">
-
-.. raw:: html
 
    <div class="showcase-header">
    <h2>🎯 Game Features</h2>
    </div>
 
-.. raw:: html
-
    <div class="api-grid">
-
-.. raw:: html
 
    <div class="api-section">
    <h4>🎮 Gameplay</h4>
@@ -65,8 +47,6 @@ The Chess game in Haive provides a full-featured chess environment with:
    </ul>
    </div>
 
-.. raw:: html
-
    <div class="api-section">
    <h4>🤖 AI Features</h4>
    <ul>
@@ -77,8 +57,6 @@ The Chess game in Haive provides a full-featured chess environment with:
    <li>Quiescence search</li>
    </ul>
    </div>
-
-.. raw:: html
 
    <div class="api-section">
    <h4>📊 Analysis</h4>
@@ -91,22 +69,18 @@ The Chess game in Haive provides a full-featured chess environment with:
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
 
 Quick Start
 -----------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="code-example-section">
    <h4>🚀 Basic Chess Game</h4>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.games.chess import ChessGame, ChessAgent
    from haive.core.engine.aug_llm import AugLLMConfig
@@ -168,21 +142,17 @@ Quick Start
    # Run the game
    asyncio.run(play_chess())
 
-   .. raw:: html
-
    </div>
 
    Game Mechanics
    --------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="custom-section">
    <h3>♟️ Chess Rules Implementation</h3>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.games.chess import ChessGame, Move, Piece
    from haive.games.chess.rules import (
@@ -241,26 +211,20 @@ Quick Start
    # Load a specific position
    game.load_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1")
 
-   .. raw:: html
-
    </div>
 
    AI Strategies
    -------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>🧠 Chess AI Implementation</h2>
    </div>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.games.chess import ChessAI, EvaluationFunction
    from haive.games.chess.ai import (
@@ -429,21 +393,17 @@ Quick Start
                        return move
            return None
 
-   .. raw:: html
-
    </div>
 
    Training Chess Agents
    ---------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="custom-section">
    <h3>🎓 Training and Improvement</h3>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.games.chess import ChessTrainer, ChessAgent
    from haive.games.chess.training import (
@@ -556,26 +516,20 @@ Quick Start
 
    return accuracy
 
-   .. raw:: html
-
    </div>
 
    Analysis and Visualization
    ---------------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>📊 Game Analysis Tools</h2>
    </div>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.games.chess import ChessAnalyzer
    from haive.games.chess.visualization import BoardRenderer, GameReplay
@@ -677,8 +631,6 @@ Quick Start
 
    )
 
-   .. raw:: html
-
    </div>
 
    API Reference
@@ -707,111 +659,67 @@ Quick Start
    Next Steps
    ----------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>🚀 Explore More Games</h2>
    </div>
 
-   .. raw:: html
-
    <div class="agent-showcase">
-
-   .. raw:: html
 
    <div class="agent-card">
 
-   .. raw:: html
-
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">🎯</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Other Board Games</h3>
    <p class="agent-subtitle">More strategic challenges</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Try other board games like Go, Checkers, and Connect Four with similar AI capabilities.
-   .. raw:: html
-
    </p>
    <a href="../index.html" class="agent-link">Browse Games</a>
    </div>
 
-   .. raw:: html
-
    <div class="agent-card">
-
-   .. raw:: html
 
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">🏆</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Chess Tournaments</h3>
    <p class="agent-subtitle">Competitive play</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Organize tournaments between multiple agents with different strategies and skill levels.
-   .. raw:: html
-
    </p>
    <a href="../../guides/game_tournaments.html" class="agent-link">Tournament Guide</a>
    </div>
 
-   .. raw:: html
-
    <div class="agent-card">
-
-   .. raw:: html
 
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">🤖</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Custom Chess Agents</h3>
    <p class="agent-subtitle">Build your own AI</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Create custom chess agents with unique evaluation functions and playing styles.
-   .. raw:: html
-
    </p>
    <a href="../../guides/custom_game_agents.html" class="agent-link">Agent Guide</a>
    </div>
@@ -820,6 +728,6 @@ Quick Start
 
    .. seealso::
 
-   - :doc:`../../agents/index` - Agents that can play chess
-   - :doc:`../../guides/game_ai` - Building game AI
-   - :doc:`../index` - Back to games overview
+   - :doc:`../../agents/index - Agents that can play chess`
+   - :doc:`../../guides/game_ai - Building game AI`
+   - :doc:`../index - Back to games overview`

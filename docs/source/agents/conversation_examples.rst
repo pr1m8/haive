@@ -1,3 +1,5 @@
+:orphan:
+
 Conversation Agent Examples
 ===========================
 
@@ -8,7 +10,7 @@ Directed Conversation
 
 A directed conversation uses a moderator agent to orchestrate the discussion between participants.
 
-**Example: AI Ethics Panel Discussion**
+**Example: AI Ethics Panel Discussion*
 
 .. literalinclude:: ../../../../packages/haive-agents/src/haive/agents/conversation/directed/example.py
 
@@ -16,7 +18,7 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
    :caption: directed_conversation_example.py
    :lines: 1-50
 
-**Sample Output:**
+**Sample Output:*
 
 .. code-block:: text
 
@@ -42,9 +44,11 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
 
     Agents take turns speaking in a fixed order, ensuring equal participation.
 
-    **Example: Team Standup Meeting**
+    **Example: Team Standup Meeting*
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.conversation.round_robin import RoundRobinConversation
     from haive.agents.simple import SimpleAgent
@@ -69,7 +73,8 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
     import asyncio
     asyncio.run(run_standup())
 
-    **Sample Output:**
+
+**Sample Output:*
 
 .. code-block:: text
 
@@ -100,7 +105,7 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
 
     Agents work together to solve problems or brainstorm ideas.
 
-    **Example: Product Feature Brainstorming**
+    **Example: Product Feature Brainstorming*
 
     .. literalinclude:: ../../../../packages/haive-agents/src/haive/agents/conversation/collaborative/example.py
 
@@ -108,7 +113,7 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
     :caption: collaborative_brainstorm.py
     :pyobject: run_brainstorming_session
 
-    **Sample Output:**
+    **Sample Output:*
 
 .. code-block:: text
 
@@ -136,9 +141,11 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
 
     Structured debates with opposing positions and scoring.
 
-    **Example: Technology Debate**
+    **Example: Technology Debate*
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.conversation.debate import DebateAgent, DebateConversation
 
@@ -174,7 +181,8 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
     import asyncio
     asyncio.run(run_debate())
 
-    **Sample Output:**
+
+**Sample Output:*
 
 .. code-block:: text
 
@@ -222,7 +230,7 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
 
     Simulates social media dynamics with posts, comments, and engagement.
 
-    **Example: Viral Tech News Discussion**
+    **Example: Viral Tech News Discussion*
 
     .. literalinclude:: ../../../../packages/haive-agents/src/haive/agents/conversation/social_media/example.py
 
@@ -230,7 +238,7 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
     :caption: social_media_simulation.py
     :lines: 1-40
 
-    **Sample Output:**
+    **Sample Output:*
 
 .. code-block:: text
 
@@ -295,9 +303,11 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
 
     To create your own conversation agent:
 
-    1. **Inherit from BaseConversation**
+    1. **Inherit from BaseConversation*
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.conversation.base import BaseConversation
 
@@ -314,9 +324,12 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
     # Your logic for when to end
     pass
 
-    2. **Implement Turn Management**
+
+2. **Implement Turn Management*
 
 .. code-block:: python
+
+    # Code example here
 
     async def run_turn(self, speaker):
     # Get speaker's message
@@ -333,9 +346,12 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
 
     return message
 
-    3. **Add Specialized Features**
+
+3. **Add Specialized Features*
 
 .. code-block:: python
+
+    # Code example here
 
     def add_scoring(self, message):
     # Score messages for quality, relevance, etc.
@@ -348,16 +364,19 @@ A directed conversation uses a moderator agent to orchestrate the discussion bet
     self.topic_history.extend(topics)
 
     Best Practices
-    --------------
 
-    1. **Memory Management**: For long conversations, implement sliding window or summarization
-    2. **Turn Limits**: Always set maximum turns to prevent infinite loops
-    3. **Error Handling**: Gracefully handle agent failures or timeouts
-    4. **Logging**: Use structured logging for debugging conversations
-    5. **Testing**: Test with mock agents before using LLM-based agents
+--------------
+
+    1. **Memory Management*: For long conversations, implement sliding window or summarization
+    2. **Turn Limits*: Always set maximum turns to prevent infinite loops
+    3. **Error Handling*: Gracefully handle agent failures or timeouts
+    4. **Logging*: Use structured logging for debugging conversations
+    5. **Testing*: Test with mock agents before using LLM-based agents
 
     .. seealso::
 
-    - :doc:`/guides/building_agents` - General agent development guide
-    - :doc:`/api/haive-agents` - Full agents API reference
-    - :doc:`/agents/showcase` - More agent examples and demos
+       Related conversation agent documentation.
+
+       - :doc:`/guides/building_agents - General agent development guide`
+       - :doc:`/api/haive-agents - Full agents API reference`
+       - :doc:`/agents/showcase - More agent examples and demos`

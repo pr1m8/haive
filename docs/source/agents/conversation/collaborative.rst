@@ -8,7 +8,7 @@ Problem Solving Session
 
 A team collaboratively solving a technical challenge.
 
-**Full Example Code:**
+**Full Example Code:*
 
 .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/collaborative/example.py
 
@@ -16,13 +16,13 @@ A team collaboratively solving a technical challenge.
    :pyobject: example_problem_solving
    :caption: Collaborative Problem Solving
 
-**Running the Example:**
+**Running the Example:*
 
 .. code-block:: bash
 
     poetry run python packages/haive-agents/src/haive/agents/conversation/collaborative/example.py
 
-    **Sample Output:**
+    **Sample Output:*
 
 .. code-block:: text
 
@@ -77,7 +77,7 @@ A team collaboratively solving a technical challenge.
 
     A design team collaborating on a new product feature.
 
-    **Full Example Code:**
+    **Full Example Code:*
 
     .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/collaborative/example.py
 
@@ -85,7 +85,7 @@ A team collaboratively solving a technical challenge.
     :pyobject: example_design_collaboration
     :caption: Design Team Collaboration
 
-    **Sample Output:**
+    **Sample Output:*
 
 .. code-block:: text
 
@@ -141,9 +141,11 @@ A team collaboratively solving a technical challenge.
 
     Researchers collaborating on analyzing findings.
 
-    **Example Code:**
+    **Example Code:*
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.conversation.collaborative import CollaborativeConversation
     from haive.agents.simple import SimpleAgent
@@ -182,7 +184,8 @@ A team collaboratively solving a technical challenge.
 
     result = collaboration.run({})
 
-    **Sample Output:**
+
+**Sample Output:*
 
 .. code-block:: text
 
@@ -226,16 +229,18 @@ A team collaboratively solving a technical challenge.
     Key Features Demonstrated
     -------------------------
 
-    1. **Natural Flow**: Agents join the conversation when they have relevant input
-    2. **Building Ideas**: Each contribution builds on previous statements
-    3. **Shared Goals**: All agents work toward the same objective
-    4. **Consensus Building**: Group works toward agreement on solutions
-    5. **Emergent Leadership**: Natural conversation flow without fixed order
+    1. **Natural Flow*: Agents join the conversation when they have relevant input
+    2. **Building Ideas*: Each contribution builds on previous statements
+    3. **Shared Goals*: All agents work toward the same objective
+    4. **Consensus Building*: Group works toward agreement on solutions
+    5. **Emergent Leadership*: Natural conversation flow without fixed order
 
     Configuration Options
     ---------------------
 
 .. code-block:: python
+
+    # Code example here
 
     CollaborativeConversation(
     agents=agent_list,                    # List of participating agents
@@ -249,27 +254,30 @@ A team collaboratively solving a technical challenge.
     )
 
     Best Practices
-    --------------
 
-    1. **Complementary Skills**: Use agents with different but complementary expertise
-    2. **Clear Goals**: Define specific shared objectives for focus
-    3. **Encourage Building**: System prompts should encourage "yes, and..." thinking
-    4. **Monitor Participation**: Ensure all agents contribute meaningfully
-    5. **Convergence**: Guide toward actionable outcomes, not endless discussion
+--------------
+
+    1. **Complementary Skills*: Use agents with different but complementary expertise
+    2. **Clear Goals*: Define specific shared objectives for focus
+    3. **Encourage Building*: System prompts should encourage "yes, and..." thinking
+    4. **Monitor Participation*: Ensure all agents contribute meaningfully
+    5. **Convergence*: Guide toward actionable outcomes, not endless discussion
 
     Common Use Cases
     ----------------
 
-    - **Problem Solving**: Technical challenges, debugging, optimization
-    - **Design**: Product features, user experiences, architecture
-    - **Research**: Data analysis, hypothesis forming, paper writing
-    - **Planning**: Project planning, strategy development, roadmapping
-    - **Creative**: Storytelling, content creation, brainstorming
+    - **Problem Solving*: Technical challenges, debugging, optimization
+    - **Design*: Product features, user experiences, architecture
+    - **Research*: Data analysis, hypothesis forming, paper writing
+    - **Planning*: Project planning, strategy development, roadmapping
+    - **Creative*: Storytelling, content creation, brainstorming
 
     Advanced Example: Startup Ideation
     ----------------------------------
 
 .. code-block:: python
+
+    # Code example here
 
     def example_startup_ideation():
     """Collaborative session for new startup ideas."""
@@ -301,9 +309,12 @@ A team collaboratively solving a technical challenge.
     strategy = extract_decisions(result, "go-to-market")
 
     Tracking Collaboration Metrics
-    ------------------------------
+
+------------------------------
 
 .. code-block:: python
+
+    # Code example here
 
     # After running collaboration
     metrics = collaboration.get_metrics()
@@ -321,9 +332,10 @@ A team collaboratively solving a technical challenge.
     collaboration.export_annotated_transcript("collaboration_results.md")
 
     See Also
-    --------
 
-    - :doc:`conversation_directed` - Structured conversations with direction
-    - :doc:`conversation_round_robin` - Equal participation in fixed order
-    - :doc:`conversation_debate` - Opposing viewpoints and argumentation
-    - :doc:`../api_reference` - Full API documentation
+--------
+
+    - :doc:`conversation_directed - Structured conversations with direction`
+    - :doc:`conversation_round_robin - Equal participation in fixed order`
+    - :doc:`conversation_debate - Opposing viewpoints and argumentation`
+    - :doc:`../../api/index - Full API documentation`

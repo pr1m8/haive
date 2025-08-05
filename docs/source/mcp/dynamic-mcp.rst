@@ -2,15 +2,9 @@
 .. _dynamic-mcp:
 
 🔄 Dynamic MCP Server Management
-=================================
-
-.. raw:: html
-
-   .. raw:: html
+===============================
 
    <div class="agent-hero-section">
-
-.. raw:: html
 
    <div class="hero-content">
    <h2>🚀 Dynamic MCP with haive-mcp</h2>
@@ -20,8 +14,6 @@
    </p>
    </div>
 
-.. raw:: html
-
    </div>
 
 The haive-mcp package brings advanced dynamic capabilities to Model Context Protocol integration,
@@ -30,40 +22,24 @@ enabling agents to automatically discover, install, and manage MCP servers based
 Key Features
 ------------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="agent-showcase">
-
-.. raw:: html
 
    <div class="agent-card">
 
-.. raw:: html
-
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🔄</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Hot-Reload</h3>
    <p class="agent-subtitle">Zero-downtime updates</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Add servers and refresh tools without restarting your agents.
             Dynamic tool discovery and immediate availability.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Add servers dynamically</li>
@@ -73,34 +49,22 @@ Key Features
    </ul>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🤖</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">AI Discovery</h3>
    <p class="agent-subtitle">Intelligent server selection</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             AI analyzes user requests and automatically finds the right MCP servers
             from our database of 1,960+ pre-indexed servers.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Capability analysis</li>
@@ -110,34 +74,22 @@ Key Features
    </ul>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">👤</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">HITL Approval</h3>
    <p class="agent-subtitle">Human-in-the-loop control</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Maintain control over server installations with flexible approval workflows.
             Custom approval logic and enterprise-grade security.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Custom approval callbacks</li>
@@ -151,14 +103,12 @@ Key Features
 Quick Start
 -----------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="code-example-section">
    <h4>🚀 Auto-Discovery in 30 Seconds</h4>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.mcp.agents import IntelligentMCPAgent
    from haive.core.engine.aug_llm import AugLLMConfig
@@ -187,22 +137,18 @@ Quick Start
    # 4. Installs servers and gets tools
    # 5. Completes the task!
 
-   .. raw:: html
-
    </div>
 
    Dynamic Server Management
    -------------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>🔧 Hot-Reload Capabilities</h3>
    <p>Add and manage servers dynamically without restart.</p>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.mcp.manager import MCPManager
    from haive.mcp.config import MCPServerConfig
@@ -233,22 +179,18 @@ Quick Start
    # Reload specific server
    await manager.reload_server("github")
 
-   .. raw:: html
-
    </div>
 
    Intelligent Discovery System
    ----------------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>🧠 AI-Powered Server Discovery</h3>
    <p>Let AI find the right servers for your needs.</p>
 
 .. code-block:: python
+
+    # Code example here
 
    # Agent with built-in discovery tools
    agent = IntelligentMCPAgent(
@@ -285,27 +227,23 @@ Quick Start
 
    The IntelligentMCPAgent includes these tools:
 
-   - **discover_mcp_servers(capability)** - Find servers by capability
-   - **install_mcp_server(server_name)** - Install with optional approval
-   - **list_mcp_status()** - Get current server and tool status
-   - **reload_mcp_server(server_name)** - Hot-reload specific server
-
-   .. raw:: html
+   - **discover_mcp_servers(capability)* - Find servers by capability
+   - **install_mcp_server(server_name)* - Install with optional approval
+   - **list_mcp_status()* - Get current server and tool status
+   - **reload_mcp_server(server_name)* - Hot-reload specific server
 
    </div>
 
    HITL Approval Workflows
    -----------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="custom-section">
    <h3>🔒 Human-in-the-Loop Control</h3>
    <p>Maintain security and control over server installations.</p>
 
 .. code-block:: python
+
+    # Code example here
 
    # Custom approval logic
    async def security_approval(request):
@@ -352,6 +290,8 @@ Quick Start
 
 .. code-block:: python
 
+    # Code example here
+
    # Production approval with Slack integration
    async def enterprise_approval(request):
    """Enterprise approval system with Slack notifications."""
@@ -383,22 +323,18 @@ Quick Start
    }
    # Send to Slack webhook...
 
-   .. raw:: html
-
    </div>
 
    Multi-Agent Tool Sharing
    -------------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>🤝 Agent Collaboration</h3>
    <p>Share tools and capabilities between agents.</p>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.mcp.agents import TransferableMCPAgent
 
@@ -444,6 +380,8 @@ Quick Start
    ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
    class ResearchWorkflow:
    """Multi-agent research workflow with tool sharing."""
@@ -507,16 +445,10 @@ Quick Start
 
    return final_report
 
-   .. raw:: html
-
    </div>
 
    Common Use Cases
    ----------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="showcase-tabs">
    <button class="showcase-tab active">Research Assistant</button>
@@ -525,15 +457,13 @@ Quick Start
    <button class="showcase-tab">Content Creation</button>
    </div>
 
-   .. raw:: html
-
    <div class="showcase-content active">
    <h3>🔍 Research Assistant</h3>
    <p>Automatically install search and file tools for research tasks.</p>
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Research agent with auto-discovery
       research_agent = IntelligentMCPAgent(
@@ -551,8 +481,8 @@ Quick Start
               "content": """
               Research quantum computing developments in 2024.
               Search multiple sources and create a comprehensive report.
-              Save the report as quantum_computing_2024.md
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Save the report as quantum_computing_2024.md
+""""""""""""""""""""""""""""""""""""""""""""
           }]
       })
 
@@ -561,11 +491,7 @@ Quick Start
       # Auto-installs: brave-search, filesystem, possibly arxiv
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       <div class="showcase-content">
       <h3>📊 Data Analyst</h3>
@@ -573,7 +499,7 @@ Quick Start
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Data analysis agent
       analyst_agent = IntelligentMCPAgent(
@@ -589,8 +515,8 @@ Quick Start
               "content": """
               Connect to PostgreSQL and analyze sales data.
               Create visualizations and export to Excel.
-              Send summary report via email.
-""""""""""""""""""""""""""""""""""""""""""""
+Send summary report via email.
+""""""""""""""""""""""""""""""
           }]
       })
 
@@ -599,11 +525,7 @@ Quick Start
       # Auto-installs: postgres, excel, matplotlib, email servers
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       <div class="showcase-content">
       <h3>🛠️ DevOps Automation</h3>
@@ -611,7 +533,7 @@ Quick Start
 
 .. code-block:: python
 
-
+    # Code example here
 
       # DevOps agent
       devops_agent = IntelligentMCPAgent(
@@ -628,8 +550,8 @@ Quick Start
               Check GitHub repository status.
               Run tests in Docker containers.
               Deploy to Kubernetes if tests pass.
-              Update deployment status in Slack.
-""""""""""""""""""""""""""""""""""""""""""""""""
+Update deployment status in Slack.
+""""""""""""""""""""""""""""""""""
           }]
       })
 
@@ -638,11 +560,7 @@ Quick Start
       # Auto-installs: github, docker, kubernetes, slack servers
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       <div class="showcase-content">
       <h3>📝 Content Creation</h3>
@@ -650,7 +568,7 @@ Quick Start
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Content creation agent
       content_agent = IntelligentMCPAgent(
@@ -667,8 +585,8 @@ Quick Start
               Research latest Python features.
               Write a blog post with code examples.
               Create social media posts.
-              Schedule publication on WordPress.
-""""""""""""""""""""""""""""""""""""""""""""""""
+Schedule publication on WordPress.
+""""""""""""""""""""""""""""""""""
           }]
       })
 
@@ -677,22 +595,18 @@ Quick Start
       # Auto-installs: brave-search, github, wordpress, social-media servers
 
 
-      .. raw:: html
-
       </div>
 
       Performance and Monitoring
       --------------------------
-
-      .. raw:: html
-
-      .. raw:: html
 
       <div class="custom-section">
       <h3>📊 Health Monitoring</h3>
       <p>Monitor server health and performance metrics.</p>
 
 .. code-block:: python
+
+    # Code example here
 
    # Get comprehensive status
    manager = MCPManager(auto_health_check=True)
@@ -721,6 +635,8 @@ Quick Start
    ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
    import logging
    from haive.mcp.manager import MCPManager
@@ -754,16 +670,10 @@ Quick Start
 
    await asyncio.sleep(60)
 
-   .. raw:: html
-
    </div>
 
    Best Practices
    --------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="best-practices">
    <h3>🚀 Development Best Practices</h3>
@@ -776,8 +686,6 @@ Quick Start
    <li><strong>Handle errors gracefully</strong> with retry logic</li>
    </ul>
    </div>
-
-   .. raw:: html
 
    <div class="warning-section">
    <h3>⚠️ Security Considerations</h3>
@@ -794,6 +702,8 @@ Quick Start
    ~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
    # Production configuration
    from haive.mcp.config import MCPConfig, MCPServerConfig
@@ -836,6 +746,8 @@ Quick Start
 
 .. code-block:: python
 
+    # Code example here
+
    # Hybrid approach: Static base + dynamic additions
    base_config = MCPConfig(
 
@@ -861,11 +773,11 @@ Quick Start
    Next Steps
    ----------
 
-   - **Explore**: Try the auto-discovery features
-   - **Experiment**: Create custom approval workflows
-   - **Scale**: Move to production with static configs
-   - **Monitor**: Implement health monitoring
-   - **Contribute**: Add more servers to the database
+   - **Explore*: Try the auto-discovery features
+   - **Experiment*: Create custom approval workflows
+   - **Scale*: Move to production with static configs
+   - **Monitor*: Implement health monitoring
+   - **Contribute*: Add more servers to the database
 
    .. toctree::
 

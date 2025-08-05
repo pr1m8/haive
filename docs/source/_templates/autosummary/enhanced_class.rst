@@ -2,7 +2,7 @@
 
 .. currentmodule:: {{ module }}
 
-{% if objname is match('.*Config$') or objname is match('.*Schema$') or objname is match('.*Model$') %}*
+{% if objname is match('.*Config$') or objname is match('.Schema$') or objname is match('.*Model$') %}*
 {# Pydantic model template #}
 .. autopydantic_model:: {{ objname }}
 
@@ -97,6 +97,8 @@
 
 .. code-block:: python
 
+    # Code example here
+
       :caption: Basic usage
 
       from {{ module }} import {{ objname }}
@@ -109,7 +111,7 @@
       print(result)
 
 
-      For more examples, see the :doc:`agent examples </agents/demos/index>`.
+      For more examples, see the :doc:`agent examples </agents/demos/index>.`
       {% else %}
       The Examples section from the class docstring will be displayed here automatically if present.
       {% endif %}

@@ -3,37 +3,23 @@ ReactWithMemoryAgent Demo
 
 ReactWithMemoryAgent - Reasoning and Acting agents that think before they act
 
-.. raw:: html
-
    <div class="agent-demo-container">
    <!-- Agent Overview Card -->
 
-.. raw:: html
-
    <div class="agent-overview-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-icon">🧠</div>
-
-.. raw:: html
 
    <div>
    <h2>ReactWithMemoryAgent</h2>
    <p class="agent-type">react</p>
    </div>
 
-.. raw:: html
-
    </div>
 
 
-
-.. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">Interactive</span>
@@ -42,78 +28,48 @@ ReactWithMemoryAgent - Reasoning and Acting agents that think before they act
    <span class="feature-tag">Async</span>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <!-- Graph Visualization -->
 
            <div id="reactwithmemory-graph"
                 class="agent-graph-container"
                 data-agent-graph='{"nodes": [{"id": "start", "type": "start", "label": "START"}, {"id": "end", "type": "end", "label": "END"}, {"id": "reason", "type": "agent", "label": "Reasoning", "description": "Analyze the problem"}, {"id": "act", "type": "tool", "label": "Action", "description": "Execute tools"}, {"id": "observe", "type": "validation", "label": "Observe", "description": "Process results"}], "edges": [{"source": "start", "target": "reason"}, {"source": "reason", "target": "act", "type": "conditional"}, {"source": "act", "target": "observe"}, {"source": "observe", "target": "reason"}, {"source": "reason", "target": "end"}], "executionTrace": [{"step": 1, "node": "start", "status": "completed", "duration": 0.1, "output": "Initialized"}, {"step": 2, "node": "reason", "status": "completed", "duration": 1.2, "output": "Processing..."}, {"step": 3, "node": "end", "status": "completed", "duration": 0.1, "output": "Finished"}]}'>
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <!-- State History Timeline -->
 
            <div id="reactwithmemory-state-history"
                 class="state-history-container"
                 data-state-history='[{"timestamp": "2025-01-08T10:00:00Z", "step": 1, "state": {"current_task": "Analyze problem", "thoughts": ["Need to understand the user's request"], "action_needed": true}, "diff": {"added": ["current_task"], "changed": [], "removed": []}}, {"timestamp": "2025-01-08T10:00:01Z", "step": 2, "state": {"current_task": "Execute tool", "thoughts": ["Need to search for information", "Using web search tool"], "action_needed": false, "tool_results": "Found relevant information"}, "diff": {"added": ["tool_results"], "changed": ["current_task", "action_needed"], "removed": []}}]'>
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <!-- Execution Trace -->
 
            <div id="reactwithmemory-execution-trace"
                 class="execution-trace-container"
                 data-execution-trace='[{"step": 1, "operation": "Initialize", "duration": 0.1, "status": "success"}, {"step": 2, "operation": "Process", "duration": 1.5, "status": "success"}, {"step": 3, "operation": "Finalize", "duration": 0.2, "status": "success"}]'>
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <!-- Interactive Example -->
 
-.. raw:: html
-
    <div class="interactive-example">
    <h3>Try it Live</h3>
-
-.. raw:: html
 
    <div class="example-input">
    <label>Input:</label>
    <textarea id="reactwithmemory-input" placeholder="Example task for ReactWithMemoryAgent"></textarea>
    </div>
 
-.. raw:: html
-
    <button onclick="runAgent('reactwithmemory')" class="run-button">
 
                 Run ReactWithMemoryAgent
-.. raw:: html
-
    </button>
-
-.. raw:: html
 
    <div id="reactwithmemory-output" class="example-output"></div>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <script>
 
@@ -131,14 +87,14 @@ ReactWithMemoryAgent - Reasoning and Acting agents that think before they act
         const traceData = JSON.parse(document.getElementById('reactwithmemory-execution-trace').dataset.executionTrace);
         new ExecutionTraceVisualizer('reactwithmemory-execution-trace', traceData);
     });
-.. raw:: html
-
    </script>
 
 Code Example
 ------------
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.react import ReactWithMemoryAgent
 
@@ -154,13 +110,14 @@ Code Example
     print(result)
 
     Architecture Details
-    --------------------
+
+--------------------
 
     The ReactWithMemoryAgent implements reasoning and acting agents that think before they act.
 
     See Also
     --------
 
-    - :doc:`/api/haive/agents/react` - Full API documentation
-    - :doc:`/guides/react-guide` - Usage guide
-    - :doc:`/examples/react-examples` - More examples
+    - :doc:`/api/haive/agents/react - Full API documentation`
+    - :doc:`/guides/react-guide - Usage guide`
+    - :doc:`/examples/react-examples - More examples`

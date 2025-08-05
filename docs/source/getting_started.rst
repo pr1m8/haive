@@ -2,15 +2,9 @@
 
 #################
 Getting Started
-#################
-
-.. raw:: html
-
-   .. raw:: html
+###############
 
    <div class="hero-section">
-
-.. raw:: html
 
    <div class="hero-content">
    <h2>Build Your First AI Agent in 5 Minutes</h2>
@@ -18,71 +12,43 @@ Getting Started
    From installation to your first intelligent agent - we'll guide you every step of the way.
    </p>
 
-.. raw:: html
-
    <div class="quick-stats">
-
-.. raw:: html
 
    <div class="stat">
 
-.. raw:: html
-
    <div class="stat-icon">⏱️</div>
-
-.. raw:: html
 
    <div class="stat-text">
    <strong>5 min</strong>
    <span>to first agent</span>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="stat">
 
-.. raw:: html
-
    <div class="stat-icon">📝</div>
-
-.. raw:: html
 
    <div class="stat-text">
    <strong>10 lines</strong>
    <span>of code</span>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <div class="stat">
 
-.. raw:: html
-
    <div class="stat-icon">🔧</div>
-
-.. raw:: html
 
    <div class="stat-text">
    <strong>Zero</strong>
    <span>configuration</span>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
    </div>
    </div>
-
-.. raw:: html
 
    <style>
 
@@ -130,30 +96,28 @@ Getting Started
         opacity: 0.9;
         font-size: 0.9rem;
      }
-.. raw:: html
-
    </style>
 
 ****************
 📦 Installation
-****************
+**************
 
 Choose Your Installation Method
 ===============================
 
-**🎯 Basic Install** (Recommended) Get started with core functionality:
+**🎯 Basic Install* (Recommended) Get started with core functionality:
 
 .. code-block:: bash
 
    pip install haive-core haive-agents
 
-**🎨 Full Install** (All Features) Includes tools, games, and extras:
+**🎨 Full Install* (All Features) Includes tools, games, and extras:
 
 .. code-block:: bash
 
    pip install haive-core haive-agents haive-tools haive-games
 
-**🛠️ Development Install** (Contributors) For contributing to Haive:
+**🛠️ Development Install* (Contributors) For contributing to Haive:
 
 .. code-block:: bash
 
@@ -164,14 +128,14 @@ Choose Your Installation Method
 System Requirements
 ===================
 
--  🐍 **Python 3.9+**
--  📦 **pip or poetry**
--  🔑 **API keys** (optional)
--  💾 **2GB free space**
+-  🐍 **Python 3.9+*
+-  📦 **pip or poetry*
+-  🔑 **API keys* (optional)
+-  💾 **2GB free space*
 
 *********************
 🎯 Quick Start Guide
-*********************
+*******************
 
 1. Create Your First Agent
 ==========================
@@ -179,6 +143,8 @@ System Requirements
 Start with a simple conversational agent:
 
 .. code-block:: python
+
+    # Code example here
 
    # first_agent.py
    from haive.agents.simple import SimpleAgent
@@ -252,31 +218,31 @@ Expected Output:
 
 Now that you have your first agent running, explore:
 
--  **Multi-Agent Systems**: :doc:`guides/multi_agents`
--  **RAG Agents**: :doc:`guides/rag_agents`
--  **Tool Integration**: :doc:`guides/tools`
--  **Game Environments**: :doc:`games/index`
+-  **Multi-Agent Systems*: :doc:`guides/multi_agents`
+-  **RAG Agents*: :doc:`guides/rag_agents`
+-  **Tool Integration*: :doc:`guides/tools`
+-  **Game Environments*: :doc:`games/index`
 
 ****************
 🔗 Useful Links
-****************
+**************
 
--  **API Reference**: :doc:`api/index`
--  **Examples Gallery**: :doc:`examples/index`
--  **Agent Showcase**: :doc:`agents/index`
--  **Tools Catalog**: :doc:`tools/index`
+-  **API Reference*: :doc:`api/index`
+-  **Examples Gallery*: :doc:`examples/index`
+-  **Agent Showcase*: :doc:`agents/index`
+-  **Tools Catalog*: :doc:`tools/index`
 
 ************
 Need Help?
-************
+**********
 
--  Check our :doc:`guides/index` for detailed tutorials
--  Browse :doc:`examples/index` for working code samples
--  Review the :doc:`api/index` for complete API documentation
+-  Check our :doc:`guides/index for detailed tutorials`
+-  Browse :doc:`examples/index for working code samples`
+-  Review the :doc:`api/index for complete API documentation`
 
 .. note::
 
-   🔑 **API Key Setup**: Most examples require an OpenAI API key. Set it
+   🔑 **API Key Setup*: Most examples require an OpenAI API key. Set it
    with:
 
    .. code-block:: bash

@@ -22,24 +22,24 @@ Example Runner Features
 
 The Universal Example Runner provides:
 
-* **Automatic Discovery**: Finds all example files across packages
-* **Streaming Output**: Real-time output display during execution
-* **Visualization Generation**: Creates agent workflow diagrams
-* **Error Handling**: Graceful handling of failed examples
-* **Concurrent Execution**: Run multiple examples in parallel
-* **Comprehensive Reports**: Detailed execution summaries
+* *Automatic Discovery**: Finds all example files across packages
+* *Streaming Output**: Real-time output display during execution
+* *Visualization Generation**: Creates agent workflow diagrams
+* *Error Handling**: Graceful handling of failed examples
+* *Concurrent Execution**: Run multiple examples in parallel
+* *Comprehensive Reports**: Detailed execution summaries
 
 Architecture Support
 --------------------
 
 The runner supports all Haive agent architectures:
 
-* **Simple Agents**: Basic conversational agents
-* **ReAct Agents**: Reasoning and acting agents with tools
-* **RAG Agents**: Retrieval-augmented generation agents
-* **Planning Agents**: Multi-step planning agents
-* **Game Agents**: Game-playing AI agents
-* **Multi-Agent Systems**: Coordinated agent workflows
+* *Simple Agents**: Basic conversational agents
+* *ReAct Agents**: Reasoning and acting agents with tools
+* *RAG Agents**: Retrieval-augmented generation agents
+* *Planning Agents**: Multi-step planning agents
+* *Game Agents**: Game-playing AI agents
+* *Multi-Agent Systems**: Coordinated agent workflows
 
 Usage Examples
 --------------
@@ -136,42 +136,42 @@ The runner creates organized output:
 
     Supported visualizations:
 
-    * **Simple Agent Workflows**: Basic linear flows
-    * **ReAct Agent Graphs**: Complex reasoning loops
-    * **Multi-Agent Systems**: Agent interaction patterns
-    * **Tool Integration**: Tool usage patterns
+    * *Simple Agent Workflows**: Basic linear flows
+    * *ReAct Agent Graphs**: Complex reasoning loops
+    * *Multi-Agent Systems**: Agent interaction patterns
+    * *Tool Integration**: Tool usage patterns
 
     Error Handling
     --------------
 
     The runner gracefully handles:
 
-    * **Import Errors**: Reports missing dependencies
-    * **Execution Timeouts**: Prevents hanging examples
-    * **Large Outputs**: Saves oversized outputs to files
-    * **Visualization Failures**: Continues without breaking
-    * **Concurrent Failures**: Isolates failed examples
+    * *Import Errors**: Reports missing dependencies
+    * *Execution Timeouts**: Prevents hanging examples
+    * *Large Outputs**: Saves oversized outputs to files
+    * *Visualization Failures**: Continues without breaking
+    * *Concurrent Failures**: Isolates failed examples
 
     Reporting
     ---------
 
     The execution report includes:
 
-    * **Success/Failure Counts**: Overall statistics
-    * **Execution Times**: Performance metrics
-    * **Architecture Breakdown**: Agent type distribution
-    * **Error Details**: Specific failure information
-    * **Generated Files**: List of created visualizations
+    * *Success/Failure Counts**: Overall statistics
+    * *Execution Times**: Performance metrics
+    * *Architecture Breakdown**: Agent type distribution
+    * *Error Details**: Specific failure information
+    * *Generated Files**: List of created visualizations
 
     Integration with Build System
     ------------------------------
 
     The example runner integrates with:
 
-    * **Nox Sessions**: Run via ``nox -s examples``
-    * **CI/CD Pipelines**: Automated example testing
-    * **Documentation Builds**: Gallery generation
-    * **Development Workflow**: Quick testing of changes
+    * *Nox Sessions**: Run via ``nox -s examples``
+    * *CI/CD Pipelines**: Automated example testing
+    * *Documentation Builds**: Gallery generation
+    * *Development Workflow**: Quick testing of changes
 
     Nox Integration
     ~~~~~~~~~~~~~~~
@@ -191,6 +191,8 @@ The runner creates organized output:
 
 .. code-block:: python
 
+    # Code example here
+
     from scripts.doc_utils.example_runner import UniversalExampleRunner, ExecutionConfig
 
     async def run_my_examples():
@@ -204,11 +206,15 @@ The runner creates organized output:
         )
 
         # Discover specific examples
-        examples = await runner.discover_all_examples()
+    async def example():
+            examples = await runner.discover_all_examples()
+
         my_examples = [e for e in examples if "my_agent" in str(e)]
 
         # Run with custom settings
-        results = await runner.run_multiple_examples(
+    async def example():
+            results = await runner.run_multiple_examples(
+
             my_examples, config, max_concurrent=2
         )
 
@@ -217,21 +223,22 @@ The runner creates organized output:
         print(report)
 
     Troubleshooting
-    ---------------
+
+---------------
 
     Common Issues
     ~~~~~~~~~~~~~
 
-    **Import Errors**
+    **Import Errors*
     Ensure all dependencies are installed: ``poetry install --all-extras``
 
-    **Timeout Issues**
+    **Timeout Issues*
     Increase timeout: ``--timeout 900`` (15 minutes)
 
-    **Memory Issues**
+    **Memory Issues*
     Reduce concurrency: ``--concurrent 1``
 
-    **Missing Visualizations**
+    **Missing Visualizations*
     Check that agents support the ``visualize_graph()`` method
 
     Debug Mode
@@ -248,16 +255,16 @@ The runner creates organized output:
 
     * Use ``--viz-only`` for quick visualization generation*
     * Adjust ``--concurrent`` based on your system capabilities*
-    * Set appropriate ``--timeout`` values for complex examples*
+    * Set appropriate ``--timeout`` values for complex examples*`
     * Use the docs runner for CI/CD to run only essential examples*
 
     Best Practices
     --------------
 
-    1. **Run regularly** during development to catch regressions
-    2. **Review reports** to understand example health
-    3. **Update examples** when agent APIs change
-    4. **Use visualizations** to document agent workflows
-    5. **Integrate with CI/CD** for automated testing
+    1. **Run regularly* during development to catch regressions
+    2. **Review reports* to understand example health
+    3. **Update examples* when agent APIs change
+    4. **Use visualizations* to document agent workflows
+    5. **Integrate with CI/CD* for automated testing
 
     The Universal Example Runner makes it easy to maintain and showcase the rich ecosystem of Haive agent examples across all packages.

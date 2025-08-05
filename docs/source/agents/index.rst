@@ -2,9 +2,9 @@
 .. _agents:
 
 🤖 Haive Agent Showcase
-========================
+======================
 
-**Comprehensive collection of 80+ intelligent AI agents for every use case**
+**Comprehensive collection of 80+ intelligent AI agents for every use case*
 
 .. grid:: 1 2 4 4
 
@@ -14,20 +14,12 @@
    .. grid-item::
 
 
-      .. raw:: html
-
-   .. raw:: html
-
    <div class="metric-card">
    <span class="value">80+</span>
    <span class="label">Agent Types</span>
    </div>
 
    .. grid-item::
-
-   .. raw:: html
-
-.. raw:: html
 
    <div class="metric-card">
    <span class="value">8</span>
@@ -37,20 +29,12 @@
    .. grid-item::
 
 
-      .. raw:: html
-
-   .. raw:: html
-
    <div class="metric-card">
    <span class="value">20+</span>
    <span class="label">RAG Variants</span>
    </div>
 
    .. grid-item::
-
-   .. raw:: html
-
-.. raw:: html
 
    <div class="metric-card">
    <span class="value">100%</span>
@@ -61,7 +45,7 @@ Agent Categories
 ----------------
 
 🤖 All Agents
-==============
+============
 
 .. grid:: 1 2 3 3
 
@@ -72,7 +56,7 @@ Agent Categories
       :link: ../api/haive/agents/simple/index
       :shadow: lg
 
-      **Basic Conversational Agent**
+      **Basic Conversational Agent*
 
       General-purpose conversational agent for straightforward interactions and basic task completion. Perfect starting point for custom agents.
 
@@ -83,10 +67,6 @@ Agent Categories
       ✓ Memory integration
       ✓ Customizable prompts
 
-      .. raw:: html
-
-   .. raw:: html
-
    <div style="margin-top: 10px;">
    <a href="demos/simple-demo.html" class="btn btn-sm btn-primary">Try Demo</a>
    </div>
@@ -95,7 +75,7 @@ Agent Categories
    :link: ../api/haive/agents/react/index
    :shadow: lg
 
-   **Reasoning & Acting Agent**
+   **Reasoning & Acting Agent*
 
    Advanced reasoning agent that can use tools to solve complex problems through iterative thought and action cycles.
 
@@ -106,10 +86,6 @@ Agent Categories
    ✓ Self-reflection capabilities
    ✓ Error recovery
 
-   .. raw:: html
-
-.. raw:: html
-
    <div style="margin-top: 10px;">
    <a href="demos/react-demo.html" class="btn btn-sm btn-primary">Try Demo</a>
    </div>
@@ -119,7 +95,7 @@ Agent Categories
       :link: ../api/haive/agents/rag/index
       :shadow: lg
 
-      **Retrieval-Augmented Generation**
+      **Retrieval-Augmented Generation*
 
       Knowledge-grounded agents that combine retrieval systems with generation for accurate, up-to-date responses.
 
@@ -135,7 +111,7 @@ Agent Categories
       :link: ../api/src/haive/agents/research/index
       :shadow: lg
 
-      **Advanced Research & Analysis**
+      **Advanced Research & Analysis*
 
       Specialized agents for comprehensive research, information gathering, and multi-source analysis.
 
@@ -151,7 +127,7 @@ Agent Categories
       :link: ../api/src/haive/agents/conversation/index
       :shadow: lg
 
-      **Multi-Party Dialogue**
+      **Multi-Party Dialogue*
 
       Sophisticated dialogue management for multi-party conversations, debates, and collaborative discussions.
 
@@ -167,7 +143,7 @@ Agent Categories
       :link: ../api/src/haive/agents/planning/index
       :shadow: lg
 
-      **Task Planning & Execution**
+      **Task Planning & Execution*
 
       Advanced planning agents for task decomposition, workflow orchestration, and multi-step execution.
 
@@ -183,7 +159,7 @@ Agent Categories
       :link: ../api/src/haive/agents/multi/index
       :shadow: lg
 
-      **Coordinated Agent Systems**
+      **Coordinated Agent Systems*
 
       Sophisticated multi-agent systems for complex problem-solving through coordinated collaboration.
 
@@ -199,7 +175,7 @@ Agent Categories
       :link: ../api/src/haive/agents/research/perplexity/index
       :shadow: lg
 
-      **Perplexity-Style Search**
+      **Perplexity-Style Search*
 
       Advanced search agents including QuickSearch, ProSearch, DeepResearch, and Labs automation capabilities.
 
@@ -218,66 +194,64 @@ Agent Catalog by Category
    .. tab-item:: 💬 Simple Agents
 
 
-      **Basic agents for straightforward tasks and conversations.**
+      **Basic agents for straightforward tasks and conversations.*
 
-      - **SimpleAgent** - General purpose conversational agent
-      - **SimpleAnalysisAgent** - Basic data analysis capabilities
-      - **StructuredOutputAgent** - Agents with typed outputs
-      - **AsyncAgent** - Asynchronous agent base class
+      - **SimpleAgent* - General purpose conversational agent
+      - **SimpleAnalysisAgent* - Basic data analysis capabilities
+      - **StructuredOutputAgent* - Agents with typed outputs
+      - **AsyncAgent* - Asynchronous agent base class
 
    .. tab-item:: 🧠 ReAct Agents
 
 
-      **Reasoning and action agents that use tools to solve problems.**
+      **Reasoning and action agents that use tools to solve problems.*
 
-      - **ReactAgent** - Standard ReAct implementation
-      - **ReactResearchAgent** - Research-focused ReAct
-      - **ReactWithMemory** - ReAct with persistent memory
-      - **DynamicReactAgent** - Dynamic tool selection
+      - **ReactAgent* - Standard ReAct implementation
+      - **ReactResearchAgent* - Research-focused ReAct
+      - **ReactWithMemory* - ReAct with persistent memory
+      - **DynamicReactAgent* - Dynamic tool selection
 
    .. tab-item:: 📚 RAG Agents
 
 
-      **Retrieval-Augmented Generation agents for knowledge-grounded responses.**
+      **Retrieval-Augmented Generation agents for knowledge-grounded responses.*
 
-      - **BaseRAGAgent** - Standard RAG implementation
-      - **AdaptiveRAGAgent** - Dynamic retrieval strategies
-      - **SelfRAGAgent** - Self-reflective RAG
-      - **MultiStrategyRAG** - Multiple retrieval approaches
-      - **HyDEAgent** - Hypothetical Document Embeddings
+      - **BaseRAGAgent* - Standard RAG implementation
+      - **AdaptiveRAGAgent* - Dynamic retrieval strategies
+      - **SelfRAGAgent* - Self-reflective RAG
+      - **MultiStrategyRAG* - Multiple retrieval approaches
+      - **HyDEAgent* - Hypothetical Document Embeddings
 
    .. tab-item:: 🌐 Multi-Agent
 
 
-      **Coordinated systems of multiple agents working together.**
+      **Coordinated systems of multiple agents working together.*
 
-      - **SupervisorAgent** - Hierarchical coordination
-      - **SequentialAgent** - Sequential execution
-      - **ParallelAgent** - Parallel processing
-      - **DynamicMultiAgent** - Dynamic agent activation
+      - **SupervisorAgent* - Hierarchical coordination
+      - **SequentialAgent* - Sequential execution
+      - **ParallelAgent* - Parallel processing
+      - **DynamicMultiAgent* - Dynamic agent activation
 
    .. tab-item:: 🎯 Specialized
 
 
-      **Agents designed for specific use cases and domains.**
+      **Agents designed for specific use cases and domains.*
 
-      - **ResearchAgent** - Academic research assistant
-      - **DebateAgent** - Multi-perspective debates
-      - **PlanAndExecuteAgent** - Strategic planning
-      - **ReflectionAgent** - Self-improving agents
-      - **TreeOfThoughtsAgent** - Complex reasoning
+      - **ResearchAgent* - Academic research assistant
+      - **DebateAgent* - Multi-perspective debates
+      - **PlanAndExecuteAgent* - Strategic planning
+      - **ReflectionAgent* - Self-improving agents
+      - **TreeOfThoughtsAgent* - Complex reasoning
 
 Quick Start
 -----------
-
-.. raw:: html
-
-   .. raw:: html
 
    <div class="code-example-section">
    <h4>🚀 Get Started in 30 Seconds</h4>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.agents.simple import SimpleAgent
    from haive.agents.react import ReactAgent
@@ -312,20 +286,12 @@ Quick Start
    "Find the population of Tokyo and calculate its density"
    )
 
-   .. raw:: html
-
    </div>
 
    Agent Patterns
    --------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="api-grid">
-
-   .. raw:: html
 
    <div class="api-section">
    <h4>🎯 Single Agent Patterns</h4>
@@ -337,8 +303,6 @@ Quick Start
    </ul>
    </div>
 
-   .. raw:: html
-
    <div class="api-section">
    <h4>🔄 Multi-Agent Patterns</h4>
    <ul>
@@ -348,8 +312,6 @@ Quick Start
    <li><strong>Collaborative</strong> - Peer-to-peer</li>
    </ul>
    </div>
-
-   .. raw:: html
 
    <div class="api-section">
    <h4>🧩 Composition Patterns</h4>
@@ -361,22 +323,18 @@ Quick Start
    </ul>
    </div>
 
-   .. raw:: html
-
    </div>
 
    Building Custom Agents
    ----------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>🛠️ Create Your Own Agent</h3>
    <p>Build custom agents by extending our base classes.</p>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.agents.base import Agent
    from haive.core.schema.prebuilt.messages_state import MessagesState
@@ -400,7 +358,7 @@ Quick Start
    self,
    input_data: Dict[str, Any],
    config: Optional[Dict[str, Any]] = None,
-   **kwargs**
+   **kwargs*
    ) -> Dict[str, Any]:
    """Execute agent logic."""
    # Get messages from input
@@ -435,20 +393,12 @@ Quick Start
    )
    result = await agent.arun({"messages": [...]})
 
-   .. raw:: html
-
    </div>
 
    Agent Configuration
    -------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>⚙️ Configuration Options</h2>
@@ -456,6 +406,8 @@ Quick Start
    </div>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.core.engine.aug_llm import AugLLMConfig
    from haive.agents.simple import SimpleAgent
@@ -498,16 +450,10 @@ Quick Start
 
    )
 
-   .. raw:: html
-
    </div>
 
    Performance Benchmarks
    ----------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="performance-section">
    <h3>⚡ Agent Performance Metrics</h3>
@@ -557,14 +503,12 @@ Quick Start
    Debugging & Testing
    -------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="custom-section">
    <h3>🐛 Debug and Test Your Agents</h3>
 
 .. code-block:: python
+
+    # Code example here
 
    import logging
    from haive.agents.simple import SimpleAgent
@@ -605,60 +549,36 @@ Quick Start
    avg_time = (time.time() - start) / 10
    print(f"Average response time: {avg_time:.2f}s")
 
-   .. raw:: html
-
    </div>
 
    Related Components
    ------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>🌐 Extend Your Agents</h2>
    <p>Enhance agent capabilities with tools, games, and external integrations</p>
    </div>
 
-   .. raw:: html
-
    <div class="agent-showcase">
-
-   .. raw:: html
 
    <div class="agent-card">
 
-   .. raw:: html
-
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">🔧</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Agent Tools</h3>
    <p class="agent-subtitle">Powerful capabilities</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Give your agents powerful tools for web search, code execution, data processing, and API integration.
-   .. raw:: html
-
    </p>
-
-   .. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">WebSearch</span>
@@ -667,41 +587,25 @@ Quick Start
    <span class="feature-tag">APIs</span>
    </div>
 
-   .. raw:: html
-
    <a href="../tools/index.html" class="agent-link">Browse Tools</a>
    </div>
 
-   .. raw:: html
-
    <div class="agent-card">
-
-   .. raw:: html
 
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">🎮</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Test in Games</h3>
    <p class="agent-subtitle">Strategic environments</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Test and train your agents in strategic game environments with intelligent opponents.
-   .. raw:: html
-
    </p>
-
-   .. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">Chess</span>
@@ -710,41 +614,25 @@ Quick Start
    <span class="feature-tag">Board Games</span>
    </div>
 
-   .. raw:: html
-
    <a href="../games/index.html" class="agent-link">View Games</a>
    </div>
 
-   .. raw:: html
-
    <div class="agent-card">
-
-   .. raw:: html
 
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">📡</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">MCP Connections</h3>
    <p class="agent-subtitle">External systems</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Connect agents to databases, filesystems, GitHub, and external APIs through Model Context Protocol.
-   .. raw:: html
-
    </p>
-
-   .. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">PostgreSQL</span>
@@ -753,41 +641,25 @@ Quick Start
    <span class="feature-tag">Docker</span>
    </div>
 
-   .. raw:: html
-
    <a href="../mcp/index.html" class="agent-link">Setup MCP</a>
    </div>
 
-   .. raw:: html
-
    <div class="agent-card">
-
-   .. raw:: html
 
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">📖</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Complete API</h3>
    <p class="agent-subtitle">Full documentation</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Explore the complete API reference with detailed documentation for all agent classes and methods.
-   .. raw:: html
-
    </p>
-
-   .. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">Core API</span>
@@ -795,8 +667,6 @@ Quick Start
    <span class="feature-tag">Guides</span>
    <span class="feature-tag">Reference</span>
    </div>
-
-   .. raw:: html
 
    <a href="../api/index.html" class="agent-link">API Docs</a>
    </div>
@@ -806,20 +676,12 @@ Quick Start
    Interactive Demos
    -----------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>🎮 Try Agent Demos</h2>
    <p>Interactive demonstrations with live graph visualization</p>
    </div>
-
-   .. raw:: html
 
    <div class="agent-showcase">
    <a href="demos/index.html" class="demo-button">
@@ -827,8 +689,6 @@ Quick Start
    <span class="demo-text">Launch Interactive Demos</span>
    </a>
    </div>
-
-   .. raw:: html
 
    </div>
 
@@ -849,13 +709,13 @@ Quick Start
    Quick Links
    ^^^^^^^^^^^
 
-   - :doc:`Agent Gallery <gallery>` - Visual showcase of all agents
-   - :doc:`API Reference <../api/agents/index>` - Complete API documentation
-   - :doc:`Building Agents Guide <../guides/building_agents>` - Step-by-step guide
-   - :doc:`Agent Patterns <../guides/agent_patterns>` - Common design patterns
+   - :doc:`Agent Gallery <gallery> - Visual showcase of all agents`
+   - :doc:`API Reference <../api/agents/index> - Complete API documentation`
+   - :doc:`Building Agents Guide <../guides/building_agents> - Step-by-step guide`
+   - :doc:`Agent Patterns <../guides/agent_patterns> - Common design patterns`
 
    .. seealso::
 
-   - :doc:`../tools/index` - Tools that agents can use
-   - :doc:`../guides/multi_agent_systems` - Building multi-agent systems
-   - :doc:`../examples/index` - Example implementations
+   - :doc:`../tools/index - Tools that agents can use`
+   - :doc:`../guides/multi_agent_systems - Building multi-agent systems`
+   - :doc:`../examples/index - Example implementations`

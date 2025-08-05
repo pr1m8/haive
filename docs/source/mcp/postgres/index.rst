@@ -2,15 +2,9 @@
 .. _postgres-mcp:
 
 🔀 PostgreSQL MCP Server
-=========================
-
-.. raw:: html
-
-   .. raw:: html
+=======================
 
    <div class="agent-hero-section">
-
-.. raw:: html
 
    <div class="hero-content">
    <h2>🔀 Database Operations via MCP</h2>
@@ -20,8 +14,6 @@
    </p>
    </div>
 
-.. raw:: html
-
    </div>
 
 Overview
@@ -29,29 +21,19 @@ Overview
 
 The PostgreSQL MCP (Model Context Protocol) server provides:
 
-- **Direct SQL Execution**: Run queries and commands
-- **Schema Exploration**: Browse tables, columns, and relationships
-- **Performance Analysis**: Query optimization and analysis
-- **Safe Operations**: Read-only mode and transaction support
-- **Multi-Database**: Connect to multiple databases
-
-.. raw:: html
-
-   .. raw:: html
+- **Direct SQL Execution*: Run queries and commands
+- **Schema Exploration*: Browse tables, columns, and relationships
+- **Performance Analysis*: Query optimization and analysis
+- **Safe Operations*: Read-only mode and transaction support
+- **Multi-Database*: Connect to multiple databases
 
    <div class="showcase-section">
-
-.. raw:: html
 
    <div class="showcase-header">
    <h2>✨ Key Features</h2>
    </div>
 
-.. raw:: html
-
    <div class="api-grid">
-
-.. raw:: html
 
    <div class="api-section">
    <h4>🔍 Query Operations</h4>
@@ -63,8 +45,6 @@ The PostgreSQL MCP (Model Context Protocol) server provides:
    </ul>
    </div>
 
-.. raw:: html
-
    <div class="api-section">
    <h4>📃 Schema Management</h4>
    <ul>
@@ -74,8 +54,6 @@ The PostgreSQL MCP (Model Context Protocol) server provides:
    <li>Check constraints</li>
    </ul>
    </div>
-
-.. raw:: html
 
    <div class="api-section">
    <h4>📊 Analysis Tools</h4>
@@ -87,17 +65,11 @@ The PostgreSQL MCP (Model Context Protocol) server provides:
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
 
 Installation
 ------------
-
-.. raw:: html
-
-   .. raw:: html
 
    <div class="code-example-section">
    <h4>🚀 Quick Setup</h4>
@@ -130,16 +102,10 @@ Installation
    claude mcp add postgres-env -s user -e DATABASE_URL=$DATABASE_URL -- \
    npx -y @modelcontextprotocol/server-postgres "${DATABASE_URL}"
 
-   .. raw:: html
-
    </div>
 
    Configuration
    -------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>⚙️ Advanced Configuration</h3>
@@ -173,8 +139,6 @@ Installation
    }
    }
 
-   .. raw:: html
-
    </div>
 
    ### Connection Options
@@ -206,13 +170,7 @@ Installation
    Usage Examples
    --------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>📝 Common Operations</h2>
@@ -280,16 +238,10 @@ Installation
    FROM pg_stat_user_tables
    ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;
 
-   .. raw:: html
-
    </div>
 
    Database Management
    -------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>🔧 Administrative Tasks</h3>
@@ -360,20 +312,12 @@ Installation
    AND correlation < 0.1
    ORDER BY n_distinct DESC;
 
-   .. raw:: html
-
    </div>
 
    Haive-Specific Queries
    ----------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>🤖 Haive Database Queries</h2>
@@ -446,16 +390,10 @@ Installation
    GROUP BY a.id, a.name
    ORDER BY total_memory_size DESC;
 
-   .. raw:: html
-
    </div>
 
    Troubleshooting
    ---------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="warning-section">
    <h3>⚠️ Common Issues</h3>
@@ -495,16 +433,10 @@ Installation
    WHERE state = 'idle'
    AND state_change < NOW() - INTERVAL '10 minutes';
 
-   .. raw:: html
-
    </div>
 
    Best Practices
    --------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="best-practices">
    <h3>💡 PostgreSQL MCP Best Practices</h3>
@@ -522,10 +454,6 @@ Installation
 
    Security Considerations
    -----------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>🔒 Security Guidelines</h3>
@@ -558,118 +486,72 @@ Installation
    ALTER SYSTEM SET log_min_duration_statement = 1000;  -- Log queries > 1s
    SELECT pg_reload_conf();
 
-   .. raw:: html
-
    </div>
 
    Next Steps
    ----------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>🚀 Explore More MCP Servers</h2>
    </div>
 
-   .. raw:: html
-
    <div class="agent-showcase">
-
-   .. raw:: html
 
    <div class="agent-card">
 
-   .. raw:: html
-
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">📁</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Filesystem Server</h3>
    <p class="agent-subtitle">Advanced file operations</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Browse, read, and manage files with the filesystem MCP server.
-   .. raw:: html
-
    </p>
    <a href="../filesystem/index.html" class="agent-link">Learn More</a>
    </div>
 
-   .. raw:: html
-
    <div class="agent-card">
-
-   .. raw:: html
 
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">🐙</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">GitHub Server</h3>
    <p class="agent-subtitle">Repository management</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Manage issues, PRs, and repository operations through MCP.
-   .. raw:: html
-
    </p>
    <a href="../github/index.html" class="agent-link">Learn More</a>
    </div>
 
-   .. raw:: html
-
    <div class="agent-card">
-
-   .. raw:: html
 
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">🔍</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Search Server</h3>
    <p class="agent-subtitle">Web search integration</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Search the web with Brave Search API through MCP.
-   .. raw:: html
-
    </p>
    <a href="../search/index.html" class="agent-link">Learn More</a>
    </div>
@@ -678,6 +560,6 @@ Installation
 
    .. seealso::
 
-   - :doc:`../index` - MCP overview and setup
-   - :doc:`../../guides/mcp_integration` - Integration guide
-   - `PostgreSQL Documentation <https://www.postgresql.org/docs/>`_
+   - :doc:`../index - MCP overview and setup`
+   - :doc:`../../guides/mcp_integration - Integration guide`
+   - ``PostgreSQL Documentation <https://www.postgresql.org/docs/>_``

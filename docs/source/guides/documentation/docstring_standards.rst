@@ -11,6 +11,8 @@ Module docstrings should be placed at the top of the file and describe the modul
 
 .. code-block:: python
 
+    # Code example here
+
     """Module name and brief description.
 
     This module provides [functionality description].
@@ -34,6 +36,8 @@ Module docstrings should be placed at the top of the file and describe the modul
 
 .. code-block:: python
 
+    # Code example here
+
     class ClassName:
     """Brief description of the class.
 
@@ -56,6 +60,8 @@ Module docstrings should be placed at the top of the file and describe the modul
     Function docstrings should describe the function's purpose, parameters, return values, exceptions, and provide usage examples.
 
 .. code-block:: python
+
+    # Code example here
 
     def function_name(param1, param2=default):
     """Brief description of the function.
@@ -83,6 +89,8 @@ Module docstrings should be placed at the top of the file and describe the modul
 
 .. code-block:: python
 
+    # Code example here
+
     class ModelName(BaseModel):
     """Brief description of the model.
 
@@ -101,6 +109,8 @@ Module docstrings should be placed at the top of the file and describe the modul
     For game modules, docstrings should include game-specific information:
 
 .. code-block:: python
+
+    # Code example here
 
     """Chess board game implementation.
 
@@ -125,18 +135,18 @@ Module docstrings should be placed at the top of the file and describe the modul
 
     -------------
 
-    1. **Abstract Method***s**: Should include a description of what implementing classes should do.**
+    1. **Abstract Method*s**: Should include a description of what implementing classes should do.*
 
-    2.*** **Propertie***s**: Should document the value being returned rather than parameters.
+    2.*** *Propertie**s*: Should document the value being returned rather than parameters.
 
-    3.*** **Private Method***s**: Should still be documented even though they're not part of the public API.
+    3.*** *Private Method**s*: Should still be documented even though they're not part of the public API.
 
     Docstring Generation
 
     --------------------
 
-    The ``add_docstrings.p``y`` script in the`` ``script``s`` directory can automatically generate appropriate docstrings for your code based on naming conventions and context.
+    The ``add_docstrings.py`` script in the`` script``s`` directory can automatically generate appropriate docstrings for your code based on naming conventions and context.
 
 .. code-block:: bash
 
-    python scripts/add_docstrings.py --path src/haive/games/chess``***
+    python scripts/add_docstrings.py --path src/haive/games/chess``***`

@@ -16,6 +16,8 @@
 
 .. code-block:: python
 
+    # Code example here
+
     from {{ module }} import {{ objname }}
     from haive.core.engine import AugLLMConfig
 
@@ -33,6 +35,8 @@
 
     {% if fullname.endswith('ReactAgent') %}
 .. code-block:: python
+
+    # Code example here
 
     from {{ module }} import {{ objname }}
     from haive.tools import SearchTool, CalculatorTool
@@ -53,6 +57,8 @@
     {% if 'RAG' in fullname %}
 .. code-block:: python
 
+    # Code example here
+
     from {{ module }} import {{ objname }}
     from haive.core.retrieval import VectorRetriever
 
@@ -71,6 +77,8 @@
 
     {% if 'Conversation' in fullname or 'Debate' in fullname %}
 .. code-block:: python
+
+    # Code example here
 
     from {{ module }} import {{ objname }}
 
@@ -93,6 +101,8 @@
     To visualize this agent's execution graph:
 
 .. code-block:: python
+
+    # Code example here
 
     # Visualize the agent's graph
     agent.visualize_graph("{{ objname.lower() }}_graph.png")

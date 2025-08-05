@@ -83,14 +83,14 @@ EXTENSION_CATEGORIES = {
     "diagrams": {
         "extensions": [
             "sphinxcontrib.mermaid",
-            "sphinx_design",
+            # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3 - sphinx_design_css_changed error
             "sphinxcontrib.plantuml",
             "sphinxcontrib.blockdiag",  # Block diagrams (architecture)
             "sphinxcontrib.seqdiag",  # Sequence diagrams (API flows)
             "sphinxcontrib.drawio",  # Draw.io integration
         ],
         "description":
-        "Diagram and design elements (6 total)",
+        "Diagram and design elements (5 total)",
         "required":
         False,
     },
@@ -321,8 +321,8 @@ def get_extension_with_structured_logging(
                     f"  - {ext['name']} ({ext['category']}): {ext['error']}", )
 
     # Save extension status
-    status_file = (Path(__file__, ).parent.parent / "logs" / "build" /
-                   "extension_status.json")
+    status_file = Path(
+        __file__).parent.parent / "logs" / "build" / "extension_status.json"
     status_file.parent.mkdir(exist_ok=True, parents=True)
     with open(status_file, "w") as f:
         json.dump(extension_status, f, indent=2)

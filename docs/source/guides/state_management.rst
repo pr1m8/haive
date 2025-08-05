@@ -26,6 +26,8 @@ Haive uses Pydantic for state schemas:
 
 .. code-block:: python
 
+    # Code example here
+
     from haive.core.schema import AgentState
     from pydantic import Field
     from typing import List, Dict, Optional
@@ -39,19 +41,20 @@ Haive uses Pydantic for state schemas:
 
     State Lifecycle
 
-    ---------------
+
+---------------
 
     Agent state goes through a typical lifecycle:
 
-    1. **Initialization**: Created with default values
+    1. **Initialization*: Created with default values
 
-    2. **Population**: Updated with new information
+    2. **Population*: Updated with new information
 
-    3. **Persistence**: Saved to storage
+    3. **Persistence*: Saved to storage
 
-    4. **Retrieval**: Loaded from storage
+    4. **Retrieval*: Loaded from storage
 
-    5. **Transformation**: Modified during execution
+    5. **Transformation*: Modified during execution
 
     Working with State
 
@@ -62,6 +65,8 @@ Haive uses Pydantic for state schemas:
     ^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
+
+    # Code example here
 
     # Creating an agent with custom state
     from haive.agents import SimpleAgent
@@ -84,6 +89,8 @@ Haive uses Pydantic for state schemas:
 
 .. code-block:: python
 
+    # Code example here
+
     # Adding to a list in state
     agent.state.resolution_steps.append("Verified account information")
 
@@ -103,7 +110,8 @@ Haive uses Pydantic for state schemas:
 
     State Persistence
 
-    -----------------
+
+-----------------
 
     Haive supports multiple state persistence options:
 
@@ -114,6 +122,8 @@ Haive uses Pydantic for state schemas:
     Default for short-lived agents:
 
 .. code-block:: python
+
+    # Code example here
 
     agent = SimpleAgent(
     persistence_manager="memory"
@@ -126,6 +136,8 @@ Haive uses Pydantic for state schemas:
     For local development and testing:
 
 .. code-block:: python
+
+    # Code example here
 
     agent = SimpleAgent(
     persistence_manager=FilePersistenceManager(
@@ -141,6 +153,8 @@ Haive uses Pydantic for state schemas:
 
 .. code-block:: python
 
+    # Code example here
+
     agent = SimpleAgent(
     persistence_manager=DatabasePersistenceManager(
     connection_string="postgresql://user:pass@localhost/agents"
@@ -149,11 +163,14 @@ Haive uses Pydantic for state schemas:
 
     State Sharing
 
-    -------------
+
+-------------
 
     Agents can share state:
 
 .. code-block:: python
+
+    # Code example here
 
     # Create a shared state
     shared_state = CustomerServiceAgentState(
@@ -170,7 +187,8 @@ Haive uses Pydantic for state schemas:
 
     Best Practices
 
-    --------------
+
+--------------
 
     - Define clear state schemas with appropriate types
 
@@ -186,7 +204,7 @@ Haive uses Pydantic for state schemas:
 
     Continue with:
 
-    - :doc:`engine_system` - Understanding the engine system
+    - :doc:`engine_system - Understanding the engine system`
 
-    - :doc:`agent_patterns` - Common agent design patterns
-    - :doc:`custom_agents` - Building agents with custom state
+    - :doc:`agent_patterns - Common agent design patterns`
+    - :doc:`custom_agents - Building agents with custom state`

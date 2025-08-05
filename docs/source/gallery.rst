@@ -103,17 +103,17 @@ Gallery Contents
 
 All examples in this gallery are:
 
-✅ **Fully Runnable** - Complete working code you can execute
-✅ **Well Documented** - Clear explanations and inline comments
-✅ **Best Practices** - Following Haive's coding standards
-✅ **Real Components** - No mocks, using actual LLMs and tools
+✅ **Fully Runnable* - Complete working code you can execute
+✅ **Well Documented* - Clear explanations and inline comments
+✅ **Best Practices* - Following Haive's coding standards
+✅ **Real Components* - No mocks, using actual LLMs and tools
 
 Getting Started
 ---------------
 
 To run any example:
 
-1. **Install Haive** with the relevant extras:
+1. **Install Haive* with the relevant extras:
 
 .. code-block:: bash
 
@@ -121,7 +121,7 @@ To run any example:
 
        poetry install --extras "agents tools games mcp"
 
-       2. **Set Environment Variables** (if needed):
+       2. **Set Environment Variables* (if needed):
 
 .. code-block:: bash
 
@@ -130,7 +130,7 @@ To run any example:
        export OPENAI_API_KEY="your-api-key"
        export ANTHROPIC_API_KEY="your-api-key"
 
-       3. **Run the Example**:
+       3. **Run the Example*:
 
 .. code-block:: bash
 

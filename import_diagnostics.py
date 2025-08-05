@@ -7,12 +7,11 @@ autosummary.
 
 from __future__ import annotations
 
-from datetime import datetime
 import importlib
 import json
 import logging
+from datetime import datetime
 from pathlib import Path
-
 
 logger = logging.getLogger(__name__)
 
@@ -46,10 +45,7 @@ def find_all_python_modules(
             else:
                 # Module
                 relative_path = py_file.relative_to(path)
-                module_name = str(relative_path.with_suffix("")).replace(
-                    "/",
-                    ".",
-                )
+                module_name = str(relative_path.with_suffix("")).replace("/", ".")
                 modules.add(module_name)
 
     return modules
@@ -86,8 +82,6 @@ def test_module_import(module_name: str) -> dict[str, str]:
 def diagnose_imports(
     autoapi_dirs: list[str],
     base_dir: str | None = None,
-    fast_mode: bool = False,
-    sample_limit: int = 500,
 ) -> tuple[dict, set[str]]:
     """Diagnose import issues for Sphinx documentation build."""
     logger.info("🔍 Diagnosing import issues for Sphinx documentation...")
@@ -99,28 +93,6 @@ def diagnose_imports(
         all_modules.update(modules)
 
     logger.info(f"🔍 Found {len(all_modules)} modules to test...")
-
-    # Apply fast mode optimization if enabled
-    if fast_mode or len(all_modules) > sample_limit:
-        # Sample key modules for faster diagnostics
-        sample_modules = set()
-        for module in all_modules:
-            # Include all top-level packages
-            if (
-                "." not in module
-                or module.count(".") <= 2
-                or any(x in module for x in ["examples", "test", "demo", "archive"])
-            ):
-                sample_modules.add(module)
-
-        if len(sample_modules) < len(all_modules):
-            mode_reason = (
-                "fast mode enabled" if fast_mode else f"module count exceeds {sample_limit}")
-            logger.info(
-                f"🚀 Optimizing: Testing {
-                    len(sample_modules)} key modules instead of all {
-                    len(all_modules)} ({mode_reason})", )
-            all_modules = sample_modules
 
     # Test each module
     results = {
@@ -137,28 +109,13 @@ def diagnose_imports(
         if module.startswith("_"):  # Skip private modules
             continue
 
-        # Skip modules that cause warnings during import
-        if any(
-            skip in module
-            for skip in [
-                "tools.google",
-                "tools.tools.google",  # Google tools with API requirements
-                "tools.search",  # Search tools with external deps
-                "tools.tools.toolkits",  # Toolkits with API requirements
-            ]
-        ):
-            logger.debug(f"⏭️  Skipping {module} (known import issues)")
-            continue
-
         result = test_module_import(module)
         results[result["status"]].append(result)
 
         if result["status"] == "success":
             success_count += 1
         else:
-            logger.warning(
-                f"❌ {module}: {result['error_type']} - {result['error']}",
-            )
+            logger.warning(f"❌ {module}: {result['error_type']} - {result['error']}")
 
     logger.info("📊 IMPORT DIAGNOSIS COMPLETE")
     logger.info(f"✅ Successful imports: {len(results['success'])}")
@@ -178,13 +135,12 @@ def diagnose_imports(
         error_msg = result["error"]
         if "No module named" in error_msg:
             # Extract module name from "No module named 'module_name'"
-            missing_module = error_msg.split(
-                "'")[1] if "'" in error_msg else error_msg.split()[-1]
+            missing_module = (
+                error_msg.split("'")[1] if "'" in error_msg else error_msg.split()[-1]
+            )
             mock_imports.add(missing_module)
 
-    logger.info(
-        f"🎯 Found {len(mock_imports)} modules to mock in Sphinx configuration",
-    )
+    logger.info(f"🎯 Found {len(mock_imports)} modules to mock in Sphinx configuration")
 
     return results, mock_imports
 
@@ -196,7 +152,7 @@ def save_import_diagnosis(
 ):
     """Save diagnostic results to files for later reference."""
     output_path = Path(output_dir)
-    output_path.mkdir(parents=True, exist_ok=True)
+    output_path.mkdir(exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -245,17 +201,10 @@ def save_import_diagnosis(
 def get_autodoc_mock_imports_from_diagnosis(
     autoapi_dirs: list[str],
     base_dir: str | None = None,
-    fast_mode: bool = False,
-    sample_limit: int = 500,
 ) -> list[str]:
     """Get autodoc mock imports by diagnosing current import issues."""
     try:
-        results, mock_imports = diagnose_imports(
-            autoapi_dirs,
-            base_dir,
-            fast_mode,
-            sample_limit,
-        )
+        results, mock_imports = diagnose_imports(autoapi_dirs, base_dir)
 
         # Save results for reference
         save_import_diagnosis(results, mock_imports)

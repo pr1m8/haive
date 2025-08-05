@@ -6,10 +6,6 @@ Building Agents
 
 This comprehensive guide shows you how to build powerful, production-ready agents with Haive. From simple assistants to complex multi-agent systems, you'll learn the patterns and best practices that make great agents.
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="guide-hero">
    <h2>🤖 Master the Art of Agent Building</h2>
    <p>Learn how to create agents that can reason, use tools, maintain state, and work together</p>
@@ -39,13 +35,13 @@ Agent Fundamentals
 
 At their core, Haive agents are stateful processing units that:
 
-1. **Receive input***s** - Process queries, commands, and data**
+1. **Receive input*s** - Process queries, commands, and data*
 
-2.*** **Think and reaso***n** - Use cognitive engines (LLMs) to understand and plan
+2.*** *Think and reaso**n* - Use cognitive engines (LLMs) to understand and plan
 
-3.*** **Take action***s** - Execute tools and interact with external systems
-4.*** **Produce output***s** - Return responses, data, or trigger actions
-5.*** **Maintain stat***e** - Remember context and learn from interactions
+3.*** *Take action**s* - Execute tools and interact with external systems
+4.*** *Produce output**s* - Return responses, data, or trigger actions
+5.*** *Maintain stat**e* - Remember context and learn from interactions
 
 Complete Agent Creation Examples
 
@@ -56,6 +52,8 @@ Complete Agent Creation Examples
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     # pycon_building_agents_01.py
     """Creating Your First Production-Ready Agent
@@ -167,7 +165,7 @@ Complete Agent Creation Examples
            print(f"Human: {query}")
            response = assistant.chat(query)
            print(f"Sophia: {response}\n")
-           print("-"*** * 80 + "\n")*
+           print("-"***  80 + "\n")*
 
 
     if __name__ == "__main__":
@@ -179,6 +177,8 @@ Complete Agent Creation Examples
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     # pycon_building_agents_02.py
     """Creating Specialized Domain Experts
@@ -348,6 +348,8 @@ Complete Agent Creation Examples
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     # pycon_building_agents_03.py
     """Advanced Tool Integration for Agents
@@ -580,6 +582,8 @@ Complete Agent Creation Examples
 
 .. code-block:: python
 
+    # Code example here
+
     # pycon_building_agents_04.py
     """Building Custom Agent Classes
 
@@ -636,7 +640,8 @@ Complete Agent Creation Examples
 
     state_class = AdvancedResearchState
 
-    def __init__(self, name: str = "Advanced Researcher",* **kwargs):**
+
+def __init__(self, name: str = "Advanced Researcher",* *kwargs):**
     """Initialize the research agent."""
     # Set up tools
     tools = [
@@ -661,7 +666,7 @@ Complete Agent Creation Examples
     name=name,
     tools=tools,
     engine=engine,
-    *** **kwargs
+    *** *kwargs
     )
 
     def plan_research(self, objective: str) -> ResearchPlan:
@@ -914,6 +919,8 @@ Complete Agent Creation Examples
 
 .. code-block:: python
 
+    # Code example here
+
     # pycon_building_agents_05.py
     """Core Agent Design Patterns
 
@@ -1116,7 +1123,7 @@ Complete Agent Creation Examples
        print(f"Problem: {problem}")
        solution = react_agent.invoke(problem)
        print(f"Solution: {solution[:300]}...\n")
-       print("-"*** * 80 + "\n")*
+       print("-"***  80 + "\n")*
 
        # Pattern 2: Plan-Execute
        print("2️⃣ Plan-Execute Pattern Demo")
@@ -1205,6 +1212,8 @@ Complete Agent Creation Examples
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     # pycon_building_agents_06.py
     """Production-Ready Agent Implementation
@@ -1337,14 +1346,14 @@ Complete Agent Creation Examples
        def _with_retry(func):
            """Decorator for retry logic."""
            @wraps(func)
-           async def wrapper(self,* *args,* **kwargs):**
+           async def wrapper(self,* args,* **kwargs):*
                last_error = None
                for attempt in range(self.max_retries):
                    try:
-                       return await func(self,*** *args,* **kwargs)
+                       return await func(self,*** args,* **kwargs)
                    except Exception as e:
                        last_error = e
-                       wait_time = 2*** ** attempt  # Exponential backoff
+                       wait_time = 2*** * attempt  # Exponential backoff
                        logger.warning(
                            f"Attempt {attempt + 1} failed: {e}. "
                            f"Retrying in {wait_time}s..."
@@ -1388,7 +1397,7 @@ Complete Agent Creation Examples
                response_time = time.time() - start_time
                self.metrics.successful_requests += 1
                self.metrics.average_response_time = (
-                   (self.metrics.average_response_time*** * (self.metrics.successful_requests - 1) + response_time)*
+                   (self.metrics.average_response_time***  (self.metrics.successful_requests - 1) + response_time)*
                    / self.metrics.successful_requests
                )
 
@@ -1514,12 +1523,12 @@ Complete Agent Creation Examples
 
        """Pool of agents for load balancing."""
 
-       def __init__(self, pool_size: int = 5,* **agent_kwargs):**
+       def __init__(self, pool_size: int = 5,* *agent_kwargs):**
            """Initialize agent pool."""
            self.agents = [
                ProductionAgent(
                    name=f"Agent-{i}",
-                  *** **agent_kwargs
+                  *** *agent_kwargs
                )
                for i in range(pool_size)
            ]
@@ -1546,18 +1555,18 @@ Complete Agent Creation Examples
 
     Continue your journey with these advanced topics:
 
-    - :doc:`agent_patterns` - Master advanced agent patterns like ReAct, RAG, and multi-agent systems
+    - :doc:`agent_patterns - Master advanced agent patterns like ReAct, RAG, and multi-agent systems`
 
-    - :doc:`custom_agents` - Create highly specialized agents for your domain
-    - :doc:`using_tools` - Learn to create and integrate custom tools
-    - :doc:`state_management` - Understand agent state and memory systems
-    - :doc:`engine_system` - Deep dive into cognitive engines and LLM configuration
+    - :doc:`custom_agents - Create highly specialized agents for your domain`
+    - :doc:`using_tools - Learn to create and integrate custom tools`
+    - :doc:`state_management - Understand agent state and memory systems`
+    - :doc:`engine_system - Deep dive into cognitive engines and LLM configuration`
 
     .. tip::
 
 
 
-    *** **Quick Reference Command***s**
+    *** *Quick Reference Command**s*
 
 
 

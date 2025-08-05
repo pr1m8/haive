@@ -14,10 +14,10 @@ This page demonstrates the enhanced documentation features available with our 86
    interactive components, diagrams, and enhanced UI elements.
 
 🚀 Interactive Components
-=========================
+========================
 
 Enhanced Tabs with Sphinx-Design
----------------------------------
+--------------------------------
 
 .. tab-set::
 
@@ -27,10 +27,12 @@ Enhanced Tabs with Sphinx-Design
 
 .. code-block:: python
 
+    # Code example here
+
          :caption: Enhanced SimpleAgent with Pydantic Configuration
          :linenos:
          :emphasize-lines: 4-10
-         :class:`copy`-button
+         :class:``copy-button``
 
          from haive.agents import SimpleAgent
          from haive.core.engine import AugLLMConfig
@@ -77,7 +79,8 @@ Enhanced Tabs with Sphinx-Design
              F --> G[User Output]
 
          Enhanced Grid Layout
-         --------------------
+
+     --------------------
 
          .. grid:: 1 2 3 3
 
@@ -125,21 +128,21 @@ Enhanced Tabs with Sphinx-Design
 
          .. admonition:: 💡 Pro Tip
 
-         :class:`tip`
+         :class:``tip``
 
          The enhanced documentation system automatically detects Pydantic models and applies
          specialized formatting for better readability and developer experience.
 
          .. admonition:: ⚠️ Important
 
-         :class:`warning`
+         :class:``warning``
 
          When using the enhanced templates, make sure your Pydantic models have comprehensive
          docstrings for the best documentation experience.
 
          .. admonition:: 📚 More Information
 
-         :class:`note`
+         :class:``note``
 
          All 86 Sphinx extensions work together to provide a comprehensive documentation
          experience with automatic cross-references, enhanced search, and beautiful styling.
@@ -154,8 +157,10 @@ Enhanced Tabs with Sphinx-Design
 
 .. code-block:: python
 
+    # Code example here
+
       :caption: Advanced AugLLMConfig with all options
-      :class:`copy`-button
+      :class:``copy-button``
 
       from haive.core.engine import AugLLMConfig
       from pydantic import Field
@@ -221,7 +226,8 @@ Enhanced Tabs with Sphinx-Design
       =======================
 
       Inheritance Diagram Example
-      ----------------------------
+
+  ----------------------------
 
       .. inheritance-diagram:: haive.agents.simple.agent.SimpleAgent haive.agents.react.agent.ReactAgent
 
@@ -233,10 +239,12 @@ Enhanced Tabs with Sphinx-Design
 
 .. code-block:: python
 
+    # Code example here
+
    :caption: Multi-Agent Coordination Example
    :linenos:
    :emphasize-lines: 8-12
-   :class:`copy`-button
+   :class:``copy-button``
 
    from haive.agents import MultiAgent, SimpleAgent, ReactAgent
    from haive.tools import WebSearchTool
@@ -271,7 +279,7 @@ Enhanced Tabs with Sphinx-Design
 
    .. container:: highlight-box
 
-   **Enhanced Styling**: This documentation uses custom CSS that integrates with
+   **Enhanced Styling*: This documentation uses custom CSS that integrates with
    all 86+ Sphinx extensions to provide a cohesive and beautiful experience.
 
    .. container:: metrics-showcase
@@ -281,30 +289,30 @@ Enhanced Tabs with Sphinx-Design
       :gutter: 2
 
       .. grid-item::
-         :class:`metric`-display
+         :class:``metric-display``
 
-         **86**
+         **86*
 
          *Total Extensions*
 
       .. grid-item::
-         :class:`metric`-display
+         :class:``metric-display``
 
-         **100%**
+         **100%*
 
          *Compatibility*
 
       .. grid-item::
-         :class:`metric`-display
+         :class:``metric-display``
 
-         **0**
+         **0*
 
          *Failed Extensions*
 
       .. grid-item::
-         :class:`metric`-display
+         :class:``metric-display``
 
-         **6**
+         **6*
 
          *New Templates*
 
@@ -316,10 +324,10 @@ Enhanced Tabs with Sphinx-Design
 
    With our comprehensive intersphinx configuration, you can easily reference:
 
-   * :class:`pydantic.BaseModel` - Pydantic base model documentation*
-   * :func:`langchain.tools.tool` - LangChain tool decorator*
-   * :class:`haive.agents.simple.agent.SimpleAgent` - Our SimpleAgent class*
-   * :doc:`/api/index` - Complete API reference*
+   * :class:``pydantic.BaseModel - Pydantic base model documentation*``
+   * :func:``langchain.tools.tool - LangChain tool decorator*``
+   * :class:``haive.agents.simple.agent.SimpleAgent - Our SimpleAgent class*``
+   * :doc:`/api/index - Complete API reference*`
 
    Search and Navigation
    ---------------------

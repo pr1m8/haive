@@ -3,37 +3,23 @@ PersonResearchAgent Demo
 
 PersonResearchAgent - Deep research and analysis agents
 
-.. raw:: html
-
    <div class="agent-demo-container">
    <!-- Agent Overview Card -->
 
-.. raw:: html
-
    <div class="agent-overview-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-icon">🔬</div>
-
-.. raw:: html
 
    <div>
    <h2>PersonResearchAgent</h2>
    <p class="agent-type">research</p>
    </div>
 
-.. raw:: html
-
    </div>
 
 
-
-.. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">Interactive</span>
@@ -42,78 +28,48 @@ PersonResearchAgent - Deep research and analysis agents
    <span class="feature-tag">Async</span>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <!-- Graph Visualization -->
 
            <div id="personresearch-graph"
                 class="agent-graph-container"
                 data-agent-graph='{"nodes": [{"id": "start", "type": "start", "label": "START"}, {"id": "end", "type": "end", "label": "END"}, {"id": "process", "type": "agent", "label": "Process", "description": "Main processing"}, {"id": "tools", "type": "tool", "label": "Tools", "description": "External tools"}, {"id": "validate", "type": "validation", "label": "Validate", "description": "Check results"}], "edges": [{"source": "start", "target": "process"}, {"source": "process", "target": "tools"}, {"source": "tools", "target": "validate"}, {"source": "validate", "target": "end"}], "executionTrace": [{"step": 1, "node": "start", "status": "completed", "duration": 0.1, "output": "Initialized"}, {"step": 2, "node": "process", "status": "completed", "duration": 1.2, "output": "Processing..."}, {"step": 3, "node": "end", "status": "completed", "duration": 0.1, "output": "Finished"}]}'>
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <!-- State History Timeline -->
 
            <div id="personresearch-state-history"
                 class="state-history-container"
                 data-state-history='[{"timestamp": "2025-01-08T10:00:00Z", "step": 1, "state": {"status": "initialized", "input": "User query"}, "diff": {"added": ["status", "input"], "changed": [], "removed": []}}, {"timestamp": "2025-01-08T10:00:01Z", "step": 2, "state": {"status": "processing", "input": "User query", "output": "Generated response"}, "diff": {"added": ["output"], "changed": ["status"], "removed": []}}]'>
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <!-- Execution Trace -->
 
            <div id="personresearch-execution-trace"
                 class="execution-trace-container"
                 data-execution-trace='[{"step": 1, "operation": "Initialize", "duration": 0.1, "status": "success"}, {"step": 2, "operation": "Process", "duration": 1.5, "status": "success"}, {"step": 3, "operation": "Finalize", "duration": 0.2, "status": "success"}]'>
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <!-- Interactive Example -->
 
-.. raw:: html
-
    <div class="interactive-example">
    <h3>Try it Live</h3>
-
-.. raw:: html
 
    <div class="example-input">
    <label>Input:</label>
    <textarea id="personresearch-input" placeholder="Example task for PersonResearchAgent"></textarea>
    </div>
 
-.. raw:: html
-
    <button onclick="runAgent('personresearch')" class="run-button">
 
                 Run PersonResearchAgent
-.. raw:: html
-
    </button>
-
-.. raw:: html
 
    <div id="personresearch-output" class="example-output"></div>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <script>
 
@@ -131,14 +87,14 @@ PersonResearchAgent - Deep research and analysis agents
         const traceData = JSON.parse(document.getElementById('personresearch-execution-trace').dataset.executionTrace);
         new ExecutionTraceVisualizer('personresearch-execution-trace', traceData);
     });
-.. raw:: html
-
    </script>
 
 Code Example
 ------------
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.research.person import PersonResearchAgent
 
@@ -154,13 +110,14 @@ Code Example
     print(result)
 
     Architecture Details
-    --------------------
+
+--------------------
 
     The PersonResearchAgent implements deep research and analysis agents.
 
     See Also
     --------
 
-    - :doc:`/api/haive/agents/research/person` - Full API documentation
-    - :doc:`/guides/research-guide` - Usage guide
-    - :doc:`/examples/research-examples` - More examples
+    - :doc:`/api/haive/agents/research/person - Full API documentation`
+    - :doc:`/guides/research-guide - Usage guide`
+    - :doc:`/examples/research-examples - More examples`

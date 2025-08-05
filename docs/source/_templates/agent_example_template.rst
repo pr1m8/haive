@@ -1,28 +1,16 @@
 {{ name }} Example
 {{ "=" * (name|length + 8) }}*
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="agent-example-container">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-icon">🤖</div>
-
-.. raw:: html
 
    <div class="agent-info">
    <h2>{{ name }} Usage Example</h2>
    <p class="agent-description">{{ description }}</p>
    </div>
-
-.. raw:: html
 
    </div>
    </div>
@@ -32,12 +20,12 @@ Overview
 
 This example demonstrates how to use the {{ name }} for {{ purpose }}.
 
-**Key Features:**
+**Key Features:*
 {% for feature in features %}
 - {{ feature }}
 {% endfor %}
 
-**Use Cases:**
+**Use Cases:*
 {% for use_case in use_cases %}
 - {{ use_case }}
 {% endfor %}
@@ -46,6 +34,8 @@ Basic Example
 -------------
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.{{ module_path }} import {{ name }}
     from haive.core.engine.aug_llm import AugLLMConfig
@@ -73,7 +63,8 @@ Basic Example
 
     {% if advanced_example %}
     Advanced Example
-    ----------------
+
+----------------
 
     {{ advanced_example }}
     {% endif %}
@@ -105,10 +96,6 @@ Basic Example
 
     Graph Visualization
     -------------------
-
-    .. raw:: html
-
-    .. raw:: html
 
     <div id="agent-graph-{{ name|lower }}" class="agent-graph-container">
     <script>
@@ -145,14 +132,14 @@ Basic Example
     --------------
 
     {% for practice in best_practices %}
-    {{ loop.index }}. **{{ practice.title }}**: {{ practice.description }}
+    {{ loop.index }}. **{{ practice.title }}*: {{ practice.description }}
     {% endfor %}
 
     Related Examples
     ----------------
 
     {% for related in related_examples %}
-    - :doc:`{{ related.path }}` - {{ related.description }}
+    - :doc:`{{ related.path }} - {{ related.description }}`
     {% endfor %}
 
     API Reference

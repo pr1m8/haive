@@ -2,15 +2,9 @@
 .. _mcp-servers:
 
 🗄️ MCP Server Directory
-========================
-
-.. raw:: html
-
-   .. raw:: html
+=======================
 
    <div class="agent-hero-section">
-
-.. raw:: html
 
    <div class="hero-content">
    <h2>🌟 1,960+ MCP Servers at Your Fingertips</h2>
@@ -20,8 +14,6 @@
    </p>
    </div>
 
-.. raw:: html
-
    </div>
 
 Comprehensive catalog of MCP servers categorized by functionality and use case.
@@ -29,42 +21,24 @@ Comprehensive catalog of MCP servers categorized by functionality and use case.
 Server Categories
 -----------------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="agent-showcase">
-
-.. raw:: html
 
    <div class="agent-card">
 
-.. raw:: html
-
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🗄️</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Database Servers</h3>
    <p class="agent-subtitle">Data storage and querying</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Connect to PostgreSQL, MySQL, SQLite, MongoDB, and other databases for data operations.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">PostgreSQL</span>
@@ -73,41 +47,25 @@ Server Categories
    <span class="feature-tag">MongoDB</span>
    </div>
 
-.. raw:: html
-
    <a href="#database-servers" class="agent-link">View Database Servers</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">📁</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Filesystem Servers</h3>
    <p class="agent-subtitle">File and directory operations</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Advanced file operations, directory analysis, and filesystem management capabilities.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">File Operations</span>
@@ -115,41 +73,25 @@ Server Categories
    <span class="feature-tag">Batch Processing</span>
    </div>
 
-.. raw:: html
-
    <a href="#filesystem-servers" class="agent-link">View Filesystem Servers</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🔍</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Search Servers</h3>
    <p class="agent-subtitle">Web and data search</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Web search, academic search, and specialized search engines for information retrieval.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">Web Search</span>
@@ -157,41 +99,25 @@ Server Categories
    <span class="feature-tag">News Search</span>
    </div>
 
-.. raw:: html
-
    <a href="#search-servers" class="agent-link">View Search Servers</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🐙</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Development Servers</h3>
    <p class="agent-subtitle">Software development tools</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             GitHub, GitLab, Docker, and other development tools for software engineering workflows.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">GitHub</span>
@@ -199,41 +125,25 @@ Server Categories
    <span class="feature-tag">Git</span>
    </div>
 
-.. raw:: html
-
    <a href="#development-servers" class="agent-link">View Development Servers</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🌐</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Web Servers</h3>
    <p class="agent-subtitle">Web automation and scraping</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Browser automation, web scraping, and web testing with Puppeteer and Playwright.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">Puppeteer</span>
@@ -241,49 +151,31 @@ Server Categories
    <span class="feature-tag">Scraping</span>
    </div>
 
-.. raw:: html
-
    <a href="#web-servers" class="agent-link">View Web Servers</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">📊</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Analytics Servers</h3>
    <p class="agent-subtitle">Data analysis and visualization</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Data analysis, visualization, and reporting tools for business intelligence.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="agent-features">
    <span class="feature-tag">Analytics</span>
    <span class="feature-tag">Visualization</span>
    <span class="feature-tag">Reporting</span>
    </div>
-
-.. raw:: html
 
    <a href="#analytics-servers" class="agent-link">View Analytics Servers</a>
    </div>
@@ -294,10 +186,6 @@ Server Categories
 Database Servers
 ----------------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="server-category">
    <h3>🗄️ Database Connectivity</h3>
    <p>Connect to popular databases for data operations.</p>
@@ -305,61 +193,39 @@ Database Servers
    PostgreSQL Server
    ~~~~~~~~~~~~~~~~~
 
-   .. raw:: html
-
-.. raw:: html
-
    <div class="server-card">
-
-.. raw:: html
 
    <div class="server-header">
    <h4>📊 PostgreSQL MCP Server</h4>
-
-.. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="server-description">
 
          Direct PostgreSQL database access with schema exploration, query execution, and transaction management.
-.. raw:: html
-
    </p>
 
-.. raw:: html
-
    <div class="server-details">
-
-.. raw:: html
 
    <div class="detail-item">
    <strong>Package:</strong> <code>@modelcontextprotocol/server-postgres</code>
    </div>
 
-.. raw:: html
-
    <div class="detail-item">
    <strong>Capabilities:</strong> Schema exploration, SQL execution, performance analysis
    </div>
-
-.. raw:: html
 
    <div class="detail-item">
    <strong>Transport:</strong> stdio
    </div>
 
-.. raw:: html
-
    </div>
 
-**Setup:**
+**Setup:*
 
 .. code-block:: bash
 
@@ -372,9 +238,11 @@ Database Servers
    # With SSL
    claude mcp add haive-db -s user -- npx -y @modelcontextprotocol/server-postgres "postgresql://user:pass@localhost:5432/haive?sslmode=require"
 
-   **Usage Examples:**
+   **Usage Examples:*
 
 .. code-block:: python
+
+    # Code example here
 
    # In haive-mcp dynamic agent
    await agent.arun({
@@ -396,7 +264,7 @@ Database Servers
 
    })
 
-   **Manual Usage:**
+   **Manual Usage:*
 
 .. code-block:: bash
 
@@ -405,49 +273,35 @@ Database Servers
    @haive-db describe users table
    @haive-db run SELECT * FROM users WHERE active = true LIMIT 10*
 
-   .. raw:: html
-
    </div>
 
    MySQL Server
    ~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-card">
-
-   .. raw:: html
 
    <div class="server-header">
    <h4>🐬 MySQL MCP Server</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge community">Community</span>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="server-description">
 
          Connect to MySQL databases with full query support and schema management.
-   .. raw:: html
-
    </p>
 
-   **Setup:**
+   **Setup:*
 
 .. code-block:: bash
 
    # MySQL server setup
    claude mcp add mysql-db -s user -- npx -y @modelcontextprotocol/server-mysql "mysql://user:pass@localhost:3306/mydb"
 
-   **Usage:**
+   **Usage:*
 
 .. code-block:: bash
 
@@ -455,49 +309,35 @@ Database Servers
    @mysql-db use mydb
    @mysql-db show tables
 
-   .. raw:: html
-
    </div>
 
    SQLite Server
    ~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-card">
-
-   .. raw:: html
 
    <div class="server-header">
    <h4>📋 SQLite MCP Server</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="server-description">
 
          Lightweight SQLite database access for local data storage and analysis.
-   .. raw:: html
-
    </p>
 
-   **Setup:**
+   **Setup:*
 
 .. code-block:: bash
 
    # SQLite server with local database
    claude mcp add sqlite-db -s user -- npx -y @modelcontextprotocol/server-sqlite "/path/to/database.db"
 
-   **Usage:**
+   **Usage:*
 
 .. code-block:: bash
 
@@ -505,11 +345,7 @@ Database Servers
    @sqlite-db .schema users
    @sqlite-db SELECT * FROM users LIMIT 5*
 
-   .. raw:: html
-
    </div>
-
-   .. raw:: html
 
    </div>
 
@@ -518,10 +354,6 @@ Database Servers
    Filesystem Servers
    ------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-category">
    <h3>📁 File System Operations</h3>
    <p>Advanced file and directory management capabilities.</p>
@@ -529,61 +361,39 @@ Database Servers
    Filesystem Server
    ~~~~~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-card">
-
-   .. raw:: html
 
    <div class="server-header">
    <h4>📁 Filesystem MCP Server</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="server-description">
 
          Enhanced file operations with recursive search, batch processing, and directory analysis.
-   .. raw:: html
-
    </p>
 
-   .. raw:: html
-
    <div class="server-details">
-
-   .. raw:: html
 
    <div class="detail-item">
    <strong>Package:</strong> <code>@modelcontextprotocol/server-filesystem</code>
    </div>
 
-   .. raw:: html
-
    <div class="detail-item">
    <strong>Capabilities:</strong> File operations, directory search, batch processing
    </div>
-
-   .. raw:: html
 
    <div class="detail-item">
    <strong>Transport:</strong> stdio
    </div>
 
-   .. raw:: html
-
    </div>
 
-   **Setup:**
+   **Setup:*
 
 .. code-block:: bash
 
@@ -597,9 +407,11 @@ Database Servers
      /home/user/documents \
      /home/user/data
 
-   **Usage Examples:**
+   **Usage Examples:*
 
 .. code-block:: python
+
+    # Code example here
 
    # Dynamic discovery
    await agent.arun({
@@ -611,7 +423,7 @@ Database Servers
 
    })
 
-   **Manual Usage:**
+   **Manual Usage:*
 
 .. code-block:: bash
 
@@ -620,11 +432,7 @@ Database Servers
    @haive-files analyze directory structure of packages/
    @haive-files search for "TODO" in all files
 
-   .. raw:: html
-
    </div>
-
-   .. raw:: html
 
    </div>
 
@@ -633,10 +441,6 @@ Database Servers
    Search Servers
    --------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-category">
    <h3>🔍 Search and Information Retrieval</h3>
    <p>Web search, academic search, and specialized search engines.</p>
@@ -644,61 +448,39 @@ Database Servers
    Brave Search Server
    ~~~~~~~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-card">
-
-   .. raw:: html
 
    <div class="server-header">
    <h4>🔍 Brave Search MCP Server</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="server-description">
 
          Real-time web search with privacy-focused results and news aggregation.
-   .. raw:: html
-
    </p>
 
-   .. raw:: html
-
    <div class="server-details">
-
-   .. raw:: html
 
    <div class="detail-item">
    <strong>Package:</strong> <code>@modelcontextprotocol/server-brave-search</code>
    </div>
 
-   .. raw:: html
-
    <div class="detail-item">
    <strong>Capabilities:</strong> Web search, news search, result filtering
    </div>
-
-   .. raw:: html
 
    <div class="detail-item">
    <strong>Requirements:</strong> Brave API Key
    </div>
 
-   .. raw:: html
-
    </div>
 
-   **Setup:**
+   **Setup:*
 
 .. code-block:: bash
 
@@ -707,9 +489,11 @@ Database Servers
 
      npx -y @modelcontextprotocol/server-brave-search
 
-   **Usage:**
+   **Usage:*
 
 .. code-block:: python
+
+    # Code example here
 
    # Auto-discovery
    await agent.arun({
@@ -721,48 +505,34 @@ Database Servers
 
    })
 
-   **Manual Usage:**
+   **Manual Usage:*
 
 .. code-block:: bash
 
    @brave-search latest Python 3.12 features
    @brave-search Python async programming tutorial
 
-   .. raw:: html
-
    </div>
 
    Google Search Server
    ~~~~~~~~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-card">
-
-   .. raw:: html
 
    <div class="server-header">
    <h4>🔍 Google Search MCP Server</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge community">Community</span>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="server-description">
 
          Google Custom Search integration for web search capabilities.
-   .. raw:: html
-
    </p>
 
-   **Setup:**
+   **Setup:*
 
 .. code-block:: bash
 
@@ -771,11 +541,7 @@ Database Servers
 
      npx -y mcp-server-google-search
 
-   .. raw:: html
-
    </div>
-
-   .. raw:: html
 
    </div>
 
@@ -784,10 +550,6 @@ Database Servers
    Development Servers
    -------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-category">
    <h3>🐙 Software Development Tools</h3>
    <p>Integration with development platforms and tools.</p>
@@ -795,61 +557,39 @@ Database Servers
    GitHub Server
    ~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-card">
-
-   .. raw:: html
 
    <div class="server-header">
    <h4>🐙 GitHub MCP Server</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="server-description">
 
          Complete GitHub integration for repository management, issues, pull requests, and CI/CD.
-   .. raw:: html
-
    </p>
 
-   .. raw:: html
-
    <div class="server-details">
-
-   .. raw:: html
 
    <div class="detail-item">
    <strong>Package:</strong> <code>@modelcontextprotocol/server-github</code>
    </div>
 
-   .. raw:: html
-
    <div class="detail-item">
    <strong>Capabilities:</strong> Issue management, PR operations, commit history
    </div>
-
-   .. raw:: html
 
    <div class="detail-item">
    <strong>Requirements:</strong> GitHub Token
    </div>
 
-   .. raw:: html
-
    </div>
 
-   **Setup:**
+   **Setup:*
 
 .. code-block:: bash
 
@@ -861,9 +601,11 @@ Database Servers
 
      npx -y @modelcontextprotocol/server-github --owner=yourusername --repo=yourrepo
 
-   **Usage:**
+   **Usage:*
 
 .. code-block:: python
+
+    # Code example here
 
    # Auto-discovery
    await agent.arun({
@@ -875,7 +617,7 @@ Database Servers
 
    })
 
-   **Manual Usage:**
+   **Manual Usage:*
 
 .. code-block:: bash
 
@@ -883,51 +625,39 @@ Database Servers
    @haive-github create PR from feature/new-feature to main
    @haive-github show workflow runs
 
-   .. raw:: html
-
    </div>
 
    Docker Server
    ~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-card">
-
-   .. raw:: html
 
    <div class="server-header">
    <h4>🐳 Docker MCP Server</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="server-description">
 
          Docker container management for isolated code execution and service orchestration.
-   .. raw:: html
-
    </p>
 
-   **Setup:**
+   **Setup:*
 
 .. code-block:: bash
 
    # Docker server
    claude mcp add haive-docker -s user -- npx -y @modelcontextprotocol/server-docker
 
-   **Usage:**
+   **Usage:*
 
 .. code-block:: python
+
+    # Code example here
 
    # Auto-discovery
    await agent.arun({
@@ -939,18 +669,14 @@ Database Servers
 
    })
 
-   **Manual Usage:**
+   **Manual Usage:*
 
 .. code-block:: bash
 
    @haive-docker list containers
    @haive-docker run python:3.12 python -c "print('Hello from Docker')"
 
-   .. raw:: html
-
    </div>
-
-   .. raw:: html
 
    </div>
 
@@ -959,10 +685,6 @@ Database Servers
    Web Servers
    -----------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-category">
    <h3>🌐 Web Automation and Scraping</h3>
    <p>Browser automation, web scraping, and testing tools.</p>
@@ -970,70 +692,50 @@ Database Servers
    Puppeteer Server
    ~~~~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-card">
-
-   .. raw:: html
 
    <div class="server-header">
    <h4>🌐 Puppeteer MCP Server</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="server-description">
 
          Browser automation and web scraping with screenshot capabilities and UI testing.
-   .. raw:: html
-
    </p>
 
-   .. raw:: html
-
    <div class="server-details">
-
-   .. raw:: html
 
    <div class="detail-item">
    <strong>Package:</strong> <code>@modelcontextprotocol/server-puppeteer</code>
    </div>
 
-   .. raw:: html
-
    <div class="detail-item">
    <strong>Capabilities:</strong> Web scraping, screenshots, UI testing
    </div>
-
-   .. raw:: html
 
    <div class="detail-item">
    <strong>Transport:</strong> stdio
    </div>
 
-   .. raw:: html
-
    </div>
 
-   **Setup:**
+   **Setup:*
 
 .. code-block:: bash
 
    # Puppeteer server
    claude mcp add haive-browser -s user -- npx -y @modelcontextprotocol/server-puppeteer
 
-   **Usage:**
+   **Usage:*
 
 .. code-block:: python
+
+    # Code example here
 
    # Auto-discovery
    await agent.arun({
@@ -1045,7 +747,7 @@ Database Servers
 
    })
 
-   **Manual Usage:**
+   **Manual Usage:*
 
 .. code-block:: bash
 
@@ -1053,11 +755,7 @@ Database Servers
    @haive-browser take screenshot
    @haive-browser extract text from page
 
-   .. raw:: html
-
    </div>
-
-   .. raw:: html
 
    </div>
 
@@ -1066,10 +764,6 @@ Database Servers
    Analytics Servers
    -----------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-category">
    <h3>📊 Data Analysis and Visualization</h3>
    <p>Business intelligence and data analysis tools.</p>
@@ -1077,44 +771,34 @@ Database Servers
    Memory Bank Server
    ~~~~~~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-card">
-
-   .. raw:: html
 
    <div class="server-header">
    <h4>🧠 Memory Bank MCP Server</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="server-description">
 
          Persistent context management with intelligent memory organization and recall.
-   .. raw:: html
-
    </p>
 
-   **Setup:**
+   **Setup:*
 
 .. code-block:: bash
 
    # Memory bank server
    claude mcp add haive-memory -s user -- npx -y @modelcontextprotocol/server-memory
 
-   **Usage:**
+   **Usage:*
 
 .. code-block:: python
+
+    # Code example here
 
    # Auto-discovery
    await agent.arun({
@@ -1126,51 +810,39 @@ Database Servers
 
    })
 
-   .. raw:: html
-
    </div>
 
    Sequential Thinking Server
    ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-card">
-
-   .. raw:: html
 
    <div class="server-header">
    <h4>💭 Sequential Thinking MCP Server</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="server-description">
 
          Complex problem solving with structured thinking and step-by-step planning.
-   .. raw:: html
-
    </p>
 
-   **Setup:**
+   **Setup:*
 
 .. code-block:: bash
 
    # Sequential thinking server
    claude mcp add haive-thinking -s user -- npx -y @modelcontextprotocol/server-sequential-thinking
 
-   **Usage:**
+   **Usage:*
 
 .. code-block:: python
+
+    # Code example here
 
    # Auto-discovery
    await agent.arun({
@@ -1182,26 +854,20 @@ Database Servers
 
    })
 
-   .. raw:: html
-
    </div>
-
-   .. raw:: html
 
    </div>
 
    Server Discovery
    ----------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="custom-section">
    <h3>🔍 Finding the Right Server</h3>
    <p>Use AI-powered discovery to find servers for your specific needs.</p>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.mcp.agents import IntelligentMCPAgent
 
@@ -1240,6 +906,8 @@ Database Servers
 
 .. code-block:: python
 
+    # Code example here
+
    from haive.mcp.documentation import MCPDocumentationLoader
 
    # Load server database
@@ -1265,16 +933,10 @@ Database Servers
    "modelcontextprotocol/server-postgres"
    )
 
-   .. raw:: html
-
    </div>
 
    Common Server Combinations
    --------------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="showcase-tabs">
    <button class="showcase-tab active">Research Stack</button>
@@ -1283,15 +945,13 @@ Database Servers
    <button class="showcase-tab">Web Development</button>
    </div>
 
-   .. raw:: html
-
    <div class="showcase-content active">
    <h3>🔍 Research Assistant Stack</h3>
    <p>Complete research workflow with search, analysis, and documentation.</p>
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Research assistant configuration
       research_servers = {
@@ -1324,11 +984,7 @@ Database Servers
       })
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       <div class="showcase-content">
       <h3>📊 Data Analysis Stack</h3>
@@ -1336,7 +992,7 @@ Database Servers
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Data analysis configuration
       analysis_servers = {
@@ -1359,11 +1015,7 @@ Database Servers
       }
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       <div class="showcase-content">
       <h3>🛠️ DevOps Automation Suite</h3>
@@ -1371,7 +1023,7 @@ Database Servers
 
 .. code-block:: python
 
-
+    # Code example here
 
       # DevOps automation configuration
       devops_servers = {
@@ -1394,11 +1046,7 @@ Database Servers
       }
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       <div class="showcase-content">
       <h3>🌐 Web Development Stack</h3>
@@ -1406,7 +1054,7 @@ Database Servers
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Web development configuration
       web_servers = {
@@ -1429,25 +1077,18 @@ Database Servers
       }
 
 
-      .. raw:: html
-
       </div>
 
       Installation Quick Reference
-      ----------------------------
 
-      .. raw:: html
-
-      .. raw:: html
+  ----------------------------
 
       <div class="quick-reference">
       <h3>🚀 Quick Installation Commands</h3>
 
-      .. raw:: html
-
       <div class="command-grid">
 
-      **Essential Servers:**
+      **Essential Servers:*
 
 
 .. code-block:: bash
@@ -1467,7 +1108,7 @@ Database Servers
       claude mcp add haive-github -s user -e GITHUB_TOKEN=$GITHUB_TOKEN -- npx -y @modelcontextprotocol/server-github
 
 
-      **Development Tools:**
+      **Development Tools:*
 
 
 .. code-block:: bash
@@ -1484,7 +1125,7 @@ Database Servers
       claude mcp add haive-memory -s user -- npx -y @modelcontextprotocol/server-memory
 
 
-      **Management Commands:**
+      **Management Commands:*
 
 
 .. code-block:: bash
@@ -1504,26 +1145,20 @@ Database Servers
       claude mcp logs haive-db
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       </div>
 
       Contributing New Servers
       -------------------------
 
-      .. raw:: html
-
-      .. raw:: html
-
       <div class="custom-section">
       <h3>🤝 Contributing to the Server Database</h3>
       <p>Help expand the MCP server ecosystem by contributing new servers.</p>
 
 .. code-block:: python
+
+    # Code example here
 
    # Example: Adding a new server to the database
    from haive.mcp.documentation import MCPDocumentationLoader
@@ -1559,18 +1194,16 @@ Database Servers
    - Include error handling
    - Support standard transports (stdio/sse)
 
-   .. raw:: html
-
    </div>
 
    Next Steps
    ----------
 
-   - **Browse**: Explore servers by category
-   - **Try**: Use auto-discovery to find servers
-   - **Integrate**: Add servers to your workflows
-   - **Contribute**: Submit new servers to the database
-   - **Monitor**: Keep track of server performance
+   - **Browse*: Explore servers by category
+   - **Try*: Use auto-discovery to find servers
+   - **Integrate*: Add servers to your workflows
+   - **Contribute*: Submit new servers to the database
+   - **Monitor*: Keep track of server performance
 
    .. toctree::
 

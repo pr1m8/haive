@@ -1,9 +1,5 @@
 🛠️ Documentation Utilities
-===========================
-
-.. raw:: html
-
-   .. raw:: html
+==========================
 
    <div class="feature-intro">
    <h1 class="gradient-text">Documentation Generation & Analysis</h1>
@@ -15,12 +11,12 @@ Overview
 
 The Haive Documentation Utilities provide a powerful, unified system for:
 
-- **🔍 Agent Analysis** - Discover and analyze all agent types automatically
-- **🎨 Visualization** - Generate workflow diagrams and comparison charts
-- **📚 Documentation** - Create comprehensive docs with cross-references
-- **🧪 Example Validation** - Test and validate all example files
+- **🔍 Agent Analysis* - Discover and analyze all agent types automatically
+- **🎨 Visualization* - Generate workflow diagrams and comparison charts
+- **📚 Documentation* - Create comprehensive docs with cross-references
+- **🧪 Example Validation* - Test and validate all example files
 
-All tools work seamlessly with both **nox build system** and **command-line interface**.
+All tools work seamlessly with both **nox build system* and **command-line interface*.
 
 Quick Start
 -----------
@@ -32,11 +28,11 @@ Quick Start
    .. grid-item::
 
 
-      **Using Nox (Recommended)**
+      **Using Nox (Recommended)*
 
 .. code-block:: bash
 
-         :class:`copy`-button
+         :class:``copy-button``
 
          # Complete workflow
          nox -s doc_utils_full
@@ -49,11 +45,11 @@ Quick Start
          .. grid-item::
 
 
-         **Direct CLI Usage**
+         **Direct CLI Usage*
 
 .. code-block:: bash
 
-         :class:`copy`-button
+         :class:``copy-button``
 
          # Agent analysis
          python doc_utils_runner.py analyze --report
@@ -75,7 +71,7 @@ Quick Start
 
          :shadow: md
 
-         **Comprehensive agent discovery and analysis**
+         **Comprehensive agent discovery and analysis*
 
          - Auto-detects 100+ agent types across packages
          - Identifies architectures (haive.agents, haive.core, haive.games)
@@ -86,7 +82,7 @@ Quick Start
 
          :shadow: md
 
-         **Execute any example with monitoring**
+         **Execute any example with monitoring*
 
          - Universal compatibility across all agent types
          - Streaming output with intelligent chunking
@@ -97,7 +93,7 @@ Quick Start
 
          :shadow: md
 
-         **Universal agent visualization**
+         **Universal agent visualization*
 
          - Multiple formats: PNG, SVG, HTML, Mermaid
          - Native visualization when available
@@ -108,7 +104,7 @@ Quick Start
 
          :shadow: md
 
-         **Automated documentation creation**
+         **Automated documentation creation*
 
          - Individual agent documentation
          - Project-wide docs with cross-references
@@ -118,7 +114,7 @@ Quick Start
          Nox Integration
          ---------------
 
-         The documentation utilities are fully integrated into the **nox build system** for seamless workflow integration:
+         The documentation utilities are fully integrated into the **nox build system* for seamless workflow integration:
 
          .. tabs::
 
@@ -234,6 +230,8 @@ Quick Start
 
 .. code-block:: python
 
+    # Code example here
+
          from scripts.doc_utils import AgentAnalyzer
 
          # Discover all agents
@@ -255,6 +253,8 @@ Quick Start
          .. tab:: Example Execution
 
 .. code-block:: python
+
+    # Code example here
 
          import asyncio
          from scripts.doc_utils import UniversalExampleRunner, ExecutionConfig
@@ -282,6 +282,8 @@ Quick Start
          .. tab:: Visualization Generation
 
 .. code-block:: python
+
+    # Code example here
 
          import asyncio
          from scripts.doc_utils import VisualizationManager, VisualizationConfig
@@ -314,6 +316,8 @@ Quick Start
 
 .. code-block:: python
 
+    # Code example here
+
          import asyncio
          from scripts.doc_utils import DocumentationGenerator, DocumentationConfig
          from pathlib import Path
@@ -344,13 +348,16 @@ Quick Start
          asyncio.run(generate_docs())
 
          Configuration Options
-         ---------------------
+
+     ---------------------
 
          .. tabs::
 
          .. tab:: ExecutionConfig
 
 .. code-block:: python
+
+    # Code example here
 
          from scripts.doc_utils import ExecutionConfig
 
@@ -367,6 +374,8 @@ Quick Start
 
 .. code-block:: python
 
+    # Code example here
+
          from scripts.doc_utils import VisualizationConfig
 
          config = VisualizationConfig(
@@ -382,6 +391,8 @@ Quick Start
 
 .. code-block:: python
 
+    # Code example here
+
          from scripts.doc_utils import DocumentationConfig
 
          config = DocumentationConfig(
@@ -396,7 +407,8 @@ Quick Start
          )
 
          Supported Agent Types
-         ---------------------
+
+     ---------------------
 
          The system automatically handles all Haive agent architectures:
 
@@ -408,7 +420,7 @@ Quick Start
 
          :shadow: sm
 
-         **Mixin-based Architecture**
+         **Mixin-based Architecture*
 
          - SimpleAgent, ReactAgent, MultiAgent
          - RAG agents, Memory agents
@@ -419,7 +431,7 @@ Quick Start
 
          :shadow: sm
 
-         **Protocol-based Architecture**
+         **Protocol-based Architecture*
 
          - Registry-based agents
          - Configurable execution patterns
@@ -429,7 +441,7 @@ Quick Start
 
          :shadow: sm
 
-         **Game-specific Agents**
+         **Game-specific Agents*
 
          - Chess, Go, Poker agents
          - Board game strategies
@@ -449,7 +461,7 @@ Quick Start
 
          # Agent Analysis Report
 
-         **Total Agents Found**: 127
+         **Total Agents Found*: 127
 
          ## Architecture Distribution
          - haive.agents: 89 agents
@@ -469,13 +481,7 @@ Quick Start
 
          Multiple visualization formats are supported:
 
-         .. raw:: html
-
-         .. raw:: html
-
          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
-
-         .. raw:: html
 
          <div>
          <h4>🖼️ Workflow Diagrams</h4>
@@ -487,8 +493,6 @@ Quick Start
          </ul>
          </div>
 
-         .. raw:: html
-
          <div>
          <h4>📊 Comparison Views</h4>
          <ul>
@@ -498,8 +502,6 @@ Quick Start
          <li>Performance metrics</li>
          </ul>
          </div>
-
-         .. raw:: html
 
          </div>
 
@@ -531,20 +533,12 @@ Quick Start
          .. grid-item::
 
 
-         .. raw:: html
-
-         .. raw:: html
-
          <div class="metric-card">
          <span class="value">100+</span>
          <span class="label">Agents Analyzed</span>
          </div>
 
          .. grid-item::
-
-         .. raw:: html
-
-         .. raw:: html
 
          <div class="metric-card">
          <span class="value">&lt;30s</span>
@@ -553,10 +547,6 @@ Quick Start
 
          .. grid-item::
 
-         .. raw:: html
-
-         .. raw:: html
-
          <div class="metric-card">
          <span class="value">50+</span>
          <span class="label">Examples/Min</span>
@@ -564,22 +554,18 @@ Quick Start
 
          .. grid-item::
 
-         .. raw:: html
-
-         .. raw:: html
-
          <div class="metric-card">
          <span class="value">10MB+</span>
          <span class="label">Output Handling</span>
          </div>
 
-         **Key Performance Features:**
+         **Key Performance Features:*
 
-         - **Concurrent Execution** - Multiple examples run in parallel
-         - **Streaming Output** - Prevents memory issues with large responses
-         - **Intelligent Caching** - Repeated operations use cached results
-         - **Timeout Protection** - Prevents hanging on problematic examples
-         - **Graceful Degradation** - Works when optional dependencies are missing
+         - **Concurrent Execution* - Multiple examples run in parallel
+         - **Streaming Output* - Prevents memory issues with large responses
+         - **Intelligent Caching* - Repeated operations use cached results
+         - **Timeout Protection* - Prevents hanging on problematic examples
+         - **Graceful Degradation* - Works when optional dependencies are missing
 
          Troubleshooting
          ---------------
@@ -588,7 +574,7 @@ Quick Start
 
          :animate: fade-in-slide-down
 
-         **Import Errors**
+         **Import Errors*
 
          Ensure you're running from the project root:
 
@@ -598,7 +584,7 @@ Quick Start
       cd /path/to/haive/backend/haive
       python doc_utils_runner.py analyze
 
-      **Missing Dependencies**
+      **Missing Dependencies*
 
       Some visualizations require optional packages:
 
@@ -607,7 +593,7 @@ Quick Start
 
       pip install graphviz matplotlib  # For advanced visualizations
 
-      **Large Output Handling**
+      **Large Output Handling*
 
       The system automatically saves large outputs to files:
 
@@ -616,7 +602,7 @@ Quick Start
 
       [OUTPUT TOO LARGE - Saved to: agent_output_1642789123.txt]
 
-      **Timeout Issues**
+      **Timeout Issues*
 
       Increase timeout for slow examples:
 
@@ -707,7 +693,7 @@ Quick Start
 
          :shadow: sm
 
-         **Keep documentation current**
+         **Keep documentation current*
 
          - Run ``nox -s doc_utils_full`` weekly
          - Update visualizations after major changes
@@ -718,7 +704,7 @@ Quick Start
 
          :shadow: sm
 
-         **Focus on what matters**
+         **Focus on what matters*
 
          - Use ``--agent-name`` for specific analysis
          - Generate visualizations for key agents
@@ -729,7 +715,7 @@ Quick Start
 
          :shadow: sm
 
-         **Track documentation health**
+         **Track documentation health*
 
          - Monitor execution times
          - Check success rates
@@ -740,7 +726,7 @@ Quick Start
 
          :shadow: sm
 
-         **Adapt to your needs**
+         **Adapt to your needs*
 
          - Configure timeouts appropriately
          - Choose visualization formats
@@ -750,12 +736,10 @@ Quick Start
          Related Documentation
          ---------------------
 
-         - :doc:`../development/index` - Development guide
-         - :doc:`../api/index` - API reference
-         - :doc:`../agents/index` - Agent documentation
-         - :doc:`../examples/index` - Example gallery
-
-         .. raw:: html
+         - :doc:`../development/index` - Development guide``
+         - :doc:`../api/index - API reference`
+         - :doc:`../agents/index - Agent documentation`
+         - :doc:`../examples/index - Example gallery`
 
          <style>
          .metric-card {

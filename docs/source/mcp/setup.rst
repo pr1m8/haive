@@ -2,15 +2,9 @@
 .. _mcp-setup:
 
 ⚙️ MCP Setup and Configuration
-===============================
-
-.. raw:: html
-
-   .. raw:: html
+==============================
 
    <div class="agent-hero-section">
-
-.. raw:: html
 
    <div class="hero-content">
    <h2>🛠️ Complete MCP Setup Guide</h2>
@@ -20,8 +14,6 @@
    </p>
    </div>
 
-.. raw:: html
-
    </div>
 
 Comprehensive guide for setting up Model Context Protocol integration with detailed
@@ -30,15 +22,11 @@ configuration examples and best practices.
 Prerequisites
 -------------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="custom-section">
    <h3>📋 System Requirements</h3>
    <p>Ensure your system meets the requirements for MCP integration.</p>
 
-   **Required Software:**
+   **Required Software:*
 
 .. code-block:: bash
 
@@ -52,7 +40,7 @@ Prerequisites
    # Claude Code (for direct MCP usage)
    claude --version   # Latest version
 
-   **Installation:**
+   **Installation:*
 
 .. code-block:: bash
 
@@ -66,16 +54,10 @@ Prerequisites
    # Install haive-mcp
    poetry add haive-mcp
 
-   .. raw:: html
-
    </div>
 
    Quick Setup Methods
    -------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="showcase-tabs">
    <button class="showcase-tab active">Dynamic Discovery</button>
@@ -84,15 +66,13 @@ Prerequisites
    <button class="showcase-tab">Hybrid Approach</button>
    </div>
 
-   .. raw:: html
-
    <div class="showcase-content active">
    <h3>🤖 Dynamic Discovery Setup</h3>
    <p>Let AI automatically find and install servers based on your needs.</p>
 
 .. code-block:: python
 
-
+    # Code example here
 
       from haive.mcp.agents import IntelligentMCPAgent
       from haive.core.engine.aug_llm import AugLLMConfig
@@ -122,17 +102,14 @@ Prerequisites
       # Auto-installs postgres server if approved!
 
 
-      **Benefits:**
+
+  **Benefits:*
       - Zero manual configuration
       - AI selects appropriate servers
       - Handles complex requirements automatically
       - Great for exploration and prototyping
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       <div class="showcase-content">
       <h3>📡 Direct MCP Commands</h3>
@@ -171,17 +148,13 @@ Prerequisites
       claude mcp list
 
 
-      **Benefits:**
+      **Benefits:*
       - Direct control over installations
       - Immediate availability
       - Easy to script and automate
       - Works with any MCP-compatible tool
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       <div class="showcase-content">
       <h3>⚙️ Static Configuration</h3>
@@ -189,7 +162,7 @@ Prerequisites
 
 .. code-block:: python
 
-
+    # Code example here
 
       from haive.mcp.config import MCPConfig, MCPServerConfig
       from haive.mcp.agents import MCPAgent
@@ -240,17 +213,14 @@ Prerequisites
       await agent.setup()
 
 
-      **Benefits:**
+
+  **Benefits:*
       - Predictable behavior
       - Version control friendly
       - Production ready
       - Security auditable
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       <div class="showcase-content">
       <h3>🔀 Hybrid Approach</h3>
@@ -258,7 +228,7 @@ Prerequisites
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Base configuration with essential servers
       base_config = MCPConfig(
@@ -295,22 +265,17 @@ Prerequisites
       await agent.setup()
 
 
-      **Benefits:**
+
+  **Benefits:*
       - Reliable core functionality
       - Flexible expansion
       - Controlled growth
       - Best of both worlds
 
-      .. raw:: html
-
       </div>
 
       Environment Configuration
       -------------------------
-
-      .. raw:: html
-
-      .. raw:: html
 
       <div class="custom-section">
       <h3>🌍 Environment-Specific Settings</h3>
@@ -320,6 +285,8 @@ Prerequisites
       ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
    # Development configuration
    dev_config = MCPConfig(
@@ -359,6 +326,8 @@ Prerequisites
 
 .. code-block:: python
 
+    # Code example here
+
    # Staging configuration
    staging_config = MCPConfig(
    enabled=True,
@@ -393,6 +362,8 @@ Prerequisites
    ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
    # Production configuration
    production_config = MCPConfig(
@@ -431,16 +402,10 @@ Prerequisites
    mcp_config=production_config
    )
 
-   .. raw:: html
-
    </div>
 
    Server-Specific Setup
    ---------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="server-setup-grid">
 
@@ -449,21 +414,15 @@ Prerequisites
    PostgreSQL Server Setup
    ~~~~~~~~~~~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-setup-card">
    <h4>🗄️ PostgreSQL Configuration</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-   **Basic Setup:**
+   **Basic Setup:*
 
 .. code-block:: bash
 
@@ -476,9 +435,11 @@ Prerequisites
    # With SSL
    claude mcp add haive-db -s user -- npx -y @modelcontextprotocol/server-postgres "postgresql://user:pass@localhost:5432/haive?sslmode=require"
 
-   **Configuration Options:**
+   **Configuration Options:*
 
 .. code-block:: python
+
+    # Code example here
 
    postgres_config = MCPServerConfig(
 
@@ -495,7 +456,7 @@ Prerequisites
 
    )
 
-   **Connection String Formats:**
+   **Connection String Formats:*
 
 .. code-block:: bash
 
@@ -511,7 +472,7 @@ Prerequisites
    # Production
    postgresql://user:password@prod-server:5432/database?sslmode=require&pool_size=20
 
-   **Testing:**
+   **Testing:*
 
 .. code-block:: bash
 
@@ -523,8 +484,6 @@ Prerequisites
    @haive-db describe users
    @haive-db run SELECT version()
 
-   .. raw:: html
-
    </div>
 
    .. _filesystem-setup:
@@ -532,21 +491,15 @@ Prerequisites
    Filesystem Server Setup
    ~~~~~~~~~~~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-setup-card">
    <h4>📁 Filesystem Configuration</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-   **Basic Setup:**
+   **Basic Setup:*
 
 .. code-block:: bash
 
@@ -560,9 +513,11 @@ Prerequisites
      /home/user/documents \
      /home/user/data
 
-   **Security Configuration:**
+   **Security Configuration:*
 
 .. code-block:: python
+
+    # Code example here
 
    filesystem_config = MCPServerConfig(
 
@@ -579,7 +534,7 @@ Prerequisites
 
    )
 
-   **Usage Examples:**
+   **Usage Examples:*
 
 .. code-block:: bash
 
@@ -589,8 +544,6 @@ Prerequisites
    @haive-files search for "TODO" in all files
    @haive-files create directory output/reports
 
-   .. raw:: html
-
    </div>
 
    .. _github-setup:
@@ -598,21 +551,15 @@ Prerequisites
    GitHub Server Setup
    ~~~~~~~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-setup-card">
    <h4>🐙 GitHub Configuration</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-   **Prerequisites:**
+   **Prerequisites:*
 
 .. code-block:: bash
 
@@ -622,7 +569,7 @@ Prerequisites
    # Get GitHub token from: https://github.com/settings/tokens
    # Required scopes: repo, read:org, read:user
 
-   **Basic Setup:**
+   **Basic Setup:*
 
 .. code-block:: bash
 
@@ -636,9 +583,11 @@ Prerequisites
 
      npx -y @modelcontextprotocol/server-github --owner=yourorg
 
-   **Configuration Options:**
+   **Configuration Options:*
 
 .. code-block:: python
+
+    # Code example here
 
    github_config = MCPServerConfig(
 
@@ -655,7 +604,7 @@ Prerequisites
 
    )
 
-   **Usage Examples:**
+   **Usage Examples:*
 
 .. code-block:: bash
 
@@ -671,8 +620,6 @@ Prerequisites
    @haive-github show workflow runs
    @haive-github get repository statistics
 
-   .. raw:: html
-
    </div>
 
    .. _brave-search-setup:
@@ -680,28 +627,22 @@ Prerequisites
    Brave Search Server Setup
    ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="server-setup-card">
    <h4>🔍 Brave Search Configuration</h4>
-
-   .. raw:: html
 
    <div class="server-badges">
    <span class="status-badge stable">Stable</span>
    <span class="status-badge official">Official</span>
    </div>
 
-   **Prerequisites:**
+   **Prerequisites:*
 
 .. code-block:: bash
 
    # Get API key from: https://api.search.brave.com/
    # Sign up for free tier or paid plan
 
-   **Basic Setup:**
+   **Basic Setup:*
 
 .. code-block:: bash
 
@@ -715,9 +656,11 @@ Prerequisites
 
      npx -y @modelcontextprotocol/server-brave-search --max-results 20 --safe-search moderate
 
-   **Configuration Options:**
+   **Configuration Options:*
 
 .. code-block:: python
+
+    # Code example here
 
    brave_config = MCPServerConfig(
 
@@ -735,7 +678,7 @@ Prerequisites
 
    )
 
-   **Usage Examples:**
+   **Usage Examples:*
 
 .. code-block:: bash
 
@@ -749,20 +692,12 @@ Prerequisites
    # Academic search
    @brave-search quantum computing research --type academic
 
-   .. raw:: html
-
    </div>
-
-   .. raw:: html
 
    </div>
 
    Advanced Configuration
    ----------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>🔧 Advanced Setup Options</h3>
@@ -786,6 +721,8 @@ Prerequisites
    ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
    # Security-focused configuration
    secure_config = MCPConfig(
@@ -819,6 +756,8 @@ Prerequisites
 
 .. code-block:: python
 
+    # Code example here
+
    # Connection pooling configuration
    pooled_config = MCPConfig(
    servers={
@@ -846,6 +785,8 @@ Prerequisites
 
 .. code-block:: python
 
+    # Code example here
+
    # Multiple server instances for load balancing
    load_balanced_config = MCPConfig(
    servers={
@@ -870,16 +811,10 @@ Prerequisites
    failover_enabled=True
    )
 
-   .. raw:: html
-
    </div>
 
    Configuration File Management
    -----------------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>📄 Configuration Files</h3>
@@ -954,16 +889,10 @@ Prerequisites
    # Use environment-specific config
    export CLAUDE_CONFIG_FILE=claude_desktop_config.prod.json
 
-   .. raw:: html
-
    </div>
 
    Health Monitoring and Diagnostics
    ----------------------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>🏥 Health Monitoring</h3>
@@ -990,6 +919,8 @@ Prerequisites
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.mcp.manager import MCPManager
 
@@ -1025,6 +956,8 @@ Prerequisites
 
 .. code-block:: python
 
+    # Code example here
+
    import asyncio
    import logging
 
@@ -1056,21 +989,15 @@ Prerequisites
    logging.error(f"Health monitoring error: {e}")
    await asyncio.sleep(60)
 
-   .. raw:: html
-
    </div>
 
    Troubleshooting
    ---------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="troubleshooting-section">
    <h3>🔧 Common Issues and Solutions</h3>
 
-   **Server Not Starting:**
+   **Server Not Starting:*
 
 .. code-block:: bash
 
@@ -1083,7 +1010,7 @@ Prerequisites
    # Reinstall if needed
    npm install -g @modelcontextprotocol/server-postgres
 
-   **Connection Errors:**
+   **Connection Errors:*
 
 .. code-block:: bash
 
@@ -1096,7 +1023,7 @@ Prerequisites
    # Verify connection string
    echo $DATABASE_URL
 
-   **Permission Issues:**
+   **Permission Issues:*
 
 .. code-block:: bash
 
@@ -1106,7 +1033,7 @@ Prerequisites
    # Fix permissions if needed
    chmod 755 /path/to/allowed/directory
 
-   **Environment Variables:**
+   **Environment Variables:*
 
 .. code-block:: bash
 
@@ -1118,9 +1045,11 @@ Prerequisites
    # Set if missing
    export GITHUB_TOKEN=your_token_here
 
-   **Performance Issues:**
+   **Performance Issues:*
 
 .. code-block:: python
+
+    # Code example here
 
    # Enable debug logging
    import logging
@@ -1133,16 +1062,10 @@ Prerequisites
    health_check_interval=60.0
    )
 
-   .. raw:: html
-
    </div>
 
    Best Practices
    --------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="best-practices">
    <h3>✅ Setup Best Practices</h3>
@@ -1156,8 +1079,6 @@ Prerequisites
    <li><strong>Use version control</strong> for config files</li>
    </ul>
    </div>
-
-   .. raw:: html
 
    <div class="warning-section">
    <h3>⚠️ Security Considerations</h3>
@@ -1174,11 +1095,11 @@ Prerequisites
    Next Steps
    ----------
 
-   - **Test**: Verify your setup with simple commands
-   - **Monitor**: Set up health monitoring
-   - **Scale**: Add more servers as needed
-   - **Secure**: Review and harden security settings
-   - **Optimize**: Tune performance settings
+   - **Test*: Verify your setup with simple commands
+   - **Monitor*: Set up health monitoring
+   - **Scale*: Add more servers as needed
+   - **Secure*: Review and harden security settings
+   - **Optimize*: Tune performance settings
 
    .. toctree::
 

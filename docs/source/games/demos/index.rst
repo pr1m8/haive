@@ -14,7 +14,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Naval strategy game with hidden ship placement
 
-      **Complexity**: Medium
+      **Complexity*: Medium
 
    .. grid-item-card:: 🔍 Clue (Cluedo)
 
@@ -23,7 +23,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Mystery deduction game to solve the murder
 
-      **Complexity**: High
+      **Complexity*: High
 
    .. grid-item-card:: 🔴 Connect Four
 
@@ -32,7 +32,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Drop discs to connect four in a row
 
-      **Complexity**: Low
+      **Complexity*: Low
 
    .. grid-item-card:: 💬 Debate
 
@@ -41,7 +41,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       AI agents engage in structured debates
 
-      **Complexity**: High
+      **Complexity*: High
 
    .. grid-item-card:: 🁯 Dominoes
 
@@ -50,7 +50,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Classic tile-matching game
 
-      **Complexity**: Medium
+      **Complexity*: Medium
 
    .. grid-item-card:: 🦊 Fox and Geese
 
@@ -59,7 +59,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Asymmetric strategy game
 
-      **Complexity**: Medium
+      **Complexity*: Medium
 
    .. grid-item-card:: ⚫ Go
 
@@ -68,7 +68,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Ancient strategic board game
 
-      **Complexity**: Very High
+      **Complexity*: Very High
 
    .. grid-item-card:: 🕵️ Mafia
 
@@ -77,7 +77,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Social deduction party game
 
-      **Complexity**: Medium
+      **Complexity*: Medium
 
    .. grid-item-card:: 🎯 Mastermind
 
@@ -86,7 +86,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Code-breaking logic game
 
-      **Complexity**: Medium
+      **Complexity*: Medium
 
    .. grid-item-card:: 🎮 Nim
 
@@ -95,7 +95,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Mathematical strategy game
 
-      **Complexity**: Low
+      **Complexity*: Low
 
    .. grid-item-card:: ♠️ Poker
 
@@ -104,7 +104,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Classic card game with multiple variants
 
-      **Complexity**: High
+      **Complexity*: High
 
    .. grid-item-card:: ⚪ Reversi (Othello)
 
@@ -113,7 +113,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Disc-flipping strategy game
 
-      **Complexity**: Medium
+      **Complexity*: Medium
 
    .. grid-item-card:: 🗺️ Risk
 
@@ -122,7 +122,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Global domination strategy game
 
-      **Complexity**: High
+      **Complexity*: High
 
    .. grid-item-card:: 🃏 Texas Hold'em
 
@@ -131,7 +131,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Popular poker variant
 
-      **Complexity**: High
+      **Complexity*: High
 
    .. grid-item-card:: ❌ Tic Tac Toe
 
@@ -140,7 +140,7 @@ Interactive game demonstrations with playable interfaces and AI opponents.
 
       Classic 3x3 grid game
 
-      **Complexity**: Low
+      **Complexity*: Low
 
 .. toctree::
 

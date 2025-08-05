@@ -1,10 +1,6 @@
 🛠️ Development Guide
 ====================
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="dev-intro">
    <h1>Development & Contribution Guide</h1>
    <p>Everything you need to contribute to Haive, from setup to advanced tooling.</p>
@@ -19,7 +15,7 @@
       :link: setup
       :shadow: md
 
-      **Development Environment Setup**
+      **Development Environment Setup*
 
       Poetry, nox, pre-commit hooks, and IDE configuration for optimal development experience.
 
@@ -28,7 +24,7 @@
       :link: doc_utilities
       :shadow: md
 
-      **Advanced Documentation Tools**
+      **Advanced Documentation Tools*
 
       Analyze agents, generate visualizations, validate examples, and create comprehensive documentation.
 
@@ -37,7 +33,7 @@
       :link: testing
       :shadow: md
 
-      **Testing Philosophy & Practices**
+      **Testing Philosophy & Practices*
 
       No-mocks testing, real component validation, and comprehensive test coverage strategies.
 
@@ -46,7 +42,7 @@
       :link: contributing
       :shadow: md
 
-      **Contribution Guidelines**
+      **Contribution Guidelines*
 
       Code standards, pull request process, and community guidelines for contributors.
 
@@ -97,97 +93,55 @@ Quick Commands
          Development Workflow
          --------------------
 
-         .. raw:: html
-
-         .. raw:: html
-
          <div class="workflow-diagram">
-
-         .. raw:: html
 
          <div class="workflow-step">
 
-         .. raw:: html
-
          <div class="step-number">1</div>
-
-         .. raw:: html
 
          <div class="step-content">
          <h4>Setup</h4>
          <p>Clone, install dependencies, configure environment</p>
          </div>
 
-         .. raw:: html
-
          </div>
-
-         .. raw:: html
 
          <div class="workflow-arrow">→</div>
 
-         .. raw:: html
-
          <div class="workflow-step">
 
-         .. raw:: html
-
          <div class="step-number">2</div>
-
-         .. raw:: html
 
          <div class="step-content">
          <h4>Develop</h4>
          <p>Write code, create tests, update documentation</p>
          </div>
 
-         .. raw:: html
-
          </div>
-
-         .. raw:: html
 
          <div class="workflow-arrow">→</div>
 
-         .. raw:: html
-
          <div class="workflow-step">
 
-         .. raw:: html
-
          <div class="step-number">3</div>
-
-         .. raw:: html
 
          <div class="step-content">
          <h4>Validate</h4>
          <p>Run tests, check quality, generate docs</p>
          </div>
 
-         .. raw:: html
-
          </div>
-
-         .. raw:: html
 
          <div class="workflow-arrow">→</div>
 
-         .. raw:: html
-
          <div class="workflow-step">
 
-         .. raw:: html
-
          <div class="step-number">4</div>
-
-         .. raw:: html
 
          <div class="step-content">
          <h4>Submit</h4>
          <p>Create PR, review, merge</p>
          </div>
-
-         .. raw:: html
 
          </div>
          </div>
@@ -203,7 +157,7 @@ Quick Commands
 
          :shadow: sm
 
-         **Google-style Docstrings**
+         **Google-style Docstrings*
 
          - All public functions documented
          - Type hints on all parameters
@@ -214,7 +168,7 @@ Quick Commands
 
          :shadow: sm
 
-         **Automated Visualizations**
+         **Automated Visualizations*
 
          - Agent workflow diagrams
          - Architecture overviews
@@ -225,7 +179,7 @@ Quick Commands
 
          :shadow: sm
 
-         **Example-Driven Docs**
+         **Example-Driven Docs*
 
          - Runnable code examples
          - Validated with real components
@@ -246,31 +200,31 @@ Quick Commands
 
          - Purpose
 
-         * - **Poetry**
+         * - *Poetry**
 
          - Dependency management and virtual environments
 
-         * - **Nox**
+         * - *Nox**
 
          - Automated testing and documentation builds
 
-         * - **Pre-commit**
+         * - *Pre-commit**
 
          - Git hooks for code quality checks
 
-         * - **Trunk**
+         * - *Trunk**
 
          - Super-linter with auto-fixes
 
-         * - **Ruff**
+         * - *Ruff**
 
          - Lightning-fast Python linting
 
-         * - **MyPy**
+         * - *MyPy**
 
          - Static type checking
 
-         * - **Pytest**
+         * - *Pytest**
 
          - Testing framework with real components
 
@@ -279,73 +233,45 @@ Quick Commands
 
          The advanced documentation utilities provide:
 
-         .. raw:: html
-
-         .. raw:: html
-
          <div class="features-grid">
-
-         .. raw:: html
 
          <div class="feature">
          <span class="feature-icon">🔍</span>
-
-         .. raw:: html
 
          <div class="feature-content">
          <h4>Agent Discovery</h4>
          <p>Automatically finds and analyzes 100+ agent types across all packages</p>
          </div>
 
-         .. raw:: html
-
          </div>
-
-         .. raw:: html
 
          <div class="feature">
          <span class="feature-icon">🎨</span>
-
-         .. raw:: html
 
          <div class="feature-content">
          <h4>Universal Visualization</h4>
          <p>Creates workflow diagrams for any agent type, regardless of architecture</p>
          </div>
 
-         .. raw:: html
-
          </div>
-
-         .. raw:: html
 
          <div class="feature">
          <span class="feature-icon">🧪</span>
-
-         .. raw:: html
 
          <div class="feature-content">
          <h4>Example Validation</h4>
          <p>Tests all examples with streaming output and error handling</p>
          </div>
 
-         .. raw:: html
-
          </div>
-
-         .. raw:: html
 
          <div class="feature">
          <span class="feature-icon">📚</span>
-
-         .. raw:: html
 
          <div class="feature-content">
          <h4>Auto Documentation</h4>
          <p>Generates comprehensive docs with cross-references and API extraction</p>
          </div>
-
-         .. raw:: html
 
          </div>
          </div>
@@ -361,7 +287,7 @@ Quick Commands
 
          :shadow: sm
 
-         **Join the Discussion**
+         **Join the Discussion*
 
          - GitHub Discussions for questions
          - Discord for real-time chat
@@ -372,7 +298,7 @@ Quick Commands
 
          :shadow: sm
 
-         **Report Issues**
+         **Report Issues*
 
          - GitHub Issues for bugs
          - Include reproduction steps
@@ -388,8 +314,6 @@ Quick Commands
          doc_utilities
          testing
          contributing
-
-         .. raw:: html
 
          <style>
          .dev-intro {
