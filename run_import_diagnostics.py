@@ -9,7 +9,7 @@ import sys
 import warnings
 from pathlib import Path
 
-from import_diagnostics import save_import_diagnosis
+from import_diagnostics import diagnose_imports, save_import_diagnosis
 
 # Suppress warnings
 os.environ["HAIVE_QUIET"] = "1"
@@ -32,8 +32,11 @@ def main():
         str(base_dir / "packages" / "haive-prebuilt" / "src"),
     ]
 
+    # Diagnose imports first
+    results, mock_imports = diagnose_imports(autoapi_dirs, str(base_dir))
+    
     # Save to file
-    save_import_diagnosis(autoapi_dirs, str(base_dir))
+    save_import_diagnosis(results, mock_imports)
 
     # Find the latest diagnosis file
     diagnosis_files = sorted(

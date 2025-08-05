@@ -21,4 +21,5 @@
 ### Root:
 
 - Dotfiles
-- Precommit and Trunk Overlap
+- Precommit and Trunk Overlap 
+- Fix and integrate haicve-mdoode
