@@ -23,16 +23,16 @@ Standard README Structure
 
 Each game module README should follow this structure:
 
-1. **Title and Overvie***w**: Brief introduction to the module**
+1. **Title and Overvie*w**: Brief introduction to the module*
 
-2.*** **Feature***s**: List of key features
+2.*** *Feature**s*: List of key features
 
-3.*** **Component***s**: Description of key classes and objects
-4.*** **Usage Exampl***e**: Code showing how to use the module
-5.*** **Game Rule***s**: Description of the game rules (for game modules)
-6.*** **Strategic Concept***s**: Key strategies in the game (for game modules)
-7.*** **Customizatio***n**: How to customize the module
-8.*** **Integratio***n**: How it integrates with the Haive framework
+3.*** *Component**s*: Description of key classes and objects
+4.*** *Usage Exampl**e*: Code showing how to use the module
+5.*** *Game Rule**s*: Description of the game rules (for game modules)
+6.*** *Strategic Concept**s*: Key strategies in the game (for game modules)
+7.*** *Customizatio**n*: How to customize the module
+8.*** *Integratio**n*: How it integrates with the Haive framework
 
 Example README Template
 
@@ -55,16 +55,16 @@ Example README Template
 
     ## Components
 
-    - `{Game Name}Agent` - Agent for playing {Game Name} with strategic reasoning
-    - `{Game Name}State` - State representation for tracking game progress
-    - `{Game Name}StateManager` - Game mechanics and rule enforcement
-    - `{Game Name}Config` - Configurable game parameters
-    - `{Game Name}Move` - Move representation and validation
-    - `{Game Name}Analysis` - Strategic position analysis
+    - ``{Game Name}Agent - Agent for playing {Game Name} with strategic reasoning``
+    - ``{Game Name}State - State representation for tracking game progress``
+    - ``{Game Name}StateManager - Game mechanics and rule enforcement``
+    - ``{Game Name}Config - Configurable game parameters``
+    - ``{Game Name}Move - Move representation and validation``
+    - ``{Game Name}Analysis - Strategic position analysis``
 
     ## Usage Example
 
-    ```python`
+    ```python``
     from haive.games.{module_name} import {Game Name}Agent
     from haive.games.{module_name} import {Game Name}Config
 
@@ -80,7 +80,7 @@ Example README Template
 
     # Check game outcome
     print(f"Game status: {final_state}")
-    `` ```
+    `` ``
 
     ## Game Rules
 
@@ -92,7 +92,7 @@ Example README Template
 
     ## Customization
 
-    The {Game Name} game can be customized through the ```{Game Name}Config` class, which allows you to adjust:
+    The {Game Name} game can be customized through the ```{Game Name}Config class, which allows you to adjust:``
 
     - Player assignments and turn order
     - Game rule variations
@@ -113,7 +113,7 @@ Example README Template
 
     --------------------------------
 
-    The ``add_docstrings.p``y`` script can automatically generate README files for modules that don't have them:
+    The ``add_docstrings.py`` script can automatically generate README files for modules that don't have them:
 
 .. code-block:: bash
 
@@ -153,4 +153,4 @@ Example README Template
 
     2. Adding them to the appropriate toctree
 
-    3. Adding cross-references to relevant API documentation``***
+    3. Adding cross-references to relevant API documentation``***`

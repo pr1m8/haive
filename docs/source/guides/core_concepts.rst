@@ -11,19 +11,19 @@ Agents
 
 Agents are autonomous entities that can process information, make decisions, and take actions. In Haive, agents are:
 
-- **Modular**: Composed of interchangeable components
-- **Stateful**: Maintain information across interactions
-- **Tool-enabled**: Can use tools to interact with external systems
-- **Configurable**: Highly customizable for different use cases
+- **Modular*: Composed of interchangeable components
+- **Stateful*: Maintain information across interactions
+- **Tool-enabled*: Can use tools to interact with external systems
+- **Configurable*: Highly customizable for different use cases
 
 Engines
 -------
 
 Engines power the cognitive abilities of agents:
 
-- **LLM Engines**: Connect to language models from providers like OpenAI, Anthropic, etc.
-- **Vector Engines**: Enable semantic search and retrieval
-- **Custom Engines**: Create specialized cognitive components
+- **LLM Engines*: Connect to language models from providers like OpenAI, Anthropic, etc.
+- **Vector Engines*: Enable semantic search and retrieval
+- **Custom Engines*: Create specialized cognitive components
 
 Tools
 -----
@@ -61,6 +61,6 @@ Next Steps
 
 Continue with these guides:
 
-- :doc:`architecture` - Detailed system architecture
-- :doc:`building_agents` - How to create custom agents
-- :doc:`using_tools` - Working with tools effectively
+- :doc:`architecture - Detailed system architecture`
+- :doc:`building_agents - How to create custom agents`
+- :doc:`using_tools - Working with tools effectively`

@@ -2,15 +2,9 @@
 .. _search-tools:
 
 🔍 Search Tools Documentation
-================================
-
-.. raw:: html
-
-   .. raw:: html
+============================
 
    <div class="agent-hero-section">
-
-.. raw:: html
 
    <div class="hero-content">
    <h2>🔍 Powerful Search & Information Retrieval</h2>
@@ -20,8 +14,6 @@
    </p>
    </div>
 
-.. raw:: html
-
    </div>
 
 Overview
@@ -29,56 +21,34 @@ Overview
 
 The Search Tools collection provides agents with powerful capabilities to find and retrieve information from various sources:
 
-- **Web Search**: Real-time web content retrieval
-- **Academic Search**: Scientific papers and research
-- **Documentation Search**: Technical documentation and APIs
-- **Semantic Search**: Vector-based similarity search
-- **Structured Data**: Database and knowledge graph queries
-
-.. raw:: html
-
-   .. raw:: html
+- **Web Search*: Real-time web content retrieval
+- **Academic Search*: Scientific papers and research
+- **Documentation Search*: Technical documentation and APIs
+- **Semantic Search*: Vector-based similarity search
+- **Structured Data*: Database and knowledge graph queries
 
    <div class="showcase-section">
-
-.. raw:: html
 
    <div class="showcase-header">
    <h2>✨ Available Search Tools</h2>
    </div>
 
-.. raw:: html
-
    <div class="games-showcase">
-
-.. raw:: html
 
    <div class="game-card">
 
-.. raw:: html
-
    <div class="game-header">
-
-.. raw:: html
 
    <div class="game-emoji">🌐</div>
    <h3 class="game-title">WebSearchTool</h3>
 
-.. raw:: html
-
    <div class="game-category">General Web</div>
    </div>
-
-.. raw:: html
 
    <p class="game-description">
 
                Real-time web search with result ranking, snippet extraction, and source verification. Supports multiple search engines.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="game-features">
    <span class="game-feature">Multi-engine support</span>
@@ -87,64 +57,40 @@ The Search Tools collection provides agents with powerful capabilities to find a
    <span class="game-feature">Rate limiting</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">< 2s</span>
    <span class="game-stat-label">Response Time</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">95%</span>
    <span class="game-stat-label">Accuracy</span>
    </div>
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">10+</span>
    <span class="game-stat-label">Sources</span>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
-
-.. raw:: html
 
    <div class="game-card">
 
-.. raw:: html
-
    <div class="game-header">
-
-.. raw:: html
 
    <div class="game-emoji">📚</div>
    <h3 class="game-title">WikipediaSearchTool</h3>
 
-.. raw:: html
-
    <div class="game-category">Encyclopedia</div>
    </div>
-
-.. raw:: html
 
    <p class="game-description">
 
                Search and retrieve Wikipedia articles with structured content extraction and cross-references.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="game-features">
    <span class="game-feature">Full articles</span>
@@ -153,64 +99,40 @@ The Search Tools collection provides agents with powerful capabilities to find a
    <span class="game-feature">Multi-language</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">6M+</span>
    <span class="game-stat-label">Articles</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">300+</span>
    <span class="game-stat-label">Languages</span>
    </div>
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">< 1s</span>
    <span class="game-stat-label">Response</span>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
-
-.. raw:: html
 
    <div class="game-card">
 
-.. raw:: html
-
    <div class="game-header">
-
-.. raw:: html
 
    <div class="game-emoji">🎓</div>
    <h3 class="game-title">ArxivSearchTool</h3>
 
-.. raw:: html
-
    <div class="game-category">Academic</div>
    </div>
-
-.. raw:: html
 
    <p class="game-description">
 
                Search scientific papers from arXiv with abstract retrieval, citation extraction, and PDF access.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="game-features">
    <span class="game-feature">2M+ papers</span>
@@ -219,64 +141,40 @@ The Search Tools collection provides agents with powerful capabilities to find a
    <span class="game-feature">Citation data</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">2M+</span>
    <span class="game-stat-label">Papers</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">8</span>
    <span class="game-stat-label">Categories</span>
    </div>
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">Free</span>
    <span class="game-stat-label">Access</span>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
-
-.. raw:: html
 
    <div class="game-card">
 
-.. raw:: html
-
    <div class="game-header">
-
-.. raw:: html
 
    <div class="game-emoji">🧠</div>
    <h3 class="game-title">SemanticSearchTool</h3>
 
-.. raw:: html
-
    <div class="game-category">Vector Search</div>
    </div>
-
-.. raw:: html
 
    <p class="game-description">
 
                Advanced semantic search using embeddings for finding conceptually similar content across documents.
-.. raw:: html
-
    </p>
-
-.. raw:: html
 
    <div class="game-features">
    <span class="game-feature">Vector similarity</span>
@@ -285,32 +183,22 @@ The Search Tools collection provides agents with powerful capabilities to find a
    <span class="game-feature">Hybrid search</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">768D</span>
    <span class="game-stat-label">Embeddings</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">< 100ms</span>
    <span class="game-stat-label">Query Time</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">99%</span>
    <span class="game-stat-label">Recall</span>
    </div>
-
-.. raw:: html
 
    </div>
    </div>
@@ -320,14 +208,12 @@ The Search Tools collection provides agents with powerful capabilities to find a
 Quick Start
 -----------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="code-example-section">
    <h4>🚀 Basic Search Examples</h4>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.tools.search import (
    WebSearchTool,
@@ -389,21 +275,17 @@ Quick Start
    "Find the latest research on quantum computing applications in cryptography"
    )
 
-   .. raw:: html
-
    </div>
 
    Advanced Search Patterns
    ------------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="custom-section">
    <h3>🎯 Advanced Search Techniques</h3>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.tools.search import WebSearchTool, SearchConfig
    from typing import List, Dict
@@ -448,7 +330,7 @@ Quick Start
    # Search with each strategy
    tasks = []
    for strategy in strategies:
-   tool = WebSearchTool(**strategy)**
+   tool = WebSearchTool(**strategy)*
    tasks.append(tool.ainvoke(query))
 
    # Gather results
@@ -522,26 +404,20 @@ Quick Start
 
    return federated_results
 
-   .. raw:: html
-
    </div>
 
    Search Result Processing
    ------------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>📊 Processing Search Results</h2>
    </div>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.tools.search import WebSearchTool
    from haive.tools.search.processors import (
@@ -678,27 +554,19 @@ Quick Start
                reverse=True
            )
 
-   .. raw:: html
-
    </div>
 
    Search Tool Combinations
    ------------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="api-grid">
-
-   .. raw:: html
 
    <div class="api-section">
    <h4>🔗 Chain Searches</h4>
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Progressive search refinement
       async def progressive_search(
@@ -720,18 +588,14 @@ Quick Start
               # Process and integrate
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       <div class="api-section">
       <h4>🌐 Cross-Reference</h4>
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Verify information across sources
       async def verify_facts(claim: str):
@@ -752,25 +616,20 @@ Quick Start
           return aggregate_evidence(evidence)
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       </div>
 
       Performance Optimization
-      ------------------------
 
-      .. raw:: html
-
-      .. raw:: html
+  ------------------------
 
       <div class="custom-section">
       <h3>⚡ Search Performance Tips</h3>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.tools.search import WebSearchTool
    from functools import lru_cache
@@ -779,8 +638,8 @@ Quick Start
 
    # 1. Caching search results
    class CachedSearchTool(WebSearchTool):
-   def __init__(self, cache_ttl: int = 3600, **kwargs):**
-   super().__init__(**kwargs)**
+   def __init__(self, cache_ttl: int = 3600, **kwargs):*
+   super().__init__(**kwargs)*
    self.cache_ttl = cache_ttl
    self.redis = None
 
@@ -789,7 +648,7 @@ Quick Start
    'redis://localhost'
    )
 
-   async def ainvoke(self, query: str, **kwargs):**
+   async def ainvoke(self, query: str, **kwargs):*
    # Check cache first
    cache_key = f"search:{query}:{hash(str(kwargs))}"
    cached = await self.redis.get(cache_key)
@@ -798,7 +657,7 @@ Quick Start
    return json.loads(cached)
 
    # Perform search
-   results = await super().ainvoke(query, **kwargs)**
+   results = await super().ainvoke(query, **kwargs)*
 
    # Cache results
    await self.redis.setex(
@@ -872,8 +731,6 @@ Quick Start
 
    return ' '.join(words)
 
-   .. raw:: html
-
    </div>
 
    API Reference
@@ -897,111 +754,67 @@ Quick Start
    Next Steps
    ----------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>🚀 Explore More Tools</h2>
    </div>
 
-   .. raw:: html
-
    <div class="agent-showcase">
-
-   .. raw:: html
 
    <div class="agent-card">
 
-   .. raw:: html
-
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">💻</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Code Tools</h3>
    <p class="agent-subtitle">Code execution and analysis</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Execute code, analyze repositories, and generate code with specialized development tools.
-   .. raw:: html
-
    </p>
    <a href="../code/index.html" class="agent-link">Explore Code Tools</a>
    </div>
 
-   .. raw:: html
-
    <div class="agent-card">
-
-   .. raw:: html
 
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">📊</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Data Tools</h3>
    <p class="agent-subtitle">Data processing and analysis</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Process CSV, JSON, and other data formats with powerful analysis and visualization tools.
-   .. raw:: html
-
    </p>
    <a href="../data/index.html" class="agent-link">Explore Data Tools</a>
    </div>
 
-   .. raw:: html
-
    <div class="agent-card">
-
-   .. raw:: html
 
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">🧮</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Math Tools</h3>
    <p class="agent-subtitle">Mathematical computation</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Perform complex calculations, symbolic math, and statistical analysis.
-   .. raw:: html
-
    </p>
    <a href="../math/index.html" class="agent-link">Explore Math Tools</a>
    </div>
@@ -1010,6 +823,6 @@ Quick Start
 
    .. seealso::
 
-   - :doc:`../../agents/react/index` - Using tools with ReactAgent
-   - :doc:`../../guides/tool_composition` - Combining multiple tools
-   - :doc:`../index` - Back to tools overview
+   - :doc:`../../agents/react/index - Using tools with ReactAgent`
+   - :doc:`../../guides/tool_composition - Combining multiple tools`
+   - :doc:`../index - Back to tools overview`

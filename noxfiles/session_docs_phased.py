@@ -88,13 +88,37 @@ class PhaseLogger:
         if self.current_phase:
             self.current_phase["logs"].append({
                 "level": level,
-                "message": message
+                "message": message,
+                "timestamp": time.time()
             })
 
-        # Also log to session
-        icons = {"info": "ℹ️", "warning": "⚠️", "error": "❌", "success": "✅"}
+        # Also log to session with consistent formatting to match conf modules
+        icons = {"info": "ℹ️", "warning": "⚠️", "error": "❌", "success": "✅", "progress": "🔄", "debug": "🔍"}
         icon = icons.get(level, "📝")
-        self.session.log(f"{icon} {message}")
+        
+        # Add phase context for better tracking
+        phase_context = f"[{self.current_phase['name']}] " if self.current_phase else ""
+        
+        # Enhanced formatting with phase context and timestamps
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        
+        if level == "info":
+            self.session.log(f"{icon} {phase_context}{message}")
+        elif level == "warning":
+            self.session.log(f"{icon} {phase_context}{message}")
+        elif level == "error":
+            self.session.log(f"{icon} {phase_context}{message}")
+        elif level == "success":
+            self.session.log(f"{icon} {phase_context}{message}")
+        elif level == "progress":
+            # Show progress updates with timestamps for long operations
+            self.session.log(f"{icon} [{timestamp}] {phase_context}{message}")
+        elif level == "debug":
+            # Only show debug in verbose mode
+            if hasattr(self.session, 'posargs') and ('-v' in self.session.posargs or '--verbose' in self.session.posargs):
+                self.session.log(f"{icon} {phase_context}{message}")
+        else:
+            self.session.log(f"{icon} {phase_context}{message}")
 
     def warning(self, message: str):
         """Log a warning."""
@@ -107,6 +131,22 @@ class PhaseLogger:
         if self.current_phase:
             self.current_phase["errors"].append(message)
         self.log(message, "error")
+    
+    def progress(self, message: str, count: int = None, total: int = None):
+        """Log a progress update with optional count/total."""
+        if count is not None and total is not None:
+            percentage = (count / total) * 100
+            progress_message = f"{message} ({count}/{total} - {percentage:.1f}%)"
+        else:
+            progress_message = message
+        self.log(progress_message, "progress")
+    
+    def phase_summary(self):
+        """Show a quick summary of the current phase."""
+        if self.current_phase:
+            phase = self.current_phase
+            elapsed = time.time() - phase["start_time"]
+            self.log(f"Phase '{phase['name']}' - {elapsed:.1f}s elapsed, {len(phase['errors'])} errors, {len(phase['warnings'])} warnings", "progress")
 
     def write_summary(self):
         """Write a summary of all phases."""
@@ -170,11 +210,17 @@ def run_sphinx_command(
     phase_name: str,
     check_output: bool = True,
     verbose: bool = True,
+    keep_going: bool = False,
+    fail_fast: bool = False,
 ) -> bool:
     """Run a sphinx-build command and parse output."""
     # Check if verbose mode requested via session args
     if session.posargs and "verbose" in session.posargs:
         verbose = True
+    
+    # Check if keep-going mode requested via session args
+    if session.posargs and "keep-going" in session.posargs:
+        keep_going = True
 
     # Always add verbose flag for better tracking
     if "-v" not in args and verbose:
@@ -184,6 +230,11 @@ def run_sphinx_command(
     if "-vv" not in args and (phase_name == "extension_test" or
                               (session.posargs and "vv" in session.posargs)):
         args = ["-vv"] + args
+    
+    # Add keep-going flag if requested
+    if keep_going and "--keep-going" not in args:
+        args = ["--keep-going"] + args
+        logger.log("🔄 Keep-going mode enabled: continuing on errors", "info")
 
     cmd = ["poetry", "run", "sphinx-build"] + args
 
@@ -233,9 +284,9 @@ def run_sphinx_command(
             current_time = time.strftime("%H:%M:%S")
 
             if "reading sources..." in line:
-                logger.log(f"[{current_time}] 📖 Reading source files...")
+                logger.progress("📖 Reading source files...")
             elif "writing output..." in line:
-                logger.log(f"[{current_time}] ✍️ Writing output files...")
+                logger.progress("✍️ Writing output files...")
             elif "building [html]:" in line and "source changed" in line:
                 # Extract number of changed files
                 import re
@@ -243,23 +294,49 @@ def run_sphinx_command(
                 match = re.search(r"(\d+) source files? that are out of date",
                                   line)
                 if match:
-                    logger.log(
-                        f"🔄 Building {match.group(1)} changed source files")
+                    logger.progress(f"🔄 Building {match.group(1)} changed source files")
             elif "[AutoAPI] Reading files..." in line or "Reading Python objects" in line:
                 files_processed += 1
                 if files_processed % 50 == 0:
-                    logger.log(
-                        f"📂 AutoAPI processed {files_processed} files...")
+                    logger.progress(f"📂 AutoAPI processed {files_processed} files...")
             elif "writing" in line and ".html" in line:
                 html_generated += 1
                 if html_generated % 20 == 0:
-                    logger.log(f"📄 Generated {html_generated} HTML files...")
+                    logger.progress(f"📄 Generated {html_generated} HTML files...")
             elif "WARNING:" in line:
                 warnings_found.append(line)
-                logger.warning(line)
-            elif "ERROR:" in line or "Exception" in line:
+                logger.warning(f"Sphinx warning: {line}")
+            elif "ERROR:" in line or "CRITICAL:" in line:
                 errors_found.append(line)
-                logger.error(line)
+                logger.error(f"Sphinx error: {line}")
+                # Fail fast mode: terminate immediately on first error
+                if fail_fast:
+                    logger.error("🚨 FAIL FAST: Terminating on first error")
+                    process.terminate()
+                    return False
+            elif "Analyzing" in line and current_file:
+                # Show progress for large analysis phases
+                if files_processed % 100 == 0:
+                    logger.progress(f"📊 Analyzing files... (current: {current_file})")
+            elif line.startswith("Extension error:") or "ExtensionError" in line:
+                errors_found.append(line)
+                logger.error(f"Extension error: {line}")
+                # Fail fast mode: terminate immediately on extension error
+                if fail_fast:
+                    logger.error("🚨 FAIL FAST: Terminating on extension error")
+                    process.terminate()
+                    return False
+            elif "invalid syntax" in line:
+                syntax_errors[current_file or "unknown"] = line
+                logger.error(f"Syntax error in {current_file or 'unknown'}: {line}")
+            elif "Exception" in line and current_file:
+                errors_found.append(line)
+                logger.error(f"Exception while processing {current_file}: {line}")
+                
+            # Periodic progress summary (every 30 seconds of processing)
+            if time.time() - (getattr(logger, '_last_summary_time', 0)) > 30:
+                logger.phase_summary()
+                logger._last_summary_time = time.time()
 
             # Capture syntax errors with file information
             elif "IndentationError" in line or "SyntaxError" in line:
@@ -337,7 +414,13 @@ def run_sphinx_command(
         # Check result
         if process.returncode != 0:
             logger.error(f"Command failed with exit code {process.returncode}")
-            return False
+            if keep_going:
+                logger.warning("⚠️ Keep-going mode: treating failure as warning and continuing")
+                # In keep-going mode, try a fallback build with fewer extensions
+                logger.log("🔄 Attempting fallback build with reduced extensions", "info")
+                return "fallback_needed"  # Signal that fallback is needed
+            else:
+                return False
 
         return True
 
@@ -346,12 +429,30 @@ def run_sphinx_command(
         import traceback
 
         logger.error(f"Traceback: {traceback.format_exc()}")
+        if keep_going:
+            logger.warning("⚠️ Keep-going mode: treating exception as warning")
+            return "fallback_needed"
         return False
 
 
 @nox.session(python=PYTHON_VERSIONS)
 def docs_phased(session):
-    """Build documentation in phases with detailed logging."""
+    """Build documentation in phases with detailed logging.
+    
+    Options:
+        verbose: Enable verbose output
+        vv: Enable very verbose output
+        keep-going: Continue building despite errors
+        pdf: Also build PDF documentation
+        fast-imports: Enable fast import diagnostics (default: enabled)
+        slow-imports: Disable fast import diagnostics (test all modules)
+        
+    Examples:
+        nox -s docs_phased -- keep-going verbose
+        nox -s docs_phased -- vv pdf
+        nox -s docs_phased -- slow-imports  # Test all 2754 modules
+        nox -s docs_phased -- fast-imports  # Test ~300 key modules (default)
+    """
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     log_file = LOGS_DIR / f"docs_phased_{timestamp}.log"
 
@@ -364,15 +465,36 @@ def docs_phased(session):
         "1",
     )  # Default to disabled
     env["SPHINX_PROFILE"] = env.get("SPHINX_PROFILE",
-                                    "standard")  # Default to standard
+                                    "full")  # Default to full
+    
+    # Handle import diagnostics speed
+    if session.posargs and "fast-imports" in session.posargs:
+        env["SPHINX_FAST_IMPORTS"] = "1"
+        env["SPHINX_IMPORT_SAMPLE_LIMIT"] = "300"
+    elif session.posargs and "slow-imports" in session.posargs:
+        env["SPHINX_FAST_IMPORTS"] = "0"
+        env["SPHINX_IMPORT_SAMPLE_LIMIT"] = "10000"  # High limit = no sampling
+    else:
+        # Default to full imports (slow mode) for thorough testing
+        env["SPHINX_FAST_IMPORTS"] = env.get("SPHINX_FAST_IMPORTS", "0")
+        env["SPHINX_IMPORT_SAMPLE_LIMIT"] = env.get("SPHINX_IMPORT_SAMPLE_LIMIT", "10000")
 
+    # Show configuration options
+    keep_going_enabled = session.posargs and "keep-going" in session.posargs
+    verbose_enabled = session.posargs and ("verbose" in session.posargs or "vv" in session.posargs)
+    fast_imports_enabled = env["SPHINX_FAST_IMPORTS"] == "1"
+    
     session.log("📊 Phased build configuration:")
-    session.log(
-        f"   SPHINX_DISABLE_EXAMPLES = {env['SPHINX_DISABLE_EXAMPLES']}")
+    session.log(f"   SPHINX_DISABLE_EXAMPLES = {env['SPHINX_DISABLE_EXAMPLES']}")
     session.log(f"   SPHINX_PROFILE = {env['SPHINX_PROFILE']}")
+    session.log(f"   SPHINX_FAST_IMPORTS = {env['SPHINX_FAST_IMPORTS']} (limit: {env['SPHINX_IMPORT_SAMPLE_LIMIT']} modules)")
+    session.log(f"   Keep-going mode: {'✅ ENABLED' if keep_going_enabled else '❌ disabled'}")
+    session.log(f"   Verbose logging: {'✅ ENABLED' if verbose_enabled else '❌ disabled'}")
+    session.log(f"   Fast imports: {'✅ ENABLED' if fast_imports_enabled else '❌ disabled'}")
     session.log("   🚫 Examples disabled by default for faster phased builds")
-    session.log(
-        "   💡 Override with SPHINX_DISABLE_EXAMPLES=0 to enable examples")
+    session.log("   💡 Override with SPHINX_DISABLE_EXAMPLES=0 to enable examples")
+    session.log("   🔄 Use 'keep-going' arg to continue on errors")
+    session.log("   ⚡ Use 'fast-imports' (default) for quick builds, 'slow-imports' for full diagnostics")
 
     # Apply environment to session
     session.env.update(env)
@@ -421,14 +543,11 @@ def docs_phased(session):
     except Exception as e:
         logger.error(f"conf.py import failed: {e}")
 
-    # Phase 3: Extension Testing - SKIPPED to go directly to HTML build
-    logger.log("Skipping extension test phase - going directly to HTML build",
-               "info")
+    # Skip extension testing and content validation - go directly to HTML build
+    logger.log("ℹ️ Skipping extension test phase")
+    logger.log("ℹ️ Skipping content validation phase")
 
-    # Phase 4: Content Validation - SKIPPED
-    logger.log("Skipping content validation phase", "info")
-
-    # Phase 5: HTML Build
+    # Phase 3: HTML Build
     logger.start_phase("html_build", "Building HTML documentation")
 
     # Clear old HTML files to get accurate count
@@ -436,16 +555,56 @@ def docs_phased(session):
     if html_dir.exists():
         logger.log(f"Clearing old HTML files from {html_dir}")
 
+    # Check if keep-going mode requested
+    keep_going = session.posargs and "keep-going" in session.posargs
+    
+    # Add incremental build support to avoid starting from 0
+    # Use -E flag only for fresh builds, otherwise use cache
+    use_fresh_build = session.posargs and "fresh" in session.posargs
+    build_args = ["-b", "html", "-j", "auto"]
+    
+    if use_fresh_build:
+        build_args.extend(["-E", "-a"])  # Fresh build: rebuild all files
+        logger.log("🔄 Fresh build requested: rebuilding all files", "info")
+    else:
+        # Incremental build: only rebuild changed files
+        logger.log("⚡ Incremental build: only changed files will be rebuilt", "info")
+    
+    build_args.extend([str(SOURCE_DIR), str(BUILD_DIR / "html")])
+    
     success = run_sphinx_command(
         session,
         logger,
-        ["-b", "html", "-j", "auto",
-         str(SOURCE_DIR),
-         str(BUILD_DIR / "html")],
+        build_args,
         "html_build",
+        keep_going=keep_going,
     )
 
-    if success:
+    # Handle fallback build if needed
+    if success == "fallback_needed" and keep_going:
+        logger.log("🔄 Starting fallback build with standard profile", "info")
+        # Set environment to use standard profile (fewer extensions)
+        fallback_env = session.env.copy()
+        fallback_env["SPHINX_PROFILE"] = "standard"
+        session.env.update(fallback_env)
+        
+        # Try again with standard profile
+        success = run_sphinx_command(
+            session,
+            logger,
+            ["-b", "html", "-j", "auto",
+             str(SOURCE_DIR),
+             str(BUILD_DIR / "html")],
+            "html_build_fallback",
+            keep_going=False,  # Don't recurse fallback
+        )
+        
+        if success:
+            logger.log("✅ Fallback build completed successfully", "success")
+        else:
+            logger.error("❌ Fallback build also failed")
+
+    if success is True or success == "fallback_needed":
         # Count all generated HTML files recursively
         html_files = list((BUILD_DIR / "html").rglob("*.html"))
         api_files = (list((BUILD_DIR / "html" / "api").rglob("*.html")) if

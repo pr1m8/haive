@@ -168,7 +168,7 @@ def get_all_extensions() -> list[str]:
                     logger.info(f"  ✅ {ext_name} (custom)")
                 except ImportError as e:
                     logger.warning(
-                        f"  ⚠️  {ext_name}: Custom extension not available - {e}"
+                        f"  ⚠️  {ext_name}: Custom extension not available - {e}",
                     )
                     optional_missing.append((ext_name, str(e)))
             elif "sphinxcontrib" in ext_name:
@@ -180,28 +180,28 @@ def get_all_extensions() -> list[str]:
                 except ImportError:
                     # Try alternative import pattern
                     try:
-                        alt_name = ext_name.replace("sphinxcontrib.",
-                                                    "sphinxcontrib_")
+                        alt_name = ext_name.replace(
+                            "sphinxcontrib.",
+                            "sphinxcontrib_",
+                        )
                         __import__(alt_name)
                         loaded_extensions.append(ext_name)
                         logger.info(f"  ✅ {ext_name} (alt import)")
                     except ImportError as e:
                         if ext_name in WORKING_EXTENSIONS:
                             logger.error(
-                                f"  ❌ {ext_name}: Required extension failed - {e}"
+                                f"  ❌ {ext_name}: Required extension failed - {e}",
                             )
                             failed_extensions.append((ext_name, str(e)))
                         else:
                             logger.warning(
-                                f"  ⚠️  {ext_name}: Optional extension missing - {e}"
+                                f"  ⚠️  {ext_name}: Optional extension missing - {e}",
                             )
                             optional_missing.append((ext_name, str(e)))
             else:
                 # Test standard extensions
                 try:
-                    if ext_name == "sphinx_gallery.gen_gallery":
-                        pass
-                    elif ext_name == "nbsphinx":
+                    if ext_name == "sphinx_gallery.gen_gallery" or ext_name == "nbsphinx":
                         pass
                     elif ext_name.startswith("sphinx.ext"):
                         # Sphinx built-in extensions - always available
@@ -217,14 +217,16 @@ def get_all_extensions() -> list[str]:
                 except ImportError as e:
                     if ext_name in WORKING_EXTENSIONS:
                         logger.error(
-                            f"  ❌ {ext_name}: Required extension failed - {e}")
+                            f"  ❌ {ext_name}: Required extension failed - {e}",
+                        )
                         failed_extensions.append((ext_name, str(e)))
                     else:
                         logger.warning(
-                            f"  ⚠️  {ext_name}: Optional extension missing - {e}"
+                            f"  ⚠️  {ext_name}: Optional extension missing - {e}",
                         )
                         optional_missing.append((ext_name, str(e)))
-                        # Don't add failed extensions to list - this causes early Sphinx failures
+                        # Don't add failed extensions to list - this causes early Sphinx
+                        # failures
 
         except Exception as e:
             logger.error(f"  💥 {ext_name}: Unexpected error - {e}")
@@ -281,7 +283,7 @@ def test_extension_compatibility() -> dict[str, Any]:
         except ImportError as e:
             results["high_value_status"][ext] = f"missing: {e}"
             results["warnings"].append(
-                (ext, f"High-value extension missing: {e}"))
+                (ext, f"High-value extension missing: {e}"), )
 
     # Get working extensions count
     working_exts = get_all_extensions()

@@ -11,11 +11,11 @@ Tool Basics
 
 A Haive tool consists of:
 
-1. **Input Scheme***a**: Defines the parameters the tool accepts**
+1. **Input Scheme*a**: Defines the parameters the tool accepts*
 
-2.*** **Logi***c**: The code that executes when the tool is called
+2.*** *Logi**c*: The code that executes when the tool is called
 
-3.*** **Output Scheme***a**: Defines the structure of the tool's response
+3.*** *Output Scheme**a*: Defines the structure of the tool's response
 
 Creating a Simple Tool
 
@@ -24,6 +24,8 @@ Creating a Simple Tool
 Here's how to create a basic custom tool:
 
 .. code-block:: python
+
+    # Code example here
 
     from pydantic import BaseModel, Field
     from haive.tools.base import BaseTool
@@ -67,17 +69,18 @@ Here's how to create a basic custom tool:
 
     Tool Best Practices
 
-    -------------------
+
+-------------------
 
     When creating custom tools:
 
-    1.*** **Clear Description***n**: Write clear descriptions for your tool and parameters
+    1.*** *Clear Description**n*: Write clear descriptions for your tool and parameters
 
-    2.*** **Input Validatio***n**: Use Pydantic models to validate inputs
+    2.*** *Input Validatio**n*: Use Pydantic models to validate inputs
 
-    3.*** **Error Handling***g**: Gracefully handle errors and edge cases
-    4.*** **Asynchronous Support***t**: For improved performance, consider implementing `_arun`
-    5.*** **Documentatio***n**: Document your tool's purpose, inputs, outputs, and limitations
+    3.*** *Error Handling**g*: Gracefully handle errors and edge cases
+    4.*** *Asynchronous Support**t*: For improved performance, consider implementing ``_arun``
+    5.*** *Documentatio**n*: Document your tool's purpose, inputs, outputs, and limitations
 
     Creating Tool Kits
 
@@ -86,6 +89,8 @@ Here's how to create a basic custom tool:
     Related tools can be organized into toolkits:
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.tools.base import BaseToolkit
 
@@ -102,11 +107,14 @@ Here's how to create a basic custom tool:
 
     Registering Custom Tools
 
-    ------------------------
+
+------------------------
 
     To make your tools available throughout your application:
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.core.registry import tool_registry
 
@@ -118,11 +126,14 @@ Here's how to create a basic custom tool:
 
     Using Environment Variables and Configuration
 
-    ---------------------------------------------
+
+---------------------------------------------
 
     For API keys and configuration:
 
 .. code-block:: python
+
+    # Code example here
 
     import os
     from haive.core.config import settings
@@ -139,11 +150,14 @@ Here's how to create a basic custom tool:
 
     Testing Custom Tools
 
-    --------------------
+
+--------------------
 
     Always write tests for your custom tools:
 
 .. code-block:: python
+
+    # Code example here
 
     def test_weather_tool():
     tool = WeatherTool()
@@ -156,11 +170,12 @@ Here's how to create a basic custom tool:
 
     Next Steps
 
-    ----------
+
+----------
 
     Now that you can create custom tools:
 
-    - Learn about :doc:`tool_routing` for advanced tool usage patterns
+    - Learn about :doc:`tool_routing for advanced tool usage patterns`
 
-    - Review the :mod:`haive.tools.base` API for more tool customization options
-    - Explore :mod:`haive.core.registry` to understand tool registration***
+    - Review the :mod:``haive.tools.base API for more tool customization options``
+    - Explore :mod:``haive.core.registry to understand tool registration***``

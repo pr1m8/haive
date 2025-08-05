@@ -44,9 +44,9 @@ At a high level, Haive consists of:
 
     Engines power agent cognition:
 
-    - **LLM Engines**: Connect to language models
-    - **Vector Engines**: Manage embeddings and retrieval
-    - **Specialized Engines**: Handle specific AI tasks
+    - **LLM Engines*: Connect to language models
+    - **Vector Engines*: Manage embeddings and retrieval
+    - **Specialized Engines*: Handle specific AI tasks
 
     Tools
     ^^^^^
@@ -106,17 +106,17 @@ At a high level, Haive consists of:
 
     Haive is designed for extensibility:
 
-    - **Custom Agents**: Specialized agent types
-    - **Custom Tools**: New capabilities
-    - **Custom Engines**: Alternative cognition engines
-    - **Custom Nodes**: Specialized processing components
-    - **Custom Patterns**: Reusable behavioral templates
+    - **Custom Agents*: Specialized agent types
+    - **Custom Tools*: New capabilities
+    - **Custom Engines*: Alternative cognition engines
+    - **Custom Nodes*: Specialized processing components
+    - **Custom Patterns*: Reusable behavioral templates
 
     Next Steps
     ----------
 
     Continue with:
 
-    - :doc:`state_management` - Understanding agent state
-    - :doc:`engine_system` - Working with cognitive engines
-    - :doc:`agent_patterns` - Common agent design patterns
+    - :doc:`state_management - Understanding agent state`
+    - :doc:`engine_system - Working with cognitive engines`
+    - :doc:`agent_patterns - Common agent design patterns`

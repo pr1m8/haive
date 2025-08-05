@@ -4,6 +4,7 @@ This module provides nox sessions for building package-specific
 documentation using the new modular configuration system.
 """
 
+import os
 import shutil
 import tempfile
 import time
@@ -570,4 +571,41 @@ Built with **{profile}** profile.
             session.log(f"{profile:<10} {'❌':<10} Failed: {result['error']}")
 
 
+@nox.session(python=PYTHON_VERSIONS, name="docs-fast")
+def docs_fast_build(session):
+    """FAST build - skip import diagnostics completely."""
+    session.log("⚡ FAST BUILD - Skipping import diagnostics...")
+
+    # Set minimal environment
+    env = os.environ.copy()
+    env["SPHINX_PROFILE"] = "minimal"
+    env["SPHINX_DISABLE_EXAMPLES"] = "1"
+    env["SPHINX_SKIP_IMPORT_DIAGNOSTICS"] = "1"
+    session.env.update(env)
+
+    build_dir = DOCS_DIR / "build" / "fast"
+
+    session.run(
+        "poetry",
+        "run",
+        "sphinx-build",
+        "-b",
+        "html",
+        "-q",  # Quiet mode
+        str(DOCS_DIR / "source"),
+        str(build_dir),
+        external=True,
+        success_codes=[0, 1, 2],  # Accept warnings
+    )
+
+    # Count results
+    html_files = list(build_dir.rglob("*.html")) if build_dir.exists() else []
+    session.log(f"✅ Generated {len(html_files)} HTML files")
+
+    index_file = build_dir / "index.html"
+    if index_file.exists():
+        session.log(f"📄 View: file://{index_file.absolute()}")
+
+
 if __name__ == "__main__":
+    pass

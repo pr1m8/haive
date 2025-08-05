@@ -2,7 +2,7 @@ Quick Start
 ===========
 
 Your First Agent
------------------
+----------------
 
 Let's build a simple conversational agent in just a few lines of code.
 
@@ -10,6 +10,8 @@ Basic Agent
 ~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.simple import SimpleAgent
     from haive.core.engine import create_engine
@@ -29,9 +31,12 @@ Basic Agent
     print(response)
 
     With Custom State
-    ~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.base import Agent
     from haive.core.schema import StateSchema
@@ -54,9 +59,12 @@ Basic Agent
     response = await agent.arun("Let's talk about AI!")
 
     Multi-Agent Conversation
-    ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.conversation import MultiAgentConversation
 
@@ -85,37 +93,46 @@ Basic Agent
     )
 
     Next Steps
-    ----------
+
+----------
 
     Now that you have a basic agent running:
 
-    1. **Explore Examples**: Check out :doc:`../examples/index` for more complex scenarios
-    2. **Learn Concepts**: Read :doc:`concepts` to understand the architecture
-    3. **Build Tools**: Add custom tools to your agents
-    4. **Create Workflows**: Design multi-step agent workflows
+    1. **Explore Examples*: Check out :doc:`../examples/index for more complex scenarios`
+    2. **Learn Concepts*: Read :doc:`concepts to understand the architecture`
+    3. **Build Tools*: Add custom tools to your agents
+    4. **Create Workflows*: Design multi-step agent workflows
 
     Common Patterns
     ---------------
 
-    **Error Handling**
+    **Error Handling*
 
 .. code-block:: python
+
+    # Code example here
 
     try:
     response = await agent.arun(user_input)
     except Exception as e:
     print(f"Agent error: {e}")
 
-    **Streaming Responses**
+
+**Streaming Responses*
 
 .. code-block:: python
+
+    # Code example here
 
     async for chunk in agent.astream(user_input):
     print(chunk, end="", flush=True)
 
-    **State Management**
+
+**State Management*
 
 .. code-block:: python
+
+    # Code example here
 
     # Access agent state
     current_state = agent.get_state()
@@ -123,9 +140,12 @@ Basic Agent
     # Update state
     agent.update_state({"conversation_count": 5})
 
-    **Configuration**
+
+**Configuration*
 
 .. code-block:: python
+
+    # Code example here
 
     # Agent with configuration
     agent = SimpleAgent(

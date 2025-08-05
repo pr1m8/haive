@@ -15,16 +15,27 @@ try:
     from rich.logging import RichHandler
     from rich.panel import Panel
     from rich.table import Table
+    import sys
 
-    # Set up rich console and logging
-    console = Console()
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(message)s",
-        datefmt="[%X]",
-        handlers=[RichHandler(console=console, rich_tracebacks=True)],
-    )
-    RICH_AVAILABLE = True
+    # Check if output is being piped to avoid BrokenPipeError
+    if hasattr(sys.stdout, 'isatty') and sys.stdout.isatty():
+        # Interactive terminal - use Rich
+        console = Console()
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(message)s",
+            datefmt="[%X]",
+            handlers=[RichHandler(console=console, rich_tracebacks=True)],
+        )
+        RICH_AVAILABLE = True
+    else:
+        # Piped output - use basic logging to avoid BrokenPipeError
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
+        console = None
+        RICH_AVAILABLE = False
 except ImportError:
     # Fall back to basic logging
     logging.basicConfig(level=logging.INFO)
@@ -104,7 +115,7 @@ def get_additional_extensions() -> list[str]:
     extension_tests = {
         # UI/UX Extensions
         "sphinx_copybutton": "sphinx_copybutton",
-        "sphinx_design": "sphinx_design",
+        # "sphinx_design": "sphinx_design",  # ERROR: sphinx_design_css_changed attribute error
         "sphinx_tabs.tabs": "sphinx_tabs",
         "sphinx_togglebutton": "sphinx_togglebutton",
         # "sphinx_external_toc": "sphinx_external_toc",  # DISABLED: requires _toc.yml
@@ -125,14 +136,14 @@ def get_additional_extensions() -> list[str]:
         "sphinxcontrib.redoc": "sphinxcontrib.redoc",
         "sphinxcontrib.httpdomain": "sphinxcontrib.httpdomain",
         # Media Extensions
-        "sphinxcontrib.images": "sphinxcontrib.images",
+        # "sphinxcontrib.images": "sphinxcontrib.images",  # ERROR: BuildEnvironment has no attribute remote_images
         "sphinxcontrib.youtube": "sphinxcontrib.youtube",
         # SEO/Web Extensions
         "sphinx_sitemap": "sphinx_sitemap",
         "sphinx_reredirects": "sphinx_reredirects",
         "sphinxext.opengraph": "sphinxext.opengraph",
         "sphinxext.rediraffe": "sphinxext.rediraffe",
-        "sphinx_last_updated_by_git": "sphinx_last_updated_by_git",
+        # "sphinx_last_updated_by_git": "sphinx_last_updated_by_git",  # ERROR: BuildEnvironment has no attribute git_last_updated
         # REMOVED: sphinxcontrib.versioning (setup function issues)
         # Output Format Extensions
         "sphinxcontrib.applehelp": "sphinxcontrib.applehelp",
@@ -140,7 +151,7 @@ def get_additional_extensions() -> list[str]:
         "sphinxcontrib.htmlhelp": "sphinxcontrib.htmlhelp",
         "sphinxcontrib.qthelp": "sphinxcontrib.qthelp",
         "sphinxcontrib.serializinghtml": "sphinxcontrib.serializinghtml",
-        "sphinxcontrib.jsmath": "sphinxcontrib.jsmath",
+        # "sphinxcontrib.jsmath": "sphinxcontrib.jsmath",  # ERROR: jsmath_path config value not set
     }
 
     available_extensions = []
@@ -181,7 +192,7 @@ def get_development_extensions() -> list[str]:
         "sphinx_autodoc2": "sphinx_autodoc2",
         "sphinx_autodocgen": "sphinx_autodocgen",
         "sphinx_autofixture": "sphinx_autofixture",
-        "sphinx_autoindex": "sphinx_autoindex",
+        # "sphinx_autoindex": "sphinx_autoindex",  # DISABLED: Problematic with multi-package structure
         "sphinx_autoissues": "sphinx_autoissues",
         "sphinx_automagicdoc": "sphinx_automagicdoc",
         # "sphinx_automodapi": "sphinx_automodapi",  # REMOVED: No setup() function
@@ -196,10 +207,10 @@ def get_development_extensions() -> list[str]:
         "sphinx_click": "sphinx_click",
         # REMOVED: sphinx_codeautolink - causes NodeType.MESSAGE_TRANSFORMER error
         # with Sphinx 8.2.3
-        "sphinx_codefence": "sphinx_codefence",
+        # "sphinx_codefence": "sphinx_codefence",  # ERROR: NameError: name 'docutils' is not defined
         "sphinx_codelinks": "sphinx_codelinks",
         "sphinx_exec_directive": "sphinx_exec_directive",
-        "sphinx_inlinecode": "sphinx_inlinecode",
+        # "sphinx_inlinecode": "sphinx_inlinecode",  # DISABLED: Path issues with doctree files
         # Documentation Management
         # "sphinx_cmd": "sphinx_cmd",  # REMOVED: No setup() function
         "sphinx_debuginfo": "sphinx_debuginfo",
@@ -242,22 +253,22 @@ def get_enhanced_extensions() -> list[str]:
         "sphinx_proof": "sphinx_proof",
         "sphinx_exercise": "sphinx_exercise",
         "sphinx_thebe": "sphinx_thebe",
-        "sphinx_thebelab": "sphinx_thebelab",
+        # "sphinx_thebelab": "sphinx_thebelab",  # DISABLED: Conflicts with sphinx_thebe (both register thebe_config)
         # Interactive Features
         "sphinx_collapse": "sphinx_collapse",
-        "sphinx_charts": "sphinx_charts",
-        "sphinx_carousel": "sphinx_carousel",
+        # "sphinx_charts": "sphinx_charts",  # WARNING: no setup() function
+        # "sphinx_carousel": "sphinx_carousel",  # WARNING: no setup() function
         "sphinx_data_viewer": "sphinx_data_viewer",
         "sphinx_galleria": "sphinx_galleria",
         "sphinx_hoverxref": "sphinx_hoverxref",
         "sphinx_tippy": "sphinx_tippy",
         "sphinx_treeview": "sphinx_treeview",
-        "sphinx_visualized": "sphinx_visualized",
+        # "sphinx_visualized": "sphinx_visualized",  # DISABLED: KeyError 'index' in node_map
         # Specialized Content
         "sphinx_changelog": "sphinx_changelog",
         "sphinx_contributors": "sphinx_contributors",
         "sphinx_git": "sphinx_git",
-        "sphinx_issues": "sphinx_issues",
+        # "sphinx_issues": "sphinx_issues",  # WARNING: duplicate role registration
         "sphinx_needs": "sphinx_needs",
         "sphinx_timeline": "sphinx_timeline",
         "sphinx_tags": "sphinx_tags",
@@ -270,17 +281,17 @@ def get_enhanced_extensions() -> list[str]:
         # Icons and UI Elements
         "sphinx_btn": "sphinx_btn",
         "sphinx_icon": "sphinx_icon",
-        "sphinx_fasvg": "sphinx_fasvg",
+        # "sphinx_fasvg": "sphinx_fasvg",  # WARNING: duplicate role registration
         # Mathematical and Scientific
         # DISABLED: sphinx_math_dollar incompatible with Sphinx 8.2.3 - causes NotImplementedError
-        "sphinx_uml": "sphinx_uml",
+        # "sphinx_uml": "sphinx_uml",  # WARNING: duplicate directive registration
         "sphinx_mindmap": "sphinx_mindmap",
-        "sphinx_diagrams": "sphinx_diagrams",
+        # "sphinx_diagrams": "sphinx_diagrams",  # WARNING: deprecation warnings
         # Markdown Integration - DISABLED due to conflict with myst_parser
-        # Social and External Integration
-        "sphinx_disqus": "sphinx_disqus",
-        "sphinx_social": "sphinx_social",
-        "sphinx_desktop": "sphinx_desktop",
+        # Social and External Integration - REMOVED: No setup() functions
+        # "sphinx_disqus": "sphinx_disqus",  # WARNING: no setup() function
+        # "sphinx_social": "sphinx_social",  # WARNING: no setup() function  
+        # "sphinx_desktop": "sphinx_desktop",  # WARNING: no setup() function
         # Internationalization - REMOVED: sphinx_intl (no setup function)
         "sphinx_tsegsearch": "sphinx_tsegsearch",
         # PDF and Export
@@ -291,16 +302,16 @@ def get_enhanced_extensions() -> list[str]:
         "sphinx_collections": "sphinx_collections",
         "sphinx_combine": "sphinx_combine",
         "sphinx_cache": "sphinx_cache",
-        "sphinx_inplace": "sphinx_inplace",
-        "sphinx_me": "sphinx_me",
+        # "sphinx_inplace": "sphinx_inplace",  # WARNING: no setup() function
+        # "sphinx_me": "sphinx_me",  # WARNING: no setup() function
         "sphinx_multiproject": "sphinx_multiproject",
         # "sphinx_multiversion": "sphinx_multiversion",  # DISABLED: May cause toctree conflicts
-        "sphinx_polyversion": "sphinx_polyversion",
+        # "sphinx_polyversion": "sphinx_polyversion",  # WARNING: no setup() function
         # REMOVED: sphinx_selective_exclude (no setup function)
         "sphinx_variations": "sphinx_variations",
         "sphinx_versions": "sphinx_versions",
         # REMOVED: sphinx_pyproject (use in conf.py instead)
-        "sphinx_toml": "sphinx_toml",
+        # "sphinx_toml": "sphinx_toml",  # WARNING: no setup() function
         # Web Framework Integration
         "sphinx_webtools": "sphinx_webtools",
         "sphinx_pyscript": "sphinx_pyscript",
@@ -311,14 +322,14 @@ def get_enhanced_extensions() -> list[str]:
         # "sphinx_jinja2_compat": "sphinx_jinja2_compat",  # DISABLED: no setup() function
         "sphinx_jsonschema": "sphinx_jsonschema",
         "sphinx_lastupdate": "sphinx_lastupdate",
-        "sphinx_mcp": "sphinx_mcp",
+        # "sphinx_mcp": "sphinx_mcp",  # DISABLED: Requires MCP config - commented out per user request
         "sphinx_openapi": "sphinx_openapi",
         "sphinx_refdoc": "sphinx_refdoc",
         "sphinx_removed_in": "sphinx_removed_in",
-        "sphinx_sql": "sphinx_sql",
+        # "sphinx_sql": "sphinx_sql",  # WARNING: no setup() function
         "sphinx_tagtoctree": "sphinx_tagtoctree",
         "sphinx_toggleprompt": "sphinx_toggleprompt",
-        "sphinx_typesafe": "sphinx_typesafe",
+        # "sphinx_typesafe": "sphinx_typesafe",  # WARNING: no setup() function
     }
 
     available_extensions = []

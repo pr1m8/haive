@@ -55,13 +55,13 @@ def on_env_get_outdated(app, env, added, changed, removed):
 
         if logger.isEnabledFor(logging.DEBUG):
             if added and len(added) <= 5:
-                logger.debug(f"  Added files: {added}")
+                logger.debug(f"  Added files: {list(added)}")
             elif added:
-                logger.debug(f"  Added files (first 5): {added[:5]}...")
+                logger.debug(f"  Added files (first 5): {list(added)[:5]}...")
             if changed and len(changed) <= 5:
-                logger.debug(f"  Changed files: {changed}")
+                logger.debug(f"  Changed files: {list(changed)}")
             elif changed:
-                logger.debug(f"  Changed files (first 5): {changed[:5]}...")
+                logger.debug(f"  Changed files (first 5): {list(changed)[:5]}...")
 
 
 def on_source_read(app, docname, source):
@@ -186,8 +186,9 @@ def on_build_finished(app, exception):
 def load_extension_status():
     """Load extension status if available."""
     try:
-        status_file = (Path(__file__, ).parent.parent / "logs" / "build" /
-                       "extension_status.json")
+        status_file = Path(
+            __file__
+        ).parent.parent / "logs" / "build" / "extension_status.json"
         if status_file.exists():
             with open(status_file) as f:
                 return json.load(f)

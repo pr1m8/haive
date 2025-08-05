@@ -7,7 +7,7 @@ Automatic Docstring Generator
 
 -----------------------------
 
-The ``add_docstrings.p``y`` script automatically adds Google-style docstrings to Python modules, classes, and functions based on naming conventions and context.
+The ``add_docstrings.py`` script automatically adds Google-style docstrings to Python modules, classes, and functions based on naming conventions and context.
 
 Location
 
@@ -58,12 +58,12 @@ The script is located at:
 
     Will add:
 
-    1. Module-level docstrings to`` ``__init__.p``y`` and other Python files
+    1. Module-level docstrings to`` __init__.p``y`` and other Python files
 
-    2. Class docstrings to classes like`` ``ChessAgen``t``,`` ``ChessStat``e``, etc.
+    2. Class docstrings to classes like`` ChessAgen``t``, ``ChessStat``e``, etc.
 
     3. Function docstrings to methods and functions
-    4. Create a`` ``README.m``d`` if one doesn't exist
+    4. Create a`` README.m``d`` if one doesn't exist
 
     Documentation Templates
 
@@ -79,9 +79,9 @@ The script is located at:
 
     ~~~~~~~~~~~~~~~~~~~
 
-    1.`` ``README_TEMPLATE.m``d`` - Template for module-level README files
+    1.`` README_TEMPLATE.m``d`` - Template for module-level README files
 
-    2.`` ``MODULE_DOCSTRING_TEMPLATE.tx``t`` - Template for module-level docstrings
+    2.`` MODULE_DOCSTRING_TEMPLATE.tx``t`` - Template for module-level docstrings
 
     Sphinx Integration
 
@@ -108,7 +108,7 @@ The script is located at:
 
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    The`` ``noxfile.p``y`` in the project root provides several commands for documentation management:
+    The`` noxfile.p``y`` in the project root provides several commands for documentation management:
 
     .. list-table::
 
@@ -117,15 +117,15 @@ The script is located at:
     * - Command*
 
      - Description
-    * * -`` ``nox -s doc``s``
+    * * -`` nox -s doc``s``
      - Build documentation
-    * * -`` ``nox -s docs -- --clea``n``
+    * * -`` nox -s docs -- --clea``n``
      - Clean build and rebuild
-    * * -`` ``nox -s docs-liv``e``
+    * * -`` nox -s docs-liv``e``
      - Start live server with auto-rebuild
-    * * -`` ``nox -s docs-clea``n``
+    * * -`` nox -s docs-clea``n``
      - Clean all documentation builds
-    * * -`` ``nox -s docs-chec``k``
+    * * -`` nox -s docs-chec``k``
      - Check documentation for errors
 
     Adding to Documentation Tools
@@ -134,8 +134,8 @@ The script is located at:
 
     If you want to extend the documentation tools, you can:
 
-    1. Add new templates to the`` ``template``s`` directory
+    1. Add new templates to the`` template``s`` directory
 
-    2. Enhance the`` ``add_docstrings.p``y`` script with new docstring patterns
+    2. Enhance the`` add_docstrings.p``y`` script with new docstring patterns
 
-    3. Update the Sphinx configuration in`` ``docs/source/conf.p``y``*
+    3. Update the Sphinx configuration in`` docs/source/conf.p``y``*`

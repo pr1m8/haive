@@ -2,15 +2,9 @@
 .. _mcp:
 
 🔌 MCP Integration
-==================
-
-.. raw:: html
-
-   .. raw:: html
+=================
 
    <div class="agent-hero-section">
-
-.. raw:: html
 
    <div class="hero-content">
    <h2>🚀 Connect Claude to Your World</h2>
@@ -19,46 +13,28 @@
    </p>
    </div>
 
-.. raw:: html
-
    </div>
 
 MCP Server Showcase
 -------------------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="agent-showcase">
-
-.. raw:: html
 
    <div class="agent-card">
 
-.. raw:: html
-
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🗄️</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">PostgreSQL Server</h3>
    <p class="agent-subtitle">Database Operations</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Direct database access for querying schemas, running SQL, analyzing performance, and managing data.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Schema exploration</li>
@@ -69,33 +45,21 @@ MCP Server Showcase
    <a href="#postgresql-setup" class="agent-link">Setup Guide</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">📁</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Filesystem Server</h3>
    <p class="agent-subtitle">Enhanced File Operations</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Advanced file operations beyond basic editing with search, batch processing, and filesystem analysis.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Recursive file search</li>
@@ -106,33 +70,21 @@ MCP Server Showcase
    <a href="#filesystem-setup" class="agent-link">Setup Guide</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🐙</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">GitHub Server</h3>
    <p class="agent-subtitle">Repository Management</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Complete GitHub integration for managing issues, pull requests, commits, and CI/CD workflows.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Issue management</li>
@@ -143,33 +95,21 @@ MCP Server Showcase
    <a href="#github-setup" class="agent-link">Setup Guide</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🌐</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Puppeteer Server</h3>
    <p class="agent-subtitle">Browser Automation</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Browser automation and web scraping with screenshot capabilities and UI testing support.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Web scraping</li>
@@ -180,33 +120,21 @@ MCP Server Showcase
    <a href="#puppeteer-setup" class="agent-link">Setup Guide</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🔍</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Brave Search Server</h3>
    <p class="agent-subtitle">Web Research</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Real-time web search integration for current information, documentation lookup, and research.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Real-time search</li>
@@ -217,33 +145,21 @@ MCP Server Showcase
    <a href="#brave-search-setup" class="agent-link">Setup Guide</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🐳</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Docker Server</h3>
    <p class="agent-subtitle">Container Management</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Docker container management for running code in isolated environments and managing services.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Container creation</li>
@@ -254,33 +170,21 @@ MCP Server Showcase
    <a href="#docker-setup" class="agent-link">Setup Guide</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">🧠</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Memory Bank Server</h3>
    <p class="agent-subtitle">Persistent Context</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Maintain persistent context across sessions with intelligent memory management and recall.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Context persistence</li>
@@ -291,33 +195,21 @@ MCP Server Showcase
    <a href="#memory-bank-setup" class="agent-link">Setup Guide</a>
    </div>
 
-.. raw:: html
-
    <div class="agent-card">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-emoji">💭</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Sequential Thinking</h3>
    <p class="agent-subtitle">Complex Problem Solving</p>
    </div>
 
-.. raw:: html
-
    </div>
    <p class="agent-description">
 
             Break down complex tasks into manageable steps with structured thinking and planning.
-.. raw:: html
-
    </p>
    <ul class="agent-features">
    <li>Task decomposition</li>
@@ -349,14 +241,12 @@ Quick Setup
    Runnable Agent Examples
    -----------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="code-example-section">
    <h4>🚀 MCP with Haive Agents in 30 Seconds</h4>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.agents.react import ReactAgent
    from haive.core.engine.aug_llm import AugLLMConfig
@@ -417,22 +307,18 @@ Quick Setup
    "Check for critical bugs and create a summary report"
    )
 
-   .. raw:: html
-
    </div>
 
    Advanced MCP Integration
    ------------------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="custom-section">
    <h3>🔗 Multi-Server Agent Workflows</h3>
    <p>Combine multiple MCP servers for powerful automation workflows.</p>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.agents.react import ReactAgent
    from haive.agents.simple import SimpleAgent
@@ -498,16 +384,10 @@ Quick Setup
    workflow = DevOpsWorkflowAgent()
    report = await workflow.run_full_workflow()
 
-   .. raw:: html
-
    </div>
 
    Why Use MCP?
    ------------
-
-   .. raw:: html
-
-   .. raw:: html
 
    <div class="showcase-tabs">
    <button class="showcase-tab active">Enhanced Capabilities</button>
@@ -515,8 +395,6 @@ Quick Setup
    <button class="showcase-tab">Tool Integration</button>
    <button class="showcase-tab">Workflow Automation</button>
    </div>
-
-   .. raw:: html
 
    <div class="showcase-content active">
    <h3>🚀 Enhanced Capabilities</h3>
@@ -529,8 +407,6 @@ Quick Setup
    </ul>
    </div>
 
-   .. raw:: html
-
    <div class="showcase-content">
    <h3>📊 Real-Time Data</h3>
    <p>Access current information and live data sources:</p>
@@ -542,8 +418,6 @@ Quick Setup
    </ul>
    </div>
 
-   .. raw:: html
-
    <div class="showcase-content">
    <h3>🛠️ Tool Integration</h3>
    <p>Seamlessly integrate with your development tools:</p>
@@ -554,8 +428,6 @@ Quick Setup
    <li><strong>Deployment</strong>: CI/CD pipeline integration</li>
    </ul>
    </div>
-
-   .. raw:: html
 
    <div class="showcase-content">
    <h3>⚡ Workflow Automation</h3>
@@ -628,10 +500,6 @@ Quick Setup
    Best Practices
    --------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="best-practices">
    <h3>Security Considerations</h3>
    <ul>
@@ -641,8 +509,6 @@ Quick Setup
    <li>Review server configurations regularly</li>
    </ul>
    </div>
-
-   .. raw:: html
 
    <div class="warning-section">
    <h3>Common Pitfalls</h3>
@@ -677,10 +543,10 @@ Quick Setup
    Resources
    ---------
 
-   * `MCP Documentation <https://modelcontextprotocol.io>`_*
-   * `Available MCP Servers <https://github.com/modelcontextprotocol>`_*
-   * `Claude Code MCP Guide <https://docs.anthropic.com/en/docs/claude-code/mcp>`_*
-   * `Community MCP Servers <https://github.com/topics/mcp-server>`_*
+   * ``MCP Documentation <https://modelcontextprotocol.io>_*``
+   * ``Available MCP Servers <https://github.com/modelcontextprotocol>_*``
+   * ``Claude Code MCP Guide <https://docs.anthropic.com/en/docs/claude-code/mcp>_*``
+   * ``Community MCP Servers <https://github.com/topics/mcp-server>_*``
 
    Navigation
    ----------

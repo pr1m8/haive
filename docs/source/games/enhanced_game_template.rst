@@ -1,28 +1,16 @@
 Enhanced Game Showcase Template
 ===============================
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="game-gallery stagger-animation">
 
    <!-- Quantum Quest Game -->
 
-.. raw:: html
-
    <div class="game-card" data-game-url="/games/quantum-quest">
-
-.. raw:: html
 
    <div class="game-preview">
 
-.. raw:: html
-
    <div class="game-icon">⚛️</div>
    </div>
-
-.. raw:: html
 
    <div class="game-content">
    <h3 class="game-title">Quantum Quest</h3>
@@ -33,38 +21,26 @@ Enhanced Game Showcase Template
    superposition and entanglement through hands-on gameplay.
    </p>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">4.8</span>
    <span class="game-stat-label">Rating</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">2.1K</span>
    <span class="game-stat-label">Players</span>
    </div>
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">15m</span>
    <span class="game-stat-label">Avg Time</span>
    </div>
 
-.. raw:: html
-
    </div>
 
 
-
-.. raw:: html
 
    <div class="game-actions">
    <button class="game-play-button">
@@ -82,29 +58,17 @@ Enhanced Game Showcase Template
    </a>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
-
-.. raw:: html
 
    <!-- Climate Detective Game -->
 
-.. raw:: html
-
    <div class="game-card" data-game-url="/games/climate-detective">
-
-.. raw:: html
 
    <div class="game-preview">
 
-.. raw:: html
-
    <div class="game-icon">🌍</div>
    </div>
-
-.. raw:: html
 
    <div class="game-content">
    <h3 class="game-title">Climate Detective</h3>
@@ -115,38 +79,26 @@ Enhanced Game Showcase Template
    in this engaging simulation game.
    </p>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">4.6</span>
    <span class="game-stat-label">Rating</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">3.5K</span>
    <span class="game-stat-label">Players</span>
    </div>
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">25m</span>
    <span class="game-stat-label">Avg Time</span>
    </div>
 
-.. raw:: html
-
    </div>
 
 
-
-.. raw:: html
 
    <div class="game-actions">
    <button class="game-play-button">
@@ -164,29 +116,17 @@ Enhanced Game Showcase Template
    </a>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
-
-.. raw:: html
 
    <!-- AI Ethics Challenge -->
 
-.. raw:: html
-
    <div class="game-card" data-game-url="/games/ai-ethics">
-
-.. raw:: html
 
    <div class="game-preview">
 
-.. raw:: html
-
    <div class="game-icon">🤖</div>
    </div>
-
-.. raw:: html
 
    <div class="game-content">
    <h3 class="game-title">AI Ethics Challenge</h3>
@@ -197,38 +137,26 @@ Enhanced Game Showcase Template
    benefit humanity.
    </p>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">4.9</span>
    <span class="game-stat-label">Rating</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">1.8K</span>
    <span class="game-stat-label">Players</span>
    </div>
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">20m</span>
    <span class="game-stat-label">Avg Time</span>
    </div>
 
-.. raw:: html
-
    </div>
 
 
-
-.. raw:: html
 
    <div class="game-actions">
    <button class="game-play-button">
@@ -246,29 +174,17 @@ Enhanced Game Showcase Template
    </a>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
-
-.. raw:: html
 
    <!-- Data Mining Adventure -->
 
-.. raw:: html
-
    <div class="game-card" data-game-url="/games/data-mining">
-
-.. raw:: html
 
    <div class="game-preview">
 
-.. raw:: html
-
    <div class="game-icon">⛏️</div>
    </div>
-
-.. raw:: html
 
    <div class="game-content">
    <h3 class="game-title">Data Mining Adventure</h3>
@@ -279,38 +195,26 @@ Enhanced Game Showcase Template
    data mysteries and unlock new levels.
    </p>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">4.7</span>
    <span class="game-stat-label">Rating</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">2.9K</span>
    <span class="game-stat-label">Players</span>
    </div>
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">30m</span>
    <span class="game-stat-label">Avg Time</span>
    </div>
 
-.. raw:: html
-
    </div>
 
 
-
-.. raw:: html
 
    <div class="game-actions">
    <button class="game-play-button">
@@ -328,29 +232,17 @@ Enhanced Game Showcase Template
    </a>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
-
-.. raw:: html
 
    <!-- Neural Network Builder -->
 
-.. raw:: html
-
    <div class="game-card" data-game-url="/games/neural-builder">
-
-.. raw:: html
 
    <div class="game-preview">
 
-.. raw:: html
-
    <div class="game-icon">🧠</div>
    </div>
-
-.. raw:: html
 
    <div class="game-content">
    <h3 class="game-title">Neural Network Builder</h3>
@@ -361,38 +253,26 @@ Enhanced Game Showcase Template
    interactive machine learning sandbox.
    </p>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">4.5</span>
    <span class="game-stat-label">Rating</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">1.4K</span>
    <span class="game-stat-label">Players</span>
    </div>
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">45m</span>
    <span class="game-stat-label">Avg Time</span>
    </div>
 
-.. raw:: html
-
    </div>
 
 
-
-.. raw:: html
 
    <div class="game-actions">
    <button class="game-play-button">
@@ -410,29 +290,17 @@ Enhanced Game Showcase Template
    </a>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
-
-.. raw:: html
 
    <!-- Algorithm Racing -->
 
-.. raw:: html
-
    <div class="game-card" data-game-url="/games/algorithm-racing">
-
-.. raw:: html
 
    <div class="game-preview">
 
-.. raw:: html
-
    <div class="game-icon">🏎️</div>
    </div>
-
-.. raw:: html
 
    <div class="game-content">
    <h3 class="game-title">Algorithm Racing</h3>
@@ -443,38 +311,26 @@ Enhanced Game Showcase Template
    and climb the leaderboards.
    </p>
 
-.. raw:: html
-
    <div class="game-stats">
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">4.3</span>
    <span class="game-stat-label">Rating</span>
    </div>
 
-.. raw:: html
-
    <div class="game-stat">
    <span class="game-stat-value">5.2K</span>
    <span class="game-stat-label">Players</span>
    </div>
-
-.. raw:: html
 
    <div class="game-stat">
    <span class="game-stat-value">12m</span>
    <span class="game-stat-label">Avg Time</span>
    </div>
 
-.. raw:: html
-
    </div>
 
 
-
-.. raw:: html
 
    <div class="game-actions">
    <button class="game-play-button">
@@ -492,25 +348,15 @@ Enhanced Game Showcase Template
    </a>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
-
-.. raw:: html
 
    </div>
 
 Game Categories
 ---------------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="tabs">
-
-.. raw:: html
 
    <div class="tab-list">
    <button class="tab-button active" data-tab="educational">Educational</button>
@@ -519,8 +365,6 @@ Game Categories
    <button class="tab-button" data-tab="puzzle">Puzzle</button>
    <button class="tab-button" data-tab="competition">Competition</button>
    </div>
-
-.. raw:: html
 
    <div class="tab-content active" id="educational">
    <h4>Educational Games</h4>
@@ -532,8 +376,6 @@ Game Categories
    </ul>
    </div>
 
-.. raw:: html
-
    <div class="tab-content" id="strategy">
    <h4>Strategy Games</h4>
    <p>Plan, analyze, and make strategic decisions in complex scenarios that mirror real-world challenges.</p>
@@ -543,8 +385,6 @@ Game Categories
    <li><strong>Network Defender</strong> - Cybersecurity strategy</li>
    </ul>
    </div>
-
-.. raw:: html
 
    <div class="tab-content" id="simulation">
    <h4>Simulation Games</h4>
@@ -556,8 +396,6 @@ Game Categories
    </ul>
    </div>
 
-.. raw:: html
-
    <div class="tab-content" id="puzzle">
    <h4>Puzzle Games</h4>
    <p>Solve challenging problems that require logical thinking, pattern recognition, and creative solutions.</p>
@@ -567,8 +405,6 @@ Game Categories
    <li><strong>Optimization Enigmas</strong> - Mathematical optimization</li>
    </ul>
    </div>
-
-.. raw:: html
 
    <div class="tab-content" id="competition">
    <h4>Competition Games</h4>
@@ -580,31 +416,19 @@ Game Categories
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
 
 Interactive Features
 --------------------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="collapsible-group">
 
-.. raw:: html
-
    <div class="collapsible">
-
-.. raw:: html
 
    <div class="collapsible-header">
    <h4 class="collapsible-title">🎮 Real-time Multiplayer</h4>
    <span class="collapsible-icon">▶</span>
    </div>
-
-.. raw:: html
 
    <div class="collapsible-content">
    <p>Connect with other players around the world in real-time collaborative or competitive gameplay. Share strategies, learn from others, and build a community of learners.</p>
@@ -616,22 +440,14 @@ Interactive Features
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
 
-.. raw:: html
-
    <div class="collapsible">
-
-.. raw:: html
 
    <div class="collapsible-header">
    <h4 class="collapsible-title">📊 Progress Tracking</h4>
    <span class="collapsible-icon">▶</span>
    </div>
-
-.. raw:: html
 
    <div class="collapsible-content">
    <p>Monitor your learning progress with detailed analytics and insights. Track your skills development across different areas and identify areas for improvement.</p>
@@ -643,22 +459,14 @@ Interactive Features
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
 
-.. raw:: html
-
    <div class="collapsible">
-
-.. raw:: html
 
    <div class="collapsible-header">
    <h4 class="collapsible-title">🔧 Customizable Difficulty</h4>
    <span class="collapsible-icon">▶</span>
    </div>
-
-.. raw:: html
 
    <div class="collapsible-content">
    <p>Adaptive difficulty systems that adjust to your skill level, ensuring optimal challenge and learning pace for each individual player.</p>
@@ -670,22 +478,14 @@ Interactive Features
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
 
-.. raw:: html
-
    <div class="collapsible">
-
-.. raw:: html
 
    <div class="collapsible-header">
    <h4 class="collapsible-title">🎨 Rich Visual Learning</h4>
    <span class="collapsible-icon">▶</span>
    </div>
-
-.. raw:: html
 
    <div class="collapsible-content">
    <p>Immersive visual experiences with interactive animations, 3D visualizations, and rich graphics that make complex concepts easier to understand.</p>
@@ -697,11 +497,7 @@ Interactive Features
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    </div>
 
@@ -723,10 +519,6 @@ Getting Started
 Development Tools
 -----------------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="section-nav">
    <h3 class="section-nav-title">
    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -737,51 +529,31 @@ Development Tools
    Game Development
    </h3>
 
-.. raw:: html
-
    <div class="section-nav-grid">
    <a href="/guides/game-engine" class="section-nav-item">
 
-.. raw:: html
-
    <div class="section-nav-item-title">Game Engine</div>
-
-.. raw:: html
 
    <div class="section-nav-item-desc">Build your own educational games</div>
    </a>
    <a href="/guides/game-templates" class="section-nav-item">
 
-.. raw:: html
-
    <div class="section-nav-item-title">Templates</div>
-
-.. raw:: html
 
    <div class="section-nav-item-desc">Pre-built game templates and assets</div>
    </a>
    <a href="/guides/game-integration" class="section-nav-item">
 
-.. raw:: html
-
    <div class="section-nav-item-title">Integration</div>
-
-.. raw:: html
 
    <div class="section-nav-item-desc">Integrate games with learning systems</div>
    </a>
    <a href="/guides/game-publishing" class="section-nav-item">
 
-.. raw:: html
-
    <div class="section-nav-item-title">Publishing</div>
-
-.. raw:: html
 
    <div class="section-nav-item-desc">Share your games with the community</div>
    </a>
    </div>
-
-.. raw:: html
 
    </div>

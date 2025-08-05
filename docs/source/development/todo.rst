@@ -8,13 +8,13 @@
 
 ## 📦 Packaging
 
-- [ ] Clean up all pyproject.toml `packages` to use `src/haive/...`
+- [ ] Clean up all pyproject.toml ``packages`` to use ``src/haive/...``
 
-- [ ] Add `tool.poetry.group.dev.dependencies` to each package
+- [ ] Add ``tool.poetry.group.dev.dependencies to each package``
 
 ## 🔐 Cosign
 
-- [ ] Add `cosign verify` to CI
+- [ ] Add ``cosign verify to CI``
 
 - [ ] Store image digest metadata per build
 
@@ -22,11 +22,11 @@
 
 - [ ] Add tests for tak tools
 
-- [ ] Port `test_state_schema.py` to core
+- [ ] Port ``test_state_schema.py to core``
 
 ## 🧠 Meta
 
-- [ ] Explore `nox -s docs` vs `make html`
+- [ ] Explore ``nox -s docs`` vs ``make html``
 
 - [ ] Set up daily scratch capture
 
@@ -108,21 +108,21 @@ auth
 
 ## ADD TO DOCKER!!!
 
-- ```bash`
+- ```bash``
 
    sudo apt-get install -y locales
 
 sudo locale-gen en_US.UTF-8
 sudo update-locale LC_ALL=en_US.UTF-8
 protobuf-compiler
-`` ```
-``````
-``````
+`` ``
+`````
+`````
 
 - trunk
 
-optional prompt varsw``
-```````````````````````
+optional prompt varsw```
+````````````````
 
 python scripts/generate_agent_docs.py --all
-``
+`````````````````````````````

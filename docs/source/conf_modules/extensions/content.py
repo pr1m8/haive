@@ -68,7 +68,7 @@ def get_config(
     # Live code execution
     if enable_live_code:
         extensions.append("sphinx_thebe")  # Live code execution in browser
-        config.update(_get_thebe_config())
+        # config.update(_get_thebe_config())  # DISABLED: Conflicts with extension registration
 
     config["extensions"] = extensions
     return config

@@ -1,3 +1,5 @@
+:orphan:
+
 Custom Conversation Patterns
 ============================
 
@@ -9,24 +11,28 @@ Creating a Custom Conversation Type
 Basic Template
 ~~~~~~~~~~~~~~
 
-**Step 1: Inherit from BaseConversation**
+**Step 1: Inherit from BaseConversation*
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.conversation.base import BaseConversation
     from typing import Dict, List, Optional
     import random
 
     class CustomConversation(BaseConversation):
+        pass
     """Your custom conversation pattern."""
 
     def __init__(
     self,
     agents: List[Agent],
     custom_param: str,
-    **kwargs**
+
+**kwargs*
     ):
-    super().__init__(agents=agents, **kwargs)**
+    super().__init__(agents=agents, **kwargs)*
     self.custom_param = custom_param
     self.custom_state = {}
 
@@ -61,7 +67,10 @@ Basic Template
 
 .. code-block:: python
 
+    # Code example here
+
     class SocraticDialogue(BaseConversation):
+        pass
     """Socratic method conversation between teacher and student."""
 
     def __init__(
@@ -70,12 +79,13 @@ Basic Template
     student: Agent,
     topic: str,
     learning_objective: str,
-    **kwargs**
+
+**kwargs*
     ):
     super().__init__(
     agents=[teacher, student],
     topic=topic,
-    **kwargs**
+    **kwargs*
     )
     self.teacher = teacher
     self.student = student
@@ -145,9 +155,11 @@ Basic Template
     return True
     return await super().should_end_conversation()
 
-    **Usage Example:**
+    **Usage Example:*
 
 .. code-block:: python
+
+    # Code example here
 
     # Create Socratic dialogue
     teacher = SimpleAgent(
@@ -168,16 +180,22 @@ Basic Template
     max_turns=20
     )
 
-    result = await dialogue.run()
+    async def example():
+        result = await dialogue.run()
+
 
     Example: Negotiation Pattern
-    ----------------------------
+
+----------------------------
 
     Multi-party negotiation with offers and counteroffers.
 
 .. code-block:: python
 
+    # Code example here
+
     class NegotiationConversation(BaseConversation):
+        pass
     """Multi-party negotiation with deal tracking."""
 
     def __init__(
@@ -185,12 +203,13 @@ Basic Template
     parties: Dict[str, Agent],
     negotiation_subject: str,
     initial_positions: Dict[str, float],
-    **kwargs**
+
+**kwargs*
     ):
     super().__init__(
     agents=list(parties.values()),
     topic=f"Negotiating {negotiation_subject}",
-    **kwargs**
+    **kwargs*
     )
     self.parties = parties
     self.positions = initial_positions.copy()
@@ -279,7 +298,10 @@ Basic Template
 
 .. code-block:: python
 
+    # Code example here
+
     class ProgressiveDisclosure(BaseConversation):
+        pass
     """Gradually reveal information as conversation progresses."""
 
     def __init__(
@@ -288,11 +310,12 @@ Basic Template
     investigators: List[Agent],
     secret_info: List[str],
     trust_threshold: float = 0.7,
-    **kwargs**
+
+**kwargs*
     ):
     super().__init__(
     agents=[informant] + investigators,
-    **kwargs**
+    **kwargs*
     )
     self.informant = informant
     self.investigators = investigators
@@ -339,14 +362,18 @@ Basic Template
     Advanced Patterns
     -----------------
 
-    **1. Parallel Conversations**
+    **1. Parallel Conversations*
 
 .. code-block:: python
 
+    # Code example here
+
     class ParallelConversations(BaseConversation):
+        pass
     """Multiple simultaneous conversation threads."""
 
-    def __init__(self, thread_configs: List[Dict], **kwargs):**
+
+def __init__(self, thread_configs: List[Dict], **kwargs):*
     # Initialize multiple conversation threads
     self.threads = [
     self.create_thread(config)
@@ -361,56 +388,66 @@ Basic Template
     ])
     return self.merge_results(results)
 
-    **2. Hierarchical Conversations**
+    **2. Hierarchical Conversations*
 
 .. code-block:: python
 
+    # Code example here
+
     class HierarchicalConversation(BaseConversation):
+        pass
     """Conversations with reporting structure."""
 
-    def __init__(self, hierarchy: Dict[str, List[str]], **kwargs):**
+
+def __init__(self, hierarchy: Dict[str, List[str]], **kwargs):*
     self.hierarchy = hierarchy
     self.approval_needed = []
     self.decisions = {}
 
-    **3. Time-Based Patterns**
+    **3. Time-Based Patterns*
 
 .. code-block:: python
 
+    # Code example here
+
     class TimeBasedConversation(BaseConversation):
+        pass
     """Conversations with time-sensitive elements."""
 
-    def __init__(self, schedule: Dict[int, str], **kwargs):**
+
+def __init__(self, schedule: Dict[int, str], **kwargs):*
     self.schedule = schedule  # turn -> event
     self.time_pressure = False
 
     Best Practices for Custom Patterns
     ----------------------------------
 
-    1. **Clear State Management**
+    1. **Clear State Management*
 
 
     - Track conversation-specific state
     - Use dataclasses for complex state
     - Implement state persistence if needed
 
-    2. **Flexible Configuration**
+    2. **Flexible Configuration*
 
 
     - Use keyword arguments for extensibility
     - Provide sensible defaults
     - Allow runtime configuration changes
 
-    3. **Robust Error Handling**
+    3. **Robust Error Handling*
 
 
     - Handle agent failures gracefully
     - Implement timeout mechanisms
     - Provide fallback behaviors
 
-    4. **Testing Your Pattern**
+    4. **Testing Your Pattern*
 
 .. code-block:: python
+
+    # Code example here
 
     import pytest
 
@@ -421,17 +458,23 @@ Basic Template
 
     # Test conversation
     conv = CustomConversation(agents=agents)
-    result = await conv.run()
+    async def example():
+        result = await conv.run()
+
 
     # Assertions
     assert len(result['messages']) > 0
     assert conv.custom_state['some_metric'] > 0
 
-    5. **Documentation**
+
+5. **Documentation*
 
 .. code-block:: python
 
+    # Code example here
+
     class WellDocumentedConversation(BaseConversation):
+        pass
     """Brief description of pattern.
 
     This conversation pattern implements [specific behavior].
@@ -446,13 +489,13 @@ Basic Template
     ...     agents=[agent1, agent2],
     ...     special_param="value"
     ... )
-    >>> result = await conv.run()
-"""""""""""""""""""""""""""""""""
+>>> result = await conv.run()
+"""""""""""""""""""""""""""""
 
     Publishing Your Pattern
     -----------------------
 
-    1. **Package Structure**
+    1. **Package Structure*
 
 .. code-block:: text
 
@@ -466,9 +509,11 @@ Basic Template
     ├── examples/
     └── README.md
 
-    2. **Registration**
+    2. **Registration*
 
 .. code-block:: python
+
+    # Code example here
 
     # In __init__.py
     from haive.agents.conversation import register_pattern
@@ -476,9 +521,12 @@ Basic Template
 
     register_pattern("my_pattern", MyCustomConversation)
 
-    3. **Usage**
+
+3. **Usage*
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.conversation import create_conversation
 
@@ -489,9 +537,10 @@ Basic Template
     )
 
     See Also
-    --------
 
-    - :doc:`index` - Conversation patterns overview
-    - :doc:`/api/haive-agents` - Base classes documentation
-    - :doc:`/guides/building_agents` - Agent development guide
-    - :doc:`/guides/testing` - Testing conversational agents
+--------
+
+    - :doc:`index - Conversation patterns overview`
+    - :doc:`/api/haive-agents - Base classes documentation`
+    - :doc:`/guides/building_agents - Agent development guide`
+    - :doc:`/guides/testing - Testing conversational agents`

@@ -1,5 +1,5 @@
 RAG (Retrieval-Augmented Generation) Agents
-============================================
+===========================================
 
 This guide covers the extensive RAG agent implementations available in Haive, including various strategies, architectures, and use cases.
 
@@ -14,11 +14,11 @@ Core RAG Concepts
 Basic RAG Flow
 ~~~~~~~~~~~~~~
 
-1. **Query Processing**: Transform user query for optimal retrieval
-2. **Document Retrieval**: Fetch relevant documents from vector stores
-3. **Document Grading**: Evaluate relevance of retrieved documents
-4. **Answer Generation**: Generate response using retrieved context
-5. **Hallucination Check**: Validate answer against source documents
+1. **Query Processing*: Transform user query for optimal retrieval
+2. **Document Retrieval*: Fetch relevant documents from vector stores
+3. **Document Grading*: Evaluate relevance of retrieved documents
+4. **Answer Generation*: Generate response using retrieved context
+5. **Hallucination Check*: Validate answer against source documents
 
 Available RAG Agents
 --------------------
@@ -26,13 +26,15 @@ Available RAG Agents
 Simple RAG Agents
 ~~~~~~~~~~~~~~~~~
 
-**SimpleRAGAgent**
+**SimpleRAGAgent*
 
    - Location: ``haive.agents.rag.simple``
    - Basic retrieval and generation
    - Best for: Quick prototypes and simple Q&A
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.simple import SimpleRAGAgent
 
@@ -42,9 +44,12 @@ Simple RAG Agents
     model="gpt-4"
     )
 
-    result = await agent.query("What is RAG?")
+    async def example():
+        result = await agent.query("What is RAG?")
 
-    **LLMRAGAgent**
+
+
+**LLMRAGAgent*
 
     - Location: ``haive.agents.rag.llm_rag``
     - Direct LLM integration without complex routing
@@ -53,13 +58,15 @@ Simple RAG Agents
     Advanced Query Processing
     ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    **HyDERAGAgent** (Hypothetical Document Embeddings)
+    **HyDERAGAgent* (Hypothetical Document Embeddings)
 
     - Location: ``haive.agents.rag.hyde``
     - Generates hypothetical documents to improve retrieval
     - Best for: Abstract or conceptual queries
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.hyde import HyDERAGAgent
 
@@ -69,13 +76,14 @@ Simple RAG Agents
     hypothesis_model="gpt-4"
     )
 
-    **MultiQueryRAGAgent**
+
+**MultiQueryRAGAgent*
 
     - Location: ``haive.agents.rag.multi_query``
     - Generates multiple query variations
     - Best for: Ambiguous or multi-faceted queries
 
-    **StepBackRAGAgent**
+    **StepBackRAGAgent*
 
     - Location: ``haive.agents.rag.step_back``
     - Creates abstracted queries for better context
@@ -84,13 +92,15 @@ Simple RAG Agents
     Document Grading & Validation
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    **CorrectiveRAGAgent**
+    **CorrectiveRAGAgent*
 
     - Location: ``haive.agents.rag.corrective``
     - Implements document grading and re-retrieval
     - Best for: High-accuracy requirements
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.corrective import CorrectiveRAGAgent
 
@@ -101,13 +111,14 @@ Simple RAG Agents
     max_retries=3
     )
 
-    **SelfRAGAgent**
+
+**SelfRAGAgent*
 
     - Location: ``haive.agents.rag.self_reflective``
     - Self-reflection and critique mechanisms
     - Best for: Complex reasoning tasks
 
-    **HallucinationGradingAgent**
+    **HallucinationGradingAgent*
 
     - Location: ``haive.agents.rag.hallucination_grading``
     - Validates answers against source documents
@@ -116,13 +127,15 @@ Simple RAG Agents
     Specialized Architectures
     ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    **AdaptiveRAGAgent**
+    **AdaptiveRAGAgent*
 
     - Location: ``haive.agents.rag.adaptive``
     - Dynamically adjusts retrieval strategy
     - Best for: Diverse query types
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.adaptive import AdaptiveRAGAgent
 
@@ -132,13 +145,14 @@ Simple RAG Agents
     auto_select=True
     )
 
-    **FusionRAGAgent**
+
+**FusionRAGAgent*
 
     - Location: ``haive.agents.rag.fusion``
     - Combines multiple retrieval methods
     - Best for: Maximum recall requirements
 
-    **SpeculativeRAGAgent**
+    **SpeculativeRAGAgent*
 
     - Location: ``haive.agents.rag.speculative``
     - Parallel retrieval with speculation
@@ -147,13 +161,15 @@ Simple RAG Agents
     Database-Specific RAG
     ~~~~~~~~~~~~~~~~~~~~~
 
-    **SQLRAGAgent**
+    **SQLRAGAgent*
 
     - Location: ``haive.agents.rag.db_rag.sql_rag``
     - Text-to-SQL with retrieval augmentation
     - Best for: Structured data queries
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.db_rag.sql_rag import SQLRAGAgent
 
@@ -163,7 +179,8 @@ Simple RAG Agents
     schema_description="sales database"
     )
 
-    **GraphRAGAgent**
+
+**GraphRAGAgent*
 
     - Location: ``haive.agents.rag.db_rag.graph_db``
     - Graph database retrieval
@@ -172,13 +189,15 @@ Simple RAG Agents
     Multi-Agent RAG Systems
     ~~~~~~~~~~~~~~~~~~~~~~~
 
-    **MultiAgentRAG**
+    **MultiAgentRAG*
 
     - Location: ``haive.agents.rag.multi_agent_rag``
     - Orchestrates multiple specialized RAG agents
     - Best for: Complex workflows
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.multi_agent_rag import MultiAgentRAG
 
@@ -191,12 +210,15 @@ Simple RAG Agents
     )
 
     Configuration Patterns
-    ----------------------
+
+----------------------
 
     Basic Configuration
     ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.base import RAGConfig
 
@@ -223,9 +245,12 @@ Simple RAG Agents
     )
 
     Advanced Configuration
-    ~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.multi_strategy import MultiStrategyConfig
 
@@ -247,26 +272,34 @@ Simple RAG Agents
     )
 
     Common Patterns
-    ---------------
+
+---------------
 
     Query Enhancement
     ~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
+    # Code example here
+
     # Query decomposition
     from haive.agents.rag.query_decomposition import QueryDecomposer
 
     decomposer = QueryDecomposer()
-    sub_queries = await decomposer.decompose(
+    async def example():
+        sub_queries = await decomposer.decompose(
+
     "Compare advantages and disadvantages of solar vs wind energy"
     )
     # Result: ["advantages of solar energy", "disadvantages of solar energy", ...]
 
     Document Processing
-    ~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     # Custom document grading
     from haive.agents.rag.common.document_graders import ComprehensiveGrader
@@ -277,29 +310,39 @@ Simple RAG Agents
     accuracy_weight=0.3
     )
 
-    score = await grader.grade(document, query)
+    async def example():
+        score = await grader.grade(document, query)
+
 
     Hallucination Prevention
-    ~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     # Hallucination checking
     from haive.agents.rag.common.hallucination_graders import HallucinationGrader
 
     grader = HallucinationGrader()
-    is_grounded = await grader.check(
+    async def example():
+        is_grounded = await grader.check(
+
     answer=generated_answer,
     sources=retrieved_documents
     )
 
     Performance Optimization
-    ------------------------
+
+------------------------
 
     Caching Strategies
     ~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.base import RAGAgent
     from haive.core.cache import SemanticCache
@@ -313,35 +356,46 @@ Simple RAG Agents
     )
 
     Batch Processing
-    ~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     # Process multiple queries efficiently
     queries = ["Query 1", "Query 2", "Query 3"]
 
-    results = await agent.batch_query(
+    async def example():
+        results = await agent.batch_query(
+
     queries=queries,
     batch_size=10,
     parallel=True
     )
 
     Streaming Responses
-    ~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     # Stream responses for real-time applications
     async for chunk in agent.stream_query("Complex question"):
     print(chunk, end="", flush=True)
 
     Integration Examples
-    --------------------
+
+--------------------
 
     With Memory Systems
     ~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.memory_aware import MemoryAwareRAGAgent
 
@@ -353,9 +407,12 @@ Simple RAG Agents
     )
 
     With Tool Usage
-    ~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.adaptive_tools import ToolAugmentedRAGAgent
     from haive.tools import WebSearchTool, CalculatorTool
@@ -367,14 +424,18 @@ Simple RAG Agents
     )
 
     With Structured Output
-    ~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.typed import TypedRAGAgent
     from pydantic import BaseModel
 
     class AnalysisResult(BaseModel):
+        pass
     summary: str
     key_points: List[str]
     confidence: float
@@ -385,27 +446,28 @@ Simple RAG Agents
     )
 
     Best Practices
-    --------------
 
-    1. **Choose the Right Agent**
+--------------
+
+    1. **Choose the Right Agent*
 
     - Start with SimpleRAGAgent for prototypes
     - Use CorrectiveRAGAgent for accuracy-critical tasks
     - Deploy AdaptiveRAGAgent for diverse query types
 
-    2. **Optimize Retrieval**
+    2. **Optimize Retrieval*
 
     - Tune chunk size based on your content
     - Use hybrid search for better recall
     - Implement semantic caching for common queries
 
-    3. **Ensure Quality**
+    3. **Ensure Quality*
 
     - Always enable document grading for production
     - Implement hallucination checks for factual content
     - Monitor retrieval and generation metrics
 
-    4. **Scale Efficiently**
+    4. **Scale Efficiently*
 
     - Use batch processing for multiple queries
     - Implement connection pooling for databases
@@ -417,25 +479,25 @@ Simple RAG Agents
     Common Issues
     ~~~~~~~~~~~~~
 
-    **Low Retrieval Quality**
+    **Low Retrieval Quality*
 
     - Increase ``top_k`` parameter
     - Try different embedding models
     - Implement query enhancement (HyDE, multi-query)
 
-    **Hallucinations**
+    **Hallucinations*
 
     - Enable strict document grading
     - Reduce generation temperature
     - Implement fact-checking post-processing
 
-    **Performance Issues**
+    **Performance Issues*
 
     - Enable caching
     - Use smaller embedding models
     - Implement async processing
 
-    **Context Limits**
+    **Context Limits*
 
     - Implement document summarization
     - Use relevance-based truncation
@@ -445,6 +507,8 @@ Simple RAG Agents
     ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     # Enable detailed logging
     import logging
@@ -463,16 +527,20 @@ Simple RAG Agents
     print(f"Avg generation time: {metrics.avg_generation_time}s")
 
     Advanced Topics
-    ---------------
+
+---------------
 
     Custom RAG Implementation
     ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
+    # Code example here
+
     from haive.agents.rag.base import BaseRAGAgent
 
     class CustomRAGAgent(BaseRAGAgent):
+        pass
     async def retrieve(self, query: str) -> List[Document]:
     # Custom retrieval logic
     pass
@@ -486,9 +554,12 @@ Simple RAG Agents
     pass
 
     Factory Pattern Usage
-    ~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.factories import CompatibleRAGFactory
 
@@ -503,9 +574,12 @@ Simple RAG Agents
     })
 
     Multi-Modal RAG
-    ~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.multimodal import MultiModalRAGAgent
 
@@ -519,9 +593,10 @@ Simple RAG Agents
     )
 
     See Also
-    --------
 
-    - **RAG API Reference**: ``/docs/source/api/agents/rag.rst``
-    - **Vector Store Configuration**: ``/docs/source/guides/vector_stores.rst``
-    - **Embedding Models Guide**: ``/docs/source/guides/embeddings.rst``
-    - **RAG Examples**: ``/examples/rag/``
+--------
+
+    - **RAG API Reference*: ``/docs/source/api/agents/rag.rst``
+    - **Vector Store Configuration*: ``/docs/source/guides/vector_stores.rst``
+    - **Embedding Models Guide*: ``/docs/source/guides/embeddings.rst``
+    - **RAG Examples*: ``/examples/rag/``

@@ -2,15 +2,9 @@
 .. _simple-agent:
 
 💬 SimpleAgent Documentation
-=============================
-
-.. raw:: html
-
-   .. raw:: html
+===========================
 
    <div class="agent-hero-section">
-
-.. raw:: html
 
    <div class="hero-content">
    <h2>💬 Basic Conversational Agent</h2>
@@ -19,8 +13,6 @@
    question-answering, and basic task completion with full memory and context management.
    </p>
    </div>
-
-.. raw:: html
 
    </div>
 
@@ -35,23 +27,13 @@ SimpleAgent is designed to be the most straightforward agent implementation whil
 - Building blocks for more complex agents
 - Quick prototyping and testing
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-.. raw:: html
 
    <div class="showcase-header">
    <h2>✨ Key Features</h2>
    </div>
 
-.. raw:: html
-
    <div class="api-grid">
-
-.. raw:: html
 
    <div class="api-section">
    <h4>🧠 Core Capabilities</h4>
@@ -63,8 +45,6 @@ SimpleAgent is designed to be the most straightforward agent implementation whil
    </ul>
    </div>
 
-.. raw:: html
-
    <div class="api-section">
    <h4>💾 Memory Management</h4>
    <ul>
@@ -74,8 +54,6 @@ SimpleAgent is designed to be the most straightforward agent implementation whil
    <li>Memory retrieval patterns</li>
    </ul>
    </div>
-
-.. raw:: html
 
    <div class="api-section">
    <h4>🔧 Configuration</h4>
@@ -87,22 +65,18 @@ SimpleAgent is designed to be the most straightforward agent implementation whil
    </ul>
    </div>
 
-.. raw:: html
-
    </div>
    </div>
 
 Quick Start
 -----------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="code-example-section">
    <h4>🚀 Basic Usage</h4>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.agents.simple import SimpleAgent
    from haive.core.engine.aug_llm import AugLLMConfig
@@ -131,21 +105,17 @@ Quick Start
    response = agent.run("What's my name?")
    # Response will remember "Alice"
 
-   .. raw:: html
-
    </div>
 
    Advanced Configuration
    ----------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="custom-section">
    <h3>⚙️ Configuration Options</h3>
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.agents.simple import SimpleAgent
    from haive.core.engine.aug_llm import AugLLMConfig
@@ -198,26 +168,20 @@ Quick Start
    )
    # result is now an AnalysisResult instance
 
-   .. raw:: html
-
    </div>
 
    Memory and State Management
    ---------------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>🧠 Memory Patterns</h2>
    </div>
 
 .. code-block:: python
+
+    # Code example here
 
    # Memory management example
    agent = SimpleAgent(
@@ -251,27 +215,19 @@ Quick Start
    # Load from saved state
    agent.load_memory("conversation_123.json")
 
-   .. raw:: html
-
    </div>
 
    Integration Patterns
    --------------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="api-grid">
-
-   .. raw:: html
 
    <div class="api-section">
    <h4>🔗 As a Tool</h4>
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Convert agent to tool for other agents
       expert_tool = SimpleAgent.as_tool(
@@ -293,18 +249,14 @@ Quick Start
       )
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       <div class="api-section">
       <h4>🌐 In Multi-Agent Systems</h4>
 
 .. code-block:: python
 
-
+    # Code example here
 
       # Part of multi-agent workflow
       from haive.agents.multi import SequentialAgent
@@ -325,20 +277,13 @@ Quick Start
       )
 
 
-      .. raw:: html
-
       </div>
-
-      .. raw:: html
 
       </div>
 
       Best Practices
-      --------------
 
-      .. raw:: html
-
-      .. raw:: html
+  --------------
 
       <div class="best-practices">
       <h3>💡 Best Practices for SimpleAgent</h3>
@@ -354,14 +299,12 @@ Quick Start
       Troubleshooting
       ---------------
 
-      .. raw:: html
-
-      .. raw:: html
-
       <div class="warning-section">
       <h3>⚠️ Common Issues and Solutions</h3>
 
 .. code-block:: python
+
+    # Code example here
 
    # Issue: Agent not remembering context
    # Solution: Check memory configuration
@@ -387,8 +330,6 @@ Quick Start
    async def safe_query(agent, query):
    return await agent.arun(query)
 
-   .. raw:: html
-
    </div>
 
    API Reference
@@ -403,14 +344,12 @@ Quick Start
    Complete Example
    ----------------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="code-example-section">
    <h4>🎯 Full Working Example</h4>
 
 .. code-block:: python
+
+    # Code example here
 
    import asyncio
    from haive.agents.simple import SimpleAgent
@@ -476,118 +415,72 @@ Quick Start
    if __name__ == "__main__":
    asyncio.run(main())
 
-   .. raw:: html
-
    </div>
 
    Next Steps
    ----------
 
-   .. raw:: html
-
-   .. raw:: html
-
    <div class="showcase-section">
-
-   .. raw:: html
 
    <div class="showcase-header">
    <h2>🚀 Where to Go From Here</h2>
    </div>
 
-   .. raw:: html
-
    <div class="agent-showcase">
-
-   .. raw:: html
 
    <div class="agent-card">
 
-   .. raw:: html
-
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">🧠</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Upgrade to ReactAgent</h3>
    <p class="agent-subtitle">Add tool usage and reasoning</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                When you need agents that can use tools and perform multi-step reasoning, upgrade to ReactAgent.
-   .. raw:: html
-
    </p>
    <a href="../react/index.html" class="agent-link">Learn ReactAgent</a>
    </div>
 
-   .. raw:: html
-
    <div class="agent-card">
-
-   .. raw:: html
 
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">🌐</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Build Multi-Agent Systems</h3>
    <p class="agent-subtitle">Coordinate multiple SimpleAgents</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Combine multiple SimpleAgents to create sophisticated workflows and conversations.
-   .. raw:: html
-
    </p>
    <a href="../multi/index.html" class="agent-link">Multi-Agent Guide</a>
    </div>
 
-   .. raw:: html
-
    <div class="agent-card">
-
-   .. raw:: html
 
    <div class="agent-header">
 
-   .. raw:: html
-
    <div class="agent-emoji">📚</div>
-
-   .. raw:: html
 
    <div>
    <h3 class="agent-title">Add RAG Capabilities</h3>
    <p class="agent-subtitle">Ground responses in knowledge</p>
    </div>
 
-   .. raw:: html
-
    </div>
    <p class="agent-description">
 
                Enhance SimpleAgent with retrieval-augmented generation for knowledge-based responses.
-   .. raw:: html
-
    </p>
    <a href="../rag/index.html" class="agent-link">Explore RAG</a>
    </div>
@@ -596,6 +489,6 @@ Quick Start
 
    .. seealso::
 
-   - :doc:`../../guides/building_agents` - Complete guide to building custom agents
-   - :doc:`../../examples/simple_agent_examples` - More SimpleAgent examples
-   - :doc:`../index` - Back to agent overview
+   - :doc:`../../guides/building_agents - Complete guide to building custom agents`
+   - :doc:`../../examples/simple_agent_examples - More SimpleAgent examples`
+   - :doc:`../index - Back to agent overview`

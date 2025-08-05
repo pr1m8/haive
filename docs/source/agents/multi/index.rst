@@ -6,22 +6,24 @@ Coordinate multiple agents to solve complex problems collaboratively.
 .. note::
 
 
-   This is the user guide for multi-agent systems. For API documentation, see :doc:`/api/haive/agents/multi/index`.
+   This is the user guide for multi-agent systems. For API documentation, see :doc:`/api/haive/agents/multi/index.`
 
 Overview
 --------
 
 Multi-agent systems in Haive enable sophisticated agent coordination patterns:
 
-- **SequentialMultiAgent** - Agents work in sequence, passing results
-- **ParallelMultiAgent** - Agents work simultaneously on sub-tasks
-- **HierarchicalMultiAgent** - Supervisor agents manage worker agents
-- **CollaborativeMultiAgent** - Agents negotiate and reach consensus
+- **SequentialMultiAgent* - Agents work in sequence, passing results
+- **ParallelMultiAgent* - Agents work simultaneously on sub-tasks
+- **HierarchicalMultiAgent* - Supervisor agents manage worker agents
+- **CollaborativeMultiAgent* - Agents negotiate and reach consensus
 
 Quick Start
 -----------
 
 .. code-block:: python
+
+    # Code example here
 
    from haive.agents.multi import SequentialMultiAgent
    from haive.agents.simple import SimpleAgent
@@ -86,7 +88,7 @@ Quick Start
    - Code Review System
    - Trading Strategy Committee
 
-   See :doc:`/guides/multi_agent_systems` for detailed examples.
+   See :doc:`/guides/multi_agent_systems for detailed examples.`
 
    .. toctree::
 

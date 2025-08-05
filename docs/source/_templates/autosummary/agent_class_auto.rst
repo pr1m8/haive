@@ -26,7 +26,7 @@
 
 .. admonition:: Example Files
 
-   :class:`seealso`
+   :class:``seealso``
 
    - Example usage: ``{{ example_file }}``
    - Configuration: ``{{ config_file }}``

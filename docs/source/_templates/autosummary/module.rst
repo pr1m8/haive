@@ -8,10 +8,6 @@
 .. automodule:: {{ fullname }}
 
 {# Module path for breadcrumb #}
-.. raw:: html
-
-   .. raw:: html
-
    <div class="module-path" style="margin-bottom: 1rem; color: var(--color-foreground-secondary);">
    <code>{{ fullname }}</code>
    </div>

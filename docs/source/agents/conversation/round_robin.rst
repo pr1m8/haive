@@ -1,5 +1,5 @@
 Round Robin Conversation Examples
-==================================
+=================================
 
 Round Robin conversations ensure equal participation by having agents speak in a fixed order. This is ideal for structured discussions, status updates, and brainstorming sessions.
 
@@ -8,7 +8,7 @@ Daily Standup Example
 
 A development team's daily standup meeting where each member shares updates in order.
 
-**Full Example Code:**
+**Full Example Code:*
 
 .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/round_robin/example.py
 
@@ -16,13 +16,13 @@ A development team's daily standup meeting where each member shares updates in o
    :pyobject: example_daily_standup
    :caption: Daily Standup Implementation
 
-**Running the Example:**
+**Running the Example:*
 
 .. code-block:: bash
 
     poetry run python packages/haive-agents/src/haive/agents/conversation/round_robin/example.py
 
-    **Sample Output:**
+    **Sample Output:*
 
 .. code-block:: text
 
@@ -89,7 +89,7 @@ A development team's daily standup meeting where each member shares updates in o
 
     A creative brainstorming session where team members build on ideas in rounds.
 
-    **Full Example Code:**
+    **Full Example Code:*
 
     .. literalinclude:: ../../../../../packages/haive-agents/src/haive/agents/conversation/round_robin/example.py
 
@@ -97,7 +97,7 @@ A development team's daily standup meeting where each member shares updates in o
     :pyobject: example_brainstorming
     :caption: Brainstorming Session Implementation
 
-    **Sample Output:**
+    **Sample Output:*
 
 .. code-block:: text
 
@@ -164,9 +164,11 @@ A development team's daily standup meeting where each member shares updates in o
 
     A book club where members share thoughts chapter by chapter.
 
-    **Example Code:**
+    **Example Code:*
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.conversation.round_robin import RoundRobinConversation
     from haive.agents.simple import SimpleAgent
@@ -214,7 +216,8 @@ A development team's daily standup meeting where each member shares updates in o
 
     result = discussion.run({})
 
-    **Sample Output:**
+
+**Sample Output:*
 
 .. code-block:: text
 
@@ -242,16 +245,18 @@ A development team's daily standup meeting where each member shares updates in o
     Key Features Demonstrated
     -------------------------
 
-    1. **Fixed Order**: Agents always speak in the same sequence
-    2. **Equal Participation**: Every agent speaks exactly once per round
-    3. **Round Structure**: Conversations organized into themed rounds
-    4. **No Interruptions**: Clean, organized flow of ideas
-    5. **Building Ideas**: Later speakers can reference earlier contributions
+    1. **Fixed Order*: Agents always speak in the same sequence
+    2. **Equal Participation*: Every agent speaks exactly once per round
+    3. **Round Structure*: Conversations organized into themed rounds
+    4. **No Interruptions*: Clean, organized flow of ideas
+    5. **Building Ideas*: Later speakers can reference earlier contributions
 
     Configuration Options
     ---------------------
 
 .. code-block:: python
+
+    # Code example here
 
     RoundRobinConversation(
     agents=agent_list,              # List of agents in speaking order
@@ -264,27 +269,30 @@ A development team's daily standup meeting where each member shares updates in o
     )
 
     Best Practices
-    --------------
 
-    1. **Clear Roles**: Give each agent a distinct perspective or expertise
-    2. **Round Themes**: Use round_names to structure the conversation progression
-    3. **Appropriate Rounds**: Usually 2-4 rounds work best to avoid repetition
-    4. **Speaking Order**: Consider putting synthesizers/summarizers last
-    5. **Topic Clarity**: Provide specific topics or questions for focus
+--------------
+
+    1. **Clear Roles*: Give each agent a distinct perspective or expertise
+    2. **Round Themes*: Use round_names to structure the conversation progression
+    3. **Appropriate Rounds*: Usually 2-4 rounds work best to avoid repetition
+    4. **Speaking Order*: Consider putting synthesizers/summarizers last
+    5. **Topic Clarity*: Provide specific topics or questions for focus
 
     Common Use Cases
     ----------------
 
-    - **Status Meetings**: Daily standups, weekly syncs, project updates
-    - **Brainstorming**: Idea generation, feature planning, problem solving
-    - **Reviews**: Code reviews, design reviews, retrospectives
-    - **Education**: Student presentations, group discussions, peer review
-    - **Creative**: Story building, collaborative writing, improv games
+    - **Status Meetings*: Daily standups, weekly syncs, project updates
+    - **Brainstorming*: Idea generation, feature planning, problem solving
+    - **Reviews*: Code reviews, design reviews, retrospectives
+    - **Education*: Student presentations, group discussions, peer review
+    - **Creative*: Story building, collaborative writing, improv games
 
     Advanced Example: Retrospective
     -------------------------------
 
 .. code-block:: python
+
+    # Code example here
 
     def example_retrospective():
     """Agile retrospective with structured rounds."""
@@ -311,9 +319,10 @@ A development team's daily standup meeting where each member shares updates in o
     print(f"\nAction Items: {action_items}")
 
     See Also
-    --------
 
-    - :doc:`conversation_directed` - Orchestrated conversations with mentions
-    - :doc:`conversation_collaborative` - Free-form collaborative discussions
-    - :doc:`conversation_debate` - Structured debates with opposing sides
-    - :doc:`../api_reference` - Full API documentation
+--------
+
+    - :doc:`conversation_directed - Orchestrated conversations with mentions`
+    - :doc:`conversation_collaborative - Free-form collaborative discussions`
+    - :doc:`conversation_debate - Structured debates with opposing sides`
+    - :doc:`../../api/index - Full API documentation`

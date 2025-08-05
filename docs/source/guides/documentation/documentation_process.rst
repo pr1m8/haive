@@ -9,14 +9,14 @@ Documentation Lifecycle
 
 The documentation process follows these key steps:
 
-1. **Code Implementation***n**: Write code with initial docstrings**
+1. **Code Implementation*n**: Write code with initial docstrings*
 
-2.*** **Automated Enhancemen***t**: Run documentation tools to fill gaps
+2.*** *Automated Enhancemen**t*: Run documentation tools to fill gaps
 
-3.*** **Manual Revie***w**: Review and enhance generated documentation
-4.*** **Documentation Buildin***g**: Build documentation with Sphinx
-5.*** **Review and Testing***g**: Review built documentation for accuracy
-6.*** **Deploymen***t**: Update public documentation
+3.*** *Manual Revie**w*: Review and enhance generated documentation
+4.*** *Documentation Buildin**g*: Build documentation with Sphinx
+5.*** *Review and Testing**g*: Review built documentation for accuracy
+6.*** *Deploymen**t*: Update public documentation
 
 Starting with New Code
 
@@ -24,12 +24,12 @@ Starting with New Code
 
 When creating new modules or classes:
 
-1.*** **Write Basic Docstring***s**: Include brief descriptions for modules, classes, and functions
+1.*** *Write Basic Docstring**s*: Include brief descriptions for modules, classes, and functions
 
-2.*** **Run Automated Tool***s**: Use the ``add_docstrings.p``y`` script to expand docstrings
+2.*** *Run Automated Tool**s*: Use the ``add_docstrings.py`` script to expand docstrings
 
-3.*** **Create README***s**: Either manually or using the automated tools
-4.*** **Build and Revie***w**: Ensure documentation builds correctly
+3.*** *Create README**s*: Either manually or using the automated tools
+4.*** *Build and Revie**w*: Ensure documentation builds correctly
 
 .. code-block:: bash
 
@@ -43,11 +43,11 @@ When creating new modules or classes:
 
     When updating existing code:
 
-    1.*** **Update Code Docstring***s**: Ensure docstrings reflect the current behavior
+    1.*** *Update Code Docstring**s*: Ensure docstrings reflect the current behavior
 
-    2.*** **Check for Consistenc***y**: Make sure documentation follows the established patterns
+    2.*** *Check for Consistenc**y*: Make sure documentation follows the established patterns
 
-    3.*** **Rebuild Documentatio***n**: Verify changes are reflected in the built docs
+    3.*** *Rebuild Documentatio**n*: Verify changes are reflected in the built docs
 
 .. code-block:: bash
 
@@ -61,15 +61,15 @@ When creating new modules or classes:
 
     Before considering documentation complete, check:
 
-    1.*** **Completenes***s**: All modules, classes, and functions have docstrings
+    1.*** *Completenes**s*: All modules, classes, and functions have docstrings
 
-    2.*** **Example***s**: Usage examples are provided and working
+    2.*** *Example**s*: Usage examples are provided and working
 
-    3.*** **Accurac***y**: Documentation matches actual code behavior
-    4.*** **Formatting***g**: Google-style docstring format is followed
-    5.*** **Module README***s**: Each module has a README with overview and usage
-    6.*** **Cross-reference***s**: Documentation properly links related concepts
-    7.*** **Builds Successful***y**: Documentation builds without errors
+    3.*** *Accurac**y*: Documentation matches actual code behavior
+    4.*** *Formatting**g*: Google-style docstring format is followed
+    5.*** *Module README**s*: Each module has a README with overview and usage
+    6.*** *Cross-reference**s*: Documentation properly links related concepts
+    7.*** *Builds Successful**y*: Documentation builds without errors
 
     Documentation Quality Levels
 
@@ -81,16 +81,16 @@ When creating new modules or classes:
 
     :header-rows: 1
 
-    *** * - Level*
+    ***  - Level*
      - Description
      - Requirements
-    * * -* **Basi***c**
+    *  -* **Basi*c**
      - Minimum acceptable level
      - All public APIs have brief docstrings, README exists
-    *** * -* **Standard***d**
+    ***  -* **Standard*d**
      - Expected quality level
      - Complete docstrings with examples, comprehensive README
-    *** * -* **Complete***e**
+    ***  -* **Complete*e**
      - Highest quality level
      - Extended examples, cross-references, diagrams, tutorials
 
@@ -98,14 +98,14 @@ When creating new modules or classes:
 
     --------------
 
-    1.*** **Document as You Cod***e**: Write docstrings while implementing features
+    1.*** *Document as You Cod**e*: Write docstrings while implementing features
 
-    2.*** **Run Tools Regularl***y**: Integrate documentation tools into your workflow
+    2.*** *Run Tools Regularl**y*: Integrate documentation tools into your workflow
 
-    3.*** **Check Documentation Build***s**: Verify Sphinx builds successfully
-    4.*** **Review Rendered Output***t**: Check how documentation looks when built
-    5.*** **Keep READMEs Update***d**: Update module READMEs when adding features
-    6.*** **Think About New User***s**: Documentation should guide new users effectively
+    3.*** *Check Documentation Build**s*: Verify Sphinx builds successfully
+    4.*** *Review Rendered Output**t*: Check how documentation looks when built
+    5.*** *Keep READMEs Update**d*: Update module READMEs when adding features
+    6.*** *Think About New User**s*: Documentation should guide new users effectively
 
     Handling Breaking Changes
 
@@ -113,12 +113,12 @@ When creating new modules or classes:
 
     When making breaking changes:
 
-    1.*** **Update All Docstring***s**: Ensure all affected docstrings reflect the changes
+    1.*** *Update All Docstring**s*: Ensure all affected docstrings reflect the changes
 
-    2.*** **Update Example***s**: Make sure all examples work with the new API
+    2.*** *Update Example**s*: Make sure all examples work with the new API
 
-    3.*** **Highlight Change***s**: Note breaking changes prominently in documentation
-    4.*** **Version Documentatio***n**: Consider maintaining documentation for older versions
+    3.*** *Highlight Change**s*: Note breaking changes prominently in documentation
+    4.*** *Version Documentatio**n*: Consider maintaining documentation for older versions
 
     Documentation Roadmap
 
@@ -126,13 +126,13 @@ When creating new modules or classes:
 
     For larger documentation improvements:
 
-    1.*** **Assessmen***t**: Evaluate current documentation coverage and quality
+    1.*** *Assessmen**t*: Evaluate current documentation coverage and quality
 
-    2.*** **Prioritizatio***n**: Identify critical areas for improvement
+    2.*** *Prioritizatio**n*: Identify critical areas for improvement
 
-    3.*** **Plannin***g**: Develop a plan with specific tasks and timelines
-    4.*** **Implementation***n**: Execute the plan, starting with high-priority items
-    5.*** **Revie***w**: Regularly review progress and adjust the plan as needed
+    3.*** *Plannin**g*: Develop a plan with specific tasks and timelines
+    4.*** *Implementation**n*: Execute the plan, starting with high-priority items
+    5.*** *Revie**w*: Regularly review progress and adjust the plan as needed
 
     Troubleshooting Documentation Issues
 
@@ -140,10 +140,10 @@ When creating new modules or classes:
 
     Common documentation issues and solutions:
 
-    1.*** **Missing docstring***s**: Run the automated docstring generator
+    1.*** *Missing docstring**s*: Run the automated docstring generator
 
-    2.*** **Sphinx build error***s**: Check the error log and fix the specific issues
+    2.*** *Sphinx build error**s*: Check the error log and fix the specific issues
 
-    3.*** **Inconsistent formatting***g**: Review against the style guide and correct
-    4.*** **Outdated example***s**: Update examples to match current code behavior
-    5.*** **Documentation doesn't match cod***e**: Update docstrings to reflect current implementation``***
+    3.*** *Inconsistent formatting**g*: Review against the style guide and correct
+    4.*** *Outdated example**s*: Update examples to match current code behavior
+    5.*** *Documentation doesn't match cod**e*: Update docstrings to reflect current implementation``**`

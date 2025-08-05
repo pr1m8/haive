@@ -11,6 +11,8 @@ Basic Conversation
 
 .. code-block:: python
 
+    # Code example here
+
     from haive.agents.simple import SimpleAgent
     from haive.core.engine import AugLLMConfig
 
@@ -40,9 +42,12 @@ Basic Conversation
     asyncio.run(run_conversation())
 
     Structured Output
-    ~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.simple.structured import StructuredSimpleAgent
     from pydantic import BaseModel
@@ -71,12 +76,15 @@ Basic Conversation
     review = asyncio.run(get_review())
 
     ReAct Agent Examples
-    --------------------
+
+--------------------
 
     Web Research
     ~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.react import ReactAgent
     from haive.tools import WebSearchTool, WikipediaTool, CalculatorTool
@@ -108,9 +116,12 @@ Basic Conversation
     result = asyncio.run(run_research())
 
     Code Analysis
-    ~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.react import ReactAgent
     from haive.tools.code import CodeAnalyzer, GitTool
@@ -133,12 +144,15 @@ Basic Conversation
     analysis = asyncio.run(analyze_code())
 
     RAG Agent Examples
-    ------------------
+
+------------------
 
     Document Q&A
     ~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.simple import SimpleRAGAgent
     from haive.core.retrieval import VectorRetriever
@@ -174,9 +188,12 @@ Basic Conversation
     answer = asyncio.run(get_answer())
 
     Adaptive RAG
-    ~~~~~~~~~~~~
+
+~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.rag.adaptive_rag import AdaptiveRAGAgent
 
@@ -202,12 +219,15 @@ Basic Conversation
     result = asyncio.run(run_adaptive())
 
     Conversation Agent Examples
-    ---------------------------
+
+---------------------------
 
     Debate Simulation
     ~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.conversation.debate import DebateConversation
 
@@ -232,9 +252,12 @@ Basic Conversation
     result = asyncio.run(run_debate())
 
     Collaborative Problem Solving
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.conversation.collaborative import CollaborativeConversation
     from haive.agents.simple import SimpleAgent
@@ -275,12 +298,15 @@ Basic Conversation
     solution = asyncio.run(run_collaboration())
 
     Multi-Agent Examples
-    --------------------
+
+--------------------
 
     Research Pipeline
     ~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.multi import MultiAgent
     from haive.agents.research.person import PersonResearchAgent
@@ -320,9 +346,12 @@ Basic Conversation
     article = asyncio.run(run_pipeline())
 
     Supervisor Pattern
-    ~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.supervisor import SupervisorAgent
 
@@ -349,12 +378,15 @@ Basic Conversation
     result = asyncio.run(run_supervisor())
 
     Advanced Examples
-    -----------------
+
+-----------------
 
     Self-Healing Code Agent
     ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.self_healing_code import SelfHealingCodeAgent
 
@@ -379,9 +411,12 @@ Basic Conversation
     fixed_code = asyncio.run(fix_code())
 
     Tree of Thoughts Reasoning
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.reasoning_and_critique.tot import TreeOfThoughtsAgent
 
@@ -406,12 +441,15 @@ Basic Conversation
     solution = asyncio.run(solve_problem())
 
     Visualization Examples
-    ----------------------
+
+----------------------
 
     Agent Graph Visualization
     ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     # For any agent, visualize its execution graph
     agent = ReactAgent(name="viz_example", tools=[...])
@@ -427,9 +465,12 @@ Basic Conversation
     graph.view()  # Opens in default viewer
 
     State Flow Visualization
-    ~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.multi import MultiAgent
 
@@ -443,9 +484,12 @@ Basic Conversation
     )
 
     Performance Monitoring
-    ----------------------
+
+----------------------
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.react import ReactAgent
     from haive.core.monitoring import AgentMonitor
@@ -474,17 +518,18 @@ Basic Conversation
     result = asyncio.run(run_with_monitoring())
 
     Best Practices
-    --------------
 
-    1. **State Management**: Always use thread_id for conversation continuity
-    2. **Error Handling**: Implement proper error handling for production use
-    3. **Resource Management**: Set appropriate timeouts and token limits
-    4. **Monitoring**: Enable monitoring for production deployments
-    5. **Testing**: Write comprehensive tests for custom agents
+--------------
+
+    1. **State Management*: Always use thread_id for conversation continuity
+    2. **Error Handling*: Implement proper error handling for production use
+    3. **Resource Management*: Set appropriate timeouts and token limits
+    4. **Monitoring*: Enable monitoring for production deployments
+    5. **Testing*: Write comprehensive tests for custom agents
 
     Next Steps
     ----------
 
-    - Explore the :doc:`api_reference` for detailed documentation
-    - Check out :doc:`showcase` for production examples
-    - Read the :doc:`../guides/building_agents` guide to create custom agents
+    - Explore the :doc:`../api/index for detailed API documentation`
+    - Check out :doc:`showcase for production examples`
+    - Read the :doc:`../guides/building_agents guide to create custom agents`

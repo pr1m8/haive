@@ -58,9 +58,11 @@ The Haive conversation system provides several conversation patterns, each optim
 Quick Start
 -----------
 
-**Basic Conversation Setup**
+**Basic Conversation Setup*
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.conversation.directed import DirectedConversation
     from haive.agents.simple import SimpleAgent
@@ -84,7 +86,8 @@ Quick Start
     result = await panel.run(max_rounds=5)
 
     Choosing a Conversation Type
-    ----------------------------
+
+----------------------------
 
     .. list-table:: Conversation Type Selection Guide
 
@@ -124,9 +127,11 @@ Quick Start
     Common Patterns
     ---------------
 
-    **1. Expert Panel Discussion**
+    **1. Expert Panel Discussion*
 
 .. code-block:: python
+
+    # Code example here
 
     panel = DirectedConversation.create_panel(
     moderator_name="Host",
@@ -135,9 +140,12 @@ Quick Start
     rounds=3
     )
 
-    **2. Team Problem Solving**
+
+**2. Team Problem Solving*
 
 .. code-block:: python
+
+    # Code example here
 
     team_session = CollaborativeConversation(
     agents=team_members,
@@ -146,9 +154,12 @@ Quick Start
     consensus_required=True
     )
 
-    **3. Decision Analysis**
+
+**3. Decision Analysis*
 
 .. code-block:: python
+
+    # Code example here
 
     decision_debate = DebateConversation(
     topic="Should we migrate to microservices?",
@@ -158,7 +169,8 @@ Quick Start
     )
 
     Architecture
-    ------------
+
+------------
 
     .. mermaid::
 
@@ -181,7 +193,7 @@ Quick Start
     Key Components
     --------------
 
-    1. **Base Conversation Class**
+    1. **Base Conversation Class*
 
 
     - Message management
@@ -189,21 +201,21 @@ Quick Start
     - History tracking
     - Context building
 
-    2. **Agent Integration**
+    2. **Agent Integration*
 
 
     - Any Haive agent can participate
     - Agents maintain individual context
     - System messages guide behavior
 
-    3. **Conversation Flow**
+    3. **Conversation Flow*
 
 
     - Configurable turn patterns
     - Dynamic speaker selection
     - Termination conditions
 
-    4. **Output Formats**
+    4. **Output Formats*
 
 
     - Full transcript
@@ -214,9 +226,11 @@ Quick Start
     Best Practices
     --------------
 
-    **1. Agent Preparation**
+    **1. Agent Preparation*
 
 .. code-block:: python
+
+    # Code example here
 
     # Give agents clear roles
     agent = SimpleAgent(
@@ -226,9 +240,12 @@ Quick Start
     Build on others' ideas with data-driven insights."""
     )
 
-    **2. Conversation Configuration**
+
+**2. Conversation Configuration*
 
 .. code-block:: python
+
+    # Code example here
 
     # Set appropriate limits
     conversation = ConversationType(
@@ -238,9 +255,12 @@ Quick Start
     summary_interval=5   # Periodic summaries
     )
 
-    **3. Error Handling**
+
+**3. Error Handling*
 
 .. code-block:: python
+
+    # Code example here
 
     try:
     result = await conversation.run()
@@ -250,11 +270,14 @@ Quick Start
     result = conversation.continue_without_agent(failed_agent)
 
     Advanced Features
-    -----------------
 
-    **Dynamic Agent Addition**
+-----------------
+
+    **Dynamic Agent Addition*
 
 .. code-block:: python
+
+    # Code example here
 
     # Add expert when specific topic arises
     conversation.add_agent_when(
@@ -263,9 +286,12 @@ Quick Start
     introduction="I'm here to explain the quantum aspects..."
     )
 
-    **Conversation Branching**
+
+**Conversation Branching*
 
 .. code-block:: python
+
+    # Code example here
 
     # Split into subgroups for parallel discussion
     main_conv.branch_into_subgroups(
@@ -274,9 +300,12 @@ Quick Start
     merge_after_turns=10
     )
 
-    **Memory and Context**
+
+**Memory and Context*
 
 .. code-block:: python
+
+    # Code example here
 
     # Use persistent memory across conversations
     memory = ConversationMemory(redis_url="...")
@@ -289,7 +318,8 @@ Quick Start
     )
 
     Examples by Use Case
-    --------------------
+
+--------------------
 
     .. toctree::
 
@@ -317,16 +347,16 @@ Quick Start
     Performance Considerations
     --------------------------
 
-    - **Token Usage**: Conversations can consume many tokens quickly
-    - **Context Management**: Use sliding windows and summarization
-    - **Parallel Processing**: Some patterns allow concurrent agent thinking
-    - **Caching**: Cache agent responses for similar prompts
-    - **Monitoring**: Track participation, quality, and outcomes
+    - **Token Usage*: Conversations can consume many tokens quickly
+    - **Context Management*: Use sliding windows and summarization
+    - **Parallel Processing*: Some patterns allow concurrent agent thinking
+    - **Caching*: Cache agent responses for similar prompts
+    - **Monitoring*: Track participation, quality, and outcomes
 
     See Also
     --------
 
-    - :doc:`/guides/building_agents` - Create custom agents
-    - :doc:`/api/haive-agents` - Full agents API reference
-    - :doc:`/guides/multi_agent_systems` - Advanced multi-agent patterns
-    - :doc:`/examples/index` - More code examples
+    - :doc:`/guides/building_agents - Create custom agents`
+    - :doc:`/api/haive-agents - Full agents API reference`
+    - :doc:`/guides/multi_agent_systems - Advanced multi-agent patterns`
+    - :doc:`/examples/index - More code examples`

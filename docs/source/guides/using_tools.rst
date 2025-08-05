@@ -29,11 +29,11 @@ Built-in Tools
 
 Haive comes with several built-in tools:
 
-- **Search Tool***s**: Query search engines, retrieve web content**
+- **Search Tool*s**: Query search engines, retrieve web content*
 
--*** **Math Tool***s**: Perform calculations, solve equations
--*** **Code Tool***s**: Execute Python code safely
--*** **Utility Tool***s**: Generate random data, parse content
+-*** *Math Tool**s*: Perform calculations, solve equations
+-*** *Code Tool**s*: Execute Python code safely
+-*** *Utility Tool**s*: Generate random data, parse content
 
 Using Tools with Agents
 
@@ -51,6 +51,8 @@ Here's a simple example using the React agent pattern:
 
 .. code-block:: python
 
+    # Code example here
+
     from haive.agents.react import ReactAgent
     from haive.tools.search import WebSearch
     from haive.tools.math import Calculator
@@ -66,7 +68,8 @@ Here's a simple example using the React agent pattern:
 
     When to Use Tools
 
-    -----------------
+
+-----------------
 
     Tools are particularly useful when:
 
@@ -91,6 +94,8 @@ Here's a simple example using the React agent pattern:
 
 .. code-block:: python
 
+    # Code example here
+
     # Example of chaining tool outputs
     search_result = web_search.run("latest Mars rover")
     parsed_data = content_parser.run(search_result)
@@ -98,11 +103,12 @@ Here's a simple example using the React agent pattern:
 
     Next Steps
 
-    ----------
+
+----------
 
     Now that you understand how to use tools, you might want to:
 
-    - Learn about :doc:`custom_tools` - Create your own specialized tools
+    - Learn about :doc:`custom_tools - Create your own specialized tools`
 
-    - Explore :doc:`tool_routing` - Advanced patterns for tool selection
-    - Check out the :mod:`haive.tools` API reference for complete documentation***
+    - Explore :doc:`tool_routing - Advanced patterns for tool selection`
+    - Check out the :mod:``haive.tools API reference for complete documentation***``

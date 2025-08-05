@@ -77,5 +77,5 @@ Advanced Topics
 
 .. note::
 
-   If you're new to Haive, start with :doc:`core_concepts` to understand
+   If you're new to Haive, start with :doc:`core_concepts to understand`
    the fundamental building blocks.

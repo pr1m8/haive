@@ -3,77 +3,45 @@ Enhanced Agent Showcase with Graph Visualization
 
 This page demonstrates the full capabilities of Haive agents with interactive graph visualization, state history tracking, and execution traces.
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="agent-showcase stagger-animation">
 
    <!-- Climate Research Agent with Full Visualization -->
 
-.. raw:: html
-
    <div class="agent-card" data-agent-type="research">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-icon">🌍</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Climate Research Agent</h3>
    <p class="agent-subtitle">Advanced Environmental Analysis with ReAct</p>
    </div>
 
-.. raw:: html
-
    </div>
 
 
-
-.. raw:: html
 
    <p class="agent-description">
 
                 Sophisticated AI agent that conducts comprehensive climate research using the ReAct (Reasoning + Acting) methodology.
                 Watch how the agent iteratively gathers data, reasons about findings, and takes action to build comprehensive reports.
-.. raw:: html
-
    </p>
 
 
 
-.. raw:: html
-
    <div class="agent-features">
-
-.. raw:: html
 
    <div class="agent-feature">ReAct Workflow</div>
 
-.. raw:: html
-
    <div class="agent-feature">Multi-Source Data</div>
 
-.. raw:: html
-
    <div class="agent-feature">Iterative Reasoning</div>
-
-.. raw:: html
 
    <div class="agent-feature">Visual Tracking</div>
    </div>
 
-.. raw:: html
-
    <!-- Agent Graph Visualization -->
-
-.. raw:: html
 
    <div id="climate-agent-graph"
    class="agent-graph-container"
@@ -103,11 +71,7 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
    }'>
    </div>
 
-.. raw:: html
-
    <!-- State History Visualization -->
-
-.. raw:: html
 
    <div id="climate-agent-state"
    class="state-history-container"
@@ -186,11 +150,7 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
    ]'>
    </div>
 
-.. raw:: html
-
    <!-- Execution Trace -->
-
-.. raw:: html
 
    <div id="climate-agent-trace"
    class="execution-trace"
@@ -258,18 +218,12 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
    ]'>
    </div>
 
-.. raw:: html
-
    <div class="agent-code-preview">
-
-.. raw:: html
 
    <div class="agent-code-header">
    <span>Complete Example</span>
    <span class="badge">Python</span>
    </div>
-
-.. raw:: html
 
    <div class="agent-code-content">
    from haive.agents.research import ClimateResearchAgent
@@ -303,17 +257,11 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
    agent.export_graph("climate_agent_workflow.svg")
    agent.export_state_history("climate_agent_states.json")
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    </div>
 
 
-
-.. raw:: html
 
    <div class="agent-actions">
    <a href="/api/haive/agents/research/climate" class="agent-button">
@@ -342,77 +290,45 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
    </a>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    <!-- Supervisor Agent Multi-Agent Coordination -->
 
-.. raw:: html
-
    <div class="agent-card" data-agent-type="supervisor">
-
-.. raw:: html
 
    <div class="agent-header">
 
-.. raw:: html
-
    <div class="agent-icon">👑</div>
-
-.. raw:: html
 
    <div>
    <h3 class="agent-title">Supervisor Agent</h3>
    <p class="agent-subtitle">Multi-Agent Coordination & Routing</p>
    </div>
 
-.. raw:: html
-
    </div>
 
 
-
-.. raw:: html
 
    <p class="agent-description">
 
                 Advanced supervisor agent that coordinates multiple specialized agents. Watch how it routes tasks,
                 manages conversations, and synthesizes results from different expert agents working together.
-.. raw:: html
-
    </p>
 
 
 
-.. raw:: html
-
    <div class="agent-features">
-
-.. raw:: html
 
    <div class="agent-feature">Task Routing</div>
 
-.. raw:: html
-
    <div class="agent-feature">Agent Coordination</div>
 
-.. raw:: html
-
    <div class="agent-feature">Result Synthesis</div>
-
-.. raw:: html
 
    <div class="agent-feature">Conversation Management</div>
    </div>
 
-.. raw:: html
-
    <!-- Multi-Agent Graph Visualization -->
-
-.. raw:: html
 
    <div id="supervisor-agent-graph"
    class="agent-graph-container"
@@ -454,18 +370,12 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
    }'>
    </div>
 
-.. raw:: html
-
    <div class="agent-code-preview">
-
-.. raw:: html
 
    <div class="agent-code-header">
    <span>Multi-Agent Setup</span>
    <span class="badge">Python</span>
    </div>
-
-.. raw:: html
 
    <div class="agent-code-content">
    from haive.agents.supervisor import SupervisorAgent
@@ -498,17 +408,11 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
 
    )
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    </div>
 
 
-
-.. raw:: html
 
    <div class="agent-actions">
    <a href="/api/haive/agents/supervisor" class="agent-button">
@@ -530,35 +434,21 @@ This page demonstrates the full capabilities of Haive agents with interactive gr
    </a>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    </div>
 
 Interactive Features
 --------------------
 
-.. raw:: html
-
-   .. raw:: html
-
    <div class="collapsible-group">
 
-.. raw:: html
-
    <div class="collapsible">
-
-.. raw:: html
 
    <div class="collapsible-header">
    <h4 class="collapsible-title">🎮 Graph Playback Controls</h4>
    <span class="collapsible-icon">▶</span>
    </div>
-
-.. raw:: html
 
    <div class="collapsible-content">
    <p>Interactive graph visualizations with playback controls let you step through agent execution:</p>
@@ -571,22 +461,14 @@ Interactive Features
    <p>Click on any node in the graph to see detailed information about that step in the process.</p>
    </div>
 
-.. raw:: html
-
    </div>
 
-.. raw:: html
-
    <div class="collapsible">
-
-.. raw:: html
 
    <div class="collapsible-header">
    <h4 class="collapsible-title">📊 State Evolution Tracking</h4>
    <span class="collapsible-icon">▶</span>
    </div>
-
-.. raw:: html
 
    <div class="collapsible-content">
    <p>Visual timeline shows how agent state evolves throughout execution:</p>
@@ -599,22 +481,14 @@ Interactive Features
    <p>Green highlights show additions, yellow shows modifications, and red shows removals.</p>
    </div>
 
-.. raw:: html
-
    </div>
 
-.. raw:: html
-
    <div class="collapsible">
-
-.. raw:: html
 
    <div class="collapsible-header">
    <h4 class="collapsible-title">🔍 Execution Trace Analysis</h4>
    <span class="collapsible-icon">▶</span>
    </div>
-
-.. raw:: html
 
    <div class="collapsible-content">
    <p>Detailed execution traces provide insight into agent decision-making:</p>
@@ -627,22 +501,14 @@ Interactive Features
    <p>Expand any trace step to see the full input and output data for that operation.</p>
    </div>
 
-.. raw:: html
-
    </div>
 
-.. raw:: html
-
    <div class="collapsible">
-
-.. raw:: html
 
    <div class="collapsible-header">
    <h4 class="collapsible-title">🌐 Multi-Agent Coordination</h4>
    <span class="collapsible-icon">▶</span>
    </div>
-
-.. raw:: html
 
    <div class="collapsible-content">
    <p>Advanced visualization for multi-agent systems and coordination:</p>
@@ -655,11 +521,7 @@ Interactive Features
    <p>Each specialist agent maintains its own state while contributing to the shared conversation context.</p>
    </div>
 
-.. raw:: html
-
    </div>
-
-.. raw:: html
 
    </div>
 
@@ -672,11 +534,7 @@ Debugging and Development
 
 .. tip::
 
-   Enable ``trace_execution=True`` when running agents to capture detailed execution information for visualization.
-
-.. raw:: html
-
-   .. raw:: html
+   Enable ``trace_execution=True`` when running agents to capture detailed execution information for visualization.`
 
    <div class="section-nav">
    <h3 class="section-nav-title">
@@ -686,51 +544,31 @@ Debugging and Development
    Development Tools
    </h3>
 
-.. raw:: html
-
    <div class="section-nav-grid">
    <a href="/guides/debugging-agents" class="section-nav-item">
 
-.. raw:: html
-
    <div class="section-nav-item-title">Debugging Guide</div>
-
-.. raw:: html
 
    <div class="section-nav-item-desc">Learn to debug and optimize agent performance</div>
    </a>
    <a href="/guides/custom-visualizations" class="section-nav-item">
 
-.. raw:: html
-
    <div class="section-nav-item-title">Custom Visualizations</div>
-
-.. raw:: html
 
    <div class="section-nav-item-desc">Create your own visualization components</div>
    </a>
    <a href="/guides/performance-analysis" class="section-nav-item">
 
-.. raw:: html
-
    <div class="section-nav-item-title">Performance Analysis</div>
-
-.. raw:: html
 
    <div class="section-nav-item-desc">Monitor and optimize agent execution speed</div>
    </a>
    <a href="/guides/state-management" class="section-nav-item">
 
-.. raw:: html
-
    <div class="section-nav-item-title">State Management</div>
-
-.. raw:: html
 
    <div class="section-nav-item-desc">Best practices for agent state design</div>
    </a>
    </div>
-
-.. raw:: html
 
    </div>

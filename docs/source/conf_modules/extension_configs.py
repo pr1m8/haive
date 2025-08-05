@@ -248,6 +248,7 @@ def get_all_extension_configs(
         "sphinxcontrib.fulltoc": get_fulltoc_config,
         "sphinxcontrib.autodoc_pydantic": get_autodoc_pydantic_config,
         "autodocsumm": get_autodocsumm_config,
+        "sphinx_autoindex": get_sphinx_autoindex_config,  # Required config
         "sphinx_autodoc_typehints":
         get_autodoc_typehints_config,  # CRITICAL for generics
     }
@@ -325,6 +326,13 @@ def get_autodocsumm_config() -> dict[str, Any]:
     }
 
 
+def get_sphinx_autoindex_config() -> dict[str, Any]:
+    """Configuration for sphinx_autoindex extension."""
+    return {
+        "package_toindex": "packages/haive-core/src/haive",  # Point to actual package location
+    }
+
+
 def get_conditional_configs(extensions: list[str]) -> dict[str, Any]:
     """Get configurations that depend on multiple extensions being present."""
     configs = {}
@@ -333,8 +341,8 @@ def get_conditional_configs(extensions: list[str]) -> dict[str, Any]:
     if "sphinxcontrib.mermaid" in extensions and "sphinxcontrib.plantuml" in extensions:
         configs.update(
             {
-                "html_css_files": ["diagrams.css"],
-                "html_js_files": ["diagram-utils.js"],
+                "html_css_files": [("diagrams.css", {})],
+                "html_js_files": [("diagram-utils.js", {})],
             }, )
 
     # If versioning and sitemap are both available, enhance SEO

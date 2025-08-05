@@ -13,11 +13,11 @@ Tool routing refers to how an agent decides which tool(s) to use in response to 
 
 tool routing can be:
 
-1. **LLM-drive***n**: The language model selects tools based on context**
+1. **LLM-drive*n**: The language model selects tools based on context*
 
-2.*** **Rule-base***d**: Predetermined logic selects tools based on triggers
+2.*** *Rule-base**d*: Predetermined logic selects tools based on triggers
 
-3.*** **Hybri***d**: Combining LLM decisions with programmatic constraints
+3.*** *Hybri**d*: Combining LLM decisions with programmatic constraints
 
 LLM-Driven Tool Selection
 
@@ -26,6 +26,8 @@ LLM-Driven Tool Selection
 The most flexible approach lets the LLM choose tools:
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.agents.react import ReactAgent
     from haive.tools import WebSearch, Calculator, WeatherTool
@@ -40,11 +42,14 @@ The most flexible approach lets the LLM choose tools:
 
     Rule-Based Tool Selection
 
-    -------------------------
+
+-------------------------
 
     For more control, implement rules:
 
 .. code-block:: python
+
+    # Code example here
 
     from haive.core.graph.node import ToolNode
     from haive.core.graph import StateGraph
@@ -54,7 +59,8 @@ The most flexible approach lets the LLM choose tools:
 
     if "weather" in query or "temperature" in query or "umbrella" in query:
     return {"tool": "weather_tool"}
-    elif "calculate" in query or any(op in query for op in ["+", "-", ***"*", "/"]):*
+
+elif "calculate" in query or any(op in query for op in ["+", "-", ***"", "/"]):*
     return {"tool": "calculator"}
     else:
     return {"tool": "web_search"}
@@ -78,6 +84,8 @@ The most flexible approach lets the LLM choose tools:
 
 .. code-block:: python
 
+    # Code example here
+
     class RestrictedToolAgent(ReactAgent):
     def get_available_tools(self, query):
     """Return only relevant tools based on the query."""
@@ -92,15 +100,19 @@ The most flexible approach lets the LLM choose tools:
 
     Dynamic Tool Loading
 
-    --------------------
+
+--------------------
 
     Load tools on demand to optimize resource usage:
 
 .. code-block:: python
 
+    # Code example here
+
     class DynamicToolAgent(ReactAgent):
-    def __init__(self,* *args,* **kwargs):**
-    super().__init__***(*args,* **kwargs)
+
+def __init__(self,* args,* **kwargs):*
+    super().__init__***(args,* **kwargs)
     self.tool_registry = {}  # Cache for loaded tools
 
     def get_tool(self, tool_name):
@@ -123,6 +135,8 @@ The most flexible approach lets the LLM choose tools:
 
 .. code-block:: python
 
+    # Code example here
+
     from haive.core.graph import StateGraph
     from haive.core.graph.node import ToolNode, LLMNode
 
@@ -142,20 +156,24 @@ The most flexible approach lets the LLM choose tools:
 
     Observability and Monitoring
 
-    ----------------------------
+
+----------------------------
 
     Track tool usage to optimize performance:
 
 .. code-block:: python
 
+    # Code example here
+
     class MonitoredAgent(ReactAgent):
-    def __init__(self,*** *args,* **kwargs):
-    super().__init__***(*args,* **kwargs)
+
+def __init__(self,*** args,* **kwargs):
+    super().__init__***(args,* **kwargs)
     self.tool_usage = {}
 
-    def run_tool(self, tool_name,*** **kwargs):
+    def run_tool(self, tool_name,*** *kwargs):
     start_time = time.time()
-    result = super().run_tool(tool_name,*** **kwargs)
+    result = super().run_tool(tool_name,*** *kwargs)
     execution_time = time.time() - start_time
 
     # Record usage
@@ -182,7 +200,7 @@ The most flexible approach lets the LLM choose tools:
 
     To further enhance your tool routing capabilities:
 
-    - Learn about the :mod:`haive.core.graph` system for complex routing logic
+    - Learn about the :mod:``haive.core.graph system for complex routing logic``
 
-    - Explore :doc:`advanced_patterns` for sophisticated agent architectures
-    - Check out :doc:`performance` for optimizing tool execution***
+    - Explore :doc:`advanced_patterns for sophisticated agent architectures`
+    - Check out :doc:`performance for optimizing tool execution***`

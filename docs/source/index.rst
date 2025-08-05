@@ -1,28 +1,20 @@
 🤖 Haive AI Agent Framework
-============================
-
-.. raw:: html
-
-   .. raw:: html
+==========================
 
    <div class="hero-section">
    <h1 class="gradient-text">Build Intelligent AI Agents</h1>
    <p>Professional framework for creating sophisticated AI agents with conversational intelligence,
    tool orchestration, game strategies, and multi-agent coordination.</p>
 
-.. raw:: html
-
    <div class="hero-buttons">
    <a href="introduction/index.html" class="sd-btn sd-btn-primary">Get Started →</a>
    <a href="https://github.com/haive/haive" class="sd-btn sd-btn-secondary">View on GitHub</a>
    </div>
 
-.. raw:: html
-
    </div>
 
 🚀 Quick Start
-==============
+=============
 
 .. grid:: 1 1 2 2
 
@@ -31,14 +23,14 @@
    .. grid-item::
 
 
-      **Install Haive**
+      **Install Haive*
 
 .. code-block:: bash
    :class: copy-button
 
    pip install haive-agents
 
-**Create Your First Agent**
+**Create Your First Agent*
 
 .. code-block:: python
    :class: copy-button
@@ -61,80 +53,50 @@
          .. grid-item::
 
 
-         **Key Features**
-
-         .. raw:: html
-
-         .. raw:: html
+         **Key Features*
 
          <div class="feature-list">
 
-         .. raw:: html
-
          <div class="feature-item">
          <span class="feature-icon">✨</span>
-
-         .. raw:: html
 
          <div>
          <strong>Auto-Persistence</strong>
          <p>Automatic state saving and loading</p>
          </div>
 
-         .. raw:: html
-
          </div>
-
-         .. raw:: html
 
          <div class="feature-item">
          <span class="feature-icon">🔧</span>
-
-         .. raw:: html
 
          <div>
          <strong>Tool Integration</strong>
          <p>Connect to APIs, databases, and services</p>
          </div>
 
-         .. raw:: html
-
          </div>
-
-         .. raw:: html
 
          <div class="feature-item">
          <span class="feature-icon">🧠</span>
-
-         .. raw:: html
 
          <div>
          <strong>Advanced Reasoning</strong>
          <p>ReAct pattern for complex problem solving</p>
          </div>
 
-         .. raw:: html
-
          </div>
-
-         .. raw:: html
 
          <div class="feature-item">
          <span class="feature-icon">🤝</span>
-
-         .. raw:: html
 
          <div>
          <strong>Multi-Agent Systems</strong>
          <p>Coordinate multiple specialized agents</p>
          </div>
 
-         .. raw:: html
-
          </div>
          </div>
-
-         .. raw:: html
 
          <style>
 
@@ -157,8 +119,6 @@
              color: var(--haive-text-muted);
              font-size: 0.875rem;
          }
-         .. raw:: html
-
          </style>
 
          🎯 Core Capabilities
@@ -178,7 +138,7 @@
 
          +++
 
-         **Available Types:** SimpleAgent • ReactAgent • RAG Systems
+         **Available Types:* SimpleAgent • ReactAgent • RAG Systems
 
          .. grid-item-card:: 🎮 Game Intelligence
 
@@ -189,7 +149,7 @@
 
          +++
 
-         **Available Types:** Chess Engine • Board Games • Strategy AI
+         **Available Types:* Chess Engine • Board Games • Strategy AI
 
          .. grid-item-card:: 🔧 Tool Orchestration
 
@@ -200,7 +160,7 @@
 
          +++
 
-         **Supported:** Web APIs • Databases • File Systems
+         **Supported:* Web APIs • Databases • File Systems
 
          .. grid-item-card:: 🔄 Dynamic MCP
 
@@ -211,7 +171,7 @@
 
          +++
 
-         **Features:** Auto-Discovery • Hot-Reload • Plugin System
+         **Features:* Auto-Discovery • Hot-Reload • Plugin System
 
          .. grid-item-card:: 📖 API Reference
 
@@ -222,7 +182,7 @@
 
          +++
 
-         **Coverage:** Core API • Agent Classes • Tools
+         **Coverage:* Core API • Agent Classes • Tools
 
          .. grid-item-card:: 📚 Examples
 
@@ -233,86 +193,50 @@
 
          +++
 
-         **Content:** Tutorials • Guides • Code Samples
-
-         .. raw:: html
-
-         .. raw:: html
+         **Content:* Tutorials • Guides • Code Samples
 
          <div class="why-haive">
          <h2>Why Choose Haive?</h2>
 
-         .. raw:: html
-
          <div class="benefits-grid">
-
-         .. raw:: html
 
          <div class="benefit">
          <span class="benefit-icon">⚡</span>
 
-         .. raw:: html
-
          <div class="benefit-title">Production Ready</div>
-
-         .. raw:: html
 
          <div class="benefit-desc">Battle-tested in production environments</div>
          </div>
 
-         .. raw:: html
-
          <div class="benefit">
          <span class="benefit-icon">🔒</span>
 
-         .. raw:: html
-
          <div class="benefit-title">Type Safe</div>
-
-         .. raw:: html
 
          <div class="benefit-desc">Full type hints and Pydantic models</div>
          </div>
 
-         .. raw:: html
-
          <div class="benefit">
          <span class="benefit-icon">🚀</span>
 
-         .. raw:: html
-
          <div class="benefit-title">High Performance</div>
-
-         .. raw:: html
 
          <div class="benefit-desc">Async-first with optimized execution</div>
          </div>
 
-         .. raw:: html
-
          <div class="benefit">
          <span class="benefit-icon">🎯</span>
 
-         .. raw:: html
-
          <div class="benefit-title">Extensible</div>
-
-         .. raw:: html
 
          <div class="benefit-desc">Plugin architecture for custom agents</div>
          </div>
-
-         .. raw:: html
 
          </div>
          </div>
 
          📊 Architecture Overview
          ========================
-
-         .. raw:: html
-
-         .. raw:: html
 
          <div class="architecture-diagram">
          <img src="_static/architecture-overview.svg" alt="Haive Architecture" style="max-width: 100%; height: auto;">
@@ -323,8 +247,6 @@
 
          🎯 Agent Comparison
          ===================
-
-         .. raw:: html
 
          <table class="feature-table">
          <thead>
@@ -373,20 +295,12 @@
          .. grid-item::
 
 
-         .. raw:: html
-
-         .. raw:: html
-
          <div class="metric-card">
          <span class="value">&lt;100ms</span>
          <span class="label">Response Time</span>
          </div>
 
          .. grid-item::
-
-         .. raw:: html
-
-         .. raw:: html
 
          <div class="metric-card">
          <span class="value">10K+</span>
@@ -395,20 +309,12 @@
 
          .. grid-item::
 
-         .. raw:: html
-
-         .. raw:: html
-
          <div class="metric-card">
          <span class="value">99.9%</span>
          <span class="label">Uptime</span>
          </div>
 
          .. grid-item::
-
-         .. raw:: html
-
-         .. raw:: html
 
          <div class="metric-card">
          <span class="value">50+</span>
@@ -418,36 +324,22 @@
          💬 What Developers Say
          ======================
 
-         .. raw:: html
-
-         .. raw:: html
-
          <div class="testimonial">
-
-         .. raw:: html
 
          <div class="content">
          Haive transformed how we build AI applications. The agent architecture is intuitive
          and the performance is outstanding. We reduced our development time by 70%.
          </div>
 
-         .. raw:: html
-
          <div class="author">— Sarah Chen, CTO at TechCorp</div>
          </div>
 
-         .. raw:: html
-
          <div class="testimonial">
-
-         .. raw:: html
 
          <div class="content">
          The best AI agent framework I've used. The documentation is excellent and the
          community support is fantastic. Highly recommended for production use.
          </div>
-
-         .. raw:: html
 
          <div class="author">— Michael Rodriguez, AI Engineer</div>
          </div>
@@ -554,9 +446,9 @@
          Quick Links
          -----------
 
-         - :doc:`api/index` - Complete API Reference
-         - :doc:`api/src/haive/core/index` - Core infrastructure
-         - :doc:`api/src/haive/agents/index` - Agent implementations
-         - :ref:`genindex` - Complete index
-         - :ref:`modindex` - Module index
-         - :ref:`search` - Search documentation
+         - :doc:`api/index - Complete API Reference`
+         - :doc:`api/src/haive/core/index - Core infrastructure`
+         - :doc:`api/src/haive/agents/index - Agent implementations`
+         - :ref:``genindex - Complete index``
+         - :ref:``modindex - Module index``
+         - :ref:``search - Search documentation``
