@@ -6,9 +6,9 @@ use this, copy it to docs/source/conf.py.
 
 from __future__ import annotations
 
+import sys
 from datetime import datetime
 from pathlib import Path
-import sys
 
 # ==============================================================================
 # Path Setup
@@ -21,12 +21,12 @@ packages_dir = workspace_dir / "packages"
 
 # Add package source paths for imports
 for package in [
-        "haive-core",
-        "haive-agents",
-        "haive-tools",
-        "haive-games",
-        "haive-mcp",
-        "haive-dataflow",
+    "haive-core",
+    "haive-agents",
+    "haive-tools",
+    "haive-games",
+    "haive-mcp",
+    "haive-dataflow",
 ]:
     src_path = packages_dir / package / "src"
     if src_path.exists():

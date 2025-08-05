@@ -70,9 +70,7 @@ class PhaseLogger:
             phase = self.current_phase
             status = "✅" if not phase["errors"] else "❌"
             self.session.log(
-                f"{status} Phase '{
-                    phase['name']}' completed in {
-                    phase['duration']:.1f}s",
+                f"{status} Phase '{phase['name']}' completed in {phase['duration']:.1f}s",
             )
 
             if phase["warnings"]:

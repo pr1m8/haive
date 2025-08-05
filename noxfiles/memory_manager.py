@@ -3,6 +3,7 @@
 This module provides intelligent memory management to prevent system
 crashes during resource-intensive documentation builds.
 """
+
 from __future__ import annotations
 
 import gc
@@ -64,18 +65,14 @@ class MemoryManager:
     def check_memory_status(self, session):
         """Check current memory status and log it."""
         if not PSUTIL_AVAILABLE:
-            session.log(
-                "⚠️  psutil not available - memory monitoring disabled")
+            session.log("⚠️  psutil not available - memory monitoring disabled")
             return "unknown"
 
         available_gb = self.get_memory_gb()
         percent_used = self.get_memory_percent()
 
         session.log(
-            f"💾 Memory: {
-                available_gb:.1f}GB available ({
-                100 -
-                percent_used:.0f}% free)",
+            f"💾 Memory: {available_gb:.1f}GB available ({100 - percent_used:.0f}% free)",
         )
 
         if available_gb < 1.0:
@@ -109,7 +106,6 @@ class MemoryManager:
         """Context manager to monitor memory during builds."""
 
         class MemoryMonitor:
-
             def __init__(self, mm, sess, op_name):
                 self.memory_manager = mm
                 self.session = sess
@@ -121,9 +117,10 @@ class MemoryManager:
                 self.start_memory = self.memory_manager.get_available_memory()
                 self.start_time = time.time()
                 self.session.log(
-                    f"🚀 Starting {
-                        self.operation} with {
-                        self.memory_manager.get_memory_gb():.1f}GB available", )
+                    f"🚀 Starting {self.operation} with {
+                        self.memory_manager.get_memory_gb():.1f
+                    }GB available",
+                )
                 return self
 
             def __exit__(self, exc_type, exc_val, exc_tb):
@@ -131,8 +128,7 @@ class MemoryManager:
                 memory_used = (self.start_memory - end_memory) / (1024**3)
                 elapsed = time.time() - self.start_time
 
-                self.session.log(
-                    f"✅ {self.operation} completed in {elapsed:.1f}s")
+                self.session.log(f"✅ {self.operation} completed in {elapsed:.1f}s")
                 self.session.log(f"💾 Memory used: {memory_used:.1f}GB")
 
                 # Cleanup if memory is low

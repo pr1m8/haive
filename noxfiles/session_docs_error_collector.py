@@ -5,12 +5,12 @@ documentation builds and creates detailed reports for review and
 systematic fixing.
 """
 
-from datetime import datetime
 import json
-from pathlib import Path
 import re
 import subprocess
 import time
+from datetime import datetime
+from pathlib import Path
 
 import nox
 
@@ -87,75 +87,93 @@ class ErrorCollector:
     def start_collection(self, package: str, profile: str):
         """Start error collection for a build."""
         self.stats["start_time"] = time.time()
-        self.stats["packages_built"] = [package
-                                        ] if package != "all" else ["all"]
+        self.stats["packages_built"] = [package] if package != "all" else ["all"]
         self.stats["profile_used"] = profile
         self.package_context = package
 
         self.session.log(
-            f"🔍 Starting error collection for {package} ({profile} profile)", )
+            f"🔍 Starting error collection for {package} ({profile} profile)",
+        )
 
     def categorize_error(self, line: str) -> str:
         """Categorize an error based on its content."""
         line_lower = line.lower()
 
         # Import errors
-        if any(keyword in line_lower for keyword in
-               ["modulenotfounderror", "importerror", "no module named"]):
+        if any(
+            keyword in line_lower
+            for keyword in ["modulenotfounderror", "importerror", "no module named"]
+        ):
             return "import_errors"
 
         # Syntax errors
-        if any(keyword in line_lower for keyword in [
+        if any(
+            keyword in line_lower
+            for keyword in [
                 "syntaxerror",
                 "indentationerror",
                 "parsing python code failed",
-        ]):
+            ]
+        ):
             return "syntax_errors"
 
         # AutoDoc errors
-        if any(keyword in line_lower
-               for keyword in ["autodoc:", "failed to import", "autosummary"]):
+        if any(
+            keyword in line_lower for keyword in ["autodoc:", "failed to import", "autosummary"]
+        ):
             return "autodoc_errors"
 
         # AutoAPI errors
-        if any(keyword in line_lower
-               for keyword in ["autoapi", "keyerror:", "all_objects"]):
+        if any(keyword in line_lower for keyword in ["autoapi", "keyerror:", "all_objects"]):
             return "autoapi_errors"
 
         # Toctree errors
-        if any(keyword in line_lower for keyword in
-               ["toctree", "document isn't included", "toc.not_included"]):
+        if any(
+            keyword in line_lower
+            for keyword in ["toctree", "document isn't included", "toc.not_included"]
+        ):
             return "toctree_errors"
 
         # Image errors
-        if any(keyword in line_lower for keyword in
-               ["image file not readable", "image.not_readable"]):
+        if any(
+            keyword in line_lower for keyword in ["image file not readable", "image.not_readable"]
+        ):
             return "image_errors"
 
         # Cross-reference errors
-        if any(keyword in line_lower for keyword in [
+        if any(
+            keyword in line_lower
+            for keyword in [
                 "undefined label",
                 "unknown document",
                 "reference target not found",
-        ]):
+            ]
+        ):
             return "cross_reference_errors"
 
         # Extension errors
-        if any(keyword in line_lower for keyword in [
+        if any(
+            keyword in line_lower
+            for keyword in [
                 "extension error",
                 "failed to initialize",
                 "extension not found",
-        ]):
+            ]
+        ):
             return "extension_errors"
 
         # Theme errors
-        if any(keyword in line_lower for keyword in
-               ["theme error", "template not found", "theme not found"]):
+        if any(
+            keyword in line_lower
+            for keyword in ["theme error", "template not found", "theme not found"]
+        ):
             return "theme_errors"
 
         # Build errors
-        if any(keyword in line_lower for keyword in
-               ["build failed", "sphinx error", "configuration error"]):
+        if any(
+            keyword in line_lower
+            for keyword in ["build failed", "sphinx error", "configuration error"]
+        ):
             return "build_errors"
 
         return "unknown_errors"
@@ -171,8 +189,7 @@ class ErrorCollector:
             return "import_warnings"
 
         # Toctree warnings
-        if any(keyword in line_lower
-               for keyword in ["toctree", "document isn't included"]):
+        if any(keyword in line_lower for keyword in ["toctree", "document isn't included"]):
             return "toctree_warnings"
 
         # Image warnings
@@ -180,13 +197,11 @@ class ErrorCollector:
             return "image_warnings"
 
         # Cross-reference warnings
-        if any(keyword in line_lower
-               for keyword in ["reference", "undefined", "unknown document"]):
+        if any(keyword in line_lower for keyword in ["reference", "undefined", "unknown document"]):
             return "cross_reference_warnings"
 
         # AutoAPI warnings
-        if any(keyword in line_lower
-               for keyword in ["autoapi", "failed to import"]):
+        if any(keyword in line_lower for keyword in ["autoapi", "failed to import"]):
             return "autoapi_warnings"
 
         # Build warnings
@@ -219,8 +234,10 @@ class ErrorCollector:
             self.stats["html_generated"] += 1
 
         # Categorize errors
-        if any(error_indicator in line for error_indicator in
-               ["ERROR:", "Exception", "Traceback", "failed"]):
+        if any(
+            error_indicator in line
+            for error_indicator in ["ERROR:", "Exception", "Traceback", "failed"]
+        ):
             if "failed to reach" not in line.lower():  # Skip network failures
                 category = self.categorize_error(line)
                 error_entry = {
@@ -267,14 +284,14 @@ class ErrorCollector:
     def finish_collection(self, success: bool = True):
         """Finish error collection and generate report."""
         self.stats["end_time"] = time.time()
-        self.stats[
-            "duration"] = self.stats["end_time"] - self.stats["start_time"]
+        self.stats["duration"] = self.stats["end_time"] - self.stats["start_time"]
         self.stats["success"] = success
 
         self.session.log(
-            f"📊 Error collection complete: {
-                self.stats['total_errors']} errors, {
-                self.stats['total_warnings']} warnings", )
+            f"📊 Error collection complete: {self.stats['total_errors']} errors, {
+                self.stats['total_warnings']
+            } warnings",
+        )
 
     def generate_report(self) -> dict:
         """Generate comprehensive error report."""
@@ -327,35 +344,33 @@ class ErrorCollector:
             recommendations.append(
                 "🔧 Fix import errors by updating dependencies in pyproject.toml",
             )
-            recommendations.append(
-                "🔧 Add missing packages to poetry dependencies")
+            recommendations.append("🔧 Add missing packages to poetry dependencies")
 
         # Syntax error recommendations
         if self.errors["syntax_errors"]:
+            recommendations.append("🔧 Fix Python syntax errors in source files")
             recommendations.append(
-                "🔧 Fix Python syntax errors in source files")
-            recommendations.append(
-                "🔧 Run 'trunk check --fix --all' to auto-fix syntax issues", )
+                "🔧 Run 'trunk check --fix --all' to auto-fix syntax issues",
+            )
 
         # AutoAPI error recommendations
         if self.errors["autoapi_errors"]:
             recommendations.append("🔧 Check AutoAPI configuration in conf.py")
-            recommendations.append(
-                "🔧 Verify package structure and __init__.py files")
+            recommendations.append("🔧 Verify package structure and __init__.py files")
 
         # Toctree error recommendations
         if self.errors["toctree_errors"] or self.warnings["toctree_warnings"]:
             recommendations.append(
-                "🔧 Update toctree directives to include missing documents", )
+                "🔧 Update toctree directives to include missing documents",
+            )
             recommendations.append(
-                "🔧 Remove references to deleted files from index.rst", )
+                "🔧 Remove references to deleted files from index.rst",
+            )
 
         # Image error recommendations
         if self.errors["image_errors"] or self.warnings["image_warnings"]:
-            recommendations.append(
-                "🔧 Update image paths or add missing image files")
-            recommendations.append(
-                "🔧 Check relative paths in documentation files")
+            recommendations.append("🔧 Update image paths or add missing image files")
+            recommendations.append("🔧 Check relative paths in documentation files")
 
         return recommendations
 
@@ -372,17 +387,14 @@ class ErrorCollector:
         self._save_human_readable_report(report)
 
         self.session.log(f"📄 Error report saved to {json_file}")
-        self.session.log(
-            f"📄 Human-readable report saved to {self.report_file}")
+        self.session.log(f"📄 Human-readable report saved to {self.report_file}")
 
     def _save_human_readable_report(self, report: dict):
         """Save a human-readable version of the report."""
         with open(self.report_file, "w") as f:
             f.write("# Documentation Build Error Report\n\n")
             f.write(f"**Generated**: {report['metadata']['timestamp']}\n")
-            f.write(
-                f"**Package(s)**: {', '.join(report['metadata']['packages'])}\n"
-            )
+            f.write(f"**Package(s)**: {', '.join(report['metadata']['packages'])}\n")
             f.write(f"**Profile**: {report['metadata']['profile']}\n")
             f.write(f"**Duration**: {report['metadata']['duration']:.1f}s\n")
             f.write(
@@ -391,17 +403,10 @@ class ErrorCollector:
 
             # Summary
             f.write("## Summary\n\n")
-            f.write(
-                f"- **Total Errors**: {report['summary']['total_errors']}\n")
-            f.write(
-                f"- **Total Warnings**: {report['summary']['total_warnings']}\n"
-            )
-            f.write(
-                f"- **Files Processed**: {report['summary']['files_processed']}\n"
-            )
-            f.write(
-                f"- **HTML Generated**: {report['summary']['html_generated']}\n"
-            )
+            f.write(f"- **Total Errors**: {report['summary']['total_errors']}\n")
+            f.write(f"- **Total Warnings**: {report['summary']['total_warnings']}\n")
+            f.write(f"- **Files Processed**: {report['summary']['files_processed']}\n")
+            f.write(f"- **HTML Generated**: {report['summary']['html_generated']}\n")
             f.write(
                 f"- **Problematic Files**: {report['summary']['problematic_files_count']}\n\n",
             )
@@ -411,15 +416,10 @@ class ErrorCollector:
                 f.write("## Errors by Category\n\n")
                 for category, data in report["errors_by_category"].items():
                     f.write(
-                        f"### {
-                            category.replace(
-                                '_',
-                                ' ').title()} ({
-                            data['count']} errors)\n\n",
+                        f"### {category.replace('_', ' ').title()} ({data['count']} errors)\n\n",
                     )
                     for error in data["errors"][:5]:  # Show first 5
-                        f.write(
-                            f"- **File**: {error.get('file', 'Unknown')}\n")
+                        f.write(f"- **File**: {error.get('file', 'Unknown')}\n")
                         f.write(f"  **Error**: {error['line']}\n")
                         f.write(f"  **Time**: {error['timestamp']}\n\n")
 
@@ -428,15 +428,10 @@ class ErrorCollector:
                 f.write("## Warnings by Category\n\n")
                 for category, data in report["warnings_by_category"].items():
                     f.write(
-                        f"### {
-                            category.replace(
-                                '_',
-                                ' ').title()} ({
-                            data['count']} warnings)\n\n",
+                        f"### {category.replace('_', ' ').title()} ({data['count']} warnings)\n\n",
                     )
                     for warning in data["warnings"][:3]:  # Show first 3
-                        f.write(
-                            f"- **File**: {warning.get('file', 'Unknown')}\n")
+                        f.write(f"- **File**: {warning.get('file', 'Unknown')}\n")
                         f.write(f"  **Warning**: {warning['line']}\n\n")
 
             # Problematic files
@@ -531,8 +526,7 @@ def docs_phased_with_error_collection(session, package, profile):
     env = {
         "SPHINX_PACKAGES": package,
         "SPHINX_PROFILE": profile,
-        "SPHINX_DISABLE_EXAMPLES":
-        "1",  # Disable examples for faster error collection
+        "SPHINX_DISABLE_EXAMPLES": "1",  # Disable examples for faster error collection
     }
 
     session.log("📊 Error collection configuration:")
@@ -556,8 +550,7 @@ def docs_phased_with_error_collection(session, package, profile):
     ]
 
     # Run with error collection
-    collector = run_sphinx_with_error_collection(session, args, package,
-                                                 profile)
+    collector = run_sphinx_with_error_collection(session, args, package, profile)
 
     # Report results
     session.log("📊 Build completed:")
@@ -600,8 +593,7 @@ def review_errors(session):
                 all_errors[category] += data["count"]
 
             # Aggregate warnings
-            for category, data in report.get("warnings_by_category",
-                                             {}).items():
+            for category, data in report.get("warnings_by_category", {}).items():
                 if category not in all_warnings:
                     all_warnings[category] = 0
                 all_warnings[category] += data["count"]
@@ -612,16 +604,14 @@ def review_errors(session):
     # Generate summary
     session.log(f"📊 Error Summary from {total_reports} reports:")
     session.log("\n🔴 ERRORS:")
-    for category, count in sorted(all_errors.items(),
-                                  key=lambda x: x[1],
-                                  reverse=True):
+    for category, count in sorted(all_errors.items(), key=lambda x: x[1], reverse=True):
         session.log(f"   {category.replace('_', ' ').title()}: {count}")
 
     session.log("\n🟡 WARNINGS:")
     for category, count in sorted(
-            all_warnings.items(),
-            key=lambda x: x[1],
-            reverse=True,
+        all_warnings.items(),
+        key=lambda x: x[1],
+        reverse=True,
     ):
         session.log(f"   {category.replace('_', ' ').title()}: {count}")
 

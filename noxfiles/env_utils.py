@@ -6,6 +6,7 @@ This module provides reusable utilities for:
 - Lock file synchronization
 - Graceful error handling for dependency issues
 """
+
 from __future__ import annotations
 
 import subprocess
@@ -13,9 +14,7 @@ from datetime import datetime
 from pathlib import Path
 
 
-def ensure_poetry_sync(session,
-                       group: str = "docs",
-                       log_prefix: str = "📦") -> bool:
+def ensure_poetry_sync(session, group: str = "docs", log_prefix: str = "📦") -> bool:
     """Ensure poetry lock file is synced and dependencies can be installed.
 
     Args:
@@ -64,8 +63,7 @@ def ensure_poetry_sync(session,
 
         # Step 3: Fallback - try without sync
         try:
-            session.log(
-                f"{log_prefix} Attempting installation without --sync...")
+            session.log(f"{log_prefix} Attempting installation without --sync...")
             session.run(
                 "poetry",
                 "install",
@@ -93,7 +91,8 @@ def ensure_poetry_sync(session,
                     external=True,
                 )
                 session.log(
-                    "⚠️  Minimal dependencies installed (some features may be unavailable)", )
+                    "⚠️  Minimal dependencies installed (some features may be unavailable)",
+                )
                 return True
             except Exception:
                 session.log("❌ All installation methods failed")
@@ -150,7 +149,8 @@ def ensure_sphinx_available(session) -> bool:
         session.log("✅ Sphinx is available")
         return True
     session.log(
-        "❌ Sphinx not available, attempting to install docs dependencies...", )
+        "❌ Sphinx not available, attempting to install docs dependencies...",
+    )
     if ensure_poetry_sync(session, group="docs"):
         # Check again after installation
         if check_tool_available(session, "sphinx-build"):
@@ -246,7 +246,9 @@ Recommendations:
     if not info["lock_sync"]:
         report += "- Run 'poetry lock' to sync lock file\n"
     if not info["docs_installed"]:
-        report += "- Run 'poetry install --with docs' to install documentation dependencies\n"
+        report += (
+            "- Run 'poetry install --with docs' to install documentation dependencies\n"
+        )
     if not info["sphinx_available"]:
         report += "- Check Sphinx installation in poetry environment\n"
 
@@ -265,7 +267,8 @@ def log_environment_info(session, log_level: str = "info"):
         session.log(
             f"🔧 Environment: Lock={'✅' if info['lock_sync'] else '❌'} "
             f"Docs={'✅' if info['docs_installed'] else '❌'} "
-            f"Sphinx={'✅' if info['sphinx_available'] else '❌'}", )
+            f"Sphinx={'✅' if info['sphinx_available'] else '❌'}",
+        )
     elif log_level in ["info", "verbose"]:
         report = create_dependency_report(session)
         session.log(report)
