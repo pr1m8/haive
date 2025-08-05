@@ -26,7 +26,7 @@ def on_config_inited(app, config):
     logger.info(f"📅 Time: {datetime.now()}")
     logger.info(f"📁 Source: {app.srcdir}")
     logger.info(f"📁 Output: {app.outdir}")
-    logger.info(f"🎨 Builder: {app.builder.name}")
+    # Builder is not available yet in config-inited event
     logger.info("=" * 80 + "\n")
 
 

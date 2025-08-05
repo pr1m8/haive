@@ -186,7 +186,7 @@ def get_development_extensions() -> list[str]:
         "sphinx_autoindex": "sphinx_autoindex",
         "sphinx_autoissues": "sphinx_autoissues",
         "sphinx_automagicdoc": "sphinx_automagicdoc",
-        "sphinx_automodapi": "sphinx_automodapi",
+        # "sphinx_automodapi": "sphinx_automodapi",  # REMOVED: No setup() function
         "sphinx_autopackagesummary": "sphinx_autopackagesummary",
         "sphinx_autopages": "sphinx_autopages",
         "sphinx_autorun": "sphinx_autorun",
@@ -202,14 +202,14 @@ def get_development_extensions() -> list[str]:
         "sphinx_exec_directive": "sphinx_exec_directive",
         "sphinx_inlinecode": "sphinx_inlinecode",
         # Documentation Management
-        "sphinx_cmd": "sphinx_cmd",
+        # "sphinx_cmd": "sphinx_cmd",  # REMOVED: No setup() function
         "sphinx_debuginfo": "sphinx_debuginfo",
         "sphinx_dust": "sphinx_dust",
-        "sphinx_feedback": "sphinx_feedback",
+        # "sphinx_feedback": "sphinx_feedback",  # REMOVED: No setup() function
         "sphinx_interrogatedb": "sphinx_interrogatedb",
         "sphinx_lint": "sphinx_lint",
-        "sphinx_reports": "sphinx_reports",
-        "sphinx_watch": "sphinx_watch",
+        # "sphinx_reports": "sphinx_reports",  # REMOVED: typing.Dict conversion errors
+        # "sphinx_watch": "sphinx_watch",  # REMOVED: No setup() function
     }
 
     available_extensions = []
