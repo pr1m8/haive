@@ -55,8 +55,7 @@ class RecursiveProblemSolver(MultiAgent):
         # Problem analyzer
         analyzer = SimpleAgent(
             name="problem_analyzer",
-            engine=AugLLMConfig(
-                temperature=0.3),
+            engine=AugLLMConfig(temperature=0.3),
             structured_output_model=ProblemDecomposition,
             system_message="Analyze if a problem can be solved directly or needs decomposition.",
         )
@@ -77,15 +76,9 @@ class RecursiveProblemSolver(MultiAgent):
             system_message="Combine sub-solutions into a complete solution.",
         )
 
-        agents = {
-            "analyzer": analyzer,
-            "solver": solver,
-            "synthesizer": synthesizer
-        }
+        agents = {"analyzer": analyzer, "solver": solver, "synthesizer": synthesizer}
 
-        super().__init__(name="recursive_solver",
-                         agents=agents,
-                         entry_point="analyzer")
+        super().__init__(name="recursive_solver", agents=agents, entry_point="analyzer")
 
         self._setup_recursive_routing()
 
@@ -104,12 +97,10 @@ class RecursiveProblemSolver(MultiAgent):
             # Max depth reached, force direct solution
             return "solver"
 
-        self.add_conditional_edges(source="analyzer",
-                                   path=route_after_analysis)
+        self.add_conditional_edges(source="analyzer", path=route_after_analysis)
 
         # Add recursive spawning logic
-        async def spawn_recursive_solvers(
-                state: dict[str, Any]) -> dict[str, Any]:
+        async def spawn_recursive_solvers(state: dict[str, Any]) -> dict[str, Any]:
             """Spawn new solver instances for sub-problems."""
             decomposition = state.get("problem_decomposition", {})
             sub_problems = decomposition.get("sub_problems", [])
@@ -193,15 +184,12 @@ class SelfImprovingWorkflow(MultiAgent):
     def _setup_monitoring(self):
         """Setup performance monitoring and optimization."""
 
-        async def monitor_and_optimize(
-                state: dict[str, Any]) -> dict[str, Any]:
+        async def monitor_and_optimize(state: dict[str, Any]) -> dict[str, Any]:
             """Monitor performance and apply optimizations."""
             # Track execution
             self.execution_history.append(
-                {
-                    "timestamp": asyncio.get_event_loop().time(),
-                    "state": state.copy()
-                }, )
+                {"timestamp": asyncio.get_event_loop().time(), "state": state.copy()},
+            )
 
             # Every 10 executions, run optimization
             if len(self.execution_history) % 10 == 0:
@@ -288,7 +276,8 @@ class CompetitiveAgentRace(MultiAgent):
             tasks = []
             for competitor in self.competitors:
                 task = asyncio.create_task(
-                    self._timed_execution(competitor, input_data), )
+                    self._timed_execution(competitor, input_data),
+                )
                 tasks.append((competitor.name, task))
 
             # Wait for first to complete (race condition)
@@ -320,18 +309,10 @@ class CompetitiveAgentRace(MultiAgent):
         try:
             output = await agent.arun(input_data)
             end_time = asyncio.get_event_loop().time()
-            return {
-                "output": output,
-                "time": end_time - start_time,
-                "success": True
-            }
+            return {"output": output, "time": end_time - start_time, "success": True}
         except Exception as e:
             end_time = asyncio.get_event_loop().time()
-            return {
-                "error": str(e),
-                "time": end_time - start_time,
-                "success": False
-            }
+            return {"error": str(e), "time": end_time - start_time, "success": False}
 
 
 # === 4. AGENT SWARM WITH EMERGENT BEHAVIOR ===
@@ -362,15 +343,11 @@ class SwarmAgent(SimpleAgent):
         # Follow or avoid trails based on behavior
         if self.behavior_type == "explorer":
             # Avoid well-trodden paths
-            avoid_areas = [
-                k for k, v in state.pheromone_trails.items() if v > 0.7
-            ]
+            avoid_areas = [k for k, v in state.pheromone_trails.items() if v > 0.7]
             prompt = f"Solve '{problem}' with a novel approach. Avoid: {avoid_areas}"
         elif self.behavior_type == "follower":
             # Follow strong trails
-            follow_areas = [
-                k for k, v in state.pheromone_trails.items() if v > 0.5
-            ]
+            follow_areas = [k for k, v in state.pheromone_trails.items() if v > 0.5]
             prompt = f"Solve '{problem}' building on: {follow_areas}"
         else:  # "hybrid"
             prompt = f"Solve '{problem}' balancing novelty and proven approaches"
@@ -379,8 +356,7 @@ class SwarmAgent(SimpleAgent):
 
         # Update pheromone trails
         solution_key = str(hash(solution))[:8]
-        state.pheromone_trails[solution_key] = state.pheromone_trails.get(
-            solution_key, 0) + 0.1
+        state.pheromone_trails[solution_key] = state.pheromone_trails.get(solution_key, 0) + 0.1
 
         return {
             "agent": self.name,
@@ -494,8 +470,7 @@ async def negotiation_protocol():
 
     mediator = SimpleAgent(
         name="mediator_agent",
-        engine=AugLLMConfig(
-            temperature=0.4),
+        engine=AugLLMConfig(temperature=0.4),
         structured_output_model=NegotiationRound,
         system_message="You are a neutral mediator. Find common ground and facilitate agreement.",
     )
@@ -515,8 +490,7 @@ async def negotiation_protocol():
         def _setup_protocol(self):
             """Setup negotiation rounds."""
 
-            async def negotiation_round(
-                    state: dict[str, Any]) -> dict[str, Any]:
+            async def negotiation_round(state: dict[str, Any]) -> dict[str, Any]:
                 """Execute one negotiation round."""
                 self.round_count += 1
 
@@ -534,8 +508,7 @@ async def negotiation_protocol():
                     "previous_rounds": state.get("rounds", []),
                 }
 
-                round_result = await self.agents["mediator"].arun(
-                    mediation_input)
+                round_result = await self.agents["mediator"].arun(mediation_input)
 
                 # Update state
                 state["rounds"] = [*state.get("rounds", []), round_result]
@@ -548,8 +521,7 @@ async def negotiation_protocol():
                 current_round = state.get("current_round", {})
                 progress = current_round.get("progress_score", 0)
 
-                if progress > 0.8 or len(current_round.get("agreements",
-                                                           [])) > 5:
+                if progress > 0.8 or len(current_round.get("agreements", [])) > 5:
                     return "finalize"
                 if self.round_count >= self.max_rounds:
                     return "deadlock"
@@ -574,7 +546,8 @@ async def negotiation_protocol():
                 "initial_price": 100000,
                 "quantity": 50,
             },
-        }, )
+        },
+    )
 
     return result
 
@@ -593,7 +566,8 @@ async def main():
     recursive_solver = RecursiveProblemSolver(max_depth=3)
     result = await recursive_solver.arun(
         "Design a sustainable city that addresses climate change, "
-        "economic growth, and social equity", )
+        "economic growth, and social equity",
+    )
     print(f"Recursive Solution: {result}\n")
 
     # 2. Self-Improving Workflow
@@ -610,14 +584,13 @@ async def main():
     print("-" * 50)
     competitors = [
         SimpleAgent(name="speed_demon", engine=AugLLMConfig(temperature=0.9)),
-        SimpleAgent(name="careful_thinker",
-                    engine=AugLLMConfig(temperature=0.1)),
-        SimpleAgent(name="balanced_runner",
-                    engine=AugLLMConfig(temperature=0.5)),
+        SimpleAgent(name="careful_thinker", engine=AugLLMConfig(temperature=0.1)),
+        SimpleAgent(name="balanced_runner", engine=AugLLMConfig(temperature=0.5)),
     ]
     race = CompetitiveAgentRace(competitors)
     race_result = await race.arun(
-        {"input": "Write a haiku about artificial intelligence"}, )
+        {"input": "Write a haiku about artificial intelligence"},
+    )
     print(f"Race Result: {race_result}\n")
 
     # 4. Swarm Intelligence
@@ -625,7 +598,8 @@ async def main():
     print("-" * 50)
     swarm = SwarmIntelligence(swarm_size=8)
     swarm_result = await swarm.arun(
-        {"problem": "Find innovative uses for expired food waste"}, )
+        {"problem": "Find innovative uses for expired food waste"},
+    )
     print(f"Swarm Consensus: {swarm_result}\n")
 
     # 5. Negotiation Protocol

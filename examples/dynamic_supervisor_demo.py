@@ -4,6 +4,7 @@
 This demonstrates the dynamic supervisor with real agents, following
 the pattern we built in experiments.
 """
+
 """"""
 
 
@@ -49,8 +50,7 @@ async def demo_supervisor():
         system_message="You are a task supervisor. Route tasks to the best agent.",
     )
 
-    supervisor = DynamicSupervisorAgent(name="coordinator",
-                                        engine=supervisor_engine)
+    supervisor = DynamicSupervisorAgent(name="coordinator", engine=supervisor_engine)
 
     # Create initial state
     state = supervisor.create_initial_state()
@@ -58,8 +58,7 @@ async def demo_supervisor():
 
     # Add agents to state
     state.add_agent("assistant", simple_agent, "General purpose assistant")
-    state.add_agent("reasoner", react_agent,
-                    "Step-by-step reasoning specialist")
+    state.add_agent("reasoner", react_agent, "Step-by-step reasoning specialist")
 
     for _tool in state.generated_tools:
         pass

@@ -21,7 +21,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 # Configure detailed logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 
 
@@ -29,7 +29,7 @@ logging.basicConfig(
 class MockEngine:
     """Mock engine that shows what would be executed."""
 
-    def __init__(self, name: str, system_message: str = ''):
+    def __init__(self, name: str, system_message: str = ""):
         self.name = name
         self.system_message = system_message
         self.tools = []
@@ -37,23 +37,14 @@ class MockEngine:
     def invoke(self, messages):
         """Simulate engine response."""
         # Simulate different responses based on system message
-        if 'research' in self.system_message.lower():
-            return {
-                'content': 'Research findings: Information about the topic...'
-            }
-        if 'code' in self.system_message.lower():
-            return {
-                'content': "def solution():\n    return 'Code implementation'"
-            }
+        if "research" in self.system_message.lower():
+            return {"content": "Research findings: Information about the topic..."}
+        if "code" in self.system_message.lower():
+            return {"content": "def solution():\n    return 'Code implementation'"}
         # For supervisor, show decision process
         return {
-            'content':
-            "I'll help you with that task. Let me check available agents.",
-            'tool_calls': [{
-                'name': 'list_agents',
-                'id': 'call_1',
-                'args': {}
-            }],
+            "content": "I'll help you with that task. Let me check available agents.",
+            "tool_calls": [{"name": "list_agents", "id": "call_1", "args": {}}],
         }
 
 
@@ -61,42 +52,41 @@ async def demonstrate_static_supervisor():
     """Show how the static supervisor works with state synchronization."""
     # Create supervisor with mock engine
     supervisor_engine = MockEngine(
-        name='supervisor_engine',
-        system_message='You are a task routing supervisor',
+        name="supervisor_engine",
+        system_message="You are a task routing supervisor",
     )
 
     # Note: In real usage, you'd use AugLLMEngine
-    supervisor = StaticSupervisor(name='task_supervisor',
-                                  engine=supervisor_engine)
+    supervisor = StaticSupervisor(name="task_supervisor", engine=supervisor_engine)
 
     # Create and register agents
 
     research_agent = SimpleAgent(
-        name='research_agent',
+        name="research_agent",
         engine=MockEngine(
-            name='research_engine',
-            system_message='You are a research assistant',
+            name="research_engine",
+            system_message="You are a research assistant",
         ),
     )
 
     coding_agent = ReactAgent(
-        name='coding_agent',
+        name="coding_agent",
         engine=MockEngine(
-            name='coding_engine',
-            system_message='You are a Python coding expert',
+            name="coding_engine",
+            system_message="You are a Python coding expert",
         ),
     )
 
     # Register agents - triggers model validator
     supervisor.register_agent(
-        name='research_agent',
-        description='Handles research and information gathering',
+        name="research_agent",
+        description="Handles research and information gathering",
         agent=research_agent,
     )
 
     supervisor.register_agent(
-        name='coding_agent',
-        description='Handles code generation and debugging',
+        name="coding_agent",
+        description="Handles code generation and debugging",
         agent=coding_agent,
     )
 
@@ -111,21 +101,18 @@ async def demonstrate_static_supervisor():
     # Simulate state with tool call
     test_state = SupervisorReactState(
         messages=[
-            HumanMessage(content='Write Python code to sort a list'),
+            HumanMessage(content="Write Python code to sort a list"),
             # Simulate AI response with tool call
             type(
-                'AIMessage',
+                "AIMessage",
                 (),
                 {
-                    'content':
-                    "I'll hand this off to the coding agent",
-                    'tool_calls': [
+                    "content": "I'll hand this off to the coding agent",
+                    "tool_calls": [
                         {
-                            'name': 'coding_agent',
-                            'id': 'call_123',
-                            'args': {
-                                'task': 'Write Python code to sort a list'
-                            },
+                            "name": "coding_agent",
+                            "id": "call_123",
+                            "args": {"task": "Write Python code to sort a list"},
                         },
                     ],
                 },
@@ -139,5 +126,5 @@ async def demonstrate_static_supervisor():
     supervisor._execute_tool_or_agent(test_state)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(demonstrate_static_supervisor())

@@ -67,8 +67,7 @@ class CustomerSupportEscalation(MultiAgent):
         # Level 2: Specialized Support Agents
         billing_agent = SimpleAgent(
             name="billing_support",
-            engine=AugLLMConfig(
-                temperature=0.4),
+            engine=AugLLMConfig(temperature=0.4),
             structured_output_model=TicketResolution,
             system_message="You are a billing specialist. Resolve billing inquiries professionally.",
         )
@@ -85,8 +84,7 @@ class CustomerSupportEscalation(MultiAgent):
 
         technical_agent = ReactAgent(
             name="technical_support",
-            engine=AugLLMConfig(
-                temperature=0.4),
+            engine=AugLLMConfig(temperature=0.4),
             tools=[technical_diagnostics],
             structured_output_model=TicketResolution,
             system_message="You are a technical support expert. Diagnose and resolve technical issues.",
@@ -94,8 +92,7 @@ class CustomerSupportEscalation(MultiAgent):
 
         account_agent = ReactAgent(
             name="account_support",
-            engine=AugLLMConfig(
-                temperature=0.4),
+            engine=AugLLMConfig(temperature=0.4),
             tools=[check_account_status],
             structured_output_model=TicketResolution,
             system_message="You are an account specialist. Help with account-related issues.",
@@ -104,8 +101,7 @@ class CustomerSupportEscalation(MultiAgent):
         # Level 3: Senior Support
         senior_agent = SimpleAgent(
             name="senior_support",
-            engine=AugLLMConfig(
-                temperature=0.5),
+            engine=AugLLMConfig(temperature=0.5),
             structured_output_model=TicketResolution,
             system_message="You are a senior support specialist. Handle complex and escalated issues.",
         )
@@ -171,11 +167,8 @@ class CustomerSupportEscalation(MultiAgent):
         self.add_conditional_edges(source="classifier", path=route_by_category)
 
         # Escalation check for each specialist
-        for specialist in [
-                "billing_support", "technical_support", "account_support"
-        ]:
-            self.add_conditional_edges(source=specialist,
-                                       path=check_escalation)
+        for specialist in ["billing_support", "technical_support", "account_support"]:
+            self.add_conditional_edges(source=specialist, path=check_escalation)
 
         # Senior always goes to QA
         self.add_edge("senior_support", "qa_review")
@@ -295,9 +288,7 @@ async def content_creation_pipeline():
         content_type="blog",
         topic="AI in Healthcare",
         target_audience="Healthcare professionals",
-        key_points=[
-            "Diagnosis assistance", "Treatment planning", "Patient monitoring"
-        ],
+        key_points=["Diagnosis assistance", "Treatment planning", "Patient monitoring"],
         tone="professional",
         word_count=1500,
     )
@@ -521,18 +512,16 @@ async def risk_assessment_system():
     # Execute assessment
     result = await risk_pipeline.arun(
         {
-            "company":
-            "TechCorp",
-            "industry":
-            "Software",
-            "size":
-            "Mid-market",
+            "company": "TechCorp",
+            "industry": "Software",
+            "size": "Mid-market",
             "recent_events": [
                 "New product launch",
                 "Market expansion",
                 "Leadership change",
             ],
-        }, )
+        },
+    )
 
     return result
 
@@ -611,18 +600,16 @@ async def sales_qualification_workflow():
     # Execute qualification
     result = await qualification_pipeline.arun(
         {
-            "company":
-            "InnovateCorp",
-            "contact":
-            "Jane Smith, VP of Engineering",
-            "source":
-            "Webinar attendance",
+            "company": "InnovateCorp",
+            "contact": "Jane Smith, VP of Engineering",
+            "source": "Webinar attendance",
             "interactions": [
                 "Downloaded whitepaper",
                 "Visited pricing page",
                 "Attended demo",
             ],
-        }, )
+        },
+    )
 
     return result
 
@@ -643,10 +630,10 @@ async def main():
         {
             "ticket_id": "TICK-12345",
             "customer_id": "CUST-789",
-            "issue":
-            "My billing shows duplicate charges for last month. This is the third time this has happened!",
+            "issue": "My billing shows duplicate charges for last month. This is the third time this has happened!",
             "previous_interactions": 2,
-        }, )
+        },
+    )
     print(f"Support Result: {ticket_result}\n")
 
     # 2. Content Creation
@@ -661,8 +648,7 @@ async def main():
     analysis_workflow = DataAnalysisWorkflow()
     analysis_result = await analysis_workflow.arun(
         {
-            "dataset_description":
-            "Customer behavior data for Q4 2023",
+            "dataset_description": "Customer behavior data for Q4 2023",
             "analysis_goals": [
                 "Identify churn patterns",
                 "Segment high-value customers",
@@ -671,9 +657,9 @@ async def main():
                 "What drives customer retention?",
                 "Which features correlate with upgrades?",
             ],
-            "output_format":
-            "report",
-        }, )
+            "output_format": "report",
+        },
+    )
     print(f"Analysis Result: {analysis_result}\n")
 
     # 4. Risk Assessment

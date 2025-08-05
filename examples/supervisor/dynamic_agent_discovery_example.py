@@ -29,9 +29,7 @@ async def basic_agent_discovery_example():
     config = AugLLMConfig(temperature=0.1)
 
     # Start with minimal agents
-    initial_agents = {
-        "generalist": SimpleAgent(name="generalist", engine=config)
-    }
+    initial_agents = {"generalist": SimpleAgent(name="generalist", engine=config)}
 
     # Create supervisor
     supervisor = DynamicAgentDiscoverySupervisor(
@@ -61,16 +59,13 @@ async def factory_with_agent_specs_example():
             "description": "Expert in data science and machine learning",
             "specialties": ["data analysis", "machine learning", "statistics"],
             "tools": ["calculator", "data_processor", "ml_toolkit"],
-            "config": {
-                "tools": []
-            },  # Will be created with empty tools initially
+            "config": {"tools": []},  # Will be created with empty tools initially
         },
         {
             "name": "business_analyst",
             "agent_type": "SimpleAgent",
             "description": "Expert in business analysis and strategy",
-            "specialties":
-            ["business strategy", "market analysis", "reporting"],
+            "specialties": ["business strategy", "market analysis", "reporting"],
             "tools": [],
             "config": {},
         },
@@ -163,7 +158,8 @@ async def discovery_sources_example():
   - Brand strategy development
   - Social media strategy
   - SEO optimization
-""", )
+""",
+            )
 
         # Create supervisor with discovery sources
         supervisor = DynamicAgentDiscoverySupervisor.create_with_discovery(
@@ -195,10 +191,7 @@ async def dynamic_team_building_example():
     # Start with just a project manager
     supervisor = DynamicAgentDiscoverySupervisor(
         name="project_supervisor",
-        agents={
-            "project_manager": SimpleAgent(name="project_manager",
-                                           engine=config)
-        },
+        agents={"project_manager": SimpleAgent(name="project_manager", engine=config)},
         engine=config,
     )
 
@@ -234,9 +227,7 @@ async def agent_capability_routing_example():
             "description": "Frontend development expert",
             "specialties": ["React", "Vue", "CSS", "UI/UX"],
             "tools": ["code_editor", "browser_dev_tools"],
-            "config": {
-                "tools": []
-            },
+            "config": {"tools": []},
         },
         {
             "name": "backend_dev",
@@ -244,9 +235,7 @@ async def agent_capability_routing_example():
             "description": "Backend development expert",
             "specialties": ["Python", "Node.js", "databases", "APIs"],
             "tools": ["code_editor", "database_client"],
-            "config": {
-                "tools": []
-            },
+            "config": {"tools": []},
         },
         {
             "name": "devops_engineer",
@@ -318,9 +307,7 @@ async def performance_tracking_example():
                 "name": "agent_c",
                 "agent_type": "ReactAgent",
                 "description": "General agent C",
-                "config": {
-                    "tools": []
-                },
+                "config": {"tools": []},
             },
         ],
         engine=config,

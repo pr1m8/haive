@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Integrated supervisor using DynamicChoiceModel + proper handoff/forward
 tools."""
+
 from __future__ import annotations
 
 import contextlib
@@ -25,18 +26,18 @@ class IntegratedSupervisorWithHandoff(ReactAgent):
     # Core components
     agent_registry: AgentRegistry = Field(
         default_factory=AgentRegistry,
-        description='Registry containing available agents',
+        description="Registry containing available agents",
     )
 
     agent_choice_model: DynamicChoiceModel = Field(
         default_factory=lambda: DynamicChoiceModel(
-            model_name='AgentChoice',
+            model_name="AgentChoice",
             include_end=True,
         ),
-        description='Dynamic choice model for agent selection',
+        description="Dynamic choice model for agent selection",
     )
 
-    @model_validator(mode='after')
+    @model_validator(mode="after")
     @classmethod
     def setup_integrated_supervisor(cls) -> IntegratedSupervisorWithHandoff:
         """Setup supervisor with choice model + proper handoff/forward
@@ -46,7 +47,7 @@ class IntegratedSupervisorWithHandoff(ReactAgent):
 
         # Create tools
         handoff_tools = self._create_handoff_tools()
-        forward_tool = create_forward_message_tool('supervisor')
+        forward_tool = create_forward_message_tool("supervisor")
         choice_tool = self._create_agent_choice_tool()
         list_tool = self._create_list_agents_tool()
 
@@ -58,7 +59,7 @@ class IntegratedSupervisorWithHandoff(ReactAgent):
 
         # Create integrated supervisor engine
         supervisor_engine = AugLLMConfig(
-            name='integrated_supervisor_engine',
+            name="integrated_supervisor_engine",
             tools=all_tools,
             system_message="""You are an integrated supervisor that routes tasks to specialized agents using proper handoff mechanisms.
 
@@ -79,7 +80,7 @@ Always follow this structured workflow for proper agent coordination.""",
 
         # Set engine for ReactAgent
         self.engine = supervisor_engine
-        self.engines['main'] = supervisor_engine
+        self.engines["main"] = supervisor_engine
 
         return self
 
@@ -113,7 +114,7 @@ Always follow this structured workflow for proper agent coordination.""",
         selection."""
 
         @tool
-        def choose_agent(task_description: str, reasoning: str = '') -> str:
+        def choose_agent(task_description: str, reasoning: str = "") -> str:
             """Make a structured, validated choice about which agent to use for
             a task.
 
@@ -135,27 +136,31 @@ Always follow this structured workflow for proper agent coordination.""",
                 # Simple heuristics for agent selection
                 task_lower = task_description.lower()
 
-                chosen_agent = 'END'  # Default fallback
+                chosen_agent = "END"  # Default fallback
 
-                if any(word in task_lower for word in [
-                        'math',
-                        'calculate',
-                        'add',
-                        'multiply',
-                        'number',
-                        '*',
-                        '+',
-                        '-',
-                        '/',
-                ]):
-                    if 'math_agent' in available_options:
-                        chosen_agent = 'math_agent'
+                if any(
+                    word in task_lower
+                    for word in [
+                        "math",
+                        "calculate",
+                        "add",
+                        "multiply",
+                        "number",
+                        "*",
+                        "+",
+                        "-",
+                        "/",
+                    ]
+                ):
+                    if "math_agent" in available_options:
+                        chosen_agent = "math_agent"
                 elif any(
-                    word in task_lower for word in
-                        ['plan', 'schedule', 'organize', 'steps', 'strategy']):
-                    if 'planning_agent' in available_options:
-                        chosen_agent = 'planning_agent'
-                elif available_options and available_options[0] != 'END':
+                    word in task_lower
+                    for word in ["plan", "schedule", "organize", "steps", "strategy"]
+                ):
+                    if "planning_agent" in available_options:
+                        chosen_agent = "planning_agent"
+                elif available_options and available_options[0] != "END":
                     # Pick first non-END option as fallback
                     chosen_agent = available_options[0]
 
@@ -163,18 +168,18 @@ Always follow this structured workflow for proper agent coordination.""",
                 try:
                     validated_choice = ChoiceModel(choice=chosen_agent)
 
-                    if validated_choice.choice == 'END':
+                    if validated_choice.choice == "END":
                         return f"Task complete or no suitable agent found. Chosen: {
-                            validated_choice.choice}"
-                    return f"Chosen agent: {
-                        validated_choice.choice}. Next: Use transfer_to_{
-                        validated_choice.choice} to handoff control."
+                            validated_choice.choice
+                        }"
+                    return f"Chosen agent: {validated_choice.choice}. Next: Use transfer_to_{
+                        validated_choice.choice
+                    } to handoff control."
 
                 except Exception:
                     # Fall back to END
-                    fallback_choice = ChoiceModel(choice='END')
-                    return f"Validation failed, ending task. Chosen: {
-                        fallback_choice.choice}"
+                    fallback_choice = ChoiceModel(choice="END")
+                    return f"Validation failed, ending task. Chosen: {fallback_choice.choice}"
 
             except Exception as e:
                 return f"Error choosing agent: {e!s}"
@@ -189,17 +194,16 @@ Always follow this structured workflow for proper agent coordination.""",
             """List all available agents and their capabilities."""
             available = self.agent_registry.list_available()
             if not available:
-                return 'No agents currently available'
+                return "No agents currently available"
 
-            result = 'Available agents:\\n'
+            result = "Available agents:\\n"
             for name, desc in available.items():
                 result += f"- {name}: {desc}\\n"
             return result
 
         return list_agents
 
-    def add_agent_to_registry(self, name: str, agent: Any,
-                              description: str) -> None:
+    def add_agent_to_registry(self, name: str, agent: Any, description: str) -> None:
         """Add agent to registry and sync choice model + create handoff
         tool."""
         self.agent_registry.register(name, agent, description)
@@ -212,22 +216,20 @@ Always follow this structured workflow for proper agent coordination.""",
         )
 
         # Add to engine tools (this is the dynamic part!)
-        if self.engine and hasattr(self.engine, 'tools'):
+        if self.engine and hasattr(self.engine, "tools"):
             self.engine.tools.append(new_handoff_tool)
 
     def remove_agent_from_registry(self, name: str) -> bool:
         """Remove agent from registry, choice model, and handoff tools."""
         # Remove from choice model
-        removed_from_choice = self.agent_choice_model.remove_option_by_name(
-            name)
+        removed_from_choice = self.agent_choice_model.remove_option_by_name(name)
 
         # Remove handoff tool from engine
-        if self.engine and hasattr(self.engine, 'tools'):
+        if self.engine and hasattr(self.engine, "tools"):
             tool_name = f"transfer_to_{name}"
             original_count = len(self.engine.tools)
             self.engine.tools = [
-                t for t in self.engine.tools
-                if getattr(t, 'name', '') != tool_name
+                t for t in self.engine.tools if getattr(t, "name", "") != tool_name
             ]
             removed_tool = len(self.engine.tools) < original_count
 
@@ -240,42 +242,41 @@ def test_integrated_supervisor():
     """Test the integrated supervisor with proper handoff tools."""
     # Import here to avoid circular imports
     from haive.agents.experiments.supervisor.test_registry_setup import (
-        create_test_agents, )
+        create_test_agents,
+    )
 
     # Create registry with agents
     registry = AgentRegistry()
     agents = create_test_agents()
     registry.register(
-        'math_agent',
-        agents['math_agent'],
-        'Performs mathematical calculations',
+        "math_agent",
+        agents["math_agent"],
+        "Performs mathematical calculations",
     )
     registry.register(
-        'planning_agent',
-        agents['planning_agent'],
-        'Creates structured plans',
+        "planning_agent",
+        agents["planning_agent"],
+        "Creates structured plans",
     )
 
     # Create integrated supervisor
     supervisor = IntegratedSupervisorWithHandoff(
-        name='integrated_supervisor',
+        name="integrated_supervisor",
         agent_registry=registry,
     )
 
-    supervisor.agent_choice_model.test_model('math_agent')
+    supervisor.agent_choice_model.test_model("math_agent")
 
-    if hasattr(supervisor.engine, 'tools'):
-        tool_names = [
-            getattr(t, 'name', 'unknown') for t in supervisor.engine.tools
-        ]
+    if hasattr(supervisor.engine, "tools"):
+        tool_names = [getattr(t, "name", "unknown") for t in supervisor.engine.tools]
 
         # Check for expected tools
         expected_tools = [
-            'transfer_to_math_agent',
-            'transfer_to_planning_agent',
-            'forward_message',
-            'choose_agent',
-            'list_agents',
+            "transfer_to_math_agent",
+            "transfer_to_planning_agent",
+            "forward_message",
+            "choose_agent",
+            "list_agents",
         ]
         for expected in expected_tools:
             if expected in tool_names:
@@ -284,11 +285,10 @@ def test_integrated_supervisor():
                 pass
 
     with contextlib.suppress(Exception):
-        supervisor.invoke(
-            {'messages': [HumanMessage('I need to calculate 25 * 8')]})
+        supervisor.invoke({"messages": [HumanMessage("I need to calculate 25 * 8")]})
 
     return supervisor
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     supervisor = test_integrated_supervisor()

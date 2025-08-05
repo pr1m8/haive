@@ -63,10 +63,7 @@ class AnalyzerAgent(Agent[AnalyzerConfig]):
         """Build the agent's processing graph."""
         # In a real implementation, this would build a StateGraph
         # For this example, we'll create a simple mock structure
-        return {
-            "nodes": ["analyze", "summarize"],
-            "edges": [("analyze", "summarize")]
-        }
+        return {"nodes": ["analyze", "summarize"], "edges": [("analyze", "summarize")]}
 
     async def ainvoke(
         self,
@@ -117,8 +114,7 @@ print(f"Focus areas: {config.focus_areas}")
 # In the core pattern, agents are typically created from configurations.
 
 # Create agent instance
-agent = config.build(
-)  # This uses the registry to instantiate the correct agent
+agent = config.build()  # This uses the registry to instantiate the correct agent
 
 print(f"\nAgent created: {type(agent).__name__}")
 print(f"Agent configuration: {agent.config.name}")

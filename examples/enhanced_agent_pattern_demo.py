@@ -7,6 +7,7 @@ This example demonstrates:
 3. How different engine types create different agent types
 4. The clean type safety this provides
 """
+
 from __future__ import annotations
 
 from abc import ABC
@@ -94,16 +95,11 @@ class Agent(Workflow, Generic[EngineT]):
         """Execute using the engine."""
         # Log the execution
         self.history.append(
-            {
-                "input": input_data,
-                "engine_type": type(self.engine).__name__
-            }, )
+            {"input": input_data, "engine_type": type(self.engine).__name__},
+        )
 
         # In real implementation, this would use the engine
-        result = f"{
-            self.name} processed '{input_data}' using {
-            type(
-                self.engine).__name__}"
+        result = f"{self.name} processed '{input_data}' using {type(self.engine).__name__}"
 
         self.history[-1]["output"] = result
         return result
@@ -188,8 +184,7 @@ class MultiAgent(Agent[AugLLMConfig]):
     an LLM to coordinate. The agents it coordinates can be any type.
     """
 
-    def __init__(self, name: str, engine: AugLLMConfig,
-                 agents: dict[str, Agent[Any]]):
+    def __init__(self, name: str, engine: AugLLMConfig, agents: dict[str, Agent[Any]]):
         super().__init__(name, engine)
         self.agents = agents
 
@@ -203,18 +198,11 @@ class MultiAgent(Agent[AugLLMConfig]):
         for agent_name, agent in self.agents.items():
             results[agent_name] = await agent.execute(input_data)
 
-        return {
-            "coordinator": self.name,
-            "decision": decision,
-            "results": results
-        }
+        return {"coordinator": self.name, "decision": decision, "results": results}
 
     def list_agents(self) -> list[AgentRef]:
         """List all coordinated agents with their types."""
-        return [
-            AgentRef(name=name, agent_type=repr(agent))
-            for name, agent in self.agents.items()
-        ]
+        return [AgentRef(name=name, agent_type=repr(agent)) for name, agent in self.agents.items()]
 
 
 # ========================================================================
@@ -230,8 +218,7 @@ async def main():
 
     # 1. SimpleAgent = Agent[AugLLMConfig]
     print("\n1. SimpleAgent (Agent[AugLLMConfig]):")
-    simple = SimpleAgent(name="assistant",
-                         engine=AugLLMConfig(temperature=0.7))
+    simple = SimpleAgent(name="assistant", engine=AugLLMConfig(temperature=0.7))
     print(f"   Created: {simple}")
     result = await simple.execute("Hello world")
     print(f"   Result: {result}")
@@ -250,8 +237,7 @@ async def main():
 
     # 3. ReasoningAgent = Agent[ReasoningEngine]
     print("\n3. ReasoningAgent (Agent[ReasoningEngine]):")
-    reasoner = ReasoningAgent(name="thinker",
-                              engine=ReasoningEngine(max_iterations=3))
+    reasoner = ReasoningAgent(name="thinker", engine=ReasoningEngine(max_iterations=3))
     print(f"   Created: {reasoner}")
     reasoning = await reasoner.reason("How to solve world hunger")
     print(f"   Reasoning: {reasoning}")
@@ -270,11 +256,7 @@ async def main():
     coordinator = MultiAgent(
         name="coordinator",
         engine=AugLLMConfig(temperature=0.3),  # Low temp for coordination
-        agents={
-            "simple": simple,
-            "rag": rag,
-            "reasoner": reasoner
-        },
+        agents={"simple": simple, "rag": rag, "reasoner": reasoner},
     )
     print(f"   Created: {coordinator}")
     print("   Coordinating agents:")

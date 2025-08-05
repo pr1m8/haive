@@ -55,7 +55,8 @@ def test_multi_agent_state():
     """Test using the prebuilt MultiAgentState."""
     # MultiAgentState provides isolation between agents
     multi_state = MultiAgentState(
-        messages=[HumanMessage(content="Analyze this document")], )
+        messages=[HumanMessage(content="Analyze this document")],
+    )
 
     # Each agent gets its own state
     planner_state = multi_state.get_agent_state("planner")
@@ -67,8 +68,7 @@ def test_multi_agent_state():
     analyzer_state.tool_results = {"analysis": "Document is about X"}
 
     # Broadcast shared data
-    multi_state.broadcast_to_agents(
-        {"document_url": "https://example.com/doc.pdf"})
+    multi_state.broadcast_to_agents({"document_url": "https://example.com/doc.pdf"})
 
     # Collect results
     multi_state.collect_agent_results()
@@ -106,12 +106,8 @@ def test_hierarchical_state():
     parent_state.add_child_agent("reviewer")
 
     # Update child results
-    parent_state.agent_states["researcher"].tool_results = {
-        "facts": ["fact1", "fact2"]
-    }
-    parent_state.agent_states["writer"].tool_results = {
-        "draft": "Article draft..."
-    }
+    parent_state.agent_states["researcher"].tool_results = {"facts": ["fact1", "fact2"]}
+    parent_state.agent_states["writer"].tool_results = {"draft": "Article draft..."}
     parent_state.agent_states["reviewer"].tool_results = {"score": 0.85}
 
     # Aggregate results

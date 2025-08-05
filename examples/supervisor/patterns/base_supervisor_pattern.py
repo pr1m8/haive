@@ -20,7 +20,8 @@ from haive.agents.experiments.supervisor.state_models import (
     SupervisorState,
 )
 from haive.agents.experiments.supervisor.tools import (
-    build_supervisor_tools, )
+    build_supervisor_tools,
+)
 from haive.agents.react.agent import ReactAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
@@ -91,8 +92,8 @@ class BaseSupervisor(ReactAgent):
         if hasattr(self.main_engine, "tools"):
             self.main_engine.tools = tools
         elif hasattr(self.main_engine, "config") and hasattr(
-                self.main_engine.config,
-                "tools",
+            self.main_engine.config,
+            "tools",
         ):
             self.main_engine.config.tools = tools
 
@@ -194,8 +195,7 @@ class BaseSupervisor(ReactAgent):
 
         return graph
 
-    def get_agent_status(self,
-                         agent_name: str | None = None) -> dict[str, Any]:
+    def get_agent_status(self, agent_name: str | None = None) -> dict[str, Any]:
         """Get status information about agents.
 
         Args:
@@ -222,12 +222,11 @@ class BaseSupervisor(ReactAgent):
             "total_agents": len(state.agents),
             "agents": {
                 name: {
-                    "description":
-                    info.metadata.description,
-                    "usage_count":
-                    info.metadata.usage_count,
-                    "last_used": (info.metadata.last_used.isoformat()
-                                  if info.metadata.last_used else None),
+                    "description": info.metadata.description,
+                    "usage_count": info.metadata.usage_count,
+                    "last_used": (
+                        info.metadata.last_used.isoformat() if info.metadata.last_used else None
+                    ),
                 }
                 for name, info in state.agents.items()
             },

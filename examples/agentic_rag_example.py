@@ -65,25 +65,16 @@ Context: {context}""",
 
 
 @tool
-def grade_documents(query: str, documents: list[dict[str,
-                                                     Any]]) -> dict[str, Any]:
+def grade_documents(query: str, documents: list[dict[str, Any]]) -> dict[str, Any]:
     """Grade documents for relevance to a query."""
-    result = asyncio.run(
-        document_grader.arun({
-            "query": query,
-            "documents": documents
-        }))
+    result = asyncio.run(document_grader.arun({"query": query, "documents": documents}))
     return result.model_dump()
 
 
 @tool
 def rewrite_query(query: str, context: str = "") -> dict[str, Any]:
     """Rewrite a query to improve retrieval."""
-    result = asyncio.run(
-        query_rewriter.arun({
-            "query": query,
-            "context": context
-        }))
+    result = asyncio.run(query_rewriter.arun({"query": query, "context": context}))
     return result.model_dump()
 
 
@@ -103,9 +94,7 @@ Your workflow:
 Use the tools available to you to provide the best possible answer.""",
         temperature=0.3,
     ),
-    tools=[
-        grade_documents,
-        rewrite_query],
+    tools=[grade_documents, rewrite_query],
 )
 
 
@@ -115,32 +104,24 @@ async def main():
     # Example documents
     documents = [
         {
-            "id":
-            "doc1",
-            "content":
-            "Quantum computing uses quantum mechanical phenomena like superposition and entanglement to perform computations. Unlike classical computers that use bits, quantum computers use quantum bits (qubits).",
+            "id": "doc1",
+            "content": "Quantum computing uses quantum mechanical phenomena like superposition and entanglement to perform computations. Unlike classical computers that use bits, quantum computers use quantum bits (qubits).",
         },
         {
-            "id":
-            "doc2",
-            "content":
-            "Machine learning is a subset of artificial intelligence that focuses on algorithms that can learn from data without being explicitly programmed.",
+            "id": "doc2",
+            "content": "Machine learning is a subset of artificial intelligence that focuses on algorithms that can learn from data without being explicitly programmed.",
         },
         {
-            "id":
-            "doc3",
-            "content":
-            "Python is a high-level programming language known for its simplicity and readability. It's widely used in data science and web development.",
+            "id": "doc3",
+            "content": "Python is a high-level programming language known for its simplicity and readability. It's widely used in data science and web development.",
         },
     ]
 
     # Test document grading
     print("=== Document Grading Example ===")
     grading_result = await document_grader.arun(
-        {
-            "query": "What is quantum computing?",
-            "documents": documents
-        }, )
+        {"query": "What is quantum computing?", "documents": documents},
+    )
 
     print(f"Grading result: {grading_result}")
 
@@ -150,7 +131,8 @@ async def main():
         {
             "query": "quantum stuff",
             "context": "User is asking about quantum computing basics",
-        }, )
+        },
+    )
 
     print(f"Rewrite result: {rewrite_result}")
 
@@ -175,15 +157,19 @@ async def demonstrate_components():
     print("1️⃣ Document Grader Agent:")
     grader = DocumentGraderAgent.create_default()
 
-    grading_input = {"query": "What is machine learning?",
-                     "documents": [{"id": "doc1",
-                                    "content": "Machine learning is a type of artificial intelligence that allows systems to learn from data.",
-                                    },
-                                   {"id": "doc2",
-                                    "content": "The weather today is sunny with a chance of rain in the evening.",
-                                    },
-                                   ],
-                     }
+    grading_input = {
+        "query": "What is machine learning?",
+        "documents": [
+            {
+                "id": "doc1",
+                "content": "Machine learning is a type of artificial intelligence that allows systems to learn from data.",
+            },
+            {
+                "id": "doc2",
+                "content": "The weather today is sunny with a chance of rain in the evening.",
+            },
+        ],
+    }
 
     grading_result = await grader.arun(grading_input)
     print(f"   Graded {len(grading_result.document_decisions)} documents")
@@ -199,10 +185,8 @@ async def demonstrate_components():
     rewriter = QueryRewriterAgent.create_default()
 
     rewrite_input = {
-        "query":
-        "ML applications",
-        "context":
-        "User is looking for practical applications of machine learning",
+        "query": "ML applications",
+        "context": "User is looking for practical applications of machine learning",
     }
 
     rewrite_result = await rewriter.arun(rewrite_input)
@@ -210,8 +194,7 @@ async def demonstrate_components():
     print(f"   Best Rewrite: {rewrite_result.best_refined_query}")
     print("   Other Suggestions:")
     for suggestion in rewrite_result.refinement_suggestions[:3]:
-        print(
-            f"   - {suggestion.refined_query} ({suggestion.improvement_type})")
+        print(f"   - {suggestion.refined_query} ({suggestion.improvement_type})")
 
 
 async def main():

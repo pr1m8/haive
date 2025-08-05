@@ -118,8 +118,7 @@ class StructuredOutputMixin(BaseModel):
             self.structured_output_version = version
 
         # Track context
-        model_name = schema.__name__ if hasattr(schema,
-                                                "__name__") else str(schema)
+        model_name = schema.__name__ if hasattr(schema, "__name__") else str(schema)
         self.structured_output_contexts[model_name] = "structured_output"
 
         # Create parser if using parser method
@@ -127,9 +126,9 @@ class StructuredOutputMixin(BaseModel):
             self._create_structured_output_parser()
 
         logger.debug(
-            f"Configured structured output: model={model_name}, " f"method={
-                self.structured_output_method}, version={
-                self.structured_output_version}", )
+            f"Configured structured output: model={model_name}, "
+            f"method={self.structured_output_method}, version={self.structured_output_version}",
+        )
 
         return self
 
@@ -141,11 +140,13 @@ class StructuredOutputMixin(BaseModel):
         if self.structured_output_method == "parser":
             # Use PydanticOutputParser for v1 approach
             self._structured_output_parser = PydanticOutputParser(
-                pydantic_object=self.structured_output_model, )
+                pydantic_object=self.structured_output_model,
+            )
         else:
             # Use PydanticToolsParser for v2 approach
             self._structured_output_parser = PydanticToolsParser(
-                tools=[self.structured_output_model], )
+                tools=[self.structured_output_model],
+            )
 
     def get_structured_output_parser(self) -> BaseOutputParser | None:
         """Get the configured structured output parser.
@@ -169,10 +170,8 @@ class StructuredOutputMixin(BaseModel):
         if self.structured_output_model and model == self.structured_output_model:
             return True
 
-        model_name = model.__name__ if hasattr(model,
-                                               "__name__") else str(model)
-        return self.structured_output_contexts.get(
-            model_name) == "structured_output"
+        model_name = model.__name__ if hasattr(model, "__name__") else str(model)
+        return self.structured_output_contexts.get(model_name) == "structured_output"
 
     def route_pydantic_model(
         self,
@@ -226,10 +225,11 @@ class StructuredOutputMixin(BaseModel):
         if not self.structured_output_model:
             raise ValueError("No structured output model configured")
 
-        if (self.structured_output_method != "tool_calling"
-                and self.structured_output_version != "v2"):
-            raise ValueError(
-                "This method is only for tool_calling/v2 approach")
+        if (
+            self.structured_output_method != "tool_calling"
+            and self.structured_output_version != "v2"
+        ):
+            raise ValueError("This method is only for tool_calling/v2 approach")
 
         # Prepare tools list
         all_tools = []
@@ -297,13 +297,13 @@ class StructuredOutputMixin(BaseModel):
         """Validate structured output configuration."""
         # Ensure version matches method
         if self.structured_output_method == "parser" and self.structured_output_version == "v2":
-            logger.warning(
-                "Parser method typically uses v1, adjusting version")
+            logger.warning("Parser method typically uses v1, adjusting version")
             self.structured_output_version = "v1"
-        elif (self.structured_output_method == "tool_calling"
-              and self.structured_output_version == "v1"):
-            logger.warning(
-                "Tool calling method typically uses v2, adjusting version")
+        elif (
+            self.structured_output_method == "tool_calling"
+            and self.structured_output_version == "v1"
+        ):
+            logger.warning("Tool calling method typically uses v2, adjusting version")
             self.structured_output_version = "v2"
 
         return self
@@ -338,18 +338,15 @@ class StructuredOutputMixin(BaseModel):
             return {"configured": False}
 
         return {
-            "configured":
-            True,
-            "model":
-            self.structured_output_model.__name__,
-            "method":
-            self.structured_output_method,
-            "version":
-            self.structured_output_version,
-            "include_raw":
-            self.include_raw,
-            "contexts":
-            self.structured_output_contexts,
-            "parser_type": (type(self._structured_output_parser).__name__
-                            if self._structured_output_parser else None),
+            "configured": True,
+            "model": self.structured_output_model.__name__,
+            "method": self.structured_output_method,
+            "version": self.structured_output_version,
+            "include_raw": self.include_raw,
+            "contexts": self.structured_output_contexts,
+            "parser_type": (
+                type(self._structured_output_parser).__name__
+                if self._structured_output_parser
+                else None
+            ),
         }
