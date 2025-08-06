@@ -29,48 +29,32 @@ SAMPLE_DOCUMENTS = [
     Document(
         page_content="Python is a high-level programming language known for its readability and versatility. "
         "It supports multiple programming paradigms, including procedural, object-oriented, and functional programming.",
-        metadata={
-            "source": "programming_docs",
-            "topic": "python"
-        },
+        metadata={"source": "programming_docs", "topic": "python"},
     ),
     Document(
         page_content="JavaScript is a scripting language that enables dynamic content on web pages. "
         "It is an essential part of web applications and runs in the browser.",
-        metadata={
-            "source": "programming_docs",
-            "topic": "javascript"
-        },
+        metadata={"source": "programming_docs", "topic": "javascript"},
     ),
     Document(
         page_content="Machine learning is a subset of artificial intelligence that provides systems the ability to "
         "learn and improve from experience without being explicitly programmed.",
-        metadata={
-            "source": "ai_docs",
-            "topic": "machine_learning"
-        },
+        metadata={"source": "ai_docs", "topic": "machine_learning"},
     ),
     Document(
         page_content="Deep learning is part of a broader family of machine learning methods based on artificial neural networks. "
         "It uses multiple layers to progressively extract higher-level features from raw input.",
-        metadata={
-            "source": "ai_docs",
-            "topic": "deep_learning"
-        },
+        metadata={"source": "ai_docs", "topic": "deep_learning"},
     ),
     Document(
         page_content="The Large Language Model (LLM) is a type of AI model designed to understand and generate human language. "
         "Examples include GPT-4, Claude, and LLaMA.",
-        metadata={
-            "source": "ai_docs",
-            "topic": "llm"
-        },
+        metadata={"source": "ai_docs", "topic": "llm"},
     ),
 ]
 
 
-def create_llm_rag_agent(use_relevance_checker=True,
-                         return_documents=3) -> Any:
+def create_llm_rag_agent(use_relevance_checker=True, return_documents=3) -> Any:
     """Creates and configures an LLM RAG agent.
 
     Args:
@@ -182,9 +166,7 @@ def run_example_queries(agent: Any):
         result = agent.invoke(input_state)
 
         # Log the result
-        logger.info(
-            f"Retrieved {len(result.get('retrieved_documents', []))} documents"
-        )
+        logger.info(f"Retrieved {len(result.get('retrieved_documents', []))} documents")
         logger.info(f"Documents relevant: {result.get('is_relevant', False)}")
         logger.info(f"Answer: {result.get('answer', 'No answer generated')}")
 
@@ -195,7 +177,8 @@ def run_example_queries(agent: Any):
                 "doc_count": len(result.get("retrieved_documents", [])),
                 "is_relevant": result.get("is_relevant", False),
                 "answer": result.get("answer", "No answer generated"),
-            }, )
+            },
+        )
 
     return results
 
@@ -205,16 +188,12 @@ def compare_agent_configurations() -> None:
     logger.info("\n\n=== Comparing Agent Configurations ===\n")
 
     # Configuration 1: With relevance checker, 2 documents
-    logger.info(
-        "Creating agent with relevance checker, retrieving 2 documents")
-    agent1 = create_llm_rag_agent(use_relevance_checker=True,
-                                  return_documents=2)
+    logger.info("Creating agent with relevance checker, retrieving 2 documents")
+    agent1 = create_llm_rag_agent(use_relevance_checker=True, return_documents=2)
 
     # Configuration 2: Without relevance checker, 3 documents
-    logger.info(
-        "\nCreating agent without relevance checker, retrieving 3 documents")
-    agent2 = create_llm_rag_agent(use_relevance_checker=False,
-                                  return_documents=3)
+    logger.info("\nCreating agent without relevance checker, retrieving 3 documents")
+    agent2 = create_llm_rag_agent(use_relevance_checker=False, return_documents=3)
 
     # Run a test query on both
     test_query = "What are the main types of machine learning?"
@@ -225,16 +204,14 @@ def compare_agent_configurations() -> None:
     # Run on first configuration
     logger.info("\nResults from agent with relevance checker:")
     result1 = agent1.invoke({"query": test_query})
-    logger.info(
-        f"Retrieved {len(result1.get('retrieved_documents', []))} documents")
+    logger.info(f"Retrieved {len(result1.get('retrieved_documents', []))} documents")
     logger.info(f"Documents relevant: {result1.get('is_relevant', False)}")
     logger.info(f"Answer: {result1.get('answer', 'No answer generated')}")
 
     # Run on second configuration
     logger.info("\nResults from agent without relevance checker:")
     result2 = agent2.invoke({"query": test_query})
-    logger.info(
-        f"Retrieved {len(result2.get('retrieved_documents', []))} documents")
+    logger.info(f"Retrieved {len(result2.get('retrieved_documents', []))} documents")
     logger.info(f"Documents relevant: {result2.get('is_relevant', False)}")
     logger.info(f"Answer: {result2.get('answer', 'No answer generated')}")
 

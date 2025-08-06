@@ -55,8 +55,7 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
             # Initialize document filter
             self.document_filter = None
             if config.document_filter_config:
-                self.document_filter = config.document_filter_config.create_runnable(
-                )
+                self.document_filter = config.document_filter_config.create_runnable()
 
             # Initialize answer generator
             self.answer_generator = None
@@ -66,20 +65,15 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
             # Initialize evaluation and correction components
             self.answer_evaluator = None
             if config.answer_evaluator_config:
-                self.answer_evaluator = config.answer_evaluator_config.create_runnable(
-                )
+                self.answer_evaluator = config.answer_evaluator_config.create_runnable()
 
             self.answer_corrector = None
             if config.answer_corrector_config:
-                self.answer_corrector = config.answer_corrector_config.create_runnable(
-                )
+                self.answer_corrector = config.answer_corrector_config.create_runnable()
 
-            logger.info(
-                "Self-corrective RAG agent components initialized successfully"
-            )
+            logger.info("Self-corrective RAG agent components initialized successfully")
         except Exception as e:
-            logger.exception(
-                f"Error initializing Self-corrective RAG components: {e}")
+            logger.exception(f"Error initializing Self-corrective RAG components: {e}")
             raise
 
     @property
@@ -108,10 +102,12 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
 
         except Exception as e:
             logger.exception(f"Error retrieving documents: {e!s}")
-            return Command(update={
-                "error": f"Error retrieving documents: {e!s}",
-                "retrieved_documents": [],
-            }, )
+            return Command(
+                update={
+                    "error": f"Error retrieving documents: {e!s}",
+                    "retrieved_documents": [],
+                },
+            )
 
     def filter_documents(self, state: SelfCorrectiveRAGState) -> Command:
         """Filter documents based on relevance to the query.
@@ -143,10 +139,8 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
 
                 try:
                     score = self.document_filter.invoke(
-                        {
-                            "query": query,
-                            "document": doc.page_content
-                        }, )
+                        {"query": query, "document": doc.page_content},
+                    )
 
                     # Try to convert the score to a float
                     if isinstance(score, dict) and "score" in score:
@@ -165,19 +159,21 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
 
             logger.info(f"Filtered to {len(filtered_docs)} relevant documents")
 
-            return Command(update={
-                "filtered_documents": filtered_docs,
-                "relevance_scores": relevance_scores,
-            }, )
+            return Command(
+                update={
+                    "filtered_documents": filtered_docs,
+                    "relevance_scores": relevance_scores,
+                },
+            )
 
         except Exception as e:
             logger.exception(f"Error in document filtering: {e!s}")
             return Command(
                 update={
                     "error": f"Error filtering documents: {e!s}",
-                    "filtered_documents":
-                    documents,  # Fall back to all documents
-                }, )
+                    "filtered_documents": documents,  # Fall back to all documents
+                },
+            )
 
     def generate_answer(self, state: SelfCorrectiveRAGState) -> Command:
         """Generate an initial answer based on filtered documents.
@@ -195,17 +191,19 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
 
         try:
             if not documents:
-                return Command(update={
-                    "answer":
-                    "I couldn't find any relevant documents to answer your query.",
-                    "correction_iterations": 0,
-                }, )
+                return Command(
+                    update={
+                        "answer": "I couldn't find any relevant documents to answer your query.",
+                        "correction_iterations": 0,
+                    },
+                )
 
             if not self.answer_generator:
                 return Command(
                     update={
                         "answer": f"Found {
-                            len(documents)} relevant documents, but no answer generator is configured.",
+                            len(documents)
+                        } relevant documents, but no answer generator is configured.",
                         "correction_iterations": 0,
                     },
                 )
@@ -214,10 +212,7 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
             context = "\n\n".join([doc.page_content for doc in documents])
 
             # Generate answer
-            answer = self.answer_generator.invoke({
-                "query": query,
-                "context": context
-            })
+            answer = self.answer_generator.invoke({"query": query, "context": context})
 
             # Extract string answer if needed
             if hasattr(answer, "content"):
@@ -230,18 +225,19 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
             return Command(
                 update={
                     "answer": answer,
-                    "correction_iterations":
-                    0,  # Initialize correction counter
-                }, )
+                    "correction_iterations": 0,  # Initialize correction counter
+                },
+            )
 
         except Exception as e:
             logger.exception(f"Error generating answer: {e!s}")
-            return Command(update={
-                "error": f"Error generating answer: {e!s}",
-                "answer":
-                "I encountered an error while trying to generate an answer.",
-                "correction_iterations": 0,
-            }, )
+            return Command(
+                update={
+                    "error": f"Error generating answer: {e!s}",
+                    "answer": "I encountered an error while trying to generate an answer.",
+                    "correction_iterations": 0,
+                },
+            )
 
     def evaluate_answer(self, state: SelfCorrectiveRAGState) -> Command:
         """Evaluate the quality of the generated answer and check for.
@@ -265,22 +261,21 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
         try:
             # If no evaluator is configured, assume the answer is good
             if not self.answer_evaluator:
-                return Command(update={
-                    "answer_score": 1.0,
-                    "hallucination_assessment": {},
-                    "final_answer": True,
-                }, )
+                return Command(
+                    update={
+                        "answer_score": 1.0,
+                        "hallucination_assessment": {},
+                        "final_answer": True,
+                    },
+                )
 
             # Prepare context from documents
             context = "\n\n".join([doc.page_content for doc in documents])
 
             # Invoke the evaluator
             evaluation = self.answer_evaluator.invoke(
-                {
-                    "query": query,
-                    "answer": answer,
-                    "context": context
-                }, )
+                {"query": query, "answer": answer, "context": context},
+            )
 
             # Process the evaluation result
             if isinstance(evaluation, dict):
@@ -292,24 +287,25 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
                     score = float(evaluation)
                     assessment = {}
                 except BaseException:
-                    logger.warning(
-                        f"Could not parse evaluation result: {evaluation}")
+                    logger.warning(f"Could not parse evaluation result: {evaluation}")
                     score = 0.5
                     assessment = {}
 
             # Determine if this should be the final answer
-            final_answer = (score >= self.config.minimum_answer_score
-                            or state.correction_iterations
-                            >= self.config.max_correction_iterations)
+            final_answer = (
+                score >= self.config.minimum_answer_score
+                or state.correction_iterations >= self.config.max_correction_iterations
+            )
 
-            logger.info(
-                f"Evaluation score: {score}, final_answer: {final_answer}")
+            logger.info(f"Evaluation score: {score}, final_answer: {final_answer}")
 
-            return Command(update={
-                "answer_score": score,
-                "hallucination_assessment": assessment,
-                "final_answer": final_answer,
-            }, )
+            return Command(
+                update={
+                    "answer_score": score,
+                    "hallucination_assessment": assessment,
+                    "final_answer": final_answer,
+                },
+            )
 
         except Exception as e:
             logger.exception(f"Error evaluating answer: {e!s}")
@@ -317,12 +313,10 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
                 update={
                     "error": f"Error evaluating answer: {e!s}",
                     "answer_score": 0.5,  # Default to middle score
-                    "hallucination_assessment": {
-                        "error": str(e)
-                    },
-                    "final_answer":
-                    True,  # Force final to avoid infinite loops on errors
-                }, )
+                    "hallucination_assessment": {"error": str(e)},
+                    "final_answer": True,  # Force final to avoid infinite loops on errors
+                },
+            )
 
     def correct_answer(self, state: SelfCorrectiveRAGState) -> Command:
         """Correct the answer based on evaluation feedback.
@@ -348,7 +342,8 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
                     update={
                         "answer": answer,  # Keep the same answer
                         "correction_iterations": iterations + 1,
-                    }, )
+                    },
+                )
 
             # Prepare context from documents
             context = "\n\n".join([doc.page_content for doc in documents])
@@ -360,21 +355,23 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
                     "current_answer": answer,
                     "assessment": assessment,
                     "context": context,
-                }, )
+                },
+            )
 
             # Extract string answer if needed
             if hasattr(corrected_answer, "content"):
                 corrected_answer = corrected_answer.content
-            elif isinstance(corrected_answer,
-                            dict) and "answer" in corrected_answer:
+            elif isinstance(corrected_answer, dict) and "answer" in corrected_answer:
                 corrected_answer = corrected_answer["answer"]
 
             logger.info("Answer corrected successfully")
 
-            return Command(update={
-                "answer": corrected_answer,
-                "correction_iterations": iterations + 1,
-            }, )
+            return Command(
+                update={
+                    "answer": corrected_answer,
+                    "correction_iterations": iterations + 1,
+                },
+            )
 
         except Exception as e:
             logger.exception(f"Error correcting answer: {e!s}")
@@ -383,7 +380,8 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
                     "error": f"Error correcting answer: {e!s}",
                     "answer": answer,  # Keep the original answer
                     "correction_iterations": iterations + 1,
-                }, )
+                },
+            )
 
     def finalize_answer(self, state: SelfCorrectiveRAGState) -> Command:
         """Prepare the final answer, possibly adding citations or formatting.
@@ -406,15 +404,11 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
 
             if score is not None:
                 confidence_level = "high" if score > 0.8 else "medium" if score > 0.5 else "low"
-                logger.info(
-                    f"Answer confidence level: {confidence_level} ({score})")
+                logger.info(f"Answer confidence level: {confidence_level} ({score})")
 
                 # Optionally add confidence information to the answer
 
-            return Command(update={
-                "answer": final_answer,
-                "final_confidence": score
-            })
+            return Command(update={"answer": final_answer, "final_confidence": score})
 
         except Exception as e:
             logger.exception(f"Error finalizing answer: {e!s}")
@@ -422,7 +416,8 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
                 update={
                     "error": f"Error finalizing answer: {e!s}",
                     "answer": answer,  # Return the unmodified answer
-                }, )
+                },
+            )
 
     def correction_router(self, state: SelfCorrectiveRAGState) -> str:
         """Route based on evaluation results."""
@@ -453,10 +448,8 @@ class SelfCorrectiveRAGAgent(Agent[SelfCorrectiveRAGConfig]):
 
         # Add conditional branch based on evaluation
         correction_branch = Branch.from_dict(
-            {
-                "finalize_answer": "finalize_answer",
-                "default": "correct_answer"
-            }, )
+            {"finalize_answer": "finalize_answer", "default": "correct_answer"},
+        )
         self.graph.add_conditional_edges(
             "evaluate_answer",
             correction_branch,

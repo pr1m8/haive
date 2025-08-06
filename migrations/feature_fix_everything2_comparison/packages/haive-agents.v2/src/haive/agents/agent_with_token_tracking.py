@@ -113,11 +113,10 @@ class TokenTrackingAgent(Agent):
                 # Use MessagesStateWithTokenUsage directly
                 self.state_schema = type(
                     f"{self.__class__.__name__}StateWithTokens",
-                    (MessagesStateWithTokenUsage, ),
+                    (MessagesStateWithTokenUsage,),
                     {},
                 )
-                logger.debug(
-                    "Using MessagesStateWithTokenUsage for token tracking")
+                logger.debug("Using MessagesStateWithTokenUsage for token tracking")
             else:
                 # Use the regular schema
                 self.state_schema = temp_schema
@@ -135,15 +134,9 @@ class TokenTrackingAgent(Agent):
         Returns:
             Dictionary with token usage statistics
         """
-        if hasattr(self, "_state") and hasattr(self._state,
-                                               "get_token_usage_summary"):
+        if hasattr(self, "_state") and hasattr(self._state, "get_token_usage_summary"):
             return self._state.get_token_usage_summary()
-        return {
-            "total_tokens": 0,
-            "total_cost": 0.0,
-            "message_count": 0,
-            "rounds": 0
-        }
+        return {"total_tokens": 0, "total_cost": 0.0, "message_count": 0, "rounds": 0}
 
     def calculate_conversation_costs(self) -> None:
         """Calculate costs for the current conversation."""

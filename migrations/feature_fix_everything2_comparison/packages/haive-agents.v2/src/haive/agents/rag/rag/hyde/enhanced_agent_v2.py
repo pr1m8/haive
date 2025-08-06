@@ -9,6 +9,7 @@ This version integrates the new enhanced prompt system with:
 - Domain-specific prompt templates
 - Ensemble retrieval using multiple hypothetical documents
 """
+
 from __future__ import annotations
 
 from enum import Enum
@@ -26,7 +27,9 @@ from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import get
 from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import HYDE_ANALYSIS_PROMPT
 from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import HyDEPerspective
 from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import HyDEPromptType
-from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import select_prompt_automatically
+from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import (
+    select_prompt_automatically,
+)
 from haive.agents.rag.models import HyDEResult
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
@@ -65,8 +68,7 @@ class HyDEAgentConfig(BaseModel):
         description="Specific prompt type to use (if not auto-selecting)",
     )
     perspectives: list[HyDEPerspective] = Field(
-        default_factory=lambda:
-        [HyDEPerspective.EXPERT, HyDEPerspective.PRACTITIONER],
+        default_factory=lambda: [HyDEPerspective.EXPERT, HyDEPerspective.PRACTITIONER],
         description="Perspectives for multi-perspective generation",
     )
     target_length: int = Field(
@@ -238,7 +240,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
 
         # Step 5: Answer generation
         from haive.agents.rag.common.answer_generators.prompts import (
-            RAG_ANSWER_STANDARD, )
+            RAG_ANSWER_STANDARD,
+        )
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
@@ -288,7 +291,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
 
         # Answer generation
         from haive.agents.rag.common.answer_generators.prompts import (
-            RAG_ANSWER_STANDARD, )
+            RAG_ANSWER_STANDARD,
+        )
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
@@ -351,7 +355,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
 
         # Answer generation
         from haive.agents.rag.common.answer_generators.prompts import (
-            RAG_ANSWER_STANDARD, )
+            RAG_ANSWER_STANDARD,
+        )
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
@@ -402,7 +407,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
 
         # Answer generation
         from haive.agents.rag.common.answer_generators.prompts import (
-            RAG_ANSWER_STANDARD, )
+            RAG_ANSWER_STANDARD,
+        )
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
@@ -433,10 +439,11 @@ class QueryAnalysisAgent(SimpleAgent):
     )
 
     def __init__(self, llm_config: LLMConfig, **kwargs):
-        analysis_prompt = ChatPromptTemplate.from_messages([
-            (
-                "system",
-                """Analyze the query to determine the best approach for HyDE document generation.
+        analysis_prompt = ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    """Analyze the query to determine the best approach for HyDE document generation.
 
             Consider:
             - Domain (technical, academic, news, business, tutorial, etc.)
@@ -445,9 +452,10 @@ class QueryAnalysisAgent(SimpleAgent):
             - Expected document format
 
             Provide analysis that will guide document generation strategy.""",
-            ),
-            ("human", "Analyze this query for HyDE generation: {query}"),
-        ], )
+                ),
+                ("human", "Analyze this query for HyDE generation: {query}"),
+            ],
+        )
 
         super().__init__(
             engine=AugLLMConfig(
@@ -476,8 +484,7 @@ class QueryAnalysisAgent(SimpleAgent):
 class AdaptiveHyDEGenerator(SimpleAgent):
     """Generator that adapts its prompt based on query analysis."""
 
-    target_length: int = Field(default=1000,
-                               description="Target document length")
+    target_length: int = Field(default=1000, description="Target document length")
 
     def __init__(self, llm_config: LLMConfig, **kwargs):
         # Default prompt - will be replaced based on analysis
@@ -548,10 +555,11 @@ class DomainAnalysisAgent(SimpleAgent):
     generation."""
 
     def __init__(self, llm_config: LLMConfig, **kwargs):
-        domain_prompt = ChatPromptTemplate.from_messages([
-            (
-                "system",
-                """Analyze the query to determine which document domains would be most valuable.
+        domain_prompt = ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    """Analyze the query to determine which document domains would be most valuable.
 
             Available domains:
             - Technical: Programming, engineering, technical documentation
@@ -562,9 +570,10 @@ class DomainAnalysisAgent(SimpleAgent):
             - Reference: Encyclopedia entries, definitions, comprehensive overviews
 
             Rank the top 3 domains that would provide the best hypothetical documents for this query.""",
-            ),
-            ("human", "Analyze query for domain relevance: {query}"),
-        ], )
+                ),
+                ("human", "Analyze query for domain relevance: {query}"),
+            ],
+        )
 
         super().__init__(
             engine=AugLLMConfig(
@@ -580,10 +589,11 @@ class EnsembleDocumentParser(SimpleAgent):
     """Parses ensemble document output into individual documents."""
 
     def __init__(self, llm_config: LLMConfig, **kwargs):
-        parser_prompt = ChatPromptTemplate.from_messages([
-            (
-                "system",
-                """Parse the ensemble document output into individual hypothetical documents.
+        parser_prompt = ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    """Parse the ensemble document output into individual hypothetical documents.
 
             Extract each document and provide:
             - Document content
@@ -592,9 +602,10 @@ class EnsembleDocumentParser(SimpleAgent):
             - Retrieval keywords
 
             Structure the output so each document can be used independently for retrieval.""",
-            ),
-            ("human", "Parse this ensemble output: {ensemble_documents}"),
-        ], )
+                ),
+                ("human", "Parse this ensemble output: {ensemble_documents}"),
+            ],
+        )
 
         super().__init__(
             engine=AugLLMConfig(
@@ -638,8 +649,7 @@ class EnhancedHyDERetrieverV2(Agent):
             # Find first non-empty candidate
             retrieval_query = None
             for candidate in retrieval_candidates:
-                if candidate and isinstance(candidate,
-                                            str) and candidate.strip():
+                if candidate and isinstance(candidate, str) and candidate.strip():
                     retrieval_query = candidate.strip()
                     break
 
@@ -659,8 +669,7 @@ class EnhancedHyDERetrieverV2(Agent):
 
                 if hasattr(result, "retrieved_documents"):
                     docs = result.retrieved_documents
-                elif isinstance(result,
-                                dict) and "retrieved_documents" in result:
+                elif isinstance(result, dict) and "retrieved_documents" in result:
                     docs = result["retrieved_documents"]
 
                 return {
@@ -745,8 +754,7 @@ class EnsembleHyDERetriever(Agent):
 
                     if hasattr(result, "retrieved_documents"):
                         docs = result.retrieved_documents
-                    elif isinstance(result,
-                                    dict) and "retrieved_documents" in result:
+                    elif isinstance(result, dict) and "retrieved_documents" in result:
                         docs = result["retrieved_documents"]
 
                     all_docs.extend(docs)
@@ -758,8 +766,7 @@ class EnsembleHyDERetriever(Agent):
             seen = set()
             unique_docs = []
             for doc in all_docs:
-                doc_id = hash(doc.page_content) if hasattr(
-                    doc, "page_content") else hash(str(doc))
+                doc_id = hash(doc.page_content) if hasattr(doc, "page_content") else hash(str(doc))
                 if doc_id not in seen:
                     seen.add(doc_id)
                     unique_docs.append(doc)
@@ -819,8 +826,7 @@ class MultiDomainHyDERetriever(Agent):
 
                     if hasattr(result, "retrieved_documents"):
                         docs = result.retrieved_documents
-                    elif isinstance(result,
-                                    dict) and "retrieved_documents" in result:
+                    elif isinstance(result, dict) and "retrieved_documents" in result:
                         docs = result["retrieved_documents"]
 
                     domain_results[domain] = docs
@@ -833,8 +839,7 @@ class MultiDomainHyDERetriever(Agent):
             seen = set()
             unique_docs = []
             for doc in all_docs:
-                doc_id = hash(doc.page_content) if hasattr(
-                    doc, "page_content") else hash(str(doc))
+                doc_id = hash(doc.page_content) if hasattr(doc, "page_content") else hash(str(doc))
                 if doc_id not in seen:
                     seen.add(doc_id)
                     unique_docs.append(doc)

@@ -58,8 +58,7 @@ class ToTAgentConfig(AgentConfig):
     # ToT parameters
     max_depth: int = Field(default=5, description="Maximum search depth")
 
-    threshold: float = Field(default=0.9,
-                             description="Score threshold for success")
+    threshold: float = Field(default=0.9, description="Score threshold for success")
 
     beam_size: int = Field(
         default=3,
@@ -99,8 +98,7 @@ class ToTAgentConfig(AgentConfig):
         cls,
         model: str = "gpt-4o",
         temperature: float = 0.7,
-        system_prompt:
-        str = "You are a helpful assistant solving a complex problem step by step.",
+        system_prompt: str = "You are a helpful assistant solving a complex problem step by step.",
         expand_prompt: ChatPromptTemplate | None = None,
         score_prompt: ChatPromptTemplate | None = None,
         name: str | None = None,
@@ -122,28 +120,31 @@ class ToTAgentConfig(AgentConfig):
         """
         # Create default expand prompt if not provided
         if expand_prompt is None:
-            expand_prompt = ChatPromptTemplate.from_messages([
-                ("system", system_prompt),
-                (
-                    "system",
-                    "Generate {candidates_per_expansion} different approaches to solve this problem. Be creative and diverse in your thinking.",
-                ),
-                ("user", "Problem: {problem}"),
-                ("user",
-                 "Previous attempt: {seed}" if "seed" in kwargs else ""),
-            ], )
+            expand_prompt = ChatPromptTemplate.from_messages(
+                [
+                    ("system", system_prompt),
+                    (
+                        "system",
+                        "Generate {candidates_per_expansion} different approaches to solve this problem. Be creative and diverse in your thinking.",
+                    ),
+                    ("user", "Problem: {problem}"),
+                    ("user", "Previous attempt: {seed}" if "seed" in kwargs else ""),
+                ],
+            )
 
         # Create default score prompt if not provided and no score function
         if score_prompt is None and "score_function" not in kwargs:
-            score_prompt = ChatPromptTemplate.from_messages([
-                (
-                    "system",
-                    "Rate the following solution attempt on a scale of 0.0 to 1.0.",
-                ),
-                ("system", "Provide feedback on the reasoning and accuracy."),
-                ("user", "Problem: {problem}"),
-                ("user", "Solution attempt: {candidate}"),
-            ], )
+            score_prompt = ChatPromptTemplate.from_messages(
+                [
+                    (
+                        "system",
+                        "Rate the following solution attempt on a scale of 0.0 to 1.0.",
+                    ),
+                    ("system", "Provide feedback on the reasoning and accuracy."),
+                    ("user", "Problem: {problem}"),
+                    ("user", "Solution attempt: {candidate}"),
+                ],
+            )
 
         # Set up LLM configs
         llm_config = AzureLLMConfig(
@@ -169,8 +170,7 @@ class ToTAgentConfig(AgentConfig):
 
         # Create and return the config
         return cls(
-            name=name
-            or f"tot_agent_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+            name=name or f"tot_agent_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
             expand_llm_config=expand_llm,
             score_llm_config=score_llm,
             **kwargs,

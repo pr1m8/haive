@@ -28,7 +28,6 @@ from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.branches import Branch
 
 
-
 @register_agent(ReflexionConfig)
 class ReflexionAgent(Agent[ReflexionConfig]):
     """Agent that uses Reflexion to answer questions."""
@@ -50,12 +49,8 @@ class ReflexionAgent(Agent[ReflexionConfig]):
         self.answer_writer = AugLLMConfig(model="gpt-4o", name="answer_writef")
         self.tool_node = self.create_tool_node(config.tools)
         self.event_loop_branch = Branch(
-            function=lambda state: _get_num_iterations(state) > self.config.
-            max_iterations,
-            destinations={
-                True: "end",
-                False: "execute_tools"
-            },
+            function=lambda state: _get_num_iterations(state) > self.config.max_iterations,
+            destinations={True: "end", False: "execute_tools"},
         )
         super().__init__(config)
 
@@ -71,7 +66,8 @@ class ReflexionAgent(Agent[ReflexionConfig]):
         for tool in self.config.tools:
             for model in self.config.models:
                 tool_node_tools.append(
-                    StructuredTool.from_function(tool, name=model.__name__), )
+                    StructuredTool.from_function(tool, name=model.__name__),
+                )
         return ToolNode(tools=tool_node_tools)
 
     def final_answer(self, state: dict):
@@ -80,7 +76,8 @@ class ReflexionAgent(Agent[ReflexionConfig]):
             """Given the following conversation, and user request, write out the final response.
             Conversation:
             {conversation}
-            """, )
+            """,
+        )
         self.answer_writer.prompt_template = prompt
         aug_llm = self.answer_writer.create_runnable()
         response = aug_llm.invoke(input={"conversation": state.model_dump()})
@@ -99,8 +96,5 @@ class ReflexionAgent(Agent[ReflexionConfig]):
         self.graph.add_conditional_edges(
             "revision",
             self.event_loop_branch.evaluate,
-            {
-                "execute_tools": "tools",
-                "end": "final_answer"
-            },
+            {"execute_tools": "tools", "end": "final_answer"},
         )

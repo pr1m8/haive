@@ -100,8 +100,7 @@ class MemoryTask(BaseModel):
     """
 
     id: str = Field(..., description="Unique task identifier")
-    type: str = Field(...,
-                      description="Task type (store, retrieve, analyze, etc.)")
+    type: str = Field(..., description="Task type (store, retrieve, analyze, etc.)")
     query: str = Field(..., description="Task query or description")
 
     # Task parameters
@@ -128,19 +127,16 @@ class MemoryTask(BaseModel):
 
     # Task state
     status: str = Field(default="pending", description="Task status")
-    assigned_agent: str | None = Field(default=None,
-                                       description="Assigned agent name")
+    assigned_agent: str | None = Field(default=None, description="Assigned agent name")
     result: Any | None = Field(default=None, description="Task result")
-    error: str | None = Field(default=None,
-                              description="Error message if failed")
+    error: str | None = Field(default=None, description="Error message if failed")
 
     # Timing
     created_at: datetime = Field(
         default_factory=datetime.utcnow,
         description="Task creation time",
     )
-    started_at: datetime | None = Field(default=None,
-                                        description="Task start time")
+    started_at: datetime | None = Field(default=None, description="Task start time")
     completed_at: datetime | None = Field(
         default=None,
         description="Task completion time",
@@ -228,8 +224,7 @@ class MemoryAgentCapabilities(BaseModel):
     agent_type: str = Field(..., description="Agent type/class")
 
     # Capabilities
-    can_store_memories: bool = Field(default=False,
-                                     description="Can store memories")
+    can_store_memories: bool = Field(default=False, description="Can store memories")
     can_retrieve_memories: bool = Field(
         default=False,
         description="Can retrieve memories",
@@ -258,8 +253,7 @@ class MemoryAgentCapabilities(BaseModel):
         default=1000,
         description="Typical response latency",
     )
-    max_concurrent_tasks: int = Field(default=1,
-                                      description="Maximum concurrent tasks")
+    max_concurrent_tasks: int = Field(default=1, description="Maximum concurrent tasks")
 
     # Specialization
     specialization: list[str] = Field(
@@ -371,14 +365,12 @@ class MultiAgentCoordinatorConfig(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     # Core configuration
-    name: str = Field(default="multi_agent_coordinator",
-                      description="Coordinator name")
+    name: str = Field(default="multi_agent_coordinator", description="Coordinator name")
     memory_store_manager: MemoryStoreManager = Field(
         ...,
         description="Memory store manager",
     )
-    memory_classifier: MemoryClassifier = Field(
-        ..., description="Memory classifier")
+    memory_classifier: MemoryClassifier = Field(..., description="Memory classifier")
 
     # Agent configurations
     kg_generator_config: KGGeneratorAgentConfig = Field(
@@ -391,8 +383,7 @@ class MultiAgentCoordinatorConfig(BaseModel):
     )
 
     # Coordination configuration
-    max_concurrent_tasks: int = Field(default=5,
-                                      description="Maximum concurrent tasks")
+    max_concurrent_tasks: int = Field(default=5, description="Maximum concurrent tasks")
     task_timeout_seconds: int = Field(
         default=300,
         description="Task timeout in seconds",
@@ -419,10 +410,8 @@ class MultiAgentCoordinatorConfig(BaseModel):
     )
 
     # Performance configuration
-    enable_caching: bool = Field(default=True,
-                                 description="Enable result caching")
-    cache_ttl_seconds: int = Field(default=3600,
-                                   description="Cache TTL in seconds")
+    enable_caching: bool = Field(default=True, description="Enable result caching")
+    cache_ttl_seconds: int = Field(default=3600, description="Cache TTL in seconds")
 
     # Persistence configuration
     persistence: Any = Field(
@@ -598,15 +587,11 @@ class MultiAgentMemoryCoordinator:
         # 1. KG Generator Agent
         kg_agent = KGGeneratorAgent(self.config.kg_generator_config)
         # Set persistence if configured
-        if hasattr(self.config,
-                   "persistence") and self.config.persistence is not None:
+        if hasattr(self.config, "persistence") and self.config.persistence is not None:
             kg_agent.persistence = self.config.persistence
         kg_meta_state = MetaStateSchema.from_agent(
             agent=kg_agent,
-            initial_state={
-                "ready": True,
-                "kg_ready": False
-            },
+            initial_state={"ready": True, "kg_ready": False},
             graph_context={"agent_type": "kg_generator"},
         )
         self.meta_agents["kg_generator"] = kg_meta_state
@@ -632,15 +617,11 @@ class MultiAgentMemoryCoordinator:
         # 2. Agentic RAG Coordinator
         rag_coordinator = AgenticRAGCoordinator(self.config.agentic_rag_config)
         # Set persistence if configured
-        if hasattr(self.config,
-                   "persistence") and self.config.persistence is not None:
+        if hasattr(self.config, "persistence") and self.config.persistence is not None:
             rag_coordinator.persistence = self.config.persistence
         rag_meta_state = MetaStateSchema.from_agent(
             agent=rag_coordinator,
-            initial_state={
-                "ready": True,
-                "strategies_loaded": True
-            },
+            initial_state={"ready": True, "strategies_loaded": True},
             graph_context={"agent_type": "agentic_rag"},
         )
         self.meta_agents["agentic_rag"] = rag_meta_state
@@ -663,10 +644,7 @@ class MultiAgentMemoryCoordinator:
         # 3. Memory Store Manager (wrapped as agent)
         store_meta_state = MetaStateSchema.from_agent(
             agent=self._create_store_agent(),
-            initial_state={
-                "ready": True,
-                "store_connected": True
-            },
+            initial_state={"ready": True, "store_connected": True},
             graph_context={"agent_type": "memory_store"},
         )
         self.meta_agents["memory_store"] = store_meta_state
@@ -679,18 +657,13 @@ class MultiAgentMemoryCoordinator:
             supported_memory_types=list(MemoryType),
             typical_latency_ms=500,
             max_concurrent_tasks=5,
-            specialization=[
-                "memory_storage", "basic_retrieval", "memory_management"
-            ],
+            specialization=["memory_storage", "basic_retrieval", "memory_management"],
         )
 
         # 4. Memory Classifier (wrapped as agent)
         classifier_meta_state = MetaStateSchema.from_agent(
             agent=self._create_classifier_agent(),
-            initial_state={
-                "ready": True,
-                "models_loaded": True
-            },
+            initial_state={"ready": True, "models_loaded": True},
             graph_context={"agent_type": "memory_classifier"},
         )
         self.meta_agents["memory_classifier"] = classifier_meta_state
@@ -830,8 +803,9 @@ FORMAT: Return a JSON object with:
     "reasoning": "Why this decomposition was chosen"
 }}
 
-Decompose the task now:""", input_variables=[
-                "task_description", "task_complexity", "available_agents"], )
+Decompose the task now:""",
+            input_variables=["task_description", "task_complexity", "available_agents"],
+        )
 
     async def execute_task(self, task: MemoryTask) -> MemoryTask:
         """Execute a memory task using appropriate agents with intelligent.
@@ -914,17 +888,13 @@ Decompose the task now:""", input_variables=[
 
             # Step 2: Execute based on routing decision
             if routing_decision["routing_decision"] == "single_agent":
-                result = await self._execute_single_agent_task(
-                    task, routing_decision)
+                result = await self._execute_single_agent_task(task, routing_decision)
             elif routing_decision["routing_decision"] == "multi_agent":
-                result = await self._execute_multi_agent_task(
-                    task, routing_decision)
+                result = await self._execute_multi_agent_task(task, routing_decision)
             elif routing_decision["routing_decision"] == "sequential":
-                result = await self._execute_sequential_task(
-                    task, routing_decision)
+                result = await self._execute_sequential_task(task, routing_decision)
             elif routing_decision["routing_decision"] == "decompose":
-                result = await self._execute_decomposed_task(
-                    task, routing_decision)
+                result = await self._execute_decomposed_task(task, routing_decision)
             else:
                 raise ValueError(
                     f"Unknown routing decision: {routing_decision['routing_decision']}",
@@ -1002,10 +972,9 @@ Decompose the task now:""", input_variables=[
             # Prepare agent capabilities description
             capabilities_desc = []
             for agent_name, capabilities in self.agent_capabilities.items():
-                desc = f"- {agent_name}: {
-                    capabilities.agent_type} - {
-                    ', '.join(
-                        capabilities.specialization)}"
+                desc = f"- {agent_name}: {capabilities.agent_type} - {
+                    ', '.join(capabilities.specialization)
+                }"
                 capabilities_desc.append(desc)
 
             # Create routing prompt
@@ -1017,12 +986,14 @@ Decompose the task now:""", input_variables=[
             )
 
             # Get routing decision from LLM
-            response = await self.coordinator_llm.ainvoke([
-                SystemMessage(
-                    content="You are an expert task router for multi-agent systems.",
-                ),
-                HumanMessage(content=prompt),
-            ], )
+            response = await self.coordinator_llm.ainvoke(
+                [
+                    SystemMessage(
+                        content="You are an expert task router for multi-agent systems.",
+                    ),
+                    HumanMessage(content=prompt),
+                ],
+            )
 
             # Parse routing decision
             routing_decision = self._parse_json_response(response.content)
@@ -1107,10 +1078,7 @@ Decompose the task now:""", input_variables=[
 
         # Execute agent with task query
         result = await meta_state.execute_agent(
-            input_data={"messages": [{
-                "role": "user",
-                "content": task.query
-            }]},
+            input_data={"messages": [{"role": "user", "content": task.query}]},
             update_state=True,
         )
 
@@ -1135,12 +1103,7 @@ Decompose the task now:""", input_variables=[
             if agent_name in self.meta_agents:
                 meta_state = self.meta_agents[agent_name]
                 task_coro = meta_state.execute_agent(
-                    input_data={
-                        "messages": [{
-                            "role": "user",
-                            "content": task.query
-                        }]
-                    },
+                    input_data={"messages": [{"role": "user", "content": task.query}]},
                     update_state=True,
                 )
                 tasks.append(task_coro)
@@ -1179,10 +1142,7 @@ Decompose the task now:""", input_variables=[
                 meta_state = self.meta_agents[agent_name]
                 result = await meta_state.execute_agent(
                     input_data={
-                        "messages": [{
-                            "role": "user",
-                            "content": current_input
-                        }],
+                        "messages": [{"role": "user", "content": current_input}],
                     },
                     update_state=True,
                 )
@@ -1229,8 +1189,7 @@ Decompose the task now:""", input_variables=[
             logger.warning(f"Failed to parse JSON response: {e}")
         return None
 
-    def _update_performance_metrics(self, task: MemoryTask,
-                                    success: bool) -> None:
+    def _update_performance_metrics(self, task: MemoryTask, success: bool) -> None:
         """Update performance metrics."""
         self.performance_metrics["total_tasks"] += 1
 
@@ -1241,14 +1200,14 @@ Decompose the task now:""", input_variables=[
 
         # Update latency
         if task.started_at and task.completed_at:
-            latency = (task.completed_at -
-                       task.started_at).total_seconds() * 1000
+            latency = (task.completed_at - task.started_at).total_seconds() * 1000
             current_avg = self.performance_metrics["avg_latency_ms"]
             total_tasks = self.performance_metrics["total_tasks"]
 
             # Update rolling average
             self.performance_metrics["avg_latency_ms"] = (
-                current_avg * (total_tasks - 1) + latency) / total_tasks
+                current_avg * (total_tasks - 1) + latency
+            ) / total_tasks
 
         # Update agent utilization
         if task.assigned_agent:
@@ -1635,16 +1594,11 @@ Decompose the task now:""", input_variables=[
         agent_status = {}
         for agent_name, meta_state in self.meta_agents.items():
             agent_status[agent_name] = {
-                "agent_name":
-                meta_state.agent_name,
-                "agent_type":
-                meta_state.agent_type,
-                "execution_status":
-                meta_state.execution_status,
-                "execution_count":
-                meta_state.graph_context.get("execution_count", 0),
-                "needs_recompile":
-                meta_state.needs_recompile,
+                "agent_name": meta_state.agent_name,
+                "agent_type": meta_state.agent_type,
+                "execution_status": meta_state.execution_status,
+                "execution_count": meta_state.graph_context.get("execution_count", 0),
+                "needs_recompile": meta_state.needs_recompile,
             }
 
         return {
@@ -1656,10 +1610,8 @@ Decompose the task now:""", input_variables=[
             "agent_status": agent_status,
             "agent_capabilities": {
                 name: {
-                    "specialization":
-                    caps.specialization,
-                    "supported_memory_types":
-                    [mt.value for mt in caps.supported_memory_types],
+                    "specialization": caps.specialization,
+                    "supported_memory_types": [mt.value for mt in caps.supported_memory_types],
                 }
                 for name, caps in self.agent_capabilities.items()
             },
@@ -1734,32 +1686,28 @@ Decompose the task now:""", input_variables=[
                 test_result = await meta_state.execute_agent(
                     input_data={
                         "messages": [
-                            {
-                                "role": "user",
-                                "content": "System diagnostic test"
-                            },
+                            {"role": "user", "content": "System diagnostic test"},
                         ],
                     },
                     update_state=False,
                 )
                 diagnostic_results[agent_name] = {
-                    "status":
-                    "healthy",
-                    "test_result": (str(test_result)[:100] + "..." if len(
-                        str(test_result)) > 100 else str(test_result)),
+                    "status": "healthy",
+                    "test_result": (
+                        str(test_result)[:100] + "..."
+                        if len(str(test_result)) > 100
+                        else str(test_result)
+                    ),
                 }
             except Exception as e:
-                diagnostic_results[agent_name] = {
-                    "status": "error",
-                    "error": str(e)
-                }
+                diagnostic_results[agent_name] = {"status": "error", "error": str(e)}
 
         return {
-            "system_status": ("healthy" if all(
-                r["status"] == "healthy"
-                for r in diagnostic_results.values()) else "degraded"),
-            "agent_diagnostics":
-            diagnostic_results,
-            "performance_metrics":
-            self.performance_metrics,
+            "system_status": (
+                "healthy"
+                if all(r["status"] == "healthy" for r in diagnostic_results.values())
+                else "degraded"
+            ),
+            "agent_diagnostics": diagnostic_results,
+            "performance_metrics": self.performance_metrics,
         }

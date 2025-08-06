@@ -34,7 +34,7 @@ def main():
 
     # Diagnose imports first
     results, mock_imports = diagnose_imports(autoapi_dirs, str(base_dir))
-    
+
     # Save to file
     save_import_diagnosis(results, mock_imports)
 

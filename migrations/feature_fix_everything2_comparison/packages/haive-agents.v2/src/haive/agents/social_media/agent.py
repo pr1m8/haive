@@ -45,8 +45,9 @@ class SocialMediaConversation(BaseConversationAgent):
     mode: Literal["social_media"] = Field(default="social_media")
 
     # Platform configuration
-    platform_type: Literal["twitter", "instagram", "tiktok",
-                           "generic"] = Field(default="generic", )
+    platform_type: Literal["twitter", "instagram", "tiktok", "generic"] = Field(
+        default="generic",
+    )
     viral_threshold: int = Field(default=10)
 
     # Engagement settings
@@ -56,12 +57,14 @@ class SocialMediaConversation(BaseConversationAgent):
     max_posts_per_round: int = Field(default=3)
 
     # Character limits by platform
-    char_limits: dict[str, int] = Field(default_factory=lambda: {
-        "twitter": 280,
-        "instagram": 2200,
-        "tiktok": 150,
-        "generic": 500,
-    }, )
+    char_limits: dict[str, int] = Field(
+        default_factory=lambda: {
+            "twitter": 280,
+            "instagram": 2200,
+            "tiktok": 150,
+            "generic": 500,
+        },
+    )
 
     def get_conversation_state_schema(self) -> type:
         """Use social media state schema."""
@@ -129,13 +132,10 @@ class SocialMediaConversation(BaseConversationAgent):
                 agent.engine.force_tool_use = False  # Let them choose
                 agent.engine.tool_choice_mode = "auto"
 
-    def _like_post_handler(self,
-                           post_author: str,
-                           reason: str | None = None) -> str:
+    def _like_post_handler(self, post_author: str, reason: str | None = None) -> str:
         """Handler for like_post tool."""
         # This will be processed in process_response
-        return f"Liked @{post_author}'s post" + (f" because {reason}"
-                                                 if reason else "")
+        return f"Liked @{post_author}'s post" + (f" because {reason}" if reason else "")
 
     def _reply_post_handler(self, reply_to: str, content: str) -> str:
         """Handler for reply_to_post tool."""
@@ -204,13 +204,10 @@ class SocialMediaConversation(BaseConversationAgent):
             selected = [random.choice(speakers)]
 
         # Limit to max posts per round
-        selected = selected[:self.max_posts_per_round]
+        selected = selected[: self.max_posts_per_round]
 
         if len(selected) > 1:
-            return {
-                "current_speaker": selected[0],
-                "pending_speakers": selected[1:]
-            }
+            return {"current_speaker": selected[0], "pending_speakers": selected[1:]}
         return {"current_speaker": selected[0] if selected else None}
 
     def _prepare_agent_input(
@@ -226,7 +223,8 @@ class SocialMediaConversation(BaseConversationAgent):
         followers = len(state.followers.get(agent_name, set()))
         trending = state.trending_topics[:3] if state.trending_topics else []
 
-        context_msg = SystemMessage(content=f"""[@{agent_name}]
+        context_msg = SystemMessage(
+            content=f"""[@{agent_name}]
 Stats: {likes} likes | {followers} followers
 Trending: {", ".join(trending) if trending else "Nothing trending"}
 Keep it under {self.char_limits.get(state.platform_type, 500)} characters!""",
@@ -238,20 +236,20 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!""",
             if isinstance(msg, AIMessage) and hasattr(msg, "name"):
                 post_likes = state.likes.get(str(msg.name), 0)
                 recent_posts.append(
-                    f"@{msg.name}: {msg.content[:100]}... ({post_likes}❤️)", )
+                    f"@{msg.name}: {msg.content[:100]}... ({post_likes}❤️)",
+                )
 
         if recent_posts:
-            feed_msg = SystemMessage(content="Recent posts:\n" +
-                                     "\n".join(recent_posts), )
+            feed_msg = SystemMessage(
+                content="Recent posts:\n" + "\n".join(recent_posts),
+            )
             base_input["messages"] = [
                 context_msg,
                 feed_msg,
                 *base_input.get("messages", []),
             ]
         else:
-            base_input["messages"] = [
-                context_msg, *base_input.get("messages", [])
-            ]
+            base_input["messages"] = [context_msg, *base_input.get("messages", [])]
 
         return base_input
 
@@ -264,8 +262,7 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!""",
 
         # Get last message
         last_msg = state.messages[-1]
-        if not isinstance(last_msg, AIMessage) or not hasattr(
-                last_msg, "name"):
+        if not isinstance(last_msg, AIMessage) or not hasattr(last_msg, "name"):
             return update
 
         speaker = last_msg.name
@@ -291,8 +288,7 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!""",
                     target = tool_call["args"].get("original_author")
                     if target:
                         shares[target] = shares.get(target, 0) + 1
-                        likes[target] = likes.get(target,
-                                                  0) + 2  # Shares worth more
+                        likes[target] = likes.get(target, 0) + 2  # Shares worth more
 
             update["likes"] = likes
             update["shares"] = shares
@@ -312,16 +308,13 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!""",
 
             # Add to viral posts
             viral_posts = list(state.viral_posts)
-            viral_posts.append(
-                (str(speaker), str(content)[:100]))  # type: ignore
+            viral_posts.append((str(speaker), str(content)[:100]))  # type: ignore
             update["viral_posts"] = viral_posts
 
         update["likes"] = likes
 
         # Extract hashtags
-        hashtags = [
-            word for word in str(content).split() if word.startswith("#")
-        ]
+        hashtags = [word for word in str(content).split() if word.startswith("#")]
         if hashtags:
             hashtags_used = dict(state.hashtags_used)
             if speaker not in hashtags_used:
@@ -340,9 +333,7 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!""",
                 hashtag_counts[tag] = hashtag_counts.get(tag, 0) + 1
 
             # Get top trending
-            trending = sorted(hashtag_counts.items(),
-                              key=lambda x: x[1],
-                              reverse=True)
+            trending = sorted(hashtag_counts.items(), key=lambda x: x[1], reverse=True)
             update["trending_topics"] = [tag for tag, _ in trending[:5]]
 
         return update
@@ -356,7 +347,8 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!""",
         for speaker, like_count in state.likes.items():
             if like_count >= state.viral_threshold:
                 viral_msg = SystemMessage(
-                    content=f"🎉 @{speaker} went viral with {like_count} likes! Thread closed. 🔥", )
+                    content=f"🎉 @{speaker} went viral with {like_count} likes! Thread closed. 🔥",
+                )
                 return {"messages": [viral_msg], "conversation_ended": True}
 
         return None
@@ -368,9 +360,7 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!""",
     ) -> dict[str, Any]:
         """Create social media style conclusion."""
         # Get top posts
-        top_posts = sorted(state.likes.items(),
-                           key=lambda x: x[1],
-                           reverse=True)[:3]
+        top_posts = sorted(state.likes.items(), key=lambda x: x[1], reverse=True)[:3]
 
         summary_parts = ["📊 Thread Summary:"]
         summary_parts.append(f"Topic: {self.topic}")
@@ -383,7 +373,8 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!""",
 
         if state.trending_topics:
             summary_parts.append(
-                f"\n📈 Trending: {', '.join(state.trending_topics[:3])}", )
+                f"\n📈 Trending: {', '.join(state.trending_topics[:3])}",
+            )
 
         conclusion_msg = SystemMessage(content="\n".join(summary_parts))
 
@@ -410,10 +401,12 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!""",
         for name, persona in personas.items():
             engine = AugLLMConfig(
                 name=f"{name.lower()}_engine",
-                system_message=(f"You are @{name}, {persona}. "
-                                "Post in Twitter style: short, punchy, with emojis. "
-                                "Use hashtags when relevant. Engage with others using @mentions. "
-                                "You can like and retweet posts you find interesting."),
+                system_message=(
+                    f"You are @{name}, {persona}. "
+                    "Post in Twitter style: short, punchy, with emojis. "
+                    "Use hashtags when relevant. Engage with others using @mentions. "
+                    "You can like and retweet posts you find interesting."
+                ),
                 temperature=0.9,
                 max_tokens=100,  # Keep responses short
             )

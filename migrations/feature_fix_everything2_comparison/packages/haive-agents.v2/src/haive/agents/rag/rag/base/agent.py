@@ -8,6 +8,7 @@ Classes:
 Functions:
     build_graph: Build Graph functionality.
 """
+
 from __future__ import annotations
 
 from haive.agents.base.agent import Agent
@@ -48,24 +49,23 @@ class BaseRAGAgent(RetrieverMixin, Agent):
             )
     """
 
-    name: str = 'Base RAG Agent'
+    name: str = "Base RAG Agent"
     engine: BaseRetrieverConfig | VectorStoreConfig = Field(
         ...,
-        description='Retriever Engine (accepts BaseRetrieverConfig or VectorStoreConfig)',
+        description="Retriever Engine (accepts BaseRetrieverConfig or VectorStoreConfig)",
     )
 
     def build_graph(self) -> BaseGraph:
         """Build the RAG agent graph."""
         # Create base graph with proper name
-        graph = BaseGraph(name='BaseRAGAgent')
+        graph = BaseGraph(name="BaseRAGAgent")
 
         # Add the retrieval node
-        retrieval_node = EngineNodeConfig(engine=self.engine,
-                                          name='retrieval_node')
-        graph.add_node('retrieval_node', retrieval_node)
+        retrieval_node = EngineNodeConfig(engine=self.engine, name="retrieval_node")
+        graph.add_node("retrieval_node", retrieval_node)
 
         # Set up proper flow: START -> retrieval_node -> END
-        graph.add_edge(START, 'retrieval_node')
-        graph.add_edge('retrieval_node', END)
+        graph.add_edge(START, "retrieval_node")
+        graph.add_edge("retrieval_node", END)
 
         return graph

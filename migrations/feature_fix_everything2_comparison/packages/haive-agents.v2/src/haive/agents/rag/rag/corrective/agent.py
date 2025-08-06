@@ -17,33 +17,37 @@ from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 DOCUMENT_GRADER_PROMPT = ChatPromptTemplate.from_messages(
     [
-        ("system",
-         "You are a grader assessing relevance of retrieved documents to a user question.",
-         ),
-        ("human",
-         """Grade the relevance of this document to the question.
+        (
+            "system",
+            "You are a grader assessing relevance of retrieved documents to a user question.",
+        ),
+        (
+            "human",
+            """Grade the relevance of this document to the question.
 
 Question: {query}
 Document: {document}
 
 Give a binary score 'yes' or 'no' to indicate whether the document is relevant to the question.""",
-         ),
+        ),
     ],
 )
 
-ANSWER_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        "You are an expert assistant. Answer based only on the provided context.",
-    ),
-    (
-        "human",
-        """Answer the question based on the context.
+ANSWER_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            "You are an expert assistant. Answer based only on the provided context.",
+        ),
+        (
+            "human",
+            """Answer the question based on the context.
 
 Question: {query}
 Context: {retrieved_documents}""",
-    ),
-], )
+        ),
+    ],
+)
 
 
 class CorrectiveRAGAgent(ConditionalAgent):
@@ -91,8 +95,7 @@ class CorrectiveRAGAgent(ConditionalAgent):
         )
 
         answer_agent = SimpleAgent(
-            engine=AugLLMConfig(llm_config=llm_config,
-                                prompt_template=ANSWER_PROMPT),
+            engine=AugLLMConfig(llm_config=llm_config, prompt_template=ANSWER_PROMPT),
             name="Answer Generator",
         )
 

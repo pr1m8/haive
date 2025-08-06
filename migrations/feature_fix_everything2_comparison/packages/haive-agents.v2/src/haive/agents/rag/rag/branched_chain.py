@@ -33,11 +33,10 @@ class QueryClassification(BaseModel):
         default=None,
         description="Secondary type if applicable",
     )
-    complexity: Literal["simple", "medium",
-                        "complex"] = Field(description="Query complexity", )
-    confidence: float = Field(ge=0.0,
-                              le=1.0,
-                              description="Classification confidence")
+    complexity: Literal["simple", "medium", "complex"] = Field(
+        description="Query complexity",
+    )
+    confidence: float = Field(ge=0.0, le=1.0, description="Classification confidence")
 
 
 class BranchResult(BaseModel):
@@ -46,9 +45,7 @@ class BranchResult(BaseModel):
     branch_type: str = Field(description="Type of branch")
     retrieved_docs: list[str] = Field(description="Retrieved documents")
     branch_answer: str = Field(description="Answer from this branch")
-    relevance_score: float = Field(ge=0.0,
-                                   le=1.0,
-                                   description="Relevance score")
+    relevance_score: float = Field(ge=0.0, le=1.0, description="Relevance score")
 
 
 class MergedResult(BaseModel):
@@ -56,10 +53,9 @@ class MergedResult(BaseModel):
 
     primary_answer: str = Field(description="Primary answer")
     supporting_evidence: list[str] = Field(
-        description="Supporting evidence from branches", )
-    confidence_score: float = Field(ge=0.0,
-                                    le=1.0,
-                                    description="Overall confidence")
+        description="Supporting evidence from branches",
+    )
+    confidence_score: float = Field(ge=0.0, le=1.0, description="Overall confidence")
     sources_used: list[str] = Field(description="Sources used")
 
 
@@ -79,19 +75,21 @@ def create_branched_rag_chain(
     # Step 1: Query classifier
     classifier = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            (
-                "system",
-                """Classify the query type and complexity:
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    """Classify the query type and complexity:
             - factual: Seeking specific facts or information
             - analytical: Requiring analysis, comparison, or reasoning
             - creative: Seeking ideas, brainstorming, or creative solutions
             - procedural: Looking for step-by-step instructions or processes
 
             Complexity: simple (direct lookup), medium (some analysis), complex (multi-step reasoning)""",
-            ),
-            ("human", "Query: {query}"),
-        ], ),
+                ),
+                ("human", "Query: {query}"),
+            ],
+        ),
         structured_output_model=QueryClassification,
         output_key="classification",
     )
@@ -104,9 +102,9 @@ def create_branched_rag_chain(
 
         # Focus on exact facts and specific information
         relevant_docs = [
-            doc for doc in documents
-            if any(word.lower() in doc.page_content.lower()
-                   for word in query.split()[:5])
+            doc
+            for doc in documents
+            if any(word.lower() in doc.page_content.lower() for word in query.split()[:5])
         ][:3]
 
         # Extract precise facts
@@ -114,8 +112,7 @@ def create_branched_rag_chain(
         answer = f"Based on the documents: {'; '.join(facts[:2])}"
 
         return {
-            "factual_result":
-            BranchResult(
+            "factual_result": BranchResult(
                 branch_type="factual",
                 retrieved_docs=facts,
                 branch_answer=answer,
@@ -126,17 +123,18 @@ def create_branched_rag_chain(
     # Step 3: Analytical retrieval branch
     analytical_branch = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system",
-             "Analyze and synthesize information for deeper insights"),
-            (
-                "human",
-                """Query: {query}
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Analyze and synthesize information for deeper insights"),
+                (
+                    "human",
+                    """Query: {query}
             Available context: {documents_context}
 
             Provide analytical insights and reasoning.""",
-            ),
-        ], ),
+                ),
+            ],
+        ),
         output_key="analytical_answer",
     )
 
@@ -145,8 +143,7 @@ def create_branched_rag_chain(
         analytical_answer = state.get("analytical_answer", "")
 
         return {
-            "analytical_result":
-            BranchResult(
+            "analytical_result": BranchResult(
                 branch_type="analytical",
                 retrieved_docs=[doc.page_content for doc in documents[:2]],
                 branch_answer=analytical_answer,
@@ -157,16 +154,18 @@ def create_branched_rag_chain(
     # Step 4: Creative retrieval branch
     creative_branch = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Generate creative solutions and innovative ideas"),
-            (
-                "human",
-                """Query: {query}
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Generate creative solutions and innovative ideas"),
+                (
+                    "human",
+                    """Query: {query}
             Context for inspiration: {documents_context}
 
             Provide creative and innovative responses.""",
-            ),
-        ], ),
+                ),
+            ],
+        ),
         output_key="creative_answer",
     )
 
@@ -175,8 +174,7 @@ def create_branched_rag_chain(
         creative_answer = state.get("creative_answer", "")
 
         return {
-            "creative_result":
-            BranchResult(
+            "creative_result": BranchResult(
                 branch_type="creative",
                 retrieved_docs=[doc.page_content for doc in documents[:2]],
                 branch_answer=creative_answer,
@@ -187,16 +185,18 @@ def create_branched_rag_chain(
     # Step 5: Procedural retrieval branch
     procedural_branch = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Extract step-by-step procedures and processes"),
-            (
-                "human",
-                """Query: {query}
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Extract step-by-step procedures and processes"),
+                (
+                    "human",
+                    """Query: {query}
             Available procedures: {documents_context}
 
             Provide clear, step-by-step instructions.""",
-            ),
-        ], ),
+                ),
+            ],
+        ),
         output_key="procedural_answer",
     )
 
@@ -205,8 +205,7 @@ def create_branched_rag_chain(
         procedural_answer = state.get("procedural_answer", "")
 
         return {
-            "procedural_result":
-            BranchResult(
+            "procedural_result": BranchResult(
                 branch_type="procedural",
                 retrieved_docs=[doc.page_content for doc in documents[:2]],
                 branch_answer=procedural_answer,
@@ -225,12 +224,14 @@ def create_branched_rag_chain(
         llm_config=llm_config,
         prompt_template=ChatPromptTemplate.from_messages(
             [
-                ("system",
-                 """Merge results from multiple retrieval branches into a comprehensive answer.
+                (
+                    "system",
+                    """Merge results from multiple retrieval branches into a comprehensive answer.
             Prioritize based on query type and relevance scores.""",
-                 ),
-                ("human",
-                 """Original Query: {query}
+                ),
+                (
+                    "human",
+                    """Original Query: {query}
             Query Classification: {classification}
 
             Branch Results:
@@ -240,7 +241,7 @@ def create_branched_rag_chain(
             - Procedural: {procedural_result}
 
             Create a comprehensive, well-structured response.""",
-                 ),
+                ),
             ],
         ),
         structured_output_model=MergedResult,
@@ -250,16 +251,18 @@ def create_branched_rag_chain(
     # Step 8: Final response generator
     final_generator = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Generate the final user-facing response"),
-            (
-                "human",
-                """Query: {query}
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Generate the final user-facing response"),
+                (
+                    "human",
+                    """Query: {query}
             Merged Analysis: {merged_result}
 
             Provide a clear, comprehensive response.""",
-            ),
-        ], ),
+                ),
+            ],
+        ),
         output_key="response",
     )
 
@@ -315,50 +318,60 @@ def create_adaptive_branched_rag(
     # Classifier
     classifier = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            (
-                "system",
-                "Classify query type: factual, analytical, creative, or procedural",
-            ),
-            ("human", "{query}"),
-        ], ),
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    "Classify query type: factual, analytical, creative, or procedural",
+                ),
+                ("human", "{query}"),
+            ],
+        ),
         output_key="query_type",
     )
 
     # Branch-specific processors
     factual_processor = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Extract precise factual information"),
-            ("human", "Query: {query}\nContext: {context}"),
-        ], ),
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Extract precise factual information"),
+                ("human", "Query: {query}\nContext: {context}"),
+            ],
+        ),
         output_key="response",
     )
 
     analytical_processor = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Provide analytical insights and reasoning"),
-            ("human", "Query: {query}\nContext: {context}"),
-        ], ),
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Provide analytical insights and reasoning"),
+                ("human", "Query: {query}\nContext: {context}"),
+            ],
+        ),
         output_key="response",
     )
 
     creative_processor = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Generate creative solutions and ideas"),
-            ("human", "Query: {query}\nContext: {context}"),
-        ], ),
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Generate creative solutions and ideas"),
+                ("human", "Query: {query}\nContext: {context}"),
+            ],
+        ),
         output_key="response",
     )
 
     procedural_processor = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Provide step-by-step procedures"),
-            ("human", "Query: {query}\nContext: {context}"),
-        ], ),
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Provide step-by-step procedures"),
+                ("human", "Query: {query}\nContext: {context}"),
+            ],
+        ),
         output_key="response",
     )
 
@@ -411,49 +424,57 @@ def create_parallel_branched_rag(
     # All branches run in parallel
     factual_branch = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Extract factual information"),
-            ("human", "Query: {query}\nContext: {context}"),
-        ], ),
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Extract factual information"),
+                ("human", "Query: {query}\nContext: {context}"),
+            ],
+        ),
         output_key="factual_response",
     )
 
     analytical_branch = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Provide analytical insights"),
-            ("human", "Query: {query}\nContext: {context}"),
-        ], ),
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Provide analytical insights"),
+                ("human", "Query: {query}\nContext: {context}"),
+            ],
+        ),
         output_key="analytical_response",
     )
 
     creative_branch = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Generate creative ideas"),
-            ("human", "Query: {query}\nContext: {context}"),
-        ], ),
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Generate creative ideas"),
+                ("human", "Query: {query}\nContext: {context}"),
+            ],
+        ),
         output_key="creative_response",
     )
 
     # Final synthesizer
     synthesizer = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            (
-                "system",
-                "Synthesize all branch responses into a comprehensive answer",
-            ),
-            (
-                "human",
-                """Query: {query}
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    "Synthesize all branch responses into a comprehensive answer",
+                ),
+                (
+                    "human",
+                    """Query: {query}
             Factual: {factual_response}
             Analytical: {analytical_response}
             Creative: {creative_response}
 
             Create final response.""",
-            ),
-        ], ),
+                ),
+            ],
+        ),
         output_key="response",
     )
 

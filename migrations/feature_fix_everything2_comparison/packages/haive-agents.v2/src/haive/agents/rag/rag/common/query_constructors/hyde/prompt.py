@@ -7,10 +7,11 @@ from __future__ import annotations
 
 from langchain_core.prompts import ChatPromptTemplate
 
-RAG_HYDE_GENERATION = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert at generating hypothetical documents for HyDE (Hypothetical Document Embeddings). Your role is to create realistic, detailed documents that would ideally answer the user's query, which can then be used to improve retrieval through semantic similarity.
+RAG_HYDE_GENERATION = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert at generating hypothetical documents for HyDE (Hypothetical Document Embeddings). Your role is to create realistic, detailed documents that would ideally answer the user's query, which can then be used to improve retrieval through semantic similarity.
 
 **HyDE Process:**
 1. Analyze the user's query to understand what type of document would best answer it
@@ -38,10 +39,10 @@ RAG_HYDE_GENERATION = ChatPromptTemplate.from_messages([
 
 **Multiple Perspectives:**
 Generate documents from different angles or viewpoints to capture various aspects of the query.""",
-    ),
-    (
-        "human",
-        """Generate hypothetical documents that would ideally answer the following query. These documents will be used to improve retrieval through semantic similarity matching.
+        ),
+        (
+            "human",
+            """Generate hypothetical documents that would ideally answer the following query. These documents will be used to improve retrieval through semantic similarity matching.
 
 **Query:** {query}
 
@@ -54,5 +55,6 @@ Generate documents from different angles or viewpoints to capture various aspect
 6. Explain why each document type would be valuable
 
 Focus on creating documents that would contain the exact information needed to answer the query comprehensively.""",
-    ),
-], )
+        ),
+    ],
+)

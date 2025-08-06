@@ -76,8 +76,7 @@ class MultiAgent(Agent, Generic[AgentsT]):
     """
 
     # The agents this MultiAgent coordinates (generic)
-    agents: AgentsT = Field(...,
-                            description="Agents to coordinate - generic type")
+    agents: AgentsT = Field(..., description="Agents to coordinate - generic type")
 
     # Execution mode
     mode: Literal["sequential", "parallel", "conditional", "branch"] = Field(
@@ -112,16 +111,14 @@ class MultiAgent(Agent, Generic[AgentsT]):
             # Validate all values are agents
             for name, agent in v.items():
                 if not hasattr(agent, "run") and not hasattr(agent, "arun"):
-                    raise ValueError(
-                        f"Agent '{name}' must have run/arun method")
+                    raise ValueError(f"Agent '{name}' must have run/arun method")
         elif isinstance(v, list):
             if not v:
                 raise ValueError("Agent list cannot be empty")
             # Validate all items are agents
             for i, agent in enumerate(v):
                 if not hasattr(agent, "run") and not hasattr(agent, "arun"):
-                    raise ValueError(
-                        f"Agent at index {i} must have run/arun method")
+                    raise ValueError(f"Agent at index {i} must have run/arun method")
         else:
             raise ValueError("Agents must be dict or list")
 
@@ -153,11 +150,13 @@ class MultiAgent(Agent, Generic[AgentsT]):
         agent_count = len(self.agents)
         agents_type = type(self.agents).__name__
 
-        return (f"MultiAgent[{agents_type}]("
-                f"name='{self.name}', "
-                f"engine={engine_type}, "
-                f"agents={agent_count}, "
-                f"mode='{self.mode}')")
+        return (
+            f"MultiAgent[{agents_type}]("
+            f"name='{self.name}', "
+            f"engine={engine_type}, "
+            f"agents={agent_count}, "
+            f"mode='{self.mode}')"
+        )
 
 
 # Specialized MultiAgent variants
@@ -169,8 +168,7 @@ class BranchingMultiAgent(MultiAgent[dict[str, Agent]]):
     Routes to different agents based on conditions.
     """
 
-    mode: Literal["branch"] = Field(default="branch",
-                                    description="Always branch mode")
+    mode: Literal["branch"] = Field(default="branch", description="Always branch mode")
 
     def build_graph(self) -> BaseGraph:
         """Build branching execution graph."""
@@ -212,8 +210,7 @@ class BranchingMultiAgent(MultiAgent[dict[str, Agent]]):
         graph.add_conditional_edges(
             "routef",
             route_condition,
-            {name: name
-             for name in self.agents},
+            {name: name for name in self.agents},
         )
 
         return graph
@@ -236,8 +233,7 @@ class ConditionalMultiAgent(MultiAgent[dict[str, Agent]]):
         description="Rules for conditional execution",
     )
 
-    def should_continue(self, state: dict[str, Any],
-                        current_agent: str) -> str | None:
+    def should_continue(self, state: dict[str, Any], current_agent: str) -> str | None:
         """Determine next agent based on conditions."""
         # Check rules for current agent
         if current_agent in self.condition_rules:
@@ -250,8 +246,7 @@ class ConditionalMultiAgent(MultiAgent[dict[str, Agent]]):
 
         return None
 
-    def _evaluate_condition(self, condition: str, state: dict[str,
-                                                              Any]) -> bool:
+    def _evaluate_condition(self, condition: str, state: dict[str, Any]) -> bool:
         """Evaluate a condition against state."""
         # Simple implementation - can be enhanced
         if condition == "success":
@@ -305,14 +300,16 @@ class AdaptiveBranchingMultiAgent(BranchingMultiAgent):
 
         # Update success rate with exponential moving average
         current_rate = metrics["success_rate"]
-        new_rate = (current_rate * (1 - self.adaptation_rate) +
-                    (1.0 if success else 0.0) * self.adaptation_rate)
+        new_rate = (
+            current_rate * (1 - self.adaptation_rate)
+            + (1.0 if success else 0.0) * self.adaptation_rate
+        )
         metrics["success_rate"] = new_rate
 
         # Update average duration
-        metrics["avg_duration"] = (metrics["avg_duration"] *
-                                   (metrics["task_count"] - 1) +
-                                   duration) / metrics["task_count"]
+        metrics["avg_duration"] = (
+            metrics["avg_duration"] * (metrics["task_count"] - 1) + duration
+        ) / metrics["task_count"]
 
     def get_best_agent_for_task(self, task_type: str) -> str:
         """Get best performing agent for task type."""

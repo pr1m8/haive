@@ -9,6 +9,7 @@ Functions:
     validate_and_setup: Validate And Setup functionality.
     set_output_parser: Set Output Parser functionality.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -35,12 +36,14 @@ class StructuredOutputAgentConfig(SimpleAgentConfig):
             force_tool_use=True,  # Force using a tool
             # Auto-select the appropriate tool (will be the only one)
             force_tool_choice=True,
-        ), )
+        ),
+    )
     output_parser: PydanticOutputParser = Field(
-        default_factory=lambda: PydanticOutputParser(), )
+        default_factory=lambda: PydanticOutputParser(),
+    )
     output_schema = structured_output_model
 
-    @model_validator(mode='after')
+    @model_validator(mode="after")
     @classmethod
     def validate_and_setup(cls) -> Any:
         """Set up the structured output tool and configure the engine."""
@@ -54,15 +57,15 @@ class StructuredOutputAgentConfig(SimpleAgentConfig):
         # The tool configuration should happen automatically through the engine's
         # _configure_tool_choice method, but we'll ensure it explicitly
         # as a safeguard and for backward compatibility
-        if hasattr(output_tool, 'name'):
+        if hasattr(output_tool, "name"):
             self.engine.force_tool_choice = output_tool.name
-        elif hasattr(output_tool, 'id'):
+        elif hasattr(output_tool, "id"):
             self.engine.force_tool_choice = output_tool.id
         else:
-            raise ValueError(
-                'StructuredOutputTool must have a name or id attribute')
+            raise ValueError("StructuredOutputTool must have a name or id attribute")
         self.output_parser = PydanticOutputParser(
-            pydantic_object=self.structured_output_model, )
+            pydantic_object=self.structured_output_model,
+        )
         # Validate tool setup
         if len(self.engine.tools) != 1:
             raise ValueError(

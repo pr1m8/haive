@@ -124,9 +124,8 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                 if hasattr(self.engine, "get_input_fields"):
                     engine_input_fields = self.engine.get_input_fields()
                     logger.debug(
-                        f"Engine derived input fields: {
-                            list(
-                                engine_input_fields.keys())}", )
+                        f"Engine derived input fields: {list(engine_input_fields.keys())}",
+                    )
 
                     # Convert engine fields to field definitions using
                     # StandardFields when possible
@@ -163,7 +162,8 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                             self.input_field_defs.append(field_def)
                         except Exception as e:
                             logger.debug(
-                                f"Failed to create field definition for {field_name}: {e}", )
+                                f"Failed to create field definition for {field_name}: {e}",
+                            )
                             # Fallback to generic field definition
                             from haive.core.schema.field_definition import (
                                 FieldDefinition,
@@ -311,8 +311,9 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                 else:
                     logger.warning(
                         f"AI message result but no ai_message or messages field in output schema: {
-                            list(
-                                self.output_schema.model_fields.keys())}", )
+                            list(self.output_schema.model_fields.keys())
+                        }",
+                    )
 
             # Add engine attribution if enabled
             if self.auto_add_engine_attribution and "engine_name" in output_dict:
@@ -379,12 +380,7 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         engine_name: str,
     ) -> list[str] | None:
         """Get input fields from state schema mappings."""
-        return getattr(
-            state,
-            "__engine_io_mappings__",
-            {}).get(
-            engine_name,
-            {}).get("inputs")
+        return getattr(state, "__engine_io_mappings__", {}).get(engine_name, {}).get("inputs")
 
     def _get_engine_inputs(self, engine: Engine) -> list[str] | None:
         """Get input fields from engine definition."""
@@ -451,11 +447,8 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
             return {"query": query}
         if engine_type == EngineType.EMBEDDINGS:
             text = (
-                self._get_state_value(
-                    state,
-                    "text") or self._get_state_value(
-                    state,
-                    "query") or "")
+                self._get_state_value(state, "text") or self._get_state_value(state, "query") or ""
+            )
             return text
         # Return state as-is for unknown types
         return state
@@ -575,10 +568,8 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         logger.debug(f"Input data type: {type(input_data)}")
         logger.debug(
             f"Input data keys: {
-                list(
-                    input_data.keys()) if isinstance(
-                    input_data,
-                    dict) else 'Not a dict'}",
+                list(input_data.keys()) if isinstance(input_data, dict) else 'Not a dict'
+            }",
         )
         logger.debug(f"Config: {config}")
 
@@ -607,9 +598,10 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
                 if result.tool_calls:
                     for i, tool_call in enumerate(result.tool_calls):
                         logger.debug(
-                            f"  Tool call {i}: name={
-                                tool_call.get('name')}, args={
-                                tool_call.get('args')}", )
+                            f"  Tool call {i}: name={tool_call.get('name')}, args={
+                                tool_call.get('args')
+                            }",
+                        )
                 else:
                     logger.warning("❌ NO TOOL CALLS FOUND in AI message")
 
@@ -643,9 +635,10 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
             if result.tool_calls:
                 for i, tool_call in enumerate(result.tool_calls):
                     logger.debug(
-                        f"     Tool call {i}: {
-                            tool_call.get('name')} with args {
-                            tool_call.get('args')}", )
+                        f"     Tool call {i}: {tool_call.get('name')} with args {
+                            tool_call.get('args')
+                        }",
+                    )
 
         # Check if result is a message-like object
         if hasattr(result, "content") and hasattr(result, "type"):
@@ -659,9 +652,8 @@ class GenericEngineNodeConfig(NodeConfig, Generic[TInput, TOutput]):
         else:
             update = {"result": result}
             logger.debug(
-                f"   ⚠️  Treating as generic result, update keys: {
-                    list(
-                        update.keys())}", )
+                f"   ⚠️  Treating as generic result, update keys: {list(update.keys())}",
+            )
 
         logger.debug(f"   Creating Command with goto: {self.command_goto}")
 

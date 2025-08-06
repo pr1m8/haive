@@ -15,7 +15,8 @@ from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field, computed_field
 
 from haive.agents.supervisor.dynamic_state import (
-    DynamicSupervisorState, )
+    DynamicSupervisorState,
+)
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 
 
@@ -210,8 +211,7 @@ class MultiAgentCoordinationState(BaseModel):
         # Sort by priority (higher first)
         self.execution_queue.sort(key=lambda x: x["priority"], reverse=True)
 
-    def start_agent_execution(self, agent_name: str,
-                              execution_id: str) -> None:
+    def start_agent_execution(self, agent_name: str, execution_id: str) -> None:
         """Mark agent execution as started."""
         execution_info = {
             "started_at": time.time(),
@@ -229,8 +229,7 @@ class MultiAgentCoordinationState(BaseModel):
 
         # Update current active agent
         active_agents = [
-            name for name, info in self.active_executions.items()
-            if info.get("status") == "active"
+            name for name, info in self.active_executions.items() if info.get("status") == "active"
         ]
         self.current_active_agent = active_agents[0] if active_agents else None
 
@@ -319,10 +318,13 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
     @property
     def active_coordination_sessions(self) -> int:
         """Number of active coordination sessions."""
-        return len([
-            info for info in self.coordination.active_executions.values()
-            if info.get("status") == "active"
-        ], )
+        return len(
+            [
+                info
+                for info in self.coordination.active_executions.values()
+                if info.get("status") == "active"
+            ],
+        )
 
     def request_agent_addition(
         self,
@@ -346,8 +348,7 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
         }
 
         self.agent_registry.pending_agent_additions.append(agent_request)
-        self.agent_registry.add_agent_change_request("add", agent_name,
-                                                     agent_request)
+        self.agent_registry.add_agent_change_request("add", agent_name, agent_request)
         self.registry_needs_sync = True
 
         return request_id
@@ -360,10 +361,7 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
         self.agent_registry.add_agent_change_request(
             "remove",
             agent_name,
-            {
-                "request_id": request_id,
-                "requested_at": time.time()
-            },
+            {"request_id": request_id, "requested_at": time.time()},
         )
         self.registry_needs_sync = True
 
@@ -430,8 +428,7 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
 
     def end_coordination_session(self) -> dict[str, Any]:
         """End the current coordination session and return summary."""
-        session_duration = time.time(
-        ) - self.coordination.coordination_start_time
+        session_duration = time.time() - self.coordination.coordination_start_time
 
         summary = {
             "session_id": self.coordination.coordination_session_id,
@@ -447,21 +444,18 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
     def get_coordination_status(self) -> dict[str, Any]:
         """Get current coordination status."""
         return {
-            "active":
-            self.coordination_active,
-            "mode":
-            self.coordination.coordination_mode,
-            "session_id":
-            self.coordination.coordination_session_id,
-            "current_agent":
-            self.coordination.current_active_agent,
-            "queue_length":
-            len(self.coordination.execution_queue),
-            "active_executions":
-            len([
-                info for info in self.coordination.active_executions.values()
-                if info.get("status") == "active"
-            ], ),
+            "active": self.coordination_active,
+            "mode": self.coordination.coordination_mode,
+            "session_id": self.coordination.coordination_session_id,
+            "current_agent": self.coordination.current_active_agent,
+            "queue_length": len(self.coordination.execution_queue),
+            "active_executions": len(
+                [
+                    info
+                    for info in self.coordination.active_executions.values()
+                    if info.get("status") == "active"
+                ],
+            ),
         }
 
     def sync_with_choice_model(self, choice_model: DynamicChoiceModel) -> None:
@@ -484,8 +478,7 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
         """Clean up old coordination data to prevent memory bloat."""
         # Limit agent handoffs
         if len(self.coordination.agent_handoffs) > max_history:
-            self.coordination.agent_handoffs = self.coordination.agent_handoffs[
-                -max_history:]
+            self.coordination.agent_handoffs = self.coordination.agent_handoffs[-max_history:]
 
         # Limit tool usage history
         if len(self.tool_usage_history) > max_history:
@@ -494,7 +487,8 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
         # Limit agent change requests
         if len(self.agent_registry.agent_change_requests) > max_history:
             self.agent_registry.agent_change_requests = self.agent_registry.agent_change_requests[
-                -max_history:]
+                -max_history:
+            ]
 
         # Call parent cleanup
         self.cleanup_old_history(max_history)

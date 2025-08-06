@@ -91,14 +91,12 @@ class RoundRobinConversation(BaseConversationAgent):
         if self.announce_speaker and next_speaker:
             from langchain_core.messages import SystemMessage
 
-            announcement = SystemMessage(
-                content=f"[Now speaking: {next_speaker}]")
+            announcement = SystemMessage(content=f"[Now speaking: {next_speaker}]")
             update["messages"] = [announcement]
 
         return update
 
-    def _custom_initialization(self,
-                               state: ConversationState) -> dict[str, Any]:
+    def _custom_initialization(self, state: ConversationState) -> dict[str, Any]:
         """Add round-robin specific initialization."""
         return {
             "skip_unavailable": self.skip_unavailable,
@@ -118,7 +116,8 @@ class RoundRobinConversation(BaseConversationAgent):
             from langchain_core.messages import SystemMessage
 
             round_msg = SystemMessage(
-                content=f"[Round {state.round_number + 1} of {state.max_rounds}]", )
+                content=f"[Round {state.round_number + 1} of {state.max_rounds}]",
+            )
 
             # Insert at beginning of messages
             messages = [round_msg, *base_input.get("messages", [])]
@@ -172,7 +171,9 @@ class RoundRobinConversation(BaseConversationAgent):
 
     def __repr__(self) -> str:
         participant_names = list(self.participant_agents.keys())
-        return (f"RoundRobinConversation("
-                f"participants={participant_names}, "
-                f"topic='{self.topic}', "
-                f"max_rounds={self.max_rounds})")
+        return (
+            f"RoundRobinConversation("
+            f"participants={participant_names}, "
+            f"topic='{self.topic}', "
+            f"max_rounds={self.max_rounds})"
+        )

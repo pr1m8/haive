@@ -36,13 +36,13 @@ class SerializationMixin:
 
         # Remove non-serializable components
         for exclude_key in [
-                "graph",
-                "_compiled_graph",
-                "checkpointer",
-                "store",
-                "_app",
-                "config",
-                "output_parser",
+            "graph",
+            "_compiled_graph",
+            "checkpointer",
+            "store",
+            "_app",
+            "config",
+            "output_parser",
         ]:
             if exclude_key in state:
                 state.pop(exclude_key)
@@ -53,16 +53,13 @@ class SerializationMixin:
             if schema_key in state and state[schema_key] is not None:
                 # Store schema name and module for reconstruction
                 schema = state[schema_key]
-                state[f"_{schema_key}_name"] = getattr(schema, "__name__",
-                                                       str(schema))
-                state[f"_{schema_key}_module"] = getattr(
-                    schema, "__module__", None)
+                state[f"_{schema_key}_name"] = getattr(schema, "__name__", str(schema))
+                state[f"_{schema_key}_module"] = getattr(schema, "__module__", None)
                 # Remove the actual schema
                 state.pop(schema_key)
 
         # Handle structured_output_model (which is a Type object)
-        if "structured_output_model" in state and state[
-                "structured_output_model"] is not None:
+        if "structured_output_model" in state and state["structured_output_model"] is not None:
             model = state["structured_output_model"]
             state["_structured_output_model_name"] = getattr(
                 model,
@@ -131,8 +128,7 @@ class SerializationMixin:
         return state
 
     @classmethod
-    def _deserialize_from_msgpack(
-            cls, data: dict[str, Any]) -> "SerializationMixin":
+    def _deserialize_from_msgpack(cls, data: dict[str, Any]) -> "SerializationMixin":
         """Reconstruct an agent from msgpack-serialized data.
 
         Args:
@@ -147,11 +143,8 @@ class SerializationMixin:
         # Initialize instance with empty state to avoid validation errors
         # that might occur in __init__
         instance.__dict__.update(
-            {
-                "_setup_complete": False,
-                "_graph_built": False,
-                "_is_compiled": False
-            }, )
+            {"_setup_complete": False, "_graph_built": False, "_is_compiled": False},
+        )
 
         # Remove type information fields
         data.pop("__agent_type__", None)

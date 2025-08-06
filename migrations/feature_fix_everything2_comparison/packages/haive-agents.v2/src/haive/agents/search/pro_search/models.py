@@ -14,20 +14,15 @@ class SearchRefinement(BaseModel):
 
     original_query: str = Field(..., description="Original user query")
     refined_query: str = Field(..., description="Refined search query")
-    refinement_reason: str = Field(...,
-                                   description="Why the query was refined")
+    refinement_reason: str = Field(..., description="Why the query was refined")
 
 
 class ContextualInsight(BaseModel):
     """Model for contextual insights from search."""
 
     insight: str = Field(..., description="The contextual insight")
-    relevance_score: float = Field(...,
-                                   ge=0.0,
-                                   le=1.0,
-                                   description="Relevance score")
-    source_type: str = Field(...,
-                             description="Type of source (memory, web, etc.)")
+    relevance_score: float = Field(..., ge=0.0, le=1.0, description="Relevance score")
+    source_type: str = Field(..., description="Type of source (memory, web, etc.)")
 
 
 class ProSearchResponse(SearchResponse):
@@ -72,31 +67,22 @@ class ProSearchResponse(SearchResponse):
 
         json_schema_extra = {
             "example": {
-                "query":
-                "How can I improve my productivity while working from home?",
-                "response":
-                "Based on your preferences for structured approaches and technology solutions, here are evidence-based strategies to improve work-from-home productivity:\n\n1. **Create a dedicated workspace**: Set up a specific area for work to maintain psychological boundaries...",
+                "query": "How can I improve my productivity while working from home?",
+                "response": "Based on your preferences for structured approaches and technology solutions, here are evidence-based strategies to improve work-from-home productivity:\n\n1. **Create a dedicated workspace**: Set up a specific area for work to maintain psychological boundaries...",
                 "sources": ["harvard.edu", "mit.edu", "productivity-blog.com"],
-                "confidence":
-                0.88,
-                "search_type":
-                "ProSearch",
-                "processing_time":
-                3.2,
+                "confidence": 0.88,
+                "search_type": "ProSearch",
+                "processing_time": 3.2,
                 "refinements": [
                     {
-                        "original_query":
-                        "How can I improve my productivity while working from home?",
-                        "refined_query":
-                        "evidence-based work from home productivity strategies structured approach",
-                        "refinement_reason":
-                        "Added specificity for evidence-based and structured approaches based on user preferences",
+                        "original_query": "How can I improve my productivity while working from home?",
+                        "refined_query": "evidence-based work from home productivity strategies structured approach",
+                        "refinement_reason": "Added specificity for evidence-based and structured approaches based on user preferences",
                     },
                 ],
                 "contextual_insights": [
                     {
-                        "insight":
-                        "User prefers structured, actionable advice over general tips",
+                        "insight": "User prefers structured, actionable advice over general tips",
                         "relevance_score": 0.9,
                         "source_type": "memory",
                     },
@@ -117,8 +103,7 @@ class ProSearchResponse(SearchResponse):
                     "Would you like recommendations for productivity tools?",
                     "Are there particular times of day when you struggle most with focus?",
                 ],
-                "depth_level":
-                3,
+                "depth_level": 3,
                 "metadata": {},
             },
         }
@@ -127,10 +112,7 @@ class ProSearchResponse(SearchResponse):
 class ProSearchRequest(BaseModel):
     """Request model for pro search operations."""
 
-    query: str = Field(...,
-                       min_length=1,
-                       max_length=1000,
-                       description="Search query")
+    query: str = Field(..., min_length=1, max_length=1000, description="Search query")
     context: dict[str, Any] | None = Field(
         default=None,
         description="Additional context",
@@ -141,26 +123,20 @@ class ProSearchRequest(BaseModel):
         le=5,
         description="Desired depth level (1-5)",
     )
-    include_reasoning: bool = Field(default=True,
-                                    description="Include reasoning steps")
+    include_reasoning: bool = Field(default=True, description="Include reasoning steps")
     generate_follow_ups: bool = Field(
         default=True,
         description="Generate follow-up questions",
     )
-    use_preferences: bool = Field(default=True,
-                                  description="Apply user preferences")
+    use_preferences: bool = Field(default=True, description="Apply user preferences")
 
     class Config:
         """Pydantic configuration."""
 
         json_schema_extra = {
             "example": {
-                "query":
-                "What are the best practices for machine learning model deployment?",
-                "context": {
-                    "domain": "enterprise",
-                    "experience_level": "intermediate"
-                },
+                "query": "What are the best practices for machine learning model deployment?",
+                "context": {"domain": "enterprise", "experience_level": "intermediate"},
                 "depth_level": 4,
                 "include_reasoning": True,
                 "generate_follow_ups": True,

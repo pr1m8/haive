@@ -234,13 +234,13 @@ class DynamicSupervisor(ReactAgent):
         if self.engine and hasattr(self.engine, "tools"):
             # Keep management tools, add agent tools
             mgmt_tools = [
-                t for t in (self.engine.tools or [])
+                t
+                for t in (self.engine.tools or [])
                 if t.name in ("add_agent", "remove_agent", "list_agents")
             ]
             self.engine.tools = mgmt_tools + aggregated_tools
 
-            logger.info(
-                f"Aggregated {len(aggregated_tools)} tools from agents")
+            logger.info(f"Aggregated {len(aggregated_tools)} tools from agents")
 
     # ========================================================================
     # GRAPH BUILDING
@@ -308,16 +308,11 @@ class DynamicSupervisor(ReactAgent):
             # Add conditional routing
             route_map = {
                 END: END,
-                "tool_node":
-                "tool_node" if "tool_node" in graph.nodes else END,
-                **{
-                    f"{name}_node": f"{name}_node"
-                    for name in self.registered_agents
-                },
+                "tool_node": "tool_node" if "tool_node" in graph.nodes else END,
+                **{f"{name}_node": f"{name}_node" for name in self.registered_agents},
             }
 
-            graph.add_conditional_edges("route_decision", route_to_agent,
-                                        route_map)
+            graph.add_conditional_edges("route_decision", route_to_agent, route_map)
 
         return graph
 

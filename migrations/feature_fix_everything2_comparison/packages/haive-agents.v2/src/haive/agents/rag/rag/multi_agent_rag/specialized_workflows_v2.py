@@ -72,10 +72,7 @@ class FLAREAgentV2(MultiAgent, StateConfigMixin):
             Synthesize all segments into final response.
             Use state.generation_segments and confidence_scores.
             """,
-            output_schema={
-                "final_response": "str",
-                "overall_confidence": "float"
-            },
+            output_schema={"final_response": "str", "overall_confidence": "float"},
         )
 
         agents = [
@@ -275,10 +272,7 @@ class DebateRAGAgentV2(MultiAgent, StateConfigMixin):
             Synthesize all positions into final answer.
             Consider state.consensus_reached and debate_winner.
             """,
-            output_schema={
-                "final_answer": "str",
-                "synthesis_method": "stf"
-            },
+            output_schema={"final_answer": "str", "synthesis_method": "stf"},
         )
 
         agents.append(synthesis_judge)
@@ -336,10 +330,7 @@ class AdaptiveThresholdRAGAgentV2(MultiAgent, StateConfigMixin):
             Use state.initial_threshold as starting point.
             Store complexity in state.query_complexity_score.
             """,
-            output_schema={
-                "complexity_score": "float",
-                "suggested_threshold": "float"
-            },
+            output_schema={"complexity_score": "float", "suggested_threshold": "float"},
         )
 
         adaptive_retriever = SimpleAgent(
@@ -376,10 +367,7 @@ class AdaptiveThresholdRAGAgentV2(MultiAgent, StateConfigMixin):
             Generate answer aware of threshold adjustments.
             Note if threshold affected answer quality.
             """,
-            output_schema={
-                "answer": "str",
-                "threshold_impact": "stf"
-            },
+            output_schema={"answer": "str", "threshold_impact": "stf"},
         )
 
         agents = [

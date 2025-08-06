@@ -59,35 +59,35 @@ class RetrieverAgent(BaseRAGAgent):
         default=5,
         ge=1,
         le=50,
-        description='Number of documents to retrieve',
+        description="Number of documents to retrieve",
     )
 
     score_threshold: float = Field(
         default=0.0,
         ge=0.0,
         le=1.0,
-        description='Minimum similarity score threshold',
+        description="Minimum similarity score threshold",
     )
 
     # Enhanced features
     performance_mode: bool = Field(
         default=False,
-        description='Enable performance tracking and metrics',
+        description="Enable performance tracking and metrics",
     )
 
     debug_mode: bool = Field(
         default=False,
-        description='Enable debug information collection',
+        description="Enable debug information collection",
     )
 
     include_metadata: bool = Field(
         default=True,
-        description='Include document metadata in results',
+        description="Include document metadata in results",
     )
 
     quality_scoring: bool = Field(
         default=False,
-        description='Calculate quality scores for retrieved documents',
+        description="Calculate quality scores for retrieved documents",
     )
 
     async def arun(
@@ -113,23 +113,20 @@ class RetrieverAgent(BaseRAGAgent):
         # Extract query
         if isinstance(input_data, str):
             query = input_data
-        elif isinstance(input_data, dict) and 'query' in input_data:
-            query = input_data['query']
+        elif isinstance(input_data, dict) and "query" in input_data:
+            query = input_data["query"]
         else:
             raise ValueError("Input must be string or dict with 'query' field")
 
         if debug or self.debug_mode:
-            logger.info(
-                f"🔍 RetrieverAgent '{self.name}' processing query: {query}")
+            logger.info(f"🔍 RetrieverAgent '{self.name}' processing query: {query}")
 
         # Start timing
         start_time = time.time()
 
         try:
             # Use parent's retrieval functionality
-            retrieval_result = await super().arun(input_data,
-                                                  debug=debug,
-                                                  **kwargs)
+            retrieval_result = await super().arun(input_data, debug=debug, **kwargs)
 
             # Extract documents from result
             documents = self._extract_documents(retrieval_result)
@@ -146,36 +143,34 @@ class RetrieverAgent(BaseRAGAgent):
 
             # Build enhanced result
             result = {
-                'documents': filtered_documents,
-                'query': query,
-                'retrieval_time': retrieval_time,
-                'document_count': len(filtered_documents),
+                "documents": filtered_documents,
+                "query": query,
+                "retrieval_time": retrieval_time,
+                "document_count": len(filtered_documents),
             }
 
             # Add performance metrics if enabled
             if self.performance_mode:
-                result[
-                    'performance_metrics'] = self._calculate_performance_metrics(
-                        filtered_documents,
-                        retrieval_time,
-                        query,
+                result["performance_metrics"] = self._calculate_performance_metrics(
+                    filtered_documents,
+                    retrieval_time,
+                    query,
                 )
 
             # Add debug information if enabled
             if debug or self.debug_mode:
-                result['debug_info'] = self._collect_debug_info(
+                result["debug_info"] = self._collect_debug_info(
                     filtered_documents,
                     retrieval_time,
                     query,
                 )
                 logger.info(
-                    f"✅ Retrieved {
-                        len(filtered_documents)} documents in {
-                        retrieval_time:.3f}s", )
+                    f"✅ Retrieved {len(filtered_documents)} documents in {retrieval_time:.3f}s",
+                )
 
             # Add metadata if enabled
             if self.include_metadata:
-                result['metadata'] = self._build_metadata(
+                result["metadata"] = self._build_metadata(
                     filtered_documents,
                     query,
                     retrieval_time,
@@ -186,33 +181,31 @@ class RetrieverAgent(BaseRAGAgent):
         except Exception as e:
             logger.exception(f"❌ RetrieverAgent error: {e}")
             return {
-                'documents': [],
-                'query': query,
-                'error': str(e),
-                'retrieval_time': time.time() - start_time,
-                'document_count': 0,
+                "documents": [],
+                "query": query,
+                "error": str(e),
+                "retrieval_time": time.time() - start_time,
+                "document_count": 0,
             }
 
     def _extract_documents(self, retrieval_result: Any) -> list[Document]:
         """Extract documents from various result formats."""
         if isinstance(retrieval_result, list):
             # Direct list of documents
-            return [
-                doc for doc in retrieval_result if isinstance(doc, Document)
-            ]
+            return [doc for doc in retrieval_result if isinstance(doc, Document)]
 
         if isinstance(retrieval_result, dict):
             # Result dictionary
-            if 'documents' in retrieval_result:
-                return retrieval_result['documents']
-            if 'retrieved_documents' in retrieval_result:
-                return retrieval_result['retrieved_documents']
+            if "documents" in retrieval_result:
+                return retrieval_result["documents"]
+            if "retrieved_documents" in retrieval_result:
+                return retrieval_result["retrieved_documents"]
 
-        if hasattr(retrieval_result, 'documents'):
+        if hasattr(retrieval_result, "documents"):
             # Object with documents attribute
             return list(retrieval_result.documents)
 
-        if hasattr(retrieval_result, 'retrieved_documents'):
+        if hasattr(retrieval_result, "retrieved_documents"):
             # Object with retrieved_documents attribute
             return list(retrieval_result.retrieved_documents)
 
@@ -221,10 +214,7 @@ class RetrieverAgent(BaseRAGAgent):
             return [
                 Document(
                     page_content=retrieval_result,
-                    metadata={
-                        'source': 'retrieval_result',
-                        'generated': True
-                    },
+                    metadata={"source": "retrieval_result", "generated": True},
                 ),
             ]
 
@@ -242,36 +232,36 @@ class RetrieverAgent(BaseRAGAgent):
 
         filtered_docs = []
 
-        for doc in documents[:self.top_k]:  # Limit to top_k
+        for doc in documents[: self.top_k]:  # Limit to top_k
             # Check similarity score if available
-            score = doc.metadata.get('score', 1.0)
+            score = doc.metadata.get("score", 1.0)
 
             if score >= self.score_threshold:
                 # Add quality scoring if enabled
                 if self.quality_scoring:
                     quality_score = self._calculate_quality_score(doc, query)
-                    doc.metadata['quality_score'] = quality_score
+                    doc.metadata["quality_score"] = quality_score
 
                 # Add retrieval metadata
-                doc.metadata['retrieval_agent'] = self.name
-                doc.metadata['retrieval_timestamp'] = time.time()
+                doc.metadata["retrieval_agent"] = self.name
+                doc.metadata["retrieval_timestamp"] = time.time()
 
                 filtered_docs.append(doc)
 
         if debug:
-            logger.info(
-                f"📊 Filtered {len(filtered_docs)}/{len(documents)} documents")
+            logger.info(f"📊 Filtered {len(filtered_docs)}/{len(documents)} documents")
             if self.quality_scoring:
-                avg_quality = (sum(
-                    doc.metadata.get('quality_score', 0.0)
-                    for doc in filtered_docs) /
-                    len(filtered_docs) if filtered_docs else 0.0)
+                avg_quality = (
+                    sum(doc.metadata.get("quality_score", 0.0) for doc in filtered_docs)
+                    / len(filtered_docs)
+                    if filtered_docs
+                    else 0.0
+                )
                 logger.info(f"📈 Average quality score: {avg_quality:.3f}")
 
         return filtered_docs
 
-    def _calculate_quality_score(self, document: Document,
-                                 query: str) -> float:
+    def _calculate_quality_score(self, document: Document, query: str) -> float:
         """Calculate quality score for a document relative to query."""
         # Simple quality scoring based on:
         # - Document length (not too short, not too long)
@@ -294,8 +284,7 @@ class RetrieverAgent(BaseRAGAgent):
         query_terms = set(query_lower.split())
         content_terms = set(content.split())
         term_overlap = len(query_terms.intersection(content_terms))
-        term_score = min(1.0, term_overlap /
-                         len(query_terms)) if query_terms else 0.5
+        term_score = min(1.0, term_overlap / len(query_terms)) if query_terms else 0.5
 
         # Metadata richness
         metadata_score = min(1.0, len(document.metadata) / 3.0)
@@ -313,43 +302,36 @@ class RetrieverAgent(BaseRAGAgent):
     ) -> dict[str, float]:
         """Calculate performance metrics for retrieval operation."""
         metrics = {
-            'retrieval_time':
-            retrieval_time,
-            'documents_per_second':
-            len(documents) / max(retrieval_time, 0.001),
-            'avg_document_length':
-            (sum(len(doc.page_content)
-                 for doc in documents) / len(documents) if documents else 0.0),
-            'query_length':
-            len(query),
+            "retrieval_time": retrieval_time,
+            "documents_per_second": len(documents) / max(retrieval_time, 0.001),
+            "avg_document_length": (
+                sum(len(doc.page_content) for doc in documents) / len(documents)
+                if documents
+                else 0.0
+            ),
+            "query_length": len(query),
         }
 
         if self.quality_scoring and documents:
-            quality_scores = [
-                doc.metadata.get('quality_score', 0.0) for doc in documents
-            ]
+            quality_scores = [doc.metadata.get("quality_score", 0.0) for doc in documents]
             metrics.update(
                 {
-                    'avg_quality_score':
-                    sum(quality_scores) / len(quality_scores),
-                    'min_quality_score': min(quality_scores),
-                    'max_quality_score': max(quality_scores),
-                }, )
+                    "avg_quality_score": sum(quality_scores) / len(quality_scores),
+                    "min_quality_score": min(quality_scores),
+                    "max_quality_score": max(quality_scores),
+                },
+            )
 
         # Add similarity scores if available
-        similarity_scores = [
-            doc.metadata.get('score', 0.0) for doc in documents
-        ]
+        similarity_scores = [doc.metadata.get("score", 0.0) for doc in documents]
         if any(score > 0 for score in similarity_scores):
             metrics.update(
                 {
-                    'avg_similarity_score':
-                    sum(similarity_scores) / len(similarity_scores),
-                    'min_similarity_score':
-                    min(similarity_scores),
-                    'max_similarity_score':
-                    max(similarity_scores),
-                }, )
+                    "avg_similarity_score": sum(similarity_scores) / len(similarity_scores),
+                    "min_similarity_score": min(similarity_scores),
+                    "max_similarity_score": max(similarity_scores),
+                },
+            )
 
         return metrics
 
@@ -361,40 +343,37 @@ class RetrieverAgent(BaseRAGAgent):
     ) -> dict[str, Any]:
         """Collect debug information for retrieval operation."""
         debug_info = {
-            'agent_name': self.name,
-            'query': query,
-            'query_length': len(query),
-            'retrieval_time': retrieval_time,
-            'documents_found': len(documents),
-            'top_k_limit': self.top_k,
-            'score_threshold': self.score_threshold,
-            'retrieval_config': {
-                'performance_mode': self.performance_mode,
-                'quality_scoring': self.quality_scoring,
-                'include_metadata': self.include_metadata,
+            "agent_name": self.name,
+            "query": query,
+            "query_length": len(query),
+            "retrieval_time": retrieval_time,
+            "documents_found": len(documents),
+            "top_k_limit": self.top_k,
+            "score_threshold": self.score_threshold,
+            "retrieval_config": {
+                "performance_mode": self.performance_mode,
+                "quality_scoring": self.quality_scoring,
+                "include_metadata": self.include_metadata,
             },
         }
 
         if documents:
-            debug_info['document_info'] = []
+            debug_info["document_info"] = []
             for i, doc in enumerate(documents):
                 doc_info = {
-                    'index':
-                    i,
-                    'content_length':
-                    len(doc.page_content),
-                    'content_preview': (doc.page_content[:100] + '...' if len(
-                        doc.page_content) > 100 else doc.page_content),
-                    'metadata_keys':
-                    list(doc.metadata.keys()),
-                    'similarity_score':
-                    doc.metadata.get('score'),
-                    'quality_score':
-                    doc.metadata.get('quality_score'),
-                    'source':
-                    doc.metadata.get('source', 'unknown'),
+                    "index": i,
+                    "content_length": len(doc.page_content),
+                    "content_preview": (
+                        doc.page_content[:100] + "..."
+                        if len(doc.page_content) > 100
+                        else doc.page_content
+                    ),
+                    "metadata_keys": list(doc.metadata.keys()),
+                    "similarity_score": doc.metadata.get("score"),
+                    "quality_score": doc.metadata.get("quality_score"),
+                    "source": doc.metadata.get("source", "unknown"),
                 }
-                debug_info['document_info'].append(doc_info)
+                debug_info["document_info"].append(doc_info)
 
         return debug_info
 
@@ -406,37 +385,33 @@ class RetrieverAgent(BaseRAGAgent):
     ) -> dict[str, Any]:
         """Build metadata for retrieval operation."""
         return {
-            'retrieval_agent':
-            self.name,
-            'query':
-            query,
-            'retrieval_time':
-            retrieval_time,
-            'document_count':
-            len(documents),
-            'sources':
-            list({doc.metadata.get('source', 'unknown')
-                  for doc in documents}, ),
-            'retrieval_config': {
-                'top_k': self.top_k,
-                'score_threshold': self.score_threshold,
-                'performance_mode': self.performance_mode,
-                'quality_scoring': self.quality_scoring,
+            "retrieval_agent": self.name,
+            "query": query,
+            "retrieval_time": retrieval_time,
+            "document_count": len(documents),
+            "sources": list(
+                {doc.metadata.get("source", "unknown") for doc in documents},
+            ),
+            "retrieval_config": {
+                "top_k": self.top_k,
+                "score_threshold": self.score_threshold,
+                "performance_mode": self.performance_mode,
+                "quality_scoring": self.quality_scoring,
             },
         }
 
     def get_retrieval_summary(self) -> dict[str, Any]:
         """Get summary of retriever configuration."""
         return {
-            'name': self.name,
-            'top_k': self.top_k,
-            'score_threshold': self.score_threshold,
-            'performance_mode': self.performance_mode,
-            'debug_mode': self.debug_mode,
-            'quality_scoring': self.quality_scoring,
-            'include_metadata': self.include_metadata,
-            'engine_type': type(self.engine).__name__,
+            "name": self.name,
+            "top_k": self.top_k,
+            "score_threshold": self.score_threshold,
+            "performance_mode": self.performance_mode,
+            "debug_mode": self.debug_mode,
+            "quality_scoring": self.quality_scoring,
+            "include_metadata": self.include_metadata,
+            "engine_type": type(self.engine).__name__,
         }
 
 
-__all__ = ['RetrieverAgent']
+__all__ = ["RetrieverAgent"]

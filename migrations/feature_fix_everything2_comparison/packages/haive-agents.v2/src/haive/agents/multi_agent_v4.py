@@ -9,6 +9,7 @@ This implementation follows the V4 pattern with:
 
 Start small, test incrementally, build up features.
 """
+
 from __future__ import annotations
 
 import logging
@@ -116,8 +117,7 @@ class MultiAgentV4(Agent):
         for i, agent in enumerate(agents):
             # Ensure agent has name
             if not hasattr(agent, "name") or not agent.name:
-                raise ValueError(
-                    f"Agent at index {i} must have a name: {agent}")
+                raise ValueError(f"Agent at index {i} must have a name: {agent}")
 
             # Check for duplicates
             if agent.name in agent_dict:
@@ -214,8 +214,7 @@ class MultiAgentV4(Agent):
         logger.info(
             f"Executing {self.execution_mode} workflow with {len(self.agent_dict)} agents",
         )
-        logger.debug(
-            f"Initial state keys: {list(initial_state.__dict__.keys())}")
+        logger.debug(f"Initial state keys: {list(initial_state.__dict__.keys())}")
 
         # Execute graph
         try:
@@ -234,23 +233,19 @@ class MultiAgentV4(Agent):
         agents_for_state = self.agent_dict
 
         # Create state
-        state_data = input_data.copy() if isinstance(input_data, dict) else {
-            "input": input_data
-        }
+        state_data = input_data.copy() if isinstance(input_data, dict) else {"input": input_data}
 
         state_data["agents"] = agents_for_state
 
         initial_state = self.state_schema(**state_data)
 
-        logger.debug(
-            f"Created initial state with {initial_state.agent_count} agents")
+        logger.debug(f"Created initial state with {initial_state.agent_count} agents")
         return initial_state
 
     def _extract_result(self, final_state: MultiAgentState) -> Any:
         """Extract final result from state."""
         # Simple result extraction - can be enhanced later
-        if hasattr(final_state,
-                   "final_result") and final_state.final_result is not None:
+        if hasattr(final_state, "final_result") and final_state.final_result is not None:
             return final_state.final_result
 
         # Return agent outputs if no final result

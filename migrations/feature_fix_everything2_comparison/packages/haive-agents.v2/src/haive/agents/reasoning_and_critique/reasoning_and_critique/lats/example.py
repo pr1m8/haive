@@ -20,8 +20,7 @@ def main():
     """Run an example of the LATS agent."""
     # Check for required API keys
     if not os.environ.get("AZURE_OPENAI_API_KEY"):
-        raise ValueError(
-            "AZURE_OPENAI_API_KEY environment variable is required")
+        raise ValueError("AZURE_OPENAI_API_KEY environment variable is required")
 
     # Set up tools - using Tavily search in this example
     tools = []
@@ -31,8 +30,7 @@ def main():
         tools.append(tavily_tool)
         logger.info("Tavily search tool added")
     else:
-        logger.warning(
-            "TAVILY_API_KEY not found, continuing without search tool")
+        logger.warning("TAVILY_API_KEY not found, continuing without search tool")
 
     # Create the LATS agent
     agent = create_lats_agent(
@@ -52,8 +50,7 @@ def main():
 
     # Run the agent on each question
     for question in questions:
-        logger.info(
-            f"\n\n*** Running LATS agent on question: {question} ***\n")
+        logger.info(f"\n\n*** Running LATS agent on question: {question} ***\n")
 
         # Track the computation steps
         last_step = None
@@ -62,8 +59,8 @@ def main():
         # Stream the agent's processing steps
         for step in agent.app.stream(
             {"input": question},
-                debug=True,
-                config=agent.config.runnable_config,
+            debug=True,
+            config=agent.config.runnable_config,
         ):
             step_count += 1
             last_step = step
@@ -81,8 +78,7 @@ def main():
                     max_depth = max(max_depth, node_data.depth)
                 tree_height = max_depth
 
-            logger.info(
-                f"Step {step_count}: {step_name} (tree height: {tree_height})")
+            logger.info(f"Step {step_count}: {step_name} (tree height: {tree_height})")
 
             # Log the output if available
             if step_state.get("output"):

@@ -105,10 +105,10 @@ class LazyAugLLMConfig:
     def __setattr__(self, name: str, value: Any):
         """Proxy attribute setting."""
         if name.startswith("_") or name in [
-                "name",
-                "temperature",
-                "max_tokens",
-                "model",
+            "name",
+            "temperature",
+            "max_tokens",
+            "model",
         ]:
             # Set on proxy for basic attributes
             super().__setattr__(name, value)
@@ -212,8 +212,7 @@ class LazySimpleAgent:
         }
 
         if debug:
-            logger.debug(
-                f"LazySimpleAgent '{name}' created with minimal overhead")
+            logger.debug(f"LazySimpleAgent '{name}' created with minimal overhead")
 
     def _ensure_initialized(self):
         """Initialize the real SimpleAgentV3 only when actually needed."""
@@ -222,8 +221,8 @@ class LazySimpleAgent:
 
             if self._debug:
                 logger.info(
-                    f"Initializing real SimpleAgentV3 for '{
-                        self._name}' (lazy loading triggered)", )
+                    f"Initializing real SimpleAgentV3 for '{self._name}' (lazy loading triggered)",
+                )
 
             # Now import the real SimpleAgentV3
             SimpleAgentV3 = cached_import(
@@ -240,9 +239,10 @@ class LazySimpleAgent:
             if self._debug:
                 total_time = (datetime.now() - self._init_time).total_seconds()
                 logger.info(
-                    f"Real SimpleAgentV3 initialized in {
-                        init_time:.2f}s (total: {
-                        total_time:.2f}s)", )
+                    f"Real SimpleAgentV3 initialized in {init_time:.2f}s (total: {
+                        total_time:.2f
+                    }s)",
+                )
 
     # Essential properties that can be handled without initialization
     @property
@@ -290,11 +290,9 @@ class LazySimpleAgent:
     def as_tool(cls, *args, **kwargs):
         """Create tool - triggers full initialization."""
         if cls._debug if hasattr(cls, "_debug") else True:
-            logger.debug(
-                "as_tool called - triggering full SimpleAgentV3 import")
+            logger.debug("as_tool called - triggering full SimpleAgentV3 import")
 
-        SimpleAgentV3 = cached_import("haive.agents.simple.agent_v3",
-                                      "SimpleAgentV3")
+        SimpleAgentV3 = cached_import("haive.agents.simple.agent_v3", "SimpleAgentV3")
         return SimpleAgentV3.as_tool(*args, **kwargs)
 
     @classmethod
@@ -305,8 +303,7 @@ class LazySimpleAgent:
                 "as_structured_tool called - triggering full SimpleAgentV3 import",
             )
 
-        SimpleAgentV3 = cached_import("haive.agents.simple.agent_v3",
-                                      "SimpleAgentV3")
+        SimpleAgentV3 = cached_import("haive.agents.simple.agent_v3", "SimpleAgentV3")
         return SimpleAgentV3.as_structured_tool(*args, **kwargs)
 
     def __repr__(self) -> str:

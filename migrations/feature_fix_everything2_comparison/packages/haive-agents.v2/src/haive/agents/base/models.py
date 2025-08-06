@@ -97,8 +97,7 @@ class AgentInfo(BaseModel):
         default_factory=list,
         description="List of agent capabilities",
     )
-    is_active: bool = Field(default=True,
-                            description="Whether agent is active")
+    is_active: bool = Field(default=True, description="Whether agent is active")
     created_at: datetime = Field(default_factory=datetime.now)
     last_used: datetime | None = Field(None, description="Last execution time")
     usage_count: int = Field(default=0, description="Number of times used")
@@ -178,10 +177,7 @@ class RoutingDecision(BaseModel):
     """Decision made by supervisor routing logic."""
 
     selected_agent: str = Field(..., description="Selected agent name")
-    confidence: float = Field(...,
-                              ge=0.0,
-                              le=1.0,
-                              description="Routing confidence")
+    confidence: float = Field(..., ge=0.0, le=1.0, description="Routing confidence")
     reasoning: str = Field(..., description="Why this agent was selected")
     alternatives: list[str] = Field(
         default_factory=list,
@@ -217,10 +213,8 @@ class SupervisorConfig(BaseModel):
     """Configuration for supervisor behavior."""
 
     name: str = Field(..., description="Supervisor name")
-    max_iterations: int = Field(default=10,
-                                description="Max iterations for ReactAgent")
-    routing_strategy: str = Field(default="llm",
-                                  description="Routing strategy")
+    max_iterations: int = Field(default=10, description="Max iterations for ReactAgent")
+    routing_strategy: str = Field(default="llm", description="Routing strategy")
     enable_performance_tracking: bool = Field(default=True)
     auto_retry_on_failure: bool = Field(default=True)
     max_retries: int = Field(default=2)

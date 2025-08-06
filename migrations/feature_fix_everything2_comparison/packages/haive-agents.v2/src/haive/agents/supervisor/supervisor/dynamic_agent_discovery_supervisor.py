@@ -108,8 +108,7 @@ class AgentCapability(BaseModel):
         default_factory=list,
         description="Areas of expertise",
     )
-    tools: list[str] = Field(default_factory=list,
-                             description="Tools this agent has")
+    tools: list[str] = Field(default_factory=list, description="Tools this agent has")
     requirements: dict[str, Any] = Field(
         default_factory=dict,
         description="Requirements for creation",
@@ -175,10 +174,8 @@ class DynamicAgentDiscoverySupervisor(ReactAgent):
     )
 
     # Discovery agents (excluded from serialization)
-    discovery_agent: ComponentDiscoveryAgent | None = Field(default=None,
-                                                            exclude=True)
-    rag_discovery_agent: Any | None = Field(default=None,
-                                            exclude=True)  # BaseRAGAgent
+    discovery_agent: ComponentDiscoveryAgent | None = Field(default=None, exclude=True)
+    rag_discovery_agent: Any | None = Field(default=None, exclude=True)  # BaseRAGAgent
     mcp_framework: dict[str, Any] | None = Field(default=None, exclude=True)
 
     # Agent management
@@ -197,12 +194,10 @@ class DynamicAgentDiscoverySupervisor(ReactAgent):
     max_discovery_attempts: int = Field(default=3, ge=1, le=10)
 
     # Agent factory registry
-    agent_factory: dict[str, type[Agent]] = Field(default_factory=dict,
-                                                  exclude=True)
+    agent_factory: dict[str, type[Agent]] = Field(default_factory=dict, exclude=True)
 
     # Initial agents to register (used during factory creation)
-    agents_to_register: list[dict[str, Any]] | None = Field(default=None,
-                                                            exclude=True)
+    agents_to_register: list[dict[str, Any]] | None = Field(default=None, exclude=True)
 
     @model_validator(mode="after")
     @classmethod
@@ -304,10 +299,14 @@ class DynamicAgentDiscoverySupervisor(ReactAgent):
             discovered = []
 
             # Component discovery
-            if (self.discovery_mode in [
+            if (
+                self.discovery_mode
+                in [
                     AgentDiscoveryMode.COMPONENT_DISCOVERY,
                     AgentDiscoveryMode.HYBRID,
-            ] and self.discovery_agent):
+                ]
+                and self.discovery_agent
+            ):
                 try:
                     components = self.discovery_agent.discover_components(
                         query=f"agents for: {task_description}",
@@ -321,14 +320,15 @@ class DynamicAgentDiscoverySupervisor(ReactAgent):
 
             # RAG discovery
             if self.discovery_mode in [
-                    AgentDiscoveryMode.RAG_DISCOVERY,
-                    AgentDiscoveryMode.HYBRID,
+                AgentDiscoveryMode.RAG_DISCOVERY,
+                AgentDiscoveryMode.HYBRID,
             ]:
                 if self.rag_discovery_agent:
                     try:
                         # Query RAG agent for agent specifications
                         rag_response = self.rag_discovery_agent.run(
-                            f"Find agent specifications or experts that can help with: {task_description}", )
+                            f"Find agent specifications or experts that can help with: {task_description}",
+                        )
                         # Parse response for agent definitions
                         # This is simplified - real implementation would parse
                         # structured output
@@ -340,10 +340,14 @@ class DynamicAgentDiscoverySupervisor(ReactAgent):
                         discovered.append(f"RAG discovery error: {e!s}")
 
             # MCP discovery
-            if (self.discovery_mode in [
+            if (
+                self.discovery_mode
+                in [
                     AgentDiscoveryMode.MCP_DISCOVERY,
                     AgentDiscoveryMode.HYBRID,
-            ] and self.mcp_framework):
+                ]
+                and self.mcp_framework
+            ):
                 try:
                     # Query MCP framework for available agents
                     mcp_agents = self.mcp_framework.get(
@@ -364,8 +368,7 @@ class DynamicAgentDiscoverySupervisor(ReactAgent):
         if hasattr(self, "engine") and hasattr(self.engine, "tools"):
             self.engine.tools.append(discover_and_add_agents)
 
-    async def _make_decision(self,
-                             state: SupervisorState) -> SupervisorDecision:
+    async def _make_decision(self, state: SupervisorState) -> SupervisorDecision:
         """Make routing decision with agent discovery awareness.
 
         This method extends the base supervisor's decision-making to consider
@@ -402,18 +405,16 @@ class DynamicAgentDiscoverySupervisor(ReactAgent):
                 if any(key in task_content for key in specialist_keywords):
                     # Check if we have suitable agents
                     has_specialist = any(
-                        cap.specialties
-                        for cap in self.agent_capabilities.values())
+                        cap.specialties for cap in self.agent_capabilities.values()
+                    )
 
                     if not has_specialist and len(self.discovered_agents) < 10:
                         # Suggest agent discovery first
                         return SupervisorDecision(
-                            next_agent=self.
-                            name,  # Route to self for discovery
+                            next_agent=self.name,  # Route to self for discovery
                             reasoning="Task appears to require specialized agents. Discovering suitable agents first.",
                             confidence=0.9,
-                            suggested_prompt=f"discover_and_add_agents for: {
-                                last_message.content}",
+                            suggested_prompt=f"discover_and_add_agents for: {last_message.content}",
                         )
 
         # Standard routing decision
@@ -437,13 +438,13 @@ class DynamicAgentDiscoverySupervisor(ReactAgent):
             if capability:
                 specialties = (
                     f"Specialties: {', '.join(capability.specialties)}"
-                    if capability.specialties else "")
-                tools = f"Tools: {
-                    ', '.join(
-                        capability.tools)}" if capability.tools else ""
-                info = f"- {name} ({
-                    capability.agent_type}): {
-                    capability.description}. {specialties} {tools}"
+                    if capability.specialties
+                    else ""
+                )
+                tools = f"Tools: {', '.join(capability.tools)}" if capability.tools else ""
+                info = f"- {name} ({capability.agent_type}): {capability.description}. {
+                    specialties
+                } {tools}"
             else:
                 info = f"- {name}: {agent.__class__.__name__}"
             agent_info.append(info)
@@ -500,8 +501,7 @@ Respond with:
 
         # Default to first agent if parsing fails
         if not agent or agent not in self.agents:
-            agent = next(iter(
-                self.agents.keys())) if self.agents else self.name
+            agent = next(iter(self.agents.keys())) if self.agents else self.name
 
         return SupervisorDecision(
             next_agent=agent,
@@ -554,19 +554,26 @@ Respond with:
         """
         # Create discovery agent if needed
         discovery_agent = None
-        if (discovery_mode in [
+        if (
+            discovery_mode
+            in [
                 AgentDiscoveryMode.COMPONENT_DISCOVERY,
                 AgentDiscoveryMode.HYBRID,
-        ] and component_discovery_config):
-            discovery_agent = ComponentDiscoveryAgent(
-                **component_discovery_config)
+            ]
+            and component_discovery_config
+        ):
+            discovery_agent = ComponentDiscoveryAgent(**component_discovery_config)
 
         # Create RAG agent if needed
         rag_discovery_agent = None
-        if (discovery_mode in [
+        if (
+            discovery_mode
+            in [
                 AgentDiscoveryMode.RAG_DISCOVERY,
                 AgentDiscoveryMode.HYBRID,
-        ] and rag_documents_path):
+            ]
+            and rag_documents_path
+        ):
             # Create simple RAG agent for agent discovery
             # TODO: Re-enable when DirectoryLoader and vectorstore imports are fixed
 
@@ -652,8 +659,7 @@ Respond with:
             elif agent_type == "ReactAgent":
                 agent_class = ReactAgent
             else:
-                logger.warning(
-                    f"Unknown agent type: {agent_type}, using SimpleAgent")
+                logger.warning(f"Unknown agent type: {agent_type}, using SimpleAgent")
                 agent_class = SimpleAgent
 
             # Create agent

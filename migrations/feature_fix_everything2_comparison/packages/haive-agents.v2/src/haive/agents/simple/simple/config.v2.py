@@ -76,8 +76,7 @@ class SimpleAgentConfig(AgentConfig):
     )
 
     # Visualization settings
-    visualize: bool = Field(default=True,
-                            description="Whether to visualize the graph")
+    visualize: bool = Field(default=True, description="Whether to visualize the graph")
 
     model_config = {"arbitrary_types_allowed": True}
 

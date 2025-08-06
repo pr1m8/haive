@@ -39,8 +39,7 @@ class TypedRAGAgent(BaseRAGAgent):
     def _init_components(self):
         """Initialize all components."""
         # Initialize query classifier
-        self.query_classifier = self.config.query_classifier_config.create_runnable(
-        )
+        self.query_classifier = self.config.query_classifier_config.create_runnable()
 
         # Initialize type handlers
         self.type_handlers = {}
@@ -49,12 +48,10 @@ class TypedRAGAgent(BaseRAGAgent):
 
         # Initialize retrievers for different query types
         self.type_retrievers = {}
-        for query_type, retriever_config in self.config.retriever_mapping.items(
-        ):
+        for query_type, retriever_config in self.config.retriever_mapping.items():
             # Check if it's a VectorStoreConfig or RetrieverConfig
             if hasattr(retriever_config, "create_retriever"):
-                self.type_retrievers[
-                    query_type] = retriever_config.create_retriever()
+                self.type_retrievers[query_type] = retriever_config.create_retriever()
             else:
                 # Assuming it's already a retriever instance
                 self.type_retrievers[query_type] = retriever_config
@@ -74,9 +71,7 @@ class TypedRAGAgent(BaseRAGAgent):
 
             if isinstance(classification, str):
                 # Try to extract category and metadata
-                if classification.lower() in [
-                        c.lower() for c in QueryCategory
-                ]:
+                if classification.lower() in [c.lower() for c in QueryCategory]:
                     return {
                         "query_category": classification.lower(),
                         "query_metadata": {},
@@ -89,14 +84,8 @@ class TypedRAGAgent(BaseRAGAgent):
                     parsed = json.loads(classification)
                     if isinstance(parsed, dict):
                         category = parsed.get("category", "factoid").lower()
-                        metadata = {
-                            k: v
-                            for k, v in parsed.items() if k != "category"
-                        }
-                        return {
-                            "query_category": category,
-                            "query_metadata": metadata
-                        }
+                        metadata = {k: v for k, v in parsed.items() if k != "category"}
+                        return {"query_category": category, "query_metadata": metadata}
                 except BaseException:
                     pass
 
@@ -105,10 +94,7 @@ class TypedRAGAgent(BaseRAGAgent):
 
             if isinstance(classification, dict):
                 category = classification.get("category", "factoid").lower()
-                metadata = {
-                    k: v
-                    for k, v in classification.items() if k != "category"
-                }
+                metadata = {k: v for k, v in classification.items() if k != "category"}
                 return {"query_category": category, "query_metadata": metadata}
 
             # Default case
@@ -134,11 +120,8 @@ class TypedRAGAgent(BaseRAGAgent):
 
         try:
             subquery_result = handler.invoke(
-                {
-                    "query": query,
-                    "category": category,
-                    "metadata": metadata
-                }, )
+                {"query": query, "category": category, "metadata": metadata},
+            )
 
             if isinstance(subquery_result, str):
                 # Single subquery
@@ -179,8 +162,7 @@ class TypedRAGAgent(BaseRAGAgent):
                 docs = retriever.invoke(subquery)
                 subquery_results[subquery_key] = docs
             except Exception as e:
-                logger.exception(
-                    f"Error retrieving for subquery {subquery_key}: {e}")
+                logger.exception(f"Error retrieving for subquery {subquery_key}: {e}")
                 subquery_results[subquery_key] = []
 
         # Combine all documents for standard processing
@@ -188,10 +170,7 @@ class TypedRAGAgent(BaseRAGAgent):
         for docs in subquery_results.values():
             all_docs.extend(docs)
 
-        return {
-            "subquery_results": subquery_results,
-            "retrieved_documents": all_docs
-        }
+        return {"subquery_results": subquery_results, "retrieved_documents": all_docs}
 
     def filter_documents(self, state: dict[str, Any]):
         """Filter documents for relevance."""
@@ -221,35 +200,25 @@ class TypedRAGAgent(BaseRAGAgent):
             for key, docs in subquery_results.items():
                 subquery = subqueries.get(key, "")
                 doc_contents = "\n\n".join([doc.page_content for doc in docs])
-                formatted_results[key] = {
-                    "query": subquery,
-                    "documents": doc_contents
-                }
+                formatted_results[key] = {"query": subquery, "documents": doc_contents}
 
             aggregation_result = handler.invoke(
                 {
-                    "main_query":
-                    query,
-                    "category":
-                    category,
-                    "subquery_results":
-                    formatted_results,
-                    "filtered_documents":
-                    [doc.page_content for doc in filtered_documents],
-                }, )
+                    "main_query": query,
+                    "category": category,
+                    "subquery_results": formatted_results,
+                    "filtered_documents": [doc.page_content for doc in filtered_documents],
+                },
+            )
 
             if isinstance(aggregation_result, str):
                 aggregated_answer = aggregation_result
-            elif isinstance(aggregation_result,
-                            dict) and "answer" in aggregation_result:
+            elif isinstance(aggregation_result, dict) and "answer" in aggregation_result:
                 aggregated_answer = aggregation_result["answef"]
             else:
                 aggregated_answer = str(aggregation_result)
 
-            return {
-                "aggregated_answer": aggregated_answer,
-                "answer": aggregated_answer
-            }
+            return {"aggregated_answer": aggregated_answer, "answer": aggregated_answer}
 
         except Exception as e:
             logger.exception(f"Error aggregating answers: {e}")
@@ -263,19 +232,14 @@ class TypedRAGAgent(BaseRAGAgent):
 
         if not documents:
             return {
-                "answer":
-                "I couldn't find any relevant information to answer your question.",
+                "answer": "I couldn't find any relevant information to answer your question.",
             }
 
         # Use the answer generation component from src.config
-        answer_generator = self.config.answer_generation_config.create_runnable(
-        )
+        answer_generator = self.config.answer_generation_config.create_runnable()
 
         try:
-            result = answer_generator.invoke({
-                "query": query,
-                "documents": documents
-            })
+            result = answer_generator.invoke({"query": query, "documents": documents})
 
             if isinstance(result, str):
                 answer = result
@@ -289,8 +253,7 @@ class TypedRAGAgent(BaseRAGAgent):
         except Exception as e:
             logger.exception(f"Error generating answer: {e}")
             return {
-                "answer":
-                "I encountered an error while generating an answer to your question.",
+                "answer": "I encountered an error while generating an answer to your question.",
             }
 
     def setup_workflow(self) -> None:

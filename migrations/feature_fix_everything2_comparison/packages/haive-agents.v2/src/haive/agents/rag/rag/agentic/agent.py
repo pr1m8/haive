@@ -265,9 +265,8 @@ class AgenticRAGAgent[TInput: BaseModel, TOutput: BaseModel](
                     return f"Could not rewrite query: {original_query}"
 
                 return (
-                    f"Rewritten query: {
-                        rewrite.rewritten_query}\\nChanges: {
-                        rewrite.changes_made}")
+                    f"Rewritten query: {rewrite.rewritten_query}\\nChanges: {rewrite.changes_made}"
+                )
 
             except Exception as e:
                 return f"Error rewriting query: {e!s}"

@@ -40,8 +40,7 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
     )
 
     # Engine configuration - required field
-    engine_name: str = Field(
-        description="Name of the engine to get tool routes from")
+    engine_name: str = Field(description="Name of the engine to get tool routes from")
 
     # Routing destinations with proper defaults
     tool_node: str = Field(
@@ -89,7 +88,8 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
         routes them.
         """
         logger.info(
-            f"Unified validation processing for engine: {self.engine_name}", )
+            f"Unified validation processing for engine: {self.engine_name}",
+        )
 
         # Get messages and engine
         messages = state.get("messages", [])
@@ -110,8 +110,7 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
         # Get last AI message with tool calls
         last_ai_message = None
         for msg in reversed(messages):
-            if isinstance(msg, AIMessage) and hasattr(
-                    msg, "tool_calls") and msg.tool_calls:
+            if isinstance(msg, AIMessage) and hasattr(msg, "tool_calls") and msg.tool_calls:
                 last_ai_message = msg
                 break
 
@@ -138,10 +137,7 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
         # Determine routing strategy
         if self.parallel_execution and len(routing_decisions) > 1:
             # Check if we should use Send for parallel execution
-            destinations = [
-                d["destination"] for d in routing_decisions
-                if d.get("destination")
-            ]
+            destinations = [d["destination"] for d in routing_decisions if d.get("destination")]
             set(destinations)
 
             # Use Send objects if we have multiple decisions, even if same
@@ -246,8 +242,7 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
 
         # Check structured output model
         structured_output = getattr(engine, "structured_output_model", None)
-        if structured_output and getattr(structured_output, "__name__",
-                                         "") == tool_name:
+        if structured_output and getattr(structured_output, "__name__", "") == tool_name:
             return structured_output
 
         # Check schemas
@@ -264,8 +259,7 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
             return False
 
         tools = getattr(engine, "tools", [])
-        return any(
-            hasattr(tool, "name") and tool.name == tool_name for tool in tools)
+        return any(hasattr(tool, "name") and tool.name == tool_name for tool in tools)
 
     def _validate_pydantic_model(
         self,
@@ -337,7 +331,8 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
                             "success": decision["success"],
                             "error": decision["error"],
                         },
-                    ), )
+                    ),
+                )
 
         return sends
 
@@ -354,9 +349,7 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
             return self.agent_node
 
         # If all are same destination, use that
-        destinations = [
-            decision["destination"] for decision in routing_decisions
-        ]
+        destinations = [decision["destination"] for decision in routing_decisions]
         unique_destinations = set(destinations)
 
         if len(unique_destinations) == 1:
@@ -373,6 +366,4 @@ def create_unified_validation_node(
     **kwargs,
 ) -> UnifiedValidationNodeConfig:
     """Create a unified validation node with sensible defaults."""
-    return UnifiedValidationNodeConfig(name=name,
-                                       engine_name=engine_name,
-                                       **kwargs)
+    return UnifiedValidationNodeConfig(name=name, engine_name=engine_name, **kwargs)

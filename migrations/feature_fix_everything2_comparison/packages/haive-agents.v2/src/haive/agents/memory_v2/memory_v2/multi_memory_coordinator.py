@@ -188,8 +188,7 @@ class MultiMemoryCoordinator:
             self.memory_systems[MemorySystemType.LONGTERM] = agent
             self.logger.info("Long-term memory system initialized")
         except Exception as e:
-            self.logger.exception(
-                f"Failed to initialize long-term memory: {e}")
+            self.logger.exception(f"Failed to initialize long-term memory: {e}")
 
     def _init_graph_memory(self):
         """Initialize graph memory agent."""
@@ -228,8 +227,7 @@ class MultiMemoryCoordinator:
             self.memory_systems[MemorySystemType.ADVANCED_RAG] = agent
             self.logger.info("Advanced RAG memory system initialized")
         except Exception as e:
-            self.logger.exception(
-                f"Failed to initialize advanced RAG memory: {e}")
+            self.logger.exception(f"Failed to initialize advanced RAG memory: {e}")
 
     def _create_router(self) -> ReactAgent:
         """Create intelligent memory system router."""
@@ -251,16 +249,22 @@ class MultiMemoryCoordinator:
             systems = []
 
             # Structured knowledge indicators → Graph
-            if (any(indicator in content_lower for indicator in [
-                    "works at",
-                    "knows",
-                    "located in",
-                    "relationship",
-                    "connected to",
-                    "part of",
-                    "belongs to",
-                    "entity",
-            ]) and MemorySystemType.GRAPH in self.memory_systems):
+            if (
+                any(
+                    indicator in content_lower
+                    for indicator in [
+                        "works at",
+                        "knows",
+                        "located in",
+                        "relationship",
+                        "connected to",
+                        "part of",
+                        "belongs to",
+                        "entity",
+                    ]
+                )
+                and MemorySystemType.GRAPH in self.memory_systems
+            ):
                 systems.append("graph")
 
             # Complex queries → Advanced RAG
@@ -281,38 +285,56 @@ class MultiMemoryCoordinator:
                         systems.append("rag")
 
             # Tool-based operations → React
-            if (any(indicator in content_lower for indicator in [
-                    "search",
-                    "find",
-                    "list",
-                    "update",
-                    "delete",
-                    "store",
-                    "remember",
-                    "forget",
-            ]) and MemorySystemType.REACT in self.memory_systems):
+            if (
+                any(
+                    indicator in content_lower
+                    for indicator in [
+                        "search",
+                        "find",
+                        "list",
+                        "update",
+                        "delete",
+                        "store",
+                        "remember",
+                        "forget",
+                    ]
+                )
+                and MemorySystemType.REACT in self.memory_systems
+            ):
                 systems.append("react")
 
             # Important/persistent content → Long-term
-            if (any(indicator in content_lower for indicator in [
-                    "important",
-                    "critical",
-                    "always",
-                    "never forget",
-                    "permanent",
-                    "long-term",
-                    "persistent",
-            ]) and MemorySystemType.LONGTERM in self.memory_systems):
+            if (
+                any(
+                    indicator in content_lower
+                    for indicator in [
+                        "important",
+                        "critical",
+                        "always",
+                        "never forget",
+                        "permanent",
+                        "long-term",
+                        "persistent",
+                    ]
+                )
+                and MemorySystemType.LONGTERM in self.memory_systems
+            ):
                 systems.append("longterm")
 
             # Token management → Simple
-            if (any(indicator in content_lower for indicator in [
-                    "summarize",
-                    "compress",
-                    "manage context",
-                    "token",
-                    "memory limit",
-            ]) and MemorySystemType.SIMPLE in self.memory_systems):
+            if (
+                any(
+                    indicator in content_lower
+                    for indicator in [
+                        "summarize",
+                        "compress",
+                        "manage context",
+                        "token",
+                        "memory limit",
+                    ]
+                )
+                and MemorySystemType.SIMPLE in self.memory_systems
+            ):
                 systems.append("simple")
 
             # Default recommendations
@@ -334,8 +356,7 @@ class MultiMemoryCoordinator:
             return ",".join(systems) if systems else "all"
 
         @tool
-        def determine_coordination_mode(query: str,
-                                        available_systems: str) -> str:
+        def determine_coordination_mode(query: str, available_systems: str) -> str:
             """Determine best coordination mode for the query.
 
             Returns: intelligent, parallel, hierarchical, or consensus
@@ -343,14 +364,19 @@ class MultiMemoryCoordinator:
             systems = available_systems.split(",")
 
             # Use parallel for comprehensive queries
-            if any(word in query.lower() for word in
-                   ["everything", "all", "comprehensive", "complete"]):
+            if any(
+                word in query.lower() for word in ["everything", "all", "comprehensive", "complete"]
+            ):
                 return "parallel"
 
             # Use consensus for important decisions
-            if (any(word in query.lower() for word in
-                    ["important", "critical", "decision", "verify"])
-                    and len(systems) >= 2):
+            if (
+                any(
+                    word in query.lower()
+                    for word in ["important", "critical", "decision", "verify"]
+                )
+                and len(systems) >= 2
+            ):
                 return "consensus"
 
             # Use hierarchical for specific system preferences
@@ -389,8 +415,7 @@ System capabilities:
             name="memory_synthesizer",
             engine=self.config.engine,
             tools=[],
-            system_message=f"""You are a memory result synthesizer for user {
-                self.config.user_id}.
+            system_message=f"""You are a memory result synthesizer for user {self.config.user_id}.
 
 Your job is to:
 1. Combine results from multiple memory systems
@@ -434,18 +459,20 @@ When combining results:
         if systems is None:
             if mode == CoordinationMode.INTELLIGENT:
                 routing_result = await self.router.arun(
-                    f"Analyze this content for storage: {content}", )
+                    f"Analyze this content for storage: {content}",
+                )
 
                 # Extract recommended systems
                 systems = []
                 for system_type in MemorySystemType:
-                    if (system_type.value in routing_result.lower()
-                            and system_type in self.memory_systems):
+                    if (
+                        system_type.value in routing_result.lower()
+                        and system_type in self.memory_systems
+                    ):
                         systems.append(system_type)
 
                 if not systems:
-                    systems = list(
-                        self.memory_systems.keys())[:2]  # Default to first 2
+                    systems = list(self.memory_systems.keys())[:2]  # Default to first 2
             else:
                 systems = list(self.memory_systems.keys())
 
@@ -477,8 +504,7 @@ When combining results:
                     )
 
                 elif system_type == MemorySystemType.LONGTERM:
-                    system_result = await system.run(content,
-                                                     extract_memories=True)
+                    system_result = await system.run(content, extract_memories=True)
 
                 elif system_type == MemorySystemType.GRAPH:
                     system_result = await system.run(content, auto_store=True)
@@ -510,7 +536,8 @@ When combining results:
                 "systems_used": results["systems_used"],
                 "timestamp": start_time.isoformat(),
                 "success": len(results["systems_used"]) > 0,
-            }, )
+            },
+        )
 
         return results
 
@@ -544,8 +571,10 @@ When combining results:
 
                 systems = []
                 for system_type in MemorySystemType:
-                    if (system_type.value in routing_result.lower()
-                            and system_type in self.memory_systems):
+                    if (
+                        system_type.value in routing_result.lower()
+                        and system_type in self.memory_systems
+                    ):
                         systems.append(system_type)
 
                 if not systems:
@@ -586,11 +615,11 @@ When combining results:
                     system_type = systems[i]
                     if isinstance(system_result, Exception):
                         results["errors"].append(
-                            f"{system_type.value}: {system_result!s}", )
+                            f"{system_type.value}: {system_result!s}",
+                        )
                     else:
                         results["systems_queried"].append(system_type.value)
-                        results["individual_results"][
-                            system_type.value] = system_result
+                        results["individual_results"][system_type.value] = system_result
 
             except TimeoutError:
                 results["errors"].append(
@@ -601,11 +630,9 @@ When combining results:
             # Query systems sequentially
             for system_type in systems:
                 try:
-                    system_result = await self._query_single_system(
-                        system_type, query)
+                    system_result = await self._query_single_system(system_type, query)
                     results["systems_queried"].append(system_type.value)
-                    results["individual_results"][
-                        system_type.value] = system_result
+                    results["individual_results"][system_type.value] = system_result
 
                     # In hierarchical mode, stop after first successful result
                     if mode == CoordinationMode.HIERARCHICAL and system_result:
@@ -628,7 +655,8 @@ When combining results:
         elif len(results["individual_results"]) == 1:
             # Single result, use as combined
             results["combined_result"] = next(
-                iter(results["individual_results"].values()), )
+                iter(results["individual_results"].values()),
+            )
 
         # Calculate timing
         results["total_time"] = (datetime.now() - start_time).total_seconds()
@@ -641,7 +669,8 @@ When combining results:
                 "systems_queried": results["systems_queried"],
                 "timestamp": start_time.isoformat(),
                 "success": len(results["systems_queried"]) > 0,
-            }, )
+            },
+        )
 
         return results
 
@@ -657,8 +686,7 @@ When combining results:
             return await system.arun(query)
 
         if system_type == MemorySystemType.REACT:
-            return await system.arun(f"Search memories: {query}",
-                                     auto_save=False)
+            return await system.arun(f"Search memories: {query}", auto_save=False)
 
         if system_type == MemorySystemType.LONGTERM:
             result = await system.run(query, extract_memories=False)
@@ -718,10 +746,7 @@ If there are conflicts, highlight them. If results complement each other, combin
                 elif hasattr(system, "get_analytics"):
                     system_analytics = await system.get_analytics()
                 else:
-                    system_analytics = {
-                        "status": "active",
-                        "type": str(type(system))
-                    }
+                    system_analytics = {"status": "active", "type": str(type(system))}
 
                 analytics["systems"][system_type.value] = system_analytics
 
@@ -753,8 +778,7 @@ If there are conflicts, highlight them. If results complement each other, combin
 
         # Implementation would depend on specific system APIs
         # This is a placeholder for the migration logic
-        self.logger.info(
-            f"Migration from {from_system} to {to_system} completed")
+        self.logger.info(f"Migration from {from_system} to {to_system} completed")
 
         return migration_result
 
@@ -777,8 +801,7 @@ If there are conflicts, highlight them. If results complement each other, combin
 
         # Add graph config if enabled
         if enable_graph and neo4j_config:
-            config.graph_config = GraphMemoryConfig(user_id=user_id,
-                                                    **neo4j_config)
+            config.graph_config = GraphMemoryConfig(user_id=user_id, **neo4j_config)
 
         return cls(config)
 
@@ -795,15 +818,13 @@ async def demo_multi_memory_coordinator():
     # Store diverse memories
     memories = [
         ("Alice Johnson is the CEO of TechStartup Inc.", "high"),
-        ("I had a great conversation with Alice about the future of AI.",
-         "normal"),
+        ("I had a great conversation with Alice about the future of AI.", "normal"),
         ("Important: Alice's direct phone number is 555-0123.", "critical"),
         (
             "TechStartup Inc. was founded in 2019 and specializes in machine learning.",
             "high",
         ),
-        ("Alice mentioned they're hiring 50 new engineers this quarter.",
-         "normal"),
+        ("Alice mentioned they're hiring 50 new engineers this quarter.", "normal"),
     ]
 
     for content, importance in memories:

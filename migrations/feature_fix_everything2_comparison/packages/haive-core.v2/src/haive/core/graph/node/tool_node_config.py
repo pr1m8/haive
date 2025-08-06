@@ -45,7 +45,9 @@ class ToolNodeConfig(NodeConfig):
         description="Optional tags for the tool node",
     )
     handle_tool_errors: bool | str | Callable[..., str] | tuple[type[Exception], ...] = Field(
-        default=True, description="How to handle tool errors", )
+        default=True,
+        description="How to handle tool errors",
+    )
     messages_key: str = Field(
         default="messages",
         description="The key to use for the messages field",
@@ -199,7 +201,9 @@ class ToolNodeConfig(NodeConfig):
             else:
                 logger.debug(
                     f"❌ Excluding tool '{tool_name}' (route: {route} not in allowed routes: {
-                        self.allowed_routes})", )
+                        self.allowed_routes
+                    })",
+                )
 
         if not filtered_tools:
             logger.warning("No tools available for tool node after filtering")
@@ -208,9 +212,8 @@ class ToolNodeConfig(NodeConfig):
             return Command(update={}, goto=self.command_goto)
 
         logger.info(
-            f"Tool node using {
-                len(filtered_tools)} tools from engine '{
-                self.engine_name}'", )
+            f"Tool node using {len(filtered_tools)} tools from engine '{self.engine_name}'",
+        )
 
         # Log tool names
         for tool in filtered_tools:
@@ -239,14 +242,12 @@ class ToolNodeConfig(NodeConfig):
             if isinstance(result, dict) and self.messages_key in result:
                 updated_messages = result[self.messages_key]
                 logger.info(
-                    f"Tool node added {
-                        len(updated_messages) -
-                        len(messages)} ToolMessages",
+                    f"Tool node added {len(updated_messages) - len(messages)} ToolMessages",
                 )
 
                 # Count ToolMessages added
                 tool_msg_count = 0
-                for msg in updated_messages[len(messages):]:
+                for msg in updated_messages[len(messages) :]:
                     if isinstance(msg, ToolMessage):
                         tool_msg_count += 1
                         logger.debug(
@@ -268,8 +269,7 @@ class ToolNodeConfig(NodeConfig):
 
             for tool_call in last_message.tool_calls:
                 # Find the tool
-                tool_name = tool_call["name"] if isinstance(
-                    tool_call, dict) else tool_call.name
+                tool_name = tool_call["name"] if isinstance(tool_call, dict) else tool_call.name
                 tool_id = (
                     tool_call.get("id", f"call_{tool_name}")
                     if isinstance(tool_call, dict)
@@ -298,8 +298,7 @@ class ToolNodeConfig(NodeConfig):
             new_messages = list(messages)
 
             for tool_call in last_message.tool_calls:
-                tool_name = tool_call["name"] if isinstance(
-                    tool_call, dict) else tool_call.name
+                tool_name = tool_call["name"] if isinstance(tool_call, dict) else tool_call.name
                 tool_id = (
                     tool_call.get("id", f"call_{tool_name}")
                     if isinstance(tool_call, dict)

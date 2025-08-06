@@ -3,6 +3,7 @@
 Monitors token usage across memory operations and triggers summarization
 or rewriting when approaching context limits.
 """
+
 from __future__ import annotations
 
 import logging
@@ -62,8 +63,7 @@ class TokenTracker(BaseModel):
     thresholds: TokenThresholds = Field(default_factory=TokenThresholds)
 
     # Tracking window
-    window_size: int = Field(default=100,
-                             description="Number of operations to track")
+    window_size: int = Field(default=100, description="Number of operations to track")
 
     # Analytics
     operation_averages: dict[str, float] = Field(default_factory=dict)
@@ -84,8 +84,7 @@ class TokenTracker(BaseModel):
         """
         # Update totals
         self.total_tokens += tokens
-        self.tokens_by_operation[operation] = self.tokens_by_operation.get(
-            operation, 0) + tokens
+        self.tokens_by_operation[operation] = self.tokens_by_operation.get(operation, 0) + tokens
 
         # Update peak
         self.peak_usage = max(self.peak_usage, self.total_tokens)
@@ -113,7 +112,8 @@ class TokenTracker(BaseModel):
         if status != "OK":
             logger.warning(
                 f"Token usage {status}: {self.total_tokens}/{self.max_context_tokens} "
-                f"({self.get_usage_ratio():.1%}) after {operation}", )
+                f"({self.get_usage_ratio():.1%}) after {operation}",
+            )
 
     def reset_tokens(self, keep_history: bool = True) -> None:
         """Reset token counts while optionally keeping history.
@@ -151,8 +151,7 @@ class TokenTracker(BaseModel):
         Returns:
             True if operation can fit, False otherwise
         """
-        return (self.total_tokens +
-                estimated_tokens) <= self.max_context_tokens
+        return (self.total_tokens + estimated_tokens) <= self.max_context_tokens
 
     def get_recommendations(self) -> list[str]:
         """Get recommendations based on usage patterns.
@@ -228,10 +227,7 @@ class TokenTracker(BaseModel):
 
     def _update_averages(self, operation: str) -> None:
         """Update operation averages."""
-        operation_entries = [
-            entry for entry in self.usage_history
-            if entry.operation == operation
-        ]
+        operation_entries = [entry for entry in self.usage_history if entry.operation == operation]
 
         if operation_entries:
             total = sum(entry.tokens for entry in operation_entries)

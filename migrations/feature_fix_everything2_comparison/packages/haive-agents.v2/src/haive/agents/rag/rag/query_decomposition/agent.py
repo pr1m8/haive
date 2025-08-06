@@ -62,15 +62,15 @@ class QueryDecomposition(BaseModel):
         description="Query complexity (0-1)",
     )
 
-    sub_queries: list[SubQuery] = Field(
-        description="List of decomposed sub-queries")
+    sub_queries: list[SubQuery] = Field(description="List of decomposed sub-queries")
     execution_order: list[int] = Field(
-        description="Suggested execution order (indices)", )
+        description="Suggested execution order (indices)",
+    )
 
     synthesis_strategy: str = Field(description="How to combine results")
-    estimated_difficulty: Literal[
-        "easy", "moderate", "hard",
-        "very_hard"] = Field(description="Estimated difficulty level", )
+    estimated_difficulty: Literal["easy", "moderate", "hard", "very_hard"] = Field(
+        description="Estimated difficulty level",
+    )
 
     reasoning: str = Field(description="Overall decomposition reasoning")
     alternative_approaches: list[str] = Field(
@@ -87,15 +87,15 @@ class HierarchicalDecomposition(BaseModel):
     # Hierarchical structure
     main_question: str = Field(description="Primary question to answer")
     sub_questions: list[str] = Field(description="Supporting sub-questions")
-    detail_questions: list[str] = Field(
-        description="Detailed follow-up questions")
+    detail_questions: list[str] = Field(description="Detailed follow-up questions")
 
     # Execution strategy
     execution_levels: list[list[int]] = Field(
         description="Execution levels (parallel within level, sequential between levels)",
     )
     dependency_map: dict[str, list[str]] = Field(
-        description="Dependencies between questions", )
+        description="Dependencies between questions",
+    )
 
     # Integration strategy
     synthesis_plan: str = Field(description="How to synthesize answers")
@@ -114,13 +114,16 @@ class ContextualDecomposition(BaseModel):
 
     # Context-driven sub-queries
     context_dependent_queries: list[str] = Field(
-        description="Queries that require context", )
+        description="Queries that require context",
+    )
     context_independent_queries: list[str] = Field(
-        description="Queries that can be answered independently", )
+        description="Queries that can be answered independently",
+    )
 
     # Strategy adaptation
     retrieval_strategy: Literal["broad", "focused", "mixed"] = Field(
-        description="Recommended retrieval strategy", )
+        description="Recommended retrieval strategy",
+    )
     context_sufficiency: float = Field(
         ge=0.0,
         le=1.0,
@@ -134,8 +137,11 @@ class ContextualDecomposition(BaseModel):
 
 
 # Enhanced prompts for query decomposition
-BASIC_DECOMPOSITION_PROMPT = ChatPromptTemplate.from_messages([(
-    "system", """You are an expert at breaking down complex queries into simpler, manageable sub-queries.
+BASIC_DECOMPOSITION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert at breaking down complex queries into simpler, manageable sub-queries.
 
 Your goal is to decompose complex questions into a series of simpler questions that, when answered together, fully address the original query.
 
@@ -154,7 +160,11 @@ Your goal is to decompose complex questions into a series of simpler questions t
 - **Causal**: Cause-and-effect relationships
 - **Hypothetical**: What-if scenarios
 
-Break down the query systematically and logically.""", ), ("human", """Decompose this complex query into manageable sub-queries:
+Break down the query systematically and logically.""",
+        ),
+        (
+            "human",
+            """Decompose this complex query into manageable sub-queries:
 
 **Query:** {query}
 
@@ -167,12 +177,16 @@ Break down the query systematically and logically.""", ), ("human", """Decompose
 3. Determine execution order and dependencies
 4. Suggest how to synthesize the results
 
-Provide a structured decomposition.""", ), ], )
+Provide a structured decomposition.""",
+        ),
+    ],
+)
 
-HIERARCHICAL_DECOMPOSITION_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert at hierarchical query decomposition.
+HIERARCHICAL_DECOMPOSITION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert at hierarchical query decomposition.
 
 Create a hierarchical breakdown where:
 - **Level 1**: Main question (broad, overarching)
@@ -181,22 +195,24 @@ Create a hierarchical breakdown where:
 
 Each level can be processed in parallel, but levels must be processed sequentially.
 Higher levels provide context for lower levels.""",
-    ),
-    (
-        "human",
-        """Create a hierarchical decomposition:
+        ),
+        (
+            "human",
+            """Create a hierarchical decomposition:
 
 **Query:** {query}
 **Context:** {retrieved_documents}
 
 Break this into a clear hierarchy of questions that build upon each other.""",
-    ),
-], )
+        ),
+    ],
+)
 
-CONTEXTUAL_DECOMPOSITION_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert at context-aware query decomposition.
+CONTEXTUAL_DECOMPOSITION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert at context-aware query decomposition.
 
 Analyze the available context and create a decomposition strategy that:
 1. Leverages existing context effectively
@@ -205,10 +221,10 @@ Analyze the available context and create a decomposition strategy that:
 4. Adapts strategy based on context quality
 
 Consider both what can be answered with current context and what requires additional retrieval.""",
-    ),
-    (
-        "human",
-        """Create a context-aware decomposition:
+        ),
+        (
+            "human",
+            """Create a context-aware decomposition:
 
 **Query:** {query}
 
@@ -220,13 +236,15 @@ Consider both what can be answered with current context and what requires additi
 - Previous results: {previous_results}
 
 Analyze context sufficiency and create an appropriate decomposition strategy.""",
-    ),
-], )
+        ),
+    ],
+)
 
-ADAPTIVE_DECOMPOSITION_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an adaptive query decomposition expert.
+ADAPTIVE_DECOMPOSITION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an adaptive query decomposition expert.
 
 Your decomposition strategy should adapt based on:
 - Query complexity and type
@@ -235,10 +253,10 @@ Your decomposition strategy should adapt based on:
 - Time and resource constraints
 
 Provide multiple decomposition approaches and select the best one based on the situation.""",
-    ),
-    (
-        "human",
-        """Create an adaptive decomposition strategy:
+        ),
+        (
+            "human",
+            """Create an adaptive decomposition strategy:
 
 **Query:** {query}
 **Context:** {retrieved_documents}
@@ -246,8 +264,9 @@ Provide multiple decomposition approaches and select the best one based on the s
 **Previous attempts:** {previous_decompositions}
 
 Provide the optimal decomposition approach for this situation.""",
-    ),
-], )
+        ),
+    ],
+)
 
 
 class QueryDecomposerAgent(Agent):
@@ -296,34 +315,29 @@ class QueryDecomposerAgent(Agent):
             # Format context info
             context_info = ""
             if retrieved_documents:
-                context_info = f"Available documents: {
-                    len(retrieved_documents)} documents"
+                context_info = f"Available documents: {len(retrieved_documents)} documents"
                 context_info += (
                     f"\nSample content: {retrieved_documents[0].page_content[:200]}..."
-                    if retrieved_documents else "")
+                    if retrieved_documents
+                    else ""
+                )
             else:
                 context_info = "No context documents available"
 
             # Get decomposition
             decomposition = decomposition_engine.invoke(
-                {
-                    "query": query,
-                    "context_info": context_info
-                }, )
+                {"query": query, "context_info": context_info},
+            )
 
             # Limit number of sub-queries
             if len(decomposition.sub_queries) > self.max_sub_queries:
-                decomposition.sub_queries = decomposition.sub_queries[:self.
-                                                                      max_sub_queries]
-                decomposition.execution_order = decomposition.execution_order[:
-                                                                              self
-                                                                              .
-                                                                              max_sub_queries]
+                decomposition.sub_queries = decomposition.sub_queries[: self.max_sub_queries]
+                decomposition.execution_order = decomposition.execution_order[
+                    : self.max_sub_queries
+                ]
 
             # Extract sub-query texts for easy access
-            sub_query_texts = [
-                sq.query_text for sq in decomposition.sub_queries
-            ]
+            sub_query_texts = [sq.query_text for sq in decomposition.sub_queries]
 
             return {
                 "query_decomposition": decomposition,
@@ -385,17 +399,21 @@ class HierarchicalQueryDecomposerAgent(Agent):
             retrieved_documents = getattr(state, "retrieved_documents", [])
 
             # Format documents
-            doc_context = ("\n\n".join([
-                f"Document {i + 1}: {doc.page_content[:300]}..."
-                for i, doc in enumerate(retrieved_documents[:3])
-            ], ) if retrieved_documents else "No documents available")
+            doc_context = (
+                "\n\n".join(
+                    [
+                        f"Document {i + 1}: {doc.page_content[:300]}..."
+                        for i, doc in enumerate(retrieved_documents[:3])
+                    ],
+                )
+                if retrieved_documents
+                else "No documents available"
+            )
 
             # Get hierarchical decomposition
             decomposition = decomposition_engine.invoke(
-                {
-                    "query": query,
-                    "retrieved_documents": doc_context
-                }, )
+                {"query": query, "retrieved_documents": doc_context},
+            )
 
             # Build execution plan
             all_questions = [
@@ -468,13 +486,18 @@ class ContextualQueryDecomposerAgent(Agent):
             previous_results = getattr(state, "previous_results", "")
 
             # Format inputs
-            doc_context = ("\n\n".join([
-                f"Doc {i + 1}: {doc.page_content[:200]}..."
-                for i, doc in enumerate(retrieved_documents[:5])
-            ], ) if retrieved_documents else "No documents")
+            doc_context = (
+                "\n\n".join(
+                    [
+                        f"Doc {i + 1}: {doc.page_content[:200]}..."
+                        for i, doc in enumerate(retrieved_documents[:5])
+                    ],
+                )
+                if retrieved_documents
+                else "No documents"
+            )
 
-            message_context = str(
-                messages[-3:]) if messages else "No previous messages"
+            message_context = str(messages[-3:]) if messages else "No previous messages"
 
             # Get contextual decomposition
             decomposition = decomposition_engine.invoke(
@@ -483,28 +506,23 @@ class ContextualQueryDecomposerAgent(Agent):
                     "retrieved_documents": doc_context,
                     "messages": message_context,
                     "previous_results": str(previous_results),
-                }, )
+                },
+            )
 
             # Determine strategy based on context sufficiency
             needs_more_context = decomposition.context_sufficiency < self.context_threshold
 
             return {
-                "contextual_decomposition":
-                decomposition,
-                "context_dependent_queries":
-                decomposition.context_dependent_queries,
-                "context_independent_queries":
-                decomposition.context_independent_queries,
-                "missing_context_queries":
-                decomposition.missing_context_queries,
-                "context_sufficiency":
-                decomposition.context_sufficiency,
-                "needs_more_context":
-                needs_more_context,
-                "retrieval_strategy":
-                decomposition.retrieval_strategy,
-                "recommended_approach": ("gather_context" if needs_more_context
-                                         else "proceed_with_current"),
+                "contextual_decomposition": decomposition,
+                "context_dependent_queries": decomposition.context_dependent_queries,
+                "context_independent_queries": decomposition.context_independent_queries,
+                "missing_context_queries": decomposition.missing_context_queries,
+                "context_sufficiency": decomposition.context_sufficiency,
+                "needs_more_context": needs_more_context,
+                "retrieval_strategy": decomposition.retrieval_strategy,
+                "recommended_approach": (
+                    "gather_context" if needs_more_context else "proceed_with_current"
+                ),
             }
 
         graph.add_node("contextual_decompose", contextual_decompose)
@@ -564,14 +582,13 @@ class AdaptiveQueryDecomposerAgent(Agent):
             elif has_context and len(retrieved_documents) > 3:
                 # Rich context - contextual decomposition
                 strategy = "contextual"
-                decomposer = ContextualQueryDecomposerAgent(
-                    llm_config=self.llm_config)
-            elif "step" in query.lower() or "first" in query.lower(
-            ) or "then" in query.lower():
+                decomposer = ContextualQueryDecomposerAgent(llm_config=self.llm_config)
+            elif "step" in query.lower() or "first" in query.lower() or "then" in query.lower():
                 # Sequential indicators - hierarchical decomposition
                 strategy = "hierarchical"
                 decomposer = HierarchicalQueryDecomposerAgent(
-                    llm_config=self.llm_config, )
+                    llm_config=self.llm_config,
+                )
             else:
                 # Default to basic decomposition
                 strategy = "basic"
@@ -582,40 +599,36 @@ class AdaptiveQueryDecomposerAgent(Agent):
                 result = decomposer.run(state)
 
                 # Add strategy metadata
-                result_dict = result if isinstance(result, dict) else {
-                    "result": result
-                }
+                result_dict = result if isinstance(result, dict) else {"result": result}
                 result_dict.update(
                     {
                         "decomposition_strategy_used": strategy,
-                        "adaptive_choice_reasoning":
-                        f"Selected {strategy} based on query analysis",
+                        "adaptive_choice_reasoning": f"Selected {strategy} based on query analysis",
                         "fallback_available": self.enable_fallback,
-                        "strategy_confidence":
-                        0.8,  # Could be improved with more sophisticated analysis
-                    }, )
+                        "strategy_confidence": 0.8,  # Could be improved with more sophisticated analysis
+                    },
+                )
 
                 return result_dict
 
             except Exception as e:
                 if self.enable_fallback:
                     logger.warning(
-                        f"Decomposition strategy {strategy} failed, falling back to basic: {e}", )
+                        f"Decomposition strategy {strategy} failed, falling back to basic: {e}",
+                    )
                     # Fallback to basic decomposition
-                    basic_decomposer = QueryDecomposerAgent(
-                        llm_config=self.llm_config)
+                    basic_decomposer = QueryDecomposerAgent(llm_config=self.llm_config)
                     result = basic_decomposer.run(state)
 
-                    result_dict = result if isinstance(result, dict) else {
-                        "result": result
-                    }
+                    result_dict = result if isinstance(result, dict) else {"result": result}
                     result_dict.update(
                         {
                             "decomposition_strategy_used": "basic_fallback",
                             "original_strategy": strategy,
                             "fallback_reason": str(e),
                             "strategy_confidence": 0.6,
-                        }, )
+                        },
+                    )
                     return result_dict
                 raise
 
@@ -650,8 +663,7 @@ def create_query_decomposer(
     if decomposer_type == "basic":
         return QueryDecomposerAgent(llm_config=llm_config, **kwargs)
     if decomposer_type == "hierarchical":
-        return HierarchicalQueryDecomposerAgent(llm_config=llm_config,
-                                                **kwargs)
+        return HierarchicalQueryDecomposerAgent(llm_config=llm_config, **kwargs)
     if decomposer_type == "contextual":
         return ContextualQueryDecomposerAgent(llm_config=llm_config, **kwargs)
     if decomposer_type == "adaptive":

@@ -210,8 +210,7 @@ class SimpleAgent(Agent):
         if isinstance(v, dict):
             return AugLLMConfig(**v)
         if not isinstance(v, AugLLMConfig):
-            raise ValueError(
-                f"SimpleAgent requires AugLLMConfig, got {type(v)}")
+            raise ValueError(f"SimpleAgent requires AugLLMConfig, got {type(v)}")
         return v
 
     # ========================================================================
@@ -303,8 +302,7 @@ class SimpleAgent(Agent):
 
         # Add tool node if needed
         if needs_tools:
-            tool_config = ToolNodeConfig(name="tool_node",
-                                         engine_name=self.engine.name)
+            tool_config = ToolNodeConfig(name="tool_node", engine_name=self.engine.name)
             graph.add_node("tool_node", tool_config)
 
         # Add parser node if needed
@@ -332,10 +330,7 @@ class SimpleAgent(Agent):
                 graph.add_conditional_edges(
                     "agent_node",
                     has_tool_calls,
-                    {
-                        True: "validation",
-                        False: END
-                    },
+                    {True: "validation", False: END},
                 )
 
         return graph
@@ -348,8 +343,8 @@ class SimpleAgent(Agent):
         """Check if agent has structured output."""
         return bool(
             self.structured_output_model
-            or (self.engine
-                and getattr(self.engine, "structured_output_model", None)), )
+            or (self.engine and getattr(self.engine, "structured_output_model", None)),
+        )
 
     def _always_needs_validation(self) -> bool:
         """Check if we always need validation (structured output or parser)."""

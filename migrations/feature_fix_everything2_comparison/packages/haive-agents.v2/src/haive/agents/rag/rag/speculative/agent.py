@@ -51,40 +51,34 @@ class Hypothesis(BaseModel):
     text: str = Field(description="Hypothesis statement")
 
     # Confidence and quality
-    confidence: HypothesisConfidence = Field(
-        description="Initial confidence level")
+    confidence: HypothesisConfidence = Field(description="Initial confidence level")
     confidence_score: float = Field(
         ge=0.0,
         le=1.0,
         description="Numerical confidence (0-1)",
     )
-    plausibility: float = Field(ge=0.0,
-                                le=1.0,
-                                description="Plausibility assessment")
+    plausibility: float = Field(ge=0.0, le=1.0, description="Plausibility assessment")
 
     # Supporting information
     reasoning: str = Field(description="Reasoning behind hypothesis")
     key_assumptions: list[str] = Field(description="Key assumptions made")
-    supporting_evidence: list[str] = Field(
-        description="Initial supporting evidence")
+    supporting_evidence: list[str] = Field(description="Initial supporting evidence")
 
     # Verification planning
     verification_criteria: list[str] = Field(
-        description="How to verify this hypothesis", )
-    required_evidence: list[str] = Field(
-        description="Evidence needed for verification")
+        description="How to verify this hypothesis",
+    )
+    required_evidence: list[str] = Field(description="Evidence needed for verification")
     verification_complexity: str = Field(
-        description="Complexity of verification process", )
+        description="Complexity of verification process",
+    )
 
     # Processing metadata
-    generation_method: str = Field(
-        description="How this hypothesis was generated")
-    related_hypotheses: list[str] = Field(
-        description="IDs of related hypotheses")
+    generation_method: str = Field(description="How this hypothesis was generated")
+    related_hypotheses: list[str] = Field(description="IDs of related hypotheses")
 
     # Verification results (updated during verification)
-    verification_status: VerificationStatus = Field(
-        default=VerificationStatus.PENDING)
+    verification_status: VerificationStatus = Field(default=VerificationStatus.PENDING)
     verification_score: float | None = Field(default=None, ge=0.0, le=1.0)
     verification_evidence: list[str] = Field(default_factory=list)
     verification_reasoning: str | None = Field(default=None)
@@ -94,19 +88,18 @@ class SpeculativeExecutionPlan(BaseModel):
     """Plan for executing speculative retrieval and verification."""
 
     total_hypotheses: int = Field(description="Total number of hypotheses")
-    parallel_batches: int = Field(
-        description="Number of parallel processing batches")
+    parallel_batches: int = Field(description="Number of parallel processing batches")
     batch_size: int = Field(description="Hypotheses per batch")
 
     # Execution strategy
     verification_strategy: str = Field(description="Strategy for verification")
-    evidence_gathering_depth: str = Field(
-        description="Depth of evidence gathering")
+    evidence_gathering_depth: str = Field(description="Depth of evidence gathering")
     convergence_criteria: str = Field(description="When to stop processing")
 
     # Resource allocation
     time_budget_per_hypothesis: str = Field(
-        description="Time allocation per hypothesis", )
+        description="Time allocation per hypothesis",
+    )
     verification_thoroughness: str = Field(description="Thoroughness level")
 
     # Quality control
@@ -127,27 +120,27 @@ class SpeculativeExecutionPlan(BaseModel):
         le=5,
         description="Maximum verification iterations",
     )
-    refinement_enabled: bool = Field(
-        description="Whether to refine hypotheses")
+    refinement_enabled: bool = Field(description="Whether to refine hypotheses")
 
     execution_metadata: dict[str, Any] = Field(
-        description="Additional execution parameters", )
+        description="Additional execution parameters",
+    )
 
 
 class SpeculativeResult(BaseModel):
     """Results from speculative RAG processing."""
 
     original_query: str = Field(description="Original query")
-    total_hypotheses_generated: int = Field(
-        description="Total hypotheses created")
+    total_hypotheses_generated: int = Field(description="Total hypotheses created")
 
     # Hypothesis outcomes
     verified_hypotheses: list[Hypothesis] = Field(
-        description="Successfully verified hypotheses", )
-    refuted_hypotheses: list[Hypothesis] = Field(
-        description="Refuted hypotheses")
+        description="Successfully verified hypotheses",
+    )
+    refuted_hypotheses: list[Hypothesis] = Field(description="Refuted hypotheses")
     inconclusive_hypotheses: list[Hypothesis] = Field(
-        description="Inconclusive hypotheses", )
+        description="Inconclusive hypotheses",
+    )
 
     # Quality metrics
     overall_confidence: float = Field(
@@ -174,7 +167,8 @@ class SpeculativeResult(BaseModel):
     )
     conflicting_evidence: list[str] = Field(description="Identified conflicts")
     confidence_distribution: dict[str, int] = Field(
-        description="Distribution of confidence levels", )
+        description="Distribution of confidence levels",
+    )
 
     # Final synthesis
     synthesized_answer: str = Field(description="Final synthesized answer")
@@ -182,14 +176,16 @@ class SpeculativeResult(BaseModel):
     limitations: list[str] = Field(description="Identified limitations")
 
     processing_metadata: dict[str, Any] = Field(
-        description="Processing statistics and metadata", )
+        description="Processing statistics and metadata",
+    )
 
 
 # Enhanced prompts for speculative processing
-HYPOTHESIS_GENERATION_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert hypothesis generator for speculative reasoning.
+HYPOTHESIS_GENERATION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert hypothesis generator for speculative reasoning.
 
 Generate multiple plausible hypotheses that could answer the query:
 
@@ -214,10 +210,10 @@ Generate multiple plausible hypotheses that could answer the query:
 - Hypotheses with varying complexity levels
 
 Generate 3-7 diverse, high-quality hypotheses for comprehensive coverage.""",
-    ),
-    (
-        "human",
-        """Generate hypotheses for this query:
+        ),
+        (
+            "human",
+            """Generate hypotheses for this query:
 
 **Query:** {query}
 
@@ -239,13 +235,15 @@ For each hypothesis, provide:
 - Key assumptions and supporting rationale
 
 Focus on generating testable, diverse hypotheses for comprehensive analysis.""",
-    ),
-], )
+        ),
+    ],
+)
 
-HYPOTHESIS_VERIFICATION_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert hypothesis verifier for speculative reasoning.
+HYPOTHESIS_VERIFICATION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert hypothesis verifier for speculative reasoning.
 
 Verify hypotheses using available evidence and reasoning:
 
@@ -269,10 +267,10 @@ Verify hypotheses using available evidence and reasoning:
 - Needs More Data: Requires additional information
 
 Provide detailed, objective verification assessments.""",
-    ),
-    (
-        "human",
-        """Verify this hypothesis using available evidence:
+        ),
+        (
+            "human",
+            """Verify this hypothesis using available evidence:
 
 **Hypothesis:** {hypothesis_text}
 
@@ -295,13 +293,15 @@ Perform thorough verification:
 5. Determine verification status and confidence
 
 Provide objective, evidence-based verification with detailed reasoning.""",
-    ),
-], )
+        ),
+    ],
+)
 
-SPECULATIVE_SYNTHESIS_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert at synthesizing results from speculative reasoning.
+SPECULATIVE_SYNTHESIS_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert at synthesizing results from speculative reasoning.
 
 Combine verified hypotheses into comprehensive answers:
 
@@ -319,10 +319,10 @@ Combine verified hypotheses into comprehensive answers:
 - Provide balanced, comprehensive conclusions
 
 Generate nuanced, evidence-based answers that reflect the full speculative analysis.""",
-    ),
-    (
-        "human",
-        """Synthesize results from speculative hypothesis analysis:
+        ),
+        (
+            "human",
+            """Synthesize results from speculative hypothesis analysis:
 
 **Original Query:** {query}
 
@@ -347,8 +347,9 @@ Create comprehensive synthesis:
 5. Provide balanced, evidence-based conclusions
 
 Focus on nuanced, well-supported answers that reflect the speculative analysis.""",
-    ),
-], )
+        ),
+    ],
+)
 
 
 class HypothesisGeneratorAgent(Agent):
@@ -403,33 +404,36 @@ class HypothesisGeneratorAgent(Agent):
 
             # Format context
             if isinstance(context, list):
-                context_str = ("\n".join([
-                    f"Doc {i + 1}: {doc.page_content[:200]}..."
-                    for i, doc in enumerate(context[:5])
-                ], ) if context else "No context available")
+                context_str = (
+                    "\n".join(
+                        [
+                            f"Doc {i + 1}: {doc.page_content[:200]}..."
+                            for i, doc in enumerate(context[:5])
+                        ],
+                    )
+                    if context
+                    else "No context available"
+                )
             else:
-                context_str = (str(context)[:800] + "..."
-                               if len(str(context)) > 800 else str(context))
+                context_str = (
+                    str(context)[:800] + "..." if len(str(context)) > 800 else str(context)
+                )
 
             # Domain information extraction
             domain_info = self._extract_domain_info(query)
 
             # Generate hypotheses
             hypotheses = generation_engine.invoke(
-                {
-                    "query": query,
-                    "context": context_str,
-                    "domain_info": domain_info
-                }, )
+                {"query": query, "context": context_str, "domain_info": domain_info},
+            )
 
             # Ensure we have the right number and assign IDs
             if len(hypotheses) > self.num_hypotheses:
-                hypotheses = hypotheses[:self.num_hypotheses]
+                hypotheses = hypotheses[: self.num_hypotheses]
 
             for i, hypothesis in enumerate(hypotheses):
                 hypothesis.id = f"hyp_{i + 1}"
-                hypothesis.generation_method = f"speculative_generation_{
-                    self.hypothesis_diversity}"
+                hypothesis.generation_method = f"speculative_generation_{self.hypothesis_diversity}"
 
             return {
                 "hypotheses": hypotheses,
@@ -448,8 +452,7 @@ class HypothesisGeneratorAgent(Agent):
         """Extract domain information for hypothesis generation."""
         # Simple domain detection for context
         domain_indicators = {
-            "technical":
-            ["how does", "algorithm", "system", "process", "mechanism"],
+            "technical": ["how does", "algorithm", "system", "process", "mechanism"],
             "factual": ["what is", "when did", "where is", "who is", "which"],
             "analytical": ["why", "analyze", "compare", "evaluate", "assess"],
             "creative": ["imagine", "suppose", "what if", "hypothetically"],
@@ -462,8 +465,7 @@ class HypothesisGeneratorAgent(Agent):
             if any(indicator in query_lower for indicator in indicators):
                 detected_types.append(domain_type)
 
-        return f"Query types: {
-            ', '.join(detected_types)}" if detected_types else "General query"
+        return f"Query types: {', '.join(detected_types)}" if detected_types else "General query"
 
 
 class ParallelVerificationAgent(Agent):
@@ -513,8 +515,7 @@ class ParallelVerificationAgent(Agent):
             output_key="verified_hypothesis",
         )
 
-        def verify_hypotheses_parallel(
-                state: dict[str, Any]) -> dict[str, Any]:
+        def verify_hypotheses_parallel(state: dict[str, Any]) -> dict[str, Any]:
             """Verify hypotheses in parallel batches."""
             hypotheses = getattr(state, "hypotheses", [])
             query = getattr(state, "query", "")
@@ -533,40 +534,38 @@ class ParallelVerificationAgent(Agent):
 
             # Process hypotheses in batches
             for i in range(0, len(hypotheses), batch_size):
-                batch = hypotheses[i:i + batch_size]
+                batch = hypotheses[i : i + batch_size]
                 batch_results = self._verify_hypothesis_batch(batch, query)
                 verification_results.update(batch_results)
                 verified_hypotheses.extend(batch_results.values())
 
             # Categorize results
             verified = [
-                h for h in verified_hypotheses
+                h
+                for h in verified_hypotheses
                 if h.verification_status == VerificationStatus.VERIFIED
             ]
             refuted = [
-                h for h in verified_hypotheses
+                h
+                for h in verified_hypotheses
                 if h.verification_status == VerificationStatus.REFUTED
             ]
             inconclusive = [
-                h for h in verified_hypotheses
+                h
+                for h in verified_hypotheses
                 if h.verification_status == VerificationStatus.INCONCLUSIVE
             ]
 
             return {
-                "verified_hypotheses":
-                verified,
-                "refuted_hypotheses":
-                refuted,
-                "inconclusive_hypotheses":
-                inconclusive,
-                "all_verified_hypotheses":
-                verified_hypotheses,
-                "verification_results":
-                verification_results,
-                "verification_success_rate":
-                (len(verified) / len(hypotheses) if hypotheses else 0.0),
-                "verification_complete":
-                True,
+                "verified_hypotheses": verified,
+                "refuted_hypotheses": refuted,
+                "inconclusive_hypotheses": inconclusive,
+                "all_verified_hypotheses": verified_hypotheses,
+                "verification_results": verification_results,
+                "verification_success_rate": (
+                    len(verified) / len(hypotheses) if hypotheses else 0.0
+                ),
+                "verification_complete": True,
             }
 
         graph.add_node("verify_parallel", verify_hypotheses_parallel)
@@ -586,8 +585,7 @@ class ParallelVerificationAgent(Agent):
         for hypothesis in hypotheses:
             try:
                 # Gather evidence for hypothesis
-                evidence = self._gather_evidence_for_hypothesis(
-                    hypothesis, query)
+                evidence = self._gather_evidence_for_hypothesis(hypothesis, query)
 
                 # Verify using evidence
                 verification_result = self._verify_single_hypothesis(
@@ -603,8 +601,7 @@ class ParallelVerificationAgent(Agent):
                 )
                 # Mark as inconclusive on error
                 hypothesis.verification_status = VerificationStatus.INCONCLUSIVE
-                hypothesis.verification_reasoning = f"Verification failed due to error: {
-                    e!s}"
+                hypothesis.verification_reasoning = f"Verification failed due to error: {e!s}"
                 results[hypothesis.id] = hypothesis
 
         return results
@@ -630,10 +627,16 @@ class ParallelVerificationAgent(Agent):
                 docs = []
 
             # Format evidence
-            evidence = ("\n".join([
-                f"Evidence {i + 1}: {doc.page_content[:300]}..."
-                for i, doc in enumerate(docs)
-            ], ) if docs else "No specific evidence found in documents")
+            evidence = (
+                "\n".join(
+                    [
+                        f"Evidence {i + 1}: {doc.page_content[:300]}..."
+                        for i, doc in enumerate(docs)
+                    ],
+                )
+                if docs
+                else "No specific evidence found in documents"
+            )
 
             return evidence
 
@@ -659,19 +662,16 @@ class ParallelVerificationAgent(Agent):
 
             verified_hypothesis = verification_engine.invoke(
                 {
-                    "hypothesis_text":
-                    hypothesis.text,
-                    "hypothesis_confidence":
-                    hypothesis.confidence,
-                    "hypothesis_reasoning":
-                    hypothesis.reasoning,
-                    "verification_criteria":
-                    ", ".join(hypothesis.verification_criteria, ),
-                    "evidence":
-                    evidence,
-                    "context":
-                    f"Original query: {query}",
-                }, )
+                    "hypothesis_text": hypothesis.text,
+                    "hypothesis_confidence": hypothesis.confidence,
+                    "hypothesis_reasoning": hypothesis.reasoning,
+                    "verification_criteria": ", ".join(
+                        hypothesis.verification_criteria,
+                    ),
+                    "evidence": evidence,
+                    "context": f"Original query: {query}",
+                },
+            )
 
             # Preserve original ID and metadata
             verified_hypothesis.id = hypothesis.id

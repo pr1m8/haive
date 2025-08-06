@@ -1,4 +1,5 @@
 """Module exports."""
+
 from __future__ import annotations
 
 from haive.agents.reasoning_and_critique.logic.models import ArgumentStrength
@@ -24,25 +25,25 @@ from haive.agents.reasoning_and_critique.logic.models import ReasoningType
 from haive.agents.reasoning_and_critique.logic.models import UncertaintyAnalysis
 
 __all__ = [
-    'ArgumentStrength',
-    'ArgumentStructure',
-    'Assumption',
-    'BiasAssessment',
-    'BiasType',
-    'CertaintyLevel',
-    'CounterArgument',
-    'Evidence',
-    'EvidenceType',
-    'FallacyDetection',
-    'LogicalFallacy',
-    'LogicalStep',
-    'Premise',
-    'ReasoningAnalysis',
-    'ReasoningChain',
-    'ReasoningQuality',
-    'ReasoningReport',
-    'ReasoningType',
-    'UncertaintyAnalysis',
-    'max_inference_chain',
-    'num_steps',
+    "ArgumentStrength",
+    "ArgumentStructure",
+    "Assumption",
+    "BiasAssessment",
+    "BiasType",
+    "CertaintyLevel",
+    "CounterArgument",
+    "Evidence",
+    "EvidenceType",
+    "FallacyDetection",
+    "LogicalFallacy",
+    "LogicalStep",
+    "Premise",
+    "ReasoningAnalysis",
+    "ReasoningChain",
+    "ReasoningQuality",
+    "ReasoningReport",
+    "ReasoningType",
+    "UncertaintyAnalysis",
+    "max_inference_chain",
+    "num_steps",
 ]

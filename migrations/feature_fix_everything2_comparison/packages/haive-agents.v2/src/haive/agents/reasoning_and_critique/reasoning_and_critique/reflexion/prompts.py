@@ -10,23 +10,25 @@ import datetime
 from agents.reflexion.models import AnswerQuestion, ReviseAnswer
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-actor_prompt_template = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are {role}.
+actor_prompt_template = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are {role}.
 Current time: {time}
 
 1. {first_instruction}
 2. Reflect and critique your answer. Be severe to maximize improvement.
 3. Recommend search queries to research information and improve your answer.""",
-    ),
-    MessagesPlaceholder(variable_name="messages"),
-    (
-        "user",
-        "\n\n<system>Reflect on the user's original question and the"
-        " actions taken thus far. Respond using the {function_name} function.</reminder>",
-    ),
-], ).partial(
+        ),
+        MessagesPlaceholder(variable_name="messages"),
+        (
+            "user",
+            "\n\n<system>Reflect on the user's original question and the"
+            " actions taken thus far. Respond using the {function_name} function.</reminder>",
+        ),
+    ],
+).partial(
     role="expert researcher",
     time=lambda: datetime.datetime.now().isoformat(),
 )

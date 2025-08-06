@@ -1,4 +1,5 @@
 """Node Schema Composer - Flexible I/O configuration for graph nodes."""
+
 from __future__ import annotations
 
 from haive.core.graph.node.composer.extract_functions import extract_conditional
@@ -80,14 +81,16 @@ __all__ = [
 
 # Add advanced features to __all__ if available
 if _advanced_available:
-    __all__.extend([
-        "AdvancedComposedNode",
-        "AdvancedNodeComposer",
-        "TypedCallableNode",
-        "as_node",
-        "callable_to_node",
-        "node_with_custom_logic",
-    ], )
+    __all__.extend(
+        [
+            "AdvancedComposedNode",
+            "AdvancedNodeComposer",
+            "TypedCallableNode",
+            "as_node",
+            "callable_to_node",
+            "node_with_custom_logic",
+        ],
+    )
 
 # Import integrated features if available
 try:
@@ -97,11 +100,13 @@ except ImportError:
 
 # Add integrated features to __all__ if available
 if _integrated_available:
-    __all__.extend([
-        "IntegratedNodeComposer",
-        "SchemaAwareComposedNode",
-        "StateSchemaAdapter",
-        "create_schema_aware_node",
-        "integrate_node_with_schema",
-        "with_state_schema",
-    ], )
+    __all__.extend(
+        [
+            "IntegratedNodeComposer",
+            "SchemaAwareComposedNode",
+            "StateSchemaAdapter",
+            "create_schema_aware_node",
+            "integrate_node_with_schema",
+            "with_state_schema",
+        ],
+    )

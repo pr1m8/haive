@@ -51,9 +51,7 @@ class MemoryItem(BaseModel):
     memory_type: MemoryType = Field(description="Type of memory")
     content: str = Field(description="Memory content")
     importance: MemoryImportance = Field(description="Importance level")
-    confidence: float = Field(ge=0.0,
-                              le=1.0,
-                              description="Confidence in this memory")
+    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in this memory")
     created_at: datetime = Field(default_factory=datetime.now)
     keywords: list[str] = Field(
         default_factory=list,
@@ -96,24 +94,27 @@ class MemoryRetrievalAgent(Agent):
 
             for memory in self.memory_store.values():
                 keyword_overlap = len(
-                    query_words.intersection(
-                        {kw.lower()
-                         for kw in memory.keywords}), )
+                    query_words.intersection({kw.lower() for kw in memory.keywords}),
+                )
                 if keyword_overlap > 0:
                     score = keyword_overlap / len(query_words)
                     relevant_memories.append((memory, score))
 
             # Sort by relevance and take top memories
             relevant_memories.sort(key=lambda x: x[1], reverse=True)
-            selected_memories = [
-                mem for mem, _ in relevant_memories[:self.max_memories]
-            ]
+            selected_memories = [mem for mem, _ in relevant_memories[: self.max_memories]]
 
             # Format memory context
-            memory_context = ("\n".join([
-                f"Memory ({mem.memory_type.value}): {mem.content}"
-                for mem in selected_memories
-            ], ) if selected_memories else "No relevant memories found.")
+            memory_context = (
+                "\n".join(
+                    [
+                        f"Memory ({mem.memory_type.value}): {mem.content}"
+                        for mem in selected_memories
+                    ],
+                )
+                if selected_memories
+                else "No relevant memories found."
+            )
 
             return {
                 "retrieved_memories": selected_memories,
@@ -166,12 +167,14 @@ class MemoryAwareRAGAgent(SequentialAgent):
                 llm_config=llm_config,
                 prompt_template=ChatPromptTemplate.from_messages(
                     [
-                        ("system",
-                         "You are an expert at integrating memory context with retrieved documents.",
-                         ),
-                        ("human",
-                         "Query: {query}\nMemory Context: {memory_context}\nDocuments: {retrieved_documents}\nProvide integrated response.",
-                         ),
+                        (
+                            "system",
+                            "You are an expert at integrating memory context with retrieved documents.",
+                        ),
+                        (
+                            "human",
+                            "Query: {query}\nMemory Context: {memory_context}\nDocuments: {retrieved_documents}\nProvide integrated response.",
+                        ),
                     ],
                 ),
             ),

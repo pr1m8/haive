@@ -7,7 +7,8 @@ models from common.
 from typing import Any
 
 from haive.agents.rag.common.document_graders.models import (
-    DocumentBinaryResponse, )
+    DocumentBinaryResponse,
+)
 from haive.agents.simple import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 
@@ -60,7 +61,8 @@ def create_document_grader_agent(
         "5. Assign a confidence score (0-1)\n\n"
         "Be strict but fair - documents should directly relate to the query to pass.\n\n"
         "Query: {query}\n\n"
-        "Documents to grade:\n{documents}")
+        "Documents to grade:\n{documents}"
+    )
 
     return SimpleAgent(
         name=name,

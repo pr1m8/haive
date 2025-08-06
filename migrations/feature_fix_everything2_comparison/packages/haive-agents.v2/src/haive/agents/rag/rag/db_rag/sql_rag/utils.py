@@ -16,6 +16,7 @@ Example:
         >>> print(f"Available tools: {[tool.name for tool in tools]}")
         Available tools: ['sql_db_query', 'sql_db_schema', 'sql_db_list_tables', ...]
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -72,7 +73,7 @@ def create_sql_toolkit(
     # Get database instance
     db = db_config.get_sql_db()
     if not db:
-        raise ValueError('Failed to initialize SQL database connection')
+        raise ValueError("Failed to initialize SQL database connection")
 
     # Initialize LLM
     if llm_config and isinstance(llm_config, LLMConfig):
@@ -109,7 +110,8 @@ def get_all_toolkit_tools(toolkit: SQLDatabaseToolkit) -> list[BaseTool]:
 
 
 def create_tool_node_with_fallback(
-        tools: BaseTool | list[BaseTool], ) -> RunnableWithFallbacks:
+    tools: BaseTool | list[BaseTool],
+) -> RunnableWithFallbacks:
     """Create a ToolNode with a fallback to handle errors gracefully.
 
     This function wraps tools in a ToolNode with error handling that
@@ -138,7 +140,7 @@ def create_tool_node_with_fallback(
     # Create tool node with fallback
     return ToolNode(tools).with_fallbacks(
         [RunnableLambda(handle_tool_error)],
-        exception_key='error',
+        exception_key="error",
     )
 
 
@@ -163,13 +165,13 @@ def handle_tool_error(state: dict[str, Any]) -> dict[str, Any]:
         >>> print(result["messages"][0].content)
         'Error: ValueError("Table \'users\' does not exist")\\nPlease fix your mistakes.'
     """
-    error = state.get('error')
+    error = state.get("error")
 
     # Check if there are tool calls in the last message
     tool_calls = []
-    if state.get('messages'):
-        last_message = state['messages'][-1]
-        if hasattr(last_message, 'tool_calls'):
+    if state.get("messages"):
+        last_message = state["messages"][-1]
+        if hasattr(last_message, "tool_calls"):
             tool_calls = last_message.tool_calls
 
     # If we have tool calls, create tool messages for each
@@ -177,16 +179,17 @@ def handle_tool_error(state: dict[str, Any]) -> dict[str, Any]:
         from langchain_core.messages import ToolMessage
 
         return {
-            'messages': [
+            "messages": [
                 ToolMessage(
                     content=f"Error: {error!r}\nPlease fix your mistakes.",
-                    tool_call_id=tc['id'],
-                ) for tc in tool_calls
+                    tool_call_id=tc["id"],
+                )
+                for tc in tool_calls
             ],
         }
 
     # Otherwise, just add error to state
-    return {'sql_errors': [f"Error: {error!r}"]}
+    return {"sql_errors": [f"Error: {error!r}"]}
 
 
 def explore_database_schema(db: SQLDatabase) -> dict[str, Any]:
@@ -229,50 +232,52 @@ def explore_database_schema(db: SQLDatabase) -> dict[str, Any]:
         querying database metadata directly.
     """
     schema_info = {
-        'tables': db.get_usable_table_names(),
-        'table_info': {},
-        'table_samples': {},
-        'relationships': [],
-        'dialect': str(db.dialect),
+        "tables": db.get_usable_table_names(),
+        "table_info": {},
+        "table_samples": {},
+        "relationships": [],
+        "dialect": str(db.dialect),
     }
 
     # Get detailed information for each table
-    for table in schema_info['tables']:
+    for table in schema_info["tables"]:
         # Get schema for this table
-        schema_info['table_info'][table] = db.get_table_info([table])
+        schema_info["table_info"][table] = db.get_table_info([table])
 
         # Get sample data
         try:
             samples = db.run(f"SELECT * FROM {table} LIMIT 3")
-            schema_info['table_samples'][table] = samples
+            schema_info["table_samples"][table] = samples
         except Exception as e:
-            schema_info['table_samples'][
-                table] = f"Error fetching samples: {e!s}"
+            schema_info["table_samples"][table] = f"Error fetching samples: {e!s}"
 
     # Try to detect relationships between tables
     try:
         # This is a simplified approach - won't work for all DB types
         # For a production system, this should be adapted to the specific DB dialect
-        for table1 in schema_info['tables']:
-            for table2 in schema_info['tables']:
+        for table1 in schema_info["tables"]:
+            for table2 in schema_info["tables"]:
                 if table1 != table2:
                     # Look for potential foreign keys based on naming conventions
-                    t1_info = schema_info['table_info'][table1]
-                    schema_info['table_info'][table2]
+                    t1_info = schema_info["table_info"][table1]
+                    schema_info["table_info"][table2]
 
                     # Look for columns with names like "{table}Id" in the other table
-                    for col_line in t1_info.split('\n'):
-                        if (f"{table2.lower()}id" in col_line.lower()
-                                or f"{table2.lower()}_id" in col_line.lower()):
-                            schema_info['relationships'].append(
+                    for col_line in t1_info.split("\n"):
+                        if (
+                            f"{table2.lower()}id" in col_line.lower()
+                            or f"{table2.lower()}_id" in col_line.lower()
+                        ):
+                            schema_info["relationships"].append(
                                 {
-                                    'from_table': table1,
-                                    'to_table': table2,
-                                    'relationship': 'potential_foreign_key',
-                                    'column': col_line.strip(),
-                                }, )
+                                    "from_table": table1,
+                                    "to_table": table2,
+                                    "relationship": "potential_foreign_key",
+                                    "column": col_line.strip(),
+                                },
+                            )
     except Exception as e:
         # Relationship detection is best-effort
-        schema_info['relationship_detection_error'] = str(e)
+        schema_info["relationship_detection_error"] = str(e)
 
     return schema_info

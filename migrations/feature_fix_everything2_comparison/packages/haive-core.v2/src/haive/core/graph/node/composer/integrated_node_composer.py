@@ -179,9 +179,7 @@ class IntegratedNodeComposer(NodeSchemaComposer):
             return FieldDefinition(
                 name=mapping.target_path,
                 type_=original_def.type_,
-                description=f"Mapped from {
-                    mapping.source_path}: {
-                    original_def.description}",
+                description=f"Mapped from {mapping.source_path}: {original_def.description}",
                 owner=base_node.name,
                 sharing_strategy=original_def.sharing_strategy,
                 persistence_strategy=original_def.persistence_strategy,
@@ -223,8 +221,7 @@ class IntegratedNodeComposer(NodeSchemaComposer):
             field_mappings=field_mappings,
             preserve_reducers=preserve_reducers,
             preserve_sharing=preserve_sharing,
-            name=name
-            or f"adapter_{source_schema.__name__}_to_{target_schema.__name__}",
+            name=name or f"adapter_{source_schema.__name__}_to_{target_schema.__name__}",
             composer=self,
         )
 
@@ -309,10 +306,12 @@ class SchemaAwareComposedNode:
         self.composer = composer
 
         # Create extract/update functions
-        self.extract_func = (composer.create_extract_function(input_mappings)
-                             if input_mappings else None)
-        self.update_func = (composer.create_update_function(output_mappings)
-                            if output_mappings else None)
+        self.extract_func = (
+            composer.create_extract_function(input_mappings) if input_mappings else None
+        )
+        self.update_func = (
+            composer.create_update_function(output_mappings) if output_mappings else None
+        )
 
     def __call__(
         self,
@@ -338,8 +337,7 @@ class SchemaAwareComposedNode:
             mapped_updates = self.update_func(actual_result, state, config)
 
             # Apply reducers if using StateSchema
-            if isinstance(state, StateSchema) and hasattr(
-                    state, "__reducer_fields__"):
+            if isinstance(state, StateSchema) and hasattr(state, "__reducer_fields__"):
                 for field, updates in mapped_updates.items():
                     if field in state.__reducer_fields__:
                         reducer = state.__reducer_fields__[field]
@@ -353,8 +351,7 @@ class SchemaAwareComposedNode:
                     return result.model_copy(update={"update": final_updates})
                 result.update = final_updates
                 return result
-            return Command(update=mapped_updates,
-                           goto=getattr(result, "goto", None))
+            return Command(update=mapped_updates, goto=getattr(result, "goto", None))
 
         return result
 
@@ -417,18 +414,16 @@ class StateSchemaAdapter:
             )
 
             # Apply transforms
-            transformed = self.composer._apply_transforms(
-                value, mapping.transform)
+            transformed = self.composer._apply_transforms(value, mapping.transform)
 
             # Handle reducer if preserving
-            if (self.preserve_reducers
-                    and hasattr(self.target_schema, "__reducer_fields__")
-                    and mapping.target_path
-                    in self.target_schema.__reducer_fields__):
-                reducer = self.target_schema.__reducer_fields__[
-                    mapping.target_path]
-                current = getattr(self.target_schema, mapping.target_path,
-                                  None)
+            if (
+                self.preserve_reducers
+                and hasattr(self.target_schema, "__reducer_fields__")
+                and mapping.target_path in self.target_schema.__reducer_fields__
+            ):
+                reducer = self.target_schema.__reducer_fields__[mapping.target_path]
+                current = getattr(self.target_schema, mapping.target_path, None)
                 transformed = reducer(current, transformed)
 
             mapped_data[mapping.target_path] = transformed

@@ -23,6 +23,7 @@ Example:
         >>> # Final output
         >>> state.answer = "The top customers by revenue are..."
 """
+
 from __future__ import annotations
 
 from typing import Any

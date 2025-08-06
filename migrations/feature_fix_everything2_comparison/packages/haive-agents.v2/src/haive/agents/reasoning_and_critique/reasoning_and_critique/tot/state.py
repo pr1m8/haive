@@ -97,7 +97,8 @@ class TOTState(TOTInput, TOTOutput):
                         "score": item.score,
                         "feedback": item.feedback,
                         "metadata": item.metadata,
-                    }, )
+                    },
+                )
             elif isinstance(item, dict):
                 result.append(item)
             else:

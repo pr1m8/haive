@@ -3,6 +3,7 @@
 from typing import Any Iterative document grading with structured
 output. Uses CallableNodeConfig to iterate over retrieved documents.
 """
+
 from __future__ import annotations
 
 from haive.agents.base.agent import Agent
@@ -11,7 +12,8 @@ from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.callable_node import (
-    create_document_grader, )
+    create_document_grader,
+)
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import AzureLLMConfig
 from haive.core.models.llm.base import LLMConfig
@@ -27,26 +29,25 @@ from pydantic import Field
 class SingleDocumentGrade(BaseModel):
     """Grade for a single document."""
 
-    relevance_score: float = Field(ge=0.0,
-                                   le=1.0,
-                                   description='Relevance score 0-1')
-    is_relevant: bool = Field(description='Whether document is relevant')
-    reasoning: str = Field(description='Explanation for the grade')
+    relevance_score: float = Field(ge=0.0, le=1.0, description="Relevance score 0-1")
+    is_relevant: bool = Field(description="Whether document is relevant")
+    reasoning: str = Field(description="Explanation for the grade")
 
 
-SINGLE_DOC_GRADING_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        'system',
-        """You are an expert document grader. Assess this document's relevance to the query.
+SINGLE_DOC_GRADING_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert document grader. Assess this document's relevance to the query.
 
 Provide:
 1. A relevance score (0.0-1.0)
 2. Whether it's relevant (true/false)
 3. Clear reasoning for your assessment""",
-    ),
-    (
-        'human',
-        """Grade this document for relevance.
+        ),
+        (
+            "human",
+            """Grade this document for relevance.
 
 Query: {query}
 
@@ -54,29 +55,30 @@ Document:
 {document}
 
 Provide your assessment.""",
-    ),
-], )
+        ),
+    ],
+)
 
 
 class DocumentGradingAgent(Agent):
     """Agent that iterates over documents and grades each one."""
 
-    name: str = 'Document Grader'
+    name: str = "Document Grader"
     relevance_threshold: float = 0.7
     llm_config: LLMConfig | None = None
 
     def __init__(self, llm_config: LLMConfig | None = None, **kwargs):
         """Initialize with LLM config."""
         self.llm_config = llm_config or AzureLLMConfig(
-            deployment_name='gpt-4',
-            azure_endpoint='${AZURE_OPENAI_API_BASE}',
-            api_key='${AZURE_OPENAI_API_KEY}',
+            deployment_name="gpt-4",
+            azure_endpoint="${AZURE_OPENAI_API_BASE}",
+            api_key="${AZURE_OPENAI_API_KEY}",
         )
         super().__init__(**kwargs)
 
     def build_graph(self) -> BaseGraph:
         """Build graph with document grading using CallableNode iteration."""
-        graph = BaseGraph(name='DocumentGradingGraph')
+        graph = BaseGraph(name="DocumentGradingGraph")
 
         # Create grading engine
         grading_engine = AugLLMConfig(
@@ -88,36 +90,34 @@ class DocumentGradingAgent(Agent):
         # Function to grade a single document
         def grade_single_document(input_data: dict) -> dict:
             """Grade one document using structured output."""
-            document = input_data['current_item']
-            state = input_data['state']
-            item_index = input_data['item_index']
+            document = input_data["current_item"]
+            state = input_data["state"]
+            item_index = input_data["item_index"]
 
-            query = getattr(state, 'query', '')
+            query = getattr(state, "query", "")
 
             # Get structured grade
             grade = grading_engine.invoke(
-                {
-                    'query': query,
-                    'document': document.page_content
-                }, )
+                {"query": query, "document": document.page_content},
+            )
 
             # Return in format expected by CallableNode
             return {
-                'document_id': f"doc_{item_index}",
-                'relevance_score': grade.relevance_score,
-                'is_relevant': grade.is_relevant,
-                'reasoning': grade.reasoning,
+                "document_id": f"doc_{item_index}",
+                "relevance_score": grade.relevance_score,
+                "is_relevant": grade.is_relevant,
+                "reasoning": grade.reasoning,
             }
 
         # Create document grader node that loops over retrieved_documents
         grading_node = create_document_grader(
             grading_func=grade_single_document,
-            name='grade_documents',
+            name="grade_documents",
         )
 
-        graph.add_node('grade', grading_node)
-        graph.add_edge(START, 'grade')
-        graph.add_edge('grade', END)
+        graph.add_node("grade", grading_node)
+        graph.add_edge(START, "grade")
+        graph.add_edge("grade", END)
 
         return graph
 
@@ -136,15 +136,15 @@ class DocumentGradingRAGAgent(SequentialAgent):
         """Create Document Grading RAG from documents."""
         if not llm_config:
             llm_config = AzureLLMConfig(
-                deployment_name='gpt-4',
-                azure_endpoint='${AZURE_OPENAI_API_BASE}',
-                api_key='${AZURE_OPENAI_API_KEY}',
+                deployment_name="gpt-4",
+                azure_endpoint="${AZURE_OPENAI_API_BASE}",
+                api_key="${AZURE_OPENAI_API_KEY}",
             )
 
         # Retrieval
         retrieval_agent = BaseRAGAgent.from_documents(
             documents=documents,
-            name='Grading RAG Retriever',
+            name="Grading RAG Retriever",
         )
 
         # Grading with structured output
@@ -157,25 +157,27 @@ class DocumentGradingRAGAgent(SequentialAgent):
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
                 llm_config=llm_config,
-                prompt_template=ChatPromptTemplate.from_messages([
-                    (
-                        'system',
-                        'Answer based only on relevant documents that passed grading.',
-                    ),
-                    (
-                        'human',
-                        """Answer the query using these relevant documents.
+                prompt_template=ChatPromptTemplate.from_messages(
+                    [
+                        (
+                            "system",
+                            "Answer based only on relevant documents that passed grading.",
+                        ),
+                        (
+                            "human",
+                            """Answer the query using these relevant documents.
 
 Query: {query}
 Relevant Documents: {graded_documents}""",
-                    ),
-                ], ),
+                        ),
+                    ],
+                ),
             ),
-            name='Graded Answer Generator',
+            name="Graded Answer Generator",
         )
 
         return cls(
             agents=[retrieval_agent, grading_agent, answer_agent],
-            name=kwargs.get('name', 'Document Grading RAG Agent'),
+            name=kwargs.get("name", "Document Grading RAG Agent"),
             **kwargs,
         )

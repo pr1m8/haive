@@ -31,11 +31,12 @@ class QueryVariationsFusion(BaseModel):
 
     original_query: str = Field(description="Original query")
     semantic_variations: list[str] = Field(
-        description="Semantically similar variations", )
+        description="Semantically similar variations",
+    )
     syntactic_variations: list[str] = Field(
-        description="Syntactically different variations", )
-    context_variations: list[str] = Field(
-        description="Context-specific variations")
+        description="Syntactically different variations",
+    )
+    context_variations: list[str] = Field(description="Context-specific variations")
 
     fusion_strategy: str = Field(description="Recommended fusion strategy")
     expected_overlap: float = Field(
@@ -49,17 +50,13 @@ class FusionResult(BaseModel):
     """Results from reciprocal rank fusion."""
 
     original_rankings: dict[str, list[str]] = Field(
-        description="Original rankings per query", )
+        description="Original rankings per query",
+    )
     fused_ranking: list[str] = Field(description="Final fused ranking")
-    fusion_scores: dict[str,
-                        float] = Field(description="RRF scores per document")
+    fusion_scores: dict[str, float] = Field(description="RRF scores per document")
 
-    confidence: float = Field(ge=0.0,
-                              le=1.0,
-                              description="Confidence in fusion")
-    diversity_score: float = Field(ge=0.0,
-                                   le=1.0,
-                                   description="Diversity of results")
+    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in fusion")
+    diversity_score: float = Field(ge=0.0, le=1.0, description="Diversity of results")
     consensus_level: float = Field(
         ge=0.0,
         le=1.0,
@@ -68,10 +65,11 @@ class FusionResult(BaseModel):
 
 
 # Enhanced prompts for fusion
-QUERY_EXPANSION_FUSION_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert at generating diverse query variations for RAG Fusion.
+QUERY_EXPANSION_FUSION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert at generating diverse query variations for RAG Fusion.
 
 Create multiple query variations that will retrieve complementary information:
 
@@ -81,10 +79,10 @@ Create multiple query variations that will retrieve complementary information:
 
 The goal is to maximize retrieval coverage while maintaining relevance.
 Each variation should potentially retrieve different but relevant documents.""",
-    ),
-    (
-        "human",
-        """Generate diverse query variations for RAG Fusion:
+        ),
+        (
+            "human",
+            """Generate diverse query variations for RAG Fusion:
 
 Original Query: {query}
 
@@ -95,13 +93,15 @@ Create variations that will:
 - Maximize retrieval diversity
 
 Provide structured variations and fusion strategy.""",
-    ),
-], )
+        ),
+    ],
+)
 
 FUSION_ANSWER_PROMPT = ChatPromptTemplate.from_messages(
     [
-        ("system",
-         """You are an expert at synthesizing information from multiple retrieval results.
+        (
+            "system",
+            """You are an expert at synthesizing information from multiple retrieval results.
 
 You have access to documents retrieved using different query variations and ranked using
 Reciprocal Rank Fusion. The highest-ranked documents are the most relevant across
@@ -112,9 +112,10 @@ Key principles:
 - Look for consensus across different query results
 - Identify and resolve any contradictions
 - Provide comprehensive coverage of the topic""",
-         ),
-        ("human",
-         """Answer the query using the fusion-ranked documents:
+        ),
+        (
+            "human",
+            """Answer the query using the fusion-ranked documents:
 
 Original Query: {query}
 Query Variations Used: {query_variations}
@@ -128,7 +129,7 @@ Fusion Metadata:
 - Confidence: {fusion_confidence}
 
 Provide a comprehensive answer that leverages the multi-perspective retrieval.""",
-         ),
+        ),
     ],
 )
 
@@ -200,8 +201,7 @@ class ReciprocalRankFusionAgent(Agent):
             # Extract fused documents in order
             doc_lookup = self._build_doc_lookup(retrieval_results)
             fused_documents = [
-                doc_lookup[doc_id] for doc_id, _ in sorted_docs
-                if doc_id in doc_lookup
+                doc_lookup[doc_id] for doc_id, _ in sorted_docs if doc_id in doc_lookup
             ]
 
             return {
@@ -260,8 +260,7 @@ class ReciprocalRankFusionAgent(Agent):
         for i in range(len(queries)):
             for j in range(i + 1, len(queries)):
                 set1, set2 = top_docs[queries[i]], top_docs[queries[j]]
-                overlap = len(set1.intersection(set2)) / max(
-                    len(set1.union(set2)), 1)
+                overlap = len(set1.intersection(set2)) / max(len(set1.union(set2)), 1)
                 overlaps.append(overlap)
 
         return sum(overlaps) / len(overlaps) if overlaps else 0.5
@@ -384,9 +383,7 @@ class RAGFusionAgent(SequentialAgent):
         )
 
         return cls(
-            agents=[
-                query_expander, multi_retriever, rrf_agent, fusion_answerer
-            ],
+            agents=[query_expander, multi_retriever, rrf_agent, fusion_answerer],
             name=kwargs.get("name", "RAG Fusion Agent"),
             **kwargs,
         )
@@ -411,8 +408,7 @@ def create_multi_query_retrieval_callable(
         variations_fusion = getattr(state, "query_variations_fusion", None)
         original_query = getattr(state, "query", "")
 
-        if variations_fusion and hasattr(variations_fusion,
-                                         "semantic_variations"):
+        if variations_fusion and hasattr(variations_fusion, "semantic_variations"):
             # Use structured variations from query expansion
             all_queries = [original_query]
             all_queries.extend(variations_fusion.semantic_variations)
@@ -446,8 +442,7 @@ def create_multi_query_retrieval_callable(
 
                 if hasattr(result, "retrieved_documents"):
                     docs = result.retrieved_documents
-                elif isinstance(result,
-                                dict) and "retrieved_documents" in result:
+                elif isinstance(result, dict) and "retrieved_documents" in result:
                     docs = result["retrieved_documents"]
 
                 # Limit docs per query
@@ -465,9 +460,10 @@ def create_multi_query_retrieval_callable(
             all_retrieved_docs.extend(docs)
 
         logger.info(
-            f"Total retrieved: {
-                len(all_retrieved_docs)} documents across {
-                len(all_queries)} queries", )
+            f"Total retrieved: {len(all_retrieved_docs)} documents across {
+                len(all_queries)
+            } queries",
+        )
 
         return {
             "retrieval_results": retrieval_results,
@@ -486,10 +482,8 @@ class MultiQueryRetrievalAgent(Agent):
     name: str = "Multi-Query Retrieval"
     # Define Pydantic fields properly
     documents: list[Document] = Field(description="Documents for retrieval")
-    embedding_model: str | None = Field(default=None,
-                                        description="Embedding model")
-    max_docs_per_query: int = Field(default=10,
-                                    description="Max docs per query")
+    embedding_model: str | None = Field(default=None, description="Embedding model")
+    max_docs_per_query: int = Field(default=10, description="Max docs per query")
 
     def build_graph(self) -> BaseGraph:
         """Build multi-query retrieval graph with callable node using Pydantic.

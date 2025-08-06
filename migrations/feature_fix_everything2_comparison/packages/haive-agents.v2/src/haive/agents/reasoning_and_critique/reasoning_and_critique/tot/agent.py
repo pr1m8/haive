@@ -2,6 +2,7 @@
 
 This module implements the Tree of Thoughts algorithm as a Haive agent.
 """
+
 from __future__ import annotations
 
 import logging
@@ -128,8 +129,7 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
 
         # Add evaluation nodes based on parallelization setting
         if self.parallel_evaluation:
-            self.dynamic_graph.add_node("evaluate_candidate",
-                                        self._evaluate_candidate)
+            self.dynamic_graph.add_node("evaluate_candidate", self._evaluate_candidate)
             self.dynamic_graph.add_node(
                 "collect_evaluations",
                 self._collect_evaluations,
@@ -141,8 +141,7 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
             )
 
         # Add selection node
-        self.dynamic_graph.add_node(self.config.selector_node,
-                                    self._select_best)
+        self.dynamic_graph.add_node(self.config.selector_node, self._select_best)
 
         # Define the workflow edges
 
@@ -159,8 +158,7 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
             )
 
             # From evaluation to collection
-            self.dynamic_graph.add_edge("evaluate_candidate",
-                                        "collect_evaluations")
+            self.dynamic_graph.add_edge("evaluate_candidate", "collect_evaluations")
 
             # From collection to selection
             self.dynamic_graph.add_edge(
@@ -217,8 +215,8 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
         if hasattr(state, "current_seed") and state.current_seed:
             seed_content = ""
             if hasattr(state.current_seed, "candidate") and hasattr(
-                    state.current_seed.candidate,
-                    "content",
+                state.current_seed.candidate,
+                "content",
             ):
                 seed_content = state.current_seed.candidate.content
             elif hasattr(state.current_seed, "content"):
@@ -229,31 +227,30 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
             seed_info = f"\nUsing this as a starting point:\n{seed_content}"
 
         # Create the prompt
-        prompt = f"Problem: {
-            state.problem}\n{seed_info}\n\nGenerate {
-            self.expansion_count} different candidate solutions."
+        prompt = f"Problem: {state.problem}\n{seed_info}\n\nGenerate {
+            self.expansion_count
+        } different candidate solutions."
 
         try:
             # Invoke the generator
             response = await generator.ainvoke(
                 [HumanMessage(content=prompt)],
-                {"configurable": {
-                    "temperature": 0.7
-                }},
+                {"configurable": {"temperature": 0.7}},
             )
 
             # Extract candidates from the response
             if hasattr(response, "to_candidates"):
                 candidates = response.to_candidates()
             elif hasattr(response, "candidate_contents"):
-                candidates = [
-                    Candidate(content=c) for c in response.candidate_contents
-                ]
+                candidates = [Candidate(content=c) for c in response.candidate_contents]
             else:
                 candidates = []
                 # Fall back to extracting from response as string
-                lines = (response.content.split("\n") if hasattr(
-                    response, "content") else str(response).split("\n"))
+                lines = (
+                    response.content.split("\n")
+                    if hasattr(response, "content")
+                    else str(response).split("\n")
+                )
 
                 # Basic filtering for reasonable candidate lines
                 for line in lines:
@@ -273,15 +270,12 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
                     "candidates": candidates,
                     "depth": state.depth + 1,
                     "current_seed": None,  # Clear the seed
-                }, )
+                },
+            )
 
         except Exception as e:
             logger.exception(f"Error generating candidates: {e}")
-            return Command(update={
-                "candidates": [],
-                "error": str(e)
-            },
-                goto=END)
+            return Command(update={"candidates": [], "error": str(e)}, goto=END)
 
     def _map_candidates_to_evaluation(self, state: TOTState) -> list[Send]:
         """Map candidates to parallel evaluation nodes.
@@ -392,34 +386,29 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
                 evaluator = self.config.get_engine("evaluator")
 
                 # Get content from candidate
-                content = candidate.content if hasattr(
-                    candidate, "content") else str(candidate)
+                content = candidate.content if hasattr(candidate, "content") else str(candidate)
 
                 # Create the prompt
-                prompt = f"Problem: {
-                    state.problem}\n\nCandidate Solution:\n{content}\n\nEvaluate this solution and provide a score between 0 and 1, where 1 is perfect."
+                prompt = f"Problem: {state.problem}\n\nCandidate Solution:\n{
+                    content
+                }\n\nEvaluate this solution and provide a score between 0 and 1, where 1 is perfect."
 
                 # Invoke the evaluator
                 response = await evaluator.ainvoke(
                     [HumanMessage(content=prompt)],
-                    {"configurable": {
-                        "temperature": 0.1
-                    }},
+                    {"configurable": {"temperature": 0.1}},
                 )
 
                 # Extract score from the response
                 if hasattr(response, "to_score"):
                     score = response.to_score()
-                elif hasattr(response, "value") and hasattr(
-                        response, "feedback"):
-                    score = Score(value=response.value,
-                                  feedback=response.feedback)
+                elif hasattr(response, "value") and hasattr(response, "feedback"):
+                    score = Score(value=response.value, feedback=response.feedback)
                 else:
                     # Try to extract from text
                     import re
 
-                    text = response.content if hasattr(
-                        response, "content") else str(response)
+                    text = response.content if hasattr(response, "content") else str(response)
                     score_match = re.search(
                         r"(?:score:?\s*)?(\d+(?:\.\d+)?)",
                         text.lower(),
@@ -438,8 +427,7 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
                         )
 
                 # Create scored candidate
-                metadata = candidate.metadata if hasattr(
-                    candidate, "metadata") else {}
+                metadata = candidate.metadata if hasattr(candidate, "metadata") else {}
                 scored_candidate = ScoredCandidate(
                     candidate=Candidate(content=content, metadata=metadata),
                     score=score,
@@ -450,24 +438,21 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
             except Exception as e:
                 logger.exception(f"Error scoring candidate: {e}")
                 # Add a zero-scored candidate as fallback
-                content = candidate.content if hasattr(
-                    candidate, "content") else str(candidate)
-                metadata = candidate.metadata if hasattr(
-                    candidate, "metadata") else {}
+                content = candidate.content if hasattr(candidate, "content") else str(candidate)
+                metadata = candidate.metadata if hasattr(candidate, "metadata") else {}
 
                 fallback_score = Score(value=0.0, feedback=f"Error: {e}")
                 scored_candidates.append(
                     ScoredCandidate(
-                        candidate=Candidate(content=content,
-                                            metadata=metadata),
+                        candidate=Candidate(content=content, metadata=metadata),
                         score=fallback_score,
-                    ), )
+                    ),
+                )
 
         # Update the state with scored candidates and clear original candidates
-        return Command(update={
-            "scored_candidates": scored_candidates,
-            "candidates": "clear"
-        }, )
+        return Command(
+            update={"scored_candidates": scored_candidates, "candidates": "clear"},
+        )
 
     def _select_best(self, state: TOTState) -> Command:
         """Select the best candidates for the next iteration.
@@ -488,9 +473,9 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
         # Sort by score
         sorted_candidates = sorted(
             scored_candidates,
-            key=lambda c:
-            (c.score.value
-             if hasattr(c, "score") and hasattr(c.score, "value") else 0.0),
+            key=lambda c: (
+                c.score.value if hasattr(c, "score") and hasattr(c.score, "value") else 0.0
+            ),
             reverse=True,
         )
 
@@ -498,12 +483,10 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
         best_candidate = sorted_candidates[0]
 
         # Get candidates for beam search (top k)
-        beam_candidates = sorted_candidates[:min(self.beam_width,
-                                                 len(sorted_candidates))]
+        beam_candidates = sorted_candidates[: min(self.beam_width, len(sorted_candidates))]
 
         # Check if the best candidate exceeds the threshold
-        best_score = best_candidate.score.value if hasattr(
-            best_candidate, "score") else 0.0
+        best_score = best_candidate.score.value if hasattr(best_candidate, "score") else 0.0
 
         solved = best_score >= self.threshold
 
@@ -517,11 +500,13 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
 
         # If we've found a good solution or reached max depth, prepare the answer
         if solved or state.depth >= self.max_depth:
-            best_content = (best_candidate.candidate.content if hasattr(
-                best_candidate, "candidate") else str(best_candidate))
+            best_content = (
+                best_candidate.candidate.content
+                if hasattr(best_candidate, "candidate")
+                else str(best_candidate)
+            )
 
-            updates[
-                "answer"] = f"Best solution (score: {best_score:.2f}):\n{best_content}"
+            updates["answer"] = f"Best solution (score: {best_score:.2f}):\n{best_content}"
             updates["search_depth"] = state.depth
 
             return Command(update=updates, goto=END)
@@ -559,8 +544,7 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
         if not best_candidate:
             return END
 
-        best_score = best_candidate.score.value if hasattr(
-            best_candidate, "score") else 0.0
+        best_score = best_candidate.score.value if hasattr(best_candidate, "score") else 0.0
 
         # If we've found a solution that exceeds threshold or reached max depth, end
         if best_score >= self.threshold or state.depth >= self.max_depth:
@@ -568,10 +552,9 @@ class ToTAgent(Agent[TOTAgentConfig], Generic[T]):
 
         # Use beam search - for each candidate in the beam, create a separate path
         sends = []
-        beam_candidates = state.beam_candidates if hasattr(
-            state, "beam_candidates") else []
+        beam_candidates = state.beam_candidates if hasattr(state, "beam_candidates") else []
 
-        for candidate in beam_candidates[:self.beam_width]:
+        for candidate in beam_candidates[: self.beam_width]:
             # Create a Send command for each beam candidate
             candidate_state = {
                 "problem": state.problem,

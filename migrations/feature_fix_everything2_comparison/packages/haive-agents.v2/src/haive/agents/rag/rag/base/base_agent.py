@@ -30,8 +30,7 @@ class BaseRAGAgent(Agent[BaseRAGConfig]):
     def retrieve(self, state: dict[str, Any]):
         """Retrieve documents based on the query."""
         query = state.query
-        documents = self.config.retriever_engine.create_retriever().invoke(
-            query)
+        documents = self.config.retriever_engine.create_retriever().invoke(query)
         return Command(update={"retrieved_documents": documents})
 
     def generate_answer(self, state: dict[str, Any]):
@@ -40,15 +39,12 @@ class BaseRAGAgent(Agent[BaseRAGConfig]):
         documents = state.retrieved_documents
         if not documents:
             return {
-                "answer":
-                "I couldn't find any relevant documents to answer your query.",
+                "answer": "I couldn't find any relevant documents to answer your query.",
             }
         context = "\n\n".join([doc.page_content for doc in documents])
         answer = self.config.engine.create_runnable().invoke(
-            {
-                "query": query,
-                "context": context
-            }, )
+            {"query": query, "context": context},
+        )
         return Command(update={"answer": answer})
 
     def setup_workflow(self) -> None:

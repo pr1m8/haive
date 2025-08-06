@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 
 def has_tool_calls_v2(state: dict[str, Any]) -> bool:
     """Check if the last AI message has tool calls - V2 version."""
-    if not hasattr(state, 'messages') or not state.messages:
+    if not hasattr(state, "messages") or not state.messages:
         return False
 
     last_msg = state.messages[-1]
@@ -47,7 +47,7 @@ def has_tool_calls_v2(state: dict[str, Any]) -> bool:
     if not isinstance(last_msg, AIMessage):
         return False
 
-    tool_calls = getattr(last_msg, 'tool_calls', None)
+    tool_calls = getattr(last_msg, "tool_calls", None)
     return bool(tool_calls)
 
 
@@ -69,7 +69,7 @@ class SimpleAgentV2(Agent):
 
     engine: AugLLMConfig = Field(
         default_factory=AugLLMConfig,
-        description='The AugLLM engine for this agent',
+        description="The AugLLM engine for this agent",
     )
 
     # ========================================================================
@@ -77,44 +77,41 @@ class SimpleAgentV2(Agent):
     # ========================================================================
 
     # LLM parameters
-    temperature: float | None = Field(default=None, description='Temperature')
-    max_tokens: int | None = Field(default=None, description='Max tokens')
-    model_name: str | None = Field(default=None, description='Model name')
+    temperature: float | None = Field(default=None, description="Temperature")
+    max_tokens: int | None = Field(default=None, description="Max tokens")
+    model_name: str | None = Field(default=None, description="Model name")
 
     # Tool configuration
     # Note: tools field is inherited from ToolRouteMixin with default_factory=list
-    force_tool_use: bool | None = Field(default=None,
-                                        description='Force tool use')
+    force_tool_use: bool | None = Field(default=None, description="Force tool use")
 
     # Structured output - THIS IS THE KEY FIELD
     structured_output_model: type[BaseModel] | None = Field(
         default=None,
-        description='Structured output model',
+        description="Structured output model",
     )
-    structured_output_version: Literal['v1', 'v2'] | None = Field(
+    structured_output_version: Literal["v1", "v2"] | None = Field(
         default=None,
-        description='Structured output version',
+        description="Structured output version",
     )
 
     # Prompting
     prompt_template: ChatPromptTemplate | PromptTemplate | None = Field(
         default=None,
-        description='Prompt template',
+        description="Prompt template",
     )
-    system_message: str | None = Field(default=None,
-                                       description='System message')
+    system_message: str | None = Field(default=None, description="System message")
 
     # LLM config
-    llm_config: LLMConfig | None = Field(default=None,
-                                         description='LLM config')
+    llm_config: LLMConfig | None = Field(default=None, description="LLM config")
 
     # V2 Configuration options
     use_parser_safety_net: bool = Field(
         default=True,
-        description='Use V2 parser with ToolMessage safety net',
+        description="Use V2 parser with ToolMessage safety net",
     )
     parser_safety_net_mode: str = Field(
-        default='create',
+        default="create",
         description="Parser safety net mode: 'create', 'warn', 'ignore'",
     )
 
@@ -126,7 +123,7 @@ class SimpleAgentV2(Agent):
     # not by storing parser instances. These fields track configuration only.
     output_parser_field: str | None = Field(
         default=None,
-        description='Output parser field name',
+        description="Output parser field name",
         exclude=True,
     )
 
@@ -134,19 +131,19 @@ class SimpleAgentV2(Agent):
     # VALIDATION AND SETUP (same as V1)
     # ========================================================================
 
-    @field_validator('engine')
+    @field_validator("engine")
     @classmethod
     def validate_engine_type(cls, v) -> Any:
         """Ensure engine is AugLLMConfig."""
         if v is not None and not isinstance(v, AugLLMConfig):
-            raise ValueError('SimpleAgentV2 engine must be AugLLMConfig')
+            raise ValueError("SimpleAgentV2 engine must be AugLLMConfig")
         return v
 
     def setup_agent(self) -> None:
         """Custom setup that modifies the engine and regenerates schemas."""
         if self.engine:
             # Add engine to engines dict
-            self.engines['main'] = self.engine
+            self.engines["main"] = self.engine
 
             # Register engine in EngineRegistry
             self._register_engine_in_registry()
@@ -175,9 +172,7 @@ class SimpleAgentV2(Agent):
             # Check if engine is already registered
             if not registry.find(self.engine.name):
                 registry.register(self.engine)
-                logger.info(
-                    f"Registered engine '{self.engine.name}' in EngineRegistry"
-                )
+                logger.info(f"Registered engine '{self.engine.name}' in EngineRegistry")
             else:
                 logger.debug(
                     f"Engine '{self.engine.name}' already registered in EngineRegistry",
@@ -185,7 +180,7 @@ class SimpleAgentV2(Agent):
 
         except ImportError:
             logger.warning(
-                'Could not import EngineRegistry - engine registration skipped',
+                "Could not import EngineRegistry - engine registration skipped",
             )
         except Exception as e:
             logger.warning(f"Failed to register engine in registry: {e}")
@@ -196,27 +191,24 @@ class SimpleAgentV2(Agent):
             return
 
         # Sync fields if they exist on engine
-        if self.temperature is not None and hasattr(self.engine,
-                                                    'temperature'):
+        if self.temperature is not None and hasattr(self.engine, "temperature"):
             self.engine.temperature = self.temperature
-        if self.max_tokens is not None and hasattr(self.engine, 'max_tokens'):
+        if self.max_tokens is not None and hasattr(self.engine, "max_tokens"):
             self.engine.max_tokens = self.max_tokens
-        if self.model_name is not None and hasattr(self.engine, 'model'):
+        if self.model_name is not None and hasattr(self.engine, "model"):
             self.engine.model = self.model_name
         # Tools are managed directly by the engine (via ToolRouteMixin)
         # No need to sync from agent to engine
-        if self.force_tool_use is not None and hasattr(self.engine,
-                                                       'force_tool_use'):
+        if self.force_tool_use is not None and hasattr(self.engine, "force_tool_use"):
             self.engine.force_tool_use = self.force_tool_use
         if self.structured_output_model is not None and hasattr(
-                self.engine,
-                'structured_output_model',
+            self.engine,
+            "structured_output_model",
         ):
             self.engine.structured_output_model = self.structured_output_model
-        if self.system_message is not None and hasattr(self.engine,
-                                                       'system_message'):
+        if self.system_message is not None and hasattr(self.engine, "system_message"):
             self.engine.system_message = self.system_message
-        if self.llm_config is not None and hasattr(self.engine, 'llm_config'):
+        if self.llm_config is not None and hasattr(self.engine, "llm_config"):
             self.engine.llm_config = self.llm_config
 
     def _modify_engine_schema(self) -> None:
@@ -226,8 +218,8 @@ class SimpleAgentV2(Agent):
             return
 
         logger.info(
-            f"Modifying engine schema to include {
-                self.structured_output_model.__name__}", )
+            f"Modifying engine schema to include {self.structured_output_model.__name__}",
+        )
 
         # Get the engine's current output schema
         current_output_schema = self.engine.derive_output_schema()
@@ -237,7 +229,8 @@ class SimpleAgentV2(Agent):
 
         logger.info(
             f"Skipping engine schema modification for {self.structured_output_model.__name__} "
-            f"- extraction handled by validation nodes", )
+            f"- extraction handled by validation nodes",
+        )
 
     # ========================================================================
     # NODE DETECTION (same as V1)
@@ -250,8 +243,9 @@ class SimpleAgentV2(Agent):
 
         tool_routes = self.get_tool_routes()
         langchain_tools = [
-            tool for tool, route in tool_routes.items()
-            if route in ['langchain_tool', 'function', 'tool_node']
+            tool
+            for tool, route in tool_routes.items()
+            if route in ["langchain_tool", "function", "tool_node"]
         ]
 
         return len(langchain_tools) > 0
@@ -263,36 +257,34 @@ class SimpleAgentV2(Agent):
 
         # Check for structured output
         has_structured_output = bool(
-            self.structured_output_model
-            or getattr(self.engine, 'structured_output_model', None), )
+            self.structured_output_model or getattr(self.engine, "structured_output_model", None),
+        )
 
         # Check for output parser in engine (not in agent)
         has_output_parser = bool(
-            getattr(self.engine, 'output_parser', None) is not None, )
+            getattr(self.engine, "output_parser", None) is not None,
+        )
 
         # Check for pydantic tools
         tool_routes = self.get_tool_routes()
-        pydantic_tools = [
-            tool for tool, route in tool_routes.items()
-            if route == 'pydantic_model'
-        ]
+        pydantic_tools = [tool for tool, route in tool_routes.items() if route == "pydantic_model"]
 
-        return has_structured_output or has_output_parser or len(
-            pydantic_tools) > 0
+        return has_structured_output or has_output_parser or len(pydantic_tools) > 0
 
     def _has_force_tool_use(self) -> bool:
         """Check if tool use is forced."""
         return bool(
-            getattr(self.engine, 'force_tool_use', False)
-            or getattr(self.engine, 'force_tool_choice', False)
+            getattr(self.engine, "force_tool_use", False)
+            or getattr(self.engine, "force_tool_choice", False)
             or (self.force_tool_use is not None and self.force_tool_use)
-            or (self.structured_output_model is not None) or (getattr(
-                self.engine, 'structured_output_model', None) is not None), )
+            or (self.structured_output_model is not None)
+            or (getattr(self.engine, "structured_output_model", None) is not None),
+        )
 
     def get_tool_routes(self) -> dict[str, str]:
         """Get tool routes from engine."""
-        if self.engine and hasattr(self.engine, 'tool_routes'):
-            return getattr(self.engine, 'tool_routes', {})
+        if self.engine and hasattr(self.engine, "tool_routes"):
+            return getattr(self.engine, "tool_routes", {})
         return {}
 
     # ========================================================================
@@ -307,10 +299,10 @@ class SimpleAgentV2(Agent):
         available_nodes = []
 
         # Add agent node
-        engine_node = EngineNodeConfig(name='agent_node', engine=self.engine)
-        graph.add_node('agent_node', engine_node)
-        graph.add_edge(START, 'agent_node')
-        available_nodes.append('agent_node')
+        engine_node = EngineNodeConfig(name="agent_node", engine=self.engine)
+        graph.add_node("agent_node", engine_node)
+        graph.add_edge(START, "agent_node")
+        available_nodes.append("agent_node")
 
         # Check what nodes we need
         needs_tool_node = self._needs_tool_node()
@@ -319,83 +311,79 @@ class SimpleAgentV2(Agent):
 
         # Simple case - no tools
         if not needs_tool_node and not needs_parser_node:
-            graph.add_edge('agent_node', END)
-            graph.metadata['available_nodes'] = available_nodes
+            graph.add_edge("agent_node", END)
+            graph.metadata["available_nodes"] = available_nodes
             return graph
 
         # Add V2 validation node (regular node that updates state)
         validation_node_v2 = ValidationNodeV2(
-            name='validation_v2',
+            name="validation_v2",
             engine_name=self.engine.name,
-            router_node='validation_router',  # Goes to router after updating state
+            router_node="validation_router",  # Goes to router after updating state
         )
-        graph.add_node('validation_v2', validation_node_v2)
-        available_nodes.append('validation_v2')
+        graph.add_node("validation_v2", validation_node_v2)
+        available_nodes.append("validation_v2")
 
         # Add tool node if needed
         if needs_tool_node:
             tool_config = ToolNodeConfig(
-                name='tool_node',
+                name="tool_node",
                 engine_name=self.engine.name,
-                allowed_routes=['langchain_tool', 'function', 'tool_node'],
+                allowed_routes=["langchain_tool", "function", "tool_node"],
             )
-            graph.add_node('tool_node', tool_config)
-            graph.add_edge('tool_node', END)
-            available_nodes.append('tool_node')
+            graph.add_node("tool_node", tool_config)
+            graph.add_edge("tool_node", END)
+            available_nodes.append("tool_node")
 
         # Add parser node if needed
         if needs_parser_node:
             if self.use_parser_safety_net:
                 # Use V2 parser with safety net
                 parser_config = ParserNodeConfigV2(
-                    name='parse_output',
+                    name="parse_output",
                     engine_name=self.engine.name,
                     add_tool_message_safety_net=True,
                     safety_net_mode=self.parser_safety_net_mode,
                 )
                 logger.info(
-                    f"Using V2 parser with safety net mode: {
-                        self.parser_safety_net_mode}", )
+                    f"Using V2 parser with safety net mode: {self.parser_safety_net_mode}",
+                )
             else:
                 # Use V1 parser (original behavior)
                 parser_config = ParserNodeConfig(
-                    name='parse_output',
+                    name="parse_output",
                     engine_name=self.engine.name,
                 )
-                logger.info('Using V1 parser (no safety net)')
+                logger.info("Using V1 parser (no safety net)")
 
-            graph.add_node('parse_output', parser_config)
-            graph.add_edge('parse_output', END)
-            available_nodes.append('parse_output')
+            graph.add_node("parse_output", parser_config)
+            graph.add_edge("parse_output", END)
+            available_nodes.append("parse_output")
 
         # Agent routing to validation
         if has_force_tool_use:
             # Force tools - always go to validation
-            graph.add_edge('agent_node', 'validation_v2')
+            graph.add_edge("agent_node", "validation_v2")
         else:
             # Use conditional branching for tool calls
             graph.add_conditional_edges(
-                'agent_node',
+                "agent_node",
                 has_tool_calls_v2,
-                {
-                    True: 'validation_v2',
-                    False: END
-                },
+                {True: "validation_v2", False: END},
             )
 
         # V2 Router: validation_v2 → validation_router_v2 → destinations
-        routing_map = {'agent_node': 'agent_node'}
+        routing_map = {"agent_node": "agent_node"}
         if needs_tool_node:
-            routing_map['tool_node'] = 'tool_node'
+            routing_map["tool_node"] = "tool_node"
         if needs_parser_node:
-            routing_map['parse_output'] = 'parse_output'
+            routing_map["parse_output"] = "parse_output"
 
-        graph.add_conditional_edges('validation_v2', validation_router_v2,
-                                    routing_map)
+        graph.add_conditional_edges("validation_v2", validation_router_v2, routing_map)
 
         # Store metadata
-        graph.metadata['available_nodes'] = available_nodes
-        graph.metadata['tool_routes'] = self.get_tool_routes()
+        graph.metadata["available_nodes"] = available_nodes
+        graph.metadata["tool_routes"] = self.get_tool_routes()
 
         return graph
 
@@ -410,14 +398,13 @@ class SimpleAgentV2(Agent):
         async def wrapped_ainvoke(input_data, config=None):
             # Ensure additional state fields are available
             if isinstance(input_data, dict):
-                if 'engine_name' not in input_data and self.engine:
-                    input_data['engine_name'] = self.engine.name
-                if 'tool_routes' not in input_data:
-                    input_data['tool_routes'] = self.get_tool_routes()
-                if 'available_nodes' not in input_data and hasattr(
-                        self, 'graph'):
-                    input_data['available_nodes'] = self.graph.metadata.get(
-                        'available_nodes',
+                if "engine_name" not in input_data and self.engine:
+                    input_data["engine_name"] = self.engine.name
+                if "tool_routes" not in input_data:
+                    input_data["tool_routes"] = self.get_tool_routes()
+                if "available_nodes" not in input_data and hasattr(self, "graph"):
+                    input_data["available_nodes"] = self.graph.metadata.get(
+                        "available_nodes",
                         [],
                     )
 
@@ -463,7 +450,7 @@ class SimpleAgentV2(Agent):
             name: Template name to remove. If None, disables active template.
         """
         self.engine.remove_prompt_template(name)
-        action = f"removed template '{name}'" if name else 'disabled active template'
+        action = f"removed template '{name}'" if name else "disabled active template"
         logger.info(f"Agent '{self.name}' {action}")
 
     def list_prompt_templates(self) -> list[str]:
@@ -486,7 +473,7 @@ class SimpleAgentV2(Agent):
         # Engine handles the actual tools (via ToolRouteMixin)
         # No need to maintain a separate tools list on SimpleAgentV2
 
-        tool_name = getattr(tool, 'name', type(tool).__name__)
+        tool_name = getattr(tool, "name", type(tool).__name__)
         logger.info(f"Added tool '{tool_name}' to agent '{self.name}'")
 
     def remove_tool(self, tool: Any) -> None:
@@ -501,7 +488,7 @@ class SimpleAgentV2(Agent):
         # Engine handles the actual tools (via ToolRouteMixin)
         # No need to maintain a separate tools list on SimpleAgentV2
 
-        tool_name = getattr(tool, 'name', type(tool).__name__)
+        tool_name = getattr(tool, "name", type(tool).__name__)
         logger.info(f"Removed tool '{tool_name}' from agent '{self.name}'")
 
     def clear_tools(self) -> None:
@@ -513,7 +500,7 @@ class SimpleAgentV2(Agent):
     def set_structured_output(
         self,
         model: type[BaseModel],
-        version: str = 'v2',
+        version: str = "v2",
         include_instructions: bool = True,
     ) -> None:
         """Set structured output model.
@@ -538,9 +525,10 @@ class SimpleAgentV2(Agent):
         self.set_schema = True
 
         logger.info(
-            f"Set structured output to {
-                model.__name__} (version {version}) for agent '{
-                self.name}'", )
+            f"Set structured output to {model.__name__} (version {version}) for agent '{
+                self.name
+            }'",
+        )
 
     def clear_structured_output(self) -> None:
         """Clear structured output configuration."""
@@ -571,23 +559,20 @@ class SimpleAgentV2(Agent):
     def get_configuration_summary(self) -> dict[str, Any]:
         """Get a summary of current agent configuration."""
         return {
-            'name':
-            self.name,
-            'active_template':
-            self.get_active_template(),
-            'available_templates':
-            self.list_prompt_templates(),
-            'tools_count': (len(self.engine.tools) if self.engine
-                            and hasattr(self.engine, 'tools') else 0),
-            'structured_output':
-            (self.get_structured_output_model().__name__
-             if self.get_structured_output_model() else None),
-            'engine_model':
-            getattr(self.engine, 'model', None),
-            'engine_temperature':
-            getattr(self.engine, 'temperature', None),
-            'system_message':
-            bool(self.system_message),
+            "name": self.name,
+            "active_template": self.get_active_template(),
+            "available_templates": self.list_prompt_templates(),
+            "tools_count": (
+                len(self.engine.tools) if self.engine and hasattr(self.engine, "tools") else 0
+            ),
+            "structured_output": (
+                self.get_structured_output_model().__name__
+                if self.get_structured_output_model()
+                else None
+            ),
+            "engine_model": getattr(self.engine, "model", None),
+            "engine_temperature": getattr(self.engine, "temperature", None),
+            "system_message": bool(self.system_message),
         }
 
     # ========================================================================
@@ -595,23 +580,18 @@ class SimpleAgentV2(Agent):
     # ========================================================================
 
     @classmethod
-    def from_engine(cls,
-                    engine: AugLLMConfig,
-                    name: str | None = None,
-                    **kwargs):
+    def from_engine(cls, engine: AugLLMConfig, name: str | None = None, **kwargs):
         """Create SimpleAgentV2 from engine."""
-        return cls(name=name or 'Simple Agent V2', engine=engine, **kwargs)
+        return cls(name=name or "Simple Agent V2", engine=engine, **kwargs)
 
     @classmethod
-    def create_with_tools(cls,
-                          tools: list[Any],
-                          name: str | None = None,
-                          **kwargs):
+    def create_with_tools(cls, tools: list[Any], name: str | None = None, **kwargs):
         """Create SimpleAgentV2 with tools."""
-        return cls(name=name or 'Tool Agent V2', tools=tools, **kwargs)
+        return cls(name=name or "Tool Agent V2", tools=tools, **kwargs)
 
     def __repr__(self) -> str:
         engine_info = f"model={getattr(self.engine, 'model', 'unknown')}"
         schema_info = f"structured_output={
-            self.structured_output_model.__name__ if self.structured_output_model else 'None'}"
+            self.structured_output_model.__name__ if self.structured_output_model else 'None'
+        }"
         return f"SimpleAgentV2(name='{self.name}', {engine_info}, {schema_info})"

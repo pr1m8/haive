@@ -253,12 +253,10 @@ class DynamicReactAgent(ReactAgent):
     state_schema: type[DynamicToolState] = DynamicToolState
 
     # Initial tools to register (used during factory creation)
-    tools_to_register: list[dict[str, Any]] | None = Field(default=None,
-                                                           exclude=True)
+    tools_to_register: list[dict[str, Any]] | None = Field(default=None, exclude=True)
 
     # Tool discovery agents (part of agent's persistent state)
-    discovery_agent: ComponentDiscoveryAgent | None = Field(default=None,
-                                                            exclude=True)
+    discovery_agent: ComponentDiscoveryAgent | None = Field(default=None, exclude=True)
     rag_tool_agent: Any | None = Field(
         default=None,
         exclude=True,
@@ -284,7 +282,8 @@ class DynamicReactAgent(ReactAgent):
         # Initialize discovery agent if config is provided
         if hasattr(self, "_discovery_config"):
             self.discovery_agent = ComponentDiscoveryAgent(
-                document_path=self._discovery_config["document_path"], )
+                document_path=self._discovery_config["document_path"],
+            )
 
         # Initialize RAG tool agent if config is provided
         if hasattr(self, "_rag_config"):
@@ -297,8 +296,7 @@ class DynamicReactAgent(ReactAgent):
         self._add_dynamic_tool_discovery_tool()
 
         # Register tools if they were provided during creation
-        if hasattr(self,
-                   "tools_to_registef") and self.tools_to_register is not None:
+        if hasattr(self, "tools_to_registef") and self.tools_to_register is not None:
             self._register_initial_tools(self.tools_to_register)
             self.tools_to_register = None  # Clean up after registration
 
@@ -356,10 +354,7 @@ class DynamicReactAgent(ReactAgent):
         agent = cls(name=name, engine=engine, **kwargs)
 
         # Set discovery configuration (used in setup_agent)
-        agent._discovery_config = {
-            "document_path": document_path,
-            "use_mcp": use_mcp
-        }
+        agent._discovery_config = {"document_path": document_path, "use_mcp": use_mcp}
 
         return agent
 
@@ -495,8 +490,8 @@ class DynamicReactAgent(ReactAgent):
 
             # Setup tool loader if discovery agent is available
             if self.discovery_agent and hasattr(
-                    self.discovery_agent,
-                    "_haive_discovery",
+                self.discovery_agent,
+                "_haive_discovery",
             ):
                 self._tool_loader = self.discovery_agent._haive_discovery
             else:
@@ -562,7 +557,8 @@ class DynamicReactAgent(ReactAgent):
                                 "source": "tool_docs",
                                 "type": "tool_documentation",
                             },
-                        ), )
+                        ),
+                    )
                 else:
                     documents.append(doc)
 
@@ -606,8 +602,7 @@ class DynamicReactAgent(ReactAgent):
                     import asyncio
 
                     async def _discover():
-                        return await self.discover_and_load_tools(
-                            task_description)
+                        return await self.discover_and_load_tools(task_description)
 
                     # Run async function
                     try:
@@ -619,12 +614,9 @@ class DynamicReactAgent(ReactAgent):
 
                     if tools:
                         tool_names = [
-                            tool.name if hasattr(tool, "name") else str(tool)
-                            for tool in tools
+                            tool.name if hasattr(tool, "name") else str(tool) for tool in tools
                         ]
-                        return f"Discovered and loaded {
-                            len(tools)} tools: {
-                            ', '.join(tool_names)}"
+                        return f"Discovered and loaded {len(tools)} tools: {', '.join(tool_names)}"
                     return "No suitable tools found for this task"
 
                 # Use RAG tool agent if available
@@ -682,7 +674,8 @@ class DynamicReactAgent(ReactAgent):
                 # Discover tools using RAG
                 discovery_query = f"tools needed for: {task}"
                 tool_docs = await self.discovery_agent.discover_components(
-                    discovery_query, )
+                    discovery_query,
+                )
 
                 # Track discovery query
                 self.state.discovery_queries.append(discovery_query)
@@ -697,8 +690,7 @@ class DynamicReactAgent(ReactAgent):
                 import logging
 
                 logger = logging.getLogger(__name__)
-                logger.exception(
-                    f"Discovery agent failed for task '{task}': {e}")
+                logger.exception(f"Discovery agent failed for task '{task}': {e}")
 
         # Try RAG tool agent if discovery agent didn't work or found nothing
         if not loaded_tools and self.rag_tool_agent:
@@ -710,8 +702,7 @@ class DynamicReactAgent(ReactAgent):
                 # Parse RAG result to find tool suggestions
                 # This is a simplified approach - you might want more sophisticated
                 # parsing
-                tool_suggestions = self._parse_rag_tool_suggestions(
-                    rag_result, task)
+                tool_suggestions = self._parse_rag_tool_suggestions(rag_result, task)
 
                 for suggestion in tool_suggestions:
                     # Try to load the suggested tool
@@ -723,8 +714,7 @@ class DynamicReactAgent(ReactAgent):
                 import logging
 
                 logger = logging.getLogger(__name__)
-                logger.exception(
-                    f"RAG tool agent failed for task '{task}': {e}")
+                logger.exception(f"RAG tool agent failed for task '{task}': {e}")
 
         # Register loaded tools
         for tool in loaded_tools:
@@ -735,10 +725,7 @@ class DynamicReactAgent(ReactAgent):
                     name=getattr(tool, "name", "Unknown Tool"),
                     description=getattr(tool, "description", ""),
                     component=tool,
-                    metadata={
-                        "source": "dynamic_discovery",
-                        "task": task
-                    },
+                    metadata={"source": "dynamic_discovery", "task": task},
                 )
 
                 # Add to registry (this will be available when state is accessible)
@@ -750,7 +737,8 @@ class DynamicReactAgent(ReactAgent):
                             "description": item.description,
                             "component": tool,
                             "metadata": item.metadata,
-                        }, )
+                        },
+                    )
 
                 # Add to engine immediately
                 self.engine.add_tool(tool)
@@ -758,10 +746,7 @@ class DynamicReactAgent(ReactAgent):
                 # Categorize tool based on task
                 category = self._infer_tool_category(
                     task,
-                    {
-                        "name": item.name,
-                        "description": item.description
-                    },
+                    {"name": item.name, "description": item.description},
                 )
                 if category and hasattr(self, "state"):
                     self.state.categorize_tool(item.name, category)
@@ -775,7 +760,8 @@ class DynamicReactAgent(ReactAgent):
         # Mark for recompilation if tools were loaded
         if loaded_tools and self._meta_self:
             self._meta_self.mark_for_recompile(
-                f"Added {len(loaded_tools)} new tools for task: {task}", )
+                f"Added {len(loaded_tools)} new tools for task: {task}",
+            )
 
             # Trigger recompilation
             await self._recompile_with_new_tools(loaded_tools)
@@ -804,8 +790,7 @@ class DynamicReactAgent(ReactAgent):
 
         for line in lines:
             line = line.strip()
-            if any(key in line.lower()
-                   for key in ["tool", "function", "method", "api"]):
+            if any(key in line.lower() for key in ["tool", "function", "method", "api"]):
                 # Extract potential tool information
                 suggestion = {
                     "name": self._extract_tool_name(line),
@@ -838,8 +823,7 @@ class DynamicReactAgent(ReactAgent):
         # Look for words that might be tool names
         words = line.split()
         for word in words:
-            if (word.islower() and "_" in word) or (word[0].isupper()
-                                                    and len(word) > 3):
+            if (word.islower() and "_" in word) or (word[0].isupper() and len(word) > 3):
                 return word
 
         return ""
@@ -883,12 +867,10 @@ class DynamicReactAgent(ReactAgent):
             import logging
 
             logger = logging.getLogger(__name__)
-            logger.exception(
-                f"Failed to load tool from suggestion {suggestion}: {e}")
+            logger.exception(f"Failed to load tool from suggestion {suggestion}: {e}")
             return None
 
-    async def discover_and_load_tools_legacy(self,
-                                             task: str) -> list[BaseTool]:
+    async def discover_and_load_tools_legacy(self, task: str) -> list[BaseTool]:
         """Legacy version of discover_and_load_tools for backward
         compatibility."""
         loaded_tools = []
@@ -899,8 +881,7 @@ class DynamicReactAgent(ReactAgent):
         try:
             # Discover tools using RAG
             discovery_query = f"tools needed for: {task}"
-            tool_docs = await self.discovery_agent.discover_components(
-                discovery_query)
+            tool_docs = await self.discovery_agent.discover_components(discovery_query)
 
             # Track discovery query
             self.state.discovery_queries.append(discovery_query)
@@ -937,7 +918,8 @@ class DynamicReactAgent(ReactAgent):
             # Mark for recompilation if tools were loaded
             if loaded_tools and self._meta_self:
                 self._meta_self.mark_for_recompile(
-                    f"Added {len(loaded_tools)} new tools for task: {task}", )
+                    f"Added {len(loaded_tools)} new tools for task: {task}",
+                )
 
                 # Trigger recompilation
                 await self._recompile_with_new_tools(loaded_tools)
@@ -947,7 +929,8 @@ class DynamicReactAgent(ReactAgent):
 
             logger = logging.getLogger(__name__)
             logger.exception(
-                f"Failed to discover and load tools for task '{task}': {e}", )
+                f"Failed to discover and load tools for task '{task}': {e}",
+            )
 
         return loaded_tools
 
@@ -985,8 +968,7 @@ class DynamicReactAgent(ReactAgent):
             logger.exception(f"Failed to load tool from document: {e}")
             return None
 
-    def _infer_tool_category(self, task: str,
-                             tool_doc: dict[str, Any]) -> str | None:
+    def _infer_tool_category(self, task: str, tool_doc: dict[str, Any]) -> str | None:
         """Infer tool category based on task and tool documentation.
 
         Args:
@@ -1001,8 +983,7 @@ class DynamicReactAgent(ReactAgent):
         tool_desc = tool_doc.get("description", "").lower()
 
         # Simple category inference
-        if any(word in task_lower
-               for word in ["math", "calculate", "compute"]):
+        if any(word in task_lower for word in ["math", "calculate", "compute"]):
             return "math"
         if any(word in task_lower for word in ["search", "web", "lookup"]):
             return "web"
@@ -1027,8 +1008,7 @@ class DynamicReactAgent(ReactAgent):
 
         return None
 
-    async def _recompile_with_new_tools(self,
-                                        new_tools: list[BaseTool]) -> None:
+    async def _recompile_with_new_tools(self, new_tools: list[BaseTool]) -> None:
         """Recompile agent graph with new tools.
 
         Args:
@@ -1141,14 +1121,12 @@ class DynamicReactAgent(ReactAgent):
                 if meta_state:
                     # Update engine tools if needed
                     if hasattr(self.engine, "tools") and isinstance(
-                            item.component,
-                            BaseTool,
+                        item.component,
+                        BaseTool,
                     ):
                         current_tools = getattr(self.engine, "tools", [])
                         if item.component not in current_tools:
-                            self.engine.tools = [
-                                *current_tools, item.component
-                            ]
+                            self.engine.tools = [*current_tools, item.component]
 
                     return True
 
@@ -1178,14 +1156,12 @@ class DynamicReactAgent(ReactAgent):
                 if success:
                     # Remove from engine tools if needed
                     if hasattr(self.engine, "tools") and isinstance(
-                            item.component,
-                            BaseTool,
+                        item.component,
+                        BaseTool,
                     ):
                         current_tools = getattr(self.engine, "tools", [])
                         if item.component in current_tools:
-                            self.engine.tools = [
-                                t for t in current_tools if t != item.component
-                            ]
+                            self.engine.tools = [t for t in current_tools if t != item.component]
 
                     return True
 

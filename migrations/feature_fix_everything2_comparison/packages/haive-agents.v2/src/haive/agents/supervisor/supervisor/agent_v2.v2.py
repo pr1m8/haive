@@ -35,23 +35,22 @@ class SupervisorState(MessagesState):
     # Engine registry for node lookups
     engines: dict[str, Engine] = Field(
         default_factory=dict,
-        description='Engines indexed by name',
+        description="Engines indexed by name",
     )
 
     # Agent registry in state
     agents: dict[str, Agent] = Field(
         default_factory=dict,
-        description='Available agents in state',
+        description="Available agents in state",
     )
 
     # Routing information
-    next_agent: str | None = Field(None, description='Next agent to route to')
-    routing_decision: str | None = Field(None, description='Routing reasoning')
+    next_agent: str | None = Field(None, description="Next agent to route to")
+    routing_decision: str | None = Field(None, description="Routing reasoning")
 
     # Execution metadata
-    last_agent: str | None = Field(None, description='Previously active agent')
-    routing_timestamp: float | None = Field(
-        None, description='When routing occurred')
+    last_agent: str | None = Field(None, description="Previously active agent")
+    routing_timestamp: float | None = Field(None, description="When routing occurred")
 
 
 class SupervisorAgent(ReactAgent):
@@ -66,7 +65,7 @@ class SupervisorAgent(ReactAgent):
 
     def __init__(
         self,
-        name: str = 'supervisor',
+        name: str = "supervisor",
         engine: AugLLMConfig | None = None,
         **kwargs,
     ):
@@ -87,13 +86,13 @@ class SupervisorAgent(ReactAgent):
             from haive.core.models.llm.base import LLMConfig
 
             engine = AugLLMConfig(
-                llm_config=LLMConfig(provider='openai', model='gpt-4o-mini'),
+                llm_config=LLMConfig(provider="openai", model="gpt-4o-mini"),
                 system_message=self._create_supervisor_prompt(),
                 tools=tools,
             )
 
         # Set state schema
-        kwargs.setdefault('state_schema', SupervisorState)
+        kwargs.setdefault("state_schema", SupervisorState)
 
         super().__init__(name=name, engine=engine, **kwargs)
 
@@ -109,7 +108,7 @@ class SupervisorAgent(ReactAgent):
         # Add main engine to engines registry for node lookups
         if self.main_engine:
             # Ensure engines dict exists
-            if not hasattr(self, 'engines'):
+            if not hasattr(self, "engines"):
                 self.engines = {}
             self.engines[self.main_engine.name] = self.main_engine
             logger.debug(
@@ -119,56 +118,53 @@ class SupervisorAgent(ReactAgent):
     def build_graph(self) -> BaseGraph:
         """Build supervisor graph with proper nodes for dynamic routing."""
         # Create graph with our supervisor state schema
-        graph = BaseGraph(name='SupervisorGraph',
-                          state_schema=self.state_schema)
+        graph = BaseGraph(name="SupervisorGraph", state_schema=self.state_schema)
 
         # Add agent node (standard ReactAgent functionality)
         from haive.core.graph.node.engine_node import EngineNodeConfig
 
         agent_node = EngineNodeConfig(
-            name='agent_node',
-            engine_name=self.main_engine.
-            name,  # Use engine name like SimpleAgent
+            name="agent_node",
+            engine_name=self.main_engine.name,  # Use engine name like SimpleAgent
         )
-        graph.add_node('agent_node', agent_node)
+        graph.add_node("agent_node", agent_node)
 
         # Add tool node if we have tools
         if self.main_engine and self.main_engine.tools:
             from haive.core.graph.node.tool_node_config import ToolNodeConfig
 
             tool_node = ToolNodeConfig(
-                name='tool_node',
-                engine_name=self.main_engine.
-                name,  # Use engine name like SimpleAgent
+                name="tool_node",
+                engine_name=self.main_engine.name,  # Use engine name like SimpleAgent
             )
-            graph.add_node('tool_node', tool_node)
+            graph.add_node("tool_node", tool_node)
 
             # Add conditional edges for tool routing
             def should_continue(state: Dict[str, Any]):
-                last_message = (getattr(state, 'messages', [])[-1]
-                                if hasattr(state, 'messages')
-                                and state.messages else None)
-                if last_message and hasattr(
-                        last_message,
-                        'tool_calls') and last_message.tool_calls:
-                    return 'tool_node'
+                last_message = (
+                    getattr(state, "messages", [])[-1]
+                    if hasattr(state, "messages") and state.messages
+                    else None
+                )
+                if last_message and hasattr(last_message, "tool_calls") and last_message.tool_calls:
+                    return "tool_node"
                 return END
 
             graph.add_conditional_edges(
-                'agent_node',
+                "agent_node",
                 should_continue,
-                ['tool_node', END],
+                ["tool_node", END],
             )
-            graph.add_edge('tool_node', 'agent_node')  # ReactAgent loop
+            graph.add_edge("tool_node", "agent_node")  # ReactAgent loop
         else:
-            graph.add_edge('agent_node', END)
+            graph.add_edge("agent_node", END)
 
         # Add generic agent execution node for routing to worker agents
         generic_node = self.create_generic_agent_execution_node()
-        graph.add_node('execute_agent', generic_node)
+        graph.add_node("execute_agent", generic_node)
 
         # Set entry point
-        graph.set_entry_point('agent_node')
+        graph.set_entry_point("agent_node")
 
         return graph
 
@@ -180,23 +176,23 @@ class SupervisorAgent(ReactAgent):
             # For now, just track the agent info
             # In a real implementation, you'd create the actual agent
             self._agent_registry[agent_name] = {
-                'name': agent_name,
-                'description': agent_description,
-                'type': 'placeholder',  # Would be real agent type
+                "name": agent_name,
+                "description": agent_description,
+                "type": "placeholder",  # Would be real agent type
             }
             return f"Agent '{agent_name}' added to registry with description: {agent_description}"
 
         def get_dynamic_routing_model() -> str:
             """Create dynamic choice model with current agents in state."""
             if not self._agent_registry:
-                return 'No agents available for routing'
+                return "No agents available for routing"
 
             # Create base model with available agents
             agent_options = list(self._agent_registry.keys())
             routing_info = {
-                'available_agents': agent_options,
-                'agent_descriptions': {
-                    name: info.get('description', 'No description')
+                "available_agents": agent_options,
+                "agent_descriptions": {
+                    name: info.get("description", "No description")
                     for name, info in self._agent_registry.items()
                 },
             }
@@ -205,12 +201,12 @@ class SupervisorAgent(ReactAgent):
 
         # Convert to langchain tools
         add_agent_tool = tool(add_agent_impl)
-        add_agent_tool.name = 'add_agent'
-        add_agent_tool.description = 'Add a new agent to the supervisor registry'
+        add_agent_tool.name = "add_agent"
+        add_agent_tool.description = "Add a new agent to the supervisor registry"
 
         routing_tool = tool(get_dynamic_routing_model)
-        routing_tool.name = 'get_routing_options'
-        routing_tool.description = 'Get current agent routing options with base model'
+        routing_tool.name = "get_routing_options"
+        routing_tool.description = "Get current agent routing options with base model"
 
         return [add_agent_tool, routing_tool]
 
@@ -248,13 +244,13 @@ If no suitable agent exists, use add_agent to create one first.
             bool: True if added successfully
         """
         if not agent.name:
-            raise ValueError('Agent must have a name')
+            raise ValueError("Agent must have a name")
 
         # Add to registry
         self._agent_registry[agent.name] = agent
 
         # Store capability if provided
-        if capability_description and hasattr(agent, 'description'):
+        if capability_description and hasattr(agent, "description"):
             agent.description = capability_description
 
         console.print(f"[green]✅ Added worker agent:[/green] {agent.name}")
@@ -289,12 +285,12 @@ If no suitable agent exists, use add_agent to create one first.
         async def generic_agent_node(state, config=None):
             """Generic node that executes the selected agent."""
             # Get routing decision from state
-            next_agent = getattr(state, 'next_agent', None)
+            next_agent = getattr(state, "next_agent", None)
 
             if not next_agent or next_agent not in self._agent_registry:
                 return {
-                    'messages': [
-                        *getattr(state, 'messages', []),
+                    "messages": [
+                        *getattr(state, "messages", []),
                         AIMessage(
                             content=f"No valid agent found for routing: {next_agent}",
                         ),
@@ -313,47 +309,47 @@ If no suitable agent exists, use add_agent to create one first.
 
                 # Extract messages from result
                 result_messages = []
-                if hasattr(result, 'messages'):
+                if hasattr(result, "messages"):
                     result_messages = result.messages
-                elif isinstance(result, dict) and 'messages' in result:
-                    result_messages = result['messages']
+                elif isinstance(result, dict) and "messages" in result:
+                    result_messages = result["messages"]
 
                 # Update state
-                current_messages = list(getattr(state, 'messages', []))
+                current_messages = list(getattr(state, "messages", []))
                 current_messages.extend(result_messages)
 
                 return {
-                    'messages': current_messages,
-                    'last_agent': next_agent,
-                    'routing_timestamp': time.time(),
+                    "messages": current_messages,
+                    "last_agent": next_agent,
+                    "routing_timestamp": time.time(),
                 }
 
             except Exception as e:
-                logger.exception(
-                    f"Agent execution failed for {next_agent}: {e}")
+                logger.exception(f"Agent execution failed for {next_agent}: {e}")
 
-                current_messages = list(getattr(state, 'messages', []))
+                current_messages = list(getattr(state, "messages", []))
                 current_messages.append(
-                    AIMessage(content=f"Agent {next_agent} failed: {e!s}"), )
+                    AIMessage(content=f"Agent {next_agent} failed: {e!s}"),
+                )
 
-                return {'messages': current_messages, 'last_agent': next_agent}
+                return {"messages": current_messages, "last_agent": next_agent}
 
         return generic_agent_node
 
     def _prepare_agent_state(self, supervisor_state, agent: Agent):
         """Prepare state for agent execution."""
         # Extract messages
-        messages = getattr(supervisor_state, 'messages', [])
+        messages = getattr(supervisor_state, "messages", [])
 
         # If agent has specific state schema, try to use it
-        if hasattr(agent, 'state_schema') and agent.state_schema:
+        if hasattr(agent, "state_schema") and agent.state_schema:
             try:
                 return agent.state_schema(messages=messages)
             except Exception as e:
                 logger.warning(f"Could not create state for {agent.name}: {e}")
 
         # Fallback to basic state
-        return type('AgentState', (), {'messages': messages})()
+        return type("AgentState", (), {"messages": messages})()
 
     def print_supervisor_status(self) -> None:
         """Print supervisor status."""
@@ -364,5 +360,4 @@ If no suitable agent exists, use add_agent to create one first.
 [bold]Tools:[/bold] add_agent, get_routing_options
         """
 
-        console.print(
-            Panel(panel_content, title='🔧 Supervisor Status', style='blue'))
+        console.print(Panel(panel_content, title="🔧 Supervisor Status", style="blue"))

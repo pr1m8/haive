@@ -16,7 +16,7 @@ from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 
 # Generic type variable for solution content
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class TOTAgentConfig(AgentConfig):
@@ -30,33 +30,25 @@ class TOTAgentConfig(AgentConfig):
     engines: dict[str, AugLLMConfig] = Field(
         default_factory=lambda: {
             # Generator engine for generating candidate solutions
-            'generator':
-            AugLLMConfig(
-                name='candidate_generator',
-                description='Generates candidate solutions for the problem',
+            "generator": AugLLMConfig(
+                name="candidate_generator",
+                description="Generates candidate solutions for the problem",
                 llm_config=AzureLLMConfig(
-                    model='gpt-4o',
-                    parameters={
-                        'temperature': 0.7,
-                        'max_tokens': 1500
-                    },
+                    model="gpt-4o",
+                    parameters={"temperature": 0.7, "max_tokens": 1500},
                 ),
             ),
             # Evaluator engine for scoring solutions
-            'evaluator':
-            AugLLMConfig(
-                name='solution_evaluator',
-                description='Evaluates candidate solutions',
+            "evaluator": AugLLMConfig(
+                name="solution_evaluator",
+                description="Evaluates candidate solutions",
                 llm_config=AzureLLMConfig(
-                    model='gpt-4o',
-                    parameters={
-                        'temperature': 0.1,
-                        'max_tokens': 500
-                    },
+                    model="gpt-4o",
+                    parameters={"temperature": 0.1, "max_tokens": 500},
                 ),
             ),
         },
-        description='Engine configurations for the ToT agent',
+        description="Engine configurations for the ToT agent",
     )
 
     # Schema definitions
@@ -67,75 +59,77 @@ class TOTAgentConfig(AgentConfig):
     # Structured output configuration
     use_structured_output: bool = Field(
         default=True,
-        description='Whether to use structured output parsing with Pydantic models',
+        description="Whether to use structured output parsing with Pydantic models",
     )
 
     generator_output_model: type[BaseModel] | None = Field(
         default=None,
-        description='Pydantic model for generator structured output (if None, will use default)',
+        description="Pydantic model for generator structured output (if None, will use default)",
     )
 
     evaluator_output_model: type[BaseModel] | None = Field(
         default=None,
-        description='Pydantic model for evaluator structured output (if None, will use default)',
+        description="Pydantic model for evaluator structured output (if None, will use default)",
     )
 
     # Search algorithm parameters
     max_depth: int = Field(
         default=3,
-        description='Maximum depth of the Tree of Thoughts search',
+        description="Maximum depth of the Tree of Thoughts search",
     )
 
     beam_width: int = Field(
         default=3,
-        description='Number of candidates to retain at each level (beam width)',
+        description="Number of candidates to retain at each level (beam width)",
     )
 
     expansion_count: int = Field(
         default=5,
-        description='Number of candidate solutions to generate in each expansion step',
+        description="Number of candidate solutions to generate in each expansion step",
     )
 
     threshold: float = Field(
         default=0.9,
-        description='Score threshold for accepting a solution',
+        description="Score threshold for accepting a solution",
     )
 
     # Node names for the graph
     generator_node: str = Field(
-        default='generate_candidates',
-        description='Name of the node that generates candidates',
+        default="generate_candidates",
+        description="Name of the node that generates candidates",
     )
 
     evaluator_node: str = Field(
-        default='score_candidates',
-        description='Name of the node that scores candidates',
+        default="score_candidates",
+        description="Name of the node that scores candidates",
     )
 
     selector_node: str = Field(
-        default='select_best',
-        description='Name of the node that selects the best candidates',
+        default="select_best",
+        description="Name of the node that selects the best candidates",
     )
 
     # Parallelization settings
     parallel_evaluation: bool = Field(
         default=True,
-        description='Whether to evaluate candidates in parallel',
+        description="Whether to evaluate candidates in parallel",
     )
 
     parallel_expansion: bool = Field(
         default=True,
-        description='Whether to expand multiple candidates in parallel using beam search',
+        description="Whether to expand multiple candidates in parallel using beam search",
     )
 
     # Content type configuration
     content_type_name: str = Field(
-        default='string',
-        description='Name of the content type (string, equation, etc.)',
+        default="string",
+        description="Name of the content type (string, equation, etc.)",
     )
 
     # Pydantic configuration
-    model_config = ConfigDict(arbitrary_types_allowed=True, )
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True,
+    )
 
     def get_engine(self, engine_key: str) -> AugLLMConfig:
         """Get an engine by key from the engines dictionary.
@@ -156,7 +150,7 @@ class TOTAgentConfig(AgentConfig):
     @classmethod
     def create_for_problem_type(
         cls,
-        content_type: str = 'string',
+        content_type: str = "string",
         **kwargs,
     ) -> TOTAgentConfig:
         """Create a TOT agent configuration specialized for a specific problem
@@ -173,7 +167,7 @@ class TOTAgentConfig(AgentConfig):
         config.content_type_name = content_type
 
         # Set up custom schemas based on content type
-        if content_type == 'equation':
+        if content_type == "equation":
             # Import here to avoid circular imports
             from haive.agents.reasoning_and_critique.tot.models import (
                 Equation,
@@ -185,7 +179,7 @@ class TOTAgentConfig(AgentConfig):
 
             # Create custom state schema derived from TOTState but with Equation content
             EquationState = create_model(
-                'EquationState',
+                "EquationState",
                 __base__=TOTState[Equation],
             )
             config.state_schema = EquationState

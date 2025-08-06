@@ -68,8 +68,7 @@ async def create_dynamic_supervisor_system():
     # Create initial agents
 
     # Simple agents for basic tasks
-    research_agent = SimpleAgent(name="research_specialist",
-                                 engine=research_engine)
+    research_agent = SimpleAgent(name="research_specialist", engine=research_engine)
     research_agent.capability = "research, information gathering, fact-finding, web search"
 
     writing_agent = SimpleAgent(name="content_writer", engine=writing_engine)
@@ -96,9 +95,11 @@ async def demonstrate_dynamic_capabilities(supervisor, analysis_engine):
         {
             "messages": [
                 HumanMessage(
-                    content="Research the latest developments in quantum computing", ),
+                    content="Research the latest developments in quantum computing",
+                ),
             ],
-        }, )
+        },
+    )
 
     result1.get("messages", [])[-1]
 
@@ -108,19 +109,21 @@ async def demonstrate_dynamic_capabilities(supervisor, analysis_engine):
         {
             "messages": [
                 HumanMessage(
-                    content="Write a blog post introduction about the future of AI", ),
+                    content="Write a blog post introduction about the future of AI",
+                ),
             ],
-        }, )
+        },
+    )
 
     # Test 3: Analysis request (no analyst yet)
 
     await supervisor.ainvoke(
         {
             "messages": [
-                HumanMessage(
-                    content="Analyze the trends in the research findings"),
+                HumanMessage(content="Analyze the trends in the research findings"),
             ],
-        }, )
+        },
+    )
 
     # Add analysis agent dynamically
 
@@ -140,10 +143,10 @@ async def demonstrate_dynamic_capabilities(supervisor, analysis_engine):
     await supervisor.ainvoke(
         {
             "messages": [
-                HumanMessage(
-                    content="Analyze the market trends for AI adoption"),
+                HumanMessage(content="Analyze the market trends for AI adoption"),
             ],
-        }, )
+        },
+    )
 
     # Show performance metrics
 
@@ -157,7 +160,8 @@ async def demonstrate_complex_workflow(supervisor):
     messages = [
         SystemMessage(content="You are part of a research project team."),
         HumanMessage(
-            content="Let's research and write about the impact of AI on healthcare", ),
+            content="Let's research and write about the impact of AI on healthcare",
+        ),
     ]
 
     # Step 1: Research
@@ -168,7 +172,8 @@ async def demonstrate_complex_workflow(supervisor):
     messages.append(
         HumanMessage(
             content="Now analyze the key findings and identify the main trends",
-        ), )
+        ),
+    )
     result2 = await supervisor.ainvoke({"messages": messages})
     messages = result2.get("messages", messages)
 
@@ -176,7 +181,8 @@ async def demonstrate_complex_workflow(supervisor):
     messages.append(
         HumanMessage(
             content="Write a comprehensive report based on the research and analysis",
-        ), )
+        ),
+    )
     result3 = await supervisor.ainvoke({"messages": messages})
     messages = result3.get("messages", messages)
 
@@ -197,7 +203,6 @@ async def demonstrate_react_agent_integration(supervisor):
     except ImportError:
         # Create mock tools for demo
         class MockTool:
-
             def __init__(self, name: str, description):
                 self.name = name
                 self.description = description
@@ -236,7 +241,8 @@ async def demonstrate_react_agent_integration(supervisor):
                     content="Calculate the compound interest on $10,000 at 5% for 10 years",
                 ),
             ],
-        }, )
+        },
+    )
 
     # Note: In real usage, the ReactAgent would use the calculator tool
 

@@ -5,6 +5,7 @@ This module provides test functionality for the Haive framework.
 Classes:
     Plan: Plan implementation.
 """
+
 # test_node_factory.py
 from __future__ import annotations
 
@@ -22,8 +23,7 @@ from pydantic import Field
 
 # Define a test output schema
 class Plan(BaseModel):
-    Steps: list[str] = Field(
-        description="A list of steps to complete the task")
+    Steps: list[str] = Field(description="A list of steps to complete the task")
 
 
 # Create an AugLLM engine
@@ -54,9 +54,7 @@ node_config = NodeConfig(
 node_function = NodeFactory.create_node_function(node_config)
 
 # Create a test state
-test_state = {
-    "messages": [HumanMessage(content="Write a plan for building a website")]
-}
+test_state = {"messages": [HumanMessage(content="Write a plan for building a website")]}
 
 # Invoke the node function
 result = node_function(test_state)

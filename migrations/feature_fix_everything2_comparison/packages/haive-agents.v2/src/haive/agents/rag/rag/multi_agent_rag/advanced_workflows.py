@@ -105,10 +105,7 @@ class GraphRAGAgent(MultiAgent):
             },
         )
 
-        agents = [
-            entity_extractor, graph_builder, graph_traverser,
-            graph_answer_agent
-        ]
+        agents = [entity_extractor, graph_builder, graph_traverser, graph_answer_agent]
 
         super().__init__(
             agents=agents,
@@ -477,9 +474,7 @@ class SpeculativeRAGAgent(MultiAgent):
             },
         )
 
-        agents = [
-            hypothesis_generator, evidence_collector, hypothesis_validator
-        ]
+        agents = [hypothesis_generator, evidence_collector, hypothesis_validator]
 
         super().__init__(
             agents=agents,

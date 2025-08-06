@@ -4,6 +4,7 @@ This module provides a unified, easy-to-use API for the complete memory system,
 integrating all components including classification, storage, retrieval,
 knowledge graph generation, and multi-agent coordination.
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -103,62 +104,60 @@ class MemorySystemConfig(BaseModel):
 
     # Store configuration
     store_type: str = Field(
-        default='memory',
-        description='Store type (memory, postgres, etc.)',
+        default="memory",
+        description="Store type (memory, postgres, etc.)",
     )
     collection_name: str = Field(
-        default='haive_memories',
-        description='Collection name',
+        default="haive_memories",
+        description="Collection name",
     )
     default_namespace: tuple[str, ...] = Field(
-        default=('user', 'general'),
-        description='Default namespace',
+        default=("user", "general"),
+        description="Default namespace",
     )
 
     # LLM configuration
     llm_config: AugLLMConfig = Field(
         default_factory=AugLLMConfig,
-        description='LLM configuration',
+        description="LLM configuration",
     )
 
     # Classification configuration
     enable_auto_classification: bool = Field(
         default=True,
-        description='Enable automatic classification',
+        description="Enable automatic classification",
     )
     classification_confidence_threshold: float = Field(
         default=0.6,
-        description='Classification confidence threshold',
+        description="Classification confidence threshold",
     )
 
     # Retrieval configuration
     enable_enhanced_retrieval: bool = Field(
         default=True,
-        description='Enable enhanced retrieval',
+        description="Enable enhanced retrieval",
     )
-    enable_graph_rag: bool = Field(default=True,
-                                   description='Enable graph RAG')
+    enable_graph_rag: bool = Field(default=True, description="Enable graph RAG")
     enable_multi_agent_coordination: bool = Field(
         default=True,
-        description='Enable multi-agent coordination',
+        description="Enable multi-agent coordination",
     )
 
     # Performance configuration
     max_concurrent_operations: int = Field(
         default=5,
-        description='Maximum concurrent operations',
+        description="Maximum concurrent operations",
     )
-    operation_timeout_seconds: int = Field(default=300,
-                                           description='Operation timeout')
+    operation_timeout_seconds: int = Field(default=300, description="Operation timeout")
 
     # Memory lifecycle
     enable_memory_consolidation: bool = Field(
         default=True,
-        description='Enable memory consolidation',
+        description="Enable memory consolidation",
     )
     consolidation_interval_hours: int = Field(
         default=24,
-        description='Consolidation interval',
+        description="Consolidation interval",
     )
 
 
@@ -227,34 +226,30 @@ class MemorySystemResult(BaseModel):
             print(f"Success rate: {success_rate:.1%}")
     """
 
-    success: bool = Field(..., description='Operation success status')
-    operation: str = Field(..., description='Operation type')
-    result: Any = Field(default=None, description='Operation result')
-    error: str | None = Field(default=None,
-                              description='Error message if failed')
+    success: bool = Field(..., description="Operation success status")
+    operation: str = Field(..., description="Operation type")
+    result: Any = Field(default=None, description="Operation result")
+    error: str | None = Field(default=None, description="Error message if failed")
 
     # Performance metrics
     execution_time_ms: float = Field(
         default=0.0,
-        description='Execution time in milliseconds',
+        description="Execution time in milliseconds",
     )
-    agent_used: str | None = Field(default=None,
-                                   description='Agent used for operation')
+    agent_used: str | None = Field(default=None, description="Agent used for operation")
 
     # Quality metrics
-    confidence_score: float = Field(default=0.0,
-                                    description='Confidence in result')
-    completeness_score: float = Field(default=0.0,
-                                      description='Completeness of result')
+    confidence_score: float = Field(default=0.0, description="Confidence in result")
+    completeness_score: float = Field(default=0.0, description="Completeness of result")
 
     # Metadata
     timestamp: datetime = Field(
         default_factory=datetime.utcnow,
-        description='Result timestamp',
+        description="Result timestamp",
     )
     metadata: dict[str, Any] = Field(
         default_factory=dict,
-        description='Additional metadata',
+        description="Additional metadata",
     )
 
 
@@ -476,19 +471,19 @@ class UnifiedMemorySystem:
         # System state
         self._initialized = True
         self._stats = {
-            'total_operations': 0,
-            'successful_operations': 0,
-            'failed_operations': 0,
-            'total_memories_stored': 0,
-            'total_memories_retrieved': 0,
-            'avg_operation_time_ms': 0.0,
+            "total_operations": 0,
+            "successful_operations": 0,
+            "failed_operations": 0,
+            "total_memories_stored": 0,
+            "total_memories_retrieved": 0,
+            "avg_operation_time_ms": 0.0,
         }
 
     def _initialize_store(self) -> None:
         """Initialize the memory store."""
         # Create store manager
         store_manager = StoreManager(
-            store_config={'type': StoreType.MEMORY},
+            store_config={"type": StoreType.MEMORY},
             default_namespace=self.config.default_namespace,
         )
 
@@ -506,8 +501,7 @@ class UnifiedMemorySystem:
         """Initialize the memory classifier."""
         classifier_config = MemoryClassifierConfig(
             llm_config=self.config.llm_config,
-            confidence_threshold=self.config.
-            classification_confidence_threshold,
+            confidence_threshold=self.config.classification_confidence_threshold,
         )
 
         self.classifier = MemoryClassifier(classifier_config)
@@ -516,7 +510,7 @@ class UnifiedMemorySystem:
         """Initialize the knowledge graph generator."""
         # Use Pydantic initialization (no __init__ override)
         self.kg_generator = KGGeneratorAgent(
-            name='memory_kg_generator',
+            name="memory_kg_generator",
             engine=self.config.llm_config,
             memory_store=self.memory_store,
             classifier=self.classifier,
@@ -541,7 +535,7 @@ class UnifiedMemorySystem:
                 memory_classifier=self.classifier,
                 kg_generator=self.kg_generator,
             )
-            self.retrievers['graph_rag'] = GraphRAGRetriever(graph_rag_config)
+            self.retrievers["graph_rag"] = GraphRAGRetriever(graph_rag_config)
 
         # Agentic RAG coordinator
         agentic_rag_config = AgenticRAGCoordinatorConfig(
@@ -613,16 +607,15 @@ class UnifiedMemorySystem:
                 )
 
             # Update stats
-            self._stats['total_memories_stored'] += 1
+            self._stats["total_memories_stored"] += 1
             self._update_operation_stats(start_time, success=True)
 
             return MemorySystemResult(
                 success=True,
-                operation='store_memory',
-                result={'memory_id': memory_id},
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
-                agent_used='coordinator' if self.coordinator else 'direct',
+                operation="store_memory",
+                result={"memory_id": memory_id},
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
+                agent_used="coordinator" if self.coordinator else "direct",
                 confidence_score=1.0,
                 completeness_score=1.0,
             )
@@ -633,10 +626,9 @@ class UnifiedMemorySystem:
 
             return MemorySystemResult(
                 success=False,
-                operation='store_memory',
+                operation="store_memory",
                 error=str(e),
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
             )
 
     async def retrieve_memories(
@@ -672,18 +664,18 @@ class UnifiedMemorySystem:
                     memory_types=memory_types,
                     namespace=namespace,
                 )
-                agent_used = 'multi_agent_coordinator'
+                agent_used = "multi_agent_coordinator"
 
             # Use graph RAG if available and requested
-            elif 'graph_rag' in self.retrievers and use_graph_rag:
-                result = await self.retrievers['graph_rag'].retrieve_memories(
+            elif "graph_rag" in self.retrievers and use_graph_rag:
+                result = await self.retrievers["graph_rag"].retrieve_memories(
                     query=query,
                     limit=limit,
                     memory_types=memory_types,
                     namespace=namespace,
                 )
                 memories = result.memories
-                agent_used = 'graph_rag'
+                agent_used = "graph_rag"
 
             # Use agentic RAG coordinator
             elif self.agentic_rag:
@@ -694,7 +686,7 @@ class UnifiedMemorySystem:
                     namespace=namespace,
                 )
                 memories = result.final_memories
-                agent_used = 'agentic_rag'
+                agent_used = "agentic_rag"
 
             # Fallback to direct store search
             else:
@@ -704,22 +696,17 @@ class UnifiedMemorySystem:
                     namespace=namespace,
                     memory_types=memory_types,
                 )
-                agent_used = 'direct_store'
+                agent_used = "direct_store"
 
             # Update stats
-            self._stats['total_memories_retrieved'] += len(memories)
+            self._stats["total_memories_retrieved"] += len(memories)
             self._update_operation_stats(start_time, success=True)
 
             return MemorySystemResult(
                 success=True,
-                operation='retrieve_memories',
-                result={
-                    'memories': memories,
-                    'count': len(memories),
-                    'query': query
-                },
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
+                operation="retrieve_memories",
+                result={"memories": memories, "count": len(memories), "query": query},
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
                 agent_used=agent_used,
                 confidence_score=0.8,  # Default confidence
                 completeness_score=min(len(memories) / limit, 1.0),
@@ -731,10 +718,9 @@ class UnifiedMemorySystem:
 
             return MemorySystemResult(
                 success=False,
-                operation='retrieve_memories',
+                operation="retrieve_memories",
                 error=str(e),
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
             )
 
     async def classify_memory(
@@ -757,10 +743,10 @@ class UnifiedMemorySystem:
             # Use coordinator if available
             if self.coordinator:
                 result = await self.coordinator.analyze_memory(content)
-                if result['success']:
-                    classification = result['analysis']
+                if result["success"]:
+                    classification = result["analysis"]
                 else:
-                    raise Exception(result['error'])
+                    raise Exception(result["error"])
             else:
                 # Direct classification
                 classification = self.classifier.classify_memory(
@@ -772,15 +758,11 @@ class UnifiedMemorySystem:
 
             return MemorySystemResult(
                 success=True,
-                operation='classify_memory',
-                result={
-                    'classification': classification,
-                    'content': content
-                },
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
-                agent_used='coordinator' if self.coordinator else 'direct',
-                confidence_score=getattr(classification, 'confidence', 0.8),
+                operation="classify_memory",
+                result={"classification": classification, "content": content},
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
+                agent_used="coordinator" if self.coordinator else "direct",
+                confidence_score=getattr(classification, "confidence", 0.8),
             )
 
         except Exception as e:
@@ -789,10 +771,9 @@ class UnifiedMemorySystem:
 
             return MemorySystemResult(
                 success=False,
-                operation='classify_memory',
+                operation="classify_memory",
                 error=str(e),
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
             )
 
     async def generate_knowledge_graph(
@@ -814,29 +795,25 @@ class UnifiedMemorySystem:
         try:
             # Use coordinator if available
             if self.coordinator:
-                result = await self.coordinator.generate_knowledge_graph(
-                    namespace)
-                if result['success']:
-                    knowledge_graph = result['knowledge_graph']
+                result = await self.coordinator.generate_knowledge_graph(namespace)
+                if result["success"]:
+                    knowledge_graph = result["knowledge_graph"]
                 else:
-                    raise Exception(result['error'])
+                    raise Exception(result["error"])
             else:
                 # Direct KG generation
                 knowledge_graph = await self.kg_generator.extract_knowledge_graph_from_memories(
-                    namespace=namespace, )
+                    namespace=namespace,
+                )
 
             self._update_operation_stats(start_time, success=True)
 
             return MemorySystemResult(
                 success=True,
-                operation='generate_knowledge_graph',
-                result={
-                    'knowledge_graph': knowledge_graph,
-                    'namespace': namespace
-                },
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
-                agent_used='coordinator' if self.coordinator else 'direct',
+                operation="generate_knowledge_graph",
+                result={"knowledge_graph": knowledge_graph, "namespace": namespace},
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
+                agent_used="coordinator" if self.coordinator else "direct",
                 confidence_score=0.8,
                 completeness_score=1.0,
             )
@@ -847,10 +824,9 @@ class UnifiedMemorySystem:
 
             return MemorySystemResult(
                 success=False,
-                operation='generate_knowledge_graph',
+                operation="generate_knowledge_graph",
                 error=str(e),
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
             )
 
     async def consolidate_memories(
@@ -880,15 +856,14 @@ class UnifiedMemorySystem:
 
             return MemorySystemResult(
                 success=True,
-                operation='consolidate_memories',
+                operation="consolidate_memories",
                 result={
-                    'consolidation_result': result,
-                    'namespace': namespace,
-                    'dry_run': dry_run,
+                    "consolidation_result": result,
+                    "namespace": namespace,
+                    "dry_run": dry_run,
                 },
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
-                agent_used='memory_store',
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
+                agent_used="memory_store",
                 confidence_score=1.0,
                 completeness_score=1.0,
             )
@@ -899,10 +874,9 @@ class UnifiedMemorySystem:
 
             return MemorySystemResult(
                 success=False,
-                operation='consolidate_memories',
+                operation="consolidate_memories",
                 error=str(e),
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
             )
 
     async def get_memory_statistics(
@@ -921,8 +895,7 @@ class UnifiedMemorySystem:
 
         try:
             # Get store statistics
-            store_stats = await self.memory_store.get_memory_statistics(
-                namespace)
+            store_stats = await self.memory_store.get_memory_statistics(namespace)
 
             # Get system statistics
             system_stats = self._stats.copy()
@@ -933,20 +906,19 @@ class UnifiedMemorySystem:
                 coordinator_stats = self.coordinator.get_system_status()
 
             combined_stats = {
-                'store_statistics': store_stats,
-                'system_statistics': system_stats,
-                'coordinator_statistics': coordinator_stats,
+                "store_statistics": store_stats,
+                "system_statistics": system_stats,
+                "coordinator_statistics": coordinator_stats,
             }
 
             self._update_operation_stats(start_time, success=True)
 
             return MemorySystemResult(
                 success=True,
-                operation='get_memory_statistics',
+                operation="get_memory_statistics",
                 result=combined_stats,
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
-                agent_used='system',
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
+                agent_used="system",
                 confidence_score=1.0,
                 completeness_score=1.0,
             )
@@ -957,10 +929,9 @@ class UnifiedMemorySystem:
 
             return MemorySystemResult(
                 success=False,
-                operation='get_memory_statistics',
+                operation="get_memory_statistics",
                 error=str(e),
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
             )
 
     async def search_entities(
@@ -981,16 +952,15 @@ class UnifiedMemorySystem:
 
         try:
             # Get entity context from KG generator
-            entity_context = await self.kg_generator.get_entity_context(
-                entity_name)
+            entity_context = await self.kg_generator.get_entity_context(entity_name)
 
-            if 'error' in entity_context:
-                raise Exception(entity_context['error'])
+            if "error" in entity_context:
+                raise Exception(entity_context["error"])
 
             # Get related memories using graph RAG if available
             related_memories = []
-            if 'graph_rag' in self.retrievers:
-                result = await self.retrievers['graph_rag'].retrieve_memories(
+            if "graph_rag" in self.retrievers:
+                result = await self.retrievers["graph_rag"].retrieve_memories(
                     query=entity_name,
                     limit=10,
                     namespace=namespace,
@@ -999,20 +969,19 @@ class UnifiedMemorySystem:
                 related_memories = result.memories
 
             combined_result = {
-                'entity_context': entity_context,
-                'related_memories': related_memories,
-                'entity_name': entity_name,
+                "entity_context": entity_context,
+                "related_memories": related_memories,
+                "entity_name": entity_name,
             }
 
             self._update_operation_stats(start_time, success=True)
 
             return MemorySystemResult(
                 success=True,
-                operation='search_entities',
+                operation="search_entities",
                 result=combined_result,
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
-                agent_used='kg_generator',
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
+                agent_used="kg_generator",
                 confidence_score=0.8,
                 completeness_score=1.0,
             )
@@ -1023,10 +992,9 @@ class UnifiedMemorySystem:
 
             return MemorySystemResult(
                 success=False,
-                operation='search_entities',
+                operation="search_entities",
                 error=str(e),
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
             )
 
     async def run_system_diagnostic(self) -> MemorySystemResult:
@@ -1043,76 +1011,73 @@ class UnifiedMemorySystem:
             # Test memory store
             try:
                 test_id = await self.memory_store.store_memory(
-                    content='System diagnostic test',
-                    namespace=('system', 'diagnostic'),
+                    content="System diagnostic test",
+                    namespace=("system", "diagnostic"),
                 )
                 await self.memory_store.get_memory_by_id(test_id)
-                diagnostic_results['memory_store'] = {'status': 'healthy'}
+                diagnostic_results["memory_store"] = {"status": "healthy"}
             except Exception as e:
-                diagnostic_results['memory_store'] = {
-                    'status': 'error',
-                    'error': str(e),
+                diagnostic_results["memory_store"] = {
+                    "status": "error",
+                    "error": str(e),
                 }
 
             # Test classifier
             try:
-                classification = self.classifier.classify_memory('Test memory')
-                diagnostic_results['classifief'] = {
-                    'status': 'healthy',
-                    'classification_types': len(classification.memory_types),
+                classification = self.classifier.classify_memory("Test memory")
+                diagnostic_results["classifief"] = {
+                    "status": "healthy",
+                    "classification_types": len(classification.memory_types),
                 }
             except Exception as e:
-                diagnostic_results['classifief'] = {
-                    'status': 'error',
-                    'error': str(e)
-                }
+                diagnostic_results["classifief"] = {"status": "error", "error": str(e)}
 
             # Test KG generator
             try:
                 kg_stats = f"KG has {len(self.kg_generator.knowledge_graph.nodes)} nodes"
-                diagnostic_results['kg_generatof'] = {
-                    'status': 'healthy',
-                    'info': kg_stats,
+                diagnostic_results["kg_generatof"] = {
+                    "status": "healthy",
+                    "info": kg_stats,
                 }
             except Exception as e:
-                diagnostic_results['kg_generatof'] = {
-                    'status': 'error',
-                    'error': str(e),
+                diagnostic_results["kg_generatof"] = {
+                    "status": "error",
+                    "error": str(e),
                 }
 
             # Test coordinator if available
             if self.coordinator:
                 try:
                     coord_diagnostic = await self.coordinator.run_diagnostic()
-                    diagnostic_results['coordinatof'] = {
-                        'status': coord_diagnostic['system_status'],
-                        'details': coord_diagnostic,
+                    diagnostic_results["coordinatof"] = {
+                        "status": coord_diagnostic["system_status"],
+                        "details": coord_diagnostic,
                     }
                 except Exception as e:
-                    diagnostic_results['coordinatof'] = {
-                        'status': 'error',
-                        'error': str(e),
+                    diagnostic_results["coordinatof"] = {
+                        "status": "error",
+                        "error": str(e),
                     }
 
             # Overall health
-            all_healthy = all(result['status'] == 'healthy'
-                              for result in diagnostic_results.values())
+            all_healthy = all(
+                result["status"] == "healthy" for result in diagnostic_results.values()
+            )
 
-            system_health = 'healthy' if all_healthy else 'degraded'
+            system_health = "healthy" if all_healthy else "degraded"
 
             self._update_operation_stats(start_time, success=True)
 
             return MemorySystemResult(
                 success=True,
-                operation='run_system_diagnostic',
+                operation="run_system_diagnostic",
                 result={
-                    'system_health': system_health,
-                    'component_diagnostics': diagnostic_results,
-                    'system_statistics': self._stats,
+                    "system_health": system_health,
+                    "component_diagnostics": diagnostic_results,
+                    "system_statistics": self._stats,
                 },
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
-                agent_used='system',
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
+                agent_used="system",
                 confidence_score=1.0,
                 completeness_score=1.0,
             )
@@ -1123,67 +1088,58 @@ class UnifiedMemorySystem:
 
             return MemorySystemResult(
                 success=False,
-                operation='run_system_diagnostic',
+                operation="run_system_diagnostic",
                 error=str(e),
-                execution_time_ms=(datetime.now() -
-                                   start_time).total_seconds() * 1000,
+                execution_time_ms=(datetime.now() - start_time).total_seconds() * 1000,
             )
 
-    def _update_operation_stats(self, start_time: datetime,
-                                success: bool) -> None:
+    def _update_operation_stats(self, start_time: datetime, success: bool) -> None:
         """Update operation statistics."""
-        self._stats['total_operations'] += 1
+        self._stats["total_operations"] += 1
 
         if success:
-            self._stats['successful_operations'] += 1
+            self._stats["successful_operations"] += 1
         else:
-            self._stats['failed_operations'] += 1
+            self._stats["failed_operations"] += 1
 
         # Update average operation time
         operation_time = (datetime.now() - start_time).total_seconds() * 1000
-        current_avg = self._stats['avg_operation_time_ms']
-        total_ops = self._stats['total_operations']
+        current_avg = self._stats["avg_operation_time_ms"]
+        total_ops = self._stats["total_operations"]
 
-        self._stats['avg_operation_time_ms'] = (current_avg * (total_ops - 1) +
-                                                operation_time) / total_ops
+        self._stats["avg_operation_time_ms"] = (
+            current_avg * (total_ops - 1) + operation_time
+        ) / total_ops
 
     def get_system_info(self) -> dict[str, Any]:
         """Get comprehensive system information."""
         return {
-            'system_version': '1.0.0',
-            'initialized': self._initialized,
-            'configuration': {
-                'store_type':
-                self.config.store_type,
-                'collection_name':
-                self.config.collection_name,
-                'auto_classification':
-                self.config.enable_auto_classification,
-                'enhanced_retrieval':
-                self.config.enable_enhanced_retrieval,
-                'graph_rag':
-                self.config.enable_graph_rag,
-                'multi_agent_coordination':
-                self.config.enable_multi_agent_coordination,
+            "system_version": "1.0.0",
+            "initialized": self._initialized,
+            "configuration": {
+                "store_type": self.config.store_type,
+                "collection_name": self.config.collection_name,
+                "auto_classification": self.config.enable_auto_classification,
+                "enhanced_retrieval": self.config.enable_enhanced_retrieval,
+                "graph_rag": self.config.enable_graph_rag,
+                "multi_agent_coordination": self.config.enable_multi_agent_coordination,
             },
-            'components': {
-                'memory_store': 'initialized',
-                'classifier': 'initialized',
-                'kg_generator': 'initialized',
-                'retrievers': list(self.retrievers.keys()),
-                'agentic_rag':
-                'initialized' if self.agentic_rag else 'disabled',
-                'coordinator':
-                'initialized' if self.coordinator else 'disabled',
+            "components": {
+                "memory_store": "initialized",
+                "classifier": "initialized",
+                "kg_generator": "initialized",
+                "retrievers": list(self.retrievers.keys()),
+                "agentic_rag": "initialized" if self.agentic_rag else "disabled",
+                "coordinator": "initialized" if self.coordinator else "disabled",
             },
-            'statistics': self._stats,
+            "statistics": self._stats,
         }
 
 
 # Convenience functions for easy usage
 async def create_memory_system(
-    store_type: str = 'memory',
-    collection_name: str = 'haive_memories',
+    store_type: str = "memory",
+    collection_name: str = "haive_memories",
     enable_all_features: bool = True,
 ) -> UnifiedMemorySystem:
     """Create a unified memory system with sensible default configuration.
@@ -1285,8 +1241,8 @@ async def quick_memory_demo():
     """
     # Create memory system
     memory_system = await create_memory_system(
-        store_type='memory',
-        collection_name='demo_memories',
+        store_type="memory",
+        collection_name="demo_memories",
     )
 
     memory_system.get_system_info()
@@ -1294,14 +1250,14 @@ async def quick_memory_demo():
     # Store some memories
 
     memories_to_store = [
-        'Alice works at TechCorp as a software engineer',
-        'Bob is a data scientist at DataFlow Inc',
-        'Alice and Bob collaborated on the ML project last month',
-        'The ML project involved building a recommendation system',
-        'TechCorp is located in San Francisco',
-        'DataFlow Inc specializes in big data analytics',
-        'The recommendation system uses collaborative filtering',
-        'Alice has 5 years of experience in Python programming',
+        "Alice works at TechCorp as a software engineer",
+        "Bob is a data scientist at DataFlow Inc",
+        "Alice and Bob collaborated on the ML project last month",
+        "The ML project involved building a recommendation system",
+        "TechCorp is located in San Francisco",
+        "DataFlow Inc specializes in big data analytics",
+        "The recommendation system uses collaborative filtering",
+        "Alice has 5 years of experience in Python programming",
     ]
 
     storage_times = []
@@ -1309,7 +1265,7 @@ async def quick_memory_demo():
         result = await memory_system.store_memory(memory)
         if result.success:
             storage_times.append(result.execution_time_ms)
-            result.result['memory_id']
+            result.result["memory_id"]
         else:
             pass
 
@@ -1318,18 +1274,18 @@ async def quick_memory_demo():
     # Retrieve memories with different strategies
 
     queries = [
-        'Who works at TechCorp?',
-        'What did Alice and Bob work on together?',
-        'Where is TechCorp located?',
-        'What technologies were used in the ML project?',
+        "Who works at TechCorp?",
+        "What did Alice and Bob work on together?",
+        "Where is TechCorp located?",
+        "What technologies were used in the ML project?",
     ]
 
     for query in queries:
         # Test different retrieval modes
         modes = [
-            ('Multi-Agent', True, True),
-            ('Graph RAG', False, True),
-            ('Basic', False, False),
+            ("Multi-Agent", True, True),
+            ("Graph RAG", False, True),
+            ("Basic", False, False),
         ]
 
         for _mode_name, use_multi_agent, use_graph_rag in modes:
@@ -1341,9 +1297,9 @@ async def quick_memory_demo():
             )
 
             if result.success:
-                memories = result.result['memories']
+                memories = result.result["memories"]
                 for memory in memories[:1]:  # Show first result
-                    memory.get('content', '')[:60]
+                    memory.get("content", "")[:60]
             else:
                 pass
 
@@ -1351,7 +1307,7 @@ async def quick_memory_demo():
 
     kg_result = await memory_system.generate_knowledge_graph()
     if kg_result.success:
-        kg = kg_result.result['knowledge_graph']
+        kg = kg_result.result["knowledge_graph"]
 
         # Show some entities
         if kg.nodes:
@@ -1363,15 +1319,15 @@ async def quick_memory_demo():
 
     # Entity search demonstration
 
-    entities_to_search = ['Alice', 'TechCorp', 'ML project']
+    entities_to_search = ["Alice", "TechCorp", "ML project"]
     for entity_name in entities_to_search:
         entity_result = await memory_system.search_entities(entity_name)
         if entity_result.success:
-            context = entity_result.result['entity_context']
-            if 'error' not in context:
-                context['entity']
-                context['total_connections']
-                memories = context['memory_count']
+            context = entity_result.result["entity_context"]
+            if "error" not in context:
+                context["entity"]
+                context["total_connections"]
+                memories = context["memory_count"]
             else:
                 pass
         else:
@@ -1382,23 +1338,23 @@ async def quick_memory_demo():
     stats_result = await memory_system.get_memory_statistics()
     if stats_result.success:
         stats = stats_result.result
-        stats['store_statistics']
-        stats['system_statistics']
+        stats["store_statistics"]
+        stats["system_statistics"]
 
     # Run comprehensive diagnostic
 
     diag_result = await memory_system.run_system_diagnostic()
     if diag_result.success:
-        diag_result.result['system_health']
-        components = diag_result.result['component_diagnostics']
+        diag_result.result["system_health"]
+        components = diag_result.result["component_diagnostics"]
 
         for _component, status in components.items():
-            '✅' if status['status'] == 'healthy' else '❌'
+            "✅" if status["status"] == "healthy" else "❌"
     else:
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     """Run the memory system demonstration.
 
     This script demonstrates the complete capabilities of the UnifiedMemorySystem

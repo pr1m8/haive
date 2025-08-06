@@ -65,15 +65,13 @@ class MemoryAgent(ReactAgent):
             # Extract user_id from runtime config
             try:
                 user_id = self._get_current_user_id()
-                save_unstructured_memories([memory], self.config.vector_store,
-                                           user_id)
+                save_unstructured_memories([memory], self.config.vector_store, user_id)
                 return f"Memory saved: {memory}"
             except Exception as e:
                 logger.exception(f"Error saving memory: {e}")
                 return f"Error saving memory: {e!s}"
 
-        def save_structured_memory(subject: str, predicate: str,
-                                   object_: str) -> str:
+        def save_structured_memory(subject: str, predicate: str, object_: str) -> str:
             """Tool to save a structured memory."""
             try:
                 user_id = self._get_current_user_id()
@@ -82,8 +80,7 @@ class MemoryAgent(ReactAgent):
                     "predicate": predicate,
                     "object_": object_,
                 }
-                save_structured_memories([triple], self.config.vector_store,
-                                         user_id)
+                save_structured_memories([triple], self.config.vector_store, user_id)
                 return f"Structured memory saved: {subject} {predicate} {object_}"
             except Exception as e:
                 logger.exception(f"Error saving structured memory: {e}")
@@ -216,8 +213,7 @@ class MemoryAgent(ReactAgent):
         # Modify the standard flow to include memory saving
         # We want the LLM to return to memory extraction after tool execution
         try:
-            gb.remove_edge(self.config.tool_node_name,
-                           self.config.llm_node_name)
+            gb.remove_edge(self.config.tool_node_name, self.config.llm_node_name)
             gb.add_edge(
                 self.config.tool_node_name,
                 self.config.memory_extract_node_name,
@@ -230,10 +226,8 @@ class MemoryAgent(ReactAgent):
             self.config.llm_node_name,
             self._route_after_llm,
             {
-                self.config.tool_node_name:
-                self.config.tool_node_name,
-                self.config.memory_save_node_name:
-                self.config.memory_save_node_name,
+                self.config.tool_node_name: self.config.tool_node_name,
+                self.config.memory_save_node_name: self.config.memory_save_node_name,
             },
         )
 
@@ -243,8 +237,7 @@ class MemoryAgent(ReactAgent):
 
             # Ensure structured output node is after memory saving
             try:
-                gb.remove_edge(self.config.llm_node_name,
-                               self.config.output_node_name)
+                gb.remove_edge(self.config.llm_node_name, self.config.output_node_name)
                 gb.add_edge(
                     self.config.memory_save_node_name,
                     self.config.output_node_name,
@@ -282,11 +275,10 @@ class MemoryAgent(ReactAgent):
             if not query and messages:
                 # Get the last message content
                 for msg in reversed(messages):
-                    if isinstance(msg,
-                                  HumanMessage) or (isinstance(msg, tuple)
-                                                    and msg[0] == "human"):
-                        content = msg.content if hasattr(msg,
-                                                         "content") else msg[1]
+                    if isinstance(msg, HumanMessage) or (
+                        isinstance(msg, tuple) and msg[0] == "human"
+                    ):
+                        content = msg.content if hasattr(msg, "content") else msg[1]
                         query = str(content)
                         break
 
@@ -301,8 +293,7 @@ class MemoryAgent(ReactAgent):
 
                 # Add to result
                 result["recall_memories"] = memories
-                logger.info(
-                    f"Loaded {len(memories)} memories for user {user_id}")
+                logger.info(f"Loaded {len(memories)} memories for user {user_id}")
             else:
                 # No query, set empty memories
                 result["recall_memories"] = []
@@ -311,10 +302,7 @@ class MemoryAgent(ReactAgent):
 
         except Exception as e:
             logger.exception(f"Error loading memories: {e}")
-            return {
-                "recall_memories": [],
-                "user_id": self._get_current_user_id()
-            }
+            return {"recall_memories": [], "user_id": self._get_current_user_id()}
 
     def _extract_query(self, state: dict[str, Any]) -> dict[str, Any]:
         """Extract query from messages and store in state.
@@ -332,10 +320,8 @@ class MemoryAgent(ReactAgent):
         if messages:
             # Look for the last human message
             for msg in reversed(messages):
-                if isinstance(msg, HumanMessage) or (isinstance(msg, tuple)
-                                                     and msg[0] == "human"):
-                    content = msg.content if hasattr(msg,
-                                                     "content") else msg[1]
+                if isinstance(msg, HumanMessage) or (isinstance(msg, tuple) and msg[0] == "human"):
+                    content = msg.content if hasattr(msg, "content") else msg[1]
                     query = str(content)
                     break
 
@@ -371,27 +357,35 @@ class MemoryAgent(ReactAgent):
         try:
             # Create a prompt for memory extraction
             if memory_type == "structured":
-                prompt_template = (self.config.memory_extraction_prompt or """
+                prompt_template = (
+                    self.config.memory_extraction_prompt
+                    or """
                 Extract important information from the conversation as structured knowledge triples.
                 Format: [{"subject": "entity1", "predicate": "relation", "object_": "entity2"}]
 
                 Extract only facts that would be useful to remember for future conversations.
                 Focus on personal preferences, facts about the user, important events, etc.
-                """)
+                """
+                )
             else:
-                prompt_template = (self.config.memory_extraction_prompt or """
+                prompt_template = (
+                    self.config.memory_extraction_prompt
+                    or """
                 Extract important information from the conversation as natural language statements.
                 Format each memory as a separate, self-contained statement.
 
                 Extract only facts that would be useful to remember for future conversations.
                 Focus on personal preferences, facts about the user, important events, etc.
-                """)
+                """
+                )
 
             # Create a complete prompt with conversation history
-            conversation_str = "\n".join([
-                f"{msg.type if hasattr(msg, 'type') else msg[0]}: {msg.content if hasattr(msg, 'content') else msg[1]}"
-                for msg in messages
-            ], )
+            conversation_str = "\n".join(
+                [
+                    f"{msg.type if hasattr(msg, 'type') else msg[0]}: {msg.content if hasattr(msg, 'content') else msg[1]}"
+                    for msg in messages
+                ],
+            )
 
             full_prompt = f"{prompt_template}\n\nConversation:\n{conversation_str}"
 
@@ -404,8 +398,11 @@ class MemoryAgent(ReactAgent):
                 extraction_result = extraction_engine.invoke(full_prompt)
 
             # Process the extraction result
-            extracted_content = (extraction_result.content if hasattr(
-                extraction_result, "content") else str(extraction_result))
+            extracted_content = (
+                extraction_result.content
+                if hasattr(extraction_result, "content")
+                else str(extraction_result)
+            )
 
             # Parse the extracted memories
             if memory_type == "structured":
@@ -414,8 +411,7 @@ class MemoryAgent(ReactAgent):
                     # Look for JSON array in the output
                     import re
 
-                    json_match = re.search(r"\[.*\]", extracted_content,
-                                           re.DOTALL)
+                    json_match = re.search(r"\[.*\]", extracted_content, re.DOTALL)
                     if json_match:
                         json_str = json_match.group(0)
                         structured_memories = json.loads(json_str)
@@ -424,8 +420,8 @@ class MemoryAgent(ReactAgent):
                         valid_memories = []
                         for memory in structured_memories:
                             if isinstance(memory, dict) and all(
-                                k in memory for k in
-                                    ["subject", "predicate", "object_"]):
+                                k in memory for k in ["subject", "predicate", "object_"]
+                            ):
                                 valid_memories.append(memory)
 
                         if valid_memories:
@@ -437,8 +433,10 @@ class MemoryAgent(ReactAgent):
             # Unstructured memory extraction
             # Split by newlines and filter out empty lines
             unstructured_memories = [
-                line.strip() for line in extracted_content.split("\n")
-                if line.strip() and not line.strip().startswith("```")
+                line.strip()
+                for line in extracted_content.split("\n")
+                if line.strip()
+                and not line.strip().startswith("```")
                 and not line.strip().endswith("```")
             ]
 
@@ -482,15 +480,14 @@ class MemoryAgent(ReactAgent):
 
                 for memory in extracted_memories:
                     if isinstance(memory, dict) and all(
-                            k in memory
-                            for k in ["subject", "predicate", "object_"]):
+                        k in memory for k in ["subject", "predicate", "object_"]
+                    ):
                         structured_memories.append(memory)
                     elif isinstance(memory, str):
                         # Try to parse string as JSON
                         try:
                             memory_dict = json.loads(memory)
-                            if all(k in memory_dict for k in
-                                   ["subject", "predicate", "object_"]):
+                            if all(k in memory_dict for k in ["subject", "predicate", "object_"]):
                                 structured_memories.append(memory_dict)
                         except BaseException:
                             # Skip invalid memories
@@ -502,9 +499,7 @@ class MemoryAgent(ReactAgent):
                         self.config.vector_store,
                         user_id,
                     )
-                    logger.info(
-                        f"Saved {len(structured_memories)} structured memories"
-                    )
+                    logger.info(f"Saved {len(structured_memories)} structured memories")
 
             else:  # unstructured
                 # Save as unstructured memories
@@ -541,15 +536,17 @@ class MemoryAgent(ReactAgent):
 
             # Check if we already have a system message
             has_system = any(
-                isinstance(m, SystemMessage) for m in messages
-                if isinstance(m, BaseMessage))
+                isinstance(m, SystemMessage) for m in messages if isinstance(m, BaseMessage)
+            )
 
             if not has_system:
                 # Get memories
                 memories = state.get("recall_memories", [])
-                memories_str = ("\n".join([
-                    f"- {memory}" for memory in memories
-                ]) if memories else "No relevant memories.")
+                memories_str = (
+                    "\n".join([f"- {memory}" for memory in memories])
+                    if memories
+                    else "No relevant memories."
+                )
 
                 # Create system message with memories
                 system_prompt = self.config.memory_system_prompt or self.config.system_prompt
@@ -571,8 +568,7 @@ class MemoryAgent(ReactAgent):
             return {}
 
         # Add the node and connect it
-        gb.add_node("add_system", add_system_message,
-                    self.config.llm_node_name)
+        gb.add_node("add_system", add_system_message, self.config.llm_node_name)
 
     def _route_after_llm(self, state: dict[str, Any]) -> str:
         """Determine where to route after the LLM node.
@@ -590,9 +586,9 @@ class MemoryAgent(ReactAgent):
 
         last_message = messages[-1]
         if isinstance(last_message, AIMessage) and getattr(
-                last_message,
-                "tool_calls",
-                None,
+            last_message,
+            "tool_calls",
+            None,
         ):
             return self.config.tool_node_name
 
@@ -619,8 +615,7 @@ class MemoryAgent(ReactAgent):
         self.current_user_id = user_id
 
         # Ensure we have a configurable section in runtime config
-        runtime_config = kwargs.get("runtime_config",
-                                    {}) or self.config.runnable_config
+        runtime_config = kwargs.get("runtime_config", {}) or self.config.runnable_config
         if "configurable" not in runtime_config:
             runtime_config["configurable"] = {}
 

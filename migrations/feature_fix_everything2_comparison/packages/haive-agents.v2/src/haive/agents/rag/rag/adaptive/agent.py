@@ -3,6 +3,7 @@
 Dynamic strategy selection based on query complexity. Routes queries to
 appropriate RAG strategies.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -25,23 +26,26 @@ class QueryAnalysis(BaseModel):
     """Analysis of query characteristics."""
 
     complexity: Literal["simple", "medium", "complex", "known"] = Field(
-        description="Query complexity level", )
+        description="Query complexity level",
+    )
     topics: list[str] = Field(description="Main topics in the query")
     requires_multi_hop: bool = Field(
-        description="Whether query requires multiple reasoning steps", )
+        description="Whether query requires multiple reasoning steps",
+    )
     temporal_sensitivity: bool = Field(
-        description="Whether query is about current/recent events", )
+        description="Whether query is about current/recent events",
+    )
     domain_specific: bool = Field(
-        description="Whether query requires specialized knowledge", )
-    confidence: float = Field(ge=0.0,
-                              le=1.0,
-                              description="Confidence in the analysis")
+        description="Whether query requires specialized knowledge",
+    )
+    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in the analysis")
 
 
-QUERY_ANALYZER_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert query analyzer for RAG systems.
+QUERY_ANALYZER_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert query analyzer for RAG systems.
 Analyze queries to determine the best retrieval strategy.
 
 Complexity levels:
@@ -55,24 +59,27 @@ Consider:
 - Need for reasoning vs. direct lookup
 - Temporal aspects (current events vs. historical)
 - Domain specificity""",
-    ),
-    (
-        "human",
-        """Analyze this query and determine its characteristics:
+        ),
+        (
+            "human",
+            """Analyze this query and determine its characteristics:
 
 Query: {query}
 
 Provide a structured analysis.""",
-    ),
-], )
+        ),
+    ],
+)
 
-DIRECT_ANSWER_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        "You are a knowledgeable assistant. Answer common questions directly.",
-    ),
-    ("human", "Answer this question based on general knowledge: {query}"),
-], )
+DIRECT_ANSWER_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            "You are a knowledgeable assistant. Answer common questions directly.",
+        ),
+        ("human", "Answer this question based on general knowledge: {query}"),
+    ],
+)
 
 
 class AdaptiveRAGAgent(ConditionalAgent):
@@ -181,9 +188,7 @@ class AdaptiveRAGAgent(ConditionalAgent):
         }
 
         return cls(
-            agents=[
-                query_analyzer, direct_agent, simple_rag, multi_rag, hyde_rag
-            ],
+            agents=[query_analyzer, direct_agent, simple_rag, multi_rag, hyde_rag],
             branches=branches,
             name=kwargs.get("name", "Adaptive RAG Agent"),
             **kwargs,

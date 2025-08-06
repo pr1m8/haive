@@ -86,19 +86,17 @@ def process_initial_response(state: LATSState) -> dict[str, Any]:
 
         # Create root node
         root = TreeNode(
-            messages=[{
-                "role": "assistant",
-                "content": last_msg.content
-            }],
-            action=(last_msg.tool_calls[0] if hasattr(last_msg, "tool_calls")
-                    and last_msg.tool_calls else None),
+            messages=[{"role": "assistant", "content": last_msg.content}],
+            action=(
+                last_msg.tool_calls[0]
+                if hasattr(last_msg, "tool_calls") and last_msg.tool_calls
+                else None
+            ),
             depth=1,
         )
 
         return {
-            "nodes": {
-                root.id: root
-            },
+            "nodes": {root.id: root},
             "root_id": root.id,
             "current_node_id": root.id,
         }
@@ -118,12 +116,9 @@ def execute_tool_calls(state: LATSState) -> dict[str, Any] | list[Send]:
             sends.append(
                 Send(
                     "tool_node",
-                    {
-                        **state.dict(), "messages": [{
-                            "tool_calls": [node.action]
-                        }]
-                    },
-                ), )
+                    {**state.dict(), "messages": [{"tool_calls": [node.action]}]},
+                ),
+            )
 
     # Check candidate nodes
     for candidate in state.candidate_nodes:
@@ -134,11 +129,10 @@ def execute_tool_calls(state: LATSState) -> dict[str, Any] | list[Send]:
                     {
                         **state.dict(),
                         "current_node_id": candidate.id,
-                        "messages": [{
-                            "tool_calls": [candidate.action]
-                        }],
+                        "messages": [{"tool_calls": [candidate.action]}],
                     },
-                ), )
+                ),
+            )
 
     return sends if sends else {}
 
@@ -164,12 +158,12 @@ def process_expansion(state: LATSState) -> dict[str, Any]:
         for _i, candidate_data in enumerate(result.get("candidates", [])):
             node = TreeNode(
                 parent_id=parent_id,
-                messages=[{
-                    "role": "assistant",
-                    "content": str(candidate_data)
-                }],
-                action=(candidate_data if isinstance(candidate_data, dict)
-                        and "tool" in candidate_data else None),
+                messages=[{"role": "assistant", "content": str(candidate_data)}],
+                action=(
+                    candidate_data
+                    if isinstance(candidate_data, dict) and "tool" in candidate_data
+                    else None
+                ),
                 depth=parent_depth + 1,
             )
 
@@ -197,8 +191,8 @@ def evaluate_candidates(state: LATSState) -> list[Send]:
     for candidate in state.candidate_nodes:
         # Prepare evaluation context
         response_to_evaluate = "\n".join(
-            [f"{msg['role']}: {msg['content']}"
-             for msg in candidate.messages], )
+            [f"{msg['role']}: {msg['content']}" for msg in candidate.messages],
+        )
 
         if candidate.tool_response:
             response_to_evaluate += f"\nTool Response: {candidate.tool_response}"
@@ -242,8 +236,7 @@ def process_reflection(state: LATSState) -> dict[str, Any]:
             best_id = state.best_solution_id
             best_node = state.get_node(best_id) if best_id else None
 
-            if node.is_solved and (not best_node
-                                   or node.value > best_node.value):
+            if node.is_solved and (not best_node or node.value > best_node.value):
                 return {
                     "nodes": updated_nodes,
                     "best_solution_id": node.id,
@@ -327,74 +320,46 @@ def create_lats(
         (
             initial_agent,
             lambda s: "process_initial",
-            {
-                "process_initial": "process_initial"
-            },
+            {"process_initial": "process_initial"},
         ),
-        ("process_initial", lambda s: "reflectof", {
-            "reflector": reflection_agent
-        }),
+        ("process_initial", lambda s: "reflectof", {"reflector": reflection_agent}),
         # After reflection of initial response
         (
             reflection_agent,
-            lambda s:
-            ("selector"
-             if s.current_node_id == s.root_id else "process_reflection"),
-            {
-                "selector": selection_agent,
-                "process_reflection": "process_reflection"
-            },
+            lambda s: ("selector" if s.current_node_id == s.root_id else "process_reflection"),
+            {"selector": selection_agent, "process_reflection": "process_reflection"},
         ),
         # Selection leads to expansion
         (
             selection_agent,
             lambda s: "expandef" if not s.should_terminate else END,
-            {
-                "expander": expansion_agent,
-                END: END
-            },
+            {"expander": expansion_agent, END: END},
         ),
         # Expansion leads to processing
         (
             expansion_agent,
             lambda s: "process_expansion",
-            {
-                "process_expansion": "process_expansion"
-            },
+            {"process_expansion": "process_expansion"},
         ),
         (
             "process_expansion",
             should_execute_tools,
-            {
-                "execute_tools": "execute_tools",
-                "evaluate": "evaluate"
-            },
+            {"execute_tools": "execute_tools", "evaluate": "evaluate"},
         ),
         # Tool execution
-        ("execute_tools", lambda s: "tool_node", {
-            "tool_node": tool_node
-        }),
-        (tool_node, lambda s: "evaluate", {
-            "evaluate": "evaluate"
-        }),
+        ("execute_tools", lambda s: "tool_node", {"tool_node": tool_node}),
+        (tool_node, lambda s: "evaluate", {"evaluate": "evaluate"}),
         # Evaluation sends to reflection
         (
             "evaluate",
-            lambda s: sends
-            if (sends := evaluate_candidates(s)) else "selectof",
-            {
-                "reflector": reflection_agent,
-                "selector": selection_agent
-            },
+            lambda s: sends if (sends := evaluate_candidates(s)) else "selectof",
+            {"reflector": reflection_agent, "selector": selection_agent},
         ),
         # After processing reflections
         (
             "process_reflection",
             should_continue_search,
-            {
-                "selectof": selection_agent,
-                END: END
-            },
+            {"selectof": selection_agent, END: END},
         ),
     ]
 
@@ -408,9 +373,7 @@ def create_lats(
 
     system = MultiAgentBase(
         name="LATS",
-        agents=[
-            initial_agent, expansion_agent, reflection_agent, selection_agent
-        ],
+        agents=[initial_agent, expansion_agent, reflection_agent, selection_agent],
         branches=branches,
         state_schema_override=LATSState,
         schema_build_mode=BuildMode.SEQUENCE,
@@ -423,10 +386,7 @@ def create_lats(
         "max_depth": max_depth,
         "max_rollouts": max_rollouts,
         "n_candidates": n_candidates,
-        "tools": [{
-            "name": t.name,
-            "description": t.description
-        } for t in tools],
+        "tools": [{"name": t.name, "description": t.description} for t in tools],
     }
 
     return system

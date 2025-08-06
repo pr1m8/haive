@@ -42,8 +42,7 @@ def fix_common_syntax_errors() -> Any:
             original_content = content
 
             # Fix 1: Unterminated string literals with extra quotes
-            content = re.sub(r'(print\([^)]*"[^"]*")!"([^"]*")\)', r"\1\2)",
-                             content)
+            content = re.sub(r'(print\([^)]*"[^"]*")!"([^"]*")\)', r"\1\2)", content)
 
             # Fix 2: Malformed string concatenation
             content = re.sub(r'"([^"]*)"n]"', r'"\1"]', content)
@@ -66,15 +65,13 @@ def fix_common_syntax_errors() -> Any:
                 lines = content.split("\n")
                 # Move global declaration to the top of the function
                 for i, line in enumerate(lines):
-                    if "def " in line and "TQDM_AVAILABLE" in content[
-                            content.find(line):]:
+                    if "def " in line and "TQDM_AVAILABLE" in content[content.find(line) :]:
                         # Find the global declaration
                         for j in range(i, len(lines)):
                             if "global TQDM_AVAILABLE" in lines[j]:
                                 global_line = lines.pop(j)
                                 # Insert it right after the function definition
-                                lines.insert(i + 1,
-                                             "    " + global_line.strip())
+                                lines.insert(i + 1, "    " + global_line.strip())
                                 break
                         break
                 content = "\n".join(lines)

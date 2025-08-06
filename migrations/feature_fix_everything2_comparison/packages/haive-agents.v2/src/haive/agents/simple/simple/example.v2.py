@@ -3,6 +3,7 @@
 from typing import Any This script demonstrates how to create and use
 SimpleAgent with custom state schema.
 """
+
 from __future__ import annotations
 
 import logging
@@ -47,9 +48,8 @@ def debug_print(title, obj, expand=False) -> None:
         from rich.pretty import Pretty
 
         console.print(
-            Panel(Pretty(obj, expand_all=expand),
-                  title=title,
-                  border_style="cyan"), )
+            Panel(Pretty(obj, expand_all=expand), title=title, border_style="cyan"),
+        )
     else:
         console.print(Panel(str(obj), title=title, border_style="cyan"))
 
@@ -74,7 +74,8 @@ def example_with_custom_state_schema() -> Any:
         User query: {input}
 
         Please provide a helpful response based on the context and query.
-        """, )
+        """,
+    )
 
     # Create the LLM chain with output field explicitly set to answer
     aug_llm = AugLLMConfig(

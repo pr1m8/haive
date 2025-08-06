@@ -10,13 +10,15 @@ Functions:
     select_modules: Select Modules functionality.
     adapt_modules: Adapt Modules functionality.
 """
+
 # src/haive/agents/selfdiscover/agent.py
 from __future__ import annotations
 
 import logging
 
 from haive.agents.reasoning_and_critique.self_discover.config import (
-    SelfDiscoverAgentConfig, )
+    SelfDiscoverAgentConfig,
+)
 from haive.agents.reasoning_and_critique.self_discover.models import ModuleAdaptationResult
 from haive.agents.reasoning_and_critique.self_discover.models import ModuleSelectionResult
 from haive.agents.reasoning_and_critique.self_discover.models import ReasoningOutput
@@ -53,8 +55,7 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
     def setup_workflow(self) -> None:
         """Set up the workflow graph for the SelfDiscover agent."""
         # Create a builder with our schema
-        gb = DynamicGraph(name=self.config.name,
-                          state_schema=self.state_schema)
+        gb = DynamicGraph(name=self.config.name, state_schema=self.state_schema)
 
         # Define node functions for each stage
         def select_modules(state: SelfDiscoverState) -> Command:
@@ -62,8 +63,8 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
             try:
                 # Prepare inputs
                 inputs = {
-                    'reasoning_modules': state.reasoning_modules,
-                    'task_description': state.task_description,
+                    "reasoning_modules": state.reasoning_modules,
+                    "task_description": state.task_description,
                 }
 
                 # Create runnable from AugLLMConfig and invoke it
@@ -77,27 +78,27 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
 
                     # Store both the structured object and formatted string
                     metadata = state.metadata.copy()
-                    metadata['selection_result'] = result.model_dump()
+                    metadata["selection_result"] = result.model_dump()
 
                     # Return command with updated state
                     return Command(
                         update={
-                            'selected_modules': formatted_result,
-                            'metadata': metadata,
+                            "selected_modules": formatted_result,
+                            "metadata": metadata,
                         },
-                        goto='adapt',
+                        goto="adapt",
                     )
                 # Fall back to string representation
                 selected_modules = self._extract_string_result(result)
                 return Command(
-                    update={'selected_modules': selected_modules},
-                    goto='adapt',
+                    update={"selected_modules": selected_modules},
+                    goto="adapt",
                 )
 
             except Exception as e:
                 logger.exception(f"Error in select_modules: {e!s}")
                 return Command(
-                    update={'error': f"Error in module selection: {e!s}"},
+                    update={"error": f"Error in module selection: {e!s}"},
                     goto=END,
                 )
 
@@ -107,14 +108,14 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 # Check if we have selected modules
                 if not state.selected_modules:
                     return Command(
-                        update={'error': 'No modules selected for adaptation'},
+                        update={"error": "No modules selected for adaptation"},
                         goto=END,
                     )
 
                 # Prepare inputs
                 inputs = {
-                    'selected_modules': state.selected_modules,
-                    'task_description': state.task_description,
+                    "selected_modules": state.selected_modules,
+                    "task_description": state.task_description,
                 }
 
                 # Create runnable from AugLLMConfig and invoke it
@@ -128,27 +129,27 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
 
                     # Store both the structured object and formatted string
                     metadata = state.metadata.copy()
-                    metadata['adaptation_result'] = result.model_dump()
+                    metadata["adaptation_result"] = result.model_dump()
 
                     # Return command with updated state
                     return Command(
                         update={
-                            'adapted_modules': formatted_result,
-                            'metadata': metadata,
+                            "adapted_modules": formatted_result,
+                            "metadata": metadata,
                         },
-                        goto='structure',
+                        goto="structure",
                     )
                 # Fall back to string representation
                 adapted_modules = self._extract_string_result(result)
                 return Command(
-                    update={'adapted_modules': adapted_modules},
-                    goto='structure',
+                    update={"adapted_modules": adapted_modules},
+                    goto="structure",
                 )
 
             except Exception as e:
                 logger.exception(f"Error in adapt_modules: {e!s}")
                 return Command(
-                    update={'error': f"Error in module adaptation: {e!s}"},
+                    update={"error": f"Error in module adaptation: {e!s}"},
                     goto=END,
                 )
 
@@ -158,22 +159,18 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 # Check if we have adapted modules
                 if not state.adapted_modules:
                     return Command(
-                        update={
-                            'error':
-                            'No adapted modules for structure creation'
-                        },
+                        update={"error": "No adapted modules for structure creation"},
                         goto=END,
                     )
 
                 # Prepare inputs
                 inputs = {
-                    'adapted_modules': state.adapted_modules,
-                    'task_description': state.task_description,
+                    "adapted_modules": state.adapted_modules,
+                    "task_description": state.task_description,
                 }
 
                 # Create runnable from AugLLMConfig and invoke it
-                structure_runnable = self.config.structure_engine.create_runnable(
-                )
+                structure_runnable = self.config.structure_engine.create_runnable()
                 result = structure_runnable.invoke(inputs)
 
                 # The result should be a ReasoningStructure object
@@ -183,27 +180,27 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
 
                     # Store both the structured object and formatted string
                     metadata = state.metadata.copy()
-                    metadata['structure_result'] = result.model_dump()
+                    metadata["structure_result"] = result.model_dump()
 
                     # Return command with updated state
                     return Command(
                         update={
-                            'reasoning_structure': formatted_result,
-                            'metadata': metadata,
+                            "reasoning_structure": formatted_result,
+                            "metadata": metadata,
                         },
-                        goto='reason',
+                        goto="reason",
                     )
                 # Fall back to string representation
                 reasoning_structure = self._extract_string_result(result)
                 return Command(
-                    update={'reasoning_structure': reasoning_structure},
-                    goto='reason',
+                    update={"reasoning_structure": reasoning_structure},
+                    goto="reason",
                 )
 
             except Exception as e:
                 logger.exception(f"Error in create_structure: {e!s}")
                 return Command(
-                    update={'error': f"Error in structure creation: {e!s}"},
+                    update={"error": f"Error in structure creation: {e!s}"},
                     goto=END,
                 )
 
@@ -213,21 +210,18 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 # Check if we have a reasoning structure
                 if not state.reasoning_structure:
                     return Command(
-                        update={
-                            'error': 'No reasoning structure for execution'
-                        },
+                        update={"error": "No reasoning structure for execution"},
                         goto=END,
                     )
 
                 # Prepare inputs
                 inputs = {
-                    'reasoning_structure': state.reasoning_structure,
-                    'task_description': state.task_description,
+                    "reasoning_structure": state.reasoning_structure,
+                    "task_description": state.task_description,
                 }
 
                 # Create runnable from AugLLMConfig and invoke it
-                reasoning_runnable = self.config.reasoning_engine.create_runnable(
-                )
+                reasoning_runnable = self.config.reasoning_engine.create_runnable()
                 result = reasoning_runnable.invoke(inputs)
 
                 # The result should be a ReasoningOutput object
@@ -237,20 +231,16 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
 
                     # Store both the structured object and formatted string
                     metadata = state.metadata.copy()
-                    metadata['reasoning_result'] = result.model_dump()
+                    metadata["reasoning_result"] = result.model_dump()
 
                     # Prepare update with answer and metadata
-                    update = {
-                        'answer': result.final_answer,
-                        'metadata': metadata
-                    }
+                    update = {"answer": result.final_answer, "metadata": metadata}
 
                     # Also add as message if we have messages
-                    if hasattr(state,
-                               'messages') and state.messages is not None:
+                    if hasattr(state, "messages") and state.messages is not None:
                         messages = list(state.messages)
                         messages.append(AIMessage(content=formatted_result))
-                        update['messages'] = messages
+                        update["messages"] = messages
 
                     # Return command with updated state
                     return Command(update=update, goto=END)
@@ -258,13 +248,13 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 answer = self._extract_string_result(result)
 
                 # Prepare update with answer
-                update = {'answer': answer}
+                update = {"answer": answer}
 
                 # Also add as message if we have messages
-                if hasattr(state, 'messages') and state.messages is not None:
+                if hasattr(state, "messages") and state.messages is not None:
                     messages = list(state.messages)
                     messages.append(AIMessage(content=answer))
-                    update['messages'] = messages
+                    update["messages"] = messages
 
                 # Return command with updated state
                 return Command(update=update, goto=END)
@@ -274,25 +264,25 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 error_msg = f"Error in reasoning execution: {e!s}"
 
                 # Prepare update with error
-                update = {'error': error_msg}
+                update = {"error": error_msg}
 
                 # Also add error as message if we have messages
-                if hasattr(state, 'messages') and state.messages is not None:
+                if hasattr(state, "messages") and state.messages is not None:
                     messages = list(state.messages)
                     messages.append(AIMessage(content=f"Error: {error_msg}"))
-                    update['messages'] = messages
+                    update["messages"] = messages
 
                 # Return command with updated state
                 return Command(update=update, goto=END)
 
         # Add nodes to the graph
-        gb.add_node('select', select_modules)
-        gb.add_node('adapt', adapt_modules)
-        gb.add_node('structure', create_structure)
-        gb.add_node('reason', execute_reasoning)
+        gb.add_node("select", select_modules)
+        gb.add_node("adapt", adapt_modules)
+        gb.add_node("structure", create_structure)
+        gb.add_node("reason", execute_reasoning)
 
         # Set entry point and build graph
-        gb.set_entry_point('select')
+        gb.set_entry_point("select")
         self.graph = gb.build()
 
         # Compile the graph
@@ -302,7 +292,7 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
 
 # Helper Functions
 def create_self_discover_agent(
-    model: str = 'gpt-4o',
+    model: str = "gpt-4o",
     temperature: float = 0.0,
     name: str | None = None,
     reasoning_modules: list[str] | None = None,

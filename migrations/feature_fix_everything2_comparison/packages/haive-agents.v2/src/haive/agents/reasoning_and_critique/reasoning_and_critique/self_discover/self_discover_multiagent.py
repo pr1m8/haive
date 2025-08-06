@@ -105,7 +105,8 @@ Select 3-5 modules that are most relevant for solving this task. For each select
 - Explain why this module is relevant for the task
 
 Return your selection in a clear, structured format.
-""", )
+""",
+    )
 
     config = AugLLMConfig(
         temperature=0.1,
@@ -132,7 +133,8 @@ For each selected module, provide a task-specific adaptation that:
 - Provides concrete guidance on how to use it
 
 Return the adapted modules in a clear, structured format.
-""", )
+""",
+    )
 
     config = AugLLMConfig(
         temperature=0.3,
@@ -165,7 +167,8 @@ Format the plan as a numbered list of steps, each with:
 - Expected outcome
 
 Note: Create the PLAN only, do not solve the problem yet.
-""", )
+""",
+    )
 
     config = AugLLMConfig(
         temperature=0.2,
@@ -195,7 +198,8 @@ Follow the plan step by step:
 - Work toward the final answer
 
 Provide detailed reasoning for each step and conclude with the final answer.
-""", )
+""",
+    )
 
     config = AugLLMConfig(
         temperature=0.1,
@@ -307,10 +311,7 @@ def create_self_discover_with_conditional_routing() -> MultiAgent:
     multi_agent.add_conditional_routing(
         "reasonef",
         check_for_errors,
-        {
-            "error": "error_handler",
-            "continue": "__end__"
-        },
+        {"error": "error_handler", "continue": "__end__"},
     )
 
     return multi_agent

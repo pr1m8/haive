@@ -7,10 +7,11 @@ from __future__ import annotations
 
 from langchain_core.prompts import ChatPromptTemplate
 
-RAG_QUERY_REFINEMENT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert query optimization specialist for RAG systems. Your role is to analyze user queries and suggest improvements that will lead to better document retrieval and more accurate answers.
+RAG_QUERY_REFINEMENT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert query optimization specialist for RAG systems. Your role is to analyze user queries and suggest improvements that will lead to better document retrieval and more accurate answers.
 
 **Query Analysis Dimensions:**
 
@@ -39,10 +40,10 @@ RAG_QUERY_REFINEMENT = ChatPromptTemplate.from_messages([
 - Causal (cause-and-effect relationships)
 
 Provide multiple refinement suggestions with clear rationales.""",
-    ),
-    (
-        "human",
-        """Analyze and refine the following user query to improve retrieval and answer quality.
+        ),
+        (
+            "human",
+            """Analyze and refine the following user query to improve retrieval and answer quality.
 
 **Original Query:** {query}
 
@@ -56,5 +57,6 @@ Provide multiple refinement suggestions with clear rationales.""",
 5. Suggest optimal search strategies
 
 Focus on improvements that will lead to better document retrieval and more comprehensive answers.""",
-    ),
-], ).partial(context="")
+        ),
+    ],
+).partial(context="")

@@ -7,4 +7,4 @@ class ReflexionState(SimpleAgentState):
     """State for the Reflexion agent."""
 
     reflections_count: int = 0
-    answer: str = ''
+    answer: str = ""

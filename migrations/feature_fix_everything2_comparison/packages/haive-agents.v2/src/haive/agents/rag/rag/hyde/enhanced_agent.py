@@ -26,8 +26,9 @@ from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 # Improved HyDE generation prompt based on LangChain best practices
 ENHANCED_HYDE_PROMPT = ChatPromptTemplate.from_messages(
     [
-        ("system",
-         """You are an expert at generating hypothetical documents for enhanced retrieval.
+        (
+            "system",
+            """You are an expert at generating hypothetical documents for enhanced retrieval.
 
 Your task is to create a detailed, authoritative document that would ideally contain
 the complete answer to the given question. This hypothetical document will be used
@@ -47,14 +48,15 @@ The document should be the type that would appear in:
 - How-to guides for procedural questions
 
 {format_instructions}""",
-         ),
-        ("human",
-         """Generate a comprehensive hypothetical document that would contain the ideal answer to this question:
+        ),
+        (
+            "human",
+            """Generate a comprehensive hypothetical document that would contain the ideal answer to this question:
 
 Question: {query}
 
 Consider what type of document would best answer this question and write accordingly.""",
-         ),
+        ),
     ],
 )
 
@@ -156,7 +158,8 @@ Consider how well the hypothetical document would serve for semantic retrieval."
 
         # Step 4: Final answer generation
         from haive.agents.rag.common.answer_generators.prompts import (
-            RAG_ANSWER_STANDARD, )
+            RAG_ANSWER_STANDARD,
+        )
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
@@ -205,7 +208,8 @@ Consider how well the hypothetical document would serve for semantic retrieval."
         )
 
         from haive.agents.rag.common.answer_generators.prompts import (
-            RAG_ANSWER_STANDARD, )
+            RAG_ANSWER_STANDARD,
+        )
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
@@ -244,9 +248,7 @@ class EnhancedHyDERetriever(Agent):
         embedding_model: str | None = None,
         **kwargs,
     ):
-        super().__init__(documents=documents,
-                         embedding_model=embedding_model,
-                         **kwargs)
+        super().__init__(documents=documents, embedding_model=embedding_model, **kwargs)
 
     def build_graph(self) -> Any:
         """Build graph that adapts to both enhancement and traditional.
@@ -262,8 +264,7 @@ class EnhancedHyDERetriever(Agent):
         def adaptive_retrieval(state: dict[str, Any]) -> dict[str, Any]:
             """Adaptively retrieve based on available state information."""
             # Try to get structured HyDE result first (traditional pattern)
-            hyde_result = state.get("hyderesult_result") or state.get(
-                "hyde_result")
+            hyde_result = state.get("hyderesult_result") or state.get("hyde_result")
 
             if hyde_result:
                 # Use structured output
@@ -297,8 +298,7 @@ class EnhancedHyDERetriever(Agent):
 
                 if hasattr(result, "retrieved_documents"):
                     docs = result.retrieved_documents
-                elif isinstance(result,
-                                dict) and "retrieved_documents" in result:
+                elif isinstance(result, dict) and "retrieved_documents" in result:
                     docs = result["retrieved_documents"]
 
                 return {
@@ -315,8 +315,7 @@ class EnhancedHyDERetriever(Agent):
 
                 if hasattr(result, "retrieved_documents"):
                     docs = result.retrieved_documents
-                elif isinstance(result,
-                                dict) and "retrieved_documents" in result:
+                elif isinstance(result, dict) and "retrieved_documents" in result:
                     docs = result["retrieved_documents"]
 
                 return {
@@ -371,9 +370,11 @@ def demonstrate_enhancement_vs_traditional() -> Dict[str, Any]:
     # Sample documents
     docs = [
         Document(
-            page_content="Machine learning uses algorithms to learn patterns from data.", ),
+            page_content="Machine learning uses algorithms to learn patterns from data.",
+        ),
         Document(
-            page_content="Neural networks are inspired by biological neural networks.", ),
+            page_content="Neural networks are inspired by biological neural networks.",
+        ),
         Document(
             page_content="Deep learning uses multiple layers for complex pattern recognition.",
         ),
@@ -394,10 +395,8 @@ def demonstrate_enhancement_vs_traditional() -> Dict[str, Any]:
     )
 
     return {
-        "enhanced":
-        enhanced_agent,
-        "traditional":
-        traditional_agent,
+        "enhanced": enhanced_agent,
+        "traditional": traditional_agent,
         "pattern_benefits": [
             "Modular design with reusable enhancement components",
             "Clearer separation between generation and structure",

@@ -7,6 +7,7 @@ Functions:
     scoring_workflow: Scoring Workflow functionality.
     control_workflow: Control Workflow functionality.
 """
+
 from __future__ import annotations
 
 import logging
@@ -76,8 +77,7 @@ def expansion_workflow(state: ToTState) -> dict[str, Any]:
                 candidate = Candidate(
                     content=candidate_data,
                     depth=state.depth,
-                    parent_id=(state.seed.id if hasattr(state, "seed")
-                               and state.seed else None),
+                    parent_id=(state.seed.id if hasattr(state, "seed") and state.seed else None),
                     expansion_index=i,
                 )
                 new_candidates.append(candidate)
@@ -104,8 +104,7 @@ def scoring_workflow(state: ToTState) -> dict[str, Any]:
 
         if hasattr(result, "messages") and result.messages:
             last_msg = result.messages[-1]
-            if hasattr(last_msg, "content") and isinstance(
-                    last_msg.content, dict):
+            if hasattr(last_msg, "content") and isinstance(last_msg.content, dict):
                 eval_result = last_msg.content
                 scored_candidate = ScoredCandidate.from_candidate(
                     candidate,
@@ -152,8 +151,7 @@ def control_workflow(state: ToTState) -> dict[str, Any]:
                     "depth": 1,  # Increment depth
                 }
 
-                if best and (not state.best_solution
-                             or best.score > state.best_solution.score):
+                if best and (not state.best_solution or best.score > state.best_solution.score):
                     updates["best_solution"] = best
 
                 return updates
@@ -217,22 +215,11 @@ def create_tree_of_thoughts(
     """Create a Tree of Thoughts multi-agent system."""
     # Define branches for routing
     branches = [
-        (expander, route_after_expansion, {
-            "scoring_prep": "scoring_prep"
-        }),
-        ("scoring_prep", route_after_scoring_prep, {
-            "scoref": scorer
-        }),
-        (scorer, route_after_scoring, {
-            "control_post": "control_post"
-        }),
-        ("control_post", route_after_control_post, {
-            "controllef": controller
-        }),
-        (controller, should_continue_search, {
-            "expander": expander,
-            END: END
-        }),
+        (expander, route_after_expansion, {"scoring_prep": "scoring_prep"}),
+        ("scoring_prep", route_after_scoring_prep, {"scoref": scorer}),
+        (scorer, route_after_scoring, {"control_post": "control_post"}),
+        ("control_post", route_after_control_post, {"controllef": controller}),
+        (controller, should_continue_search, {"expander": expander, END: END}),
     ]
 
     # Custom workflow nodes
@@ -273,9 +260,7 @@ def solve_with_tot(
     **kwargs,
 ) -> dict[str, Any]:
     """Solve a problem using Tree of Thoughts."""
-    system = create_tree_of_thoughts(max_depth=max_depth,
-                                     beam_size=beam_size,
-                                     **kwargs)
+    system = create_tree_of_thoughts(max_depth=max_depth, beam_size=beam_size, **kwargs)
 
     # Build and compile the graph
     graph = system.build_graph()
@@ -283,10 +268,7 @@ def solve_with_tot(
 
     # Create initial state
     initial_state = {
-        "messages": [{
-            "role": "user",
-            "content": problem
-        }],
+        "messages": [{"role": "user", "content": problem}],
         "problem_type": problem_type,
     }
 

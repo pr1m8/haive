@@ -65,8 +65,9 @@ class MultiReactMemorySystem:
             name="episodic_memory_agent",
             engine=self.engine,
             user_id=self.user_id,
-            memory_store_path=(f"{self.memory_base_path}/episodic"
-                               if self.memory_base_path else None),
+            memory_store_path=(
+                f"{self.memory_base_path}/episodic" if self.memory_base_path else None
+            ),
             k=5,
             use_time_weighting=True,
             decay_rate=0.01,  # Slower decay for personal experiences
@@ -77,8 +78,9 @@ class MultiReactMemorySystem:
             name="semantic_memory_agent",
             engine=self.engine,
             user_id=self.user_id,
-            memory_store_path=(f"{self.memory_base_path}/semantic"
-                               if self.memory_base_path else None),
+            memory_store_path=(
+                f"{self.memory_base_path}/semantic" if self.memory_base_path else None
+            ),
             k=5,
             use_time_weighting=False,  # Facts don't decay over time
         )
@@ -88,8 +90,9 @@ class MultiReactMemorySystem:
             name="procedural_memory_agent",
             engine=self.engine,
             user_id=self.user_id,
-            memory_store_path=(f"{self.memory_base_path}/procedural"
-                               if self.memory_base_path else None),
+            memory_store_path=(
+                f"{self.memory_base_path}/procedural" if self.memory_base_path else None
+            ),
             k=3,
             use_time_weighting=True,
             decay_rate=0.005,  # Very slow decay for skills
@@ -100,8 +103,9 @@ class MultiReactMemorySystem:
             name="working_memory_agent",
             engine=self.engine,
             user_id=self.user_id,
-            memory_store_path=(f"{self.memory_base_path}/working"
-                               if self.memory_base_path else None),
+            memory_store_path=(
+                f"{self.memory_base_path}/working" if self.memory_base_path else None
+            ),
             k=10,  # More items in working memory
             use_time_weighting=True,
             decay_rate=0.1,  # Fast decay for working memory
@@ -123,7 +127,9 @@ class MultiReactMemorySystem:
             routes = []
 
             # Episodic memory indicators
-            if any(word in query_lower for word in [
+            if any(
+                word in query_lower
+                for word in [
                     "remember when",
                     "last time",
                     "experience",
@@ -133,11 +139,14 @@ class MultiReactMemorySystem:
                     "personal",
                     "my day",
                     "happened",
-            ]):
+                ]
+            ):
                 routes.append(MemoryType.EPISODIC.value)
 
             # Semantic memory indicators
-            if any(word in query_lower for word in [
+            if any(
+                word in query_lower
+                for word in [
                     "fact",
                     "definition",
                     "what is",
@@ -146,11 +155,14 @@ class MultiReactMemorySystem:
                     "general knowledge",
                     "information about",
                     "meaning of",
-            ]):
+                ]
+            ):
                 routes.append(MemoryType.SEMANTIC.value)
 
             # Procedural memory indicators
-            if any(word in query_lower for word in [
+            if any(
+                word in query_lower
+                for word in [
                     "how to",
                     "steps",
                     "procedure",
@@ -160,11 +172,14 @@ class MultiReactMemorySystem:
                     "way to",
                     "process",
                     "tutorial",
-            ]):
+                ]
+            ):
                 routes.append(MemoryType.PROCEDURAL.value)
 
             # Working memory indicators
-            if any(word in query_lower for word in [
+            if any(
+                word in query_lower
+                for word in [
                     "current",
                     "now",
                     "today",
@@ -175,7 +190,8 @@ class MultiReactMemorySystem:
                     "context",
                     "just",
                     "recent",
-            ]):
+                ]
+            ):
                 routes.append(MemoryType.WORKING.value)
 
             # Default to episodic if no clear indicators
@@ -193,7 +209,9 @@ class MultiReactMemorySystem:
             content_lower = content.lower()
 
             # Check for procedural content
-            if any(word in content_lower for word in [
+            if any(
+                word in content_lower
+                for word in [
                     "how to",
                     "steps:",
                     "procedure",
@@ -203,11 +221,14 @@ class MultiReactMemorySystem:
                     "finally",
                     "method",
                     "technique",
-            ]):
+                ]
+            ):
                 return MemoryType.PROCEDURAL.value
 
             # Check for semantic content
-            if any(word in content_lower for word in [
+            if any(
+                word in content_lower
+                for word in [
                     "is defined as",
                     "means",
                     "fact:",
@@ -217,11 +238,14 @@ class MultiReactMemorySystem:
                     "every",
                     "general rule",
                     "principle",
-            ]):
+                ]
+            ):
                 return MemoryType.SEMANTIC.value
 
             # Check for working memory content
-            if any(word in content_lower for word in [
+            if any(
+                word in content_lower
+                for word in [
                     "currently",
                     "right now",
                     "today",
@@ -229,7 +253,8 @@ class MultiReactMemorySystem:
                     "active task",
                     "working on",
                     "in progress",
-            ]):
+                ]
+            ):
                 return MemoryType.WORKING.value
 
             # Default to episodic
@@ -284,7 +309,8 @@ Memory types:
         """
         # First, determine which memory systems to use
         routing_result = await self.router_agent.arun(
-            f"Route this query to appropriate memory systems: {query}", )
+            f"Route this query to appropriate memory systems: {query}",
+        )
 
         # Extract memory types from routing result
         memory_types = []
@@ -326,7 +352,8 @@ Memory types:
         # Determine memory type if not specified
         if not memory_type:
             classification = await self.router_agent.arun(
-                f"Classify this memory for storage: {content}", )
+                f"Classify this memory for storage: {content}",
+            )
 
             # Extract memory type
             for mt in MemoryType:
@@ -339,8 +366,7 @@ Memory types:
 
         # Store in appropriate system
         agent = self.memory_agents[memory_type]
-        result = await agent.arun(f"Store this memory: {content}",
-                                  auto_save=False)
+        result = await agent.arun(f"Store this memory: {content}", auto_save=False)
 
         return f"Memory stored in {memory_type.value} system: {result}"
 
@@ -371,8 +397,7 @@ For each memory, indicate the action and destination."""
         # Execute consolidation (simplified for example)
         return f"Memory consolidation complete. Plan: {consolidation_plan}"
 
-    def _combine_memory_results(self, results: dict[str, str],
-                                query: str) -> str:
+    def _combine_memory_results(self, results: dict[str, str], query: str) -> str:
         """Combine results from multiple memory systems."""
         if not results:
             return "No relevant memories found."
@@ -437,7 +462,8 @@ async def example_multi_memory_system():
 
     # Query that touches multiple systems
     await system.process_query(
-        "What am I currently working on and when did I last meet with Bob?", )
+        "What am I currently working on and when did I last meet with Bob?",
+    )
 
     # Specific procedural query
     await system.process_query("How do I make coffee?")
@@ -468,7 +494,8 @@ async def example_advanced_memory_operations():
     # Complex query spanning multiple memory types
     await system.process_query(
         "What have I learned about Rust, what projects have I built, "
-        "and what am I currently struggling with?", )
+        "and what am I currently struggling with?",
+    )
 
 
 if __name__ == "__main__":

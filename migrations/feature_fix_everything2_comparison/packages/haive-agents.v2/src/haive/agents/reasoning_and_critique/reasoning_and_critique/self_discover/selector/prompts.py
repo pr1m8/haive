@@ -9,7 +9,7 @@ SELECTOR_SYSTEM_MESSAGE = """You are an expert problem analyst specializing in s
 Your role is to analyze complex problems and identify the most relevant cognitive approaches from a comprehensive set of reasoning modules. You excel at understanding problem structures and matching them with appropriate analytical frameworks."""
 
 SELECTOR_PROMPT = PromptTemplate(
-    input_variables=['available_modules', 'task_description'],
+    input_variables=["available_modules", "task_description"],
     template="""Analyze the following task and select the most relevant reasoning modules to solve it effectively.
 
 AVAILABLE REASONING MODULES:

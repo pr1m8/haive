@@ -54,10 +54,12 @@ def create_multi_query_processor(documents: list[Document]):
 def create_document_summarizer() -> Any:
     """Create a list iteration node that summarizes multiple documents."""
     # Create summarization engine
-    summarize_prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are an expert at summarizing documents concisely."),
-        ("human", "Summarize this document in 2-3 sentences:\n\n{document}"),
-    ], )
+    summarize_prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", "You are an expert at summarizing documents concisely."),
+            ("human", "Summarize this document in 2-3 sentences:\n\n{document}"),
+        ],
+    )
 
     summarize_engine = AugLLMConfig(
         llm_config=AzureLLMConfig(
@@ -70,8 +72,7 @@ def create_document_summarizer() -> Any:
     )
 
     # Create engine callable
-    def summarize_document(doc: Document,
-                           context: dict[str, Any]) -> dict[str, Any]:
+    def summarize_document(doc: Document, context: dict[str, Any]) -> dict[str, Any]:
         """Summarize a single document."""
         result = summarize_engine.invoke({"document": doc.page_content})
         return {
@@ -98,20 +99,17 @@ def create_entity_extractor() -> Any:
     class ExtractedEntities(BaseModel):
         """Entities extracted from text."""
 
-        people: list[str] = Field(default_factory=list,
-                                  description="Names of people")
+        people: list[str] = Field(default_factory=list, description="Names of people")
         organizations: list[str] = Field(
             default_factory=list,
             description="Organization names",
         )
-        locations: list[str] = Field(default_factory=list,
-                                     description="Location names")
-        dates: list[str] = Field(default_factory=list,
-                                 description="Dates mentioned")
+        locations: list[str] = Field(default_factory=list, description="Location names")
+        dates: list[str] = Field(default_factory=list, description="Dates mentioned")
 
     extract_prompt = ChatPromptTemplate.from_messages(
-        [("system", "Extract entities from the following text."),
-         ("human", "{text}")], )
+        [("system", "Extract entities from the following text."), ("human", "{text}")],
+    )
 
     extract_engine = AugLLMConfig(
         llm_config=AzureLLMConfig(
@@ -139,8 +137,7 @@ def create_entity_extractor() -> Any:
 def create_parallel_document_grader() -> Any:
     """Create a list iteration node that grades documents in parallel."""
 
-    def grade_document(doc: Document, context: dict[str,
-                                                    Any]) -> dict[str, Any]:
+    def grade_document(doc: Document, context: dict[str, Any]) -> dict[str, Any]:
         """Grade a single document - this would be processed in parallel."""
         # In real usage, this would be a separate node that receives the Send
         return {
@@ -172,10 +169,12 @@ def example_graph_usage() -> Any:
     graph = BaseGraph(name="ListIterationExample")
 
     # Create nodes
-    query_processor = create_multi_query_processor(documents=[
-        Document(page_content="Example document about AI"),
-        Document(page_content="Another document about ML"),
-    ], )
+    query_processor = create_multi_query_processor(
+        documents=[
+            Document(page_content="Example document about AI"),
+            Document(page_content="Another document about ML"),
+        ],
+    )
 
     summarizer = create_document_summarizer()
 
@@ -190,8 +189,7 @@ def example_graph_usage() -> Any:
 
     # Example state
     {
-        "queries":
-        ["What is AI?", "How does ML work?", "What are neural networks?"],
+        "queries": ["What is AI?", "How does ML work?", "What are neural networks?"],
         "documents": [
             Document(page_content="Long document about AI..."),
             Document(page_content="Long document about ML..."),

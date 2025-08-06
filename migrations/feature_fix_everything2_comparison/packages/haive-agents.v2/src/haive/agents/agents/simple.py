@@ -88,11 +88,18 @@ Guidelines:
 6. Note any important patterns or recurring themes
 7. Maintain the original meaning and nuance
 
-Output a summary that captures the essence of the memories while reducing token usage by approximately 70%.""", ), HumanMessage(
-            content="Please summarize the following memories:\n\n{memories_text}\n\nTarget token count: {target_tokens}", ), ], )
+Output a summary that captures the essence of the memories while reducing token usage by approximately 70%.""",
+        ),
+        HumanMessage(
+            content="Please summarize the following memories:\n\n{memories_text}\n\nTarget token count: {target_tokens}",
+        ),
+    ],
+)
 
-RUNNING_SUMMARY_UPDATE_PROMPT = ChatPromptTemplate.from_messages([SystemMessage(
-    content="""You are updating a running summary of conversation memories. You need to integrate new information into the existing summary while keeping it concise and comprehensive.
+RUNNING_SUMMARY_UPDATE_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        SystemMessage(
+            content="""You are updating a running summary of conversation memories. You need to integrate new information into the existing summary while keeping it concise and comprehensive.
 
 Guidelines:
 1. Merge new information with existing summary
@@ -100,13 +107,19 @@ Guidelines:
 3. Preserve all important information
 4. Remove redundancies
 5. Maintain chronological awareness
-6. Keep the summary coherent and well-structured""", ), HumanMessage(content="""Current Summary:
+6. Keep the summary coherent and well-structured""",
+        ),
+        HumanMessage(
+            content="""Current Summary:
 {current_summary}
 
 New Memories to Integrate:
 {new_memories}
 
-Updated Summary (target tokens: {target_tokens}):""", ), ], )
+Updated Summary (target tokens: {target_tokens}):""",
+        ),
+    ],
+)
 
 MEMORY_REWRITE_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -118,8 +131,13 @@ Guidelines:
 2. Combine related facts into single statements
 3. Remove unnecessary words and phrases
 4. Preserve all entities, relationships, and key information
-5. Maintain the original intent and nuance""", ), HumanMessage(
-            content="Rewrite this memory more concisely:\n\n{memory_content}\n\nCompression target: {compression_ratio}% of original", ), ], )
+5. Maintain the original intent and nuance""",
+        ),
+        HumanMessage(
+            content="Rewrite this memory more concisely:\n\n{memory_content}\n\nCompression target: {compression_ratio}% of original",
+        ),
+    ],
+)
 
 
 # ============================================================================
@@ -391,8 +409,8 @@ class SimpleMemoryAgent(EnhancedSimpleAgent):
         # State schema is already set as a class attribute
 
         logger.info(
-            f"Memory agent setup complete with {
-                self.memory_config.max_context_tokens} max tokens", )
+            f"Memory agent setup complete with {self.memory_config.max_context_tokens} max tokens",
+        )
 
     def _setup_summarization_prompts(self) -> None:
         """Setup summarization prompts."""
@@ -433,8 +451,13 @@ For each entity, provide:
 2. Type: The category of entity (Person, Place, Concept, Organization, etc.)
 3. Properties: Key attributes and facts about the entity
 
-Focus on entities that are meaningful and likely to appear in future conversations.""", ), HumanMessage(
-                    content="Extract entities from this content:\n\n{content}", ), ], )
+Focus on entities that are meaningful and likely to appear in future conversations.""",
+                ),
+                HumanMessage(
+                    content="Extract entities from this content:\n\n{content}",
+                ),
+            ],
+        )
 
         # Relationship extraction prompt
         self.relationship_extraction_prompt = ChatPromptTemplate.from_messages(
@@ -451,8 +474,13 @@ For each relationship, provide:
 4. Confidence: How confident you are in this relationship (0.0 to 1.0)
 5. Evidence: Brief text supporting this relationship
 
-Focus on relationships that are explicitly mentioned or strongly implied.""", ), HumanMessage(
-                    content="Extract relationships from this content:\n\n{content}\n\nKnown entities:\n{entities}", ), ], )
+Focus on relationships that are explicitly mentioned or strongly implied.""",
+                ),
+                HumanMessage(
+                    content="Extract relationships from this content:\n\n{content}\n\nKnown entities:\n{entities}",
+                ),
+            ],
+        )
 
     # ========================================================================
     # GRAPH BUILDING
@@ -724,9 +752,8 @@ Focus on relationships that are explicitly mentioned or strongly implied.""", ),
                 return Command(update={})
 
             content = (
-                last_message.content if hasattr(
-                    last_message,
-                    "content") else str(last_message))
+                last_message.content if hasattr(last_message, "content") else str(last_message)
+            )
 
             # Determine operation type and execute
             operation_result = {"operation_timestamp": datetime.now().isoformat()}
@@ -841,11 +868,8 @@ Focus on relationships that are explicitly mentioned or strongly implied.""", ),
 
                 # Apply summarization results
                 message_ids = [
-                    getattr(
-                        msg,
-                        "id",
-                        f"msg_{i}") for i,
-                    msg in enumerate(messages_to_summarize)]
+                    getattr(msg, "id", f"msg_{i}") for i, msg in enumerate(messages_to_summarize)
+                ]
                 memory_ids = [mem.id for mem in memories_to_summarize]
 
                 state.apply_summarization_result(
@@ -924,8 +948,8 @@ Focus on relationships that are explicitly mentioned or strongly implied.""", ),
                 )
 
                 logger.info(
-                    f"Warning summarization complete: {
-                        len(memories_to_summarize)} memories", )
+                    f"Warning summarization complete: {len(memories_to_summarize)} memories",
+                )
 
                 return Command(
                     update={
@@ -958,8 +982,7 @@ Focus on relationships that are explicitly mentioned or strongly implied.""", ),
                 essential_memories.append(memory)
 
         # Keep only last 2 messages
-        essential_messages = state.messages[-2:] if len(
-            state.messages) > 2 else state.messages
+        essential_messages = state.messages[-2:] if len(state.messages) > 2 else state.messages
 
         # Reset state aggressively
         return Command(
@@ -1039,9 +1062,9 @@ Focus on relationships that are explicitly mentioned or strongly implied.""", ),
             content = getattr(message, "content", str(message))
             recent_content.append(f"[Message] {content}")
 
-        summary = f"Initial summary created at {
-            datetime.now().isoformat()}:\n\n" + "\n".join(
-            recent_content, )
+        summary = f"Initial summary created at {datetime.now().isoformat()}:\n\n" + "\n".join(
+            recent_content,
+        )
 
         return Command(
             update={
@@ -1060,13 +1083,10 @@ Focus on relationships that are explicitly mentioned or strongly implied.""", ),
             return self.create_summary_node(state)
 
         # Update with recent activity
-        recent_activity = f"\nUpdated {
-            datetime.now().isoformat()}: Recent activity processed."
+        recent_activity = f"\nUpdated {datetime.now().isoformat()}: Recent activity processed."
 
         if hasattr(state, "last_operation"):
-            recent_activity += f" Last operation: {
-                state.last_operation.get(
-                    'type', 'unknown')}"
+            recent_activity += f" Last operation: {state.last_operation.get('type', 'unknown')}"
 
         updated_summary = state.running_summary + recent_activity
 
@@ -1219,8 +1239,7 @@ Focus on relationships that are explicitly mentioned or strongly implied.""", ),
             )
 
             # Get recent messages
-            recent_messages = state.messages[-3:] if len(
-                state.messages) > 3 else state.messages
+            recent_messages = state.messages[-3:] if len(state.messages) > 3 else state.messages
 
             if not new_memories and len(recent_messages) < 2:
                 return Command(
@@ -1378,7 +1397,7 @@ Focus on relationships that are explicitly mentioned or strongly implied.""", ),
 
             # Split into memories to summarize and preserve
             to_summarize = all_memories[: -self.memory_config.preserve_recent_memories]
-            to_preserve = all_memories[-self.memory_config.preserve_recent_memories:]
+            to_preserve = all_memories[-self.memory_config.preserve_recent_memories :]
 
             # Create text from memories to summarize
             memories_text = "\n\n".join(
@@ -1477,8 +1496,8 @@ Focus on relationships that are explicitly mentioned or strongly implied.""", ),
 
                     response = self.engine.invoke(rewrite_input)
                     rewritten_content = (
-                        response.content if hasattr(
-                            response, "content") else str(response))
+                        response.content if hasattr(response, "content") else str(response)
+                    )
 
                     # Create rewritten memory
                     rewritten_memory = EnhancedMemoryItem(

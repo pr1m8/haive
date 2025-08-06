@@ -22,7 +22,8 @@ GENERATE_PROMPT = (
     "If you don't know the answer, just say that you don't know. "
     "Use three sentences maximum and keep the answer concise.\n"
     "Question: {question} \n"
-    "Context: {context}")
+    "Context: {context}"
+)
 
 GENERATE_PROMPT_TEMPLATE = PromptTemplate.from_template(GENERATE_PROMPT)
 
@@ -31,6 +32,7 @@ GRADE_PROMPT = (
     "Here is the retrieved document: \n\n {context} \n\n"
     "Here is the user question: {question} \n"
     "If the document contains key(s) or semantic meaning related to the user question, grade it as relevant. \n"
-    "Give a binary score 'yes' or 'no' score to indicate whether the document is relevant to the question.")
+    "Give a binary score 'yes' or 'no' score to indicate whether the document is relevant to the question."
+)
 
 GRADE_PROMPT_TEMPLATE = PromptTemplate.from_template(GRADE_PROMPT)

@@ -6,10 +6,8 @@ from pydantic import BaseModel, Field
 class StepResult(BaseModel):
     """Result of executing a single reasoning step."""
 
-    step_number: int = Field(...,
-                             description="The step number that was executed")
-    step_name: str = Field(...,
-                           description="Name of the step that was executed")
+    step_number: int = Field(..., description="The step number that was executed")
+    step_name: str = Field(..., description="Name of the step that was executed")
     findings: str = Field(
         ...,
         description="What was discovered or concluded in this step",

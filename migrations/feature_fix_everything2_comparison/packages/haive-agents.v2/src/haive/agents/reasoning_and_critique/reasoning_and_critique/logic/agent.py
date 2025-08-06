@@ -11,6 +11,7 @@ Functions:
     build_graph: Build Graph functionality.
     should_explore_alternatives: Should Explore Alternatives functionality.
 """
+
 # src/haive/agents/reasoning/orchestrator.py
 from __future__ import annotations
 
@@ -67,13 +68,12 @@ class ReasoningSystem(Agent):
     state_schema: Any = Field(default=ReasoningSystemState)
 
     # Define engines
-    premise_extractor: AugLLMConfig = Field(
-        default_factory=create_premise_extractor)
-    logical_reasoner: AugLLMConfig = Field(
-        default_factory=create_logical_reasoner)
+    premise_extractor: AugLLMConfig = Field(default_factory=create_premise_extractor)
+    logical_reasoner: AugLLMConfig = Field(default_factory=create_logical_reasoner)
     bias_detector: AugLLMConfig = Field(default_factory=create_bias_detector)
     uncertainty_analyzer: AugLLMConfig = Field(
-        default_factory=create_uncertainty_analyzer, )
+        default_factory=create_uncertainty_analyzer,
+    )
     synthesizer: AugLLMConfig = Field(default_factory=create_synthesis_agent)
 
     def setup_agent(self) -> None:
@@ -114,10 +114,7 @@ class ReasoningSystem(Agent):
         graph.add_conditional_edges(
             "primary_reasoning",
             should_explore_alternatives,
-            {
-                True: "alternative_reasoning",
-                False: "analyze_biases"
-            },
+            {True: "alternative_reasoning", False: "analyze_biases"},
         )
 
         graph.add_edge("alternative_reasoning", "analyze_biases")

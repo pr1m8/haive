@@ -25,8 +25,7 @@ class LATSAgentConfig(AgentConfig):
         description="Maximum number of search iterations",
     )
 
-    max_depth: int = Field(default=5,
-                           description="Maximum depth of the search tree")
+    max_depth: int = Field(default=5, description="Maximum depth of the search tree")
 
     exploration_weight: float = Field(
         default=1.0,

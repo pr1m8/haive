@@ -10,6 +10,7 @@ Functions:
     convert_vector_store_to_retriever: Convert Vector Store To Retriever functionality.
     setup_engine: Setup Engine functionality.
 """
+
 from __future__ import annotations
 
 import uuid
@@ -34,13 +35,10 @@ class BaseRAGConfig(AgentConfig):
     """Configuration for a basic RAG agent."""
 
     # Configuration for Pydantic
-    model_config = ConfigDict(arbitrary_types_allowed=True,
-                              populate_by_name=True)
+    model_config = ConfigDict(arbitrary_types_allowed=True, populate_by_name=True)
 
-    name: str = Field(
-        default_factory=lambda: f"rag_agent_{uuid.uuid4().hex[:8]}")
-    description: str = Field(
-        default="Basic Retrieval-Augmented Generation agent")
+    name: str = Field(default_factory=lambda: f"rag_agent_{uuid.uuid4().hex[:8]}")
+    description: str = Field(default="Basic Retrieval-Augmented Generation agent")
 
     # Allow either a VectorStoreConfig or RetrieverConfig to be provided
     retriever_config: BaseRetrieverConfig | VectorStoreConfig = Field(
@@ -55,8 +53,7 @@ class BaseRAGConfig(AgentConfig):
 
     @model_validator(mode="before")
     @classmethod
-    def convert_vector_store_to_retriever(
-            cls, data: dict[str, Any]) -> dict[str, Any]:
+    def convert_vector_store_to_retriever(cls, data: dict[str, Any]) -> dict[str, Any]:
         """Pre-validation converter from VectorStoreConfig to RetrieverConfig.
 
         This runs before Pydantic validation, ensuring the type checking

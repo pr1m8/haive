@@ -158,13 +158,13 @@ SPHINX_PACKAGES = os.environ.get("SPHINX_PACKAGES", "all")
 
 # All available packages - point to the actual package directories
 ALL_PACKAGES = {
-    "core": "../../packages/haive-core/src/haive/core",
-    "agents": "../../packages/haive-agents/src/haive/agents", 
-    "tools": "../../packages/haive-tools/src/haive/tools",
-    "games": "../../packages/haive-games/src/haive/games",
-    "dataflow": "../../packages/haive-dataflow/src/haive/dataflow",
-    "mcp": "../../packages/haive-mcp/src/haive/mcp",
-    "prebuilt": "../../packages/haive-prebuilt/src/haive/prebuilt",
+    "core": "../packages/haive-core/src/haive/core",
+    "agents": "../packages/haive-agents/src/haive/agents", 
+    "tools": "../packages/haive-tools/src/haive/tools",
+    "games": "../packages/haive-games/src/haive/games",
+    "dataflow": "../packages/haive-dataflow/src/haive/dataflow",
+    "mcp": "../packages/haive-mcp/src/haive/mcp",
+    "prebuilt": "../packages/haive-prebuilt/src/haive/prebuilt",
 }
 
 autoapi_type = "python"

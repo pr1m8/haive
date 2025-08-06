@@ -106,8 +106,7 @@ class CorrectiveRAGAgent(ConditionalAgent):
             requery_agent = RequeryDecisionAgent()
 
         if not answer_agent:
-            answer_agent = SimpleAgent(name="CRAG Answer Agent",
-                                       engine=AugLLMConfig())
+            answer_agent = SimpleAgent(name="CRAG Answer Agent", engine=AugLLMConfig())
 
         # Initialize with agents
         agents = [retrieval_agent, grading_agent, requery_agent, answer_agent]
@@ -145,8 +144,10 @@ class CorrectiveRAGAgent(ConditionalAgent):
                 return self._get_agent_node_name(self.requery_agent)
 
             # If requery needed and haven't hit limit
-            if (getattr(state, "needs_requery", False)
-                    and state.retrieval_count < state.max_retrievals):
+            if (
+                getattr(state, "needs_requery", False)
+                and state.retrieval_count < state.max_retrievals
+            ):
                 # Clear previous docs and requery
                 state.retrieved_documents = []
                 state.graded_documents = []
@@ -161,10 +162,7 @@ class CorrectiveRAGAgent(ConditionalAgent):
             self.add_conditional_edge(
                 source_agent=agent,
                 condition=crag_router,
-                destinations={
-                    self._get_agent_node_name(a): a
-                    for a in self.agents
-                },
+                destinations={self._get_agent_node_name(a): a for a in self.agents},
                 default=END,
             )
 
@@ -187,13 +185,15 @@ class HYDERAGAgent(SequentialAgent):
         if not hypothesis_agent:
             from langchain_core.prompts import ChatPromptTemplate
 
-            hyde_prompt = ChatPromptTemplate.from_messages([
-                (
-                    "system",
-                    "You are an expert that generates detailed, accurate responses to questions. Write a comprehensive paragraph that would perfectly answer the given question.",
-                ),
-                ("human", "Question: {query}\n\nDetailed Answer:"),
-            ], )
+            hyde_prompt = ChatPromptTemplate.from_messages(
+                [
+                    (
+                        "system",
+                        "You are an expert that generates detailed, accurate responses to questions. Write a comprehensive paragraph that would perfectly answer the given question.",
+                    ),
+                    ("human", "Question: {query}\n\nDetailed Answer:"),
+                ],
+            )
 
             hypothesis_agent = SimpleAgent(
                 name="HYDE Hypothesis Generator",
@@ -210,8 +210,7 @@ class HYDERAGAgent(SequentialAgent):
             )
 
         if not answer_agent:
-            answer_agent = SimpleAgent(name="HYDE Answer Agent",
-                                       engine=AugLLMConfig())
+            answer_agent = SimpleAgent(name="HYDE Answer Agent", engine=AugLLMConfig())
 
         super().__init__(
             name="HYDE RAG Agent",
@@ -237,16 +236,18 @@ class SelfRAGAgent(ConditionalAgent):
         if not retrieval_decision_agent:
             from langchain_core.prompts import ChatPromptTemplate
 
-            retrieval_prompt = ChatPromptTemplate.from_messages([
-                (
-                    "system",
-                    """You decide if external knowledge retrieval is needed.
+            retrieval_prompt = ChatPromptTemplate.from_messages(
+                [
+                    (
+                        "system",
+                        """You decide if external knowledge retrieval is needed.
                 Respond with exactly one of:
                 - [Retrieval] if the question requires external knowledge
                 - [No Retrieval] if you can answer with your internal knowledge""",
-                ),
-                ("human", "Question: {query}"),
-            ], )
+                    ),
+                    ("human", "Question: {query}"),
+                ],
+            )
 
             retrieval_decision_agent = SimpleAgent(
                 name="Self-RAG Retrieval Decision",
@@ -301,8 +302,7 @@ class SelfRAGAgent(ConditionalAgent):
         def self_rag_router(state: MultiAgentRAGState) -> str:
             """Route based on Self-RAG reflection logic."""
             # Check if we need retrieval decision
-            if not hasattr(state, "needs_retrieval_decision"
-                           ) or not state.needs_retrieval_decision:
+            if not hasattr(state, "needs_retrieval_decision") or not state.needs_retrieval_decision:
                 return self._get_agent_node_name(self.retrieval_decision_agent)
 
             # If retrieval is needed and not done
@@ -311,8 +311,7 @@ class SelfRAGAgent(ConditionalAgent):
                 return self._get_agent_node_name(self.retrieval_agent)
 
             # Check relevance if documents retrieved but not checked
-            if state.retrieved_documents and not hasattr(
-                    state, "relevance_checked"):
+            if state.retrieved_documents and not hasattr(state, "relevance_checked"):
                 return self._get_agent_node_name(self.relevance_agent)
 
             # Generate final answer
@@ -323,10 +322,7 @@ class SelfRAGAgent(ConditionalAgent):
             self.add_conditional_edge(
                 source_agent=agent,
                 condition=self_rag_router,
-                destinations={
-                    self._get_agent_node_name(a): a
-                    for a in self.agents
-                },
+                destinations={self._get_agent_node_name(a): a for a in self.agents},
                 default=END,
             )
 

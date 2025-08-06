@@ -74,10 +74,7 @@ class QuickSearchAgent(BaseSearchAgent):
                 system_message=self.get_system_prompt(),
             )
 
-        super().__init__(name=name,
-                         engine=engine,
-                         search_tools=search_tools,
-                         **kwargs)
+        super().__init__(name=name, engine=engine, search_tools=search_tools, **kwargs)
 
         logger.info(f"Initialized QuickSearchAgent: {name}")
 
@@ -183,7 +180,8 @@ Process the query efficiently and provide a clear, concise response."""
 
         words = query.lower().split()
         keywords = [
-            word.strip(".,!?;:") for word in words
+            word.strip(".,!?;:")
+            for word in words
             if word.strip(".,!?;:") not in stop_words and len(word) > 2
         ]
 
@@ -210,8 +208,7 @@ Process the query efficiently and provide a clear, concise response."""
             return "geographical"
         if query_lower.startswith(("how to", "how do", "how can")):
             return "procedural"
-        if query_lower.startswith(
-                ("how much", "how many", "how tall", "how long")):
+        if query_lower.startswith(("how much", "how many", "how tall", "how long")):
             return "quantitative"
         if query_lower.startswith(("why is", "why do", "why did")):
             return "explanatory"
@@ -244,8 +241,7 @@ Process the query efficiently and provide a clear, concise response."""
         answer_type = self.determine_answer_type(query)
 
         # Get base response
-        base_response = await super().process_search(query, context,
-                                                     save_to_memory)
+        base_response = await super().process_search(query, context, save_to_memory)
 
         # Calculate processing time
         processing_time = time.time() - start_time
@@ -267,8 +263,7 @@ Process the query efficiently and provide a clear, concise response."""
 
         return response
 
-    async def batch_search(self,
-                           queries: list[str]) -> list[QuickSearchResponse]:
+    async def batch_search(self, queries: list[str]) -> list[QuickSearchResponse]:
         """Process multiple quick search queries efficiently.
 
         Args:

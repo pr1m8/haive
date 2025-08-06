@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 from haive.agents.reasoning_and_critique.lats.v3.agents.action_generator import (
-    ActionGenerator, )
+    ActionGenerator,
+)
 from haive.agents.reasoning_and_critique.lats.v3.agents.node_selector import (
-    NodeSelector, )
+    NodeSelector,
+)
 from haive.agents.reasoning_and_critique.lats.v3.agents.reflection_evaluator import (
-    ReflectionEvaluator, )
+    ReflectionEvaluator,
+)
 
 __all__ = [
     "ActionGenerator",

@@ -80,9 +80,8 @@ def merge_configs(
 ) -> dict[str, Any] | None:
     """Merge two configs with smart handling."""
     logger.debug(
-        f"Merging configs: base={
-            base_config is not None}, override={
-            override_config is not None}", )
+        f"Merging configs: base={base_config is not None}, override={override_config is not None}",
+    )
 
     # Handle None cases
     if base_config is None and override_config is None:
@@ -95,11 +94,7 @@ def merge_configs(
     # Use RunnableConfigManager for proper merging
     merged = RunnableConfigManager.merge(base_config, override_config)
     logger.debug(
-        f"Merged config keys: {
-            list(
-                merged.keys() if isinstance(
-                    merged,
-                    dict) else [])}",
+        f"Merged config keys: {list(merged.keys() if isinstance(merged, dict) else [])}",
     )
     return merged
 
@@ -180,11 +175,7 @@ def extract_input(state: Any, config: NodeConfig) -> Any:
         logger.debug(f"Processing BaseModel state: {state.__class__.__name__}")
     else:
         logger.debug(
-            f"State keys: {
-                list(
-                    state.keys()) if isinstance(
-                    state,
-                    dict) else 'non-dict state'}",
+            f"State keys: {list(state.keys()) if isinstance(state, dict) else 'non-dict state'}",
         )
 
     logger.debug(f"Input mapping: {config.input_mapping}")
@@ -217,9 +208,8 @@ def extract_input(state: Any, config: NodeConfig) -> Any:
             elif isinstance(state, dict) and state_key in state:
                 mapped_input[input_key] = state[state_key]
                 logger.debug(
-                    f"Mapped {state_key} → {input_key}: {
-                        type(
-                            state[state_key]).__name__}", )
+                    f"Mapped {state_key} → {input_key}: {type(state[state_key]).__name__}",
+                )
             else:
                 logger.warning(f"State key '{state_key}' not found in state")
 
@@ -227,8 +217,8 @@ def extract_input(state: Any, config: NodeConfig) -> Any:
         # query string
         if is_retriever and "query" in mapped_input and len(mapped_input) == 1:
             logger.debug(
-                f"Simplified retriever input to just query string: {
-                    mapped_input['query']}", )
+                f"Simplified retriever input to just query string: {mapped_input['query']}",
+            )
             return mapped_input["query"]
 
         # Return mapped dict if we have any values
@@ -270,8 +260,8 @@ def extract_input(state: Any, config: NodeConfig) -> Any:
         if is_base_model and hasattr(state, "messages"):
             messages = state.messages
             logger.debug(
-                f"Using direct messages from BaseModel (count: {
-                    len(messages) if messages else 0})", )
+                f"Using direct messages from BaseModel (count: {len(messages) if messages else 0})",
+            )
             return messages
         # From dict
         if isinstance(state, dict) and "messages" in state:
@@ -280,8 +270,7 @@ def extract_input(state: Any, config: NodeConfig) -> Any:
 
     # If we get here with a mapping but no matches, log a clear error
     if config.input_mapping and len(config.input_mapping) > 0:
-        msg = f"No input fields could be extracted using mapping: {
-            config.input_mapping}"
+        msg = f"No input fields could be extracted using mapping: {config.input_mapping}"
         logger.error(msg)
 
         # Check for common errors
@@ -291,11 +280,11 @@ def extract_input(state: Any, config: NodeConfig) -> Any:
                 for attr in dir(state)
                 if not attr.startswith("_") and not callable(getattr(state, attr))
             ]
-            missing_attrs = [
-                k for k in config.input_mapping if k not in available_attrs]
+            missing_attrs = [k for k in config.input_mapping if k not in available_attrs]
             if missing_attrs:
                 logger.error(
-                    f"BaseModel is missing these attributes defined in mapping: {missing_attrs}", )
+                    f"BaseModel is missing these attributes defined in mapping: {missing_attrs}",
+                )
                 logger.error(
                     f"Available attributes: {available_attrs[:10]}{
                         '...' if len(available_attrs) > 10 else ''
@@ -381,14 +370,14 @@ def process_output(result: Any, config: NodeConfig, original_state: Any) -> Any:
             # Pydantic v2
             updates = original_state.model_copy(deep=True)
             logger.debug(
-                f"Created deep copy of original BaseModel: {
-                    updates.__class__.__name__}", )
+                f"Created deep copy of original BaseModel: {updates.__class__.__name__}",
+            )
         else:
             # Pydantic v1
             updates = original_state.copy(deep=True)
             logger.debug(
-                f"Created deep copy of original BaseModel: {
-                    updates.__class__.__name__}", )
+                f"Created deep copy of original BaseModel: {updates.__class__.__name__}",
+            )
     else:
         # Start with empty dict or original state dict if preserving
         updates = {}
@@ -419,8 +408,8 @@ def process_output(result: Any, config: NodeConfig, original_state: Any) -> Any:
             try:
                 setattr(updates, output_key, result)
                 logger.debug(
-                    f"Set BaseModel attribute {output_key} with {
-                        len(result)} documents", )
+                    f"Set BaseModel attribute {output_key} with {len(result)} documents",
+                )
 
                 # Preserve query if available
                 if hasattr(original_state, "query"):
@@ -586,8 +575,8 @@ def process_output(result: Any, config: NodeConfig, original_state: Any) -> Any:
                     messages = updates.messages
                     messages.append(result)
                     logger.debug(
-                        f"Added message to existing messages list (now {
-                            len(messages)})", )
+                        f"Added message to existing messages list (now {len(messages)})",
+                    )
                 else:
                     try:
                         updates.messages = [result]
@@ -755,8 +744,8 @@ def handle_command_pattern(result: Any, config: NodeConfig) -> Any:
                         # Call update() to get actual data
                         update_data = result.update()
                         logger.debug(
-                            f"Called callable update, got type: {
-                                type(update_data).__name__}", )
+                            f"Called callable update, got type: {type(update_data).__name__}",
+                        )
                     except Exception as e:
                         logger.exception(f"Error calling update(): {e}")
                         update_data = {"error": str(e)}
@@ -790,9 +779,7 @@ def handle_command_pattern(result: Any, config: NodeConfig) -> Any:
         return result
 
     # Special handling for BaseModel if preserving and command_goto is set
-    if isinstance(
-            result,
-            BaseModel) and preserve_model and config.command_goto is not None:
+    if isinstance(result, BaseModel) and preserve_model and config.command_goto is not None:
         logger.debug(
             f"Wrapping preserved BaseModel in Command with goto: {config.command_goto}",
         )
@@ -1009,8 +996,8 @@ class AsyncInvokableNodeProcessor:
                         result = engine.invoke(input_data, merged_config)
 
                     logger.debug(
-                        f"Async engine returned result of type: {
-                            type(result).__name__}", )
+                        f"Async engine returned result of type: {type(result).__name__}",
+                    )
 
                     # Process output
                     processed_output = process_output(result, config, processed_state)
@@ -1098,15 +1085,9 @@ class CallableNodeProcessor:
 
                 # For callable functions, we assume they might directly return Command/Send
                 # so we don't process the output further unless it's a dict
-                if isinstance(
-                    result,
-                    Command | Send) or (
-                    isinstance(
-                        result,
-                        list) and all(
-                        isinstance(
-                        x,
-                        Send) for x in result)):
+                if isinstance(result, Command | Send) or (
+                    isinstance(result, list) and all(isinstance(x, Send) for x in result)
+                ):
                     logger.debug("Returning Command/Send directly")
                     return result
 
@@ -1186,15 +1167,9 @@ class AsyncNodeProcessor:
                 )
 
                 # Handle Command/Send directly
-                if isinstance(
-                    result,
-                    Command | Send) or (
-                    isinstance(
-                        result,
-                        list) and all(
-                        isinstance(
-                        x,
-                        Send) for x in result)):
+                if isinstance(result, Command | Send) or (
+                    isinstance(result, list) and all(isinstance(x, Send) for x in result)
+                ):
                     logger.debug("Returning Command/Send from async function directly")
                     return result
 

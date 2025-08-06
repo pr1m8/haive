@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 """Multi-agent state with hierarchical agent management and recompilation support.
 
 This module provides a comprehensive state schema for managing multiple agents in
@@ -336,8 +337,7 @@ class MultiAgentState(ToolState):
 
     @field_validator("agents", mode="before")
     @classmethod
-    def convert_agents_to_dict(
-            cls, v: list[Any] | dict[str, Any]) -> dict[str, Any]:
+    def convert_agents_to_dict(cls, v: list[Any] | dict[str, Any]) -> dict[str, Any]:
         """Convert list of agents to dict keyed by agent name.
 
         This allows flexible initialization while maintaining consistent
@@ -348,8 +348,7 @@ class MultiAgentState(ToolState):
             agent_dict = {}
             for agent in v:
                 if not hasattr(agent, "name"):
-                    raise ValueError(
-                        f"Agent {agent} must have a 'name' attribute")
+                    raise ValueError(f"Agent {agent} must have a 'name' attribute")
                 agent_dict[agent.name] = agent
             return agent_dict
         return v
@@ -408,8 +407,7 @@ class MultiAgentState(ToolState):
         """
         return self.agent_states.get(agent_name, {})
 
-    def update_agent_state(self, agent_name: str, updates: dict[str,
-                                                                Any]) -> None:
+    def update_agent_state(self, agent_name: str, updates: dict[str, Any]) -> None:
         """Update isolated state for a specific agent.
 
         Args:
@@ -454,7 +452,8 @@ class MultiAgentState(ToolState):
                 "reason": reason or "Manual recompilation request",
                 "timestamp": __import__("datetime").datetime.now().isoformat(),
                 "resolved": False,
-            }, )
+            },
+        )
 
     def resolve_agent_recompile(self, agent_name: str) -> None:
         """Mark agent recompilation as resolved.
@@ -469,8 +468,7 @@ class MultiAgentState(ToolState):
         for entry in reversed(self.recompile_history):
             if entry["agent_name"] == agent_name and not entry.get("resolved"):
                 entry["resolved"] = True
-                entry["resolved_at"] = __import__(
-                    "datetime").datetime.now().isoformat()
+                entry["resolved_at"] = __import__("datetime").datetime.now().isoformat()
                 break
 
     def get_agents_needing_recompile(self) -> set[str]:
@@ -553,23 +551,19 @@ class MultiAgentState(ToolState):
         self._add_agent_overview(agent_overview)
 
         # 2. State Hierarchy
-        state_hierarchy = debug_tree.add("📊 State Hierarchy",
-                                         style="bold yellow")
+        state_hierarchy = debug_tree.add("📊 State Hierarchy", style="bold yellow")
         self._add_state_hierarchy(state_hierarchy)
 
         # 3. Execution Status
-        execution_status = debug_tree.add("🏃 Execution Status",
-                                          style="bold cyan")
+        execution_status = debug_tree.add("🏃 Execution Status", style="bold cyan")
         self._add_execution_status(execution_status)
 
         # 4. Engine Management
-        engine_mgmt = debug_tree.add("⚙️ Engine Management",
-                                     style="bold magenta")
+        engine_mgmt = debug_tree.add("⚙️ Engine Management", style="bold magenta")
         self._add_engine_management(engine_mgmt)
 
         # 5. Recompilation Status
-        recompile_status = debug_tree.add("🔄 Recompilation Status",
-                                          style="bold red")
+        recompile_status = debug_tree.add("🔄 Recompilation Status", style="bold red")
         self._add_recompilation_status(recompile_status)
 
         # Display in panel
@@ -585,8 +579,7 @@ class MultiAgentState(ToolState):
             # List each agent with details
             for name, agent in self.agents.items():
                 agent_type = type(agent).__name__
-                has_state = name in self.agent_states and bool(
-                    self.agent_states[name])
+                has_state = name in self.agent_states and bool(self.agent_states[name])
                 has_output = name in self.agent_outputs
 
                 status_indicators = []
@@ -599,16 +592,14 @@ class MultiAgentState(ToolState):
                 if name in self.agents_needing_recompile:
                     status_indicators.append("🔄 Needs Recompile")
 
-                status_str = " | ".join(
-                    status_indicators) if status_indicators else "⏸️ Idle"
+                status_str = " | ".join(status_indicators) if status_indicators else "⏸️ Idle"
                 branch.add(f"{name} ({agent_type}) - {status_str}")
 
     def _add_state_hierarchy(self, branch: Tree) -> None:
         """Add state hierarchy information."""
         # Global state fields
         global_fields = [
-            f for f in self.model_fields
-            if f not in ["agents", "agent_states", "agent_outputs"]
+            f for f in self.model_fields if f not in ["agents", "agent_states", "agent_outputs"]
         ]
         global_branch = branch.add(f"🌍 Global Fields ({len(global_fields)})")
         for field in global_fields[:5]:  # Show first 5
@@ -618,17 +609,14 @@ class MultiAgentState(ToolState):
             elif isinstance(value, dict):
                 global_branch.add(f"📁 {field}: {{{len(value)} keys}}")
             else:
-                value_str = str(value)[:30] + "..." if len(
-                    str(value)) > 30 else str(value)
+                value_str = str(value)[:30] + "..." if len(str(value)) > 30 else str(value)
                 global_branch.add(f"📝 {field}: {value_str}")
 
         # Agent states
         if self.agent_states:
-            states_branch = branch.add(
-                f"🤖 Agent States ({len(self.agent_states)})")
+            states_branch = branch.add(f"🤖 Agent States ({len(self.agent_states)})")
             for agent_name, state in self.agent_states.items():
-                state_branch = states_branch.add(
-                    f"{agent_name} ({len(state)} fields)")
+                state_branch = states_branch.add(f"{agent_name} ({len(state)} fields)")
                 # Show first 3 fields
                 for key, value in list(state.items())[:3]:
                     if isinstance(value, list):
@@ -636,8 +624,7 @@ class MultiAgentState(ToolState):
                     elif isinstance(value, dict):
                         state_branch.add(f"📁 {key}: {{{len(value)} keys}}")
                     else:
-                        value_str = str(value)[:20] + "..." if len(
-                            str(value)) > 20 else str(value)
+                        value_str = str(value)[:20] + "..." if len(str(value)) > 20 else str(value)
                         state_branch.add(f"📝 {key}: {value_str}")
 
     def _add_execution_status(self, branch: Tree) -> None:
@@ -651,24 +638,22 @@ class MultiAgentState(ToolState):
         # Execution order
         if self.agent_execution_order:
             order_branch = branch.add(
-                f"📋 Execution Order ({len(self.agent_execution_order)})", )
+                f"📋 Execution Order ({len(self.agent_execution_order)})",
+            )
             for i, agent_name in enumerate(self.agent_execution_order):
                 status = "✅ Completed" if agent_name in self.agent_outputs else "⏳ Pending"
                 order_branch.add(f"{i + 1}. {agent_name} - {status}")
 
         # Agent outputs
         if self.agent_outputs:
-            outputs_branch = branch.add(
-                f"📤 Agent Outputs ({len(self.agent_outputs)})")
+            outputs_branch = branch.add(f"📤 Agent Outputs ({len(self.agent_outputs)})")
             for agent_name, output in self.agent_outputs.items():
                 if isinstance(output, dict) and "error" in output:
-                    outputs_branch.add(
-                        f"❌ {agent_name}: Error - {output['error']}")
+                    outputs_branch.add(f"❌ {agent_name}: Error - {output['error']}")
                 elif isinstance(output, dict):
                     outputs_branch.add(f"✅ {agent_name}: {len(output)} fields")
                 else:
-                    output_str = str(output)[:30] + "..." if len(
-                        str(output)) > 30 else str(output)
+                    output_str = str(output)[:30] + "..." if len(str(output)) > 30 else str(output)
                     outputs_branch.add(f"✅ {agent_name}: {output_str}")
 
     def _add_engine_management(self, branch: Tree) -> None:
@@ -694,7 +679,8 @@ class MultiAgentState(ToolState):
                 agent_eng_branch = engines_branch.add("🤖 Agent Engines")
                 for agent_name, engine_names in agent_engines.items():
                     agent_eng_branch.add(
-                        f"{agent_name}: {len(engine_names)} engines", )
+                        f"{agent_name}: {len(engine_names)} engines",
+                    )
 
             # Show global engines
             if global_engines:
@@ -713,7 +699,8 @@ class MultiAgentState(ToolState):
         # Agents needing recompilation
         if self.agents_needing_recompile:
             needs_branch = branch.add(
-                f"🔄 Needs Recompile ({len(self.agents_needing_recompile)})", )
+                f"🔄 Needs Recompile ({len(self.agents_needing_recompile)})",
+            )
             for agent_name in self.agents_needing_recompile:
                 needs_branch.add(f"⚠️ {agent_name}")
         else:
@@ -722,8 +709,7 @@ class MultiAgentState(ToolState):
         # Recent recompilation history
         if self.recompile_history:
             recent_count = min(3, len(self.recompile_history))
-            history_branch = branch.add(
-                f"📜 Recent History (last {recent_count})")
+            history_branch = branch.add(f"📜 Recent History (last {recent_count})")
 
             for entry in self.recompile_history[-recent_count:]:
                 agent_name = entry.get("agent_name", "Unknown")

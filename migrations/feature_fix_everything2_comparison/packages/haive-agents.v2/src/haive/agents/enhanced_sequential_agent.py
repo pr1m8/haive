@@ -188,8 +188,7 @@ Always preserve key information while improving clarity and structure."""
 
         # Add coordinator node if processing between steps
         if self.process_between_steps:
-            coordinator_node = EngineNodeConfig(name="coordinator",
-                                                engine=self.engine)
+            coordinator_node = EngineNodeConfig(name="coordinator", engine=self.engine)
             graph.add_node("coordinator", coordinator_node)
 
         # Add each agent as a node
@@ -251,17 +250,15 @@ Always preserve key information while improving clarity and structure."""
                     if hasattr(self, "arun"):
                         output = await self.arun(
                             {
-                                "previous_output":
-                                output,
-                                "next_agent":
-                                getattr(
+                                "previous_output": output,
+                                "next_agent": getattr(
                                     self.agents[i + 1],
                                     "name",
                                     f"agent_{i + 1}",
                                 ),
-                                "instruction":
-                                "Process this output for the next agent",
-                            }, )
+                                "instruction": "Process this output for the next agent",
+                            },
+                        )
 
                 current_input = output
 
@@ -277,19 +274,16 @@ Always preserve key information while improving clarity and structure."""
     def __repr__(self) -> str:
         """String representation with pipeline info."""
         engine_type = type(self.engine).__name__ if self.engine else "None"
-        pipeline = " → ".join([
-            getattr(agent, "name",
-                    type(agent).__name__) for agent in self.agents
-        ], )
-        return f"SequentialAgent[{engine_type}](name='{
-            self.name}', pipeline=[{pipeline}])"
+        pipeline = " → ".join(
+            [getattr(agent, "name", type(agent).__name__) for agent in self.agents],
+        )
+        return f"SequentialAgent[{engine_type}](name='{self.name}', pipeline=[{pipeline}])"
 
 
 # Example usage
 if __name__ == "__main__":
     # Mock agents for demo
     class MockAgent:
-
         def __init__(self, name: str, transform: str):
             self.name = name
             self.transform = transform
@@ -318,10 +312,7 @@ if __name__ == "__main__":
     # With intermediate processing
     pipeline_enhanced = SequentialAgent(
         name="enhanced_pipeline",
-        agents=[
-            MockAgent("researcher", "RESEARCH"),
-            MockAgent("writer", "WRITE")
-        ],
+        agents=[MockAgent("researcher", "RESEARCH"), MockAgent("writer", "WRITE")],
         process_between_steps=True,
         system_message="Enhance outputs between steps",
     )

@@ -23,11 +23,9 @@ from typing import Any, Protocol, runtime_checkable
 class NodeProcessor(Protocol):
     """Protocol for node processors that handle specific node types."""
 
-    def can_process(self, engine: Any) -> bool:
-        ...
+    def can_process(self, engine: Any) -> bool: ...
 
-    def create_node_function(self, engine: Any, node_config: Any) -> callable:
-        ...
+    def create_node_function(self, engine: Any, node_config: Any) -> callable: ...
 
 
 @runtime_checkable
@@ -39,16 +37,14 @@ class CommandHandler(Protocol):
         result: Any,
         config: Any,
         original_state: dict[str, Any],
-    ) -> Any:
-        ...
+    ) -> Any: ...
 
 
 @runtime_checkable
 class InputProcessor(Protocol):
     """Protocol for input processing strategies."""
 
-    def extract_input(self, state: dict[str, Any], config: Any) -> Any:
-        ...
+    def extract_input(self, state: dict[str, Any], config: Any) -> Any: ...
 
 
 @runtime_checkable
@@ -60,5 +56,4 @@ class OutputProcessor(Protocol):
         result: Any,
         config: Any,
         original_state: dict[str, Any],
-    ) -> dict[str, Any]:
-        ...
+    ) -> dict[str, Any]: ...

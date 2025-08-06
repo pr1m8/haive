@@ -54,8 +54,7 @@ class NodeRegistry(AbstractRegistry[NodeConfig]):
         """Initialize the registry with empty storage."""
         self.nodes_by_id: dict[str, NodeConfig] = {}
         self.nodes_by_type: dict[NodeType, dict[str, NodeConfig]] = {
-            node_type: {}
-            for node_type in NodeType
+            node_type: {} for node_type in NodeType
         }
         self.custom_node_types: dict[str, type[NodeConfig]] = {}
 

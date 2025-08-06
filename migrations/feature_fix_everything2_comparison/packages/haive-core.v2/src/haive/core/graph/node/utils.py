@@ -57,13 +57,13 @@ def create_node(
     # Create node config
     config = NodeConfig(
         name=name or "unnamed_node",
-        engine=engine_or_callable
-        if not isinstance(engine_or_callable, str) else None,
-        engine_name=engine_or_callable
-        if isinstance(engine_or_callable, str) else None,
-        callable_func=(engine_or_callable if callable(engine_or_callable)
-                       and not hasattr(engine_or_callable, "engine_type") else
-                       None),
+        engine=engine_or_callable if not isinstance(engine_or_callable, str) else None,
+        engine_name=engine_or_callable if isinstance(engine_or_callable, str) else None,
+        callable_func=(
+            engine_or_callable
+            if callable(engine_or_callable) and not hasattr(engine_or_callable, "engine_type")
+            else None
+        ),
         command_goto=command_goto,
         input_fields=input_mapping,
         output_fields=output_mapping,
@@ -99,9 +99,7 @@ def create_validation_node(
         name=name or "validation_node",
         node_type=NodeType.VALIDATION,
         command_goto=command_goto,
-        input_mapping=({
-            "messages": messages_field
-        } if messages_field != "messages" else None),
+        input_mapping=({"messages": messages_field} if messages_field != "messages" else None),
         validation_schemas=schemas,
         messages_field=messages_field,
         **kwargs,
@@ -215,9 +213,9 @@ def extract_io_mapping_from_schema(
     else:
         # Try partial matches
         for key in mappings:
-            if isinstance(key,
-                          str) and (key == engine_id or engine_id.endswith(key)
-                                    or key.endswith(engine_id)):
+            if isinstance(key, str) and (
+                key == engine_id or engine_id.endswith(key) or key.endswith(engine_id)
+            ):
                 matched_key = key
                 break
 
@@ -235,8 +233,7 @@ def extract_io_mapping_from_schema(
                         result["inputs"][field_name] = field_name
 
                     # Check if field is output from this engine
-                    if "output_from" in meta and engine_id in meta[
-                            "output_from"]:
+                    if "output_from" in meta and engine_id in meta["output_from"]:
                         result["outputs"][field_name] = field_name
 
         return result

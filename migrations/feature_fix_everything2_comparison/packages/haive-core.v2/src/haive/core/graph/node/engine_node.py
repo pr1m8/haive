@@ -78,9 +78,8 @@ class EngineNodeConfig(NodeConfig):
                 if hasattr(self.engine, "get_input_fields"):
                     engine_input_fields = self.engine.get_input_fields()
                     logger.debug(
-                        f"Engine derived input fields: {
-                            list(
-                                engine_input_fields.keys())}", )
+                        f"Engine derived input fields: {list(engine_input_fields.keys())}",
+                    )
 
                     # Convert engine fields to field definitions using
                     # StandardFields when possible
@@ -117,7 +116,8 @@ class EngineNodeConfig(NodeConfig):
                             self.input_field_defs.append(field_def)
                         except Exception as e:
                             logger.debug(
-                                f"Failed to create field definition for {field_name}: {e}", )
+                                f"Failed to create field definition for {field_name}: {e}",
+                            )
                             # Fallback to generic field definition
                             from haive.core.schema.field_definition import (
                                 FieldDefinition,
@@ -240,10 +240,8 @@ class EngineNodeConfig(NodeConfig):
                 wrapped = self.create_output_for_state(result)
                 logger.info(
                     f"Using schema-based output creation: {
-                        list(
-                            wrapped.keys()) if isinstance(
-                            wrapped,
-                            dict) else type(wrapped)}",
+                        list(wrapped.keys()) if isinstance(wrapped, dict) else type(wrapped)
+                    }",
                 )
             else:
                 wrapped = self._wrap_smart_result(result, state, engine)
@@ -291,8 +289,8 @@ class EngineNodeConfig(NodeConfig):
                         engine = engines_dict[self.engine_name]
                         if engine:
                             logger.info(
-                                f"✅ Found engine '{
-                                    self.engine_name}' in state.engines!", )
+                                f"✅ Found engine '{self.engine_name}' in state.engines!",
+                            )
                             self.engine = engine  # Cache it
                             return engine
                         logger.error(
@@ -316,13 +314,12 @@ class EngineNodeConfig(NodeConfig):
                 if isinstance(state, dict) and "engines" in state:
                     logger.debug("State is a dict, checking state['engines']...")
                     engines_dict = state["engines"]
-                    if isinstance(engines_dict,
-                                  dict) and self.engine_name in engines_dict:
+                    if isinstance(engines_dict, dict) and self.engine_name in engines_dict:
                         engine = engines_dict[self.engine_name]
                         if engine:
                             logger.info(
-                                f"✅ Found engine '{
-                                    self.engine_name}' in state['engines']!", )
+                                f"✅ Found engine '{self.engine_name}' in state['engines']!",
+                            )
                             self.engine = engine  # Cache it
                             return engine
 
@@ -375,8 +372,8 @@ class EngineNodeConfig(NodeConfig):
                             if value:
                                 last_msg = value[-1]
                                 logger.debug(
-                                    f"      Last message type: {
-                                        type(last_msg).__name__}", )
+                                    f"      Last message type: {type(last_msg).__name__}",
+                                )
                         else:
                             logger.debug(f"    {key}: {type(value).__name__}")
                     else:
@@ -773,12 +770,7 @@ class EngineNodeConfig(NodeConfig):
         """Get engine inputs from schema."""
         if not hasattr(state, "__engine_io_mappings__") or not engine_name:
             return None
-        return getattr(
-            state,
-            "__engine_io_mappings__",
-            {}).get(
-            engine_name,
-            {}).get("inputs")
+        return getattr(state, "__engine_io_mappings__", {}).get(engine_name, {}).get("inputs")
 
     def _get_schema_outputs(
         self,
@@ -788,12 +780,7 @@ class EngineNodeConfig(NodeConfig):
         """Get engine outputs from schema."""
         if not hasattr(state, "__engine_io_mappings__") or not engine_name:
             return None
-        return getattr(
-            state,
-            "__engine_io_mappings__",
-            {}).get(
-            engine_name,
-            {}).get("outputs")
+        return getattr(state, "__engine_io_mappings__", {}).get(engine_name, {}).get("outputs")
 
     def _get_engine_inputs(self, engine: Engine) -> list[str] | None:
         """Get input fields from engine definition."""
@@ -834,8 +821,7 @@ class EngineNodeConfig(NodeConfig):
     def _map_to_outputs(self, result: Any, output_fields: list[str]) -> dict[str, Any]:
         """Map result to schema output fields."""
         if isinstance(result, dict):
-            return {field: result.get(field)
-                    for field in output_fields if field in result}
+            return {field: result.get(field) for field in output_fields if field in result}
         return {output_fields[0]: result} if output_fields else {"result": result}
 
     def extract_input_from_state(self, state: Any) -> dict[str, Any]:
@@ -882,12 +868,7 @@ class EngineNodeConfig(NodeConfig):
         # ================= DETAILED PRE-INVOKE LOGGING =================
         logger.info("🔍 DETAILED PRE-INVOKE ANALYSIS")
         logger.info(
-            f"Engine: {
-                engine.name} (type: {
-                getattr(
-                    engine,
-                    'engine_type',
-                    'unknown')})",
+            f"Engine: {engine.name} (type: {getattr(engine, 'engine_type', 'unknown')})",
         )
 
         # Log input data comprehensively
@@ -918,15 +899,14 @@ class EngineNodeConfig(NodeConfig):
             logger.info(f"  Required input_variables: {input_vars}")
             logger.info(f"  Optional variables: {optional_vars}")
             logger.info(
-                f"  Partial variables: {
-                    list(
-                        partial_vars.keys()) if partial_vars else []}",
+                f"  Partial variables: {list(partial_vars.keys()) if partial_vars else []}",
             )
 
             # Check if input data provides the required variables
             if isinstance(input_data, dict):
                 missing_vars = [
-                    var for var in input_vars if var not in input_data and var not in partial_vars]
+                    var for var in input_vars if var not in input_data and var not in partial_vars
+                ]
                 extra_vars = [
                     key
                     for key in input_data

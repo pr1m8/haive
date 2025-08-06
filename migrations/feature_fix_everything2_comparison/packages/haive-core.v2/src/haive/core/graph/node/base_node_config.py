@@ -3,6 +3,7 @@
 This module provides the base configuration class for v2 nodes with
 improved type safety and generic support.
 """
+
 from __future__ import annotations
 
 from typing import Generic

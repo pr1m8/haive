@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from haive.agents.conversation.round_robin.agent import (
-    RoundRobinConversation, )
+    RoundRobinConversation,
+)
 from haive.agents.conversation.round_robin.example import (
     example_custom_round_robin,
     example_panel_discussion,

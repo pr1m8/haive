@@ -43,11 +43,9 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
     - Selective field extraction from state
     """
 
-    node_type: NodeType = Field(default=NodeType.VALIDATION,
-                                description='Node type')
-    name: str = Field(default='validation_v2', description='Node name')
-    messages_key: str = Field(default='messages',
-                              description='Messages field in state')
+    node_type: NodeType = Field(default=NodeType.VALIDATION, description="Node type")
+    name: str = Field(default="validation_v2", description="Node name")
+    messages_key: str = Field(default="messages", description="Messages field in state")
 
     def model_post_init(self, __context) -> None:
         """Setup default field definitions for validation node."""
@@ -74,8 +72,8 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
 
     # Router node to go to after updating state
     router_node: str = Field(
-        default='validation_router',
-        description='Router node for routing decisions',
+        default="validation_router",
+        description="Router node for routing decisions",
     )
 
     def _get_engine_from_state(self, state: StateLike) -> Any | None:
@@ -86,16 +84,17 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
             return None
 
         # Try state.engines first
-        if hasattr(state, 'engines') and isinstance(state.engines, dict):
+        if hasattr(state, "engines") and isinstance(state.engines, dict):
             engine = state.engines.get(self.engine_name)
             if engine:
                 logger.info(
-                    f"Found engine in state.engines: {self.engine_name}", )
+                    f"Found engine in state.engines: {self.engine_name}",
+                )
                 return engine
 
             # Try by engine.name attribute
             for _key, eng in state.engines.items():
-                if hasattr(eng, 'name') and eng.name == self.engine_name:
+                if hasattr(eng, "name") and eng.name == self.engine_name:
                     logger.info(
                         f"Found engine by name attribute: {self.engine_name}",
                     )
@@ -124,7 +123,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
 
     def _get_tool_routes_from_engine(self, engine: Any) -> dict[str, str]:
         """Get tool routes from engine."""
-        if hasattr(engine, 'tool_routes') and engine.tool_routes:
+        if hasattr(engine, "tool_routes") and engine.tool_routes:
             return engine.tool_routes
         return {}
 
@@ -135,22 +134,23 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
     ) -> type[BaseModel] | None:
         """Find Pydantic model class by name in engine."""
         # Check structured_output_model
-        if (hasattr(engine, 'structured_output_model')
-                and engine.structured_output_model
-                and getattr(engine.structured_output_model, '__name__',
-                            None) == tool_name):
+        if (
+            hasattr(engine, "structured_output_model")
+            and engine.structured_output_model
+            and getattr(engine.structured_output_model, "__name__", None) == tool_name
+        ):
             return engine.structured_output_model
 
         # Check schemas
-        if hasattr(engine, 'schemas') and engine.schemas:
+        if hasattr(engine, "schemas") and engine.schemas:
             for schema in engine.schemas:
-                if getattr(schema, '__name__', None) == tool_name:
+                if getattr(schema, "__name__", None) == tool_name:
                     return schema
 
         # Check pydantic_tools
-        if hasattr(engine, 'pydantic_tools') and engine.pydantic_tools:
+        if hasattr(engine, "pydantic_tools") and engine.pydantic_tools:
             for tool in engine.pydantic_tools:
-                if getattr(tool, '__name__', None) == tool_name:
+                if getattr(tool, "__name__", None) == tool_name:
                     return tool
 
         return None
@@ -169,10 +169,10 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
 
             # Create success ToolMessage
             success_content = {
-                'success': True,
-                'model': tool_name,
-                'data': model_instance.model_dump(),
-                'validated': True,
+                "success": True,
+                "model": tool_name,
+                "data": model_instance.model_dump(),
+                "validated": True,
             }
 
             return ToolMessage(
@@ -180,21 +180,21 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
                 tool_call_id=tool_id,
                 name=tool_name,
                 additional_kwargs={
-                    'is_error': False,
-                    'validation_passed': True,
-                    'model_type': 'pydantic',
-                    'validated_data': success_content['data'],
+                    "is_error": False,
+                    "validation_passed": True,
+                    "model_type": "pydantic",
+                    "validated_data": success_content["data"],
                 },
             )
 
         except ValidationError as e:
             # Create validation error ToolMessage
             error_content = {
-                'success': False,
-                'model': tool_name,
-                'error': 'ValidationError',
-                'details': str(e),
-                'errors': e.errors() if hasattr(e, 'errors') else [],
+                "success": False,
+                "model": tool_name,
+                "error": "ValidationError",
+                "details": str(e),
+                "errors": e.errors() if hasattr(e, "errors") else [],
             }
 
             return ToolMessage(
@@ -202,19 +202,19 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
                 tool_call_id=tool_id,
                 name=tool_name,
                 additional_kwargs={
-                    'is_error': True,
-                    'error_type': 'validation_error',
-                    'validation_passed': False,
+                    "is_error": True,
+                    "error_type": "validation_error",
+                    "validation_passed": False,
                 },
             )
 
         except Exception as e:
             # Create generic error ToolMessage
             error_content = {
-                'success': False,
-                'model': tool_name,
-                'error': 'Exception',
-                'details': str(e),
+                "success": False,
+                "model": tool_name,
+                "error": "Exception",
+                "details": str(e),
             }
 
             return ToolMessage(
@@ -222,9 +222,9 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
                 tool_call_id=tool_id,
                 name=tool_name,
                 additional_kwargs={
-                    'is_error': True,
-                    'error_type': 'exception',
-                    'validation_passed': False,
+                    "is_error": True,
+                    "error_type": "exception",
+                    "validation_passed": False,
                 },
             )
 
@@ -235,48 +235,38 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
         error_msg: str,
     ) -> ToolMessage:
         """Create error ToolMessage for unknown tools or other errors."""
-        error_content = {
-            'success': False,
-            'tool': tool_name,
-            'errof': error_msg
-        }
+        error_content = {"success": False, "tool": tool_name, "errof": error_msg}
 
         return ToolMessage(
             content=json.dumps(error_content, indent=2),
             tool_call_id=tool_id,
             name=tool_name,
-            additional_kwargs={
-                'is_error': True,
-                'error_type': 'tool_not_found'
-            },
+            additional_kwargs={"is_error": True, "error_type": "tool_not_found"},
         )
 
-    def __call__(self,
-                 state: StateLike,
-                 config: ConfigLike | None = None) -> Command:
+    def __call__(self, state: StateLike, config: ConfigLike | None = None) -> Command:
         """Process tool calls and update state with ToolMessages."""
-        logger.info('=== ValidationNodeV2 Execution ===')
+        logger.info("=== ValidationNodeV2 Execution ===")
 
         # Get messages from state
         messages = getattr(state, self.messages_key, [])
         if not messages:
-            logger.warning('No messages in state')
+            logger.warning("No messages in state")
             return Command(goto=self.router_node)
 
         # Get last message
         last_message = messages[-1]
         if not isinstance(last_message, AIMessage):
-            logger.warning('Last message is not AIMessage')
+            logger.warning("Last message is not AIMessage")
             return Command(goto=self.router_node)
 
         # EXTRACT ENGINE NAME FROM AI MESSAGE ATTRIBUTION
-        if hasattr(last_message,
-                   'additional_kwargs') and last_message.additional_kwargs:
-            engine_name_from_message = last_message.additional_kwargs.get(
-                'engine_name')
+        if hasattr(last_message, "additional_kwargs") and last_message.additional_kwargs:
+            engine_name_from_message = last_message.additional_kwargs.get("engine_name")
             if engine_name_from_message:
                 logger.info(
-                    f"Found engine attribution in AI message: {engine_name_from_message}", )
+                    f"Found engine attribution in AI message: {engine_name_from_message}",
+                )
                 # Override the validation node's engine_name with the one from
                 # the message
                 self.engine_name = engine_name_from_message
@@ -285,13 +275,13 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
                 )
             else:
                 logger.debug(
-                    'No engine attribution found in AI message additional_kwargs',
+                    "No engine attribution found in AI message additional_kwargs",
                 )
 
         # Get tool calls
-        tool_calls = getattr(last_message, 'tool_calls', [])
+        tool_calls = getattr(last_message, "tool_calls", [])
         if not tool_calls:
-            logger.warning('No tool calls in last message')
+            logger.warning("No tool calls in last message")
             return Command(goto=self.router_node)
 
         logger.info(f"Processing {len(tool_calls)} tool calls")
@@ -299,7 +289,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
         # Get engine and tool routes
         engine = self._get_engine_from_state(state)
         if not engine:
-            logger.error('No engine found')
+            logger.error("No engine found")
             return Command(goto=self.router_node)
 
         tool_routes = self._get_tool_routes_from_engine(engine)
@@ -308,9 +298,9 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
         new_tool_messages = []
 
         for tool_call in tool_calls:
-            tool_name = tool_call.get('name')
-            tool_id = tool_call.get('id')
-            args = tool_call.get('args', {})
+            tool_name = tool_call.get("name")
+            tool_id = tool_call.get("id")
+            args = tool_call.get("args", {})
 
             if not tool_name or not tool_id:
                 continue
@@ -320,8 +310,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
             # CHECK IF TOOLMESSAGE ALREADY EXISTS FOR THIS TOOL CALL
             tool_message_exists = False
             for msg in messages:
-                if isinstance(msg, ToolMessage) and getattr(
-                        msg, 'tool_call_id', None) == tool_id:
+                if isinstance(msg, ToolMessage) and getattr(msg, "tool_call_id", None) == tool_id:
                     tool_message_exists = True
                     logger.debug(
                         f"ToolMessage already exists for tool call {tool_id}, skipping",
@@ -332,13 +321,12 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
                 continue  # Skip processing this tool call
 
             # Get route for this tool
-            route = tool_routes.get(tool_name, 'unknown')
+            route = tool_routes.get(tool_name, "unknown")
             logger.debug(f"Tool route: {tool_name} -> {route}")
 
-            if route == 'pydantic_model':
+            if route == "pydantic_model":
                 # Handle Pydantic model
-                model_class = self._find_pydantic_model_class(
-                    tool_name, engine)
+                model_class = self._find_pydantic_model_class(tool_name, engine)
                 if model_class:
                     tool_msg = self._create_tool_message_for_pydantic(
                         tool_name,
@@ -347,8 +335,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
                         model_class,
                     )
                     new_tool_messages.append(tool_msg)
-                    logger.info(
-                        f"Created ToolMessage for Pydantic model: {tool_name}")
+                    logger.info(f"Created ToolMessage for Pydantic model: {tool_name}")
                 else:
                     # Unknown Pydantic model
                     error_msg = f"Pydantic model '{tool_name}' not found in engine"
@@ -360,11 +347,10 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
                     new_tool_messages.append(tool_msg)
                     logger.warning(f"Unknown Pydantic model: {tool_name}")
 
-            elif route in ['langchain_tool', 'function', 'tool_node']:
+            elif route in ["langchain_tool", "function", "tool_node"]:
                 # Regular tools - don't create ToolMessages here, let tool_node
                 # handle it
-                logger.debug(
-                    f"Regular tool {tool_name} will be handled by tool_node")
+                logger.debug(f"Regular tool {tool_name} will be handled by tool_node")
 
             else:
                 # Unknown tool
@@ -383,7 +369,8 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
             updated_messages = list(messages) + new_tool_messages
             update_dict[self.messages_key] = updated_messages
             logger.info(
-                f"Added {len(new_tool_messages)} ToolMessages to state", )
+                f"Added {len(new_tool_messages)} ToolMessages to state",
+            )
 
             # Log the ToolMessages for debugging
             for i, tm in enumerate(new_tool_messages):

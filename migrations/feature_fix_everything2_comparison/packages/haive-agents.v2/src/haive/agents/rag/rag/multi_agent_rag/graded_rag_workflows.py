@@ -117,8 +117,7 @@ class FullyGradedRAGAgent(MultiAgent):
         answer_grader = create_answer_grader("answer_quality_grader")
 
         # Hallucination detector
-        hallucination_grader = create_hallucination_grader(
-            "hallucination_detector")
+        hallucination_grader = create_hallucination_grader("hallucination_detector")
 
         # Final synthesis
         synthesis_agent = SimpleAgent(
@@ -338,9 +337,7 @@ class MultiCriteriaGradedRAGAgent(MultiAgent):
             },
         )
 
-        agents = [
-            multi_criteria_grader, perspective_aggregator, balanced_generator
-        ]
+        agents = [multi_criteria_grader, perspective_aggregator, balanced_generator]
 
         self._grading_criteria = grading_criteria
 

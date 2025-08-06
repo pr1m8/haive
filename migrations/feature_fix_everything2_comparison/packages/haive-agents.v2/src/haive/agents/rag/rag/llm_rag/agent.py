@@ -10,6 +10,7 @@ Functions:
     retrieve_documents: Retrieve Documents functionality.
     check_relevance: Check Relevance functionality.
 """
+
 from __future__ import annotations
 
 import logging
@@ -52,7 +53,7 @@ class LLMRAGAgent(BaseRAGAgent):
         relevance_checker = self.config.relevance_checker_config
 
         # Debug: Log component details
-        logger.info('Setting up LLM RAG workflow with components:')
+        logger.info("Setting up LLM RAG workflow with components:")
         logger.info(f"- Retriever: {retriever_engine.name}")
         logger.info(f"- LLM: {llm_engine.name}")
         logger.info(
@@ -92,12 +93,13 @@ class LLMRAGAgent(BaseRAGAgent):
                 # Pass the result to the relevance checker
                 return Command(
                     # No need to update state since the subgraph already did that
-                    goto='check_relevance', )
+                    goto="check_relevance",
+                )
             except Exception as e:
                 logger.exception(f"Error in document retrieval: {e}")
                 return Command(
-                    update={'error': str(e)},
-                    goto='check_relevance',  # Still try to proceed
+                    update={"error": str(e)},
+                    goto="check_relevance",  # Still try to proceed
                 )
 
         # Define a function to check document relevance
@@ -108,19 +110,15 @@ class LLMRAGAgent(BaseRAGAgent):
 
             # If no documents retrieved, mark as not relevant
             if not state.retrieved_documents:
-                logger.info('No documents retrieved, marking as not relevant')
-                return Command(update={'is_relevant': False},
-                               goto='generate_answef')
+                logger.info("No documents retrieved, marking as not relevant")
+                return Command(update={"is_relevant": False}, goto="generate_answef")
 
             try:
                 # Format documents for relevance check
                 documents_text = format_documents(state.retrieved_documents)
 
                 # Prepare the input for the relevance checker
-                relevance_input = {
-                    'query': state.query,
-                    'documents': documents_text
-                }
+                relevance_input = {"query": state.query, "documents": documents_text}
 
                 # Invoke the relevance checker LLM
                 result = relevance_checker.invoke(relevance_input)
@@ -130,31 +128,26 @@ class LLMRAGAgent(BaseRAGAgent):
                 logger.info(f"Relevance check result: {is_relevant}")
 
                 return Command(
-                    update={'is_relevant': is_relevant},
-                    goto='generate_answer',
+                    update={"is_relevant": is_relevant},
+                    goto="generate_answer",
                 )
             except Exception as e:
                 logger.exception(f"Error in relevance checker: {e}")
                 return Command(
-                    update={
-                        'is_relevant': False,
-                        'error': str(e)
-                    },
-                    goto='generate_answer',
+                    update={"is_relevant": False, "error": str(e)},
+                    goto="generate_answer",
                 )
 
         # Define a function to generate an answer
         def generate_answer(state: dict[str, Any]):
-            logger.info(
-                f"Generating answer with relevance: {state.is_relevant}")
+            logger.info(f"Generating answer with relevance: {state.is_relevant}")
 
             try:
                 # If documents aren't relevant, provide a standard response
                 if not state.is_relevant:
                     return Command(
                         update={
-                            'answer':
-                            'The retrieved documents are not relevant to the question.',
+                            "answer": "The retrieved documents are not relevant to the question.",
                         },
                         goto=END,
                     )
@@ -163,7 +156,7 @@ class LLMRAGAgent(BaseRAGAgent):
                 context = format_documents(state.retrieved_documents)
 
                 # Prepare the input for the LLM
-                llm_input = {'query': state.query, 'context': context}
+                llm_input = {"query": state.query, "context": context}
 
                 # Invoke the LLM
                 result = llm_engine.invoke(llm_input)
@@ -172,37 +165,37 @@ class LLMRAGAgent(BaseRAGAgent):
                 answer = extract_answer(result)
                 logger.info(f"Generated answer: {answer[:100]}...")
 
-                return Command(update={'answer': answer}, goto=END)
+                return Command(update={"answer": answer}, goto=END)
             except Exception as e:
                 logger.exception(f"Error in answer generation: {e}")
                 return Command(
                     update={
-                        'answer': f"Error generating answer: {e!s}",
-                        'error': str(e),
+                        "answer": f"Error generating answer: {e!s}",
+                        "error": str(e),
                     },
                     goto=END,
                 )
 
         # Add nodes to the graph
-        graph_builder.add_node('retrieve_documents', retrieve_documents)
+        graph_builder.add_node("retrieve_documents", retrieve_documents)
 
         if relevance_checker:
-            graph_builder.add_node('check_relevance', check_relevance)
+            graph_builder.add_node("check_relevance", check_relevance)
         else:
             # If no relevance checker, add a passthrough node
             def default_relevance(state: dict[str, Any]):
                 return Command(
-                    update={'is_relevant': bool(state.retrieved_documents)},
-                    goto='generate_answer',
+                    update={"is_relevant": bool(state.retrieved_documents)},
+                    goto="generate_answer",
                 )
 
-            graph_builder.add_node('check_relevance', default_relevance)
+            graph_builder.add_node("check_relevance", default_relevance)
 
-        graph_builder.add_node('generate_answer', generate_answer)
+        graph_builder.add_node("generate_answer", generate_answer)
 
         # Set workflow edges
-        graph_builder.add_edge(START, 'retrieve_documents')
-        graph_builder.add_edge('retrieve_documents', 'check_relevance')
+        graph_builder.add_edge(START, "retrieve_documents")
+        graph_builder.add_edge("retrieve_documents", "check_relevance")
 
         # Build the graph
         self.graph = graph_builder.build()
@@ -221,7 +214,7 @@ def format_documents(documents: list[Any]) -> str:
     formatted_texts = []
 
     for i, doc in enumerate(documents):
-        if hasattr(doc, 'page_content'):
+        if hasattr(doc, "page_content"):
             # Handle Document objects
             text = doc.page_content
         elif isinstance(doc, str):
@@ -232,10 +225,10 @@ def format_documents(documents: list[Any]) -> str:
             text = str(doc)
 
         # Clean up the text
-        text = text.replace('\n\n', ' ').replace('  ', ' ').strip()
+        text = text.replace("\n\n", " ").replace("  ", " ").strip()
         formatted_texts.append(f"[{i + 1}] {text}")
 
-    return '\n\n'.join(formatted_texts)
+    return "\n\n".join(formatted_texts)
 
 
 def parse_relevance_result(result: Any) -> bool:
@@ -243,14 +236,14 @@ def parse_relevance_result(result: Any) -> bool:
     are relevant."""
     if isinstance(result, dict):
         # Check for various possible response formats
-        if 'output' in result:
-            result = result['output']
-        elif 'answer' in result:
-            result = result['answer']
-        elif 'text' in result:
-            result = result['text']
-        elif 'content' in result:
-            result = result['content']
+        if "output" in result:
+            result = result["output"]
+        elif "answer" in result:
+            result = result["answer"]
+        elif "text" in result:
+            result = result["text"]
+        elif "content" in result:
+            result = result["content"]
 
     # Convert to string if needed
     if not isinstance(result, str):
@@ -260,15 +253,15 @@ def parse_relevance_result(result: Any) -> bool:
     result = result.strip().lower()
 
     # Check for explicit yes/no
-    if result == 'yes' or result.startswith('yes,'):
+    if result == "yes" or result.startswith("yes,"):
         return True
-    if result == 'no' or result.startswith('no,'):
+    if result == "no" or result.startswith("no,"):
         return False
 
     # Look for yes/no in the text
-    if 'yes' in result[:20]:  # Check beginning of response
+    if "yes" in result[:20]:  # Check beginning of response
         return True
-    if 'no' in result[:20]:
+    if "no" in result[:20]:
         return False
 
     # Default to true if we can't determine
@@ -283,14 +276,14 @@ def extract_answer(result: Any) -> str:
 
     if isinstance(result, dict):
         # Check for various possible response formats
-        if 'output' in result:
-            return result['output'].strip()
-        if 'answer' in result:
-            return result['answer'].strip()
-        if 'text' in result:
-            return result['text'].strip()
-        if 'content' in result:
-            return result['content'].strip()
+        if "output" in result:
+            return result["output"].strip()
+        if "answer" in result:
+            return result["answer"].strip()
+        if "text" in result:
+            return result["text"].strip()
+        if "content" in result:
+            return result["content"].strip()
 
     # If all else fails, convert to string
     return str(result).strip()

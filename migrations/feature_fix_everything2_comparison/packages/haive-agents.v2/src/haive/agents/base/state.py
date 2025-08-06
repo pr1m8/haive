@@ -163,16 +163,14 @@ class BaseSupervisorState(StateSchema):
     )
 
     # Execution context
-    execution_count: int = Field(default=0,
-                                 description="Total number of executions")
+    execution_count: int = Field(default=0, description="Total number of executions")
     last_agent_used: str | None = Field(
         None,
         description="Last agent that was executed",
     )
 
     # Error handling
-    last_error: str | None = Field(None,
-                                   description="Last error message if any")
+    last_error: str | None = Field(None, description="Last error message if any")
     error_count: int = Field(default=0, description="Total number of errors")
 
     # Metadata
@@ -196,7 +194,8 @@ class BaseSupervisorState(StateSchema):
         agent_name = result.agent_used
         if agent_name not in self.agent_performance:
             self.agent_performance[agent_name] = AgentPerformanceMetrics(
-                agent_name=agent_name, )
+                agent_name=agent_name,
+            )
 
         metrics = self.agent_performance[agent_name]
         metrics.total_executions += 1
@@ -211,9 +210,9 @@ class BaseSupervisorState(StateSchema):
         else:
             # Running average
             metrics.average_execution_time = (
-                metrics.average_execution_time *
-                (metrics.total_executions - 1) +
-                result.execution_time) / metrics.total_executions
+                metrics.average_execution_time * (metrics.total_executions - 1)
+                + result.execution_time
+            ) / metrics.total_executions
 
         metrics.last_execution = result.completed_at
 
@@ -248,8 +247,7 @@ class BaseSupervisorState(StateSchema):
         """Clear error state."""
         self.last_error = None
 
-    def get_agent_performance(
-            self, agent_name: str) -> AgentPerformanceMetrics | None:
+    def get_agent_performance(self, agent_name: str) -> AgentPerformanceMetrics | None:
         """Get performance metrics for an agent."""
         return self.agent_performance.get(agent_name)
 

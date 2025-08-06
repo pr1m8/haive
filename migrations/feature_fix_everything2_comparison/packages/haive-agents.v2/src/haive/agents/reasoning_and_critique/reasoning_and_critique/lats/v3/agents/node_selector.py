@@ -7,7 +7,8 @@ choose the best node for expansion in the Monte Carlo Tree Search.
 from __future__ import annotations
 
 from haive.agents.reasoning_and_critique.lats.v3.models.evaluation_models import (
-    UCBSelection, )
+    UCBSelection,
+)
 from haive.agents.reasoning_and_critique.lats.v3.models.tree_models import LATSNode
 from haive.agents.simple.agent_v3 import SimpleAgentV3
 from haive.core.engine.aug_llm import AugLLMConfig
@@ -118,7 +119,8 @@ Node ID: {node_id}
 - UCB score: {ucb_score:.3f}
 - Is leaf: {node.is_leaf()}
 - Reflection score: {node.reflection_score:.3f}
-""", )
+""",
+            )
 
         prompt_parts.append(
             """
@@ -126,7 +128,8 @@ Select the best node to expand next. Consider:
 1. UCB scores (higher is better for selection)
 2. Strategic value of different search directions
 3. Balance between exploitation and exploration
-4. Whether unvisited nodes should be prioritized""", )
+4. Whether unvisited nodes should be prioritized""",
+        )
 
         return "\n".join(prompt_parts)
 
@@ -146,8 +149,7 @@ Select the best node to expand next. Consider:
         Returns:
             UCBSelection with the chosen node and reasoning
         """
-        prompt = self.create_selection_prompt(nodes, current_problem,
-                                              search_context)
+        prompt = self.create_selection_prompt(nodes, current_problem, search_context)
 
         # Use the composed agent's arun method
         result = await self.agent.arun(prompt)
@@ -173,8 +175,7 @@ Select the best node to expand next. Consider:
 
         ucb_scores = {}
         for node_id, node in nodes.items():
-            ucb_scores[node_id] = node.ucb_score(self.exploration_weight,
-                                                 parent_visits)
+            ucb_scores[node_id] = node.ucb_score(self.exploration_weight, parent_visits)
 
         return ucb_scores
 
@@ -193,5 +194,4 @@ def create_node_selector(
     Returns:
         Configured NodeSelector
     """
-    return NodeSelector(exploration_weight=exploration_weight,
-                        temperature=temperature)
+    return NodeSelector(exploration_weight=exploration_weight, temperature=temperature)

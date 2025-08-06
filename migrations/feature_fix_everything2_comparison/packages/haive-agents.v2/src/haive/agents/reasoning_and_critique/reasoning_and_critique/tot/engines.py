@@ -3,6 +3,7 @@
 This module defines specialized engine configurations for candidate
 generation, evaluation, and selection in the Tree of Thoughts algorithm.
 """
+
 from __future__ import annotations
 
 from haive.agents.reasoning_and_critique.tot.models import CandidateEvaluation
@@ -25,18 +26,20 @@ Explore different approaches and reasoning pathways.
 Return your response as a structured output with reasoning and multiple candidate solutions.""",
 )
 
-generator_prompt = ChatPromptTemplate.from_messages([
-    ("system", generator_system_message.content),
-    MessagesPlaceholder(variable_name="history"),
-    (
-        "user",
-        """Problem: {problem}
+generator_prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", generator_system_message.content),
+        MessagesPlaceholder(variable_name="history"),
+        (
+            "user",
+            """Problem: {problem}
 
 {seed_info}
 
 Generate {expansion_count} different candidate solutions.""",
-    ),
-], )
+        ),
+    ],
+)
 
 # Evaluator prompt
 evaluator_system_message = SystemMessage(
@@ -45,14 +48,16 @@ Your task is to evaluate a candidate solution and provide a score between 0 and 
 Be critical and analytical in your assessment.
 
 Return your response as a structured output with a numerical score between 0 and 1
-and detailed feedback explaining the score.""", )
+and detailed feedback explaining the score.""",
+)
 
-evaluator_prompt = ChatPromptTemplate.from_messages([
-    ("system", evaluator_system_message.content),
-    MessagesPlaceholder(variable_name="history"),
-    (
-        "user",
-        """Problem: {problem}
+evaluator_prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", evaluator_system_message.content),
+        MessagesPlaceholder(variable_name="history"),
+        (
+            "user",
+            """Problem: {problem}
 
 Candidate Solution:
 {candidate}
@@ -62,8 +67,9 @@ Evaluate this solution and provide a numerical score between 0 and 1, where:
 - 1 means perfect solution
 
 Your evaluation:""",
-    ),
-], )
+        ),
+    ],
+)
 
 # =============================
 # Pre-configured Engine Configs

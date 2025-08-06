@@ -48,14 +48,16 @@ def create_query_planning_chain(
     # Query planner
     planner = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            (
-                "system",
-                """Break down complex queries into 2-3 simple sub-queries.
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    """Break down complex queries into 2-3 simple sub-queries.
             Focus on atomic, answerable questions.""",
-            ),
-            ("human", "Query: {query}\nCreate execution plan."),
-        ], ),
+                ),
+                ("human", "Query: {query}\nCreate execution plan."),
+            ],
+        ),
         structured_output_model=QueryPlan,
         output_key="plan",
     )
@@ -71,28 +73,25 @@ def create_query_planning_chain(
         for i, sub_query in enumerate(sub_queries[:3]):  # Limit to 3
             # Mock answer generation
             answer = f"Answer to sub-query {i + 1}: {sub_query}"
-            results.append({
-                "query": sub_query,
-                "answer": answer,
-                "confidence": 0.8
-            })
+            results.append({"query": sub_query, "answer": answer, "confidence": 0.8})
 
         return {"sub_results": results, "total_sub_queries": len(sub_queries)}
 
     # Result synthesizer
     synthesizer = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system",
-             "Synthesize sub-query results into a comprehensive answer"),
-            (
-                "human",
-                """Original query: {query}
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Synthesize sub-query results into a comprehensive answer"),
+                (
+                    "human",
+                    """Original query: {query}
             Sub-query results: {sub_results}
 
             Create a complete, coherent response.""",
-            ),
-        ], ),
+                ),
+            ],
+        ),
         output_key="final_response",
     )
 
@@ -121,8 +120,8 @@ def create_simple_decomposition_chain(
     decomposer = AugLLMConfig(
         llm_config=llm_config,
         prompt_template=ChatPromptTemplate.from_messages(
-            [("system", "Break query into 2-3 simple questions"),
-             ("human", "{query}")], ),
+            [("system", "Break query into 2-3 simple questions"), ("human", "{query}")],
+        ),
         output_key="sub_queries",
     )
 
@@ -135,10 +134,12 @@ def create_simple_decomposition_chain(
     # Step 3: Combine
     combiner = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Combine these answers into one response"),
-            ("human", "Original: {query}\nAnswers: {answers}"),
-        ], ),
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Combine these answers into one response"),
+                ("human", "Original: {query}\nAnswers: {answers}"),
+            ],
+        ),
         output_key="response",
     )
 
@@ -161,10 +162,12 @@ def create_adaptive_planning_chain(
     # Complexity analyzer
     analyzer = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Rate query complexity: 'simple' or 'complex'"),
-            ("human", "{query}"),
-        ], ),
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Rate query complexity: 'simple' or 'complex'"),
+                ("human", "{query}"),
+            ],
+        ),
         output_key="complexity",
     )
 
@@ -172,8 +175,8 @@ def create_adaptive_planning_chain(
     simple_answer = AugLLMConfig(
         llm_config=llm_config,
         prompt_template=ChatPromptTemplate.from_messages(
-            [("system", "Answer this simple query directly"),
-             ("human", "{query}")], ),
+            [("system", "Answer this simple query directly"), ("human", "{query}")],
+        ),
         output_key="response",
     )
 
@@ -187,10 +190,7 @@ def create_adaptive_planning_chain(
     # Route based on complexity
     return flow_with_edges(
         [analyzer, simple_answer, complex_planning],
-        (0, {
-            "simple": 1,
-            "complex": 2
-        }, lambda s: s.get("complexity", "simple")),
+        (0, {"simple": 1, "complex": 2}, lambda s: s.get("complexity", "simple")),
     )
 
 
@@ -199,6 +199,5 @@ def get_query_planning_chain_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for query planning chain."""
     return {
         "inputs": ["query", "context", "messages"],
-        "outputs":
-        ["plan", "sub_results", "final_response", "response", "messages"],
+        "outputs": ["plan", "sub_results", "final_response", "response", "messages"],
     }

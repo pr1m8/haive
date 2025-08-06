@@ -78,8 +78,7 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
             "engagement_scores": [],
         }
 
-    def select_next_speaker(self,
-                            state: CustomConversationState) -> str | None:
+    def select_next_speaker(self, state: CustomConversationState) -> str | None:
         """Custom speaker selection with engagement-based prioritization.
 
         Selects speakers based on:
@@ -92,10 +91,9 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
             # If engagement is high, prioritize active participants
             if state.engagement_level > 0.7:
                 # Sort by recent activity (those who spoke more recently)
-                recent_speakers = state.speaker_history[-len(state.speakers):]
+                recent_speakers = state.speaker_history[-len(state.speakers) :]
                 active_remaining = [
-                    s for s in state.remaining_speakers_this_round
-                    if s in recent_speakers
+                    s for s in state.remaining_speakers_this_round if s in recent_speakers
                 ]
                 if active_remaining:
                     return active_remaining[0]
@@ -152,8 +150,7 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
 
             # Update metrics
             self.conversation_metrics["total_words"] += len(response.split())
-            self.conversation_metrics["engagement_scores"].append(
-                quality_score)
+            self.conversation_metrics["engagement_scores"].append(quality_score)
 
             # Update state with quality score
             state.quality_scores.append(quality_score)
@@ -215,8 +212,11 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
         state = self.get_state()
 
         # Calculate final metrics
-        avg_response_length = (self.conversation_metrics["total_words"] /
-                               state.turn_count if state.turn_count > 0 else 0)
+        avg_response_length = (
+            self.conversation_metrics["total_words"] / state.turn_count
+            if state.turn_count > 0
+            else 0
+        )
 
         return {
             "basic_info": {
@@ -227,14 +227,14 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
                 "progress": f"{state.conversation_progress:.1%}",
             },
             "quality_metrics": {
-                "average_quality":
-                state.average_quality,
-                "final_engagement":
-                state.engagement_level,
-                "quality_trend":
-                ("improving" if len(state.quality_scores) > 1
-                 and state.quality_scores[-1] > state.quality_scores[0] else
-                 "declining"),
+                "average_quality": state.average_quality,
+                "final_engagement": state.engagement_level,
+                "quality_trend": (
+                    "improving"
+                    if len(state.quality_scores) > 1
+                    and state.quality_scores[-1] > state.quality_scores[0]
+                    else "declining"
+                ),
             },
             "conversation_metrics": {
                 "total_words": self.conversation_metrics["total_words"],

@@ -77,14 +77,24 @@ actions:
     - git-lfs
     - trunk-cache-prune
     - trunk-upgrade-available
-    - trunk-fmt-pre-commit # ✅ built-in full-repo formatter on commit
-    - trunk-check-pre-push # ✅ built-in full-repo checker on push
-    - run-pre-commit-hook # ✅ integration with .pre-commit-config.yaml
-
+    - trunk-fmt-pre-commit
+    - trunk-check-pre-push
+    - run-pre-commit-hook # ✅ Lint staged files on pre-commit
+    - run-commit-msg-hook # ✅ Validate commit messages
+    - setup-pre-commit # ✅ Update pre-commit hooks
   definitions:
+    - id: setup-pre-commit
+      display_name: Update pre-commit hooks
+      description: Update `.pre-commit-config.yaml` hook versions
+      run: |
+        echo "📦 Updating pre-commit hook versions..."
+        pre-commit autoupdate
+      triggers: []
+      interactive: true
+
     - id: run-pre-commit-hook
-      display_name: Run pre-commit YAML hooks
-      description: Run `.pre-commit-config.yaml` against staged changes
+      display_name: Run pre-commit hooks
+      description: Lint staged files on pre-commit
       triggers:
         - git_hooks: [pre-commit]
       run: |
@@ -95,5 +105,17 @@ actions:
         fi
         echo "🔧 Running pre-commit on staged files..."
         pre-commit run --files $FILES
+      interactive: false
+      notify_on_error: false
+
+    - id: run-commit-msg-hook
+      display_name: Validate commit message
+      description: Run commitizen to enforce Conventional Commits
+      triggers:
+        - git_hooks: [commit-msg]
+      run: |
+        COMMIT_MSG_FILE="${TRUNK_COMMIT_MSG_FILE:-.git/COMMIT_EDITMSG}"
+        echo "🔧 Validating commit message with Commitizen at $COMMIT_MSG_FILE"
+        pre-commit run commitizen --hook-stage commit-msg --commit-msg-filename "$COMMIT_MSG_FILE"
       interactive: false
       notify_on_error: false

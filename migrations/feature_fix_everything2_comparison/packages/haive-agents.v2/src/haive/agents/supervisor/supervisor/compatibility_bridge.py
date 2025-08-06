@@ -70,8 +70,7 @@ class DynamicMultiAgentSupervisor(MultiAgent):
             for agent in self.agents:
                 if hasattr(agent, "name"):
                     # Use asyncio.create_task or run in executor for async registration
-                    logger.info(
-                        f"Will register {agent.name} with dynamic supervisor")
+                    logger.info(f"Will register {agent.name} with dynamic supervisor")
 
         return self
 
@@ -112,8 +111,7 @@ class DynamicMultiAgentSupervisor(MultiAgent):
         # Enhance with dynamic supervisor capabilities
         from haive.core.schema.schema_composer import SchemaComposer
 
-        enhanced_composer = SchemaComposer(
-            name=f"{self.__class__.__name__}State")
+        enhanced_composer = SchemaComposer(name=f"{self.__class__.__name__}State")
 
         # Add all fields from composed schema
         enhanced_composer.add_fields_from_model(composed_schema)
@@ -195,17 +193,15 @@ class DynamicMultiAgentSupervisor(MultiAgent):
             if self._dynamic_supervisor:
                 # Create supervisor state
                 supervisor_state = {
-                    "messages":
-                    messages,
-                    "registered_agents":
-                    getattr(state, "dynamic_agent_registry", {}),
-                    "supervisor_decisions":
-                    getattr(state, "supervisor_decisions", []),
+                    "messages": messages,
+                    "registered_agents": getattr(state, "dynamic_agent_registry", {}),
+                    "supervisor_decisions": getattr(state, "supervisor_decisions", []),
                 }
 
                 # Get supervisor decision
                 decision_result = await self._dynamic_supervisor.route_request_internal(
-                    supervisor_state, )
+                    supervisor_state,
+                )
 
                 # Update multi-agent state
                 updates = {
@@ -213,8 +209,7 @@ class DynamicMultiAgentSupervisor(MultiAgent):
                         *getattr(state, "supervisor_decisions", []),
                         decision_result,
                     ],
-                    "dynamic_coordination_active":
-                    True,
+                    "dynamic_coordination_active": True,
                 }
 
                 return updates
@@ -227,8 +222,7 @@ class DynamicMultiAgentSupervisor(MultiAgent):
     def _create_managed_agent_node(self, agent: Agent) -> Any:
         """Create node for an agent managed by dynamic supervisor."""
 
-        async def managed_agent_node(state: Any,
-                                     config=None) -> dict[str, Any]:
+        async def managed_agent_node(state: Any, config=None) -> dict[str, Any]:
             """Execute agent within multi-agent context."""
             # Extract input for agent using existing multi-agent patterns
             agent_input = self._extract_agent_input(agent.name, agent, state)
@@ -238,8 +232,7 @@ class DynamicMultiAgentSupervisor(MultiAgent):
             result = await agent.ainvoke(agent_input, config)
 
             # Create update using existing patterns
-            update = self._create_agent_output(agent.name, agent, result,
-                                               state)
+            update = self._create_agent_output(agent.name, agent, result, state)
 
             return update
 
@@ -261,10 +254,7 @@ class DynamicMultiAgentSupervisor(MultiAgent):
                 if "add agent" in content:
                     # Simulate agent addition
                     registry = getattr(state, "dynamic_agent_registry", {})
-                    registry["new_agent"] = {
-                        "added_at": "now",
-                        "capability": "dynamic"
-                    }
+                    registry["new_agent"] = {"added_at": "now", "capability": "dynamic"}
                     return {"dynamic_agent_registry": registry}
 
                 if "remove agent" in content:
@@ -285,24 +275,21 @@ class DynamicMultiAgentSupervisor(MultiAgent):
     ) -> bool:
         """Register an agent dynamically at runtime."""
         if not self._dynamic_supervisor:
-            logger.warning(
-                "Dynamic supervisor not available for agent registration")
+            logger.warning("Dynamic supervisor not available for agent registration")
             return False
 
         try:
             # Register with dynamic supervisor
             success = await self._dynamic_supervisor.register_agent(
                 agent,
-                capability_description=capability
-                or f"Dynamically added {agent.name}",
+                capability_description=capability or f"Dynamically added {agent.name}",
                 rebuild_graph=True,
             )
 
             if success:
                 # Add to multi-agent agents list
                 self.agents = [*list(self.agents), agent]
-                logger.info(
-                    f"Successfully registered {agent.name} dynamically")
+                logger.info(f"Successfully registered {agent.name} dynamically")
 
             return success
 
@@ -313,22 +300,17 @@ class DynamicMultiAgentSupervisor(MultiAgent):
     async def unregister_agent_dynamically(self, agent_name: str) -> bool:
         """Unregister an agent dynamically at runtime."""
         if not self._dynamic_supervisor:
-            logger.warning(
-                "Dynamic supervisor not available for agent removal")
+            logger.warning("Dynamic supervisor not available for agent removal")
             return False
 
         try:
             # Remove from dynamic supervisor
-            success = await self._dynamic_supervisor.unregister_agent(
-                agent_name)
+            success = await self._dynamic_supervisor.unregister_agent(agent_name)
 
             if success:
                 # Remove from multi-agent agents list
-                self.agents = [
-                    agent for agent in self.agents if agent.name != agent_name
-                ]
-                logger.info(
-                    f"Successfully unregistered {agent_name} dynamically")
+                self.agents = [agent for agent in self.agents if agent.name != agent_name]
+                logger.info(f"Successfully unregistered {agent_name} dynamically")
 
             return success
 
@@ -348,12 +330,10 @@ class DynamicMultiAgentSupervisor(MultiAgent):
         if self._dynamic_supervisor:
             status.update(
                 {
-                    "registered_agents":
-                    self._dynamic_supervisor.agent_registry.
-                    get_available_agents(),
-                    "coordination_status":
-                    self._dynamic_supervisor.get_coordination_status(),
-                }, )
+                    "registered_agents": self._dynamic_supervisor.agent_registry.get_available_agents(),
+                    "coordination_status": self._dynamic_supervisor.get_coordination_status(),
+                },
+            )
 
         return status
 
@@ -378,8 +358,7 @@ class ReactMultiAgentSupervisor(DynamicMultiAgentSupervisor):
         if self._dynamic_supervisor and hasattr(graph, "nodes"):
             # Remove END edges and add loops back to supervisor
             for node_name in list(graph.nodes.keys()):
-                if node_name.startswith(
-                        "managed_") and "dynamic_supervisor" in graph.nodes:
+                if node_name.startswith("managed_") and "dynamic_supervisor" in graph.nodes:
                     # Change edge to loop back instead of ending
                     # This creates ReactAgent-style continuous execution
                     pass
@@ -413,13 +392,10 @@ def create_compatible_supervisor(
             supervisor_engine=supervisor_engine,
             use_choice_model=True,
         )
-    return MultiAgent(name=name,
-                      agents=agents,
-                      execution_mode=ExecutionMode.SEQUENCE)
+    return MultiAgent(name=name, agents=agents, execution_mode=ExecutionMode.SEQUENCE)
 
 
-def migrate_from_multi_agent(
-        multi_agent: MultiAgent) -> DynamicMultiAgentSupervisor:
+def migrate_from_multi_agent(multi_agent: MultiAgent) -> DynamicMultiAgentSupervisor:
     """Migrate existing MultiAgent to dynamic supervisor version.
 
     Args:

@@ -12,6 +12,7 @@ Functions:
     setup_rag_agents: Setup Rag Agents functionality.
     from_documents: From Documents functionality.
 """
+
 #!/usr/bin/env python3
 """SimpleRAG - Clean MultiAgent Implementation.
 
@@ -175,7 +176,8 @@ class SimpleRAG(MultiAgent):
         default=(
             "You are a helpful assistant that answers questions based on the provided context. "
             "Use only the information in the context to answer the question. "
-            "If the context doesn't contain enough information, say so clearly."),
+            "If the context doesn't contain enough information, say so clearly."
+        ),
         min_length=10,
         description="System prompt template for answer generation",
     )
@@ -195,13 +197,11 @@ class SimpleRAG(MultiAgent):
     def validate_context_template(cls, v: str) -> str:
         """Validate context template has required placeholders."""
         required_placeholders = {"{context}", "{query}"}
-        missing = required_placeholders - {
-            ph
-            for ph in required_placeholders if ph in v
-        }
+        missing = required_placeholders - {ph for ph in required_placeholders if ph in v}
         if missing:
             raise ValueError(
-                f"Context template missing required placeholders: {missing}", )
+                f"Context template missing required placeholders: {missing}",
+            )
         return v
 
     @model_validator(mode="after")
@@ -365,8 +365,7 @@ class SimpleRAG(MultiAgent):
             "Could not extract documents from retrieval result, using fallback",
         )
         return [
-            Document(page_content=str(result),
-                     metadata={"source": "retrieval_result"}),
+            Document(page_content=str(result), metadata={"source": "retrieval_result"}),
         ]
 
     async def generate_answer(
@@ -396,8 +395,7 @@ class SimpleRAG(MultiAgent):
         context = "\n\n".join(context_parts)
 
         # Format with template
-        formatted_input = self.context_template.format(context=context,
-                                                       query=query)
+        formatted_input = self.context_template.format(context=context, query=query)
 
         # Generate answer
         generator = self.get_generator_agent()
@@ -467,22 +465,25 @@ class SimpleRAG(MultiAgent):
                 "similarity_threshold": self.similarity_threshold,
             },
             "generation_config": {
-                "structured_output":
-                self.structured_output_model is not None,
-                "system_prompt": (self.system_prompt_template[:100] +
-                                  "..." if len(self.system_prompt_template)
-                                  > 100 else self.system_prompt_template),
+                "structured_output": self.structured_output_model is not None,
+                "system_prompt": (
+                    self.system_prompt_template[:100] + "..."
+                    if len(self.system_prompt_template) > 100
+                    else self.system_prompt_template
+                ),
             },
         }
 
     def __repr__(self) -> str:
         """String representation showing clean MultiAgent structure."""
-        return (f"SimpleRAG(CleanMultiAgent)("
-                f"name='{self.name}', "
-                f"agents={list(self.agents.keys())}, "
-                f"mode='{self.execution_mode}', "
-                f"top_k={self.top_k}"
-                f")")
+        return (
+            f"SimpleRAG(CleanMultiAgent)("
+            f"name='{self.name}', "
+            f"agents={list(self.agents.keys())}, "
+            f"mode='{self.execution_mode}', "
+            f"top_k={self.top_k}"
+            f")"
+        )
 
 
 # ================================
@@ -511,18 +512,15 @@ if __name__ == "__main__":
         [
             Document(
                 page_content="Machine learning is a subset of AI that enables computers to learn without explicit programming.",
-                metadata={
-                    "source": "ml_guide.pdf"},
+                metadata={"source": "ml_guide.pdf"},
             ),
             Document(
                 page_content="Neural networks are computing systems inspired by biological neural networks.",
-                metadata={
-                    "source": "nn_book.pdf"},
+                metadata={"source": "nn_book.pdf"},
             ),
         ]
 
         # This would create a proper SimpleRAG with real configs
-
 
         # result = await rag.arun("What is machine learning?", debug=True)
 

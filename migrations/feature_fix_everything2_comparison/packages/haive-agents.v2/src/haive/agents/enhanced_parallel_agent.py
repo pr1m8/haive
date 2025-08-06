@@ -68,10 +68,9 @@ class ParallelAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
         description="List of agents to execute in parallel",
     )
 
-    aggregation_strategy: Literal[
-        "all", "first", "best", "majority", "merge"] = Field(
-            default="all",
-            description="Strategy for aggregating results",
+    aggregation_strategy: Literal["all", "first", "best", "majority", "merge"] = Field(
+        default="all",
+        description="Strategy for aggregating results",
     )
 
     timeout_per_agent: float | None = Field(
@@ -154,10 +153,7 @@ class ParallelAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
 
     def _get_merge_prompt(self) -> str:
         """Get prompt for merging results."""
-        agent_names = [
-            getattr(agent, "name", f"Agent{i}")
-            for i, agent in enumerate(self.agents)
-        ]
+        agent_names = [getattr(agent, "name", f"Agent{i}") for i, agent in enumerate(self.agents)]
 
         return f"""You are aggregating results from multiple parallel agents:
 
@@ -227,8 +223,7 @@ Create a unified response that leverages all agent contributions."""
                 task = agent.arun(input_data)
             else:
                 # Wrap sync in async
-                task = asyncio.create_task(
-                    asyncio.to_thread(agent.run, input_data))
+                task = asyncio.create_task(asyncio.to_thread(agent.run, input_data))
 
             # Wrap with timeout if specified
             if self.timeout_per_agent:
@@ -278,10 +273,13 @@ Create a unified response that leverages all agent contributions."""
         """
         if self.aggregation_strategy == "all":
             # Return all results with agent info
-            return [{
-                "agent": getattr(self.agents[i], "name", f"agent_{i}"),
-                "result": result,
-            } for i, result in results]
+            return [
+                {
+                    "agent": getattr(self.agents[i], "name", f"agent_{i}"),
+                    "result": result,
+                }
+                for i, result in results
+            ]
 
         if self.aggregation_strategy == "first":
             # Return first successful result
@@ -290,8 +288,7 @@ Create a unified response that leverages all agent contributions."""
         if self.aggregation_strategy == "best":
             # Score and return best result
             if self.quality_scorer:
-                scored = [(i, result, self.quality_scorer(result))
-                          for i, result in results]
+                scored = [(i, result, self.quality_scorer(result)) for i, result in results]
                 best = max(scored, key=lambda x: x[2])
                 return best[1]
             # Default to longest response
@@ -302,8 +299,8 @@ Create a unified response that leverages all agent contributions."""
             # Find consensus (simplified - real impl would be smarter)
             if len(results) < self.min_agents_for_consensus:
                 raise ValueError(
-                    f"Need at least {
-                        self.min_agents_for_consensus} agents for consensus", )
+                    f"Need at least {self.min_agents_for_consensus} agents for consensus",
+                )
 
             # Group similar results (simplified)
             from collections import Counter
@@ -320,44 +317,43 @@ Create a unified response that leverages all agent contributions."""
             # Use LLM to merge all results
             if self.merge_with_llm and hasattr(self, "arun"):
                 merge_input = {
-                    "original_query":
-                    original_input,
-                    "agent_results": [{
-                        "agent":
-                        getattr(self.agents[i], "name", f"agent_{i}"),
-                        "result":
-                        result,
-                    } for i, result in results],
-                    "instruction":
-                    "Merge these agent results into a comprehensive response",
+                    "original_query": original_input,
+                    "agent_results": [
+                        {
+                            "agent": getattr(self.agents[i], "name", f"agent_{i}"),
+                            "result": result,
+                        }
+                        for i, result in results
+                    ],
+                    "instruction": "Merge these agent results into a comprehensive response",
                 }
                 return await self.arun(merge_input)
             # Simple concatenation
-            return "\n\n".join([
-                f"{getattr(self.agents[i], 'name', f'Agent {i}')}: {result}"
-                for i, result in results
-            ], )
+            return "\n\n".join(
+                [
+                    f"{getattr(self.agents[i], 'name', f'Agent {i}')}: {result}"
+                    for i, result in results
+                ],
+            )
 
         return results
 
     def __repr__(self) -> str:
         """String representation with parallel info."""
         engine_type = type(self.engine).__name__ if self.engine else "None"
-        [
-            getattr(agent, "name", f"agent_{i}")
-            for i, agent in enumerate(self.agents)
-        ]
-        return (f"ParallelAgent[{engine_type}]("
-                f"name='{self.name}', "
-                f"agents={len(self.agents)}, "
-                f"strategy='{self.aggregation_strategy}')")
+        [getattr(agent, "name", f"agent_{i}") for i, agent in enumerate(self.agents)]
+        return (
+            f"ParallelAgent[{engine_type}]("
+            f"name='{self.name}', "
+            f"agents={len(self.agents)}, "
+            f"strategy='{self.aggregation_strategy}')"
+        )
 
 
 # Example usage
 if __name__ == "__main__":
     # Mock agents for demo
     class MockExpert:
-
         def __init__(self, name: str, specialty: str):
             self.name = name
             self.specialty = specialty
@@ -368,10 +364,9 @@ if __name__ == "__main__":
             import random
 
             await asyncio.sleep(random.uniform(0.1, 0.5))
-            return f"{
-                self.name} ({
-                self.specialty}): Analysis of '{input_data}' from {
-                self.specialty} perspective"
+            return f"{self.name} ({self.specialty}): Analysis of '{input_data}' from {
+                self.specialty
+            } perspective"
 
     # Create parallel agent ensemble
     ensemble = ParallelAgent(

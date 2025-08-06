@@ -176,7 +176,8 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
         if self.transformation_type == TransformationType.FILTER_BY_TYPE:
             if not self.include_types and not self.exclude_types:
                 raise ValueError(
-                    "Either include_types or exclude_types must be set for FILTER_BY_TYPE", )
+                    "Either include_types or exclude_types must be set for FILTER_BY_TYPE",
+                )
 
         return self
 
@@ -195,8 +196,7 @@ class MessageTransformationNodeConfig(BaseNodeConfig[TInput, TOutput]):
                 default_factory=list,
                 description="Transformed messages",
                 shared=output_field_name == "messages",
-                reducer_name=(
-                    "add_messages" if output_field_name == "messages" else None),
+                reducer_name=("add_messages" if output_field_name == "messages" else None),
             ),
             FieldDefinition(
                 name=self.error_field,

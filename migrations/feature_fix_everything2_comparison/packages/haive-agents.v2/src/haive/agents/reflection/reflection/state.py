@@ -12,8 +12,7 @@ class ReflectionState(MultiAgentState):
     """State for Reflection Agent."""
 
     input: str = Field(..., description="The original content to reflect on")
-    current_content: str = Field(...,
-                                 description="Current version of the content")
+    current_content: str = Field(..., description="Current version of the content")
 
     critique: Critique | None = Field(
         default=None,
@@ -25,11 +24,9 @@ class ReflectionState(MultiAgentState):
         description="List of improvements made",
     )
 
-    iteration_count: int = Field(default=0,
-                                 description="Current iteration number")
+    iteration_count: int = Field(default=0, description="Current iteration number")
 
-    max_iterations: int = Field(default=3,
-                                description="Maximum number of iterations")
+    max_iterations: int = Field(default=3, description="Maximum number of iterations")
 
     quality_threshold: float = Field(
         default=0.8,

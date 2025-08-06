@@ -51,22 +51,18 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
             # Initialize document filter
             self.document_filter = None
             if config.document_filter_config:
-                self.document_filter = config.document_filter_config.create_runnable(
-                )
+                self.document_filter = config.document_filter_config.create_runnable()
 
             # Initialize answer generator
             self.answer_generator = None
             if config.llm_config:
                 self.answer_generator = config.llm_config.create_runnable()
             elif config.answer_generator_config:
-                self.answer_generator = config.answer_generator_config.create_runnable(
-                )
+                self.answer_generator = config.answer_generator_config.create_runnable()
 
-            logger.info(
-                "Filtered RAG agent components initialized successfully")
+            logger.info("Filtered RAG agent components initialized successfully")
         except Exception as e:
-            logger.exception(
-                f"Error initializing Filtered RAG components: {e}")
+            logger.exception(f"Error initializing Filtered RAG components: {e}")
             raise
 
     @property
@@ -95,10 +91,12 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
 
         except Exception as e:
             logger.exception(f"Error retrieving documents: {e!s}")
-            return Command(update={
-                "error": f"Error retrieving documents: {e!s}",
-                "retrieved_documents": [],
-            }, )
+            return Command(
+                update={
+                    "error": f"Error retrieving documents: {e!s}",
+                    "retrieved_documents": [],
+                },
+            )
 
     def filter_documents(self, state: FilteredRAGState) -> Command:
         """Filter documents based on relevance to the query.
@@ -130,10 +128,8 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
 
                 try:
                     score = self.document_filter.invoke(
-                        {
-                            "query": query,
-                            "document": doc.page_content
-                        }, )
+                        {"query": query, "document": doc.page_content},
+                    )
 
                     # Try to convert the score to a float
                     if isinstance(score, dict) and "score" in score:
@@ -152,19 +148,21 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
 
             logger.info(f"Filtered to {len(filtered_docs)} relevant documents")
 
-            return Command(update={
-                "filtered_documents": filtered_docs,
-                "relevance_scores": relevance_scores,
-            }, )
+            return Command(
+                update={
+                    "filtered_documents": filtered_docs,
+                    "relevance_scores": relevance_scores,
+                },
+            )
 
         except Exception as e:
             logger.exception(f"Error in document filtering: {e!s}")
             return Command(
                 update={
                     "error": f"Error filtering documents: {e!s}",
-                    "filtered_documents":
-                    documents,  # Fall back to all documents
-                }, )
+                    "filtered_documents": documents,  # Fall back to all documents
+                },
+            )
 
     def generate_answer(self, state: FilteredRAGState) -> Command:
         """Generate an answer based on filtered documents.
@@ -182,16 +180,18 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
 
         try:
             if not documents:
-                return Command(update={
-                    "answer":
-                    "I couldn't find any relevant documents to answer your query.",
-                }, )
+                return Command(
+                    update={
+                        "answer": "I couldn't find any relevant documents to answer your query.",
+                    },
+                )
 
             if not self.answer_generator:
                 return Command(
                     update={
                         "answer": f"Found {
-                            len(documents)} relevant documents, but no answer generator is configured.",
+                            len(documents)
+                        } relevant documents, but no answer generator is configured.",
                     },
                 )
 
@@ -199,10 +199,7 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
             context = "\n\n".join([doc.page_content for doc in documents])
 
             # Generate answer
-            answer = self.answer_generator.invoke({
-                "query": query,
-                "context": context
-            })
+            answer = self.answer_generator.invoke({"query": query, "context": context})
 
             # Extract string answer if needed
             if hasattr(answer, "content"):
@@ -216,12 +213,12 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
 
         except Exception as e:
             logger.exception(f"Error generating answer: {e!s}")
-            return Command(update={
-                "error":
-                f"Error generating answer: {e!s}",
-                "answer":
-                "I encountered an error while trying to generate an answer.",
-            }, )
+            return Command(
+                update={
+                    "error": f"Error generating answer: {e!s}",
+                    "answer": "I encountered an error while trying to generate an answer.",
+                },
+            )
 
     def setup_workflow(self) -> None:
         """Set up the filtered RAG workflow.

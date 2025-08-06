@@ -25,9 +25,7 @@ class StateMixin:
         # Use regular attributes instead of trying to add Pydantic fields
         self._state_filename = None
 
-    def save_state_history(self,
-                           runnable_config: RunnableConfig | None = None
-                           ) -> bool:
+    def save_state_history(self, runnable_config: RunnableConfig | None = None) -> bool:
         """Save the current agent state to a JSON file.
 
         Args:
@@ -37,14 +35,14 @@ class StateMixin:
             True if successful, False otherwise
         """
         if not hasattr(self, "_app") or not self._app:
-            logger.error(
-                "Cannot save state history: Workflow graph not compiled")
+            logger.error("Cannot save state history: Workflow graph not compiled")
             return False
 
         # Use provided runnable config or create default
         if not runnable_config:
-            runnable_config = (self._prepare_runnable_config() if hasattr(
-                self, "_prepare_runnable_config") else {})
+            runnable_config = (
+                self._prepare_runnable_config() if hasattr(self, "_prepare_runnable_config") else {}
+            )
 
         try:
             # Get state from app
@@ -58,8 +56,7 @@ class StateMixin:
             state_json = ensure_json_serializable(state_json)
 
             # Create state filename if not exists
-            if not hasattr(self,
-                           "_state_filename") or self._state_filename is None:
+            if not hasattr(self, "_state_filename") or self._state_filename is None:
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
                 # Get output directory from config or use default
@@ -125,9 +122,11 @@ class StateMixin:
             return
 
         # Prepare runtime configuration
-        runtime_config = (self._prepare_runnable_config(
-            thread_id=thread_id, config=config) if hasattr(
-                self, "_prepare_runnable_config") else config)
+        runtime_config = (
+            self._prepare_runnable_config(thread_id=thread_id, config=config)
+            if hasattr(self, "_prepare_runnable_config")
+            else config
+        )
 
         try:
             # Get current state
@@ -138,8 +137,11 @@ class StateMixin:
                 return
 
             # Extract thread ID from config
-            thread_id = (runtime_config["configurable"].get(
-                "thread_id", "unknown") if runtime_config else "unknown")
+            thread_id = (
+                runtime_config["configurable"].get("thread_id", "unknown")
+                if runtime_config
+                else "unknown"
+            )
 
             # Log the state
             logger.info(f"State inspection for thread {thread_id}")
@@ -177,8 +179,7 @@ class StateMixin:
         import asyncio
 
         loop = asyncio.get_event_loop()
-        await loop.run_in_executor(
-            None, lambda: self.inspect_state(thread_id, config))
+        await loop.run_in_executor(None, lambda: self.inspect_state(thread_id, config))
 
     def reset_state(
         self,
@@ -200,13 +201,16 @@ class StateMixin:
             return False
 
         # Prepare runtime configuration
-        runtime_config = (self._prepare_runnable_config(
-            thread_id=thread_id, config=config) if hasattr(
-                self, "_prepare_runnable_config") else config)
+        runtime_config = (
+            self._prepare_runnable_config(thread_id=thread_id, config=config)
+            if hasattr(self, "_prepare_runnable_config")
+            else config
+        )
 
         # Extract thread ID from config
-        thread_id = (runtime_config["configurable"].get("thread_id", None)
-                     if runtime_config else thread_id)
+        thread_id = (
+            runtime_config["configurable"].get("thread_id", None) if runtime_config else thread_id
+        )
         if not thread_id:
             logger.warning("Cannot reset state: No thread ID provided")
             return False
@@ -223,7 +227,7 @@ class StateMixin:
                 with conn.connection() as db_conn, db_conn.cursor() as cursor:
                     cursor.execute(
                         "DELETE FROM checkpoints WHERE thread_id = %s",
-                        (thread_id, ),
+                        (thread_id,),
                     )
 
             logger.info(f"State reset successfully for thread {thread_id}")
@@ -297,13 +301,11 @@ class StateMixin:
             ensure_pool_open(checkpointer)
 
             # Create runtime config with thread ID
-            runtime_config = (self._prepare_runnable_config(
-                thread_id=thread_id) if hasattr(
-                    self, "_prepare_runnable_config") else {
-                        "configurable": {
-                            "thread_id": thread_id
-                        }
-            })
+            runtime_config = (
+                self._prepare_runnable_config(thread_id=thread_id)
+                if hasattr(self, "_prepare_runnable_config")
+                else {"configurable": {"thread_id": thread_id}}
+            )
             runtime_config["configurable"]["recursion_limit"] = 100
             # Process state based on its format
             values = state_data.get("values", state_data)
@@ -315,8 +317,7 @@ class StateMixin:
             elif hasattr(checkpointer, "save"):
                 checkpointer.save(thread_id, values)
             else:
-                raise NotImplementedError(
-                    "No checkpoint save mechanism available")
+                raise NotImplementedError("No checkpoint save mechanism available")
 
             logger.info(f"State loaded successfully for thread {thread_id}")
             return True

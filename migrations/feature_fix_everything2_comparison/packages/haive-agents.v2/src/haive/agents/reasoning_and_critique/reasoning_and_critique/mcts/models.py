@@ -10,6 +10,7 @@ Functions:
     as_message: As Message functionality.
     normalized_score: Normalized Score functionality.
 """
+
 from __future__ import annotations
 
 import math
@@ -25,13 +26,14 @@ from pydantic import field_serializer
 
 
 class Reflection(BaseModel):
-    reflections: str = Field(..., description='Critique and reflection')
-    score: int = Field(..., ge=0, le=10, description='0-10 score')
-    found_solution: bool = Field(..., description='True if task was solved')
+    reflections: str = Field(..., description="Critique and reflection")
+    score: int = Field(..., ge=0, le=10, description="0-10 score")
+    found_solution: bool = Field(..., description="True if task was solved")
 
     def as_message(self) -> HumanMessage:
         return HumanMessage(
-            content=f"Reasoning: {self.reflections}\nScore: {self.score}", )
+            content=f"Reasoning: {self.reflections}\nScore: {self.score}",
+        )
 
     @property
     def normalized_score(self) -> float:
@@ -60,8 +62,7 @@ class TreeNode(BaseModel):
         node = self
         while node:
             node.visits += 1
-            node.value = (node.value *
-                          (node.visits - 1) + reward) / node.visits
+            node.value = (node.value * (node.visits - 1) + reward) / node.visits
             node = node.parent
 
     def _mark_tree_as_solved(self):
@@ -70,13 +71,10 @@ class TreeNode(BaseModel):
             node._is_solved = True
             node = node.parent
 
-    def get_messages(self,
-                     include_reflections: bool = True) -> list[BaseMessage]:
-        return self.messages + ([self.reflection.as_message()]
-                                if include_reflections else [])
+    def get_messages(self, include_reflections: bool = True) -> list[BaseMessage]:
+        return self.messages + ([self.reflection.as_message()] if include_reflections else [])
 
-    def get_trajectory(self,
-                       include_reflections: bool = True) -> list[BaseMessage]:
+    def get_trajectory(self, include_reflections: bool = True) -> list[BaseMessage]:
         node = self
         messages = []
         while node:
@@ -97,19 +95,17 @@ class TreeNode(BaseModel):
         all_nodes = [self, *self._get_all_children()]
         best = max(
             all_nodes,
-            key=lambda node: int(node.is_terminal and node.is_solved) * node.
-            value,
+            key=lambda node: int(node.is_terminal and node.is_solved) * node.value,
         )
         return best
 
     def upper_confidence_bound(self, exploration_weight=1.0) -> float:
         if self.parent is None:
-            raise ValueError('Cannot obtain UCT from root node')
+            raise ValueError("Cannot obtain UCT from root node")
         if self.visits == 0:
             return self.value
         average_reward = self.value / self.visits
-        exploration_term = math.sqrt(
-            math.log(self.parent.visits) / self.visits)
+        exploration_term = math.sqrt(math.log(self.parent.visits) / self.visits)
         return average_reward + exploration_weight * exploration_term
 
     @property
@@ -133,14 +129,14 @@ class TreeNode(BaseModel):
             return 1
         return 1 + max(child.height for child in self.children)
 
-    @field_serializer('children', mode='wrap')
+    @field_serializer("children", mode="wrap")
     def serialize_children(self, children, handler) -> Any:
         try:
             return handler(children)
         except ValueError as exc:
-            if 'Circular reference' not in str(exc):
+            if "Circular reference" not in str(exc):
                 raise
-            return [{'depth': c.depth, 'value': c.value} for c in children]
+            return [{"depth": c.depth, "value": c.value} for c in children]
 
 
 TreeNode.model_rebuild()

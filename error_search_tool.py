@@ -11,7 +11,6 @@ from pathlib import Path
 
 
 class ErrorSearchTool:
-
     def __init__(self, db_path="error_analysis/error_database.json"):
         self.db_path = Path(db_path)
         self.load_database()

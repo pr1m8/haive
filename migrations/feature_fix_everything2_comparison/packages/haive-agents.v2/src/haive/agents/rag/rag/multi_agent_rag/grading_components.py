@@ -3,6 +3,7 @@
 This module provides reusable grading agents for document relevance,
 answer quality, and hallucination detection.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -50,10 +51,11 @@ class HallucinationGrade(BaseModel):
 
 # ===== PROMPT TEMPLATES =====
 
-DOCUMENT_RELEVANCE_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        'system',
-        """You are an expert document relevance evaluator. Assess each document's relevance to the query.
+DOCUMENT_RELEVANCE_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert document relevance evaluator. Assess each document's relevance to the query.
 
 **Scoring Guidelines:**
 - 0.9-1.0: Directly answers the query with specific, comprehensive information
@@ -67,10 +69,10 @@ DOCUMENT_RELEVANCE_PROMPT = ChatPromptTemplate.from_messages([
 - Quality and specificity of information
 - Completeness of coverage
 - Usefulness for answering the query""",
-    ),
-    (
-        'human',
-        """Query: {query}
+        ),
+        (
+            "human",
+            """Query: {query}
 
 Document to evaluate:
 {document}
@@ -80,13 +82,15 @@ Provide a detailed relevance assessment with:
 2. Is relevant (true/false - use 0.5 as threshold)
 3. Reasoning for your assessment
 4. Key information extracted (if relevant)""",
-    ),
-], )
+        ),
+    ],
+)
 
-ANSWER_QUALITY_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        'system',
-        """You are an expert answer quality evaluator. Assess the generated answer across multiple dimensions.
+ANSWER_QUALITY_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert answer quality evaluator. Assess the generated answer across multiple dimensions.
 
 **Evaluation Criteria:**
 
@@ -109,10 +113,10 @@ ANSWER_QUALITY_PROMPT = ChatPromptTemplate.from_messages([
    - Holistic assessment of the answer
    - Balance of all factors
    - Usefulness to the user""",
-    ),
-    (
-        'human',
-        """Query: {query}
+        ),
+        (
+            "human",
+            """Query: {query}
 
 Generated Answer:
 {answer}
@@ -126,13 +130,15 @@ Provide a comprehensive quality assessment including:
 3. Specific strengths
 4. Identified weaknesses
 5. Concrete suggestions for improvement""",
-    ),
-], )
+        ),
+    ],
+)
 
-HALLUCINATION_DETECTION_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        'system',
-        """You are an expert hallucination detector. Rigorously verify that all claims in the answer are grounded in source documents.
+HALLUCINATION_DETECTION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert hallucination detector. Rigorously verify that all claims in the answer are grounded in source documents.
 
 **Types of Hallucinations to Detect:**
 1. **Factual**: Claims contradicting or not present in sources
@@ -150,10 +156,10 @@ HALLUCINATION_DETECTION_PROMPT = ChatPromptTemplate.from_messages([
 - 1.0: Severe fabrication
 
 Be thorough and evidence-based.""",
-    ),
-    (
-        'human',
-        """Query: {query}
+        ),
+        (
+            "human",
+            """Query: {query}
 
 Source Documents:
 {source_documents}
@@ -167,13 +173,14 @@ Analyze for hallucinations:
 3. Types of hallucinations found
 4. Specific problematic claims
 5. List of supported vs unsupported claims""",
-    ),
-], )
+        ),
+    ],
+)
 
 # ===== GRADING AGENTS =====
 
 
-def create_document_grader(name: str = 'document_grader') -> SimpleAgent:
+def create_document_grader(name: str = "document_grader") -> SimpleAgent:
     """Create a document relevance grading agent."""
     return SimpleAgent(
         name=name,
@@ -181,16 +188,16 @@ def create_document_grader(name: str = 'document_grader') -> SimpleAgent:
         Provide detailed assessments with scores, reasoning, and extracted key information.""",
         prompt_template=DOCUMENT_RELEVANCE_PROMPT,
         output_schema={
-            'document_id': 'str',
-            'relevance_score': 'float',
-            'is_relevant': 'bool',
-            'reasoning': 'str',
-            'key_information': 'List[str]',
+            "document_id": "str",
+            "relevance_score": "float",
+            "is_relevant": "bool",
+            "reasoning": "str",
+            "key_information": "List[str]",
         },
     )
 
 
-def create_answer_grader(name: str = 'answer_grader') -> SimpleAgent:
+def create_answer_grader(name: str = "answer_grader") -> SimpleAgent:
     """Create an answer quality grading agent."""
     return SimpleAgent(
         name=name,
@@ -198,19 +205,18 @@ def create_answer_grader(name: str = 'answer_grader') -> SimpleAgent:
         Assess completeness, accuracy, clarity, and overall quality with specific feedback.""",
         prompt_template=ANSWER_QUALITY_PROMPT,
         output_schema={
-            'completeness_score': 'float',
-            'accuracy_score': 'float',
-            'clarity_score': 'float',
-            'overall_score': 'float',
-            'strengths': 'List[str]',
-            'weaknesses': 'List[str]',
-            'suggestions': 'List[str]',
+            "completeness_score": "float",
+            "accuracy_score": "float",
+            "clarity_score": "float",
+            "overall_score": "float",
+            "strengths": "List[str]",
+            "weaknesses": "List[str]",
+            "suggestions": "List[str]",
         },
     )
 
 
-def create_hallucination_grader(
-        name: str = 'hallucination_grader') -> SimpleAgent:
+def create_hallucination_grader(name: str = "hallucination_grader") -> SimpleAgent:
     """Create a hallucination detection agent."""
     return SimpleAgent(
         name=name,
@@ -218,22 +224,23 @@ def create_hallucination_grader(
         Identify unsupported claims, fabrications, and misrepresentations.""",
         prompt_template=HALLUCINATION_DETECTION_PROMPT,
         output_schema={
-            'has_hallucination': 'bool',
-            'hallucination_score': 'float',
-            'hallucination_types': 'List[str]',
-            'specific_issues': 'List[str]',
-            'supported_claims': 'List[str]',
-            'unsupported_claims': 'List[str]',
+            "has_hallucination": "bool",
+            "hallucination_score": "float",
+            "hallucination_types": "List[str]",
+            "specific_issues": "List[str]",
+            "supported_claims": "List[str]",
+            "unsupported_claims": "List[str]",
         },
     )
 
 
 # ===== PRIORITY GRADING =====
 
-PRIORITY_RANKING_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        'system',
-        """You are an expert at prioritizing retrieved documents based on their relevance and usefulness.
+PRIORITY_RANKING_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert at prioritizing retrieved documents based on their relevance and usefulness.
 
 **Prioritization Criteria:**
 1. **Direct Relevance**: How directly does it answer the query?
@@ -244,10 +251,10 @@ PRIORITY_RANKING_PROMPT = ChatPromptTemplate.from_messages([
 6. **Uniqueness**: Novel information not in other documents
 
 Rank documents from most to least important for answering the query.""",
-    ),
-    (
-        'human',
-        """Query: {query}
+        ),
+        (
+            "human",
+            """Query: {query}
 
 Documents to prioritize:
 {documents}
@@ -257,11 +264,12 @@ Provide:
 2. Priority score for each (0.0-1.0)
 3. Reasoning for top 3 documents
 4. Documents to potentially exclude (if any)""",
-    ),
-], )
+        ),
+    ],
+)
 
 
-def create_priority_ranker(name: str = 'priority_ranker') -> SimpleAgent:
+def create_priority_ranker(name: str = "priority_ranker") -> SimpleAgent:
     """Create a document priority ranking agent."""
     return SimpleAgent(
         name=name,
@@ -269,11 +277,11 @@ def create_priority_ranker(name: str = 'priority_ranker') -> SimpleAgent:
         Create ranked lists to optimize document usage in answer generation.""",
         prompt_template=PRIORITY_RANKING_PROMPT,
         output_schema={
-            'ranked_document_ids': 'List[str]',
-            'priority_scores': 'Dict[str, float]',
-            'top_3_reasoning': 'Dict[str, str]',
-            'exclude_document_ids': 'List[str]',
-            'exclusion_reasons': 'Dict[str, str]',
+            "ranked_document_ids": "List[str]",
+            "priority_scores": "Dict[str, float]",
+            "top_3_reasoning": "Dict[str, str]",
+            "exclude_document_ids": "List[str]",
+            "exclusion_reasons": "Dict[str, str]",
         },
     )
 
@@ -282,8 +290,9 @@ def create_priority_ranker(name: str = 'priority_ranker') -> SimpleAgent:
 
 QUERY_ANALYSIS_PROMPT = ChatPromptTemplate.from_messages(
     [
-        ('system',
-         """You are an expert query analyzer. Break down queries to understand intent and requirements.
+        (
+            "system",
+            """You are an expert query analyzer. Break down queries to understand intent and requirements.
 
 **Analysis Dimensions:**
 1. **Query Type**: Factual, analytical, comparative, procedural, etc.
@@ -292,9 +301,10 @@ QUERY_ANALYSIS_PROMPT = ChatPromptTemplate.from_messages(
 4. **Complexity**: Simple, moderate, or complex
 5. **Required Information**: What types of information are needed
 6. **Potential Ambiguities**: Unclear or multiple interpretations""",
-         ),
-        ('human',
-         """Analyze this query in detail:
+        ),
+        (
+            "human",
+            """Analyze this query in detail:
 
 Query: {query}
 
@@ -305,12 +315,12 @@ Provide comprehensive analysis including:
 4. Complexity assessment
 5. Information requirements
 6. Potential ambiguities or clarifications needed""",
-         ),
+        ),
     ],
 )
 
 
-def create_query_analyzer(name: str = 'query_analyzer') -> SimpleAgent:
+def create_query_analyzer(name: str = "query_analyzer") -> SimpleAgent:
     """Create a query analysis agent."""
     return SimpleAgent(
         name=name,
@@ -318,13 +328,13 @@ def create_query_analyzer(name: str = 'query_analyzer') -> SimpleAgent:
         Provide detailed breakdowns to guide retrieval and answer generation.""",
         prompt_template=QUERY_ANALYSIS_PROMPT,
         output_schema={
-            'query_type': 'str',
-            'key_entities': 'List[str]',
-            'user_intent': 'str',
-            'complexity': 'str',  # simple, moderate, complex
-            'information_requirements': 'List[str]',
-            'ambiguities': 'List[str]',
-            'suggested_clarifications': 'List[str]',
+            "query_type": "str",
+            "key_entities": "List[str]",
+            "user_intent": "str",
+            "complexity": "str",  # simple, moderate, complex
+            "information_requirements": "List[str]",
+            "ambiguities": "List[str]",
+            "suggested_clarifications": "List[str]",
         },
     )
 
@@ -350,54 +360,38 @@ class CompositeGradingAgent:
     ) -> dict[str, Any]:
         """Perform comprehensive grading of entire RAG pipeline."""
         # Analyze query
-        query_analysis = await self.query_analyzer.ainvoke({'query': query})
+        query_analysis = await self.query_analyzer.ainvoke({"query": query})
 
         # Grade each document
         document_grades = []
         for doc in documents:
             grade = await self.document_grader.ainvoke(
-                {
-                    'query': query,
-                    'document': doc.get('content', doc)
-                }, )
+                {"query": query, "document": doc.get("content", doc)},
+            )
             document_grades.append(grade)
 
         # Prioritize documents
         priority_ranking = await self.priority_ranker.ainvoke(
-            {
-                'query': query,
-                'documents': documents
-            }, )
+            {"query": query, "documents": documents},
+        )
 
         # Grade answer quality
         answer_grade = await self.answer_grader.ainvoke(
-            {
-                'query': query,
-                'answer': answer,
-                'source_documents': documents
-            }, )
+            {"query": query, "answer": answer, "source_documents": documents},
+        )
 
         # Check for hallucinations
         hallucination_grade = await self.hallucination_grader.ainvoke(
-            {
-                'query': query,
-                'answer': answer,
-                'source_documents': documents
-            }, )
+            {"query": query, "answer": answer, "source_documents": documents},
+        )
 
         return {
-            'query_analysis':
-            query_analysis,
-            'document_grades':
-            document_grades,
-            'priority_ranking':
-            priority_ranking,
-            'answer_grade':
-            answer_grade,
-            'hallucination_grade':
-            hallucination_grade,
-            'overall_pipeline_score':
-            self._calculate_overall_score(
+            "query_analysis": query_analysis,
+            "document_grades": document_grades,
+            "priority_ranking": priority_ranking,
+            "answer_grade": answer_grade,
+            "hallucination_grade": hallucination_grade,
+            "overall_pipeline_score": self._calculate_overall_score(
                 document_grades,
                 answer_grade,
                 hallucination_grade,
@@ -412,19 +406,19 @@ class CompositeGradingAgent:
     ) -> float:
         """Calculate overall pipeline score."""
         # Average document relevance
-        doc_score = (sum(g.get('relevance_score', 0)
-                         for g in document_grades) /
-                     len(document_grades) if document_grades else 0)
+        doc_score = (
+            sum(g.get("relevance_score", 0) for g in document_grades) / len(document_grades)
+            if document_grades
+            else 0
+        )
 
         # Answer quality
-        answer_score = answer_grade.get('overall_score', 0)
+        answer_score = answer_grade.get("overall_score", 0)
 
         # Hallucination penalty
-        hallucination_penalty = hallucination_grade.get(
-            'hallucination_score', 0)
+        hallucination_penalty = hallucination_grade.get("hallucination_score", 0)
 
         # Weighted combination
-        overall = (0.3 * doc_score +
-                   0.5 * answer_score) * (1 - 0.5 * hallucination_penalty)
+        overall = (0.3 * doc_score + 0.5 * answer_score) * (1 - 0.5 * hallucination_penalty)
 
         return min(max(overall, 0.0), 1.0)

@@ -32,10 +32,10 @@ class ModularConfig(BaseModel):
     """Configuration for modular RAG."""
 
     modules: list[RAGModule] = Field(description="Modules to include")
-    routing_strategy: Literal["sequential", "conditional",
-                              "parallel"] = Field(default="sequential", )
-    quality_gates: bool = Field(default=True,
-                                description="Include quality checkpoints")
+    routing_strategy: Literal["sequential", "conditional", "parallel"] = Field(
+        default="sequential",
+    )
+    quality_gates: bool = Field(default=True, description="Include quality checkpoints")
 
 
 def create_modular_rag(
@@ -59,10 +59,12 @@ def create_modular_rag(
     if RAGModule.QUERY_EXPANSION in config.modules:
         query_expander = AugLLMConfig(
             llm_config=llm_config,
-            prompt_template=ChatPromptTemplate.from_messages([
-                ("system", "Expand the query with synonyms and related terms"),
-                ("human", "{query}"),
-            ], ),
+            prompt_template=ChatPromptTemplate.from_messages(
+                [
+                    ("system", "Expand the query with synonyms and related terms"),
+                    ("human", "{query}"),
+                ],
+            ),
             output_key="expanded_query",
         )
         nodes.append(query_expander)
@@ -75,9 +77,9 @@ def create_modular_rag(
 
             # Simple relevance filtering (mock)
             filtered_docs = [
-                doc for doc in documents
-                if any(word.lower() in doc.page_content.lower()
-                       for word in query.split()[:3])
+                doc
+                for doc in documents
+                if any(word.lower() in doc.page_content.lower() for word in query.split()[:3])
             ]
 
             return {
@@ -91,16 +93,18 @@ def create_modular_rag(
     if RAGModule.CONTEXT_RANKING in config.modules:
         context_ranker = AugLLMConfig(
             llm_config=llm_config,
-            prompt_template=ChatPromptTemplate.from_messages([
-                ("system", "Rank document relevance for the query"),
-                (
-                    "human",
-                    """Query: {query}
+            prompt_template=ChatPromptTemplate.from_messages(
+                [
+                    ("system", "Rank document relevance for the query"),
+                    (
+                        "human",
+                        """Query: {query}
                 Documents: {filtered_documents}
 
                 Rank by relevance and provide top 3.""",
-                ),
-            ], ),
+                    ),
+                ],
+            ),
             output_key="ranked_context",
         )
         nodes.append(context_ranker)
@@ -109,16 +113,18 @@ def create_modular_rag(
     if RAGModule.ANSWER_GENERATION in config.modules:
         answer_generator = AugLLMConfig(
             llm_config=llm_config,
-            prompt_template=ChatPromptTemplate.from_messages([
-                ("system", "Generate answer based on ranked context"),
-                (
-                    "human",
-                    """Query: {query}
+            prompt_template=ChatPromptTemplate.from_messages(
+                [
+                    ("system", "Generate answer based on ranked context"),
+                    (
+                        "human",
+                        """Query: {query}
                 Context: {ranked_context}
 
                 Provide comprehensive answer.""",
-                ),
-            ], ),
+                    ),
+                ],
+            ),
             output_key="generated_answer",
         )
         nodes.append(answer_generator)
@@ -136,12 +142,9 @@ def create_modular_rag(
 
             return {
                 "verification_result": {
-                    "is_supported":
-                    is_supported,
-                    "confidence":
-                    confidence,
-                    "verified_answer":
-                    (answer if is_supported else "Answer needs more evidence"),
+                    "is_supported": is_supported,
+                    "confidence": confidence,
+                    "verified_answer": (answer if is_supported else "Answer needs more evidence"),
                 },
             }
 
@@ -151,18 +154,19 @@ def create_modular_rag(
     if RAGModule.RESPONSE_SYNTHESIS in config.modules:
         synthesizer = AugLLMConfig(
             llm_config=llm_config,
-            prompt_template=ChatPromptTemplate.from_messages([
-                ("system",
-                 "Synthesize final response with confidence indicators"),
-                (
-                    "human",
-                    """Original Query: {query}
+            prompt_template=ChatPromptTemplate.from_messages(
+                [
+                    ("system", "Synthesize final response with confidence indicators"),
+                    (
+                        "human",
+                        """Original Query: {query}
                 Generated Answer: {generated_answer}
                 Verification: {verification_result}
 
                 Create final response.""",
-                ),
-            ], ),
+                    ),
+                ],
+            ),
             output_key="response",
         )
         nodes.append(synthesizer)
@@ -172,7 +176,8 @@ def create_modular_rag(
         default_rag = AugLLMConfig(
             llm_config=llm_config,
             prompt_template=ChatPromptTemplate.from_messages(
-                [("system", "Answer the query"), ("human", "{query}")], ),
+                [("system", "Answer the query"), ("human", "{query}")],
+            ),
             output_key="response",
         )
         nodes.append(default_rag)
@@ -182,8 +187,7 @@ def create_modular_rag(
         return ChainAgent(*nodes, name=name)
     if config.routing_strategy == "conditional":
         # Add simple conditional routing
-        return flow_with_edges(
-            nodes, *[f"{i}->{i + 1}" for i in range(len(nodes) - 1)])
+        return flow_with_edges(nodes, *[f"{i}->{i + 1}" for i in range(len(nodes) - 1)])
     # parallel - simplified
     return ChainAgent(*nodes, name=name)
 
@@ -193,11 +197,13 @@ def create_simple_modular_rag(
     llm_config: LLMConfig | None = None,
 ) -> ChainAgent:
     """Create a simple modular RAG with basic modules."""
-    config = ModularConfig(modules=[
-        RAGModule.QUERY_EXPANSION,
-        RAGModule.DOCUMENT_FILTERING,
-        RAGModule.ANSWER_GENERATION,
-    ], )
+    config = ModularConfig(
+        modules=[
+            RAGModule.QUERY_EXPANSION,
+            RAGModule.DOCUMENT_FILTERING,
+            RAGModule.ANSWER_GENERATION,
+        ],
+    )
     return create_modular_rag(documents, config, llm_config)
 
 

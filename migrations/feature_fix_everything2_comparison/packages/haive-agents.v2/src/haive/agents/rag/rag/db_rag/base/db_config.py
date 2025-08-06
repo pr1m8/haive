@@ -11,6 +11,7 @@ Functions:
     get_db: Get Db functionality.
     get_db_schema: Get Db Schema functionality.
 """
+
 from __future__ import annotations
 
 from abc import ABC
@@ -34,7 +35,8 @@ class BaseDBConfig(ABC, BaseModel, Generic[T]):
     """
 
     db_type: str = Field(
-        description="Type of database (e.g., 'sql', 'graph', 'document')", )
+        description="Type of database (e.g., 'sql', 'graph', 'document')",
+    )
 
     @abstractmethod
     def get_connection_string(self) -> str:

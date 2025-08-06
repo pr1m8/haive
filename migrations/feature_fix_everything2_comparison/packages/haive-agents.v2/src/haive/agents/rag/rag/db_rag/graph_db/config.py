@@ -350,7 +350,8 @@ class GraphDBRAGConfig(AgentConfig):
                 else:
                     raise ValueError(
                         f"Missing required engine: {engine_name}. "
-                        f"Available engines: {list(engines.keys())}", )
+                        f"Available engines: {list(engines.keys())}",
+                    )
 
         return engines
 

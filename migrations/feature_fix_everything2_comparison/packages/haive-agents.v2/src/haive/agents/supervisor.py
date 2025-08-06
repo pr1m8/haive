@@ -43,16 +43,14 @@ class Plan(BaseModel):
 
 
 add_aug = AugLLMConfig(tools=[add])
-plan_aug = AugLLMConfig(structured_output_model=Plan,
-                        structured_output_version="v2")
+plan_aug = AugLLMConfig(structured_output_model=Plan, structured_output_version="v2")
 simple_agent = SimpleAgent(engine=plan_aug)
 react_agent = ReactAgent(engine=add_aug)
 
 
 class MultiAgentState(BaseModel, GetterMixin):
     agents: list[Agent] = Field(default_factory=[])
-    selected_agents: Annotated[list[Agent],
-                               operator.add] = Field(default_factory=[])
+    selected_agents: Annotated[list[Agent], operator.add] = Field(default_factory=[])
 
     @computed_field
     @property

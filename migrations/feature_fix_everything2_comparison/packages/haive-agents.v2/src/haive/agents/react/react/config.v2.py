@@ -5,6 +5,7 @@ This module provides config functionality for the Haive framework.
 Classes:
     ReactAgentConfig: ReactAgentConfig implementation.
 """
+
 from __future__ import annotations
 
 from haive.agents.simple.config import SimpleAgentConfig
@@ -21,11 +22,9 @@ class ReactAgentConfig(SimpleAgentConfig):
         default_factory=list,
         description="The tools to use for the agent",
     )
-    continuation_branch: Branch = Field(
-        description="The branch to continue the agent")
+    continuation_branch: Branch = Field(description="The branch to continue the agent")
     max_iterations: int = Field(
         default=10,
         description="The maximum number of iterations for the agent",
     )
-    retry_policy: RetryPolicy = Field(
-        description="The retry policy for the agent")
+    retry_policy: RetryPolicy = Field(description="The retry policy for the agent")

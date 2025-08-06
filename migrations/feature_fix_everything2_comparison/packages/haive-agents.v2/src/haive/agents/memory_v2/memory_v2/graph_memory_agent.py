@@ -69,18 +69,20 @@ class GraphMemoryConfig:
     database_name: str = "neo4j"
 
     # Graph transformation settings
-    allowed_nodes: list[str] = field(default_factory=lambda: [
-        "Person",
-        "Organization",
-        "Location",
-        "Event",
-        "Concept",
-        "Product",
-        "Technology",
-        "Date",
-        "Skill",
-        "Topic",
-    ], )
+    allowed_nodes: list[str] = field(
+        default_factory=lambda: [
+            "Person",
+            "Organization",
+            "Location",
+            "Event",
+            "Concept",
+            "Product",
+            "Technology",
+            "Date",
+            "Skill",
+            "Topic",
+        ],
+    )
     allowed_relationships: list[tuple[str, str, str]] = field(
         default_factory=lambda: [
             ("Person", "WORKS_FOR", "Organization"),
@@ -93,19 +95,23 @@ class GraphMemoryConfig:
             ("Event", "ON_DATE", "Date"),
             ("Person", "INTERESTED_IN", "Topic"),
             ("Concept", "RELATED_TO", "Concept"),
-        ], )
+        ],
+    )
 
     # Extraction settings
     extract_properties: bool = True
-    node_properties: list[str] = field(default_factory=lambda: [
-        "role",
-        "description",
-        "date",
-        "importance",
-        "confidence",
-    ], )
+    node_properties: list[str] = field(
+        default_factory=lambda: [
+            "role",
+            "description",
+            "date",
+            "importance",
+            "confidence",
+        ],
+    )
     relationship_properties: list[str] = field(
-        default_factory=lambda: ["since", "until", "strength", "context"], )
+        default_factory=lambda: ["since", "until", "strength", "context"],
+    )
 
     # Memory settings
     user_id: str = "default_user"
@@ -176,18 +182,17 @@ class GraphMemoryAgent:
             # Create uniqueness constraints for common node types
             for node_type in ["Person", "Organization", "Location", "Event"]:
                 self.graph.query(
-                    f"CREATE CONSTRAINT IF NOT EXISTS FOR (n:{node_type}) REQUIRE n.id IS UNIQUE", )
+                    f"CREATE CONSTRAINT IF NOT EXISTS FOR (n:{node_type}) REQUIRE n.id IS UNIQUE",
+                )
 
             # Create indexes for better query performance
-            self.graph.query(
-                "CREATE INDEX IF NOT EXISTS FOR (n:Person) ON (n.name)")
+            self.graph.query("CREATE INDEX IF NOT EXISTS FOR (n:Person) ON (n.name)")
             self.graph.query(
                 "CREATE INDEX IF NOT EXISTS FOR (n:Organization) ON (n.name)",
             )
 
             # Create user index for multi-user support
-            self.graph.query(
-                "CREATE INDEX IF NOT EXISTS FOR (n:Memory) ON (n.user_id)")
+            self.graph.query("CREATE INDEX IF NOT EXISTS FOR (n:Memory) ON (n.user_id)")
         except Exception as e:
             self.logger.warning(f"Error creating constraints: {e}")
 
@@ -198,7 +203,8 @@ class GraphMemoryAgent:
         else:
             self.graph_transformer = None
             self.logger.warning(
-                "GraphTransformer not available - graph extraction limited to LangChain LLMGraphTransformer", )
+                "GraphTransformer not available - graph extraction limited to LangChain LLMGraphTransformer",
+            )
 
         # Always initialize LangChain's LLMGraphTransformer as fallback
         llm = self.config.llm_config.instantiate()
@@ -206,11 +212,12 @@ class GraphMemoryAgent:
             llm=llm,
             allowed_nodes=self.config.allowed_nodes,
             allowed_relationships=self.config.allowed_relationships,
-            node_properties=(self.config.node_properties
-                             if self.config.extract_properties else False),
-            relationship_properties=(self.config.relationship_properties
-                                     if self.config.extract_properties else
-                                     False),
+            node_properties=(
+                self.config.node_properties if self.config.extract_properties else False
+            ),
+            relationship_properties=(
+                self.config.relationship_properties if self.config.extract_properties else False
+            ),
             strict_mode=False,
         )
 
@@ -303,7 +310,8 @@ class GraphMemoryAgent:
         # Create document
         doc = Document(
             page_content=text,
-            metadata=metadata or {
+            metadata=metadata
+            or {
                 "user_id": self.config.user_id,
                 "timestamp": datetime.now().isoformat(),
                 "source": "memory_extraction",
@@ -323,8 +331,7 @@ class GraphMemoryAgent:
             )
         else:
             # Fall back to LangChain LLMGraphTransformer
-            graph_docs = self.llm_graph_transformer.convert_to_graph_documents(
-                [doc])
+            graph_docs = self.llm_graph_transformer.convert_to_graph_documents([doc])
 
         return graph_docs
 
@@ -356,9 +363,9 @@ class GraphMemoryAgent:
                         {
                             "user_id": self.config.user_id,
                             "created_at": datetime.now().isoformat(),
-                            "id":
-                            f"{node.type}_{node.id}_{self.config.user_id}",
-                        }, )
+                            "id": f"{node.type}_{node.id}_{self.config.user_id}",
+                        },
+                    )
 
                     if merge_nodes:
                         query = f"""
@@ -393,7 +400,8 @@ class GraphMemoryAgent:
                         {
                             "user_id": self.config.user_id,
                             "created_at": datetime.now().isoformat(),
-                        }, )
+                        },
+                    )
 
                     query = f"""
                     MATCH (a {{id: $source_id}})
@@ -403,14 +411,8 @@ class GraphMemoryAgent:
                     RETURN r
                     """
 
-                    source_id = f"{
-                        rel.source.type}_{
-                        rel.source.id}_{
-                        self.config.user_id}"
-                    target_id = f"{
-                        rel.target.type}_{
-                        rel.target.id}_{
-                        self.config.user_id}"
+                    source_id = f"{rel.source.type}_{rel.source.id}_{self.config.user_id}"
+                    target_id = f"{rel.target.type}_{rel.target.id}_{self.config.user_id}"
 
                     self.graph.query(
                         query,
@@ -442,18 +444,12 @@ class GraphMemoryAgent:
         self.graph.query(
             memory_query,
             {
-                "id":
-                f"memory_{datetime.now().timestamp()}_{self.config.user_id}",
-                "user_id":
-                self.config.user_id,
-                "content": (graph_documents[0].source.page_content
-                            if graph_documents else ""),
-                "timestamp":
-                datetime.now().isoformat(),
-                "nodes_created":
-                nodes_created,
-                "relationships_created":
-                relationships_created,
+                "id": f"memory_{datetime.now().timestamp()}_{self.config.user_id}",
+                "user_id": self.config.user_id,
+                "content": (graph_documents[0].source.page_content if graph_documents else ""),
+                "timestamp": datetime.now().isoformat(),
+                "nodes_created": nodes_created,
+                "relationships_created": relationships_created,
             },
         )
 
@@ -487,8 +483,7 @@ class GraphMemoryAgent:
 
                 if include_context and result.get("cypher_statement"):
                     # Get additional context using the generated Cypher
-                    context = self._get_query_context(
-                        result["cypher_statement"])
+                    context = self._get_query_context(result["cypher_statement"])
                     result["context"] = context
 
                 return result
@@ -538,8 +533,7 @@ class GraphMemoryAgent:
         LIMIT 10
         """
 
-        recent_nodes = self.graph.query(context_query,
-                                        {"user_id": self.config.user_id})
+        recent_nodes = self.graph.query(context_query, {"user_id": self.config.user_id})
 
         return {
             "recent_nodes": recent_nodes,
@@ -575,21 +569,22 @@ class GraphMemoryAgent:
                     query,
                     k=k,
                 )
-                results.extend([{
-                    "type": "Person",
-                    "content": doc.page_content,
-                    "score": score
-                } for doc, score in person_results], )
+                results.extend(
+                    [
+                        {"type": "Person", "content": doc.page_content, "score": score}
+                        for doc, score in person_results
+                    ],
+                )
 
         if node_type == "Concept" or node_type is None:
             if hasattr(self, "concept_vector_index"):
-                concept_results = self.concept_vector_index.similarity_search_with_score(
-                    query, k=k)
-                results.extend([{
-                    "type": "Concept",
-                    "content": doc.page_content,
-                    "score": score
-                } for doc, score in concept_results], )
+                concept_results = self.concept_vector_index.similarity_search_with_score(query, k=k)
+                results.extend(
+                    [
+                        {"type": "Concept", "content": doc.page_content, "score": score}
+                        for doc, score in concept_results
+                    ],
+                )
 
         # Sort by score
         results.sort(key=lambda x: x["score"], reverse=True)
@@ -625,10 +620,7 @@ class GraphMemoryAgent:
 
         paths = self.graph.query(
             query,
-            {
-                "name": entity_name,
-                "user_id": self.config.user_id
-            },
+            {"name": entity_name, "user_id": self.config.user_id},
         )
 
         # Extract unique nodes and relationships
@@ -674,10 +666,7 @@ class GraphMemoryAgent:
 
         candidates = self.graph.query(
             query,
-            {
-                "user_id": self.config.user_id,
-                "min_connections": min_connections
-            },
+            {"user_id": self.config.user_id, "min_connections": min_connections},
         )
 
         # Create concept nodes for highly connected entities
@@ -719,19 +708,16 @@ class GraphMemoryAgent:
         }
 
         if mode in [
-                GraphMemoryMode.EXTRACT_ONLY,
-                GraphMemoryMode.EXTRACT_AND_STORE,
-                GraphMemoryMode.FULL,
+            GraphMemoryMode.EXTRACT_ONLY,
+            GraphMemoryMode.EXTRACT_AND_STORE,
+            GraphMemoryMode.FULL,
         ]:
             # Extract graph from text
             graph_docs = await self.extract_graph_from_text(input_text)
             results["extracted_graph"] = {
-                "documents":
-                len(graph_docs),
-                "total_nodes":
-                sum(len(doc.nodes) for doc in graph_docs),
-                "total_relationships":
-                sum(len(doc.relationships) for doc in graph_docs),
+                "documents": len(graph_docs),
+                "total_nodes": sum(len(doc.nodes) for doc in graph_docs),
+                "total_relationships": sum(len(doc.relationships) for doc in graph_docs),
             }
 
             if auto_store and mode != GraphMemoryMode.EXTRACT_ONLY:
@@ -794,7 +780,8 @@ async def example_graph_memory():
     await agent.run(
         "I met John Doe at the AI Conference in San Francisco last week. "
         "He works as a Senior Engineer at TechCorp and specializes in machine learning. "
-        "We discussed implementing RAG systems using knowledge graphs.", )
+        "We discussed implementing RAG systems using knowledge graphs.",
+    )
 
     # Query the graph
     await agent.query_graph("Who did I meet at conferences recently?")

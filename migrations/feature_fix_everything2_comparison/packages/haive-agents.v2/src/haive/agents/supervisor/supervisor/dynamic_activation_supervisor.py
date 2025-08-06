@@ -107,8 +107,7 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
     state_schema: type[DynamicActivationState] = DynamicActivationState
 
     # Private attributes for internal state (not serialized)
-    _discovery_agent: ComponentDiscoveryAgent | None = PrivateAttr(
-        default=None)
+    _discovery_agent: ComponentDiscoveryAgent | None = PrivateAttr(default=None)
     _meta_self: MetaStateSchema | None = PrivateAttr(default=None)
 
     def setup_agent(self) -> None:
@@ -123,7 +122,8 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
         # Initialize discovery agent if config is provided
         if hasattr(self, "_discovery_config"):
             self._discovery_agent = ComponentDiscoveryAgent(
-                document_path=self._discovery_config["document_path"], )
+                document_path=self._discovery_config["document_path"],
+            )
 
         # Wrap self in MetaStateSchema for self-tracking
         self._meta_self = MetaStateSchema(
@@ -258,20 +258,15 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
             # Simple capability detection (can be enhanced)
             task_lower = task_description.lower()
 
-            if any(word in task_lower
-                   for word in ["calculate", "math", "compute", "number"]):
+            if any(word in task_lower for word in ["calculate", "math", "compute", "number"]):
                 capabilities.append("math")
-            if any(word in task_lower
-                   for word in ["search", "find", "lookup", "web"]):
+            if any(word in task_lower for word in ["search", "find", "lookup", "web"]):
                 capabilities.append("search")
-            if any(word in task_lower
-                   for word in ["chart", "plot", "graph", "visualize"]):
+            if any(word in task_lower for word in ["chart", "plot", "graph", "visualize"]):
                 capabilities.append("visualization")
-            if any(word in task_lower
-                   for word in ["file", "read", "write", "process"]):
+            if any(word in task_lower for word in ["file", "read", "write", "process"]):
                 capabilities.append("file_processing")
-            if any(word in task_lower
-                   for word in ["data", "analyze", "process", "transform"]):
+            if any(word in task_lower for word in ["data", "analyze", "process", "transform"]):
                 capabilities.append("data_processing")
 
             return {
@@ -282,8 +277,7 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
 
         # Tool for activating components
         @tool
-        def activate_component(component_id: str,
-                               reason: str = "") -> dict[str, Any]:
+        def activate_component(component_id: str, reason: str = "") -> dict[str, Any]:
             """Activate a component by ID."""
             # Access state through self (tool has access to supervisor context)
             meta_state = self.state.activate_component(component_id)
@@ -316,7 +310,8 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
                 try:
                     loop = asyncio.get_event_loop()
                     components = loop.run_until_complete(
-                        self._discovery_agent.discover_components(query), )
+                        self._discovery_agent.discover_components(query),
+                    )
                     return components[:max_results]
                 except Exception as e:
                     return [{"error": f"Discovery failed: {e}"}]
@@ -334,30 +329,27 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
                                 "name": item.name,
                                 "description": item.description,
                                 "is_active": item.is_active,
-                            }, )
+                            },
+                        )
 
                 return matches[:max_results]
 
         # Tool for checking component status
         @tool
-        def check_component_status(
-                component_id: str | None = None) -> dict[str, Any]:
+        def check_component_status(component_id: str | None = None) -> dict[str, Any]:
             """Check status of components."""
             if component_id:
                 # Check specific component
                 item = self.state.registry.get_item(component_id)
                 if item:
                     return {
-                        "component_id":
-                        component_id,
-                        "name":
-                        item.name,
-                        "is_active":
-                        item.is_active,
-                        "activation_count":
-                        item.activation_count,
-                        "last_activated": (str(item.last_activated)
-                                           if item.last_activated else None),
+                        "component_id": component_id,
+                        "name": item.name,
+                        "is_active": item.is_active,
+                        "activation_count": item.activation_count,
+                        "last_activated": (
+                            str(item.last_activated) if item.last_activated else None
+                        ),
                     }
                 return {"error": f"Component {component_id} not found"}
             # Check all components
@@ -371,12 +363,14 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
 
         # Add tools to engine if it has tools attribute
         if hasattr(self.engine, "tools"):
-            self.engine.tools.extend([
-                analyze_task_requirements,
-                activate_component,
-                discover_components,
-                check_component_status,
-            ], )
+            self.engine.tools.extend(
+                [
+                    analyze_task_requirements,
+                    activate_component,
+                    discover_components,
+                    check_component_status,
+                ],
+            )
 
     def build_graph(self) -> BaseGraph:
         """Build the dynamic activation supervisor graph.
@@ -417,8 +411,7 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
 
         return graph.compile()
 
-    async def _supervisor_node(
-            self, state: DynamicActivationState) -> dict[str, Any]:
+    async def _supervisor_node(self, state: DynamicActivationState) -> dict[str, Any]:
         """Main supervisor logic node."""
         # Update current task
         if hasattr(state, "messages") and state.messages:
@@ -454,8 +447,7 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
         # All capabilities satisfied, execute task
         return {"next_action": "execute", "reason": "Ready to execute task"}
 
-    async def _analyze_task_node(
-            self, state: DynamicActivationState) -> dict[str, Any]:
+    async def _analyze_task_node(self, state: DynamicActivationState) -> dict[str, Any]:
         """Analyze task requirements and update state."""
         # Use LLM to analyze task requirements
         analysis_prompt = f"""
@@ -481,10 +473,7 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
         # Update state
         state.update_capabilities(required=capabilities)
 
-        return {
-            "capabilities_identified": capabilities,
-            "analysis_complete": True
-        }
+        return {"capabilities_identified": capabilities, "analysis_complete": True}
 
     async def _discover_components_node(
         self,
@@ -497,7 +486,8 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
             if self._discovery_agent:
                 # Use discovery agent
                 components = await self._discovery_agent.discover_components(
-                    f"components for {capability}", )
+                    f"components for {capability}",
+                )
                 discovered_components.extend(components)
 
         # Register discovered components
@@ -531,8 +521,7 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
                 item = state.registry.get_item(item_id)
                 if item and not item.is_active:
                     # Simple matching - check if capability is in description
-                    if capability in item.description.lower(
-                    ) or capability in item.name.lower():
+                    if capability in item.description.lower() or capability in item.name.lower():
                         meta_state = state.activate_component(item_id)
                         if meta_state:
                             activated_components.append(item_id)
@@ -544,16 +533,14 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
             "activation_complete": True,
         }
 
-    async def _execute_task_node(
-            self, state: DynamicActivationState) -> dict[str, Any]:
+    async def _execute_task_node(self, state: DynamicActivationState) -> dict[str, Any]:
         """Execute the task using active components."""
         # Get active components
         active_components = state.get_active_components()
 
         if not active_components:
             return {
-                "execution_result":
-                "No active components available for task execution",
+                "execution_result": "No active components available for task execution",
                 "success": False,
             }
 

@@ -87,12 +87,10 @@ class AdvancedNodeComposer(NodeSchemaComposer):
             # All are handled automatically!
         """
         # Analyze function signature
-        sig_info = self._analyze_callable_signature(
-            func) if auto_detect_signature else {}
+        sig_info = self._analyze_callable_signature(func) if auto_detect_signature else {}
 
         # Create wrapped function that normalizes signatures
-        wrapped_func = self._create_normalized_callable(
-            func, sig_info, handle_command)
+        wrapped_func = self._create_normalized_callable(func, sig_info, handle_command)
 
         # Use base method to create node
         from haive.core.graph.node.callable_node import CallableNodeConfig
@@ -168,8 +166,7 @@ class AdvancedNodeComposer(NodeSchemaComposer):
         """
 
         @wraps(func)
-        def normalized_wrapper(state: Any,
-                               config: dict[str, Any] | None = None) -> Any:
+        def normalized_wrapper(state: Any, config: dict[str, Any] | None = None) -> Any:
             config = config or {}
 
             # Build kwargs based on signature
@@ -239,18 +236,17 @@ class AdvancedNodeComposer(NodeSchemaComposer):
             if validate_types:
                 if not isinstance(state, state_type):
                     logger.warning(
-                        f"State type mismatch: expected {state_type}, got {
-                            type(state)}", )
+                        f"State type mismatch: expected {state_type}, got {type(state)}",
+                    )
                 if not isinstance(config, config_type):
                     logger.warning(
-                        f"Config type mismatch: expected {config_type}, got {
-                            type(config)}", )
+                        f"Config type mismatch: expected {config_type}, got {type(config)}",
+                    )
 
             result = func(state, config)
 
             # Validate output type if specified
-            if validate_types and result_type and not isinstance(
-                    result, result_type):
+            if validate_types and result_type and not isinstance(result, result_type):
                 logger.warning(
                     f"Result type mismatch: expected {result_type}, got {type(result)}",
                 )
@@ -333,8 +329,7 @@ class AdvancedNodeComposer(NodeSchemaComposer):
         # Create node from callable
         from haive.core.graph.node.callable_node import CallableNodeConfig
 
-        base_node = CallableNodeConfig(name=name,
-                                       callable_func=pipeline_callable)
+        base_node = CallableNodeConfig(name=name, callable_func=pipeline_callable)
 
         return ComposedNode(
             base_node=base_node,
@@ -360,16 +355,13 @@ class AdvancedComposedNode(ComposedNode):
         original_func: Callable | None = None,
         signature_info: dict[str, Any] | None = None,
     ):
-        super().__init__(base_node, input_mappings, output_mappings, name,
-                         composer)
+        super().__init__(base_node, input_mappings, output_mappings, name, composer)
         self.extract_logic = extract_logic
         self.update_logic = update_logic
         self.original_func = original_func
         self.signature_info = signature_info
 
-    def __call__(self,
-                 state: Any,
-                 config: dict[str, Any] | None = None) -> Any:
+    def __call__(self, state: Any, config: dict[str, Any] | None = None) -> Any:
         """Execute with extended logic."""
         config = config or {}
 
@@ -379,13 +371,11 @@ class AdvancedComposedNode(ComposedNode):
             # Merge with mapped inputs
             if self.extract_func:
                 mapped_input = self.extract_func(state, config)
-                if isinstance(mapped_input, dict) and isinstance(
-                        extracted_input, dict):
+                if isinstance(mapped_input, dict) and isinstance(extracted_input, dict):
                     extracted_input.update(mapped_input)
         else:
             # Use standard extraction
-            extracted_input = self.extract_func(
-                state, config) if self.extract_func else state
+            extracted_input = self.extract_func(state, config) if self.extract_func else state
 
         # Prepare state for node
         if isinstance(extracted_input, dict) and hasattr(state, "model_copy"):
@@ -447,9 +437,7 @@ class TypedCallableNode:
             **kwargs,
         )
 
-    def __call__(self,
-                 state: Any,
-                 config: dict[str, Any] | None = None) -> Any:
+    def __call__(self, state: Any, config: dict[str, Any] | None = None) -> Any:
         """Execute typed node."""
         return self.node(state, config)
 

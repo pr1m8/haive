@@ -54,9 +54,7 @@ class BaseExecutor(ABC, Generic[TState]):
     def validate_state(self, state: TState) -> bool:
         """Validate that state has required components."""
         # Check required engines
-        return all(
-            state.get_engine(engine_name)
-            for engine_name in self.get_required_engines())
+        return all(state.get_engine(engine_name) for engine_name in self.get_required_engines())
 
 
 class ToolExecutor(BaseExecutor[ToolExecutorState]):
@@ -65,10 +63,7 @@ class ToolExecutor(BaseExecutor[ToolExecutorState]):
     Executes tools based on predefined plans or rules.
     """
 
-    def __init__(self,
-                 name: str,
-                 execution_strategy: str = "sequential",
-                 **kwargs):
+    def __init__(self, name: str, execution_strategy: str = "sequential", **kwargs):
         super().__init__(name, ToolExecutorState, **kwargs)
         self.execution_strategy = execution_strategy
 
@@ -88,13 +83,11 @@ class ToolExecutor(BaseExecutor[ToolExecutorState]):
                     result = await self._execute_tool(tool, inputs)
                     state.mark_step_complete(result)
                 else:
-                    state.mark_step_complete(
-                        {"error": f"Tool {tool_name} not found"})
+                    state.mark_step_complete({"error": f"Tool {tool_name} not found"})
 
         return state
 
-    def _find_tool(self, state: ToolExecutorState,
-                   tool_name: str) -> Any | None:
+    def _find_tool(self, state: ToolExecutorState, tool_name: str) -> Any | None:
         """Find a tool by name."""
         for tool in state.tools:
             if hasattr(tool, "name") and tool.name == tool_name:
@@ -138,9 +131,7 @@ class DataProcessor(BaseExecutor[DataProcessingState]):
                 state.stage_results[stage] = result
                 current_data = result
             else:
-                state.stage_results[stage] = {
-                    "error": f"Engine {stage} not found"
-                }
+                state.stage_results[stage] = {"error": f"Engine {stage} not found"}
 
         state.processed_data = current_data
         return state
@@ -185,7 +176,8 @@ class BaseAgent(BaseExecutor[AgentState]):
         engine = state.primary_engine
         if not engine:
             raise ValueError(
-                f"No primary engine available for agent {self.name}", )
+                f"No primary engine available for agent {self.name}",
+            )
 
         # Execute main agent logic
         result = await self.run_engine(engine, state)
@@ -199,8 +191,7 @@ class BaseAgent(BaseExecutor[AgentState]):
     async def run_engine(self, engine: Engine, state: AgentState) -> Any:
         """Run the primary engine with state."""
 
-    def update_state_with_result(self, state: AgentState,
-                                 result: Any) -> AgentState:
+    def update_state_with_result(self, state: AgentState, result: Any) -> AgentState:
         """Update state with engine result."""
         # Default: just return state
         # Subclasses should override
@@ -223,8 +214,7 @@ class LLMAgent(BaseAgent):
             return await engine.ainvoke({"messages": messages})
         return engine.invoke({"messages": messages})
 
-    def update_state_with_result(self, state: AgentState,
-                                 result: Any) -> AgentState:
+    def update_state_with_result(self, state: AgentState, result: Any) -> AgentState:
         """Update state with LLM result."""
         if isinstance(result, dict) and "messages" in result:
             state.messages.extend(result["messages"])
@@ -396,8 +386,7 @@ class ReactiveAgent(LLMAgent):
 
         return triggered
 
-    def evaluate_trigger(self, trigger: dict[str, Any],
-                         state: AgentState) -> bool:
+    def evaluate_trigger(self, trigger: dict[str, Any], state: AgentState) -> bool:
         """Evaluate a single trigger."""
         # Simple pattern matching on messages
         pattern = trigger.get("pattern")
@@ -450,8 +439,7 @@ class AdaptiveAgent(WorkflowAgent):
     def needs_adaptation(self, metrics: dict[str, float]) -> bool:
         """Check if adaptation is needed."""
         # Simple threshold check
-        avg_performance = sum(
-            metrics.values()) / len(metrics) if metrics else 0
+        avg_performance = sum(metrics.values()) / len(metrics) if metrics else 0
         return avg_performance < self.adaptation_threshold
 
     async def adapt_strategy(self, state: WorkflowState) -> None:

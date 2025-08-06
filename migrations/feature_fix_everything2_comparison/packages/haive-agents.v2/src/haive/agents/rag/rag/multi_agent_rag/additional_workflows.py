@@ -57,10 +57,7 @@ class SimpleRAGWithMemoryAgent(MultiAgent):
 
             Provide a concise memory context summary.
             """,
-            output_schema={
-                "memory_context": "str",
-                "relevant_history": "List[str]"
-            },
+            output_schema={"memory_context": "str", "relevant_history": "List[str]"},
         )
 
         # Standard retrieval agent
@@ -71,10 +68,7 @@ class SimpleRAGWithMemoryAgent(MultiAgent):
             and the memory context provided. Use the memory context to enhance your
             retrieval strategy and find more relevant documents.
             """,
-            output_schema={
-                "documents": "List[str]",
-                "retrieval_strategy": "str"
-            },
+            output_schema={"documents": "List[str]", "retrieval_strategy": "str"},
         )
 
         # Answer generation with memory
@@ -140,10 +134,7 @@ class SelfRAGAgent(MultiAgent):
             Only retrieve documents if needs_retrieval is True.
             Use the reflection reasoning to guide retrieval strategy.
             """,
-            output_schema={
-                "documents": "List[str]",
-                "retrieval_quality": "str"
-            },
+            output_schema={"documents": "List[str]", "retrieval_quality": "str"},
         )
 
         # Self-reflective answer generator
@@ -380,9 +371,7 @@ class StepBackPromptingRAGAgent(MultiAgent):
             },
         )
 
-        agents = [
-            step_back_agent, dual_retrieval_agent, contextual_answer_agent
-        ]
+        agents = [step_back_agent, dual_retrieval_agent, contextual_answer_agent]
 
         super().__init__(
             agents=agents,
