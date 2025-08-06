@@ -22,8 +22,7 @@ class DataSourceConfig(BaseModel):
 
     name: str = Field(..., description="Name of the data source")
     source_type: DataSourceType = Field(..., description="Type of data source")
-    description: str = Field(default="",
-                             description="Description of the data source")
+    description: str = Field(default="", description="Description of the data source")
 
     def create_retriever(self) -> RetrieverConfig:
         """Create a retriever for this data source."""

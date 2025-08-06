@@ -63,8 +63,7 @@ class CallableNodeConfig(BaseNodeConfig):
     node_type: NodeType = Field(default=NodeType.CALLABLE)
 
     # The callable to wrap
-    callable_func: Callable = Field(
-        ..., description="The function to wrap as a node")
+    callable_func: Callable = Field(..., description="The function to wrap as a node")
 
     # How to handle the result
     result_key: str | None = Field(
@@ -127,16 +126,19 @@ class CallableNodeConfig(BaseNodeConfig):
     def validate_config(self) -> Self:
         """Validate the configuration."""
         # Check that we have some way to route
-        if not any([
+        if not any(
+            [
                 self.goto_on_true,
                 self.goto_on_false,
                 self.goto_mapping,
                 self.default_goto,
                 self.command_goto,
-        ], ):
+            ],
+        ):
             raise ValueError(
                 "Must specify at least one of: goto_on_true/false, goto_mapping, "
-                "default_goto, or command_goto", )
+                "default_goto, or command_goto",
+            )
 
         return self
 
@@ -176,9 +178,7 @@ class CallableNodeConfig(BaseNodeConfig):
 
         return fields
 
-    def __call__(self,
-                 state: StateLike,
-                 config: ConfigLike | None = None) -> Command:
+    def __call__(self, state: StateLike, config: ConfigLike | None = None) -> Command:
         """Execute the callable and return appropriate Command."""
         try:
             # Extract parameters
@@ -213,8 +213,7 @@ class CallableNodeConfig(BaseNodeConfig):
             if self.on_error == "goto_errof":
                 return Command(
                     update={"error": str(e)},
-                    goto=self.error_goto or self.default_goto
-                    or self.command_goto,
+                    goto=self.error_goto or self.default_goto or self.command_goto,
                 )
 
     def _extract_parameters(self, state: StateLike) -> dict[str, Any]:

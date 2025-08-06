@@ -1,4 +1,5 @@
 """Configuration for the Reflection Agent."""
+
 from __future__ import annotations
 
 import logging
@@ -18,8 +19,7 @@ logger = logging.getLogger(__name__)
 class ReflectionConfig(BaseModel):
     """Configuration specific to the reflection mechanism."""
 
-    enabled: bool = Field(default=True,
-                          description="Whether reflection is enabled")
+    enabled: bool = Field(default=True, description="Whether reflection is enabled")
 
     reflection_llm: AugLLMConfig | None = Field(
         default=None,
@@ -45,7 +45,8 @@ class ReflectionConfig(BaseModel):
             "Missing: [what important information or reasoning is missing]\n"
             "Superfluous: [what content is unnecessary or could be removed]\n"
             "Score (0-10): [your rating of the response quality]\n"
-            "Found Solution (true/false): [whether this response fully solves the request]"),
+            "Found Solution (true/false): [whether this response fully solves the request]"
+        ),
         description="Template for reflection prompt",
     )
 
@@ -56,7 +57,8 @@ class ReflectionConfig(BaseModel):
             "Your previous response: {response}\n\n"
             "Feedback: {feedback}\n\n"
             "Based on this feedback, provide an improved version of your response that addresses the critique."
-            "Be sure to include all relevant information while removing anything unnecessary."),
+            "Be sure to include all relevant information while removing anything unnecessary."
+        ),
         description="Template for improvement prompt",
     )
 
@@ -72,7 +74,8 @@ class ReflectionConfig(BaseModel):
             "Original request: {original_request}\n\n"
             "Your previous response: {response}\n\n"
             "Feedback: {feedback}\n\n"
-            "Generate 1-3 specific search queries (one per line):"),
+            "Generate 1-3 specific search queries (one per line):"
+        ),
         description="Template for generating search queries",
     )
 

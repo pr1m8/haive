@@ -12,6 +12,7 @@ Architecture:
 - ConversationMemoryAgent tool for conversation context
 - Memory analysis and coordination through ReactAgent reasoning
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -168,8 +169,8 @@ class ReactMemoryCoordinator:
 
         self._initialized = True
         logger.info(
-            f"✅ ReactMemoryCoordinator initialized with {
-                len(memory_tools)} memory tools", )
+            f"✅ ReactMemoryCoordinator initialized with {len(memory_tools)} memory tools",
+        )
 
     def _create_memory_tools(self) -> list:
         """Create memory tools for ReactAgent."""
@@ -189,7 +190,8 @@ class ReactMemoryCoordinator:
                     memory_context = result.get("memory_context", [])
                     if memory_context:
                         return f"Found {len(memory_context)} relevant memories:\n" + "\n".join(
-                            f"- {mem}" for mem in memory_context[:3])
+                            f"- {mem}" for mem in memory_context[:3]
+                        )
                     return "No relevant long-term memories found."
                 except Exception as e:
                     return f"Error searching long-term memory: {e!s}"
@@ -203,17 +205,16 @@ class ReactMemoryCoordinator:
             async def search_conversation_memory(query: str) -> str:
                 """Search conversation memory for relevant context."""
                 try:
-                    docs = await self.conversation_memory.retrieve_context(
-                        query, k=3)
+                    docs = await self.conversation_memory.retrieve_context(query, k=3)
                     if docs:
                         results = []
                         for doc in docs:
-                            msg_type = doc.metadata.get(
-                                "message_type", "unknown")
+                            msg_type = doc.metadata.get("message_type", "unknown")
                             content = doc.page_content[:100]
                             results.append(f"[{msg_type}] {content}")
-                        return f"Found {len(docs)} relevant conversation messages:\n" + \
-                            "\n".join(results, )
+                        return f"Found {len(docs)} relevant conversation messages:\n" + "\n".join(
+                            results,
+                        )
                     return "No relevant conversation history found."
                 except Exception as e:
                     return f"Error searching conversation memory: {e!s}"
@@ -233,8 +234,7 @@ class ReactMemoryCoordinator:
                     memory = MemoryEntry(
                         content=content,
                         memory_type=memory_type,
-                        importance=min(max(importance, 0.0),
-                                       1.0),  # Clamp to [0,1]
+                        importance=min(max(importance, 0.0), 1.0),  # Clamp to [0,1]
                         user_id=self.user_id,
                         tags=[memory_type],
                     )
@@ -260,15 +260,18 @@ class ReactMemoryCoordinator:
                     )
 
                 if self.conversation_memory:
-                    conv_summary = await self.conversation_memory.get_conversation_summary(
-                    )
+                    conv_summary = await self.conversation_memory.get_conversation_summary()
                     insights.append(
-                        f"Conversation: {
-                            conv_summary['total_messages']} messages across {
-                            conv_summary['conversations']} conversations", )
+                        f"Conversation: {conv_summary['total_messages']} messages across {
+                            conv_summary['conversations']
+                        } conversations",
+                    )
 
-                return ("Memory Analysis:\n" + "\n".join(insights) if insights
-                        else "No memory data available for analysis.")
+                return (
+                    "Memory Analysis:\n" + "\n".join(insights)
+                    if insights
+                    else "No memory data available for analysis."
+                )
 
             except Exception as e:
                 return f"❌ Error analyzing memory: {e!s}"
@@ -301,9 +304,7 @@ When users ask questions:
 
 Be helpful, insightful, and proactive about memory management."""
 
-    async def run(self,
-                  query: str,
-                  add_to_conversation: bool = True) -> dict[str, Any]:
+    async def run(self, query: str, add_to_conversation: bool = True) -> dict[str, Any]:
         """Run memory-enhanced conversation with ReactAgent reasoning.
 
         This implements the ReactAgent pattern for memory operations:
@@ -330,14 +331,14 @@ Be helpful, insightful, and proactive about memory management."""
             )
 
         return {
-            "response":
-            react_result,
-            "user_id":
-            self.user_id,
-            "memory_tools_used": (self.react_agent.tool_calls_made if hasattr(
-                self.react_agent, "tool_calls_made") else 0),
-            "coordinator_name":
-            self.name,
+            "response": react_result,
+            "user_id": self.user_id,
+            "memory_tools_used": (
+                self.react_agent.tool_calls_made
+                if hasattr(self.react_agent, "tool_calls_made")
+                else 0
+            ),
+            "coordinator_name": self.name,
         }
 
     async def add_conversation_batch(
@@ -369,13 +370,12 @@ Be helpful, insightful, and proactive about memory management."""
         }
 
         if self.long_term_memory:
-            summary["memory_systems"][
-                "long_term"] = self.long_term_memory.get_memory_summary()
+            summary["memory_systems"]["long_term"] = self.long_term_memory.get_memory_summary()
 
         if self.conversation_memory:
             summary["memory_systems"][
-                "conversation"] = await self.conversation_memory.get_conversation_summary(
-            )
+                "conversation"
+            ] = await self.conversation_memory.get_conversation_summary()
 
         return summary
 

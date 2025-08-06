@@ -349,7 +349,8 @@ class ReactAgentV3(SimpleAgentV3):
         if v > 50:
             logger.warning(
                 f"max_iterations={v} is very high and may cause performance issues. "
-                f"Consider using a lower value (5-15 typical range).", )
+                f"Consider using a lower value (5-15 typical range).",
+            )
         return v
 
     def setup_agent(self) -> None:
@@ -373,11 +374,9 @@ class ReactAgentV3(SimpleAgentV3):
         super().setup_agent()
 
         if self.debug:
-            logger.debug(
-                f"Setting up ReactAgent v3 features for '{self.name}'")
+            logger.debug(f"Setting up ReactAgent v3 features for '{self.name}'")
             logger.debug(f"Max iterations: {self.max_iterations}")
-            logger.debug(
-                f"Stop on first tool result: {self.stop_on_first_tool_result}")
+            logger.debug(f"Stop on first tool result: {self.stop_on_first_tool_result}")
             logger.debug(f"Require final answer: {self.require_final_answer}")
 
         # Initialize reasoning state
@@ -408,10 +407,8 @@ class ReactAgentV3(SimpleAgentV3):
             # For now, use basic hook registration from SimpleAgentV3
             # The specific ReAct hook events can be added later when HookEvent is
             # extended
-            if hasattr(self,
-                       "hooks_enabled") and self.hooks_enabled and self.debug:
-                logger.debug(
-                    "ReAct hooks would be registered here (placeholder)")
+            if hasattr(self, "hooks_enabled") and self.hooks_enabled and self.debug:
+                logger.debug("ReAct hooks would be registered here (placeholder)")
 
         except Exception as e:
             if self.debug:
@@ -485,9 +482,8 @@ class ReactAgentV3(SimpleAgentV3):
         """
         if self.debug:
             logger.debug(
-                f"Building ReAct graph for '{
-                    self.name}' with max_iterations={
-                    self.max_iterations}", )
+                f"Building ReAct graph for '{self.name}' with max_iterations={self.max_iterations}",
+            )
 
         # Start with SimpleAgentV3's enhanced graph
         graph = super().build_graph()
@@ -590,8 +586,8 @@ class ReactAgentV3(SimpleAgentV3):
         """
         return bool(
             getattr(self, "structured_output_model", None)
-            or (self.engine
-                and getattr(self.engine, "structured_output_model", None)), )
+            or (self.engine and getattr(self.engine, "structured_output_model", None)),
+        )
 
     def run(self, input_data: Any, debug: bool | None = None, **kwargs) -> Any:
         """Execute ReactAgent with iterative reasoning loops and structured
@@ -773,8 +769,7 @@ class ReactAgentV3(SimpleAgentV3):
         Args:
             step: Description of the reasoning step being performed
         """
-        self.reasoning_trace.append(
-            f"Step {len(self.reasoning_trace) + 1}: {step}")
+        self.reasoning_trace.append(f"Step {len(self.reasoning_trace) + 1}: {step}")
         if self.debug:
             logger.debug(f"[{self.name}] Reasoning: {step}")
 
@@ -898,8 +893,7 @@ def create_react_agent(
     """
     # Validate inputs
     if not tools:
-        raise ValueError(
-            "ReAct agents require at least one tool for the acting phase")
+        raise ValueError("ReAct agents require at least one tool for the acting phase")
 
     if max_iterations < 1 or max_iterations > 50:
         raise ValueError("max_iterations must be between 1 and 50")
@@ -923,9 +917,11 @@ def create_react_agent(
 
     if debug:
         logger.info(
-            f"Created ReactAgentV3 '{name}' with {
-                len(tools)} tools, " f"max_iterations={max_iterations}, structured_output={
-                structured_output_model is not None}", )
+            f"Created ReactAgentV3 '{name}' with {len(tools)} tools, "
+            f"max_iterations={max_iterations}, structured_output={
+                structured_output_model is not None
+            }",
+        )
 
     return agent
 

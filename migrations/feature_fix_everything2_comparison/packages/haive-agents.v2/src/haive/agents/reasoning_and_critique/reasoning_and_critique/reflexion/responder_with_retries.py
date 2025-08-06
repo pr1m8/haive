@@ -51,27 +51,28 @@ class ResponderWithRetries:
             try:
                 self.validator.invoke(response)
                 if self.name == "revisof":
-                    return Command(update={
-                        "messages": response,
-                        "reflections_count": reflections_count + 1,
-                    }, )
+                    return Command(
+                        update={
+                            "messages": response,
+                            "reflections_count": reflections_count + 1,
+                        },
+                    )
                 return Command(update={"messages": response})
             except ValidationError as e:
                 response = [
                     response,
                     ToolMessage(
-                        content=f"{
-                            e!r}\n\nPay close attention to the function schema.\n\n" +
-                        json.dumps(
-                            self.validator.schema(),
-                            indent=2) +
-                        "\nRespond by fixing all validation errors.",
+                        content=f"{e!r}\n\nPay close attention to the function schema.\n\n"
+                        + json.dumps(self.validator.schema(), indent=2)
+                        + "\nRespond by fixing all validation errors.",
                         tool_call_id=response.tool_calls[0]["id"],
                     ),
                 ]
         if self.name == "revisof":
-            return Command(update={
-                "messages": response,
-                "reflections_count": reflections_count + 1,
-            }, )
+            return Command(
+                update={
+                    "messages": response,
+                    "reflections_count": reflections_count + 1,
+                },
+            )
         return Command(update={"messages": response})

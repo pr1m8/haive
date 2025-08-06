@@ -234,11 +234,12 @@ def run_batch_problems(
 def example_advanced_configuration():
     """Example showing advanced configuration of the SelfDiscover agent."""
     # Custom prompts for each stage
-    select_prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are an expert problem solver."),
-        (
-            "human",
-            """Look at the problem below and select the 3-5 most appropriate reasoning techniques from the available options.
+    select_prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", "You are an expert problem solver."),
+            (
+                "human",
+                """Look at the problem below and select the 3-5 most appropriate reasoning techniques from the available options.
         Choose only techniques that will directly contribute to solving this specific problem.
 
         Available reasoning techniques:
@@ -249,14 +250,16 @@ def example_advanced_configuration():
 
         Selected reasoning techniques (list only the numbers of your chosen techniques):
         """,
-        ),
-    ], )
+            ),
+        ],
+    )
 
-    adapt_prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are an expert problem solver."),
-        (
-            "human",
-            """Customize these selected reasoning techniques specifically for the problem at hand:
+    adapt_prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", "You are an expert problem solver."),
+            (
+                "human",
+                """Customize these selected reasoning techniques specifically for the problem at hand:
 
         Selected techniques:
         {selected_modules}
@@ -266,14 +269,16 @@ def example_advanced_configuration():
 
         For each technique, provide a customized version that addresses the specific challenges of this problem:
         """,
-        ),
-    ], )
+            ),
+        ],
+    )
 
-    structure_prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are an expert problem solver."),
-        (
-            "human",
-            """Create a structured reasoning plan as a JSON object to solve this problem.
+    structure_prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", "You are an expert problem solver."),
+            (
+                "human",
+                """Create a structured reasoning plan as a JSON object to solve this problem.
         Your JSON should contain keys for each step of analysis, with explanations for what needs to be determined at each step.
         Do NOT solve the problem yet - only create the plan framework.
 
@@ -285,14 +290,16 @@ def example_advanced_configuration():
 
         JSON reasoning plan structure:
         """,
-        ),
-    ], )
+            ),
+        ],
+    )
 
-    reasoning_prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are an expert problem solver."),
-        (
-            "human",
-            """
+    reasoning_prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", "You are an expert problem solver."),
+            (
+                "human",
+                """
         Follow this reasoning structure to methodically solve the problem.
         Fill in each component of the structure with your actual reasoning and calculations.
 
@@ -304,8 +311,9 @@ def example_advanced_configuration():
 
         Complete solution with all reasoning steps:
         """,
-        ),
-    ], )
+            ),
+        ],
+    )
 
     # Custom set of reasoning modules
     reasoning_modules = [
@@ -372,8 +380,7 @@ def analyze_reasoning_process(
         if result.get("error"):
             analysis["failed_problems"] += 1
             error = result.get("error")
-            analysis["common_errors"][error] = analysis["common_errors"].get(
-                error, 0) + 1
+            analysis["common_errors"][error] = analysis["common_errors"].get(error, 0) + 1
         else:
             analysis["successful_problems"] += 1
 
@@ -384,16 +391,13 @@ def analyze_reasoning_process(
 
             module_numbers = re.findall(r"(\d+)\.", selected)
             for num in module_numbers:
-                analysis["module_usage"][num] = analysis["module_usage"].get(
-                    num, 0) + 1
+                analysis["module_usage"][num] = analysis["module_usage"].get(num, 0) + 1
 
     # Calculate module usage percentages
     for module, count in analysis["module_usage"].items():
         analysis["module_usage"][module] = {
-            "count":
-            count,
-            "percentage":
-            round((count / analysis["successful_problems"]) * 100, 2),
+            "count": count,
+            "percentage": round((count / analysis["successful_problems"]) * 100, 2),
         }
 
     # Sort modules by usage
@@ -410,9 +414,9 @@ def analyze_reasoning_process(
 
     if analysis["common_errors"]:
         for error, count in sorted(
-                analysis["common_errors"].items(),
-                key=lambda x: x[1],
-                reverse=True,
+            analysis["common_errors"].items(),
+            key=lambda x: x[1],
+            reverse=True,
         )[:3]:
             pass
 

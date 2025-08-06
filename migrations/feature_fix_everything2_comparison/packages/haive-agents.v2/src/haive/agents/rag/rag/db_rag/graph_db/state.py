@@ -42,8 +42,7 @@ class InputState(BaseModel):
         Who directed The Matrix?
     """
 
-    question: str = Field(
-        description="The user's question in natural language")
+    question: str = Field(description="The user's question in natural language")
 
 
 class OutputState(BaseModel):

@@ -25,14 +25,10 @@ def example_twitter_thread() -> None:
     thread = SocialMediaConversation.create_twitter_thread(
         topic="🚀 Just shipped our new AI framework! It's 10x faster than before. AMA!",
         personas={
-            "TechInfluencer":
-            "popular tech influencer with 100k followers, loves new tech",
-            "DevNewbie":
-            "curious junior developer learning about AI",
-            "AISkeptic":
-            "concerned about AI safety and performance claims",
-            "StartupFounder":
-            "fellow startup founder interested in the tech stack",
+            "TechInfluencer": "popular tech influencer with 100k followers, loves new tech",
+            "DevNewbie": "curious junior developer learning about AI",
+            "AISkeptic": "concerned about AI safety and performance claims",
+            "StartupFounder": "fellow startup founder interested in the tech stack",
         },
         viral_threshold=8,
         max_rounds=10,
@@ -89,7 +85,8 @@ def example_instagram_discussion() -> None:
                     f"You are @{name}, {persona}. "
                     "Post Instagram-style with emojis and positivity. "
                     "Can use #hashtags. Keep it visual and inspiring. "
-                    "Engage with others' posts."),
+                    "Engage with others' posts."
+                ),
                 temperature=0.8,
                 max_tokens=150,
             ),
@@ -139,7 +136,8 @@ def example_tiktok_comments() -> None:
                     f"You are @{name}, {persona}. "
                     "Comment in TikTok style: short, trendy, lots of emojis. "
                     "Use popular phrases and keep it under 150 chars. "
-                    "Can reply to others with @mentions."),
+                    "Can reply to others with @mentions."
+                ),
                 temperature=0.9,
                 max_tokens=50,
             ),
@@ -177,7 +175,8 @@ def example_linkedin_professional() -> None:
                 name="leader_engine",
                 system_message=(
                     "You are a LinkedIn thought leader. Post insights about leadership and innovation. "
-                    "Use professional tone with some emojis. Share actionable advice."),
+                    "Use professional tone with some emojis. Share actionable advice."
+                ),
                 temperature=0.7,
             ),
         ),
@@ -187,7 +186,8 @@ def example_linkedin_professional() -> None:
                 name="recruiter_engine",
                 system_message=(
                     "You are a tech recruiter. Engage about hiring trends and talent. "
-                    "Professional but approachable. Can mention job opportunities."),
+                    "Professional but approachable. Can mention job opportunities."
+                ),
                 temperature=0.7,
             ),
         ),
@@ -197,7 +197,8 @@ def example_linkedin_professional() -> None:
                 name="engineer_engine",
                 system_message=(
                     "You are a senior engineer. Share technical insights and career advice. "
-                    "Be helpful and mentor-like in responses."),
+                    "Be helpful and mentor-like in responses."
+                ),
                 temperature=0.6,
             ),
         ),
@@ -207,7 +208,8 @@ def example_linkedin_professional() -> None:
                 name="student_engine",
                 system_message=(
                     "You are a CS student looking for opportunities. "
-                    "Ask questions and engage genuinely. Show enthusiasm."),
+                    "Ask questions and engage genuinely. Show enthusiasm."
+                ),
                 temperature=0.8,
             ),
         ),

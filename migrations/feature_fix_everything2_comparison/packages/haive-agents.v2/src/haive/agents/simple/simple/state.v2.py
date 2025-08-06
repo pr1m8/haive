@@ -76,8 +76,7 @@ class SimpleAgentState(StateSchema):
             return None
 
         last_message = self.messages[-1]
-        return last_message.content if hasattr(last_message,
-                                               "content") else None
+        return last_message.content if hasattr(last_message, "content") else None
 
     @classmethod
     def with_messages(cls, messages: list[BaseMessage]) -> "SimpleAgentState":

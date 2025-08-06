@@ -42,26 +42,21 @@ class AgentProtocol(Protocol):
     _disable_checkpointing: bool
 
     # Methods from Agent
-    def compile(self, **kwargs) -> "CompiledGraph":
-        ...
+    def compile(self, **kwargs) -> "CompiledGraph": ...
 
-    def save_state_history(self, config: RunnableConfig) -> None:
-        ...
+    def save_state_history(self, config: RunnableConfig) -> None: ...
 
     # Methods from ExecutionMixin itself
-    def _prepare_input(self, input_data: Any) -> Any:
-        ...
+    def _prepare_input(self, input_data: Any) -> Any: ...
 
     def _prepare_runnable_config(
         self,
         thread_id: str | None = None,
         config: RunnableConfig | None = None,
         **kwargs,
-    ) -> RunnableConfig:
-        ...
+    ) -> RunnableConfig: ...
 
-    def _process_output(self, output_data: Any) -> Any:
-        ...
+    def _process_output(self, output_data: Any) -> Any: ...
 
     def run(
         self,
@@ -70,8 +65,7 @@ class AgentProtocol(Protocol):
         debug: bool | None = None,
         config: RunnableConfig | None = None,
         **kwargs,
-    ) -> Any:
-        ...
+    ) -> Any: ...
 
     async def arun(
         self,
@@ -80,8 +74,7 @@ class AgentProtocol(Protocol):
         config: RunnableConfig | None = None,
         debug: bool | None = None,
         **kwargs,
-    ) -> Any:
-        ...
+    ) -> Any: ...
 
     def stream(
         self,
@@ -91,8 +84,7 @@ class AgentProtocol(Protocol):
         config: RunnableConfig | None = None,
         debug: bool | None = None,
         **kwargs,
-    ) -> Generator[dict[str, Any], None, None]:
-        ...
+    ) -> Generator[dict[str, Any], None, None]: ...
 
     async def astream(
         self,
@@ -102,9 +94,6 @@ class AgentProtocol(Protocol):
         config: RunnableConfig | None = None,
         debug: bool | None = None,
         **kwargs,
-    ) -> AsyncGenerator[dict[str, Any], None]:
-        ...
+    ) -> AsyncGenerator[dict[str, Any], None]: ...
 
-    def _process_stream_chunk(self, chunk: Any,
-                              stream_mode: str) -> dict[str, Any]:
-        ...
+    def _process_stream_chunk(self, chunk: Any, stream_mode: str) -> dict[str, Any]: ...

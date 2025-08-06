@@ -114,8 +114,7 @@ class NodeConfig(BaseModel):
 
     # Node type specific options
     # Tool node options
-    tools: list[Any] | None = Field(default=None,
-                                    description="Tools for tool nodes")
+    tools: list[Any] | None = Field(default=None, description="Tools for tool nodes")
     messages_field: str | None = Field(
         default="messages",
         description="Field containing messages for tool/validation nodes",
@@ -166,10 +165,7 @@ class NodeConfig(BaseModel):
         description="Additional metadata for this node",
     )
 
-    model_config = {
-        "arbitrary_types_allowed": True,
-        "validate_assignment": True
-    }
+    model_config = {"arbitrary_types_allowed": True, "validate_assignment": True}
 
     def to_dict(self) -> dict[str, Any]:
         """Convert this node config to a dictionary representation.
@@ -178,8 +174,7 @@ class NodeConfig(BaseModel):
             Dictionary representation of this node config
         """
         # Use model_dump for serialization
-        data = self.model_dump(
-            exclude={"engine", "callable_func", "condition"})
+        data = self.model_dump(exclude={"engine", "callable_func", "condition"})
 
         # Handle engine reference
         if self.engine:
@@ -196,21 +191,15 @@ class NodeConfig(BaseModel):
         # Handle specific fields that need serialization
         # Add state_schema class name if present
         if self.state_schema:
-            data["state_schema"] = f"{
-                self.state_schema.__module__}.{
-                self.state_schema.__name__}"
+            data["state_schema"] = f"{self.state_schema.__module__}.{self.state_schema.__name__}"
 
         # Add input_schema class name if present
         if self.input_schema:
-            data["input_schema"] = f"{
-                self.input_schema.__module__}.{
-                self.input_schema.__name__}"
+            data["input_schema"] = f"{self.input_schema.__module__}.{self.input_schema.__name__}"
 
         # Add output_schema class name if present
         if self.output_schema:
-            data["output_schema"] = f"{
-                self.output_schema.__module__}.{
-                self.output_schema.__name__}"
+            data["output_schema"] = f"{self.output_schema.__module__}.{self.output_schema.__name__}"
 
         # Convert CommandGoto.END to string representation
         if self.command_goto == END:
@@ -229,13 +218,17 @@ class NodeConfig(BaseModel):
             self.command_goto = END
 
         # Ensure at least one execution target is set
-        if (self.engine is None and self.engine_name is None
-                and self.callable_func is None and self.tools is None
-                and self.schemas is None
-                # and self.node_type is not NodeType.VALIDATION
-                ):
+        if (
+            self.engine is None
+            and self.engine_name is None
+            and self.callable_func is None
+            and self.tools is None
+            and self.schemas is None
+            # and self.node_type is not NodeType.VALIDATION
+        ):
             raise ValueError(
-                "At least one of engine, engine_name, tools,schemas or callable_func must be set", )
+                "At least one of engine, engine_name, tools,schemas or callable_func must be set",
+            )
 
         # Convert input_fields and output_fields to dictionaries if they're
         # lists
@@ -279,8 +272,7 @@ class NodeConfig(BaseModel):
                 if not self.output_schema:
                     self.output_schema = schema.create_output_schema()
             except Exception as e:
-                logger.warning(
-                    f"Could not auto-generate schema from engine: {e}")
+                logger.warning(f"Could not auto-generate schema from engine: {e}")
 
         # Extract input/output mappings from engine I/O schema if they exist
         if self.engine and not self.input_fields and not self.output_fields:
@@ -301,22 +293,15 @@ class NodeConfig(BaseModel):
                         if "inputs" in mapping and not self.input_fields:
                             input_fields = mapping["inputs"]
                             # Create identity mapping
-                            self.input_fields = {
-                                field: field
-                                for field in input_fields
-                            }
+                            self.input_fields = {field: field for field in input_fields}
 
                         # Extract output fields
                         if "outputs" in mapping and not self.output_fields:
                             output_fields = mapping["outputs"]
                             # Create identity mapping
-                            self.output_fields = {
-                                field: field
-                                for field in output_fields
-                            }
+                            self.output_fields = {field: field for field in output_fields}
             except Exception as e:
-                logger.warning(
-                    f"Could not extract I/O mappings from schema: {e}")
+                logger.warning(f"Could not extract I/O mappings from schema: {e}")
 
         return self
 
@@ -347,8 +332,8 @@ class NodeConfig(BaseModel):
                 return engine, engine_id
         except ImportError:
             logger.warning(
-                f"Could not import EngineRegistry to resolve engine: {
-                    self.engine_name}", )
+                f"Could not import EngineRegistry to resolve engine: {self.engine_name}",
+            )
 
         # Not found - return None
         return None, None

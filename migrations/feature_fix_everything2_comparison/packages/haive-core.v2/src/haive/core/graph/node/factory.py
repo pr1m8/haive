@@ -61,8 +61,7 @@ class NodeFactory:
         if isinstance(engine, InvokableEngine):
             return cls._create_invokable_engine_node(config, engine, engine_id)
         if isinstance(engine, NonInvokableEngine):
-            return cls._create_non_invokable_engine_node(
-                config, engine, engine_id)
+            return cls._create_non_invokable_engine_node(config, engine, engine_id)
         if callable(engine):
             return cls._create_callable_node(config, engine)
         return cls._create_generic_node(config, engine)
@@ -90,17 +89,14 @@ class NodeFactory:
         output_mapping = config.get_output_mapping()
 
         # Get engine-specific ID or name for lookup
-        engine_id = engine_id or getattr(engine, "name", None) or getattr(
-            engine, "id", None)
+        engine_id = engine_id or getattr(engine, "name", None) or getattr(engine, "id", None)
 
-        def node_function(state: dict[str, Any],
-                          config: dict[str, Any] | None = None):
+        def node_function(state: dict[str, Any], config: dict[str, Any] | None = None):
             """Node function that uses engine's invoke method."""
             try:
                 # Extract input from state using the fixed _extract_input
                 # method
-                input_data = cls._extract_input(state, input_mapping,
-                                                engine_id)
+                input_data = cls._extract_input(state, input_mapping, engine_id)
                 # Create a fresh runnable with appropriate config
                 runnable = engine.create_runnable()
 
@@ -113,10 +109,8 @@ class NodeFactory:
                 processed_output = cls._process_output(result, output_mapping)
 
                 # Handle structured output models (special case)
-                if hasattr(engine, "structured_output_model"
-                           ) and engine.structured_output_model:
-                    model_name = engine.structured_output_model.__name__.lower(
-                    )
+                if hasattr(engine, "structured_output_model") and engine.structured_output_model:
+                    model_name = engine.structured_output_model.__name__.lower()
                     # If result is the model instance, ensure it's correctly
                     # mapped
                     if isinstance(result, engine.structured_output_model):
@@ -128,7 +122,8 @@ class NodeFactory:
                 return Command(update=processed_output, goto=command_goto)
             except Exception as e:
                 logger.exception(
-                    f"Error in node {engine_id or 'unknown'}: {e}", )
+                    f"Error in node {engine_id or 'unknown'}: {e}",
+                )
                 return Command(update={"error": str(e)}, goto=command_goto)
 
         # Add metadata
@@ -168,8 +163,7 @@ class NodeFactory:
             output_fields = config.output_schema.model_fields.keys()
             output_mapping = {field: field for field in output_fields}
 
-        def node_function(state: dict[str, Any],
-                          config: dict[str, Any] | None = None):
+        def node_function(state: dict[str, Any], config: dict[str, Any] | None = None):
             """Node function that instantiates the engine."""
             try:
                 # Extract input from state
@@ -184,8 +178,7 @@ class NodeFactory:
                     mapped_output = {}
                     for output_key, state_key in output_mapping.items():
                         if output_key in processed_output:
-                            mapped_output[state_key] = processed_output[
-                                output_key]
+                            mapped_output[state_key] = processed_output[output_key]
                     if mapped_output:
                         processed_output = mapped_output
 
@@ -203,8 +196,7 @@ class NodeFactory:
         return node_function
 
     @classmethod
-    def _create_callable_node(cls, config: NodeConfig,
-                              func: Callable) -> Callable:
+    def _create_callable_node(cls, config: NodeConfig, func: Callable) -> Callable:
         """Create a node function from a callable.
 
         Args:
@@ -240,8 +232,7 @@ class NodeFactory:
             # Can't inspect signature - assume no config
             pass
 
-        def node_function(state: dict[str, Any],
-                          config: dict[str, Any] | None = None):
+        def node_function(state: dict[str, Any], config: dict[str, Any] | None = None):
             """Node function for callable."""
             try:
                 # Extract input from state
@@ -252,8 +243,7 @@ class NodeFactory:
                     if is_async:
                         # Run async function in event loop
                         loop = asyncio.get_event_loop()
-                        result = loop.run_until_complete(
-                            func(input_data, config))
+                        result = loop.run_until_complete(func(input_data, config))
                     else:
                         result = func(input_data, config)
                 elif is_async:
@@ -264,9 +254,9 @@ class NodeFactory:
                     result = func(input_data)
 
                 # Handle result that's already a Command or Send
-                if isinstance(result, Command
-                              | Send) or (isinstance(result, list) and all(
-                                  isinstance(item, Send) for item in result)):
+                if isinstance(result, Command | Send) or (
+                    isinstance(result, list) and all(isinstance(item, Send) for item in result)
+                ):
                     return result
 
                 # Process output
@@ -294,15 +284,13 @@ class NodeFactory:
                         result = await func(input_data)
 
                     # Handle result that's already a Command or Send
-                    if isinstance(result, Command
-                                  | Send) or (isinstance(result, list) and all(
-                                      isinstance(item, Send)
-                                      for item in result)):
+                    if isinstance(result, Command | Send) or (
+                        isinstance(result, list) and all(isinstance(item, Send) for item in result)
+                    ):
                         return result
 
                     # Process output
-                    processed_output = cls._process_output(
-                        result, output_mapping)
+                    processed_output = cls._process_output(result, output_mapping)
 
                     # Return with Command for routing
                     return Command(update=processed_output, goto=command_goto)
@@ -353,8 +341,7 @@ class NodeFactory:
             output_fields = config.output_schema.model_fields.keys()
             output_mapping = {field: field for field in output_fields}
 
-        def node_function(state: dict[str, Any],
-                          config: dict[str, Any] | None = None):
+        def node_function(state: dict[str, Any], config: dict[str, Any] | None = None):
             """Node function for tool node."""
             try:
                 # Extract input from state
@@ -364,12 +351,15 @@ class NodeFactory:
                 result = tool_node.invoke(input_data, config)
 
                 # If result is already a Command or Send, return it
-                if isinstance(result, Command
-                              | Send) or (isinstance(result, list) and all(
-                                  isinstance(item, Send) for item in result)):
+                if isinstance(result, Command | Send) or (
+                    isinstance(result, list) and all(isinstance(item, Send) for item in result)
+                ):
                     # If Command but no goto, add our goto
-                    if (isinstance(result, Command) and result.goto is None
-                            and command_goto is not None):
+                    if (
+                        isinstance(result, Command)
+                        and result.goto is None
+                        and command_goto is not None
+                    ):
                         return Command(
                             update=result.update,
                             goto=command_goto,
@@ -400,13 +390,15 @@ class NodeFactory:
                     result = await tool_node.ainvoke(input_data, config)
 
                     # If result is already a Command or Send, return it
-                    if isinstance(result, Command
-                                  | Send) or (isinstance(result, list) and all(
-                                      isinstance(item, Send)
-                                      for item in result)):
+                    if isinstance(result, Command | Send) or (
+                        isinstance(result, list) and all(isinstance(item, Send) for item in result)
+                    ):
                         # If Command but no goto, add our goto
-                        if (isinstance(result, Command) and result.goto is None
-                                and command_goto is not None):
+                        if (
+                            isinstance(result, Command)
+                            and result.goto is None
+                            and command_goto is not None
+                        ):
                             return Command(
                                 update=result.update,
                                 goto=command_goto,
@@ -416,8 +408,7 @@ class NodeFactory:
                         return result
 
                     # Process output
-                    processed_output = cls._process_output(
-                        result, output_mapping)
+                    processed_output = cls._process_output(result, output_mapping)
 
                     # Return with Command for routing
                     return Command(update=processed_output, goto=command_goto)
@@ -467,8 +458,7 @@ class NodeFactory:
             output_fields = config.output_schema.model_fields.keys()
             output_mapping = {field: field for field in output_fields}
 
-        def node_function(state: dict[str, Any],
-                          config: dict[str, Any] | None = None):
+        def node_function(state: dict[str, Any], config: dict[str, Any] | None = None):
             """Node function for validation node."""
             try:
                 # Extract input from state
@@ -478,12 +468,15 @@ class NodeFactory:
                 result = validation_node.invoke(input_data, config)
 
                 # If result is already a Command or Send, return it
-                if isinstance(result, Command
-                              | Send) or (isinstance(result, list) and all(
-                                  isinstance(item, Send) for item in result)):
+                if isinstance(result, Command | Send) or (
+                    isinstance(result, list) and all(isinstance(item, Send) for item in result)
+                ):
                     # If Command but no goto, add our goto
-                    if (isinstance(result, Command) and result.goto is None
-                            and command_goto is not None):
+                    if (
+                        isinstance(result, Command)
+                        and result.goto is None
+                        and command_goto is not None
+                    ):
                         return Command(
                             update=result.update,
                             goto=command_goto,
@@ -528,8 +521,7 @@ class NodeFactory:
                 raise ValueError(f"Could not resolve condition function: {e}")
 
         if not condition or not config.routes:
-            raise ValueError(
-                "Branch node requires condition function and routes")
+            raise ValueError("Branch node requires condition function and routes")
 
         # Core info
         input_mapping = config.get_input_mapping()
@@ -540,8 +532,7 @@ class NodeFactory:
             input_fields = config.input_schema.model_fields.keys()
             input_mapping = {field: field for field in input_fields}
 
-        def node_function(state: dict[str, Any],
-                          config: dict[str, Any] | None = None):
+        def node_function(state: dict[str, Any], config: dict[str, Any] | None = None):
             """Node function for branch node."""
             try:
                 # Extract input from state
@@ -599,8 +590,7 @@ class NodeFactory:
             input_fields = config.input_schema.model_fields.keys()
             input_mapping = {field: field for field in input_fields}
 
-        def node_function(state: dict[str, Any],
-                          config: dict[str, Any] | None = None):
+        def node_function(state: dict[str, Any], config: dict[str, Any] | None = None):
             """Node function for send node."""
             try:
                 # Extract input from state
@@ -609,9 +599,7 @@ class NodeFactory:
                 # Get items to distribute
                 if not send_field:
                     # Just send the entire input to each target
-                    return [
-                        Send(target, input_data) for target in send_targets
-                    ]
+                    return [Send(target, input_data) for target in send_targets]
 
                 # Extract the field to distribute
                 items = None
@@ -621,8 +609,7 @@ class NodeFactory:
                     items = getattr(input_data, send_field)
 
                 if items is None:
-                    logger.warning(
-                        f"Send field '{send_field}' not found in state")
+                    logger.warning(f"Send field '{send_field}' not found in state")
                     # Return empty update to END
                     return Command(goto=END)
 
@@ -677,8 +664,7 @@ class NodeFactory:
             output_fields = config.output_schema.model_fields.keys()
             output_mapping = {field: field for field in output_fields}
 
-        def node_function(state: dict[str, Any],
-                          config: dict[str, Any] | None = None):
+        def node_function(state: dict[str, Any], config: dict[str, Any] | None = None):
             """Node function for generic object."""
             try:
                 # Just return the object as result
@@ -720,8 +706,7 @@ class NodeFactory:
             # First check if state has I/O mappings
             state_io_mappings = None
             if hasattr(state, "__engine_io_mappings__"):
-                state_io_mappings = getattr(state, "__engine_io_mappings__",
-                                            {})
+                state_io_mappings = getattr(state, "__engine_io_mappings__", {})
             elif isinstance(state, dict) and "__engine_io_mappings__" in state:
                 state_io_mappings = state["__engine_io_mappings__"]
 

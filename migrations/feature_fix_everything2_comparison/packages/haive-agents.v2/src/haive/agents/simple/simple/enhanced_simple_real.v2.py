@@ -12,6 +12,7 @@ Functions:
     build_graph: Build Graph functionality.
     arun: Arun functionality.
 """
+
 # src/haive/agents/simple/enhanced_simple_real.py
 """Enhanced SimpleAgent - Real implementation using Agent[AugLLMConfig].
 
@@ -98,8 +99,7 @@ class SimpleAgent(EnhancedAgentBase):
             )
         elif not isinstance(values["engine"], AugLLMConfig):
             # Convert to AugLLMConfig if needed
-            logger.warning(
-                "SimpleAgent requires AugLLMConfig engine, converting...")
+            logger.warning("SimpleAgent requires AugLLMConfig engine, converting...")
             values["engine"] = AugLLMConfig()
 
         return values
@@ -152,10 +152,7 @@ class SimpleAgent(EnhancedAgentBase):
             graph.add_conditional_edges(
                 "agent",
                 check_tools,
-                {
-                    "tools": "tools",
-                    "end": END
-                },
+                {"tools": "tools", "end": END},
             )
             graph.add_edge("tools", END)
         else:

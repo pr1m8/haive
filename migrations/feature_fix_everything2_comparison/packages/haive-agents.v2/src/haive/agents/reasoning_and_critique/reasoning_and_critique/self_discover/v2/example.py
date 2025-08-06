@@ -14,7 +14,7 @@ Functions:
 def run_self_discovery_example() -> None:
     """Run the self-discovery agent on example tasks."""
     # Example 1: Simple math problem
-    task1 = 'Lisa has 10 apples. She gives 3 apples to her friend and then buys 5 more apples from the store. How many apples does Lisa have now?'
+    task1 = "Lisa has 10 apples. She gives 3 apples to her friend and then buys 5 more apples from the store. How many apples does Lisa have now?"
 
     # Example 2: SVG shape identification
     task2 = """This SVG path element <path d="M 55.57,80.69 L 57.38,65.80 M 57.38,65.80 L 48.90,57.46 M 48.90,57.46 L
@@ -22,7 +22,7 @@ def run_self_discovery_example() -> None:
 (A) circle (B) heptagon (C) hexagon (D) kite (E) line (F) octagon (G) pentagon (H) rectangle (I) sector (J) triangle"""
 
     # Prepare reasoning modules string
-    reasoning_modules_str = '\n'.join(DEFAULT_REASONING_MODULES)
+    reasoning_modules_str = "\n".join(DEFAULT_REASONING_MODULES)
 
     # Run on first task
 
@@ -56,11 +56,10 @@ def run_self_discovery_example() -> None:
         pass
 
 
-def run_custom_task(task_description: str,
-                    custom_modules: list[str] | None = None):
+def run_custom_task(task_description: str, custom_modules: list[str] | None = None):
     """Run self-discovery on a custom task."""
     modules = custom_modules or DEFAULT_REASONING_MODULES
-    reasoning_modules_str = '\n'.join(modules)
+    reasoning_modules_str = "\n".join(modules)
 
     state = SelfDiscoveryState(
         task_description=task_description,
@@ -72,5 +71,5 @@ def run_custom_task(task_description: str,
     return result
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     run_self_discovery_example()

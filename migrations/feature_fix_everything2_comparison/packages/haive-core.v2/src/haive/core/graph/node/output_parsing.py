@@ -62,29 +62,26 @@ class OutputParserNodeConfig(ParserNodeConfig):
         description="Whether tool information is required (False for output parsing)",
     )
 
-    def __call__(self,
-                 state: StateLike,
-                 config: ConfigLike | None = None) -> Command:
+    def __call__(self, state: StateLike, config: ConfigLike | None = None) -> Command:
         """Parse the last message content using the output parser."""
         # Ensure we have a valid command_goto
         goto_node = self.command_goto or self.agent_node
 
         # Get messages from state
-        messages = (getattr(state, self.messages_key,
-                            state.get(self.messages_key, [])) if hasattr(
-                                state, "get") else getattr(
-                                    state, self.messages_key, []))
+        messages = (
+            getattr(state, self.messages_key, state.get(self.messages_key, []))
+            if hasattr(state, "get")
+            else getattr(state, self.messages_key, [])
+        )
 
         logger.debug(f"OutputParserNode processing {len(messages)} messages")
 
         if not messages:
             logger.warning(
-                f"No messages found in state key '{self.messages_key}'", )
+                f"No messages found in state key '{self.messages_key}'",
+            )
             return Command(
-                update={
-                    self.output_key: None,
-                    "parse_error": "No messages found"
-                },
+                update={self.output_key: None, "parse_error": "No messages found"},
                 goto=goto_node,
             )
 
@@ -101,10 +98,8 @@ class OutputParserNodeConfig(ParserNodeConfig):
                 )
                 return Command(
                     update={
-                        self.output_key:
-                        None,
-                        "parse_error":
-                        f"Invalid message type: {type(last_message)}",
+                        self.output_key: None,
+                        "parse_error": f"Invalid message type: {type(last_message)}",
                     },
                     goto=goto_node,
                 )
@@ -116,8 +111,8 @@ class OutputParserNodeConfig(ParserNodeConfig):
                 update_dict = {self.output_key: parsed_result}
 
                 logger.info(
-                    f"Successfully parsed output using {
-                        self.output_parser.__class__.__name__}", )
+                    f"Successfully parsed output using {self.output_parser.__class__.__name__}",
+                )
                 return Command(update=update_dict, goto=goto_node)
 
             except Exception as parse_error:
@@ -288,8 +283,7 @@ def detect_output_parser_need(agent: Any) -> bool:
     return hasattr(agent, "output_parser") and agent.output_parser is not None
 
 
-def create_output_parser_node_for_agent(
-        agent: Any) -> OutputParserNodeConfig | None:
+def create_output_parser_node_for_agent(agent: Any) -> OutputParserNodeConfig | None:
     """Create an output parser node config for an agent if needed.
 
     Args:

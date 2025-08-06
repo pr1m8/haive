@@ -38,12 +38,12 @@ class RAGModuleType(str, Enum):
         RESPONSE_SYNTHESIS: Final response synthesis module.
     """
 
-    QUERY_EXPANSION = 'query_expansion'
-    DOCUMENT_FILTERING = 'document_filtering'
-    CONTEXT_RANKING = 'context_ranking'
-    ANSWER_GENERATION = 'answer_generation'
-    ANSWER_VERIFICATION = 'answer_verification'
-    RESPONSE_SYNTHESIS = 'response_synthesis'
+    QUERY_EXPANSION = "query_expansion"
+    DOCUMENT_FILTERING = "document_filtering"
+    CONTEXT_RANKING = "context_ranking"
+    ANSWER_GENERATION = "answer_generation"
+    ANSWER_VERIFICATION = "answer_verification"
+    RESPONSE_SYNTHESIS = "response_synthesis"
 
 
 class QueryType(str, Enum):
@@ -56,10 +56,10 @@ class QueryType(str, Enum):
         PROCEDURAL: Step-by-step procedure queries.
     """
 
-    FACTUAL = 'factual'
-    ANALYTICAL = 'analytical'
-    CREATIVE = 'creative'
-    PROCEDURAL = 'procedural'
+    FACTUAL = "factual"
+    ANALYTICAL = "analytical"
+    CREATIVE = "creative"
+    PROCEDURAL = "procedural"
 
 
 class ReActStep(str, Enum):
@@ -72,10 +72,10 @@ class ReActStep(str, Enum):
         REFLECTION: Reflection and evaluation step.
     """
 
-    THOUGHT = 'thought'
-    ACTION = 'action'
-    OBSERVATION = 'observation'
-    REFLECTION = 'reflection'
+    THOUGHT = "thought"
+    ACTION = "action"
+    OBSERVATION = "observation"
+    REFLECTION = "reflection"
 
 
 class MemoryType(str, Enum):
@@ -88,10 +88,10 @@ class MemoryType(str, Enum):
         SEMANTIC: Semantic knowledge memory.
     """
 
-    SHORT_TERM = 'short_term'
-    LONG_TERM = 'long_term'
-    EPISODIC = 'episodic'
-    SEMANTIC = 'semantic'
+    SHORT_TERM = "short_term"
+    LONG_TERM = "long_term"
+    EPISODIC = "episodic"
+    SEMANTIC = "semantic"
 
 
 class HyDEResult(BaseModel):
@@ -106,12 +106,9 @@ class HyDEResult(BaseModel):
         confidence (float): Confidence score in the hypothesis (0.0 to 1.0).
     """
 
-    hypothetical_doc: str = Field(
-        description='Generated hypothetical document')
-    refined_query: str = Field(description='Refined query for retrieval')
-    confidence: float = Field(ge=0.0,
-                              le=1.0,
-                              description='Confidence in hypothesis')
+    hypothetical_doc: str = Field(description="Generated hypothetical document")
+    refined_query: str = Field(description="Refined query for retrieval")
+    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in hypothesis")
 
 
 class FusionResult(BaseModel):
@@ -126,10 +123,9 @@ class FusionResult(BaseModel):
         ranking_method (str): Method used for ranking (e.g., "reciprocal_rank_fusion").
     """
 
-    fused_documents: list[str] = Field(
-        description='Documents ranked by fusion')
-    fusion_scores: list[float] = Field(description='Fusion scores')
-    ranking_method: str = Field(description='Method used for ranking')
+    fused_documents: list[str] = Field(description="Documents ranked by fusion")
+    fusion_scores: list[float] = Field(description="Fusion scores")
+    ranking_method: str = Field(description="Method used for ranking")
 
 
 class StepBackResult(BaseModel):
@@ -144,10 +140,9 @@ class StepBackResult(BaseModel):
         specific_answer (str): Specific answer to the original query.
     """
 
-    abstract_question: str = Field(description='High-level abstract question')
-    abstract_answer: str = Field(description='Answer to abstract question')
-    specific_answer: str = Field(
-        description='Specific answer to original query')
+    abstract_question: str = Field(description="High-level abstract question")
+    abstract_answer: str = Field(description="Answer to abstract question")
+    specific_answer: str = Field(description="Specific answer to original query")
 
 
 class SpeculativeResult(BaseModel):
@@ -162,10 +157,9 @@ class SpeculativeResult(BaseModel):
         final_answer (str): Answer based on verified hypotheses.
     """
 
-    hypotheses: list[str] = Field(description='Generated hypotheses')
-    verified_hypotheses: list[str] = Field(description='Verified hypotheses')
-    final_answer: str = Field(
-        description='Answer based on verified hypotheses')
+    hypotheses: list[str] = Field(description="Generated hypotheses")
+    verified_hypotheses: list[str] = Field(description="Verified hypotheses")
+    final_answer: str = Field(description="Answer based on verified hypotheses")
 
 
 class MemoryEntry(BaseModel):
@@ -182,16 +176,15 @@ class MemoryEntry(BaseModel):
         context_tags (List[str]): Tags for categorizing memory content.
     """
 
-    content: str = Field(description='Memory content')
-    memory_type: MemoryType = Field(description='Type of memory')
-    timestamp: str = Field(description='When this memory was created')
+    content: str = Field(description="Memory content")
+    memory_type: MemoryType = Field(description="Type of memory")
+    timestamp: str = Field(description="When this memory was created")
     relevance_score: float = Field(
         ge=0.0,
         le=1.0,
-        description='Relevance to current query',
+        description="Relevance to current query",
     )
-    context_tags: list[str] = Field(default_factory=list,
-                                    description='Context tags')
+    context_tags: list[str] = Field(default_factory=list, description="Context tags")
 
 
 class MemoryAnalysis(BaseModel):
@@ -207,13 +200,10 @@ class MemoryAnalysis(BaseModel):
         confidence (float): Overall memory confidence (0.0 to 1.0).
     """
 
-    relevant_memories: list[MemoryEntry] = Field(
-        description='Relevant memories found')
-    memory_gaps: list[str] = Field(description='Identified knowledge gaps')
-    temporal_context: str = Field(description='Temporal context of memories')
-    confidence: float = Field(ge=0.0,
-                              le=1.0,
-                              description='Overall memory confidence')
+    relevant_memories: list[MemoryEntry] = Field(description="Relevant memories found")
+    memory_gaps: list[str] = Field(description="Identified knowledge gaps")
+    temporal_context: str = Field(description="Temporal context of memories")
+    confidence: float = Field(ge=0.0, le=1.0, description="Overall memory confidence")
 
 
 class ReActStepResult(BaseModel):
@@ -229,13 +219,10 @@ class ReActStepResult(BaseModel):
         next_action (Optional[str]): Next action to take, if any.
     """
 
-    step_type: ReActStep = Field(description='Type of step')
-    content: str = Field(description='Step content')
-    confidence: float = Field(ge=0.0,
-                              le=1.0,
-                              description='Confidence in this step')
-    next_action: str | None = Field(default=None,
-                                    description='Next action to take')
+    step_type: ReActStep = Field(description="Type of step")
+    content: str = Field(description="Step content")
+    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in this step")
+    next_action: str | None = Field(default=None, description="Next action to take")
 
 
 class QueryClassification(BaseModel):
@@ -251,15 +238,13 @@ class QueryClassification(BaseModel):
         confidence (float): Classification confidence (0.0 to 1.0).
     """
 
-    primary_type: QueryType = Field(description='Primary query type')
+    primary_type: QueryType = Field(description="Primary query type")
     secondary_type: QueryType | None = Field(
         default=None,
-        description='Secondary type if applicable',
+        description="Secondary type if applicable",
     )
-    complexity: str = Field(description='Query complexity')
-    confidence: float = Field(ge=0.0,
-                              le=1.0,
-                              description='Classification confidence')
+    complexity: str = Field(description="Query complexity")
+    confidence: float = Field(ge=0.0, le=1.0, description="Classification confidence")
 
 
 class BranchResult(BaseModel):
@@ -275,12 +260,10 @@ class BranchResult(BaseModel):
         relevance_score (float): Relevance score for this branch (0.0 to 1.0).
     """
 
-    branch_type: str = Field(description='Type of branch')
-    retrieved_docs: list[str] = Field(description='Retrieved documents')
-    branch_answer: str = Field(description='Answer from this branch')
-    relevance_score: float = Field(ge=0.0,
-                                   le=1.0,
-                                   description='Relevance score')
+    branch_type: str = Field(description="Type of branch")
+    retrieved_docs: list[str] = Field(description="Retrieved documents")
+    branch_answer: str = Field(description="Answer from this branch")
+    relevance_score: float = Field(ge=0.0, le=1.0, description="Relevance score")
 
 
 class MergedResult(BaseModel):
@@ -296,13 +279,12 @@ class MergedResult(BaseModel):
         sources_used (List[str]): Sources used in the final answer.
     """
 
-    primary_answer: str = Field(description='Primary answer')
+    primary_answer: str = Field(description="Primary answer")
     supporting_evidence: list[str] = Field(
-        description='Supporting evidence from branches', )
-    confidence_score: float = Field(ge=0.0,
-                                    le=1.0,
-                                    description='Overall confidence')
-    sources_used: list[str] = Field(description='Sources used')
+        description="Supporting evidence from branches",
+    )
+    confidence_score: float = Field(ge=0.0, le=1.0, description="Overall confidence")
+    sources_used: list[str] = Field(description="Sources used")
 
 
 class EnhancedResponse(BaseModel):
@@ -319,16 +301,11 @@ class EnhancedResponse(BaseModel):
         confidence (float): Response confidence (0.0 to 1.0).
     """
 
-    answer: str = Field(description='Main answer')
-    reasoning_chain: list[ReActStepResult] = Field(
-        description='ReAct reasoning steps')
-    memory_used: list[MemoryEntry] = Field(
-        description='Memories used in response')
-    new_memories: list[MemoryEntry] = Field(
-        description='New memories to store')
-    confidence: float = Field(ge=0.0,
-                              le=1.0,
-                              description='Response confidence')
+    answer: str = Field(description="Main answer")
+    reasoning_chain: list[ReActStepResult] = Field(description="ReAct reasoning steps")
+    memory_used: list[MemoryEntry] = Field(description="Memories used in response")
+    new_memories: list[MemoryEntry] = Field(description="New memories to store")
+    confidence: float = Field(ge=0.0, le=1.0, description="Response confidence")
 
 
 class StrategyDecision(BaseModel):
@@ -343,9 +320,9 @@ class StrategyDecision(BaseModel):
         reasoning (str): Explanation for why this strategy was chosen.
     """
 
-    strategy: str = Field(description='Selected strategy')
-    confidence: float = Field(ge=0.0, le=1.0, description='Confidence')
-    reasoning: str = Field(description='Why this strategy was chosen')
+    strategy: str = Field(description="Selected strategy")
+    confidence: float = Field(ge=0.0, le=1.0, description="Confidence")
+    reasoning: str = Field(description="Why this strategy was chosen")
 
 
 class QueryPlan(BaseModel):
@@ -360,9 +337,9 @@ class QueryPlan(BaseModel):
         synthesis_approach (str): How to combine results.
     """
 
-    sub_queries: list[str] = Field(description='Sub-queries to execute')
-    execution_strategy: str = Field(description='How to execute them')
-    synthesis_approach: str = Field(description='How to combine results')
+    sub_queries: list[str] = Field(description="Sub-queries to execute")
+    execution_strategy: str = Field(description="How to execute them")
+    synthesis_approach: str = Field(description="How to combine results")
 
 
 class SubQueryResult(BaseModel):
@@ -377,9 +354,9 @@ class SubQueryResult(BaseModel):
         confidence (float): Confidence in this result (0.0 to 1.0).
     """
 
-    query: str = Field(description='The sub-query')
-    answer: str = Field(description='Answer to the sub-query')
-    confidence: float = Field(ge=0.0, le=1.0, description='Confidence')
+    query: str = Field(description="The sub-query")
+    answer: str = Field(description="Answer to the sub-query")
+    confidence: float = Field(ge=0.0, le=1.0, description="Confidence")
 
 
 # Type aliases for commonly used model unions

@@ -60,8 +60,9 @@ class CollaborativeConversation(BaseConversationAgent):
     )
 
     # Output configuration
-    output_format: Literal["markdown", "code", "outline",
-                           "report"] = Field(default="markdown", )
+    output_format: Literal["markdown", "code", "outline", "report"] = Field(
+        default="markdown",
+    )
     include_attribution: bool = Field(
         default=True,
         description="Include contributor names in output",
@@ -71,8 +72,7 @@ class CollaborativeConversation(BaseConversationAgent):
         """Use collaborative state schema."""
         return CollaborativeState
 
-    def _custom_initialization(self,
-                               state: CollaborativeState) -> dict[str, Any]:
+    def _custom_initialization(self, state: CollaborativeState) -> dict[str, Any]:
         """Initialize collaborative-specific state."""
         # Initialize document with title
         if self.output_format == "markdown":
@@ -94,8 +94,7 @@ class CollaborativeConversation(BaseConversationAgent):
 
     def _create_initial_message(self) -> BaseMessage:
         """Create collaborative session introduction."""
-        sections_list = "\n".join(
-            [f"- {section}" for section in self.sections])
+        sections_list = "\n".join([f"- {section}" for section in self.sections])
 
         return HumanMessage(
             content=f"""📝 Collaborative Session: {self.document_title}
@@ -135,8 +134,7 @@ Let's start with: {self.sections[0] if self.sections else "open discussion"}""",
         section_contributors = {}
         for contributor, section, _ in state.contributions:
             if section == current_section:
-                section_contributors[contributor] = section_contributors.get(
-                    contributor, 0) + 1
+                section_contributors[contributor] = section_contributors.get(contributor, 0) + 1
 
         logger.debug(f"Section contributors: {section_contributors}")
 
@@ -154,16 +152,14 @@ Let's start with: {self.sections[0] if self.sections else "open discussion"}""",
         # If everyone has contributed minimum, pick least active overall
         if min_count >= self.min_contributions_per_section:
             logger.debug(
-                f"Everyone has contributed minimum ({
-                    self.min_contributions_per_section})", )
+                f"Everyone has contributed minimum ({self.min_contributions_per_section})",
+            )
             return self._select_least_active_overall(state)
 
-        logger.debug(
-            f"Selected speaker: {min_contributor} (count: {min_count})")
+        logger.debug(f"Selected speaker: {min_contributor} (count: {min_count})")
         return Command(update={"current_speaker": min_contributor})
 
-    def _check_section_completion(self,
-                                  state: CollaborativeState) -> Command | None:
+    def _check_section_completion(self, state: CollaborativeState) -> Command | None:
         """Check if current section is complete and move to next."""
         current_section = state.current_section
         if not current_section:
@@ -171,13 +167,14 @@ Let's start with: {self.sections[0] if self.sections else "open discussion"}""",
 
         # Count contributions to current section
         section_contribution_count = sum(
-            1 for _, section, _ in state.contributions
-            if section == current_section)
+            1 for _, section, _ in state.contributions if section == current_section
+        )
 
         # Check if section has enough contributions
         min_total = self.min_contributions_per_section * len(state.speakers)
         logger.debug(
-            f"Section {current_section}: {section_contribution_count}/{min_total} contributions", )
+            f"Section {current_section}: {section_contribution_count}/{min_total} contributions",
+        )
 
         if section_contribution_count >= min_total:
             # Mark section complete
@@ -193,24 +190,23 @@ Let's start with: {self.sections[0] if self.sections else "open discussion"}""",
 
             if next_section:
                 transition_msg = SystemMessage(
-                    content=f"✅ Section '{current_section}' complete. Moving to '{next_section}'.", )
-                return Command(update={
-                    "completed_sections":
-                    completed,
-                    "current_section":
-                    next_section,
-                    "messages": [transition_msg],
-                    "current_speaker":
-                    (state.speakers[0] if state.speakers else None),
-                }, )
+                    content=f"✅ Section '{current_section}' complete. Moving to '{next_section}'.",
+                )
+                return Command(
+                    update={
+                        "completed_sections": completed,
+                        "current_section": next_section,
+                        "messages": [transition_msg],
+                        "current_speaker": (state.speakers[0] if state.speakers else None),
+                    },
+                )
             # All sections complete
             logger.debug("All sections complete - finalizing document")
             return self._finalize_document(state)
 
         return None
 
-    def _select_least_active_overall(self,
-                                     state: CollaborativeState) -> Command:
+    def _select_least_active_overall(self, state: CollaborativeState) -> Command:
         """Select speaker who has contributed least overall."""
         contribution_count = dict(state.contribution_count)
 
@@ -253,11 +249,13 @@ Let's start with: {self.sections[0] if self.sections else "open discussion"}""",
         if section_content:
             instruction = SystemMessage(
                 content="Build upon or enhance the existing content. "
-                "Be constructive and collaborative.", )
+                "Be constructive and collaborative.",
+            )
         else:
             instruction = SystemMessage(
                 content=f"Start the '{current_section}' section. "
-                "Provide a solid foundation for others to build on.", )
+                "Provide a solid foundation for others to build on.",
+            )
 
         messages = [context_msg, instruction, *base_input.get("messages", [])]
         base_input["messages"] = messages
@@ -270,8 +268,7 @@ Let's start with: {self.sections[0] if self.sections else "open discussion"}""",
             return Command(update={})
 
         last_msg = state.messages[-1]
-        if not isinstance(last_msg, AIMessage) or not hasattr(
-                last_msg, "name"):
+        if not isinstance(last_msg, AIMessage) or not hasattr(last_msg, "name"):
             return Command(update={})
 
         contributor = last_msg.name
@@ -288,7 +285,8 @@ Let's start with: {self.sections[0] if self.sections else "open discussion"}""",
         # Update contribution count
         new_contribution_count = state.contribution_count.copy()
         new_contribution_count[str(contributor)] = (
-            new_contribution_count.get(str(contributor), 0) + 1)
+            new_contribution_count.get(str(contributor), 0) + 1
+        )
 
         # Update section content
         new_document_sections = state.document_sections.copy()
@@ -302,22 +300,23 @@ Let's start with: {self.sections[0] if self.sections else "open discussion"}""",
             # Append to existing section content
             if new_document_sections.get(current_section):
                 new_document_sections[current_section] = (
-                    new_document_sections[current_section].rstrip() + "\n" +
-                    new_content)
+                    new_document_sections[current_section].rstrip() + "\n" + new_content
+                )
             else:
                 new_document_sections[current_section] = new_content
 
         # Compile updated document
-        new_shared_document = self._compile_document(state,
-                                                     new_document_sections)
+        new_shared_document = self._compile_document(state, new_document_sections)
 
         # Return Command with complete updated values
-        return Command(update={
-            "contributions": new_contributions,
-            "contribution_count": new_contribution_count,
-            "document_sections": new_document_sections,
-            "shared_document": new_shared_document,
-        }, )
+        return Command(
+            update={
+                "contributions": new_contributions,
+                "contribution_count": new_contribution_count,
+                "document_sections": new_document_sections,
+                "shared_document": new_shared_document,
+            },
+        )
 
     def _compile_document(
         self,
@@ -333,9 +332,7 @@ Let's start with: {self.sections[0] if self.sections else "open discussion"}""",
         elif self.output_format == "code":
             doc_parts = [f"# {self.document_title}\n# Collaborative Code"]
         elif self.output_format == "outline":
-            doc_parts = [
-                f"{self.document_title}\n{'=' * len(self.document_title)}"
-            ]
+            doc_parts = [f"{self.document_title}\n{'=' * len(self.document_title)}"]
         else:  # report
             doc_parts = [f"{self.document_title.upper()}"]
 
@@ -348,8 +345,7 @@ Let's start with: {self.sections[0] if self.sections else "open discussion"}""",
                 elif self.output_format == "code":
                     doc_parts.append(f"# {section}\n{sections[section]}")
                 else:  # report
-                    doc_parts.append(
-                        f"{section.upper()}\n\n{sections[section]}")
+                    doc_parts.append(f"{section.upper()}\n\n{sections[section]}")
 
         return "\n\n".join(doc_parts)
 
@@ -362,7 +358,8 @@ Let's start with: {self.sections[0] if self.sections else "open discussion"}""",
         for speaker, count in state.contribution_count.items():
             contributor_summary.append(f"- {speaker}: {count} contributions")
 
-        summary_msg = SystemMessage(content=f"""📄 Document Complete!
+        summary_msg = SystemMessage(
+            content=f"""📄 Document Complete!
 
 Title: {self.document_title}
 Total Contributions: {total_contributions}
@@ -370,15 +367,12 @@ Total Contributions: {total_contributions}
 Contributors:
 {chr(10).join(contributor_summary)}
 
-The final document has been compiled.""", )
+The final document has been compiled.""",
+        )
 
-        return Command(update={
-            "messages": [summary_msg],
-            "conversation_ended": True
-        })
+        return Command(update={"messages": [summary_msg], "conversation_ended": True})
 
-    def _check_custom_end_conditions(
-            self, state: CollaborativeState) -> Command | None:
+    def _check_custom_end_conditions(self, state: CollaborativeState) -> Command | None:
         """Check if all sections are complete."""
         if len(state.completed_sections) >= len(self.sections):
             return self._finalize_document(state)
@@ -401,9 +395,7 @@ The final document has been compiled.""", )
             **kwargs: Additional configuration
         """
         if sections is None:
-            sections = [
-                "Problem Statement", "Ideas", "Evaluation", "Action Items"
-            ]
+            sections = ["Problem Statement", "Ideas", "Evaluation", "Action Items"]
 
         from haive.agents.simple.agent import SimpleAgent
         from haive.core.engine.aug_llm import AugLLMConfig
@@ -412,9 +404,11 @@ The final document has been compiled.""", )
         for name in participants:
             engine = AugLLMConfig(
                 name=f"{name.lower()}_engine",
-                system_message=(f"You are {name}, participating in a brainstorming session. "
-                                "Be creative, build on others' ideas, and think outside the box. "
-                                "Keep contributions focused and constructive."),
+                system_message=(
+                    f"You are {name}, participating in a brainstorming session. "
+                    "Be creative, build on others' ideas, and think outside the box. "
+                    "Keep contributions focused and constructive."
+                ),
                 temperature=0.8,
             )
             agents[name] = SimpleAgent(name=f"{name}_agent", engine=engine)
@@ -423,8 +417,7 @@ The final document has been compiled.""", )
         # Each participant needs to contribute min_contributions_per_section times
         # per section
         min_contributions = kwargs.get("min_contributions_per_section", 1)
-        total_contributions_needed = len(participants) * len(
-            sections) * min_contributions
+        total_contributions_needed = len(participants) * len(sections) * min_contributions
 
         # Add some buffer for conversation flow
         suggested_max_rounds = total_contributions_needed + len(sections) + 5
@@ -474,11 +467,8 @@ The final document has been compiled.""", )
 
         # Calculate appropriate max_rounds
         min_contributions = kwargs.get("min_contributions_per_section", 1)
-        sections = [
-            "Overview", "Strengths", "Issues", "Suggestions", "Conclusion"
-        ]
-        total_contributions_needed = len(reviewers) * len(
-            sections) * min_contributions
+        sections = ["Overview", "Strengths", "Issues", "Suggestions", "Conclusion"]
+        total_contributions_needed = len(reviewers) * len(sections) * min_contributions
         suggested_max_rounds = total_contributions_needed + len(sections) + 5
 
         if "max_rounds" not in kwargs:

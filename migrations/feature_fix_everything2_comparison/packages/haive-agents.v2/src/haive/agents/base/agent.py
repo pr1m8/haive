@@ -201,8 +201,7 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
         self.config = config or SupervisorConfig(name=name)
 
         # Set up state schema
-        kwargs["state_schema"] = kwargs.get("state_schema",
-                                            BaseSupervisorState)
+        kwargs["state_schema"] = kwargs.get("state_schema", BaseSupervisorState)
 
         # Set max iterations from config
         kwargs["max_iterations"] = kwargs.get(
@@ -345,8 +344,7 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
         if self.tool_factory:
             self._update_tools()
 
-        logger.info(
-            f"Unregistered agent '{name}' from supervisor '{self.name}'")
+        logger.info(f"Unregistered agent '{name}' from supervisor '{self.name}'")
         return True
 
     def list_agents(self) -> dict[str, str]:
@@ -355,10 +353,7 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
         Returns:
             Dict mapping agent names to descriptions
         """
-        return {
-            name: info.description
-            for name, info in self.agent_info.items() if info.is_active
-        }
+        return {name: info.description for name, info in self.agent_info.items() if info.is_active}
 
     def get_agent_info(self, name: str) -> AgentInfo | None:
         """Get information about a registered agent.
@@ -418,8 +413,7 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
 
         # Get active agents
         active_agents = {
-            name: info.description
-            for name, info in self.agent_info.items() if info.is_active
+            name: info.description for name, info in self.agent_info.items() if info.is_active
         }
 
         # Create all tools
@@ -428,16 +422,16 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
         # Update engine tools
         if self.main_engine and hasattr(self.main_engine, "tools"):
             self.main_engine.tools = all_tools
-        elif (self.main_engine and hasattr(self.main_engine, "config")
-              and hasattr(self.main_engine.config, "tools")):
+        elif (
+            self.main_engine
+            and hasattr(self.main_engine, "config")
+            and hasattr(self.main_engine.config, "tools")
+        ):
             self.main_engine.config.tools = all_tools
 
     def _get_agent_descriptions(self) -> dict[str, str]:
         """Get active agent descriptions for tools."""
-        return {
-            name: info.description
-            for name, info in self.agent_info.items() if info.is_active
-        }
+        return {name: info.description for name, info in self.agent_info.items() if info.is_active}
 
     def _get_agent_info(self, name: str) -> AgentInfo | None:
         """Get agent info for tools."""

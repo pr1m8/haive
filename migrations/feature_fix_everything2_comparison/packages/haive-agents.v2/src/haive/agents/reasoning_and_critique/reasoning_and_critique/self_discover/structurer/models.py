@@ -10,8 +10,7 @@ class ReasoningStep(BaseModel):
         ...,
         description="The order of this step in the reasoning process",
     )
-    step_name: str = Field(
-        ..., description="Descriptive name for this reasoning step")
+    step_name: str = Field(..., description="Descriptive name for this reasoning step")
     guiding_questions: list[str] = Field(
         ...,
         description="Key questions to address in this step",

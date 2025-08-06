@@ -10,8 +10,7 @@ class SelectedModule(BaseModel):
         ...,
         description="The number of the module from the available list",
     )
-    module_name: str = Field(
-        ..., description="The name/type of the reasoning module")
+    module_name: str = Field(..., description="The name/type of the reasoning module")
     relevance_explanation: str = Field(
         ...,
         description="Why this module is relevant for the task",

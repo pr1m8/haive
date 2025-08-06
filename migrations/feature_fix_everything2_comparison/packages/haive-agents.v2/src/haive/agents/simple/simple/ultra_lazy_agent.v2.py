@@ -22,6 +22,8 @@ This uses the most minimal possible imports and defers everything else.
 
 
 from typing import Any
+
+
 class UltraLazyAgent:
     """Ultra-minimal agent proxy with maximum lazy loading."""
 

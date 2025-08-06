@@ -33,5 +33,4 @@ class TypedRAGState(BaseRAGState):
         default_factory=dict,
         description="Results for each subquery",
     )
-    aggregated_answer: str | None = Field(default=None,
-                                          description="Aggregated answer")
+    aggregated_answer: str | None = Field(default=None, description="Aggregated answer")

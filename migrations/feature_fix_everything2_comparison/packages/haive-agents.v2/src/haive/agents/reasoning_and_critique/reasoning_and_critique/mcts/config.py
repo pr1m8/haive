@@ -28,47 +28,45 @@ class MCTSAgentConfig(AgentConfig):
 
     # LLM configuration
     llm_config: LLMConfig | None = Field(
-        default=AzureLLMConfig(model='gpt-4o', parameters={'temperature':
-                                                           0.7}),
-        description='Configuration for the LLM',
+        default=AzureLLMConfig(model="gpt-4o", parameters={"temperature": 0.7}),
+        description="Configuration for the LLM",
     )
 
     # Tools
     tools: list[BaseTool] = Field(
         default_factory=list,
-        description='Tools available to the agent',
+        description="Tools available to the agent",
     )
 
     # MCTS parameters
-    max_rollouts: int = Field(default=5,
-                              description='Maximum depth of rollouts')
+    max_rollouts: int = Field(default=5, description="Maximum depth of rollouts")
     candidates_per_rollout: int = Field(
         default=5,
-        description='Number of candidates to generate per rollout',
+        description="Number of candidates to generate per rollout",
     )
     exploration_weight: float = Field(
         default=1.0,
-        description='Exploration weight for UCB',
+        description="Exploration weight for UCB",
     )
 
     # Prompts
     initial_prompt_template: ChatPromptTemplate | None = Field(
         default=None,
-        description='Template for initial response',
+        description="Template for initial response",
     )
     expansion_prompt_template: ChatPromptTemplate | None = Field(
         default=None,
-        description='Template for candidate expansion',
+        description="Template for candidate expansion",
     )
     reflection_prompt_template: ChatPromptTemplate | None = Field(
         default=None,
-        description='Template for reflection',
+        description="Template for reflection",
     )
 
     # System prompt
     system_prompt: str = Field(
-        default='You are an AI assistant.',
-        description='System prompt for the agent',
+        default="You are an AI assistant.",
+        description="System prompt for the agent",
     )
 
     @classmethod
@@ -78,45 +76,51 @@ class MCTSAgentConfig(AgentConfig):
         tools: list[BaseTool] | None = None,
         system_prompt: str | None = None,
         **kwargs,
-    ) -> 'MCTSAgentConfig':
+    ) -> "MCTSAgentConfig":
         """Create an MCTS Agent config from LLM config and tools."""
         # Use defaults if not provided
         llm_config = llm_config or AzureLLMConfig(
-            model='gpt-4o',
-            parameters={'temperature': 0.7},
+            model="gpt-4o",
+            parameters={"temperature": 0.7},
         )
         tools = tools or []
-        system_prompt = system_prompt or 'You are an AI assistant.'
+        system_prompt = system_prompt or "You are an AI assistant."
 
         # Create default prompt templates if not in kwargs
         from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-        if 'initial_prompt_template' not in kwargs:
-            initial_prompt = ChatPromptTemplate.from_messages([
-                ('system', system_prompt),
-                ('user', '{input}'),
-                MessagesPlaceholder(variable_name='messages', optional=True),
-            ], )
-            kwargs['initial_prompt_template'] = initial_prompt
+        if "initial_prompt_template" not in kwargs:
+            initial_prompt = ChatPromptTemplate.from_messages(
+                [
+                    ("system", system_prompt),
+                    ("user", "{input}"),
+                    MessagesPlaceholder(variable_name="messages", optional=True),
+                ],
+            )
+            kwargs["initial_prompt_template"] = initial_prompt
 
-        if 'expansion_prompt_template' not in kwargs:
-            expansion_prompt = ChatPromptTemplate.from_messages([
-                ('system', system_prompt),
-                ('user', '{input}'),
-                MessagesPlaceholder(variable_name='messages'),
-            ], )
-            kwargs['expansion_prompt_template'] = expansion_prompt
+        if "expansion_prompt_template" not in kwargs:
+            expansion_prompt = ChatPromptTemplate.from_messages(
+                [
+                    ("system", system_prompt),
+                    ("user", "{input}"),
+                    MessagesPlaceholder(variable_name="messages"),
+                ],
+            )
+            kwargs["expansion_prompt_template"] = expansion_prompt
 
-        if 'reflection_prompt_template' not in kwargs:
-            reflection_prompt = ChatPromptTemplate.from_messages([
-                (
-                    'system',
-                    'Reflect and grade the assistant response to the user question below.',
-                ),
-                ('user', '{input}'),
-                MessagesPlaceholder(variable_name='candidate'),
-            ], )
-            kwargs['reflection_prompt_template'] = reflection_prompt
+        if "reflection_prompt_template" not in kwargs:
+            reflection_prompt = ChatPromptTemplate.from_messages(
+                [
+                    (
+                        "system",
+                        "Reflect and grade the assistant response to the user question below.",
+                    ),
+                    ("user", "{input}"),
+                    MessagesPlaceholder(variable_name="candidate"),
+                ],
+            )
+            kwargs["reflection_prompt_template"] = reflection_prompt
 
         return cls(
             llm_config=llm_config,

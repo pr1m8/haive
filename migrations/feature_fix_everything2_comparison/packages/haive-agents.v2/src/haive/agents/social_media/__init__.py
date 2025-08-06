@@ -1,7 +1,8 @@
 """Module exports."""
 
 from haive.agents.conversation.social_media.agent import (
-    SocialMediaConversation, )
+    SocialMediaConversation,
+)
 from haive.agents.conversation.social_media.example import (
     example_instagram_discussion,
     example_linkedin_professional,

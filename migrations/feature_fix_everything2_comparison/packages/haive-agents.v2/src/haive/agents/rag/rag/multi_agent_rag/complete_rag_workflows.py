@@ -63,9 +63,9 @@ def crag_relevance_check(input_data: dict) -> dict:
         }
 
     # Calculate average relevance score
-    avg_score = sum(grade.relevance_score
-                    for grade in state.graded_documents) / len(
-                        state.graded_documents, )
+    avg_score = sum(grade.relevance_score for grade in state.graded_documents) / len(
+        state.graded_documents,
+    )
 
     if avg_score > 0.8:
         quality = RAGQuality.CORRECT
@@ -75,14 +75,10 @@ def crag_relevance_check(input_data: dict) -> dict:
         quality = RAGQuality.AMBIGUOUS
 
     return {
-        "quality":
-        quality,
-        "confidence":
-        avg_score,
-        "reasoning":
-        f"Average relevance score: {avg_score:.2f}",
-        "needs_web_search":
-        quality in [RAGQuality.INCORRECT, RAGQuality.AMBIGUOUS],
+        "quality": quality,
+        "confidence": avg_score,
+        "reasoning": f"Average relevance score: {avg_score:.2f}",
+        "needs_web_search": quality in [RAGQuality.INCORRECT, RAGQuality.AMBIGUOUS],
     }
 
 
@@ -100,9 +96,7 @@ def hallucination_detection(input_data: dict) -> dict:
 
     # Simple hallucination detection (can be enhanced with more sophisticated methods)
     # Check if response contains information not in source documents
-    doc_contents = [
-        doc.page_content.lower() for doc in state.relevant_documents
-    ]
+    doc_contents = [doc.page_content.lower() for doc in state.relevant_documents]
     response_lower = response.lower()
 
     # Look for specific claims that might be hallucinated
@@ -114,13 +108,11 @@ def hallucination_detection(input_data: dict) -> dict:
         "i think",
     ]
 
-    has_indicators = any(indicator in response_lower
-                         for indicator in hallucination_indicators)
+    has_indicators = any(indicator in response_lower for indicator in hallucination_indicators)
 
     # Check if response mentions facts not in documents (basic check)
     key_terms = response_lower.split()
-    doc_coverage = sum(1 for term in key_terms
-                       if any(term in doc for doc in doc_contents))
+    doc_coverage = sum(1 for term in key_terms if any(term in doc for doc in doc_contents))
     coverage_ratio = doc_coverage / len(key_terms) if key_terms else 0
 
     has_hallucination = has_indicators or coverage_ratio < 0.3
@@ -129,8 +121,7 @@ def hallucination_detection(input_data: dict) -> dict:
     return {
         "has_hallucination": has_hallucination,
         "confidence": confidence,
-        "reasoning":
-        f"Coverage ratio: {coverage_ratio:.2f}, indicators: {has_indicators}",
+        "reasoning": f"Coverage ratio: {coverage_ratio:.2f}, indicators: {has_indicators}",
         "needs_regeneration": has_hallucination,
     }
 
@@ -158,8 +149,7 @@ def self_rag_retrieval_decision(input_data: dict) -> dict:
         "schedule",
     ]
 
-    needs_retrieval = any(term in query.lower()
-                          for term in knowledge_requiring_terms)
+    needs_retrieval = any(term in query.lower() for term in knowledge_requiring_terms)
 
     token = ReflectionToken.RETRIEVAL_YES if needs_retrieval else ReflectionToken.NO_RETRIEVAL
 
@@ -179,17 +169,11 @@ def web_search_fallback(input_data: dict) -> dict:
     web_results = [
         Document(
             page_content=f"Web search result for: {query}. This would contain current information from the internet.",
-            metadata={
-                "source": "web_search",
-                "query": query,
-                "relevance": 0.9},
+            metadata={"source": "web_search", "query": query, "relevance": 0.9},
         ),
         Document(
             page_content=f"Additional web context about {query} from recent sources.",
-            metadata={
-                "source": "web_search",
-                "query": query,
-                "relevance": 0.8},
+            metadata={"source": "web_search", "query": query, "relevance": 0.8},
         ),
     ]
 
@@ -232,12 +216,9 @@ def query_complexity_analysis(input_data: dict) -> dict:
         complexity = "unknown"
 
     return {
-        "complexity":
-        complexity,
-        "requires_multi_hop":
-        multi_hop_count > 0,
-        "reasoning":
-        f"Multi-hop: {multi_hop_count}, Simple: {simple_count}, Complex: {complex_count}",
+        "complexity": complexity,
+        "requires_multi_hop": multi_hop_count > 0,
+        "reasoning": f"Multi-hop: {multi_hop_count}, Simple: {simple_count}, Complex: {complex_count}",
     }
 
 
@@ -311,15 +292,11 @@ class CorrectiveRAGAgent(ConditionalAgent):
         web_search_agent.build_graph = lambda: self._build_web_search_graph()
 
         # Create answer agent
-        answer_agent = SimpleAgent(name="CRAG Answer Agent",
-                                   engine=AugLLMConfig())
+        answer_agent = SimpleAgent(name="CRAG Answer Agent", engine=AugLLMConfig())
 
         super().__init__(
             name="Corrective RAG Agent",
-            agents=[
-                retrieval_agent, relevance_agent, web_search_agent,
-                answer_agent
-            ],
+            agents=[retrieval_agent, relevance_agent, web_search_agent, answer_agent],
             state_schema=MultiAgentRAGState,
             **kwargs,
         )
@@ -340,8 +317,7 @@ class CorrectiveRAGAgent(ConditionalAgent):
             simple_document_grader,
         )
 
-        grader_node = create_document_grader(simple_document_grader,
-                                             "grade_docs")
+        grader_node = create_document_grader(simple_document_grader, "grade_docs")
         graph.add_node("grade_docs", grader_node)
 
         # Relevance check
@@ -388,8 +364,7 @@ class CorrectiveRAGAgent(ConditionalAgent):
             # Route based on quality
             getattr(state, "quality", RAGQuality.INCORRECT)
             needs_web_search = getattr(state, "needs_web_search", False)
-            web_search_performed = getattr(state, "web_search_performed",
-                                           False)
+            web_search_performed = getattr(state, "web_search_performed", False)
 
             if needs_web_search and not web_search_performed:
                 return self._get_agent_node_name(self.web_search_agent)
@@ -402,10 +377,7 @@ class CorrectiveRAGAgent(ConditionalAgent):
             self.add_conditional_edge(
                 source_agent=agent,
                 condition=crag_router,
-                destinations={
-                    self._get_agent_node_name(a): a
-                    for a in self.agents
-                },
+                destinations={self._get_agent_node_name(a): a for a in self.agents},
                 default=END,
             )
 
@@ -439,8 +411,7 @@ class SelfRAGAgent(ConditionalAgent):
         # Create hallucination detection agent
         hallucination_agent = Agent()
         hallucination_agent.name = "Hallucination Detection Agent"
-        hallucination_agent.build_graph = lambda: self._build_hallucination_graph(
-        )
+        hallucination_agent.build_graph = lambda: self._build_hallucination_graph()
 
         super().__init__(
             name="Self-RAG Agent",
@@ -550,10 +521,7 @@ class SelfRAGAgent(ConditionalAgent):
             self.add_conditional_edge(
                 source_agent=agent,
                 condition=self_rag_router,
-                destinations={
-                    self._get_agent_node_name(a): a
-                    for a in self.agents
-                },
+                destinations={self._get_agent_node_name(a): a for a in self.agents},
                 default=END,
             )
 
@@ -577,8 +545,7 @@ class AdaptiveRAGAgent(ConditionalAgent):
         complex_rag_agent = CorrectiveRAGAgent(documents)
 
         # Create direct answer agent
-        direct_agent = SimpleAgent(name="Direct Answer Agent",
-                                   engine=AugLLMConfig())
+        direct_agent = SimpleAgent(name="Direct Answer Agent", engine=AugLLMConfig())
 
         super().__init__(
             name="Adaptive RAG Agent",
@@ -616,8 +583,7 @@ class AdaptiveRAGAgent(ConditionalAgent):
 
         return graph
 
-    def _create_multi_query_agent(self,
-                                  documents: list[Document] | None) -> Agent:
+    def _create_multi_query_agent(self, documents: list[Document] | None) -> Agent:
         """Create multi-query RAG agent."""
         multi_query_agent = Agent()
         multi_query_agent.name = "Multi-Query RAG Agent"
@@ -643,8 +609,7 @@ class AdaptiveRAGAgent(ConditionalAgent):
             answer_node = CallableNodeConfig(
                 name="answer_generation",
                 callable_func=lambda x: {
-                    "generated_response":
-                    f"Multi-query answer for: {x['state'].query}",
+                    "generated_response": f"Multi-query answer for: {x['state'].query}",
                 },
                 pass_state=True,
             )
@@ -683,10 +648,7 @@ class AdaptiveRAGAgent(ConditionalAgent):
             self.add_conditional_edge(
                 source_agent=agent,
                 condition=adaptive_router,
-                destinations={
-                    self._get_agent_node_name(a): a
-                    for a in self.agents
-                },
+                destinations={self._get_agent_node_name(a): a for a in self.agents},
                 default=END,
             )
 
@@ -707,8 +669,7 @@ class HYDERAGAgent(SequentialAgent):
         )
 
         # Create answer agent
-        answer_agent = SimpleAgent(name="HYDE Answer Agent",
-                                   engine=AugLLMConfig())
+        answer_agent = SimpleAgent(name="HYDE Answer Agent", engine=AugLLMConfig())
 
         super().__init__(
             name="HYDE RAG Agent",
@@ -761,9 +722,8 @@ def create_complete_rag_workflow(
 
     if workflow_type not in workflow_map:
         raise ValueError(
-            f"Unknown workflow type: {workflow_type}. Available: {
-                list(
-                    workflow_map.keys())}", )
+            f"Unknown workflow type: {workflow_type}. Available: {list(workflow_map.keys())}",
+        )
 
     return workflow_map[workflow_type](documents=documents, **kwargs)
 

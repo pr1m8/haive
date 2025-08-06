@@ -178,12 +178,10 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
             # Set up corrector schema for relationship direction correction
             self.corrector_schema = [
                 Schema(el["start"], el["type"], el["end"])
-                for el in self.graph_db_structured_schema.get(
-                    "relationships", [])
+                for el in self.graph_db_structured_schema.get("relationships", [])
             ]
 
-            self.cypher_query_corrector = CypherQueryCorrector(
-                self.corrector_schema)
+            self.cypher_query_corrector = CypherQueryCorrector(self.corrector_schema)
             self.no_results = "No results found"
 
             # Initialize example selector
@@ -215,8 +213,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
             domain_examples = []
 
             # Try to get examples for the configured domain
-            if hasattr(config, "domain_examples"
-                       ) and config.domain_name in config.domain_examples:
+            if hasattr(config, "domain_examples") and config.domain_name in config.domain_examples:
                 domain_examples = config.domain_examples[config.domain_name]
 
             # Try to load examples from a file if specified
@@ -231,15 +228,15 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
             # Default examples if none are provided
             if not domain_examples:
                 # Get default examples for the domain
-                domain_examples = self._get_default_examples(
-                    config.domain_name)
+                domain_examples = self._get_default_examples(config.domain_name)
 
             # Create documents for embedding
             documents = [
                 Document(
                     page_content=ex["query"],
                     metadata={"question": ex["question"]},
-                ) for ex in domain_examples
+                )
+                for ex in domain_examples
             ]
 
             # Try to use OpenAI embeddings, falling back to default if not available
@@ -252,20 +249,20 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                 )
                 self.example_selector = SemanticSimilarityExampleSelector(
                     vectorstore=vectorstore,
-                    k=(getattr(config, "example_config", {}).get("k", 2)
-                       if hasattr(config, "example_config") else 2),
+                    k=(
+                        getattr(config, "example_config", {}).get("k", 2)
+                        if hasattr(config, "example_config")
+                        else 2
+                    ),
                     input_keys=["question"],
                 )
             except Exception as e:
-                logger.warning(
-                    f"Failed to initialize semantic example selector: {e}")
+                logger.warning(f"Failed to initialize semantic example selector: {e}")
                 # Simple fallback - just use all examples
                 self.example_selector = type(
                     "SimpleSelectof",
                     (),
-                    {
-                        "select_examples": lambda self, query: domain_examples
-                    },
+                    {"select_examples": lambda self, query: domain_examples},
                 )()
 
         except Exception as e:
@@ -274,9 +271,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
             self.example_selector = type(
                 "DummySelectof",
                 (),
-                {
-                    "select_examples": lambda self, query: []
-                },
+                {"select_examples": lambda self, query: []},
             )()
 
     def _get_default_examples(self, domain_name: str) -> list[dict[str, str]]:
@@ -306,42 +301,30 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
         default_examples = {
             "movies": [
                 {
-                    "question":
-                    "Which movie has the highest rating?",
-                    "query":
-                    "MATCH (m:Movie) RETURN m.title, m.rating ORDER BY m.rating DESC LIMIT 1",
+                    "question": "Which movie has the highest rating?",
+                    "query": "MATCH (m:Movie) RETURN m.title, m.rating ORDER BY m.rating DESC LIMIT 1",
                 },
                 {
-                    "question":
-                    "Who directed The Matrix?",
-                    "query":
-                    "MATCH (p:Person)-[:DIRECTED]->(m:Movie {title: 'The Matrix'}) RETURN p.name",
+                    "question": "Who directed The Matrix?",
+                    "query": "MATCH (p:Person)-[:DIRECTED]->(m:Movie {title: 'The Matrix'}) RETURN p.name",
                 },
                 {
-                    "question":
-                    "What are the top 5 highest-rated movies?",
-                    "query":
-                    "MATCH (m:Movie) RETURN m.title, m.rating ORDER BY m.rating DESC LIMIT 5",
+                    "question": "What are the top 5 highest-rated movies?",
+                    "query": "MATCH (m:Movie) RETURN m.title, m.rating ORDER BY m.rating DESC LIMIT 5",
                 },
             ],
             "healthcare": [
                 {
-                    "question":
-                    "Which patients have diabetes?",
-                    "query":
-                    "MATCH (p:Patient)-[:HAS_CONDITION]->(c:Condition {name: 'Diabetes'}) RETURN p.name",
+                    "question": "Which patients have diabetes?",
+                    "query": "MATCH (p:Patient)-[:HAS_CONDITION]->(c:Condition {name: 'Diabetes'}) RETURN p.name",
                 },
                 {
-                    "question":
-                    "What medications are prescribed for hypertension?",
-                    "query":
-                    "MATCH (m:Medication)<-[:PRESCRIBED]-(c:Condition {name: 'Hypertension'}) RETURN m.name",
+                    "question": "What medications are prescribed for hypertension?",
+                    "query": "MATCH (m:Medication)<-[:PRESCRIBED]-(c:Condition {name: 'Hypertension'}) RETURN m.name",
                 },
                 {
-                    "question":
-                    "Who are the doctors specializing in cardiology?",
-                    "query":
-                    "MATCH (d:Doctor {specialty: 'Cardiology'}) RETURN d.name",
+                    "question": "Who are the doctors specializing in cardiology?",
+                    "query": "MATCH (d:Doctor {specialty: 'Cardiology'}) RETURN d.name",
                 },
             ],
             # Add more domains as needed
@@ -355,8 +338,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                     "query": "MATCH (x:X) RETURN x LIMIT 1",
                 },
                 {
-                    "question":
-                    "How many relationships exist in the database?",
+                    "question": "How many relationships exist in the database?",
                     "query": "MATCH ()-[r]->() RETURN count(r)",
                 },
             ],
@@ -400,8 +382,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                 domain_categories = [domain_name]
 
             # Default category to use
-            category = domain_categories[
-                0] if domain_categories else domain_name
+            category = domain_categories[0] if domain_categories else domain_name
 
             # Invoke the guardrails engine
             guardrails_output = self.engines["guardrails"].invoke(
@@ -409,7 +390,8 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                     "question": state.question,
                     "domain_name": domain_name,
                     "category": category,
-                }, )
+                },
+            )
 
             database_records = None
 
@@ -438,17 +420,21 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
             if decision == "end":
                 database_records = f"This question is not about {domain_name}. Therefore I cannot answer this question."
 
-            return Command(update={
-                "next_action": decision,
-                "database_records": database_records,
-                "steps": ["check_domain_relevance"],
-            }, )
+            return Command(
+                update={
+                    "next_action": decision,
+                    "database_records": database_records,
+                    "steps": ["check_domain_relevance"],
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in check_domain_relevance: {e}")
-            return Command(update={
-                "error": f"Error checking domain relevance: {e!s}",
-                "next_action": "end",
-            }, )
+            return Command(
+                update={
+                    "error": f"Error checking domain relevance: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def generate_query(self, state: OverallState) -> Command:
         """Generate a Cypher query from the natural language question.
@@ -476,36 +462,40 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
         """
         try:
             if "text2cypher" not in self.engines:
-                raise ValueError(
-                    "Missing 'text2cypher' engine in configuration")
+                raise ValueError("Missing 'text2cypher' engine in configuration")
 
             # Get examples for few-shot learning
             examples = self.example_selector.select_examples(
-                {"question": state.question}, )
+                {"question": state.question},
+            )
 
-            fewshot_examples = "\n".join([
-                f"Question: {example['question']}\nCypher query: {example['query']}"
-                for example in examples
-            ], )
+            fewshot_examples = "\n".join(
+                [
+                    f"Question: {example['question']}\nCypher query: {example['query']}"
+                    for example in examples
+                ],
+            )
 
             cypher_statement = self.engines["text2cyphef"].invoke(
-                {
-                    "question": state.question,
-                    "fewshot_examples": fewshot_examples
-                }, )
+                {"question": state.question, "fewshot_examples": fewshot_examples},
+            )
 
             logger.info(f"Generated Cypher query: {cypher_statement}")
 
-            return Command(update={
-                "cypher_statement": cypher_statement,
-                "steps": [*state.steps, "generate_query"],
-            }, )
+            return Command(
+                update={
+                    "cypher_statement": cypher_statement,
+                    "steps": [*state.steps, "generate_query"],
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in generate_query: {e}")
-            return Command(update={
-                "error": f"Error generating Cypher query: {e!s}",
-                "next_action": "end",
-            }, )
+            return Command(
+                update={
+                    "error": f"Error generating Cypher query: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def validate_query(self, state: OverallState) -> Command:
         """Validate the generated Cypher query against the database schema.
@@ -535,32 +525,38 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
         """
         try:
             if "validate_cypher" not in self.engines:
-                raise ValueError(
-                    "Missing 'validate_cypher' engine in configuration")
+                raise ValueError("Missing 'validate_cypher' engine in configuration")
 
             validation_result = self.engines["validate_cyphef"].invoke(
                 {
                     "question": state.question,
                     "cypher": state.cypher_statement,
                     "schema": self.graph_db_enhanced_schema.schema,
-                }, )
+                },
+            )
 
             if not validation_result.is_valid:
-                return Command(update={
-                    "next_action": "correct_cypher",
-                    "cypher_errors": validation_result.errors,
+                return Command(
+                    update={
+                        "next_action": "correct_cypher",
+                        "cypher_errors": validation_result.errors,
+                        "steps": [*state.steps, "validate_query"],
+                    },
+                )
+            return Command(
+                update={
+                    "next_action": "execute_query",
                     "steps": [*state.steps, "validate_query"],
-                }, )
-            return Command(update={
-                "next_action": "execute_query",
-                "steps": [*state.steps, "validate_query"],
-            }, )
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in validate_query: {e}")
-            return Command(update={
-                "error": f"Error validating Cypher query: {e!s}",
-                "next_action": "end",
-            }, )
+            return Command(
+                update={
+                    "error": f"Error validating Cypher query: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def correct_query(self, state: OverallState) -> Command:
         """Correct errors in the Cypher query based on validation feedback.
@@ -592,8 +588,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
         """
         try:
             if "correct_cypher" not in self.engines:
-                raise ValueError(
-                    "Missing 'correct_cypher' engine in configuration")
+                raise ValueError("Missing 'correct_cypher' engine in configuration")
 
             corrected_cypher = self.engines["correct_cyphef"].invoke(
                 {
@@ -601,19 +596,24 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                     "errors": state.cypher_errors,
                     "cypher": state.cypher_statement,
                     "schema": self.graph_db_enhanced_schema.schema,
-                }, )
+                },
+            )
 
-            return Command(update={
-                "next_action": "validate_query",
-                "cypher_statement": corrected_cypher,
-                "steps": [*state.steps, "correct_query"],
-            }, )
+            return Command(
+                update={
+                    "next_action": "validate_query",
+                    "cypher_statement": corrected_cypher,
+                    "steps": [*state.steps, "correct_query"],
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in correct_query: {e}")
-            return Command(update={
-                "error": f"Error correcting Cypher query: {e!s}",
-                "next_action": "end",
-            }, )
+            return Command(
+                update={
+                    "error": f"Error correcting Cypher query: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def execute_query(self, state: OverallState) -> Command:
         """Execute the validated Cypher query against the Neo4j database.
@@ -645,17 +645,21 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
         try:
             records = self.graph_db.query(state.cypher_statement)
 
-            return Command(update={
-                "database_records": records if records else self.no_results,
-                "next_action": "generate_answer",
-                "steps": [*state.steps, "execute_query"],
-            }, )
+            return Command(
+                update={
+                    "database_records": records if records else self.no_results,
+                    "next_action": "generate_answer",
+                    "steps": [*state.steps, "execute_query"],
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in execute_query: {e}")
-            return Command(update={
-                "error": f"Error executing Cypher query: {e!s}",
-                "next_action": "end",
-            }, )
+            return Command(
+                update={
+                    "error": f"Error executing Cypher query: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def generate_answer(self, state: OverallState) -> Command:
         """Generate a natural language answer from the query results.
@@ -692,28 +696,28 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                 )
 
             if state.database_records == self.no_results:
-                answer = f"I couldn't find any information about your question: {
-                    state.question}"
+                answer = f"I couldn't find any information about your question: {state.question}"
             else:
                 answer = self.engines["generate_final_answef"].invoke(
-                    {
-                        "question": state.question,
-                        "results": state.database_records
-                    }, )
+                    {"question": state.question, "results": state.database_records},
+                )
 
-            return Command(update={
-                "answer": answer,
-                "next_action": "end",
-                "steps": [*state.steps, "generate_answer"],
-            }, )
+            return Command(
+                update={
+                    "answer": answer,
+                    "next_action": "end",
+                    "steps": [*state.steps, "generate_answer"],
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in generate_answer: {e}")
-            return Command(update={
-                "error": f"Error generating answer: {e!s}",
-                "answer":
-                f"An error occurred while generating the answer: {e!s}",
-                "next_action": "end",
-            }, )
+            return Command(
+                update={
+                    "error": f"Error generating answer: {e!s}",
+                    "answer": f"An error occurred while generating the answer: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def domain_router(self, state: OverallState) -> str:
         """Route based on domain relevance check result.
@@ -779,8 +783,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
             exit points for error handling.
         """
         # Add nodes for the workflow
-        self.graph.add_node("check_domain_relevance",
-                            self.check_domain_relevance)
+        self.graph.add_node("check_domain_relevance", self.check_domain_relevance)
         self.graph.add_node("generate_query", self.generate_query)
         self.graph.add_node("validate_query", self.validate_query)
         self.graph.add_node("correct_query", self.correct_query)
@@ -793,10 +796,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
         # Add conditional edges using Branch directly
         domain_branch = Branch(
             key="next_action",
-            destinations={
-                "end": END,
-                "generate_query": "generate_query"
-            },
+            destinations={"end": END, "generate_query": "generate_query"},
             default="generate_query",
         )
 

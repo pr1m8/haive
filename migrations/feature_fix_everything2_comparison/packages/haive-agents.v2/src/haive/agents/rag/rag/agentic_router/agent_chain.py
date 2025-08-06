@@ -58,18 +58,20 @@ def create_agentic_rag_router_chain(
     # Strategy selector
     strategy_selector = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            (
-                "system",
-                """Select the best RAG strategy:
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    """Select the best RAG strategy:
             - simple: Basic queries, direct lookup
             - multi_query: Complex queries needing multiple perspectives
             - hyde: Abstract queries needing expansion
             - fusion: High-quality results through fusion
             - flare: Iterative refinement needed""",
-            ),
-            ("human", "Query: {query}\nSelect optimal strategy."),
-        ], ),
+                ),
+                ("human", "Query: {query}\nSelect optimal strategy."),
+            ],
+        ),
         structured_output_model=StrategyDecision,
         output_key="strategy_decision",
     )
@@ -84,17 +86,19 @@ def create_agentic_rag_router_chain(
     # Synthesis engine
     synthesizer = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Synthesize the RAG results into a final response"),
-            (
-                "human",
-                """Original query: {query}
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Synthesize the RAG results into a final response"),
+                (
+                    "human",
+                    """Original query: {query}
             Selected strategy: {strategy}
             RAG response: {response}
 
             Create a comprehensive final response.""",
-            ),
-        ], ),
+                ),
+            ],
+        ),
         output_key="final_response",
     )
 
@@ -112,13 +116,7 @@ def create_agentic_rag_router_chain(
         # Conditional routing based on strategy
         (
             0,
-            {
-                "simple": 1,
-                "multi_query": 2,
-                "hyde": 3,
-                "fusion": 4,
-                "flare": 5
-            },
+            {"simple": 1, "multi_query": 2, "hyde": 3, "fusion": 4, "flare": 5},
             lambda s: s.get("strategy_decision", {}).get("strategy", "simple"),
         ),
         # All strategies flow to synthesizer
@@ -149,10 +147,12 @@ def create_simple_rag_router_chain(
     # Simple classifier
     classifier = AugLLMConfig(
         llm_config=llm_config,
-        prompt_template=ChatPromptTemplate.from_messages([
-            ("system", "Classify query complexity: 'simple' or 'complex'"),
-            ("human", "{query}"),
-        ], ),
+        prompt_template=ChatPromptTemplate.from_messages(
+            [
+                ("system", "Classify query complexity: 'simple' or 'complex'"),
+                ("human", "{query}"),
+            ],
+        ),
         output_key="complexity",
     )
 
@@ -163,10 +163,7 @@ def create_simple_rag_router_chain(
     # Just 3 nodes and routing - done!
     return flow_with_edges(
         [classifier, simple_rag, complex_rag],
-        (0, {
-            "simple": 1,
-            "complex": 2
-        }, lambda s: s.get("complexity", "simple")),
+        (0, {"simple": 1, "complex": 2}, lambda s: s.get("complexity", "simple")),
     )
 
 
@@ -190,6 +187,5 @@ def get_agentic_router_chain_io_schema() -> dict[str, list[str]]:
     """Get I/O schema for the chain version."""
     return {
         "inputs": ["query", "context", "messages"],
-        "outputs":
-        ["strategy_decision", "response", "final_response", "messages"],
+        "outputs": ["strategy_decision", "response", "final_response", "messages"],
     }

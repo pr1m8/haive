@@ -64,8 +64,7 @@ class SimpleAgentWithValidation(Agent):
     max_tokens: int | None = Field(default=None, description="Max tokens")
     model_name: str | None = Field(default=None, description="Model name")
     tools: list[Any] | None = Field(default=None, description="Tools")
-    force_tool_use: bool | None = Field(default=None,
-                                        description="Force tool use")
+    force_tool_use: bool | None = Field(default=None, description="Force tool use")
     structured_output_model: type[BaseModel] | None = Field(
         default=None,
         description="Structured output model",
@@ -78,10 +77,8 @@ class SimpleAgentWithValidation(Agent):
         default=None,
         description="Prompt template",
     )
-    system_message: str | None = Field(default=None,
-                                       description="System message")
-    llm_config: LLMConfig | None = Field(default=None,
-                                         description="LLM config")
+    system_message: str | None = Field(default=None, description="System message")
+    llm_config: LLMConfig | None = Field(default=None, description="LLM config")
     output_parser: BaseOutputParser | None = Field(
         default=None,
         description="Output parser",
@@ -110,8 +107,7 @@ class SimpleAgentWithValidation(Agent):
     def validate_engine_type(cls, v) -> Any:
         """Ensure engine is AugLLMConfig."""
         if v is not None and not isinstance(v, AugLLMConfig):
-            raise ValueError(
-                "SimpleAgentWithValidation engine must be AugLLMConfig")
+            raise ValueError("SimpleAgentWithValidation engine must be AugLLMConfig")
         return v
 
     def setup_agent(self) -> None:
@@ -147,9 +143,7 @@ class SimpleAgentWithValidation(Agent):
             # Check if engine is already registered
             if not registry.find(self.engine.name):
                 registry.register(self.engine)
-                logger.info(
-                    f"Registered engine '{self.engine.name}' in EngineRegistry"
-                )
+                logger.info(f"Registered engine '{self.engine.name}' in EngineRegistry")
             else:
                 logger.debug(
                     f"Engine '{self.engine.name}' already registered in EngineRegistry",
@@ -168,8 +162,7 @@ class SimpleAgentWithValidation(Agent):
             return
 
         # Sync fields if they exist on engine (same as SimpleAgent)
-        if self.temperature is not None and hasattr(self.engine,
-                                                    "temperature"):
+        if self.temperature is not None and hasattr(self.engine, "temperature"):
             self.engine.temperature = self.temperature
         if self.max_tokens is not None and hasattr(self.engine, "max_tokens"):
             self.engine.max_tokens = self.max_tokens
@@ -177,16 +170,14 @@ class SimpleAgentWithValidation(Agent):
             self.engine.model = self.model_name
         if self.tools is not None and hasattr(self.engine, "tools"):
             self.engine.tools = self.tools
-        if self.force_tool_use is not None and hasattr(self.engine,
-                                                       "force_tool_use"):
+        if self.force_tool_use is not None and hasattr(self.engine, "force_tool_use"):
             self.engine.force_tool_use = self.force_tool_use
         if self.structured_output_model is not None and hasattr(
-                self.engine,
-                "structured_output_model",
+            self.engine,
+            "structured_output_model",
         ):
             self.engine.structured_output_model = self.structured_output_model
-        if self.system_message is not None and hasattr(self.engine,
-                                                       "system_message"):
+        if self.system_message is not None and hasattr(self.engine, "system_message"):
             self.engine.system_message = self.system_message
         if self.llm_config is not None and hasattr(self.engine, "llm_config"):
             self.engine.llm_config = self.llm_config
@@ -199,7 +190,8 @@ class SimpleAgentWithValidation(Agent):
 
         logger.info(
             f"Skipping engine schema modification for {self.structured_output_model.__name__} "
-            f"- extraction handled by validation nodes", )
+            f"- extraction handled by validation nodes",
+        )
 
     # Node detection methods (unchanged from SimpleAgent)
     def _needs_tool_node(self) -> bool:
@@ -209,7 +201,8 @@ class SimpleAgentWithValidation(Agent):
 
         tool_routes = self.get_tool_routes()
         langchain_tools = [
-            tool for tool, route in tool_routes.items()
+            tool
+            for tool, route in tool_routes.items()
             if route in ["langchain_tool", "function", "tool_node"]
         ]
 
@@ -222,21 +215,17 @@ class SimpleAgentWithValidation(Agent):
 
         # Check for structured output
         has_structured_output = bool(
-            self.structured_output_model
-            or getattr(self.engine, "structured_output_model", None), )
+            self.structured_output_model or getattr(self.engine, "structured_output_model", None),
+        )
 
         # Check for output parser
         has_output_parser = self.output_parser is not None
 
         # Check for pydantic tools
         tool_routes = self.get_tool_routes()
-        pydantic_tools = [
-            tool for tool, route in tool_routes.items()
-            if route == "pydantic_model"
-        ]
+        pydantic_tools = [tool for tool, route in tool_routes.items() if route == "pydantic_model"]
 
-        return has_structured_output or has_output_parser or len(
-            pydantic_tools) > 0
+        return has_structured_output or has_output_parser or len(pydantic_tools) > 0
 
     def _has_force_tool_use(self) -> bool:
         """Check if tool use is forced."""
@@ -244,8 +233,9 @@ class SimpleAgentWithValidation(Agent):
             getattr(self.engine, "force_tool_use", False)
             or getattr(self.engine, "force_tool_choice", False)
             or (self.force_tool_use is not None and self.force_tool_use)
-            or (self.structured_output_model is not None) or (getattr(
-                self.engine, "structured_output_model", None) is not None), )
+            or (self.structured_output_model is not None)
+            or (getattr(self.engine, "structured_output_model", None) is not None),
+        )
 
     def get_tool_routes(self) -> dict[str, str]:
         """Get tool routes from engine."""
@@ -264,7 +254,8 @@ class SimpleAgentWithValidation(Agent):
                     "langchain_tool": "tool_node",
                     "function": "tool_node",
                     "tool_node": "tool_node",
-                }, )
+                },
+            )
 
         if self._needs_parser_node():
             route_mapping["pydantic_model"] = "parse_output"
@@ -272,11 +263,10 @@ class SimpleAgentWithValidation(Agent):
         # Add default routes
         route_mapping.update(
             {
-                "retriever":
-                "retriever_node",
-                "unknown":
-                "tool_node" if self._needs_tool_node() else "agent_node",
-            }, )
+                "retriever": "retriever_node",
+                "unknown": "tool_node" if self._needs_tool_node() else "agent_node",
+            },
+        )
 
         return StateUpdatingValidationNode(
             name="state_validator",
@@ -361,10 +351,7 @@ class SimpleAgentWithValidation(Agent):
             graph.add_conditional_edges(
                 "agent_node",
                 has_tool_calls,
-                {
-                    True: "state_validator",
-                    False: END
-                },
+                {True: "state_validator", False: END},
             )
 
         # State validator always goes to router
@@ -391,42 +378,29 @@ class SimpleAgentWithValidation(Agent):
         compiled = super().create_runnable(runnable_config)
 
         # Ensure initial state has tool_routes and available_nodes
-        if hasattr(self, "graph") and self.graph and hasattr(
-                self.graph, "metadata"):
+        if hasattr(self, "graph") and self.graph and hasattr(self.graph, "metadata"):
             initial_values = {}
 
             if "tool_routes" in self.graph.metadata:
-                initial_values["tool_routes"] = self.graph.metadata[
-                    "tool_routes"]
+                initial_values["tool_routes"] = self.graph.metadata["tool_routes"]
             elif self.engine and hasattr(self.engine, "tool_routes"):
                 initial_values["tool_routes"] = self.engine.tool_routes
 
             if "available_nodes" in self.graph.metadata:
-                initial_values["available_nodes"] = self.graph.metadata[
-                    "available_nodes"]
+                initial_values["available_nodes"] = self.graph.metadata["available_nodes"]
 
         return compiled
 
     # Convenience constructors
     @classmethod
-    def from_engine(cls,
-                    engine: AugLLMConfig,
-                    name: str | None = None,
-                    **kwargs):
+    def from_engine(cls, engine: AugLLMConfig, name: str | None = None, **kwargs):
         """Create SimpleAgentWithValidation from engine."""
-        return cls(name=name or "Simple Agent with Validation",
-                   engine=engine,
-                   **kwargs)
+        return cls(name=name or "Simple Agent with Validation", engine=engine, **kwargs)
 
     @classmethod
-    def create_with_tools(cls,
-                          tools: list[Any],
-                          name: str | None = None,
-                          **kwargs):
+    def create_with_tools(cls, tools: list[Any], name: str | None = None, **kwargs):
         """Create SimpleAgentWithValidation with tools."""
-        return cls(name=name or "Tool Agent with Validation",
-                   tools=tools,
-                   **kwargs)
+        return cls(name=name or "Tool Agent with Validation", tools=tools, **kwargs)
 
     @classmethod
     def create_strict_validation(
@@ -461,15 +435,18 @@ class SimpleAgentWithValidation(Agent):
     def __repr__(self) -> str:
         engine_info = f"model={getattr(self.engine, 'model', 'unknown')}"
         schema_info = f"structured_output={
-            self.structured_output_model.__name__ if self.structured_output_model else 'None'}"
+            self.structured_output_model.__name__ if self.structured_output_model else 'None'
+        }"
         validation_info = f"validation_mode={self.validation_mode.value}"
-        return f"SimpleAgentWithValidation(name='{
-            self.name}', {engine_info}, {schema_info}, {validation_info})"
+        return f"SimpleAgentWithValidation(name='{self.name}', {engine_info}, {schema_info}, {
+            validation_info
+        })"
 
 
 # For backward compatibility, provide a function to upgrade SimpleAgent
 def upgrade_simple_agent_with_validation(
-        simple_agent: "SimpleAgent", ) -> SimpleAgentWithValidation:
+    simple_agent: "SimpleAgent",
+) -> SimpleAgentWithValidation:
     """Upgrade a SimpleAgent to use StateUpdatingValidationNode."""
     # Extract all fields from SimpleAgent
     agent_data = simple_agent.model_dump()

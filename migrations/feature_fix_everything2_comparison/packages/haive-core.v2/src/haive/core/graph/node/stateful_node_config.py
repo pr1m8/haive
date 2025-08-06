@@ -151,16 +151,13 @@ class StatefulNodeConfig(BaseNodeConfig, ABC):
         full_key = f"{self.routing_prefix}{route_key}"
         destination = self._get_state_value(state, full_key)
         if destination:
-            logger.info(
-                f"Discovered routing destination: {full_key} -> {destination}")
+            logger.info(f"Discovered routing destination: {full_key} -> {destination}")
             return destination
 
         # Strategy 2: Direct key lookup without prefix
         destination = self._get_state_value(state, route_key)
         if destination:
-            logger.info(
-                f"Discovered routing destination: {route_key} -> {destination}"
-            )
+            logger.info(f"Discovered routing destination: {route_key} -> {destination}")
             return destination
 
         # Strategy 3: From routing configuration in state
@@ -215,13 +212,11 @@ class StatefulNodeConfig(BaseNodeConfig, ABC):
         state_mapping = self._get_state_value(state, "field_mapping")
         if isinstance(state_mapping, dict):
             mapping.update(state_mapping)
-            logger.info(
-                f"Discovered field mapping from state: {state_mapping}")
+            logger.info(f"Discovered field mapping from state: {state_mapping}")
 
         # Strategy 2: Auto-mapping based on callable signature
         if callable_func and self.auto_field_mapping:
-            auto_mapping = self._auto_discover_field_mapping(
-                state, callable_func)
+            auto_mapping = self._auto_discover_field_mapping(state, callable_func)
             # Only add auto-mapping if not already explicitly configured
             for param, field in auto_mapping.items():
                 if param not in mapping:
@@ -229,8 +224,7 @@ class StatefulNodeConfig(BaseNodeConfig, ABC):
 
         # Strategy 3: Type-based field discovery
         if callable_func:
-            type_mapping = self._discover_field_mapping_by_types(
-                state, callable_func)
+            type_mapping = self._discover_field_mapping_by_types(state, callable_func)
             for param, field in type_mapping.items():
                 if param not in mapping:
                     mapping[param] = field
@@ -238,8 +232,7 @@ class StatefulNodeConfig(BaseNodeConfig, ABC):
         logger.info(f"Final field mapping: {mapping}")
         return mapping
 
-    def _discover_engine_by_name(self, state: StateLike,
-                                 name: str) -> Any | None:
+    def _discover_engine_by_name(self, state: StateLike, name: str) -> Any | None:
         """Discover engine by exact name match."""
         # Check state.engines dict
         if hasattr(state, "engines") and isinstance(state.engines, dict):
@@ -286,8 +279,7 @@ class StatefulNodeConfig(BaseNodeConfig, ABC):
 
         return None
 
-    def _discover_engine_from_message_attribution(
-            self, state: StateLike) -> Any | None:
+    def _discover_engine_from_message_attribution(self, state: StateLike) -> Any | None:
         """Discover engine from last AI message attribution."""
         messages = self._get_state_value(state, "messages")
         if not messages:
@@ -334,8 +326,7 @@ class StatefulNodeConfig(BaseNodeConfig, ABC):
         for param_name in sig.parameters:
             if param_name in available_fields:
                 mapping[param_name] = param_name
-                logger.debug(
-                    f"Auto-mapped parameter: {param_name} -> {param_name}")
+                logger.debug(f"Auto-mapped parameter: {param_name} -> {param_name}")
 
         return mapping
 
@@ -359,8 +350,7 @@ class StatefulNodeConfig(BaseNodeConfig, ABC):
                 field_name = self._find_field_by_type(state, param_type)
                 if field_name:
                     mapping[param_name] = field_name
-                    logger.debug(
-                        f"Type-mapped parameter: {param_name} -> {field_name}")
+                    logger.debug(f"Type-mapped parameter: {param_name} -> {field_name}")
 
         return mapping
 
@@ -382,8 +372,7 @@ class StatefulNodeConfig(BaseNodeConfig, ABC):
 
         return fields
 
-    def _find_field_by_type(self, state: StateLike,
-                            target_type: type) -> str | None:
+    def _find_field_by_type(self, state: StateLike, target_type: type) -> str | None:
         """Find state field with matching type."""
         # Check state attributes
         if hasattr(state, "__dict__"):
@@ -394,9 +383,7 @@ class StatefulNodeConfig(BaseNodeConfig, ABC):
         # Check Pydantic model fields
         if hasattr(state, "model_fields"):
             for field_name, field_info in state.model_fields.items():
-                if hasattr(
-                        field_info,
-                        "annotation") and field_info.annotation == target_type:
+                if hasattr(field_info, "annotation") and field_info.annotation == target_type:
                     return field_name
 
         return None
@@ -445,9 +432,7 @@ class StatefulNodeConfig(BaseNodeConfig, ABC):
             Command object with updates and routing
         """
 
-    def __call__(self,
-                 state: StateLike,
-                 config: ConfigLike | None = None) -> Command:
+    def __call__(self, state: StateLike, config: ConfigLike | None = None) -> Command:
         """Execute the stateful node with dynamic discovery."""
         try:
             # Perform discovery before execution
@@ -458,11 +443,7 @@ class StatefulNodeConfig(BaseNodeConfig, ABC):
                 engine = self.discover_engine(state)
                 if engine:
                     logger.info(
-                        f"Discovered engine: {
-                            getattr(
-                                engine,
-                                'name',
-                                type(engine).__name__)}",
+                        f"Discovered engine: {getattr(engine, 'name', type(engine).__name__)}",
                     )
 
             # Execute the actual node logic
@@ -487,11 +468,13 @@ class StatefulValidationNodeConfig(StatefulNodeConfig):
     routing_prefix: str = Field(default="validation_")
 
     # Default fallbacks
-    fallback_routing: dict[str, str] = Field(default_factory=lambda: {
-        "tool_node": "tool_node",
-        "parser_node": "parse_output",
-        "default": "END",
-    }, )
+    fallback_routing: dict[str, str] = Field(
+        default_factory=lambda: {
+            "tool_node": "tool_node",
+            "parser_node": "parse_output",
+            "default": "END",
+        },
+    )
 
     def execute_stateful_logic(
         self,
@@ -505,8 +488,7 @@ class StatefulValidationNodeConfig(StatefulNodeConfig):
             return Command(goto="END")
 
         last_message = messages[-1]
-        if not hasattr(last_message,
-                       "tool_calls") or not last_message.tool_calls:
+        if not hasattr(last_message, "tool_calls") or not last_message.tool_calls:
             return Command(goto="END")
 
         # Discover routing destinations
@@ -559,8 +541,7 @@ class StatefulValidationNodeConfig(StatefulNodeConfig):
             if model_class:
                 model_instance = model_class(**args)
                 return ToolMessage(
-                    content=f"Successfully validated {tool_name}: {
-                        model_instance.model_dump()}",
+                    content=f"Successfully validated {tool_name}: {model_instance.model_dump()}",
                     tool_call_id=tool_id,
                     name=tool_name,
                 )
@@ -586,10 +567,9 @@ class StatefulValidationNodeConfig(StatefulNodeConfig):
             return None
 
         # Check structured_output_model
-        if (hasattr(engine, "structured_output_model")
-                and engine.structured_output_model) and getattr(
-                    engine.structured_output_model, "__name__",
-                    None) == tool_name:
+        if (
+            hasattr(engine, "structured_output_model") and engine.structured_output_model
+        ) and getattr(engine.structured_output_model, "__name__", None) == tool_name:
             return engine.structured_output_model
 
         # Check schemas
@@ -626,10 +606,9 @@ class StatefulParserNodeConfig(StatefulNodeConfig):
     routing_prefix: str = Field(default="parser_")
 
     # Default fallbacks
-    fallback_routing: dict[str, str] = Field(default_factory=lambda: {
-        "agent_node": "agent",
-        "default": "END"
-    }, )
+    fallback_routing: dict[str, str] = Field(
+        default_factory=lambda: {"agent_node": "agent", "default": "END"},
+    )
 
     def execute_stateful_logic(
         self,
@@ -649,8 +628,7 @@ class StatefulParserNodeConfig(StatefulNodeConfig):
             return Command(goto=agent_node or "END")
 
         # Extract tool information
-        tool_name, tool_call, tool_message = self._extract_tool_from_messages(
-            messages)
+        tool_name, tool_call, tool_message = self._extract_tool_from_messages(messages)
         if not tool_name:
             return Command(goto=agent_node or "END")
 
@@ -664,15 +642,13 @@ class StatefulParserNodeConfig(StatefulNodeConfig):
 
         # Parse tool content
         try:
-            content = tool_message.content if tool_message else tool_call.get(
-                "args", {})
+            content = tool_message.content if tool_message else tool_call.get("args", {})
             parsed_result = self._parse_tool_content(content, tool_class)
 
             # Determine field name
             field_name = self._determine_field_name(tool_class, tool_name)
 
-            return Command(update={field_name: parsed_result},
-                           goto=agent_node or "END")
+            return Command(update={field_name: parsed_result}, goto=agent_node or "END")
 
         except Exception as e:
             return Command(
@@ -680,8 +656,7 @@ class StatefulParserNodeConfig(StatefulNodeConfig):
                 goto=agent_node or "END",
             )
 
-    def _extract_tool_from_messages(self,
-                                    messages: list[BaseMessage]) -> tuple:
+    def _extract_tool_from_messages(self, messages: list[BaseMessage]) -> tuple:
         """Extract tool information from messages."""
         # Find last AI message with tool calls
         for msg in reversed(messages):
@@ -715,9 +690,7 @@ class StatefulParserNodeConfig(StatefulNodeConfig):
                     candidates.extend(attr_value)
 
         # Check structured_output_model
-        if hasattr(
-                engine,
-                "structured_output_model") and engine.structured_output_model:
+        if hasattr(engine, "structured_output_model") and engine.structured_output_model:
             candidates.append(engine.structured_output_model)
 
         # Find matching tool
@@ -763,8 +736,10 @@ class StatefulParserNodeConfig(StatefulNodeConfig):
             pass
 
         # Fallback to simple naming
-        return (tool_name.lower().replace("response", "").replace(
-            "result", "").strip() or "parsed_result")
+        return (
+            tool_name.lower().replace("response", "").replace("result", "").strip()
+            or "parsed_result"
+        )
 
 
 class StatefulToolNodeConfig(StatefulNodeConfig):
@@ -776,10 +751,9 @@ class StatefulToolNodeConfig(StatefulNodeConfig):
     routing_prefix: str = Field(default="tool_")
 
     # Default fallbacks
-    fallback_routing: dict[str, str] = Field(default_factory=lambda: {
-        "agent_node": "agent",
-        "default": "END"
-    }, )
+    fallback_routing: dict[str, str] = Field(
+        default_factory=lambda: {"agent_node": "agent", "default": "END"},
+    )
 
     def execute_stateful_logic(
         self,
@@ -801,11 +775,9 @@ class StatefulToolNodeConfig(StatefulNodeConfig):
         # Execute tools and create tool messages
         tool_messages = self._execute_tools(messages, engine)
 
-        return Command(update={"messages": tool_messages},
-                       goto=agent_node or "END")
+        return Command(update={"messages": tool_messages}, goto=agent_node or "END")
 
-    def _execute_tools(self, messages: list[BaseMessage],
-                       engine: Any) -> list[Any]:
+    def _execute_tools(self, messages: list[BaseMessage], engine: Any) -> list[Any]:
         """Execute tools and return tool messages."""
         from langchain_core.messages import ToolMessage
 
@@ -829,21 +801,24 @@ class StatefulToolNodeConfig(StatefulNodeConfig):
                                     content=str(result),
                                     tool_call_id=tool_id,
                                     name=tool_name,
-                                ), )
+                                ),
+                            )
                         else:
                             tool_messages.append(
                                 ToolMessage(
                                     content=f"Tool not found: {tool_name}",
                                     tool_call_id=tool_id,
                                     name=tool_name,
-                                ), )
+                                ),
+                            )
                     except Exception as e:
                         tool_messages.append(
                             ToolMessage(
                                 content=f"Tool error: {e!s}",
                                 tool_call_id=tool_id,
                                 name=tool_name,
-                            ), )
+                            ),
+                        )
 
                 break  # Only process last AI message
 

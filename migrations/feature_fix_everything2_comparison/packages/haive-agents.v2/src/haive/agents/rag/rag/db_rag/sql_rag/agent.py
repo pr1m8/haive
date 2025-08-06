@@ -35,6 +35,7 @@ Note:
     This agent requires proper database credentials and connection details
     to be configured either through environment variables or explicit configuration.
 """
+
 from __future__ import annotations
 
 import logging
@@ -162,8 +163,8 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
 
             # Explore the database schema thoroughly
             self.db_schema = explore_database_schema(self.sql_db)
-            self.dialect = self.db_schema['dialect']
-            self.no_results = 'No results found'
+            self.dialect = self.db_schema["dialect"]
+            self.no_results = "No results found"
 
             # Create toolkit and get all tools
             self.toolkit = create_sql_toolkit(
@@ -175,12 +176,11 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
             # Create tool nodes for each tool
             self.tool_nodes = {}
             for tool in self.tools:
-                self.tool_nodes[tool.name] = create_tool_node_with_fallback(
-                    tool)
+                self.tool_nodes[tool.name] = create_tool_node_with_fallback(tool)
 
             # Map engines from config
             self.engines = {}
-            if hasattr(config, 'engines') and config.engines:
+            if hasattr(config, "engines") and config.engines:
                 # Start with default engines
                 self.engines = {**default_sql_engines}
                 # Override with any provided in config
@@ -236,25 +236,25 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
             domain_categories[0] if domain_categories else domain_name
 
             # Use the guardrails engine
-            if 'guardrails' not in self.engines:
-                raise ValueError(
-                    "Missing 'guardrails' engine in configuration")
+            if "guardrails" not in self.engines:
+                raise ValueError("Missing 'guardrails' engine in configuration")
 
             # Pass the required variables to the guardrails engine
-            guardrails_output = self.engines['guardrails'].invoke(
+            guardrails_output = self.engines["guardrails"].invoke(
                 {
-                    'question': state.question,
-                    'schema': self.db_schema,
-                    'tables': self.db_schema.get('tables', []),
-                }, )
+                    "question": state.question,
+                    "schema": self.db_schema,
+                    "tables": self.db_schema.get("tables", []),
+                },
+            )
 
             database_records = None
 
             # Handle the output - it might be an AIMessage or a structured output
-            if hasattr(guardrails_output, 'decision'):
+            if hasattr(guardrails_output, "decision"):
                 # It's a structured GuardrailsOutput
                 decision = guardrails_output.decision
-            elif hasattr(guardrails_output, 'content'):
+            elif hasattr(guardrails_output, "content"):
                 # It's an AIMessage - try to parse the content
                 try:
                     # If it's JSON content, parse it
@@ -263,30 +263,34 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                     content = guardrails_output.content
                     if isinstance(content, str):
                         parsed = json.loads(content)
-                        decision = parsed.get('decision', 'continue')
+                        decision = parsed.get("decision", "continue")
                     else:
-                        decision = 'continue'  # Default if we can't parse
+                        decision = "continue"  # Default if we can't parse
                 except BaseException:
                     # If parsing fails, default to continue
-                    decision = 'continue'
+                    decision = "continue"
             else:
                 # Unknown output type, default to continue
-                decision = 'continue'
+                decision = "continue"
 
-            if decision == 'end':
+            if decision == "end":
                 database_records = f"This question is not about {domain_name}. I can only answer questions about databases."
 
-            return Command(update={
-                'next_action': decision,
-                'database_records': database_records,
-                'steps': ['check_domain_relevance'],
-            }, )
+            return Command(
+                update={
+                    "next_action": decision,
+                    "database_records": database_records,
+                    "steps": ["check_domain_relevance"],
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in check_domain_relevance: {e}")
-            return Command(update={
-                'error': f"Error checking domain relevance: {e!s}",
-                'next_action': 'end',
-            }, )
+            return Command(
+                update={
+                    "error": f"Error checking domain relevance: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def retrieve_schema(self, state: OverallState) -> Command:
         """Retrieve database schema information for context.
@@ -317,52 +321,52 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
         try:
             # Find the get_schema tool
             get_schema_tool = next(
-                (tool for tool in self.tools if tool.name == 'sql_db_schema'),
+                (tool for tool in self.tools if tool.name == "sql_db_schema"),
                 None,
             )
 
             schema_info = {}
             # Get schema for all tables (or limit to a subset for very large databases)
             if get_schema_tool:
-                for table in self.db_schema[
-                        'tables'][:
-                                  10]:  # Limit to first 10 tables if there are many
+                for table in self.db_schema["tables"][
+                    :10
+                ]:  # Limit to first 10 tables if there are many
                     try:
                         schema_info[table] = get_schema_tool.invoke(
-                            {'table_names': table}, )
+                            {"table_names": table},
+                        )
                     except Exception as e:
                         schema_info[table] = f"Error retrieving schema: {e!s}"
             else:
                 # Fallback if tool not available
-                for table in self.db_schema['tables'][:10]:
-                    schema_info[table] = self.db_schema['table_info'].get(
+                for table in self.db_schema["tables"][:10]:
+                    schema_info[table] = self.db_schema["table_info"].get(
                         table,
-                        'Schema not available',
+                        "Schema not available",
                     )
 
             # Format schema information
-            schema_message = 'Database Schema Information:\n\n'
+            schema_message = "Database Schema Information:\n\n"
             for table, info in schema_info.items():
                 schema_message += f"Table: {table}\n{info}\n\n"
 
-            return Command(update={
-                'schema_info':
-                schema_info,
-                'database_schema':
-                schema_message,
-                'next_action':
-                'analyze_query',
-                'steps': [*state.steps, 'retrieve_schema'],
-                'messages':
-                [*state.messages,
-                 AIMessage(content=schema_message)],
-            }, )
+            return Command(
+                update={
+                    "schema_info": schema_info,
+                    "database_schema": schema_message,
+                    "next_action": "analyze_query",
+                    "steps": [*state.steps, "retrieve_schema"],
+                    "messages": [*state.messages, AIMessage(content=schema_message)],
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in retrieve_schema: {e}")
-            return Command(update={
-                'error': f"Error retrieving database schema: {e!s}",
-                'next_action': 'end',
-            }, )
+            return Command(
+                update={
+                    "error": f"Error retrieving database schema: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def analyze_query(self, state: OverallState) -> Command:
         """Analyze the query to determine relevant tables and fields.
@@ -401,39 +405,43 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
             queries by understanding the semantic intent.
         """
         try:
-            if 'analyze_query' not in self.engines:
-                raise ValueError(
-                    "Missing 'analyze_query' engine in configuration")
+            if "analyze_query" not in self.engines:
+                raise ValueError("Missing 'analyze_query' engine in configuration")
 
-            analysis = self.engines['analyze_query'].invoke(
+            analysis = self.engines["analyze_query"].invoke(
                 {
-                    'question': state.question,
-                    'schema': self.db_schema,
-                    'dialect': self.dialect,
-                }, )
+                    "question": state.question,
+                    "schema": self.db_schema,
+                    "dialect": self.dialect,
+                },
+            )
 
             # Store analysis in a way that works with different return types
             query_analysis = analysis
             tables_needed = []
 
             # Try to extract tables_needed based on the return type
-            if hasattr(analysis, 'relevant_tables'):
+            if hasattr(analysis, "relevant_tables"):
                 tables_needed = analysis.relevant_tables
-            elif isinstance(analysis, dict) and 'relevant_tables' in analysis:
-                tables_needed = analysis['relevant_tables']
+            elif isinstance(analysis, dict) and "relevant_tables" in analysis:
+                tables_needed = analysis["relevant_tables"]
 
-            return Command(update={
-                'query_analysis': query_analysis,
-                'tables_needed': tables_needed,
-                'next_action': 'generate_query',
-                'steps': [*state.steps, 'analyze_query'],
-            }, )
+            return Command(
+                update={
+                    "query_analysis": query_analysis,
+                    "tables_needed": tables_needed,
+                    "next_action": "generate_query",
+                    "steps": [*state.steps, "analyze_query"],
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in analyze_query: {e}")
-            return Command(update={
-                'error': f"Error analyzing query: {e!s}",
-                'next_action': 'end',
-            }, )
+            return Command(
+                update={
+                    "error": f"Error analyzing query: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def generate_query(self, state: OverallState) -> Command:
         """Generate an SQL query from the natural language question.
@@ -476,64 +484,67 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
             "what tables are in the database" that don't require complex SQL.
         """
         try:
-            if 'generate_sql' not in self.engines:
-                raise ValueError(
-                    "Missing 'generate_sql' engine in configuration")
+            if "generate_sql" not in self.engines:
+                raise ValueError("Missing 'generate_sql' engine in configuration")
 
             # For "what tables" questions, create a direct response based on schema
             question_lower = state.question.lower()
-            if ('what tables' in question_lower
-                    or 'list tables' in question_lower
-                    or 'show tables' in question_lower
-                    or 'which tables' in question_lower):
+            if (
+                "what tables" in question_lower
+                or "list tables" in question_lower
+                or "show tables" in question_lower
+                or "which tables" in question_lower
+            ):
                 # Extract table names directly from the schema
-                tables = self.db_schema.get('tables', [])
+                tables = self.db_schema.get("tables", [])
 
                 # Create a simple and safe query for this specific use case
-                tables_list = ', '.join(tables)
+                tables_list = ", ".join(tables)
                 return Command(
                     update={
-                        'sql_query':
-                        f"-- Database contains tables: {tables_list}",
-                        'next_action':
-                        'generate_answer',  # Skip to answer generation
-                        'steps': [*state.steps, 'generate_query'],
-                        'query_result':
-                        f"The database contains the following tables: {tables_list}",
-                    }, )
+                        "sql_query": f"-- Database contains tables: {tables_list}",
+                        "next_action": "generate_answer",  # Skip to answer generation
+                        "steps": [*state.steps, "generate_query"],
+                        "query_result": f"The database contains the following tables: {tables_list}",
+                    },
+                )
 
             # Access query_analysis safely
-            query_analysis = getattr(state, 'query_analysis', None)
+            query_analysis = getattr(state, "query_analysis", None)
 
             # Get examples for few-shot learning if available
             examples = []
-            if (hasattr(self.config, 'domain_examples') and
-                    self.config.domain_name in self.config.domain_examples):
+            if (
+                hasattr(self.config, "domain_examples")
+                and self.config.domain_name in self.config.domain_examples
+            ):
                 examples = self.config.domain_examples[self.config.domain_name]
 
             # Format examples
-            fewshot_examples = ''
+            fewshot_examples = ""
             if examples:
-                fewshot_examples = '\n\n'.join([
-                    f"Question: {example['question']}\nSQL query: {example['query']}"
-                    for example in examples
-                ], )
+                fewshot_examples = "\n\n".join(
+                    [
+                        f"Question: {example['question']}\nSQL query: {example['query']}"
+                        for example in examples
+                    ],
+                )
 
             # Use consistent variable names matching prompt template
-            sql_query = self.engines['generate_sql'].invoke(
+            sql_query = self.engines["generate_sql"].invoke(
                 {
-                    'question': state.question,
-                    'schema': self.db_schema,
-                    'dialect': self.dialect,
-                    'query_analysis':
-                    query_analysis,  # Changed from analysis to query_analysis
-                    'fewshot_examples': fewshot_examples,
-                }, )
+                    "question": state.question,
+                    "schema": self.db_schema,
+                    "dialect": self.dialect,
+                    "query_analysis": query_analysis,  # Changed from analysis to query_analysis
+                    "fewshot_examples": fewshot_examples,
+                },
+            )
 
             logger.info(f"Generated SQL query: {sql_query}")
 
             # Handle if it already returns an SQLQueryOutput
-            if hasattr(sql_query, 'query'):
+            if hasattr(sql_query, "query"):
                 formatted_query = sql_query
             else:
                 # Format query with sqlparse
@@ -541,23 +552,27 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                     formatted_query = sqlparse.format(
                         sql_query,
                         reindent=True,
-                        keyword_case='UPPER',
+                        keyword_case="UPPER",
                     )
                 except Exception as e:
                     logger.warning(f"Error formatting SQL query: {e}")
                     formatted_query = sql_query
 
-            return Command(update={
-                'sql_query': formatted_query,
-                'next_action': 'validate_query',
-                'steps': [*state.steps, 'generate_query'],
-            }, )
+            return Command(
+                update={
+                    "sql_query": formatted_query,
+                    "next_action": "validate_query",
+                    "steps": [*state.steps, "generate_query"],
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in generate_query: {e}")
-            return Command(update={
-                'error': f"Error generating SQL query: {e!s}",
-                'next_action': 'end',
-            }, )
+            return Command(
+                update={
+                    "error": f"Error generating SQL query: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def validate_query(self, state: OverallState) -> Command:
         """Validate the SQL query for syntax and schema correctness.
@@ -593,57 +608,65 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
             SELECT queries are executed.
         """
         try:
-            if 'validate_sql' not in self.engines:
-                raise ValueError(
-                    "Missing 'validate_sql' engine in configuration")
+            if "validate_sql" not in self.engines:
+                raise ValueError("Missing 'validate_sql' engine in configuration")
 
             # Handle case where sql_query might be empty
             if not state.sql_query:
-                return Command(update={
-                    'sql_errors': ['Query not provided.'],
-                    'next_action': 'end',
-                    'steps': [*state.steps, 'validate_query'],
-                }, )
+                return Command(
+                    update={
+                        "sql_errors": ["Query not provided."],
+                        "next_action": "end",
+                        "steps": [*state.steps, "validate_query"],
+                    },
+                )
 
             # Extract query string if it's an object
             sql_str = state.sql_query
-            if hasattr(state.sql_query, 'query'):
+            if hasattr(state.sql_query, "query"):
                 sql_str = state.sql_query.query
 
             # Use consistent variable names matching prompt template
-            validation_result = self.engines['validate_sql'].invoke(
+            validation_result = self.engines["validate_sql"].invoke(
                 {
-                    'question': state.question,
-                    'sql_query': sql_str,  # Changed from sql to sql_query
-                    'schema': self.db_schema,
-                    'dialect': self.dialect,
-                }, )
+                    "question": state.question,
+                    "sql_query": sql_str,  # Changed from sql to sql_query
+                    "schema": self.db_schema,
+                    "dialect": self.dialect,
+                },
+            )
 
             # Check validation result
             is_valid = True
             errors = []
-            if hasattr(validation_result, 'is_valid'):
+            if hasattr(validation_result, "is_valid"):
                 is_valid = validation_result.is_valid
 
-            if hasattr(validation_result, 'errors'):
+            if hasattr(validation_result, "errors"):
                 errors = validation_result.errors
 
             if not is_valid:
-                return Command(update={
-                    'next_action': 'correct_query',
-                    'sql_errors': errors,
-                    'steps': [*state.steps, 'validate_query'],
-                }, )
-            return Command(update={
-                'next_action': 'execute_query',
-                'steps': [*state.steps, 'validate_query'],
-            }, )
+                return Command(
+                    update={
+                        "next_action": "correct_query",
+                        "sql_errors": errors,
+                        "steps": [*state.steps, "validate_query"],
+                    },
+                )
+            return Command(
+                update={
+                    "next_action": "execute_query",
+                    "steps": [*state.steps, "validate_query"],
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in validate_query: {e}")
-            return Command(update={
-                'error': f"Error validating SQL query: {e!s}",
-                'next_action': 'end',
-            }, )
+            return Command(
+                update={
+                    "error": f"Error validating SQL query: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def correct_query(self, state: OverallState) -> Command:
         """Correct the SQL query based on validation errors.
@@ -675,41 +698,45 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
             max_iterations configuration setting.
         """
         try:
-            if 'correct_sql' not in self.engines:
-                raise ValueError(
-                    "Missing 'correct_sql' engine in configuration")
+            if "correct_sql" not in self.engines:
+                raise ValueError("Missing 'correct_sql' engine in configuration")
 
-            corrected_sql = self.engines['correct_sql'].invoke(
+            corrected_sql = self.engines["correct_sql"].invoke(
                 {
-                    'question': state.question,
-                    'sql_query': state.sql_query,
-                    'errors': state.sql_errors,
-                    'schema': self.db_schema,
-                    'dialect': self.dialect,
-                }, )
+                    "question": state.question,
+                    "sql_query": state.sql_query,
+                    "errors": state.sql_errors,
+                    "schema": self.db_schema,
+                    "dialect": self.dialect,
+                },
+            )
 
             # Format query with sqlparse
             try:
                 formatted_query = sqlparse.format(
                     corrected_sql,
                     reindent=True,
-                    keyword_case='upper',
+                    keyword_case="upper",
                 )
             except Exception as e:
                 logger.warning(f"Error formatting corrected SQL query: {e}")
                 formatted_query = corrected_sql
 
-            return Command(update={
-                'sql_query': formatted_query,
-                'next_action': 'validate_query',
-                'steps': [*state.steps, 'correct_query'],
-            }, )
+            return Command(
+                update={
+                    "sql_query": formatted_query,
+                    "next_action": "validate_query",
+                    "steps": [*state.steps, "correct_query"],
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in correct_query: {e}")
-            return Command(update={
-                'error': f"Error correcting SQL query: {e!s}",
-                'next_action': 'end',
-            }, )
+            return Command(
+                update={
+                    "error": f"Error correcting SQL query: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def execute_query(self, state: OverallState) -> Command:
         r"""Execute the SQL query against the database.
@@ -741,30 +768,31 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
         try:
             # Find the run_query tool
             run_query_tool = next(
-                (tool for tool in self.tools if tool.name == 'sql_db_query'),
+                (tool for tool in self.tools if tool.name == "sql_db_query"),
                 None,
             )
 
             # Check if sql_query is present
             if not state.sql_query:
-                return Command(update={
-                    'query_result': 'No SQL query to execute',
-                    'next_action': 'generate_answer',
-                    'steps': [*state.steps, 'execute_query'],
-                }, )
+                return Command(
+                    update={
+                        "query_result": "No SQL query to execute",
+                        "next_action": "generate_answer",
+                        "steps": [*state.steps, "execute_query"],
+                    },
+                )
 
             # Extract query string if it's an object
             sql_query_str = state.sql_query
-            if hasattr(state.sql_query, 'query'):
+            if hasattr(state.sql_query, "query"):
                 sql_query_str = state.sql_query
 
             if run_query_tool:
                 try:
                     # Use the tool to execute the query string
-                    result = run_query_tool.invoke({'query': sql_query_str})
+                    result = run_query_tool.invoke({"query": sql_query_str})
 
-                    if not result or (isinstance(result, str)
-                                      and result.strip() == ''):
+                    if not result or (isinstance(result, str) and result.strip() == ""):
                         result = self.no_results
                 except Exception as e:
                     logger.exception(f"Error executing SQL query: {e}")
@@ -776,21 +804,24 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
                     if not result:
                         result = self.no_results
                 except Exception as e:
-                    logger.exception(
-                        f"Error executing SQL query directly: {e}")
+                    logger.exception(f"Error executing SQL query directly: {e}")
                     result = f"Error executing query: {e!s}"
 
-            return Command(update={
-                'query_result': result,
-                'next_action': 'generate_answer',
-                'steps': [*state.steps, 'execute_query'],
-            }, )
+            return Command(
+                update={
+                    "query_result": result,
+                    "next_action": "generate_answer",
+                    "steps": [*state.steps, "execute_query"],
+                },
+            )
         except Exception as e:
             logger.exception(f"Error in execute_query: {e}")
-            return Command(update={
-                'error': f"Error executing SQL query: {e!s}",
-                'next_action': 'end',
-            }, )
+            return Command(
+                update={
+                    "error": f"Error executing SQL query: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def generate_answer(self, state: OverallState) -> Command:
         r"""Generate the final answer based on the query results.
@@ -825,65 +856,71 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
             warning is appended to the answer.
         """
         try:
-            if 'generate_final_answer' not in self.engines:
+            if "generate_final_answer" not in self.engines:
                 raise ValueError(
                     "Missing 'generate_final_answer' engine in configuration",
                 )
 
             # Extract sql query string if it's an object
             sql_str = state.sql_query
-            if hasattr(state.sql_query, 'query'):
+            if hasattr(state.sql_query, "query"):
                 sql_str = state.sql_query.query
 
             # For special case of listing tables
             if isinstance(sql_str, str) and sql_str.startswith(
-                    '-- Database contains tables:', ):
+                "-- Database contains tables:",
+            ):
                 tables_list = sql_str.replace(
-                    '-- Database contains tables:',
-                    '',
+                    "-- Database contains tables:",
+                    "",
                 ).strip()
-                return Command(update={
-                    'answer':
-                    f"The database contains the following tables: {tables_list}",
-                    'next_action': 'end',
-                    'steps': [*state.steps, 'generate_answer'],
-                }, )
+                return Command(
+                    update={
+                        "answer": f"The database contains the following tables: {tables_list}",
+                        "next_action": "end",
+                        "steps": [*state.steps, "generate_answer"],
+                    },
+                )
 
             # Generate the final answer
-            answer = self.engines['generate_final_answef'].invoke(
+            answer = self.engines["generate_final_answef"].invoke(
                 {
-                    'question': state.question,
-                    'sql_query': sql_str,
-                    'query_result': state.query_result,
-                }, )
+                    "question": state.question,
+                    "sql_query": sql_str,
+                    "query_result": state.query_result,
+                },
+            )
 
             # Proceed with the usual workflow
             result = {
-                'answer': answer,
-                'final_sql': sql_str,
-                'next_action': 'end',
-                'steps': [*state.steps, 'generate_answer'],
+                "answer": answer,
+                "final_sql": sql_str,
+                "next_action": "end",
+                "steps": [*state.steps, "generate_answer"],
             }
 
             # Run hallucination check if required
-            if self.config.hallucination_check and 'hallucination_check' in self.engines:
+            if self.config.hallucination_check and "hallucination_check" in self.engines:
                 try:
-                    hallucination_result = self.engines[
-                        'hallucination_check'].invoke(
-                            {
-                                'question': state.question,
-                                'answer': answer,
-                                'query_result': state.query_result,
-                            }, )
+                    hallucination_result = self.engines["hallucination_check"].invoke(
+                        {
+                            "question": state.question,
+                            "answer": answer,
+                            "query_result": state.query_result,
+                        },
+                    )
 
-                    result['hallucination_check'] = hallucination_result
+                    result["hallucination_check"] = hallucination_result
 
                     # If hallucinations detected, provide a warning
-                    if (hasattr(hallucination_result, 'hallucination_detected')
-                            and hallucination_result.hallucination_detected):
+                    if (
+                        hasattr(hallucination_result, "hallucination_detected")
+                        and hallucination_result.hallucination_detected
+                    ):
                         warning = f"\n\nWarning: The answer may contain information not supported by the data. Areas of concern: {
-                            hallucination_result.problem_areas}"
-                        result['answer'] = answer + warning
+                            hallucination_result.problem_areas
+                        }"
+                        result["answer"] = answer + warning
 
                 except Exception as e:
                     logger.warning(f"Error in hallucination check: {e}")
@@ -892,12 +929,13 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
             return Command(update=result)
         except Exception as e:
             logger.exception(f"Error in generate_answer: {e}")
-            return Command(update={
-                'error': f"Error generating answer: {e!s}",
-                'answer':
-                f"An error occurred while generating the answer: {e!s}",
-                'next_action': 'end',
-            }, )
+            return Command(
+                update={
+                    "error": f"Error generating answer: {e!s}",
+                    "answer": f"An error occurred while generating the answer: {e!s}",
+                    "next_action": "end",
+                },
+            )
 
     def domain_router(self, state: OverallState) -> str:
         """Route based on domain relevance check.
@@ -908,9 +946,9 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
         Returns:
             str: Next node name - either END or "retrieve_schema".
         """
-        if state.next_action == 'end':
+        if state.next_action == "end":
             return END
-        return 'retrieve_schema'
+        return "retrieve_schema"
 
     def validation_router(self, state: OverallState) -> str:
         """Route based on query validation results.
@@ -921,11 +959,11 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
         Returns:
             str: Next node name - END, "correct_query", or "execute_query".
         """
-        if state.next_action == 'end':
+        if state.next_action == "end":
             return END
-        if state.next_action == 'correct_query':
-            return 'correct_query'
-        return 'execute_query'
+        if state.next_action == "correct_query":
+            return "correct_query"
+        return "execute_query"
 
     def setup_workflow(self) -> None:
         """Set up the SQL RAG workflow graph.
@@ -945,60 +983,56 @@ class SQLRAGAgent(Agent[SQLRAGConfig]):
             and should not be called directly.
         """
         # Add nodes for the workflow
-        self.graph.add_node('check_domain_relevance',
-                            self.check_domain_relevance)
-        self.graph.add_node('retrieve_schema', self.retrieve_schema)
-        self.graph.add_node('analyze_query', self.analyze_query)
-        self.graph.add_node('generate_query', self.generate_query)
-        self.graph.add_node('validate_query', self.validate_query)
-        self.graph.add_node('correct_query', self.correct_query)
-        self.graph.add_node('execute_query', self.execute_query)
-        self.graph.add_node('generate_answer', self.generate_answer)
+        self.graph.add_node("check_domain_relevance", self.check_domain_relevance)
+        self.graph.add_node("retrieve_schema", self.retrieve_schema)
+        self.graph.add_node("analyze_query", self.analyze_query)
+        self.graph.add_node("generate_query", self.generate_query)
+        self.graph.add_node("validate_query", self.validate_query)
+        self.graph.add_node("correct_query", self.correct_query)
+        self.graph.add_node("execute_query", self.execute_query)
+        self.graph.add_node("generate_answer", self.generate_answer)
 
         # Connect nodes
-        self.graph.add_edge(START, 'check_domain_relevance')
+        self.graph.add_edge(START, "check_domain_relevance")
 
         # Add conditional edges using Branch directly
         domain_branch = Branch(
-            key='next_action',
-            destinations={
-                'end': END,
-                'retrieve_schema': 'retrieve_schema'
-            },
-            default='retrieve_schema',
+            key="next_action",
+            destinations={"end": END, "retrieve_schema": "retrieve_schema"},
+            default="retrieve_schema",
         )
 
         self.graph.add_conditional_edges(
-            'check_domain_relevance',
+            "check_domain_relevance",
             domain_branch,  # Branch object can be called directly
             domain_branch.destinations,  # Pass the destinations mapping
         )
 
         # Linear flow
-        self.graph.add_edge('retrieve_schema', 'analyze_query')
-        self.graph.add_edge('analyze_query', 'generate_query')
-        self.graph.add_edge('generate_query', 'validate_query')
+        self.graph.add_edge("retrieve_schema", "analyze_query")
+        self.graph.add_edge("analyze_query", "generate_query")
+        self.graph.add_edge("generate_query", "validate_query")
 
         # Validation branch
         validation_branch = Branch(
-            key='next_action',
+            key="next_action",
             destinations={
-                'correct_query': 'correct_query',
-                'execute_query': 'execute_query',
-                'end': END,
+                "correct_query": "correct_query",
+                "execute_query": "execute_query",
+                "end": END,
             },
-            default='execute_query',
+            default="execute_query",
         )
 
         self.graph.add_conditional_edges(
-            'validate_query',
+            "validate_query",
             validation_branch,
             validation_branch.destinations,
         )
 
         # Complete the flow
-        self.graph.add_edge('correct_query', 'validate_query')
-        self.graph.add_edge('execute_query', 'generate_answer')
-        self.graph.add_edge('generate_answer', END)
+        self.graph.add_edge("correct_query", "validate_query")
+        self.graph.add_edge("execute_query", "generate_answer")
+        self.graph.add_edge("generate_answer", END)
 
-        logger.info('SQL RAG workflow setup complete')
+        logger.info("SQL RAG workflow setup complete")

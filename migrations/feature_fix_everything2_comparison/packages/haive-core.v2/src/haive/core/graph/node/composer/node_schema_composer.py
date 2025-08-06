@@ -89,11 +89,11 @@ class NodeSchemaComposer:
                 "uppercase": lambda x: str(x).upper() if x is not None else "",
                 "lowercase": lambda x: str(x).lower() if x is not None else "",
                 "bool_to_str": lambda x: "true" if x else "false",
-                "str_to_bool": lambda x: str(x).lower() in
-                ("true", "1", "yes"),
+                "str_to_bool": lambda x: str(x).lower() in ("true", "1", "yes"),
                 "parse_int": lambda x: int(x) if x is not None else 0,
                 "parse_float": lambda x: float(x) if x is not None else 0.0,
-            }, )
+            },
+        )
 
     def register_extract_function(self, name: str, func: ExtractFunction):
         """Register a custom extract function.
@@ -180,8 +180,7 @@ class NodeSchemaComposer:
             Update function that handles all mappings
         """
 
-        def _update(result: Any, state: Any,
-                    config: dict[str, Any]) -> dict[str, Any]:
+        def _update(result: Any, state: Any, config: dict[str, Any]) -> dict[str, Any]:
             """Update state according to field mappings."""
             updates = {}
 
@@ -193,8 +192,7 @@ class NodeSchemaComposer:
                 elif mapping.source_path in {"result", ""}:
                     value = result
                 else:
-                    value = getattr(result, mapping.source_path,
-                                    mapping.default)
+                    value = getattr(result, mapping.source_path, mapping.default)
 
                 # Apply transforms
                 transformed = self._apply_transforms(value, mapping.transform)
@@ -206,8 +204,7 @@ class NodeSchemaComposer:
 
         return _update
 
-    def _apply_transforms(self, value: Any,
-                          transform_names: list[str] | None) -> Any:
+    def _apply_transforms(self, value: Any, transform_names: list[str] | None) -> Any:
         """Apply transform pipeline to value.
 
         Args:
@@ -370,8 +367,7 @@ class NodeSchemaComposer:
             source_schema=source_schema,
             target_schema=target_schema,
             field_mappings=field_mappings,
-            name=name
-            or f"adapter_{source_schema.__name__}_to_{target_schema.__name__}",
+            name=name or f"adapter_{source_schema.__name__}_to_{target_schema.__name__}",
             composer=self,
         )
 
@@ -399,8 +395,7 @@ class ComposedNode:
 
         # Create I/O functions
         if input_mappings:
-            self.extract_func = composer.create_extract_function(
-                input_mappings)
+            self.extract_func = composer.create_extract_function(input_mappings)
         else:
             self.extract_func = None
 
@@ -409,9 +404,7 @@ class ComposedNode:
         else:
             self.update_func = None
 
-    def __call__(self,
-                 state: Any,
-                 config: dict[str, Any] | None = None) -> Any:
+    def __call__(self, state: Any, config: dict[str, Any] | None = None) -> Any:
         """Execute the composed node with I/O mappings."""
         config = config or {}
 
@@ -462,8 +455,7 @@ class ComposedNode:
             # Return new Command with mapped updates
             from langgraph.types import Command
 
-            return Command(update=mapped_updates,
-                           goto=getattr(result, "goto", None))
+            return Command(update=mapped_updates, goto=getattr(result, "goto", None))
 
         return result
 
@@ -479,8 +471,7 @@ class ComposedCallableNode(ComposedNode):
         name: str,
         composer: NodeSchemaComposer,
     ):
-        super().__init__(base_node, input_mappings, output_mappings, name,
-                         composer)
+        super().__init__(base_node, input_mappings, output_mappings, name, composer)
 
 
 class SchemaAdapter:
@@ -510,8 +501,7 @@ class SchemaAdapter:
                 mapping.source_path,
                 mapping.default,
             )
-            transformed = self.composer._apply_transforms(
-                value, mapping.transform)
+            transformed = self.composer._apply_transforms(value, mapping.transform)
             mapped_data[mapping.target_path] = transformed
 
         # Create target instance

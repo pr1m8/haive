@@ -35,10 +35,12 @@ class SocialMediaState(ConversationState):
     # Viral mechanics
     viral_threshold: int = Field(default=10)
     trending_topics: list[str] = Field(default_factory=list)
-    viral_posts: list[tuple[str, str]] = Field(default_factory=list,
-                                               )  # (author, content)
+    viral_posts: list[tuple[str, str]] = Field(
+        default_factory=list,
+    )  # (author, content)
 
     # Platform state
-    platform_type: Literal['twitter', 'instagram', 'tiktok',
-                           'generic'] = Field(default='generic', )
+    platform_type: Literal["twitter", "instagram", "tiktok", "generic"] = Field(
+        default="generic",
+    )
     hashtags_used: dict[str, list[str]] = Field(default_factory=dict)

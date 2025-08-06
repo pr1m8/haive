@@ -114,13 +114,15 @@ class RAGFactory:
         """Create ChainAgent implementation."""
         if rag_type == RAGType.AGENTIC_ROUTER:
             from haive.agents.rag.agentic_router.agent_chain import (
-                create_agentic_rag_router_chain, )
+                create_agentic_rag_router_chain,
+            )
 
             return create_agentic_rag_router_chain(documents, llm_config, name)
 
         if rag_type == RAGType.QUERY_PLANNING:
             from haive.agents.rag.query_planning.agent_chain import (
-                create_query_planning_chain, )
+                create_query_planning_chain,
+            )
 
             return create_query_planning_chain(documents, llm_config, name)
 
@@ -323,8 +325,7 @@ def create_rag_chain(
     return create_rag(rag_type, documents, style="chain", **kwargs)
 
 
-def create_rag_multi(rag_type: str | RAGType, documents: list[Document],
-                     **kwargs):
+def create_rag_multi(rag_type: str | RAGType, documents: list[Document], **kwargs):
     """Create a RAG agent as a MultiAgent."""
     return create_rag(rag_type, documents, style="multi", **kwargs)
 
@@ -359,9 +360,7 @@ def example_usage() -> Dict[str, Any]:
     planning_multi = create_rag_multi("query_planning", docs)
 
     # Pipeline of multiple RAG types
-    pipeline = create_rag_pipeline(["simple", "fusion", "flare"],
-                                   docs,
-                                   style="chain")
+    pipeline = create_rag_pipeline(["simple", "fusion", "flare"], docs, style="chain")
 
     # Traditional implementation
     traditional = create_rag("hyde", docs, style="traditional")

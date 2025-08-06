@@ -54,8 +54,7 @@ def register_node(
         Decorated function as a node function
     """
 
-    def decorator(func: Callable[[StateInput, ConfigType | None],
-                                 StateOutput]):
+    def decorator(func: Callable[[StateInput, ConfigType | None], StateOutput]):
         # Get node name from function name if not provided
         node_name = name or func.__name__
 
@@ -106,9 +105,7 @@ def tool_node(
         name=name,
         node_type=NodeType.TOOL,
         command_goto=command_goto,
-        input_mapping=({
-            "messages": messages_field
-        } if messages_field != "messages" else None),
+        input_mapping=({"messages": messages_field} if messages_field != "messages" else None),
         tools=tools,
         messages_field=messages_field,
         handle_tool_errors=handle_tool_errors,
@@ -136,9 +133,7 @@ def validation_node(
         name=name,
         node_type=NodeType.VALIDATION,
         command_goto=command_goto,
-        input_mapping=({
-            "messages": messages_field
-        } if messages_field != "messages" else None),
+        input_mapping=({"messages": messages_field} if messages_field != "messages" else None),
         validation_schemas=schemas,
         messages_field=messages_field,
     )
@@ -216,14 +211,14 @@ def debug_node(name: str | None = None):
     def decorator(func) -> Any:
         func_name = name or func.__name__
 
-        def wrapper(state: dict[str, Any],
-                    config: dict[str, Any] | None = None):
+        def wrapper(state: dict[str, Any], config: dict[str, Any] | None = None):
             # Log input
             console.print(
                 Panel.fit(
                     f"[bold cyan]Node {func_name} Input:[/bold cyan]\n{Pretty(state)}",
                     border_style="cyan",
-                ), )
+                ),
+            )
 
             # Call original function
             result = func(state, config)
@@ -249,7 +244,8 @@ def debug_node(name: str | None = None):
                         f"Update: {getattr(result, 'update', None)}\n"
                         f"Branch: {getattr(result, 'branch', None)}",
                         border_style="yellow",
-                    ), )
+                    ),
+                )
 
             # Return original result unchanged
             return result

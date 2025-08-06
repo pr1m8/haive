@@ -3,6 +3,7 @@
 This supervisor uses ReactAgent's looping behavior but modifies the tool
 node to execute agent handoffs stored in state.
 """
+
 from __future__ import annotations
 
 import logging
@@ -38,8 +39,7 @@ class AgentEntry(BaseModel):
     agent_class: str  # Class name for reconstruction
 
     @classmethod
-    def from_agent(cls, name: str, description: str,
-                   agent: Agent) -> AgentEntry:
+    def from_agent(cls, name: str, description: str, agent: Agent) -> AgentEntry:
         """Create an AgentEntry from an agent instance."""
         return cls(
             name=name,
@@ -72,8 +72,7 @@ class SupervisorReactState(StateSchema):
     )
 
     # Current execution context
-    current_agent: str | None = Field(None,
-                                      description="Currently active agent")
+    current_agent: str | None = Field(None, description="Currently active agent")
     last_handoff_result: Any | None = Field(
         None,
         description="Result from last handoff",
@@ -104,8 +103,7 @@ class SupervisorReactState(StateSchema):
 
         for tool_name in tools_to_remove:
             del self.handoff_tools[tool_name]
-            logger.info(
-                f"Removed handoff tool for unregistered agent: {tool_name}")
+            logger.info(f"Removed handoff tool for unregistered agent: {tool_name}")
 
         return self
 
@@ -136,8 +134,7 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
             return
 
         # Get current state
-        state = self.get_state() if hasattr(
-            self, "get_state") else SupervisorReactState()
+        state = self.get_state() if hasattr(self, "get_state") else SupervisorReactState()
 
         # Build tool list
         tools = []
@@ -153,8 +150,8 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
         if hasattr(self.main_engine, "tools"):
             self.main_engine.tools = tools
         elif hasattr(self.main_engine, "config") and hasattr(
-                self.main_engine.config,
-                "tools",
+            self.main_engine.config,
+            "tools",
         ):
             self.main_engine.config.tools = tools
 
@@ -164,8 +161,7 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
         @tool
         def list_agents() -> str:
             """List all available agents and their capabilities."""
-            state = self.get_state() if hasattr(
-                self, "get_state") else SupervisorReactState()
+            state = self.get_state() if hasattr(self, "get_state") else SupervisorReactState()
             agents = state.registered_agents
 
             if not agents:
@@ -179,8 +175,7 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
 
         return list_agents
 
-    def register_agent(self, name: str, description: str,
-                       agent: Agent) -> None:
+    def register_agent(self, name: str, description: str, agent: Agent) -> None:
         """Register an agent with the supervisor.
 
         This updates the state and triggers tool synchronization.
@@ -188,8 +183,7 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
         entry = AgentEntry.from_agent(name, description, agent)
 
         # Update state - this triggers the validator
-        current_state = self.get_state() if hasattr(
-            self, "get_state") else SupervisorReactState()
+        current_state = self.get_state() if hasattr(self, "get_state") else SupervisorReactState()
         current_state.registered_agents[name] = entry
 
         if hasattr(self, "update_state"):
@@ -219,8 +213,7 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
 
         return graph
 
-    def _execute_tool_or_agent(self,
-                               state: SupervisorReactState) -> dict[str, Any]:
+    def _execute_tool_or_agent(self, state: SupervisorReactState) -> dict[str, Any]:
         """Execute tools or agent handoffs based on the tool call.
 
         This replaces the standard tool node behavior to handle agent
@@ -231,8 +224,7 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
             return {"messages": []}
 
         last_message = messages[-1]
-        if not isinstance(last_message,
-                          AIMessage) or not last_message.tool_calls:
+        if not isinstance(last_message, AIMessage) or not last_message.tool_calls:
             return {"messages": []}
 
         # Process each tool call
@@ -244,20 +236,16 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
             # Check if it's a handoff to an agent
             if tool_name in state.registered_agents:
                 # Execute agent handoff
-                result = self._execute_agent_handoff(state, tool_name,
-                                                     tool_call)
+                result = self._execute_agent_handoff(state, tool_name, tool_call)
                 tool_messages.append(
-                    ToolMessage(content=result,
-                                tool_call_id=tool_id,
-                                name=tool_name), )
+                    ToolMessage(content=result, tool_call_id=tool_id, name=tool_name),
+                )
             else:
                 # Execute regular tool (list_agents, forward_message, etc)
-                result = self._execute_regular_tool(state, tool_name,
-                                                    tool_call)
+                result = self._execute_regular_tool(state, tool_name, tool_call)
                 tool_messages.append(
-                    ToolMessage(content=result,
-                                tool_call_id=tool_id,
-                                name=tool_name), )
+                    ToolMessage(content=result, tool_call_id=tool_id, name=tool_name),
+                )
 
         return {"messages": tool_messages}
 

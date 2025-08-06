@@ -4,6 +4,7 @@ This module defines the protocol interfaces that extract and update
 functions must implement to be compatible with the NodeSchemaComposer
 system.
 """
+
 from __future__ import annotations
 
 from typing import Any

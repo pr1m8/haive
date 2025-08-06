@@ -93,8 +93,7 @@ def run_math_example():
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Run Tree of Thoughts agent examples")
+    parser = argparse.ArgumentParser(description="Run Tree of Thoughts agent examples")
     parser.add_argument(
         "--example",
         choices=["basic", "game24", "math"],

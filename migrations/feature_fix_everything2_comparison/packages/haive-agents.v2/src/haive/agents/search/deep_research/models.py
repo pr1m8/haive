@@ -31,8 +31,7 @@ class ResearchSource(BaseModel):
         le=1.0,
         description="Relevance to query",
     )
-    content_snippet: str = Field(default="",
-                                 description="Relevant content excerpt")
+    content_snippet: str = Field(default="", description="Relevant content excerpt")
     source_type: str = Field(
         default="web",
         description="Type of source (web, academic, news, etc.)",
@@ -68,14 +67,12 @@ class ResearchQuery(BaseModel):
         ...,
         description="Type of query (background, specific, validation)",
     )
-    results_found: int = Field(default=0,
-                               description="Number of results found")
+    results_found: int = Field(default=0, description="Number of results found")
     processing_time: float = Field(
         default=0.0,
         description="Time to process this query",
     )
-    success: bool = Field(default=True,
-                          description="Whether query was successful")
+    success: bool = Field(default=True, description="Whether query was successful")
 
 
 class DeepResearchResponse(SearchResponse):
@@ -100,8 +97,7 @@ class DeepResearchResponse(SearchResponse):
         default_factory=list,
         description="Queries performed",
     )
-    total_sources_examined: int = Field(default=0,
-                                        description="Total sources examined")
+    total_sources_examined: int = Field(default=0, description="Total sources examined")
     high_quality_sources: int = Field(
         default=0,
         description="High quality sources found",
@@ -130,50 +126,37 @@ class DeepResearchResponse(SearchResponse):
 
         json_schema_extra = {
             "example": {
-                "query":
-                "What are the environmental impacts of electric vehicles?",
-                "response":
-                "# Environmental Impacts of Electric Vehicles: A Comprehensive Analysis\n\n## Executive Summary\n\nElectric vehicles (EVs) present both environmental benefits and challenges...",
+                "query": "What are the environmental impacts of electric vehicles?",
+                "response": "# Environmental Impacts of Electric Vehicles: A Comprehensive Analysis\n\n## Executive Summary\n\nElectric vehicles (EVs) present both environmental benefits and challenges...",
                 "sources": ["nature.com", "science.org", "epa.gov"],
-                "confidence":
-                0.85,
-                "search_type":
-                "DeepResearch",
-                "processing_time":
-                45.2,
-                "executive_summary":
-                "Electric vehicles show significant environmental benefits over traditional vehicles, with lifecycle emissions 40-60% lower despite manufacturing challenges.",
+                "confidence": 0.85,
+                "search_type": "DeepResearch",
+                "processing_time": 45.2,
+                "executive_summary": "Electric vehicles show significant environmental benefits over traditional vehicles, with lifecycle emissions 40-60% lower despite manufacturing challenges.",
                 "research_sections": [
                     {
-                        "title":
-                        "Manufacturing Impact",
-                        "content":
-                        "EV battery production requires significant energy and rare earth materials...",
+                        "title": "Manufacturing Impact",
+                        "content": "EV battery production requires significant energy and rare earth materials...",
                         "sources": [],
                         "key_points": [
                             "Battery production is energy-intensive",
                             "Rare earth mining concerns",
                         ],
-                        "confidence_level":
-                        0.8,
+                        "confidence_level": 0.8,
                     },
                 ],
                 "research_queries": [
                     {
-                        "query":
-                        "electric vehicle lifecycle emissions studies",
+                        "query": "electric vehicle lifecycle emissions studies",
                         "query_type": "background",
                         "results_found": 25,
                         "processing_time": 12.3,
                         "success": True,
                     },
                 ],
-                "total_sources_examined":
-                47,
-                "high_quality_sources":
-                12,
-                "research_depth":
-                4,
+                "total_sources_examined": 47,
+                "high_quality_sources": 12,
+                "research_depth": 4,
                 "limitations": ["Limited data on long-term battery disposal"],
                 "related_topics": [
                     "Battery recycling",
@@ -188,10 +171,7 @@ class DeepResearchResponse(SearchResponse):
 class DeepResearchRequest(BaseModel):
     """Request model for deep research operations."""
 
-    query: str = Field(...,
-                       min_length=1,
-                       max_length=2000,
-                       description="Research query")
+    query: str = Field(..., min_length=1, max_length=2000, description="Research query")
     research_depth: int = Field(
         default=3,
         ge=1,
@@ -214,8 +194,7 @@ class DeepResearchRequest(BaseModel):
         default=True,
         description="Include fact checking",
     )
-    max_sources: int = Field(default=50,
-                             description="Maximum sources to examine")
+    max_sources: int = Field(default=50, description="Maximum sources to examine")
     generate_report: bool = Field(
         default=True,
         description="Generate structured report",
@@ -226,24 +205,17 @@ class DeepResearchRequest(BaseModel):
 
         json_schema_extra = {
             "example": {
-                "query":
-                "Impact of artificial intelligence on healthcare outcomes",
-                "research_depth":
-                4,
+                "query": "Impact of artificial intelligence on healthcare outcomes",
+                "research_depth": 4,
                 "focus_areas": [
                     "diagnostic accuracy",
                     "treatment efficiency",
                     "patient outcomes",
                 ],
-                "source_types":
-                ["academic", "clinical_trials", "meta_analysis"],
-                "time_period":
-                "last_3_years",
-                "include_fact_checking":
-                True,
-                "max_sources":
-                40,
-                "generate_report":
-                True,
+                "source_types": ["academic", "clinical_trials", "meta_analysis"],
+                "time_period": "last_3_years",
+                "include_fact_checking": True,
+                "max_sources": 40,
+                "generate_report": True,
             },
         }

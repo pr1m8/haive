@@ -23,8 +23,7 @@ class Candidate(BaseModel):
         default=None,
         description="Score assigned to this candidate",
     )
-    feedback: str | None = Field(default=None,
-                                 description="Feedback on this candidate")
+    feedback: str | None = Field(default=None, description="Feedback on this candidate")
     metadata: dict[str, Any] = Field(
         default_factory=dict,
         description="Additional metadata",
@@ -42,15 +41,15 @@ class Candidate(BaseModel):
 class CandidateContent(BaseModel):
     """A potential solution to the problem."""
 
-    content: str = Field(
-        description="The complete reasoning and solution approach")
+    content: str = Field(description="The complete reasoning and solution approach")
 
 
 class CandidateList(BaseModel):
     """A list of candidate solutions."""
 
     candidates: list[CandidateContent] = Field(
-        description="List of different candidate solutions to the problem", )
+        description="List of different candidate solutions to the problem",
+    )
     reasoning: str | None = Field(
         default=None,
         description="Reasoning about different approaches to solving the problem",
@@ -64,4 +63,5 @@ class CandidateScore(BaseModel):
         description="Numerical score between 0.0 and 1.0, where 1.0 is perfect",
     )
     feedback: str = Field(
-        description="Detailed feedback explaining the score and reasoning", )
+        description="Detailed feedback explaining the score and reasoning",
+    )

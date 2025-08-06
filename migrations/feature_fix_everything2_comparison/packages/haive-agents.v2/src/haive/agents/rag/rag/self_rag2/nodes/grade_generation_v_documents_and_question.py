@@ -27,19 +27,14 @@ def grade_generation_v_documents_and_question(state: dict[str, Any]):
     generation = state["generation"]
 
     score = hallucination_grader.invoke(
-        {
-            "documents": documents,
-            "generation": generation
-        }, )
+        {"documents": documents, "generation": generation},
+    )
     grade = score.binary_score
 
     # Check hallucination
     if grade == "yes":
         # Check question-answering
-        score = answer_grader.invoke({
-            "question": question,
-            "generation": generation
-        })
+        score = answer_grader.invoke({"question": question, "generation": generation})
         grade = score.binary_score
         if grade == "yes":
             return "useful"

@@ -26,16 +26,16 @@ class SupervisorState(BaseModel):
     """State for supervisor operations."""
 
     messages: list[Any] = Field(default_factory=list)
-    routing_decision: str | None = Field(None,
-                                         description='Last routing decision')
-    target_agent: str | None = Field(None, description='Current target agent')
+    routing_decision: str | None = Field(None, description="Last routing decision")
+    target_agent: str | None = Field(None, description="Current target agent")
 
 
 # Default supervisor prompt
-DEFAULT_SUPERVISOR_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        'system',
-        """You are a supervisor managing specialized agents.
+DEFAULT_SUPERVISOR_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are a supervisor managing specialized agents.
 
 Available Agents:
 {agent_descriptions}
@@ -46,9 +46,10 @@ Instructions:
 3. Respond with ONLY the agent name or "END" if complete
 
 Decision:""",
-    ),
-    ('placeholder', '{messages}'),
-], )
+        ),
+        ("placeholder", "{messages}"),
+    ],
+)
 
 
 class SupervisorAgent(ReactAgent):
@@ -64,24 +65,24 @@ class SupervisorAgent(ReactAgent):
 
     registered_agents: dict[str, Agent] = Field(
         default_factory=dict,
-        description='Registered agents by name',
+        description="Registered agents by name",
     )
 
     agent_descriptions: dict[str, str] = Field(
         default_factory=dict,
-        description='Descriptions of agent capabilities',
+        description="Descriptions of agent capabilities",
     )
 
     supervisor_prompt: ChatPromptTemplate | None = Field(
         default=None,
-        description='Custom prompt for routing decisions',
+        description="Custom prompt for routing decisions",
     )
 
     # ========================================================================
     # ENGINE CONFIGURATION
     # ========================================================================
 
-    @field_validator('engine', mode='before')
+    @field_validator("engine", mode="before")
     @classmethod
     def ensure_supervisor_engine(cls, v):
         """Ensure supervisor has a low-temperature engine for routing."""
@@ -105,29 +106,25 @@ class SupervisorAgent(ReactAgent):
 
         # Update prompt template for routing
         if self.engine:
-            self.engine.prompt_template = self.supervisor_prompt or self._create_routing_prompt(
-            )
+            self.engine.prompt_template = self.supervisor_prompt or self._create_routing_prompt()
 
     def _create_routing_prompt(self) -> ChatPromptTemplate:
         """Create routing prompt with current agent descriptions."""
         if not self.agent_descriptions:
-            descriptions = 'No agents registered yet'
+            descriptions = "No agents registered yet"
         else:
-            descriptions = '\n'.join([
-                f"- {name}: {desc}"
-                for name, desc in self.agent_descriptions.items()
-            ], )
+            descriptions = "\n".join(
+                [f"- {name}: {desc}" for name, desc in self.agent_descriptions.items()],
+            )
 
         # Use default template with current descriptions
-        return DEFAULT_SUPERVISOR_PROMPT.partial(
-            agent_descriptions=descriptions)
+        return DEFAULT_SUPERVISOR_PROMPT.partial(agent_descriptions=descriptions)
 
     # ========================================================================
     # AGENT REGISTRATION
     # ========================================================================
 
-    def register_agent(self, name: str, agent: Agent,
-                       description: str) -> None:
+    def register_agent(self, name: str, agent: Agent, description: str) -> None:
         """Register an agent with the supervisor.
 
         Args:
@@ -175,23 +172,23 @@ class SupervisorAgent(ReactAgent):
 
         if not self.registered_agents:
             logger.warning(
-                'No agents registered, supervisor will only make routing decisions',
+                "No agents registered, supervisor will only make routing decisions",
             )
             return graph
 
         # Add routing logic node after agent_node
         def route_to_agent(state: dict[str, Any]) -> str:
             """Route based on supervisor's decision."""
-            messages = state.get('messages', [])
+            messages = state.get("messages", [])
             if not messages:
                 return END
 
             last_msg = messages[-1]
-            if hasattr(last_msg, 'content'):
+            if hasattr(last_msg, "content"):
                 decision = last_msg.content.strip().lower()
 
                 # Check for END
-                if decision == 'end':
+                if decision == "end":
                     return END
 
                 # Match agent names
@@ -204,38 +201,34 @@ class SupervisorAgent(ReactAgent):
 
         # Remove existing edge from agent_node to END/tool_node
         # and add routing instead
-        if 'agent_node' in graph.nodes:
+        if "agent_node" in graph.nodes:
             # Find and remove outgoing edges from agent_node
             edges_to_remove = []
             for source, target in graph.edges:
-                if source == 'agent_node':
+                if source == "agent_node":
                     edges_to_remove.append((source, target))
 
             for edge in edges_to_remove:
                 graph.remove_edge(*edge)
 
             # Add routing node
-            graph.add_node('route_decision', route_to_agent)
-            graph.add_edge('agent_node', 'route_decision')
+            graph.add_node("route_decision", route_to_agent)
+            graph.add_edge("agent_node", "route_decision")
 
             # Add agent nodes
             for name, agent in self.registered_agents.items():
                 node = AgentNodeV3Config(name=f"{name}_node", agent=agent)
                 graph.add_node(f"{name}_node", node)
                 # Agent outputs go back to supervisor
-                graph.add_edge(f"{name}_node", 'agent_node')
+                graph.add_edge(f"{name}_node", "agent_node")
 
             # Add conditional routing
             route_map = {
                 END: END,
-                **{
-                    f"{name}_node": f"{name}_node"
-                    for name in self.registered_agents
-                },
+                **{f"{name}_node": f"{name}_node" for name in self.registered_agents},
             }
 
-            graph.add_conditional_edges('route_decision', route_to_agent,
-                                        route_map)
+            graph.add_conditional_edges("route_decision", route_to_agent, route_map)
 
         return graph
 
@@ -247,7 +240,7 @@ class SupervisorAgent(ReactAgent):
     def create_with_agents(
         cls,
         agents: list[tuple[str, Agent, str]],
-        name: str = 'supervisor',
+        name: str = "supervisor",
         engine: AugLLMConfig | None = None,
         **kwargs,
     ) -> SupervisorAgent:

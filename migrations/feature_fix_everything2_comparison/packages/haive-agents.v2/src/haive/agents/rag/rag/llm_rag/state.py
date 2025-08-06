@@ -7,6 +7,7 @@ Classes:
     LLMRAGOutputState: LLMRAGOutputState implementation.
     LLMRAGState: LLMRAGState implementation.
 """
+
 from __future__ import annotations
 
 from haive.agents.rag.base.state import BaseRAGInputState
@@ -23,12 +24,12 @@ class LLMRAGOutputState(BaseRAGOutputState):
     """Output state for LLM RAG agents."""
 
     answer: str = Field(
-        default='',
-        description='The generated answer based on retrieved documents',
+        default="",
+        description="The generated answer based on retrieved documents",
     )
     is_relevant: bool = Field(
         default=False,
-        description='Whether the retrieved documents are relevant to the query',
+        description="Whether the retrieved documents are relevant to the query",
     )
 
 

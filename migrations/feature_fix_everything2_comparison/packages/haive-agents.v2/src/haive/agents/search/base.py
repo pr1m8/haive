@@ -88,8 +88,7 @@ class BaseSearchAgent(ReactAgent, ABC):
     def get_search_instructions(self) -> str:
         """Get specific search instructions for this agent type."""
 
-    def format_search_context(self, query: str, context: dict[str,
-                                                              Any]) -> str:
+    def format_search_context(self, query: str, context: dict[str, Any]) -> str:
         """Format search context for the agent.
 
         Args:
@@ -125,8 +124,7 @@ class BaseSearchAgent(ReactAgent, ABC):
 
         return "\n".join(context_parts)
 
-    def extract_memory_items(self, query: str,
-                             response: str) -> list[dict[str, Any]]:
+    def extract_memory_items(self, query: str, response: str) -> list[dict[str, Any]]:
         """Extract memory items from search interaction.
 
         Args:
@@ -148,20 +146,18 @@ class BaseSearchAgent(ReactAgent, ABC):
                     "response_length": len(response),
                     "search_type": self.__class__.__name__,
                 },
-            }, )
+            },
+        )
 
         # Extract semantic facts from response (basic extraction)
         if "fact:" in response.lower() or "according to" in response.lower():
             memory_items.append(
                 {
                     "type": MemoryType.SEMANTIC,
-                    "content":
-                    response[:500],  # First 500 chars as semantic knowledge
-                    "metadata": {
-                        "source": "search_response",
-                        "query": query
-                    },
-                }, )
+                    "content": response[:500],  # First 500 chars as semantic knowledge
+                    "metadata": {"source": "search_response", "query": query},
+                },
+            )
 
         return memory_items
 

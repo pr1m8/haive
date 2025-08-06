@@ -72,21 +72,26 @@ Improved response:"""
 # Create prompt templates
 def create_reflection_prompt() -> ChatPromptTemplate:
     """Create a reflection prompt template."""
-    return ChatPromptTemplate.from_messages([
-        SystemMessagePromptTemplate.from_template(REFLECTION_SYSTEM_PROMPT),
-        HumanMessagePromptTemplate.from_template(
-            "Please reflect on and improve this response:\n\n{response}", ),
-    ], )
+    return ChatPromptTemplate.from_messages(
+        [
+            SystemMessagePromptTemplate.from_template(REFLECTION_SYSTEM_PROMPT),
+            HumanMessagePromptTemplate.from_template(
+                "Please reflect on and improve this response:\n\n{response}",
+            ),
+        ],
+    )
 
 
 def create_grading_prompt() -> ChatPromptTemplate:
     """Create a grading prompt template."""
-    return ChatPromptTemplate.from_messages([
-        SystemMessagePromptTemplate.from_template(GRADING_SYSTEM_PROMPT),
-        HumanMessagePromptTemplate.from_template(
-            "Original query: {query}\n\nResponse to grade:\n{response}\n\nPlease provide a comprehensive evaluation.",
-        ),
-    ], )
+    return ChatPromptTemplate.from_messages(
+        [
+            SystemMessagePromptTemplate.from_template(GRADING_SYSTEM_PROMPT),
+            HumanMessagePromptTemplate.from_template(
+                "Original query: {query}\n\nResponse to grade:\n{response}\n\nPlease provide a comprehensive evaluation.",
+            ),
+        ],
+    )
 
 
 def create_expert_prompt(expertise_config: dict) -> ChatPromptTemplate:
@@ -104,10 +109,12 @@ def create_expert_prompt(expertise_config: dict) -> ChatPromptTemplate:
         style_instruction=style_instruction,
     )
 
-    return ChatPromptTemplate.from_messages([
-        SystemMessagePromptTemplate.from_template(system_prompt),
-        HumanMessagePromptTemplate.from_template("{query}"),
-    ], )
+    return ChatPromptTemplate.from_messages(
+        [
+            SystemMessagePromptTemplate.from_template(system_prompt),
+            HumanMessagePromptTemplate.from_template("{query}"),
+        ],
+    )
 
 
 def create_improvement_prompt(

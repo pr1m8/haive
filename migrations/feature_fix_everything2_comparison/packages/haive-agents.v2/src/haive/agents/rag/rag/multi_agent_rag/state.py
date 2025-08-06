@@ -42,22 +42,17 @@ class DocumentGradingResult(BaseModel):
 
     document_id: str = Field(description="Document identifier")
     document: Document = Field(description="The original document")
-    relevance_score: float = Field(ge=0.0,
-                                   le=1.0,
-                                   description="Relevance score")
-    is_relevant: bool = Field(
-        description="Whether document passed relevance check")
+    relevance_score: float = Field(ge=0.0, le=1.0, description="Relevance score")
+    is_relevant: bool = Field(description="Whether document passed relevance check")
     grading_reason: str = Field(description="Reason for grading decision")
-    grader_type: str = Field(
-        description="Type of grader used (binary, numeric, etc.)")
+    grader_type: str = Field(description="Type of grader used (binary, numeric, etc.)")
 
 
 class RAGStep(BaseModel):
     """Represents a single step in the RAG workflow."""
 
     step_id: str = Field(description="Unique identifier for this step")
-    operation_type: RAGOperationType = Field(
-        description="Type of operation performed")
+    operation_type: RAGOperationType = Field(description="Type of operation performed")
     input_data: dict[str, Any] = Field(
         default_factory=dict,
         description="Input data for this step",
@@ -100,10 +95,9 @@ class MultiAgentRAGState(StateSchema):
         default_factory=list,
         description="Documents retrieved for current query",
     )
-    graded_documents: Annotated[
-        list[DocumentGradingResult], operator.add] = Field(
-            default_factory=list,
-            description="Documents that have been graded for relevance",
+    graded_documents: Annotated[list[DocumentGradingResult], operator.add] = Field(
+        default_factory=list,
+        description="Documents that have been graded for relevance",
     )
     filtered_documents: Annotated[list[Document], operator.add] = Field(
         default_factory=list,
@@ -261,7 +255,8 @@ class MultiAgentRAGState(StateSchema):
     def get_relevant_documents(self, min_score: float = 0.5) -> list[Document]:
         """Get documents that passed relevance threshold."""
         return [
-            result.document for result in self.graded_documents
+            result.document
+            for result in self.graded_documents
             if result.relevance_score >= min_score and result.is_relevant
         ]
 
@@ -269,21 +264,22 @@ class MultiAgentRAGState(StateSchema):
         """Update quality metrics based on current state."""
         if self.graded_documents:
             # Calculate retrieval confidence based on graded documents
-            relevant_count = sum(1 for doc in self.graded_documents
-                                 if doc.is_relevant)
-            self.retrieval_confidence = relevant_count / len(
-                self.graded_documents)
+            relevant_count = sum(1 for doc in self.graded_documents if doc.is_relevant)
+            self.retrieval_confidence = relevant_count / len(self.graded_documents)
 
         # Overall quality is average of retrieval and generation confidence
         if self.retrieval_confidence > 0 and self.generation_confidence > 0:
-            self.overall_quality_score = (self.retrieval_confidence +
-                                          self.generation_confidence) / 2
+            self.overall_quality_score = (
+                self.retrieval_confidence + self.generation_confidence
+            ) / 2
 
     def should_refine_query(self) -> bool:
         """Determine if query should be refined based on state."""
-        return (self.retrieval_confidence < 0.3
-                or len(self.get_relevant_documents()) == 0
-                or self.query_status == QueryStatus.NEEDS_REFINEMENT)
+        return (
+            self.retrieval_confidence < 0.3
+            or len(self.get_relevant_documents()) == 0
+            or self.query_status == QueryStatus.NEEDS_REFINEMENT
+        )
 
     def get_latest_step(
         self,
@@ -295,9 +291,7 @@ class MultiAgentRAGState(StateSchema):
         """
         steps = self.workflow_steps
         if operation_type:
-            steps = [
-                step for step in steps if step.operation_type == operation_type
-            ]
+            steps = [step for step in steps if step.operation_type == operation_type]
 
         return steps[-1] if steps else None
 

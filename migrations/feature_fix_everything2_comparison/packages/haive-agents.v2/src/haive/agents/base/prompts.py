@@ -214,9 +214,7 @@ def format_agent_capabilities(agents: dict[str, list[str]]) -> str:
 
     lines = []
     for name, capabilities in agents.items():
-        cap_str = ", ".join(
-            capabilities
-        ) if capabilities else "No specific capabilities listed"
+        cap_str = ", ".join(capabilities) if capabilities else "No specific capabilities listed"
         lines.append(f"- {name}: {cap_str}")
 
     return "\n".join(lines)
@@ -238,12 +236,14 @@ def create_system_prompt(
         Complete system prompt
     """
     prompt = BaseSupervisorPrompts.SUPERVISOR_SYSTEM_PROMPT.format(
-        agent_list=agent_list, )
+        agent_list=agent_list,
+    )
 
     if supervisor_name:
         prompt = (
             f"You are {supervisor_name}, an intelligent supervisor agent...\n\n"
-            + prompt[len("You are an intelligent supervisor agent"):])
+            + prompt[len("You are an intelligent supervisor agent") :]
+        )
 
     if additional_instructions:
         prompt += f"\n\nAdditional Instructions:\n{additional_instructions}"

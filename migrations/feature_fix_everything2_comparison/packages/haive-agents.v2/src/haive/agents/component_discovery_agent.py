@@ -129,8 +129,7 @@ class ComponentDiscoveryAgent(BaseModel):
 
     # Internal state (private attributes)
     _documents: list[Document] | None = PrivateAttr(default=None)
-    _haive_discovery: HaiveComponentDiscovery | None = PrivateAttr(
-        default=None)
+    _haive_discovery: HaiveComponentDiscovery | None = PrivateAttr(default=None)
 
     @model_validator(mode="after")
     def setup_discovery_agent(self) -> "ComponentDiscoveryAgent":
@@ -149,16 +148,12 @@ class ComponentDiscoveryAgent(BaseModel):
                 self._documents = self._load_documents(self.document_path)
 
                 if not self._documents:
-                    logger.warning(
-                        f"No documents found at path: {self.document_path}")
+                    logger.warning(f"No documents found at path: {self.document_path}")
                     # Create empty documents list to avoid errors
                     self._documents = [
                         Document(
                             page_content="No components found",
-                            metadata={
-                                "source": "empty",
-                                "type": "placeholder"
-                            },
+                            metadata={"source": "empty", "type": "placeholder"},
                         ),
                     ]
 
@@ -214,10 +209,7 @@ class ComponentDiscoveryAgent(BaseModel):
         # Create minimal document
         fallback_doc = Document(
             page_content="Fallback component discovery agent",
-            metadata={
-                "source": "fallback",
-                "type": "system"
-            },
+            metadata={"source": "fallback", "type": "system"},
         )
 
         # Create basic retriever
@@ -286,7 +278,8 @@ class ComponentDiscoveryAgent(BaseModel):
 
             # Discover all components
             all_components = self._haive_discovery.discover_all_categorized(
-                create_tools=True, )
+                create_tools=True,
+            )
 
             # Convert to documents
             for category, components in all_components.items():
@@ -360,14 +353,12 @@ class ComponentDiscoveryAgent(BaseModel):
                             doc = Document(
                                 page_content=content,
                                 metadata={
-                                    "source":
-                                    str(file_path),
-                                    "type":
-                                    "file",
-                                    "filename":
-                                    file_path.name,
-                                    "relative_path":
-                                    str(file_path.relative_to(path_obj), ),
+                                    "source": str(file_path),
+                                    "type": "file",
+                                    "filename": file_path.name,
+                                    "relative_path": str(
+                                        file_path.relative_to(path_obj),
+                                    ),
                                 },
                             )
                             documents.append(doc)
@@ -375,8 +366,7 @@ class ComponentDiscoveryAgent(BaseModel):
                         logger.warning(f"Failed to load file {file_path}: {e}")
 
         except Exception as e:
-            logger.exception(
-                f"Failed to load from filesystem path {path}: {e}")
+            logger.exception(f"Failed to load from filesystem path {path}: {e}")
 
         return documents
 
@@ -437,13 +427,11 @@ class ComponentDiscoveryAgent(BaseModel):
             if self.discovery_config.get("use_cache", True):
                 self.component_cache[query] = components
 
-            logger.info(
-                f"Discovered {len(components)} components for query: {query}")
+            logger.info(f"Discovered {len(components)} components for query: {query}")
             return components
 
         except Exception as e:
-            logger.exception(
-                f"Failed to discover components for query '{query}': {e}")
+            logger.exception(f"Failed to discover components for query '{query}': {e}")
             return []
 
     def _parse_components(self, output: str) -> list[dict[str, Any]]:
@@ -608,8 +596,7 @@ class ComponentDiscoveryAgent(BaseModel):
                 print(f"Cached queries: {stats['cached_queries']}")
                 print(f"Total components: {stats['total_components']}")
         """
-        total_components = sum(
-            len(components) for components in self.component_cache.values())
+        total_components = sum(len(components) for components in self.component_cache.values())
 
         return {
             "cached_queries": len(self.component_cache),

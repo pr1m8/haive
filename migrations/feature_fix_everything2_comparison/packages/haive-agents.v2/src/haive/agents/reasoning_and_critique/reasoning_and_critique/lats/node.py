@@ -80,8 +80,7 @@ class Node(BaseModel):
             current = current.parent
         return list(reversed(path))
 
-    def get_trajectory(self,
-                       include_reflections: bool = True) -> list[BaseMessage]:
+    def get_trajectory(self, include_reflections: bool = True) -> list[BaseMessage]:
         """Get all messages in the path from root to this node."""
         messages = []
         current = self
@@ -124,6 +123,5 @@ class NodeManager:
                 node.parent = self.nodes[parent_id]
 
             node.children = [
-                self.nodes[child_id] for child_id in children_ids
-                if child_id in self.nodes
+                self.nodes[child_id] for child_id in children_ids if child_id in self.nodes
             ]

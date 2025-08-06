@@ -21,14 +21,12 @@ class AgentExecutionConfig(BaseModel):
     """Configuration for agent execution within supervisor context."""
 
     agent_name: str = Field(description="Name of the agent")
-    capability_description: str = Field(
-        description="Agent's capability description")
+    capability_description: str = Field(description="Agent's capability description")
     execution_timeout: float | None = Field(
         default=300.0,
         description="Timeout in seconds",
     )
-    retry_count: int = Field(default=0,
-                             description="Number of retries attempted")
+    retry_count: int = Field(default=0, description="Number of retries attempted")
     max_retries: int = Field(default=3, description="Maximum retries allowed")
     output_mode: str = Field(
         default="full_history",
@@ -56,10 +54,8 @@ class AgentExecutionConfig(BaseModel):
         default=None,
         description="Last execution timestamp",
     )
-    success_count: int = Field(default=0,
-                               description="Number of successful executions")
-    error_count: int = Field(default=0,
-                             description="Number of failed executions")
+    success_count: int = Field(default=0, description="Number of successful executions")
+    error_count: int = Field(default=0, description="Number of failed executions")
 
     # Dynamic configuration
     custom_params: dict[str, Any] = Field(
@@ -85,8 +81,7 @@ class AgentExecutionResult(BaseModel):
         default_factory=time.time,
         description="Execution start time",
     )
-    end_time: float | None = Field(default=None,
-                                   description="Execution end time")
+    end_time: float | None = Field(default=None, description="Execution end time")
     duration: float | None = Field(
         default=None,
         description="Execution duration in seconds",
@@ -98,8 +93,7 @@ class AgentExecutionResult(BaseModel):
         description="Messages from agent execution",
     )
     output: Any | None = Field(default=None, description="Agent output data")
-    error: str | None = Field(default=None,
-                              description="Error message if failed")
+    error: str | None = Field(default=None, description="Error message if failed")
 
     # Metadata
     token_usage: dict[str, int] | None = Field(
@@ -263,8 +257,7 @@ class DynamicSupervisorState(StateSchema):
         """Timestamp of last agent execution."""
         if not self.agent_execution_history:
             return None
-        return max(result.start_time
-                   for result in self.agent_execution_history)
+        return max(result.start_time for result in self.agent_execution_history)
 
     @computed_field
     @property
@@ -272,8 +265,7 @@ class DynamicSupervisorState(StateSchema):
         """Success rate of agent executions."""
         if not self.agent_execution_history:
             return 0.0
-        successful = sum(1 for result in self.agent_execution_history
-                         if result.success)
+        successful = sum(1 for result in self.agent_execution_history if result.success)
         return successful / len(self.agent_execution_history)
 
     @computed_field
@@ -285,14 +277,11 @@ class DynamicSupervisorState(StateSchema):
 
         usage_counts = {}
         for result in self.agent_execution_history:
-            usage_counts[result.agent_name] = usage_counts.get(
-                result.agent_name, 0) + 1
+            usage_counts[result.agent_name] = usage_counts.get(result.agent_name, 0) + 1
 
-        return max(usage_counts.items(),
-                   key=lambda x: x[1])[0] if usage_counts else None
+        return max(usage_counts.items(), key=lambda x: x[1])[0] if usage_counts else None
 
-    def add_agent_config(self, agent_name: str,
-                         config: AgentExecutionConfig) -> None:
+    def add_agent_config(self, agent_name: str, config: AgentExecutionConfig) -> None:
         """Add or update agent configuration."""
         self.registered_agents[agent_name] = config
 
@@ -340,15 +329,13 @@ class DynamicSupervisorState(StateSchema):
             self.session_stats["failed_executions"] += 1
 
         # Update average response time
-        total_duration = sum(r.duration or 0
-                             for r in self.agent_execution_history
-                             if r.duration)
+        total_duration = sum(r.duration or 0 for r in self.agent_execution_history if r.duration)
         self.session_stats["average_response_time"] = total_duration / len(
-            self.agent_execution_history, )
+            self.agent_execution_history,
+        )
 
         # Update agent stats
-        self.update_agent_stats(result.agent_name, result.success,
-                                result.duration or 0)
+        self.update_agent_stats(result.agent_name, result.success, result.duration or 0)
 
     def add_routing_decision(self, decision: SupervisorDecision) -> None:
         """Add routing decision to history."""
@@ -357,33 +344,22 @@ class DynamicSupervisorState(StateSchema):
 
     def get_recent_decisions(self, limit: int = 5) -> list[SupervisorDecision]:
         """Get recent routing decisions."""
-        return self.routing_decisions[
-            -limit:] if self.routing_decisions else []
+        return self.routing_decisions[-limit:] if self.routing_decisions else []
 
     def get_agent_performance(self, agent_name: str) -> dict[str, Any]:
         """Get performance metrics for specific agent."""
-        agent_results = [
-            r for r in self.agent_execution_history
-            if r.agent_name == agent_name
-        ]
+        agent_results = [r for r in self.agent_execution_history if r.agent_name == agent_name]
 
         if not agent_results:
-            return {
-                "executions": 0,
-                "success_rate": 0.0,
-                "average_duration": 0.0
-            }
+            return {"executions": 0, "success_rate": 0.0, "average_duration": 0.0}
 
         successful = sum(1 for r in agent_results if r.success)
-        durations = [
-            r.duration for r in agent_results if r.duration is not None
-        ]
+        durations = [r.duration for r in agent_results if r.duration is not None]
 
         return {
             "executions": len(agent_results),
             "success_rate": successful / len(agent_results),
-            "average_duration":
-            sum(durations) / len(durations) if durations else 0.0,
+            "average_duration": sum(durations) / len(durations) if durations else 0.0,
             "last_execution": max(r.start_time for r in agent_results),
             "error_count": len(agent_results) - successful,
         }
@@ -414,11 +390,11 @@ class DynamicSupervisorState(StateSchema):
     def get_high_priority_agents(self) -> list[str]:
         """Get agents sorted by priority (highest first)."""
         agents_with_priority = [
-            (name, config.priority)
-            for name, config in self.registered_agents.items()
+            (name, config.priority) for name, config in self.registered_agents.items()
         ]
         return [
-            name for name, _ in sorted(
+            name
+            for name, _ in sorted(
                 agents_with_priority,
                 key=lambda x: x[1],
                 reverse=True,
@@ -446,8 +422,7 @@ class DynamicSupervisorState(StateSchema):
     def cleanup_old_history(self, max_history: int = 100) -> None:
         """Clean up old execution history to prevent memory bloat."""
         if len(self.agent_execution_history) > max_history:
-            self.agent_execution_history = self.agent_execution_history[
-                -max_history:]
+            self.agent_execution_history = self.agent_execution_history[-max_history:]
 
         if len(self.routing_decisions) > max_history:
             self.routing_decisions = self.routing_decisions[-max_history:]

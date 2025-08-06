@@ -3,6 +3,7 @@
 This implementation integrates with the MultiAgent base class and uses
 dynamic agent execution without graph rebuilding.
 """
+
 from __future__ import annotations
 
 import logging
@@ -51,11 +52,8 @@ class DynamicMultiAgent(MultiAgent):
 
     # Private attributes for dynamic management
     _capability_registry: dict[str, str] = PrivateAttr(default_factory=dict)
-    _performance_metrics: dict[str,
-                               dict[str,
-                                    Any]] = PrivateAttr(default_factory=dict)
-    _execution_history: list[dict[str,
-                                  Any]] = PrivateAttr(default_factory=list)
+    _performance_metrics: dict[str, dict[str, Any]] = PrivateAttr(default_factory=dict)
+    _execution_history: list[dict[str, Any]] = PrivateAttr(default_factory=list)
 
     def setup_agent(self) -> None:
         """Set up the dynamic multi-agent system."""
@@ -71,8 +69,7 @@ class DynamicMultiAgent(MultiAgent):
         for agent_name, agent in self.agents.items():
             self._register_agent_capability(agent_name, agent)
 
-    def _register_agent_capability(self, agent_name: str,
-                                   agent: Agent) -> None:
+    def _register_agent_capability(self, agent_name: str, agent: Agent) -> None:
         """Register agent capabilities for routing."""
         # Extract capability from agent
         capability = getattr(agent, "capability", None)
@@ -80,14 +77,11 @@ class DynamicMultiAgent(MultiAgent):
             # Try to infer from agent type/name
             if "research" in agent_name.lower():
                 capability = "research, information gathering, fact-finding"
-            elif "write" in agent_name.lower(
-            ) or "writing" in agent_name.lower():
+            elif "write" in agent_name.lower() or "writing" in agent_name.lower():
                 capability = "writing, content creation, documentation"
-            elif "code" in agent_name.lower() or "coding" in agent_name.lower(
-            ):
+            elif "code" in agent_name.lower() or "coding" in agent_name.lower():
                 capability = "coding, programming, software development"
-            elif "analyze" in agent_name.lower(
-            ) or "analysis" in agent_name.lower():
+            elif "analyze" in agent_name.lower() or "analysis" in agent_name.lower():
                 capability = "analysis, data processing, insights"
             else:
                 capability = f"general tasks for {agent_name}"
@@ -201,10 +195,7 @@ class DynamicMultiAgent(MultiAgent):
         graph.add_conditional_edges(
             "supervisof",
             self._route_from_supervisor,
-            {
-                "executor": "executor",
-                "END": "__end__"
-            },
+            {"executor": "executor", "END": "__end__"},
         )
 
         # Executor always returns to supervisor
@@ -243,8 +234,7 @@ class DynamicMultiAgent(MultiAgent):
                 return {"is_complete": True}
 
             # Select best agent
-            selected_agent = self._select_best_agent_for_task(
-                last_message, state_dict)
+            selected_agent = self._select_best_agent_for_task(last_message, state_dict)
 
             if selected_agent:
                 logger.info(f"Selected agent: {selected_agent}")
@@ -272,7 +262,8 @@ class DynamicMultiAgent(MultiAgent):
 
             # Get target agent
             target_agent = state_dict.get("target_agent") or state_dict.get(
-                "active_agent_id", )
+                "active_agent_id",
+            )
 
             if not target_agent:
                 logger.error("No target agent specified")
@@ -291,8 +282,7 @@ class DynamicMultiAgent(MultiAgent):
 
             try:
                 # Prepare agent input following AgentNode pattern
-                agent_input = self._prepare_agent_input(
-                    target_agent, agent, state_dict)
+                agent_input = self._prepare_agent_input(target_agent, agent, state_dict)
 
                 # Execute agent
                 if hasattr(agent, "ainvoke"):
@@ -315,22 +305,18 @@ class DynamicMultiAgent(MultiAgent):
                     self._update_performance_metrics(
                         target_agent,
                         success=True,
-                        execution_time=(datetime.now() -
-                                        start_time).total_seconds(),
+                        execution_time=(datetime.now() - start_time).total_seconds(),
                     )
 
                 # Add to execution history
                 self._execution_history.append(
                     {
-                        "agent":
-                        target_agent,
-                        "timestamp":
-                        datetime.now(),
-                        "success":
-                        True,
-                        "execution_time":
-                        (datetime.now() - start_time).total_seconds(),
-                    }, )
+                        "agent": target_agent,
+                        "timestamp": datetime.now(),
+                        "success": True,
+                        "execution_time": (datetime.now() - start_time).total_seconds(),
+                    },
+                )
 
                 logger.info(f"✅ Agent {target_agent} executed successfully")
                 return update
@@ -340,8 +326,7 @@ class DynamicMultiAgent(MultiAgent):
 
                 # Track failure
                 if self.track_performance:
-                    self._update_performance_metrics(target_agent,
-                                                     success=False)
+                    self._update_performance_metrics(target_agent, success=False)
 
                 return {
                     "error": str(e),
@@ -383,8 +368,7 @@ class DynamicMultiAgent(MultiAgent):
         # If last message is AI, check for human input after it
         if isinstance(last_message, AIMessage):
             # Find last human message
-            human_messages = [(i, m) for i, m in enumerate(messages)
-                              if isinstance(m, HumanMessage)]
+            human_messages = [(i, m) for i, m in enumerate(messages) if isinstance(m, HumanMessage)]
 
             if human_messages:
                 last_human_idx = human_messages[-1][0]
@@ -444,8 +428,7 @@ class DynamicMultiAgent(MultiAgent):
 
             # Direct capability word matches
             capability_words = capability.split()
-            matches = sum(1 for word in capability_words
-                          if word in content_lower)
+            matches = sum(1 for word in capability_words if word in content_lower)
             score += min(0.5, matches * 0.1)
 
             # Semantic similarity (simple version)
@@ -543,27 +526,22 @@ class DynamicMultiAgent(MultiAgent):
         if success and execution_time:
             avg_time = metrics["average_execution_time"]
             total = metrics["successful_executions"]
-            metrics["average_execution_time"] = (avg_time * (total - 1) +
-                                                 execution_time) / total
+            metrics["average_execution_time"] = (avg_time * (total - 1) + execution_time) / total
 
         # Update last execution
         metrics["last_execution"] = datetime.now()
 
         # Adjust capability score based on performance
-        success_rate = metrics["successful_executions"] / metrics[
-            "total_executions"]
+        success_rate = metrics["successful_executions"] / metrics["total_executions"]
         metrics["capability_score"] = 0.5 + 0.5 * success_rate
 
-    def get_agent_performance(self,
-                              agent_name: str | None = None) -> dict[str, Any]:
+    def get_agent_performance(self, agent_name: str | None = None) -> dict[str, Any]:
         """Get performance metrics for agent(s)."""
         if agent_name:
             return self._performance_metrics.get(agent_name, {})
         return self._performance_metrics.copy()
 
-    def get_execution_history(self,
-                              limit: int | None = None
-                              ) -> list[dict[str, Any]]:
+    def get_execution_history(self, limit: int | None = None) -> list[dict[str, Any]]:
         """Get execution history."""
         if limit:
             return self._execution_history[-limit:]

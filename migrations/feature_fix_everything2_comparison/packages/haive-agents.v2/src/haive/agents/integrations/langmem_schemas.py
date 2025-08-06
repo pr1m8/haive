@@ -23,6 +23,8 @@ and managed by the LTM agent.
 
 
 from pydantic import BaseModel, Field
+
+
 class Memory(BaseModel):
     """Basic memory schema following LangMem patterns."""
 
@@ -39,11 +41,9 @@ class Memory(BaseModel):
 class UserPreference(BaseModel):
     """User preference memory."""
 
-    category: str = Field(
-        description="Preference category (e.g., food, music, etc.)")
+    category: str = Field(description="Preference category (e.g., food, music, etc.)")
     preference: str = Field(description="The actual preference")
-    context: str = Field(
-        description="Context or reasoning behind the preference")
+    context: str = Field(description="Context or reasoning behind the preference")
     confidence: float = Field(
         default=0.8,
         description="Confidence level in this preference (0.0-1.0)",
@@ -55,8 +55,7 @@ class FactualMemory(BaseModel):
 
     fact: str = Field(description="The factual information")
     domain: str = Field(description="Domain or category of the fact")
-    source: str | None = Field(default=None,
-                               description="Source of the information")
+    source: str | None = Field(default=None, description="Source of the information")
     verification_level: str = Field(
         default="stated",
         description="Level of verification: stated, confirmed, verified",
@@ -68,8 +67,7 @@ class PersonalContext(BaseModel):
 
     person: str = Field(description="Person or entity this context relates to")
     relationship: str = Field(description="Relationship to the user")
-    context: str = Field(
-        description="Important context about this person/relationship")
+    context: str = Field(description="Important context about this person/relationship")
     importance: str = Field(
         default="medium",
         description="Importance level: low, medium, high, critical",
@@ -96,9 +94,7 @@ class ConversationalMemory(BaseModel):
 # ============================================================================
 
 # Default schemas for the LTM agent
-DEFAULT_MEMORY_SCHEMAS = [
-    Memory, UserPreference, FactualMemory, ConversationalMemory
-]
+DEFAULT_MEMORY_SCHEMAS = [Memory, UserPreference, FactualMemory, ConversationalMemory]
 
 # Extended schemas including personal context
 EXTENDED_MEMORY_SCHEMAS = [

@@ -50,14 +50,11 @@ class ExtractFunctions:
 
         def _extract(state: Any, config: dict[str, Any]) -> Any:
             """Extract simple field from state."""
-            return self._path_resolver.extract_value(state, field_name,
-                                                     default)
+            return self._path_resolver.extract_value(state, field_name, default)
 
         return _extract
 
-    def extract_with_path(self,
-                          path: str,
-                          default: Any = None) -> ExtractFunction:
+    def extract_with_path(self, path: str, default: Any = None) -> ExtractFunction:
         """Create extract function for complex path access.
 
         Pattern from: EngineNode complex cases, AgentNodeV3 projections
@@ -154,8 +151,7 @@ class ExtractFunctions:
 
         def _extract(state: Any, config: dict[str, Any]) -> list[str]:
             """Extract content from all messages."""
-            messages = self._path_resolver.extract_value(
-                state, messages_field, [])
+            messages = self._path_resolver.extract_value(state, messages_field, [])
 
             if not messages:
                 return []
@@ -209,14 +205,11 @@ class ExtractFunctions:
 
         def _extract(state: Any, config: dict[str, Any]) -> Any:
             """Extract conditionally based on state."""
-            condition = self._path_resolver.extract_value(
-                state, condition_path, False)
+            condition = self._path_resolver.extract_value(state, condition_path, False)
 
             if condition:
-                return self._path_resolver.extract_value(
-                    state, true_path, true_default)
-            return self._path_resolver.extract_value(state, false_path,
-                                                     false_default)
+                return self._path_resolver.extract_value(state, true_path, true_default)
+            return self._path_resolver.extract_value(state, false_path, false_default)
 
         return _extract
 

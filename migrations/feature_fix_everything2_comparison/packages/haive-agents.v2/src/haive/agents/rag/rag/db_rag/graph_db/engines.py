@@ -2,6 +2,7 @@
 
 This module provides engines functionality for the Haive framework.
 """
+
 r"""LLM engine configurations for the Graph Database RAG Agent.
 
 This module defines the prompt templates and AugLLMConfig instances for each
@@ -60,8 +61,8 @@ The errors are:
 {errors}"""
 
 CORRECT_CYPHER_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages(
-    [("system", CORRECT_CYPHER_SYSTEM_PROMPT),
-     ("human", CORRECT_CYPHER_USER_PROMPT)], )
+    [("system", CORRECT_CYPHER_SYSTEM_PROMPT), ("human", CORRECT_CYPHER_USER_PROMPT)],
+)
 
 correct_cypher_aug_llm_config = AugLLMConfig(
     prompt_template=CORRECT_CYPHER_PROMPT_TEMPLATE,
@@ -114,10 +115,12 @@ The Cypher statement is:
 
 Make sure you don't make any mistakes!"""
 
-validate_cypher_prompt = ChatPromptTemplate.from_messages([
-    ("system", VALIDATE_CYPHER_SYSTEM_PROMPT),
-    ("human", VALIDATE_CYPHER_USER_PROMPT),
-], )
+validate_cypher_prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", VALIDATE_CYPHER_SYSTEM_PROMPT),
+        ("human", VALIDATE_CYPHER_USER_PROMPT),
+    ],
+)
 
 validate_cypher_aug_llm_config = AugLLMConfig(
     prompt_template=validate_cypher_prompt,
@@ -151,10 +154,12 @@ TEXT2CYPHER_USER_PROMPT = """Below are a number of examples of questions and the
 User input: {question}
 Cypher query:"""
 
-TEXT2CYPHER_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages([
-    ("system", TEXT2CYPHER_SYSTEM_PROMPT),
-    ("human", TEXT2CYPHER_USER_PROMPT),
-], )
+TEXT2CYPHER_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages(
+    [
+        ("system", TEXT2CYPHER_SYSTEM_PROMPT),
+        ("human", TEXT2CYPHER_USER_PROMPT),
+    ],
+)
 
 text2cypher_aug_llm_config = AugLLMConfig(
     prompt_template=TEXT2CYPHER_PROMPT_TEMPLATE,
@@ -182,10 +187,12 @@ If the question is related to {domain_name}, output "{category}". Otherwise, out
 To make this decision, assess the content of the question and determine if it refers to any topics in the {domain_name} domain.
 Provide only the specified output: "{category}" or "end"."""
 
-GUARDRAILS_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages([
-    ("system", GUARDRAILS_SYSTEM_PROMPT),
-    ("human", "{question}"),
-], )
+GUARDRAILS_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages(
+    [
+        ("system", GUARDRAILS_SYSTEM_PROMPT),
+        ("human", "{question}"),
+    ],
+)
 
 guardrails_aug_llm_config = AugLLMConfig(
     prompt_template=GUARDRAILS_PROMPT_TEMPLATE,
@@ -217,10 +224,12 @@ Respond as if you are answering the question directly.
 Results: {results}
 Question: {question}"""
 
-GENERATE_FINAL_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages([
-    ("system", "You are a helpful assistant"),
-    ("human", GENERATE_FINAL_HUMAN_PROMPT),
-], )
+GENERATE_FINAL_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages(
+    [
+        ("system", "You are a helpful assistant"),
+        ("human", GENERATE_FINAL_HUMAN_PROMPT),
+    ],
+)
 
 generate_final_aug_llm_config = AugLLMConfig(
     prompt_template=GENERATE_FINAL_PROMPT_TEMPLATE,

@@ -15,7 +15,8 @@ from haive.agents.multi.proper_base import ProperMultiAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.prebuilt.messages.messages_with_token_usage import (
-    MessagesStateWithTokenUsage, )
+    MessagesStateWithTokenUsage,
+)
 
 
 class StructuredOutputAgent(SimpleAgent):
@@ -113,7 +114,7 @@ class StructuredOutputAgent(SimpleAgent):
 
         enhanced_state_class = type(
             "EnhancedState",
-            (MessagesStateWithTokenUsage, ),
+            (MessagesStateWithTokenUsage,),
             enhanced_state_attrs,
         )
 

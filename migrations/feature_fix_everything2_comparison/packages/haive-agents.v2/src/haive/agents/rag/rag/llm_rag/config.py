@@ -58,13 +58,12 @@ class LLMRAGConfig(BaseRAGConfig):
     """Configuration for an LLM-enhanced RAG agent."""
 
     # Configuration for Pydantic
-    model_config = ConfigDict(arbitrary_types_allowed=True,
-                              populate_by_name=True)
+    model_config = ConfigDict(arbitrary_types_allowed=True, populate_by_name=True)
 
-    name: str = Field(
-        default_factory=lambda: f"llm_rag_agent_{uuid.uuid4().hex[:8]}")
+    name: str = Field(default_factory=lambda: f"llm_rag_agent_{uuid.uuid4().hex[:8]}")
     description: str = Field(
-        default="LLM-enhanced Retrieval-Augmented Generation agent", )
+        default="LLM-enhanced Retrieval-Augmented Generation agent",
+    )
 
     # LLM configurations
     llm_config: AugLLMConfig = Field(
@@ -78,8 +77,7 @@ class LLMRAGConfig(BaseRAGConfig):
     relevance_checker_config: AugLLMConfig | None = Field(
         default_factory=lambda: AugLLMConfig(
             name="relevance_checker",
-            prompt_template=ChatPromptTemplate.from_template(
-                RELEVANCE_CHECKER_PROMPT),
+            prompt_template=ChatPromptTemplate.from_template(RELEVANCE_CHECKER_PROMPT),
         ),
         description="Configuration for checking document relevance",
     )
@@ -105,8 +103,9 @@ class LLMRAGConfig(BaseRAGConfig):
             self.llm_config.name = f"rag_llm_{uuid.uuid4().hex[:6]}"
 
         if self.relevance_checker_config and (
-                not self.relevance_checker_config.name
-                or self.relevance_checker_config.name == "aug_llm"):
+            not self.relevance_checker_config.name
+            or self.relevance_checker_config.name == "aug_llm"
+        ):
             self.relevance_checker_config.name = f"relevance_checker_{uuid.uuid4().hex[:6]}"
 
         return self

@@ -11,6 +11,7 @@ Functions:
     setup_workflow: Setup Workflow functionality.
     reflection_chain: Reflection Chain functionality.
 """
+
 # src/haive/agents/lats/tree_agent.py
 from __future__ import annotations
 
@@ -54,26 +55,22 @@ class LATSAgentConfig(AgentConfig):
     """
 
     # LLM settings
-    model: str = Field(default="gpt-4o",
-                       description="Model to use for the agent")
-    temperature: float = Field(default=0.7,
-                               description="Temperature for generation")
+    model: str = Field(default="gpt-4o", description="Model to use for the agent")
+    temperature: float = Field(default=0.7, description="Temperature for generation")
 
     # LATS settings
     candidates_per_expansion: int = Field(
         default=5,
         description="Number of candidates to generate per expansion",
     )
-    max_tree_height: int = Field(default=5,
-                                 description="Maximum height of the tree")
+    max_tree_height: int = Field(default=5, description="Maximum height of the tree")
     exploration_weight: float = Field(
         default=1.0,
         description="Exploration weight for UCB1",
     )
 
     # Tools
-    tools: list[Any] = Field(default_factory=list,
-                             description="Tools for the agent")
+    tools: list[Any] = Field(default_factory=list, description="Tools for the agent")
 
     # Prompts
     system_prompt: str = Field(
@@ -124,13 +121,11 @@ class LATSAgentConfig(AgentConfig):
 
         # Use provided system prompt or default
         system_prompt = (
-            system_prompt or
-            "You are an AI assistant that provides accurate, helpful responses."
+            system_prompt or "You are an AI assistant that provides accurate, helpful responses."
         )
 
         return cls(
-            name=name
-            or f"lats_agent_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+            name=name or f"lats_agent_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
             system_prompt=system_prompt,
             tools=tools,
             model=model,
@@ -160,17 +155,21 @@ class LATSAgent(Agent[LATSAgentConfig]):
         logger.debug(f"Setting up workflow for LATSAgent {self.config.name}")
 
         # Create prompt templates
-        prompt_template = ChatPromptTemplate.from_messages([
-            ("system", self.config.system_prompt),
-            ("user", "{input}"),
-            MessagesPlaceholder(variable_name="messages", optional=True),
-        ], )
+        prompt_template = ChatPromptTemplate.from_messages(
+            [
+                ("system", self.config.system_prompt),
+                ("user", "{input}"),
+                MessagesPlaceholder(variable_name="messages", optional=True),
+            ],
+        )
 
-        reflection_prompt = ChatPromptTemplate.from_messages([
-            ("system", self.config.reflection_prompt),
-            ("user", "{input}"),
-            MessagesPlaceholder(variable_name="candidate"),
-        ], )
+        reflection_prompt = ChatPromptTemplate.from_messages(
+            [
+                ("system", self.config.reflection_prompt),
+                ("user", "{input}"),
+                MessagesPlaceholder(variable_name="candidate"),
+            ],
+        )
 
         # Initialize LLM
         llm_config = AzureLLMConfig(
@@ -189,19 +188,21 @@ class LATSAgent(Agent[LATSAgentConfig]):
 
         # Set up chains
         self.initial_answer_chain = prompt_template | self.llm.bind_tools(
-            tools=self.config.tools, ).with_config(
-                run_name="GenerateInitialCandidate")
+            tools=self.config.tools,
+        ).with_config(run_name="GenerateInitialCandidate")
 
         # Tool parser
         self.parser = JsonOutputToolsParser(return_id=True)
 
         # Reflection chain
-        self.reflection_llm_chain = (reflection_prompt
-                                     | self.llm.bind_tools(
-                                         tools=[Reflection],
-                                         tool_choice="Reflection",
-                                     ).with_config(run_name="Reflection")
-                                     | PydanticToolsParser(tools=[Reflection]))
+        self.reflection_llm_chain = (
+            reflection_prompt
+            | self.llm.bind_tools(
+                tools=[Reflection],
+                tool_choice="Reflection",
+            ).with_config(run_name="Reflection")
+            | PydanticToolsParser(tools=[Reflection])
+        )
 
         # Define the reflection chain
         @as_runnable
@@ -215,10 +216,8 @@ class LATSAgent(Agent[LATSAgentConfig]):
         self.reflection_chain = reflection_chain
 
         # Define the candidate generation function
-        def generate_candidates(messages: ChatPromptValue,
-                                config: RunnableConfig):
-            n = config["configurable"].get(
-                "N", self.config.candidates_per_expansion)
+        def generate_candidates(messages: ChatPromptValue, config: RunnableConfig):
+            n = config["configurable"].get("N", self.config.candidates_per_expansion)
             bound_kwargs = self.llm.bind_tools(tools=self.config.tools).kwargs
             chat_result = self.llm.generate(
                 [messages.to_messages()],
@@ -262,7 +261,9 @@ class LATSAgent(Agent[LATSAgentConfig]):
                                     ],
                                 ),
                             ],
-                        }, ) for r in parsed
+                        },
+                    )
+                    for r in parsed
                 ]
 
             # Collect messages including tool responses
@@ -272,10 +273,8 @@ class LATSAgent(Agent[LATSAgentConfig]):
 
             # Generate reflection
             reflection = self.reflection_chain.invoke(
-                {
-                    "input": user_input,
-                    "candidate": output_messages
-                }, )
+                {"input": user_input, "candidate": output_messages},
+            )
 
             # Create the root node
             root = Node(
@@ -305,15 +304,8 @@ class LATSAgent(Agent[LATSAgentConfig]):
 
             # Generate new candidates
             new_candidates = self.expansion_chain.invoke(
-                {
-                    "input": user_input,
-                    "messages": messages
-                },
-                config={
-                    "configurable": {
-                        "N": self.config.candidates_per_expansion
-                    }
-                },
+                {"input": user_input, "messages": messages},
+                config={"configurable": {"N": self.config.candidates_per_expansion}},
             )
 
             # Process tool calls if any
@@ -323,9 +315,11 @@ class LATSAgent(Agent[LATSAgentConfig]):
             output_messages = []
             if self.tool_node:
                 # Flatten the tool calls
-                flattened = [(i, tool_call)
-                             for i, tool_calls in enumerate(parsed)
-                             for tool_call in tool_calls]
+                flattened = [
+                    (i, tool_call)
+                    for i, tool_calls in enumerate(parsed)
+                    for tool_call in tool_calls
+                ]
 
                 # Execute tools
                 tool_responses = []
@@ -345,20 +339,22 @@ class LATSAgent(Agent[LATSAgentConfig]):
                                         ],
                                     ),
                                 ],
-                            }, )
+                            },
+                        )
                         tool_responses.append((i, response))
                     except Exception as e:
                         logger.exception(f"Error executing tool: {e}")
                         # Create an error message
-                        tool_responses.append((
-                            i,
-                            {
-                                "messages": [
-                                    AIMessage(
-                                        content=f"Error executing tool: {e}"),
-                                ],
-                            },
-                        ), )
+                        tool_responses.append(
+                            (
+                                i,
+                                {
+                                    "messages": [
+                                        AIMessage(content=f"Error executing tool: {e}"),
+                                    ],
+                                },
+                            ),
+                        )
 
                 # Collect tool responses by candidate index
                 from collections import defaultdict
@@ -369,17 +365,15 @@ class LATSAgent(Agent[LATSAgentConfig]):
 
                 # Combine candidate messages with tool responses
                 for i, candidate in enumerate(new_candidates):
-                    output_messages.append([candidate] +
-                                           collected_responses[i])
+                    output_messages.append([candidate] + collected_responses[i])
             else:
                 # No tools, just use the candidate messages
                 output_messages = [[candidate] for candidate in new_candidates]
 
             # Reflect on each candidate
-            reflections = self.reflection_chain.batch([{
-                "input": user_input,
-                "candidate": msges
-            } for msges in output_messages], )
+            reflections = self.reflection_chain.batch(
+                [{"input": user_input, "candidate": msges} for msges in output_messages],
+            )
 
             # Create and add child nodes
             child_nodes = [
@@ -388,8 +382,8 @@ class LATSAgent(Agent[LATSAgentConfig]):
                     parent=best_candidate,
                     reflection=reflection,
                     exploration_weight=self.config.exploration_weight,
-                ) for cand, reflection in zip(
-                    output_messages, reflections, strict=False)
+                )
+                for cand, reflection in zip(output_messages, reflections, strict=False)
             ]
             best_candidate.children.extend(child_nodes)
 
@@ -411,8 +405,7 @@ class LATSAgent(Agent[LATSAgentConfig]):
 
             # Check max iterations
             if iterations >= self.config.max_tree_height:
-                logger.info(
-                    f"Reached max iterations ({self.config.max_tree_height})")
+                logger.info(f"Reached max iterations ({self.config.max_tree_height})")
                 return END
 
             # Continue searching
@@ -429,12 +422,11 @@ class LATSAgent(Agent[LATSAgentConfig]):
             # Update state with best messages and reflection
             updated_state = {
                 **state,
-                "best_node":
-                best_node,
-                "output":
-                best_messages[-1].content if best_messages else "",
-                "messages": ([*state.get("messages", []), best_messages[-1]]
-                             if best_messages else []),
+                "best_node": best_node,
+                "output": best_messages[-1].content if best_messages else "",
+                "messages": (
+                    [*state.get("messages", []), best_messages[-1]] if best_messages else []
+                ),
             }
 
             return updated_state
@@ -451,10 +443,8 @@ class LATSAgent(Agent[LATSAgentConfig]):
 
         # Add edges
         graph.add_edge(START, "start")
-        graph.add_conditional_edges("start", should_continue,
-                                    ["expand", "finish"])
-        graph.add_conditional_edges("expand", should_continue,
-                                    ["expand", "finish"])
+        graph.add_conditional_edges("start", should_continue, ["expand", "finish"])
+        graph.add_conditional_edges("expand", should_continue, ["expand", "finish"])
         graph.add_edge("finish", END)
 
         # Set graph
@@ -529,9 +519,7 @@ class LATSAgent(Agent[LATSAgentConfig]):
 
         # Make sure messages field exists
         if "messages" not in input_data and "input" in input_data:
-            input_data["messages"] = [
-                HumanMessage(content=input_data["input"])
-            ]
+            input_data["messages"] = [HumanMessage(content=input_data["input"])]
 
         # Run the agent
         result = super().run(input_data)
@@ -559,9 +547,7 @@ class LATSAgent(Agent[LATSAgentConfig]):
 
         # Make sure messages field exists
         if "messages" not in input_data and "input" in input_data:
-            input_data["messages"] = [
-                HumanMessage(content=input_data["input"])
-            ]
+            input_data["messages"] = [HumanMessage(content=input_data["input"])]
 
         # Stream the agent execution
         return super().stream(input_data)

@@ -3,6 +3,7 @@
 This module provides flexible state schemas for multi-agent systems
 without forcing specific fields like messages or tools.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -128,8 +129,7 @@ class FlexibleMultiAgentState(StateSchema):
             agent_dict = {}
             for agent in v:
                 if not hasattr(agent, "name"):
-                    raise ValueError(
-                        f"Agent {agent} must have 'name' attribute")
+                    raise ValueError(f"Agent {agent} must have 'name' attribute")
                 agent_dict[agent.name] = agent
             return agent_dict
         return v
@@ -151,8 +151,7 @@ class FlexibleMultiAgentState(StateSchema):
         """Get state for specific agent."""
         return self.agent_states.get(agent_name, {})
 
-    def update_agent_state(self, agent_name: str, updates: dict[str,
-                                                                Any]) -> None:
+    def update_agent_state(self, agent_name: str, updates: dict[str, Any]) -> None:
         """Update state for specific agent."""
         if agent_name not in self.agent_states:
             self.agent_states[agent_name] = {}

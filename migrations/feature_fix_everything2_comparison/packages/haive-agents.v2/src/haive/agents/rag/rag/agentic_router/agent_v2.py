@@ -42,24 +42,24 @@ class StrategyDecision(BaseModel):
     """Strategy selection decision."""
 
     strategy: RAGStrategy = Field(description="Selected strategy")
-    confidence: float = Field(ge=0.0,
-                              le=1.0,
-                              description="Confidence in selection")
+    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in selection")
     reasoning: str = Field(description="Reasoning for selection")
 
 
-STRATEGY_SELECTION_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """Select the best RAG strategy for the query:
+STRATEGY_SELECTION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """Select the best RAG strategy for the query:
     - simple: Basic queries needing direct retrieval
     - multi_query: Complex queries benefiting from multiple perspectives
     - hyde: Abstract queries needing hypothetical expansion
     - fusion: High-quality results through rank fusion
     - flare: Iterative refinement needed""",
-    ),
-    ("human", "Query: {query}\n\nSelect the optimal strategy."),
-], )
+        ),
+        ("human", "Query: {query}\n\nSelect the optimal strategy."),
+    ],
+)
 
 
 class AgenticRAGRouterV2(Agent):

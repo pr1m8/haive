@@ -5,6 +5,7 @@ This system shows how to use multiple memory strategies together:
 2. ReactMemoryAgent for flexible tool-based memory management
 3. LongTermMemoryAgent for persistent cross-conversation memory
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -68,11 +69,14 @@ class IntegratedMemorySystem:
             user_id=self.user_id,
             mode=GraphMemoryMode.FULL,
             llm_config=self.engine,
-            **(neo4j_config or {
-                "neo4j_uri": "bolt://localhost:7687",
-                "neo4j_username": "neo4j",
-                "neo4j_password": "password",
-            }),
+            **(
+                neo4j_config
+                or {
+                    "neo4j_uri": "bolt://localhost:7687",
+                    "neo4j_username": "neo4j",
+                    "neo4j_password": "password",
+                }
+            ),
         )
         self.graph_memory = GraphMemoryAgent(config)
 
@@ -117,8 +121,7 @@ class IntegratedMemorySystem:
                 "connected to",
                 "related to",
             ]
-            has_structured = any(ind in content_lower
-                                 for ind in structured_indicators)
+            has_structured = any(ind in content_lower for ind in structured_indicators)
 
             # Check for conversational indicators
             conversational_indicators = [
@@ -131,8 +134,7 @@ class IntegratedMemorySystem:
                 "i think",
                 "my opinion",
             ]
-            has_conversational = any(ind in content_lower
-                                     for ind in conversational_indicators)
+            has_conversational = any(ind in content_lower for ind in conversational_indicators)
 
             # Check for long-term importance indicators
             persistent_indicators = [
@@ -145,8 +147,7 @@ class IntegratedMemorySystem:
                 "essential",
                 "permanent",
             ]
-            has_persistent = any(ind in content_lower
-                                 for ind in persistent_indicators)
+            has_persistent = any(ind in content_lower for ind in persistent_indicators)
 
             # Determine best system
             if has_structured and not has_conversational:
@@ -170,7 +171,9 @@ class IntegratedMemorySystem:
             systems = []
 
             # Graph queries
-            if any(word in query_lower for word in [
+            if any(
+                word in query_lower
+                for word in [
                     "who",
                     "what",
                     "where",
@@ -179,11 +182,14 @@ class IntegratedMemorySystem:
                     "knows",
                     "works",
                     "located",
-            ]):
+                ]
+            ):
                 systems.append("graph")
 
             # Time-based queries
-            if any(word in query_lower for word in [
+            if any(
+                word in query_lower
+                for word in [
                     "recent",
                     "today",
                     "yesterday",
@@ -191,18 +197,22 @@ class IntegratedMemorySystem:
                     "when",
                     "timeline",
                     "history",
-            ]):
+                ]
+            ):
                 systems.append("react")
 
             # Persistent memory queries
-            if any(word in query_lower for word in [
+            if any(
+                word in query_lower
+                for word in [
                     "always",
                     "important",
                     "remember",
                     "learned",
                     "fact",
                     "knowledge",
-            ]):
+                ]
+            ):
                 systems.append("longterm")
 
             return ",".join(systems) if systems else "all"
@@ -265,7 +275,8 @@ the best memory system(s) to use:
         if mode == MemorySystemMode.INTELLIGENT:
             # Let router decide
             routing = await self.router.arun(
-                f"Analyze this content for memory storage: {content}", )
+                f"Analyze this content for memory storage: {content}",
+            )
 
             if "structured" in routing.lower():
                 mode = MemorySystemMode.STRUCTURED
@@ -328,8 +339,7 @@ the best memory system(s) to use:
 
         if mode == MemorySystemMode.INTELLIGENT:
             # Let router decide which systems to query
-            routing = await self.router.arun(
-                f"Route this memory query: {query}")
+            routing = await self.router.arun(f"Route this memory query: {query}")
             systems_to_query = routing.lower().split(",")
         else:
             # Map mode to systems
@@ -377,8 +387,7 @@ the best memory system(s) to use:
 
         return results
 
-    async def _combine_query_results(self, query: str,
-                                     results: dict[str, Any]) -> str:
+    async def _combine_query_results(self, query: str, results: dict[str, Any]) -> str:
         """Combine results from multiple memory systems."""
         # Use a simple agent to synthesize results
         synthesis_prompt = f"""
@@ -398,8 +407,7 @@ Long-term Memory (important facts):
 Synthesize these results into a comprehensive answer.
 """
 
-        synthesizer = SimpleAgent(name="result_synthesizer",
-                                  engine=self.engine)
+        synthesizer = SimpleAgent(name="result_synthesizer", engine=self.engine)
 
         combined = await synthesizer.arun(synthesis_prompt)
         return combined
@@ -442,8 +450,7 @@ Synthesize these results into a comprehensive answer.
 
         # Long-term memory stats
         analytics["systems"]["longterm"] = {
-            "retriever_active": hasattr(self.longterm_memory,
-                                        "memory_retriever"),
+            "retriever_active": hasattr(self.longterm_memory, "memory_retriever"),
         }
 
         return analytics
@@ -473,8 +480,7 @@ Synthesize these results into a comprehensive answer.
                 extract_memories=True,
             )
             consolidation_results["archived_memories"] = True
-            consolidation_results["systems_consolidated"].append(
-                "react_to_longterm")
+            consolidation_results["systems_consolidated"].append("react_to_longterm")
 
         return consolidation_results
 
@@ -506,8 +512,7 @@ async def demo_integrated_memory():
     ]
 
     for memory in memories:
-        result = await system.store_memory(memory,
-                                           mode=MemorySystemMode.INTELLIGENT)
+        result = await system.store_memory(memory, mode=MemorySystemMode.INTELLIGENT)
 
     # Query memories in different ways
     queries = [
@@ -519,8 +524,7 @@ async def demo_integrated_memory():
     ]
 
     for query in queries:
-        result = await system.query_memory(query,
-                                           mode=MemorySystemMode.INTELLIGENT)
+        result = await system.query_memory(query, mode=MemorySystemMode.INTELLIGENT)
         if "combined_answer" in result:
             pass
 
@@ -565,9 +569,7 @@ async def create_research_assistant():
             mode=MemorySystemMode.HYBRID,  # Store in multiple systems
         )
 
-        return f"Stored paper information in {
-            len(
-                result['systems_used'])} memory systems"
+        return f"Stored paper information in {len(result['systems_used'])} memory systems"
 
     @tool
     async def find_related_papers(topic: str) -> str:

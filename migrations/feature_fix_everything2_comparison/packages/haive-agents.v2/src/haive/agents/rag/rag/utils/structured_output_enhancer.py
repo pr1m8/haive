@@ -89,9 +89,10 @@ Please provide your analysis in the following structured format:
 
         if include_state_context:
             # Include context from previous processing steps
-            messages.append((
-                "human",
-                """Based on the previous processing:
+            messages.append(
+                (
+                    "human",
+                    """Based on the previous processing:
 
 Query: {query}
 Context: {context}
@@ -100,7 +101,8 @@ Retrieved Documents: {retrieved_documents}
 {additional_context}
 
 Please provide your structured analysis.""",
-            ), )
+                ),
+            )
         else:
             messages.append(("human", "{query}"))
 
@@ -168,7 +170,8 @@ Please provide your structured analysis.""",
         if context_prompt is None:
             context_prompt = (
                 f"Analyze the processing results and provide a structured "
-                f"{self.output_model.__name__} summary.")
+                f"{self.output_model.__name__} summary."
+            )
 
         enhancement_agent = self.create_enhancement_agent(
             llm_config=llm_config,
@@ -307,14 +310,10 @@ class RAGEnhancementFactory:
 
         # Enhance with structured output
         context_prompts = {
-            "hyde":
-            "Generate hypothetical documents and refined queries for enhanced retrieval",
-            "fusion":
-            "Analyze multi-query retrieval results and provide reciprocal rank fusion analysis",
-            "speculative":
-            "Generate and verify hypotheses about the query requirements",
-            "memory":
-            "Analyze conversation context and memory relevance for personalized responses",
+            "hyde": "Generate hypothetical documents and refined queries for enhanced retrieval",
+            "fusion": "Analyze multi-query retrieval results and provide reciprocal rank fusion analysis",
+            "speculative": "Generate and verify hypotheses about the query requirements",
+            "memory": "Analyze conversation context and memory relevance for personalized responses",
         }
 
         return enhancer.enhance_agent_sequence(

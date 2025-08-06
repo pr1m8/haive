@@ -199,8 +199,7 @@ class TreeManager:
 
         # Calculate statistics
         num_leaves = len(self.get_leaf_nodes())
-        total_children = sum(
-            len(node.children) for node in self.nodes.values())
+        total_children = sum(len(node.children) for node in self.nodes.values())
         num_internal = len(self.nodes) - num_leaves
         avg_branching = total_children / max(num_internal, 1)
 
@@ -213,8 +212,7 @@ class TreeManager:
 
         most_visited_path = []
         if most_visited_leaf:
-            most_visited_path = self.get_path_to_node(
-                most_visited_leaf.node_id)
+            most_visited_path = self.get_path_to_node(most_visited_leaf.node_id)
 
         return {
             "size": self.get_tree_size(),
@@ -296,8 +294,10 @@ class TreeManager:
 
         # Create node representation
         connector = "└── " if is_last else "├── "
-        node_str = (f"{prefix}{connector}{node.action} "
-                    f"(visits={node.visits}, avg={node.average_reward():.2f})")
+        node_str = (
+            f"{prefix}{connector}{node.action} "
+            f"(visits={node.visits}, avg={node.average_reward():.2f})"
+        )
         lines.append(node_str)
 
         # Prepare prefix for children

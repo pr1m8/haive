@@ -58,12 +58,11 @@ TOutput = TypeVar("TOutput", bound=BaseModel)
 
 
 class SimpleAgentV3(
-        Agent[
-            AugLLMConfig],  # Use enhanced generic Agent with AugLLMConfig default
-        RecompileMixin,
-        DynamicToolRouteMixin,
-        # Note: Removed HooksMixin to avoid conflicts - enhanced Agent has its own
-        # hook system
+    Agent[AugLLMConfig],  # Use enhanced generic Agent with AugLLMConfig default
+    RecompileMixin,
+    DynamicToolRouteMixin,
+    # Note: Removed HooksMixin to avoid conflicts - enhanced Agent has its own
+    # hook system
 ):
     """SimpleAgent v3 with enhanced dynamic architecture and hooks system.
 
@@ -217,8 +216,7 @@ class SimpleAgentV3(
             logger.debug(f"Created AugLLMConfig from dict: {list(v.keys())}")
             return engine
         if not isinstance(v, AugLLMConfig):
-            raise ValueError(
-                f"SimpleAgentV3 requires AugLLMConfig, got {type(v)}")
+            raise ValueError(f"SimpleAgentV3 requires AugLLMConfig, got {type(v)}")
         logger.debug("Using provided AugLLMConfig engine")
         return v
 
@@ -267,8 +265,7 @@ class SimpleAgentV3(
     def _init_dynamic_tool_routing(self) -> None:
         """Initialize dynamic tool routing mixin with debug logging."""
         if self.debug:
-            logger.debug(
-                f"Initializing DynamicToolRouteMixin for '{self.name}'")
+            logger.debug(f"Initializing DynamicToolRouteMixin for '{self.name}'")
 
         # Register callback for tool changes
         self.register_route_change_callback(self._on_tool_route_change)
@@ -466,37 +463,44 @@ class SimpleAgentV3(
             )
 
         # Track each field change with debug logging
-        if (self.temperature is not None and getattr(
-                self.engine, "temperature", None) != self.temperature):
+        if (
+            self.temperature is not None
+            and getattr(self.engine, "temperature", None) != self.temperature
+        ):
             self.engine.temperature = self.temperature
             changes_made.append("temperature")
             if self.debug:
                 logger.debug(f"Synced temperature: {self.temperature}")
 
-        if (self.max_tokens is not None and getattr(self.engine, "max_tokens",
-                                                    None) != self.max_tokens):
+        if (
+            self.max_tokens is not None
+            and getattr(self.engine, "max_tokens", None) != self.max_tokens
+        ):
             self.engine.max_tokens = self.max_tokens
             changes_made.append("max_tokens")
             if self.debug:
                 logger.debug(f"Synced max_tokens: {self.max_tokens}")
 
-        if self.model_name is not None and getattr(self.engine, "model",
-                                                   None) != self.model_name:
+        if self.model_name is not None and getattr(self.engine, "model", None) != self.model_name:
             self.engine.model = self.model_name
             changes_made.append("model_name")
             if self.debug:
                 logger.debug(f"Synced model_name: {self.model_name}")
 
-        if (self.force_tool_use is not None and getattr(
-                self.engine, "force_tool_use", None) != self.force_tool_use):
+        if (
+            self.force_tool_use is not None
+            and getattr(self.engine, "force_tool_use", None) != self.force_tool_use
+        ):
             self.engine.force_tool_use = self.force_tool_use
             changes_made.append("force_tool_use")
             if self.debug:
                 logger.debug(f"Synced force_tool_use: {self.force_tool_use}")
 
-        if (self.structured_output_model is not None
-                and getattr(self.engine, "structured_output_model",
-                            None) != self.structured_output_model):
+        if (
+            self.structured_output_model is not None
+            and getattr(self.engine, "structured_output_model", None)
+            != self.structured_output_model
+        ):
             self.engine.structured_output_model = self.structured_output_model
             changes_made.append("structured_output_model")
             if self.debug:
@@ -504,8 +508,10 @@ class SimpleAgentV3(
                     f"Synced structured_output_model: {self.structured_output_model}",
                 )
 
-        if (self.system_message is not None and getattr(
-                self.engine, "system_message", None) != self.system_message):
+        if (
+            self.system_message is not None
+            and getattr(self.engine, "system_message", None) != self.system_message
+        ):
             self.engine.system_message = self.system_message
             changes_made.append("system_message")
             if self.debug:
@@ -524,10 +530,7 @@ class SimpleAgentV3(
         if self.hooks_enabled:
             self.execute_hooks(
                 HookEvent.AFTER_STATE_UPDATE,
-                metadata={
-                    "sync_type": "convenience_fields",
-                    "changes": changes_made
-                },
+                metadata={"sync_type": "convenience_fields", "changes": changes_made},
             )
 
     def _register_change_callbacks(self) -> None:
@@ -542,8 +545,7 @@ class SimpleAgentV3(
         if hasattr(self.engine, "register_change_callback"):
             self.engine.register_change_callback(self._on_engine_change)
 
-    def _on_tool_route_change(self, change_type: str, tool_name: str,
-                              **kwargs) -> None:
+    def _on_tool_route_change(self, change_type: str, tool_name: str, **kwargs) -> None:
         """Handle tool route changes with hooks."""
         if self.debug:
             logger.info(
@@ -554,11 +556,7 @@ class SimpleAgentV3(
         if self.hooks_enabled:
             self.execute_hooks(
                 HookEvent.BEFORE_STATE_UPDATE,
-                metadata={
-                    "change_type": change_type,
-                    "tool_name": tool_name,
-                    **kwargs
-                },
+                metadata={"change_type": change_type, "tool_name": tool_name, **kwargs},
             )
 
         if self.change_tracking_enabled:
@@ -576,10 +574,7 @@ class SimpleAgentV3(
         if self.hooks_enabled:
             self.execute_hooks(
                 HookEvent.BEFORE_STATE_UPDATE,
-                metadata={
-                    "change_type": change_type,
-                    **kwargs
-                },
+                metadata={"change_type": change_type, **kwargs},
             )
 
         if self.change_tracking_enabled:
@@ -604,16 +599,15 @@ class SimpleAgentV3(
             """Post-process output for structured format if needed."""
             if self.structured_output_model and context.output_data and self.debug:
                 logger.debug(
-                    f"Processing structured output for model: {
-                        self.structured_output_model}", )
+                    f"Processing structured output for model: {self.structured_output_model}",
+                )
                 # Additional structured output processing can be added here
 
     def _trigger_initial_compilation(self) -> None:
         """Trigger initial graph compilation with hooks."""
         try:
             if self.debug:
-                logger.debug(
-                    f"Triggering initial compilation for '{self.name}'")
+                logger.debug(f"Triggering initial compilation for '{self.name}'")
 
             # Execute before_build_graph hook
             if self.hooks_enabled:
@@ -692,8 +686,7 @@ class SimpleAgentV3(
             logger.debug(f"Using engine name: {engine_name}")
 
         # Add main LLM node using existing EngineNodeConfig
-        llm_node_config = EngineNodeConfig(name="agent_node",
-                                           engine=self.engine)
+        llm_node_config = EngineNodeConfig(name="agent_node", engine=self.engine)
         graph.add_node("agent_node", llm_node_config)
         graph.add_edge(START, "agent_node")
 
@@ -723,8 +716,7 @@ class SimpleAgentV3(
 
         # Add validation/routing nodes
         if needs_tools or needs_parsing:
-            self._add_validation_nodes(graph, engine_name, needs_tools,
-                                       needs_parsing)
+            self._add_validation_nodes(graph, engine_name, needs_tools, needs_parsing)
 
         # Register graph for recompilation with hooks
         self._register_graph_for_recompilation(graph)
@@ -734,26 +726,21 @@ class SimpleAgentV3(
 
         return graph
 
-    def _add_dynamic_tool_nodes(self, graph: BaseGraph,
-                                engine_name: str) -> None:
+    def _add_dynamic_tool_nodes(self, graph: BaseGraph, engine_name: str) -> None:
         """Add dynamic tool nodes with change tracking and hooks."""
         if self.debug:
-            logger.debug(
-                f"Adding dynamic tool nodes for engine: {engine_name}")
+            logger.debug(f"Adding dynamic tool nodes for engine: {engine_name}")
 
         # Create tool node config using existing ToolNodeConfig
-        tool_node_config = ToolNodeConfig(name="tool_node",
-                                          engine_name=engine_name)
+        tool_node_config = ToolNodeConfig(name="tool_node", engine_name=engine_name)
         graph.add_node("tool_node", tool_node_config)
 
         # Register for tool change notifications with hooks
         def tool_change_handler(change_type: str, tool_name: str, **kwargs):
             if self.debug:
-                logger.debug(
-                    f"Tool change detected: {change_type} - {tool_name}")
+                logger.debug(f"Tool change detected: {change_type} - {tool_name}")
 
-            graph.mark_for_recompile(
-                f"Tool change: {change_type} - {tool_name}")
+            graph.mark_for_recompile(f"Tool change: {change_type} - {tool_name}")
 
             # Execute hook for tool change
             if self.hooks_enabled:
@@ -797,7 +784,8 @@ class SimpleAgentV3(
         """Add validation/routing nodes with hooks."""
         if self.debug:
             logger.debug(
-                f"Adding validation nodes - tools: {needs_tools}, parsing: {needs_parsing}", )
+                f"Adding validation nodes - tools: {needs_tools}, parsing: {needs_parsing}",
+            )
 
         # Create validation config with only valid fields
         validation_kwargs = {
@@ -845,10 +833,7 @@ class SimpleAgentV3(
         if self.hooks_enabled:
             self.execute_hooks(
                 HookEvent.BEFORE_NODE,
-                metadata={
-                    "node_type": "routing",
-                    "last_message": last_message
-                },
+                metadata={"node_type": "routing", "last_message": last_message},
             )
 
         # Check for tool calls
@@ -879,8 +864,7 @@ class SimpleAgentV3(
         self._current_graph = graph
 
         if self.debug:
-            logger.debug(
-                f"Graph registered for recompilation tracking: {graph.name}")
+            logger.debug(f"Graph registered for recompilation tracking: {graph.name}")
 
         # Check if recompilation is immediately needed
         if self.check_recompile_conditions():
@@ -906,8 +890,7 @@ class SimpleAgentV3(
             self.resolve_recompile(success=True)
 
             if self.debug:
-                logger.info(
-                    f"Graph recompilation successful for agent '{self.name}'")
+                logger.info(f"Graph recompilation successful for agent '{self.name}'")
 
             # Execute after recompile hook
             if self.hooks_enabled:
@@ -937,31 +920,24 @@ class SimpleAgentV3(
     # ENHANCED EXECUTION METHODS - With debug=True and hooks
     # ========================================================================
 
-    async def arun(self,
-                   input_data: Any,
-                   debug: bool | None = None,
-                   **kwargs) -> Any:
+    async def arun(self, input_data: Any, debug: bool | None = None, **kwargs) -> Any:
         """Enhanced async run with debug=True default and hooks integration."""
         # Use debug=True by default, or override with parameter
         run_debug = debug if debug is not None else self.debug
 
         if run_debug:
-            logger.info(
-                f"[{self.name}] Starting async execution with debug=True")
+            logger.info(f"[{self.name}] Starting async execution with debug=True")
 
         # Execute before_run hook
         if self.hooks_enabled:
-            self.execute_hooks(HookEvent.BEFORE_ARUN,
-                               input_data=input_data,
-                               **kwargs)
+            self.execute_hooks(HookEvent.BEFORE_ARUN, input_data=input_data, **kwargs)
 
         try:
             # Call parent arun with debug enabled
             result = await super().arun(input_data, debug=run_debug, **kwargs)
 
             if run_debug:
-                logger.info(
-                    f"[{self.name}] Async execution completed successfully")
+                logger.info(f"[{self.name}] Async execution completed successfully")
 
             # Execute after_run hook
             if self.hooks_enabled:
@@ -1158,22 +1134,18 @@ class SimpleAgentV3(
         run_debug = debug if debug is not None else self.debug
 
         if run_debug:
-            logger.info(
-                f"[{self.name}] Starting sync execution with debug=True")
+            logger.info(f"[{self.name}] Starting sync execution with debug=True")
 
         # Execute before_run hook
         if self.hooks_enabled:
-            self.execute_hooks(HookEvent.BEFORE_RUN,
-                               input_data=input_data,
-                               **kwargs)
+            self.execute_hooks(HookEvent.BEFORE_RUN, input_data=input_data, **kwargs)
 
         try:
             # Call parent run with debug enabled
             result = super().run(input_data, debug=run_debug, **kwargs)
 
             if run_debug:
-                logger.info(
-                    f"[{self.name}] Sync execution completed successfully")
+                logger.info(f"[{self.name}] Sync execution completed successfully")
 
             # Execute after_run hook
             if self.hooks_enabled:
@@ -1209,21 +1181,20 @@ class SimpleAgentV3(
         """Check if agent has tools with debug logging."""
         has_tools = bool(self.engine and getattr(self.engine, "tools", None))
         if self.debug:
-            tool_count = len(getattr(self.engine, "tools",
-                                     [])) if has_tools else 0
-            logger.debug(
-                f"[{self.name}] Has tools: {has_tools} (count: {tool_count})")
+            tool_count = len(getattr(self.engine, "tools", [])) if has_tools else 0
+            logger.debug(f"[{self.name}] Has tools: {has_tools} (count: {tool_count})")
         return has_tools
 
     def _has_structured_output(self) -> bool:
         """Check if agent has structured output with debug logging."""
         has_structured = bool(
             self.structured_output_model
-            or (self.engine
-                and getattr(self.engine, "structured_output_model", None)), )
+            or (self.engine and getattr(self.engine, "structured_output_model", None)),
+        )
         if self.debug:
-            model_name = (self.structured_output_model.__name__
-                          if self.structured_output_model else None)
+            model_name = (
+                self.structured_output_model.__name__ if self.structured_output_model else None
+            )
             logger.debug(
                 f"[{self.name}] Has structured output: {has_structured} (model: {model_name})",
             )
@@ -1231,11 +1202,9 @@ class SimpleAgentV3(
 
     def _always_needs_validation(self) -> bool:
         """Check if we always need validation with debug logging."""
-        needs_validation = self._has_structured_output() or bool(
-            self.output_parser)
+        needs_validation = self._has_structured_output() or bool(self.output_parser)
         if self.debug:
-            logger.debug(
-                f"[{self.name}] Always needs validation: {needs_validation}")
+            logger.debug(f"[{self.name}] Always needs validation: {needs_validation}")
         return needs_validation
 
     # ========================================================================
@@ -1264,8 +1233,8 @@ class SimpleAgentV3(
             """Execute SimpleAgent v3 with the given query."""
             if debug:
                 logger.info(
-                    f"Executing agent tool '{tool_name}' with query length: {
-                        len(query)}", )
+                    f"Executing agent tool '{tool_name}' with query length: {len(query)}",
+                )
 
             # Create agent instance with debug
             agent = cls(debug=debug, **agent_kwargs)
@@ -1275,14 +1244,12 @@ class SimpleAgentV3(
 
             try:
                 loop = asyncio.get_event_loop()
-                result = loop.run_until_complete(agent.arun(query,
-                                                            debug=debug))
+                result = loop.run_until_complete(agent.arun(query, debug=debug))
             except RuntimeError:
                 # Create new event loop if none exists
                 loop = asyncio.new_event_loop()
                 asyncio.set_event_loop(loop)
-                result = loop.run_until_complete(agent.arun(query,
-                                                            debug=debug))
+                result = loop.run_until_complete(agent.arun(query, debug=debug))
 
             # Extract string result
             if isinstance(result, dict) and "messages" in result:
@@ -1307,8 +1274,7 @@ class SimpleAgentV3(
         from langchain_core.tools import tool
 
         tool_name = name or f"structured_{output_model.__name__.lower()}_tool"
-        tool_description = description or f"Generate structured {
-            output_model.__name__} output"
+        tool_description = description or f"Generate structured {output_model.__name__} output"
 
         # Set structured output model in agent kwargs
         agent_kwargs["structured_output_model"] = output_model
@@ -1321,7 +1287,9 @@ class SimpleAgentV3(
             if debug:
                 logger.info(
                     f"Executing structured agent tool '{tool_name}' for model: {
-                        output_model.__name__}", )
+                        output_model.__name__
+                    }",
+                )
 
             # Create agent with structured output
             agent = cls(debug=debug, **agent_kwargs)
@@ -1331,13 +1299,11 @@ class SimpleAgentV3(
 
             try:
                 loop = asyncio.get_event_loop()
-                result = loop.run_until_complete(agent.arun(query,
-                                                            debug=debug))
+                result = loop.run_until_complete(agent.arun(query, debug=debug))
             except RuntimeError:
                 loop = asyncio.new_event_loop()
                 asyncio.set_event_loop(loop)
-                result = loop.run_until_complete(agent.arun(query,
-                                                            debug=debug))
+                result = loop.run_until_complete(agent.arun(query, debug=debug))
 
             # Extract structured output
             if isinstance(result, dict):
@@ -1435,17 +1401,13 @@ class SimpleAgentV3(
             BaseGraph: The compiled agent graph with enhanced capabilities.
         """
         if self.debug:
-            logger.info(
-                f"Building enhanced graph for SimpleAgentV3 '{self.name}'")
+            logger.info(f"Building enhanced graph for SimpleAgentV3 '{self.name}'")
 
         # Execute pre-build hooks
         if self.hooks_enabled:
             self.execute_hooks(
                 HookEvent.BEFORE_BUILD_GRAPH,
-                metadata={
-                    "agent_name": self.name,
-                    "graph_type": "SimpleAgentV3"
-                },
+                metadata={"agent_name": self.name, "graph_type": "SimpleAgentV3"},
             )
 
         # Create base graph
@@ -1477,8 +1439,7 @@ class SimpleAgentV3(
                 logger.debug("Simple graph: agent_node → END")
         else:
             # Add complex routing with tools and/or parsing
-            self._add_complex_routing(graph, engine_name, needs_tools,
-                                      needs_parsing)
+            self._add_complex_routing(graph, engine_name, needs_tools, needs_parsing)
 
         # Register for recompilation tracking
         self._register_graph_for_recompilation(graph)
@@ -1488,14 +1449,10 @@ class SimpleAgentV3(
             self.execute_hooks(
                 HookEvent.AFTER_BUILD_GRAPH,
                 metadata={
-                    "graph":
-                    graph,
-                    "nodes_count":
-                    len(graph.nodes) if hasattr(graph, "nodes") else 0,
-                    "has_tools":
-                    needs_tools,
-                    "has_parsing":
-                    needs_parsing,
+                    "graph": graph,
+                    "nodes_count": len(graph.nodes) if hasattr(graph, "nodes") else 0,
+                    "has_tools": needs_tools,
+                    "has_parsing": needs_parsing,
                 },
             )
 
@@ -1535,8 +1492,7 @@ class SimpleAgentV3(
             self._add_parser_nodes(graph, engine_name)
 
         # Add validation/routing logic
-        self._add_validation_nodes(graph, engine_name, needs_tools,
-                                   needs_parsing)
+        self._add_validation_nodes(graph, engine_name, needs_tools, needs_parsing)
 
     def _add_tool_nodes(self, graph: BaseGraph, engine_name: str) -> None:
         """Add tool execution nodes to the graph."""

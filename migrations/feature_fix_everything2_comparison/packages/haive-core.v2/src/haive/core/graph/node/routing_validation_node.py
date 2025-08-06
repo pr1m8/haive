@@ -1,5 +1,6 @@
 """Validation node that returns Send objects for routing based on validation
 results."""
+
 from __future__ import annotations
 
 import logging
@@ -108,9 +109,7 @@ class RoutingValidationNode(BaseModel):
                     tool_name=tool_name,
                     status=ValidationStatus.ERROR,
                     route_recommendation=RouteRecommendation.AGENT,
-                    errors=[
-                        f"Tool '{tool_name}' not found in available tools"
-                    ],
+                    errors=[f"Tool '{tool_name}' not found in available tools"],
                 )
                 validation_state.add_validation_result(result)
                 continue
@@ -210,8 +209,7 @@ class RoutingValidationNode(BaseModel):
 
         return available_tools, tool_routes
 
-    def _validate_tool_arguments(self, tool: Any,
-                                 args: dict[str, Any]) -> list[str]:
+    def _validate_tool_arguments(self, tool: Any, args: dict[str, Any]) -> list[str]:
         """Validate tool arguments and return list of errors."""
         errors = []
 

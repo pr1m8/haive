@@ -400,8 +400,8 @@ class Agent(
         # Check if we should skip schema generation
         if self.state_schema and not self.use_prebuilt_base and not self.engines:
             logger.debug(
-                f"State schema already provided for {
-                    self.name}, no engines to integrate", )
+                f"State schema already provided for {self.name}, no engines to integrate",
+            )
             # Still derive I/O schemas if needed
             self._auto_derive_io_schemas()
             return
@@ -450,8 +450,8 @@ class Agent(
             # Handle case where we have a prebuilt base schema to extend
             if self.state_schema and self.use_prebuilt_base and engine_list:
                 logger.debug(
-                    f"Extending prebuilt schema {
-                        self.state_schema.__name__} with engine fields", )
+                    f"Extending prebuilt schema {self.state_schema.__name__} with engine fields",
+                )
                 composer = SchemaComposer(name=f"{self.__class__.__name__}State")
 
                 # First add fields from the prebuilt schema
@@ -467,11 +467,7 @@ class Agent(
                 self.state_schema = composer.build()
 
                 logger.debug(
-                    f"Extended schema built: {
-                        getattr(
-                            self.state_schema,
-                            '__name__',
-                            'Unknown')}",
+                    f"Extended schema built: {getattr(self.state_schema, '__name__', 'Unknown')}",
                 )
             elif agent_list:
                 # Use AgentSchemaComposer for multi-agent scenarios
@@ -515,11 +511,7 @@ class Agent(
                 self.state_schema = composer.build()
 
                 logger.debug(
-                    f"Built schema: {
-                        getattr(
-                            self.state_schema,
-                            '__name__',
-                            'Unknown')}",
+                    f"Built schema: {getattr(self.state_schema, '__name__', 'Unknown')}",
                 )
             else:
                 logger.debug("No engines or agents found, using default MessagesState")
@@ -563,8 +555,8 @@ class Agent(
                         name=f"{self.name}Input",
                     )
                     logger.debug(
-                        f"Derived input schema from state schema: {
-                            self.input_schema.__name__}", )
+                        f"Derived input schema from state schema: {self.input_schema.__name__}",
+                    )
                 except Exception as e:
                     logger.debug(f"Could not derive input schema from state: {e}")
 
@@ -667,7 +659,9 @@ class Agent(
                         )
                         logger.debug(
                             f"Created output schema with structured field '{field_name}': {
-                                self.output_schema.__name__}", )
+                                self.output_schema.__name__
+                            }",
+                        )
                     else:
                         # For v1 or direct structured output, use the model
                         # as-is
@@ -691,7 +685,8 @@ class Agent(
                                 **{output_field_name: fields[output_field_name]},
                             )
                             logger.debug(
-                                f"Created output schema with field '{output_field_name}'", )
+                                f"Created output schema with field '{output_field_name}'",
+                            )
                             return
                     except Exception as e:
                         logger.debug(
@@ -760,7 +755,8 @@ class Agent(
                                     ),
                                 )
                                 logger.debug(
-                                    "Using messages output schema to avoid exposing full state", )
+                                    "Using messages output schema to avoid exposing full state",
+                                )
                                 return
                             # Small number of fields, use them all
                             self.output_schema = create_model(
@@ -779,8 +775,8 @@ class Agent(
                         name=f"{self.name}Output",
                     )
                     logger.debug(
-                        f"Derived output schema from state schema: {
-                            self.output_schema.__name__}", )
+                        f"Derived output schema from state schema: {self.output_schema.__name__}",
+                    )
                     return
                 except Exception as e:
                     logger.debug(f"Could not derive output schema from state: {e}")
@@ -1169,9 +1165,9 @@ class Agent(
         engine_count = len(self.engines)
         main_engine = self.main_engine
         engine_type = type(main_engine).__name__ if main_engine else "None"
-        return f"{
-            self.__class__.__name__}(name='{
-            self.name}', engines={engine_count}, main_engine={engine_type})"
+        return f"{self.__class__.__name__}(name='{self.name}', engines={engine_count}, main_engine={
+            engine_type
+        })"
 
     def get_all_tools(self) -> list[Any]:
         """Collect all tools from all engines and state schema.
@@ -1218,9 +1214,7 @@ class Agent(
                 unique_tools.append(tool)
 
         logger.debug(
-            f"Agent {
-                self.name} collected {
-                len(unique_tools)} unique tools from all sources",
+            f"Agent {self.name} collected {len(unique_tools)} unique tools from all sources",
         )
         return unique_tools
 
@@ -1390,13 +1384,12 @@ class Agent(
                     else:
                         state_instance.add_tool(tool, route, target_engine)
                     logger.debug(
-                        f"Added tool to state schema: {
-                            getattr(
-                                tool, 'name', str(tool))}", )
+                        f"Added tool to state schema: {getattr(tool, 'name', str(tool))}",
+                    )
                 else:
                     logger.warning(
-                        f"State schema {
-                            self.state_schema.__name__} does not support tools", )
+                        f"State schema {self.state_schema.__name__} does not support tools",
+                    )
             except Exception as e:
                 logger.exception(f"Failed to add tool to state: {e}")
 
@@ -1461,8 +1454,8 @@ class Agent(
                     logger.debug("Manually triggered tool synchronization to engines")
                 else:
                     logger.warning(
-                        f"State schema {
-                            self.state_schema.__name__} does not support tool syncing", )
+                        f"State schema {self.state_schema.__name__} does not support tool syncing",
+                    )
             except Exception as e:
                 logger.exception(f"Failed to sync tools to engines: {e}")
 
@@ -1474,18 +1467,12 @@ class Agent(
         """
         info = {
             "agent_name": self.name,
-            "agent_engines": list(
-                self.engines.keys()),
-            "main_engine": getattr(
-                self.engine,
-                "name",
-                None) if self.engine else None,
+            "agent_engines": list(self.engines.keys()),
+            "main_engine": getattr(self.engine, "name", None) if self.engine else None,
             "state_schema": {
                 "name": (
-                    getattr(
-                        self.state_schema,
-                        "__name__",
-                        None) if self.state_schema else None),
+                    getattr(self.state_schema, "__name__", None) if self.state_schema else None
+                ),
                 "class_engines": [],
                 "supports_tools": False,
                 "supports_routing": False,
@@ -1493,18 +1480,14 @@ class Agent(
             },
             "input_schema": {
                 "name": (
-                    getattr(
-                        self.input_schema,
-                        "__name__",
-                        None) if self.input_schema else None),
+                    getattr(self.input_schema, "__name__", None) if self.input_schema else None
+                ),
                 "fields": [],
             },
             "output_schema": {
                 "name": (
-                    getattr(
-                        self.output_schema,
-                        "__name__",
-                        None) if self.output_schema else None),
+                    getattr(self.output_schema, "__name__", None) if self.output_schema else None
+                ),
                 "fields": [],
             },
             "total_engines": 0,

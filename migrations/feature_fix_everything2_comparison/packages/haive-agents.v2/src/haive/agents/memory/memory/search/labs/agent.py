@@ -96,10 +96,7 @@ class LabsAgent(BaseSearchAgent):
                 system_message=self.get_system_prompt(),
             )
 
-        super().__init__(name=name,
-                         engine=engine,
-                         search_tools=search_tools,
-                         **kwargs)
+        super().__init__(name=name, engine=engine, search_tools=search_tools, **kwargs)
 
         # Add Labs-specific tools
         self.enable_code_execution = enable_code_execution
@@ -118,8 +115,7 @@ class LabsAgent(BaseSearchAgent):
         """Create Labs-specific tools for project automation."""
 
         @tool
-        def execute_python_code(code: str,
-                                description: str = "") -> dict[str, Any]:
+        def execute_python_code(code: str, description: str = "") -> dict[str, Any]:
             """Execute Python code and return results.
 
             Args:
@@ -213,8 +209,7 @@ class LabsAgent(BaseSearchAgent):
                 App creation results
             """
             try:
-                logger.info(
-                    f"Creating {app_type} app with features: {features}")
+                logger.info(f"Creating {app_type} app with features: {features}")
 
                 app_id = str(uuid.uuid4())
 
@@ -257,8 +252,7 @@ class LabsAgent(BaseSearchAgent):
                 }
 
         @tool
-        def process_data_file(file_path: str,
-                              operations: list[str]) -> dict[str, Any]:
+        def process_data_file(file_path: str, operations: list[str]) -> dict[str, Any]:
             """Process a data file with specified operations.
 
             Args:
@@ -414,13 +408,12 @@ Execute each project with professional standards and comprehensive automation.""
                 {
                     "name": "Load and Validate Data",
                     "description": f"Load data from {
-                        len(data_sources)} sources and validate structure",
+                        len(data_sources)
+                    } sources and validate structure",
                     "tool": "process_data_file",
                     "inputs": {
                         "files": data_sources,
-                        "operations": [
-                            "load",
-                            "validate"],
+                        "operations": ["load", "validate"],
                     },
                     "estimated_time": 30,
                 },
@@ -431,59 +424,54 @@ Execute each project with professional standards and comprehensive automation.""
             workflow_steps.append(
                 {
                     "name": "Data Analysis",
-                    "description":
-                    "Perform statistical analysis and identify key insights",
+                    "description": "Perform statistical analysis and identify key insights",
                     "tool": "execute_python_code",
-                    "inputs": {
-                        "analysis_type": "descriptive_statistics"
-                    },
+                    "inputs": {"analysis_type": "descriptive_statistics"},
                     "estimated_time": 60,
-                }, )
+                },
+            )
 
         # Step 3: Visualization creation
-        if ("chart" in query.lower() or "visualization" in query.lower()
-                or project_type == "dashboard"):
+        if (
+            "chart" in query.lower()
+            or "visualization" in query.lower()
+            or project_type == "dashboard"
+        ):
             workflow_steps.append(
                 {
                     "name": "Create Visualizations",
-                    "description":
-                    "Generate charts and graphs to represent data insights",
+                    "description": "Generate charts and graphs to represent data insights",
                     "tool": "create_visualization",
-                    "inputs": {
-                        "chart_types": ["bar", "line", "scatter"]
-                    },
+                    "inputs": {"chart_types": ["bar", "line", "scatter"]},
                     "estimated_time": 45,
-                }, )
+                },
+            )
 
         # Step 4: Interactive app creation
-        if project_type in ["dashboard", "app"
-                            ] or "interactive" in query.lower():
+        if project_type in ["dashboard", "app"] or "interactive" in query.lower():
             workflow_steps.append(
                 {
                     "name": "Build Interactive Application",
-                    "description":
-                    "Create interactive web application with user interface",
+                    "description": "Create interactive web application with user interface",
                     "tool": "create_interactive_app",
                     "inputs": {
                         "app_type": project_type,
                         "features": ["filters", "charts", "export"],
                     },
                     "estimated_time": 120,
-                }, )
+                },
+            )
 
         # Step 5: Testing and deployment
         workflow_steps.append(
             {
                 "name": "Testing and Finalization",
-                "description":
-                "Test all components and prepare final deliverables",
+                "description": "Test all components and prepare final deliverables",
                 "tool": "quality_assurance",
-                "inputs": {
-                    "test_types":
-                    ["functionality", "performance", "usability"]
-                },
+                "inputs": {"test_types": ["functionality", "performance", "usability"]},
                 "estimated_time": 30,
-            }, )
+            },
+        )
 
         return workflow_steps
 
@@ -513,9 +501,7 @@ Execute each project with professional standards and comprehensive automation.""
 
             if tool_name == "execute_python_code":
                 # Execute Python code
-                code = f"# {
-                    step_plan['description']}\nprint('Executing step: {
-                    step_plan['name']}')"
+                code = f"# {step_plan['description']}\nprint('Executing step: {step_plan['name']}')"
                 result = await self.tools[0].arun(
                     code=code,
                     description=step_plan["description"],
@@ -562,14 +548,12 @@ Execute each project with professional standards and comprehensive automation.""
                 output_data=result,
                 duration_seconds=duration,
                 success=result.get("success", True),
-                error_message=(result.get("error")
-                               if not result.get("success", True) else None),
+                error_message=(result.get("error") if not result.get("success", True) else None),
             )
 
         except Exception as e:
             duration = time.time() - start_time
-            logger.exception(
-                f"Workflow step failed: {step_plan['name']} - {e}")
+            logger.exception(f"Workflow step failed: {step_plan['name']} - {e}")
 
             return WorkflowStep(
                 step_id=step_id,
@@ -617,7 +601,8 @@ Execute each project with professional standards and comprehensive automation.""
                             "chart_type": output_data.get("chart_type"),
                             "step_id": step.step_id,
                         },
-                    ), )
+                    ),
+                )
 
             # Create app assets
             if "app_id" in output_data:
@@ -633,31 +618,24 @@ Execute each project with professional standards and comprehensive automation.""
                             "app_type": output_data.get("app_type"),
                             "features": output_data.get("features", []),
                         },
-                    ), )
+                    ),
+                )
 
             # Create data processing assets
             if "processed_data" in output_data:
                 processed = output_data["processed_data"]
                 assets.append(
                     ProjectAsset(
-                        asset_id=str(
-                            uuid.uuid4()),
+                        asset_id=str(uuid.uuid4()),
                         name="Processed Data",
                         type=AssetType.CSV,
-                        description=f"Processed data from step: {
-                            step.name}",
+                        description=f"Processed data from step: {step.name}",
                         file_path=processed.get("output_file"),
-                        content=f"Rows: {
-                            processed.get(
-                                'rows',
-                                0)}, Columns: {
-                            processed.get(
-                                'columns',
-                                0)}",
+                        content=f"Rows: {processed.get('rows', 0)}, Columns: {
+                            processed.get('columns', 0)
+                        }",
                         metadata={
-                            "operations": processed.get(
-                                "operations_performed",
-                                []),
+                            "operations": processed.get("operations_performed", []),
                             "step_id": step.step_id,
                         },
                     ),
@@ -698,7 +676,8 @@ Execute each project with professional standards and comprehensive automation.""
                         data_sources=output_data.get("data_sources", []),
                         interactive_elements=output_data.get("features", []),
                         deployment_url=output_data.get("deployment_url"),
-                    ), )
+                    ),
+                )
 
         return apps
 
@@ -742,15 +721,13 @@ Execute each project with professional standards and comprehensive automation.""
         project_name = f"Project_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
         # Plan workflow
-        workflow_plan = self.plan_project_workflow(query, project_type,
-                                                   data_sources)
+        workflow_plan = self.plan_project_workflow(query, project_type, data_sources)
 
         # Execute workflow steps
         workflow_steps = []
         for i, step_plan in enumerate(workflow_plan):
             if time.time() - start_time > max_work_time:
-                logger.warning(
-                    f"Project exceeded max work time: {max_work_time}s")
+                logger.warning(f"Project exceeded max work time: {max_work_time}s")
                 break
 
             step_result = await self.execute_workflow_step(step_plan, i)
@@ -764,23 +741,21 @@ Execute each project with professional standards and comprehensive automation.""
 
         # Calculate metrics
         total_work_time = time.time() - start_time
-        tools_used = list(
-            {step.tool_used
-             for step in workflow_steps if step.tool_used})
-        visualizations_created = len([
-            asset for asset in assets_created if asset.type == AssetType.CHART
-        ], )
+        tools_used = list({step.tool_used for step in workflow_steps if step.tool_used})
+        visualizations_created = len(
+            [asset for asset in assets_created if asset.type == AssetType.CHART],
+        )
 
         # Generate project summary
         successful_steps = [step for step in workflow_steps if step.success]
         project_summary = (
             f"Completed {len(successful_steps)}/{len(workflow_steps)} workflow steps. "
         )
-        project_summary += f"Created {
-            len(assets_created)} assets including {visualizations_created} visualizations. "
+        project_summary += f"Created {len(assets_created)} assets including {
+            visualizations_created
+        } visualizations. "
         if interactive_apps:
-            project_summary += f"Built {
-                len(interactive_apps)} interactive applications."
+            project_summary += f"Built {len(interactive_apps)} interactive applications."
 
         # Suggest next steps
         next_steps = [
@@ -821,10 +796,7 @@ Execute each project with professional standards and comprehensive automation.""
             visualizations_created=visualizations_created,
             project_summary=project_summary,
             next_steps=next_steps,
-            metadata={
-                "project_type": project_type,
-                "max_work_time": max_work_time
-            },
+            metadata={"project_type": project_type, "max_work_time": max_work_time},
         )
 
         # Save to memory if requested
@@ -853,8 +825,7 @@ Execute each project with professional standards and comprehensive automation.""
             Labs response
         """
         # Extract parameters from context
-        project_type = context.get("project_type",
-                                   "analysis") if context else "analysis"
+        project_type = context.get("project_type", "analysis") if context else "analysis"
         data_sources = context.get("data_sources", []) if context else []
 
         return await self.process_labs_project(

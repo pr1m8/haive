@@ -162,8 +162,7 @@ def create_plug_and_play_component(
     if component_type == RAGComponent.QUERY_DECOMPOSITION:
         return QueryDecomposerAgent(llm_config=llm_config, **kwargs)
     if component_type == RAGComponent.HIERARCHICAL_DECOMPOSITION:
-        return HierarchicalQueryDecomposerAgent(llm_config=llm_config,
-                                                **kwargs)
+        return HierarchicalQueryDecomposerAgent(llm_config=llm_config, **kwargs)
     if component_type == RAGComponent.CONTEXTUAL_DECOMPOSITION:
         return ContextualQueryDecomposerAgent(llm_config=llm_config, **kwargs)
     if component_type == RAGComponent.ADAPTIVE_DECOMPOSITION:
@@ -173,11 +172,9 @@ def create_plug_and_play_component(
     if component_type == RAGComponent.HALLUCINATION_GRADING:
         return HallucinationGraderAgent(llm_config=llm_config, **kwargs)
     if component_type == RAGComponent.ADVANCED_HALLUCINATION_GRADING:
-        return AdvancedHallucinationGraderAgent(llm_config=llm_config,
-                                                **kwargs)
+        return AdvancedHallucinationGraderAgent(llm_config=llm_config, **kwargs)
     if component_type == RAGComponent.REALTIME_HALLUCINATION_GRADING:
-        return RealtimeHallucinationGraderAgent(llm_config=llm_config,
-                                                **kwargs)
+        return RealtimeHallucinationGraderAgent(llm_config=llm_config, **kwargs)
 
     # Document processing components
     if component_type == RAGComponent.DOCUMENT_GRADING:
@@ -211,7 +208,8 @@ def create_plug_and_play_component(
 
 
 def get_component_compatibility_info(
-        component_type: RAGComponent, ) -> dict[str, list[str]]:
+    component_type: RAGComponent,
+) -> dict[str, list[str]]:
     """Get I/O schema information for a component type."""
     # Simplified I/O schemas for compatibility checking
     schemas = {
@@ -221,8 +219,7 @@ def get_component_compatibility_info(
         },
         RAGComponent.HALLUCINATION_GRADING: {
             "inputs": ["query", "response", "retrieved_documents", "messages"],
-            "outputs":
-            ["hallucination_result", "hallucination_score", "messages"],
+            "outputs": ["hallucination_result", "hallucination_score", "messages"],
         },
         RAGComponent.DOCUMENT_GRADING: {
             "inputs": ["query", "retrieved_documents", "messages"],
@@ -234,7 +231,4 @@ def get_component_compatibility_info(
         },
     }
 
-    return schemas.get(component_type, {
-        "inputs": ["query"],
-        "outputs": ["response"]
-    })
+    return schemas.get(component_type, {"inputs": ["query"], "outputs": ["response"]})

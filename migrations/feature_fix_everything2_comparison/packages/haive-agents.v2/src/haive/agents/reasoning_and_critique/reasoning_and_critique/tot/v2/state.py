@@ -57,10 +57,9 @@ class ToTState(MessagesState):
         default_factory=list,
         description="Current candidates",
     )
-    scored_candidates: Annotated[list[ScoredCandidate],
-                                 update_candidates] = Field(
-                                     default_factory=list,
-                                     description="Scored candidates",
+    scored_candidates: Annotated[list[ScoredCandidate], update_candidates] = Field(
+        default_factory=list,
+        description="Scored candidates",
     )
     selected_candidates: list[ScoredCandidate] = Field(
         default_factory=list,
@@ -69,12 +68,10 @@ class ToTState(MessagesState):
     all_candidates_history: Annotated[
         list[Candidate | ScoredCandidate],
         operator.add,
-    ] = Field(default_factory=list,
-              description="All candidates ever generated")
+    ] = Field(default_factory=list, description="All candidates ever generated")
 
     # Search parameters
-    depth: Annotated[int, operator.add] = Field(default=0,
-                                                description="Current depth")
+    depth: Annotated[int, operator.add] = Field(default=0, description="Current depth")
     max_depth: int = Field(default=10, description="Maximum search depth")
     beam_size: int = Field(
         default=3,
@@ -104,10 +101,9 @@ class ToTState(MessagesState):
     )
 
     # Search strategy
-    search_strategy: Literal["breadth_first", "best_first",
-                             "adaptive"] = Field(
-                                 default="best_first",
-                                 description="Search strategy to use",
+    search_strategy: Literal["breadth_first", "best_first", "adaptive"] = Field(
+        default="best_first",
+        description="Search strategy to use",
     )
 
     # Current candidate being processed (for scoring phase)
@@ -139,8 +135,8 @@ class ToTState(MessagesState):
             converted = []
             for item in data["candidates"]:
                 if isinstance(item, dict) and not isinstance(
-                        item,
-                        Candidate | ScoredCandidate,
+                    item,
+                    Candidate | ScoredCandidate,
                 ):
                     # Check if it has score to determine type
                     if "score" in item and item["score"] is not None:
@@ -156,16 +152,16 @@ class ToTState(MessagesState):
 
         # Similar conversion for other candidate fields
         for field in [
-                "scored_candidates",
-                "selected_candidates",
-                "all_candidates_history",
+            "scored_candidates",
+            "selected_candidates",
+            "all_candidates_history",
         ]:
             if field in data and isinstance(data[field], list):
                 converted = []
                 for item in data[field]:
                     if isinstance(item, dict) and not isinstance(
-                            item,
-                            Candidate | ScoredCandidate,
+                        item,
+                        Candidate | ScoredCandidate,
                     ):
                         if "score" in item and item["score"] is not None:
                             converted.append(ScoredCandidate(**item))
@@ -194,21 +190,18 @@ class ToTState(MessagesState):
         ]
 
         for i, candidate in enumerate(self.selected_candidates):
-            expansion_context.append(
-                f"Parent {i + 1} (Score: {candidate.score:.3f}):")
+            expansion_context.append(f"Parent {i + 1} (Score: {candidate.score:.3f}):")
             expansion_context.append(f"Content: {candidate.get_content_str()}")
             expansion_context.append(f"Feedback: {candidate.feedback}")
             if candidate.scoring_metadata:
                 if "strengths" in candidate.scoring_metadata:
                     expansion_context.append(
-                        f"Strengths: {
-                            ', '.join(
-                                candidate.scoring_metadata['strengths'])}", )
+                        f"Strengths: {', '.join(candidate.scoring_metadata['strengths'])}",
+                    )
                 if "weaknesses" in candidate.scoring_metadata:
                     expansion_context.append(
-                        f"Weaknesses: {
-                            ', '.join(
-                                candidate.scoring_metadata['weaknesses'])}", )
+                        f"Weaknesses: {', '.join(candidate.scoring_metadata['weaknesses'])}",
+                    )
             expansion_context.append("")
 
         return "\n".join(expansion_context)
@@ -257,10 +250,8 @@ class ToTState(MessagesState):
 
         for i, candidate in enumerate(sorted_scored):
             summary.append(
-                f"{i}. [Score: {
-                    candidate.score:.3f}] {
-                    candidate.get_content_str()[
-                        :100]}...", )
+                f"{i}. [Score: {candidate.score:.3f}] {candidate.get_content_str()[:100]}...",
+            )
             summary.append(f"   Feedback: {candidate.feedback}")
             if i < len(sorted_scored) - 1:
                 summary.append("")
@@ -301,7 +292,8 @@ class ToTState(MessagesState):
 
         if self.best_solution:
             progress_parts.append(
-                f"  - Best solution score: {self.best_solution.score:.3f}", )
+                f"  - Best solution score: {self.best_solution.score:.3f}",
+            )
 
         return "\n".join(progress_parts)
 

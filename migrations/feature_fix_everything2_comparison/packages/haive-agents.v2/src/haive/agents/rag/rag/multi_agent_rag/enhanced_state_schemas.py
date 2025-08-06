@@ -4,6 +4,7 @@ This module provides state schemas that include configuration fields,
 solving the issue of storing agent-specific configuration in a clean
 way.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -139,8 +140,7 @@ class DebateRAGState(ConfigurableRAGState):
         default_factory=list,
         description="Names of debate positions",
     )
-    max_debate_rounds: int = Field(default=3,
-                                   description="Maximum rounds of debate")
+    max_debate_rounds: int = Field(default=3, description="Maximum rounds of debate")
     require_consensus: bool = Field(
         default=False,
         description="Whether consensus is required to end debate",
@@ -168,10 +168,8 @@ class AdaptiveThresholdRAGState(DynamicRAGState):
         default=0.1,
         description="Amount to adjust threshold by",
     )
-    min_threshold: float = Field(default=0.3,
-                                 description="Minimum allowed threshold")
-    max_threshold: float = Field(default=0.95,
-                                 description="Maximum allowed threshold")
+    min_threshold: float = Field(default=0.3, description="Minimum allowed threshold")
+    max_threshold: float = Field(default=0.95, description="Maximum allowed threshold")
 
 
 # Helper function to create state with configuration
@@ -214,16 +212,13 @@ class StateConfigMixin:
         config = state.config.copy()
 
         # Add standard fields if they exist
-        for field in [
-                "relevance_threshold", "max_documents", "grading_criteria"
-        ]:
+        for field in ["relevance_threshold", "max_documents", "grading_criteria"]:
             if hasattr(state, field):
                 config[field] = getattr(state, field)
 
         return config
 
-    def update_state_config(self, state: ConfigurableRAGState,
-                            **updates) -> None:
+    def update_state_config(self, state: ConfigurableRAGState, **updates) -> None:
         """Update configuration in state."""
         for key, value in updates.items():
             if hasattr(state, key):

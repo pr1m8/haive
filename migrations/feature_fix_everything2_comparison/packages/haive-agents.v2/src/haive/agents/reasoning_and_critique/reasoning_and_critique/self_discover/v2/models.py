@@ -20,7 +20,8 @@ class SelectedModules(BaseModel):
     """Selected reasoning modules for the task."""
 
     selected_modules: list[str] = Field(
-        description="List of selected reasoning modules that are crucial for solving the task", )
+        description="List of selected reasoning modules that are crucial for solving the task",
+    )
     rationale: str | None = Field(
         default=None,
         description="Explanation for why these modules were selected",
@@ -31,17 +32,16 @@ class AdaptedModules(BaseModel):
     """Adapted reasoning modules tailored to the specific task."""
 
     adapted_modules: list[dict[str, str]] = Field(
-        description="List of adapted modules with 'module' and 'adaptation' keys", )
+        description="List of adapted modules with 'module' and 'adaptation' keys",
+    )
 
     class Config:
         json_schema_extra = {
             "example": {
                 "adapted_modules": [
                     {
-                        "module":
-                        "Critical Thinking",
-                        "adaptation":
-                        "Analyze SVG path commands to understand shape formation",
+                        "module": "Critical Thinking",
+                        "adaptation": "Analyze SVG path commands to understand shape formation",
                     },
                 ],
             },

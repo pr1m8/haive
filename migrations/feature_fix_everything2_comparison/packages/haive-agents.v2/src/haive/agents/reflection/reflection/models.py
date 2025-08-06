@@ -10,9 +10,7 @@ from pydantic import BaseModel, Field, validator
 class QualityScore(BaseModel):
     """Simple quality score for responses."""
 
-    score: float = Field(ge=0.0,
-                         le=100.0,
-                         description="Overall quality score (0-100)")
+    score: float = Field(ge=0.0, le=100.0, description="Overall quality score (0-100)")
     confidence: float = Field(
         default=0.8,
         ge=0.0,
@@ -26,7 +24,8 @@ class ImprovementSuggestion(BaseModel):
     """A specific improvement suggestion."""
 
     category: str = Field(
-        description="Category of improvement (clarity, accuracy, completeness, etc.)", )
+        description="Category of improvement (clarity, accuracy, completeness, etc.)",
+    )
     suggestion: str = Field(description="Specific suggestion for improvement")
     priority: Literal["high", "medium", "low"] = Field(
         default="medium",
@@ -42,8 +41,7 @@ class GradingResult(BaseModel):
     """Comprehensive grading result for a response."""
 
     # Core grading
-    overall_score: QualityScore = Field(
-        description="Overall quality assessment")
+    overall_score: QualityScore = Field(description="Overall quality assessment")
 
     # Detailed scores
     accuracy_score: float = Field(
@@ -137,8 +135,7 @@ class GradingResult(BaseModel):
 class ReflectionOutput(BaseModel):
     """Output from reflection process (unstructured)."""
 
-    reflected_response: str = Field(
-        description="The reflected/improved response")
+    reflected_response: str = Field(description="The reflected/improved response")
 
     reflection_notes: str | None = Field(
         default=None,
@@ -162,10 +159,9 @@ class ExpertiseConfig(BaseModel):
 
     domain: str = Field(description="Domain of expertise")
 
-    expertise_level: Literal["beginner", "intermediate", "expert",
-                             "world-class"] = Field(
-                                 default="expert",
-                                 description="Level of expertise to simulate",
+    expertise_level: Literal["beginner", "intermediate", "expert", "world-class"] = Field(
+        default="expert",
+        description="Level of expertise to simulate",
     )
 
     style: str | None = Field(
@@ -230,8 +226,7 @@ class ReflectionConfig(BaseModel):
         description="Force exact number of iterations",
     )
 
-    stop_on_decline: bool = Field(default=True,
-                                  description="Stop if quality decreases")
+    stop_on_decline: bool = Field(default=True, description="Stop if quality decreases")
 
 
 # Additional models for structured output reflection pattern
@@ -240,8 +235,7 @@ class Critique(BaseModel):
 
     strengths: list[str] = Field(description="Identified strengths")
     weaknesses: list[str] = Field(description="Identified weaknesses")
-    suggestions: list[str] = Field(
-        description="Specific improvement suggestions")
+    suggestions: list[str] = Field(description="Specific improvement suggestions")
     overall_quality: float = Field(
         ge=0.0,
         le=1.0,
@@ -255,8 +249,5 @@ class ReflectionResult(BaseModel):
 
     summary: str = Field(description="Summary of the reflection analysis")
     critique: Critique = Field(description="Detailed critique")
-    action_items: list[str] = Field(
-        description="Specific action items for improvement")
-    confidence: float = Field(ge=0.0,
-                              le=1.0,
-                              description="Confidence in the analysis")
+    action_items: list[str] = Field(description="Specific action items for improvement")
+    confidence: float = Field(ge=0.0, le=1.0, description="Confidence in the analysis")

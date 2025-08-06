@@ -9,7 +9,7 @@
       "extraPaths": [
         "packages/haive-core/src",
         "packages/haive-agents/src",
-        "packages/haive-tools/src", 
+        "packages/haive-tools/src",
         "packages/haive-games/src",
         "packages/haive-mcp/src",
         "packages/haive-prebuilt/src",
@@ -22,5 +22,19 @@
   "autoSearchPaths": true,
   "autoImportCompletions": true,
   "reportMissingImports": "warning",
-  "reportMissingTypeStubs": false
+  "reportMissingTypeStubs": false,
+  "exclude": [
+    "**/tests/**",
+    "**/test_*.py",
+    "**/*_test.py",
+    "**/examples/**",
+    "**/__pycache__/**",
+    "**/*.pyc",
+    "**/build/**",
+    "**/dist/**",
+    "**/.venv/**",
+    "**/venv/**",
+    "**/node_modules/**",
+    "**/.git/**"
+  ]
 }

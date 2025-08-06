@@ -89,8 +89,7 @@ class ReactMemoryAgent:
                 k=self.k,
             )
         else:
-            self.retriever = self.vector_store.as_retriever(
-                search_kwargs={"k": self.k})
+            self.retriever = self.vector_store.as_retriever(search_kwargs={"k": self.k})
 
         # Create memory tools
         self.memory_tools = self._create_memory_tools()
@@ -105,8 +104,7 @@ class ReactMemoryAgent:
 
     def _get_system_message(self) -> str:
         """Get system message that instructs agent on memory usage."""
-        return f"""You are an AI assistant with access to long-term memory for user {
-            self.user_id}.
+        return f"""You are an AI assistant with access to long-term memory for user {self.user_id}.
 
 IMPORTANT: For EVERY user query, you should:
 1. First use the 'search_memories' tool to find relevant past conversations and facts
@@ -159,8 +157,9 @@ Always strive to use memories to provide more helpful, personalized responses.""
                     importance = doc.metadata.get("importance", "normal")
 
                     memories.append(
-                        f"Memory {i} [{memory_type}] (from {timestamp}, importance: {importance}):\n" f"{
-                            doc.page_content}", )
+                        f"Memory {i} [{memory_type}] (from {timestamp}, importance: {importance}):\n"
+                        f"{doc.page_content}",
+                    )
 
                 return "\n\n".join(memories)
             except Exception as e:
@@ -187,8 +186,7 @@ Always strive to use memories to provide more helpful, personalized responses.""
                 from datetime import datetime
 
                 start = datetime.fromisoformat(start_date)
-                end = datetime.fromisoformat(
-                    end_date) if end_date else datetime.now()
+                end = datetime.fromisoformat(end_date) if end_date else datetime.now()
 
                 # Get all documents
                 all_docs = self.vector_store.similarity_search("", k=1000)
@@ -210,8 +208,7 @@ Always strive to use memories to provide more helpful, personalized responses.""
                 filtered_docs = filtered_docs[:k]
 
                 if not filtered_docs:
-                    return f"No memories found between {start_date} and {
-                        end_date or 'now'}."
+                    return f"No memories found between {start_date} and {end_date or 'now'}."
 
                 # Format memories
                 memories = []
@@ -220,8 +217,8 @@ Always strive to use memories to provide more helpful, personalized responses.""
                     memory_type = doc.metadata.get("type", "general")
 
                     memories.append(
-                        f"Memory {i} [{memory_type}] (from {timestamp}):\n{
-                            doc.page_content}", )
+                        f"Memory {i} [{memory_type}] (from {timestamp}):\n{doc.page_content}",
+                    )
 
                 return "\n\n".join(memories)
             except Exception as e:
@@ -361,7 +358,8 @@ Always strive to use memories to provide more helpful, personalized responses.""
 
                     memories.append(
                         f"{i}. [{memory_type}] {timestamp} (importance: {importance}):\n"
-                        f"   {doc.page_content[:100]}...", )
+                        f"   {doc.page_content[:100]}...",
+                    )
 
                 return "Recent memories:\n" + "\n".join(memories)
             except Exception as e:
@@ -407,14 +405,14 @@ Always strive to use memories to provide more helpful, personalized responses.""
 
         if include_metadata:
             return {
-                "response":
-                response,
-                "user_id":
-                self.user_id,
-                "timestamp":
-                datetime.now().isoformat(),
-                "tools_used": (self.agent.get_tool_usage_stats() if hasattr(
-                    self.agent, "get_tool_usage_stats") else None),
+                "response": response,
+                "user_id": self.user_id,
+                "timestamp": datetime.now().isoformat(),
+                "tools_used": (
+                    self.agent.get_tool_usage_stats()
+                    if hasattr(self.agent, "get_tool_usage_stats")
+                    else None
+                ),
             }
 
         return response
@@ -479,8 +477,7 @@ async def example_basic_usage():
     await agent.arun("What do you remember about my job?", auto_save=True)
 
     # Search specific memories
-    await agent.arun("Search my memories for information about hiking",
-                     auto_save=False)
+    await agent.arun("Search my memories for information about hiking", auto_save=False)
 
     # Save vector store
     agent.save_vector_store("alice_memories")
@@ -512,7 +509,8 @@ async def example_with_custom_tools():
     # Use both memory and custom tools
     await agent.arun(
         "Store a memory that I started my new job on 2024-01-15, "
-        "then calculate how many days I've been working there.", )
+        "then calculate how many days I've been working there.",
+    )
 
 
 if __name__ == "__main__":

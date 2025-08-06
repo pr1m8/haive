@@ -54,8 +54,7 @@ class DebateState(ConversationState):
         description="Whether closing statements are done",
     )
 
-    current_phase: str = Field(default="opening",
-                               description="Current debate phase")
+    current_phase: str = Field(default="opening", description="Current debate phase")
 
     phase_transitions: list[tuple[str, int]] = Field(
         default_factory=list,
@@ -84,8 +83,7 @@ class DebateState(ConversationState):
         description="Feedback from judge participants",
     )
 
-    debate_winner: str = Field(default="",
-                               description="Declared winner of the debate")
+    debate_winner: str = Field(default="", description="Declared winner of the debate")
 
     # Configuration
     arguments_per_side: int = Field(
@@ -116,8 +114,7 @@ class DebateState(ConversationState):
             return True
 
         for participant in self.debate_positions:
-            if len(self.arguments_made.get(participant,
-                                           [])) < self.arguments_per_side:
+            if len(self.arguments_made.get(participant, [])) < self.arguments_per_side:
                 return False
         return True
 
@@ -135,15 +132,14 @@ class DebateState(ConversationState):
     @property
     def phase_should_transition(self) -> bool:
         """Check if current phase should transition."""
-        if (self.current_phase == "opening"
-                and self.opening_statements_complete) or (
-                    self.current_phase == "arguments"
-                    and self.all_arguments_complete):
+        if (self.current_phase == "opening" and self.opening_statements_complete) or (
+            self.current_phase == "arguments" and self.all_arguments_complete
+        ):
             return True
         return bool(
             (self.current_phase == "rebuttals" and self.all_rebuttals_complete)
-            or (self.current_phase == "closing"
-                and self.closing_statements_complete), )
+            or (self.current_phase == "closing" and self.closing_statements_complete),
+        )
 
     @computed_field
     @property
@@ -178,14 +174,8 @@ class DebateState(ConversationState):
             "phase": self.current_phase,
             "total_arguments": self.total_arguments,
             "total_rebuttals": self.total_rebuttals,
-            "arguments_by_participant": {
-                p: len(args)
-                for p, args in self.arguments_made.items()
-            },
-            "rebuttals_by_participant": {
-                p: len(rebs)
-                for p, rebs in self.rebuttals.items()
-            },
+            "arguments_by_participant": {p: len(args) for p, args in self.arguments_made.items()},
+            "rebuttals_by_participant": {p: len(rebs) for p, rebs in self.rebuttals.items()},
             "progress": self.debate_progress,
             "winner": self.debate_winner or "Undecided",
         }
@@ -194,9 +184,12 @@ class DebateState(ConversationState):
     @property
     def should_end_debate(self) -> bool:
         """Check if debate should end based on all conditions."""
-        return (self.conversation_ended or self.current_phase == "complete"
-                or self.should_end_by_rounds or
-                (self.debate_winner != "" and self.current_phase == "judging"))
+        return (
+            self.conversation_ended
+            or self.current_phase == "complete"
+            or self.should_end_by_rounds
+            or (self.debate_winner != "" and self.current_phase == "judging")
+        )
 
     def get_participant_summary(self, participant: str) -> dict[str, Any]:
         """Get summary for a specific participant."""

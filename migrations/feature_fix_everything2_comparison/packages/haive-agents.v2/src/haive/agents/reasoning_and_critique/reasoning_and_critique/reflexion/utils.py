@@ -17,8 +17,7 @@ def _get_num_iterations(state: BaseModel) -> int:
     """
     i = 0
     for m in reversed(state.messages):  # Reverse iteration for efficiency
-        if isinstance(m,
-                      dict):  # Ensure compatibility with dict-based messages
+        if isinstance(m, dict):  # Ensure compatibility with dict-based messages
             msg_type = m.get("type", "")
         else:
             msg_type = getattr(m, "type", "")

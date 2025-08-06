@@ -25,22 +25,21 @@ from haive.core.models.llm.base import LLMConfig
 class QueryVariations(BaseModel):
     """Structured output for query variations."""
 
-    specific_query: str = Field(
-        description="More specific version of the query")
+    specific_query: str = Field(description="More specific version of the query")
     broader_query: str = Field(description="Broader conceptual version")
-    alternative_query: str = Field(
-        description="Alternative phrasing of the query")
+    alternative_query: str = Field(description="Alternative phrasing of the query")
 
 
-QUERY_EXPANSION_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert at query expansion for improved information retrieval.
+QUERY_EXPANSION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert at query expansion for improved information retrieval.
 Generate diverse query variations that capture different aspects and phrasings.""",
-    ),
-    (
-        "human",
-        """Generate 3 different versions of this query to improve search coverage:
+        ),
+        (
+            "human",
+            """Generate 3 different versions of this query to improve search coverage:
 
 Original Query: {query}
 
@@ -50,16 +49,16 @@ Create:
 3. An alternative phrasing that might match different documents
 
 Return the three query variations.""",
-    ),
-], )
+        ),
+    ],
+)
 
 
 class MultiRetrievalAgent(Agent):
     """Agent that performs parallel retrieval with multiple queries."""
 
     name: str = "Multi-Query Retriever"
-    base_retriever: BaseRAGAgent = Field(...,
-                                         description="Base retriever to use")
+    base_retriever: BaseRAGAgent = Field(..., description="Base retriever to use")
 
     def build_graph(self) -> BaseGraph:
         """Build graph that retrieves with multiple queries in parallel."""
@@ -74,11 +73,13 @@ class MultiRetrievalAgent(Agent):
             # Collect all queries
             all_queries = [original_query]
             if isinstance(variations, dict):
-                all_queries.extend([
-                    variations.get("specific_query", ""),
-                    variations.get("broader_query", ""),
-                    variations.get("alternative_query", ""),
-                ], )
+                all_queries.extend(
+                    [
+                        variations.get("specific_query", ""),
+                        variations.get("broader_query", ""),
+                        variations.get("alternative_query", ""),
+                    ],
+                )
 
             # Remove empty queries
             all_queries = [q for q in all_queries if q.strip()]
@@ -97,11 +98,7 @@ class MultiRetrievalAgent(Agent):
                 for i, doc in enumerate(docs):
                     doc_id = hash(doc.page_content)
                     if doc_id not in doc_scores:
-                        doc_scores[doc_id] = {
-                            "doc": doc,
-                            "score": 0,
-                            "positions": []
-                        }
+                        doc_scores[doc_id] = {"doc": doc, "score": 0, "positions": []}
                     # Higher score for documents appearing in multiple queries
                     doc_scores[doc_id]["score"] += 1
                     # Bonus for higher ranking positions
@@ -185,7 +182,8 @@ class MultiQueryRAGAgent(SequentialAgent):
 
         # Step 4: Answer generation
         from haive.agents.rag.common.answer_generators.prompts import (
-            RAG_ANSWER_STANDARD, )
+            RAG_ANSWER_STANDARD,
+        )
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(

@@ -1,4 +1,5 @@
 """Module exports."""
+
 from __future__ import annotations
 
 from multi_strategy.agent import analyze_query

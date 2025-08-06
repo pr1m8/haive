@@ -27,8 +27,7 @@ def example_business_decision() -> Any:
 
     # Prepare the input
     input_data = {
-        "question":
-        "Should we acquire StartupX for $50M?",
+        "question": "Should we acquire StartupX for $50M?",
         "context": {
             "our_company": {
                 "revenue": "$500M",
@@ -66,10 +65,8 @@ def example_business_decision() -> Any:
             "Must maintain 6 months cash runway",
             "Cannot take on debt for acquisition",
         ],
-        "reasoning_depth":
-        4,
-        "explore_alternatives":
-        True,
+        "reasoning_depth": 4,
+        "explore_alternatives": True,
     }
 
     # Run the reasoning system
@@ -91,8 +88,7 @@ def example_quick_reasoning() -> Any:
 
     result = reasoner.invoke(
         {
-            "question":
-            "Should I take the job offer with 20% higher salary but longer commute?",
+            "question": "Should I take the job offer with 20% higher salary but longer commute?",
             "context": {
                 "current_job": {
                     "salary": "$100k",
@@ -106,7 +102,8 @@ def example_quick_reasoning() -> Any:
                 },
             },
             "constraints": ["Need work-life balance", "Have young kids"],
-        }, )
+        },
+    )
 
     return result
 

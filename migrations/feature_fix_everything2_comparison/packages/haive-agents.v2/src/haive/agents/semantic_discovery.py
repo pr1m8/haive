@@ -106,8 +106,7 @@ class VectorBasedToolSelector(BaseModel):
         default=0.7,
         description="Minimum similarity score for tool selection",
     )
-    max_tools: int = Field(default=5,
-                           description="Maximum number of tools to select")
+    max_tools: int = Field(default=5, description="Maximum number of tools to select")
 
     # Component registry for enhanced capabilities
     component_registry: Optional[EnhancedComponentRegistry] = Field(
@@ -139,8 +138,7 @@ class VectorBasedToolSelector(BaseModel):
         # Also register in component registry
         if self.component_registry:
             for tool in tools:
-                self.component_registry.register_component(
-                    tool, ComponentType.TOOL)
+                self.component_registry.register_component(tool, ComponentType.TOOL)
 
         # Create documents for vector store
         documents = []
@@ -222,8 +220,7 @@ class VectorBasedToolSelector(BaseModel):
 
         return selected_tools
 
-    async def _select_by_threshold(self,
-                                   query: str) -> list[ComponentMetadata]:
+    async def _select_by_threshold(self, query: str) -> list[ComponentMetadata]:
         """Select tools above similarity threshold."""
         # Use component registry if available
         if self.component_registry:
@@ -233,10 +230,7 @@ class VectorBasedToolSelector(BaseModel):
                 max_results=20,  # Get more results to filter
             )
             # Filter by threshold
-            return [
-                r for r in all_results
-                if r.similarity_score >= self.similarity_threshold
-            ]
+            return [r for r in all_results if r.similarity_score >= self.similarity_threshold]
 
         # Fallback to direct vector store search
         results = self.vector_store.similarity_search_with_score(
@@ -256,7 +250,7 @@ class VectorBasedToolSelector(BaseModel):
                 )
                 selected_tools.append(metadata)
 
-        return selected_tools[:self.max_tools]
+        return selected_tools[: self.max_tools]
 
     async def _select_hybrid(self, query: str) -> list[ComponentMetadata]:
         """Hybrid selection combining similarity and capability matching."""
@@ -282,8 +276,8 @@ class VectorBasedToolSelector(BaseModel):
                     existing = all_tools[tool.name]
                     existing.capability_match_score = tool.capability_match_score
                     existing.composite_score = (
-                        existing.similarity_score * 0.6 +
-                        existing.capability_match_score * 0.4)
+                        existing.similarity_score * 0.6 + existing.capability_match_score * 0.4
+                    )
 
             # Sort by composite score
             sorted_tools = sorted(
@@ -292,7 +286,7 @@ class VectorBasedToolSelector(BaseModel):
                 reverse=True,
             )
 
-            return sorted_tools[:self.max_tools]
+            return sorted_tools[: self.max_tools]
 
         # Fallback to simple similarity search
         return await self._select_top_k(query)
@@ -304,13 +298,10 @@ class QueryAnalyzer(BaseModel):
     capability_keywords: dict[str, list[str]] = Field(
         default_factory=lambda: {
             "search": ["search", "find", "look", "query", "discover"],
-            "analysis":
-            ["analyze", "examine", "inspect", "evaluate", "assess"],
+            "analysis": ["analyze", "examine", "inspect", "evaluate", "assess"],
             "generation": ["generate", "create", "make", "produce", "build"],
-            "transformation":
-            ["transform", "convert", "change", "modify", "alter"],
-            "communication":
-            ["send", "email", "notify", "message", "communicate"],
+            "transformation": ["transform", "convert", "change", "modify", "alter"],
+            "communication": ["send", "email", "notify", "message", "communicate"],
             "storage": ["save", "store", "persist", "cache", "archive"],
             "retrieval": ["get", "fetch", "retrieve", "load", "read"],
             "processing": ["process", "handle", "execute", "run", "perform"],
@@ -380,8 +371,7 @@ class QueryAnalyzer(BaseModel):
             complexity += 0.2
 
         # Increase for multiple steps
-        if any(step in query.lower()
-               for step in ["first", "then", "finally", "after"]):
+        if any(step in query.lower() for step in ["first", "then", "finally", "after"]):
             complexity += 0.3
 
         return min(complexity, 1.0)
@@ -454,21 +444,17 @@ class CapabilityMatcher(BaseModel):
 
         for tool_name, tool_capabilities in self.capability_matrix.items():
             # Check required capabilities
-            required_match = all(cap in tool_capabilities
-                                 for cap in required_capabilities)
+            required_match = all(cap in tool_capabilities for cap in required_capabilities)
 
             if not required_match:
                 continue
 
             # Calculate match score
-            score = len(
-                set(required_capabilities).intersection(
-                    set(tool_capabilities)))
+            score = len(set(required_capabilities).intersection(set(tool_capabilities)))
 
             # Bonus for optional capabilities
             if optional_capabilities:
-                optional_match = sum(1 for cap in optional_capabilities
-                                     if cap in tool_capabilities)
+                optional_match = sum(1 for cap in optional_capabilities if cap in tool_capabilities)
                 score += optional_match * 0.5
 
             matches.append((tool_name, score))
@@ -532,8 +518,7 @@ class SemanticDiscoveryEngine(BaseModel):
     def setup_registry(cls) -> SemanticDiscoveryEngine:
         """Setup shared component registry."""
         if self.component_registry is None:
-            self.component_registry = create_component_registry(
-                use_embeddings=True)
+            self.component_registry = create_component_registry(use_embeddings=True)
 
         # Share registry with sub-components
         self.vector_selector.component_registry = self.component_registry
@@ -600,8 +585,7 @@ class SemanticDiscoveryEngine(BaseModel):
             if capability_filter:
                 filtered_tools = []
                 for tool in selected_tools:
-                    if any(cap in tool.capabilities
-                           for cap in capability_filter):
+                    if any(cap in tool.capabilities for cap in capability_filter):
                         filtered_tools.append(tool)
                 selected_tools = filtered_tools
 
@@ -613,7 +597,7 @@ class SemanticDiscoveryEngine(BaseModel):
                     "capability_filter": capability_filter,
                 }
                 selected_tools = self.selection_strategy.select(
-                    selected_tools[:max_tools * 2],
+                    selected_tools[: max_tools * 2],
                     context,
                     max_tools,
                 )
@@ -621,8 +605,7 @@ class SemanticDiscoveryEngine(BaseModel):
                 selected_tools = selected_tools[:max_tools]
         else:
             # Fallback to vector selector
-            selected_tools = await self.vector_selector.select_tools(
-                query, strategy)
+            selected_tools = await self.vector_selector.select_tools(query, strategy)
 
         # Update query analysis with selected tools
         query_analysis.suggested_tools = [t.name for t in selected_tools]
@@ -650,8 +633,7 @@ class SemanticDiscoveryEngine(BaseModel):
             # Filter by required capabilities
             filtered = []
             for result in results:
-                if all(cap in result.capabilities
-                       for cap in required_capabilities):
+                if all(cap in result.capabilities for cap in required_capabilities):
                     filtered.append(result)
 
             return filtered[:max_tools]
@@ -693,8 +675,7 @@ class SemanticDiscoveryEngine(BaseModel):
                 "ensemble": EnsembleSelectionStrategy,
             }
 
-            strategy_class = strategy_map.get(strategy,
-                                              SemanticSelectionStrategy)
+            strategy_class = strategy_map.get(strategy, SemanticSelectionStrategy)
             self.selection_strategy = strategy_class()
         else:
             self.selection_strategy = strategy

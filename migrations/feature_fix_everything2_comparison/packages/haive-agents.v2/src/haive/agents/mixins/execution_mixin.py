@@ -94,8 +94,8 @@ class ExecutionMixin:
                 try:
                     result = input_schema(**prepared_input)
                     logger.debug(
-                        f"Created input schema instance with {
-                            len(prepared_input)} fields", )
+                        f"Created input schema instance with {len(prepared_input)} fields",
+                    )
                     return result
                 except Exception as e:
                     logger.warning(f"Error creating input schema instance: {e}")
@@ -115,8 +115,7 @@ class ExecutionMixin:
                 prepared_input = {}
 
                 if "messages" in schema_fields:
-                    prepared_input["messages"] = [HumanMessage(
-                        content=text) for text in input_data]
+                    prepared_input["messages"] = [HumanMessage(content=text) for text in input_data]
 
                 joined_text = "\n".join(input_data)
                 for field_name in ["input", "query", "question", "text", "content"]:
@@ -144,8 +143,8 @@ class ExecutionMixin:
                 try:
                     result = input_schema(**prepared_input)
                     logger.debug(
-                        f"Created input schema instance with {
-                            len(prepared_input)} fields", )
+                        f"Created input schema instance with {len(prepared_input)} fields",
+                    )
                     return result
                 except Exception as e:
                     logger.warning(f"Error creating input schema instance: {e}")
@@ -173,8 +172,9 @@ class ExecutionMixin:
                     # important fields like tool_call_id
                     if input_data.get("messages"):
                         # Check if messages are already BaseMessage objects
-                        all_base_messages = all(isinstance(msg, BaseMessage)
-                                                for msg in input_data["messages"])
+                        all_base_messages = all(
+                            isinstance(msg, BaseMessage) for msg in input_data["messages"]
+                        )
                         logger.debug(
                             f"Messages validation: count={
                                 len(input_data['messages'])
@@ -195,22 +195,24 @@ class ExecutionMixin:
                             }
                             logger.debug(
                                 f"Creating schema instance without messages, remaining fields: {
-                                    list(
-                                        validation_data.keys())}", )
+                                    list(validation_data.keys())
+                                }",
+                            )
                             # Create the schema instance
                             result = input_schema(**validation_data)
                             # Directly set the messages field to preserve
                             # BaseMessage objects
                             result.messages = input_data["messages"]
                             logger.debug(
-                                "Created input schema instance with preserved BaseMessage objects", )
+                                "Created input schema instance with preserved BaseMessage objects",
+                            )
                             return result
 
                     # Fallback to normal validation
                     result = input_schema(**input_data)
                     logger.debug(
-                        f"Created input schema instance from dict with {
-                            len(input_data)} fields", )
+                        f"Created input schema instance from dict with {len(input_data)} fields",
+                    )
                     return result
                 except Exception as e:
                     logger.warning(
@@ -265,17 +267,20 @@ class ExecutionMixin:
                                     if hasattr(msg, "tool_call_id"):
                                         logger.debug(
                                             f"  Preserving ToolMessage {i} with tool_call_id={
-                                                getattr(
-                                                    msg, 'tool_call_id', 'None')}", )
+                                                getattr(msg, 'tool_call_id', 'None')
+                                            }",
+                                        )
 
                                 # Create schema instance without messages first
                                 validation_data = {
-                                    k: v for k, v in data_dict.items() if k != "messages"}
+                                    k: v for k, v in data_dict.items() if k != "messages"
+                                }
                                 result = input_schema(**validation_data)
                                 # Directly set the actual BaseMessage objects
                                 result.messages = actual_messages
                                 logger.debug(
-                                    "Converted BaseModel to input schema with preserved BaseMessage objects", )
+                                    "Converted BaseModel to input schema with preserved BaseMessage objects",
+                                )
                                 return result
 
                     # Fallback to normal conversion
@@ -291,8 +296,8 @@ class ExecutionMixin:
         # Other types - convert to string and handle
         else:
             logger.warning(
-                f"Unsupported input type {
-                    type(input_data).__name__}, converting to string", )
+                f"Unsupported input type {type(input_data).__name__}, converting to string",
+            )
             return self._prepare_input(str(input_data))
 
     def _prepare_runnable_config(
@@ -331,9 +336,7 @@ class ExecutionMixin:
 
         debugger.log_recursion_limit_flow(
             "Initial base_config",
-            (base_config.get(
-                "configurable",
-                {}).get("recursion_limit") if base_config else None),
+            (base_config.get("configurable", {}).get("recursion_limit") if base_config else None),
             "agent.runnable_config or agent.config.runnable_config",
         )
 

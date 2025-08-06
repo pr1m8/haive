@@ -59,11 +59,12 @@ class PropertyFilter(BaseModel):
     """
 
     node_label: str = Field(
-        description="The label of the node to which this property belongs", )
-    property_key: str = Field(
-        description="The key of the property being filtered")
+        description="The label of the node to which this property belongs",
+    )
+    property_key: str = Field(description="The key of the property being filtered")
     property_value: Any | None = Field(
-        description="The value that the property is being matched against", )
+        description="The value that the property is being matched against",
+    )
     filter_type: Literal["=", "!=", ">", "<", ">=", "<="] | None = Field(
         default="=",
         description="Type of filter operation used in the Cypher query",
@@ -154,8 +155,8 @@ class CypherQueryOutput(BaseModel):
 
         if not any(query_upper.startswith(kw) for kw in valid_keywords):
             raise ValueError(
-                f"Invalid Cypher query. Must start with one of: {
-                    ', '.join(valid_keywords)}", )
+                f"Invalid Cypher query. Must start with one of: {', '.join(valid_keywords)}",
+            )
         return query
 
 
@@ -262,9 +263,8 @@ class GuardrailsOutput(BaseModel):
         valid_values = ["end", *self.allowed_categories]
         if self.decision not in valid_values:
             raise ValueError(
-                f"Invalid decision '{
-                    self.decision}'. Must be one of: {
-                    ', '.join(valid_values)}", )
+                f"Invalid decision '{self.decision}'. Must be one of: {', '.join(valid_values)}",
+            )
 
     class Config:
         """Pydantic model configuration."""

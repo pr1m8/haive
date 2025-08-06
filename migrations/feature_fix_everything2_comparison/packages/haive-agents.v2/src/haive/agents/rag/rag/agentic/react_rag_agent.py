@@ -107,14 +107,17 @@ class ReactRAGAgent(ReactAgent):
         engine = kwargs.pop("engine", None)
         if engine is None:
             engine = AugLLMConfig(
-                temperature=temperature, system_message=(
+                temperature=temperature,
+                system_message=(
                     "You are an intelligent assistant with access to both a knowledge base and various tools.\n\n"
                     "Decision Guidelines:\n"
                     "1. For factual/knowledge questions, use the retriever tool first\n"
                     "2. For calculations, use the calculator tool\n"
                     "3. For current information, use the web search tool\n"
                     "4. For complex queries, combine multiple tools as needed\n\n"
-                    "Always think step-by-step about which tool(s) to use and why."), )
+                    "Always think step-by-step about which tool(s) to use and why."
+                ),
+            )
 
         return cls(
             name=name,
@@ -127,7 +130,8 @@ class ReactRAGAgent(ReactAgent):
 
     @staticmethod
     def _create_retriever_tool(
-            retriever_config: BaseRetrieverConfig | VectorStoreConfig, ) -> Tool:
+        retriever_config: BaseRetrieverConfig | VectorStoreConfig,
+    ) -> Tool:
         """Create a retriever tool that triggers the retrieval node.
 
         This tool doesn't actually perform retrieval - it just signals
@@ -155,7 +159,8 @@ class ReactRAGAgent(ReactAgent):
                 "Search the knowledge base for relevant information. "
                 "Use this for factual questions, background information, "
                 "or when you need to look up specific knowledge. "
-                "This tool triggers a dedicated retrieval process."),
+                "This tool triggers a dedicated retrieval process."
+            ),
             func=trigger_retrieval,
         )
 
@@ -213,8 +218,7 @@ class ReactRAGAgent(ReactAgent):
                     self._route_to_retrieval_or_tools,
                     {
                         "retrieval": "retrieval_node",
-                        "tools":
-                        "tool_node" if self._needs_tool_node() else END,
+                        "tools": "tool_node" if self._needs_tool_node() else END,
                         "end": END,
                     },
                 )

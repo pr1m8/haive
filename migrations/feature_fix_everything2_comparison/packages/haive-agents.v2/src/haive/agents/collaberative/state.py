@@ -77,16 +77,15 @@ class CollaborativeState(ConversationState):
     )
 
     # Output format
-    output_format: Literal[markdown, code, outline,
-                           report] = Field(default="markdown", )
+    output_format: Literal[markdown, code, outline, report] = Field(
+        default="markdown",
+    )
 
     # Add custom reducers for proper merging
     __reducer_fields__ = {
         **ConversationState.__reducer_fields__,
         "contributions": operator.add,  # Accumulate contributions
-        "document_sections":
-        merge_document_sections,  # Merge sections properly
-        "contribution_count":
-        merge_contribution_counts,  # Sum contribution counts
+        "document_sections": merge_document_sections,  # Merge sections properly
+        "contribution_count": merge_contribution_counts,  # Sum contribution counts
         "completed_sections": operator.add,  # Accumulate completed sections
     }

@@ -7,6 +7,7 @@ Classes:
     BaseRAGOutputState: BaseRAGOutputState implementation.
     BaseRAGState: BaseRAGState implementation.
 """
+
 from __future__ import annotations
 
 from langchain.schema import Document
@@ -17,8 +18,7 @@ from pydantic import Field
 class BaseRAGInputState(BaseModel):
     """Input state for RAG agents."""
 
-    query: str = Field(
-        ..., description='The query to search the RAG database with.')
+    query: str = Field(..., description="The query to search the RAG database with.")
 
 
 class BaseRAGOutputState(BaseModel):
@@ -26,7 +26,7 @@ class BaseRAGOutputState(BaseModel):
 
     retrieved_documents: list[Document] | list[str] | None = Field(
         default=[],
-        description='The results of the RAG search.',
+        description="The results of the RAG search.",
     )
 
 

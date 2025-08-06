@@ -89,8 +89,7 @@ class SimpleRAGState(StateSchema):
         description="Documents retrieved from vector store",
     )
 
-    generated_answer: str = Field(default="",
-                                  description="Generated answer from LLM")
+    generated_answer: str = Field(default="", description="Generated answer from LLM")
 
     # Enhanced tracking fields (populated when features enabled)
     retrieval_metadata: RAGMetadata | None = Field(
@@ -199,8 +198,7 @@ class SimpleRAGState(StateSchema):
             if hasattr(self.generation_debug, key):
                 setattr(self.generation_debug, key, value)
 
-    def update_performance_metric(self, metric_name: str,
-                                  value: float) -> None:
+    def update_performance_metric(self, metric_name: str, value: float) -> None:
         """Update a performance metric."""
         self.performance_metrics[metric_name] = value
 
@@ -230,17 +228,17 @@ class SimpleRAGState(StateSchema):
         if self.retrieval_debug:
             summary.update(
                 {
-                    "search_time":
-                    self.retrieval_debug.search_time,
-                    "total_documents":
-                    self.retrieval_debug.total_documents,
-                    "similarity_scores":
-                    self.retrieval_debug.similarity_scores,
-                    "avg_similarity":
-                    (sum(self.retrieval_debug.similarity_scores) /
-                     len(self.retrieval_debug.similarity_scores)
-                     if self.retrieval_debug.similarity_scores else None),
-                }, )
+                    "search_time": self.retrieval_debug.search_time,
+                    "total_documents": self.retrieval_debug.total_documents,
+                    "similarity_scores": self.retrieval_debug.similarity_scores,
+                    "avg_similarity": (
+                        sum(self.retrieval_debug.similarity_scores)
+                        / len(self.retrieval_debug.similarity_scores)
+                        if self.retrieval_debug.similarity_scores
+                        else None
+                    ),
+                },
+            )
 
         if self.retrieval_metadata:
             summary.update({"metadata": self.retrieval_metadata.model_dump()})
@@ -259,11 +257,11 @@ class SimpleRAGState(StateSchema):
                 {
                     "context_length": self.generation_debug.context_length,
                     "prompt_tokens": self.generation_debug.prompt_tokens,
-                    "completion_tokens":
-                    self.generation_debug.completion_tokens,
+                    "completion_tokens": self.generation_debug.completion_tokens,
                     "generation_time": self.generation_debug.generation_time,
                     "model_used": self.generation_debug.model_used,
-                }, )
+                },
+            )
 
         if self.generation_metadata:
             summary.update({"metadata": self.generation_metadata.model_dump()})

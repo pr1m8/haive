@@ -143,20 +143,14 @@ class NodeConfig(ABC, BaseModel):
     def get_input_fields_for_state(self) -> dict[str, Any]:
         """Get input fields that should be included in overall state schema."""
         if self.input_field_defs:
-            return {
-                fd.name: fd.to_field_info()
-                for fd in self.input_field_defs
-            }
+            return {fd.name: fd.to_field_info() for fd in self.input_field_defs}
         return {}
 
     def get_output_fields_for_state(self) -> dict[str, Any]:
         """Get output fields that should be included in overall state
         schema."""
         if self.output_field_defs:
-            return {
-                fd.name: fd.to_field_info()
-                for fd in self.output_field_defs
-            }
+            return {fd.name: fd.to_field_info() for fd in self.output_field_defs}
         return {}
 
     def extract_input_from_state(self, state: Any) -> dict[str, Any]:
@@ -187,8 +181,7 @@ class NodeConfig(ABC, BaseModel):
                         output_dict[field_name] = result[field_name]
             else:
                 # Try to map single result to first output field
-                output_field_names = list(
-                    self.output_schema.model_fields.keys())
+                output_field_names = list(self.output_schema.model_fields.keys())
                 if output_field_names:
                     output_dict[output_field_names[0]] = result
         elif isinstance(result, dict):
@@ -218,4 +211,5 @@ class NodeConfig(ABC, BaseModel):
     ) -> Any:
         """Base implementation - subclasses should override this."""
         raise NotImplementedError(
-            f"Node type {self.node_type} does not implement __call__", )
+            f"Node type {self.node_type} does not implement __call__",
+        )

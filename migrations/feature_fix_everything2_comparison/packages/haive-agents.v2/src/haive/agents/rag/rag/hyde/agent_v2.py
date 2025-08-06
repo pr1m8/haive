@@ -21,8 +21,11 @@ from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import LLMConfig
 
-HYDE_GENERATION_PROMPT = ChatPromptTemplate.from_messages([(
-    "system", """You are an expert at generating hypothetical documents that would answer questions.
+HYDE_GENERATION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert at generating hypothetical documents that would answer questions.
 Your task is to write a detailed, informative document that contains the information needed to answer the given question.
 
 Guidelines:
@@ -33,17 +36,26 @@ Guidelines:
 - Do not mention that this is hypothetical - write as if stating facts
 
 Please provide your response in the following format:
-{format_instructions}""", ), ("human", """Write a detailed document that would contain the answer to this question:
+{format_instructions}""",
+        ),
+        (
+            "human",
+            """Write a detailed document that would contain the answer to this question:
 
-Question: {query}""", ), ], )
+Question: {query}""",
+        ),
+    ],
+)
 
 HYDE_RETRIEVAL_PROMPT = ChatPromptTemplate.from_messages(
     [
-        ("system",
-         "Transform the hypothetical document into an effective search query.",
-         ),
-        ("human",
-         """Based on this hypothetical answer document, create a search query to find similar real documents:
+        (
+            "system",
+            "Transform the hypothetical document into an effective search query.",
+        ),
+        (
+            "human",
+            """Based on this hypothetical answer document, create a search query to find similar real documents:
 
 Hypothetical Document:
 {hypothetical_doc}
@@ -51,7 +63,7 @@ Hypothetical Document:
 Original Question: {query}
 
 Search Query:""",
-         ),
+        ),
     ],
 )
 
@@ -61,8 +73,7 @@ class HyDERetrieverAgent(Agent):
     retrieval."""
 
     name: str = "HyDE Retriever"
-    base_retriever: BaseRAGAgent = Field(...,
-                                         description="Base retriever to use")
+    base_retriever: BaseRAGAgent = Field(..., description="Base retriever to use")
 
     def build_graph(self) -> BaseGraph:
         """Build graph that passes hypothetical doc as query."""
@@ -168,7 +179,8 @@ class HyDERAGAgentV2(SequentialAgent):
 
         # Step 4: Generate final answer using standard RAG prompt
         from haive.agents.rag.common.answer_generators.prompts import (
-            RAG_ANSWER_STANDARD, )
+            RAG_ANSWER_STANDARD,
+        )
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(

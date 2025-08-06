@@ -9,6 +9,7 @@ Example:
 
         # TODO: Add example
 """
+
 from __future__ import annotations
 
 __all__ = []

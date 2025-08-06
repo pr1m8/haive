@@ -62,7 +62,7 @@ class ProSearchAgent(BaseSearchAgent):
 
     def __init__(
         self,
-        name: str = 'pro_search_agent',
+        name: str = "pro_search_agent",
         engine: AugLLMConfig | None = None,
         search_tools: list[Tool] | None = None,
         **kwargs,
@@ -83,10 +83,7 @@ class ProSearchAgent(BaseSearchAgent):
                 system_message=self.get_system_prompt(),
             )
 
-        super().__init__(name=name,
-                         engine=engine,
-                         search_tools=search_tools,
-                         **kwargs)
+        super().__init__(name=name, engine=engine, search_tools=search_tools, **kwargs)
 
         logger.info(f"Initialized ProSearchAgent: {name}")
 
@@ -175,8 +172,7 @@ Remember: Depth, context, and personalization are key to pro search excellence."
 
 Process each query with thoroughness and attention to user context."""
 
-    def refine_query(self, query: str, context: dict[str,
-                                                     Any]) -> SearchRefinement:
+    def refine_query(self, query: str, context: dict[str, Any]) -> SearchRefinement:
         """Refine the search query based on context and preferences.
 
         Args:
@@ -188,29 +184,29 @@ Process each query with thoroughness and attention to user context."""
         """
         # Analyze query for refinement opportunities
         refined_query = query
-        refinement_reason = 'Original query used as-is'
+        refinement_reason = "Original query used as-is"
 
         # Add domain context if available
-        if 'domain' in context:
-            domain = context['domain']
+        if "domain" in context:
+            domain = context["domain"]
             refined_query = f"{query} in {domain}"
             refinement_reason = f"Added domain context: {domain}"
 
         # Add expertise level context
-        if 'experience_level' in context:
-            level = context['experience_level']
-            if level == 'beginner':
+        if "experience_level" in context:
+            level = context["experience_level"]
+            if level == "beginner":
                 refined_query = f"{refined_query} for beginners"
-            elif level == 'advanced':
+            elif level == "advanced":
                 refined_query = f"{refined_query} advanced techniques"
             refinement_reason += f", adapted for {level} level"
 
         # Add preference-based refinements
-        if 'preferred_sources' in context:
-            sources = context['preferred_sources']
-            if 'academic' in sources:
+        if "preferred_sources" in context:
+            sources = context["preferred_sources"]
+            if "academic" in sources:
                 refined_query = f"{refined_query} research-based evidence"
-                refinement_reason += ', emphasized academic sources'
+                refinement_reason += ", emphasized academic sources"
 
         return SearchRefinement(
             original_query=query,
@@ -235,38 +231,39 @@ Process each query with thoroughness and attention to user context."""
         insights = []
 
         # Memory-based insights
-        if 'memory_context' in context:
-            memory_items = context['memory_context']
+        if "memory_context" in context:
+            memory_items = context["memory_context"]
             if memory_items:
                 insights.append(
                     ContextualInsight(
-                        insight=f"Found {
-                            len(memory_items)} related items in search history",
+                        insight=f"Found {len(memory_items)} related items in search history",
                         relevance_score=0.8,
-                        source_type='memory',
+                        source_type="memory",
                     ),
                 )
 
         # Preference insights
-        if 'preferences' in context:
-            prefs = context['preferences']
+        if "preferences" in context:
+            prefs = context["preferences"]
             if prefs:
                 insights.append(
                     ContextualInsight(
                         insight=f"Applied user preferences: {', '.join(prefs.keys())}",
                         relevance_score=0.9,
-                        source_type='preferences',
-                    ), )
+                        source_type="preferences",
+                    ),
+                )
 
         # Domain insights
-        if 'domain' in context:
-            domain = context['domain']
+        if "domain" in context:
+            domain = context["domain"]
             insights.append(
                 ContextualInsight(
                     insight=f"Search contextualized for {domain} domain",
                     relevance_score=0.7,
-                    source_type='context',
-                ), )
+                    source_type="context",
+                ),
+            )
 
         return insights
 
@@ -288,20 +285,16 @@ Process each query with thoroughness and attention to user context."""
 
         steps.append(f"Analyzed query: '{query}' for intent and scope")
 
-        if context.get('memory_context'):
-            steps.append(
-                "Retrieved relevant context from user's search history")
+        if context.get("memory_context"):
+            steps.append("Retrieved relevant context from user's search history")
 
-        if context.get('preferences'):
-            steps.append(
-                'Applied user preferences to customize search approach')
+        if context.get("preferences"):
+            steps.append("Applied user preferences to customize search approach")
 
-        if context.get('domain'):
-            steps.append(
-                f"Contextualized search for {context['domain']} domain")
+        if context.get("domain"):
+            steps.append(f"Contextualized search for {context['domain']} domain")
 
-        steps.append(
-            'Structured comprehensive response with evidence and examples')
+        steps.append("Structured comprehensive response with evidence and examples")
 
         return steps
 
@@ -324,38 +317,34 @@ Process each query with thoroughness and attention to user context."""
         follow_ups = []
 
         # Query type-based follow-ups
-        if 'how to' in query.lower():
-            follow_ups.append(
-                'What challenges might you face when implementing this?')
-            follow_ups.append(
-                'Would you like specific tools or resources to help?')
+        if "how to" in query.lower():
+            follow_ups.append("What challenges might you face when implementing this?")
+            follow_ups.append("Would you like specific tools or resources to help?")
 
-        if 'best practices' in query.lower():
+        if "best practices" in query.lower():
             follow_ups.append(
-                'Are there particular constraints or requirements in your situation?',
+                "Are there particular constraints or requirements in your situation?",
             )
             follow_ups.append(
-                'Would you like examples of how others have implemented these practices?', )
-
-        if 'comparison' in query.lower() or 'vs' in query.lower():
-            follow_ups.append(
-                'Which specific criteria are most important for your decision?',
+                "Would you like examples of how others have implemented these practices?",
             )
+
+        if "comparison" in query.lower() or "vs" in query.lower():
             follow_ups.append(
-                'Would you like detailed pros and cons for each option?')
+                "Which specific criteria are most important for your decision?",
+            )
+            follow_ups.append("Would you like detailed pros and cons for each option?")
 
         # Context-based follow-ups
-        if context.get('domain'):
-            domain = context['domain']
+        if context.get("domain"):
+            domain = context["domain"]
             follow_ups.append(
                 f"Are there {domain}-specific considerations I should address?",
             )
 
         # Generic useful follow-ups
-        follow_ups.append(
-            'What would you like to explore next about this topic?')
-        follow_ups.append(
-            'Are there any aspects that need more clarification?')
+        follow_ups.append("What would you like to explore next about this topic?")
+        follow_ups.append("Are there any aspects that need more clarification?")
 
         return follow_ups[:4]  # Limit to 4 follow-ups
 
@@ -398,10 +387,10 @@ Process each query with thoroughness and attention to user context."""
         # Apply user preferences if requested
         if use_preferences:
             # This would typically load from a user preference store
-            context['preferences'] = {
-                'learning_style': 'structured',
-                'preferred_sources': ['academic', 'research-based'],
-                'format_preference': 'detailed_explanations',
+            context["preferences"] = {
+                "learning_style": "structured",
+                "preferred_sources": ["academic", "research-based"],
+                "format_preference": "detailed_explanations",
             }
 
         # Refine query based on context
@@ -440,11 +429,11 @@ Process each query with thoroughness and attention to user context."""
             response=base_response.response,
             sources=base_response.sources,
             confidence=base_response.confidence,
-            search_type='ProSearch',
+            search_type="ProSearch",
             processing_time=processing_time,
             refinements=[refinement],
             contextual_insights=insights,
-            user_preferences_applied=context.get('preferences', {}),
+            user_preferences_applied=context.get("preferences", {}),
             reasoning_steps=reasoning_steps,
             follow_up_questions=follow_ups,
             depth_level=depth_level,

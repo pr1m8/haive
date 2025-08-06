@@ -17,27 +17,30 @@ from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 HYDE_GENERATION_PROMPT = ChatPromptTemplate.from_messages(
     [
-        ("system",
-         """You are an expert at generating hypothetical documents that would answer questions.
+        (
+            "system",
+            """You are an expert at generating hypothetical documents that would answer questions.
 Your task is to write a detailed, informative paragraph that would perfectly answer the given question.""",
-         ),
-        ("human",
-         """Write a detailed paragraph that would answer this question:
+        ),
+        (
+            "human",
+            """Write a detailed paragraph that would answer this question:
 Question: {query}
 
 Paragraph:""",
-         ),
+        ),
     ],
 )
 
-HYDE_ANSWER_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        "You are an expert assistant. Answer based on the retrieved documents.",
-    ),
-    (
-        "human",
-        """Answer the question using the retrieved documents.
+HYDE_ANSWER_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            "You are an expert assistant. Answer based on the retrieved documents.",
+        ),
+        (
+            "human",
+            """Answer the question using the retrieved documents.
 
 Original Question: {query}
 
@@ -45,8 +48,9 @@ Retrieved Documents:
 {retrieved_documents}
 
 Provide a comprehensive answer:""",
-    ),
-], )
+        ),
+    ],
+)
 
 
 class HyDERAGAgent(MultiAgent):

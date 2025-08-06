@@ -30,7 +30,8 @@ step_reasoning_chain = AugLLMConfig(
 )
 reasoning_modules_instance = ReasoningModules()  # ✅ Create an instance
 
-select_prompt_template = PromptTemplate(template="""
+select_prompt_template = PromptTemplate(
+    template="""
 Select several reasoning modules that are crucial to utilize in order to solve the given task:
 
 All reasoning module descriptions:
@@ -39,10 +40,13 @@ All reasoning module descriptions:
 Task: {task_description}
 
 Select several modules that are crucial for solving the task above:
-""", )
+""",
+)
 select_prompt_template = select_prompt_template.partial(
     reasoning_modules=parse_reasoning_modules_to_string(
-        reasoning_modules_instance.modules, ), )
+        reasoning_modules_instance.modules,
+    ),
+)
 select_chain = AugLLMConfig(
     name="select",
     prompt_template=select_prompt_template,

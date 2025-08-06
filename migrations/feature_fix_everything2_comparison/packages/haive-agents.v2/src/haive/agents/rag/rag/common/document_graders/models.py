@@ -52,11 +52,14 @@ class DocumentGradingResponse(BaseModel):
 
     query: str = Field(description="The original query")
     document_scores: list[DocumentRelevanceScore] = Field(
-        description="Individual scores for each document", )
+        description="Individual scores for each document",
+    )
     overall_assessment: str = Field(
-        description="Summary assessment of the document collection", )
+        description="Summary assessment of the document collection",
+    )
     coverage_analysis: str = Field(
-        description="Analysis of how well documents cover the query", )
+        description="Analysis of how well documents cover the query",
+    )
     recommendations: list[str] = Field(
         default_factory=list,
         description="Recommendations for improving retrieval",
@@ -82,5 +85,6 @@ class DocumentBinaryResponse(BaseModel):
 
     query: str = Field(description="The original query")
     document_decisions: list[DocumentBinaryGrading] = Field(
-        description="Binary decisions for each document", )
+        description="Binary decisions for each document",
+    )
     summary: str = Field(description="Overall summary of filtering results")

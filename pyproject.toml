@@ -418,6 +418,7 @@ ruff-lsp = "^0.0.62"
 mypy-extensions = "^1.1.0"
 docstring-parser = "^0.17.0"
 ast-tools = "^0.1.8"
+commitizen = "^4.8.3"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
@@ -1131,6 +1132,14 @@ directory = "misc"
 name = "🔀 Miscellaneous"
 showcontent = true
 
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "v$version"
+version_scheme = "pep440"
+version_provider = "poetry"
+update_changelog_on_bump = true
+major_version_zero = true
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

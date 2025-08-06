@@ -82,10 +82,9 @@ class EnhancedMultiAgentV4(Agent):
         description="List of agents to coordinate",
     )
 
-    execution_mode: Literal["sequential", "parallel", "conditional",
-                            "manual"] = Field(
-                                default="sequential",
-                                description="How to execute the agents",
+    execution_mode: Literal["sequential", "parallel", "conditional", "manual"] = Field(
+        default="sequential",
+        description="How to execute the agents",
     )
 
     build_mode: Literal["auto", "manual", "lazy"] = Field(
@@ -192,8 +191,7 @@ class EnhancedMultiAgentV4(Agent):
         """Add all agents as nodes using AgentNodeV3."""
         for agent_name, agent in self.agent_dict.items():
             # Create AgentNodeV3 for proper state projection
-            node_config = create_agent_node_v3(agent_name=agent_name,
-                                               agent=agent)
+            node_config = create_agent_node_v3(agent_name=agent_name, agent=agent)
             graph.add_node(agent_name, node_config)
             logger.debug(f"Added AgentNodeV3 for: {agent_name}")
 
@@ -205,8 +203,7 @@ class EnhancedMultiAgentV4(Agent):
             return
 
         # Determine entry point
-        start_agent = self.entry_point if self.entry_point in agent_names else agent_names[
-            0]
+        start_agent = self.entry_point if self.entry_point in agent_names else agent_names[0]
 
         # START -> first agent
         graph.add_edge(START, start_agent)
@@ -237,8 +234,7 @@ class EnhancedMultiAgentV4(Agent):
         """Add conditional edges using BaseGraph2.add_conditional_edges()."""
         # Start with entry point or first agent
         agent_names = list(self.agent_dict.keys())
-        start_agent = self.entry_point if self.entry_point in agent_names else agent_names[
-            0]
+        start_agent = self.entry_point if self.entry_point in agent_names else agent_names[0]
         graph.add_edge(START, start_agent)
 
         # Add configured conditional edges
@@ -261,8 +257,7 @@ class EnhancedMultiAgentV4(Agent):
         # Ensure unconnected agents go to END
         for agent_name in agent_names:
             # Check if agent has outgoing edges configured
-            has_outgoing = any(edge["from_agent"] == agent_name
-                               for edge in self.conditional_edges)
+            has_outgoing = any(edge["from_agent"] == agent_name for edge in self.conditional_edges)
             if not has_outgoing and agent_name != start_agent:
                 graph.add_edge(agent_name, END)
 
@@ -272,12 +267,12 @@ class EnhancedMultiAgentV4(Agent):
         """Manual mode - minimal setup, user adds edges."""
         # Just ensure START connects to entry point
         agent_names = list(self.agent_dict.keys())
-        start_agent = self.entry_point if self.entry_point in agent_names else agent_names[
-            0]
+        start_agent = self.entry_point if self.entry_point in agent_names else agent_names[0]
         graph.add_edge(START, start_agent)
 
         logger.info(
-            "Manual mode - user must add edges with add_edge() or add_conditional_edge()", )
+            "Manual mode - user must add edges with add_edge() or add_conditional_edge()",
+        )
 
     # ========================================================================
     # USER-FRIENDLY EDGE METHODS
@@ -312,10 +307,7 @@ class EnhancedMultiAgentV4(Agent):
         edge_config = {
             "from_agent": from_agent,
             "condition": condition,
-            "destinations": {
-                True: true_agent,
-                False: false_agent
-            },
+            "destinations": {True: true_agent, False: false_agent},
             "default": false_agent,
         }
         self.conditional_edges.append(edge_config)
@@ -325,10 +317,7 @@ class EnhancedMultiAgentV4(Agent):
             self.graph.add_conditional_edges(
                 source_node=from_agent,
                 condition=condition,
-                destinations={
-                    True: true_agent,
-                    False: false_agent
-                },
+                destinations={True: true_agent, False: false_agent},
                 default=false_agent,
             )
             logger.info(f"Added conditional edge from {from_agent}")

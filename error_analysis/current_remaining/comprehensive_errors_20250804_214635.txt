@@ -1,9 +1,0 @@
-Traceback (most recent call last):
-  File "/home/will/Projects/haive/backend/haive/run_import_diagnostics.py", line 108, in <module>
-    main()
-  File "/home/will/Projects/haive/backend/haive/run_import_diagnostics.py", line 36, in main
-    save_import_diagnosis(autoapi_dirs, str(base_dir))
-  File "/home/will/Projects/haive/backend/haive/import_diagnostics.py", line 179, in save_import_diagnosis
-    f.write(f"- ✅ Successful imports: {len(results['success'])}\n")
-                                            ~~~~~~~^^^^^^^^^^^
-TypeError: list indices must be integers or slices, not str

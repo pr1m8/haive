@@ -166,8 +166,7 @@ class GraphRAGResult(BaseModel):
         default=0.0,
         description="Graph traversal time",
     )
-    vector_search_time_ms: float = Field(default=0.0,
-                                         description="Vector search time")
+    vector_search_time_ms: float = Field(default=0.0, description="Vector search time")
 
     # Query analysis
     query_intent: MemoryQueryIntent | None = Field(
@@ -201,8 +200,7 @@ class GraphRAGResult(BaseModel):
             return []
 
         # Sort by final score
-        scored_memories = list(
-            zip(self.memories, self.final_scores, strict=False))
+        scored_memories = list(zip(self.memories, self.final_scores, strict=False))
         scored_memories.sort(key=lambda x: x[1], reverse=True)
 
         return [memory for memory, score in scored_memories[:limit]]
@@ -321,10 +319,8 @@ class GraphRAGRetrieverConfig(BaseModel):
         ...,
         description="Memory store manager",
     )
-    memory_classifier: MemoryClassifier = Field(
-        ..., description="Memory classifier")
-    kg_generator: KGGeneratorAgent = Field(
-        ..., description="Knowledge graph generator")
+    memory_classifier: MemoryClassifier = Field(..., description="Memory classifier")
+    kg_generator: KGGeneratorAgent = Field(..., description="Knowledge graph generator")
 
     # Retrieval configuration
     default_limit: int = Field(
@@ -363,16 +359,14 @@ class GraphRAGRetrieverConfig(BaseModel):
         default=0.2,
         description="Weight for importance score",
     )
-    recency_weight: float = Field(default=0.1,
-                                  description="Weight for recency score")
+    recency_weight: float = Field(default=0.1, description="Weight for recency score")
 
     # Query expansion
     enable_query_expansion: bool = Field(
         default=True,
         description="Enable query expansion",
     )
-    max_expansion_terms: int = Field(default=5,
-                                     description="Maximum expansion terms")
+    max_expansion_terms: int = Field(default=5, description="Maximum expansion terms")
 
     # LLM configuration
     llm_config: AugLLMConfig = Field(
@@ -593,8 +587,9 @@ FORMAT: Return a JSON object with structure:
     "suggested_traversal_depth": 2
 }}
 
-Analyze the query now:""", input_variables=[
-                "query", "known_entities"], )
+Analyze the query now:""",
+            input_variables=["query", "known_entities"],
+        )
 
         self.relationship_path_analysis_prompt = PromptTemplate(
             template="""You are an expert at analyzing relationship paths in knowledge graphs to provide context.
@@ -622,10 +617,7 @@ FORMAT: Return a JSON object:
 }}
 
 Analyze the relationship path now:""",
-            input_variables=[
-                "query",
-                "relationship_path",
-                "path_memories"],
+            input_variables=["query", "relationship_path", "path_memories"],
         )
 
     async def retrieve_memories(
@@ -660,8 +652,7 @@ Analyze the relationship path now:""",
 
             # Step 1: Analyze query intent
             if self.classifier:
-                result.query_intent = self.classifier.classify_query_intent(
-                    query)
+                result.query_intent = self.classifier.classify_query_intent(query)
 
             # Step 2: Identify entities in query
             graph_traversal_start = datetime.now()
@@ -691,13 +682,12 @@ Analyze the relationship path now:""",
 
             graph_traversal_end = datetime.now()
             result.graph_traversal_time_ms = (
-                graph_traversal_end -
-                graph_traversal_start).total_seconds() * 1000
+                graph_traversal_end - graph_traversal_start
+            ).total_seconds() * 1000
 
             # Step 4: Retrieve memories using traditional vector search
             vector_search_start = datetime.now()
-            expanded_query = self._build_expanded_query(
-                query, result.expansion_terms)
+            expanded_query = self._build_expanded_query(query, result.expansion_terms)
 
             vector_memories = await self.memory_store.retrieve_memories(
                 query=expanded_query,
@@ -708,7 +698,8 @@ Analyze the relationship path now:""",
 
             vector_search_end = datetime.now()
             result.vector_search_time_ms = (
-                vector_search_end - vector_search_start).total_seconds() * 1000
+                vector_search_end - vector_search_start
+            ).total_seconds() * 1000
 
             # Step 5: Get graph-based memories
             graph_memories = []
@@ -719,8 +710,7 @@ Analyze the relationship path now:""",
                 )
 
             # Step 6: Combine and deduplicate memories
-            combined_memories = self._combine_memories(vector_memories,
-                                                       graph_memories)
+            combined_memories = self._combine_memories(vector_memories, graph_memories)
 
             # Step 7: Score memories using combined approach
             (
@@ -745,28 +735,23 @@ Analyze the relationship path now:""",
                         result.graph_scores,
                         result.final_scores,
                         strict=False,
-                    ), )
+                    ),
+                )
                 scored_memories.sort(key=lambda x: x[3], reverse=True)
 
                 result.memories = [m[0] for m in scored_memories[:limit]]
-                result.similarity_scores = [
-                    m[1] for m in scored_memories[:limit]
-                ]
+                result.similarity_scores = [m[1] for m in scored_memories[:limit]]
                 result.graph_scores = [m[2] for m in scored_memories[:limit]]
                 result.final_scores = [m[3] for m in scored_memories[:limit]]
 
             # Calculate total time
             end_time = datetime.now()
-            result.total_time_ms = (end_time -
-                                    start_time).total_seconds() * 1000
+            result.total_time_ms = (end_time - start_time).total_seconds() * 1000
 
             logger.info(
-                f"Graph RAG retrieval completed in {
-                    result.total_time_ms:.1f}ms: {
-                    len(
-                        result.memories)} memories, {
-                    len(
-                        result.traversed_entities)} entities",
+                f"Graph RAG retrieval completed in {result.total_time_ms:.1f}ms: {
+                    len(result.memories)
+                } memories, {len(result.traversed_entities)} entities",
             )
 
             return result
@@ -775,8 +760,7 @@ Analyze the relationship path now:""",
             logger.exception(f"Error in Graph RAG retrieval: {e}")
             # Return empty result on error
             result = GraphRAGResult(query=query)
-            result.total_time_ms = (datetime.now() -
-                                    start_time).total_seconds() * 1000
+            result.total_time_ms = (datetime.now() - start_time).total_seconds() * 1000
             return result
 
     async def _identify_query_entities(self, query: str) -> dict[str, Any]:
@@ -802,15 +786,18 @@ Analyze the relationship path now:""",
             prompt = self.entity_identification_prompt.format(
                 query=query,
                 known_entities=", ".join(
-                    known_entities[:100], ),  # Limit to avoid token limits
+                    known_entities[:100],
+                ),  # Limit to avoid token limits
             )
 
-            response = await self.llm.ainvoke([
-                SystemMessage(
-                    content="You are an expert entity identifier for knowledge graph retrieval.",
-                ),
-                HumanMessage(content=prompt),
-            ], )
+            response = await self.llm.ainvoke(
+                [
+                    SystemMessage(
+                        content="You are an expert entity identifier for knowledge graph retrieval.",
+                    ),
+                    HumanMessage(content=prompt),
+                ],
+            )
 
             # Parse response
             entities_info = self._parse_json_response(response.content)
@@ -852,9 +839,9 @@ Analyze the relationship path now:""",
         related_entities: list[str],
         max_depth: int,
     ) -> tuple[
-            list[KnowledgeGraphNode],
-            list[KnowledgeGraphNode],
-            list[list[KnowledgeGraphRelationship]],
+        list[KnowledgeGraphNode],
+        list[KnowledgeGraphNode],
+        list[list[KnowledgeGraphRelationship]],
     ]:
         """Perform graph traversal to find related entities."""
         kg = self.kg_generator.knowledge_graph
@@ -892,8 +879,9 @@ Analyze the relationship path now:""",
 
                 # Filter by confidence
                 filtered_relationships = [
-                    rel for rel in relationships if rel.confidence >=
-                    self.config.min_relationship_confidence
+                    rel
+                    for rel in relationships
+                    if rel.confidence >= self.config.min_relationship_confidence
                 ]
 
                 for rel in filtered_relationships:
@@ -910,8 +898,7 @@ Analyze the relationship path now:""",
 
                         # Create relationship path
                         path = [rel]
-                        if len(relationship_paths
-                               ) < 50:  # Limit paths to avoid memory issues
+                        if len(relationship_paths) < 50:  # Limit paths to avoid memory issues
                             relationship_paths.append(path)
 
             current_level = next_level
@@ -940,7 +927,8 @@ Analyze the relationship path now:""",
                             "entity_name": entity.name,
                             "entity_type": entity.type,
                             "confidence": entity.confidence,
-                        }, )
+                        },
+                    )
                     memories.append(memory)
 
         return memories
@@ -972,8 +960,7 @@ Analyze the relationship path now:""",
                     if "graph_context" in memory:
                         if "graph_context" not in existing:
                             existing["graph_context"] = []
-                        existing["graph_context"].extend(
-                            memory["graph_context"])
+                        existing["graph_context"].extend(memory["graph_context"])
                 else:
                     memory["retrieval_source"] = "graph"
                     combined[memory_id] = memory
@@ -1019,8 +1006,7 @@ Analyze the relationship path now:""",
             if created_at:
                 try:
                     created_time = datetime.fromisoformat(created_at)
-                    hours_ago = (datetime.utcnow() -
-                                 created_time).total_seconds() / 3600
+                    hours_ago = (datetime.utcnow() - created_time).total_seconds() / 3600
                     recency = max(
                         0.0,
                         1.0 - (hours_ago / 1000),
@@ -1029,10 +1015,12 @@ Analyze the relationship path now:""",
                     pass
 
             # Combine scores
-            final_score = (similarity * self.config.similarity_weight +
-                           graph_score * self.config.graph_weight +
-                           importance * self.config.importance_weight +
-                           recency * self.config.recency_weight)
+            final_score = (
+                similarity * self.config.similarity_weight
+                + graph_score * self.config.graph_weight
+                + importance * self.config.importance_weight
+                + recency * self.config.recency_weight
+            )
 
             similarity_scores.append(similarity)
             graph_scores.append(graph_score)
@@ -1111,7 +1099,7 @@ Analyze the relationship path now:""",
             return original_query
 
         # Add expansion terms
-        limited_terms = expansion_terms[:self.config.max_expansion_terms]
+        limited_terms = expansion_terms[: self.config.max_expansion_terms]
         expanded = f"{original_query} {' '.join(limited_terms)}"
 
         return expanded

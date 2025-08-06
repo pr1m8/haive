@@ -79,8 +79,7 @@ class SupervisorState(MessagesState):
         description="Maximum number of agent iterations",
     )
 
-    current_iteration: int = Field(default=0,
-                                   description="Current iteration count")
+    current_iteration: int = Field(default=0, description="Current iteration count")
 
     @computed_field
     @property
@@ -202,8 +201,7 @@ def create_dynamic_handoff_tool(supervisor_instance, agent_name: str):
     """Create a handoff tool for a specific agent."""
 
     @tool
-    def handoff_to_agent(task: str, state: Annotated[dict,
-                                                     InjectedState]) -> str:
+    def handoff_to_agent(task: str, state: Annotated[dict, InjectedState]) -> str:
         """Transfer control to the specified agent.
 
         Args:
@@ -214,8 +212,7 @@ def create_dynamic_handoff_tool(supervisor_instance, agent_name: str):
         """
         try:
             # Get agent from registry
-            agent = supervisor_instance.agent_registry.instantiate_agent(
-                agent_name)
+            agent = supervisor_instance.agent_registry.instantiate_agent(agent_name)
             if not agent:
                 return f"Error: Agent '{agent_name}' not found in registry"
 
@@ -226,9 +223,7 @@ def create_dynamic_handoff_tool(supervisor_instance, agent_name: str):
 
             # Create input for the agent
             agent_input = {
-                "messages":
-                [*state.get("messages", []),
-                 HumanMessage(content=task)],
+                "messages": [*state.get("messages", []), HumanMessage(content=task)],
             }
 
             # Execute the agent
@@ -285,8 +280,7 @@ def create_forward_message_tool(supervisor_name: str = "supervisor"):
     """Create a tool to forward agent messages."""
 
     @tool
-    def forward_message(from_agent: str,
-                        state: Annotated[dict, InjectedState]) -> str:
+    def forward_message(from_agent: str, state: Annotated[dict, InjectedState]) -> str:
         """Forward the latest message from a specific agent to the user.
 
         Args:
@@ -303,8 +297,9 @@ def create_forward_message_tool(supervisor_name: str = "supervisor"):
             target_message = None
             for msg in reversed(messages):
                 if (hasattr(msg, "name") and msg.name == from_agent) or (
-                        hasattr(msg, "additional_kwargs") and
-                        msg.additional_kwargs.get("agent_name") == from_agent):
+                    hasattr(msg, "additional_kwargs")
+                    and msg.additional_kwargs.get("agent_name") == from_agent
+                ):
                     target_message = msg
                     break
 
@@ -312,8 +307,11 @@ def create_forward_message_tool(supervisor_name: str = "supervisor"):
                 return f"No message found from agent '{from_agent}'"
 
             # Forward the message content
-            content = (target_message.content if hasattr(
-                target_message, "content") else str(target_message))
+            content = (
+                target_message.content
+                if hasattr(target_message, "content")
+                else str(target_message)
+            )
 
             return f"Forwarding from {from_agent}: {content}"
 
@@ -395,11 +393,13 @@ class DynamicSupervisorAgent(ReactAgent):
         tools = []
 
         # Always include these core tools
-        tools.extend([
-            create_list_agents_tool(self),
-            create_forward_message_tool("supervisor"),
-            self._create_end_supervision_tool(),
-        ], )
+        tools.extend(
+            [
+                create_list_agents_tool(self),
+                create_forward_message_tool("supervisor"),
+                self._create_end_supervision_tool(),
+            ],
+        )
 
         # Create handoff tools for each registered agent
         for agent_name in self.agent_registry.list_agents():
@@ -540,8 +540,7 @@ def test_supervisor_basic() -> Any:
     # Create supervisor with test registry
     registry = create_test_registry()
 
-    supervisor = DynamicSupervisorAgent(name="Test Supervisor",
-                                        agent_registry=registry)
+    supervisor = DynamicSupervisorAgent(name="Test Supervisor", agent_registry=registry)
 
     return supervisor
 
@@ -577,8 +576,7 @@ def test_dynamic_tools() -> Any:
     [t for t in supervisor.tools if t.name.startswith("handoff_to_")]
 
     # Test the new handoff tool
-    next(t for t in supervisor.tools
-         if t.name == "handoff_to_calculator_agent")
+    next(t for t in supervisor.tools if t.name == "handoff_to_calculator_agent")
 
     return supervisor
 
@@ -597,16 +595,13 @@ def test_supervisor_workflow() -> Any:
     }
 
     # Test handoff functionality
-    research_handoff = next(t for t in supervisor.tools
-                            if t.name == "handoff_to_research_agent")
+    research_handoff = next(t for t in supervisor.tools if t.name == "handoff_to_research_agent")
 
     try:
         # This would normally be called by the graph, but we'll test directly
         research_handoff.invoke(
-            {
-                "task": "Research the latest developments in AI",
-                "_state": test_state
-            }, )
+            {"task": "Research the latest developments in AI", "_state": test_state},
+        )
     except Exception:
         pass
 

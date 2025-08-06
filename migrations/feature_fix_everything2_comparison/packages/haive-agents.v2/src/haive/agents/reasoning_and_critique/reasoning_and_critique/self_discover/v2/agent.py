@@ -54,10 +54,11 @@ select_engine = AugLLMConfig(
     name="select_modules",
     structured_output_model=SelectedModules,
     structured_output_version="v2",
-    prompt_template=select_prompt.partial(reasoning_modules="\n".join([
-        f"{i + 1}. {module}"
-        for i, module in enumerate(default_reasoning_modules)
-    ], ), ),
+    prompt_template=select_prompt.partial(
+        reasoning_modules="\n".join(
+            [f"{i + 1}. {module}" for i, module in enumerate(default_reasoning_modules)],
+        ),
+    ),
     temperature=0.7,
 )
 

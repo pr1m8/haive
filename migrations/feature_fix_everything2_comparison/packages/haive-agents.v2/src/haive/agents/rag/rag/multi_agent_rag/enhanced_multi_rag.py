@@ -59,9 +59,7 @@ class EnhancedRAGSequentialAgent(CompatibilityEnhancedSequentialAgent):
             kwargs["name"] = "Enhanced RAG Sequential System"
 
         # Initialize with empty agents list first
-        super().__init__(agents=[],
-                         compatibility_mode=compatibility_mode,
-                         **kwargs)
+        super().__init__(agents=[], compatibility_mode=compatibility_mode, **kwargs)
 
         # Add agents with automatic compatibility checking
         if retrieval_agent:
@@ -72,8 +70,7 @@ class EnhancedRAGSequentialAgent(CompatibilityEnhancedSequentialAgent):
         if grading_agent:
             self.add_agent(grading_agent)
         else:
-            self.add_agent(
-                DocumentGradingAgent(name="Auto-Added Grading Agent"))
+            self.add_agent(DocumentGradingAgent(name="Auto-Added Grading Agent"))
 
         if answer_agent:
             self.add_agent(answer_agent)
@@ -106,14 +103,13 @@ class EnhancedRAGConditionalAgent(CompatibilityEnhancedConditionalAgent):
             kwargs["name"] = "Enhanced RAG Conditional System"
 
         # Initialize with empty agents list
-        super().__init__(agents=[],
-                         compatibility_mode=compatibility_mode,
-                         **kwargs)
+        super().__init__(agents=[], compatibility_mode=compatibility_mode, **kwargs)
 
         # Store agent references for conditional routing
         self.retrieval_agent = retrieval_agent or SIMPLE_RAG_AGENT
         self.grading_agent = grading_agent or DocumentGradingAgent(
-            name="Conditional Grading Agent", )
+            name="Conditional Grading Agent",
+        )
         self.answer_agent = answer_agent or SIMPLE_RAG_ANSWER_AGENT
 
         # Add agents with compatibility checking
@@ -143,10 +139,8 @@ class EnhancedRAGConditionalAgent(CompatibilityEnhancedConditionalAgent):
             source_agent=self.retrieval_agent,
             condition=compatibility_aware_routing,
             destinations={
-                self._get_agent_node_name(self.grading_agent):
-                self.grading_agent,
-                self._get_agent_node_name(self.answer_agent):
-                self.answer_agent,
+                self._get_agent_node_name(self.grading_agent): self.grading_agent,
+                self._get_agent_node_name(self.answer_agent): self.answer_agent,
             },
             default=self.grading_agent,
         )
@@ -192,9 +186,7 @@ class EnhancedRAGParallelAgent(CompatibilityEnhancedParallelAgent):
             ]
 
         # Initialize with empty agents list
-        super().__init__(agents=[],
-                         compatibility_mode=compatibility_mode,
-                         **kwargs)
+        super().__init__(agents=[], compatibility_mode=compatibility_mode, **kwargs)
 
         # Add each RAG variant with compatibility checking
         for variant in rag_variants:
@@ -236,12 +228,8 @@ class SmartRAGFactory:
         """
         # Analyze agent types
         retrieval_agents = [a for a in agents if isinstance(a, SimpleRAGAgent)]
-        grading_agents = [
-            a for a in agents if isinstance(a, DocumentGradingAgent)
-        ]
-        answer_agents = [
-            a for a in agents if isinstance(a, SimpleRAGAnswerAgent)
-        ]
+        grading_agents = [a for a in agents if isinstance(a, DocumentGradingAgent)]
+        answer_agents = [a for a in agents if isinstance(a, SimpleRAGAnswerAgent)]
 
         # Determine optimal structure
         if preferred_mode == "parallel" or len(retrieval_agents) > 1:
@@ -251,8 +239,8 @@ class SmartRAGFactory:
                     EnhancedRAGSequentialAgent(
                         retrieval_agent=ret_agent,
                         compatibility_mode=compatibility_mode,
-                    ) for ret_agent in
-                    retrieval_agents[:3]  # Limit to 3 variants
+                    )
+                    for ret_agent in retrieval_agents[:3]  # Limit to 3 variants
                 ],
                 compatibility_mode=compatibility_mode,
                 name="Smart Parallel RAG System",
@@ -261,8 +249,7 @@ class SmartRAGFactory:
         elif preferred_mode == "conditional" or len(grading_agents) > 1:
             # Multiple grading options suggest conditional routing
             system = EnhancedRAGConditionalAgent(
-                retrieval_agent=retrieval_agents[0]
-                if retrieval_agents else None,
+                retrieval_agent=retrieval_agents[0] if retrieval_agents else None,
                 grading_agent=grading_agents[0] if grading_agents else None,
                 answer_agent=answer_agents[0] if answer_agents else None,
                 compatibility_mode=compatibility_mode,
@@ -272,8 +259,7 @@ class SmartRAGFactory:
         else:
             # Default to sequential
             system = EnhancedRAGSequentialAgent(
-                retrieval_agent=retrieval_agents[0]
-                if retrieval_agents else None,
+                retrieval_agent=retrieval_agents[0] if retrieval_agents else None,
                 grading_agent=grading_agents[0] if grading_agents else None,
                 answer_agent=answer_agents[0] if answer_agents else None,
                 compatibility_mode=compatibility_mode,
@@ -282,7 +268,9 @@ class SmartRAGFactory:
 
         # Add any remaining agents
         remaining_agents = [
-            a for a in agents if not isinstance(
+            a
+            for a in agents
+            if not isinstance(
                 a,
                 SimpleRAGAgent | DocumentGradingAgent | SimpleRAGAnswerAgent,
             )
@@ -319,10 +307,10 @@ class SmartRAGFactory:
             if include_grading:
                 if use_iterative_grading:
                     grading_agent = IterativeDocumentGradingAgent(
-                        name="Safe Iterative Grading Agent", )
+                        name="Safe Iterative Grading Agent",
+                    )
                 else:
-                    grading_agent = DocumentGradingAgent(
-                        name="Safe Grading Agent")
+                    grading_agent = DocumentGradingAgent(name="Safe Grading Agent")
             else:
                 grading_agent = None
 
@@ -341,7 +329,8 @@ class SmartRAGFactory:
             report = system.get_compatibility_report()
             if not report["overall_compatible"]:
                 raise ValueError(
-                    f"Safe RAG system failed compatibility check: {report}", )
+                    f"Safe RAG system failed compatibility check: {report}",
+                )
 
             system.visualize_compatibility()
 
@@ -364,7 +353,8 @@ def demonstrate_enhanced_rag_compatibility() -> None:
     # Example 1: Sequential RAG with automatic compatibility checking
 
     sequential_rag = EnhancedRAGSequentialAgent(
-        compatibility_mode=CompatibilityMode.ADAPTIVE, )
+        compatibility_mode=CompatibilityMode.ADAPTIVE,
+    )
 
     sequential_rag.visualize_compatibility()
 
@@ -410,7 +400,8 @@ enhanced_simple_rag_agent = SimpleRAGAgent.from_documents(
 )
 
 enhanced_simple_rag_answer_agent = SimpleRAGAnswerAgent(
-    name="Enhanced Simple RAG Answer Agent", )
+    name="Enhanced Simple RAG Answer Agent",
+)
 
 # Enhanced base RAG agent with compatibility checking
 enhanced_base_rag_agent = create_compatible_multi_agent(
@@ -420,9 +411,7 @@ enhanced_base_rag_agent = create_compatible_multi_agent(
 )
 
 # Enhanced agent list for compatibility testing
-enhanced_agent_list = [
-    enhanced_simple_rag_agent, enhanced_simple_rag_answer_agent
-]
+enhanced_agent_list = [enhanced_simple_rag_agent, enhanced_simple_rag_answer_agent]
 
 if __name__ == "__main__":
     demonstrate_enhanced_rag_compatibility()

@@ -23,7 +23,7 @@ from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field, field_validator
 
 # Generic type for candidate content
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class Candidate(BaseModel, Generic[T]):
@@ -37,7 +37,7 @@ class Candidate(BaseModel, Generic[T]):
     expansion_index: int = 0
     created_at: datetime = Field(default_factory=datetime.now)
 
-    @field_validator('content', mode='before')
+    @field_validator("content", mode="before")
     @classmethod
     def validate_content(cls, v: Any) -> Any:
         """Convert various types to a consistent format."""
@@ -48,15 +48,15 @@ class Candidate(BaseModel, Generic[T]):
         # Convert BaseMessage to dict representation
         if isinstance(v, BaseMessage):
             return {
-                'type': v.__class__.__name__,
-                'content': v.content,
-                'additional_kwargs': v.additional_kwargs,
+                "type": v.__class__.__name__,
+                "content": v.content,
+                "additional_kwargs": v.additional_kwargs,
             }
 
         # Convert other objects to dict if possible
-        if hasattr(v, 'dict'):
+        if hasattr(v, "dict"):
             return v.dict()
-        if hasattr(v, '__dict__'):
+        if hasattr(v, "__dict__"):
             return v.__dict__
 
         # Default: convert to string
@@ -76,26 +76,26 @@ class Candidate(BaseModel, Generic[T]):
         """String representation for use in prompts."""
         content_str = self.get_content_str()
         if len(content_str) > 100:
-            content_str = content_str[:100] + '...'
+            content_str = content_str[:100] + "..."
         return f"[Candidate {self.id[:8]}... depth={self.depth}] {content_str}"
 
 
 class ScoredCandidate(Candidate[T], Generic[T]):
     """A candidate that has been evaluated with a score."""
 
-    score: float = Field(description='Evaluation score')
-    feedback: str = Field(description='Evaluation feedback/reasoning')
+    score: float = Field(description="Evaluation score")
+    feedback: str = Field(description="Evaluation feedback/reasoning")
     scoring_metadata: dict[str, Any] = Field(
         default_factory=dict,
-        description='Additional scoring information',
+        description="Additional scoring information",
     )
 
-    @field_validator('score')
+    @field_validator("score")
     @classmethod
     def validate_score(cls, v: float) -> float:
         """Ensure score is in valid range."""
         if not 0 <= v <= 1:
-            raise ValueError('Score must be between 0 and 1')
+            raise ValueError("Score must be between 0 and 1")
         return v
 
     @classmethod
@@ -131,11 +131,12 @@ class CandidateGeneration(BaseModel):
     """Output from expansion agent."""
 
     candidates: list[dict[str, Any]] = Field(
-        description='List of generated candidate solutions', )
-    reasoning: str = Field(description='Overall reasoning for this expansion')
-    strategy: Literal['explore', 'exploit', 'refine'] = Field(
-        default='explore',
-        description='Strategy used for generation',
+        description="List of generated candidate solutions",
+    )
+    reasoning: str = Field(description="Overall reasoning for this expansion")
+    strategy: Literal["explore", "exploit", "refine"] = Field(
+        default="explore",
+        description="Strategy used for generation",
     )
 
 
@@ -152,9 +153,9 @@ class CandidateEvaluation(BaseModel):
 class SearchControl(BaseModel):
     """Output from control/pruning agent."""
 
-    selected_indices: list[int] = Field(
-        description='Indices of candidates to keep')
+    selected_indices: list[int] = Field(description="Indices of candidates to keep")
     should_terminate: bool
     termination_reason: str | None = None
-    next_strategy: Literal['explore', 'exploit', 'refine',
-                           'terminate'] = Field(default='explore', )
+    next_strategy: Literal["explore", "exploit", "refine", "terminate"] = Field(
+        default="explore",
+    )

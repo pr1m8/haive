@@ -24,21 +24,21 @@ from haive.core.schema.state_schema import StateSchema
 # ============================================================================
 
 # Engine types - properly constrained
-TEngine = TypeVar('TEngine', bound=Engine)
-TInvokableEngine = TypeVar('TInvokableEngine', bound=InvokableEngine)
+TEngine = TypeVar("TEngine", bound=Engine)
+TInvokableEngine = TypeVar("TInvokableEngine", bound=InvokableEngine)
 
 # Input/Output types - must be BaseModel for serialization
-TInput = TypeVar('TInput', bound=BaseModel)
-TOutput = TypeVar('TOutput', bound=BaseModel)
+TInput = TypeVar("TInput", bound=BaseModel)
+TOutput = TypeVar("TOutput", bound=BaseModel)
 
 # State type - must extend StateSchema for proper state management
-TState = TypeVar('TState', bound=StateSchema)
+TState = TypeVar("TState", bound=StateSchema)
 
 # Config type - for configuration
-TConfig = TypeVar('TConfig', bound=BaseModel)
+TConfig = TypeVar("TConfig", bound=BaseModel)
 
 # Node type - for graph nodes
-TNode = TypeVar('TNode')
+TNode = TypeVar("TNode")
 
 # ============================================================================
 # BASE PROTOCOLS
@@ -106,11 +106,11 @@ class EngineProvider(Protocol[TEngine]):
 
 
 class Agent(
-        GraphProvider[TState],
-        StateProvider[TState],
-        Invocable[TInput, TOutput],
-        EngineProvider[TEngine],
-        Protocol[TEngine, TInput, TOutput, TState],
+    GraphProvider[TState],
+    StateProvider[TState],
+    Invocable[TInput, TOutput],
+    EngineProvider[TEngine],
+    Protocol[TEngine, TInput, TOutput, TState],
 ):
     """Complete agent protocol combining all capabilities."""
 
@@ -148,34 +148,34 @@ class HookPoint(str, Enum):
     """Standard hook points in agent lifecycle."""
 
     # Initialization
-    BEFORE_INIT = 'before_init'
-    AFTER_INIT = 'after_init'
+    BEFORE_INIT = "before_init"
+    AFTER_INIT = "after_init"
 
     # Setup
-    BEFORE_SETUP = 'before_setup'
-    AFTER_SETUP = 'after_setup'
+    BEFORE_SETUP = "before_setup"
+    AFTER_SETUP = "after_setup"
 
     # Schema
-    BEFORE_SCHEMA_BUILD = 'before_schema_build'
-    AFTER_SCHEMA_BUILD = 'after_schema_build'
+    BEFORE_SCHEMA_BUILD = "before_schema_build"
+    AFTER_SCHEMA_BUILD = "after_schema_build"
 
     # Graph
-    BEFORE_GRAPH_BUILD = 'before_graph_build'
-    AFTER_GRAPH_BUILD = 'after_graph_build'
-    BEFORE_GRAPH_COMPILE = 'before_graph_compile'
-    AFTER_GRAPH_COMPILE = 'after_graph_compile'
+    BEFORE_GRAPH_BUILD = "before_graph_build"
+    AFTER_GRAPH_BUILD = "after_graph_build"
+    BEFORE_GRAPH_COMPILE = "before_graph_compile"
+    AFTER_GRAPH_COMPILE = "after_graph_compile"
 
     # Nodes
-    BEFORE_NODE_ADD = 'before_node_add'
-    AFTER_NODE_ADD = 'after_node_add'
+    BEFORE_NODE_ADD = "before_node_add"
+    AFTER_NODE_ADD = "after_node_add"
 
     # Execution
-    BEFORE_INVOKE = 'before_invoke'
-    AFTER_INVOKE = 'after_invoke'
+    BEFORE_INVOKE = "before_invoke"
+    AFTER_INVOKE = "after_invoke"
 
     # State
-    BEFORE_STATE_UPDATE = 'before_state_update'
-    AFTER_STATE_UPDATE = 'after_state_update'
+    BEFORE_STATE_UPDATE = "before_state_update"
+    AFTER_STATE_UPDATE = "after_state_update"
 
 
 class HookContext(BaseModel, Generic[TState]):
@@ -189,7 +189,7 @@ class HookContext(BaseModel, Generic[TState]):
 
 
 # Type for hook functions
-HookFunction = TypeVar('HookFunction', bound=Any)
+HookFunction = TypeVar("HookFunction", bound=Any)
 
 # ============================================================================
 # DEFAULT AGENT SCHEMAS

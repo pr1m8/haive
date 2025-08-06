@@ -7,6 +7,7 @@ This example demonstrates:
 - Tool-based agent management
 - Dynamic routing based on agent capabilities and tools
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -45,8 +46,7 @@ async def demonstrate_integrated_supervisor():
     console.print("✅ Registered agent constructors")
 
     # Phase 1: Start with empty supervisor and demonstrate tool-based agent addition
-    console.print(
-        "\n[bold cyan]Phase 1: Dynamic Agent Addition via Tools[/bold cyan]")
+    console.print("\n[bold cyan]Phase 1: Dynamic Agent Addition via Tools[/bold cyan]")
 
     supervisor.print_integrated_dashboard()
 
@@ -66,11 +66,7 @@ async def demonstrate_integrated_supervisor():
     await supervisor.register_agent(
         research_agent,
         capability_description="Handles research tasks, web searches, and fact-finding",
-        execution_config={
-            "priority": 3,
-            "execution_timeout": 180.0,
-            "max_retries": 2
-        },
+        execution_config={"priority": 3, "execution_timeout": 180.0, "max_retries": 2},
     )
 
     console.print("✅ Added research agent dynamically")
@@ -84,27 +80,21 @@ async def demonstrate_integrated_supervisor():
     await supervisor.register_agent(
         writing_agent,
         capability_description="Handles writing, editing, and content creation",
-        execution_config={
-            "priority": 2,
-            "output_mode": "last_message"
-        },
+        execution_config={"priority": 2, "output_mode": "last_message"},
     )
 
     console.print("✅ Added writing agent dynamically")
     supervisor.print_integrated_dashboard()
 
     # Phase 2: Demonstrate DynamicChoiceModel integration
-    console.print(
-        "\n[bold cyan]Phase 2: DynamicChoiceModel Routing[/bold cyan]")
+    console.print("\n[bold cyan]Phase 2: DynamicChoiceModel Routing[/bold cyan]")
 
     if supervisor.registry_manager:
         choice_model = supervisor.registry_manager.get_agent_choice_model()
         console.print(f"Choice model options: {choice_model.option_names}")
 
         # Test choice validation
-        test_choices = [
-            "research_agent", "writing_agent", "nonexistent_agent", "END"
-        ]
+        test_choices = ["research_agent", "writing_agent", "nonexistent_agent", "END"]
         for choice in test_choices:
             is_valid = choice_model.validate_choice(choice)
             status = "✅ Valid" if is_valid else "❌ Invalid"
@@ -131,9 +121,7 @@ async def demonstrate_integrated_supervisor():
             # Create state for request
             state = {
                 "messages": [HumanMessage(content=request)],
-                "configurable": {
-                    "thread_id": f"coord_session_{i}"
-                },
+                "configurable": {"thread_id": f"coord_session_{i}"},
             }
 
             # Run supervisor (this would trigger coordination)
@@ -148,8 +136,7 @@ async def demonstrate_integrated_supervisor():
             console.print(f"[red]❌ Request {i} failed: {e}[/red]")
 
     # Phase 4: Tool-based agent management
-    console.print(
-        "\n[bold cyan]Phase 4: Tool-Based Agent Management[/bold cyan]")
+    console.print("\n[bold cyan]Phase 4: Tool-Based Agent Management[/bold cyan]")
 
     # Simulate agent management requests
     mgmt_requests = [
@@ -200,8 +187,7 @@ async def demonstrate_integrated_supervisor():
             console.print(f"[red]❌ Management request {i} failed: {e}[/red]")
 
     # Phase 5: Final state and performance
-    console.print(
-        "\n[bold cyan]Phase 5: Final State and Performance[/bold cyan]")
+    console.print("\n[bold cyan]Phase 5: Final State and Performance[/bold cyan]")
 
     supervisor.print_integrated_dashboard()
 
@@ -213,14 +199,12 @@ async def demonstrate_integrated_supervisor():
     performance = supervisor.get_performance_summary()
     console.print(f"\nPerformance summary: {performance}")
 
-    console.print(
-        "\n[bold green]🎉 Integrated Supervisor Demo Complete![/bold green]")
+    console.print("\n[bold green]🎉 Integrated Supervisor Demo Complete![/bold green]")
 
 
 async def demonstrate_dynamic_choice_model_integration():
     """Demonstrate DynamicChoiceModel integration specifically."""
-    console.print(
-        "\n[bold blue]🎯 DynamicChoiceModel Integration Demo[/bold blue]\n")
+    console.print("\n[bold blue]🎯 DynamicChoiceModel Integration Demo[/bold blue]\n")
 
     supervisor = IntegratedDynamicSupervisor(
         name="choice_model_supervisor",
@@ -255,8 +239,7 @@ async def demonstrate_dynamic_choice_model_integration():
             # Test the model
             try:
                 test_instance = choice_model.current_model(choice=agent_name)
-                console.print(
-                    f"✅ Valid choice created: {test_instance.choice}")
+                console.print(f"✅ Valid choice created: {test_instance.choice}")
             except Exception as e:
                 console.print(f"❌ Choice validation failed: {e}")
 
@@ -266,8 +249,7 @@ async def demonstrate_dynamic_choice_model_integration():
 
     if supervisor.registry_manager:
         choice_model = supervisor.registry_manager.get_agent_choice_model()
-        console.print(
-            f"Choice model after removal: {choice_model.option_names}")
+        console.print(f"Choice model after removal: {choice_model.option_names}")
 
     console.print(
         "\n[bold green]🎯 DynamicChoiceModel Integration Demo Complete![/bold green]",
@@ -326,14 +308,14 @@ async def demonstrate_tool_routing():
             else:
                 console.print(f"Tool '{tool}' → No agent found")
 
-    console.print(
-        "\n[bold green]🔧 Tool-Based Routing Demo Complete![/bold green]")
+    console.print("\n[bold green]🔧 Tool-Based Routing Demo Complete![/bold green]")
 
 
 async def main():
     """Run all integrated supervisor demonstrations."""
     console.print(
-        "[bold magenta]Integrated Dynamic Multi-Agent Supervisor Examples[/bold magenta]", )
+        "[bold magenta]Integrated Dynamic Multi-Agent Supervisor Examples[/bold magenta]",
+    )
     console.print("=" * 60)
 
     try:

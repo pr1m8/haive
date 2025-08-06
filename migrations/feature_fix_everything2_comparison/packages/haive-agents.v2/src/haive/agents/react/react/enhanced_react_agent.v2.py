@@ -110,8 +110,7 @@ class ReactAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
 
         # Validate tools
         if not self.tools:
-            logger.warning(
-                "ReactAgent created without tools - limited functionality")
+            logger.warning("ReactAgent created without tools - limited functionality")
 
         return self
 
@@ -163,13 +162,11 @@ class ReactAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
                 content = last_message.content.lower()
 
                 # Check if task is complete
-                if any(word in content
-                       for word in ["final answer", "complete", "finished"]):
+                if any(word in content for word in ["final answer", "complete", "finished"]):
                     return END
 
                 # Check if tool use is needed
-                if self.tools and any(word in content
-                                      for word in ["use", "call", "need"]):
+                if self.tools and any(word in content for word in ["use", "call", "need"]):
                     return "act"
 
                 # Check iteration limit

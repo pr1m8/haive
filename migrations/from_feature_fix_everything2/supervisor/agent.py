@@ -24,16 +24,16 @@ class SupervisorState(BaseModel):
     """State for supervisor operations."""
 
     messages: list[Any] = Field(default_factory=list)
-    routing_decision: str | None = Field(None,
-                                         description="Last routing decision")
+    routing_decision: str | None = Field(None, description="Last routing decision")
     target_agent: str | None = Field(None, description="Current target agent")
 
 
 # Default supervisor prompt
-DEFAULT_SUPERVISOR_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are a supervisor managing specialized agents.
+DEFAULT_SUPERVISOR_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are a supervisor managing specialized agents.
 
 Available Agents:
 {agent_descriptions}
@@ -44,9 +44,10 @@ Instructions:
 3. Respond with ONLY the agent name or "END" if complete
 
 Decision:""",
-    ),
-    ("placeholder", "{messages}"),
-], )
+        ),
+        ("placeholder", "{messages}"),
+    ],
+)
 
 
 class SupervisorAgent(ReactAgent):
@@ -103,29 +104,25 @@ class SupervisorAgent(ReactAgent):
 
         # Update prompt template for routing
         if self.engine:
-            self.engine.prompt_template = self.supervisor_prompt or self._create_routing_prompt(
-            )
+            self.engine.prompt_template = self.supervisor_prompt or self._create_routing_prompt()
 
     def _create_routing_prompt(self) -> ChatPromptTemplate:
         """Create routing prompt with current agent descriptions."""
         if not self.agent_descriptions:
             descriptions = "No agents registered yet"
         else:
-            descriptions = "\n".join([
-                f"- {name}: {desc}"
-                for name, desc in self.agent_descriptions.items()
-            ], )
+            descriptions = "\n".join(
+                [f"- {name}: {desc}" for name, desc in self.agent_descriptions.items()],
+            )
 
         # Use default template with current descriptions
-        return DEFAULT_SUPERVISOR_PROMPT.partial(
-            agent_descriptions=descriptions)
+        return DEFAULT_SUPERVISOR_PROMPT.partial(agent_descriptions=descriptions)
 
     # ========================================================================
     # AGENT REGISTRATION
     # ========================================================================
 
-    def register_agent(self, name: str, agent: Agent,
-                       description: str) -> None:
+    def register_agent(self, name: str, agent: Agent, description: str) -> None:
         """Register an agent with the supervisor.
 
         Args:
@@ -226,14 +223,10 @@ class SupervisorAgent(ReactAgent):
             # Add conditional routing
             route_map = {
                 END: END,
-                **{
-                    f"{name}_node": f"{name}_node"
-                    for name in self.registered_agents
-                },
+                **{f"{name}_node": f"{name}_node" for name in self.registered_agents},
             }
 
-            graph.add_conditional_edges("route_decision", route_to_agent,
-                                        route_map)
+            graph.add_conditional_edges("route_decision", route_to_agent, route_map)
 
         return graph
 

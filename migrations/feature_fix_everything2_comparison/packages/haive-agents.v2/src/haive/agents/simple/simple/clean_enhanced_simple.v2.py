@@ -9,6 +9,7 @@ Functions:
     setup_agent: Setup Agent functionality.
     build_graph: Build Graph functionality.
 """
+
 # src/haive/agents/simple/clean_enhanced_simple.py
 """Clean Enhanced SimpleAgent - SimpleAgent as Agent[AugLLMConfig].
 
@@ -81,10 +82,7 @@ class SimpleAgent(Agent[AugLLMConfig]):
             graph.add_conditional_edges(
                 "agent",
                 lambda s: "tools" if self._has_tool_calls(s) else "end",
-                {
-                    "tools": "tools",
-                    "end": END
-                },
+                {"tools": "tools", "end": END},
             )
             graph.add_edge("tools", END)
         else:

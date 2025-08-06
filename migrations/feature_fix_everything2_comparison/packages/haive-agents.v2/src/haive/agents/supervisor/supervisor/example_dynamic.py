@@ -42,8 +42,7 @@ async def demonstrate_dynamic_supervisor():
     supervisor.print_supervisor_dashboard()
 
     # Phase 2: Add some agents dynamically
-    console.print(
-        "\n[bold cyan]Phase 2: Adding Agents Dynamically[/bold cyan]")
+    console.print("\n[bold cyan]Phase 2: Adding Agents Dynamically[/bold cyan]")
 
     # Create specialized agents
     research_agent = ReactAgent(
@@ -65,11 +64,7 @@ async def demonstrate_dynamic_supervisor():
     await supervisor.register_agent(
         research_agent,
         capability_description="Handles research tasks, web searches, and fact-finding",
-        execution_config={
-            "priority": 3,
-            "execution_timeout": 180.0,
-            "max_retries": 2
-        },
+        execution_config={"priority": 3, "execution_timeout": 180.0, "max_retries": 2},
     )
 
     await supervisor.register_agent(
@@ -88,9 +83,7 @@ async def demonstrate_dynamic_supervisor():
         execution_config={
             "priority": 2,
             "execution_timeout": 60.0,
-            "custom_params": {
-                "precision": "high"
-            },
+            "custom_params": {"precision": "high"},
         },
     )
 
@@ -115,9 +108,7 @@ async def demonstrate_dynamic_supervisor():
             # Create conversation state
             state = {
                 "messages": [HumanMessage(content=query)],
-                "configurable": {
-                    "thread_id": f"demo_session_{i}"
-                },
+                "configurable": {"thread_id": f"demo_session_{i}"},
             }
 
             # Run supervisor
@@ -142,10 +133,7 @@ async def demonstrate_dynamic_supervisor():
         {
             "priority": 4,  # Increase priority
             "execution_timeout": 30.0,  # Reduce timeout
-            "custom_params": {
-                "precision": "ultra_high",
-                "show_steps": True
-            },
+            "custom_params": {"precision": "ultra_high", "show_steps": True},
         },
     )
 
@@ -173,8 +161,7 @@ async def demonstrate_dynamic_supervisor():
     supervisor.print_supervisor_dashboard()
 
     # Phase 5: Test with updated agent configuration
-    console.print(
-        "\n[bold cyan]Phase 5: Testing Updated Configuration[/bold cyan]")
+    console.print("\n[bold cyan]Phase 5: Testing Updated Configuration[/bold cyan]")
 
     updated_queries = [
         "Write a Python function to calculate fibonacci numbers",
@@ -188,9 +175,7 @@ async def demonstrate_dynamic_supervisor():
         try:
             state = {
                 "messages": [HumanMessage(content=query)],
-                "configurable": {
-                    "thread_id": f"updated_session_{i}"
-                },
+                "configurable": {"thread_id": f"updated_session_{i}"},
             }
 
             await supervisor.ainvoke(state)
@@ -205,8 +190,7 @@ async def demonstrate_dynamic_supervisor():
     performance_summary = supervisor.get_performance_summary()
 
     console.print("\n[bold yellow]Performance Summary:[/bold yellow]")
-    console.print(
-        f"Total Executions: {performance_summary.get('total_executions', 0)}")
+    console.print(f"Total Executions: {performance_summary.get('total_executions', 0)}")
     console.print(
         f"Overall Success Rate: {performance_summary.get('success_rate', 0.0):.1%}",
     )
@@ -217,8 +201,7 @@ async def demonstrate_dynamic_supervisor():
     # Show final dashboard
     supervisor.print_supervisor_dashboard()
 
-    console.print(
-        "\n[bold green]🎉 Dynamic Supervisor Demo Complete![/bold green]")
+    console.print("\n[bold green]🎉 Dynamic Supervisor Demo Complete![/bold green]")
 
 
 async def demonstrate_parallel_execution():
@@ -256,9 +239,7 @@ async def demonstrate_parallel_execution():
     try:
         state = {
             "messages": [HumanMessage(content=parallel_query)],
-            "configurable": {
-                "thread_id": "parallel_session"
-            },
+            "configurable": {"thread_id": "parallel_session"},
         }
 
         await parallel_supervisor.ainvoke(state)
@@ -294,17 +275,10 @@ async def demonstrate_adaptation_rules():
         execution_config={
             "output_mode": "last_message",
             "state_adapters": {
-                "response_filtef": {
-                    "remove_markdown": True
-                },
-                "length_limitef": {
-                    "max_length": 200
-                },
+                "response_filtef": {"remove_markdown": True},
+                "length_limitef": {"max_length": 200},
             },
-            "custom_params": {
-                "adaptation_level": "high",
-                "filter_sensitive": True
-            },
+            "custom_params": {"adaptation_level": "high", "filter_sensitive": True},
         },
     )
 
@@ -318,9 +292,7 @@ async def demonstrate_adaptation_rules():
     try:
         state = {
             "messages": [HumanMessage(content=adaptation_query)],
-            "configurable": {
-                "thread_id": "adaptation_session"
-            },
+            "configurable": {"thread_id": "adaptation_session"},
         }
 
         await adaptive_supervisor.ainvoke(state)
@@ -334,8 +306,7 @@ async def demonstrate_adaptation_rules():
 
 async def main():
     """Run all dynamic supervisor demonstrations."""
-    console.print(
-        "[bold magenta]Dynamic Supervisor Agent Examples[/bold magenta]")
+    console.print("[bold magenta]Dynamic Supervisor Agent Examples[/bold magenta]")
     console.print("=" * 50)
 
     try:

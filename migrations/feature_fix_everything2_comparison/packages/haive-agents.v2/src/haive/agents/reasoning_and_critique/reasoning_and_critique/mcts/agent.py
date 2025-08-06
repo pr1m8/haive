@@ -10,6 +10,7 @@ Functions:
     setup_workflow: Setup Workflow functionality.
     reflection_chain: Reflection Chain functionality.
 """
+
 # src/haive/agents/mcts/agent.py
 from __future__ import annotations
 
@@ -63,33 +64,27 @@ class MCTSAgent(Agent):
 
         # Add nodes to the graph
         gb.add_node(
-            name='generate_initial_response',
+            name="generate_initial_response",
             config=self._generate_initial_response,
         )
 
-        gb.add_node(name='expand', config=self._expand)
+        gb.add_node(name="expand", config=self._expand)
 
         # Add conditional edges
         gb.add_conditional_edges(
-            'generate_initial_response',
+            "generate_initial_response",
             self._should_continue,
-            {
-                'end': END,
-                'expand': 'expand'
-            },
+            {"end": END, "expand": "expand"},
         )
 
         gb.add_conditional_edges(
-            'expand',
+            "expand",
             self._should_continue,
-            {
-                'end': END,
-                'expand': 'expand'
-            },
+            {"end": END, "expand": "expand"},
         )
 
         # Set the entry point
-        gb.set_entry_point('generate_initial_response')
+        gb.set_entry_point("generate_initial_response")
 
         # Build the graph
         self.graph = gb.build()
@@ -103,40 +98,40 @@ class MCTSAgent(Agent):
         # Initial response chain
         self.initial_answer_chain = (
             self.config.initial_prompt_template
-            | llm_with_tools.with_config(run_name='GenerateInitialCandidate'))
+            | llm_with_tools.with_config(run_name="GenerateInitialCandidate")
+        )
 
         # Tool response parser
         self.parser = JsonOutputToolsParser(return_id=True)
 
         # Reflection chain
-        reflection_llm_chain = (self.config.reflection_prompt_template
-                                | llm.bind_tools(
-                                    tools=[Reflection],
-                                    tool_choice='Reflection').with_config(
-                                        run_name='Reflection', )
-                                | PydanticToolsParser(tools=[Reflection]))
+        reflection_llm_chain = (
+            self.config.reflection_prompt_template
+            | llm.bind_tools(tools=[Reflection], tool_choice="Reflection").with_config(
+                run_name="Reflection",
+            )
+            | PydanticToolsParser(tools=[Reflection])
+        )
 
         @as_runnable
         def reflection_chain(inputs) -> Reflection:
             tool_choices = reflection_llm_chain.invoke(inputs)
             reflection = tool_choices[0]
-            if not isinstance(inputs['candidate'][-1], AIMessage):
+            if not isinstance(inputs["candidate"][-1], AIMessage):
                 reflection.found_solution = False
             return reflection
 
         self.reflection_chain = reflection_chain
 
         # Expansion chain
-        def generate_candidates(messages: list[dict[str, Any]],
-                                config: RunnableConfig):
-            n = config['configurable'].get('N',
-                                           self.config.candidates_per_rollout)
+        def generate_candidates(messages: list[dict[str, Any]], config: RunnableConfig):
+            n = config["configurable"].get("N", self.config.candidates_per_rollout)
             bound_kwargs = llm_with_tools.kwargs
             chat_result = llm.generate(
                 [messages.to_messages()],
                 n=n,
-                callbacks=config['callbacks'],
-                run_name='GenerateCandidates',
+                callbacks=config["callbacks"],
+                run_name="GenerateCandidates",
                 **bound_kwargs,
             )
             return [gen.message for gen in chat_result.generations[0]]
@@ -150,7 +145,7 @@ class MCTSAgent(Agent):
             input_text = state.input
 
             # Invoke the initial answer chain
-            res = self.initial_answer_chain.invoke({'input': input_text})
+            res = self.initial_answer_chain.invoke({"input": input_text})
 
             # Parse tool calls
             parsed = self.parser.invoke(res)
@@ -160,30 +155,29 @@ class MCTSAgent(Agent):
             for r in parsed:
                 tool_resp = self.tool_node.invoke(
                     {
-                        'messages': [
+                        "messages": [
                             AIMessage(
-                                content='',
+                                content="",
                                 tool_calls=[
                                     {
-                                        'name': r['type'],
-                                        'args': r['args'],
-                                        'id': r['id'],
+                                        "name": r["type"],
+                                        "args": r["args"],
+                                        "id": r["id"],
                                     },
                                 ],
                             ),
                         ],
-                    }, )
-                tool_responses.append(tool_resp['messages'][0])
+                    },
+                )
+                tool_responses.append(tool_resp["messages"][0])
 
             # Combine messages
             output_messages = [res, *tool_responses]
 
             # Perform reflection
             reflection = self.reflection_chain.invoke(
-                {
-                    'input': input_text,
-                    'candidate': output_messages
-                }, )
+                {"input": input_text, "candidate": output_messages},
+            )
 
             # Create root node
             node_data = TreeNode(
@@ -202,11 +196,11 @@ class MCTSAgent(Agent):
 
             # Create updated state
             updated_state = {
-                'nodes': updated_nodes,
-                'messages': output_messages,
-                'current_step': 1,
-                'status': 'searching',
-                'solved': reflection.found_solution,
+                "nodes": updated_nodes,
+                "messages": output_messages,
+                "current_step": 1,
+                "status": "searching",
+                "solved": reflection.found_solution,
             }
 
             return updated_state
@@ -214,12 +208,11 @@ class MCTSAgent(Agent):
         except Exception as e:
             logger.exception(f"Error in generate_initial_response: {e!s}")
             return {
-                'error': f"Error generating initial response: {e!s}",
-                'status': 'error',
+                "error": f"Error generating initial response: {e!s}",
+                "status": "error",
             }
 
-    def _expand(self, state: TreeState,
-                config: RunnableConfig) -> dict[str, Any]:
+    def _expand(self, state: TreeState, config: RunnableConfig) -> dict[str, Any]:
         """Expand the search tree by generating new candidates from the best
         node."""
         try:
@@ -233,33 +226,29 @@ class MCTSAgent(Agent):
             best_node_id = nodes_store.select_best_node()
             if not best_node_id:
                 # No node to expand
-                return {'error': 'No node found to expand', 'status': 'errof'}
+                return {"error": "No node found to expand", "status": "errof"}
 
             best_node = nodes_store.get_node_by_id(best_node_id)
             if not best_node:
                 return {
-                    'error': f"Selected node {best_node_id} not found",
-                    'status': 'error',
+                    "error": f"Selected node {best_node_id} not found",
+                    "status": "error",
                 }
 
             # Get trajectory messages
             trajectory_messages = nodes_store.deserialize_messages(
-                nodes_store.get_trajectory(best_node_id,
-                                           include_reflections=False), )
+                nodes_store.get_trajectory(best_node_id, include_reflections=False),
+            )
 
             # Set N in config for number of candidates
             config_with_n = dict(config)
-            if 'configurable' not in config_with_n:
-                config_with_n['configurable'] = {}
-            config_with_n['configurable'][
-                'N'] = self.config.candidates_per_rollout
+            if "configurable" not in config_with_n:
+                config_with_n["configurable"] = {}
+            config_with_n["configurable"]["N"] = self.config.candidates_per_rollout
 
             # Generate candidate expansions
             new_candidates = self.expansion_chain.invoke(
-                {
-                    'input': state.input,
-                    'messages': trajectory_messages
-                },
+                {"input": state.input, "messages": trajectory_messages},
                 config_with_n,
             )
 
@@ -277,20 +266,21 @@ class MCTSAgent(Agent):
             for i, tool_call in flattened:
                 resp = self.tool_node.invoke(
                     {
-                        'messages': [
+                        "messages": [
                             AIMessage(
-                                content='',
+                                content="",
                                 tool_calls=[
                                     {
-                                        'name': tool_call['type'],
-                                        'args': tool_call['args'],
-                                        'id': tool_call['id'],
+                                        "name": tool_call["type"],
+                                        "args": tool_call["args"],
+                                        "id": tool_call["id"],
                                     },
                                 ],
                             ),
                         ],
-                    }, )
-                tool_responses.append((i, resp['messages'][0]))
+                    },
+                )
+                tool_responses.append((i, resp["messages"][0]))
 
             # Group tool responses by candidate index
             collected_responses = defaultdict(list)
@@ -303,21 +293,19 @@ class MCTSAgent(Agent):
                 output_messages.append([candidate] + collected_responses[i])
 
             # Reflect on each candidate
-            reflection_inputs = [{
-                'input': state.input,
-                'candidate': msges
-            } for msges in output_messages]
-            reflections = self.reflection_chain.batch(reflection_inputs,
-                                                      config)
+            reflection_inputs = [
+                {"input": state.input, "candidate": msges} for msges in output_messages
+            ]
+            reflections = self.reflection_chain.batch(reflection_inputs, config)
 
             # Create child nodes
             updated_nodes = nodes_store
             found_solution = state.solved
 
             for candidate_msgs, reflection in zip(
-                    output_messages,
-                    reflections,
-                    strict=False,
+                output_messages,
+                reflections,
+                strict=False,
             ):
                 # Create node
                 node_data = TreeNode(
@@ -350,9 +338,9 @@ class MCTSAgent(Agent):
 
             # Create updated state dictionary
             updated_state = {
-                'nodes': updated_nodes,
-                'current_step': new_step,
-                'solved': found_solution,
+                "nodes": updated_nodes,
+                "current_step": new_step,
+                "solved": found_solution,
             }
 
             # If we found a solution, update the messages and output
@@ -362,44 +350,41 @@ class MCTSAgent(Agent):
                     updated_nodes.get_trajectory(
                         best_solution.node_id,
                         include_reflections=False,
-                    ), )
-                updated_state['messages'] = solution_messages
+                    ),
+                )
+                updated_state["messages"] = solution_messages
 
                 # Get the last message as output
-                if solution_messages and isinstance(solution_messages[-1],
-                                                    AIMessage):
-                    updated_state['output'] = solution_messages[-1].content
+                if solution_messages and isinstance(solution_messages[-1], AIMessage):
+                    updated_state["output"] = solution_messages[-1].content
 
             return updated_state
 
         except Exception as e:
             logger.exception(f"Error in expand node: {e!s}")
-            return {
-                'error': f"Error expanding search tree: {e!s}",
-                'status': 'error'
-            }
+            return {"error": f"Error expanding search tree: {e!s}", "status": "error"}
 
     def _should_continue(self, state: TreeState) -> str:
         """Determine whether to continue the tree search or exit."""
         # Check for error
         if state.error:
-            return 'end'
+            return "end"
 
         # Check if solution found
         if state.solved:
-            return 'end'
+            return "end"
 
         # Check max steps
         if state.current_step >= state.max_steps:
-            return 'end'
+            return "end"
 
         # Check tree height
         tree_height = state.nodes.get_tree_height()
         if tree_height > self.config.max_rollouts:
-            return 'end'
+            return "end"
 
         # Continue search
-        return 'expand'
+        return "expand"
 
     # def run(self, input_data: Union[str, Dict[str, Any]]) -> Dict[str, Any]:
     # """Run the agent with the provided input."""

@@ -74,8 +74,7 @@ class MemoryEntry(BaseModel):
         default_factory=datetime.utcnow,
         description="Last access timestamp",
     )
-    access_count: int = Field(default=0,
-                              description="Number of times accessed")
+    access_count: int = Field(default=0, description="Number of times accessed")
 
     # Importance and decay
     importance_score: float = Field(
@@ -106,8 +105,7 @@ class MemoryEntry(BaseModel):
         default_factory=list,
         description="Entity relationships",
     )
-    topics: list[str] = Field(default_factory=list,
-                              description="Key topics/themes")
+    topics: list[str] = Field(default_factory=list, description="Key topics/themes")
     sentiment: float | None = Field(
         default=None,
         ge=-1.0,
@@ -152,8 +150,7 @@ class MemoryEntry(BaseModel):
         default=None,
         description="Memory namespace for organization",
     )
-    tags: list[str] = Field(default_factory=list,
-                            description="User-defined tags")
+    tags: list[str] = Field(default_factory=list, description="User-defined tags")
     metadata: dict[str, Any] = Field(
         default_factory=dict,
         description="Additional metadata",
@@ -166,25 +163,24 @@ class MemoryEntry(BaseModel):
 
     def calculate_current_weight(self) -> float:
         """Calculate current relevance weight based on age and decay."""
-        time_since_creation = (datetime.utcnow() -
-                               self.created_at).total_seconds() / 3600  # hours
-        time_since_access = (datetime.utcnow() - self.last_accessed
-                             ).total_seconds() / 3600  # hours
+        time_since_creation = (datetime.utcnow() - self.created_at).total_seconds() / 3600  # hours
+        time_since_access = (datetime.utcnow() - self.last_accessed).total_seconds() / 3600  # hours
 
         # Combine creation age, access recency, and importance
-        creation_factor = max(
-            0.0, 1.0 - (time_since_creation * self.decay_rate / 1000))
-        access_factor = max(0.0,
-                            1.0 - (time_since_access * self.decay_rate / 100))
+        creation_factor = max(0.0, 1.0 - (time_since_creation * self.decay_rate / 1000))
+        access_factor = max(0.0, 1.0 - (time_since_access * self.decay_rate / 100))
 
         # Weight by importance and access frequency
         importance_factor = self.importance_score
-        frequency_factor = min(1.0, self.access_count /
-                               10.0)  # Normalize access count
+        frequency_factor = min(1.0, self.access_count / 10.0)  # Normalize access count
 
         # Combine all factors
-        weight = (creation_factor * 0.3 + access_factor * 0.3 +
-                  importance_factor * 0.3 + frequency_factor * 0.1)
+        weight = (
+            creation_factor * 0.3
+            + access_factor * 0.3
+            + importance_factor * 0.3
+            + frequency_factor * 0.1
+        )
 
         self.current_weight = max(0.0, min(1.0, weight))
         return self.current_weight
@@ -194,14 +190,9 @@ class MemoryEntry(BaseModel):
         current_weight = self.calculate_current_weight()
         return current_weight < expiration_threshold
 
-    def add_relationship(self, subject: str, predicate: str,
-                         object: str) -> None:
+    def add_relationship(self, subject: str, predicate: str, object: str) -> None:
         """Add an entity relationship to this memory."""
-        relationship = {
-            "subject": subject,
-            "predicate": predicate,
-            "object": object
-        }
+        relationship = {"subject": subject, "predicate": predicate, "object": object}
         if relationship not in self.relationships:
             self.relationships.append(relationship)
 
@@ -209,10 +200,8 @@ class MemoryEntry(BaseModel):
 class MemoryClassificationResult(BaseModel):
     """Result of memory classification analysis."""
 
-    memory_types: list[MemoryType] = Field(
-        ..., description="Identified memory types")
-    importance: MemoryImportance = Field(
-        ..., description="Assessed importance level")
+    memory_types: list[MemoryType] = Field(..., description="Identified memory types")
+    importance: MemoryImportance = Field(..., description="Assessed importance level")
     importance_score: float = Field(
         ...,
         ge=0.0,
@@ -221,10 +210,8 @@ class MemoryClassificationResult(BaseModel):
     )
 
     # Extracted metadata
-    entities: list[str] = Field(default_factory=list,
-                                description="Extracted entities")
-    topics: list[str] = Field(default_factory=list,
-                              description="Identified topics")
+    entities: list[str] = Field(default_factory=list, description="Extracted entities")
+    topics: list[str] = Field(default_factory=list, description="Identified topics")
     sentiment: float | None = Field(
         default=None,
         description="Sentiment analysis result",
@@ -246,8 +233,7 @@ class MemoryClassificationResult(BaseModel):
 class MemoryQueryIntent(BaseModel):
     """Analysis of user query intent for memory retrieval."""
 
-    memory_types: list[MemoryType] = Field(...,
-                                           description="Required memory types")
+    memory_types: list[MemoryType] = Field(..., description="Required memory types")
     complexity: str = Field(
         default="simple",
         description="Query complexity: simple, moderate, complex",
@@ -280,8 +266,7 @@ class MemoryQueryIntent(BaseModel):
         default="semantic",
         description="Suggested retrieval approach",
     )
-    max_results: int = Field(default=5,
-                             description="Suggested maximum results")
+    max_results: int = Field(default=5, description="Suggested maximum results")
     confidence_threshold: float = Field(
         default=0.7,
         description="Minimum confidence for results",
@@ -327,5 +312,4 @@ class MemoryConsolidationResult(BaseModel):
         default_factory=list,
         description="Any errors during consolidation",
     )
-    summary: str = Field(default="",
-                         description="Human-readable consolidation summary")
+    summary: str = Field(default="", description="Human-readable consolidation summary")

@@ -11,6 +11,7 @@ Functions:
     execute: Execute functionality.
     execute: Execute functionality.
 """
+
 # src/haive/agents/simple/enhanced_simple_minimal.py
 """Minimal Enhanced SimpleAgent - showing the pattern in action.
 

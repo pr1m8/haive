@@ -3,6 +3,7 @@
 This agent rewrites queries to improve retrieval using existing models
 from common.
 """
+
 from __future__ import annotations
 
 from haive.agents.rag.common.query_refinement.models import QueryRefinementResponse
@@ -56,7 +57,8 @@ def create_query_rewriter_agent(
         "5. Break down complex queries if needed\n\n"
         "Provide multiple suggestions with clear rationales and select the best one.\n\n"
         "Query to rewrite: {query}\n\n"
-        "Context: {context}")
+        "Context: {context}"
+    )
 
     return SimpleAgent(
         name=name,

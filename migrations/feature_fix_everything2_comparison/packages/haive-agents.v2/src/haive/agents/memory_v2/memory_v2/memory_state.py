@@ -116,9 +116,7 @@ class MemoryEntry(BaseModel):
 
     id: str = Field(..., description="Unique identifier for the memory")
 
-    content: str = Field(...,
-                         min_length=1,
-                         description="The actual memory content")
+    content: str = Field(..., min_length=1, description="The actual memory content")
 
     metadata: MemoryMetadata = Field(
         default_factory=MemoryMetadata,
@@ -270,9 +268,10 @@ class MemoryState(MessagesState):
         self.memory_stats.total_retrievals += 1
 
         # Update average retrieval time
-        total_time = (self.memory_stats.avg_retrieval_time *
-                      (self.memory_stats.total_retrievals - 1) +
-                      retrieval_time)
+        total_time = (
+            self.memory_stats.avg_retrieval_time * (self.memory_stats.total_retrievals - 1)
+            + retrieval_time
+        )
         self.memory_stats.avg_retrieval_time = total_time / self.memory_stats.total_retrievals
 
         # Update retrieval counts for individual memories
@@ -285,8 +284,7 @@ class MemoryState(MessagesState):
             "total_memories": len(self.current_memories),
             "retrieved_count": len(self.retrieved_memories),
             "memory_types": dict(self.memory_stats.memories_by_type),
-            "importance_levels":
-            dict(self.memory_stats.memories_by_importance),
+            "importance_levels": dict(self.memory_stats.memories_by_importance),
             "performance": {
                 "avg_storage_time": self.memory_stats.avg_storage_time,
                 "avg_retrieval_time": self.memory_stats.avg_retrieval_time,

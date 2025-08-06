@@ -3,6 +3,7 @@
 This version uses state schemas with built-in configuration support,
 providing a cleaner approach to managing agent-specific parameters.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -70,8 +71,7 @@ class FullyGradedRAGAgentV2(MultiAgent, StateConfigMixin):
         )
 
         answer_grader = create_answer_grader("answer_quality_grader")
-        hallucination_grader = create_hallucination_grader(
-            "hallucination_detector")
+        hallucination_grader = create_hallucination_grader("hallucination_detector")
 
         synthesis_agent = SimpleAgent(
             name="grade_synthesis",
@@ -122,8 +122,7 @@ class FullyGradedRAGAgentV2(MultiAgent, StateConfigMixin):
         """Override to inject configuration into state."""
         # Ensure state has our configuration
         if "relevance_threshold" not in inputs:
-            inputs["relevance_threshold"] = self._initial_config[
-                "relevance_threshold"]
+            inputs["relevance_threshold"] = self._initial_config["relevance_threshold"]
         if "workflow_type" not in inputs:
             inputs["workflow_type"] = self._initial_config["workflow_type"]
 
@@ -173,15 +172,10 @@ class MultiCriteriaGradedRAGAgentV2(MultiAgent, StateConfigMixin):
             instructions="""
             Generate answer balancing all criteria from state.grading_criteria.
             """,
-            output_schema={
-                "answer": "str",
-                "criteria_addressed": "Dict[str, bool]"
-            },
+            output_schema={"answer": "str", "criteria_addressed": "Dict[str, bool]"},
         )
 
-        agents = [
-            multi_criteria_grader, perspective_aggregator, balanced_generator
-        ]
+        agents = [multi_criteria_grader, perspective_aggregator, balanced_generator]
 
         super().__init__(
             agents=agents,
@@ -198,8 +192,7 @@ class MultiCriteriaGradedRAGAgentV2(MultiAgent, StateConfigMixin):
     async def ainvoke(self, inputs: dict[str, Any]) -> dict[str, Any]:
         """Override to inject configuration."""
         if "grading_criteria" not in inputs:
-            inputs["grading_criteria"] = self._initial_config[
-                "grading_criteria"]
+            inputs["grading_criteria"] = self._initial_config["grading_criteria"]
         if "workflow_type" not in inputs:
             inputs["workflow_type"] = self._initial_config["workflow_type"]
 
@@ -253,8 +246,7 @@ def create_graded_rag_agent(
     """Factory function to create graded RAG agents with proper
     configuration."""
     if workflow_type == "fully_graded":
-        return FullyGradedRAGAgentV2(relevance_threshold=relevance_threshold,
-                                     **kwargs)
+        return FullyGradedRAGAgentV2(relevance_threshold=relevance_threshold, **kwargs)
     if workflow_type == "multi_criteria":
         return MultiCriteriaGradedRAGAgentV2(
             grading_criteria=grading_criteria,
@@ -280,4 +272,5 @@ if __name__ == "__main__":
             # Can override configuration per-invocation
             "relevance_threshold": 0.8,
             "max_documents": 5,
-        }, )
+        },
+    )

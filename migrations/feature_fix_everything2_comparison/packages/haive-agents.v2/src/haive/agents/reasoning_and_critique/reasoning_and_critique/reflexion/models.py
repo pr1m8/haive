@@ -16,8 +16,8 @@ from pydantic import BaseModel, Field
 class Reflection(BaseModel):
     """Reflection on the answer."""
 
-    missing: str = Field(description='Critique of what is missing.')
-    superfluous: str = Field(description='Critique of what is superfluous')
+    missing: str = Field(description="Critique of what is missing.")
+    superfluous: str = Field(description="Critique of what is superfluous")
 
 
 class AnswerQuestion(BaseModel):
@@ -27,13 +27,11 @@ class AnswerQuestion(BaseModel):
     improve the answer.
     """
 
-    answer: str = Field(
-        description='~250 word detailed answer to the question.')
-    reflection: Reflection = Field(
-        description='Your reflection on the initial answer.')
+    answer: str = Field(description="~250 word detailed answer to the question.")
+    reflection: Reflection = Field(description="Your reflection on the initial answer.")
     search_queries: list[str] = Field(
         default_factory=list,  # ✅ Ensures search_queries is always present
-        description='1-3 search queries for researching improvements to address the critique of your current answer.',
+        description="1-3 search queries for researching improvements to address the critique of your current answer.",
     )
 
 
@@ -48,4 +46,5 @@ class ReviseAnswer(AnswerQuestion):
     """
 
     references: list[str] = Field(
-        description='Citations motivating your updated answer.', )
+        description="Citations motivating your updated answer.",
+    )

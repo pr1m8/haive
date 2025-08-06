@@ -1,4 +1,5 @@
 """Module exports."""
+
 from __future__ import annotations
 
 from agentic_router.agent import AgenticRAGRouterAgent

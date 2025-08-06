@@ -56,10 +56,7 @@ class MultiStrategyRAGAgent(SelfCorrectiveRAGAgent):
         query = state.query
 
         if not self.query_analyzer:
-            return {
-                "query_type": QueryType.FACTUAL.value,
-                "strategy_name": "default"
-            }
+            return {"query_type": QueryType.FACTUAL.value, "strategy_name": "default"}
 
         analysis = self.query_analyzer.invoke({"query": query})
 
@@ -105,18 +102,13 @@ class MultiStrategyRAGAgent(SelfCorrectiveRAGAgent):
         else:
             # Try to parse variations from text
             try:
-                variations = [
-                    q.strip() for q in rewrite_result.split("\n") if q.strip()
-                ]
+                variations = [q.strip() for q in rewrite_result.split("\n") if q.strip()]
             except BaseException:
                 variations = []
 
         rewritten_query = variations[0] if variations else None
 
-        return {
-            "query_variations": variations,
-            "rewritten_query": rewritten_query
-        }
+        return {"query_variations": variations, "rewritten_query": rewritten_query}
 
     def retrieve_with_strategy(self, state: dict[str, Any]):
         """Retrieve documents using the selected strategy."""
@@ -125,8 +117,7 @@ class MultiStrategyRAGAgent(SelfCorrectiveRAGAgent):
         strategy_name = state.strategy_name
 
         # Use the appropriate retriever for the strategy
-        retriever = self.retriever_strategies.get(strategy_name,
-                                                  self.retriever)
+        retriever = self.retriever_strategies.get(strategy_name, self.retriever)
 
         # Use rewritten query if available
         effective_query = rewritten_query if rewritten_query else query
@@ -168,10 +159,7 @@ class MultiStrategyRAGAgent(SelfCorrectiveRAGAgent):
         # Add conditional branch for correction
         correction_branch = Branch(
             function=self.decide_correction,
-            destinations={
-                "correct": "correct_answer",
-                "finalize": "finalize_answer"
-            },
+            destinations={"correct": "correct_answer", "finalize": "finalize_answer"},
         )
         gb.add_conditional_edges("evaluate_answer", correction_branch)
 

@@ -14,10 +14,11 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from haive.agents.reasoning_and_critique.logic.models import Any, ReasoningAnalysis
 from haive.core.engine.aug_llm import AugLLMConfig
 
-BIAS_DETECTION_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert in cognitive biases and logical fallacies.
+BIAS_DETECTION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert in cognitive biases and logical fallacies.
 
 Your role is to:
 1. Analyze reasoning for cognitive biases
@@ -174,13 +175,14 @@ Overall assessment:
 - Are biases systematic or isolated?
 - Do they all point one direction?
 - What's the cumulative impact?""",
-    ),
-    (
-        "human",
-        "Analyze this reasoning chain for biases and fallacies:\n{reasoning_chain}",
-    ),
-    MessagesPlaceholder(variable_name="messages", optional=True),
-], )
+        ),
+        (
+            "human",
+            "Analyze this reasoning chain for biases and fallacies:\n{reasoning_chain}",
+        ),
+        MessagesPlaceholder(variable_name="messages", optional=True),
+    ],
+)
 
 
 def create_bias_detector() -> Any:

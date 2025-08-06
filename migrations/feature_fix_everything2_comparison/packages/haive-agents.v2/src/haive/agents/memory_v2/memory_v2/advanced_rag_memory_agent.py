@@ -150,11 +150,12 @@ class AdvancedRAGMemoryAgent:
                         embedding_function=embeddings,
                     )
                 self.logger.info(
-                    f"Loaded existing vector store from {
-                        self.config.memory_store_path}", )
+                    f"Loaded existing vector store from {self.config.memory_store_path}",
+                )
             except Exception as e:
                 self.logger.warning(
-                    f"Could not load existing store: {e}, creating new one", )
+                    f"Could not load existing store: {e}, creating new one",
+                )
                 self._create_new_vector_store(embeddings)
         else:
             self._create_new_vector_store(embeddings)
@@ -175,8 +176,7 @@ class AdvancedRAGMemoryAgent:
         if self.config.vector_store_type == "faiss":
             self.vector_store = FAISS.from_documents([initial_doc], embeddings)
         elif self.config.vector_store_type == "chroma":
-            self.vector_store = Chroma.from_documents([initial_doc],
-                                                      embeddings)
+            self.vector_store = Chroma.from_documents([initial_doc], embeddings)
 
         self.documents = [initial_doc]
 
@@ -184,7 +184,8 @@ class AdvancedRAGMemoryAgent:
         """Initialize all retrieval components."""
         # Dense retriever (vector similarity)
         self.dense_retriever = self.vector_store.as_retriever(
-            search_kwargs={"k": self.config.k_initial}, )
+            search_kwargs={"k": self.config.k_initial},
+        )
 
         # Time-weighted dense retriever
         if self.config.enable_time_weighting:
@@ -242,8 +243,7 @@ class AdvancedRAGMemoryAgent:
                 base_retriever=self.ensemble_retriever,
             )
         except Exception as e:
-            self.logger.warning(
-                f"Could not initialize contextual retriever: {e}")
+            self.logger.warning(f"Could not initialize contextual retriever: {e}")
             self.contextual_retriever = self.ensemble_retriever
 
     def _init_reranking_retriever(self):
@@ -255,7 +255,8 @@ class AdvancedRAGMemoryAgent:
         try:
             # Initialize cross-encoder for reranking
             cross_encoder = HuggingFaceCrossEncoder(
-                model_name=self.config.reranker_model, )
+                model_name=self.config.reranker_model,
+            )
             reranker = CrossEncoderReranker(
                 model=cross_encoder,
                 top_k=self.config.rerank_top_k,
@@ -298,32 +299,25 @@ class AdvancedRAGMemoryAgent:
 
         # Count indicators of complexity
         complexity_indicators = {
-            "multi_entity":
-            len([
-                w
-                for w in ["and", "or", "between", "among"] if w in query_lower
-            ], ),
-            "temporal":
-            len([
-                w for w in ["when", "before", "after", "during", "since"]
-                if w in query_lower
-            ], ),
-            "relational":
-            len([
-                w for w in
-                ["how", "why", "relationship", "connection", "related"]
-                if w in query_lower
-            ], ),
-            "comparative":
-            len([
-                w for w in ["compare", "difference", "similar", "versus"]
-                if w in query_lower
-            ], ),
-            "quantitative":
-            len([
-                w for w in ["how many", "count", "number", "statistics"]
-                if w in query_lower
-            ], ),
+            "multi_entity": len(
+                [w for w in ["and", "or", "between", "among"] if w in query_lower],
+            ),
+            "temporal": len(
+                [w for w in ["when", "before", "after", "during", "since"] if w in query_lower],
+            ),
+            "relational": len(
+                [
+                    w
+                    for w in ["how", "why", "relationship", "connection", "related"]
+                    if w in query_lower
+                ],
+            ),
+            "comparative": len(
+                [w for w in ["compare", "difference", "similar", "versus"] if w in query_lower],
+            ),
+            "quantitative": len(
+                [w for w in ["how many", "count", "number", "statistics"] if w in query_lower],
+            ),
         }
 
         total_complexity = sum(complexity_indicators.values())
@@ -356,8 +350,7 @@ class AdvancedRAGMemoryAgent:
             return RetrievalStrategy.MULTI_QUERY
 
         # Use hybrid for key-heavy queries
-        if any(word in query_lower
-               for word in ["specific", "exact", "name", "title"]):
+        if any(word in query_lower for word in ["specific", "exact", "name", "title"]):
             return RetrievalStrategy.HYBRID
 
         # Default to contextual compression
@@ -380,8 +373,7 @@ class AdvancedRAGMemoryAgent:
             if strategy == RetrievalStrategy.DENSE_ONLY:
                 if self.config.enable_time_weighting:
                     self.time_weighted_retriever.k = k
-                    docs = self.time_weighted_retriever.get_relevant_documents(
-                        query)
+                    docs = self.time_weighted_retriever.get_relevant_documents(query)
                 else:
                     docs = self.dense_retriever.get_relevant_documents(query)
 
@@ -393,8 +385,8 @@ class AdvancedRAGMemoryAgent:
                 docs = self.ensemble_retriever.get_relevant_documents(query)
 
             elif strategy == RetrievalStrategy.MULTI_QUERY and hasattr(
-                    self,
-                    "multi_query_retriever",
+                self,
+                "multi_query_retriever",
             ):
                 docs = self.multi_query_retriever.get_relevant_documents(query)
 
@@ -415,8 +407,7 @@ class AdvancedRAGMemoryAgent:
             return docs[:k]
 
         except Exception as e:
-            self.logger.exception(
-                f"Error in retrieval with strategy {strategy}: {e}")
+            self.logger.exception(f"Error in retrieval with strategy {strategy}: {e}")
             # Fallback to simple dense retrieval
             return self.dense_retriever.get_relevant_documents(query)[:k]
 
@@ -428,19 +419,13 @@ class AdvancedRAGMemoryAgent:
         # Sort by importance, then by original ranking
         def importance_score(doc):
             importance = doc.metadata.get("importance", "normal")
-            importance_values = {
-                "critical": 4,
-                "high": 3,
-                "normal": 2,
-                "low": 1
-            }
+            importance_values = {"critical": 4, "high": 3, "normal": 2, "low": 1}
             base_score = importance_values.get(importance, 2)
             return base_score * self.config.importance_boost
 
         # Sort by importance while maintaining relative order within importance
         # levels
-        docs_with_scores = [(doc, importance_score(doc), i)
-                            for i, doc in enumerate(docs)]
+        docs_with_scores = [(doc, importance_score(doc), i) for i, doc in enumerate(docs)]
         docs_with_scores.sort(key=lambda x: (-x[1], x[2]))
 
         return [doc for doc, _, _ in docs_with_scores]
@@ -477,8 +462,7 @@ class AdvancedRAGMemoryAgent:
 
         # Truncate if too long
         if len(full_context) > self.config.max_context_length:
-            full_context = full_context[:self.config.
-                                        max_context_length] + "..."
+            full_context = full_context[: self.config.max_context_length] + "..."
 
         # Generate response
         if hasattr(self.memory_agent, "arun"):
@@ -520,8 +504,7 @@ Answer:"""
         doc_metadata = {
             "timestamp": datetime.now().isoformat(),
             "user_id": self.config.user_id,
-            "doc_id":
-            f"mem_{len(self.documents)}_{int(datetime.now().timestamp())}",
+            "doc_id": f"mem_{len(self.documents)}_{int(datetime.now().timestamp())}",
             "importance": importance,
             **(metadata or {}),
         }
@@ -547,9 +530,7 @@ Answer:"""
                 # Update ensemble retriever
                 self.ensemble_retriever = EnsembleRetriever(
                     retrievers=[self.dense_retriever, self.sparse_retriever],
-                    weights=[
-                        self.config.dense_weight, self.config.sparse_weight
-                    ],
+                    weights=[self.config.dense_weight, self.config.sparse_weight],
                 )
             except Exception as e:
                 self.logger.warning(f"Could not reinitialize BM25: {e}")
@@ -571,15 +552,13 @@ Answer:"""
 
         # Analyze query
         complexity = self.analyze_query_complexity(query)
-        chosen_strategy = strategy or self.choose_retrieval_strategy(
-            query, complexity)
+        chosen_strategy = strategy or self.choose_retrieval_strategy(query, complexity)
 
         # Retrieve documents
         retrieved_docs = await self.retrieve_documents(query, chosen_strategy)
 
         # Generate response with citations
-        generation_result = await self.generate_with_citations(
-            query, retrieved_docs)
+        generation_result = await self.generate_with_citations(query, retrieved_docs)
 
         # Calculate timing
         end_time = datetime.now()
@@ -631,16 +610,17 @@ Answer:"""
             user_id = doc.metadata.get("user_id", "unknown")
 
             doc_stats["by_importance"][importance] = (
-                doc_stats["by_importance"].get(importance, 0) + 1)
-            doc_stats["by_user"][user_id] = doc_stats["by_user"].get(
-                user_id, 0) + 1
+                doc_stats["by_importance"].get(importance, 0) + 1
+            )
+            doc_stats["by_user"][user_id] = doc_stats["by_user"].get(user_id, 0) + 1
 
             # Check if recent
             try:
                 timestamp_str = doc.metadata.get("timestamp", "")
                 if timestamp_str:
                     doc_time = datetime.fromisoformat(
-                        timestamp_str.replace("Z", "+00:00"), ).timestamp()
+                        timestamp_str.replace("Z", "+00:00"),
+                    ).timestamp()
                     if doc_time > recent_threshold:
                         doc_stats["recent_additions"] += 1
             except BaseException:
@@ -656,18 +636,19 @@ Answer:"""
 
         if self.query_history:
             query_stats["avg_processing_time"] = sum(
-                q["processing_time"]
-                for q in self.query_history) / len(self.query_history)
+                q["processing_time"] for q in self.query_history
+            ) / len(self.query_history)
 
             for query in self.query_history:
                 complexity = query["complexity"]
                 strategy = query["strategy"]
 
                 query_stats["complexity_distribution"][complexity] = (
-                    query_stats["complexity_distribution"].get(complexity, 0) +
-                    1)
+                    query_stats["complexity_distribution"].get(complexity, 0) + 1
+                )
                 query_stats["strategy_usage"][strategy] = (
-                    query_stats["strategy_usage"].get(strategy, 0) + 1)
+                    query_stats["strategy_usage"].get(strategy, 0) + 1
+                )
 
         return {
             "timestamp": datetime.now().isoformat(),
@@ -741,22 +722,24 @@ async def example_advanced_rag_usage():
 
     # Add memories
     memories = [
-        ("Dr. Sarah Chen published a groundbreaking paper on Graph Neural Networks in Nature 2023.",
-         "high",
-         ),
-        ("The paper introduces a new attention mechanism for graph-structured data.",
-         "high",
-         ),
-        ("Sarah works at Stanford AI Lab and collaborates with Google Research.",
-         "normal",
-         ),
-        ("Her previous work on knowledge graphs was cited over 1000 times.",
-         "high"),
-        ("I met Sarah at NeurIPS 2023 where she presented her latest findings.",
-         "normal",
-         ),
-        ("She mentioned that graph transformers could revolutionize NLP.",
-         "critical"),
+        (
+            "Dr. Sarah Chen published a groundbreaking paper on Graph Neural Networks in Nature 2023.",
+            "high",
+        ),
+        (
+            "The paper introduces a new attention mechanism for graph-structured data.",
+            "high",
+        ),
+        (
+            "Sarah works at Stanford AI Lab and collaborates with Google Research.",
+            "normal",
+        ),
+        ("Her previous work on knowledge graphs was cited over 1000 times.", "high"),
+        (
+            "I met Sarah at NeurIPS 2023 where she presented her latest findings.",
+            "normal",
+        ),
+        ("She mentioned that graph transformers could revolutionize NLP.", "critical"),
     ]
 
     for content, importance in memories:

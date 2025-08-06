@@ -53,7 +53,8 @@ class QueryAnalysis(BaseModel):
 
     # Complexity Analysis
     complexity_level: QueryComplexity = Field(
-        description="Overall complexity assessment", )
+        description="Overall complexity assessment",
+    )
     complexity_score: float = Field(
         ge=0.0,
         le=1.0,
@@ -62,59 +63,62 @@ class QueryAnalysis(BaseModel):
 
     # Query Characteristics
     requires_factual_accuracy: bool = Field(
-        description="Needs highly accurate factual information", )
+        description="Needs highly accurate factual information",
+    )
     requires_multiple_perspectives: bool = Field(
-        description="Benefits from multiple viewpoints", )
+        description="Benefits from multiple viewpoints",
+    )
     requires_domain_expertise: bool = Field(
-        description="Needs specialized domain knowledge", )
+        description="Needs specialized domain knowledge",
+    )
     requires_recent_information: bool = Field(
-        description="Needs up-to-date information", )
+        description="Needs up-to-date information",
+    )
     requires_reasoning: bool = Field(
-        description="Involves logical reasoning or inference", )
+        description="Involves logical reasoning or inference",
+    )
 
     # Technical Indicators
     named_entities: list[str] = Field(description="Identified named entities")
     domain_topics: list[str] = Field(description="Domain-specific topics")
     query_intent: str = Field(
-        description="Primary intent (factual, analytical, creative, etc.)", )
+        description="Primary intent (factual, analytical, creative, etc.)",
+    )
 
     # Preprocessing Requirements
     needs_decomposition: bool = Field(
-        description="Would benefit from query decomposition", )
-    needs_expansion: bool = Field(
-        description="Needs query expansion/reformulation")
-    needs_context_enrichment: bool = Field(
-        description="Requires additional context")
+        description="Would benefit from query decomposition",
+    )
+    needs_expansion: bool = Field(description="Needs query expansion/reformulation")
+    needs_context_enrichment: bool = Field(description="Requires additional context")
 
     # Routing Recommendations
     primary_strategy: RoutingStrategy = Field(
-        description="Primary recommended strategy", )
+        description="Primary recommended strategy",
+    )
     fallback_strategies: list[RoutingStrategy] = Field(
-        description="Alternative strategies", )
+        description="Alternative strategies",
+    )
     confidence: float = Field(
         ge=0.0,
         le=1.0,
         description="Confidence in routing decision",
     )
 
-    reasoning: str = Field(
-        description="Detailed reasoning for routing decision")
+    reasoning: str = Field(description="Detailed reasoning for routing decision")
 
 
 class IterativePlan(BaseModel):
     """Iterative processing plan with loop structure."""
 
-    total_iterations: int = Field(ge=1,
-                                  le=5,
-                                  description="Total planned iterations")
-    current_iteration: int = Field(ge=0,
-                                   description="Current iteration number")
+    total_iterations: int = Field(ge=1, le=5, description="Total planned iterations")
+    current_iteration: int = Field(ge=0, description="Current iteration number")
 
     # Per-iteration planning
-    iteration_goals: dict[str,
-                          str] = Field(description="Goals for each iteration")
+    iteration_goals: dict[str, str] = Field(description="Goals for each iteration")
     iteration_strategies: dict[str, RoutingStrategy] = Field(
-        description="Strategy for each iteration", )
+        description="Strategy for each iteration",
+    )
 
     # Loop control
     convergence_criteria: str = Field(description="When to stop iterating")
@@ -126,21 +130,19 @@ class IterativePlan(BaseModel):
 
     # State tracking
     accumulated_context: str = Field(
-        description="Context accumulated across iterations", )
-    iteration_results: dict[str, str] = Field(
-        description="Results from each iteration")
+        description="Context accumulated across iterations",
+    )
+    iteration_results: dict[str, str] = Field(description="Results from each iteration")
     should_continue: bool = Field(description="Whether to continue iterations")
 
-    completion_reason: str | None = Field(
-        description="Why iteration completed")
+    completion_reason: str | None = Field(description="Why iteration completed")
 
 
 class RoutingDecision(BaseModel):
     """Final routing decision with execution plan."""
 
     selected_strategy: RoutingStrategy = Field(description="Chosen strategy")
-    execution_plan: dict[str, Any] = Field(
-        description="Detailed execution parameters")
+    execution_plan: dict[str, Any] = Field(description="Detailed execution parameters")
 
     # Quality assurance
     expected_quality: float = Field(
@@ -148,28 +150,26 @@ class RoutingDecision(BaseModel):
         le=1.0,
         description="Expected result quality",
     )
-    risk_factors: list[str] = Field(
-        description="Potential risks or limitations")
-    mitigation_strategies: list[str] = Field(
-        description="Risk mitigation approaches")
+    risk_factors: list[str] = Field(description="Potential risks or limitations")
+    mitigation_strategies: list[str] = Field(description="Risk mitigation approaches")
 
     # Performance optimization
     estimated_latency: str = Field(description="Expected response time")
-    resource_requirements: str = Field(
-        description="Computational resource needs")
+    resource_requirements: str = Field(description="Computational resource needs")
 
     # Fallback planning
-    fallback_enabled: bool = Field(
-        description="Whether fallback is configured")
+    fallback_enabled: bool = Field(description="Whether fallback is configured")
     fallback_trigger: str | None = Field(
-        description="Conditions for fallback activation", )
+        description="Conditions for fallback activation",
+    )
 
 
 # Enhanced prompts with structured output
-QUERY_ANALYSIS_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert query analyzer for RAG routing decisions.
+QUERY_ANALYSIS_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert query analyzer for RAG routing decisions.
 
 Analyze the query across multiple dimensions to determine the optimal routing strategy:
 
@@ -197,10 +197,10 @@ Analyze the query across multiple dimensions to determine the optimal routing st
 5. Recommend optimal routing strategy
 
 Provide detailed, structured analysis for routing optimization.""",
-    ),
-    (
-        "human",
-        """Analyze this query for optimal RAG routing:
+        ),
+        (
+            "human",
+            """Analyze this query for optimal RAG routing:
 
 **Query:** {query}
 
@@ -216,13 +216,15 @@ Provide comprehensive analysis including:
 5. Fallback strategies and risk assessment
 
 Focus on actionable routing decisions with clear justification.""",
-    ),
-], )
+        ),
+    ],
+)
 
-ITERATIVE_PLANNING_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert at iterative planning for complex RAG workflows.
+ITERATIVE_PLANNING_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert at iterative planning for complex RAG workflows.
 
 Design multi-iteration plans that progressively refine results:
 
@@ -244,10 +246,10 @@ Design multi-iteration plans that progressively refine results:
 - Satisfactory coverage obtained
 
 Design efficient iterative plans that balance thoroughness with performance.""",
-    ),
-    (
-        "human",
-        """Create an iterative plan for this query processing:
+        ),
+        (
+            "human",
+            """Create an iterative plan for this query processing:
 
 **Query:** {query}
 **Query Analysis:** {query_analysis}
@@ -264,13 +266,15 @@ Design a plan with:
 5. State management across iterations
 
 Focus on efficient convergence with high-quality results.""",
-    ),
-], )
+        ),
+    ],
+)
 
-ROUTING_DECISION_PROMPT = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """You are an expert routing engine for RAG systems.
+ROUTING_DECISION_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """You are an expert routing engine for RAG systems.
 
 Make final routing decisions based on query analysis and iterative planning:
 
@@ -288,10 +292,10 @@ Make final routing decisions based on query analysis and iterative planning:
 - Provide clear execution guidance
 
 Make data-driven routing decisions with clear justification.""",
-    ),
-    (
-        "human",
-        """Make routing decision for this query:
+        ),
+        (
+            "human",
+            """Make routing decision for this query:
 
 **Query:** {query}
 **Query Analysis:** {query_analysis}
@@ -308,8 +312,9 @@ Provide final routing decision with:
 5. Fallback strategy and trigger conditions
 
 Focus on actionable, optimized routing decisions.""",
-    ),
-], )
+        ),
+    ],
+)
 
 
 class QueryAnalyzerAgent(Agent):
@@ -361,24 +366,28 @@ class QueryAnalyzerAgent(Agent):
 
             # Format context for analysis
             if isinstance(context, list):
-                context_str = ("\n".join([
-                    f"Doc {i + 1}: {doc.page_content[:150]}..."
-                    for i, doc in enumerate(context[:3])
-                ], ) if context else "No context available")
+                context_str = (
+                    "\n".join(
+                        [
+                            f"Doc {i + 1}: {doc.page_content[:150]}..."
+                            for i, doc in enumerate(context[:3])
+                        ],
+                    )
+                    if context
+                    else "No context available"
+                )
             else:
-                context_str = (str(context)[:500] + "..."
-                               if len(str(context)) > 500 else str(context))
+                context_str = (
+                    str(context)[:500] + "..." if len(str(context)) > 500 else str(context)
+                )
 
             # Extract domain information from query
             domain_info = self._extract_domain_info(query)
 
             # Perform structured analysis
             analysis_result = analysis_engine.invoke(
-                {
-                    "query": query,
-                    "context": context_str,
-                    "domain_info": domain_info
-                }, )
+                {"query": query, "context": context_str, "domain_info": domain_info},
+            )
 
             return {
                 "query_analysis": analysis_result,
@@ -389,12 +398,9 @@ class QueryAnalyzerAgent(Agent):
                 "routing_confidence": analysis_result.confidence,
                 "analysis_reasoning": analysis_result.reasoning,
                 "preprocessing_requirements": {
-                    "needs_decomposition":
-                    analysis_result.needs_decomposition,
-                    "needs_expansion":
-                    analysis_result.needs_expansion,
-                    "needs_context_enrichment":
-                    analysis_result.needs_context_enrichment,
+                    "needs_decomposition": analysis_result.needs_decomposition,
+                    "needs_expansion": analysis_result.needs_expansion,
+                    "needs_context_enrichment": analysis_result.needs_context_enrichment,
                 },
             }
 
@@ -414,14 +420,10 @@ class QueryAnalyzerAgent(Agent):
                 "neural network",
                 "deep learning",
             ],
-            "medicine":
-            ["medical", "disease", "treatment", "diagnosis", "health"],
-            "finance":
-            ["financial", "market", "investment", "trading", "economy"],
-            "technology":
-            ["software", "programming", "computer", "algorithm", "data"],
-            "science":
-            ["research", "experiment", "theory", "hypothesis", "analysis"],
+            "medicine": ["medical", "disease", "treatment", "diagnosis", "health"],
+            "finance": ["financial", "market", "investment", "trading", "economy"],
+            "technology": ["software", "programming", "computer", "algorithm", "data"],
+            "science": ["research", "experiment", "theory", "hypothesis", "analysis"],
         }
 
         query_lower = query.lower()
@@ -431,8 +433,11 @@ class QueryAnalyzerAgent(Agent):
             if any(key in query_lower for key in keywords):
                 detected_domains.append(domain)
 
-        return (f"Detected domains: {', '.join(detected_domains)}"
-                if detected_domains else "General domain")
+        return (
+            f"Detected domains: {', '.join(detected_domains)}"
+            if detected_domains
+            else "General domain"
+        )
 
 
 class IterativePlannerAgent(Agent):
@@ -484,41 +489,42 @@ class IterativePlannerAgent(Agent):
             )
 
             # Available strategies based on analysis
-            available_strategies = [
-                strategy.value for strategy in RoutingStrategy
-            ]
+            available_strategies = [strategy.value for strategy in RoutingStrategy]
             if query_analysis:
                 # Prioritize recommended strategies
                 available_strategies = (
-                    [query_analysis.primary_strategy.value] +
-                    [s.value for s in query_analysis.fallback_strategies] +
-                    available_strategies)
+                    [query_analysis.primary_strategy.value]
+                    + [s.value for s in query_analysis.fallback_strategies]
+                    + available_strategies
+                )
                 # Remove duplicates while preserving order
-                available_strategies = list(
-                    dict.fromkeys(available_strategies))
+                available_strategies = list(dict.fromkeys(available_strategies))
 
             # Quality requirements based on complexity
             quality_requirements = (
-                "high" if hasattr(query_analysis, "complexity_level")
+                "high"
+                if hasattr(query_analysis, "complexity_level")
                 and query_analysis.complexity_level
-                in [QueryComplexity.COMPLEX, QueryComplexity.EXPERT] else
-                "moderate")
+                in [QueryComplexity.COMPLEX, QueryComplexity.EXPERT]
+                else "moderate"
+            )
 
             # Create iterative plan
             plan_result = planning_engine.invoke(
                 {
-                    "query":
-                    query,
-                    "query_analysis": (str(query_analysis) if query_analysis
-                                       else "No analysis available"),
-                    "available_strategies":
-                    ", ".join(available_strategies),
-                    "current_context":
-                    (str(current_context)[:300] + "..." if len(
-                        str(current_context)) > 300 else str(current_context)),
-                    "quality_requirements":
-                    quality_requirements,
-                }, )
+                    "query": query,
+                    "query_analysis": (
+                        str(query_analysis) if query_analysis else "No analysis available"
+                    ),
+                    "available_strategies": ", ".join(available_strategies),
+                    "current_context": (
+                        str(current_context)[:300] + "..."
+                        if len(str(current_context)) > 300
+                        else str(current_context)
+                    ),
+                    "quality_requirements": quality_requirements,
+                },
+            )
 
             # Ensure plan doesn't exceed max iterations
             plan_result.total_iterations = min(
@@ -593,17 +599,17 @@ class RoutingDecisionAgent(Agent):
             # Make routing decision
             decision_result = decision_engine.invoke(
                 {
-                    "query":
-                    query,
-                    "query_analysis": (str(query_analysis) if query_analysis
-                                       else "No analysis available"),
-                    "iterative_plan": (str(iterative_plan) if iterative_plan
-                                       else "No iterative plan"),
-                    "available_resources":
-                    available_resources,
-                    "performance_requirements":
-                    performance_requirements,
-                }, )
+                    "query": query,
+                    "query_analysis": (
+                        str(query_analysis) if query_analysis else "No analysis available"
+                    ),
+                    "iterative_plan": (
+                        str(iterative_plan) if iterative_plan else "No iterative plan"
+                    ),
+                    "available_resources": available_resources,
+                    "performance_requirements": performance_requirements,
+                },
+            )
 
             # Configure fallback if enabled
             if self.enable_fallback and not decision_result.fallback_enabled:
@@ -690,12 +696,14 @@ class SelfRouteRAGAgent(SequentialAgent):
                 llm_config=llm_config,
                 prompt_template=ChatPromptTemplate.from_messages(
                     [
-                        ("system",
-                         "You are a strategy execution coordinator. Execute the routing decision.",
-                         ),
-                        ("human",
-                         "Execute routing strategy: {selected_strategy}\nExecution plan: {execution_plan}\nQuery: {query}",
-                         ),
+                        (
+                            "system",
+                            "You are a strategy execution coordinator. Execute the routing decision.",
+                        ),
+                        (
+                            "human",
+                            "Execute routing strategy: {selected_strategy}\nExecution plan: {execution_plan}\nQuery: {query}",
+                        ),
                     ],
                 ),
             ),

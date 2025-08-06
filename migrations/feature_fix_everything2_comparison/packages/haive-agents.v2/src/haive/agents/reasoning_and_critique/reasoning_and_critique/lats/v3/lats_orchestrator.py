@@ -11,11 +11,14 @@ from typing import Any
 
 from haive.agents.multi.enhanced_multi_agent_v4 import EnhancedMultiAgentV4
 from haive.agents.reasoning_and_critique.lats.v3.agents.action_generator import (
-    ActionGenerator, )
+    ActionGenerator,
+)
 from haive.agents.reasoning_and_critique.lats.v3.agents.node_selector import (
-    NodeSelector, )
+    NodeSelector,
+)
 from haive.agents.reasoning_and_critique.lats.v3.agents.reflection_evaluator import (
-    ReflectionEvaluator, )
+    ReflectionEvaluator,
+)
 from haive.agents.reasoning_and_critique.lats.v3.models.tree_models import LATSNode
 from haive.agents.reasoning_and_critique.lats.v3.tree_manager import TreeManager
 
@@ -114,9 +117,7 @@ class LATSOrchestrator(EnhancedMultiAgentV4):
         nodes = self.tree_manager.get_leaf_nodes()
         if not nodes:
             # Initialize with root if no nodes exist
-            root = LATSNode(action="Start",
-                            state_description="Initial state",
-                            depth=0)
+            root = LATSNode(action="Start", state_description="Initial state", depth=0)
             self.tree_manager.add_node(root)
             nodes = {root.node_id: root}
 
@@ -162,8 +163,7 @@ class LATSOrchestrator(EnhancedMultiAgentV4):
 
             # Check depth limit
             if self.tree_manager.get_max_depth() >= self.max_depth:
-                logger.warning(
-                    f"[{self.name}] Reached max depth {self.max_depth}")
+                logger.warning(f"[{self.name}] Reached max depth {self.max_depth}")
                 break
 
         # Get the best path from the tree
@@ -191,8 +191,7 @@ class LATSOrchestrator(EnhancedMultiAgentV4):
         if "evaluation" in result:
             eval_data = result["evaluation"]
             if hasattr(eval_data, "termination_recommendation"):
-                return "terminate" in eval_data.termination_recommendation.lower(
-                )
+                return "terminate" in eval_data.termination_recommendation.lower()
         return False
 
     def add_custom_node_processor(self, processor: Any) -> None:

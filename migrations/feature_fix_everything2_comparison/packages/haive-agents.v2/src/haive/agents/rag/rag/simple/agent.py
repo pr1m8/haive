@@ -89,10 +89,7 @@ class SimpleRAGAgent(EnhancedMultiAgent):
         **kwargs,
     ) -> "SimpleRAGAgent":
         """Create SimpleRAG from documents - factory method."""
-        return cls(documents=documents,
-                   llm_config=llm_config,
-                   name=name,
-                   **kwargs)
+        return cls(documents=documents, llm_config=llm_config, name=name, **kwargs)
 
     @classmethod
     def create_enhanced(
@@ -122,8 +119,7 @@ def create_simple_rag_pattern(
 ):
     """Literally: SimpleRAGAgent = EnhancedMulti([BaseRAGAgent, SimpleAgent], mode=Sequential)."""
     # Create the agents
-    base_rag = BaseRAGAgent.from_documents(documents=documents,
-                                           name="retriever")
+    base_rag = BaseRAGAgent.from_documents(documents=documents, name="retriever")
 
     if not llm_config:
         llm_config = AzureLLMConfig(
@@ -149,8 +145,6 @@ def create_simple_rag_pattern(
 
 
 # For even more direct usage - alias pattern
-def SimpleRAG(documents: list[Document],
-              llm_config: LLMConfig | None = None,
-              **kwargs):
+def SimpleRAG(documents: list[Document], llm_config: LLMConfig | None = None, **kwargs):
     """Direct function pattern: SimpleRAG(documents) -> working RAG agent."""
     return create_simple_rag_pattern(documents, llm_config)

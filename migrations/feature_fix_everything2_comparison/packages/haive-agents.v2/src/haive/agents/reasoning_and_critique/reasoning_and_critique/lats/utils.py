@@ -62,9 +62,7 @@ def create_reflection_chain() -> Any:
 
     # Create parser for Reflection
     parser = PydanticOutputParser(pydantic_object=Reflection)
-    model = AzureLLMConfig(model="gpt-4o", parameters={
-        "temperature": 0
-    }).instantiate()
+    model = AzureLLMConfig(model="gpt-4o", parameters={"temperature": 0}).instantiate()
     # Build and return the reflection chain
     return reflection_prompt | model | parser
 
@@ -93,8 +91,7 @@ Factory functions for creating LATS agents.
 
 
 def create_lats_agent(
-    system_prompt:
-    str = "You are a helpful assistant that can answer questions and help with tasks.",
+    system_prompt: str = "You are a helpful assistant that can answer questions and help with tasks.",
     tools: list[BaseTool] | None = None,
     max_depth: int = 3,
     max_iterations: int = 3,
@@ -134,27 +131,27 @@ def create_lats_agent(
     # Create reflection engine
     reflection_prompt = ChatPromptTemplate.from_messages(
         [
-            ("system",
-             "You are an objective evaluator tasked with analyzing responses.",
-             ),
-            ("user",
-             "Analyze how well the following response addresses the query:\n\nQuery: {input}\n\nResponse: {candidate}",
-             ),
+            (
+                "system",
+                "You are an objective evaluator tasked with analyzing responses.",
+            ),
+            (
+                "user",
+                "Analyze how well the following response addresses the query:\n\nQuery: {input}\n\nResponse: {candidate}",
+            ),
         ],
     )
 
     reflection_engine = AugLLMConfig(
         name="reflection_engine",
-        llm_config=llm_config.model_copy(
-            update={"parameters": {
-                "temperature": 0.1
-            }}),
+        llm_config=llm_config.model_copy(update={"parameters": {"temperature": 0.1}}),
         prompt_template=reflection_prompt,
     )
 
     # Create action engine
     action_prompt = ChatPromptTemplate.from_messages(
-        [("system", system_prompt), ("user", "{input}")], )
+        [("system", system_prompt), ("user", "{input}")],
+    )
 
     action_engine = AugLLMConfig(
         name="action_engine",

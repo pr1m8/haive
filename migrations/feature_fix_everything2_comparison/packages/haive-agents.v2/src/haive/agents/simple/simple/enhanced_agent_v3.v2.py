@@ -62,8 +62,8 @@ def should_continue(state: dict[str, Any]) -> bool:
 
     # Check for structured output needs
     return bool(
-        hasattr(state, "structured_output_model")
-        and state.structured_output_model, )
+        hasattr(state, "structured_output_model") and state.structured_output_model,
+    )
 
 
 # ========================================================================
@@ -267,7 +267,8 @@ class EnhancedSimpleAgent(Agent):
             return AugLLMConfig(**v)
         if not isinstance(v, AugLLMConfig):
             raise ValueError(
-                f"EnhancedSimpleAgent requires AugLLMConfig, got {type(v)}", )
+                f"EnhancedSimpleAgent requires AugLLMConfig, got {type(v)}",
+            )
         return v
 
     @field_validator("temperature")
@@ -356,13 +357,12 @@ class EnhancedSimpleAgent(Agent):
         if self.structured_output_model is not None:
             self.engine.structured_output_model = self.structured_output_model
             logger.debug(
-                f"Synced structured_output_model: {
-                    self.structured_output_model.__name__}", )
+                f"Synced structured_output_model: {self.structured_output_model.__name__}",
+            )
 
         if self.system_message is not None:
             self.engine.system_message = self.system_message
-            logger.debug(
-                f"Synced system_message: {self.system_message[:50]}...")
+            logger.debug(f"Synced system_message: {self.system_message[:50]}...")
 
         if self.llm_config is not None:
             self.engine.llm_config = self.llm_config
@@ -497,13 +497,9 @@ class EnhancedSimpleAgent(Agent):
                 graph.add_conditional_edges(
                     "agent_node",
                     should_continue,
-                    {
-                        True: "validation",
-                        False: END
-                    },
+                    {True: "validation", False: END},
                 )
-                logger.debug(
-                    "Added conditional routing: agent_node → [validation|END]")
+                logger.debug("Added conditional routing: agent_node → [validation|END]")
 
         logger.debug(f"Built enhanced graph with {len(graph.nodes)} nodes")
         return graph
@@ -516,8 +512,8 @@ class EnhancedSimpleAgent(Agent):
         """Check if agent has structured output configured."""
         return bool(
             self.structured_output_model
-            or (self.engine
-                and getattr(self.engine, "structured_output_model", None)), )
+            or (self.engine and getattr(self.engine, "structured_output_model", None)),
+        )
 
     def _always_needs_validation(self) -> bool:
         """Check if we always need validation routing."""
@@ -554,12 +550,15 @@ class EnhancedSimpleAgent(Agent):
                 "engine_names": list(self.engines.keys()),
             },
             "schemas": {
-                "state_schema": (getattr(self.state_schema, "__name__", None)
-                                 if self.state_schema else None),
-                "input_schema": (getattr(self.input_schema, "__name__", None)
-                                 if self.input_schema else None),
-                "output_schema": (getattr(self.output_schema, "__name__", None)
-                                  if self.output_schema else None),
+                "state_schema": (
+                    getattr(self.state_schema, "__name__", None) if self.state_schema else None
+                ),
+                "input_schema": (
+                    getattr(self.input_schema, "__name__", None) if self.input_schema else None
+                ),
+                "output_schema": (
+                    getattr(self.output_schema, "__name__", None) if self.output_schema else None
+                ),
             },
         }
 
@@ -589,8 +588,7 @@ class EnhancedSimpleAgent(Agent):
             "Structured Output",
             "✅" if features["has_structured_output"] else "❌",
         )
-        table.add_row("Multi-Engine",
-                      "✅" if features["multi_engine_mode"] else "❌")
+        table.add_row("Multi-Engine", "✅" if features["multi_engine_mode"] else "❌")
         table.add_row(
             "Advanced Routing",
             "✅" if features["advanced_routing"] else "❌",
@@ -624,5 +622,4 @@ class EnhancedSimpleAgent(Agent):
             features.append("debug")
 
         feature_str = f" ({', '.join(features)})" if features else ""
-        return f"EnhancedSimpleAgent(name='{
-            self.name}', engine={engine_info}{feature_str})"
+        return f"EnhancedSimpleAgent(name='{self.name}', engine={engine_info}{feature_str})"

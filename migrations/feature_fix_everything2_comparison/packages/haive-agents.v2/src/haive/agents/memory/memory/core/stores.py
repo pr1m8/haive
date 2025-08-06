@@ -31,8 +31,7 @@ class MemoryStoreConfig(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     # Store configuration
-    store_manager: StoreManager = Field(...,
-                                        description="Underlying store manager")
+    store_manager: StoreManager = Field(..., description="Underlying store manager")
     default_namespace: tuple[str, ...] = Field(
         default=("memory", "general"),
         description="Default memory namespace",
@@ -93,8 +92,9 @@ class MemoryStoreManager:
         """Initialize memory store manager with configuration."""
         self.config = config
         self.store_manager = config.store_manager
-        self.classifier = (MemoryClassifier(config.classifier_config)
-                           if config.auto_classify else None)
+        self.classifier = (
+            MemoryClassifier(config.classifier_config) if config.auto_classify else None
+        )
         self._last_consolidation = datetime.utcnow()
 
     async def store_memory(
@@ -136,9 +136,9 @@ class MemoryStoreManager:
                 # Manual memory entry
                 memory_entry = MemoryEntry(
                     content=content,
-                    memory_types=([
-                        force_classification
-                    ] if force_classification else [MemoryType.SEMANTIC]),
+                    memory_types=(
+                        [force_classification] if force_classification else [MemoryType.SEMANTIC]
+                    ),
                     user_context=user_context or {},
                     session_context=conversation_context or {},
                     namespace="/".join(namespace),
@@ -152,12 +152,12 @@ class MemoryStoreManager:
             # Store in underlying store manager
             memory_id = self.store_manager.store_memory(
                 content=content,
-                category=(memory_entry.memory_types[0].value
-                          if memory_entry.memory_types else "general"),
+                category=(
+                    memory_entry.memory_types[0].value if memory_entry.memory_types else "general"
+                ),
                 namespace=namespace,
                 metadata={
-                    "memory_types":
-                    [mt.value for mt in memory_entry.memory_types],
+                    "memory_types": [mt.value for mt in memory_entry.memory_types],
                     "importance": memory_entry.importance.value,
                     "importance_score": memory_entry.importance_score,
                     "entities": memory_entry.entities,
@@ -243,18 +243,15 @@ class MemoryStoreManager:
 
                 # Filter by memory types if specified
                 if memory_types:
-                    result_types = [
-                        MemoryType(mt)
-                        for mt in metadata.get("memory_types", [])
-                    ]
+                    result_types = [MemoryType(mt) for mt in metadata.get("memory_types", [])]
                     if not any(mt in memory_types for mt in result_types):
                         continue
 
                 # Filter by time range
                 if time_range:
                     created_at = datetime.fromisoformat(
-                        metadata.get("created_at",
-                                     datetime.utcnow().isoformat()), )
+                        metadata.get("created_at", datetime.utcnow().isoformat()),
+                    )
                     if not (time_range[0] <= created_at <= time_range[1]):
                         continue
 
@@ -268,8 +265,7 @@ class MemoryStoreManager:
                 await self._update_access_metadata(result_dict.get("id"))
 
                 # Add ranking score
-                ranking_score = self._calculate_ranking_score(
-                    result_dict, query_intent)
+                ranking_score = self._calculate_ranking_score(result_dict, query_intent)
                 result_dict["ranking_score"] = ranking_score
 
                 filtered_results.append(result_dict)
@@ -332,11 +328,9 @@ class MemoryStoreManager:
             # Update content if provided
             if content and reclassify and self.classifier:
                 # Reclassify with new content
-                memory_entry = self.classifier.create_memory_entry(
-                    content=content)
+                memory_entry = self.classifier.create_memory_entry(content=content)
                 classification_metadata = {
-                    "memory_types":
-                    [mt.value for mt in memory_entry.memory_types],
+                    "memory_types": [mt.value for mt in memory_entry.memory_types],
                     "importance": memory_entry.importance.value,
                     "importance_score": memory_entry.importance_score,
                     "entities": memory_entry.entities,
@@ -430,13 +424,12 @@ class MemoryStoreManager:
                 metadata = memory.get("metadata", {})
                 importance_score = metadata.get("importance_score", 0.5)
                 created_at = datetime.fromisoformat(
-                    metadata.get("created_at",
-                                 datetime.utcnow().isoformat()), )
+                    metadata.get("created_at", datetime.utcnow().isoformat()),
+                )
 
                 # Calculate if memory is expired
                 if max_age_hours:
-                    age_hours = (datetime.utcnow() -
-                                 created_at).total_seconds() / 3600
+                    age_hours = (datetime.utcnow() - created_at).total_seconds() / 3600
                     if age_hours > max_age_hours and importance_score < 0.3:
                         expired_memories.append(memory)
                 else:
@@ -460,14 +453,14 @@ class MemoryStoreManager:
             total_memories = len(all_memories)
             if total_memories > 0:
                 result.storage_efficiency_gain = (
-                    result.duplicates_removed +
-                    result.expired_removed) / total_memories
+                    result.duplicates_removed + result.expired_removed
+                ) / total_memories
 
             processing_time = (datetime.utcnow() - start_time).total_seconds()
             result.processing_time = processing_time
             result.summary = f"Consolidation complete: {
-                result.duplicates_removed} duplicates removed, {
-                result.expired_removed} expired memories removed"
+                result.duplicates_removed
+            } duplicates removed, {result.expired_removed} expired memories removed"
 
             if not dry_run:
                 self._last_consolidation = datetime.utcnow()
@@ -529,13 +522,13 @@ class MemoryStoreManager:
                 # Memory types
                 memory_types = metadata.get("memory_types", [])
                 for mt in memory_types:
-                    stats["memory_types"][mt] = stats["memory_types"].get(
-                        mt, 0) + 1
+                    stats["memory_types"][mt] = stats["memory_types"].get(mt, 0) + 1
 
                 # Importance
                 importance = metadata.get("importance", "medium")
                 stats["importance_distribution"][importance] = (
-                    stats["importance_distribution"].get(importance, 0) + 1)
+                    stats["importance_distribution"].get(importance, 0) + 1
+                )
 
                 importance_score = metadata.get("importance_score", 0.5)
                 importance_scores.append(importance_score)
@@ -548,8 +541,8 @@ class MemoryStoreManager:
 
                 # Age analysis
                 created_at = datetime.fromisoformat(
-                    metadata.get("created_at",
-                                 datetime.utcnow().isoformat()), )
+                    metadata.get("created_at", datetime.utcnow().isoformat()),
+                )
                 if created_at < oldest_date:
                     oldest_date = created_at
                     stats["oldest_memory"] = memory["id"]
@@ -560,7 +553,8 @@ class MemoryStoreManager:
             # Calculate averages
             if importance_scores:
                 stats["average_importance"] = sum(importance_scores) / len(
-                    importance_scores, )
+                    importance_scores,
+                )
 
             stats["most_accessed"] = most_accessed_memory
 
@@ -574,16 +568,15 @@ class MemoryStoreManager:
         """Check if memory consolidation should be triggered."""
         time_since_consolidation = datetime.utcnow() - self._last_consolidation
         return time_since_consolidation.total_seconds() > (
-            self.config.consolidation_interval_hours * 3600)
+            self.config.consolidation_interval_hours * 3600
+        )
 
-    async def _schedule_consolidation(self, namespace: tuple[str,
-                                                             ...]) -> None:
+    async def _schedule_consolidation(self, namespace: tuple[str, ...]) -> None:
         """Schedule background memory consolidation."""
         try:
             # In a production system, this would trigger a background task
             # For now, we'll just log that consolidation is needed
-            logger.info(
-                f"Memory consolidation scheduled for namespace {namespace}")
+            logger.info(f"Memory consolidation scheduled for namespace {namespace}")
 
             # Could trigger consolidation in background:
             # await self.consolidate_memories(namespace=namespace)
@@ -602,8 +595,7 @@ class MemoryStoreManager:
                 },
             )
         except Exception as e:
-            logger.exception(
-                f"Error updating access metadata for {memory_id}: {e}")
+            logger.exception(f"Error updating access metadata for {memory_id}: {e}")
 
     def _calculate_ranking_score(
         self,
@@ -624,21 +616,18 @@ class MemoryStoreManager:
 
         # Boost based on recency
         created_at = datetime.fromisoformat(
-            metadata.get("created_at",
-                         datetime.utcnow().isoformat()), )
+            metadata.get("created_at", datetime.utcnow().isoformat()),
+        )
         last_accessed = datetime.fromisoformat(
-            metadata.get("last_accessed",
-                         datetime.utcnow().isoformat()), )
+            metadata.get("last_accessed", datetime.utcnow().isoformat()),
+        )
 
-        recency_boost = self._calculate_recency_boost(created_at,
-                                                      last_accessed)
+        recency_boost = self._calculate_recency_boost(created_at, last_accessed)
 
         # Boost based on memory type match
         type_boost = 0.0
         if query_intent:
-            memory_types = [
-                MemoryType(mt) for mt in metadata.get("memory_types", [])
-            ]
+            memory_types = [MemoryType(mt) for mt in metadata.get("memory_types", [])]
             if any(mt in query_intent.memory_types for mt in memory_types):
                 type_boost = 0.15
 
@@ -651,8 +640,9 @@ class MemoryStoreManager:
         )
 
         # Combine all factors
-        final_score = (base_score + importance_boost + frequency_boost +
-                       recency_boost + type_boost) * current_weight
+        final_score = (
+            base_score + importance_boost + frequency_boost + recency_boost + type_boost
+        ) * current_weight
 
         return min(1.0, final_score)
 
@@ -687,12 +677,10 @@ class MemoryStoreManager:
         decay_rate: float,
     ) -> float:
         """Calculate current weight based on age and decay."""
-        time_since_creation = (datetime.utcnow() -
-                               created_at).total_seconds() / 3600  # hours
+        time_since_creation = (datetime.utcnow() - created_at).total_seconds() / 3600  # hours
 
         # Exponential decay based on importance and time
-        decay_factor = max(0.0,
-                           1.0 - (time_since_creation * decay_rate / 1000))
+        decay_factor = max(0.0, 1.0 - (time_since_creation * decay_rate / 1000))
 
         # Weight by importance (higher importance decays slower)
         importance_factor = 0.5 + (importance_score * 0.5)
@@ -714,7 +702,7 @@ class MemoryStoreManager:
             duplicate_group = [memory1["id"]]
             content1 = memory1.get("content", "").lower().strip()
 
-            for _j, memory2 in enumerate(memories[i + 1:], i + 1):
+            for _j, memory2 in enumerate(memories[i + 1 :], i + 1):
                 if memory2["id"] in processed_ids:
                     continue
 
