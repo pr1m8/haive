@@ -11,6 +11,23 @@ project_root = Path(__file__).parent.parent.parent
 packages_dir = project_root / "packages"
 # Note: We don't modify sys.path to avoid duplicate module discovery by AutoAPI
 
+# =============================================================================
+# BUILD ORGANIZATION SETUP (Clean structure for incremental builds)
+# =============================================================================
+
+docs_root = project_root / "docs"
+
+# Define clean build structure - organized in builds/ directory
+BUILDS_DIR = docs_root / "builds"
+HTML_DIR = BUILDS_DIR / "html"
+DOCTREES_DIR = BUILDS_DIR / "doctrees"  # PERSISTENT CACHE - key for incremental builds!
+LOGS_DIR = BUILDS_DIR / "logs"
+DEBUG_DIR = BUILDS_DIR / "debug"
+
+# Ensure build directories exist
+for dir_path in [BUILDS_DIR, HTML_DIR, DOCTREES_DIR, LOGS_DIR, DEBUG_DIR]:
+    dir_path.mkdir(parents=True, exist_ok=True)
+
 # MCP Documentation Paths
 MCP_DATA_ROOT = packages_dir / "haive-mcp/data"
 MCP_DOCS_ROOT = MCP_DATA_ROOT / "documentation/servers"
@@ -19,6 +36,13 @@ MCP_DOCS_ROOT = MCP_DATA_ROOT / "documentation/servers"
 import logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger("sphinx_config_complete")
+
+# Log the build organization (after logger setup)
+logger.info(f"🏗️  Build directories organized:")
+logger.info(f"   📁 HTML: {HTML_DIR}")
+logger.info(f"   🗂️  Doctrees: {DOCTREES_DIR}")  
+logger.info(f"   📋 Logs: {LOGS_DIR}")
+logger.info(f"   🐛 Debug: {DEBUG_DIR}")
 
 # =============================================================================
 # PROJECT INFORMATION
@@ -68,21 +92,26 @@ def get_mcp_server_paths():
 
 def should_include_mcp_docs():
     """Check if MCP documentation should be included."""
-    # Allow environment variable control
-    if os.environ.get("SPHINX_SKIP_MCP_DOCS", "").lower() in ("1", "true", "yes"):
+    # Default to false - only include if explicitly enabled
+    if os.environ.get("SPHINX_INCLUDE_MCP_DOCS", "").lower() not in ("1", "true", "yes"):
         return False
     
     # Check if MCP docs exist
     return MCP_DOCS_ROOT.exists() and any(MCP_DOCS_ROOT.glob("*/*/index.rst"))
 
+def get_mcp_doc_format():
+    """Get preferred MCP documentation format (rst or md)."""
+    return os.environ.get("SPHINX_MCP_FORMAT", "rst").lower()
+
 # Check if MCP docs are available
 MCP_DOCS_ENABLED = should_include_mcp_docs()
+MCP_DOC_FORMAT = get_mcp_doc_format()
 
 if MCP_DOCS_ENABLED:
     mcp_server_count = sum(len(list(MCP_DOCS_ROOT.glob(f"{cat}/*/index.rst"))) for cat in MCP_CATEGORIES)
-    logger.info(f"📚 MCP Documentation: {mcp_server_count} servers found in {MCP_DOCS_ROOT}")
+    logger.info(f"📚 MCP Documentation: {mcp_server_count} servers found in {MCP_DOCS_ROOT} (format: {MCP_DOC_FORMAT})")
 else:
-    logger.info("📚 MCP Documentation: Disabled or not found")
+    logger.info("📚 MCP Documentation: Disabled by default (set SPHINX_INCLUDE_MCP_DOCS=true to enable)")
 
 # =============================================================================
 # GENERAL CONFIGURATION
@@ -135,12 +164,11 @@ extensions = [
     "sphinx_copybutton",
     "sphinx_design",
     "sphinx_togglebutton",
-    "sphinx_tabs.tabs",
+    "sphinx_tabs.tabs",  # Main tabs extension
     "sphinx-prompt",
     "sphinx_substitution_extensions",
     "sphinx_tippy",
     "sphinx_needs",
-    "sphinx_inline_tabs",
     # "sphinx_panels",  # Incompatible with Sphinx 8.x
     # "sphinx_proof",  # Not available as standalone package
     # "sphinx_exercise",  # Not available as standalone package
@@ -189,7 +217,7 @@ extensions = [
     # "sphinxcontrib.gist",  # Package is broken - ImportError in setup.py
     
     # Development tools
-    "sphinx_autobuild",
+    # sphinx-autobuild is not an extension - it's a CLI tool
     "sphinx_rtd_theme",
     "sphinx_rtd_dark_mode",
     "sphinx_book_theme",
@@ -215,7 +243,7 @@ extensions = [
     # "sphinx_gallery.gen_gallery",  # Temporarily disabled
     "sphinx_exec_code",
     "sphinx_exec_directive",
-    "sphinx_runpython",
+    # "sphinx_runpython",  # No setup() function - not a proper extension
     
     # Search enhancements
     "sphinxcontrib.spelling",
@@ -240,7 +268,7 @@ extensions = [
     # "sphinxcontrib.googlemaps",  # Uncommon extension
     "sphinx_last_updated_by_git",
     # "sphinx_math_dollar",  # Compatibility issue with pending_xref_condition
-    "sphinxemoji",
+    # "sphinxemoji",  # No setup() function - not a proper extension
     "sphinxext.rediraffe",
     "sphinx_jinja2",
     
@@ -334,39 +362,72 @@ autoapi_python_class_content = "both"
 autoapi_member_order = "bysource"
 autoapi_keep_files = True
 autoapi_python_use_implicit_namespaces = False
+
+# Include ALL members and show everything
 autoapi_options = [
     "members",
     "undoc-members", 
     "show-inheritance",
     "special-members",
     "imported-members",
+    "private-members",  # Include private members too
+    "show-module-summary",  # Show module summaries
 ]
 
-autoapi_python_class_content = "both"
-autoapi_member_order = "bysource"
+# Explicitly include file patterns (default is just *.py)
+autoapi_file_patterns = ["*.py", "*.pyi"]  # Include type stub files too
+
+# Generate documentation at module level
 autoapi_own_page_level = "module"
+
+# Include __init__ methods and other special methods
+autoapi_python_class_content = "both"  # Include both class and __init__ docstrings
+
+# Show everything in the order it appears in source
+autoapi_member_order = "bysource"
 autoapi_ignore = [
-    # Test files and directories
+    # Test files and directories - not part of API
     "*/test_*.py",
     "*/tests/*",
     "*_test.py",
     "*/conftest.py",
-    # Examples and demos that execute on import
+    
+    # Example files - not part of API
     "*/examples/*",
-    "*/example.py", 
-    "**/example*.py",
-    "*/demos/*",
-    "*/demo.py",
-    # Build artifacts and caches
+    "*/example_*.py",
+    "*_example.py",
+    "*_demo.py",
+    
+    # Build artifacts
     "*/__pycache__/*",
     "*.pyc",
     "*/.pytest_cache/*",
+    
     # Backup and temporary files
     "*.backup",
     "*.bak",
     "*.tmp",
     "*~",
+    
+    # Non-Python files in MCP data
+    "*/haive-mcp/data/mcp_servers/raw_readmes/*",
+    "*/haive-mcp/data/documentation/servers/*",
+    
+    # INCLUDED:
+    # ✅ All main source code
+    # ✅ All scripts that are part of the API
+    # ✅ All package modules
 ]
+
+# Add debugging for AutoAPI file discovery (commented out for normal builds)
+def autoapi_skip_member_debug(app, what, name, obj, skip, options):
+    """Custom skip logic with debugging."""
+    # Log what's being processed to understand what's included/excluded
+    if what == "module" and "test" not in name.lower():
+        logger.info(f"🔍 AutoAPI processing {what}: {name}")
+    
+    # Never skip anything unless it's in our ignore list
+    return skip
 
 # =============================================================================
 # HTML THEME CONFIGURATION - PYDATA/BOOK/FURO WITH FULL FEATURES
@@ -586,9 +647,19 @@ if html_theme == "pydata_sphinx_theme":
         "**": ["sidebar-nav-bs", "sidebar-ethical-ads"],
     }
 
-# Favicon and logo
-html_favicon = "_static/favicon.ico"
-html_logo = "_static/logo.png"
+# Favicon and logo (conditional to avoid warnings)
+favicon_path = Path(project_root) / "docs/source/_static/favicon.ico" 
+logo_path = Path(project_root) / "docs/source/_static/logo.png"
+
+if favicon_path.exists():
+    html_favicon = "_static/favicon.ico"
+else:
+    logger.debug("📄 No favicon found at _static/favicon.ico")
+
+if logo_path.exists():
+    html_logo = "_static/logo.png"
+else:
+    logger.debug("🖼️  No logo found at _static/logo.png")
 
 # =============================================================================
 # EXTENSION CONFIGURATIONS (ALL 83+)
@@ -810,16 +881,43 @@ if "sphinx_sitemap" in extensions:
 # JSMath
 jsmath_path = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 
-# Sphinx Tippy configuration
+# Sphinx Tippy configuration with proper error handling
 if "sphinx_tippy" in extensions:
-    tippy_enable_mathjax = False  # Set to False since we're not using mathjax extensively
-    tippy_enable_doitips = True
-    tippy_anchor_parent_selector = "article.bd-article"
-    tippy_rtd_urls = [
-        "https://docs.python.org/3",
-        "https://numpy.org/doc/stable",
-        "https://docs.pydantic.dev/latest"
-    ]
+    try:
+        logger.info("🔧 Setting up sphinx_tippy extension with proper error handling")
+        
+        # FIXED: Conservative configuration to prevent KeyError(None)
+        tippy_enable_mathjax = False  # Disable - requires sphinx.ext.mathjax
+        tippy_enable_doitips = False  # Keep disabled - known to cause KeyError
+        tippy_enable_wikitips = False # Keep disabled - known to cause KeyError  
+        tippy_enable_rtdtips = False  # DISABLE - this causes the KeyError(None)
+        
+        # Minimal configuration to prevent data structure issues
+        tippy_anchor_parent_selector = "div.document"  # Use simple selector
+        
+        # Skip problematic classes that cause KeyError(None)
+        tippy_skip_anchor_classes = (
+            "headerlink", 
+            "sd-stretched-link",
+            "reference",
+            "internal", 
+            "external"
+        )
+        
+        # Disable source tooltips that cause KeyError(None)
+        tippy_enable_tooltip_on_source = False
+        
+        # Minimal URL list to prevent data issues
+        tippy_rtd_urls = []  # Empty list prevents KeyError(None)
+        
+        logger.info("✅ sphinx_tippy configured with KeyError(None) prevention")
+        
+    except Exception as e:
+        logger.warning(f"⚠️  sphinx_tippy configuration failed: {e}")
+        logger.warning("🔄 Removing sphinx_tippy from extensions as fallback")
+        extensions.remove("sphinx_tippy")
+else:
+    logger.debug("📝 sphinx_tippy not in extensions list")
 
 # Sphinx Gallery
 if "sphinx_gallery.gen_gallery" in extensions and not DISABLE_EXAMPLES:
@@ -881,27 +979,30 @@ def autoapi_skip_member(app, what, name, obj, skip, options):
                     if any(keyword in ".".join(parts[:-1]).lower() for keyword in ["model", "schema", "config", "plan", "task"]):
                         return True
         
-        # Skip problematic imports
-        problematic_patterns = [
-            'haive.core.schema.prebuilt.messages_state',
-            'haive.core.schema.prebuilt.messages.messages_state',
-            'haive.agents.base.agent',
-            'haive.agents.base',
-            'hyde.agent',
-            'hyde.enhanced_agent',
-            'get_summary',
-            'BranchSpec',
-            'AgentState',
-            'SupervisorReactState',
-            'ExtendedHuggingFaceDatasetLoader',
-            'HuggingFaceModelCardLoader',
-            'VectorStoreConfig',
-            'Config',
+        # Skip ONLY very specific problematic members (exact matches)
+        problematic_exact_names = {
+            'haive.core.schema.prebuilt.messages_state.MessagesState',
+            'haive.core.schema.prebuilt.messages.messages_state.MessagesState',
+            'hyde.agent.HydeAgent',
+            'hyde.enhanced_agent.EnhancedHydeAgent',
+        }
+        
+        # Skip patterns that are causing actual import errors
+        problematic_prefixes = [
+            'haive.core.schema.prebuilt.messages_state.',  # Specific module
+            'haive.core.schema.prebuilt.messages.messages_state.',  # Specific module
         ]
         
-        if any(pattern in str(name) for pattern in problematic_patterns):
-            logger.warning(f"⚠️ Skipping problematic member: {name}")
+        # Check exact matches first
+        if str(name) in problematic_exact_names:
+            logger.warning(f"⚠️ Skipping exact problematic member: {name}")
             return True
+            
+        # Check prefixes only for specific problematic modules
+        for prefix in problematic_prefixes:
+            if str(name).startswith(prefix):
+                logger.warning(f"⚠️ Skipping member from problematic module: {name}")
+                return True
         
         return skip
         
@@ -1199,6 +1300,9 @@ code.literal {
 def setup(app):
     """Enhanced setup with all features."""
     
+    # Connect AutoAPI debugging
+    app.connect("autoapi-skip-member", autoapi_skip_member)
+    
     # MCP Documentation Integration
     if MCP_DOCS_ENABLED:
         logger.info(f"✅ MCP Server docs enabled from: {MCP_DOCS_ROOT}")
@@ -1341,3 +1445,34 @@ logger.info(f"🎨 Theme: {html_theme}")
 logger.info(f"🔧 AutoAPI: Configured for all 7 Haive packages")
 logger.info(f"✨ ALL 83+ extensions loaded (minus unavailable)")
 logger.info("=" * 70)
+
+# =============================================================================
+# BUILD COMMAND EXAMPLES (for persistent incremental builds)
+# =============================================================================
+#
+# Use these commands to take advantage of the organized build structure:
+#
+# INCREMENTAL BUILD (preserves cache, fast):
+# poetry run sphinx-build -d docs/builds/doctrees -b html docs/source docs/builds/html
+#
+# FULL REBUILD (when needed):
+# poetry run sphinx-build -E -a -d docs/builds/doctrees -b html docs/source docs/builds/html
+#
+# DEBUG BUILD:  
+# poetry run sphinx-build -d docs/builds/doctrees -b html docs/source docs/builds/debug
+#
+# WITH LOGGING:
+# poetry run sphinx-build -d docs/builds/doctrees -b html docs/source docs/builds/html 2>&1 | tee docs/builds/logs/build-$(date +%Y%m%d-%H%M%S).log
+#
+# WATCH MODE (requires sphinx-autobuild):
+# poetry run sphinx-autobuild -d docs/builds/doctrees --host 127.0.0.1 --port 8000 docs/source docs/builds/html
+#
+# Environment variables:
+# SPHINX_INCLUDE_MCP_DOCS=true   # Enable MCP server documentation  
+# SPHINX_MCP_FORMAT=rst          # Format: rst or md
+#
+# Key benefits of this structure:
+# - Persistent doctrees cache at docs/builds/doctrees/ 
+# - Clean separation of source and build artifacts
+# - Organized logs and debug builds
+# - No more full rebuilds after fixing errors!
