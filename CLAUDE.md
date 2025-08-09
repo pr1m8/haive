@@ -30,6 +30,7 @@
 - @project_docs/active/standards/coding/PYDANTIC_PATTERNS.md
 - @project_docs/active/standards/testing/philosophy.md
 - @project_docs/active/standards/git/workflow.md
+- @project_docs/guides/TOOL_ROUTING_REFACTOR.md - **NEW** Routing changes for structured output
 
 ### Architecture & Patterns
 
