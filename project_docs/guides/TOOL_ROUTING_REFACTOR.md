@@ -44,7 +44,42 @@ These need different routes because they have different execution paths.
 
 ## Key Changes
 
-### 1. Route Assignment in AugLLMConfig
+### 1. StructuredOutputMixin Route Fix
+
+**File**: `/packages/haive-core/src/haive/core/common/mixins/structured_output_mixin.py`
+**Lines**: 164, 183
+
+**Problem**: StructuredOutputMixin was setting `"structured_output"` route instead of `"parse_output"`
+**Fix**: Changed both occurrences to use `"parse_output"` route
+
+```python
+# Before (WRONG)
+self.set_tool_route(name, "structured_output", metadata)
+
+# After (CORRECT)
+self.set_tool_route(name, "parse_output", metadata)
+```
+
+### 2. AugLLMConfig add_tool() Method Fix
+
+**File**: `/packages/haive-core/src/haive/core/engine/aug_llm/config.py`
+**Lines**: 1777-1796
+
+**Problem**: `add_tool()` only called `_sync_tool_routes()` for new tools, causing `with_structured_output()` to not set routes
+**Fix**: Always call `_sync_tool_routes()` regardless of whether tool was already in list
+
+```python
+def add_tool(self, tool, name=None, route=None):
+    # Add tool if not already present
+    if tool not in self.tools:
+        # ... add tool logic
+
+    # ALWAYS sync routes - moved outside conditional
+    self._sync_tool_routes()
+    return self
+```
+
+### 3. Route Assignment in AugLLMConfig
 
 **File**: `/packages/haive-core/src/haive/core/engine/aug_llm/config.py`
 **Line**: 362
