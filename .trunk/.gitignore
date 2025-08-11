@@ -7,3 +7,6 @@ plugins
 user_trunk.yaml
 user.yaml
 tmp
+
+# Ignore tool submodules - they have their own trunk configs
+tools/
