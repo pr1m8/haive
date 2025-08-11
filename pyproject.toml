@@ -419,6 +419,13 @@ mypy-extensions = "^1.1.0"
 docstring-parser = "^0.17.0"
 ast-tools = "^0.1.8"
 commitizen = "^4.8.3"
+invoke = "^2.2.0"
+nox = "^2025.5.1"
+nox-poetry = "^1.2.0"
+all-repos = "^1.30.0"
+pants = "^1.0.1"
+pygithub = "^2.7.0"
+multi-repo-automation = "^1.7.0"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
