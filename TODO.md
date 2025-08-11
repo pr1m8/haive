@@ -21,5 +21,12 @@
 ### Root:
 
 - Dotfiles
-- Precommit and Trunk Overlap 
+- Precommit and Trunk Overlap
 - Fix and integrate haicve-mdoode
+- TOOLS , S/O sync, Updated packages/haive-agents/src/haive/agents/base/struc
+  ured_output_handler.py with 16 additions and 13 removals
+
+  NODES - RETRY
+  NODES - GEN
+  NODES - COmposer
+  LLM Models -> Engines
