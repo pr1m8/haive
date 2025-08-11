@@ -1,0 +1,817 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>Supervisor Documentation - 🤖 Haive Test Build</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index_core_only.html"><div class="brand">🤖 Haive Test Build</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Test Build</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/haive/core/index.html">haive.core</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../../../../_sources/discovered_readmes/packages/haive-agents/docs/supervisor/README.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="supervisor-documentation">
+<h1>Supervisor Documentation<a class="headerlink" href="#supervisor-documentation" title="Link to this heading">¶</a></h1>
+<p>This directory contains comprehensive documentation for all supervisor implementations in the haive-agents package. The documentation covers architecture, patterns, usage, and best practices.</p>
+<section id="documentation-structure">
+<h2>Documentation Structure<a class="headerlink" href="#documentation-structure" title="Link to this heading">¶</a></h2>
+<section id="core-documentation">
+<h3>Core Documentation<a class="headerlink" href="#core-documentation" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>README.md</strong> - This file, main documentation index</p></li>
+<li><p><strong>REORGANIZED_STRUCTURE.md</strong> - Overview of the reorganized package structure</p></li>
+<li><p><strong>REORGANIZATION_SUMMARY.md</strong> - Summary of reorganization changes</p></li>
+</ul>
+</section>
+<section id="implementation-documentation">
+<h3>Implementation Documentation<a class="headerlink" href="#implementation-documentation" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>dynamic_supervisor_README.md</strong> - Dynamic supervisor package documentation</p></li>
+<li><p><strong>README_DYNAMIC.md</strong> - Dynamic supervisor implementation details</p></li>
+<li><p><strong>IMPLEMENTATION_PLAN.md</strong> - Implementation strategy and roadmap</p></li>
+<li><p><strong>LANGGRAPH_ANALYSIS.md</strong> - LangGraph integration patterns</p></li>
+</ul>
+</section>
+<section id="testing-and-development">
+<h3>Testing and Development<a class="headerlink" href="#testing-and-development" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>TEST_GUIDE.md</strong> - Testing guidelines and best practices</p></li>
+<li><p><strong>DYNAMIC_ROUTING_DESIGN.md</strong> - Dynamic routing architecture</p></li>
+</ul>
+</section>
+<section id="archives">
+<h3>Archives<a class="headerlink" href="#archives" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>archive/</strong> - Archived debug files and old implementations</p>
+<ul>
+<li><p><strong>debug/</strong> - Debug files from development process</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="supervisor-implementations">
+<h2>Supervisor Implementations<a class="headerlink" href="#supervisor-implementations" title="Link to this heading">¶</a></h2>
+<section id="dynamic-supervisor-package">
+<h3>1. Dynamic Supervisor Package<a class="headerlink" href="#dynamic-supervisor-package" title="Link to this heading">¶</a></h3>
+<p><strong>Location</strong>: <code class="docutils literal notranslate"><span class="pre">/src/haive/agents/dynamic_supervisor/</span></code></p>
+<p>The main production implementation providing:</p>
+<ul class="simple">
+<li><p><strong>Runtime agent management</strong> - Add/remove agents dynamically</p></li>
+<li><p><strong>Tool-based execution</strong> - Agents execute through tools</p></li>
+<li><p><strong>ReAct integration</strong> - Inherits reasoning and acting capabilities</p></li>
+<li><p><strong>State management</strong> - Maintains agent registry and execution state</p></li>
+</ul>
+<p><strong>Key Features:</strong></p>
+<ul class="simple">
+<li><p>Extends ReactAgent for reasoning loop</p></li>
+<li><p>SupervisorStateWithTools for dynamic tool generation</p></li>
+<li><p>Handoff tools execute agents directly</p></li>
+<li><p>Automatic tool synchronization</p></li>
+</ul>
+</section>
+<section id="supervisor-package">
+<h3>2. Supervisor Package<a class="headerlink" href="#supervisor-package" title="Link to this heading">¶</a></h3>
+<p><strong>Location</strong>: <code class="docutils literal notranslate"><span class="pre">/src/haive/agents/supervisor/</span></code></p>
+<p>Alternative implementations including:</p>
+<ul class="simple">
+<li><p><strong>Basic SupervisorAgent</strong> - Traditional supervisor pattern</p></li>
+<li><p><strong>Integrated supervisor</strong> - Integrated multi-agent coordination</p></li>
+<li><p><strong>Registry utilities</strong> - Agent registry management</p></li>
+<li><p><strong>Routing logic</strong> - Task routing and agent selection</p></li>
+</ul>
+</section>
+<section id="react-agent">
+<h3>3. React Agent<a class="headerlink" href="#react-agent" title="Link to this heading">¶</a></h3>
+<p><strong>Location</strong>: <code class="docutils literal notranslate"><span class="pre">/src/haive/agents/react/</span></code></p>
+<p>Foundation for supervisor implementations:</p>
+<ul class="simple">
+<li><p><strong>ReAct pattern</strong> - Reasoning and acting loop</p></li>
+<li><p><strong>Tool integration</strong> - Seamless tool usage</p></li>
+<li><p><strong>State management</strong> - Conversation state handling</p></li>
+<li><p><strong>SimpleAgent extension</strong> - Inherits base functionality</p></li>
+</ul>
+</section>
+</section>
+<section id="architecture-patterns">
+<h2>Architecture Patterns<a class="headerlink" href="#architecture-patterns" title="Link to this heading">¶</a></h2>
+<section id="tool-based-agent-execution">
+<h3>1. Tool-Based Agent Execution<a class="headerlink" href="#tool-based-agent-execution" title="Link to this heading">¶</a></h3>
+<p>The main pattern uses tools that execute agents directly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@tool</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handoff_to_agent</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    \<span class="s2">&quot;</span><span class="se">\&quot;\&quot;</span><span class="s2">Transfer task to specific agent.</span><span class="se">\&quot;\&quot;\&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">agent</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Agent response: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p><strong>Benefits:</strong></p>
+<ul class="simple">
+<li><p>Flexible runtime agent selection</p></li>
+<li><p>Clean separation of concerns</p></li>
+<li><p>Easy integration with ReAct loop</p></li>
+<li><p>Dynamic tool generation</p></li>
+</ul>
+</section>
+<section id="agent-execution-node-pattern">
+<h3>2. Agent Execution Node Pattern<a class="headerlink" href="#agent-execution-node-pattern" title="Link to this heading">¶</a></h3>
+<p>Alternative pattern using dedicated execution nodes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Supervisor decides routing</span>
+<span class="n">state</span><span class="o">.</span><span class="n">agent_route</span> <span class="o">=</span> <span class="s2">&quot;math_agent&quot;</span>
+
+<span class="c1"># Agent execution node runs selected agent</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_agent_execution_node</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">get_active_agent</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">agent_route</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">agent</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">current_task</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Benefits:</strong></p>
+<ul class="simple">
+<li><p>Clear separation of routing and execution</p></li>
+<li><p>Flexible agent selection</p></li>
+<li><p>Simple state requirements</p></li>
+<li><p>Clean architecture</p></li>
+</ul>
+</section>
+<section id="dynamic-tool-generation">
+<h3>3. Dynamic Tool Generation<a class="headerlink" href="#dynamic-tool-generation" title="Link to this heading">¶</a></h3>
+<p>Pattern for creating tools from agent registry:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tools generated from current agents</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_generate_handoff_tools</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">tools</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">agent_name</span><span class="p">,</span> <span class="n">agent_info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">tool</span> <span class="o">=</span> <span class="n">create_handoff_tool</span><span class="p">(</span><span class="n">agent_name</span><span class="p">,</span> <span class="n">agent_info</span><span class="p">)</span>
+        <span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tools</span>
+</pre></div>
+</div>
+<p><strong>Benefits:</strong></p>
+<ul class="simple">
+<li><p>Automatic tool updates</p></li>
+<li><p>Registry-driven tool creation</p></li>
+<li><p>Validated agent selection</p></li>
+<li><p>Clean tool lifecycle</p></li>
+</ul>
+</section>
+</section>
+<section id="usage-patterns">
+<h2>Usage Patterns<a class="headerlink" href="#usage-patterns" title="Link to this heading">¶</a></h2>
+<section id="basic-supervisor-usage">
+<h3>Basic Supervisor Usage<a class="headerlink" href="#basic-supervisor-usage" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.dynamic_supervisor</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_dynamic_supervisor</span>
+
+<span class="c1"># Create supervisor</span>
+<span class="n">supervisor</span> <span class="o">=</span> <span class="n">create_dynamic_supervisor</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;task_router&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add agents</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">create_initial_state</span><span class="p">()</span>
+<span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="s2">&quot;math&quot;</span><span class="p">,</span> <span class="n">math_agent</span><span class="p">,</span> <span class="s2">&quot;Mathematics expert&quot;</span><span class="p">)</span>
+<span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="s2">&quot;search&quot;</span><span class="p">,</span> <span class="n">search_agent</span><span class="p">,</span> <span class="s2">&quot;Web search specialist&quot;</span><span class="p">)</span>
+
+<span class="c1"># Route tasks</span>
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="s2">&quot;Calculate 15 * 23&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="dynamic-agent-activation">
+<h3>Dynamic Agent Activation<a class="headerlink" href="#dynamic-agent-activation" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start with minimal agents</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">create_initial_state</span><span class="p">()</span>
+<span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="n">general_agent</span><span class="p">,</span> <span class="s2">&quot;General assistant&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add specialized agents as needed</span>
+<span class="k">if</span> <span class="n">task_requires_math</span><span class="p">:</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="s2">&quot;math&quot;</span><span class="p">,</span> <span class="n">math_agent</span><span class="p">,</span> <span class="s2">&quot;Mathematics expert&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">task_requires_search</span><span class="p">:</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="s2">&quot;search&quot;</span><span class="p">,</span> <span class="n">search_agent</span><span class="p">,</span> <span class="s2">&quot;Web search specialist&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="multi-step-coordination">
+<h3>Multi-Step Coordination<a class="headerlink" href="#multi-step-coordination" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Supervisor coordinates multi-step workflows</span>
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span>
+    <span class="s2">&quot;Research the topic, analyze findings, and create a presentation&quot;</span><span class="p">,</span>
+    <span class="n">state</span><span class="o">=</span><span class="n">state</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading">¶</a></h2>
+<section id="agent-design">
+<h3>1. Agent Design<a class="headerlink" href="#agent-design" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Specialized agents</strong> for specific tasks</p></li>
+<li><p><strong>Clear descriptions</strong> for routing decisions</p></li>
+<li><p><strong>Robust error handling</strong> in implementations</p></li>
+<li><p><strong>Appropriate tool selection</strong> for each agent</p></li>
+</ul>
+</section>
+<section id="supervisor-configuration">
+<h3>2. Supervisor Configuration<a class="headerlink" href="#supervisor-configuration" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Clear system messages</strong> for routing logic</p></li>
+<li><p><strong>Appropriate model selection</strong> for task complexity</p></li>
+<li><p><strong>Proper state management</strong> for multi-turn interactions</p></li>
+<li><p><strong>Resource optimization</strong> for cost efficiency</p></li>
+</ul>
+</section>
+<section id="state-management">
+<h3>3. State Management<a class="headerlink" href="#state-management" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Minimal state</strong> for performance</p></li>
+<li><p><strong>Clear state transitions</strong> for debugging</p></li>
+<li><p><strong>Proper state persistence</strong> for long conversations</p></li>
+<li><p><strong>State validation</strong> for correctness</p></li>
+</ul>
+</section>
+<section id="error-handling">
+<h3>4. Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Graceful degradation</strong> when agents fail</p></li>
+<li><p><strong>Retry logic</strong> for transient failures</p></li>
+<li><p><strong>Fallback agents</strong> for critical functions</p></li>
+<li><p><strong>Comprehensive logging</strong> for debugging</p></li>
+</ul>
+</section>
+</section>
+<section id="testing-philosophy">
+<h2>Testing Philosophy<a class="headerlink" href="#testing-philosophy" title="Link to this heading">¶</a></h2>
+<section id="no-mocks-approach">
+<h3>No-Mocks Approach<a class="headerlink" href="#no-mocks-approach" title="Link to this heading">¶</a></h3>
+<p>All supervisor tests use real components:</p>
+<ul class="simple">
+<li><p><strong>Real LLM integrations</strong> - Actual API calls</p></li>
+<li><p><strong>Real agent implementations</strong> - Full agent stack</p></li>
+<li><p><strong>Real state management</strong> - Actual state persistence</p></li>
+<li><p><strong>Real tool execution</strong> - Complete tool workflow</p></li>
+</ul>
+</section>
+<section id="test-categories">
+<h3>Test Categories<a class="headerlink" href="#test-categories" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Unit tests</strong> - Individual component testing</p></li>
+<li><p><strong>Integration tests</strong> - Multi-component workflows</p></li>
+<li><p><strong>Component tests</strong> - Specific supervisor components</p></li>
+<li><p><strong>Experimental tests</strong> - Pattern validation</p></li>
+</ol>
+</section>
+<section id="test-structure">
+<h3>Test Structure<a class="headerlink" href="#test-structure" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">test_supervisor_with_real_components</span><span class="p">():</span>
+    \<span class="s2">&quot;</span><span class="se">\&quot;\&quot;</span><span class="s2">Test supervisor with real LLM and agents.</span><span class="se">\&quot;\&quot;\&quot;</span>
+    <span class="c1"># Create real supervisor</span>
+    <span class="n">supervisor</span> <span class="o">=</span> <span class="n">DynamicSupervisorAgent</span><span class="p">(</span>
+        <span class="n">engine</span><span class="o">=</span><span class="n">AugLLMConfig</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Create real agents</span>
+    <span class="n">math_agent</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">engine</span><span class="o">=</span><span class="n">math_engine</span><span class="p">)</span>
+    <span class="n">search_agent</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">engine</span><span class="o">=</span><span class="n">search_engine</span><span class="p">)</span>
+
+    <span class="c1"># Test real coordination</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">create_initial_state</span><span class="p">()</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="s2">&quot;math&quot;</span><span class="p">,</span> <span class="n">math_agent</span><span class="p">,</span> <span class="s2">&quot;Math expert&quot;</span><span class="p">)</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="s2">&quot;search&quot;</span><span class="p">,</span> <span class="n">search_agent</span><span class="p">,</span> <span class="s2">&quot;Search expert&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Verify real behavior</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="s2">&quot;Find and calculate something&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="performance-considerations">
+<h2>Performance Considerations<a class="headerlink" href="#performance-considerations" title="Link to this heading">¶</a></h2>
+<section id="agent-lifecycle">
+<h3>1. Agent Lifecycle<a class="headerlink" href="#agent-lifecycle" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Lazy loading</strong> - Only activate agents when needed</p></li>
+<li><p><strong>Resource pooling</strong> - Share resources between agents</p></li>
+<li><p><strong>Caching strategies</strong> - Cache agent results appropriately</p></li>
+<li><p><strong>Monitoring</strong> - Track agent performance and usage</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>2. State Management<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>State size optimization</strong> - Keep state minimal</p></li>
+<li><p><strong>State update batching</strong> - Batch updates when possible</p></li>
+<li><p><strong>State persistence</strong> - Use appropriate storage backends</p></li>
+<li><p><strong>State cleanup</strong> - Regular cleanup of old state</p></li>
+</ul>
+</section>
+<section id="tool-management">
+<h3>3. Tool Management<a class="headerlink" href="#tool-management" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Tool caching</strong> - Cache tool results when appropriate</p></li>
+<li><p><strong>Tool optimization</strong> - Optimize tool implementations</p></li>
+<li><p><strong>Tool synchronization</strong> - Efficient state-tool sync</p></li>
+<li><p><strong>Tool monitoring</strong> - Track tool usage and performance</p></li>
+</ul>
+</section>
+</section>
+<section id="common-use-cases">
+<h2>Common Use Cases<a class="headerlink" href="#common-use-cases" title="Link to this heading">¶</a></h2>
+<section id="task-routing">
+<h3>1. Task Routing<a class="headerlink" href="#task-routing" title="Link to this heading">¶</a></h3>
+<p>Route different types of tasks to specialized agents:</p>
+<ul class="simple">
+<li><p><strong>Question answering</strong> → General agent</p></li>
+<li><p><strong>Calculations</strong> → Math agent</p></li>
+<li><p><strong>Research</strong> → Search agent</p></li>
+<li><p><strong>Code generation</strong> → Code agent</p></li>
+</ul>
+</section>
+<section id="multi-step-workflows">
+<h3>2. Multi-Step Workflows<a class="headerlink" href="#multi-step-workflows" title="Link to this heading">¶</a></h3>
+<p>Coordinate complex multi-step processes:</p>
+<ul class="simple">
+<li><p><strong>Research → Analysis → Presentation</strong></p></li>
+<li><p><strong>Data Collection → Processing → Reporting</strong></p></li>
+<li><p><strong>Problem Analysis → Solution Design → Implementation</strong></p></li>
+</ul>
+</section>
+<section id="resource-management">
+<h3>3. Resource Management<a class="headerlink" href="#resource-management" title="Link to this heading">¶</a></h3>
+<p>Optimize resource usage in multi-agent systems:</p>
+<ul class="simple">
+<li><p><strong>Dynamic activation</strong> - Activate agents on demand</p></li>
+<li><p><strong>Load balancing</strong> - Distribute work across agents</p></li>
+<li><p><strong>Cost optimization</strong> - Use appropriate models for tasks</p></li>
+<li><p><strong>Performance monitoring</strong> - Track and optimize usage</p></li>
+</ul>
+</section>
+<section id="error-recovery">
+<h3>4. Error Recovery<a class="headerlink" href="#error-recovery" title="Link to this heading">¶</a></h3>
+<p>Handle failures gracefully:</p>
+<ul class="simple">
+<li><p><strong>Fallback agents</strong> - Backup agents for critical functions</p></li>
+<li><p><strong>Retry logic</strong> - Automatic retry for transient failures</p></li>
+<li><p><strong>Graceful degradation</strong> - Reduced functionality when agents fail</p></li>
+<li><p><strong>Error reporting</strong> - Comprehensive error tracking</p></li>
+</ul>
+</section>
+</section>
+<section id="development-guidelines">
+<h2>Development Guidelines<a class="headerlink" href="#development-guidelines" title="Link to this heading">¶</a></h2>
+<section id="adding-new-patterns">
+<h3>1. Adding New Patterns<a class="headerlink" href="#adding-new-patterns" title="Link to this heading">¶</a></h3>
+<p>When implementing new supervisor patterns:</p>
+<ol class="arabic simple">
+<li><p>Study existing patterns in <code class="docutils literal notranslate"><span class="pre">/patterns/</span></code> directory</p></li>
+<li><p>Follow established architecture principles</p></li>
+<li><p>Implement comprehensive tests</p></li>
+<li><p>Document the pattern thoroughly</p></li>
+<li><p>Provide usage examples</p></li>
+</ol>
+</section>
+<section id="modifying-existing-implementations">
+<h3>2. Modifying Existing Implementations<a class="headerlink" href="#modifying-existing-implementations" title="Link to this heading">¶</a></h3>
+<p>When modifying supervisor implementations:</p>
+<ol class="arabic simple">
+<li><p>Maintain backward compatibility</p></li>
+<li><p>Update all related tests</p></li>
+<li><p>Update documentation</p></li>
+<li><p>Consider performance implications</p></li>
+<li><p>Test with real components</p></li>
+</ol>
+</section>
+<section id="documentation-standards">
+<h3>3. Documentation Standards<a class="headerlink" href="#documentation-standards" title="Link to this heading">¶</a></h3>
+<p>All documentation should include:</p>
+<ul class="simple">
+<li><p><strong>Clear purpose</strong> and scope</p></li>
+<li><p><strong>Architecture overview</strong> with diagrams</p></li>
+<li><p><strong>Usage examples</strong> with code</p></li>
+<li><p><strong>Best practices</strong> and guidelines</p></li>
+<li><p><strong>Testing instructions</strong></p></li>
+<li><p><strong>Performance considerations</strong></p></li>
+</ul>
+</section>
+</section>
+<section id="related-resources">
+<h2>Related Resources<a class="headerlink" href="#related-resources" title="Link to this heading">¶</a></h2>
+<section id="implementation-code">
+<h3>Implementation Code<a class="headerlink" href="#implementation-code" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="#../../src/haive/agents/dynamic_supervisor/"><span class="xref myst">Dynamic Supervisor</span></a> - Main implementation</p></li>
+<li><p><a class="reference internal" href="#../../src/haive/agents/supervisor/"><span class="xref myst">Supervisor Package</span></a> - Alternative implementations</p></li>
+<li><p><a class="reference internal" href="#../../src/haive/agents/react/"><span class="xref myst">React Agent</span></a> - Foundation implementation</p></li>
+</ul>
+</section>
+<section id="examples-and-tests">
+<h3>Examples and Tests<a class="headerlink" href="#examples-and-tests" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="#../../examples/supervisor/"><span class="xref myst">Examples</span></a> - Usage examples and patterns</p></li>
+<li><p><a class="reference internal" href="#../../tests/supervisor/"><span class="xref myst">Tests</span></a> - Comprehensive test suites</p></li>
+<li><p><a class="reference internal" href="../../tests/supervisor/README.html"><span class="std std-doc">Test Documentation</span></a> - Testing guidelines</p></li>
+</ul>
+</section>
+<section id="external-resources">
+<h3>External Resources<a class="headerlink" href="#external-resources" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://langchain-ai.github.io/langgraph/">LangGraph Documentation</a> - Graph execution framework</p></li>
+<li><p><a class="reference external" href="https://python.langchain.com/docs/modules/agents/tools/">LangChain Tools</a> - Tool integration</p></li>
+<li><p><a class="reference external" href="https://docs.pydantic.dev/">Pydantic Documentation</a> - State management</p></li>
+</ul>
+</section>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">¶</a></h2>
+<p>When contributing to supervisor documentation:</p>
+<ol class="arabic simple">
+<li><p>Follow the existing documentation structure</p></li>
+<li><p>Include comprehensive examples</p></li>
+<li><p>Test all code examples</p></li>
+<li><p>Update cross-references as needed</p></li>
+<li><p>Maintain consistency with existing patterns</p></li>
+</ol>
+</section>
+<section id="roadmap">
+<h2>Roadmap<a class="headerlink" href="#roadmap" title="Link to this heading">¶</a></h2>
+<section id="planned-improvements">
+<h3>Planned Improvements<a class="headerlink" href="#planned-improvements" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Enhanced routing</strong> - More sophisticated agent selection</p></li>
+<li><p><strong>Performance optimization</strong> - Faster state management</p></li>
+<li><p><strong>Extended patterns</strong> - New architectural patterns</p></li>
+<li><p><strong>Better monitoring</strong> - Enhanced observability</p></li>
+<li><p><strong>Improved error handling</strong> - More robust error recovery</p></li>
+</ol>
+</section>
+<section id="future-patterns">
+<h3>Future Patterns<a class="headerlink" href="#future-patterns" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Hierarchical supervisors</strong> - Multi-level coordination</p></li>
+<li><p><strong>Federated agents</strong> - Distributed agent management</p></li>
+<li><p><strong>Adaptive routing</strong> - Learning-based agent selection</p></li>
+<li><p><strong>Resource-aware scheduling</strong> - Optimize resource usage</p></li>
+<li><p><strong>Stream processing</strong> - Real-time agent coordination</p></li>
+</ol>
+<p>For questions or contributions, please refer to the main project documentation or create an issue in the repository.</p>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Supervisor Documentation</a><ul>
+<li><a class="reference internal" href="#documentation-structure">Documentation Structure</a><ul>
+<li><a class="reference internal" href="#core-documentation">Core Documentation</a></li>
+<li><a class="reference internal" href="#implementation-documentation">Implementation Documentation</a></li>
+<li><a class="reference internal" href="#testing-and-development">Testing and Development</a></li>
+<li><a class="reference internal" href="#archives">Archives</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#supervisor-implementations">Supervisor Implementations</a><ul>
+<li><a class="reference internal" href="#dynamic-supervisor-package">1. Dynamic Supervisor Package</a></li>
+<li><a class="reference internal" href="#supervisor-package">2. Supervisor Package</a></li>
+<li><a class="reference internal" href="#react-agent">3. React Agent</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#architecture-patterns">Architecture Patterns</a><ul>
+<li><a class="reference internal" href="#tool-based-agent-execution">1. Tool-Based Agent Execution</a></li>
+<li><a class="reference internal" href="#agent-execution-node-pattern">2. Agent Execution Node Pattern</a></li>
+<li><a class="reference internal" href="#dynamic-tool-generation">3. Dynamic Tool Generation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage-patterns">Usage Patterns</a><ul>
+<li><a class="reference internal" href="#basic-supervisor-usage">Basic Supervisor Usage</a></li>
+<li><a class="reference internal" href="#dynamic-agent-activation">Dynamic Agent Activation</a></li>
+<li><a class="reference internal" href="#multi-step-coordination">Multi-Step Coordination</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a><ul>
+<li><a class="reference internal" href="#agent-design">1. Agent Design</a></li>
+<li><a class="reference internal" href="#supervisor-configuration">2. Supervisor Configuration</a></li>
+<li><a class="reference internal" href="#state-management">3. State Management</a></li>
+<li><a class="reference internal" href="#error-handling">4. Error Handling</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#testing-philosophy">Testing Philosophy</a><ul>
+<li><a class="reference internal" href="#no-mocks-approach">No-Mocks Approach</a></li>
+<li><a class="reference internal" href="#test-categories">Test Categories</a></li>
+<li><a class="reference internal" href="#test-structure">Test Structure</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#performance-considerations">Performance Considerations</a><ul>
+<li><a class="reference internal" href="#agent-lifecycle">1. Agent Lifecycle</a></li>
+<li><a class="reference internal" href="#id1">2. State Management</a></li>
+<li><a class="reference internal" href="#tool-management">3. Tool Management</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#common-use-cases">Common Use Cases</a><ul>
+<li><a class="reference internal" href="#task-routing">1. Task Routing</a></li>
+<li><a class="reference internal" href="#multi-step-workflows">2. Multi-Step Workflows</a></li>
+<li><a class="reference internal" href="#resource-management">3. Resource Management</a></li>
+<li><a class="reference internal" href="#error-recovery">4. Error Recovery</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#development-guidelines">Development Guidelines</a><ul>
+<li><a class="reference internal" href="#adding-new-patterns">1. Adding New Patterns</a></li>
+<li><a class="reference internal" href="#modifying-existing-implementations">2. Modifying Existing Implementations</a></li>
+<li><a class="reference internal" href="#documentation-standards">3. Documentation Standards</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#related-resources">Related Resources</a><ul>
+<li><a class="reference internal" href="#implementation-code">Implementation Code</a></li>
+<li><a class="reference internal" href="#examples-and-tests">Examples and Tests</a></li>
+<li><a class="reference internal" href="#external-resources">External Resources</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#contributing">Contributing</a></li>
+<li><a class="reference internal" href="#roadmap">Roadmap</a><ul>
+<li><a class="reference internal" href="#planned-improvements">Planned Improvements</a></li>
+<li><a class="reference internal" href="#future-patterns">Future Patterns</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

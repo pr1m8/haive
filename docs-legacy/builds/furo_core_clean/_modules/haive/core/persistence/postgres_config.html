@@ -1,0 +1,844 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.persistence.postgres_config - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for haive.core.persistence.postgres_config</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;PostgreSQL-based persistence implementation for the Haive framework.</span>
+
+<span class="sd">This module provides a PostgreSQL-backed checkpoint persistence implementation that</span>
+<span class="sd">stores state data in a PostgreSQL database. This allows for durable, reliable state</span>
+<span class="sd">persistence across application restarts and deployments.</span>
+
+<span class="sd">The PostgreSQL implementation offers advanced features including connection pooling,</span>
+<span class="sd">automatic retry with exponential backoff, comprehensive error handling, and support</span>
+<span class="sd">for both synchronous and asynchronous operation modes. It integrates with LangGraph&#39;s</span>
+<span class="sd">checkpoint system while adding enhanced robustness and configurability.</span>
+
+<span class="sd">For production deployments, the PostgreSQL implementation is generally recommended</span>
+<span class="sd">over in-memory or SQLite options due to its scalability, reliability, and</span>
+<span class="sd">concurrent access capabilities.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib.parse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">asynccontextmanager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">psycopg_pool</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncConnectionPool</span><span class="p">,</span> <span class="n">ConnectionPool</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Field</span><span class="p">,</span> <span class="n">SecretStr</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.persistence.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">CheckpointerConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.persistence.postgres_saver_override</span><span class="w"> </span><span class="kn">import</span> <span class="n">configure_postgres_json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.persistence.postgres_saver_with_thread_creation</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">create_async_postgres_saver_with_thread_creation</span><span class="p">,</span>
+    <span class="n">create_postgres_saver_with_thread_creation</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.persistence.serializers</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_encrypted_serializer_for_postgres</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.persistence.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">CheckpointerMode</span><span class="p">,</span> <span class="n">CheckpointerType</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PostgresCheckpointerConfig">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/persistence/index.html#haive.core.persistence.PostgresCheckpointerConfig">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PostgresCheckpointerConfig</span><span class="p">(</span><span class="n">CheckpointerConfig</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configuration for PostgreSQL-based checkpoint persistence.</span>
+
+<span class="sd">    This implementation provides a robust, production-ready persistence solution</span>
+<span class="sd">    using PostgreSQL as the storage backend. It offers comprehensive configuration</span>
+<span class="sd">    options for database connections, connection pooling, security, and performance</span>
+<span class="sd">    tuning.</span>
+
+<span class="sd">    PostgreSQL persistence is recommended for production deployments where durability,</span>
+<span class="sd">    reliability, and concurrent access are important. It supports both full history</span>
+<span class="sd">    tracking and space-efficient shallow mode that only retains the most recent state.</span>
+
+<span class="sd">    Key features include:</span>
+
+<span class="sd">    - Connection pooling for optimal performance under load</span>
+<span class="sd">    - Automatic retry with exponential backoff for resilience</span>
+<span class="sd">    - Comprehensive security options including SSL/TLS support</span>
+<span class="sd">    - Support for both synchronous and asynchronous operation</span>
+<span class="sd">    - Transaction management and prepared statement optimization</span>
+<span class="sd">    - Thread registration for tracking active sessions</span>
+<span class="sd">    - Support for both full history and shallow (latest-only) storage modes</span>
+
+<span class="sd">    The implementation maintains connection pools separately for synchronous and</span>
+<span class="sd">    asynchronous usage, ensuring optimal performance in both contexts. It also</span>
+<span class="sd">    includes table setup and validation to ensure the database schema is properly</span>
+<span class="sd">    configured.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        from haive.core.persistence import PostgresCheckpointerConfig</span>
+<span class="sd">        from haive.core.persistence.types import CheckpointerMode, CheckpointStorageMode</span>
+
+<span class="sd">        # Create a basic PostgreSQL checkpointer</span>
+<span class="sd">        config = PostgresCheckpointerConfig(</span>
+<span class="sd">            db_host=&quot;localhost&quot;,</span>
+<span class="sd">            db_port=5432,</span>
+<span class="sd">            db_name=&quot;haive&quot;,</span>
+<span class="sd">            db_user=&quot;postgres&quot;,</span>
+<span class="sd">            db_pass=&quot;secure_password&quot;,</span>
+<span class="sd">            ssl_mode=&quot;require&quot;,</span>
+<span class="sd">            mode=CheckpointerMode.ASYNC,</span>
+<span class="sd">            storage_mode=CheckpointStorageMode.SHALLOW</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # For async usage</span>
+<span class="sd">        async def setup():</span>
+<span class="sd">            async_checkpointer = await config.create_async_checkpointer()</span>
+<span class="sd">            # Use the checkpointer...</span>
+<span class="sd">        ```</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - Requires the psycopg and psycopg_pool packages to be installed</span>
+<span class="sd">        - For best performance, use connection pooling with appropriate sizing</span>
+<span class="sd">        - Consider shallow mode for applications that don&#39;t need full history</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">CheckpointerType</span> <span class="o">=</span> <span class="n">CheckpointerType</span><span class="o">.</span><span class="n">POSTGRES</span>
+
+    <span class="c1"># Database connection parameters</span>
+    <span class="n">db_host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;PostgreSQL server hostname&quot;</span><span class="p">)</span>
+    <span class="n">db_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">5432</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;PostgreSQL server port&quot;</span><span class="p">)</span>
+    <span class="n">db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;postgres&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Database name&quot;</span><span class="p">)</span>
+    <span class="n">db_user</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;postgres&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Database username&quot;</span><span class="p">)</span>
+    <span class="n">db_pass</span><span class="p">:</span> <span class="n">SecretStr</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">SecretStr</span><span class="p">(</span><span class="s2">&quot;postgres&quot;</span><span class="p">),</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Database password&quot;</span>
+    <span class="p">)</span>
+    <span class="n">ssl_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;disable&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;SSL mode for database connection&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Connection pool configuration</span>
+    <span class="n">min_pool_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Minimum number of connections in the pool&quot;</span>
+    <span class="p">)</span>
+    <span class="n">max_pool_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Maximum number of connections in the pool&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Additional connection options</span>
+    <span class="n">auto_commit</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Auto-commit transactions&quot;</span><span class="p">)</span>
+    <span class="n">prepare_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Prepared statement threshold (None to disable)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">connection_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;keepalives&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;keepalives_idle&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+            <span class="s2">&quot;keepalives_interval&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s2">&quot;keepalives_count&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s2">&quot;connect_timeout&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Additional connection keyword arguments&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Optional direct connection string</span>
+    <span class="n">connection_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Direct connection string (overrides individual parameters)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Pipeline mode</span>
+    <span class="n">use_pipeline</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Whether to use pipeline mode for better performance&quot;</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="PostgresCheckpointerConfig.Config">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/persistence/index.html#haive.core.persistence.PostgresCheckpointerConfig.Config">[docs]</a>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Config</span><span class="p">:</span>
+        <span class="n">arbitrary_types_allowed</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="PostgresCheckpointerConfig.is_async_mode">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/persistence/index.html#haive.core.persistence.PostgresCheckpointerConfig.is_async_mode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_async_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if this configuration is set to operate in asynchronous mode.</span>
+
+<span class="sd">        This method determines whether the PostgreSQL checkpointer should use</span>
+<span class="sd">        asynchronous operations based on the configured mode. It affects which</span>
+<span class="sd">        connection pools and checkpointer implementations are used.</span>
+
+<span class="sd">        For PostgreSQL, this is an important distinction as it determines whether</span>
+<span class="sd">        synchronous or asynchronous database drivers are used, which have different</span>
+<span class="sd">        connection management patterns and performance characteristics.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if configured for async operations, False for synchronous</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">CheckpointerMode</span><span class="o">.</span><span class="n">ASYNC</span></div>
+
+
+<div class="viewcode-block" id="PostgresCheckpointerConfig.get_connection_uri">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/persistence/index.html#haive.core.persistence.PostgresCheckpointerConfig.get_connection_uri">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_connection_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a formatted connection URI for PostgreSQL.</span>
+
+<span class="sd">        This method constructs a properly formatted PostgreSQL connection string</span>
+<span class="sd">        based on the configured connection parameters. It handles proper escaping</span>
+<span class="sd">        of special characters in passwords and formatting according to PostgreSQL</span>
+<span class="sd">        standards.</span>
+
+<span class="sd">        The method prioritizes using a direct connection string if one is provided,</span>
+<span class="sd">        otherwise it builds the string from individual connection parameters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Formatted PostgreSQL connection string ready for use</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            config = PostgresCheckpointerConfig(</span>
+<span class="sd">                db_host=&quot;db.example.com&quot;,</span>
+<span class="sd">                db_port=5432,</span>
+<span class="sd">                db_name=&quot;haive&quot;,</span>
+<span class="sd">                db_user=&quot;app_user&quot;,</span>
+<span class="sd">                db_pass=&quot;secret_password&quot;,</span>
+<span class="sd">                ssl_mode=&quot;require&quot;</span>
+<span class="sd">            uri = config.get_connection_uri()</span>
+<span class="sd">            # uri = &quot;postgresql://app_user:secret_password@db.example.com:5432/haive?sslmode=require&quot;</span>
+<span class="sd">            ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Use direct connection string if provided</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_string</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_string</span>
+
+        <span class="c1"># Generate from individual parameters</span>
+
+        <span class="n">encoded_pass</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote_plus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_pass</span><span class="o">.</span><span class="n">get_secret_value</span><span class="p">())</span>
+        <span class="n">db_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;postgresql://</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">db_user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">encoded_pass</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">db_host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">db_port</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">db_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssl_mode</span><span class="p">:</span>
+            <span class="n">db_uri</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;?sslmode=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ssl_mode</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">db_uri</span></div>
+
+
+<div class="viewcode-block" id="PostgresCheckpointerConfig.get_connection_kwargs">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/persistence/index.html#haive.core.persistence.PostgresCheckpointerConfig.get_connection_kwargs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_connection_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get connection keyword arguments for PostgreSQL connections.</span>
+
+<span class="sd">        This method constructs a dictionary of connection options to be passed</span>
+<span class="sd">        to the PostgreSQL connection pool and individual connections. It combines</span>
+<span class="sd">        the standard configuration parameters with any additional custom parameters</span>
+<span class="sd">        specified in connection_kwargs.</span>
+
+<span class="sd">        The options include settings for transaction management, prepared statement</span>
+<span class="sd">        handling, and timeout configuration, which can significantly impact</span>
+<span class="sd">        performance and reliability.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict[str, Any]: Dictionary of connection options ready to use with</span>
+<span class="sd">                PostgreSQL connections or connection pools</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            config = PostgresCheckpointerConfig(</span>
+<span class="sd">                auto_commit=True,</span>
+<span class="sd">                prepare_threshold=5,</span>
+<span class="sd">                connection_kwargs={&quot;application_name&quot;: &quot;haive_app&quot;}</span>
+<span class="sd">            kwargs = config.get_connection_kwargs()</span>
+<span class="sd">            # kwargs = {</span>
+<span class="sd">            #    &quot;autocommit&quot;: True,</span>
+<span class="sd">            #    &quot;prepare_threshold&quot;: 5,</span>
+<span class="sd">            #    &quot;application_name&quot;: &quot;haive_app&quot;</span>
+<span class="sd">            # }</span>
+<span class="sd">            ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;autocommit&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_commit</span><span class="p">,</span>
+            <span class="s2">&quot;prepare_threshold&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_threshold</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="c1"># Add any additional kwargs</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">kwargs</span></div>
+
+
+<div class="viewcode-block" id="PostgresCheckpointerConfig.create_checkpointer">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/persistence/index.html#haive.core.persistence.PostgresCheckpointerConfig.create_checkpointer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_checkpointer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a synchronous PostgreSQL checkpointer.</span>
+
+<span class="sd">        This method creates and configures a synchronous PostgreSQL checkpointer</span>
+<span class="sd">        that matches the settings in this configuration. It handles connection</span>
+<span class="sd">        pool creation, checkpointer initialization, and database table setup.</span>
+
+<span class="sd">        The method automatically selects the appropriate implementation based on</span>
+<span class="sd">        the storage_mode setting (full or shallow), and performs error checking</span>
+<span class="sd">        to ensure the requested configuration is valid.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: A configured PostgresSaver or ShallowPostgresSaver instance</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If async mode is requested (use create_async_checkpointer instead)</span>
+<span class="sd">            RuntimeError: If the PostgreSQL dependencies are missing or connection fails</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            config = PostgresCheckpointerConfig(</span>
+<span class="sd">                db_host=&quot;localhost&quot;,</span>
+<span class="sd">                db_port=5432,</span>
+<span class="sd">                storage_mode=CheckpointStorageMode.SHALLOW</span>
+<span class="sd">            try:</span>
+<span class="sd">                # Creates a ShallowPostgresSaver instance</span>
+<span class="sd">                checkpointer = config.create_checkpointer()</span>
+
+<span class="sd">                # Use with a graph</span>
+<span class="sd">                graph = Graph(checkpointer=checkpointer)</span>
+<span class="sd">            except RuntimeError as e:</span>
+<span class="sd">                print(f&quot;Failed to create PostgreSQL checkpointer: {e}&quot;)</span>
+<span class="sd">                # Handle error - perhaps fall back to memory checkpointer</span>
+<span class="sd">            ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Handle async mode request</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_async_mode</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="s2">&quot;Cannot use create_checkpointer for async mode, use create_async_checkpointer instead&quot;</span>
+                <span class="p">)</span>
+
+            <span class="c1"># Import our enhanced PostgresSaver with thread creation</span>
+
+            <span class="c1"># Create connection pool with forced parameters to avoid SSL issues</span>
+            <span class="n">connection_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_connection_kwargs</span><span class="p">()</span>
+
+            <span class="c1"># Force disable prepared statements and ensure proper SSL handling</span>
+            <span class="n">connection_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;prepare_threshold&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Force disable prepared statements</span>
+                    <span class="s2">&quot;autocommit&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Ensure autocommit</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Configure function for JSON handling</span>
+
+            <span class="n">pool</span> <span class="o">=</span> <span class="n">ConnectionPool</span><span class="p">(</span>
+                <span class="n">conninfo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_connection_uri</span><span class="p">(),</span>
+                <span class="n">min_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_pool_size</span><span class="p">,</span>
+                <span class="n">max_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_pool_size</span><span class="p">,</span>
+                <span class="n">kwargs</span><span class="o">=</span><span class="n">connection_kwargs</span><span class="p">,</span>
+                <span class="n">configure</span><span class="o">=</span><span class="n">configure_postgres_json</span><span class="p">,</span>  <span class="c1"># Configure each connection</span>
+                <span class="n">check</span><span class="o">=</span><span class="n">ConnectionPool</span><span class="o">.</span><span class="n">check_connection</span><span class="p">,</span>  <span class="c1"># Add connection health checking</span>
+                <span class="n">max_lifetime</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span>  <span class="c1"># 30 minutes max connection lifetime</span>
+                <span class="nb">open</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Don&#39;t open in constructor to avoid early failures</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Explicitly open the pool with error handling</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">pool</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;PostgreSQL connection pool opened successfully&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to open PostgreSQL connection pool: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span>
+
+            <span class="c1"># Import our production serializer factory</span>
+
+            <span class="c1"># Create production-grade encrypted serializer for PostgreSQL</span>
+            <span class="n">production_serializer</span> <span class="o">=</span> <span class="n">create_encrypted_serializer_for_postgres</span><span class="p">(</span>
+                <span class="n">connection_string</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_connection_uri</span><span class="p">()</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Create PostgresSaver with automatic thread creation</span>
+            <span class="n">checkpointer</span> <span class="o">=</span> <span class="n">create_postgres_saver_with_thread_creation</span><span class="p">(</span>
+                <span class="n">pool</span><span class="p">,</span> <span class="n">serde</span><span class="o">=</span><span class="n">production_serializer</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Setup tables if needed</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_needed</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">checkpointer</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;PostgreSQL tables set up successfully&quot;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error during PostgreSQL setup: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">checkpointer</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to create PostgreSQL checkpointer: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to create PostgreSQL checkpointer: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PostgresCheckpointerConfig.create_async_checkpointer">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/persistence/index.html#haive.core.persistence.PostgresCheckpointerConfig.create_async_checkpointer">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">create_async_checkpointer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an asynchronous PostgreSQL checkpointer.</span>
+
+<span class="sd">        This method creates and configures an asynchronous PostgreSQL checkpointer</span>
+<span class="sd">        that matches the settings in this configuration. It handles async connection</span>
+<span class="sd">        pool creation, checkpointer initialization, and database table setup.</span>
+
+<span class="sd">        The method automatically selects the appropriate implementation based on</span>
+<span class="sd">        the storage_mode setting (full or shallow). It uses the asynchronous</span>
+<span class="sd">        PostgreSQL driver and connection pool for non-blocking database operations.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: A configured AsyncPostgresSaver or AsyncShallowPostgresSaver instance</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If the asynchronous PostgreSQL dependencies are missing</span>
+<span class="sd">                or connection fails</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            config = PostgresCheckpointerConfig(</span>
+<span class="sd">                db_host=&quot;localhost&quot;,</span>
+<span class="sd">                db_port=5432,</span>
+<span class="sd">                mode=CheckpointerMode.ASYNC,</span>
+<span class="sd">                storage_mode=CheckpointStorageMode.FULL</span>
+<span class="sd">            )</span>
+
+<span class="sd">            async def setup_graph():</span>
+<span class="sd">                try:</span>
+<span class="sd">                    # Creates an AsyncPostgresSaver instance</span>
+<span class="sd">                    async_checkpointer = await config.create_async_checkpointer()</span>
+
+<span class="sd">                    # Use with an async graph</span>
+<span class="sd">                    graph = AsyncGraph(checkpointer=async_checkpointer)</span>
+<span class="sd">                    return graph</span>
+<span class="sd">                except RuntimeError as e:</span>
+<span class="sd">                    print(f&quot;Failed to create async PostgreSQL checkpointer: {e}&quot;)</span>
+<span class="sd">                    # Handle error</span>
+<span class="sd">            ```</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method automatically forces the mode to ASYNC for consistency,</span>
+<span class="sd">            ensuring that the configuration accurately reflects the type of</span>
+<span class="sd">            checkpointer being created.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Force async mode</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">CheckpointerMode</span><span class="o">.</span><span class="n">ASYNC</span>
+
+            <span class="c1"># Import our enhanced AsyncPostgresSaver with thread creation</span>
+
+            <span class="c1"># Create connection pool with forced parameters to avoid SSL issues</span>
+            <span class="n">connection_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_connection_kwargs</span><span class="p">()</span>
+
+            <span class="c1"># Force disable prepared statements and ensure proper SSL handling</span>
+            <span class="n">connection_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;prepare_threshold&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Force disable prepared statements</span>
+                    <span class="s2">&quot;autocommit&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Ensure autocommit</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Configure function for JSON handling</span>
+
+            <span class="n">pool</span> <span class="o">=</span> <span class="n">AsyncConnectionPool</span><span class="p">(</span>
+                <span class="n">conninfo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_connection_uri</span><span class="p">(),</span>
+                <span class="n">min_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_pool_size</span><span class="p">,</span>
+                <span class="n">max_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_pool_size</span><span class="p">,</span>
+                <span class="n">kwargs</span><span class="o">=</span><span class="n">connection_kwargs</span><span class="p">,</span>
+                <span class="n">configure</span><span class="o">=</span><span class="n">configure_postgres_json</span><span class="p">,</span>  <span class="c1"># Configure each connection</span>
+                <span class="n">check</span><span class="o">=</span><span class="n">AsyncConnectionPool</span><span class="o">.</span><span class="n">check_connection</span><span class="p">,</span>  <span class="c1"># Add connection health checking</span>
+                <span class="n">max_lifetime</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span>  <span class="c1"># 30 minutes max connection lifetime</span>
+                <span class="nb">open</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Don&#39;t open in constructor to avoid deprecation warning</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Explicitly open the pool with error handling</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">await</span> <span class="n">pool</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Async PostgreSQL connection pool opened successfully&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to open async PostgreSQL connection pool: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="k">raise</span>
+
+            <span class="c1"># Import our production serializer factory</span>
+
+            <span class="c1"># Create production-grade encrypted serializer for PostgreSQL</span>
+            <span class="n">production_serializer</span> <span class="o">=</span> <span class="n">create_encrypted_serializer_for_postgres</span><span class="p">(</span>
+                <span class="n">connection_string</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_connection_uri</span><span class="p">()</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Create AsyncPostgresSaver with automatic thread creation</span>
+            <span class="n">checkpointer</span> <span class="o">=</span> <span class="k">await</span> <span class="n">create_async_postgres_saver_with_thread_creation</span><span class="p">(</span>
+                <span class="n">pool</span><span class="p">,</span> <span class="n">serde</span><span class="o">=</span><span class="n">production_serializer</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Setup tables if needed</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_needed</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">await</span> <span class="n">checkpointer</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;PostgreSQL tables set up successfully (async)&quot;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error during PostgreSQL async setup: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">checkpointer</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to create async PostgreSQL checkpointer: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Connection URI: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_connection_uri</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Storage mode: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">storage_mode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mode: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Try to provide more specific error information</span>
+            <span class="k">if</span> <span class="s2">&quot;AsyncPostgresSaver&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;AsyncPostgresSaver import or creation failed&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;pool&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Connection pool creation failed&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;connection&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Database connection failed&quot;</span><span class="p">)</span>
+
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to create async PostgreSQL checkpointer: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PostgresCheckpointerConfig.initialize_async_checkpointer">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/persistence/index.html#haive.core.persistence.PostgresCheckpointerConfig.initialize_async_checkpointer">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">initialize_async_checkpointer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize an async checkpointer with proper resource management.</span>
+
+<span class="sd">        This method creates and initializes an asynchronous PostgreSQL checkpointer</span>
+<span class="sd">        with proper resource lifecycle management using an async context manager.</span>
+<span class="sd">        This ensures that database connections are properly closed when they&#39;re</span>
+<span class="sd">        no longer needed, preventing connection leaks and other resource issues.</span>
+
+<span class="sd">        Unlike create_async_checkpointer, which returns a raw checkpointer instance,</span>
+<span class="sd">        this method returns an async context manager that automatically handles</span>
+<span class="sd">        resource cleanup when the context is exited, making it ideal for use</span>
+<span class="sd">        in production environments.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: An async context manager that yields a configured checkpointer</span>
+<span class="sd">                and automatically cleans up resources on exit</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If the asynchronous PostgreSQL dependencies are missing</span>
+<span class="sd">                or connection fails</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            config = PostgresCheckpointerConfig(</span>
+<span class="sd">                db_host=&quot;localhost&quot;,</span>
+<span class="sd">                db_port=5432,</span>
+<span class="sd">                mode=CheckpointerMode.ASYNC</span>
+<span class="sd">            )</span>
+
+<span class="sd">            async def run_with_managed_resources():</span>
+<span class="sd">                # Resources will be properly initialized and cleaned up</span>
+<span class="sd">                async with await config.initialize_async_checkpointer() as checkpointer:</span>
+<span class="sd">                    # Use checkpointer with async code</span>
+<span class="sd">                    graph = AsyncGraph(checkpointer=checkpointer)</span>
+<span class="sd">                    # Run operations with graph...</span>
+<span class="sd">                # Connection pool is automatically closed here</span>
+<span class="sd">            ```</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This is the recommended method for asynchronous usage in production</span>
+<span class="sd">            environments, as it ensures proper resource cleanup even if errors occur.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nd">@asynccontextmanager</span>
+        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_checkpointer_context</span><span class="p">():</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Context manager for async checkpointer with proper resource management.&quot;&quot;&quot;</span>
+            <span class="n">checkpointer</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Create the checkpointer</span>
+                <span class="n">checkpointer</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_async_checkpointer</span><span class="p">()</span>
+
+                <span class="c1"># Yield it for use</span>
+                <span class="k">yield</span> <span class="n">checkpointer</span>
+
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="c1"># Clean up resources</span>
+                <span class="k">if</span> <span class="n">checkpointer</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">checkpointer</span><span class="p">,</span> <span class="s2">&quot;conn&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">checkpointer</span><span class="o">.</span><span class="n">conn</span><span class="p">:</span>
+                    <span class="c1"># Close pool if available</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">checkpointer</span><span class="o">.</span><span class="n">conn</span><span class="p">,</span> <span class="s2">&quot;close&quot;</span><span class="p">):</span>
+                            <span class="k">await</span> <span class="n">checkpointer</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Async PostgreSQL pool closed successfully&quot;</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error closing async PostgreSQL pool: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Return the context manager</span>
+        <span class="k">return</span> <span class="n">async_checkpointer_context</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

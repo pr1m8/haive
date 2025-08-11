@@ -1,0 +1,973 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.engine.output_parser.base - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for haive.core.engine.output_parser.base</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="c1"># from langchain_core.output_parsers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.output_parser.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">OutputParserType</span>
+
+<span class="c1"># class OutputParsingInputSchema(BaseModel):</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Output parser engine for the Haive framework.</span>
+
+<span class="sd">This module provides an engine implementation for LangChain output parsers,</span>
+<span class="sd">allowing them to be used consistently within the Haive framework&#39;s engine system.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.messages</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseMessage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.runnables</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunnableConfig</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvokableEngine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.base.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">EngineType</span>
+
+<span class="c1"># Deferred import to avoid circular dependency - registry imports engine</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Define a bounded type variable for output types</span>
+<span class="n">TOut</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span>
+    <span class="s2">&quot;TOut&quot;</span><span class="p">,</span>
+    <span class="n">bound</span><span class="o">=</span><span class="nb">bool</span>
+    <span class="o">|</span> <span class="nb">str</span>
+    <span class="o">|</span> <span class="nb">int</span>
+    <span class="o">|</span> <span class="nb">float</span>
+    <span class="o">|</span> <span class="n">datetime</span>
+    <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+    <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+    <span class="o">|</span> <span class="n">BaseModel</span>
+    <span class="o">|</span> <span class="n">Any</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Input can be string, message, or collection</span>
+<span class="n">TIn</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;TIn&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="nb">str</span> <span class="o">|</span> <span class="n">BaseMessage</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseMessage</span><span class="p">]</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span>
+
+
+<span class="c1"># TODO: Re-enable registration after fixing circular imports</span>
+<span class="c1"># @register_component(registry_getter=&quot;engine_registry&quot;, component_type=EngineType.OUTPUT_PARSER)</span>
+<div class="viewcode-block" id="OutputParserEngine">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/index.html#haive.core.engine.OutputParserEngine">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OutputParserEngine</span><span class="p">(</span><span class="n">InvokableEngine</span><span class="p">[</span><span class="n">TIn</span><span class="p">,</span> <span class="n">TOut</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Engine that wraps LangChain OutputParsers to convert text to structured data.</span>
+
+<span class="sd">    The generic parameter TOut represents the specific return type of the parser.</span>
+<span class="sd">    This allows for type-safe usage of parsers in your workflows.</span>
+
+<span class="sd">    Supported output types include:</span>
+<span class="sd">    - Primitive types (bool, str, int, float, datetime)</span>
+<span class="sd">    - Collection types (List[str], Dict[str, Any], etc.)</span>
+<span class="sd">    - Pydantic models (any BaseModel subclass)</span>
+<span class="sd">    - Specialized types (pandas.DataFrame, Enum values)</span>
+<span class="sd">    - Custom structured types</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        # Create a JSON parser</span>
+<span class="sd">        json_parser = create_output_parser_engine(</span>
+<span class="sd">            OutputParserType.JSON,</span>
+<span class="sd">            name=&quot;my_json_parser&quot;</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # Use in a graph</span>
+<span class="sd">        graph.add_node(&quot;parse_json&quot;, json_parser)</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">engine_type</span><span class="p">:</span> <span class="n">EngineType</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">EngineType</span><span class="o">.</span><span class="n">OUTPUT_PARSER</span><span class="p">)</span>
+
+    <span class="c1"># Parser configuration</span>
+    <span class="n">parser_type</span><span class="p">:</span> <span class="n">OutputParserType</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Type of parser to use (from OutputParserType enum)&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Additional configuration parameters for the parser&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Special configuration fields for specific parsers</span>
+    <span class="n">pydantic_model</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Pydantic model for PydanticOutputParser&quot;</span><span class="p">,</span>
+        <span class="n">exclude</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Exclude from serialization</span>
+    <span class="p">)</span>
+
+    <span class="n">regex_pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Regex pattern for RegexParser&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">enum_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Enum</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Enum class for EnumOutputParser&quot;</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="n">response_schemas</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Response schemas for StructuredOutputParser&quot;</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="OutputParserEngine.get_input_fields">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/index.html#haive.core.engine.OutputParserEngine.get_input_fields">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_input_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Define input field requirements.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BaseMessage</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseMessage</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+                <span class="n">Field</span><span class="p">(</span>
+                    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Text, message, or dictionary to parse into structured data&quot;</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="OutputParserEngine.get_output_fields">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/index.html#haive.core.engine.OutputParserEngine.get_output_fields">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_output_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Define output field requirements based on parser type.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="o">==</span> <span class="n">OutputParserType</span><span class="o">.</span><span class="n">BOOLEAN</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parsed boolean result&quot;</span><span class="p">))}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">COMMA_SEPARATED_LIST</span><span class="p">,</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">NUMBERED_LIST</span><span class="p">,</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">MARKDOWN_LIST</span><span class="p">,</span>
+        <span class="p">]:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parsed list result&quot;</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="o">==</span> <span class="n">OutputParserType</span><span class="o">.</span><span class="n">DATETIME</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">datetime</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parsed datetime result&quot;</span><span class="p">))}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">SIMPLE_JSON</span><span class="p">,</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">COMBINING</span><span class="p">,</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">REGEX_DICT</span><span class="p">,</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">XML</span><span class="p">,</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">YAML</span><span class="p">,</span>
+        <span class="p">]:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parsed dictionary result&quot;</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="o">==</span> <span class="n">OutputParserType</span><span class="o">.</span><span class="n">PYDANTIC</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">pydantic_model</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pydantic_model</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parsed Pydantic model&quot;</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="o">==</span> <span class="n">OutputParserType</span><span class="o">.</span><span class="n">STRING</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parsed string result&quot;</span><span class="p">))}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="o">==</span> <span class="n">OutputParserType</span><span class="o">.</span><span class="n">PANDAS_DATAFRAME</span><span class="p">:</span>
+            <span class="c1"># Using Any here since we can&#39;t import pandas directly in the type</span>
+            <span class="c1"># hint</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">Any</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parsed pandas DataFrame&quot;</span><span class="p">))}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="o">==</span> <span class="n">OutputParserType</span><span class="o">.</span><span class="n">ENUM</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">enum_class</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enum_class</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parsed enum value&quot;</span><span class="p">))}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">OPENAI_TOOLS</span><span class="p">,</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">OPENAI_TOOLS_KEY</span><span class="p">,</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">PYDANTIC_TOOLS</span><span class="p">,</span>
+        <span class="p">]:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">Any</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parsed tool output&quot;</span><span class="p">))}</span>
+
+        <span class="c1"># Default for unknown types</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">Any</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parsed result&quot;</span><span class="p">))}</span></div>
+
+
+<div class="viewcode-block" id="OutputParserEngine.create_runnable">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/index.html#haive.core.engine.OutputParserEngine.create_runnable">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_runnable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">runnable_config</span><span class="p">:</span> <span class="n">RunnableConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the appropriate parser based on configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            runnable_config: Optional runtime configuration</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An instantiated output parser</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If parser type is unknown or required config is missing</span>
+<span class="sd">            ImportError: If required packages are not installed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_runnable_config</span><span class="p">(</span><span class="n">runnable_config</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_config</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">}</span>
+
+        <span class="c1"># Common module prefixes</span>
+        <span class="n">MODULES</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;core&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_core.output_parsers&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;langchain&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain.output_parsers&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;openai_tools&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_core.output_parsers.openai_tools&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c1"># General parser configuration with more concise format</span>
+        <span class="c1"># Format: parser_type: (module_key, class_name_override, config_handler)</span>
+        <span class="c1"># If class_name_override is None, derive from enum value</span>
+        <span class="c1"># If config_handler is None, just pass filtered kwargs</span>
+        <span class="n">PARSER_MAP</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="c1"># Core simple parsers</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">LIST</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;core&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">COMMA_SEPARATED_LIST</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;core&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">NUMBERED_LIST</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;core&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">MARKDOWN_LIST</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;core&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">STRING</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;core&quot;</span><span class="p">,</span> <span class="s2">&quot;StrOutputParser&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">JSON</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;core&quot;</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;schema&quot;</span><span class="p">)},</span>
+            <span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">SIMPLE_JSON</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;core&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">XML</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;core&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">PYDANTIC</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;core&quot;</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pydantic_object&quot;</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">pydantic_model</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="c1"># LangChain extension parsers</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">BOOLEAN</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;langchain&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">DATETIME</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;langchain&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">COMBINING</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;langchain&quot;</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;parsers&quot;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;parsers&quot;</span><span class="p">,</span> <span class="p">[])},</span>
+            <span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">REGEX</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;langchain&quot;</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;regex_pattern&quot;</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">regex_pattern</span><span class="p">,</span>
+                    <span class="s2">&quot;output_keys&quot;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;output_keys&quot;</span><span class="p">,</span> <span class="p">[]),</span>
+                <span class="p">},</span>
+            <span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">REGEX_DICT</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;langchain&quot;</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;regex_patterns&quot;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;regex_patterns&quot;</span><span class="p">,</span> <span class="p">{})},</span>
+            <span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">PANDAS_DATAFRAME</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;langchain&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">YAML</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;langchain&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">ENUM</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;langchain&quot;</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">enum_class</span><span class="p">},</span>
+            <span class="p">),</span>
+            <span class="c1"># OpenAI tools parsers</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">OPENAI_TOOLS</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;openai_tools&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;JsonOutputToolsParser&quot;</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;schema&quot;</span><span class="p">)},</span>
+            <span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">OPENAI_TOOLS_KEY</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;openai_tools&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;JsonOutputKeyToolsParser&quot;</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;schema&quot;</span><span class="p">),</span> <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">)},</span>
+            <span class="p">),</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">PYDANTIC_TOOLS</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;openai_tools&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;PydanticToolsParser&quot;</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;pydantic_schemas&quot;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pydantic_schemas&quot;</span><span class="p">,</span> <span class="p">[])},</span>
+            <span class="p">),</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Special case handlers - for parsers that need custom instantiation</span>
+        <span class="n">SPECIAL_HANDLERS</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">STRUCTURED</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_structured_parser</span><span class="p">(</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">response_schemas</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Required attributes and parameters validation</span>
+        <span class="n">REQUIRED_ATTRS</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">PYDANTIC</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;pydantic_model&quot;</span><span class="p">],</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">REGEX</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;regex_pattern&quot;</span><span class="p">],</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">ENUM</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;enum_class&quot;</span><span class="p">],</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">STRUCTURED</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;response_schemas&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="n">REQUIRED_PARAMS</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">COMBINING</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;parsers&quot;</span><span class="p">],</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">REGEX</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;output_keys&quot;</span><span class="p">],</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">REGEX_DICT</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;regex_patterns&quot;</span><span class="p">],</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">OPENAI_TOOLS</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">],</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">OPENAI_TOOLS_KEY</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;key&quot;</span><span class="p">],</span>
+            <span class="n">OutputParserType</span><span class="o">.</span><span class="n">PYDANTIC_TOOLS</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;pydantic_schemas&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Check for special case handlers first</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="ow">in</span> <span class="n">SPECIAL_HANDLERS</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">SPECIAL_HANDLERS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="p">](</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+
+            <span class="c1"># Check if we have a configuration for this parser type</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">PARSER_MAP</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown parser type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">module_key</span><span class="p">,</span> <span class="n">class_override</span><span class="p">,</span> <span class="n">config_handler</span> <span class="o">=</span> <span class="n">PARSER_MAP</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="p">]</span>
+
+            <span class="c1"># Get the module path</span>
+            <span class="k">if</span> <span class="n">module_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">MODULES</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown module key: </span><span class="si">{</span><span class="n">module_key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">module_path</span> <span class="o">=</span> <span class="n">MODULES</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span>
+
+            <span class="c1"># Determine class name</span>
+            <span class="k">if</span> <span class="n">class_override</span><span class="p">:</span>
+                <span class="n">class_name</span> <span class="o">=</span> <span class="n">class_override</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Convert enum value to CamelCase and append OutputParser</span>
+                <span class="n">parts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+                <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;OutputParser&quot;</span>
+
+            <span class="c1"># Validate required attributes</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="ow">in</span> <span class="n">REQUIRED_ATTRS</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">REQUIRED_ATTRS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2"> requires </span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2"> to be set&quot;</span>
+                        <span class="p">)</span>
+
+            <span class="c1"># Validate required parameters</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span> <span class="ow">in</span> <span class="n">REQUIRED_PARAMS</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">REQUIRED_PARAMS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">param</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2"> requires &#39;</span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2">&#39; in configuration&quot;</span>
+                        <span class="p">)</span>
+
+            <span class="c1"># Import the parser class</span>
+            <span class="n">parser_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_import_class</span><span class="p">(</span><span class="n">module_path</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
+
+            <span class="c1"># Determine parameters</span>
+            <span class="k">if</span> <span class="n">config_handler</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="n">config_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_kwargs_for_class</span><span class="p">(</span><span class="n">parser_class</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+
+            <span class="c1"># Create and return instance</span>
+            <span class="k">return</span> <span class="n">parser_class</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to import parser for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">!s}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Required package for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2"> parser not installed: </span><span class="si">{</span><span class="n">e</span><span class="si">!s}</span><span class="s2">&quot;</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OutputParserEngine.invoke">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/index.html#haive.core.engine.OutputParserEngine.invoke">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">invoke</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">:</span> <span class="n">TIn</span><span class="p">,</span> <span class="n">runnable_config</span><span class="p">:</span> <span class="n">RunnableConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TOut</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Invoke the parser with the input data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            input_data: Input text, message, or dictionary</span>
+<span class="sd">            runnable_config: Optional runtime configuration</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Parsed output based on parser type</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the input cannot be processed</span>
+<span class="sd">            Exception: If parsing fails and no error handler is provided</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create the parser</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_runnable</span><span class="p">(</span><span class="n">runnable_config</span><span class="p">)</span>
+
+        <span class="c1"># Extract text from various input types</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_text</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+
+        <span class="c1"># Parse the text</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">hasattr</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="s2">&quot;parse_with_prompt&quot;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">runnable_config</span>
+                <span class="ow">and</span> <span class="s2">&quot;prompt&quot;</span> <span class="ow">in</span> <span class="n">runnable_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;configurable&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="p">):</span>
+                <span class="c1"># If we have a prompt in the config and the parser supports it</span>
+                <span class="n">prompt</span> <span class="o">=</span> <span class="n">runnable_config</span><span class="p">[</span><span class="s2">&quot;configurable&quot;</span><span class="p">][</span><span class="s2">&quot;prompt&quot;</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_with_prompt</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span>
+            <span class="c1"># Otherwise, use regular parse</span>
+            <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># Handle parsing errors</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error parsing with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">!s}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;error_handler&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_config</span><span class="p">:</span>
+                <span class="n">error_handler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_config</span><span class="p">[</span><span class="s2">&quot;error_handler&quot;</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">error_handler</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="c1"># Re-raise if no error handler</span>
+            <span class="k">raise</span></div>
+
+
+<div class="viewcode-block" id="OutputParserEngine.ainvoke">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/index.html#haive.core.engine.OutputParserEngine.ainvoke">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">ainvoke</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">:</span> <span class="n">TIn</span><span class="p">,</span> <span class="n">runnable_config</span><span class="p">:</span> <span class="n">RunnableConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TOut</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Asynchronously invoke the parser with the input data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            input_data: Input text, message, or dictionary</span>
+<span class="sd">            runnable_config: Optional runtime configuration</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Parsed output based on parser type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create the parser</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_runnable</span><span class="p">(</span><span class="n">runnable_config</span><span class="p">)</span>
+
+        <span class="c1"># Extract text</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_text</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+
+        <span class="c1"># Parse asynchronously if supported</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">hasattr</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="s2">&quot;aparse_with_prompt&quot;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">runnable_config</span>
+                <span class="ow">and</span> <span class="s2">&quot;prompt&quot;</span> <span class="ow">in</span> <span class="n">runnable_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;configurable&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="p">):</span>
+                <span class="n">prompt</span> <span class="o">=</span> <span class="n">runnable_config</span><span class="p">[</span><span class="s2">&quot;configurable&quot;</span><span class="p">][</span><span class="s2">&quot;prompt&quot;</span><span class="p">]</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">parser</span><span class="o">.</span><span class="n">aparse_with_prompt</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="s2">&quot;aparse&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">parser</span><span class="o">.</span><span class="n">aparse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="c1"># Fall back to synchronous parsing in an async context</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+
+            <span class="k">return</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">to_thread</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Error parsing asynchronously with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">!s}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;error_handler&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_config</span><span class="p">:</span>
+                <span class="n">error_handler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser_config</span><span class="p">[</span><span class="s2">&quot;error_handler&quot;</span><span class="p">]</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">to_thread</span><span class="p">(</span><span class="n">error_handler</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">raise</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">:</span> <span class="n">TIn</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract text content from various input types.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            input_data: Input data in various formats</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Extracted text string</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If text cannot be extracted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="c1"># If input is already a string, use it directly</span>
+            <span class="k">return</span> <span class="n">input_data</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_data</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="c1"># If input is a message with text content, extract it</span>
+            <span class="k">return</span> <span class="n">input_data</span><span class="o">.</span><span class="n">content</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
+            <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">input_data</span>
+        <span class="p">):</span>
+            <span class="c1"># If input is a list of messages, concatenate their contents</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">m</span><span class="o">.</span><span class="n">content</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">input_data</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="c1"># Try to extract text from dictionary</span>
+            <span class="k">if</span> <span class="s2">&quot;text&quot;</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;content&quot;</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;input&quot;</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">])</span>
+
+        <span class="c1"># Try to convert to string as a fallback</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot extract text from input: </span><span class="si">{</span><span class="n">e</span><span class="si">!s}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_import_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Dynamically import a class.&quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+
+        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_filter_kwargs_for_class</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Filter kwargs to only include those accepted by the class&#39;s __init__.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s2">&quot;__init__&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{}</span>
+
+        <span class="c1"># Get the signature of the class&#39;s __init__ method</span>
+        <span class="n">sig</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="fm">__init__</span><span class="p">)</span>
+        <span class="c1"># Get parameter names, excluding &#39;self&#39;</span>
+        <span class="n">valid_params</span> <span class="o">=</span> <span class="p">[</span><span class="n">param</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">sig</span><span class="o">.</span><span class="n">parameters</span> <span class="k">if</span> <span class="n">param</span> <span class="o">!=</span> <span class="s2">&quot;self&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Return only the kwargs that are valid parameters</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">valid_params</span><span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_structured_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schemas</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a StructuredOutputParser instance.&quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">langchain.output_parsers</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResponseSchema</span><span class="p">,</span> <span class="n">StructuredOutputParser</span>
+
+        <span class="n">response_schemas</span> <span class="o">=</span> <span class="p">[</span><span class="n">ResponseSchema</span><span class="p">(</span><span class="o">**</span><span class="n">schema</span><span class="p">)</span> <span class="k">for</span> <span class="n">schema</span> <span class="ow">in</span> <span class="n">schemas</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">StructuredOutputParser</span><span class="o">.</span><span class="n">from_response_schemas</span><span class="p">(</span><span class="n">response_schemas</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_output_parser_engine">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/base/index.html#haive.core.engine.create_output_parser_engine">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_output_parser_engine</span><span class="p">(</span>
+    <span class="n">parser_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">OutputParserType</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OutputParserEngine</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Factory function to create an OutputParserEngine.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        parser_type: Type of parser (from OutputParserType enum or string)</span>
+<span class="sd">        name: Optional name for the engine</span>
+<span class="sd">        **kwargs: Additional configuration parameters</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Configured OutputParserEngine</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Convert string to enum if needed</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parser_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">parser_type</span> <span class="o">=</span> <span class="n">OutputParserType</span><span class="p">(</span><span class="n">parser_type</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown parser type: </span><span class="si">{</span><span class="n">parser_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">parser_type</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">_parser_</span><span class="si">{</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="c1"># Extract special parameters</span>
+    <span class="n">parser_config</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">k</span><span class="p">:</span> <span class="n">v</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">k</span>
+        <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;pydantic_model&quot;</span><span class="p">,</span> <span class="s2">&quot;regex_pattern&quot;</span><span class="p">,</span> <span class="s2">&quot;enum_class&quot;</span><span class="p">,</span> <span class="s2">&quot;response_schemas&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">OutputParserEngine</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">parser_type</span><span class="o">=</span><span class="n">parser_type</span><span class="p">,</span>
+        <span class="n">parser_config</span><span class="o">=</span><span class="n">parser_config</span><span class="p">,</span>
+        <span class="n">pydantic_model</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pydantic_model&quot;</span><span class="p">),</span>
+        <span class="n">regex_pattern</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;regex_pattern&quot;</span><span class="p">),</span>
+        <span class="n">enum_class</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;enum_class&quot;</span><span class="p">),</span>
+        <span class="n">response_schemas</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;response_schemas&quot;</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="c1"># Convenience functions for common parser types</span>
+<div class="viewcode-block" id="create_str_parser">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/base/index.html#haive.core.engine.create_str_parser">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_str_parser</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OutputParserEngine</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a StrOutputParser engine.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">create_output_parser_engine</span><span class="p">(</span><span class="n">OutputParserType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_list_parser">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/base/index.html#haive.core.engine.create_list_parser">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_list_parser</span><span class="p">(</span>
+    <span class="n">list_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OutputParserEngine</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a list parser engine.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        list_type: Type of list parser (&#39;list&#39;, &#39;comma_separated&#39;, &#39;numbered&#39;, &#39;markdown&#39;)</span>
+<span class="sd">        name: Optional name for the engine</span>
+<span class="sd">        **kwargs: Additional configuration</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List parser engine</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">type_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;list&quot;</span><span class="p">:</span> <span class="n">OutputParserType</span><span class="o">.</span><span class="n">LIST</span><span class="p">,</span>
+        <span class="s2">&quot;comma_separated&quot;</span><span class="p">:</span> <span class="n">OutputParserType</span><span class="o">.</span><span class="n">COMMA_SEPARATED_LIST</span><span class="p">,</span>
+        <span class="s2">&quot;numbered&quot;</span><span class="p">:</span> <span class="n">OutputParserType</span><span class="o">.</span><span class="n">NUMBERED_LIST</span><span class="p">,</span>
+        <span class="s2">&quot;markdown&quot;</span><span class="p">:</span> <span class="n">OutputParserType</span><span class="o">.</span><span class="n">MARKDOWN_LIST</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">list_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">type_map</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Unknown list type: </span><span class="si">{</span><span class="n">list_type</span><span class="si">}</span><span class="s2">. Must be one of </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">type_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">create_output_parser_engine</span><span class="p">(</span><span class="n">type_map</span><span class="p">[</span><span class="n">list_type</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_json_parser">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/base/index.html#haive.core.engine.create_json_parser">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_json_parser</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">schema</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OutputParserEngine</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a JsonOutputParser engine.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">schema</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">schema</span>
+    <span class="k">return</span> <span class="n">create_output_parser_engine</span><span class="p">(</span><span class="n">OutputParserType</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_pydantic_parser">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/base/index.html#haive.core.engine.create_pydantic_parser">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_pydantic_parser</span><span class="p">(</span>
+    <span class="n">pydantic_model</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OutputParserEngine</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a PydanticOutputParser engine.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">create_output_parser_engine</span><span class="p">(</span>
+        <span class="n">OutputParserType</span><span class="o">.</span><span class="n">PYDANTIC</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">pydantic_model</span><span class="o">=</span><span class="n">pydantic_model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_structured_parser">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/base/index.html#haive.core.engine.create_structured_parser">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_structured_parser</span><span class="p">(</span>
+    <span class="n">response_schemas</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OutputParserEngine</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a StructuredOutputParser engine.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">create_output_parser_engine</span><span class="p">(</span>
+        <span class="n">OutputParserType</span><span class="o">.</span><span class="n">STRUCTURED</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">response_schemas</span><span class="o">=</span><span class="n">response_schemas</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_regex_parser">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/base/index.html#haive.core.engine.create_regex_parser">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_regex_parser</span><span class="p">(</span>
+    <span class="n">regex_pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_keys</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OutputParserEngine</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a RegexParser engine.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">create_output_parser_engine</span><span class="p">(</span>
+        <span class="n">OutputParserType</span><span class="o">.</span><span class="n">REGEX</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="n">regex_pattern</span><span class="o">=</span><span class="n">regex_pattern</span><span class="p">,</span>
+        <span class="n">output_keys</span><span class="o">=</span><span class="n">output_keys</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_enum_parser">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/output_parser/base/index.html#haive.core.engine.create_enum_parser">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_enum_parser</span><span class="p">(</span>
+    <span class="n">enum_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Enum</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OutputParserEngine</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an EnumOutputParser engine.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">create_output_parser_engine</span><span class="p">(</span>
+        <span class="n">OutputParserType</span><span class="o">.</span><span class="n">ENUM</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">enum_class</span><span class="o">=</span><span class="n">enum_class</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span></div>
+
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

@@ -1,0 +1,834 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>Haive-MCP Architecture Overview - 🤖 Haive Test Build</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index_core_only.html"><div class="brand">🤖 Haive Test Build</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Test Build</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/haive/core/index.html">haive.core</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../../../../_sources/discovered_readmes/packages/haive-mcp/project_docs/architecture/README.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="haive-mcp-architecture-overview">
+<h1>Haive-MCP Architecture Overview<a class="headerlink" href="#haive-mcp-architecture-overview" title="Link to this heading">¶</a></h1>
+<p><strong>System design and components for dynamic MCP integration</strong></p>
+<section id="architecture-overview">
+<h2>🏗️ Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading">¶</a></h2>
+<p>Haive-MCP is designed as a layered architecture that provides dynamic Model Context Protocol integration for Haive agents.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>┌─────────────────────────────────────────────────────────────┐
+│                    Agent Layer                              │
+│  ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐│
+│  │IntelligentMCP   │ │   MCPAgent      │ │TransferableMCP  ││
+│  │    Agent        │ │                 │ │    Agent        ││
+│  └─────────────────┘ └─────────────────┘ └─────────────────┘│
+└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                  Management Layer                           │
+│  ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐│
+│  │   MCPManager    │ │ ServerDiscovery │ │   DocLoader     ││
+│  │  (Hot-Reload)   │ │  (AI-Powered)   │ │ (1960+ Servers) ││
+│  └─────────────────┘ └─────────────────┘ └─────────────────┘│
+└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                    MCP Layer                                │
+│  ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐│
+│  │  MCP Servers    │ │     Tools       │ │   Resources     ││
+│  │  (External)     │ │   (Dynamic)     │ │  (Documents)    ││
+│  └─────────────────┘ └─────────────────┘ └─────────────────┘│
+└─────────────────────────────────────────────────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="core-components">
+<h2>🧩 Core Components<a class="headerlink" href="#core-components" title="Link to this heading">¶</a></h2>
+<section id="agent-layer">
+<h3>1. Agent Layer<a class="headerlink" href="#agent-layer" title="Link to this heading">¶</a></h3>
+<section id="intelligentmcpagent">
+<h4>IntelligentMCPAgent<a class="headerlink" href="#intelligentmcpagent" title="Link to this heading">¶</a></h4>
+<p><strong>Purpose</strong>: AI-powered agent with automatic server discovery and HITL approval.</p>
+<p><strong>Key Features</strong>:</p>
+<ul class="simple">
+<li><p>Automatic capability analysis from user requests</p></li>
+<li><p>Server discovery and installation</p></li>
+<li><p>Human-in-the-loop approval workflows</p></li>
+<li><p>Hot-reload of tools and capabilities</p></li>
+</ul>
+<p><strong>Usage</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">agent</span> <span class="o">=</span> <span class="n">IntelligentMCPAgent</span><span class="p">(</span>
+    <span class="n">engine</span><span class="o">=</span><span class="n">AugLLMConfig</span><span class="p">(),</span>
+    <span class="n">auto_discover</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>      <span class="c1"># Enable AI discovery</span>
+    <span class="n">require_approval</span><span class="o">=</span><span class="kc">True</span>    <span class="c1"># HITL approval</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="mcpagent">
+<h4>MCPAgent<a class="headerlink" href="#mcpagent" title="Link to this heading">¶</a></h4>
+<p><strong>Purpose</strong>: Production agent with static MCP server configuration.</p>
+<p><strong>Key Features</strong>:</p>
+<ul class="simple">
+<li><p>Pre-configured MCP servers</p></li>
+<li><p>Reliable tool access</p></li>
+<li><p>Production-ready patterns</p></li>
+<li><p>Integrates with existing Haive agents</p></li>
+</ul>
+<p><strong>Usage</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">agent</span> <span class="o">=</span> <span class="n">MCPAgent</span><span class="p">(</span>
+    <span class="n">engine</span><span class="o">=</span><span class="n">AugLLMConfig</span><span class="p">(),</span>
+    <span class="n">mcp_config</span><span class="o">=</span><span class="n">static_config</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="transferablemcpagent">
+<h4>TransferableMCPAgent<a class="headerlink" href="#transferablemcpagent" title="Link to this heading">¶</a></h4>
+<p><strong>Purpose</strong>: Agent that can share tools with other agents.</p>
+<p><strong>Key Features</strong>:</p>
+<ul class="simple">
+<li><p>Tool sharing between agents</p></li>
+<li><p>Multi-agent collaboration</p></li>
+<li><p>Selective capability transfer</p></li>
+<li><p>Dynamic tool sets</p></li>
+</ul>
+</section>
+</section>
+<section id="management-layer">
+<h3>2. Management Layer<a class="headerlink" href="#management-layer" title="Link to this heading">¶</a></h3>
+<section id="mcpmanager">
+<h4>MCPManager<a class="headerlink" href="#mcpmanager" title="Link to this heading">¶</a></h4>
+<p><strong>Purpose</strong>: Central server lifecycle management with hot-reload capabilities.</p>
+<p><strong>Key Features</strong>:</p>
+<ul class="simple">
+<li><p>Dynamic server addition/removal</p></li>
+<li><p>Health monitoring</p></li>
+<li><p>Tool refreshing</p></li>
+<li><p>Connection management</p></li>
+</ul>
+<p><strong>Core Methods</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">manager</span> <span class="o">=</span> <span class="n">MCPManager</span><span class="p">()</span>
+
+<span class="c1"># Server management</span>
+<span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">add_server</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">remove_server</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">reload_server</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c1"># Tool management</span>
+<span class="n">tools</span> <span class="o">=</span> <span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_all_tools</span><span class="p">(</span><span class="n">refresh</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resources</span> <span class="o">=</span> <span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_resources</span><span class="p">()</span>
+<span class="n">prompts</span> <span class="o">=</span> <span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_prompts</span><span class="p">()</span>
+
+<span class="c1"># Health monitoring</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_all_server_status</span><span class="p">()</span>
+<span class="n">health</span> <span class="o">=</span> <span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">check_server_health</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="mcpserverdiscovery">
+<h4>MCPServerDiscovery<a class="headerlink" href="#mcpserverdiscovery" title="Link to this heading">¶</a></h4>
+<p><strong>Purpose</strong>: AI-powered intelligent server discovery and matching.</p>
+<p><strong>Key Features</strong>:</p>
+<ul class="simple">
+<li><p>Capability analysis using LLM</p></li>
+<li><p>Server matching algorithms</p></li>
+<li><p>Confidence scoring</p></li>
+<li><p>Setup instruction extraction</p></li>
+</ul>
+<p><strong>Discovery Process</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">discovery</span> <span class="o">=</span> <span class="n">MCPServerDiscovery</span><span class="p">()</span>
+
+<span class="c1"># 1. Analyze user request</span>
+<span class="n">capabilities</span> <span class="o">=</span> <span class="k">await</span> <span class="n">discovery</span><span class="o">.</span><span class="n">analyze_capability_needs</span><span class="p">(</span><span class="n">user_request</span><span class="p">)</span>
+
+<span class="c1"># 2. Find matching servers</span>
+<span class="n">recommendations</span> <span class="o">=</span> <span class="k">await</span> <span class="n">discovery</span><span class="o">.</span><span class="n">find_servers_by_capabilities</span><span class="p">(</span><span class="n">capabilities</span><span class="p">)</span>
+
+<span class="c1"># 3. Rank by confidence</span>
+<span class="n">top_servers</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">recommendations</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">confidence</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="mcpdocumentationloader">
+<h4>MCPDocumentationLoader<a class="headerlink" href="#mcpdocumentationloader" title="Link to this heading">¶</a></h4>
+<p><strong>Purpose</strong>: Access to pre-processed database of 1,960+ MCP servers.</p>
+<p><strong>Key Features</strong>:</p>
+<ul class="simple">
+<li><p>Server metadata and documentation</p></li>
+<li><p>Setup instructions</p></li>
+<li><p>Capability categorization</p></li>
+<li><p>Quality scoring</p></li>
+</ul>
+<p><strong>Data Structure</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loader</span> <span class="o">=</span> <span class="n">MCPDocumentationLoader</span><span class="p">()</span>
+
+<span class="c1"># Load all servers</span>
+<span class="n">all_servers</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_all_mcp_documents</span><span class="p">()</span>
+
+<span class="c1"># Find specific server</span>
+<span class="n">server_doc</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_server_documentation</span><span class="p">(</span><span class="s2">&quot;server-name&quot;</span><span class="p">)</span>
+
+<span class="c1"># Search by capability</span>
+<span class="n">database_servers</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">find_servers_by_capability</span><span class="p">(</span><span class="s2">&quot;database&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="configuration-layer">
+<h3>3. Configuration Layer<a class="headerlink" href="#configuration-layer" title="Link to this heading">¶</a></h3>
+<section id="mcpconfig-mcpserverconfig">
+<h4>MCPConfig &amp; MCPServerConfig<a class="headerlink" href="#mcpconfig-mcpserverconfig" title="Link to this heading">¶</a></h4>
+<p><strong>Purpose</strong>: Type-safe configuration for MCP servers and connections.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.mcp.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">MCPConfig</span><span class="p">,</span> <span class="n">MCPServerConfig</span>
+
+<span class="c1"># Individual server configuration</span>
+<span class="n">server_config</span> <span class="o">=</span> <span class="n">MCPServerConfig</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;postgres&quot;</span><span class="p">,</span>
+    <span class="n">transport</span><span class="o">=</span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>           <span class="c1"># stdio, sse, or http</span>
+    <span class="n">command</span><span class="o">=</span><span class="s2">&quot;npx&quot;</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;@modelcontextprotocol/server-postgres&quot;</span><span class="p">],</span>
+    <span class="n">env</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;DATABASE_URL&quot;</span><span class="p">:</span> <span class="s2">&quot;postgresql://...&quot;</span><span class="p">},</span>
+    <span class="n">timeout</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span>
+    <span class="n">retry_attempts</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+
+<span class="c1"># Full MCP configuration</span>
+<span class="n">mcp_config</span> <span class="o">=</span> <span class="n">MCPConfig</span><span class="p">(</span>
+    <span class="n">servers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;postgres&quot;</span><span class="p">:</span> <span class="n">server_config</span><span class="p">},</span>
+    <span class="n">auto_health_check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">health_check_interval</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span>
+    <span class="n">max_concurrent_connections</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="dynamic-discovery-process">
+<h2>🔄 Dynamic Discovery Process<a class="headerlink" href="#dynamic-discovery-process" title="Link to this heading">¶</a></h2>
+<section id="capability-analysis">
+<h3>1. Capability Analysis<a class="headerlink" href="#capability-analysis" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>User Request → LLM Analysis → Capability List
+&quot;Search for Python tutorials and save to spreadsheet&quot;
+↓
+[&quot;web_search&quot;, &quot;document_storage&quot;, &quot;spreadsheet&quot;]
+</pre></div>
+</div>
+</section>
+<section id="server-matching">
+<h3>2. Server Matching<a class="headerlink" href="#server-matching" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Capability List → Database Query → Server Recommendations
+[&quot;web_search&quot;, &quot;spreadsheet&quot;]
+↓
+[{server: &quot;brave-search&quot;, confidence: 0.95},
+ {server: &quot;google-sheets&quot;, confidence: 0.89}]
+</pre></div>
+</div>
+</section>
+<section id="installation-integration">
+<h3>3. Installation &amp; Integration<a class="headerlink" href="#installation-integration" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>User Approval → Server Installation → Tool Integration
+User approves &quot;brave-search&quot; and &quot;google-sheets&quot;
+↓
+Tools available in agent.mcp_tools
+</pre></div>
+</div>
+</section>
+</section>
+<section id="hot-reload-architecture">
+<h2>🔥 Hot-Reload Architecture<a class="headerlink" href="#hot-reload-architecture" title="Link to this heading">¶</a></h2>
+<section id="server-lifecycle-management">
+<h3>Server Lifecycle Management<a class="headerlink" href="#server-lifecycle-management" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Server Addition:  Config → Connection → Tool Loading → Integration
+Server Removal:   Cleanup → Connection Close → Tool Removal
+Server Reload:    Disconnect → Reconnect → Tool Refresh → Update
+</pre></div>
+</div>
+</section>
+<section id="tool-synchronization">
+<h3>Tool Synchronization<a class="headerlink" href="#tool-synchronization" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Before tool refresh</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">mcp_tools</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;file_read&quot;</span><span class="p">:</span> <span class="n">tool1</span><span class="p">,</span> <span class="s2">&quot;file_write&quot;</span><span class="p">:</span> <span class="n">tool2</span><span class="p">}</span>
+
+<span class="c1"># Add new server with web tools</span>
+<span class="k">await</span> <span class="n">manager</span><span class="o">.</span><span class="n">add_server</span><span class="p">(</span><span class="s2">&quot;web&quot;</span><span class="p">,</span> <span class="n">web_config</span><span class="p">)</span>
+
+<span class="c1"># After refresh</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">mcp_tools</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;file_read&quot;</span><span class="p">:</span> <span class="n">tool1</span><span class="p">,</span>
+    <span class="s2">&quot;file_write&quot;</span><span class="p">:</span> <span class="n">tool2</span><span class="p">,</span>
+    <span class="s2">&quot;web_search&quot;</span><span class="p">:</span> <span class="n">tool3</span><span class="p">,</span>    <span class="c1"># New!</span>
+    <span class="s2">&quot;url_fetch&quot;</span><span class="p">:</span> <span class="n">tool4</span>      <span class="c1"># New!</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="ai-powered-discovery">
+<h2>🤖 AI-Powered Discovery<a class="headerlink" href="#ai-powered-discovery" title="Link to this heading">¶</a></h2>
+<section id="capability-analysis-pipeline">
+<h3>Capability Analysis Pipeline<a class="headerlink" href="#capability-analysis-pipeline" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">CapabilityAnalyzer</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">analyze_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_request</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract needed capabilities from user request.&quot;&quot;&quot;</span>
+
+        <span class="c1"># 1. LLM-based analysis</span>
+        <span class="n">llm_capabilities</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_llm_analyze</span><span class="p">(</span><span class="n">user_request</span><span class="p">)</span>
+
+        <span class="c1"># 2. Keyword matching</span>
+        <span class="n">keyword_capabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keyword_analyze</span><span class="p">(</span><span class="n">user_request</span><span class="p">)</span>
+
+        <span class="c1"># 3. Context-aware enhancement</span>
+        <span class="n">context_capabilities</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context_analyze</span><span class="p">(</span><span class="n">user_request</span><span class="p">)</span>
+
+        <span class="c1"># 4. Merge and deduplicate</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_capabilities</span><span class="p">(</span>
+            <span class="n">llm_capabilities</span><span class="p">,</span>
+            <span class="n">keyword_capabilities</span><span class="p">,</span>
+            <span class="n">context_capabilities</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="server-matching-algorithm">
+<h3>Server Matching Algorithm<a class="headerlink" href="#server-matching-algorithm" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ServerMatcher</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">match_servers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">capabilities</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ServerRecommendation</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Find best matching servers for capabilities.&quot;&quot;&quot;</span>
+
+        <span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">server</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_database</span><span class="p">:</span>
+            <span class="c1"># Calculate capability overlap</span>
+            <span class="n">overlap</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">capabilities</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">capabilities</span><span class="p">)</span>
+            <span class="n">coverage</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">overlap</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">capabilities</span><span class="p">)</span>
+
+            <span class="c1"># Factor in server quality</span>
+            <span class="n">quality_score</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">quality_rating</span> <span class="o">/</span> <span class="mf">10.0</span>
+
+            <span class="c1"># Calculate confidence</span>
+            <span class="n">confidence</span> <span class="o">=</span> <span class="p">(</span><span class="n">coverage</span> <span class="o">*</span> <span class="mf">0.7</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">quality_score</span> <span class="o">*</span> <span class="mf">0.3</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">confidence</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>  <span class="c1"># Threshold</span>
+                <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ServerRecommendation</span><span class="p">(</span>
+                    <span class="n">server_name</span><span class="o">=</span><span class="n">server</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">confidence</span><span class="o">=</span><span class="n">confidence</span><span class="p">,</span>
+                    <span class="n">matched_capabilities</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">overlap</span><span class="p">),</span>
+                    <span class="n">setup_instructions</span><span class="o">=</span><span class="n">server</span><span class="o">.</span><span class="n">setup_instructions</span>
+                <span class="p">))</span>
+
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">confidence</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="security-safety">
+<h2>🔒 Security &amp; Safety<a class="headerlink" href="#security-safety" title="Link to this heading">¶</a></h2>
+<section id="approval-workflows">
+<h3>Approval Workflows<a class="headerlink" href="#approval-workflows" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">HITLApprovalSystem</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">request_approval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recommendation</span><span class="p">:</span> <span class="n">ServerRecommendation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Human-in-the-loop approval for server installation.&quot;&quot;&quot;</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">HITLApprovalRequest</span><span class="p">(</span>
+            <span class="n">recommendation</span><span class="o">=</span><span class="n">recommendation</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+            <span class="n">risk_assessment</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_assess_risk</span><span class="p">(</span><span class="n">recommendation</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Custom approval callback</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">approval_callback</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">approval_callback</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+        <span class="c1"># Default approval logic</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_approval</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_assess_risk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recommendation</span><span class="p">:</span> <span class="n">ServerRecommendation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RiskLevel</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Assess security risk of server installation.&quot;&quot;&quot;</span>
+        <span class="c1"># Check against allowlist/denylist</span>
+        <span class="c1"># Analyze server permissions</span>
+        <span class="c1"># Consider data access patterns</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="server-sandboxing">
+<h3>Server Sandboxing<a class="headerlink" href="#server-sandboxing" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SecureMCPConnection</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Secure wrapper for MCP server connections.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">MCPServerConfig</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resource_limits</span> <span class="o">=</span> <span class="n">ResourceLimits</span><span class="p">(</span>
+            <span class="n">max_memory</span><span class="o">=</span><span class="s2">&quot;512MB&quot;</span><span class="p">,</span>
+            <span class="n">max_cpu_time</span><span class="o">=</span><span class="s2">&quot;30s&quot;</span><span class="p">,</span>
+            <span class="n">network_access</span><span class="o">=</span><span class="s2">&quot;restricted&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">execute_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute tool with security constraints.&quot;&quot;&quot;</span>
+        <span class="c1"># Validate arguments</span>
+        <span class="c1"># Apply resource limits</span>
+        <span class="c1"># Monitor execution</span>
+        <span class="c1"># Log activity</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="performance-considerations">
+<h2>📊 Performance Considerations<a class="headerlink" href="#performance-considerations" title="Link to this heading">¶</a></h2>
+<section id="connection-pooling">
+<h3>Connection Pooling<a class="headerlink" href="#connection-pooling" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MCPConnectionPool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Efficient connection management for MCP servers.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_connections</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pool</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="n">max_connections</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_connections</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MCPConnection</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get pooled connection to server.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">server_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_connections</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_connections</span><span class="p">[</span><span class="n">server_name</span><span class="p">]</span>
+
+        <span class="n">connection</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_connection</span><span class="p">(</span><span class="n">server_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_connections</span><span class="p">[</span><span class="n">server_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="k">return</span> <span class="n">connection</span>
+</pre></div>
+</div>
+</section>
+<section id="tool-caching">
+<h3>Tool Caching<a class="headerlink" href="#tool-caching" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ToolCache</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cache for MCP tools to improve performance.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ttl</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">):</span>  <span class="c1"># 5 minutes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ttl</span> <span class="o">=</span> <span class="n">ttl</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_tools</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Tool</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get cached tools or fetch from server.&quot;&quot;&quot;</span>
+        <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;tools_</span><span class="si">{</span><span class="n">server_name</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">if</span> <span class="n">cache_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">:</span>
+            <span class="n">cached_data</span><span class="p">,</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">cache_key</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">timestamp</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ttl</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">cached_data</span>
+
+        <span class="c1"># Fetch fresh tools</span>
+        <span class="n">tools</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_tools</span><span class="p">(</span><span class="n">server_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">cache_key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">tools</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">tools</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="integration-points">
+<h2>🔗 Integration Points<a class="headerlink" href="#integration-points" title="Link to this heading">¶</a></h2>
+<section id="haive-agent-framework">
+<h3>Haive Agent Framework<a class="headerlink" href="#haive-agent-framework" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># MCP capabilities integrate seamlessly with existing Haive patterns</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EnhancedReactAgent</span><span class="p">(</span><span class="n">ReactAgent</span><span class="p">,</span> <span class="n">MCPMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ReactAgent enhanced with MCP capabilities.&quot;&quot;&quot;</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">await</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_mcp</span><span class="p">()</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_tools</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Combine built-in tools with MCP tools</span>
+        <span class="n">built_in_tools</span> <span class="o">=</span> <span class="k">await</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_tools</span><span class="p">()</span>
+        <span class="n">mcp_tools</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mcp_tools</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">built_in_tools</span> <span class="o">+</span> <span class="n">mcp_tools</span>
+</pre></div>
+</div>
+</section>
+<section id="langgraph-integration">
+<h3>LangGraph Integration<a class="headerlink" href="#langgraph-integration" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">create_mcp_enhanced_graph</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create LangGraph workflow with MCP tools.&quot;&quot;&quot;</span>
+
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">AgentState</span><span class="p">)</span>
+
+    <span class="c1"># MCP-enhanced agent node</span>
+    <span class="n">graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;mcp_agent&quot;</span><span class="p">,</span> <span class="n">mcp_agent_node</span><span class="p">)</span>
+    <span class="n">graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;tool_node&quot;</span><span class="p">,</span> <span class="n">create_tool_node</span><span class="p">(</span><span class="n">mcp_tools</span><span class="p">))</span>
+
+    <span class="c1"># Dynamic tool routing</span>
+    <span class="n">graph</span><span class="o">.</span><span class="n">add_conditional_edges</span><span class="p">(</span>
+        <span class="s2">&quot;mcp_agent&quot;</span><span class="p">,</span>
+        <span class="n">should_continue</span><span class="p">,</span>
+        <span class="p">{</span><span class="s2">&quot;continue&quot;</span><span class="p">:</span> <span class="s2">&quot;tool_node&quot;</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">END</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">graph</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="scalability">
+<h2>🚀 Scalability<a class="headerlink" href="#scalability" title="Link to this heading">¶</a></h2>
+<section id="distributed-mcp-servers">
+<h3>Distributed MCP Servers<a class="headerlink" href="#distributed-mcp-servers" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DistributedMCPManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Manage MCP servers across multiple processes/machines.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_servers</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote_servers</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_balancer</span> <span class="o">=</span> <span class="n">MCPLoadBalancer</span><span class="p">()</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">route_tool_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Route tool call to appropriate server instance.&quot;&quot;&quot;</span>
+        <span class="n">server_instance</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_balancer</span><span class="o">.</span><span class="n">select_server</span><span class="p">(</span><span class="n">tool_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">server_instance</span><span class="o">.</span><span class="n">execute_tool</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><strong>Next</strong>: <a class="reference internal" href="#dynamic-discovery.md"><span class="xref myst">Dynamic Discovery Deep Dive</span></a> | <a class="reference internal" href="#hot-reload.md"><span class="xref myst">Hot-Reload System</span></a></p>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Haive-MCP Architecture Overview</a><ul>
+<li><a class="reference internal" href="#architecture-overview">🏗️ Architecture Overview</a></li>
+<li><a class="reference internal" href="#core-components">🧩 Core Components</a><ul>
+<li><a class="reference internal" href="#agent-layer">1. Agent Layer</a><ul>
+<li><a class="reference internal" href="#intelligentmcpagent">IntelligentMCPAgent</a></li>
+<li><a class="reference internal" href="#mcpagent">MCPAgent</a></li>
+<li><a class="reference internal" href="#transferablemcpagent">TransferableMCPAgent</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#management-layer">2. Management Layer</a><ul>
+<li><a class="reference internal" href="#mcpmanager">MCPManager</a></li>
+<li><a class="reference internal" href="#mcpserverdiscovery">MCPServerDiscovery</a></li>
+<li><a class="reference internal" href="#mcpdocumentationloader">MCPDocumentationLoader</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration-layer">3. Configuration Layer</a><ul>
+<li><a class="reference internal" href="#mcpconfig-mcpserverconfig">MCPConfig &amp; MCPServerConfig</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dynamic-discovery-process">🔄 Dynamic Discovery Process</a><ul>
+<li><a class="reference internal" href="#capability-analysis">1. Capability Analysis</a></li>
+<li><a class="reference internal" href="#server-matching">2. Server Matching</a></li>
+<li><a class="reference internal" href="#installation-integration">3. Installation &amp; Integration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hot-reload-architecture">🔥 Hot-Reload Architecture</a><ul>
+<li><a class="reference internal" href="#server-lifecycle-management">Server Lifecycle Management</a></li>
+<li><a class="reference internal" href="#tool-synchronization">Tool Synchronization</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ai-powered-discovery">🤖 AI-Powered Discovery</a><ul>
+<li><a class="reference internal" href="#capability-analysis-pipeline">Capability Analysis Pipeline</a></li>
+<li><a class="reference internal" href="#server-matching-algorithm">Server Matching Algorithm</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#security-safety">🔒 Security &amp; Safety</a><ul>
+<li><a class="reference internal" href="#approval-workflows">Approval Workflows</a></li>
+<li><a class="reference internal" href="#server-sandboxing">Server Sandboxing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#performance-considerations">📊 Performance Considerations</a><ul>
+<li><a class="reference internal" href="#connection-pooling">Connection Pooling</a></li>
+<li><a class="reference internal" href="#tool-caching">Tool Caching</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#integration-points">🔗 Integration Points</a><ul>
+<li><a class="reference internal" href="#haive-agent-framework">Haive Agent Framework</a></li>
+<li><a class="reference internal" href="#langgraph-integration">LangGraph Integration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scalability">🚀 Scalability</a><ul>
+<li><a class="reference internal" href="#distributed-mcp-servers">Distributed MCP Servers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

@@ -1,0 +1,7 @@
+packages/haive-agents/pyproject.toml
+packages/haive-core/pyproject.toml
+packages/haive-dataflow/pyproject.toml
+packages/haive-games/pyproject.toml
+packages/haive-mcp/pyproject.toml
+packages/haive-prebuilt/pyproject.toml
+packages/haive-tools/pyproject.toml

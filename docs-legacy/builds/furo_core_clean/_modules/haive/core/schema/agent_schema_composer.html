@@ -1,0 +1,1122 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.schema.agent_schema_composer - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for haive.core.schema.agent_schema_composer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Agent Schema Composer for the Haive Framework.</span>
+
+<span class="sd">This module provides the AgentSchemaComposer class, which extends SchemaComposer</span>
+<span class="sd">with agent-specific functionality for building dynamic state schemas from multiple</span>
+<span class="sd">agents. It handles intelligent field separation, message preservation, and</span>
+<span class="sd">multi-agent coordination patterns.</span>
+
+<span class="sd">The AgentSchemaComposer is the cornerstone of multi-agent state management in Haive,</span>
+<span class="sd">enabling seamless composition of schemas with proper field sharing, reducers, and</span>
+<span class="sd">engine I/O mappings while preserving critical message fields like tool_call_id.</span>
+
+<span class="sd">Example:</span>
+<span class="sd">    Basic usage for composing schemas from agents::</span>
+
+<span class="sd">        from haive.core.schema.agent_schema_composer import AgentSchemaComposer</span>
+<span class="sd">        from haive.agents.react.agent import ReactAgent</span>
+<span class="sd">        from haive.agents.simple.agent import SimpleAgent</span>
+
+<span class="sd">        # Create agents with their engines</span>
+<span class="sd">        react_agent = ReactAgent(name=&quot;Calculator&quot;, engine=calc_engine)</span>
+<span class="sd">        simple_agent = SimpleAgent(name=&quot;Planner&quot;, engine=plan_engine)</span>
+
+<span class="sd">        # Compose schema from agents</span>
+<span class="sd">        MultiAgentState = AgentSchemaComposer.from_agents(</span>
+<span class="sd">            agents=[react_agent, simple_agent],</span>
+<span class="sd">            name=&quot;MultiAgentState&quot;,</span>
+<span class="sd">            separation=&quot;smart&quot;,  # Intelligent field separation</span>
+<span class="sd">            build_mode=BuildMode.SEQUENCE  # Sequential execution</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # Create state instance</span>
+<span class="sd">        state = MultiAgentState()</span>
+<span class="sd">        # state.messages will use preserve_messages_reducer automatically</span>
+
+<span class="sd">Attributes:</span>
+<span class="sd">    logger: Module-level logger for debugging schema composition</span>
+<span class="sd">    BuildMode: Enum defining execution patterns for multi-agent systems</span>
+
+<span class="sd">Note:</span>
+<span class="sd">    This module uses a custom message reducer (preserve_messages_reducer) instead</span>
+<span class="sd">    of LangGraph&#39;s default to prevent loss of fields like tool_call_id in</span>
+<span class="sd">    ToolMessage objects during multi-agent execution.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.messages</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnyMessage</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.schema.preserve_messages_reducer</span><span class="w"> </span><span class="kn">import</span> <span class="n">preserve_messages_reducer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.schema.schema_composer</span><span class="w"> </span><span class="kn">import</span> <span class="n">SchemaComposer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.schema.state_schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">StateSchema</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Import Agent only for type checking to break circular dependency</span>
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.base.agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+
+<span class="c1"># Import preserve_messages_reducer</span>
+
+
+<span class="c1"># Helper function for message reducer - now uses preserve_messages_reducer</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_messages</span><span class="p">(</span>
+    <span class="n">current_msgs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">AnyMessage</span><span class="p">],</span> <span class="n">new_msgs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">AnyMessage</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">AnyMessage</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Combine message lists while preserving BaseMessage objects.</span>
+
+<span class="sd">    This function uses preserve_messages_reducer to maintain all fields in</span>
+<span class="sd">    BaseMessage objects, including tool_call_id which is critical for</span>
+<span class="sd">    multi-agent tool coordination.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        current_msgs: Existing messages in the state</span>
+<span class="sd">        new_msgs: New messages to add to the state</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Combined list of messages with BaseMessage objects preserved intact</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from langchain_core.messages import ToolMessage</span>
+<span class="sd">        &gt;&gt;&gt; tool_msg = ToolMessage(content=&quot;Result&quot;, tool_call_id=&quot;123&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; messages = add_messages([], [tool_msg])</span>
+<span class="sd">        &gt;&gt;&gt; messages[0].tool_call_id  # Preserved!</span>
+<span class="sd">        &#39;123&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">preserve_messages_reducer</span><span class="p">(</span><span class="n">current_msgs</span><span class="p">,</span> <span class="n">new_msgs</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BuildMode">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/index.html#haive.core.schema.BuildMode">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BuildMode</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build modes for agent schema composition.</span>
+
+<span class="sd">    Defines execution patterns for multi-agent systems, determining how</span>
+<span class="sd">    agents are orchestrated and how their fields are composed.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        PARALLEL: All agents execute independently with separate state spaces</span>
+<span class="sd">        SEQUENCE: Agents execute in order, with state flowing between them</span>
+<span class="sd">        HIERARCHICAL: Parent-child relationships with supervisor patterns</span>
+<span class="sd">        CUSTOM: User-defined execution mode requiring custom implementation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">PARALLEL</span> <span class="o">=</span> <span class="s2">&quot;parallel&quot;</span>  <span class="c1"># All agents execute independently</span>
+    <span class="n">SEQUENCE</span> <span class="o">=</span> <span class="s2">&quot;sequence&quot;</span>  <span class="c1"># Agents execute in sequence</span>
+    <span class="n">HIERARCHICAL</span> <span class="o">=</span> <span class="s2">&quot;hierarchical&quot;</span>  <span class="c1"># Parent-child relationships</span>
+    <span class="n">CUSTOM</span> <span class="o">=</span> <span class="s2">&quot;custom&quot;</span>  <span class="c1"># User-defined mode</span></div>
+
+
+
+<div class="viewcode-block" id="AgentSchemaComposer">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/index.html#haive.core.schema.AgentSchemaComposer">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AgentSchemaComposer</span><span class="p">(</span><span class="n">SchemaComposer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enhanced schema composer with agent-specific intelligence.</span>
+
+<span class="sd">    Extends SchemaComposer to provide intelligent schema composition from</span>
+<span class="sd">    agent instances, handling field separation strategies, message preservation,</span>
+<span class="sd">    and multi-agent coordination patterns. This class is the primary interface</span>
+<span class="sd">    for building state schemas in multi-agent systems.</span>
+
+<span class="sd">    The composer automatically:</span>
+<span class="sd">    - Extracts fields from agent state schemas and engines</span>
+<span class="sd">    - Applies intelligent field separation based on usage patterns</span>
+<span class="sd">    - Preserves engine I/O mappings for proper routing</span>
+<span class="sd">    - Adds message fields with custom reducers to preserve tool_call_id</span>
+<span class="sd">    - Includes meta state for agent coordination when needed</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; # Compose from multiple agents</span>
+<span class="sd">        &gt;&gt;&gt; schema = AgentSchemaComposer.from_agents(</span>
+<span class="sd">        ...     agents=[research_agent, writer_agent],</span>
+<span class="sd">        ...     separation=&quot;smart&quot;</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; state = schema()  # Create state instance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AgentSchemaComposer.from_agents_with_multiagent_base">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/index.html#haive.core.schema.AgentSchemaComposer.from_agents_with_multiagent_base">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_agents_with_multiagent_base</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Agent&quot;</span><span class="p">],</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">separation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;smart&quot;</span><span class="p">,</span>  <span class="c1"># &quot;smart&quot;, &quot;shared&quot;, &quot;namespaced&quot;</span>
+        <span class="n">build_mode</span><span class="p">:</span> <span class="n">BuildMode</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">StateSchema</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compose a state schema that inherits from MultiAgentState with agent fields.</span>
+
+<span class="sd">        This method creates a schema that MARRIES AgentSchemaComposer with MultiAgentState:</span>
+<span class="sd">        - Inherits ALL MultiAgentState functionality (hierarchical agents, agent_states, agent_outputs)</span>
+<span class="sd">        - Adds ALL agent-specific fields from the composed agents on top</span>
+<span class="sd">        - Preserves the hierarchical big daddy grand state architecture</span>
+
+<span class="sd">        This is the solution for multi-agent systems that need both:</span>
+<span class="sd">        1. Hierarchical state management (MultiAgentState)</span>
+<span class="sd">        2. Access to all agent-specific fields (composed from agents)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agents: List of agent instances to compose fields from</span>
+<span class="sd">            name: Optional name for the composed schema class</span>
+<span class="sd">            separation: Field separation strategy for agent fields</span>
+<span class="sd">            build_mode: Execution pattern for the multi-agent system</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A StateSchema class that inherits from MultiAgentState and includes</span>
+<span class="sd">            all composed agent fields</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; # Self-discovery agents example</span>
+<span class="sd">            &gt;&gt;&gt; schema = AgentSchemaComposer.from_agents_with_multiagent_base(</span>
+<span class="sd">            ...     agents=[self_discovery_agent],</span>
+<span class="sd">            ...     name=&quot;SelfDiscoveryMultiState&quot;</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; # This schema has BOTH:</span>
+<span class="sd">            &gt;&gt;&gt; # - MultiAgentState fields: agents, agent_states, agent_outputs</span>
+<span class="sd">            &gt;&gt;&gt; # - SelfDiscoveryState fields: reasoning_modules, task_description, etc.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.schema.prebuilt.multi_agent_state</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiAgentState</span>
+
+        <span class="c1"># Auto-detect build mode if not specified</span>
+        <span class="k">if</span> <span class="n">build_mode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">build_mode</span> <span class="o">=</span> <span class="n">BuildMode</span><span class="o">.</span><span class="n">PARALLEL</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">BuildMode</span><span class="o">.</span><span class="n">SEQUENCE</span>
+
+        <span class="c1"># Create composer with MultiAgentState as base</span>
+        <span class="n">composer</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_generate_name</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span><span class="si">}</span><span class="s2">WithMultiBase&quot;</span><span class="p">,</span>
+            <span class="n">base_state_schema</span><span class="o">=</span><span class="n">MultiAgentState</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Collect all fields from all agents (excluding MultiAgentState fields</span>
+        <span class="c1"># to avoid conflicts)</span>
+        <span class="n">all_fields</span><span class="p">,</span> <span class="n">engine_io_mappings</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_collect_all_fields</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span>
+
+        <span class="c1"># Filter out fields that already exist in MultiAgentState to avoid</span>
+        <span class="c1"># conflicts</span>
+        <span class="n">multiagent_fields</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">MultiAgentState</span><span class="o">.</span><span class="n">model_fields</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">filtered_fields</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">agent_name</span><span class="p">,</span> <span class="n">agent_fields</span> <span class="ow">in</span> <span class="n">all_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">filtered_fields</span><span class="p">[</span><span class="n">agent_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">field</span>
+                <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">agent_fields</span>
+                <span class="k">if</span> <span class="n">field</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">multiagent_fields</span>  <span class="c1"># field[0] is field name</span>
+            <span class="p">]</span>
+
+        <span class="c1"># Apply separation strategy for agent-specific fields only</span>
+        <span class="k">if</span> <span class="n">separation</span> <span class="o">==</span> <span class="s2">&quot;smart&quot;</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_apply_smart_separation</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">filtered_fields</span><span class="p">,</span> <span class="n">agents</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">separation</span> <span class="o">==</span> <span class="s2">&quot;shared&quot;</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_apply_shared_separation</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">filtered_fields</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">separation</span> <span class="o">==</span> <span class="s2">&quot;namespaced&quot;</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_apply_namespaced_separation</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">filtered_fields</span><span class="p">,</span> <span class="n">agents</span><span class="p">)</span>
+
+        <span class="c1"># Copy engine IO mappings</span>
+        <span class="k">for</span> <span class="n">engine_name</span><span class="p">,</span> <span class="n">mapping</span> <span class="ow">in</span> <span class="n">engine_io_mappings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">composer</span><span class="o">.</span><span class="n">engine_io_mappings</span><span class="p">[</span><span class="n">engine_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;inputs&quot;</span><span class="p">]:</span>
+                <span class="n">composer</span><span class="o">.</span><span class="n">input_fields</span><span class="p">[</span><span class="n">engine_name</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]:</span>
+                <span class="n">composer</span><span class="o">.</span><span class="n">output_fields</span><span class="p">[</span><span class="n">engine_name</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+
+        <span class="c1"># Build the composed schema (inheriting from MultiAgentState + agent</span>
+        <span class="c1"># fields)</span>
+        <span class="k">return</span> <span class="n">composer</span><span class="o">.</span><span class="n">build</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="AgentSchemaComposer.from_agents">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/index.html#haive.core.schema.AgentSchemaComposer.from_agents">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_agents</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Agent&quot;</span><span class="p">],</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">include_meta</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Auto-detect if None</span>
+        <span class="n">separation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;smart&quot;</span><span class="p">,</span>  <span class="c1"># &quot;smart&quot;, &quot;shared&quot;, &quot;namespaced&quot;</span>
+        <span class="c1"># Build mode for schema generation</span>
+        <span class="n">build_mode</span><span class="p">:</span> <span class="n">BuildMode</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">StateSchema</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compose a state schema from multiple agents with intelligent defaults.</span>
+
+<span class="sd">        This method is the primary entry point for creating multi-agent state schemas.</span>
+<span class="sd">        It analyzes the provided agents and creates a unified schema with proper</span>
+<span class="sd">        field sharing, reducers, and engine mappings.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agents: List of agent instances to compose the schema from. Each agent</span>
+<span class="sd">                should have a state_schema and optionally engines with I/O fields.</span>
+<span class="sd">            name: Optional name for the composed schema class. If None, generates</span>
+<span class="sd">                a name based on the agents (e.g., &quot;MultiAgentState&quot;).</span>
+<span class="sd">            include_meta: Whether to include MetaAgentState for coordination. If None,</span>
+<span class="sd">                auto-detects based on number of agents and meta_state usage.</span>
+<span class="sd">            separation: Field separation strategy:</span>
+<span class="sd">                - &quot;smart&quot;: Automatically determine sharing based on usage patterns</span>
+<span class="sd">                - &quot;shared&quot;: All fields are shared between agents</span>
+<span class="sd">                - &quot;namespaced&quot;: Each agent&#39;s fields get a unique prefix</span>
+<span class="sd">            build_mode: Execution pattern for the multi-agent system. If None,</span>
+<span class="sd">                defaults to PARALLEL for single agent, SEQUENCE for multiple.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A new StateSchema class composed from the agent specifications.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no agents are provided or if agents have invalid schemas.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; # Smart separation with auto-detected build mode</span>
+<span class="sd">            &gt;&gt;&gt; schema = AgentSchemaComposer.from_agents(</span>
+<span class="sd">            ...     agents=[agent1, agent2],</span>
+<span class="sd">            ...     name=&quot;CustomMultiState&quot;</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt;</span>
+<span class="sd">            &gt;&gt;&gt; # Explicit configuration</span>
+<span class="sd">            &gt;&gt;&gt; schema = AgentSchemaComposer.from_agents(</span>
+<span class="sd">            ...     agents=[supervisor, worker1, worker2],</span>
+<span class="sd">            ...     separation=&quot;namespaced&quot;,</span>
+<span class="sd">            ...     build_mode=BuildMode.HIERARCHICAL</span>
+<span class="sd">            ... )</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            The messages field is always added with preserve_messages_reducer</span>
+<span class="sd">            to ensure tool_call_id and other fields are maintained across</span>
+<span class="sd">            agent boundaries.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Auto-detect meta state need</span>
+        <span class="k">if</span> <span class="n">include_meta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">include_meta</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="nb">any</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">&quot;meta_state&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Auto-detect build mode if not specified</span>
+        <span class="k">if</span> <span class="n">build_mode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">build_mode</span> <span class="o">=</span> <span class="n">BuildMode</span><span class="o">.</span><span class="n">PARALLEL</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">BuildMode</span><span class="o">.</span><span class="n">SEQUENCE</span>
+
+        <span class="n">composer</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_generate_name</span><span class="p">(</span><span class="n">agents</span><span class="p">))</span>
+
+        <span class="c1"># Force messages state for agents</span>
+        <span class="n">composer</span><span class="o">.</span><span class="n">has_messages</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Check if any agent has tools</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">hasattr</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="s2">&quot;engine&quot;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">agent</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">tools</span>
+            <span class="p">):</span>
+                <span class="n">composer</span><span class="o">.</span><span class="n">has_tools</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="s2">&quot;engines&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">engine</span> <span class="ow">in</span> <span class="n">agent</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">engine</span><span class="o">.</span><span class="n">tools</span><span class="p">:</span>
+                        <span class="n">composer</span><span class="o">.</span><span class="n">has_tools</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="k">break</span>
+
+        <span class="c1"># Collect all fields from all agents</span>
+        <span class="n">all_fields</span><span class="p">,</span> <span class="n">engine_io_mappings</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_collect_all_fields</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span>
+
+        <span class="c1"># Apply build mode specific logic</span>
+        <span class="k">if</span> <span class="n">build_mode</span> <span class="o">==</span> <span class="n">BuildMode</span><span class="o">.</span><span class="n">SEQUENCE</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_apply_sequence_mode</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">,</span> <span class="n">agents</span><span class="p">,</span> <span class="n">engine_io_mappings</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">build_mode</span> <span class="o">==</span> <span class="n">BuildMode</span><span class="o">.</span><span class="n">PARALLEL</span><span class="p">:</span>
+            <span class="c1"># Apply separation strategy for parallel mode</span>
+            <span class="k">if</span> <span class="n">separation</span> <span class="o">==</span> <span class="s2">&quot;smart&quot;</span><span class="p">:</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_apply_smart_separation</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">,</span> <span class="n">agents</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">separation</span> <span class="o">==</span> <span class="s2">&quot;shared&quot;</span><span class="p">:</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_apply_shared_separation</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">separation</span> <span class="o">==</span> <span class="s2">&quot;namespaced&quot;</span><span class="p">:</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_apply_namespaced_separation</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">,</span> <span class="n">agents</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">build_mode</span> <span class="o">==</span> <span class="n">BuildMode</span><span class="o">.</span><span class="n">HIERARCHICAL</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_apply_hierarchical_mode</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">,</span> <span class="n">agents</span><span class="p">)</span>
+        <span class="c1"># Custom mode - use default separation</span>
+        <span class="k">elif</span> <span class="n">separation</span> <span class="o">==</span> <span class="s2">&quot;smart&quot;</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_apply_smart_separation</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">,</span> <span class="n">agents</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">separation</span> <span class="o">==</span> <span class="s2">&quot;shared&quot;</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_apply_shared_separation</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">separation</span> <span class="o">==</span> <span class="s2">&quot;namespaced&quot;</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_apply_namespaced_separation</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">,</span> <span class="n">agents</span><span class="p">)</span>
+
+        <span class="c1"># Add implicit fields</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_add_implicit_fields</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">agents</span><span class="p">,</span> <span class="n">include_meta</span><span class="p">)</span>
+
+        <span class="c1"># Copy engine IO mappings</span>
+        <span class="k">for</span> <span class="n">engine_name</span><span class="p">,</span> <span class="n">mapping</span> <span class="ow">in</span> <span class="n">engine_io_mappings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Add to composer&#39;s engine IO mappings</span>
+            <span class="n">composer</span><span class="o">.</span><span class="n">engine_io_mappings</span><span class="p">[</span><span class="n">engine_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="c1"># Update input/output fields tracking</span>
+            <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;inputs&quot;</span><span class="p">]:</span>
+                <span class="n">composer</span><span class="o">.</span><span class="n">input_fields</span><span class="p">[</span><span class="n">engine_name</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]:</span>
+                <span class="n">composer</span><span class="o">.</span><span class="n">output_fields</span><span class="p">[</span><span class="n">engine_name</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
+
+        <span class="c1"># Don&#39;t copy engines to prevent contamination</span>
+        <span class="c1"># Each agent will use its own state schema with its own engines</span>
+        <span class="c1"># This prevents tools from one agent leaking to another</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Skipping engine copying to prevent cross-agent contamination&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">composer</span><span class="o">.</span><span class="n">build</span><span class="p">()</span></div>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_collect_all_fields</span><span class="p">(</span>
+        <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Agent&quot;</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
+        <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span>
+    <span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Collect all fields from agents and their engine I/O mappings.</span>
+
+<span class="sd">        Extracts field definitions from agent state schemas and engine</span>
+<span class="sd">        input/output specifications. This comprehensive collection enables</span>
+<span class="sd">        intelligent field separation and proper engine routing.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agents: List of agents to analyze for field extraction</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple containing:</span>
+<span class="sd">                - fields_dict: Mapping of field names to their sources and types</span>
+<span class="sd">                  Format: {field_name: [(agent_id, field_name, type, info)]}</span>
+<span class="sd">                - engine_io_mappings_dict: Engine routing information</span>
+<span class="sd">                  Format: {engine_name: {&quot;inputs&quot;: [...], &quot;outputs&quot;: [...]}}</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; fields, mappings = AgentSchemaComposer._collect_all_fields([agent1, agent2])</span>
+<span class="sd">            &gt;&gt;&gt; # fields[&quot;messages&quot;] might contain multiple entries if both agents use it</span>
+<span class="sd">            &gt;&gt;&gt; # mappings[&quot;planner_engine&quot;] contains input/output field names</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Engine names are prefixed with agent names to avoid collisions</span>
+<span class="sd">            (e.g., &quot;planner_aug_llm&quot; for aug_llm engine in planner agent).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Also track engine IO mappings in a separate dictionary</span>
+        <span class="n">engine_io_mappings</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
+            <span class="n">agent_id</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">id</span>  <span class="c1"># Use ID instead of object for hashability</span>
+            <span class="n">agent_name</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">name</span>
+
+            <span class="c1"># From state schema</span>
+            <span class="k">if</span> <span class="n">agent</span><span class="o">.</span><span class="n">state_schema</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">state_schema</span><span class="p">,</span> <span class="s2">&quot;model_fields&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">finfo</span> <span class="ow">in</span> <span class="n">agent</span><span class="o">.</span><span class="n">state_schema</span><span class="o">.</span><span class="n">model_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">fname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+                        <span class="n">fields</span><span class="p">[</span><span class="n">fname</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">fields</span><span class="p">[</span><span class="n">fname</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">agent_id</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">finfo</span><span class="o">.</span><span class="n">annotation</span><span class="p">,</span> <span class="n">finfo</span><span class="p">))</span>
+
+                <span class="c1"># Extract engine IO mappings from state schema if available</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">state_schema</span><span class="p">,</span> <span class="s2">&quot;__engine_io_mappings__&quot;</span><span class="p">):</span>
+                    <span class="n">schema_mappings</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+                        <span class="n">agent</span><span class="o">.</span><span class="n">state_schema</span><span class="p">,</span> <span class="s2">&quot;__engine_io_mappings__&quot;</span><span class="p">,</span> <span class="p">{}</span>
+                    <span class="p">)</span>
+
+                    <span class="c1"># Add prefix to engine names to avoid collisions</span>
+                    <span class="k">for</span> <span class="n">engine_name</span><span class="p">,</span> <span class="n">mapping</span> <span class="ow">in</span> <span class="n">schema_mappings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="n">prefixed_engine_name</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">agent_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="p">)</span>
+                        <span class="n">engine_io_mappings</span><span class="p">[</span><span class="n">prefixed_engine_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="c1"># From engines - using get_input_fields and get_output_fields</span>
+            <span class="k">for</span> <span class="n">engine_name</span><span class="p">,</span> <span class="n">engine</span> <span class="ow">in</span> <span class="n">agent</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="c1"># Create prefixed engine name</span>
+                <span class="n">prefixed_engine_name</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">agent_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Initialize engine mapping if not exists</span>
+                <span class="k">if</span> <span class="n">prefixed_engine_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">engine_io_mappings</span><span class="p">:</span>
+                    <span class="n">engine_io_mappings</span><span class="p">[</span><span class="n">prefixed_engine_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                        <span class="s2">&quot;outputs&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                    <span class="p">}</span>
+
+                <span class="c1"># Get input fields</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;get_input_fields&quot;</span><span class="p">):</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">input_fields</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">get_input_fields</span><span class="p">()</span>
+                        <span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="p">(</span><span class="n">ftype</span><span class="p">,</span> <span class="n">fdefault</span><span class="p">)</span> <span class="ow">in</span> <span class="n">input_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="k">if</span> <span class="n">fname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+                                <span class="n">fields</span><span class="p">[</span><span class="n">fname</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                            <span class="c1"># Create a mock field info</span>
+                            <span class="n">field_info</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span>
+                                <span class="s2">&quot;FieldInfo&quot;</span><span class="p">,</span>
+                                <span class="p">(),</span>
+                                <span class="p">{</span><span class="s2">&quot;annotation&quot;</span><span class="p">:</span> <span class="n">ftype</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="n">fdefault</span><span class="p">},</span>
+                            <span class="p">)()</span>
+                            <span class="n">fields</span><span class="p">[</span><span class="n">fname</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">agent_id</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">field_info</span><span class="p">))</span>
+
+                            <span class="c1"># Add to engine IO mapping</span>
+                            <span class="k">if</span> <span class="p">(</span>
+                                <span class="n">fname</span>
+                                <span class="ow">not</span> <span class="ow">in</span> <span class="n">engine_io_mappings</span><span class="p">[</span><span class="n">prefixed_engine_name</span><span class="p">][</span>
+                                    <span class="s2">&quot;inputs&quot;</span>
+                                <span class="p">]</span>
+                            <span class="p">):</span>
+                                <span class="n">engine_io_mappings</span><span class="p">[</span><span class="n">prefixed_engine_name</span><span class="p">][</span>
+                                    <span class="s2">&quot;inputs&quot;</span>
+                                <span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">BaseException</span><span class="p">:</span>
+                        <span class="k">pass</span>
+
+                <span class="c1"># Get output fields</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;get_output_fields&quot;</span><span class="p">):</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">output_fields</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">get_output_fields</span><span class="p">()</span>
+                        <span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="p">(</span><span class="n">ftype</span><span class="p">,</span> <span class="n">fdefault</span><span class="p">)</span> <span class="ow">in</span> <span class="n">output_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="k">if</span> <span class="n">fname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+                                <span class="n">fields</span><span class="p">[</span><span class="n">fname</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                            <span class="c1"># Create a mock field info</span>
+                            <span class="n">field_info</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span>
+                                <span class="s2">&quot;FieldInfo&quot;</span><span class="p">,</span>
+                                <span class="p">(),</span>
+                                <span class="p">{</span><span class="s2">&quot;annotation&quot;</span><span class="p">:</span> <span class="n">ftype</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="n">fdefault</span><span class="p">},</span>
+                            <span class="p">)()</span>
+                            <span class="n">fields</span><span class="p">[</span><span class="n">fname</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">agent_id</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">field_info</span><span class="p">))</span>
+
+                            <span class="c1"># Add to engine IO mapping</span>
+                            <span class="k">if</span> <span class="p">(</span>
+                                <span class="n">fname</span>
+                                <span class="ow">not</span> <span class="ow">in</span> <span class="n">engine_io_mappings</span><span class="p">[</span><span class="n">prefixed_engine_name</span><span class="p">][</span>
+                                    <span class="s2">&quot;outputs&quot;</span>
+                                <span class="p">]</span>
+                            <span class="p">):</span>
+                                <span class="n">engine_io_mappings</span><span class="p">[</span><span class="n">prefixed_engine_name</span><span class="p">][</span>
+                                    <span class="s2">&quot;outputs&quot;</span>
+                                <span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">BaseException</span><span class="p">:</span>
+                        <span class="k">pass</span>
+
+        <span class="c1"># Return the fields and the engine IO mappings</span>
+        <span class="k">return</span> <span class="n">fields</span><span class="p">,</span> <span class="n">engine_io_mappings</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_apply_smart_separation</span><span class="p">(</span>
+        <span class="n">composer</span><span class="p">:</span> <span class="n">SchemaComposer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Agent&quot;</span><span class="p">]</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply intelligent field separation based on usage patterns.</span>
+
+<span class="sd">        Smart separation automatically determines whether fields should be</span>
+<span class="sd">        shared or namespaced based on:</span>
+<span class="sd">        - Number of agents using the field</span>
+<span class="sd">        - Special field names (e.g., &quot;messages&quot;, &quot;shared_*&quot;)</span>
+<span class="sd">        - Field type and purpose</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            composer: SchemaComposer instance to add fields to</span>
+<span class="sd">            all_fields: Dictionary of collected fields from all agents</span>
+<span class="sd">            agents: List of agent instances for context</span>
+
+<span class="sd">        Separation Rules:</span>
+<span class="sd">            - Fields used by multiple agents → shared</span>
+<span class="sd">            - Fields named &quot;messages&quot; or &quot;meta_state&quot; → always shared</span>
+<span class="sd">            - Fields prefixed with &quot;shared_&quot; → always shared</span>
+<span class="sd">            - Fields used by all agents → shared</span>
+<span class="sd">            - Single-agent fields → namespaced if multiple agents exist</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            If agent1 and agent2 both have a &quot;context&quot; field, it becomes shared.</span>
+<span class="sd">            If only agent1 has &quot;tool_results&quot;, it becomes &quot;agent1_tool_results&quot;</span>
+<span class="sd">            in a multi-agent setup.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create agent ID to name mapping</span>
+        <span class="n">agent_id_to_name</span> <span class="o">=</span> <span class="p">{</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">agent</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_sources</span> <span class="ow">in</span> <span class="n">all_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Check if field appears in multiple agents (using agent IDs)</span>
+            <span class="n">unique_agent_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">source</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">field_sources</span><span class="p">}</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_agent_ids</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># Field used by multiple agents - share it</span>
+                <span class="c1"># Use the first occurrence for type info</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">finfo</span> <span class="o">=</span> <span class="n">field_sources</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="c1"># Determine if it should be shared</span>
+                <span class="n">should_share</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">field_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;messages&quot;</span><span class="p">,</span> <span class="s2">&quot;meta_state&quot;</span><span class="p">]</span>
+                    <span class="ow">or</span> <span class="n">field_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;shared_&quot;</span><span class="p">)</span>
+                    <span class="c1"># All agents use it</span>
+                    <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_agent_ids</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Handle field info properly</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">):</span>
+                    <span class="n">default</span> <span class="o">=</span> <span class="n">finfo</span><span class="o">.</span><span class="n">default</span>
+                <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default_factory&quot;</span><span class="p">):</span>
+                    <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                        <span class="n">field_name</span><span class="p">,</span>
+                        <span class="n">ftype</span><span class="p">,</span>
+                        <span class="n">default_factory</span><span class="o">=</span><span class="n">finfo</span><span class="o">.</span><span class="n">default_factory</span><span class="p">,</span>
+                        <span class="n">shared</span><span class="o">=</span><span class="n">should_share</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">default</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                    <span class="n">field_name</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">shared</span><span class="o">=</span><span class="n">should_share</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Field used by single agent</span>
+                <span class="n">agent_id</span> <span class="o">=</span> <span class="n">field_sources</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">agent_name</span> <span class="o">=</span> <span class="n">agent_id_to_name</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">agent_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">)</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">finfo</span> <span class="o">=</span> <span class="n">field_sources</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="c1"># Could namespace it</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">namespaced_name</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">agent_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+
+                    <span class="c1"># Handle field info properly</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default_factory&quot;</span><span class="p">):</span>
+                        <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                            <span class="n">namespaced_name</span><span class="p">,</span>
+                            <span class="n">ftype</span><span class="p">,</span>
+                            <span class="n">default_factory</span><span class="o">=</span><span class="n">finfo</span><span class="o">.</span><span class="n">default_factory</span><span class="p">,</span>
+                            <span class="n">shared</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                            <span class="n">namespaced_name</span><span class="p">,</span>
+                            <span class="n">ftype</span><span class="p">,</span>
+                            <span class="n">default</span><span class="o">=</span><span class="p">(</span>
+                                <span class="n">finfo</span><span class="o">.</span><span class="n">default</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+                            <span class="p">),</span>
+                            <span class="n">shared</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="p">)</span>
+                <span class="c1"># Single agent, use as is</span>
+                <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default_factory&quot;</span><span class="p">):</span>
+                    <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                        <span class="n">field_name</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">default_factory</span><span class="o">=</span><span class="n">finfo</span><span class="o">.</span><span class="n">default_factory</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                        <span class="n">field_name</span><span class="p">,</span>
+                        <span class="n">ftype</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="p">(</span><span class="n">finfo</span><span class="o">.</span><span class="n">default</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">),</span>
+                    <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_implicit_fields</span><span class="p">(</span>
+        <span class="n">composer</span><span class="p">:</span> <span class="n">SchemaComposer</span><span class="p">,</span> <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Agent&quot;</span><span class="p">],</span> <span class="n">include_meta</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add fields that should be implicitly included.&quot;&quot;&quot;</span>
+
+        <span class="c1"># Check if field exists using has_field method or by checking the</span>
+        <span class="c1"># fields dict</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">field_exists</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="s2">&quot;has_field&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">composer</span><span class="o">.</span><span class="n">has_field</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="s2">&quot;fields&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">composer</span><span class="o">.</span><span class="n">fields</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="s2">&quot;_field_definitions&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">composer</span><span class="o">.</span><span class="n">_field_definitions</span>
+            <span class="c1"># Try to access through the model fields if already built</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">temp_model</span> <span class="o">=</span> <span class="n">composer</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">temp_model</span><span class="o">.</span><span class="n">model_fields</span>
+            <span class="k">except</span> <span class="ne">BaseException</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Always ensure messages field exists</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">field_exists</span><span class="p">(</span><span class="s2">&quot;messages&quot;</span><span class="p">):</span>
+            <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                <span class="s2">&quot;messages&quot;</span><span class="p">,</span>
+                <span class="nb">list</span><span class="p">[</span><span class="n">AnyMessage</span><span class="p">],</span>
+                <span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span>
+                <span class="n">shared</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">reducer</span><span class="o">=</span><span class="n">add_messages</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Add meta state if needed</span>
+        <span class="k">if</span> <span class="n">include_meta</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">field_exists</span><span class="p">(</span><span class="s2">&quot;meta_state&quot;</span><span class="p">):</span>
+            <span class="c1"># Import here to avoid circular imports</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.schema.meta_agent_state</span><span class="w"> </span><span class="kn">import</span> <span class="n">MetaAgentState</span>
+
+                <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                    <span class="s2">&quot;meta_state&quot;</span><span class="p">,</span>
+                    <span class="n">MetaAgentState</span><span class="p">,</span>
+                    <span class="n">default_factory</span><span class="o">=</span><span class="n">MetaAgentState</span><span class="p">,</span>
+                    <span class="n">shared</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Shared meta state for agent coordination&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="c1"># If meta_state module doesn&#39;t exist, create a dummy Dict type</span>
+                <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                    <span class="s2">&quot;meta_state&quot;</span><span class="p">,</span>
+                    <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+                    <span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span>
+                    <span class="n">shared</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Shared meta state for agent coordination&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Multi-agent coordination fields</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">field_exists</span><span class="p">(</span><span class="s2">&quot;active_agent_id&quot;</span><span class="p">):</span>
+                <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                    <span class="s2">&quot;active_agent_id&quot;</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shared</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">field_exists</span><span class="p">(</span><span class="s2">&quot;agent_outputs&quot;</span><span class="p">):</span>
+                <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                    <span class="s2">&quot;agent_outputs&quot;</span><span class="p">,</span>
+                    <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+                    <span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span>
+                    <span class="n">shared</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Collected outputs from each agent&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_name</span><span class="p">(</span><span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Agent&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a name for the composed schema.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">agents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">State&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;MultiAgentState&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_apply_shared_separation</span><span class="p">(</span><span class="n">composer</span><span class="p">:</span> <span class="n">SchemaComposer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply shared separation - all fields are shared.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_sources</span> <span class="ow">in</span> <span class="n">all_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Use first occurrence for type info</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">finfo</span> <span class="o">=</span> <span class="n">field_sources</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default_factory&quot;</span><span class="p">):</span>
+                <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                    <span class="n">field_name</span><span class="p">,</span>
+                    <span class="n">ftype</span><span class="p">,</span>
+                    <span class="n">default_factory</span><span class="o">=</span><span class="n">finfo</span><span class="o">.</span><span class="n">default_factory</span><span class="p">,</span>
+                    <span class="n">shared</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                    <span class="n">field_name</span><span class="p">,</span>
+                    <span class="n">ftype</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="n">finfo</span><span class="o">.</span><span class="n">default</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">shared</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_apply_namespaced_separation</span><span class="p">(</span>
+        <span class="n">composer</span><span class="p">:</span> <span class="n">SchemaComposer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Agent&quot;</span><span class="p">]</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply namespaced separation - each agent gets its own namespace.&quot;&quot;&quot;</span>
+        <span class="c1"># Create agent ID to name mapping</span>
+        <span class="n">agent_id_to_name</span> <span class="o">=</span> <span class="p">{</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">agent</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">_field_name</span><span class="p">,</span> <span class="n">field_sources</span> <span class="ow">in</span> <span class="n">all_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">finfo</span> <span class="ow">in</span> <span class="n">field_sources</span><span class="p">:</span>
+                <span class="n">agent_name</span> <span class="o">=</span> <span class="n">agent_id_to_name</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">agent_id</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">)</span>
+                <span class="n">namespaced_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">agent_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">&quot;</span>
+
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default_factory&quot;</span><span class="p">):</span>
+                    <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                        <span class="n">namespaced_name</span><span class="p">,</span>
+                        <span class="n">ftype</span><span class="p">,</span>
+                        <span class="n">default_factory</span><span class="o">=</span><span class="n">finfo</span><span class="o">.</span><span class="n">default_factory</span><span class="p">,</span>
+                        <span class="n">shared</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                        <span class="n">namespaced_name</span><span class="p">,</span>
+                        <span class="n">ftype</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="n">finfo</span><span class="o">.</span><span class="n">default</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">shared</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_apply_sequence_mode</span><span class="p">(</span>
+        <span class="n">composer</span><span class="p">:</span> <span class="n">SchemaComposer</span><span class="p">,</span>
+        <span class="n">all_fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Agent&quot;</span><span class="p">],</span>
+        <span class="n">engine_io_mappings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]],</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply sequence mode logic where agents execute in order.</span>
+
+<span class="sd">        In sequence mode:</span>
+<span class="sd">        - First agent&#39;s input fields are required</span>
+<span class="sd">        - Last agent&#39;s output fields are the schema output</span>
+<span class="sd">        - Intermediate fields are optional (as they may be populated by previous agents)</span>
+<span class="sd">        - Messages field is always shared</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create agent ID to index mapping</span>
+        <span class="n">agent_id_to_idx</span> <span class="o">=</span> <span class="p">{</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">agent</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">agents</span><span class="p">)}</span>
+        <span class="p">{</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">agent</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">}</span>
+
+        <span class="c1"># Process fields based on their position in the sequence</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_sources</span> <span class="ow">in</span> <span class="n">all_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Always share messages field</span>
+            <span class="k">if</span> <span class="n">field_name</span> <span class="o">==</span> <span class="s2">&quot;messages&quot;</span><span class="p">:</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">finfo</span> <span class="o">=</span> <span class="n">field_sources</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                    <span class="n">field_name</span><span class="p">,</span>
+                    <span class="n">ftype</span><span class="p">,</span>
+                    <span class="n">default_factory</span><span class="o">=</span><span class="p">(</span>
+                        <span class="n">finfo</span><span class="o">.</span><span class="n">default_factory</span>
+                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default_factory&quot;</span><span class="p">)</span>
+                        <span class="k">else</span> <span class="nb">list</span>
+                    <span class="p">),</span>
+                    <span class="n">shared</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">reducer</span><span class="o">=</span><span class="n">add_messages</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Determine which agents use this field</span>
+            <span class="n">agent_indices</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">_fname</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">finfo</span> <span class="ow">in</span> <span class="n">field_sources</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">agent_id</span> <span class="ow">in</span> <span class="n">agent_id_to_idx</span><span class="p">:</span>
+                    <span class="n">agent_indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agent_id_to_idx</span><span class="p">[</span><span class="n">agent_id</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">agent_indices</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">min_idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">agent_indices</span><span class="p">)</span>
+            <span class="nb">max</span><span class="p">(</span><span class="n">agent_indices</span><span class="p">)</span>
+
+            <span class="c1"># Use first occurrence for type info</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ftype</span><span class="p">,</span> <span class="n">finfo</span> <span class="o">=</span> <span class="n">field_sources</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># Determine if field should be required</span>
+            <span class="n">is_required</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># Check if this is an input field for the first agent</span>
+            <span class="k">if</span> <span class="n">min_idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">first_agent</span> <span class="o">=</span> <span class="n">agents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="c1"># Check if it&#39;s in the first agent&#39;s input fields</span>
+                <span class="k">for</span> <span class="n">engine_name</span><span class="p">,</span> <span class="n">mapping</span> <span class="ow">in</span> <span class="n">engine_io_mappings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">engine_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span>
+                        <span class="n">first_agent</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+                    <span class="p">)</span> <span class="ow">and</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;inputs&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+                        <span class="n">is_required</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="k">break</span>
+
+            <span class="c1"># Add field with appropriate optionality</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default_factory&quot;</span><span class="p">):</span>
+                <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                    <span class="n">field_name</span><span class="p">,</span>
+                    <span class="n">ftype</span><span class="p">,</span>
+                    <span class="n">default_factory</span><span class="o">=</span><span class="n">finfo</span><span class="o">.</span><span class="n">default_factory</span><span class="p">,</span>
+                    <span class="n">shared</span><span class="o">=</span><span class="p">(</span>
+                        <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">agent_indices</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span>
+                    <span class="p">),</span>  <span class="c1"># Share if multiple agents use it</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Make intermediate fields optional by providing a default</span>
+                <span class="n">default_value</span> <span class="o">=</span> <span class="n">finfo</span><span class="o">.</span><span class="n">default</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">finfo</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_required</span> <span class="ow">and</span> <span class="n">default_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># Make it optional by wrapping in Optional if not already</span>
+                    <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span> <span class="k">as</span> <span class="n">Opt</span>
+                    <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_origin</span>
+
+                    <span class="k">if</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">ftype</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Opt</span><span class="p">:</span>
+                        <span class="n">ftype</span> <span class="o">=</span> <span class="n">Opt</span><span class="p">[</span><span class="n">ftype</span><span class="p">]</span>
+
+                <span class="n">composer</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span>
+                    <span class="n">field_name</span><span class="p">,</span>
+                    <span class="n">ftype</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="n">default_value</span><span class="p">,</span>
+                    <span class="n">shared</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">agent_indices</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_apply_hierarchical_mode</span><span class="p">(</span>
+        <span class="n">composer</span><span class="p">:</span> <span class="n">SchemaComposer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Agent&quot;</span><span class="p">]</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply hierarchical mode for parent-child agent relationships.&quot;&quot;&quot;</span>
+        <span class="c1"># For now, just use smart separation</span>
+        <span class="c1"># TODO: Implement proper hierarchical logic</span>
+        <span class="n">AgentSchemaComposer</span><span class="o">.</span><span class="n">_apply_smart_separation</span><span class="p">(</span><span class="n">composer</span><span class="p">,</span> <span class="n">all_fields</span><span class="p">,</span> <span class="n">agents</span><span class="p">)</span></div>
+
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>
