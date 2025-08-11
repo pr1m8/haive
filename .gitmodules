@@ -29,3 +29,15 @@
 	path = packages/haive-agents
 	url = https://github.com/pr1m8/haive-agents.git
 	branch = feature/fix_everything_v2
+[submodule "tools/haive-cli"]
+	path = tools/haive-cli
+	url = https://github.com/pr1m8/haive-cli.git
+[submodule "tools/haive-dev"]
+	path = tools/haive-dev
+	url = https://github.com/pr1m8/haive-dev.git
+[submodule "tools/haive-testing"]
+	path = tools/haive-testing
+	url = https://github.com/pr1m8/haive-testing.git
+[submodule "tools/haive-docs"]
+	path = tools/haive-docs
+	url = https://github.com/pr1m8/haive-docs.git
