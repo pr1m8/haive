@@ -28,6 +28,7 @@ from noxfiles.session_docs import (
     docs_quality,
     docs_serve,
 )
+from noxfiles.session_docs_debug import docs_debug_enhanced, docs_minimal_test
 from noxfiles.session_docs_error_collector import (
     docs_phased_with_error_collection,
     review_errors,
@@ -41,10 +42,19 @@ from noxfiles.session_docs_examples import (
     docs_prod,
     docs_with_examples,
 )
+from noxfiles.session_docs_furo import (
+    docs_furo,
+    docs_furo_clean,
+    docs_furo_core,
+    docs_furo_enhanced,
+    docs_furo_fixed,
+    docs_furo_full,
+    docs_furo_minimal,
+    docs_furo_serve,
+)
+from noxfiles.session_docs_modular import docs_fast_build
 from noxfiles.session_docs_package import docs_multi, docs_package, docs_quick
 from noxfiles.session_docs_phased import docs_phased, docs_phased_no_examples
-from noxfiles.session_docs_modular import docs_fast_build
-from noxfiles.session_docs_debug import docs_debug_enhanced, docs_minimal_test
 from noxfiles.session_docs_testing import (
     docs_test_all,
     docs_test_docstrings,
@@ -174,6 +184,15 @@ __all__ = [
     "docs_test_prose",
     "docs_test_spelling",
     "docs_with_examples",
+    # Furo documentation sessions
+    "docs_furo",
+    "docs_furo_enhanced",
+    "docs_furo_minimal",
+    "docs_furo_full",
+    "docs_furo_serve",
+    "docs_furo_clean",
+    "docs_furo_fixed",
+    "docs_furo_core",
     # Examples
     "examples",
     "examples_docs",
