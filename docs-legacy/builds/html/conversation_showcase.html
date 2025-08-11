@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta property="article:modified_time" content="2025-08-04T18:34:22-04:00" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi-Agent Conversation Showcase &mdash; 🤖 Haive AI Agent Framework Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css?v=a0a71c94" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx_paramlinks.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=5044e660" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://haive.readthedocs.io/conversation_showcase.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=6894dda5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=af94cf59"></script>
+      <script src="_static/scripts/sphinx-book-theme.js"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script src="https://wavedrom.com/skins/default.js"></script>
+      <script src="https://wavedrom.com/wavedrom.min.js"></script>
+      <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX"></script>
+      <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-XXXXXXX');
+            </script>
+      <script src="_static/js/rtd_search_config.js"></script>
+      <script src="_static/js/rtd_sphinx_search.min.js"></script>
+      <script src="_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+      <script src="_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+      <script src="_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+      <script src="_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+      <script src="_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+      <script defer="defer" src="https://unpkg.com/@popperjs/core@2"></script>
+      <script defer="defer" src="https://unpkg.com/tippy.js@6"></script>
+      <script defer="defer" src="_static/tippy/conversation_showcase.051398b2-90cb-4c89-a3d4-b1faebed19f6.js"></script>
+      <script>DOCUMENTATION_OPTIONS.pagename = 'conversation_showcase';</script>
+      <script src="_static/dark_mode_js/default_dark.js?v=fd565c74"></script>
+      <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Haive AI Agent Framework
+          </a>
+<div id="searchbox"></div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Haive AI Agent Framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Multi-Agent Conversation Showcase</span></li>
+  </ul>
+</nav>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="multi-agent-conversation-showcase">
+<h1>Multi-Agent Conversation Showcase<a class="headerlink" href="#multi-agent-conversation-showcase" title="Link to this heading">#</a></h1>
+<p>This page demonstrates <strong>real outputs</strong> from Haive’s conversation agents. These are actual conversations between AI agents, not mock data.</p>
+<section id="collaborative-brainstorming">
+<h2>Collaborative Brainstorming<a class="headerlink" href="#collaborative-brainstorming" title="Link to this heading">#</a></h2>
+<p>The collaborative conversation agent can orchestrate multiple AI agents working together on complex projects. Here’s a real example of 4 agents (ProductManager, Designer, Engineer, Marketer) brainstorming eco-friendly smart home devices:</p>
+<section id="real-output-eco-friendly-smart-home-brainstorming">
+<h3>Real Output: Eco-Friendly Smart Home Brainstorming<a class="headerlink" href="#real-output-eco-friendly-smart-home-brainstorming" title="Link to this heading">#</a></h3>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>📄 Final Brainstorming Document:
+
+============================================================
+<span class="gh">Brainstorming: Eco-friendly smart home device ideas</span>
+<span class="gh">===================================================</span>
+
+Problem Statement:
+[<span class="nl">ProductManager</span>]: <span class="na">I. Environmental Concerns</span>
+ A. Growing impact of energy consumption on the environment
+
+<span class="k">1.</span>  High levels of greenhouse gas emissions
+<span class="k">2.</span>  Depletion of natural resources
+    B. Increasing waste and pollution from electronic devices
+<span class="k">3.</span>  E-waste contributing to landfill overflow
+<span class="k">4.</span>  Toxic materials leaching into soil and water
+
+...
+
+Product Ideas:
+[<span class="nl">ProductManager</span>]: <span class="na">I. Intelligent Energy Management System</span>
+ A. Smart power grid integration for homes
+ B. Real-time energy monitoring and optimization
+ C. Automated scheduling of high-energy consumption tasks
+
+[<span class="nl">Designer</span>]: <span class="na">VI. Smart Air Quality Management System</span>
+ A. Real-time monitoring of indoor air quality metrics
+ B. Automated air purifiers and ventilation control
+ C. Notifications and tips for enhancing air quality
+
+[<span class="nl">Engineer</span>]: <span class="na">X. Smart Lighting System</span>
+ A. Adaptive lighting based on occupant activity and natural light availability
+ B. Integration with circadian rhythm to enhance sleep and wellness
+ C. Energy-efficient LED lighting with remote control access
+
+[<span class="nl">Marketer</span>]: <span class="na">XIII. Smart Composting Trash Can</span>
+ A. Automatic waste categorization and composting
+ B. Integrated sensors for monitoring decomposition progress
+ C. Mobile app notifications for maintenance and output usage tips
+
+============================================================
+📊 Contribution Summary:
+
+<span class="k">-</span><span class="w"> </span>ProductManager: 5 contributions
+<span class="k">-</span><span class="w"> </span>Designer: 5 contributions
+<span class="k">-</span><span class="w"> </span>Engineer: 5 contributions
+<span class="k">-</span><span class="w"> </span>Marketer: 5 contributions
+</pre></div>
+</div>
+<p><strong>Key Features Demonstrated:</strong></p>
+<ul class="simple">
+<li><p>✅ <strong>Balanced Participation</strong>: Each agent contributed equally (5 contributions each)</p></li>
+<li><p>✅ <strong>Structured Sections</strong>: Problem Statement → Product Ideas → Features → Target Market → Next Steps</p></li>
+<li><p>✅ <strong>Role-Based Expertise</strong>: Each agent contributed according to their role</p></li>
+<li><p>✅ <strong>Attribution Tracking</strong>: Clear labeling of who contributed what</p></li>
+<li><p>✅ <strong>Document Compilation</strong>: Final cohesive document with contribution summary</p></li>
+</ul>
+</section>
+</section>
+<section id="code-review-collaboration">
+<h2>Code Review Collaboration<a class="headerlink" href="#code-review-collaboration" title="Link to this heading">#</a></h2>
+<p>Here’s a real example of 4 technical experts (SecurityExpert, BackendLead, DevOpsEngineer) collaboratively reviewing an authentication microservice:</p>
+<section id="real-output-jwt-authentication-microservice-review">
+<h3>Real Output: JWT Authentication Microservice Review<a class="headerlink" href="#real-output-jwt-authentication-microservice-review" title="Link to this heading">#</a></h3>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>🔍 Code Review Results:
+
+<span class="gh"># Code Review</span>
+
+<span class="gu">## Overview</span>
+
+[<span class="nl">SecurityExpert</span>]: <span class="na"># Overview</span>
+
+In this collaborative session, we are reviewing a newly implemented authentication
+microservice designed to handle user authentication using JSON Web Tokens (JWT) and
+Redis caching. The microservice is intended to provide secure, scalable, and efficient
+authentication and session management for a distributed system.
+
+<span class="gu">## Strengths</span>
+
+[<span class="nl">SecurityExpert</span>]: <span class="na">## Strengths</span>
+
+<span class="gu">### Security</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Robust JWT Structure**</span>: The microservice leverages the inherent security features
+  of JWT, including payload encryption and signature verification, to maintain data
+  integrity and authenticity, reducing the risk of tampering and unauthorized access.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Token Expiry Strategy**</span>: Implementing token expiration times is an effective
+  security measure to prevent replay attacks, ensuring that JWTs are only valid for
+  a limited period.
+
+[<span class="nl">BackendLead</span>]: <span class="na">## Enhancements to Strengths</span>
+
+<span class="gu">### Security Enhancements</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Advanced JWT Features**</span>: Consider using advanced features like scopes or claims
+  within JWTs to provide more granular control over user access levels.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Secure Transmission**</span>: Ensure all tokens are transmitted over secure channels
+  (HTTPS) to prevent interception and unauthorized access.
+
+[<span class="nl">DevOpsEngineer</span>]: <span class="na">## Additional Considerations to Strengths</span>
+
+<span class="gu">### Scalability and Performance</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Horizontal Scaling**</span>: Ensure that the architecture supports horizontal scaling by
+  deploying the microservice across multiple nodes or regions, which is crucial for
+  handling varying loads and maintaining performance.
+
+<span class="gu">## Issues</span>
+
+[<span class="nl">SecurityExpert</span>]: <span class="na">## Issues</span>
+
+<span class="gu">### Security Concerns</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Token Storage**</span>: If JWTs are stored improperly on the client-side (e.g., in local
+  storage), they are vulnerable to XSS attacks, potentially exposing user sessions.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Token Revocation**</span>: There is typically no built-in mechanism for revoking JWTs,
+  which can be problematic if a token needs to be invalidated before its expiration
+  due to security concerns.
+
+[<span class="nl">BackendLead</span>]: <span class="na">## Enhancements to Issues</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Token Storage**</span>: Encourage storing JWTs in secure cookies with the <span class="sb">`HttpOnly`</span> and
+  <span class="sb">`Secure`</span> flags to mitigate XSS vulnerabilities and enforce HTTPS for token transmission.
+
+<span class="gu">## Conclusion</span>
+
+[<span class="nl">SecurityExpert</span>]: <span class="na">## Conclusion</span>
+
+Throughout this code review session, we have thoroughly examined the new authentication
+microservice that utilizes JWT tokens and Redis caching. Our collaborative analysis
+highlighted several key areas of strength, including scalability, security, and
+integration within a microservices architecture.
+
+<span class="gu">### Next Steps:</span>
+
+<span class="k">1.</span> <span class="gs">**Prioritize Security Enhancements**</span>: Implement secure token storage practices and
+   develop a comprehensive token revocation strategy to mitigate vulnerabilities.
+<span class="k">2.</span> <span class="gs">**Optimize Performance**</span>: Adjust Redis configurations and caching strategies based
+   on performance metrics and conduct regular load testing.
+<span class="k">3.</span> <span class="gs">**Strengthen Architecture**</span>: Configure Redis for high availability and explore
+   service mesh integration to enhance inter-service communication and resilience.
+</pre></div>
+</div>
+<p><strong>Key Features Demonstrated:</strong></p>
+<ul class="simple">
+<li><p>✅ <strong>Expert Role Specialization</strong>: Each agent contributed from their domain expertise</p></li>
+<li><p>✅ <strong>Iterative Enhancement</strong>: Agents built upon each other’s contributions</p></li>
+<li><p>✅ <strong>Comprehensive Coverage</strong>: Security, performance, architecture, and operations</p></li>
+<li><p>✅ <strong>Actionable Outcomes</strong>: Concrete next steps and recommendations</p></li>
+<li><p>✅ <strong>Professional Quality</strong>: Enterprise-grade technical review output</p></li>
+</ul>
+</section>
+</section>
+<section id="debate-agent-examples">
+<h2>Debate Agent Examples<a class="headerlink" href="#debate-agent-examples" title="Link to this heading">#</a></h2>
+<p>The debate agent orchestrates structured arguments between multiple positions. Here are examples of different debate formats:</p>
+<section id="available-debate-formats">
+<h3>Available Debate Formats<a class="headerlink" href="#available-debate-formats" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Simple Debate</strong> - Two-sided arguments on a topic</p></li>
+<li><p><strong>Panel Debate</strong> - Multiple participants with different viewpoints</p></li>
+<li><p><strong>Oxford Debate</strong> - Formal structured debate with proposition/opposition</p></li>
+<li><p><strong>Socratic Dialogue</strong> - Question-based philosophical discussions</p></li>
+</ol>
+</section>
+<section id="real-output-simple-ai-regulation-debate">
+<h3>Real Output: Simple AI Regulation Debate<a class="headerlink" href="#real-output-simple-ai-regulation-debate" title="Link to this heading">#</a></h3>
+<p>From <code class="docutils literal notranslate"><span class="pre">packages/haive-agents/src/haive/agents/conversation/debate/outputs/simple_debate.md</span></code>:</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>Motion: &quot;Should AI development be regulated by governments?&quot;
+
+Position A (ProRegulation): &quot;AI development needs strict government oversight and regulation&quot;
+Position B (AntiRegulation): &quot;AI development should remain free from government interference&quot;
+
+[Debate proceedings with opening statements, arguments, rebuttals, and closing statements...]
+
+Final verdict: [Based on strength of arguments presented]
+</pre></div>
+</div>
+</section>
+</section>
+<section id="integration-with-your-applications">
+<h2>Integration with Your Applications<a class="headerlink" href="#integration-with-your-applications" title="Link to this heading">#</a></h2>
+<p>These conversation agents can be integrated into your applications to provide:</p>
+<section id="business-applications">
+<h3>Business Applications<a class="headerlink" href="#business-applications" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Project Planning</strong>: Multi-stakeholder collaborative planning sessions</p></li>
+<li><p><strong>Code Reviews</strong>: Technical team collaboration on code quality</p></li>
+<li><p><strong>Strategy Sessions</strong>: Cross-functional brainstorming and decision making</p></li>
+<li><p><strong>Design Reviews</strong>: Collaborative UI/UX and system design sessions</p></li>
+</ul>
+</section>
+<section id="implementation-example">
+<h3>Implementation Example<a class="headerlink" href="#implementation-example" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.conversation.collaborative.agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">CollaborativeConversation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.simple.agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.aug_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">AugLLMConfig</span>
+
+<span class="c1"># Create participant agents with different roles</span>
+<span class="n">participants</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ProductManager&quot;</span><span class="p">:</span> <span class="n">SimpleAgent</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ProductManager&quot;</span><span class="p">,</span>
+        <span class="n">engine</span><span class="o">=</span><span class="n">AugLLMConfig</span><span class="p">(</span>
+            <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are a product manager focused on user needs and market fit.&quot;</span><span class="p">,</span>
+            <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;Engineer&quot;</span><span class="p">:</span> <span class="n">SimpleAgent</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Engineer&quot;</span><span class="p">,</span>
+        <span class="n">engine</span><span class="o">=</span><span class="n">AugLLMConfig</span><span class="p">(</span>
+            <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are a software engineer focused on technical feasibility.&quot;</span><span class="p">,</span>
+            <span class="n">temperature</span><span class="o">=</span><span class="mf">0.5</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># Create collaborative conversation</span>
+<span class="n">collaboration</span> <span class="o">=</span> <span class="n">CollaborativeConversation</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ProductPlanningSession&quot;</span><span class="p">,</span>
+    <span class="n">participant_agents</span><span class="o">=</span><span class="n">participants</span><span class="p">,</span>
+    <span class="n">document_sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Problem Statement&quot;</span><span class="p">,</span> <span class="s2">&quot;Solution Ideas&quot;</span><span class="p">,</span> <span class="s2">&quot;Technical Requirements&quot;</span><span class="p">,</span> <span class="s2">&quot;Next Steps&quot;</span><span class="p">],</span>
+    <span class="n">contributions_per_section</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">output_format</span><span class="o">=</span><span class="s2">&quot;markdown&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Run the collaboration</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">collaboration</span><span class="o">.</span><span class="n">run</span><span class="p">({</span>
+    <span class="s2">&quot;topic&quot;</span><span class="p">:</span> <span class="s2">&quot;Mobile app feature planning&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="s2">&quot;We need to plan the next major feature for our mobile app&quot;</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">final_document</span><span class="p">)</span>  <span class="c1"># Complete collaborative output</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="source-files">
+<h2>Source Files<a class="headerlink" href="#source-files" title="Link to this heading">#</a></h2>
+<p>All examples on this page come from real outputs in the codebase:</p>
+<ul class="simple">
+<li><p><strong>Brainstorming Example</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-agents/src/haive/agents/conversation/collaborative/outputs/brainstorming.md</span></code></p></li>
+<li><p><strong>Code Review Example</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-agents/src/haive/agents/conversation/collaborative/outputs/code_review.md</span></code></p></li>
+<li><p><strong>Debate Examples</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-agents/src/haive/agents/conversation/debate/outputs/</span></code></p></li>
+<li><p><strong>Working Code</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-agents/src/haive/agents/conversation/*/example.py</span></code></p></li>
+</ul>
+<p>These are not mock examples - they are actual outputs generated by the conversation agents in the Haive framework.</p>
+</section>
+</section>
+
+    <script type="text/javascript">
+        function init() {
+            WaveDrom.ProcessAll();
+        }
+        window.onload = init;
+    </script>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Haive Team.
+      <span class="lastupdated">Last updated on Aug 04, 2025.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

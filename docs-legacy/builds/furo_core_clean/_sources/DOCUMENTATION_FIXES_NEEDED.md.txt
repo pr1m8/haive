@@ -1,0 +1,174 @@
+# Documentation Structure Issues and Fixes Needed
+
+## 🚨 Critical Issues
+
+### 1. Flat TOC Structure Problem
+**Issue**: The entire API documentation is appearing as a flat list instead of a proper hierarchy
+**Example**: `api/complexity_analyzer/index.html` appears at the root level instead of nested under `api/haive/tools/toolkits/dev/python/cst_toolkit/visitors/`
+
+**Root Causes**:
+- AutoAPI is creating individual pages for EVERY module/class at the same level
+- No proper namespace grouping
+- Deep package paths are being flattened
+- Theme navigation settings aren't showing the hierarchy properly
+
+### 2. Package Structure Not Reflected
+**Issue**: The actual package hierarchy isn't being preserved:
+```
+haive/
+├── core/
+├── agents/
+├── tools/
+│   └── tools/  # Double nesting!
+│       └── toolkits/
+│           └── dev/
+│               └── python/
+│                   └── cst_toolkit/
+│                       └── visitors/
+│                           └── complexity_analyzer.py
+```
+
+**Problems**:
+- Double `tools/tools/` nesting makes paths unnecessarily deep
+- Submodules aren't grouped under their parent packages
+- No visual separation between top-level packages
+
+### 3. Navigation Issues
+**Current Problems**:
+- Sidebar shows everything at once (overwhelming)
+- No collapsible sections for deep hierarchies
+- Can't tell what belongs to which package
+- No way to navigate package structure logically
+
+## 🔧 Fixes Needed
+
+### 1. AutoAPI Configuration Changes
+```python
+# Current (BAD):
+autoapi_own_page_level = "module"  # Creates a page for EVERY module
+
+# Should be:
+autoapi_own_page_level = "class"  # Only create pages for classes
+# OR custom template that groups by package
+```
+
+### 2. Custom AutoAPI Templates
+Create custom templates to:
+- Group modules by package
+- Create package index pages
+- Show module hierarchy in TOC
+- Collapse deep paths by default
+
+### 3. Manual TOC Structure
+Instead of relying on AutoAPI's auto-generated TOC:
+```rst
+# api/index.rst
+API Reference
+=============
+
+.. toctree::
+   :maxdepth: 2
+   
+   haive-core/index
+   haive-agents/index
+   haive-tools/index
+   haive-games/index
+   haive-dataflow/index
+   haive-mcp/index
+   haive-prebuilt/index
+```
+
+Then create package-specific index files that control their own structure.
+
+### 4. Path Aliasing/Shortening
+For deep paths like `haive.tools.tools.toolkits.dev.python.cst_toolkit`:
+- Create logical groupings
+- Use shorter display names
+- Hide implementation details from main navigation
+
+### 5. Theme Navigation Settings
+Need to configure:
+- Collapsible navigation sections
+- Proper depth limits
+- Package-based grouping
+- Better visual hierarchy
+
+## 📋 Specific Changes for conf.py
+
+### 1. AutoAPI Settings
+```python
+# Add these settings:
+autoapi_ignore_package_names = ["tools.tools"]  # Skip duplicate nesting
+autoapi_group_by_package = True  # Group modules by package (if supported)
+autoapi_collapse_navigation = True  # Collapse deep hierarchies
+```
+
+### 2. Custom Skip Logic
+```python
+def autoapi_skip_member(app, what, name, obj, skip, options):
+    # Skip generating individual pages for deep modules
+    if what == "module" and name.count(".") > 4:
+        return True
+    return skip
+```
+
+### 3. Post-Processing Hook
+```python
+def reorganize_api_toc(app, exception):
+    """Reorganize the generated API TOC structure."""
+    if exception:
+        return
+    
+    # Read generated index files
+    # Reorganize them by package
+    # Create proper hierarchy
+    # Write back cleaned structure
+```
+
+## 🎯 End Goal Structure
+
+```
+API Reference/
+├── Core (haive.core)
+│   ├── Engine
+│   ├── Schema
+│   └── Utils
+├── Agents (haive.agents)
+│   ├── Simple
+│   ├── React
+│   └── Multi-Agent
+├── Tools (haive.tools)
+│   ├── Core Tools
+│   └── Toolkits/
+│       ├── Development
+│       ├── Data Processing
+│       └── Web
+└── Games (haive.games)
+    ├── Board Games
+    ├── Card Games
+    └── Strategy
+```
+
+## 🚀 Implementation Priority
+
+1. **Immediate**: Fix AutoAPI page generation level
+2. **High**: Create manual package index files
+3. **Medium**: Implement custom templates
+4. **Low**: Add post-processing cleanup
+
+## 💡 Alternative Solutions
+
+### Option 1: Disable AutoAPI for Deep Packages
+- Use AutoAPI only for top-level packages
+- Manually document deep toolkits
+- Create curated toolkit documentation
+
+### Option 2: Separate Documentation Sites
+- Main API docs for core packages
+- Separate toolkit documentation
+- Link between them
+
+### Option 3: Custom Documentation Generator
+- Write custom script to generate docs
+- Full control over structure
+- More work but perfect result

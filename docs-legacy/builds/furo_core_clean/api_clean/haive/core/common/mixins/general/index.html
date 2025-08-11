@@ -1,0 +1,1029 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.common.mixins.general - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/will-astley/haive/blob/main/docs/source/api_clean/haive/core/common/mixins/general/index.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/will-astley/haive/edit/main/docs/source/api_clean/haive/core/common/mixins/general/index.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="haive-core-common-mixins-general">
+<h1><a class="reference internal" href="#module-0" title="haive.core.common.mixins.general"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core.common.mixins.general</span></code></a><a class="headerlink" href="#haive-core-common-mixins-general" title="Link to this heading">¶</a></h1>
+<p id="module-haive.core.common.mixins.general">General-purpose mixins providing basic functionality for Haive components.</p>
+<p>This package contains fundamental mixins that provide core functionality
+like ID management, serialization, state tracking, and versioning. These
+mixins are designed to be lightweight and composable, making them suitable
+for inclusion in a wide variety of components.</p>
+<p>Available mixins:
+- IdMixin: Basic ID generation and management
+- MetadataMixin: Key-value metadata storage
+- SerializationMixin: Enhanced serialization capabilities
+- StateMixin: State tracking and validation
+- TimestampMixin: Creation and modification timestamp tracking
+- VersionMixin: Version tracking and compatibility checking</p>
+<dl>
+<dt>Usage:</dt><dd><p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>python
+from pydantic import BaseModel
+from haive.core.common.mixins.general import (</p>
+<blockquote>
+<div><p>IdMixin, TimestampMixin, VersionMixin</p>
+</div></blockquote>
+<p>)</p>
+<dl>
+<dt>class MyComponent(IdMixin, TimestampMixin, VersionMixin, BaseModel):</dt><dd><p>name: str</p>
+<dl class="simple">
+<dt>def __init__(self, <a href="#id5"><span class="problematic" id="id6">**</span></a>data):</dt><dd><p>super().__init__(<a href="#id7"><span class="problematic" id="id8">**</span></a>data)
+# Now the component has ID, timestamp, and version capabilities</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p><a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a></p>
+</dd>
+</dl>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="id/index.html#module-haive.core.common.mixins.general.id" title="haive.core.common.mixins.general.id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">haive.core.common.mixins.general.id</span></code></a></p></td>
+<td><p>ID mixin for basic identification capabilities.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">¶</a></h2>
+<p class="rubric">haive.core.common.mixins.general.__all__</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#haive.core.common.mixins.general.IdMixin" title="haive.core.common.mixins.general.IdMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">haive.core.common.mixins.general.IdMixin</span></code></a></p></td>
+<td><p>Mixin for adding basic ID generation and management capabilities.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p id="module-0">General-purpose mixins providing basic functionality for Haive components.</p>
+<p>This package contains fundamental mixins that provide core functionality
+like ID management, serialization, state tracking, and versioning. These
+mixins are designed to be lightweight and composable, making them suitable
+for inclusion in a wide variety of components.</p>
+<p>Available mixins:
+- IdMixin: Basic ID generation and management
+- MetadataMixin: Key-value metadata storage
+- SerializationMixin: Enhanced serialization capabilities
+- StateMixin: State tracking and validation
+- TimestampMixin: Creation and modification timestamp tracking
+- VersionMixin: Version tracking and compatibility checking</p>
+<dl>
+<dt>Usage:</dt><dd><p><a href="#id13"><span class="problematic" id="id14">``</span></a><a href="#id15"><span class="problematic" id="id16">`</span></a>python
+from pydantic import BaseModel
+from haive.core.common.mixins.general import (</p>
+<blockquote>
+<div><p>IdMixin, TimestampMixin, VersionMixin</p>
+</div></blockquote>
+<p>)</p>
+<dl>
+<dt>class MyComponent(IdMixin, TimestampMixin, VersionMixin, BaseModel):</dt><dd><p>name: str</p>
+<dl class="simple">
+<dt>def __init__(self, <a href="#id17"><span class="problematic" id="id18">**</span></a>data):</dt><dd><p>super().__init__(<a href="#id19"><span class="problematic" id="id20">**</span></a>data)
+# Now the component has ID, timestamp, and version capabilities</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p><a href="#id21"><span class="problematic" id="id22">``</span></a><a href="#id23"><span class="problematic" id="id24">`</span></a></p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.IdMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.common.mixins.general.</span></span><span class="sig-name descname"><span class="pre">IdMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/id.html#IdMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.IdMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Mixin for adding basic ID generation and management capabilities.</p>
+<p>This mixin adds a UUID-based ID field to any Pydantic model, with
+methods for regenerating the ID and creating instances with specific IDs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.IdMixin.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#haive.core.common.mixins.general.IdMixin.id" title="Link to this definition">¶</a></dt>
+<dd><p>A UUID string that uniquely identifies the object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.IdMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#haive.core.common.mixins.general.IdMixin.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.IdMixin.regenerate_id">
+<span class="sig-name descname"><span class="pre">regenerate_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/id.html#IdMixin.regenerate_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.IdMixin.regenerate_id" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a new UUID and return it.</p>
+<p>This method replaces the current ID with a new UUID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The newly generated UUID string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.IdMixin.with_id">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">with_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/id.html#IdMixin.with_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.IdMixin.with_id" title="Link to this definition">¶</a></dt>
+<dd><p>Create an instance with a specific ID.</p>
+<p>This class method provides a convenient way to create an instance
+with a predetermined ID value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id_value</strong> – The ID value to use.</p></li>
+<li><p><strong>**kwargs</strong> – Additional attributes for the instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new instance with the specified ID.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.MetadataMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.common.mixins.general.</span></span><span class="sig-name descname"><span class="pre">MetadataMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata:</span> <span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/metadata.html#MetadataMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.MetadataMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Mixin for adding flexible metadata storage capabilities.</p>
+<p>This mixin provides a dictionary for storing arbitrary key-value pairs
+as metadata, along with methods for adding, retrieving, updating, and
+removing metadata entries.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.MetadataMixin.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#haive.core.common.mixins.general.MetadataMixin.metadata" title="Link to this definition">¶</a></dt>
+<dd><p>Dictionary containing arbitrary metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.MetadataMixin.add_metadata">
+<span class="sig-name descname"><span class="pre">add_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/metadata.html#MetadataMixin.add_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.MetadataMixin.add_metadata" title="Link to this definition">¶</a></dt>
+<dd><p>Add a metadata key-value pair.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – The metadata key.</p></li>
+<li><p><strong>value</strong> – The value to store.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.MetadataMixin.clear_metadata">
+<span class="sig-name descname"><span class="pre">clear_metadata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/metadata.html#MetadataMixin.clear_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.MetadataMixin.clear_metadata" title="Link to this definition">¶</a></dt>
+<dd><p>Clear all metadata.</p>
+<p>This method removes all metadata entries, resulting in an empty
+metadata dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.MetadataMixin.get_metadata">
+<span class="sig-name descname"><span class="pre">get_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/metadata.html#MetadataMixin.get_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.MetadataMixin.get_metadata" title="Link to this definition">¶</a></dt>
+<dd><p>Get metadata value by key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – The metadata key to retrieve.</p></li>
+<li><p><strong>default</strong> – Value to return if key doesn’t exist.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The metadata value or the default value if key doesn’t exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.MetadataMixin.has_metadata">
+<span class="sig-name descname"><span class="pre">has_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/metadata.html#MetadataMixin.has_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.MetadataMixin.has_metadata" title="Link to this definition">¶</a></dt>
+<dd><p>Check if metadata key exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> – The metadata key to check.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the key exists in metadata, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id25">
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id25" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.MetadataMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#haive.core.common.mixins.general.MetadataMixin.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.MetadataMixin.remove_metadata">
+<span class="sig-name descname"><span class="pre">remove_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/metadata.html#MetadataMixin.remove_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.MetadataMixin.remove_metadata" title="Link to this definition">¶</a></dt>
+<dd><p>Remove and return metadata value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> – The metadata key to remove.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The removed value, or None if key doesn’t exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.MetadataMixin.update_metadata">
+<span class="sig-name descname"><span class="pre">update_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">updates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/metadata.html#MetadataMixin.update_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.MetadataMixin.update_metadata" title="Link to this definition">¶</a></dt>
+<dd><p>Update multiple metadata fields.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>updates</strong> – Dictionary containing key-value pairs to update.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.SerializationMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.common.mixins.general.</span></span><span class="sig-name descname"><span class="pre">SerializationMixin</span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/serialization.html#SerializationMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.SerializationMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Mixin for enhanced serialization and deserialization capabilities.</p>
+<p>This mixin provides methods for converting Pydantic models to dictionaries
+and JSON strings, and for creating models from dictionaries and JSON strings.
+It handles private fields (starting with underscore) appropriately.</p>
+<p>When combined with other mixins like IdMixin, TimestampMixin, etc.,
+it provides a complete solution for model persistence.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.SerializationMixin.from_dict">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/serialization.html#SerializationMixin.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.SerializationMixin.from_dict" title="Link to this definition">¶</a></dt>
+<dd><p>Create instance from dictionary.</p>
+<p>This class method creates a model instance from a dictionary,
+using Pydantic’s validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – Dictionary containing model data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New model instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.SerializationMixin.from_json">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/serialization.html#SerializationMixin.from_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.SerializationMixin.from_json" title="Link to this definition">¶</a></dt>
+<dd><p>Create instance from JSON string.</p>
+<p>This class method creates a model instance from a JSON string,
+parsing the JSON and then using from_dict().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_str</strong> – JSON string containing model data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New model instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.SerializationMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#haive.core.common.mixins.general.SerializationMixin.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.SerializationMixin.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exclude_private</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/serialization.html#SerializationMixin.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.SerializationMixin.to_dict" title="Link to this definition">¶</a></dt>
+<dd><p>Convert to dictionary with options.</p>
+<p>This method converts the model to a dictionary, with the option
+to exclude private fields (those starting with an underscore).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>exclude_private</strong> – Whether to exclude private fields.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary representation of the model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.SerializationMixin.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exclude_private</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/serialization.html#SerializationMixin.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.SerializationMixin.to_json" title="Link to this definition">¶</a></dt>
+<dd><p>Convert to JSON string.</p>
+<p>This method converts the model to a JSON string, with options
+for controlling the JSON serialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exclude_private</strong> – Whether to exclude private fields.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to pass to json.dumps().</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON string representation of the model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.StateMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.common.mixins.general.</span></span><span class="sig-name descname"><span class="pre">StateMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'active'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_history:</span> <span class="pre">list[dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/state.html#StateMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.StateMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Mixin for state tracking with validation and comprehensive history.</p>
+<p>This mixin adds state management capabilities to Pydantic models, allowing
+objects to track their current state and maintain a complete history of
+state transitions with timestamps and optional reasons.</p>
+<p>The mixin is designed to be composable with other BaseModel classes and
+provides thread-safe state transitions with automatic history tracking.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.StateMixin.state">
+<span class="sig-name descname"><span class="pre">state</span></span><a class="headerlink" href="#haive.core.common.mixins.general.StateMixin.state" title="Link to this definition">¶</a></dt>
+<dd><p>Current state of the object (defaults to “active”).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.StateMixin.state_history">
+<span class="sig-name descname"><span class="pre">state_history</span></span><a class="headerlink" href="#haive.core.common.mixins.general.StateMixin.state_history" title="Link to this definition">¶</a></dt>
+<dd><p>Chronological list of all state changes with metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Task</span><span class="p">(</span><span class="n">StateMixin</span><span class="p">,</span> <span class="n">BaseModel</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Process data&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">task</span><span class="o">.</span><span class="n">change_state</span><span class="p">(</span><span class="s2">&quot;running&quot;</span><span class="p">,</span> <span class="s2">&quot;Starting execution&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">task</span><span class="o">.</span><span class="n">change_state</span><span class="p">(</span><span class="s2">&quot;complete&quot;</span><span class="p">,</span> <span class="s2">&quot;Finished successfully&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">task</span><span class="o">.</span><span class="n">is_in_state</span><span class="p">(</span><span class="s2">&quot;complete&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">get_state_changes</span><span class="p">())</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.StateMixin.change_state">
+<span class="sig-name descname"><span class="pre">change_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">reason</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/state.html#StateMixin.change_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.StateMixin.change_state" title="Link to this definition">¶</a></dt>
+<dd><p>Change state and automatically track the transition in history.</p>
+<p>This method updates the current state and records the transition
+in the state history with a timestamp and optional reason.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_state</strong> – The new state to transition to.</p></li>
+<li><p><strong>reason</strong> – Optional explanation for the state change.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">task</span><span class="o">.</span><span class="n">change_state</span><span class="p">(</span><span class="s2">&quot;paused&quot;</span><span class="p">,</span> <span class="s2">&quot;Waiting for user input&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">task</span><span class="o">.</span><span class="n">state</span>
+<span class="go">&#39;paused&#39;</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.StateMixin.get_state_changes">
+<span class="sig-name descname"><span class="pre">get_state_changes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/state.html#StateMixin.get_state_changes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.StateMixin.get_state_changes" title="Link to this definition">¶</a></dt>
+<dd><p>Get a copy of the complete state change history.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>from_state: Previous state</p></li>
+<li><p>to_state: New state</p></li>
+<li><p>timestamp: When the change occurred</p></li>
+<li><p>reason: Optional explanation for the change</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of state change records, each containing</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">changes</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">get_state_changes</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">changes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;from_state&quot;</span><span class="p">])</span>
+<span class="go">&#39;active&#39;</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.StateMixin.is_in_state">
+<span class="sig-name descname"><span class="pre">is_in_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/state.html#StateMixin.is_in_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.StateMixin.is_in_state" title="Link to this definition">¶</a></dt>
+<dd><p>Check if the object is currently in the specified state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> – State name to check against current state.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if current state matches the specified state, False otherwise.</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">task</span><span class="o">.</span><span class="n">is_in_state</span><span class="p">(</span><span class="s2">&quot;complete&quot;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">task</span><span class="o">.</span><span class="n">change_state</span><span class="p">(</span><span class="s2">&quot;complete&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">task</span><span class="o">.</span><span class="n">is_in_state</span><span class="p">(</span><span class="s2">&quot;complete&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.StateMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#haive.core.common.mixins.general.StateMixin.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id26">
+<span class="sig-name descname"><span class="pre">state</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#id26" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id27">
+<span class="sig-name descname"><span class="pre">state_history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id27" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.TimestampMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.common.mixins.general.</span></span><span class="sig-name descname"><span class="pre">TimestampMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at:</span> <span class="pre">~datetime.datetime</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updated_at:</span> <span class="pre">~datetime.datetime</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/timestamp.html#TimestampMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.TimestampMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Mixin for adding timestamp tracking to Pydantic models.</p>
+<p>This mixin adds creation and update timestamps to any model,
+with methods for updating timestamps and calculating time intervals.
+It’s useful for tracking when objects were created and modified,
+which helps with auditing, caching strategies, and expiration logic.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.TimestampMixin.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#haive.core.common.mixins.general.TimestampMixin.created_at" title="Link to this definition">¶</a></dt>
+<dd><p>When this object was created (auto-set on instantiation).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.TimestampMixin.updated_at">
+<span class="sig-name descname"><span class="pre">updated_at</span></span><a class="headerlink" href="#haive.core.common.mixins.general.TimestampMixin.updated_at" title="Link to this definition">¶</a></dt>
+<dd><p>When this object was last updated (initially same as created_at).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.TimestampMixin.age_in_seconds">
+<span class="sig-name descname"><span class="pre">age_in_seconds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/timestamp.html#TimestampMixin.age_in_seconds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.TimestampMixin.age_in_seconds" title="Link to this definition">¶</a></dt>
+<dd><p>Get age of this object in seconds.</p>
+<p>This method calculates how much time has passed since the
+object was created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of seconds since creation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id28">
+<span class="sig-name descname"><span class="pre">created_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#id28" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.TimestampMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#haive.core.common.mixins.general.TimestampMixin.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.TimestampMixin.time_since_update">
+<span class="sig-name descname"><span class="pre">time_since_update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/timestamp.html#TimestampMixin.time_since_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.TimestampMixin.time_since_update" title="Link to this definition">¶</a></dt>
+<dd><p>Get time since last update in seconds.</p>
+<p>This method calculates how much time has passed since the
+object was last updated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of seconds since last update.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.TimestampMixin.update_timestamp">
+<span class="sig-name descname"><span class="pre">update_timestamp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/timestamp.html#TimestampMixin.update_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.TimestampMixin.update_timestamp" title="Link to this definition">¶</a></dt>
+<dd><p>Update the updated_at timestamp to the current time.</p>
+<p>This method should be called whenever the object is modified
+to track the time of the latest change.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id29">
+<span class="sig-name descname"><span class="pre">updated_at</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#id29" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.VersionMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.common.mixins.general.</span></span><span class="sig-name descname"><span class="pre">VersionMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'1.0.0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version_history:</span> <span class="pre">list[str]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/version.html#VersionMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.VersionMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Mixin for adding version tracking to Pydantic models.</p>
+<p>This mixin adds version information to any model, with support for
+tracking version history. It’s useful for managing model versions,
+checking compatibility, and auditing changes over time.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.VersionMixin.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#haive.core.common.mixins.general.VersionMixin.version" title="Link to this definition">¶</a></dt>
+<dd><p>Current version string (defaults to “1.0.0”).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.VersionMixin.version_history">
+<span class="sig-name descname"><span class="pre">version_history</span></span><a class="headerlink" href="#haive.core.common.mixins.general.VersionMixin.version_history" title="Link to this definition">¶</a></dt>
+<dd><p>List of previous versions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.VersionMixin.bump_version">
+<span class="sig-name descname"><span class="pre">bump_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/version.html#VersionMixin.bump_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.VersionMixin.bump_version" title="Link to this definition">¶</a></dt>
+<dd><p>Update version and track the previous version in history.</p>
+<p>This method should be called whenever a significant change is made
+to the object that warrants a version increment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_version</strong> – The new version string to set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.VersionMixin.get_version_history">
+<span class="sig-name descname"><span class="pre">get_version_history</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../../_modules/haive/core/common/mixins/general/version.html#VersionMixin.get_version_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.common.mixins.general.VersionMixin.get_version_history" title="Link to this definition">¶</a></dt>
+<dd><p>Get complete version history including the current version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List containing all previous versions plus the current version.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.common.mixins.general.VersionMixin.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#haive.core.common.mixins.general.VersionMixin.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id30">
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#id30" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id31">
+<span class="sig-name descname"><span class="pre">version_history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id31" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core.common.mixins.general</span></code></a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.IdMixin"><code class="docutils literal notranslate"><span class="pre">IdMixin</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.IdMixin.id"><code class="docutils literal notranslate"><span class="pre">IdMixin.id</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">IdMixin.id</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.IdMixin.model_config"><code class="docutils literal notranslate"><span class="pre">IdMixin.model_config</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.IdMixin.regenerate_id"><code class="docutils literal notranslate"><span class="pre">IdMixin.regenerate_id()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.IdMixin.with_id"><code class="docutils literal notranslate"><span class="pre">IdMixin.with_id()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.MetadataMixin"><code class="docutils literal notranslate"><span class="pre">MetadataMixin</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.MetadataMixin.metadata"><code class="docutils literal notranslate"><span class="pre">MetadataMixin.metadata</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.MetadataMixin.add_metadata"><code class="docutils literal notranslate"><span class="pre">MetadataMixin.add_metadata()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.MetadataMixin.clear_metadata"><code class="docutils literal notranslate"><span class="pre">MetadataMixin.clear_metadata()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.MetadataMixin.get_metadata"><code class="docutils literal notranslate"><span class="pre">MetadataMixin.get_metadata()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.MetadataMixin.has_metadata"><code class="docutils literal notranslate"><span class="pre">MetadataMixin.has_metadata()</span></code></a></li>
+<li><a class="reference internal" href="#id25"><code class="docutils literal notranslate"><span class="pre">MetadataMixin.metadata</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.MetadataMixin.model_config"><code class="docutils literal notranslate"><span class="pre">MetadataMixin.model_config</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.MetadataMixin.remove_metadata"><code class="docutils literal notranslate"><span class="pre">MetadataMixin.remove_metadata()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.MetadataMixin.update_metadata"><code class="docutils literal notranslate"><span class="pre">MetadataMixin.update_metadata()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.SerializationMixin"><code class="docutils literal notranslate"><span class="pre">SerializationMixin</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.SerializationMixin.from_dict"><code class="docutils literal notranslate"><span class="pre">SerializationMixin.from_dict()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.SerializationMixin.from_json"><code class="docutils literal notranslate"><span class="pre">SerializationMixin.from_json()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.SerializationMixin.model_config"><code class="docutils literal notranslate"><span class="pre">SerializationMixin.model_config</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.SerializationMixin.to_dict"><code class="docutils literal notranslate"><span class="pre">SerializationMixin.to_dict()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.SerializationMixin.to_json"><code class="docutils literal notranslate"><span class="pre">SerializationMixin.to_json()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.StateMixin"><code class="docutils literal notranslate"><span class="pre">StateMixin</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.StateMixin.state"><code class="docutils literal notranslate"><span class="pre">StateMixin.state</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.StateMixin.state_history"><code class="docutils literal notranslate"><span class="pre">StateMixin.state_history</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.StateMixin.change_state"><code class="docutils literal notranslate"><span class="pre">StateMixin.change_state()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.StateMixin.get_state_changes"><code class="docutils literal notranslate"><span class="pre">StateMixin.get_state_changes()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.StateMixin.is_in_state"><code class="docutils literal notranslate"><span class="pre">StateMixin.is_in_state()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.StateMixin.model_config"><code class="docutils literal notranslate"><span class="pre">StateMixin.model_config</span></code></a></li>
+<li><a class="reference internal" href="#id26"><code class="docutils literal notranslate"><span class="pre">StateMixin.state</span></code></a></li>
+<li><a class="reference internal" href="#id27"><code class="docutils literal notranslate"><span class="pre">StateMixin.state_history</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.TimestampMixin"><code class="docutils literal notranslate"><span class="pre">TimestampMixin</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.TimestampMixin.created_at"><code class="docutils literal notranslate"><span class="pre">TimestampMixin.created_at</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.TimestampMixin.updated_at"><code class="docutils literal notranslate"><span class="pre">TimestampMixin.updated_at</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.TimestampMixin.age_in_seconds"><code class="docutils literal notranslate"><span class="pre">TimestampMixin.age_in_seconds()</span></code></a></li>
+<li><a class="reference internal" href="#id28"><code class="docutils literal notranslate"><span class="pre">TimestampMixin.created_at</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.TimestampMixin.model_config"><code class="docutils literal notranslate"><span class="pre">TimestampMixin.model_config</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.TimestampMixin.time_since_update"><code class="docutils literal notranslate"><span class="pre">TimestampMixin.time_since_update()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.TimestampMixin.update_timestamp"><code class="docutils literal notranslate"><span class="pre">TimestampMixin.update_timestamp()</span></code></a></li>
+<li><a class="reference internal" href="#id29"><code class="docutils literal notranslate"><span class="pre">TimestampMixin.updated_at</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.VersionMixin"><code class="docutils literal notranslate"><span class="pre">VersionMixin</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.VersionMixin.version"><code class="docutils literal notranslate"><span class="pre">VersionMixin.version</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.VersionMixin.version_history"><code class="docutils literal notranslate"><span class="pre">VersionMixin.version_history</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.VersionMixin.bump_version"><code class="docutils literal notranslate"><span class="pre">VersionMixin.bump_version()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.VersionMixin.get_version_history"><code class="docutils literal notranslate"><span class="pre">VersionMixin.get_version_history()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.common.mixins.general.VersionMixin.model_config"><code class="docutils literal notranslate"><span class="pre">VersionMixin.model_config</span></code></a></li>
+<li><a class="reference internal" href="#id30"><code class="docutils literal notranslate"><span class="pre">VersionMixin.version</span></code></a></li>
+<li><a class="reference internal" href="#id31"><code class="docutils literal notranslate"><span class="pre">VersionMixin.version_history</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

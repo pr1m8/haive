@@ -1,0 +1,1101 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.utils.tools.tool_schema_generator - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for haive.core.utils.tools.tool_schema_generator</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Tool schema extraction utilities for the Haive framework.</span>
+
+<span class="sd">from typing import Any</span>
+<span class="sd">This module provides utilities to extract Pydantic input schemas from various</span>
+<span class="sd">callable types including regular functions, LangChain tools, and other tool types.</span>
+<span class="sd">Also includes utilities for creating StructuredTool instances and ToolNode configurations.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">get_type_hints</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseTool</span><span class="p">,</span> <span class="n">StructuredTool</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">create_model</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Type definitions for different tool types</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseTool</span><span class="p">,</span> <span class="n">StructuredTool</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.tools.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseToolkit</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.prebuilt</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolNode</span>
+
+    <span class="n">LANGCHAIN_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">LANGCHAIN_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">BaseTool</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">StructuredTool</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">BaseToolkit</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">ToolNode</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="extract_input_schema">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/utils/tools/tool_schema_generator/index.html#haive.core.utils.tools.tool_schema_generator.extract_input_schema">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_input_schema</span><span class="p">(</span>
+    <span class="n">tool_or_callable</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">schema_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">include_docstring</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">strict_typing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">include_signature</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract a Pydantic input schema from a callable or tool.</span>
+
+<span class="sd">    This function can handle:</span>
+<span class="sd">    - Regular Python functions with type hints</span>
+<span class="sd">    - LangChain BaseTool instances</span>
+<span class="sd">    - LangChain StructuredTool instances</span>
+<span class="sd">    - Any callable with proper type annotations</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tool_or_callable: The callable or tool to extract schema from</span>
+<span class="sd">        schema_name: Optional name for the generated schema class</span>
+<span class="sd">        include_docstring: Whether to extract descriptions from docstrings</span>
+<span class="sd">        strict_typing: Whether to be strict about type annotations</span>
+<span class="sd">        include_signature: Whether to store the original function signature</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Pydantic BaseModel class representing the input schema</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        def my_function(name: str, age: int = 25, active: bool = True):</span>
+<span class="sd">            &#39;&#39;&#39;Process user information.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">                name: User&#39;s full name</span>
+<span class="sd">                age: User&#39;s age in years</span>
+<span class="sd">                active: Whether the user is active</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+<span class="sd">            return f&quot;User {name} is {age} years old&quot;</span>
+
+<span class="sd">        Schema = extract_input_schema(my_function)</span>
+<span class="sd">        # Creates a Pydantic model with name, age, active fields</span>
+<span class="sd">        # and stores the original signature for dynamic invocation</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Determine schema name</span>
+    <span class="k">if</span> <span class="n">schema_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool_or_callable</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
+            <span class="n">schema_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tool_or_callable</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">Input&quot;</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool_or_callable</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">):</span>
+            <span class="n">schema_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tool_or_callable</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">Input&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">schema_name</span> <span class="o">=</span> <span class="s2">&quot;ToolInput&quot;</span>
+
+    <span class="c1"># Handle different tool types</span>
+    <span class="k">if</span> <span class="n">LANGCHAIN_AVAILABLE</span> <span class="ow">and</span> <span class="n">BaseTool</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool_or_callable</span><span class="p">,</span> <span class="n">BaseTool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_extract_from_langchain_tool</span><span class="p">(</span><span class="n">tool_or_callable</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">tool_or_callable</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_extract_from_callable</span><span class="p">(</span>
+            <span class="n">tool_or_callable</span><span class="p">,</span>
+            <span class="n">schema_name</span><span class="p">,</span>
+            <span class="n">include_docstring</span><span class="p">,</span>
+            <span class="n">strict_typing</span><span class="p">,</span>
+            <span class="n">include_signature</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported tool type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">tool_or_callable</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_from_langchain_tool</span><span class="p">(</span><span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract schema from a LangChain tool.&quot;&quot;&quot;</span>
+    <span class="c1"># Check if tool already has an input schema</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;args_schema&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">tool</span><span class="o">.</span><span class="n">args_schema</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Return existing schema or create a copy with new name</span>
+        <span class="k">if</span> <span class="n">tool</span><span class="o">.</span><span class="n">args_schema</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">schema_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tool</span><span class="o">.</span><span class="n">args_schema</span>
+
+        <span class="c1"># Create a copy with the desired name</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_info</span> <span class="ow">in</span> <span class="n">tool</span><span class="o">.</span><span class="n">args_schema</span><span class="o">.</span><span class="n">model_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">fields</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">field_info</span><span class="o">.</span><span class="n">annotation</span><span class="p">,</span> <span class="n">field_info</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">create_model</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="o">**</span><span class="n">fields</span><span class="p">)</span>
+
+    <span class="c1"># If tool has a _run method, extract from that</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;_run&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_extract_from_callable</span><span class="p">(</span><span class="n">tool</span><span class="o">.</span><span class="n">_run</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># If tool has a run method, extract from that</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_extract_from_callable</span><span class="p">(</span><span class="n">tool</span><span class="o">.</span><span class="n">run</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Fallback: create a generic schema</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Could not extract specific schema from tool </span><span class="si">{</span><span class="w"> </span><span class="n">tool</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="w"> </span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">create_model</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Tool input&quot;</span><span class="p">)))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_from_callable</span><span class="p">(</span>
+    <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">schema_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">include_docstring</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">strict_typing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">include_signature</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract schema from a regular callable.&quot;&quot;&quot;</span>
+    <span class="c1"># Get function signature</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not inspect signature of </span><span class="si">{</span><span class="n">func</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span>
+            <span class="n">schema_name</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Function input&quot;</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">include_signature</span><span class="p">:</span>
+            <span class="c1"># Use setattr to avoid pyright complaints about unknown attributes</span>
+            <span class="n">schema</span><span class="o">.</span><span class="n">__signature_info__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="s2">&quot;callable&quot;</span><span class="p">:</span> <span class="n">func</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">schema</span>
+
+    <span class="c1"># Get type hints</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">type_hints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">NameError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not get type hints for </span><span class="si">{</span><span class="n">func</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">type_hints</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># Extract parameter descriptions from docstring</span>
+    <span class="n">param_descriptions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">include_docstring</span> <span class="ow">and</span> <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">:</span>
+        <span class="n">param_descriptions</span> <span class="o">=</span> <span class="n">_extract_param_descriptions</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+
+    <span class="c1"># Build field definitions</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">signature</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># Skip &#39;self&#39; and &#39;cls&#39; parameters</span>
+        <span class="k">if</span> <span class="n">param_name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;self&quot;</span><span class="p">,</span> <span class="s2">&quot;cls&quot;</span><span class="p">):</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Skip **kwargs and *args</span>
+        <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">VAR_POSITIONAL</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">VAR_KEYWORD</span><span class="p">):</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Get type annotation</span>
+        <span class="n">param_type</span> <span class="o">=</span> <span class="n">type_hints</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">annotation</span><span class="p">)</span>
+
+        <span class="c1"># Handle missing type annotations</span>
+        <span class="k">if</span> <span class="n">param_type</span> <span class="o">==</span> <span class="n">inspect</span><span class="o">.</span><span class="n">Parameter</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">strict_typing</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parameter </span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s2"> has no type annotation&quot;</span><span class="p">)</span>
+            <span class="n">param_type</span> <span class="o">=</span> <span class="n">Any</span>
+
+        <span class="c1"># Handle default values</span>
+        <span class="n">default_value</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">default</span>
+        <span class="n">field_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">default_value</span> <span class="o">!=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">Parameter</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">field_kwargs</span><span class="p">[</span><span class="s2">&quot;default&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># No default means required field</span>
+            <span class="n">field_kwargs</span><span class="p">[</span><span class="s2">&quot;default&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">...</span>
+
+        <span class="c1"># Add description from docstring</span>
+        <span class="k">if</span> <span class="n">param_name</span> <span class="ow">in</span> <span class="n">param_descriptions</span><span class="p">:</span>
+            <span class="n">field_kwargs</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">param_descriptions</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span>
+
+        <span class="c1"># Create field</span>
+        <span class="k">if</span> <span class="n">field_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="o">...</span><span class="p">:</span>
+            <span class="c1"># Required field</span>
+            <span class="n">fields</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">param_type</span><span class="p">,</span>
+                <span class="n">Field</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">field_kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s2">&quot;default&quot;</span><span class="p">}),</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Optional field with default</span>
+            <span class="n">fields</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_type</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="o">**</span><span class="n">field_kwargs</span><span class="p">))</span>
+
+    <span class="c1"># Handle case where function has no parameters</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">fields</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Function </span><span class="si">{</span><span class="w"> </span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">hasattr</span><span class="p">(</span><span class="n">func</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;__name__&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="w"> </span><span class="si">}</span><span class="s2"> has no extractable parameters&quot;</span>
+        <span class="p">)</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">schema_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">include_signature</span><span class="p">:</span>
+            <span class="n">schema</span><span class="o">.</span><span class="n">__signature_info__</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;signature&quot;</span><span class="p">:</span> <span class="n">signature</span><span class="p">,</span>
+                <span class="s2">&quot;callable&quot;</span><span class="p">:</span> <span class="n">func</span><span class="p">,</span>
+                <span class="s2">&quot;has_parameters&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="k">return</span> <span class="n">schema</span>
+
+    <span class="c1"># Create and return the model</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="o">**</span><span class="n">fields</span><span class="p">)</span>
+
+        <span class="c1"># Store signature information for dynamic invocation</span>
+        <span class="k">if</span> <span class="n">include_signature</span><span class="p">:</span>
+            <span class="n">schema</span><span class="o">.</span><span class="n">__signature_info__</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;signature&quot;</span><span class="p">:</span> <span class="n">signature</span><span class="p">,</span>
+                <span class="s2">&quot;callable&quot;</span><span class="p">:</span> <span class="n">func</span><span class="p">,</span>
+                <span class="s2">&quot;parameter_count&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">signature</span><span class="o">.</span><span class="n">parameters</span><span class="p">),</span>
+                <span class="s2">&quot;required_params&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="n">name</span>
+                    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">model_fields</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="o">...</span> <span class="ow">or</span> <span class="n">field</span><span class="o">.</span><span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span>
+                <span class="p">],</span>
+                <span class="s2">&quot;optional_params&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="n">name</span>
+                    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">model_fields</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">default</span> <span class="o">!=</span> <span class="o">...</span> <span class="ow">and</span> <span class="n">field</span><span class="o">.</span><span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="p">],</span>
+                <span class="s2">&quot;type_hints&quot;</span><span class="p">:</span> <span class="n">type_hints</span><span class="p">,</span>
+                <span class="s2">&quot;docstring&quot;</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">,</span>
+            <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">schema</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to create model </span><span class="si">{</span><span class="n">schema_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># Fallback to a simple model</span>
+        <span class="n">fallback_schema</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span>
+            <span class="n">schema_name</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Function input&quot;</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">include_signature</span><span class="p">:</span>
+            <span class="n">fallback_schema</span><span class="o">.</span><span class="n">__signature_info__</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;signature&quot;</span><span class="p">:</span> <span class="n">signature</span><span class="p">,</span>
+                <span class="s2">&quot;callable&quot;</span><span class="p">:</span> <span class="n">func</span><span class="p">,</span>
+                <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
+            <span class="p">}</span>
+        <span class="k">return</span> <span class="n">fallback_schema</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_param_descriptions</span><span class="p">(</span><span class="n">docstring</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract parameter descriptions from a docstring.</span>
+
+<span class="sd">    Supports multiple docstring formats:</span>
+<span class="sd">    - Google style</span>
+<span class="sd">    - NumPy style</span>
+<span class="sd">    - Sphinx style</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">descriptions</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># Try Google style first: &quot;Args:&quot; section</span>
+    <span class="n">google_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s2">&quot;Args?:\s*\n(.*?)(?:\n\s*\n|\n[A-Z][a-z]+:|\Z)&quot;</span><span class="p">,</span>
+        <span class="n">docstring</span><span class="p">,</span>
+        <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">google_match</span><span class="p">:</span>
+        <span class="n">args_section</span> <span class="o">=</span> <span class="n">google_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Match parameter lines: &quot;param_name: description&quot; or &quot;param_name</span>
+        <span class="c1"># (type): description&quot;</span>
+        <span class="n">param_matches</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
+            <span class="sa">r</span><span class="s2">&quot;^\s*()(?:\s*\([^)]+\))?\s*:\s*(.+?)(?=^\s*(?:\s*\([^)]+\))?\s*:|$)&quot;</span><span class="p">,</span>
+            <span class="n">args_section</span><span class="p">,</span>
+            <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="n">param_matches</span><span class="p">:</span>
+            <span class="n">descriptions</span><span class="p">[</span><span class="n">param_name</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">description</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+
+    <span class="c1"># Try NumPy style: &quot;Parameters&quot; section</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">descriptions</span><span class="p">:</span>
+        <span class="n">numpy_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+            <span class="sa">r</span><span class="s2">&quot;Parameters\s*\n\s*-+\s*\n(.*?)(?:\n\s*\n|\n[A-Z][a-z]+\s*\n\s*-+|\Z)&quot;</span><span class="p">,</span>
+            <span class="n">docstring</span><span class="p">,</span>
+            <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">numpy_match</span><span class="p">:</span>
+            <span class="n">params_section</span> <span class="o">=</span> <span class="n">numpy_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># Match parameter blocks</span>
+            <span class="n">param_blocks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
+                <span class="sa">r</span><span class="s2">&quot;()\s*:\s*([^:]+?)(?=\n\s*:|$)&quot;</span><span class="p">,</span> <span class="n">params_section</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="n">param_blocks</span><span class="p">:</span>
+                <span class="n">descriptions</span><span class="p">[</span><span class="n">param_name</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">description</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+
+    <span class="c1"># Try Sphinx style: &quot;:param name: description&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">descriptions</span><span class="p">:</span>
+        <span class="n">sphinx_matches</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
+            <span class="sa">r</span><span class="s2">&quot;:param ()\s*:\s*(.+?)(?=:param|\Z)&quot;</span><span class="p">,</span> <span class="n">docstring</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="n">sphinx_matches</span><span class="p">:</span>
+            <span class="n">descriptions</span><span class="p">[</span><span class="n">param_name</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">description</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">descriptions</span>
+
+
+<div class="viewcode-block" id="extract_output_schema">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/utils/tools/tool_schema_generator/index.html#haive.core.utils.tools.tool_schema_generator.extract_output_schema">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_output_schema</span><span class="p">(</span>
+    <span class="n">tool_or_callable</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">schema_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">include_docstring</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract a Pydantic output schema from a callable or tool.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tool_or_callable: The callable or tool to extract schema from</span>
+<span class="sd">        schema_name: Optional name for the generated schema class</span>
+<span class="sd">        include_docstring: Whether to extract descriptions from docstrings</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Pydantic BaseModel class representing the output schema, or None if not extractable</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Determine schema name</span>
+    <span class="k">if</span> <span class="n">schema_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool_or_callable</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
+            <span class="n">schema_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tool_or_callable</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">Output&quot;</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool_or_callable</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">):</span>
+            <span class="n">schema_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tool_or_callable</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">Output&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">schema_name</span> <span class="o">=</span> <span class="s2">&quot;ToolOutput&quot;</span>
+
+    <span class="c1"># Handle LangChain tools</span>
+    <span class="k">if</span> <span class="n">LANGCHAIN_AVAILABLE</span> <span class="ow">and</span> <span class="n">BaseTool</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool_or_callable</span><span class="p">,</span> <span class="n">BaseTool</span><span class="p">):</span>
+        <span class="c1"># Most LangChain tools return strings, but check if there&#39;s a specific</span>
+        <span class="c1"># schema</span>
+        <span class="k">return</span> <span class="n">create_model</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Tool output&quot;</span><span class="p">)))</span>
+
+    <span class="c1"># Handle regular callables</span>
+    <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">tool_or_callable</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Get return type annotation</span>
+            <span class="n">signature</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">tool_or_callable</span><span class="p">)</span>
+            <span class="n">return_annotation</span> <span class="o">=</span> <span class="n">signature</span><span class="o">.</span><span class="n">return_annotation</span>
+
+            <span class="k">if</span> <span class="n">return_annotation</span> <span class="o">!=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">Signature</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="c1"># Try to get full type hints for better resolution</span>
+                <span class="n">type_hints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="n">tool_or_callable</span><span class="p">)</span>
+                <span class="n">return_type</span> <span class="o">=</span> <span class="n">type_hints</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;return&quot;</span><span class="p">,</span> <span class="n">return_annotation</span><span class="p">)</span>
+
+                <span class="c1"># If it&#39;s already a BaseModel, return it</span>
+                <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">return_type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">return_type</span><span class="p">,</span> <span class="n">BaseModel</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">return_type</span>
+
+                <span class="c1"># Create a simple schema with the return type</span>
+                <span class="k">return</span> <span class="n">create_model</span><span class="p">(</span>
+                    <span class="n">schema_name</span><span class="p">,</span>
+                    <span class="n">output</span><span class="o">=</span><span class="p">(</span><span class="n">return_type</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Function output&quot;</span><span class="p">)),</span>
+                <span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not extract output schema: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="create_tool_schemas">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/utils/tools/tool_schema_generator/index.html#haive.core.utils.tools.tool_schema_generator.create_tool_schemas">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_tool_schemas</span><span class="p">(</span>
+    <span class="n">tool_or_callable</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">input_schema_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">output_schema_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">include_docstring</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">strict_typing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">include_signature</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create both input and output schemas for a tool or callable.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tool_or_callable: The callable or tool to extract schemas from</span>
+<span class="sd">        input_schema_name: Optional name for the input schema class</span>
+<span class="sd">        output_schema_name: Optional name for the output schema class</span>
+<span class="sd">        include_docstring: Whether to extract descriptions from docstrings</span>
+<span class="sd">        strict_typing: Whether to be strict about type annotations</span>
+<span class="sd">        include_signature: Whether to store the original function signature</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with &#39;input&#39; and &#39;output&#39; schema classes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">input_schema</span> <span class="o">=</span> <span class="n">extract_input_schema</span><span class="p">(</span>
+        <span class="n">tool_or_callable</span><span class="p">,</span>
+        <span class="n">input_schema_name</span><span class="p">,</span>
+        <span class="n">include_docstring</span><span class="p">,</span>
+        <span class="n">strict_typing</span><span class="p">,</span>
+        <span class="n">include_signature</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">output_schema</span> <span class="o">=</span> <span class="n">extract_output_schema</span><span class="p">(</span>
+        <span class="n">tool_or_callable</span><span class="p">,</span> <span class="n">output_schema_name</span><span class="p">,</span> <span class="n">include_docstring</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">input_schema</span><span class="p">,</span> <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="n">output_schema</span><span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="invoke_from_schema">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/utils/tools/tool_schema_generator/index.html#haive.core.utils.tools.tool_schema_generator.invoke_from_schema">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">invoke_from_schema</span><span class="p">(</span><span class="n">schema_instance</span><span class="p">:</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Invoke the original callable using a schema instance.</span>
+
+<span class="sd">    This function uses the stored signature information to properly</span>
+<span class="sd">    invoke the original callable with the validated input data.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        schema_instance: Instance of a schema created by extract_input_schema</span>
+<span class="sd">        **extra_kwargs: Additional keyword arguments to pass to the callable</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Result of calling the original function</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        Schema = extract_input_schema(my_function)</span>
+<span class="sd">        input_data = Schema(name=&quot;John&quot;, age=30)</span>
+<span class="sd">        result = invoke_from_schema(input_data)</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">schema_class</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">schema_instance</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">schema_class</span><span class="p">,</span> <span class="s2">&quot;__signature_info__&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Schema does not contain signature information. &quot;</span>
+            <span class="s2">&quot;Ensure include_signature=True was used during extraction.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">sig_info</span> <span class="o">=</span> <span class="n">schema_class</span><span class="o">.</span><span class="n">__signature_info__</span>
+    <span class="n">callable_func</span> <span class="o">=</span> <span class="n">sig_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;callable&quot;</span><span class="p">)</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">sig_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;signature&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">callable_func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No callable function found in signature info&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Convert schema instance to dict</span>
+    <span class="n">input_dict</span> <span class="o">=</span> <span class="n">schema_instance</span><span class="o">.</span><span class="n">model_dump</span><span class="p">()</span>
+
+    <span class="c1"># Merge with extra kwargs</span>
+    <span class="n">input_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">extra_kwargs</span><span class="p">)</span>
+
+    <span class="c1"># If we have signature info, use it to call properly</span>
+    <span class="k">if</span> <span class="n">signature</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Bind arguments to signature to validate</span>
+            <span class="n">bound_args</span> <span class="o">=</span> <span class="n">signature</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="o">**</span><span class="n">input_dict</span><span class="p">)</span>
+            <span class="n">bound_args</span><span class="o">.</span><span class="n">apply_defaults</span><span class="p">()</span>
+
+            <span class="c1"># Call the function with bound arguments</span>
+            <span class="k">return</span> <span class="n">callable_func</span><span class="p">(</span><span class="o">*</span><span class="n">bound_args</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">bound_args</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to bind arguments to signature: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="c1"># Fallback to direct call</span>
+            <span class="k">return</span> <span class="n">callable_func</span><span class="p">(</span><span class="o">**</span><span class="n">input_dict</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Direct call if no signature available</span>
+        <span class="k">return</span> <span class="n">callable_func</span><span class="p">(</span><span class="o">**</span><span class="n">input_dict</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_signature_info">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/utils/tools/tool_schema_generator/index.html#haive.core.utils.tools.tool_schema_generator.get_signature_info">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_signature_info</span><span class="p">(</span><span class="n">schema_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get stored signature information from a schema class.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        schema_class: Schema class created by extract_input_schema</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary containing signature information, or None if not available</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">schema_class</span><span class="p">,</span> <span class="s2">&quot;__signature_info__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_structured_tool_from_callable">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/utils/tools/tool_schema_generator/index.html#haive.core.utils.tools.tool_schema_generator.create_structured_tool_from_callable">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_structured_tool_from_callable</span><span class="p">(</span>
+    <span class="n">callable_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">extract_schema</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a LangChain StructuredTool from a callable.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        callable_func: The function to wrap</span>
+<span class="sd">        name: Optional tool name (defaults to function name)</span>
+<span class="sd">        description: Optional tool description (defaults to docstring)</span>
+<span class="sd">        extract_schema: Whether to extract and use schema for args_schema</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        StructuredTool instance or None if LangChain not available</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">LANGCHAIN_AVAILABLE</span> <span class="ow">or</span> <span class="n">StructuredTool</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;LangChain not available, cannot create StructuredTool&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Get name</span>
+    <span class="n">tool_name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">callable_func</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown_tool&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Get description</span>
+    <span class="n">tool_description</span> <span class="o">=</span> <span class="n">description</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span>
+        <span class="n">callable_func</span><span class="p">,</span> <span class="s2">&quot;__doc__&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Tool: </span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">tool_description</span><span class="p">:</span>
+        <span class="n">tool_description</span> <span class="o">=</span> <span class="n">tool_description</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="c1"># Extract schema if requested</span>
+    <span class="n">args_schema</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">extract_schema</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">args_schema</span> <span class="o">=</span> <span class="n">extract_input_schema</span><span class="p">(</span><span class="n">callable_func</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">Args&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not extract schema for </span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Create the tool</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">args_schema</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">StructuredTool</span><span class="o">.</span><span class="n">from_function</span><span class="p">(</span>
+                <span class="n">func</span><span class="o">=</span><span class="n">callable_func</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">tool_name</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="n">tool_description</span><span class="p">,</span>
+                <span class="n">args_schema</span><span class="o">=</span><span class="n">args_schema</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">StructuredTool</span><span class="o">.</span><span class="n">from_function</span><span class="p">(</span>
+            <span class="n">func</span><span class="o">=</span><span class="n">callable_func</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">tool_description</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to create StructuredTool for </span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="create_goal_tool_node">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/utils/tools/tool_schema_generator/index.html#haive.core.utils.tools.tool_schema_generator.create_goal_tool_node">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_goal_tool_node</span><span class="p">(</span>
+    <span class="n">goal_schemas</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">]],</span>
+    <span class="n">executor_function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">executor_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a ToolNode for &quot;goal tools&quot; pattern.</span>
+
+<span class="sd">    This creates a ToolNode where:</span>
+<span class="sd">    1. Each goal schema becomes a StructuredTool that calls the executor</span>
+<span class="sd">    2. The executor receives the structured data and handles the actual work</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        goal_schemas: List of Pydantic models representing different goals/actions</span>
+<span class="sd">        executor_function: Function that executes the actual work</span>
+<span class="sd">        executor_name: Optional name for the executor (defaults to function name)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ToolNode instance or None if LangChain not available</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        class SearchQueries(BaseModel):</span>
+<span class="sd">            search_queries: List[str]</span>
+
+<span class="sd">        class AnswerQuestion(BaseModel):</span>
+<span class="sd">            answer: str</span>
+<span class="sd">            sources: List[str]</span>
+
+<span class="sd">        def execute_goal(goal_data, **kwargs):</span>
+<span class="sd">            if isinstance(goal_data, SearchQueries):</span>
+<span class="sd">                return search_function(goal_data.search_queries)</span>
+<span class="sd">            elif isinstance(goal_data, AnswerQuestion):</span>
+<span class="sd">                return answer_function(goal_data.answer, goal_data.sources)</span>
+
+<span class="sd">        tool_node = create_goal_tool_node(</span>
+<span class="sd">            [SearchQueries, AnswerQuestion],</span>
+<span class="sd">            execute_goal</span>
+<span class="sd">        )</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">LANGCHAIN_AVAILABLE</span> <span class="ow">or</span> <span class="n">ToolNode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;LangChain not available, cannot create ToolNode&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">executor_name</span> <span class="o">=</span> <span class="n">executor_name</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span>
+        <span class="n">executor_function</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">,</span> <span class="s2">&quot;execute_goal&quot;</span>
+    <span class="p">)</span>
+    <span class="n">tools</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">schema_class</span> <span class="ow">in</span> <span class="n">goal_schemas</span><span class="p">:</span>
+        <span class="n">schema_name</span> <span class="o">=</span> <span class="n">schema_class</span><span class="o">.</span><span class="vm">__name__</span>
+
+        <span class="c1"># Create a wrapper function that converts the schema to the expected</span>
+        <span class="c1"># format</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">create_wrapper</span><span class="p">(</span><span class="n">schema_cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+                <span class="c1"># Convert kwargs to schema instance</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">goal_instance</span> <span class="o">=</span> <span class="n">schema_cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                    <span class="c1"># Call executor with the goal instance</span>
+                    <span class="k">return</span> <span class="n">executor_function</span><span class="p">(</span><span class="n">goal_instance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error executing goal </span><span class="si">{</span><span class="n">schema_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">!s}</span><span class="s2">&quot;</span>
+
+            <span class="c1"># Copy metadata</span>
+            <span class="n">wrapper</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;execute_</span><span class="si">{</span><span class="n">schema_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">wrapper</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Execute </span><span class="si">{</span><span class="n">schema_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> goal&quot;</span>
+
+            <span class="k">return</span> <span class="n">wrapper</span>
+
+        <span class="c1"># Create wrapper for this schema</span>
+        <span class="n">goal_wrapper</span> <span class="o">=</span> <span class="n">create_wrapper</span><span class="p">(</span><span class="n">schema_class</span><span class="p">)</span>
+
+        <span class="c1"># Create StructuredTool with the schema as args_schema</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">StructuredTool</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;StructuredTool not available&quot;</span><span class="p">)</span>
+            <span class="n">tool</span> <span class="o">=</span> <span class="n">StructuredTool</span><span class="o">.</span><span class="n">from_function</span><span class="p">(</span>
+                <span class="n">func</span><span class="o">=</span><span class="n">goal_wrapper</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">schema_name</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Execute </span><span class="si">{</span><span class="n">schema_name</span><span class="si">}</span><span class="s2"> action&quot;</span><span class="p">,</span>
+                <span class="n">args_schema</span><span class="o">=</span><span class="n">schema_class</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to create tool for </span><span class="si">{</span><span class="n">schema_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">tools</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No tools created for goal tool node&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Create and return ToolNode</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ToolNode</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to create ToolNode: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="create_batch_goal_tool_node">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/utils/tools/tool_schema_generator/index.html#haive.core.utils.tools.tool_schema_generator.create_batch_goal_tool_node">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_batch_goal_tool_node</span><span class="p">(</span>
+    <span class="n">goal_schemas</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">]],</span>
+    <span class="n">batch_executor_function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">executor_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a ToolNode for batch &quot;goal tools&quot; pattern like the tavily example.</span>
+
+<span class="sd">    This creates a ToolNode where multiple goal schemas can share the same</span>
+<span class="sd">    underlying batch executor function.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        goal_schemas: List of Pydantic models representing different goals</span>
+<span class="sd">        batch_executor_function: Function that can handle batch operations</span>
+<span class="sd">        executor_name: Optional name for the executor</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ToolNode instance or None if LangChain not available</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        class SearchQueries(BaseModel):</span>
+<span class="sd">            search_queries: List[str]</span>
+
+<span class="sd">        class ReviseAnswer(BaseModel):</span>
+<span class="sd">            search_queries: List[str]</span>
+
+<span class="sd">        def run_queries(search_queries: List[str], **kwargs):</span>
+<span class="sd">            return tavily_tool.batch([{&quot;query&quot;: query} for query in search_queries])</span>
+
+<span class="sd">        tool_node = create_batch_goal_tool_node(</span>
+<span class="sd">            [SearchQueries, ReviseAnswer],</span>
+<span class="sd">            run_queries</span>
+<span class="sd">        )</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">LANGCHAIN_AVAILABLE</span> <span class="ow">or</span> <span class="n">ToolNode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;LangChain not available, cannot create ToolNode&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">tools</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">schema_class</span> <span class="ow">in</span> <span class="n">goal_schemas</span><span class="p">:</span>
+        <span class="n">schema_name</span> <span class="o">=</span> <span class="n">schema_class</span><span class="o">.</span><span class="vm">__name__</span>
+
+        <span class="c1"># Create StructuredTool that uses the schema name and calls batch</span>
+        <span class="c1"># executor</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">StructuredTool</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;StructuredTool not available&quot;</span><span class="p">)</span>
+            <span class="n">tool</span> <span class="o">=</span> <span class="n">StructuredTool</span><span class="o">.</span><span class="n">from_function</span><span class="p">(</span>
+                <span class="n">func</span><span class="o">=</span><span class="n">batch_executor_function</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">schema_name</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Execute </span><span class="si">{</span><span class="n">schema_name</span><span class="si">}</span><span class="s2"> batch operation&quot;</span><span class="p">,</span>
+                <span class="n">args_schema</span><span class="o">=</span><span class="n">schema_class</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to create batch tool for </span><span class="si">{</span><span class="n">schema_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">tools</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No tools created for batch goal tool node&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Create and return ToolNode</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ToolNode</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to create batch ToolNode: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<span class="c1"># Example usage and testing</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Test with a regular function</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">search_documents</span><span class="p">(</span>
+        <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">include_metadata</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Search for documents matching a query.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            query: The search query string</span>
+<span class="sd">            limit: Maximum number of results to return</span>
+<span class="sd">            include_metadata: Whether to include document metadata</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of matching document titles</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Document </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">limit</span><span class="p">)]</span>
+
+    <span class="c1"># Extract schema</span>
+    <span class="n">SearchSchema</span> <span class="o">=</span> <span class="n">extract_input_schema</span><span class="p">(</span><span class="n">search_documents</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_name</span><span class="p">,</span> <span class="n">field_info</span> <span class="ow">in</span> <span class="n">SearchSchema</span><span class="o">.</span><span class="n">model_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">field_info</span><span class="o">.</span><span class="n">description</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="c1"># Test creating an instance</span>
+    <span class="n">search_input</span> <span class="o">=</span> <span class="n">SearchSchema</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;test query&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="c1"># Test schemas creation with signature</span>
+    <span class="n">schemas</span> <span class="o">=</span> <span class="n">create_tool_schemas</span><span class="p">(</span><span class="n">search_documents</span><span class="p">,</span> <span class="n">include_signature</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Test signature info</span>
+    <span class="n">input_schema</span> <span class="o">=</span> <span class="n">schemas</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">input_schema</span><span class="p">:</span>
+        <span class="n">sig_info</span> <span class="o">=</span> <span class="n">get_signature_info</span><span class="p">(</span><span class="n">input_schema</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sig_info</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="c1"># Test goal tool node creation</span>
+
+    <span class="c1"># Define some goal schemas</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">SearchQueries</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+        <span class="n">search_queries</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;List of search queries to execute&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">AnswerQuestion</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+        <span class="n">answer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;The answer to provide&quot;</span><span class="p">)</span>
+        <span class="n">sources</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+            <span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Sources for the answer&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Define executor function</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">execute_search_goal</span><span class="p">(</span><span class="n">goal_data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute search-related goals.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">goal_data</span><span class="p">,</span> <span class="n">SearchQueries</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Search results for: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">goal_data</span><span class="o">.</span><span class="n">search_queries</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">goal_data</span><span class="p">,</span> <span class="n">AnswerQuestion</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Answer: </span><span class="si">{</span><span class="n">goal_data</span><span class="o">.</span><span class="n">answer</span><span class="si">}</span><span class="s2"> (Sources: </span><span class="si">{</span><span class="n">goal_data</span><span class="o">.</span><span class="n">sources</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;Unknown goal type&quot;</span>
+
+    <span class="c1"># Create goal tool node</span>
+    <span class="k">if</span> <span class="n">LANGCHAIN_AVAILABLE</span><span class="p">:</span>
+        <span class="n">goal_tool_node</span> <span class="o">=</span> <span class="n">create_goal_tool_node</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">SearchQueries</span><span class="p">,</span> <span class="n">AnswerQuestion</span><span class="p">],</span> <span class="n">execute_search_goal</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Test batch version too</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">run_queries</span><span class="p">(</span><span class="n">search_queries</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Run the generated queries.&quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Result for: </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">search_queries</span><span class="p">]</span>
+
+        <span class="n">batch_tool_node</span> <span class="o">=</span> <span class="n">create_batch_goal_tool_node</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">SearchQueries</span><span class="p">,</span> <span class="n">AnswerQuestion</span><span class="p">],</span> <span class="n">run_queries</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

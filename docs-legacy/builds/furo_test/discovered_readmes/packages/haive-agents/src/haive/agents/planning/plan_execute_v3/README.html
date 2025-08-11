@@ -1,0 +1,717 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>Plan-and-Execute V3 Agent - 🤖 Haive Test Build</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../../../../index_core_only.html"><div class="brand">🤖 Haive Test Build</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Test Build</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../../api/haive/core/index.html">haive.core</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../../../../../../../_sources/discovered_readmes/packages/haive-agents/src/haive/agents/planning/plan_execute_v3/README.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="plan-and-execute-v3-agent">
+<h1>Plan-and-Execute V3 Agent<a class="headerlink" href="#plan-and-execute-v3-agent" title="Link to this heading">¶</a></h1>
+<p>Advanced implementation of the Plan-and-Execute methodology using Enhanced MultiAgent V3 architecture.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>The Plan-and-Execute V3 agent separates complex task execution into distinct phases:</p>
+<ol class="arabic simple">
+<li><p><strong>Planning</strong>: Create detailed, structured execution plans</p></li>
+<li><p><strong>Execution</strong>: Execute individual steps with available tools</p></li>
+<li><p><strong>Evaluation</strong>: Assess progress and decide next actions</p></li>
+<li><p><strong>Replanning</strong>: Revise plans when necessary for better outcomes</p></li>
+</ol>
+</section>
+<section id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Link to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>┌─────────────────────────────────────────────────────────────────┐
+│                    PlanExecuteV3Agent                           │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │              Enhanced MultiAgent V3                     │   │
+│  │                                                         │   │
+│  │  ┌──────────┐    ┌──────────┐    ┌──────────┐         │   │
+│  │  │ Planner  │───▶│ Executor │───▶│Evaluator │         │   │
+│  │  │(Simple)  │    │ (React)  │    │ (Simple) │         │   │
+│  │  └──────────┘    └──────────┘    └──────────┘         │   │
+│  │       │                               │                │   │
+│  │       │          ┌──────────┐         │                │   │
+│  │       └─────────▶│Replanner │◀────────┘                │   │
+│  │                  │ (Simple) │                          │   │
+│  │                  └──────────┘                          │   │
+│  └─────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
+</pre></div>
+</div>
+<section id="sub-agents">
+<h3>Sub-Agents<a class="headerlink" href="#sub-agents" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Planner</strong> (SimpleAgent): Creates structured execution plans with dependencies</p></li>
+<li><p><strong>Executor</strong> (ReactAgent): Executes steps using available tools</p></li>
+<li><p><strong>Evaluator</strong> (SimpleAgent): Assesses progress and makes continuation decisions</p></li>
+<li><p><strong>Replanner</strong> (SimpleAgent): Creates revised plans when needed</p></li>
+</ul>
+</section>
+<section id="structured-outputs">
+<h3>Structured Outputs<a class="headerlink" href="#structured-outputs" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>ExecutionPlan</strong>: Detailed plan with steps, dependencies, and metadata</p></li>
+<li><p><strong>StepExecution</strong>: Results from individual step execution</p></li>
+<li><p><strong>PlanEvaluation</strong>: Progress assessment and decision (continue/replan/finalize)</p></li>
+<li><p><strong>RevisedPlan</strong>: Improved plan incorporating lessons learned</p></li>
+</ul>
+</section>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Real Component Testing</strong>: No mocks, uses actual LLMs and tools</p></li>
+<li><p><strong>Computed Fields</strong>: State management with automatic field computation</p></li>
+<li><p><strong>Conditional Routing</strong>: Smart routing between sub-agents based on state</p></li>
+<li><p><strong>Plan Revision</strong>: Automatic replanning when execution encounters issues</p></li>
+<li><p><strong>Tool Integration</strong>: Full tool support for step execution</p></li>
+<li><p><strong>Performance Tracking</strong>: Built-in performance monitoring and metrics</p></li>
+</ul>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<section id="basic-usage">
+<h3>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.planning.plan_execute_v3</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlanExecuteV3Agent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.aug_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">AugLLMConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">tool</span>
+
+<span class="c1"># Create some tools</span>
+<span class="nd">@tool</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculator</span><span class="p">(</span><span class="n">expression</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate mathematical expressions.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">expression</span><span class="p">))</span>
+
+<span class="nd">@tool</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">web_search</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search the web for information.&quot;&quot;&quot;</span>
+    <span class="c1"># Implementation here</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Search results for: </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># Create agent</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">PlanExecuteV3Agent</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;research_planner&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">AugLLMConfig</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">),</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">calculator</span><span class="p">,</span> <span class="n">web_search</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Execute task</span>
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">agent</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span>
+    <span class="s2">&quot;Research renewable energy market trends and calculate the growth rate&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final Answer: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">final_answer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Steps Completed: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">steps_completed</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">total_steps</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Execution Time: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">total_execution_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="advanced-usage-with-input-structure">
+<h3>Advanced Usage with Input Structure<a class="headerlink" href="#advanced-usage-with-input-structure" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.planning.plan_execute_v3</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlanExecuteV3Agent</span><span class="p">,</span> <span class="n">PlanExecuteInput</span>
+
+<span class="c1"># Structured input</span>
+<span class="n">input_data</span> <span class="o">=</span> <span class="n">PlanExecuteInput</span><span class="p">(</span>
+    <span class="n">objective</span><span class="o">=</span><span class="s2">&quot;Analyze competitive landscape for AI startups&quot;</span><span class="p">,</span>
+    <span class="n">context</span><span class="o">=</span><span class="s2">&quot;Focus on companies founded in the last 2 years with &gt;$10M funding&quot;</span><span class="p">,</span>
+    <span class="n">max_steps</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">time_limit</span><span class="o">=</span><span class="mi">300</span>  <span class="c1"># 5 minutes</span>
+<span class="p">)</span>
+
+<span class="c1"># Execute with structured input</span>
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">agent</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+
+<span class="c1"># Access detailed results</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Objective: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">objective</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key Findings:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">finding</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">key_findings</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - </span><span class="si">{</span><span class="n">finding</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Confidence: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">confidence_score</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="custom-state-management">
+<h3>Custom State Management<a class="headerlink" href="#custom-state-management" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.planning.plan_execute_v3</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlanExecuteV3State</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.messages</span><span class="w"> </span><span class="kn">import</span> <span class="n">HumanMessage</span>
+
+<span class="c1"># Create custom initial state</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">PlanExecuteV3State</span><span class="p">(</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[</span><span class="n">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;Analyze market data&quot;</span><span class="p">)],</span>
+    <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;industry&quot;</span><span class="p">:</span> <span class="s2">&quot;renewable_energy&quot;</span><span class="p">,</span> <span class="s2">&quot;timeframe&quot;</span><span class="p">:</span> <span class="s2">&quot;2023-2024&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># Execute with existing state</span>
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">agent</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="s2">&quot;Continue analysis with latest data&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
+<section id="agent-parameters">
+<h3>Agent Parameters<a class="headerlink" href="#agent-parameters" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>name</strong>: Agent identifier</p></li>
+<li><p><strong>config</strong>: AugLLMConfig for LLM settings</p></li>
+<li><p><strong>tools</strong>: List of available tools for execution</p></li>
+<li><p><strong>max_iterations</strong>: Maximum planning iterations (default: 5)</p></li>
+<li><p><strong>max_steps_per_plan</strong>: Maximum steps per plan (default: 10)</p></li>
+</ul>
+</section>
+<section id="llm-configuration">
+<h3>LLM Configuration<a class="headerlink" href="#llm-configuration" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.aug_llm</span><span class="w"> </span><span class="kn">import</span> <span class="n">AugLLMConfig</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">AugLLMConfig</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>  <span class="c1"># Use best model for planning</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>  <span class="c1"># Lower temperature for consistent planning</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+    <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are an expert at systematic planning and execution&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="state-schema">
+<h2>State Schema<a class="headerlink" href="#state-schema" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">PlanExecuteV3State</span></code> extends <code class="docutils literal notranslate"><span class="pre">MessagesState</span></code> with computed fields:</p>
+<section id="core-fields">
+<h3>Core Fields<a class="headerlink" href="#core-fields" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>plan</strong>: Current execution plan</p></li>
+<li><p><strong>step_executions</strong>: History of step executions</p></li>
+<li><p><strong>evaluations</strong>: History of plan evaluations</p></li>
+<li><p><strong>revision_count</strong>: Number of plan revisions</p></li>
+<li><p><strong>final_answer</strong>: Final result when complete</p></li>
+</ul>
+</section>
+<section id="computed-fields">
+<h3>Computed Fields<a class="headerlink" href="#computed-fields" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>objective</strong>: Extracted from plan or messages</p></li>
+<li><p><strong>current_step</strong>: Formatted current step for executor</p></li>
+<li><p><strong>plan_status</strong>: Formatted plan status overview</p></li>
+<li><p><strong>previous_results</strong>: Formatted execution history</p></li>
+<li><p><strong>execution_summary</strong>: Complete execution summary</p></li>
+<li><p><strong>should_evaluate</strong>: Whether evaluation is needed</p></li>
+<li><p><strong>key_findings</strong>: Extracted key findings from executions</p></li>
+</ul>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<section id="market-research-agent">
+<h3>Market Research Agent<a class="headerlink" href="#market-research-agent" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tools for market research</span>
+<span class="nd">@tool</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">stock_data</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get stock data for a company.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Stock data for </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nd">@tool</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">news_search</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for recent news.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;News about: </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># Create specialized market research agent</span>
+<span class="n">market_agent</span> <span class="o">=</span> <span class="n">PlanExecuteV3Agent</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;market_researcher&quot;</span><span class="p">,</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">stock_data</span><span class="p">,</span> <span class="n">news_search</span><span class="p">,</span> <span class="n">calculator</span><span class="p">],</span>
+    <span class="n">max_steps_per_plan</span><span class="o">=</span><span class="mi">12</span>
+<span class="p">)</span>
+
+<span class="c1"># Research task</span>
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">market_agent</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span>
+    <span class="s2">&quot;Analyze Tesla&#39;s market position and calculate its P/E ratio trends&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="content-creation-agent">
+<h3>Content Creation Agent<a class="headerlink" href="#content-creation-agent" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@tool</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">content_research</span><span class="p">(</span><span class="n">topic</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Research content on a topic.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Content research for: </span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nd">@tool</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">write_draft</span><span class="p">(</span><span class="n">outline</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write content draft from outline.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Draft content based on: </span><span class="si">{</span><span class="n">outline</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># Content creation agent</span>
+<span class="n">content_agent</span> <span class="o">=</span> <span class="n">PlanExecuteV3Agent</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;content_creator&quot;</span><span class="p">,</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">content_research</span><span class="p">,</span> <span class="n">write_draft</span><span class="p">],</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">AugLLMConfig</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>  <span class="c1"># Higher creativity</span>
+<span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">content_agent</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span>
+    <span class="s2">&quot;Create a comprehensive blog post about sustainable technology trends&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="error-handling">
+<h2>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h2>
+<p>The agent includes robust error handling:</p>
+<ul class="simple">
+<li><p><strong>Step Failures</strong>: Automatic evaluation and potential replanning</p></li>
+<li><p><strong>Tool Errors</strong>: Graceful handling of tool execution failures</p></li>
+<li><p><strong>Plan Issues</strong>: Automatic replanning when plans become infeasible</p></li>
+<li><p><strong>Timeout Handling</strong>: Respect for execution time limits</p></li>
+</ul>
+</section>
+<section id="performance">
+<h2>Performance<a class="headerlink" href="#performance" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Parallel Execution</strong>: Where possible within Enhanced MultiAgent V3</p></li>
+<li><p><strong>Smart Routing</strong>: Conditional routing minimizes unnecessary steps</p></li>
+<li><p><strong>State Caching</strong>: Efficient state management with computed fields</p></li>
+<li><p><strong>Tool Optimization</strong>: Intelligent tool selection and usage</p></li>
+</ul>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.planning.plan_execute_v3</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlanExecuteV3Agent</span>
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">asyncio</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">test_plan_execute_v3_real_execution</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test Plan-and-Execute V3 with real components.&quot;&quot;&quot;</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">PlanExecuteV3Agent</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">calculator</span><span class="p">])</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">agent</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="s2">&quot;Calculate the compound interest on $1000 at 5</span><span class="si">% f</span><span class="s2">or 3 years&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">final_answer</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">steps_completed</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">confidence_score</span> <span class="o">&gt;</span> <span class="mf">0.5</span>
+    <span class="k">assert</span> <span class="s2">&quot;1157.63&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">final_answer</span>  <span class="c1"># Expected compound interest result</span>
+</pre></div>
+</div>
+</section>
+<section id="integration">
+<h2>Integration<a class="headerlink" href="#integration" title="Link to this heading">¶</a></h2>
+<section id="with-other-agents">
+<h3>With Other Agents<a class="headerlink" href="#with-other-agents" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use Plan-and-Execute as a tool for other agents</span>
+<span class="n">plan_tool</span> <span class="o">=</span> <span class="n">PlanExecuteV3Agent</span><span class="o">.</span><span class="n">as_tool</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;complex_planner&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Plan and execute complex multi-step tasks&quot;</span><span class="p">,</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">calculator</span><span class="p">,</span> <span class="n">web_search</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Integrate into ReactAgent</span>
+<span class="n">coordinator</span> <span class="o">=</span> <span class="n">ReactAgent</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;coordinator&quot;</span><span class="p">,</span>
+    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">plan_tool</span><span class="p">,</span> <span class="n">other_tools</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="with-custom-state-schemas">
+<h3>With Custom State Schemas<a class="headerlink" href="#with-custom-state-schemas" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.planning.plan_execute_v3</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlanExecuteV3State</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomPlanState</span><span class="p">(</span><span class="n">PlanExecuteV3State</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extended state with custom fields.&quot;&quot;&quot;</span>
+
+    <span class="n">project_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Project identifier&quot;</span><span class="p">)</span>
+    <span class="n">custom_context</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="nd">@computed_field</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">project_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Custom project status computation.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Project </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">execution_summary</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">¶</a></h2>
+<section id="common-issues">
+<h3>Common Issues<a class="headerlink" href="#common-issues" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Import Errors</strong>: Ensure all dependencies are installed with <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">install</span> <span class="pre">--all-extras</span></code></p></li>
+<li><p><strong>Tool Execution Failures</strong>: Check tool implementations and error handling</p></li>
+<li><p><strong>Plan Generation Issues</strong>: Verify LLM configuration and system prompts</p></li>
+<li><p><strong>State Management</strong>: Ensure proper state schema usage and field validation</p></li>
+</ol>
+</section>
+<section id="debug-mode">
+<h3>Debug Mode<a class="headerlink" href="#debug-mode" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enable debug mode for detailed logging</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">PlanExecuteV3Agent</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;debug_agent&quot;</span><span class="p">,</span>
+    <span class="n">tools</span><span class="o">=</span><span class="n">tools</span>
+<span class="p">)</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">multi_agent</span><span class="o">.</span><span class="n">debug_mode</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># Execute with detailed logging</span>
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">agent</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="s2">&quot;Debug this complex task&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">¶</a></h2>
+<p>When extending Plan-and-Execute V3:</p>
+<ol class="arabic simple">
+<li><p>Follow existing patterns for structured outputs</p></li>
+<li><p>Use computed fields for state management</p></li>
+<li><p>Test with real components (no mocks)</p></li>
+<li><p>Document new features comprehensively</p></li>
+<li><p>Follow the established routing patterns</p></li>
+</ol>
+</section>
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#../multi/enhanced_multi_agent_v3.py"><span class="xref myst">Enhanced MultiAgent V3</span></a></p></li>
+<li><p><a class="reference internal" href="#../simple/agent.py"><span class="xref myst">SimpleAgent V3</span></a></p></li>
+<li><p><a class="reference internal" href="#../react/agent.py"><span class="xref myst">ReactAgent V3</span></a></p></li>
+<li><p><a class="reference internal" href="../llm_compiler_v3/README.html"><span class="std std-doc">LLM Compiler V3</span></a></p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Plan-and-Execute V3 Agent</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#architecture">Architecture</a><ul>
+<li><a class="reference internal" href="#sub-agents">Sub-Agents</a></li>
+<li><a class="reference internal" href="#structured-outputs">Structured Outputs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li><a class="reference internal" href="#advanced-usage-with-input-structure">Advanced Usage with Input Structure</a></li>
+<li><a class="reference internal" href="#custom-state-management">Custom State Management</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#agent-parameters">Agent Parameters</a></li>
+<li><a class="reference internal" href="#llm-configuration">LLM Configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#state-schema">State Schema</a><ul>
+<li><a class="reference internal" href="#core-fields">Core Fields</a></li>
+<li><a class="reference internal" href="#computed-fields">Computed Fields</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#market-research-agent">Market Research Agent</a></li>
+<li><a class="reference internal" href="#content-creation-agent">Content Creation Agent</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#error-handling">Error Handling</a></li>
+<li><a class="reference internal" href="#performance">Performance</a></li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+<li><a class="reference internal" href="#integration">Integration</a><ul>
+<li><a class="reference internal" href="#with-other-agents">With Other Agents</a></li>
+<li><a class="reference internal" href="#with-custom-state-schemas">With Custom State Schemas</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#common-issues">Common Issues</a></li>
+<li><a class="reference internal" href="#debug-mode">Debug Mode</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#contributing">Contributing</a></li>
+<li><a class="reference internal" href="#see-also">See Also</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../../../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

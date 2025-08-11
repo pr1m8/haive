@@ -1,0 +1,576 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta property="article:modified_time" content="2025-08-04T18:34:22-04:00" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conversation Agent Examples &mdash; 🤖 Haive AI Agent Framework Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css?v=a0a71c94" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_paramlinks.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5044e660" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://haive.readthedocs.io/real_examples/conversation_examples.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=6894dda5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=af94cf59"></script>
+      <script src="../_static/scripts/sphinx-book-theme.js"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script src="https://wavedrom.com/skins/default.js"></script>
+      <script src="https://wavedrom.com/wavedrom.min.js"></script>
+      <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX"></script>
+      <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-XXXXXXX');
+            </script>
+      <script src="../_static/js/rtd_search_config.js"></script>
+      <script src="../_static/js/rtd_sphinx_search.min.js"></script>
+      <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+      <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+      <script src="../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+      <script src="../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+      <script src="../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+      <script defer="defer" src="https://unpkg.com/@popperjs/core@2"></script>
+      <script defer="defer" src="https://unpkg.com/tippy.js@6"></script>
+      <script defer="defer" src="../_static/tippy/real_examples/conversation_examples.c1c79f69-1eb6-4a0d-9dc3-34bb295f07a8.js"></script>
+      <script>DOCUMENTATION_OPTIONS.pagename = 'real_examples/conversation_examples';</script>
+      <script src="../_static/dark_mode_js/default_dark.js?v=fd565c74"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Haive AI Agent Framework
+          </a>
+<div id="searchbox"></div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Haive AI Agent Framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Conversation Agent Examples</span></li>
+  </ul>
+</nav>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="conversation-agent-examples">
+<h1>Conversation Agent Examples<a class="headerlink" href="#conversation-agent-examples" title="Link to this heading">#</a></h1>
+<p>Real examples and outputs from the conversation agent.</p>
+<section id="conversation-readme">
+<h2>conversation_README<a class="headerlink" href="#conversation-readme" title="Link to this heading">#</a></h2>
+<p><strong>Source</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-agents/src/haive/agents/conversation/collaborative/README.md</span></code></p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="collaborative-conversation">
+<h1>Collaborative Conversation<a class="headerlink" href="#collaborative-conversation" title="Link to this heading">#</a></h1>
+<p>Structured multi-agent collaboration for building shared documents, plans, and creative content.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>The Collaborative Conversation agent orchestrates multiple participants working together to create shared content in a structured, section-based format. Unlike free-form conversations, this agent guides participants through defined sections, ensures balanced contributions, and compiles a cohesive final document. It’s ideal for brainstorming sessions, code reviews, project planning, and any scenario requiring structured collaborative output.</p>
+</section>
+<section id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CollaborativeConversation (extends BaseConversationAgent)
+├── Document Structure Management
+│   ├── Section Definition &amp; Ordering
+│   ├── Progress Tracking
+│   └── Document Compilation
+├── Contribution System
+│   ├── Per-Section Tracking
+│   ├── Balanced Participation
+│   └── Attribution Management
+├── Output Formatting
+│   ├── Markdown
+│   ├── Code
+│   ├── Outline
+│   └── Report
+└── Review &amp; Approval (Optional)
+    ├── Section Completion
+    ├── Revision Support
+    └── Final Approval
+</pre></div>
+</div>
+</section>
+<section id="key-features">
+<h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Structured sections</strong> - Organize collaboration into defined sections</p></li>
+<li><p><strong>Balanced contributions</strong> - Ensure everyone participates in each section</p></li>
+<li><p><strong>Multiple output formats</strong> - Markdown, code, outline, or report styles</p></li>
+<li><p><strong>Attribution tracking</strong> - Know who contributed what</p></li>
+<li><p><strong>Progress monitoring</strong> - Track completion of sections and contributions</p></li>
+<li><p><strong>Flexible workflows</strong> - Support for revisions and approvals</p></li>
+<li><p><strong>Document compilation</strong> - Automatic assembly of final output</p></li>
+<li><p><strong>Smart speaker selection</strong> - Prioritize those who haven’t contributed to current section</p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<p>This module is part of the <code class="docutils literal notranslate"><span class="pre">haive-agents</span></code> package. Install it using:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>haive-agents<span class="o">[</span>conversation<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
+<section id="basic-collaborative-document">
+<h3>Basic Collaborative Document<a class="headerlink" href="#basic-collaborative-document" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">CollaborativeConversation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.simple</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleAgent</span>
+
+<span class="o">...</span> <span class="p">(</span><span class="n">truncated</span><span class="p">)</span>
+
+
+<span class="o">---</span>
+
+<span class="c1">## conversation_README</span>
+
+<span class="o">**</span><span class="n">Source</span><span class="o">**</span><span class="p">:</span> <span class="err">`</span><span class="n">packages</span><span class="o">/</span><span class="n">haive</span><span class="o">-</span><span class="n">agents</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">haive</span><span class="o">/</span><span class="n">agents</span><span class="o">/</span><span class="n">conversation</span><span class="o">/</span><span class="n">base</span><span class="o">/</span><span class="n">README</span><span class="o">.</span><span class="n">md</span><span class="err">`</span>
+
+<span class="c1"># Base Conversation Agent</span>
+
+<span class="n">Core</span> <span class="n">foundation</span> <span class="n">classes</span> <span class="k">for</span> <span class="n">conversation</span> <span class="n">agents</span> <span class="n">that</span> <span class="n">orchestrate</span> <span class="n">multi</span><span class="o">-</span><span class="n">agent</span> <span class="n">interactions</span> <span class="k">with</span> <span class="n">automatic</span> <span class="n">state</span> <span class="n">tracking</span><span class="p">,</span> <span class="n">phase</span><span class="o">-</span><span class="n">based</span> <span class="n">management</span><span class="p">,</span> <span class="ow">and</span> <span class="n">extensible</span> <span class="n">graph</span><span class="o">-</span><span class="n">based</span> <span class="n">conversation</span> <span class="n">flow</span><span class="o">.</span>
+
+<span class="c1">## Overview</span>
+
+<span class="n">The</span> <span class="n">base</span> <span class="n">conversation</span> <span class="n">system</span> <span class="n">provides</span> <span class="n">the</span> <span class="n">foundation</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">conversation</span> <span class="n">agent</span> <span class="n">types</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">Haive</span> <span class="n">framework</span><span class="o">.</span> <span class="n">It</span> <span class="n">implements</span> <span class="n">robust</span> <span class="n">multi</span><span class="o">-</span><span class="n">agent</span> <span class="n">conversation</span> <span class="n">orchestration</span> <span class="k">with</span> <span class="n">reducer</span><span class="o">-</span><span class="n">based</span> <span class="n">automatic</span> <span class="n">state</span> <span class="n">tracking</span><span class="p">,</span> <span class="n">computed</span> <span class="n">properties</span> <span class="k">for</span> <span class="n">conversation</span> <span class="n">analysis</span><span class="p">,</span> <span class="ow">and</span> <span class="n">seamless</span> <span class="n">integration</span> <span class="k">with</span> <span class="n">the</span> <span class="n">Haive</span> <span class="n">core</span> <span class="n">systems</span><span class="o">.</span>
+
+<span class="c1">## Architecture</span>
+
+</pre></div>
+</div>
+<p>BaseConversationAgent (Abstract)
+├── Speaker Selection Logic
+├── Agent Execution &amp; Error Handling
+├── Extension Hooks for Customization
+└── Graph-Based Workflow Integration</p>
+<p>ConversationState (Extends MessagesState)
+├── Automatic Turn &amp; Round Tracking
+├── Speaker History Management
+├── Computed Progress Properties
+└── Reducer-Based State Updates</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+## Key Features
+
+- **Multi-agent orchestration** with automatic turn management
+- **Reducer-based state tracking** for rounds and speaker history
+- **Phase-based conversation management** with customizable flow control
+- **Message routing and agent execution** with comprehensive error handling
+- **Extensible graph-based workflow** for complex conversation patterns
+- **Computed properties** for real-time conversation progress analysis
+- **Seamless integration** with Haive core schema and graph systems
+
+## Installation
+
+This module is part of the `haive-agents` package. Install it using:
+
+```bash
+pip install haive-agents[conversation]
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id1">
+<h2>Quick Start<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="basic-usage">
+<h3>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.conversation.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationState</span><span class="p">,</span> <span class="n">create_conversation_state</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.simple</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleAgent</span>
+
+<span class="c1"># Create conversation state with automatic tracking</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">create_conversation_state</span><span class="p">(</span>
+    <span class="n">participants</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Alice&quot;</span><span class="p">),</span>
+        <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Bob&quot;</span><span class="p">),</span>
+        <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Charlie&quot;</span><span class="p">)</span>
+    <span class="p">],</span>
+    <span class="n">topic</span><span class="o">=</span><span class="s2">&quot;Future of AI&quot;</span><span class="p">,</span>
+    <span class="n">max_roun</span>
+
+<span class="o">...</span> <span class="p">(</span><span class="n">truncated</span><span class="p">)</span>
+
+
+<span class="o">---</span>
+
+<span class="c1">## conversation_README</span>
+
+<span class="o">**</span><span class="n">Source</span><span class="o">**</span><span class="p">:</span> <span class="err">`</span><span class="n">packages</span><span class="o">/</span><span class="n">haive</span><span class="o">-</span><span class="n">agents</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">haive</span><span class="o">/</span><span class="n">agents</span><span class="o">/</span><span class="n">conversation</span><span class="o">/</span><span class="n">round_robin</span><span class="o">/</span><span class="n">README</span><span class="o">.</span><span class="n">md</span><span class="err">`</span>
+
+<span class="c1"># Round Robin Conversation</span>
+
+<span class="n">Sequential</span> <span class="n">turn</span><span class="o">-</span><span class="n">based</span> <span class="n">multi</span><span class="o">-</span><span class="n">agent</span> <span class="n">dialogue</span> <span class="k">with</span> <span class="n">automatic</span> <span class="nb">round</span> <span class="n">tracking</span> <span class="ow">and</span> <span class="n">balanced</span> <span class="n">participation</span><span class="o">.</span>
+
+<span class="c1">## Overview</span>
+
+<span class="n">The</span> <span class="n">Round</span> <span class="n">Robin</span> <span class="n">Conversation</span> <span class="n">agent</span> <span class="n">implements</span> <span class="n">a</span> <span class="n">simple</span> <span class="n">yet</span> <span class="n">effective</span> <span class="n">conversation</span> <span class="n">pattern</span> <span class="n">where</span> <span class="n">participants</span> <span class="n">speak</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">fixed</span><span class="p">,</span> <span class="n">predictable</span> <span class="n">order</span><span class="o">.</span> <span class="n">Each</span> <span class="n">participant</span> <span class="n">gets</span> <span class="n">exactly</span> <span class="n">one</span> <span class="n">turn</span> <span class="n">per</span> <span class="nb">round</span><span class="p">,</span> <span class="n">ensuring</span> <span class="n">fair</span> <span class="ow">and</span> <span class="n">balanced</span> <span class="n">participation</span> <span class="n">across</span> <span class="nb">all</span> <span class="n">agents</span><span class="o">.</span> <span class="n">This</span> <span class="n">conversation</span> <span class="nb">type</span> <span class="ow">is</span> <span class="n">ideal</span> <span class="k">for</span> <span class="n">panel</span> <span class="n">discussions</span><span class="p">,</span> <span class="n">structured</span> <span class="n">interviews</span><span class="p">,</span> <span class="ow">and</span> <span class="n">scenarios</span> <span class="n">requiring</span> <span class="n">equal</span> <span class="n">speaking</span> <span class="n">opportunities</span><span class="o">.</span>
+
+<span class="c1">## Architecture</span>
+
+</pre></div>
+</div>
+<p>RoundRobinConversation (extends BaseConversationAgent)
+├── Sequential Speaker Selection
+├── Automatic Round Progression
+├── Turn Equality Enforcement
+└── Progress Tracking &amp; Analytics</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+## Key Features
+
+- **Fixed speaking order** - Participants speak in the same sequence each round
+- **Guaranteed turn equality** - Each participant gets exactly one turn per round
+- **Automatic round tracking** - Built-in round counting and progress monitoring
+- **Simple configuration** - Minimal setup required for basic conversations
+- **Flexible round limits** - Configure maximum rounds or let conversations run
+- **Progress visualization** - Real-time tracking of conversation advancement
+- **Easy integration** - Works seamlessly with any Haive agent type
+
+## Installation
+
+This module is part of the `haive-agents` package. Install it using:
+
+```bash
+pip install haive-agents[conversation]
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id2">
+<h2>Quick Start<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>Basic Usage<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">RoundRobinConversation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.simple</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleAgent</span>
+
+<span class="c1"># Create participants</span>
+<span class="n">alice</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">)</span>
+<span class="n">bob</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">)</span>
+<span class="n">charlie</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Charlie&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create round-robin conversation</span>
+<span class="n">conversation</span> <span class="o">=</span> <span class="n">RoundRobinConversation</span><span class="p">(</span>
+    <span class="n">participants</span><span class="o">=</span><span class="p">[</span><span class="n">alice</span><span class="p">,</span> <span class="n">bob</span><span class="p">,</span> <span class="n">charlie</span><span class="p">],</span>
+    <span class="n">topic</span><span class="o">=</span><span class="s2">&quot;The future of renewable energy&quot;</span><span class="p">,</span>
+    <span class="n">max_rounds</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+
+<span class="c1"># Run the conversation</span>
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">conv</span>
+
+<span class="o">...</span> <span class="p">(</span><span class="n">truncated</span><span class="p">)</span>
+
+
+<span class="o">---</span>
+
+<span class="c1">## conversation_README</span>
+
+<span class="o">**</span><span class="n">Source</span><span class="o">**</span><span class="p">:</span> <span class="err">`</span><span class="n">packages</span><span class="o">/</span><span class="n">haive</span><span class="o">-</span><span class="n">agents</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">haive</span><span class="o">/</span><span class="n">agents</span><span class="o">/</span><span class="n">conversation</span><span class="o">/</span><span class="n">debate</span><span class="o">/</span><span class="n">README</span><span class="o">.</span><span class="n">md</span><span class="err">`</span>
+
+<span class="c1"># Debate Conversation</span>
+
+<span class="n">Structured</span> <span class="n">argumentative</span> <span class="n">multi</span><span class="o">-</span><span class="n">agent</span> <span class="n">dialogue</span> <span class="k">with</span> <span class="n">formal</span> <span class="n">positions</span><span class="p">,</span> <span class="n">rebuttals</span><span class="p">,</span> <span class="ow">and</span> <span class="n">optional</span> <span class="n">judging</span><span class="o">.</span>
+
+<span class="c1">## Overview</span>
+
+<span class="n">The</span> <span class="n">Debate</span> <span class="n">Conversation</span> <span class="n">agent</span> <span class="n">implements</span> <span class="n">formal</span> <span class="n">debate</span> <span class="n">structures</span> <span class="n">where</span> <span class="n">participants</span> <span class="n">argue</span> <span class="kn">from</span><span class="w"> </span><span class="nn">assigned</span> <span class="n">positions</span> <span class="n">following</span> <span class="n">multi</span><span class="o">-</span><span class="n">phase</span> <span class="n">conversational</span> <span class="n">formats</span><span class="o">.</span> <span class="n">This</span> <span class="n">includes</span> <span class="n">opening</span> <span class="n">statements</span><span class="p">,</span> <span class="n">main</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">rebuttals</span><span class="p">,</span> <span class="n">closing</span> <span class="n">statements</span><span class="p">,</span> <span class="ow">and</span> <span class="n">optional</span> <span class="n">judging</span> <span class="k">with</span> <span class="n">scoring</span><span class="o">.</span> <span class="n">The</span> <span class="n">system</span> <span class="n">supports</span> <span class="n">multiple</span> <span class="n">debate</span> <span class="n">formats</span> <span class="p">(</span><span class="n">traditional</span><span class="p">,</span> <span class="n">Oxford</span><span class="p">,</span> <span class="n">parliamentary</span><span class="p">,</span> <span class="n">Lincoln</span><span class="o">-</span><span class="n">Douglas</span><span class="p">)</span> <span class="ow">and</span> <span class="n">provides</span> <span class="n">comprehensive</span> <span class="n">argument</span> <span class="n">tracking</span> <span class="ow">and</span> <span class="n">evaluation</span> <span class="n">capabilities</span><span class="o">.</span>
+
+<span class="c1">## Architecture</span>
+
+</pre></div>
+</div>
+<p>DebateConversation (extends BaseConversationAgent)
+├── Position Management (Pro/Con/Judge)
+├── Phase-Based Flow Control
+├── Argument &amp; Rebuttal Tracking
+├── Scoring &amp; Evaluation System
+└── Multiple Debate Formats</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+## Key Features
+
+- **Multiple debate formats** - Traditional, Oxford, Parliamentary, Lincoln-Douglas, Policy
+- **Position-based roles** - Clear assignment of pro/con positions with optional judges
+- **Phase management** - Opening, arguments, cross-examination, rebuttals, closing, judging
+- **Argument tracking** - Track arguments, counter-arguments, and evidence per position
+- **Scoring system** - Optional judging with customizable scoring criteria
+- **Time management** - Configurable time limits per phase and speaker
+- **Evidence handling** - Support for citations and fact-based arguments
+- **Flexible team sizes** - One-on-one or team-based debates
+
+## Installation
+
+This module is part of the `haive-agents` package. Install it using:
+
+```bash
+pip install haive-agents[conversation]
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id4">
+<h2>Quick Start<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="basic-two-sided-debate">
+<h3>Basic Two-Sided Debate<a class="headerlink" href="#basic-two-sided-debate" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">DebateConversation</span><span class="p">,</span> <span class="n">create_debate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.simple</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleAgent</span>
+
+<span class="c1"># Create debate participants</span>
+<span class="n">pro_agent</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Proponent&quot;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;advocate&quot;</span><span class="p">)</span>
+<span class="n">con_agent</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Opponent&quot;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;critic&quot;</span><span class="p">)</span>
+<span class="n">judge_agent</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Judge&quot;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;evaluator&quot;</span><span class="p">)</span>
+
+<span class="c1">#</span>
+
+<span class="o">...</span> <span class="p">(</span><span class="n">truncated</span><span class="p">)</span>
+
+
+<span class="o">---</span>
+
+<span class="c1">## conversation_README</span>
+
+<span class="o">**</span><span class="n">Source</span><span class="o">**</span><span class="p">:</span> <span class="err">`</span><span class="n">packages</span><span class="o">/</span><span class="n">haive</span><span class="o">-</span><span class="n">agents</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">haive</span><span class="o">/</span><span class="n">agents</span><span class="o">/</span><span class="n">conversation</span><span class="o">/</span><span class="n">directed</span><span class="o">/</span><span class="n">README</span><span class="o">.</span><span class="n">md</span><span class="err">`</span>
+
+<span class="c1"># Directed Conversation</span>
+
+<span class="n">Mention</span><span class="o">-</span><span class="n">based</span> <span class="n">multi</span><span class="o">-</span><span class="n">agent</span> <span class="n">dialogue</span> <span class="k">with</span> <span class="n">targeted</span> <span class="n">responses</span> <span class="ow">and</span> <span class="n">natural</span> <span class="n">conversation</span> <span class="n">flow</span><span class="o">.</span>
+
+<span class="c1">## Overview</span>
+
+<span class="n">The</span> <span class="n">Directed</span> <span class="n">Conversation</span> <span class="n">agent</span> <span class="n">implements</span> <span class="n">a</span> <span class="n">natural</span> <span class="n">conversation</span> <span class="n">pattern</span> <span class="n">where</span> <span class="n">participants</span> <span class="n">respond</span> <span class="n">to</span> <span class="n">mentions</span><span class="p">,</span> <span class="n">questions</span><span class="p">,</span> <span class="ow">and</span> <span class="n">contextual</span> <span class="n">cues</span><span class="o">.</span> <span class="n">Unlike</span> <span class="nb">round</span><span class="o">-</span><span class="n">robin</span> <span class="n">conversations</span><span class="p">,</span> <span class="n">speakers</span> <span class="n">engage</span> <span class="n">only</span> <span class="n">when</span> <span class="n">addressed</span> <span class="ow">or</span> <span class="n">when</span> <span class="n">the</span> <span class="n">context</span> <span class="n">naturally</span> <span class="n">calls</span> <span class="k">for</span> <span class="n">their</span> <span class="nb">input</span><span class="o">.</span> <span class="n">This</span> <span class="n">creates</span> <span class="n">more</span> <span class="n">organic</span><span class="p">,</span> <span class="n">purposeful</span> <span class="n">discussions</span> <span class="n">similar</span> <span class="n">to</span> <span class="n">real</span><span class="o">-</span><span class="n">world</span> <span class="n">meetings</span><span class="p">,</span> <span class="n">classrooms</span><span class="p">,</span> <span class="ow">or</span> <span class="n">collaborative</span> <span class="n">sessions</span><span class="o">.</span>
+
+<span class="c1">## Architecture</span>
+
+</pre></div>
+</div>
+<p>DirectedConversation (extends BaseConversationAgent)
+├── Mention Detection System
+│ ├── Direct Mentions (&#64;name)
+│ ├── Name References (name, name:)
+│ └── Question Targeting
+├── Structured Speaker Selection
+│ ├── Mention-based Priority
+│ ├── Fallback Strategies
+│ └── Least-Active Selection
+├── Interaction Tracking
+│ ├── Speaker Relationships
+│ ├── Mention Patterns
+│ └── Engagement Metrics
+└── Context-Aware Response Generation</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+## Key Features
+
+- **Natural mention detection** - Multiple patterns for detecting when someone is addressed
+- **Structured output models** - Type-safe mention and selection tracking
+- **Flexible fallback strategies** - Round-robin or least-active when no mentions
+- **Interaction tracking** - Monitor who talks to whom and how often
+- **Context-aware responses** - Agents know why they&#39;re speaking
+- **Self-mention prevention** - Avoid speakers selecting themselves
+- **Configurable patterns** - Customize mention detection for your use case
+- **Priority-based selection** - Different mention types have different weights
+
+## Installation
+
+This module is part of the `haive-agents` package. Install it using:
+
+```bash
+pip install haive-agents[conversation]
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2>Quick Start<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="basic-directed-conversation">
+<h3>Basic Directed Conversation<a class="headerlink" href="#basic-directed-conversation" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">DirectedConversation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.simple</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleAgent</span>
+
+<span class="c1"># Create participants</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Manager&quot;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;facilitator&quot;</span><span class="p">)</span>
+<span class="n">d</span>
+
+<span class="o">...</span> <span class="p">(</span><span class="n">truncated</span><span class="p">)</span>
+
+
+<span class="o">---</span>
+
+<span class="c1">## conversation_README</span>
+
+<span class="o">**</span><span class="n">Source</span><span class="o">**</span><span class="p">:</span> <span class="err">`</span><span class="n">packages</span><span class="o">/</span><span class="n">haive</span><span class="o">-</span><span class="n">agents</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">haive</span><span class="o">/</span><span class="n">agents</span><span class="o">/</span><span class="n">conversation</span><span class="o">/</span><span class="n">social_media</span><span class="o">/</span><span class="n">README</span><span class="o">.</span><span class="n">md</span><span class="err">`</span>
+
+<span class="c1"># Social Media Conversation</span>
+
+<span class="n">Platform</span><span class="o">-</span><span class="n">style</span> <span class="n">multi</span><span class="o">-</span><span class="n">agent</span> <span class="n">conversations</span> <span class="k">with</span> <span class="n">engagement</span> <span class="n">mechanics</span><span class="p">,</span> <span class="n">viral</span> <span class="n">dynamics</span><span class="p">,</span> <span class="ow">and</span> <span class="n">social</span> <span class="n">interactions</span><span class="o">.</span>
+
+<span class="c1">## Overview</span>
+
+<span class="n">The</span> <span class="n">Social</span> <span class="n">Media</span> <span class="n">Conversation</span> <span class="n">agent</span> <span class="n">simulates</span> <span class="n">realistic</span> <span class="n">social</span> <span class="n">media</span> <span class="n">interactions</span> <span class="n">across</span> <span class="n">different</span> <span class="n">platforms</span> <span class="p">(</span><span class="n">Twitter</span><span class="p">,</span> <span class="n">Instagram</span><span class="p">,</span> <span class="n">TikTok</span><span class="p">,</span> <span class="n">LinkedIn</span><span class="p">)</span><span class="o">.</span> <span class="n">It</span> <span class="n">includes</span> <span class="n">engagement</span> <span class="n">mechanics</span> <span class="n">like</span> <span class="n">likes</span><span class="p">,</span> <span class="n">shares</span><span class="p">,</span> <span class="ow">and</span> <span class="n">replies</span><span class="p">,</span> <span class="n">along</span> <span class="k">with</span> <span class="n">viral</span> <span class="n">dynamics</span> <span class="ow">and</span> <span class="n">trending</span> <span class="n">topics</span><span class="o">.</span> <span class="n">This</span> <span class="n">creates</span> <span class="n">authentic</span> <span class="n">platform</span><span class="o">-</span><span class="n">specific</span> <span class="n">conversations</span> <span class="k">with</span> <span class="n">natural</span> <span class="n">social</span> <span class="n">behaviors</span> <span class="ow">and</span> <span class="n">engagement</span> <span class="n">patterns</span><span class="o">.</span>
+
+<span class="c1">## Architecture</span>
+
+</pre></div>
+</div>
+<p>SocialMediaConversation (extends BaseConversationAgent)
+├── Platform Configuration
+│ ├── Twitter (280 chars, retweets)
+│ ├── Instagram (visual, hashtags)
+│ ├── TikTok (short, trendy)
+│ └── Generic (customizable)
+├── Engagement System
+│ ├── Likes &amp; Reactions
+│ ├── Shares &amp; Retweets
+│ ├── Reply Threads
+│ └── Follower Dynamics
+├── Viral Mechanics
+│ ├── Engagement Tracking
+│ ├── Viral Threshold
+│ └── Trending Topics
+└── Social Tools
+├── Like Tool
+├── Reply Tool
+└── Share Tool</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+## Key Features
+
+- **Platform-specific behavior** - Authentic Twitter, Instagram, TikTok, LinkedIn styles
+- **Engagement mechanics** - Likes, shares, replies with social dynamics
+- **Viral system** - Posts can go viral based on engagement
+- **Character limits** - Platform-appropriate content length
+- **Trending topics** - Dynamic hashtag tracking and trends
+- **Social tools** - Agents can like, reply, and share posts
+- **Weighted selection** - Popular users get more engagement
+- **Organic growth** - Natural engagement simulation
+
+## Installation
+
+This module is part of the `haive-agents` package. Install it using:
+
+```bash
+pip install haive-agents[conversation]
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id6">
+<h2>Quick Start<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="basic-social-media-conversation">
+<h3>Basic Social Media Conversation<a class="headerlink" href="#basic-social-media-conversation" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">SocialMediaConversation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.simple</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleAgent</span>
+
+<span class="c1"># Create social media personalities</span>
+<span class="n">influencer</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;TechGuru&quot;</span><span class="p">,</span> <span class="n">followers</span><span class="o">=</span><span class="mi">10000</span>
+
+<span class="o">...</span> <span class="p">(</span><span class="n">truncated</span><span class="p">)</span>
+
+
+<span class="o">---</span>
+
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/javascript">
+        function init() {
+            WaveDrom.ProcessAll();
+        }
+        window.onload = init;
+    </script>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Haive Team.
+      <span class="lastupdated">Last updated on Aug 04, 2025.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

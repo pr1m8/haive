@@ -1,0 +1,1335 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.schema.field_utils - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for haive.core.schema.field_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Field utilities for the Haive Schema System.</span>
+
+<span class="sd">from typing import Any</span>
+<span class="sd">This module provides a comprehensive set of utilities for creating, extracting, and</span>
+<span class="sd">manipulating Pydantic fields within the Haive Schema System. It ensures consistent</span>
+<span class="sd">handling of field metadata, types, and defaults across the entire framework.</span>
+
+<span class="sd">The utilities in this module serve as the low-level foundation for the Schema System,</span>
+<span class="sd">handling technical details like:</span>
+<span class="sd">- Creating fields with standardized metadata</span>
+<span class="sd">- Working with Annotated types for metadata embedding</span>
+<span class="sd">- Extracting metadata from type annotations</span>
+<span class="sd">- Type inference and manipulation</span>
+<span class="sd">- Resolver functions for reducers</span>
+
+<span class="sd">Core functions include:</span>
+<span class="sd">- create_field: Create a standard Pydantic field with metadata</span>
+<span class="sd">- create_annotated_field: Create a field using Python&#39;s Annotated type for metadata</span>
+<span class="sd">- extract_type_metadata: Extract base type and metadata from annotations</span>
+<span class="sd">- infer_field_type: Intelligently determine types from values</span>
+<span class="sd">- get_common_reducers: Access standard reducer functions</span>
+<span class="sd">- resolve_reducer: Convert reducer names to functions</span>
+
+<span class="sd">These utilities are primarily used by FieldDefinition, SchemaComposer, and</span>
+<span class="sd">StateSchemaManager to implement higher-level functionality.</span>
+
+<span class="sd">Example:</span>
+<span class="sd">    ```python</span>
+<span class="sd">    from haive.core.schema.field_utils import (</span>
+<span class="sd">        create_field, create_annotated_field, get_common_reducers</span>
+<span class="sd">    )</span>
+<span class="sd">    from typing import List</span>
+<span class="sd">    import operator</span>
+
+<span class="sd">    # Create a standard field</span>
+<span class="sd">    field_type, field_info = create_field(</span>
+<span class="sd">        field_type=List[str],</span>
+<span class="sd">        default_factory=list,</span>
+<span class="sd">        description=&quot;List of items&quot;,</span>
+<span class="sd">        shared=True,</span>
+<span class="sd">        reducer=operator.add</span>
+<span class="sd">    )</span>
+
+<span class="sd">    # Create an annotated field with embedded metadata</span>
+<span class="sd">    field_type, field_info = create_annotated_field(</span>
+<span class="sd">        field_type=List[str],</span>
+<span class="sd">        default_factory=list,</span>
+<span class="sd">        description=&quot;List of items&quot;,</span>
+<span class="sd">        shared=True,</span>
+<span class="sd">        reducer=operator.add</span>
+<span class="sd">    )</span>
+
+<span class="sd">    # Get common reducer functions</span>
+<span class="sd">    reducers = get_common_reducers()</span>
+<span class="sd">    add_messages = reducers[&quot;add_messages&quot;]  # LangGraph&#39;s message list combiner</span>
+<span class="sd">    ```</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">operator</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ForwardRef</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">get_args</span><span class="p">,</span> <span class="n">get_origin</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># FIELD NAMING UTILITIES</span>
+<span class="c1"># ============================================================================</span>
+
+
+<div class="viewcode-block" id="camel_to_snake_case">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/field_utils/index.html#haive.core.schema.field_utils.camel_to_snake_case">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">camel_to_snake_case</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert CamelCase to snake_case.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: CamelCase string to convert</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        snake_case version of the string</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; camel_to_snake_case(&quot;QueryRefinementResponse&quot;)</span>
+<span class="sd">        &#39;query_refinement_response&#39;</span>
+<span class="sd">        &gt;&gt;&gt; camel_to_snake_case(&quot;UserProfile&quot;)</span>
+<span class="sd">        &#39;user_profile&#39;</span>
+<span class="sd">        &gt;&gt;&gt; camel_to_snake_case(&quot;APIKey&quot;)</span>
+<span class="sd">        &#39;api_key&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Handle sequences of uppercase letters (like &quot;APIKey&quot; -&gt; &quot;api_key&quot;)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;([A-Z]+)([A-Z][a-z])&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\1_\2&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="c1"># Handle normal CamelCase (like &quot;QueryRefinement&quot; -&gt; &quot;query_refinement&quot;)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;([a-z0-9])([A-Z])&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\1_\2&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="create_field_name_from_model">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/field_utils/index.html#haive.core.schema.field_utils.create_field_name_from_model">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_field_name_from_model</span><span class="p">(</span>
+    <span class="n">model_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">],</span> <span class="n">remove_suffixes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a proper field name from a Pydantic model class.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model_class: The Pydantic model class</span>
+<span class="sd">        remove_suffixes: Whether to remove common suffixes like &quot;Response&quot;, &quot;Result&quot;</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A properly formatted snake_case field name</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; class QueryRefinementResponse(BaseModel): pass</span>
+<span class="sd">        &gt;&gt;&gt; create_field_name_from_model(QueryRefinementResponse)</span>
+<span class="sd">        &#39;query_refinement_response&#39;</span>
+<span class="sd">        &gt;&gt;&gt; create_field_name_from_model(QueryRefinementResponse, remove_suffixes=True)</span>
+<span class="sd">        &#39;query_refinement&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">class_name</span> <span class="o">=</span> <span class="n">model_class</span><span class="o">.</span><span class="vm">__name__</span>
+
+    <span class="c1"># Convert to snake_case</span>
+    <span class="n">field_name</span> <span class="o">=</span> <span class="n">camel_to_snake_case</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+
+    <span class="c1"># Remove common suffixes if requested</span>
+    <span class="k">if</span> <span class="n">remove_suffixes</span><span class="p">:</span>
+        <span class="n">suffixes_to_remove</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;_response&quot;</span><span class="p">,</span> <span class="s2">&quot;_result&quot;</span><span class="p">,</span> <span class="s2">&quot;_output&quot;</span><span class="p">,</span> <span class="s2">&quot;_data&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">suffix</span> <span class="ow">in</span> <span class="n">suffixes_to_remove</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">field_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">suffix</span><span class="p">):</span>
+                <span class="n">field_name</span> <span class="o">=</span> <span class="n">field_name</span><span class="p">[:</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">suffix</span><span class="p">)]</span>
+                <span class="k">break</span>
+
+    <span class="c1"># Ensure we have a valid field name</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">field_name</span> <span class="ow">or</span> <span class="n">field_name</span> <span class="o">==</span> <span class="s2">&quot;_&quot;</span><span class="p">:</span>
+        <span class="n">field_name</span> <span class="o">=</span> <span class="s2">&quot;parsed_result&quot;</span>
+
+    <span class="k">return</span> <span class="n">field_name</span></div>
+
+
+
+<div class="viewcode-block" id="get_field_info_from_model">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/field_utils/index.html#haive.core.schema.field_utils.get_field_info_from_model">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_field_info_from_model</span><span class="p">(</span><span class="n">model_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get field info from a model class, checking for annotations.</span>
+
+<span class="sd">    This function looks for field integration annotations on the model class</span>
+<span class="sd">    and returns field information for schema integration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model_class: The Pydantic model class</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with field configuration for schema integration</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># Check for custom field name annotation</span>
+    <span class="n">field_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model_class</span><span class="p">,</span> <span class="s2">&quot;__field_name__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">field_name</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;field_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field_name</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Use auto-generated field name</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;field_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">create_field_name_from_model</span><span class="p">(</span><span class="n">model_class</span><span class="p">)</span>
+
+    <span class="c1"># Check for field description</span>
+    <span class="n">field_description</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model_class</span><span class="p">,</span> <span class="s2">&quot;__field_description__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">field_description</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field_description</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Parsed </span><span class="si">{</span><span class="n">model_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="c1"># Check for field type override</span>
+    <span class="n">field_type</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model_class</span><span class="p">,</span> <span class="s2">&quot;__field_type__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">field_type</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;field_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field_type</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;field_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">[</span><span class="n">model_class</span><span class="p">]</span>
+
+    <span class="c1"># Check for other field configuration</span>
+    <span class="n">field_config</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model_class</span><span class="p">,</span> <span class="s2">&quot;__field_config__&quot;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">field_config</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<span class="c1"># Decorators for adding field info to models</span>
+<div class="viewcode-block" id="field_name">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/field_utils/index.html#haive.core.schema.field_utils.field_name">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">field_name</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple decorator to set the field name for schema integration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: The field name to use in schema integration</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; @field_name(&quot;query_refinement&quot;)</span>
+<span class="sd">        ... class QueryRefinementResponse(BaseModel):</span>
+<span class="sd">        ...     pass</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">__field_name__</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">return</span> <span class="bp">cls</span>
+
+    <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+
+<div class="viewcode-block" id="field_description">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/field_utils/index.html#haive.core.schema.field_utils.field_description">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">field_description</span><span class="p">(</span><span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorator to set the field description for schema integration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        description: The field description to use</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; @field_description(&quot;Refined query results&quot;)</span>
+<span class="sd">        ... class QueryRefinementResponse(BaseModel):</span>
+<span class="sd">        ...     pass</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">__field_description__</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="k">return</span> <span class="bp">cls</span>
+
+    <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+
+<div class="viewcode-block" id="field_config">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/field_utils/index.html#haive.core.schema.field_utils.field_config">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">field_config</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorator to set field configuration for schema integration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **config: Field configuration options</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; @field_config(required=True, default=None)</span>
+<span class="sd">        ... class QueryRefinementResponse(BaseModel):</span>
+<span class="sd">        ...     pass</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">__field_config__</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="k">return</span> <span class="bp">cls</span>
+
+    <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+
+<span class="c1"># Type variables</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
+<span class="n">FieldType</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;FieldType&quot;</span><span class="p">)</span>
+<span class="n">DefaultType</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;DefaultType&quot;</span><span class="p">)</span>
+<span class="n">ReducerType</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;ReducerType&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">])</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">FieldMetadata</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Standardized container for field metadata in the Haive Schema System.</span>
+
+<span class="sd">    This class encapsulates all metadata associated with a field, serving as a</span>
+<span class="sd">    comprehensive representation of field properties beyond what Pydantic directly</span>
+<span class="sd">    supports. It provides a structured way to manage:</span>
+
+<span class="sd">    - Basic field properties (description, title, etc.)</span>
+<span class="sd">    - Haive-specific properties (shared status, reducer functions, etc.)</span>
+<span class="sd">    - Engine I/O tracking (input/output relationships with engines)</span>
+<span class="sd">    - Structured output model associations</span>
+
+<span class="sd">    FieldMetadata provides methods for converting between different metadata</span>
+<span class="sd">    representations, including dictionaries for Field instantiation and annotation</span>
+<span class="sd">    objects for Annotated types. It also supports merging metadata from different</span>
+<span class="sd">    sources and serializing reducer functions.</span>
+
+<span class="sd">    This class serves as a single source of truth for field metadata throughout</span>
+<span class="sd">    the Schema System, ensuring consistent handling of field properties across</span>
+<span class="sd">    schema composition, manipulation, and serialization operations.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        description (Optional[str]): Human-readable description of the field</span>
+<span class="sd">        shared (bool): Whether the field is shared with parent graphs</span>
+<span class="sd">        reducer (Optional[Callable]): Function to combine field values during updates</span>
+<span class="sd">        source (Optional[str]): Component that provided this field</span>
+<span class="sd">        input_for (List[str]): Engines this field serves as input for</span>
+<span class="sd">        output_from (List[str]): Engines this field is output from</span>
+<span class="sd">        structured_model (Optional[str]): Name of structured model this field belongs to</span>
+<span class="sd">        title (Optional[str]): Field title (for OpenAPI/Schema generation)</span>
+<span class="sd">        extra (Dict[str, Any]): Additional metadata properties</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">shared</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">reducer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">source</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">input_for</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">output_from</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">structured_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">extra</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize field metadata with comprehensive properties.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            description: Human-readable description of the field</span>
+<span class="sd">            shared: Whether field is shared with parent graphs</span>
+<span class="sd">            reducer: Function to combine field values during state updates</span>
+<span class="sd">            source: Component that provided this field</span>
+<span class="sd">            input_for: List of engines this field serves as input for</span>
+<span class="sd">            output_from: List of engines this field is output from</span>
+<span class="sd">            structured_model: Name of structured model this field belongs to</span>
+<span class="sd">            title: Optional field title (for OpenAPI/Schema generation)</span>
+<span class="sd">            **extra: Additional metadata properties</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="n">shared</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reducer</span> <span class="o">=</span> <span class="n">reducer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_for</span> <span class="o">=</span> <span class="n">input_for</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_from</span> <span class="o">=</span> <span class="n">output_from</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">structured_model</span> <span class="o">=</span> <span class="n">structured_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extra</span> <span class="o">=</span> <span class="n">extra</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert metadata to dictionary for Field instantiation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary of metadata suitable for pydantic.Field constructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+
+        <span class="c1"># Add standard Field parameters from extra</span>
+        <span class="n">standard_params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;gt&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ge&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;lt&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;le&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;multiple_of&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;min_items&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;max_items&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;min_length&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;max_length&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pattern&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;discriminator&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;json_schema_extra&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;validation_alias&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;serialization_alias&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;validation_alias_priority&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;serialization_alias_priority&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;deprecated&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;examples&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">standard_params</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_annotation_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert to a list of metadata objects for Annotated types.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of metadata objects for use in Annotated[Type, ...]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Add reducer as first metadata if present</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="p">)</span>
+
+        <span class="c1"># Create a dictionary for other metadata</span>
+        <span class="n">other_meta</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared</span><span class="p">:</span>
+            <span class="n">other_meta</span><span class="p">[</span><span class="s2">&quot;shared&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">:</span>
+            <span class="n">other_meta</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_for</span><span class="p">:</span>
+            <span class="n">other_meta</span><span class="p">[</span><span class="s2">&quot;input_for&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_for</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_from</span><span class="p">:</span>
+            <span class="n">other_meta</span><span class="p">[</span><span class="s2">&quot;output_from&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_from</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">structured_model</span><span class="p">:</span>
+            <span class="n">other_meta</span><span class="p">[</span><span class="s2">&quot;structured_model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">structured_model</span>
+
+        <span class="c1"># Add to metadata list if we have any other metadata</span>
+        <span class="k">if</span> <span class="n">other_meta</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">other_meta</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">metadata</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;FieldMetadata&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;FieldMetadata&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Merge with another FieldMetadata instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other: FieldMetadata instance to merge with</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            New FieldMetadata instance with merged data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Start with a copy of the current metadata</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">FieldMetadata</span><span class="p">(</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">other</span><span class="o">.</span><span class="n">description</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">shared</span><span class="o">=</span><span class="n">other</span><span class="o">.</span><span class="n">shared</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared</span><span class="p">,</span>
+            <span class="n">reducer</span><span class="o">=</span><span class="n">other</span><span class="o">.</span><span class="n">reducer</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="p">,</span>
+            <span class="n">source</span><span class="o">=</span><span class="n">other</span><span class="o">.</span><span class="n">source</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">other</span><span class="o">.</span><span class="n">title</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Merge lists</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">input_for</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_for</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">input_for</span><span class="p">))</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">output_from</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_from</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">output_from</span><span class="p">))</span>
+
+        <span class="c1"># Structured model takes the newer value</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">structured_model</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">structured_model</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">structured_model</span>
+
+        <span class="c1"># Merge extra attributes, with other taking precedence</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">extra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">extra</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extra</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_reducer_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get serializable name for the reducer function.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            String name of the reducer function or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Handle operator module functions</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="p">,</span> <span class="s2">&quot;__module__&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="o">.</span><span class="vm">__module__</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="s2">&quot;operator&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;_operator&quot;</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;operator.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Handle lambda functions</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;&lt;lambda&gt;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&lt;lambda&gt;&quot;</span>
+
+        <span class="c1"># Handle standard functions</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="p">,</span> <span class="s2">&quot;__module__&quot;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">!=</span> <span class="s2">&quot;__main__&quot;</span>
+            <span class="p">):</span>
+                <span class="c1"># Use fully qualified name for imported functions</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="o">.</span><span class="vm">__module__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="o">.</span><span class="vm">__name__</span>
+
+        <span class="c1"># Last resort: string representation</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reducer</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_annotation</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">annotation</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;FieldMetadata&quot;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract field metadata from an annotated type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            annotation: Type annotation to extract metadata from</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            FieldMetadata if metadata was found, None otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if this is an Annotated type</span>
+        <span class="k">if</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Annotated</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Get args from Annotated[Type, ...]</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Extract metadata from annotation</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">FieldMetadata</span><span class="p">()</span>
+
+        <span class="c1"># Process each metadata object</span>
+        <span class="k">for</span> <span class="n">meta</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+                <span class="c1"># Found a callable, assume it&#39;s a reducer</span>
+                <span class="n">metadata</span><span class="o">.</span><span class="n">reducer</span> <span class="o">=</span> <span class="n">meta</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="c1"># Dictionary of metadata</span>
+                <span class="k">if</span> <span class="s2">&quot;shared&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+                    <span class="n">metadata</span><span class="o">.</span><span class="n">shared</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;shared&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s2">&quot;source&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+                    <span class="n">metadata</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s2">&quot;input_for&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+                    <span class="n">metadata</span><span class="o">.</span><span class="n">input_for</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;input_for&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s2">&quot;output_from&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+                    <span class="n">metadata</span><span class="o">.</span><span class="n">output_from</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;output_from&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s2">&quot;structured_model&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+                    <span class="n">metadata</span><span class="o">.</span><span class="n">structured_model</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;structured_model&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s2">&quot;description&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+                    <span class="n">metadata</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s2">&quot;title&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+                    <span class="n">metadata</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
+
+                <span class="c1"># Add any other keys to extra</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">meta</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span>
+                        <span class="s2">&quot;shared&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;input_for&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;output_from&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;structured_model&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;description&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;title&quot;</span><span class="p">,</span>
+                    <span class="p">}:</span>
+                        <span class="n">metadata</span><span class="o">.</span><span class="n">extra</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+        <span class="k">return</span> <span class="n">metadata</span>
+
+
+<div class="viewcode-block" id="create_field">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/index.html#haive.core.schema.field_utils.create_field">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_field</span><span class="p">(</span>
+    <span class="n">field_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span>
+    <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">default_factory</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">T</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="n">FieldMetadata</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">shared</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">reducer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">make_optional</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">,</span> <span class="n">Field</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a standardized Pydantic field with consistent metadata handling.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        field_type: The type of the field</span>
+<span class="sd">        default: Default value (used if default_factory is None)</span>
+<span class="sd">        default_factory: Optional factory function for default value</span>
+<span class="sd">        metadata: Optional FieldMetadata object for comprehensive metadata</span>
+<span class="sd">        description: Optional field description (ignored if metadata is provided)</span>
+<span class="sd">        shared: Whether field is shared with parent (ignored if metadata is provided)</span>
+<span class="sd">        reducer: Optional reducer function (ignored if metadata is provided)</span>
+<span class="sd">        make_optional: Whether to make the field Optional if it&#39;s not already</span>
+<span class="sd">        **kwargs: Additional field parameters</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple of (field_type, field_info) ready for Pydantic model creation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span> <span class="k">as</span> <span class="n">OptionalType</span>
+
+    <span class="c1"># Process field type</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">make_optional</span>
+        <span class="ow">and</span> <span class="n">field_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">field_type</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">OptionalType</span>
+    <span class="p">):</span>
+        <span class="n">field_type</span> <span class="o">=</span> <span class="n">OptionalType</span><span class="p">[</span><span class="n">field_type</span><span class="p">]</span>
+
+    <span class="c1"># Prepare field metadata</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">metadata</span> <span class="ow">or</span> <span class="n">FieldMetadata</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">shared</span><span class="o">=</span><span class="n">shared</span><span class="p">,</span> <span class="n">reducer</span><span class="o">=</span><span class="n">reducer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Build field parameters</span>
+    <span class="n">field_params</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+    <span class="c1"># Handle default value or factory</span>
+    <span class="k">if</span> <span class="n">default_factory</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">field_info</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">default_factory</span><span class="p">,</span> <span class="o">**</span><span class="n">field_params</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Use Pydantic&#39;s natural default handling - don&#39;t force explicit None</span>
+        <span class="c1"># This matches the behavior from commit 99cfc8b4</span>
+        <span class="n">field_info</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="o">**</span><span class="n">field_params</span><span class="p">)</span>
+
+    <span class="c1"># Return the field definition</span>
+    <span class="k">return</span> <span class="n">field_type</span><span class="p">,</span> <span class="n">field_info</span></div>
+
+
+
+<div class="viewcode-block" id="create_annotated_field">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/index.html#haive.core.schema.field_utils.create_annotated_field">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_annotated_field</span><span class="p">(</span>
+    <span class="n">field_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span>
+    <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">default_factory</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">T</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="n">FieldMetadata</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">shared</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">reducer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">make_optional</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">,</span> <span class="n">Field</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a Pydantic field using Python&#39;s Annotated type for embedded metadata.</span>
+
+<span class="sd">    This function creates a field for Pydantic models using the Annotated type to embed</span>
+<span class="sd">    metadata directly in the type annotation. This approach aligns with Pydantic v2&#39;s</span>
+<span class="sd">    design and provides better support for schema composition and manipulation.</span>
+
+<span class="sd">    By embedding metadata in the Annotated type, field properties like shared status</span>
+<span class="sd">    and reducer functions stay attached to the field type itself, which allows them</span>
+<span class="sd">    to be preserved during operations like schema composition and subclassing.</span>
+
+<span class="sd">    The function supports both direct metadata parameters (description, shared, reducer)</span>
+<span class="sd">    and a comprehensive FieldMetadata object for more complex metadata.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        field_type (Type[T]): The Python type of the field (e.g., str, List[int])</span>
+<span class="sd">        default (Any, optional): Default value for the field. Used if default_factory</span>
+<span class="sd">            is not provided. Defaults to None.</span>
+<span class="sd">        default_factory (Optional[Callable[[], T]], optional): Factory function that</span>
+<span class="sd">            returns the default value. Takes precedence over default if both are</span>
+<span class="sd">            provided. Defaults to None.</span>
+<span class="sd">        metadata (Optional[FieldMetadata], optional): Comprehensive field metadata</span>
+<span class="sd">            object. If provided, other metadata parameters (description, shared,</span>
+<span class="sd">            reducer) are ignored. Defaults to None.</span>
+<span class="sd">        description (Optional[str], optional): Human-readable description of the field.</span>
+<span class="sd">            Ignored if metadata is provided. Defaults to None.</span>
+<span class="sd">        shared (bool, optional): Whether the field is shared with parent graphs.</span>
+<span class="sd">            Ignored if metadata is provided. Defaults to False.</span>
+<span class="sd">        reducer (Optional[Callable], optional): Function to combine field values during</span>
+<span class="sd">            updates. Ignored if metadata is provided. Defaults to None.</span>
+<span class="sd">        make_optional (bool, optional): Whether to make the field Optional[T] if it&#39;s</span>
+<span class="sd">            not already. This ensures the field can be None, which is important for</span>
+<span class="sd">            state management. Defaults to True.</span>
+<span class="sd">        **kwargs: Additional field parameters passed to FieldMetadata or Field.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[Type, Field]: A tuple containing:</span>
+<span class="sd">            - field_type: The annotated type with embedded metadata</span>
+<span class="sd">            - field_info: The Pydantic Field object with standard properties</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        from typing import List</span>
+<span class="sd">        from pydantic import create_model, Field</span>
+<span class="sd">        import operator</span>
+
+<span class="sd">        # Create an annotated field with shared status and reducer</span>
+<span class="sd">        field_type, field_info = create_annotated_field(</span>
+<span class="sd">            field_type=List[str],</span>
+<span class="sd">            default_factory=list,</span>
+<span class="sd">            description=&quot;List of items&quot;,</span>
+<span class="sd">            shared=True,</span>
+<span class="sd">            reducer=operator.add</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # Create a model using the field</span>
+<span class="sd">        MyModel = create_model(</span>
+<span class="sd">            &quot;MyModel&quot;,</span>
+<span class="sd">            items=(field_type, field_info)</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # The model will have &quot;items&quot; as a shared field with an add reducer</span>
+<span class="sd">        # The metadata stays attached to the field type</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span> <span class="k">as</span> <span class="n">OptionalType</span>
+
+    <span class="c1"># Prepare field metadata</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">metadata</span> <span class="ow">or</span> <span class="n">FieldMetadata</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">shared</span><span class="o">=</span><span class="n">shared</span><span class="p">,</span> <span class="n">reducer</span><span class="o">=</span><span class="n">reducer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Get base type (unwrap Optional if needed)</span>
+    <span class="n">base_type</span> <span class="o">=</span> <span class="n">field_type</span>
+    <span class="k">if</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">field_type</span><span class="p">)</span> <span class="ow">is</span> <span class="n">OptionalType</span><span class="p">:</span>
+        <span class="n">base_type</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">field_type</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Create Annotated type with metadata</span>
+    <span class="n">meta_objects</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">to_annotation_metadata</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">meta_objects</span><span class="p">:</span>
+        <span class="n">annotated_type</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[(</span><span class="n">base_type</span><span class="p">,</span> <span class="o">*</span><span class="n">meta_objects</span><span class="p">)]</span>
+
+        <span class="c1"># Re-wrap in Optional if needed</span>
+        <span class="k">if</span> <span class="n">make_optional</span> <span class="ow">or</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">field_type</span><span class="p">)</span> <span class="ow">is</span> <span class="n">OptionalType</span><span class="p">:</span>
+            <span class="n">field_type</span> <span class="o">=</span> <span class="n">OptionalType</span><span class="p">[</span><span class="n">annotated_type</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">field_type</span> <span class="o">=</span> <span class="n">annotated_type</span>
+    <span class="k">elif</span> <span class="n">make_optional</span> <span class="ow">and</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">field_type</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">OptionalType</span><span class="p">:</span>
+        <span class="n">field_type</span> <span class="o">=</span> <span class="n">OptionalType</span><span class="p">[</span><span class="n">field_type</span><span class="p">]</span>
+
+    <span class="c1"># Build field parameters (only basic ones for Field constructor)</span>
+    <span class="n">field_params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">description</span><span class="p">:</span>
+        <span class="n">field_params</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">description</span>
+    <span class="k">if</span> <span class="n">meta</span><span class="o">.</span><span class="n">title</span><span class="p">:</span>
+        <span class="n">field_params</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">title</span>
+
+    <span class="c1"># Add standard Field parameters from extra</span>
+    <span class="n">standard_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;gt&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ge&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lt&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;le&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;multiple_of&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;min_items&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;max_items&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;min_length&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;max_length&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pattern&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;discriminator&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;json_schema_extra&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;validation_alias&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;serialization_alias&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;validation_alias_priority&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;serialization_alias_priority&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;deprecated&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;examples&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">meta</span><span class="o">.</span><span class="n">extra</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">standard_params</span><span class="p">:</span>
+            <span class="n">field_params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+    <span class="c1"># Handle default value or factory</span>
+    <span class="k">if</span> <span class="n">default_factory</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">field_info</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">default_factory</span><span class="p">,</span> <span class="o">**</span><span class="n">field_params</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">field_info</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="o">**</span><span class="n">field_params</span><span class="p">)</span>
+
+    <span class="c1"># Return the field definition</span>
+    <span class="k">return</span> <span class="n">field_type</span><span class="p">,</span> <span class="n">field_info</span></div>
+
+
+
+<div class="viewcode-block" id="extract_field_info">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/field_utils/index.html#haive.core.schema.field_utils.extract_field_info">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_field_info</span><span class="p">(</span>
+    <span class="n">field_info</span><span class="p">:</span> <span class="n">Field</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract useful information from a Pydantic Field object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        field_info: Pydantic Field object</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple of (default_value, default_factory, metadata_dict)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Extract default or default_factory</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field_info</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+    <span class="n">default_factory</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field_info</span><span class="p">,</span> <span class="s2">&quot;default_factory&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># Extract metadata</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">]:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field_info</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="c1"># Extract extra (varies between Pydantic v1 and v2)</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_info</span><span class="p">,</span> <span class="s2">&quot;json_schema_extra&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">field_info</span><span class="o">.</span><span class="n">json_schema_extra</span><span class="p">:</span>
+        <span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">field_info</span><span class="o">.</span><span class="n">json_schema_extra</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_info</span><span class="p">,</span> <span class="s2">&quot;extra&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">field_info</span><span class="o">.</span><span class="n">extra</span><span class="p">:</span>
+        <span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">field_info</span><span class="o">.</span><span class="n">extra</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">default</span><span class="p">,</span> <span class="n">default_factory</span><span class="p">,</span> <span class="n">metadata</span></div>
+
+
+
+<div class="viewcode-block" id="extract_type_metadata">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/index.html#haive.core.schema.field_utils.extract_type_metadata">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_type_metadata</span><span class="p">(</span>
+    <span class="n">type_annotation</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">,</span> <span class="n">FieldMetadata</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract base type and metadata from a type annotation.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        type_annotation: Type annotation to extract from</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple of (base_type, field_metadata)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># For Annotated types, extract metadata</span>
+    <span class="k">if</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">type_annotation</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Annotated</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">type_annotation</span><span class="p">)</span>
+        <span class="n">base_type</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">FieldMetadata</span><span class="o">.</span><span class="n">from_annotation</span><span class="p">(</span><span class="n">type_annotation</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">base_type</span><span class="p">,</span> <span class="n">metadata</span>
+
+    <span class="c1"># For Optional[Annotated[...]] types</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span> <span class="k">as</span> <span class="n">OptionalType</span>
+
+    <span class="k">if</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">type_annotation</span><span class="p">)</span> <span class="ow">is</span> <span class="n">OptionalType</span><span class="p">:</span>
+        <span class="n">inner_type</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">type_annotation</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">inner_type</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Annotated</span><span class="p">:</span>
+            <span class="n">base_type</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">extract_type_metadata</span><span class="p">(</span><span class="n">inner_type</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">OptionalType</span><span class="p">[</span><span class="n">base_type</span><span class="p">],</span> <span class="n">metadata</span>
+
+    <span class="c1"># For other types, return as is with no metadata</span>
+    <span class="k">return</span> <span class="n">type_annotation</span><span class="p">,</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="format_type_annotation">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/field_utils/index.html#haive.core.schema.field_utils.format_type_annotation">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_type_annotation</span><span class="p">(</span><span class="n">type_annotation</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Format a type annotation for display or documentation.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        type_annotation: Type annotation to format</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Formatted string representation of the type</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Handle primitive types</span>
+    <span class="k">if</span> <span class="n">type_annotation</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;str&quot;</span>
+    <span class="k">if</span> <span class="n">type_annotation</span> <span class="ow">is</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;int&quot;</span>
+    <span class="k">if</span> <span class="n">type_annotation</span> <span class="ow">is</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;float&quot;</span>
+    <span class="k">if</span> <span class="n">type_annotation</span> <span class="ow">is</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;bool&quot;</span>
+    <span class="k">if</span> <span class="n">type_annotation</span> <span class="ow">is</span> <span class="nb">list</span> <span class="ow">or</span> <span class="n">type_annotation</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;List&quot;</span>
+    <span class="k">if</span> <span class="n">type_annotation</span> <span class="ow">is</span> <span class="nb">dict</span> <span class="ow">or</span> <span class="n">type_annotation</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Dict&quot;</span>
+    <span class="k">if</span> <span class="n">type_annotation</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">type_annotation</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;None&quot;</span>
+
+    <span class="c1"># Get origin and arguments</span>
+    <span class="n">origin</span> <span class="o">=</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">type_annotation</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">type_annotation</span><span class="p">)</span>
+
+    <span class="c1"># Handle None origin</span>
+    <span class="k">if</span> <span class="n">origin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">type_annotation</span><span class="p">,</span> <span class="n">ForwardRef</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">type_annotation</span><span class="o">.</span><span class="n">__forward_arg__</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">type_annotation</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">hasattr</span><span class="p">(</span><span class="n">type_annotation</span><span class="p">,</span> <span class="s2">&quot;__module__&quot;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">type_annotation</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">!=</span> <span class="s2">&quot;builtins&quot;</span>
+            <span class="p">):</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">type_annotation</span><span class="o">.</span><span class="vm">__module__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">type_annotation</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">return</span> <span class="n">type_annotation</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">type_annotation</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;typing.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Extract base type name</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">):</span>
+        <span class="n">origin_name</span> <span class="o">=</span> <span class="n">origin</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">origin_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;typing.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Handle special cases</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span> <span class="k">as</span> <span class="n">OptionalType</span>
+
+    <span class="k">if</span> <span class="n">origin</span> <span class="ow">is</span> <span class="n">OptionalType</span><span class="p">:</span>
+        <span class="n">inner_type</span> <span class="o">=</span> <span class="n">format_type_annotation</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Optional[</span><span class="si">{</span><span class="n">inner_type</span><span class="si">}</span><span class="s2">]&quot;</span>
+    <span class="k">if</span> <span class="n">origin</span> <span class="ow">is</span> <span class="n">Union</span><span class="p">:</span>
+        <span class="c1"># Check if it&#39;s Optional (Union with None)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)):</span>
+            <span class="n">inner_type</span> <span class="o">=</span> <span class="n">format_type_annotation</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Optional[</span><span class="si">{</span><span class="n">inner_type</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)):</span>
+            <span class="n">inner_type</span> <span class="o">=</span> <span class="n">format_type_annotation</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Optional[</span><span class="si">{</span><span class="n">inner_type</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="n">inner_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">format_type_annotation</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Union[</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">inner_types</span><span class="p">)</span><span class="si">}</span><span class="s2">]&quot;</span>
+    <span class="k">if</span> <span class="n">origin</span> <span class="ow">is</span> <span class="nb">list</span> <span class="ow">or</span> <span class="n">origin</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+            <span class="n">inner_type</span> <span class="o">=</span> <span class="n">format_type_annotation</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;List[</span><span class="si">{</span><span class="n">inner_type</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;List&quot;</span>
+    <span class="k">if</span> <span class="n">origin</span> <span class="ow">is</span> <span class="nb">dict</span> <span class="ow">or</span> <span class="n">origin</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">key_type</span> <span class="o">=</span> <span class="n">format_type_annotation</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">value_type</span> <span class="o">=</span> <span class="n">format_type_annotation</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Dict[</span><span class="si">{</span><span class="n">key_type</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">value_type</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;Dict&quot;</span>
+    <span class="k">if</span> <span class="n">origin</span> <span class="ow">is</span> <span class="n">Annotated</span><span class="p">:</span>
+        <span class="c1"># For Annotated types, format the base type but ignore metadata</span>
+        <span class="k">return</span> <span class="n">format_type_annotation</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># Generic handling</span>
+    <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">inner_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">format_type_annotation</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">origin_name</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">inner_types</span><span class="p">)</span><span class="si">}</span><span class="s2">]&quot;</span>
+
+    <span class="k">return</span> <span class="n">origin_name</span></div>
+
+
+
+<div class="viewcode-block" id="get_common_reducers">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/index.html#haive.core.schema.field_utils.get_common_reducers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_common_reducers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a registry of common reducer functions.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary of reducer name -&gt; reducer function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reducers</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># Add operator module reducers</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">operator</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+                <span class="n">reducers</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;operator.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span>
+                <span class="n">reducers</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">func</span>  <span class="c1"># Also store without prefix for backward compatibility</span>
+                <span class="p">)</span>
+
+    <span class="c1"># Add common list operations</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_lists</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="ow">or</span> <span class="p">[])</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span> <span class="ow">or</span> <span class="p">[])</span>
+
+    <span class="n">reducers</span><span class="p">[</span><span class="s2">&quot;add_lists&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_lists</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">concat_lists</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="ow">or</span> <span class="p">[])</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span> <span class="ow">or</span> <span class="p">[])</span>
+
+    <span class="n">reducers</span><span class="p">[</span><span class="s2">&quot;concat_lists&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">concat_lists</span>
+
+    <span class="c1"># Try to import langgraph&#39;s add_messages if available</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">langgraph.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_messages</span>
+
+        <span class="n">reducers</span><span class="p">[</span><span class="s2">&quot;add_messages&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_messages</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="c1"># Fallback implementation</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">add_messages</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="ow">or</span> <span class="p">[])</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span> <span class="ow">or</span> <span class="p">[])</span>
+
+        <span class="n">reducers</span><span class="p">[</span><span class="s2">&quot;add_messages&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_messages</span>
+
+    <span class="c1"># Add string operations</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">concat_strings</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">reducers</span><span class="p">[</span><span class="s2">&quot;concat_strings&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">concat_strings</span>
+
+    <span class="c1"># Add numeric operations</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sum_values</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">reducers</span><span class="p">[</span><span class="s2">&quot;sum_values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sum_values</span>
+
+    <span class="c1"># Add other common functions</span>
+    <span class="n">reducers</span><span class="p">[</span><span class="s2">&quot;max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span>
+    <span class="n">reducers</span><span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span>
+
+    <span class="k">return</span> <span class="n">reducers</span></div>
+
+
+
+<div class="viewcode-block" id="resolve_reducer">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/index.html#haive.core.schema.field_utils.resolve_reducer">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">resolve_reducer</span><span class="p">(</span><span class="n">reducer_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resolve a reducer function from its name.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reducer_name: Name of the reducer to resolve</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Callable reducer function or None if not found</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Check common reducers first</span>
+    <span class="n">common_reducers</span> <span class="o">=</span> <span class="n">get_common_reducers</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">reducer_name</span> <span class="ow">in</span> <span class="n">common_reducers</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">common_reducers</span><span class="p">[</span><span class="n">reducer_name</span><span class="p">]</span>
+
+    <span class="c1"># Handle operator module functions</span>
+    <span class="k">if</span> <span class="n">reducer_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;operator.&quot;</span><span class="p">):</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="n">reducer_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">func_name</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">func_name</span><span class="p">)</span>
+
+    <span class="c1"># Try to import by module.function_name</span>
+    <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">reducer_name</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">module_name</span><span class="p">,</span> <span class="n">func_name</span> <span class="o">=</span> <span class="n">reducer_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="p">[</span><span class="n">func_name</span><span class="p">])</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">func_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not resolve reducer: </span><span class="si">{</span><span class="n">reducer_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Special case for lambda</span>
+    <span class="k">if</span> <span class="n">reducer_name</span> <span class="o">==</span> <span class="s2">&quot;&lt;lambda&gt;&quot;</span><span class="p">:</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">generic_lambda_reducer</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+            <span class="c1"># Simple fallback that concatenates lists or dicts, otherwise takes</span>
+            <span class="c1"># b</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">result</span>
+            <span class="k">return</span> <span class="n">b</span>
+
+        <span class="k">return</span> <span class="n">generic_lambda_reducer</span>
+
+    <span class="c1"># Could not resolve</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="infer_field_type">
+<a class="viewcode-back" href="../../../../api_clean/haive/core/schema/index.html#haive.core.schema.field_utils.infer_field_type">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">infer_field_type</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Infer the field type from a value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value: Value to infer type from</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Inferred type</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span> <span class="k">as</span> <span class="n">AnyType</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AnyType</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">value</span><span class="p">):</span>
+            <span class="n">item_type</span> <span class="o">=</span> <span class="n">infer_field_type</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="c1"># Strip Optional from item_type</span>
+            <span class="k">if</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">item_type</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Optional</span><span class="p">:</span>
+                <span class="n">item_type</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">item_type</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">item_type</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">AnyType</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">value</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">AnyType</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="n">AnyType</span><span class="p">,</span> <span class="n">AnyType</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AnyType</span><span class="p">]</span></div>
+
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

@@ -1,0 +1,678 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>Agent Showcase - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/will-astley/haive/blob/main/docs/source/showcase.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/will-astley/haive/edit/main/docs/source/showcase.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="agent-showcase">
+<h1>Agent Showcase<a class="headerlink" href="#agent-showcase" title="Link to this heading">¶</a></h1>
+<div class="modern-agent-showcase">
+
+<!-- Hero Section -->
+<div class="showcase-hero">
+   <h1 class="hero-title">🚀 Haive Agent Collection</h1>
+   <p class="hero-subtitle">Powerful, composable AI agents for every use case</p>
+
+   <div class="hero-stats">
+      <div class="stat">
+         <span class="stat-number">25+</span>
+         <span class="stat-label">Agent Types</span>
+      </div>
+      <div class="stat">
+         <span class="stat-number">100+</span>
+         <span class="stat-label">Built-in Tools</span>
+      </div>
+      <div class="stat">
+         <span class="stat-number">∞</span>
+         <span class="stat-label">Possibilities</span>
+      </div>
+   </div>
+</div>
+
+<!-- Filter Tabs -->
+<div class="filter-tabs">
+   <button class="filter-tab active" onclick="filterAgents('all')">All Agents</button>
+   <button class="filter-tab" onclick="filterAgents('simple')">Simple</button>
+   <button class="filter-tab" onclick="filterAgents('react')">ReAct</button>
+   <button class="filter-tab" onclick="filterAgents('rag')">RAG</button>
+   <button class="filter-tab" onclick="filterAgents('multi')">Multi-Agent</button>
+   <button class="filter-tab" onclick="filterAgents('research')">Research</button>
+   <button class="filter-tab" onclick="filterAgents('planning')">Planning</button>
+</div>
+
+<!-- Core Agents Section -->
+<div class="agent-section" data-category="simple">
+   <div class="section-header">
+      <h2 class="section-title">
+         <span class="section-icon">⭐</span>
+         Core Agents
+      </h2>
+      <p class="section-description">Foundation agents for common tasks</p>
+   </div>
+
+   <div class="agent-grid">
+      <!-- Simple Agent -->
+      <div class="agent-card featured" data-tags="simple conversation">
+         <div class="card-header">
+            <div class="agent-icon">💬</div>
+            <div class="agent-badge">Popular</div>
+         </div>
+         <h3 class="agent-name">SimpleAgent</h3>
+         <p class="agent-description">
+            The foundation agent for straightforward conversational AI tasks.
+            Perfect for chatbots, Q&A systems, and basic interactions.
+         </p>
+         <div class="agent-features">
+            <span class="feature-tag">Stateful Conversations</span>
+            <span class="feature-tag">Memory Support</span>
+            <span class="feature-tag">Async Ready</span>
+         </div>
+         <div class="agent-actions">
+            <a href="api/agents/simple/agent/index.html" class="action-primary">View Docs</a>
+            <a href="#simple-example" class="action-secondary">See Example</a>
+         </div>
+      </div>
+
+      <!-- Structured Output Agent -->
+      <div class="agent-card" data-tags="simple structured">
+         <div class="card-header">
+            <div class="agent-icon">📊</div>
+            <div class="agent-badge new">New</div>
+         </div>
+         <h3 class="agent-name">StructuredSimpleAgent</h3>
+         <p class="agent-description">
+            Get perfectly structured, validated responses using Pydantic models.
+            Ideal for APIs, data extraction, and form processing.
+         </p>
+         <div class="agent-features">
+            <span class="feature-tag">Type Safety</span>
+            <span class="feature-tag">Pydantic Models</span>
+            <span class="feature-tag">Validation</span>
+         </div>
+         <div class="agent-actions">
+            <a href="api/agents/simple/structured_agent/index.html" class="action-primary">View Docs</a>
+            <a href="#structured-example" class="action-secondary">See Example</a>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- ReAct Agents Section -->
+<div class="agent-section" data-category="react">
+   <div class="section-header">
+      <h2 class="section-title">
+         <span class="section-icon">🧠</span>
+         ReAct Agents
+      </h2>
+      <p class="section-description">Reasoning and action agents with tool use</p>
+   </div>
+
+   <div class="agent-grid">
+      <!-- ReactAgent -->
+      <div class="agent-card featured" data-tags="react tools">
+         <div class="card-header">
+            <div class="agent-icon">🔧</div>
+            <div class="agent-badge">Essential</div>
+         </div>
+         <h3 class="agent-name">ReactAgent</h3>
+         <p class="agent-description">
+            Think-act-observe pattern for complex reasoning tasks.
+            Integrates seamlessly with any LangChain tool.
+         </p>
+         <div class="agent-features">
+            <span class="feature-tag">Tool Integration</span>
+            <span class="feature-tag">Chain of Thought</span>
+            <span class="feature-tag">Error Recovery</span>
+         </div>
+         <div class="agent-actions">
+            <a href="api/agents/react/agent/index.html" class="action-primary">View Docs</a>
+            <a href="#react-example" class="action-secondary">See Example</a>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- RAG Agents Section -->
+<div class="agent-section" data-category="rag">
+   <div class="section-header">
+      <h2 class="section-title">
+         <span class="section-icon">📚</span>
+         RAG Agents
+      </h2>
+      <p class="section-description">Retrieval-augmented generation for knowledge tasks</p>
+   </div>
+
+   <div class="agent-grid">
+      <!-- Base RAG Agent -->
+      <div class="agent-card" data-tags="rag retrieval">
+         <div class="card-header">
+            <div class="agent-icon">🔍</div>
+            <div class="agent-badge">Foundation</div>
+         </div>
+         <h3 class="agent-name">BaseRAGAgent</h3>
+         <p class="agent-description">
+            Foundation for retrieval-augmented generation.
+            Supports multiple vector stores and retrieval strategies.
+         </p>
+         <div class="agent-features">
+            <span class="feature-tag">Vector Stores</span>
+            <span class="feature-tag">Semantic Search</span>
+            <span class="feature-tag">Context Injection</span>
+         </div>
+         <div class="agent-actions">
+            <a href="api/agents/rag/base/agent/index.html" class="action-primary">View Docs</a>
+            <a href="#rag-example" class="action-secondary">See Example</a>
+         </div>
+      </div>
+   </div>
+</div>
+
+</div>
+
+<style>
+.modern-agent-showcase {
+   margin: 2rem 0;
+}
+
+.showcase-hero {
+   text-align: center;
+   padding: 3rem 0;
+   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   color: white;
+   border-radius: 1rem;
+   margin-bottom: 2rem;
+}
+
+.hero-title {
+   font-size: 3rem;
+   margin-bottom: 1rem;
+}
+
+.hero-stats {
+   display: flex;
+   justify-content: center;
+   gap: 3rem;
+   margin-top: 2rem;
+}
+
+.stat {
+   text-align: center;
+}
+
+.stat-number {
+   display: block;
+   font-size: 2.5rem;
+   font-weight: bold;
+}
+
+.filter-tabs {
+   display: flex;
+   gap: 0.5rem;
+   margin-bottom: 2rem;
+   flex-wrap: wrap;
+}
+
+.filter-tab {
+   padding: 0.5rem 1rem;
+   border: 2px solid #e5e7eb;
+   background: white;
+   border-radius: 2rem;
+   cursor: pointer;
+   transition: all 0.2s;
+}
+
+.filter-tab.active {
+   background: #667eea;
+   color: white;
+   border-color: #667eea;
+}
+
+.agent-section {
+   margin-bottom: 3rem;
+}
+
+.section-header {
+   margin-bottom: 2rem;
+}
+
+.section-title {
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+   font-size: 2rem;
+}
+
+.agent-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+   gap: 1.5rem;
+}
+
+.agent-card {
+   background: white;
+   border: 1px solid #e5e7eb;
+   border-radius: 0.75rem;
+   padding: 1.5rem;
+   transition: all 0.3s;
+}
+
+.agent-card:hover {
+   transform: translateY(-4px);
+   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.agent-card.featured {
+   border-color: #667eea;
+}
+
+.card-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: start;
+   margin-bottom: 1rem;
+}
+
+.agent-icon {
+   font-size: 2.5rem;
+}
+
+.agent-badge {
+   background: #f3f4f6;
+   padding: 0.25rem 0.75rem;
+   border-radius: 1rem;
+   font-size: 0.875rem;
+   font-weight: 600;
+}
+
+.agent-badge.new {
+   background: #10b981;
+   color: white;
+}
+
+.agent-name {
+   font-size: 1.5rem;
+   margin-bottom: 0.5rem;
+}
+
+.agent-features {
+   display: flex;
+   gap: 0.5rem;
+   flex-wrap: wrap;
+   margin: 1rem 0;
+}
+
+.feature-tag {
+   background: #eff6ff;
+   color: #3b82f6;
+   padding: 0.25rem 0.75rem;
+   border-radius: 1rem;
+   font-size: 0.875rem;
+}
+
+.agent-actions {
+   display: flex;
+   gap: 1rem;
+   margin-top: 1.5rem;
+}
+
+.action-primary {
+   background: #667eea;
+   color: white;
+   padding: 0.5rem 1.5rem;
+   border-radius: 0.5rem;
+   text-decoration: none;
+   transition: all 0.2s;
+}
+
+.action-primary:hover {
+   background: #5a67d8;
+}
+
+.action-secondary {
+   background: transparent;
+   color: #667eea;
+   padding: 0.5rem 1.5rem;
+   border: 2px solid #667eea;
+   border-radius: 0.5rem;
+   text-decoration: none;
+   transition: all 0.2s;
+}
+
+.action-secondary:hover {
+   background: #667eea;
+   color: white;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+   body[data-theme="dark"] .agent-card {
+      background: #1e293b;
+      border-color: #334155;
+   }
+
+   body[data-theme="dark"] .filter-tab {
+      background: #1e293b;
+      border-color: #334155;
+      color: #e5e7eb;
+   }
+
+   body[data-theme="dark"] .filter-tab.active {
+      background: #667eea;
+      color: white;
+   }
+}
+</style>
+
+<script>
+function filterAgents(category) {
+   // Update active tab
+   document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.classList.remove('active');
+   });
+   event.target.classList.add('active');
+
+   // Show/hide agent sections
+   document.querySelectorAll('.agent-section').forEach(section => {
+      if (category === 'all' || section.dataset.category === category) {
+         section.style.display = 'block';
+      } else {
+         section.style.display = 'none';
+      }
+   });
+}
+</script></section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

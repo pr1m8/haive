@@ -1,0 +1,467 @@
+/* Enhanced Documentation Styles - Leveraging 86+ Sphinx Extensions */
+
+/* Import Font Awesome for enhanced icons (sphinx_design integration) */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
+
+/* Enhanced Hero Section with Sphinx-Design Components */
+.hero-banner {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin: -2rem -2rem 2rem -2rem;
+  border-radius: 0 0 1rem 1rem;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-logo {
+  margin-bottom: 2rem;
+  filter: brightness(0) invert(1);
+}
+
+/* Enhanced Feature Cards with Sphinx-Design Grid */
+.feature-grid .sd-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--color-card-border);
+  height: 100%;
+}
+
+.feature-grid .sd-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-brand-primary);
+}
+
+.feature-card-header {
+  background: linear-gradient(
+    45deg,
+    var(--color-brand-primary),
+    var(--color-brand-content)
+  );
+  color: white !important;
+  font-weight: 600;
+}
+
+.feature-list {
+  border: none !important;
+  margin: 0;
+}
+
+.feature-list td {
+  border: none !important;
+  padding: 0.5rem 0 !important;
+  font-size: 0.9rem;
+}
+
+.feature-list td:first-child {
+  font-weight: 600;
+  color: var(--color-brand-primary);
+}
+
+/* Enhanced Tabs (sphinx_design tab-set) */
+.sd-tab-set {
+  margin: 2rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.sd-tab-content {
+  padding: 2rem;
+  background: var(--color-background-secondary);
+}
+
+.sd-tab-label {
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  background: var(--color-background-primary);
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.sd-tab-label:hover {
+  background: var(--color-background-secondary);
+  border-bottom-color: var(--color-brand-primary);
+}
+
+.sd-tab-label[aria-selected="true"] {
+  background: var(--color-brand-primary);
+  color: white;
+  border-bottom-color: var(--color-brand-primary);
+}
+
+/* Enhanced Code Blocks with Copy Button (sphinx_copybutton) */
+.highlight {
+  position: relative;
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--color-code-background, #f8f8f8);
+  border: 1px solid var(--color-card-border, #e0e0e0);
+}
+
+/* Enhanced code block styling */
+.highlight pre {
+  margin: 0;
+  padding: 1.25rem;
+  overflow-x: auto;
+  background: transparent;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  font-family: "Fira Code", "Source Code Pro", "Consolas", monospace;
+}
+
+/* Line numbers styling */
+.highlight .linenos {
+  user-select: none;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 1.25rem 0.5rem;
+  color: #999;
+  font-size: 0.8rem;
+}
+
+/* Emphasized lines */
+.highlight .hll {
+  background-color: rgba(255, 235, 59, 0.2);
+  display: block;
+  margin: 0 -1.25rem;
+  padding: 0 1.25rem;
+}
+
+.highlight-caption {
+  background: var(--color-brand-primary);
+  color: white;
+  padding: 0.75rem 1rem;
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.copybutton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid var(--color-brand-primary) !important;
+  color: var(--color-brand-primary) !important;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.copybutton:hover {
+  background: var(--color-brand-primary) !important;
+  color: white !important;
+}
+
+/* Enhanced Dropdown Components (sphinx_design dropdown) */
+.sd-dropdown {
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.sd-dropdown-header {
+  background: linear-gradient(
+    45deg,
+    var(--color-brand-primary),
+    var(--color-brand-content)
+  );
+  color: white;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sd-dropdown-header:hover {
+  filter: brightness(1.1);
+}
+
+.sd-dropdown-body {
+  padding: 1.5rem;
+  background: var(--color-background-secondary);
+}
+
+/* Enhanced Grid Layouts */
+.docs-grid .sd-card {
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.docs-grid .sd-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.docs-card-header {
+  background: var(--color-background-primary);
+  font-weight: 600;
+  border-bottom: 2px solid var(--color-brand-primary);
+}
+
+.metrics-grid {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.metric-item {
+  padding: 1.5rem;
+  background: var(--color-background-secondary);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.metric-item strong {
+  display: block;
+  font-size: 2rem;
+  color: var(--color-brand-primary);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.metric-item em {
+  color: var(--color-foreground-muted);
+  font-style: normal;
+  font-size: 0.9rem;
+}
+
+/* Enhanced Pydantic Model Documentation (autopydantic_model) */
+.py.class .sig-name {
+  color: var(--color-brand-primary);
+  font-weight: 600;
+}
+
+.field-list {
+  margin: 1rem 0;
+  background: var(--color-background-secondary);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.field-list .field-name {
+  background: var(--color-brand-primary);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.field-list .field-body {
+  padding-left: 1rem;
+}
+
+/* Enhanced Admonitions with Icons */
+.admonition {
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 1.5rem 0;
+}
+
+.admonition .admonition-title {
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  margin: 0;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.admonition p,
+.admonition .admonition-content {
+  padding: 0 1.5rem 1rem 1.5rem;
+  margin: 0;
+}
+
+.admonition.note .admonition-title {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.admonition.warning .admonition-title {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.admonition.tip .admonition-title {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+/* Enhanced API Documentation */
+.py.method .sig-name,
+.py.function .sig-name {
+  color: var(--color-brand-content);
+  font-weight: 600;
+}
+
+.py.class .property {
+  background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+  border-left: 3px solid var(--color-brand-primary);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+/* Enhanced Inheritance Diagrams */
+.inheritance-diagram {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: var(--color-background-secondary);
+  border-radius: 0.5rem;
+}
+
+.inheritance-diagram svg {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced Search Results */
+.search .context {
+  background: var(--color-background-secondary);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-left: 3px solid var(--color-brand-primary);
+}
+
+/* Enhanced Navigation */
+.toctree-wrapper .caption {
+  background: var(--color-brand-primary);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+  font-weight: 600;
+  margin: 0;
+}
+
+.toctree-wrapper ul {
+  background: var(--color-background-secondary);
+  border-radius: 0 0 0.5rem 0.5rem;
+  padding: 1rem;
+  margin-top: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-banner {
+    padding: 3rem 1rem;
+    margin: -1rem -1rem 1rem -1rem;
+  }
+
+  .sd-tab-label {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .metric-item strong {
+    font-size: 1.5rem;
+  }
+}
+
+/* Dark Mode Enhancements */
+[data-theme="dark"] .hero-banner {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+[data-theme="dark"] .feature-grid .sd-card:hover {
+  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .copybutton {
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: var(--color-brand-primary) !important;
+}
+
+[data-theme="dark"] .copybutton:hover {
+  background: var(--color-brand-primary) !important;
+  color: white !important;
+}
+
+/* Dark mode code block enhancements */
+[data-theme="dark"] .highlight {
+  background: var(--color-code-background, #2b2b2b);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .highlight .linenos {
+  background: rgba(255, 255, 255, 0.05);
+  color: #666;
+}
+
+[data-theme="dark"] .highlight .hll {
+  background-color: rgba(255, 235, 59, 0.1);
+}
+
+/* Syntax-specific color improvements */
+.highlight .c,
+.highlight .cm,
+.highlight .c1 {
+  /* Comments */
+  color: #6a737d;
+  font-style: italic;
+}
+
+.highlight .k,
+.highlight .kd,
+.highlight .kn {
+  /* Keywords */
+  color: #d73a49;
+  font-weight: 600;
+}
+
+.highlight .s,
+.highlight .s1,
+.highlight .s2 {
+  /* Strings */
+  color: #032f62;
+}
+
+.highlight .mi,
+.highlight .mf {
+  /* Numbers */
+  color: #005cc5;
+}
+
+.highlight .nc,
+.highlight .nn {
+  /* Class names */
+  color: #6f42c1;
+  font-weight: 600;
+}
+
+.highlight .nf {
+  /* Function names */
+  color: #6f42c1;
+}
+
+[data-theme="dark"] .highlight .s,
+[data-theme="dark"] .highlight .s1,
+[data-theme="dark"] .highlight .s2 {
+  /* Strings in dark mode */
+  color: #a8e6cf;
+}
+
+[data-theme="dark"] .highlight .k,
+[data-theme="dark"] .highlight .kd,
+[data-theme="dark"] .highlight .kn {
+  /* Keywords in dark mode */
+  color: #ff6b6b;
+}
