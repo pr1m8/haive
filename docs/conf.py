@@ -1,1478 +1,635 @@
-"""Complete Sphinx configuration with ALL 83+ extensions and enhanced theming."""
-
-from __future__ import annotations
+# Haive AI Agent Framework - Sphinx Configuration
+# Based on PyAutoDoc's proven 43-extension configuration
+# Adapted for Haive monorepo with all packages
 
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
-# Path setup
-project_root = Path(__file__).parent.parent.parent
+from sphinx.application import Sphinx
+
+# Path setup - Add all Haive package src directories
+project_root = Path(__file__).parent.parent
 packages_dir = project_root / "packages"
-# Note: We don't modify sys.path to avoid duplicate module discovery by AutoAPI
 
-# =============================================================================
-# BUILD ORGANIZATION SETUP (Clean structure for incremental builds)
-# =============================================================================
+# Add all package src directories to path
+for package in packages_dir.glob("haive-*/src"):
+    sys.path.insert(0, str(package))
 
-docs_root = project_root / "docs"
-
-# Define clean build structure - organized in builds/ directory
-BUILDS_DIR = docs_root / "builds"
-HTML_DIR = BUILDS_DIR / "html"
-DOCTREES_DIR = BUILDS_DIR / "doctrees"  # PERSISTENT CACHE - key for incremental builds!
-LOGS_DIR = BUILDS_DIR / "logs"
-DEBUG_DIR = BUILDS_DIR / "debug"
-
-# Ensure build directories exist
-for dir_path in [BUILDS_DIR, HTML_DIR, DOCTREES_DIR, LOGS_DIR, DEBUG_DIR]:
-    dir_path.mkdir(parents=True, exist_ok=True)
-
-# MCP Documentation Paths
-MCP_DATA_ROOT = packages_dir / "haive-mcp/data"
-MCP_DOCS_ROOT = MCP_DATA_ROOT / "documentation/servers"
-
-# Logging
-import logging
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
-logger = logging.getLogger("sphinx_config_complete")
-
-# Log the build organization (after logger setup)
-logger.info(f"🏗️  Build directories organized:")
-logger.info(f"   📁 HTML: {HTML_DIR}")
-logger.info(f"   🗂️  Doctrees: {DOCTREES_DIR}")  
-logger.info(f"   📋 Logs: {LOGS_DIR}")
-logger.info(f"   🐛 Debug: {DEBUG_DIR}")
-
-# =============================================================================
-# PROJECT INFORMATION
-# =============================================================================
-
-_sphinx_packages = os.environ.get("SPHINX_PACKAGES", "all")
-
-if _sphinx_packages != "all":
-    pkg_names = [
-        p.strip().replace("haive-", "") for p in _sphinx_packages.split(",")
-    ]
-    project = f"Haive {', '.join(p.title() for p in pkg_names)}"
-else:
-    project = "Haive AI Agent Framework"
-
-copyright = "2024, Haive Team"
+# Project information
+project = "Haive AI Agent Framework"
 author = "Haive Team"
-version = "1.0"
+copyright = "2025, Haive Team"
 release = "1.0.0"
 
-# =============================================================================
-# MCP DOCUMENTATION CONFIGURATION
-# =============================================================================
-
-# MCP Categories
-MCP_CATEGORIES = [
-    "ai_ml", "api_integration", "cloud", "communication",
-    "database", "filesystem", "finance", "general",
-    "monitoring", "productivity", "search", "security",
-    "testing", "toolchain", "web_scraping"
-]
-
-def get_mcp_server_paths():
-    """Get all MCP server documentation paths organized by category."""
-    from typing import Dict, List
-    paths: Dict[str, List[Path]] = {}
-    
-    for category in MCP_CATEGORIES:
-        category_path = MCP_DOCS_ROOT / category
-        if category_path.exists():
-            # Find all index.rst files in this category
-            index_files = list(category_path.glob("*/index.rst"))
-            if index_files:
-                paths[category] = sorted(index_files)
-    
-    return paths
-
-def should_include_mcp_docs():
-    """Check if MCP documentation should be included."""
-    # Default to false - only include if explicitly enabled
-    if os.environ.get("SPHINX_INCLUDE_MCP_DOCS", "").lower() not in ("1", "true", "yes"):
-        return False
-    
-    # Check if MCP docs exist
-    return MCP_DOCS_ROOT.exists() and any(MCP_DOCS_ROOT.glob("*/*/index.rst"))
-
-def get_mcp_doc_format():
-    """Get preferred MCP documentation format (rst or md)."""
-    return os.environ.get("SPHINX_MCP_FORMAT", "rst").lower()
-
-# Check if MCP docs are available
-MCP_DOCS_ENABLED = should_include_mcp_docs()
-MCP_DOC_FORMAT = get_mcp_doc_format()
-
-if MCP_DOCS_ENABLED:
-    mcp_server_count = sum(len(list(MCP_DOCS_ROOT.glob(f"{cat}/*/index.rst"))) for cat in MCP_CATEGORIES)
-    logger.info(f"📚 MCP Documentation: {mcp_server_count} servers found in {MCP_DOCS_ROOT} (format: {MCP_DOC_FORMAT})")
-else:
-    logger.info("📚 MCP Documentation: Disabled by default (set SPHINX_INCLUDE_MCP_DOCS=true to enable)")
-
-# =============================================================================
-# GENERAL CONFIGURATION
-# =============================================================================
-
-templates_path = ["_templates"]
-exclude_patterns = [
-    "_build", 
-    "Thumbs.db", 
-    ".DS_Store",
-    "agents/conversation/*.rst",
-    "guides/agent_visualization.rst",
-]
-pygments_style = "sphinx"
-
-# =============================================================================
-# EXTENSIONS - ALL 83+ ORIGINAL EXTENSIONS
-# =============================================================================
-
-# Control variables
-SPHINX_PROFILE = os.environ.get("SPHINX_PROFILE", "full")
-DISABLE_EXAMPLES = os.environ.get("SPHINX_DISABLE_EXAMPLES", "0").lower() in ("1", "true", "yes")
-FAST_IMPORTS = os.environ.get("SPHINX_FAST_IMPORTS", "1").lower() in ("1", "true", "yes")
-IMPORT_SAMPLE_LIMIT = int(os.environ.get("SPHINX_IMPORT_SAMPLE_LIMIT", "300"))
-
-# ALL 83+ ORIGINAL EXTENSIONS
+# Extensions - HYPER-ORGANIZED with proper loading order (compatibility filtered)
 extensions = [
-    # CRITICAL: AutoAPI MUST BE FIRST
-    "autoapi.extension",
-    
-    # Core Sphinx extensions
+    # Core (Priority 1-10) - AutoAPI FIRST as requested
     "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
+    "autoapi.extension",
     "sphinx.ext.napoleon",
-    "sphinx.ext.doctest",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.todo",
-    "sphinx.ext.coverage",
-    "sphinx.ext.ifconfig",
     "sphinx.ext.viewcode",
-    "sphinx.ext.githubpages",
-    "sphinx.ext.inheritance_diagram",
-    "sphinx.ext.graphviz",
-    "sphinx.ext.mathjax",
-    "sphinx.ext.imgmath",
-    "sphinx.ext.duration",
-    "sphinx.ext.extlinks",
-    
-    # Enhanced documentation features
-    "sphinx_copybutton",
-    "sphinx_design",
-    "sphinx_togglebutton",
-    "sphinx_tabs.tabs",  # Main tabs extension
-    "sphinx-prompt",
-    "sphinx_substitution_extensions",
-    "sphinx_tippy",
-    "sphinx_needs",
-    # "sphinx_panels",  # Incompatible with Sphinx 8.x
-    # "sphinx_proof",  # Not available as standalone package
-    # "sphinx_exercise",  # Not available as standalone package
-    
-    # API documentation
-    "sphinx_automodapi.automodapi",
-    "sphinx_automodapi.smart_resolver",
-    "sphinxcontrib.httpdomain",
-    "sphinxcontrib.openapi",
-    "sphinxcontrib.redoc",
-    "sphinxcontrib.swaggerdoc",
-    
-    # Output formats
-    "sphinxcontrib.htmlhelp",
-    "sphinxcontrib.serializinghtml",
-    "sphinxcontrib.devhelp",
-    "sphinxcontrib.qthelp",
-    "sphinxcontrib.applehelp",
-    # "sphinx_latex_elements",  # Doesn't exist
-    
-    # Markdown support
+    "sphinx.ext.intersphinx",
+    "seed_intersphinx_mapping",  # Auto-populate intersphinx from pyproject.toml
+    # Enhanced API (Priority 11-20) - REMOVED enum_tools due to compatibility
+    "sphinxcontrib.autodoc_pydantic",
+    "sphinx_autodoc_typehints",
+    # Content & Design (Priority 21-30) - INTENSE FURO FOCUS
     "myst_parser",
-    # "myst_nb",  # Conflicts with myst_parser
-    # "recommonmark",  # Deprecated, use myst_parser instead
-    
-    # Diagrams and visualization
+    "sphinx_design",  # KEY for intense theming
+    "sphinx_togglebutton",
+    "sphinx_copybutton",
+    "sphinx_tabs.tabs",
+    # Execution (Priority 31-40) - TESTING FOCUS
+    # "sphinx_exec_code",  # Will test if available
+    "sphinxcontrib.programoutput",
+    # "sphinx_runpython",  # Will test if available
+    # Diagrams (Priority 41-50) - MERMAID FOCUS
+    "sphinx.ext.graphviz",
     "sphinxcontrib.mermaid",
     "sphinxcontrib.plantuml",
-    # "sphinxcontrib.actdiag",  # Not installed
-    "sphinxcontrib.blockdiag",
-    "sphinxcontrib.nwdiag",
-    "sphinxcontrib.seqdiag",
-    "sphinxcontrib.wavedrom",
-    "sphinxcontrib.kroki",
-    "sphinx_diagrams",
-    
-    # External services
-    "sphinx_favicon",
-    "sphinx_last_updated_by_git",
-    "sphinx_notfound_page",
-    "sphinx_reredirects",
+    # Utilities (Priority 51-60)
     "sphinx_sitemap",
-    "sphinx_external_toc",
-    "sphinxcontrib.youtube",
-    # "sphinxcontrib.vimeo",  # Package doesn't exist
-    # "sphinxcontrib.gist",  # Package is broken - ImportError in setup.py
-    
-    # Development tools
-    # sphinx-autobuild is not an extension - it's a CLI tool
-    "sphinx_rtd_theme",
-    "sphinx_rtd_dark_mode",
-    "sphinx_book_theme",
-    "pydata_sphinx_theme",
-    "sphinx_material",
-    "sphinx_bootstrap_theme",
-    "sphinx_pdj_theme",
-    "sphinx_typo3_theme",
-    "groundwork_sphinx_theme",
-    "sphinx_documatt_theme",
-    
-    # Code documentation
-    "sphinx_autodoc_typehints",
-    "sphinx_autodoc_defaultargs",
-    "sphinx_paramlinks",
-    # "sphinx_codeautolink",  # Error: 'module' object is not callable
-    "sphinx_autorun",
-    "sphinx_click",
-    "sphinx_argparse",
-    "sphinx_jsonschema",
-    
-    # Testing and examples
-    # "sphinx_gallery.gen_gallery",  # Temporarily disabled
-    "sphinx_exec_code",
-    "sphinx_exec_directive",
-    # "sphinx_runpython",  # No setup() function - not a proper extension
-    
-    # Search enhancements
-    "sphinxcontrib.spelling",
-    "sphinx_search.extension",
-    
-    # Additional features
-    "sphinx_issues",
-    "sphinx_removed_in",
-    "sphinx_version_warning",
-    "sphinx_multiversion",
-    "sphinx_revealjs",
-    "hieroglyph",
-    "sphinxcontrib.programoutput",
-    # "sphinxcontrib.asciinema",  # Not installed
-    # "sphinxcontrib.email",  # Uncommon extension
-    # "sphinxcontrib.argdoc",  # Uncommon extension
-    "sphinxcontrib.confluencebuilder",
-    # "sphinxcontrib.discourse",  # Uncommon extension
-    # "sphinxcontrib.exceltable",  # Uncommon extension
-    # "sphinxcontrib.googleanalytics",  # Uncommon extension
-    # "sphinxcontrib.googlechart",  # Uncommon extension
-    # "sphinxcontrib.googlemaps",  # Uncommon extension
-    "sphinx_last_updated_by_git",
-    # "sphinx_math_dollar",  # Compatibility issue with pending_xref_condition
-    # "sphinxemoji",  # No setup() function - not a proper extension
-    "sphinxext.rediraffe",
-    "sphinx_jinja2",
-    
-    # Add autodoc-pydantic if available
-    "sphinxcontrib.autodoc_pydantic",
+    "sphinx_codeautolink",  # Re-enabled - issue was fulltoc conflict, not docutils
+    # TOC Enhancements (Priority 61-70)
+    # "sphinxcontrib.fulltoc",  # Disabled - conflicts with sphinx-codeautolink
+    # "sphinx_external_toc",  # Requires _toc.yml file
+    "sphinx_treeview",  # Dynamic collapsible tree view sidebar - EXPERIMENTING
+    # Enhanced Features (Priority 71-80)
+    # "sphinx_paramlinks",  # Removed - codeautolink handles this + config issues
+    "sphinx_toggleprompt",  # Toggle Python prompts in code blocks (INSTALLED)
+    "sphinx_prompt",  # Better CLI prompt documentation (INSTALLED)
+    "sphinx_last_updated_by_git",  # Last modification from git (INSTALLED)
+    "sphinx_inlinecode",  # Enhanced inline code styling (TESTING - may need HTML post-processing)
+    "sphinx_library",  # Better library documentation (INSTALLED)
+    "sphinx_icontract",  # Document contracts (INSTALLED)
+    "sphinx_tippy",  # Rich hover tooltips (INSTALLED)
+    # "sphinx_apischema",   # Enhanced dataclass documentation - INCOMPATIBLE WITH AUTOAPI
+    # Error: TypeError: None is not a module, class, method, or function
+    # Occurs when AutoAPI passes None objects to process_docstring handler
+    # Documentation Tools (Priority 81-90)
+    "sphinx_comments",  # Add comments and annotations (INSTALLED)
+    "sphinx_contributors",  # Contributors extension (INSTALLED)
+    "sphinx_issues",  # Link to GitHub issues (INSTALLED)
+    "sphinx_needs",  # Requirements tracking and traceability (INSTALLED)
+    "sphinxarg.ext",  # Automatic CLI documentation (INSTALLED)
+    "notfound.extension",  # Custom 404 page (INSTALLED)
+    "sphinx_reredirects",  # Redirect management for moved pages (INSTALLED)
+    "sphinxext.rediraffe",  # Broken link detection and redirect generation (INSTALLED)
+    "sphinx_git",  # Git changelog integration (INSTALLED)
+    "sphinx_comments",  # Comments and annotations (INSTALLED)
+    # "sphinxcontrib.lastupdate", # Last updated timestamps - PACKAGE STRUCTURE ISSUE (using sphinx_last_updated_by_git instead)
+    "sphinx_debuginfo",  # Development debug information (INSTALLED)
+    "sphinxext.opengraph",  # OpenGraph metadata for social sharing (PROPER EXTENSION)
+    "sphinx_tags",  # Content tagging system (INSTALLED)
+    "sphinx_favicon",  # Favicon management (INSTALLED)
+    "sphinxcontrib.collections",  # Document collections (FIXED RECURSIVE LOOPS)
+    "sphinx_combine",  # Combine multiple documents (TESTING)
+    # NOTE: Removing sphinx_reports - may have compatibility issues
 ]
 
-# Verify AutoAPI is first
-if extensions[0] != "autoapi.extension":
-    raise RuntimeError(f"AutoAPI MUST be first extension, but got: {extensions[0]}")
-
-# Remove extensions that aren't installed
-def check_and_remove_missing_extensions(extensions_list):
-    """Remove extensions that aren't installed but keep trying."""
-    available_extensions = []
-    missing_extensions = []
-    
-    for ext in extensions_list:
-        try:
-            if ext == "autoapi.extension":
-                import autoapi
-            elif ext.startswith("sphinx.ext."):
-                # Built-in extensions are always available
-                pass
-            elif "." in ext:
-                module = ext.rsplit(".", 1)[0]
-                __import__(module)
-            else:
-                __import__(ext)
-            available_extensions.append(ext)
-        except ImportError:
-            missing_extensions.append(ext)
-    
-    if missing_extensions:
-        logger.warning(f"⚠️ Missing {len(missing_extensions)} extensions: {', '.join(missing_extensions[:5])}...")
-    
-    logger.info(f"✅ Loaded {len(available_extensions)} of {len(extensions_list)} extensions")
-    return available_extensions
-
-extensions = check_and_remove_missing_extensions(extensions)
-
-# Remove problematic extensions if needed
-if DISABLE_EXAMPLES:
-    extensions = [ext for ext in extensions if not ext.startswith("sphinx_gallery")]
-    logger.info("🚫 Sphinx Gallery disabled via SPHINX_DISABLE_EXAMPLES")
-
-# =============================================================================
-# AUTOAPI CONFIGURATION - ALL PACKAGES
-# =============================================================================
-
-SPHINX_PACKAGES = os.environ.get("SPHINX_PACKAGES", "all")
-
-ALL_PACKAGES = {
-    "core": str(packages_dir / "haive-core/src"),
-    "agents": str(packages_dir / "haive-agents/src"), 
-    "tools": str(packages_dir / "haive-tools/src"),
-    "games": str(packages_dir / "haive-games/src"),
-    "dataflow": str(packages_dir / "haive-dataflow/src"),
-    "mcp": str(packages_dir / "haive-mcp/src"),
-    "prebuilt": str(packages_dir / "haive-prebuilt/src"),
-}
-
-autoapi_type = "python"
-
-if SPHINX_PACKAGES == "all":
-    autoapi_dirs = list(ALL_PACKAGES.values())
-    print(f"📦 Building ALL packages ({len(autoapi_dirs)} total)")
-else:
-    requested_packages = [p.strip() for p in SPHINX_PACKAGES.split(",")]
-    autoapi_dirs = []
-
-    for pkg in requested_packages:
-        pkg_name = (pkg.replace("haive-", "") if pkg.startswith("haive-") else pkg)
-
-        if pkg_name in ALL_PACKAGES:
-            autoapi_dirs.append(ALL_PACKAGES[pkg_name])
-            print(f"📦 Adding package: haive-{pkg_name}")
-        else:
-            print(f"⚠️  Unknown package: {pkg}")
-
-    if not autoapi_dirs:
-        print("❌ No valid packages specified, defaulting to haive-core")
-        autoapi_dirs = [ALL_PACKAGES["core"]]
-
-autodoc_mock_imports = []
-
-autoapi_root = "api"
-autoapi_add_toctree_entry = True
-autoapi_generate_api_docs = True
-autoapi_python_class_content = "both"
-autoapi_member_order = "bysource"
-autoapi_keep_files = True
-autoapi_python_use_implicit_namespaces = False
-
-# Include ALL members and show everything
-autoapi_options = [
-    "members",
-    "undoc-members", 
-    "show-inheritance",
-    "special-members",
-    "imported-members",
-    "private-members",  # Include private members too
-    "show-module-summary",  # Show module summaries
-]
-
-# Explicitly include file patterns (default is just *.py)
-autoapi_file_patterns = ["*.py", "*.pyi"]  # Include type stub files too
-
-# Generate documentation at module level
-autoapi_own_page_level = "module"
-
-# Include __init__ methods and other special methods
-autoapi_python_class_content = "both"  # Include both class and __init__ docstrings
-
-# Show everything in the order it appears in source
-autoapi_member_order = "bysource"
-autoapi_ignore = [
-    # Test files and directories - not part of API
-    "*/test_*.py",
-    "*/tests/*",
-    "*_test.py",
-    "*/conftest.py",
-    
-    # Example files - not part of API
-    "*/examples/*",
-    "*/example_*.py",
-    "*_example.py",
-    "*_demo.py",
-    
-    # Build artifacts
-    "*/__pycache__/*",
-    "*.pyc",
-    "*/.pytest_cache/*",
-    
-    # Backup and temporary files
-    "*.backup",
-    "*.bak",
-    "*.tmp",
-    "*~",
-    
-    # Non-Python files in MCP data
-    "*/haive-mcp/data/mcp_servers/raw_readmes/*",
-    "*/haive-mcp/data/documentation/servers/*",
-    
-    # INCLUDED:
-    # ✅ All main source code
-    # ✅ All scripts that are part of the API
-    # ✅ All package modules
-]
-
-# Add debugging for AutoAPI file discovery (commented out for normal builds)
-def autoapi_skip_member_debug(app, what, name, obj, skip, options):
-    """Custom skip logic with debugging."""
-    # Log what's being processed to understand what's included/excluded
-    if what == "module" and "test" not in name.lower():
-        logger.info(f"🔍 AutoAPI processing {what}: {name}")
-    
-    # Never skip anything unless it's in our ignore list
-    return skip
-
-# =============================================================================
-# HTML THEME CONFIGURATION - PYDATA/BOOK/FURO WITH FULL FEATURES
-# =============================================================================
-
-# Try themes in order of preference
-theme_preference = ["pydata_sphinx_theme", "sphinx_book_theme", "furo", "sphinx_rtd_theme"]
-html_theme = None
-
-for theme in theme_preference:
-    if theme in extensions or theme == "furo":  # Furo isn't in extensions
-        try:
-            if theme == "pydata_sphinx_theme":
-                import pydata_sphinx_theme
-            elif theme == "sphinx_book_theme":
-                import sphinx_book_theme
-            elif theme == "furo":
-                import furo
-            elif theme == "sphinx_rtd_theme":
-                import sphinx_rtd_theme
-            html_theme = theme
-            logger.info(f"✅ Using theme: {theme}")
-            break
-        except ImportError:
-            continue
-
-if html_theme is None:
-    html_theme = "alabaster"
-    logger.warning("⚠️ Using fallback theme: alabaster")
-
-# Theme options based on selected theme
-if html_theme == "pydata_sphinx_theme":
-    html_theme_options = {
-        "logo": {
-            "text": "🤖 Haive AI Framework",
-            "alt_text": "Haive - Advanced AI Agent Framework",
-        },
-        "icon_links": [
-            {
-                "name": "GitHub",
-                "url": "https://github.com/will-astley/haive",
-                "icon": "fa-brands fa-github",
-                "type": "fontawesome",
-            },
-            {
-                "name": "PyPI",
-                "url": "https://pypi.org/project/haive/",
-                "icon": "fa-brands fa-python",
-                "type": "fontawesome",
-            },
-        ],
-        "use_edit_page_button": True,
-        "show_toc_level": 3,
-        "navigation_with_keys": True,
-        "show_nav_level": 2,
-        "navigation_depth": 4,
-        "show_prev_next": True,
-        "header_links_before_dropdown": 5,
-        "primary_sidebar_end": ["indices.html", "sidebar-ethical-ads.html"],
-        "secondary_sidebar_items": ["page-toc", "edit-this-page", "sourcelink"],
-        "navbar_align": "left",
-        "navbar_center": ["navbar-nav"],
-        "navbar_end": ["theme-switcher", "navbar-icon-links"],
-        "footer_start": ["copyright"],
-        "footer_center": ["sphinx-version"],
-        "footer_end": ["theme-version"],
-        "pygment_light_style": "default",
-        "pygment_dark_style": "monokai",
-        "analytics": {
-            "google_analytics_id": "UA-XXXXXXX",
-        },
-    }
-    
-elif html_theme == "sphinx_book_theme":
-    html_theme_options = {
-        "repository_url": "https://github.com/will-astley/haive",
-        "use_repository_button": True,
-        "use_edit_page_button": True,
-        "use_source_button": True,
-        "use_issues_button": True,
-        "use_download_button": True,
-        "use_fullscreen_button": True,
-        "path_to_docs": "docs/source",
-        "repository_branch": "main",
-        "home_page_in_toc": True,
-        "show_navbar_depth": 2,
-        "show_toc_level": 3,
-        "navigation_with_keys": True,
-        "logo": {
-            "text": "🤖 Haive AI Framework",
-        },
-        "extra_navbar": "<p>Advanced AI Agent Framework</p>",
-        "toc_title": "On this page",
-        "launch_buttons": {
-            "notebook_interface": "jupyterlab",
-            "binderhub_url": "https://mybinder.org",
-            "colab_url": "https://colab.research.google.com",
-        },
-    }
-    
-elif html_theme == "furo":
-    html_theme_options = {
-        "light_css_variables": {
-            "color-background-primary": "#ffffff",
-            "color-background-secondary": "#f8fafc",
-            "color-background-border": "#e2e8f0",
-            "color-background-hover": "#f1f5f9",
-            "color-background-item": "#e2e8f0",
-            "color-brand-primary": "#2563eb",
-            "color-brand-content": "#2563eb",
-            "color-foreground-primary": "#1f2937",
-            "color-foreground-secondary": "#6b7280",
-            "color-foreground-muted": "#9ca3af",
-            "color-foreground-border": "#d1d5db",
-            "color-sidebar-background": "#f8fafc",
-            "color-sidebar-background-border": "#e2e8f0",
-            "color-api-background": "#f8fafc",
-            "color-api-background-hover": "#f1f5f9",
-            "color-api-overall": "#6b7280",
-            "color-api-name": "#1f2937",
-            "color-api-pre-name": "#6b7280",
-            "color-inline-code-background": "#f1f5f9",
-            "color-inline-code-foreground": "#374151",
-            "color-admonition-background": "#f8fafc",
-            "color-search-background": "#ffffff",
-            "color-search-foreground": "#1f2937",
-            "color-search-border": "#d1d5db",
-            "color-link": "#2563eb",
-            "color-link-underline": "#2563eb",
-            "color-link-hover": "#1d4ed8",
-            "font-stack": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-            "font-stack-monospace": "'Fira Code', Consolas, Monaco, monospace",
-        },
-        "dark_css_variables": {
-            "color-background-primary": "#0f172a",
-            "color-background-secondary": "#1e293b",
-            "color-background-border": "#334155",
-            "color-background-hover": "#475569",
-            "color-background-item": "#334155",
-            "color-brand-primary": "#60a5fa",
-            "color-brand-content": "#60a5fa",
-            "color-foreground-primary": "#f1f5f9",
-            "color-foreground-secondary": "#cbd5e1",
-            "color-foreground-muted": "#94a3b8",
-            "color-foreground-border": "#64748b",
-            "color-sidebar-background": "#1e293b",
-            "color-sidebar-background-border": "#334155",
-            "color-api-background": "#1e293b",
-            "color-api-background-hover": "#475569",
-            "color-api-overall": "#cbd5e1",
-            "color-api-name": "#f1f5f9",
-            "color-api-pre-name": "#cbd5e1",
-            "color-inline-code-background": "#475569",
-            "color-inline-code-foreground": "#e2e8f0",
-            "color-admonition-background": "#1e293b",
-            "color-search-background": "#0f172a",
-            "color-search-foreground": "#f1f5f9",
-            "color-search-border": "#334155",
-            "color-link": "#60a5fa",
-            "color-link-underline": "#60a5fa",
-            "color-link-hover": "#93c5fd",
-        },
-        "sidebar_hide_name": False,
-        "navigation_with_keys": True,
-        "top_of_page_buttons": ["view", "edit"],
-        "source_repository": "https://github.com/will-astley/haive",
-        "source_branch": "main", 
-        "source_directory": "docs/source/",
-        "announcement": "🚀 Haive v1.0 is now available!",
-    }
-
-elif html_theme == "sphinx_rtd_theme":
-    html_theme_options = {
-        "logo_only": False,
-        "display_version": True,
-        "prev_next_buttons_location": "both",
-        "style_external_links": True,
-        "collapse_navigation": False,
-        "sticky_navigation": True,
-        "navigation_depth": 4,
-        "includehidden": True,
-        "titles_only": False,
-        "analytics_id": "UA-XXXXXXX-1",
-        "analytics_anonymize_ip": False,
-        "canonical_url": "https://haive.readthedocs.io/",
-    }
-
+# General configuration
+templates_path = ["_templates", "_autoapi_templates"]
 html_static_path = ["_static"]
-html_css_files = ["custom.css"]
-html_js_files = []
+exclude_patterns = [
+    "_build",
+    "Thumbs.db",
+    ".DS_Store",
+    "**/CVS",
+    "**/.git",
+    "_collections/*/_collections",  # Prevent nested collection directories
+    "**/symlink_loops",  # Prevent symlink loop directories
+]
+add_module_names = False
+toc_object_entries_show_parents = "hide"
 
-html_title = f"🤖 {project} Documentation"
-html_short_title = "Haive"
-
-html_context = {
-    "display_github": True,
-    "github_user": "will-astley",
-    "github_repo": "haive",
-    "github_version": "main",
-    "conf_py_path": "/docs/source/",
-}
-
-# Sidebars configuration
+# TOC Configuration - Enhanced nesting and presentation
 html_sidebars = {
     "**": [
-        "sidebar/scroll-start.html",
         "sidebar/brand.html",
         "sidebar/search.html",
-        "sidebar/navigation.html", 
+        "sidebar/scroll-start.html",
+        "sidebar/navigation.html",
         "sidebar/ethical-ads.html",
         "sidebar/scroll-end.html",
-    ],
+    ]
 }
 
-if html_theme == "pydata_sphinx_theme":
-    html_sidebars = {
-        "**": ["sidebar-nav-bs", "sidebar-ethical-ads"],
-    }
+# Furo-specific TOC options
+navigation_with_keys = True
+top_of_page_button = "edit"
 
-# Favicon and logo (conditional to avoid warnings)
-favicon_path = Path(project_root) / "docs/source/_static/favicon.ico" 
-logo_path = Path(project_root) / "docs/source/_static/logo.png"
+# Sphinx TOC settings
+toctree_maxdepth = 4  # Maximum depth for nested TOC
+toctree_collapse = False  # Don't collapse by default
+toctree_titles_only = False  # Show full titles
+toctree_includehidden = True  # Include hidden TOC entries
 
-if favicon_path.exists():
-    html_favicon = "_static/favicon.ico"
-else:
-    logger.debug("📄 No favicon found at _static/favicon.ico")
+# Jinja2 options
+jinja_env_options = {"extensions": ["jinja2.ext.do"]}
 
-if logo_path.exists():
-    html_logo = "_static/logo.png"
-else:
-    logger.debug("🖼️  No logo found at _static/logo.png")
-
-# =============================================================================
-# EXTENSION CONFIGURATIONS (ALL 83+)
-# =============================================================================
-
-# Myst Parser - Full configuration
-myst_enable_extensions = [
-    "amsmath",
-    "colon_fence",
-    "deflist",
-    "dollarmath",
-    "fieldlist",
-    "html_admonition",
-    "html_image",
-    "linkify",
-    "replacements",
-    "smartquotes",
-    "strikethrough",
-    "substitution",
-    "tasklist",
-    "attrs_inline",
-    "attrs_block",
+# AutoAPI configuration - PRIORITY FIRST
+autoapi_type = "python"
+autoapi_dirs = [
+    str(packages_dir / "haive-core/src"),
+    str(packages_dir / "haive-agents/src"),
+    str(packages_dir / "haive-dataflow/src"),
+    str(packages_dir / "haive-games/src"),
+    str(packages_dir / "haive-mcp/src"),
+    str(packages_dir / "haive-tools/src"),
+    str(packages_dir / "haive-prebuilt/src"),
 ]
+autoapi_template_dir = "_autoapi_templates"
+autoapi_add_toctree_entry = True
+autoapi_generate_api_docs = True
+autoapi_keep_files = True
+autoapi_options = [
+    "members",
+    "undoc-members",
+    "show-inheritance",
+    "show-module-summary",
+    "private-members",
+    "special-members",
+    "imported-members",
+]
+autoapi_python_class_content = "both"
+autoapi_add_class_diagram = True
+autoapi_class_diagram_depth = 2
 
-myst_heading_anchors = 3
-myst_footnote_transition = True
-myst_dmath_double_inline = True
-myst_all_links_external = False
-myst_url_schemes = ["http", "https", "mailto", "ftp"]
-myst_substitutions = {
-    "version": version,
-    "release": release,
-}
+# AutoAPI TOC configuration
+autoapi_member_order = "groupwise"  # Group by type
+autoapi_root = "autoapi"  # Root directory for API docs
+autoapi_toctree_depth = 3  # Depth for API TOC entries
 
-# Napoleon settings
+# Napoleon configuration
 napoleon_google_docstring = True
 napoleon_numpy_docstring = True
 napoleon_include_init_with_doc = False
 napoleon_include_private_with_doc = False
-napoleon_include_special_with_doc = True
-napoleon_use_admonition_for_examples = True
-napoleon_use_admonition_for_notes = True
-napoleon_use_admonition_for_references = False
-napoleon_use_ivar = False
-napoleon_use_param = True
-napoleon_use_rtype = True
-napoleon_type_aliases = None
-napoleon_attr_annotations = True
 
-# Autodoc configuration
-autodoc_default_options = {
-    "members": True,
-    "member-order": "bysource",
-    "special-members": "__init__",
-    "undoc-members": True,
-    "exclude-members": "__weakref__",
-    "show-inheritance": True,
-    "inherited-members": False,
-    "private-members": False,
-}
+# Intersphinx configuration
+# seed-intersphinx-mapping will auto-populate from pyproject.toml
+pkg_requirements_source = "pyproject"  # Read dependencies from pyproject.toml
+repository_root = ".."  # Path to repo root from docs
 
-autodoc_typehints = "description"
-autodoc_typehints_description_target = "documented"
-autodoc_typehints_format = "short"
-autodoc_mock_imports = []
-autodoc_class_signature = "separated"
-autodoc_preserve_defaults = True
-
-# Autosummary
-autosummary_generate = True
-autosummary_imported_members = True
-autosummary_mock_imports = autodoc_mock_imports
-
-# Type hints
-typehints_fully_qualified = False
-typehints_document_rtype = True
-typehints_use_rtype = True
-
-# autodoc-pydantic (if installed)
-if "sphinxcontrib.autodoc_pydantic" in extensions:
-    autodoc_pydantic_model_show_json = False
-    autodoc_pydantic_model_show_config_summary = True
-    autodoc_pydantic_model_show_validator_members = True
-    autodoc_pydantic_model_show_validator_summary = True
-    autodoc_pydantic_model_show_field_summary = True
-    autodoc_pydantic_field_list_validators = True
-    autodoc_pydantic_field_show_constraints = True
-    autodoc_pydantic_field_doc_policy = "both"
-    autodoc_pydantic_settings_show_json = False
-    autodoc_pydantic_settings_show_config_summary = True
-    autodoc_pydantic_settings_show_validator_members = True
-
-# Intersphinx mapping
+# Manual intersphinx mappings (for packages without metadata or overrides)
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
-    "numpy": ("https://numpy.org/doc/stable/", None),
-    "pandas": ("https://pandas.pydata.org/docs/", None),
-    "pydantic": ("https://docs.pydantic.dev/latest/", None),
-    # LangChain URLs updated to working ones
-    "langchain": ("https://api.python.langchain.com/en/latest/", None),
-    "langchain_core": ("https://api.python.langchain.com/en/latest/core/", None),
+    "pydantic": ("https://docs.pydantic.dev/latest", None),
+    "sphinx": ("https://www.sphinx-doc.org/en/master", None),
+    # seed-intersphinx-mapping will add more mappings automatically
 }
 
-# Nitpicky mode
-nitpicky = True
-nitpick_ignore = [
-    # Basic Python types
-    ("py:class", "str"),
-    ("py:class", "int"),
-    ("py:class", "bool"),
-    ("py:class", "float"),
-    ("py:class", "list"),
-    ("py:class", "dict"),
-    ("py:class", "tuple"),
-    ("py:class", "set"),
-    ("py:class", "bytes"),
-    ("py:class", "None"),
-    ("py:class", "type"),
-    ("py:class", "object"),
-    
-    # Typing module
-    ("py:class", "Any"),
-    ("py:class", "List"),
-    ("py:class", "Dict"),
-    ("py:class", "Tuple"),
-    ("py:class", "Set"),
-    ("py:class", "Optional"),
-    ("py:class", "Union"),
-    ("py:class", "Callable"),
-    ("py:class", "Type"),
-    ("py:class", "TypeVar"),
-    ("py:class", "Generic"),
-    ("py:class", "Literal"),
-    ("py:class", "Protocol"),
-    ("py:class", "TypedDict"),
-    
-    # Pydantic
-    ("py:class", "BaseModel"),
-    ("py:class", "Field"),
-    ("py:class", "SecretStr"),
-    ("py:class", "ConfigDict"),
-    
-    # LangChain
-    ("py:class", "Document"),
-    ("py:class", "BaseMessage"),
-    ("py:class", "HumanMessage"),
-    ("py:class", "AIMessage"),
-    ("py:class", "SystemMessage"),
-    ("py:class", "ToolMessage"),
-    ("py:class", "langchain_core.runnables.RunnableConfig"),
-    ("py:class", "langchain_core.runnables.Runnable"),
-    ("py:class", "langchain_core.callbacks.CallbackManagerForLLMRun"),
-    
-    # Haive internal
-    ("py:class", "haive.core.engine.base.Engine"),
-    ("py:obj", "haive.core.common.mixins.tool_route_mixin.ToolRouteMixin"),
-    ("py:class", "haive.agents.wiki_writer.utils.update_editor"),
-    
-    # Generic parameters
-    ("py:class", "T"),
-    ("py:class", "Agent"),
-    ("py:class", "TIn"),
-    ("py:class", "TOut"),
+# Pydantic configuration
+autodoc_pydantic_model_show_json = True
+autodoc_pydantic_model_show_config_summary = True
+autodoc_pydantic_model_show_validator_summary = True
+autodoc_pydantic_model_show_field_summary = True
+autodoc_pydantic_model_show_validator_members = True
+autodoc_pydantic_field_list_validators = True
+autodoc_pydantic_field_show_constraints = True
+autodoc_pydantic_model_erdantic_figure = False
+autodoc_pydantic_model_erdantic_figure_collapsed = False
+
+# Type hints configuration
+typehints_fully_qualified = False
+typehints_use_signature = True
+
+# MyST Parser configuration
+myst_enable_extensions = [
+    "deflist",
+    "tasklist",
+    "html_image",
+    "colon_fence",
+    "smartquotes",
+    "replacements",
+    "linkify",
+    "strikethrough",
+    "attrs_inline",
+    "attrs_block",
+]
+myst_heading_anchors = 3
+myst_fence_as_directive = ["mermaid", "note", "warning"]
+
+# Sphinx Design configuration - INTENSE THEMING
+sd_fontawesome_latex = True
+
+# Toggle button configuration
+togglebutton_hint = "Click to expand"
+togglebutton_hint_hide = "Click to collapse"
+
+# Copy button configuration
+copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
+copybutton_prompt_is_regexp = True
+copybutton_remove_prompts = True
+
+# Tabs configuration
+sphinx_tabs_disable_tab_closing = True
+
+# Execution extensions configuration (if loaded)
+# exec_code_working_dir = "."
+# exec_code_source_folders = ["../../src"]
+programoutput_use_ansi = True
+# runpython_show_source = True
+
+# Mermaid configuration - CUSTOM THEMING
+mermaid_params = [
+    "--theme",
+    "neutral",
+    "--width",
+    "800",
+    "--backgroundColor",
+    "transparent",
+]
+mermaid_verbose = True
+
+# PlantUML configuration
+plantuml_output_format = "svg"
+plantuml = "plantuml"
+
+# Sitemap configuration
+html_baseurl = "https://pyautodoc.readthedocs.io/"
+
+# Code autolink configuration - RESTORED with v0.17.5
+codeautolink_autodoc_inject = True  # Re-enabled - fixed in newer version
+codeautolink_concat_default = True
+
+# Treeview configuration - Dynamic collapsible sidebar (EXPERIMENTING)
+treeview_expand_all = False
+treeview_collapse_inactive = True
+treeview_max_depth = 4
+
+# Toggle prompt configuration - Interactive code blocks
+toggleprompt_offset_right = 30
+toggleprompt_default_hidden = "true"
+
+# API Schema configuration - Better dataclass documentation
+apischema_show_json_schema = True
+apischema_show_examples = True
+apischema_group_by_type = True
+
+# Removed paramlinks configuration - using codeautolink instead
+
+# Type-safe configuration - Better type documentation
+typesafe_show_annotations = True
+typesafe_include_private = False
+
+# Git last updated configuration - Page timestamps from git
+git_last_updated_show_commit_hash = True
+git_last_updated_format = "%Y-%m-%d %H:%M"
+
+# Inline code configuration - Enhanced styling
+inlinecode_highlight_language = "python"
+
+# Library configuration - Better library docs
+library_show_summary = True
+library_group_by_type = True
+
+# iContract configuration - Document contracts
+icontract_include_repr = True
+icontract_include_snapshot = False
+
+# Comments configuration - Add annotations
+comments_config = {
+    "hypothesis": True,  # Enable hypothesis comments
+    "utterances": False,  # Disable utterances for now
+}
+
+# Contributors configuration
+contributors_show_contribution_counts = True
+contributors_sort_by_contribution = True
+
+# Issues configuration - Link to GitHub
+issues_github_path = "yourusername/pyautodoc"
+issues_uri = "https://github.com/yourusername/pyautodoc/issues/{issue}"
+
+# Sphinx Tippy configuration - Rich hover tooltips
+tippy_props = {
+    "placement": "auto",
+    "maxWidth": 600,
+    "theme": "light-border",
+    "delay": [200, 100],
+    "duration": [200, 100],
+    "interactive": True,
+}
+tippy_enable_mathjax = True
+tippy_enable_doitips = True  # Enable DOI tooltips
+tippy_rtd_urls = ["https://pyautodoc.readthedocs.io"]  # ReadTheDocs integration
+tippy_anchor_parent_selector = "article.bd-article"  # For better positioning
+
+# Sphinx APISchema configuration - Enhanced dataclass documentation
+apischema_show_json_schema = True
+apischema_show_examples = True
+apischema_group_by_type = True
+apischema_custom_css = True  # Use custom CSS styling
+
+# Sphinx-prompt configuration - CLI documentation
+prompt_modifiers = "auto"  # Auto-detect prompts
+prompt_default_prompts = ["$", ">>>", "..."]
+
+# Sphinx-needs configuration - Requirements tracking
+needs_types = [
+    {
+        "directive": "req",
+        "title": "Requirement",
+        "prefix": "R_",
+        "color": "#BFD8D2",
+        "style": "node",
+    },
+    {
+        "directive": "spec",
+        "title": "Specification",
+        "prefix": "S_",
+        "color": "#FEDCD2",
+        "style": "node",
+    },
+    {
+        "directive": "test",
+        "title": "Test Case",
+        "prefix": "T_",
+        "color": "#DF744A",
+        "style": "node",
+    },
 ]
 
-# Python domain
-python_use_unqualified_type_names = True
+needs_statuses = [
+    {"name": "open", "description": "New requirement"},
+    {"name": "in_progress", "description": "Being implemented"},
+    {"name": "implemented", "description": "Completed"},
+    {"name": "closed", "description": "Done and verified"},
+]
 
-# Suppress warnings
-suppress_warnings = ["ref.python", "autoapi"]
+needs_tags = [
+    {"name": "security", "description": "Security related"},
+    {"name": "performance", "description": "Performance critical"},
+    {"name": "ui", "description": "User interface"},
+]
 
-# Copy button
-if "sphinx_copybutton" in extensions:
-    copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
-    copybutton_prompt_is_regexp = True
-    copybutton_line_continuation_character = "\\"
-    copybutton_here_doc_delimiter = "EOT"
-    copybutton_selector = "div.highlight > pre"
+# Sphinx-notfound-page configuration - Custom 404 page
+notfound_context = {
+    "title": "Page Not Found",
+    "body": """
+<h1>🚀 Oops! Page Not Found</h1>
+<p>The page you're looking for seems to have wandered off into the documentation cosmos.</p>
 
-# Mermaid
-if "sphinxcontrib.mermaid" in extensions:
-    mermaid_output_format = "svg"
-    mermaid_init_js = """
-    mermaid.initialize({
-        startOnLoad: true,
-        theme: 'default',
-        themeVariables: {
-            primaryColor: '#2563eb',
-            primaryTextColor: '#1f2937',
-            primaryBorderColor: '#1d4ed8',
-            lineColor: '#374151',
-            secondaryColor: '#f3f4f6',
-            tertiaryColor: '#e5e7eb'
-        }
-    });
-    """
+<div class="admonition tip">
+<p class="admonition-title">Try these options:</p>
+<ul>
+<li><strong>Search:</strong> Use the search box above to find what you need</li>
+<li><strong>API Reference:</strong> Check our <a href="/autoapi/">complete API documentation</a></li>
+<li><strong>CLI Guide:</strong> Looking for commands? See our <a href="/cli-guide/">CLI documentation</a></li>
+<li><strong>Home:</strong> Return to the <a href="/">main documentation</a></li>
+</ul>
+</div>
 
-# Graphviz
-graphviz_output_format = "svg"
-inheritance_graph_attrs = dict(rankdir="TB", size='""')
-inheritance_node_attrs = dict(shape='ellipse', fontsize=14, color='dodgerblue1',
-                              style='filled', fillcolor='lightgoldenrodyellow')
-inheritance_edge_attrs = dict(arrowsize='.5', color='dodgerblue1')
-
-# Todo extension
-todo_include_todos = True
-todo_emit_warnings = False
-todo_link_only = False
-
-# External TOC
-if "sphinx_external_toc" in extensions:
-    external_toc_path = "_toc.yml"
-
-# Sitemap
-if "sphinx_sitemap" in extensions:
-    html_baseurl = "https://haive.readthedocs.io/"
-    sitemap_url_scheme = "{link}"
-
-# JSMath
-jsmath_path = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-
-# Sphinx Tippy configuration with proper error handling
-if "sphinx_tippy" in extensions:
-    try:
-        logger.info("🔧 Setting up sphinx_tippy extension with proper error handling")
-        
-        # FIXED: Conservative configuration to prevent KeyError(None)
-        tippy_enable_mathjax = False  # Disable - requires sphinx.ext.mathjax
-        tippy_enable_doitips = False  # Keep disabled - known to cause KeyError
-        tippy_enable_wikitips = False # Keep disabled - known to cause KeyError  
-        tippy_enable_rtdtips = False  # DISABLE - this causes the KeyError(None)
-        
-        # Minimal configuration to prevent data structure issues
-        tippy_anchor_parent_selector = "div.document"  # Use simple selector
-        
-        # Skip problematic classes that cause KeyError(None)
-        tippy_skip_anchor_classes = (
-            "headerlink", 
-            "sd-stretched-link",
-            "reference",
-            "internal", 
-            "external"
-        )
-        
-        # Disable source tooltips that cause KeyError(None)
-        tippy_enable_tooltip_on_source = False
-        
-        # Minimal URL list to prevent data issues
-        tippy_rtd_urls = []  # Empty list prevents KeyError(None)
-        
-        logger.info("✅ sphinx_tippy configured with KeyError(None) prevention")
-        
-    except Exception as e:
-        logger.warning(f"⚠️  sphinx_tippy configuration failed: {e}")
-        logger.warning("🔄 Removing sphinx_tippy from extensions as fallback")
-        extensions.remove("sphinx_tippy")
-else:
-    logger.debug("📝 sphinx_tippy not in extensions list")
-
-# Sphinx Gallery
-if "sphinx_gallery.gen_gallery" in extensions and not DISABLE_EXAMPLES:
-    sphinx_gallery_conf = {
-        'examples_dirs': '../examples',
-        'gallery_dirs': 'auto_examples',
-        'filename_pattern': '/*.py',
-        'ignore_pattern': r'__init__\.py',
-        'expected_failing_examples': [],
-        'plot_gallery': True,
-        'download_all_examples': True,
-        'abort_on_example_error': False,
-        'remove_config_comments': True,
-    }
-
-# External links
-extlinks = {
-    'issue': ('https://github.com/will-astley/haive/issues/%s', 'issue %s'),
-    'pr': ('https://github.com/will-astley/haive/pull/%s', 'PR %s'),
-    'commit': ('https://github.com/will-astley/haive/commit/%s', 'commit %s'),
+<p>Still can't find what you're looking for? <a href="https://github.com/yourusername/pyautodoc/issues">Report an issue</a> and we'll help you out!</p>
+    """,
 }
 
-# =============================================================================
-# AUTOAPI SKIP MEMBER - Enhanced
-# =============================================================================
+notfound_template = "page.html"  # Use Furo's standard template
+notfound_no_urls_prefix = True  # Don't add URL prefix to relative links
 
+# Sphinx-reredirects configuration - Redirect management
+redirects = {
+    # Example redirects for moved/renamed pages
+    # "old-page": "new-page.html",
+    # "old-api": "autoapi/index.html",
+    # "legacy/guide": "cli-guide.html",
+}
+
+# Rediraffe configuration - Broken link detection and redirect generation
+rediraffe_redirects = {
+    # Auto-generate redirects for common patterns
+    # These will be checked during build and suggest redirects
+}
+
+# Enable redirect checking during build
+rediraffe_branch = "main"  # Check redirects against this branch
+rediraffe_auto_redirect_perc = 50  # Auto-redirect if 50%+ similarity
+
+# Sphinx-git configuration - Git changelog integration
+sphinx_git_changelog = True  # Enable git changelog
+sphinx_git_changelog_title = "📝 Documentation Changes"
+sphinx_git_show_tags = True  # Show git tags in changelog
+sphinx_git_show_branch = True  # Show current branch
+
+# Git integration settings
+sphinx_git_tracked_files = ["docs/source/"]  # Track only docs files
+sphinx_git_untracked = False  # Don't show untracked files
+
+# Sphinx-apischema configuration - Enhanced dataclass documentation
+apischema_type_annotations = True  # Show type annotations
+apischema_class_summary = True  # Show class summaries
+apischema_methods_summary = True  # Show method summaries
+
+# Sphinx-inlinecode configuration - Enhanced inline code styling
+inlinecode_enable = True  # Enable inline code enhancement
+inlinecode_highlight_style = "default"  # Code highlighting style
+inlinecode_process_docstrings = True  # Process docstrings for inline code
+
+# Sphinx-lastupdate configuration - Page timestamps
+lastupdated_fmt = "%Y-%m-%d %H:%M:%S"  # Custom timestamp format
+lastupdated_timezone = "UTC"  # Use UTC timezone
+lastupdated_show_commit_hash = True  # Show git commit hash if available
+
+# Sphinx-debuginfo configuration - Development debug information
+debuginfo_enable = True  # Enable debug information
+debuginfo_show_performance = True  # Show build performance metrics
+debuginfo_show_warnings = True  # Show warning counts
+debuginfo_show_extensions = True  # Show loaded extensions
+
+# OpenGraph configuration - Social sharing metadata (PROPER EXTENSION)
+ogp_site_url = "https://pyautodoc.readthedocs.io/"
+ogp_site_name = "PyAutoDoc"
+ogp_site_description = "Hyper-organized documentation system with intense Furo theming"
+ogp_image = "_static/social-preview.png"  # Default social image (if available)
+ogp_image_alt = "PyAutoDoc Documentation"
+ogp_type = "website"
+ogp_locale = "en_US"
+
+# OpenGraph social card generation (if using social cards feature)
+ogp_social_cards = {
+    "enable": True,
+    "image": "_static/social-card-template.png",  # Template image for cards
+    "line_color": "#2563eb",  # Brand color for social cards
+    "text_color": "#ffffff",  # Text color for social cards
+}
+
+# Sphinx-tags configuration - Content tagging system
+tags_create_tags = True  # Enable tag creation
+tags_create_index = True  # Create a tags index page
+tags_create_badges = True  # Create tag badges on pages
+tags_page_title = "Documentation Tags"  # Title for tags index page
+tags_intro_text = "Browse documentation content by tags"  # Intro text for tags page
+tags_extension = [".rst", ".md"]  # File extensions to scan for tags
+
+# Tag styling
+tags_badge_colors = {
+    "security": "#dc3545",  # Red for security tags
+    "performance": "#28a745",  # Green for performance tags
+    "ui": "#007bff",  # Blue for UI tags
+    "api": "#6f42c1",  # Purple for API tags
+    "config": "#fd7e14",  # Orange for configuration tags
+    "tutorial": "#20c997",  # Teal for tutorials
+    "reference": "#6c757d",  # Gray for reference docs
+}
+
+# Sphinx-favicon configuration - Favicon management
+favicons = [
+    {
+        "rel": "icon",
+        "sizes": "32x32",
+        "href": "favicon-32x32.png",
+        "type": "image/png",
+    },
+    {
+        "rel": "icon",
+        "sizes": "16x16",
+        "href": "favicon-16x16.png",
+        "type": "image/png",
+    },
+    {
+        "rel": "apple-touch-icon",
+        "sizes": "180x180",
+        "href": "apple-touch-icon.png",
+        "type": "image/png",
+    },
+    {
+        "rel": "shortcut icon",
+        "href": "favicon.ico",
+        "type": "image/x-icon",
+    },
+]
+
+# Sphinx-collections configuration - FIXED to prevent recursive loops
+collections = {
+    "api_docs": {
+        "driver": "copy_folder",  # Use copy_folder instead of symlink
+        "source": "autoapi/",
+        "target": "_collections/api",
+        "active": False,  # Disable until autoapi/ directory is created
+        "clean": True,  # Clean before copying to prevent accumulation
+    },
+}
+
+# Global collection settings to prevent loops
+collections_clean = True  # Always clean before build
+collections_final_clean = False  # Keep collections after build for inspection
+
+# Sphinx-combine configuration - Combine multiple documents (FIXED PATHS)
+combine_source_dir = "."  # Relative to current source directory
+combine_build_dir = "../build/combined"  # Relative to current source directory
+combine_formats = ["html"]
+combine_master_doc = "index"
+
+# Removed reports configuration as extension was removed
+
+# INTENSE FURO THEME CONFIGURATION
+html_theme = "furo"
+
+html_theme_options = {
+    "sidebar_hide_name": False,
+    # Enhanced TOC configuration
+    "navigation_depth": 4,  # Show 4 levels of nesting
+    "collapse_navigation": False,  # Don't collapse by default
+    "sticky_navigation": True,  # Make TOC sticky
+    "includehidden": True,  # Include hidden entries
+    "titles_only": False,  # Show full document structure
+    # Intense branding colors
+    "light_css_variables": {
+        "color-brand-primary": "#2563eb",  # Blue-600
+        "color-brand-content": "#1d4ed8",  # Blue-700
+        "color-background-primary": "#ffffff",
+        "color-background-secondary": "#f8fafc",  # Slate-50
+        "color-background-hover": "#e2e8f0",  # Slate-200
+        "color-background-border": "#cbd5e1",  # Slate-300
+        "color-code-background": "#1e293b",  # Slate-800
+        "color-code-foreground": "#e2e8f0",  # Slate-200
+        "color-sidebar-background": "#0f172a",  # Slate-900
+        "color-sidebar-foreground": "#cbd5e1",  # Slate-300
+        "color-api-background": "#f1f5f9",  # Slate-100
+        "color-api-background-hover": "#e2e8f0",  # Slate-200
+        "color-admonition-background": "#dbeafe",  # Blue-100
+    },
+    "dark_css_variables": {
+        "color-brand-primary": "#60a5fa",  # Blue-400
+        "color-brand-content": "#3b82f6",  # Blue-500
+        "color-background-primary": "#0f172a",  # Slate-900
+        "color-background-secondary": "#1e293b",  # Slate-800
+        "color-background-hover": "#334155",  # Slate-700
+        "color-background-border": "#475569",  # Slate-600
+        "color-code-background": "#0f172a",  # Slate-900
+        "color-code-foreground": "#cbd5e1",  # Slate-300
+        "color-sidebar-background": "#020617",  # Slate-950
+        "color-sidebar-foreground": "#94a3b8",  # Slate-400
+    },
+    # Repository integration
+    "source_repository": "https://github.com/yourusername/pyautodoc/",
+    "source_branch": "main",
+    "source_directory": "docs/",
+    # Announcements
+    "announcement": "🚀 <strong>PyAutoDoc 0.1.0</strong> - Hyper-organized documentation with intense Furo theming!",
+    # Footer icons
+    "footer_icons": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/yourusername/pyautodoc/",
+            "html": """<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>""",
+        },
+    ],
+}
+
+# Custom CSS and JS files for intense theming
+html_css_files = [
+    "furo-intense.css",
+    "api-docs.css",
+    "mermaid-custom.css",
+    "toc-enhancements.css",  # New TOC styling
+    "tippy-enhancements.css",  # Enhanced tooltips styling
+]
+
+html_js_files = [
+    "furo-enhancements.js",
+    "mermaid-config.js",
+    "toc-navigator.js",  # New TOC navigation JS
+    "js/api-enhancements.js",  # API page visual fixes
+]
+
+
+# Event Hooks
 def autoapi_skip_member(app, what, name, obj, skip, options):
-    """Skip problematic members with enhanced logic."""
-    try:
-        # Skip Pydantic internals
-        pydantic_internals = [
-            "__fields__", "__config__", "__validators__", "__root_validators__",
-            "__pre_root_validators__", "__post_root_validators__",
-            "__schema_cache__", "__module__", "__annotations__",
-            "__pydantic_model__", "__pydantic_fields__", "__pydantic_config__",
-            "__pydantic_complete__", "__pydantic_decorators__",
-            "__pydantic_fields_set__", "__pydantic_extra__",
-            "__pydantic_generic_metadata__", "__pydantic_parent_namespace__",
-            "__pydantic_serializer__", "__pydantic_validator__",
-            "model_fields", "model_config", "model_computed_fields",
-        ]
-        
-        if what == "attribute" and any(name.endswith(internal) for internal in pydantic_internals):
-            return True
-        
-        # Skip duplicate fields
-        if what == "attribute" and "." in name:
-            parts = name.split(".")
-            if len(parts) >= 2:
-                field_name = parts[-1]
-                
-                duplicate_prone_fields = [
-                    "milestones", "risk_factors", "available_tools", 
-                    "time_constraints", "constraints", "dependencies",
-                    "metadata", "tags", "status", "created_at", "updated_at",
-                ]
-                
-                if field_name in duplicate_prone_fields:
-                    if any(keyword in ".".join(parts[:-1]).lower() for keyword in ["model", "schema", "config", "plan", "task"]):
-                        return True
-        
-        # Skip ONLY very specific problematic members (exact matches)
-        problematic_exact_names = {
-            'haive.core.schema.prebuilt.messages_state.MessagesState',
-            'haive.core.schema.prebuilt.messages.messages_state.MessagesState',
-            'hyde.agent.HydeAgent',
-            'hyde.enhanced_agent.EnhancedHydeAgent',
-        }
-        
-        # Skip patterns that are causing actual import errors
-        problematic_prefixes = [
-            'haive.core.schema.prebuilt.messages_state.',  # Specific module
-            'haive.core.schema.prebuilt.messages.messages_state.',  # Specific module
-        ]
-        
-        # Check exact matches first
-        if str(name) in problematic_exact_names:
-            logger.warning(f"⚠️ Skipping exact problematic member: {name}")
-            return True
-            
-        # Check prefixes only for specific problematic modules
-        for prefix in problematic_prefixes:
-            if str(name).startswith(prefix):
-                logger.warning(f"⚠️ Skipping member from problematic module: {name}")
-                return True
-        
-        return skip
-        
-    except Exception as e:
-        logger.warning(f"⚠️ Error in skip_member for {name}: {e}")
+    if name.startswith("__pydantic"):
         return True
+    return None
 
-# =============================================================================
-# CUSTOM CSS
-# =============================================================================
 
-custom_css_content = """
-/* Haive Documentation Custom Styles */
-
-/* Modern fonts */
-body {
-    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    line-height: 1.7;
-}
-
-code, pre, .rst-content tt, .rst-content code {
-    font-family: 'Fira Code', 'JetBrains Mono', Consolas, Monaco, 'Courier New', monospace;
-    font-variant-ligatures: normal;
-}
-
-/* Better headings */
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    letter-spacing: -0.02em;
-}
-
-/* Enhanced code blocks */
-.highlight {
-    background: #f8fafc !important;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    margin: 1.5em 0;
-    position: relative;
-}
-
-.highlight pre {
-    margin: 0;
-    padding: 1.25em;
-    overflow-x: auto;
-}
-
-/* Copy button styling */
-.highlight button.copybtn {
-    position: absolute;
-    top: 0.5em;
-    right: 0.5em;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.highlight:hover button.copybtn {
-    opacity: 1;
-}
-
-/* API documentation enhancements */
-.py.class, .py.function, .py.method, .py.attribute {
-    margin: 2em 0;
-    border-left: 3px solid #2563eb;
-    padding-left: 1em;
-    transition: all 0.2s ease;
-}
-
-.py.class:hover, .py.function:hover, .py.method:hover {
-    border-left-color: #1d4ed8;
-    background: rgba(37, 99, 235, 0.03);
-}
-
-.py.class > dt, .py.function > dt, .py.method > dt {
-    background: #f8fafc;
-    padding: 0.75em 1em;
-    font-weight: 600;
-    border-radius: 0 6px 6px 0;
-    font-size: 1.05em;
-}
-
-/* Better admonitions */
-.admonition {
-    border-radius: 8px;
-    padding: 1.25em;
-    margin: 1.5em 0;
-    border-left: 4px solid;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.admonition.note {
-    background: #eff6ff;
-    border-color: #3b82f6;
-}
-
-.admonition.warning {
-    background: #fffbeb;
-    border-color: #f59e0b;
-}
-
-.admonition.danger, .admonition.error {
-    background: #fef2f2;
-    border-color: #ef4444;
-}
-
-.admonition.tip, .admonition.hint {
-    background: #f0fdf4;
-    border-color: #10b981;
-}
-
-.admonition-title {
-    font-weight: 600;
-    margin-bottom: 0.5em;
-}
-
-/* Navigation improvements */
-.toctree-wrapper {
-    margin: 2.5em 0;
-}
-
-.toctree-wrapper .caption {
-    font-weight: 700;
-    font-size: 1.25em;
-    margin-bottom: 0.75em;
-    color: #1f2937;
-}
-
-/* Tables */
-table.docutils {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 1.5em 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-table.docutils td, table.docutils th {
-    border: 1px solid #e5e7eb;
-    padding: 0.75em 1em;
-}
-
-table.docutils th {
-    background: #f9fafb;
-    font-weight: 600;
-}
-
-table.docutils tbody tr:hover {
-    background: #f9fafb;
-}
-
-/* Inline code */
-code.literal {
-    background: #f1f5f9;
-    padding: 0.125em 0.375em;
-    border-radius: 4px;
-    font-size: 0.875em;
-    color: #0f172a;
-    font-weight: 500;
-}
-
-/* Search styling */
-.search input[type="text"] {
-    width: 100%;
-    padding: 0.75em 1em;
-    border: 2px solid #e5e7eb;
-    border-radius: 6px;
-    font-size: 1em;
-    transition: border-color 0.2s;
-}
-
-.search input[type="text"]:focus {
-    outline: none;
-    border-color: #2563eb;
-}
-
-/* Sidebar enhancements */
-.sidebar {
-    background: #f9fafb;
-    border-right: 1px solid #e5e7eb;
-}
-
-.sidebar .caption {
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.875em;
-    letter-spacing: 0.05em;
-    color: #6b7280;
-    margin: 1.5em 0 0.5em 0;
-}
-
-/* Module index cards */
-.modindex-jumpbox {
-    background: #f8fafc;
-    padding: 1.5em;
-    border-radius: 8px;
-    margin-bottom: 2em;
-    border: 1px solid #e5e7eb;
-}
-
-/* Responsive improvements */
-@media (max-width: 768px) {
-    .content {
-        padding: 1em;
-    }
-    
-    .py.class, .py.function, .py.method {
-        margin: 1em 0;
-        padding-left: 0.5em;
-    }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    body[data-theme="auto"] {
-        --color-background: #0f172a;
-        --color-foreground: #f1f5f9;
-    }
-    
-    .highlight {
-        background: #1e293b !important;
-        border-color: #334155;
-    }
-    
-    code.literal {
-        background: #334155;
-        color: #f1f5f9;
-    }
-    
-    .admonition {
-        filter: brightness(0.8);
-    }
-}
-
-/* Sphinx design cards */
-.sd-card {
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    transition: all 0.2s;
-}
-
-.sd-card:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-}
-
-/* Tabs styling */
-.sphinx-tabs {
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.sphinx-tabs .sphinx-tabs-nav {
-    background: #f9fafb;
-    border-bottom: 2px solid #e5e7eb;
-}
-
-.sphinx-tabs .sphinx-tabs-tab[aria-selected="true"] {
-    background: white;
-    border-bottom: 2px solid #2563eb;
-}
-
-/* Toggle button styling */
-.toggle-button {
-    background: #f3f4f6;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    padding: 0.5em 1em;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.toggle-button:hover {
-    background: #e5e7eb;
-}
-
-/* API page improvements */
-.api h1 {
-    border-bottom: 2px solid #e5e7eb;
-    padding-bottom: 0.5em;
-    margin-bottom: 1em;
-}
-
-.api .toc-tree {
-    background: #f9fafb;
-    padding: 1em;
-    border-radius: 8px;
-    margin: 1em 0;
-}
-"""
-
-# =============================================================================
-# SETUP FUNCTION
-# =============================================================================
-
-def setup(app):
-    """Enhanced setup with all features."""
-    
-    # Connect AutoAPI debugging
+def setup(app: Sphinx):
     app.connect("autoapi-skip-member", autoapi_skip_member)
-    
-    # MCP Documentation Integration
-    if MCP_DOCS_ENABLED:
-        logger.info(f"✅ MCP Server docs enabled from: {MCP_DOCS_ROOT}")
-        
-        # Generate MCP index dynamically
-        def generate_mcp_index(app):
-            """Generate the mcp_servers.rst file with dynamic content."""
-            paths = get_mcp_server_paths()
-            
-            content = """MCP Server Documentation
-========================
 
-This section contains documentation for various Model Context Protocol (MCP) servers
-that can be integrated with the Haive framework.
+    # Add custom CSS classes for TOC
+    app.add_css_file("toc-enhancements.css")
+    app.add_js_file("toc-navigator.js")
 
-.. note::
-   
-   These are external MCP server implementations categorized by their primary functionality.
-   Each server includes installation instructions, configuration details, and usage examples.
-
-**Total Servers**: {} servers across {} categories
-
-""".format(sum(len(f) for f in paths.values()), len(paths))
-            
-            # Add each category
-            for category, files in sorted(paths.items()):
-                # Format category title
-                category_title = category.replace('_', ' ').title()
-                content += f"\n{category_title}\n{'-' * len(category_title)}\n\n"
-                
-                # Add toctree for this category
-                content += f".. toctree::\n   :maxdepth: 1\n   :caption: {category_title} ({len(files)} servers)\n\n"
-                
-                # Add each server
-                for file in sorted(files):
-                    # Get relative path from docs/source
-                    rel_path = "../../" + str(file.relative_to(project_root))
-                    # Extract server name from path
-                    server_name = file.parent.name
-                    content += f"   {server_name} <{rel_path}>\n"
-                
-                content += "\n"
-            
-            # Write the file
-            output_file = Path(app.srcdir) / "mcp_servers.rst"
-            with open(output_file, 'w') as f:
-                f.write(content)
-            
-            logger.info(f"✅ Generated {output_file} with {sum(len(f) for f in paths.values())} servers")
-        
-        app.connect('builder-inited', generate_mcp_index)
-    else:
-        logger.info("🚫 MCP Server docs disabled")
-    
-    # Create custom CSS
-    def create_custom_css(app):
-        """Create custom CSS file."""
-        static_dir = Path(app.srcdir) / "_static"
-        static_dir.mkdir(exist_ok=True)
-        
-        css_file = static_dir / "custom.css"
-        with open(css_file, 'w') as f:
-            f.write(custom_css_content)
-        
-        logger.info("✅ Created custom.css")
-    
-    app.connect('builder-inited', lambda app: create_custom_css(app))
-    
-    # Connect autoapi skip member
+    # Manually load sphinx-lastupdate to fix import issue with dashes
     try:
-        app.connect("autoapi-skip-member", autoapi_skip_member)
-        logger.info("✅ AutoAPI skip member handler connected")
+        import importlib
+
+        sphinx_lastupdate = importlib.import_module("sphinx-lastupdate")
+        if hasattr(sphinx_lastupdate, "setup"):
+            sphinx_lastupdate.setup(app)
+            print("🔧 sphinx-lastupdate loaded successfully with importlib!")
+        else:
+            # Try to find and load the actual module
+            lastupdate_module = getattr(sphinx_lastupdate, "lastupdate", None)
+            if lastupdate_module and hasattr(lastupdate_module, "setup"):
+                lastupdate_module.setup(app)
+                print("🔧 sphinx-lastupdate.lastupdate loaded successfully!")
     except Exception as e:
-        logger.error(f"❌ Failed to connect AutoAPI skip member: {e}")
-    
-    # Initialize autoapi_all_objects
-    def init_autoapi_objects_builder_inited(app):
-        """Initialize when builder is initialized."""
-        try:
-            if hasattr(app, 'env') and app.env and not hasattr(app.env, 'autoapi_all_objects'):
-                app.env.autoapi_all_objects = {}
-                logger.info("✅ Initialized autoapi_all_objects")
-        except Exception as e:
-            logger.error(f"❌ Failed to initialize autoapi_all_objects: {e}")
-    
-    # Robust AutoAPI error handling
-    def handle_autoapi_errors(app, exception):
-        """Handle AutoAPI processing errors gracefully."""
-        try:
-            logger.error(f"❌ AutoAPI error: {exception}")
-            return True
-        except Exception as e:
-            logger.error(f"❌ Error in AutoAPI error handler: {e}")
-            return True
-    
-    # Connect to valid Sphinx events
-    try:
-        app.connect('builder-inited', init_autoapi_objects_builder_inited)
-        if hasattr(app, 'connect'):
-            try:
-                app.connect('build-finished', lambda app, exception: handle_autoapi_errors(app, exception) if exception else None)
-            except Exception as e:
-                logger.warning(f"⚠️  Could not connect build-finished handler: {e}")
-        logger.info("✅ AutoAPI event handlers connected")
-    except Exception as e:
-        logger.error(f"❌ Failed to connect AutoAPI event handlers: {e}")
-    
-    # Fix for Sphinx 8.2.3 toc_num_entries KeyError
-    def fix_autoapi_toc_entries(app, env):
-        """Fix AutoAPI compatibility with Sphinx 8.2.3."""
-        if 'index' not in env.toc_num_entries:
-            env.toc_num_entries['index'] = 0
-            logger.info("🔧 Fixed missing toc_num_entries for index")
-        
-        for docname in env.all_docs:
-            if docname not in env.toc_num_entries:
-                env.toc_num_entries[docname] = 0
-    
-    app.connect('env-updated', fix_autoapi_toc_entries)
+        print(f"⚠️  Could not load sphinx-lastupdate: {e}")
 
-    # Try to setup enhanced build hooks
-    try:
-        from build_hooks_enhanced import setup as setup_hooks
-        setup_hooks(app)
-        logger.info("🪝 Enhanced build hooks registered")
-    except ImportError:
-        logger.warning("⚠️  Enhanced build hooks not available")
-    except Exception as e:
-        logger.error(f"❌ Failed to setup build hooks: {e}")
-
-# =============================================================================
-# CONFIGURATION SUMMARY
-# =============================================================================
-
-logger.info("=" * 70)
-logger.info("COMPLETE ENHANCED SPHINX CONFIGURATION")
-logger.info("=" * 70)
-logger.info(f"📦 Extensions: {len(extensions)} total with AutoAPI first")
-logger.info(f"🎨 Theme: {html_theme}")
-logger.info(f"🔧 AutoAPI: Configured for all 7 Haive packages")
-logger.info(f"✨ ALL 83+ extensions loaded (minus unavailable)")
-logger.info("=" * 70)
-
-# =============================================================================
-# BUILD COMMAND EXAMPLES (for persistent incremental builds)
-# =============================================================================
-#
-# Use these commands to take advantage of the organized build structure:
-#
-# INCREMENTAL BUILD (preserves cache, fast):
-# poetry run sphinx-build -d docs/builds/doctrees -b html docs/source docs/builds/html
-#
-# FULL REBUILD (when needed):
-# poetry run sphinx-build -E -a -d docs/builds/doctrees -b html docs/source docs/builds/html
-#
-# DEBUG BUILD:  
-# poetry run sphinx-build -d docs/builds/doctrees -b html docs/source docs/builds/debug
-#
-# WITH LOGGING:
-# poetry run sphinx-build -d docs/builds/doctrees -b html docs/source docs/builds/html 2>&1 | tee docs/builds/logs/build-$(date +%Y%m%d-%H%M%S).log
-#
-# WATCH MODE (requires sphinx-autobuild):
-# poetry run sphinx-autobuild -d docs/builds/doctrees --host 127.0.0.1 --port 8000 docs/source docs/builds/html
-#
-# Environment variables:
-# SPHINX_INCLUDE_MCP_DOCS=true   # Enable MCP server documentation  
-# SPHINX_MCP_FORMAT=rst          # Format: rst or md
-#
-# Key benefits of this structure:
-# - Persistent doctrees cache at docs/builds/doctrees/ 
-# - Clean separation of source and build artifacts
-# - Organized logs and debug builds
-# - No more full rebuilds after fixing errors!
+    print("✨ Intense Furo theme with sphinx-design enabled!")
+    print("🎨 Custom Mermaid integration configured!")
+    print("⚡ Hyper-organized extension system active!")
+    print("📚 Enhanced TOC navigation system loaded!")
