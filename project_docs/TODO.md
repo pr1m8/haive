@@ -10,6 +10,14 @@
 - Overall Styliung, theme colours
 - Broken imporst
 
+## Completed Documentation Updates
+
+- [x] Tool Routing Refactor (2025-01-08)
+  - Changed structured_output_model to use `parse_output` route instead of `pydantic_model`
+  - Updated ValidationNodeV2 and ValidationNodeConfigV2 to handle both routes
+  - Created guide at @project_docs/guides/TOOL_ROUTING_REFACTOR.md
+  - Added deprecation warnings for pydantic_model route
+
 # Package Wise
 
 ## Root
