@@ -1,0 +1,241 @@
+#!/usr/bin/env python3
+"""Example of batch operations with MCP servers.
+
+This example demonstrates downloading many servers efficiently and managing them in bulk.
+"""
+
+import asyncio
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from rich.console import Console
+from src.haive.mcp.downloader import GeneralMCPDownloader
+
+console = Console()
+
+
+async def download_many_servers():
+    """Download multiple servers concurrently."""
+    downloader = GeneralMCPDownloader()
+
+    # List of servers to download
+    servers_to_download = [
+        "filesystem",
+        "sqlite",
+        "github",  # Requires GITHUB_TOKEN
+        "postgres",  # Requires database
+    ]
+
+    console.print("🚀 Starting batch download...")
+    console.print(f"Downloading {len(servers_to_download)} servers")
+
+    # Download with progress tracking
+    result = await downloader.download_servers(
+        server_names=servers_to_download,
+        max_concurrent=3,  # Limit concurrent downloads
+    )
+
+    # Detailed results
+    console.print("\n📊 Batch Results:")
+    console.print(f"  Total: {result['total']}")
+    console.print(f"  Successful: {result['successful']}")
+    console.print(f"  Failed: {result['failed']}")
+    console.print(f"  Success Rate: {result['success_rate']:.1f}%")
+
+    return result
+
+
+async def download_by_pattern():
+    """Download servers matching specific patterns."""
+    downloader = GeneralMCPDownloader()
+
+    # Discover servers first
+    console.print("🔍 Discovering servers...")
+
+    # Get all configured servers
+    all_servers = [server.name for server in downloader.servers if server.enabled]
+
+    # Filter by pattern
+    file_servers = [name for name in all_servers if "file" in name.lower()]
+    db_servers = [
+        name
+        for name in all_servers
+        if any(db in name.lower() for db in ["sql", "db", "mongo"])
+    ]
+
+    console.print(f"Found {len(file_servers)} file-related servers")
+    console.print(f"Found {len(db_servers)} database-related servers")
+
+    # Download file servers first
+    if file_servers:
+        console.print("\n📁 Downloading file servers...")
+        result = await downloader.download_servers(server_names=file_servers)
+        console.print(
+            f"File servers: {result['successful']}/{result['total']} successful"
+        )
+
+    # Download database servers
+    if db_servers:
+        console.print("\n🗄️  Downloading database servers...")
+        result = await downloader.download_servers(server_names=db_servers)
+        console.print(
+            f"Database servers: {result['successful']}/{result['total']} successful"
+        )
+
+
+async def download_with_retry():
+    """Download with custom retry logic."""
+    downloader = GeneralMCPDownloader()
+
+    servers_to_retry = ["filesystem", "nonexistent-server"]
+    max_retries = 3
+
+    for attempt in range(max_retries):
+        console.print(f"\n🔄 Attempt {attempt + 1}/{max_retries}")
+
+        result = await downloader.download_servers(
+            server_names=servers_to_retry, max_concurrent=2
+        )
+
+        if result["failed"] == 0:
+            console.print("✅ All servers downloaded successfully!")
+            break
+
+        # Show failed servers
+        failed_servers = [f["server"] for f in result["failed_servers"]]
+        console.print(f"❌ Failed servers: {failed_servers}")
+
+        if attempt < max_retries - 1:
+            # Wait before retry
+            console.print("⏳ Waiting 5 seconds before retry...")
+            await asyncio.sleep(5)
+
+            # Retry only failed servers
+            servers_to_retry = failed_servers
+        else:
+            console.print("❌ Max retries reached, some servers failed")
+
+
+async def batch_health_check():
+    """Check health of all installed servers."""
+    console.print("🏥 Running batch health check...")
+
+    # Find all installed server configs
+    config_files = list(Path.home().glob(".mcp/**/mcp_servers_config.json"))
+
+    if not config_files:
+        console.print("No server configurations found")
+        return
+
+    all_servers = {}
+    for config_file in config_files:
+        with open(config_file) as f:
+            config = json.load(f)
+            all_servers.update(config.get("mcpServers", {}))
+
+    console.print(f"Found {len(all_servers)} installed servers")
+
+    # Test each server (simplified health check)
+    healthy = 0
+    for server_name, server_config in all_servers.items():
+        try:
+            # Simple check: verify command exists
+            command = server_config.get("command", "")
+            if command:
+                # In a real implementation, you'd test the actual connection
+                console.print(f"✅ {server_name}: Command configured")
+                healthy += 1
+            else:
+                console.print(f"❌ {server_name}: No command configured")
+        except Exception as e:
+            console.print(f"❌ {server_name}: Error - {e}")
+
+    console.print(f"\n📊 Health Summary: {healthy}/{len(all_servers)} servers healthy")
+
+
+async def bulk_update():
+    """Update all servers to latest versions."""
+    console.print("🔄 Starting bulk update...")
+
+    # This would be implemented by:
+    # 1. Finding all installed servers
+    # 2. Checking for updates
+    # 3. Downloading new versions
+    # 4. Updating configurations
+
+    console.print("⚠️  Bulk update functionality would be implemented here")
+    console.print("Features would include:")
+    console.print("  - Version checking")
+    console.print("  - Backup before update")
+    console.print("  - Rollback on failure")
+    console.print("  - Update notifications")
+
+
+async def export_import_configs():
+    """Export and import server configurations."""
+    console.print("📤 Exporting server configurations...")
+
+    # Export current configuration
+    export_data = {"servers": [], "export_date": "2023-12-01", "version": "1.0"}
+
+    # Find all configurations
+    config_files = list(Path.home().glob(".mcp/**/mcp_servers_config.json"))
+
+    for config_file in config_files:
+        with open(config_file) as f:
+            config = json.load(f)
+            export_data["servers"].append(
+                {
+                    "config_file": str(config_file),
+                    "servers": config.get("mcpServers", {}),
+                }
+            )
+
+    # Save export
+    export_file = Path("mcp_servers_export.json")
+    with open(export_file, "w") as f:
+        json.dump(export_data, f, indent=2)
+
+    console.print(f"✅ Configuration exported to {export_file}")
+
+    # Import example
+    console.print("\n📥 Import example:")
+    console.print("To import on another system:")
+    console.print("1. Copy the export file")
+    console.print(
+        "2. Run: python scripts/manage_servers.py import mcp_servers_export.json"
+    )
+    console.print("3. Servers will be restored")
+
+
+async def main():
+    """Run all batch operation examples."""
+    console.print("MCP Batch Operations Examples")
+    console.print("=" * 50)
+
+    # Example 1: Download many servers
+    await download_many_servers()
+
+    # Example 2: Download by pattern
+    await download_by_pattern()
+
+    # Example 3: Download with retry
+    await download_with_retry()
+
+    # Example 4: Health check
+    await batch_health_check()
+
+    # Example 5: Bulk update (demo)
+    await bulk_update()
+
+    # Example 6: Export/import
+    await export_import_configs()
+
+    console.print("\n✨ Batch operations examples complete!")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
