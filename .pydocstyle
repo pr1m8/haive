@@ -10,14 +10,4 @@ add-ignore =
     D107,   # Missing docstring in __init__ (Pydantic handles this)
 
 # Match files
-match = *.py
-match-dir = packages/*/src
-
-# Exclude patterns
-ignore-paths =
-    tests,
-    examples,
-    build,
-    dist,
-    .venv,
-    __pycache__
+match = .*\.py
