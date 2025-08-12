@@ -1,0 +1,4 @@
+{% set is_pydantic = "BaseModel" in obj.bases or "pydantic.BaseModel" in obj.bases %}
+{% set is_enum = "Enum" in obj.bases %}
+{% set is_internal = obj.full_name.startswith("haive_core.internal") %}
+{% set is_computed = obj.docstring and "@computed_field" in obj.docstring %}

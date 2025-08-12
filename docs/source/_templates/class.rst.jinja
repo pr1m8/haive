@@ -1,0 +1,16 @@
+{{ obj.name }}
+{{ "=" * obj.name|length }}
+
+.. autoclass:: {{ obj.full_name }}
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+{% if is_pydantic is defined and is_pydantic %}
+.. rubric:: Pydantic Summary
+
+{% include "includes/pydantic/summary_panel.jinja" %}
+{% include "includes/pydantic/model_config.jinja" %}
+{% include "includes/pydantic/computed.jinja" %}
+{% include "includes/pydantic/validators.jinja" %}
+{% endif %}

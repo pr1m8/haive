@@ -1,0 +1,168 @@
+/* Sphinx Tippy Enhancements for Furo Theme */
+
+/* Custom tooltip styling to match Furo theme */
+.tippy-box[data-theme~="light-border"] {
+  background-color: var(--color-background-primary) !important;
+  border: 2px solid var(--color-brand-primary) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15) !important;
+  max-width: 600px !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  padding: 0 !important;
+}
+
+.tippy-box[data-theme~="light-border"] .tippy-content {
+  padding: 1rem !important;
+  color: var(--color-foreground-primary) !important;
+}
+
+/* Dark mode tooltip styling */
+body[data-theme="dark"] .tippy-box[data-theme~="light-border"] {
+  background-color: var(--color-background-secondary) !important;
+  border-color: var(--color-brand-content) !important;
+  color: var(--color-foreground-primary) !important;
+}
+
+body[data-theme="dark"] .tippy-box[data-theme~="light-border"] .tippy-content {
+  color: var(--color-foreground-primary) !important;
+}
+
+/* Arrow styling */
+.tippy-box[data-theme~="light-border"] .tippy-arrow::before {
+  border-color: var(--color-brand-primary) !important;
+}
+
+body[data-theme="dark"]
+  .tippy-box[data-theme~="light-border"]
+  .tippy-arrow::before {
+  border-color: var(--color-brand-content) !important;
+}
+
+/* Enhanced styling for code elements in tooltips */
+.tippy-content code {
+  background: var(--color-background-hover) !important;
+  color: var(--color-brand-primary) !important;
+  padding: 0.125rem 0.25rem !important;
+  border-radius: 3px !important;
+  font-family: var(--font-stack-monospace) !important;
+  font-size: 0.8125rem !important;
+}
+
+/* API reference tooltips */
+.tippy-content .api-tooltip {
+  max-height: 400px !important;
+  overflow-y: auto !important;
+}
+
+.tippy-content .api-tooltip h3 {
+  margin: 0 0 0.5rem 0 !important;
+  color: var(--color-brand-primary) !important;
+  font-size: 1rem !important;
+  border-bottom: 1px solid var(--color-background-border) !important;
+  padding-bottom: 0.25rem !important;
+}
+
+.tippy-content .api-tooltip .signature {
+  background: var(--color-code-background) !important;
+  color: var(--color-code-foreground) !important;
+  padding: 0.5rem !important;
+  border-radius: 4px !important;
+  margin: 0.5rem 0 !important;
+  font-family: var(--font-stack-monospace) !important;
+  font-size: 0.75rem !important;
+  overflow-x: auto !important;
+}
+
+.tippy-content .api-tooltip .description {
+  margin-top: 0.5rem !important;
+  font-size: 0.8125rem !important;
+  line-height: 1.4 !important;
+}
+
+/* External link tooltips */
+.tippy-content .external-tooltip {
+  border-left: 3px solid var(--color-brand-primary) !important;
+  padding-left: 0.75rem !important;
+}
+
+.tippy-content .external-tooltip .source {
+  font-size: 0.75rem !important;
+  color: var(--color-foreground-muted) !important;
+  margin-top: 0.5rem !important;
+  font-style: italic !important;
+}
+
+/* DOI tooltip styling */
+.tippy-content .doi-tooltip .title {
+  font-weight: 600 !important;
+  color: var(--color-brand-primary) !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.tippy-content .doi-tooltip .authors {
+  font-size: 0.8125rem !important;
+  color: var(--color-foreground-muted) !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.tippy-content .doi-tooltip .journal {
+  font-style: italic !important;
+  font-size: 0.8125rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+/* Responsive tooltip sizing */
+@media (max-width: 768px) {
+  .tippy-box[data-theme~="light-border"] {
+    max-width: 90vw !important;
+    font-size: 0.8125rem !important;
+  }
+
+  .tippy-content {
+    padding: 0.75rem !important;
+  }
+
+  .tippy-content .api-tooltip {
+    max-height: 300px !important;
+  }
+}
+
+/* Animation enhancements */
+.tippy-box {
+  transition:
+    transform 0.2s ease-out,
+    opacity 0.2s ease-out !important;
+}
+
+.tippy-box[data-state="visible"] {
+  transform: translateY(-2px) !important;
+}
+
+/* Loading state for dynamic tooltips */
+.tippy-content .loading {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  color: var(--color-foreground-muted) !important;
+  font-size: 0.8125rem !important;
+}
+
+.tippy-content .loading::before {
+  content: "" !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  border: 2px solid var(--color-background-border) !important;
+  border-top: 2px solid var(--color-brand-primary) !important;
+  border-radius: 50% !important;
+  animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

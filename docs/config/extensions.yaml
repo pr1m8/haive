@@ -1,0 +1,234 @@
+# Extension Configuration for PyAutoDoc
+# Hyper-organized extension loading with proper priorities and dependencies
+
+# Core Extensions (Priority 1-10)
+core:
+  sphinx.ext.autodoc:
+    priority: 1
+    required: true
+    config:
+      autodoc_default_options:
+        members: true
+        undoc-members: true
+        show-inheritance: true
+
+  autoapi.extension:
+    priority: 2 # Must be early for proper API generation
+    required: true
+    package: sphinx-autoapi
+    config:
+      autoapi_type: python
+      autoapi_dirs: ["../../../src"]
+      autoapi_template_dir: "_autoapi_templates"
+      autoapi_add_toctree_entry: true
+      autoapi_generate_api_docs: true
+      autoapi_keep_files: true
+      autoapi_options:
+        - members
+        - undoc-members
+        - show-inheritance
+        - show-module-summary
+        - private-members
+        - special-members
+        - imported-members
+      autoapi_python_class_content: both
+      autoapi_add_class_diagram: true
+      autoapi_class_diagram_depth: 2
+
+  sphinx.ext.napoleon:
+    priority: 3
+    required: true
+    config:
+      napoleon_google_docstring: true
+      napoleon_numpy_docstring: true
+      napoleon_include_init_with_doc: false
+      napoleon_include_private_with_doc: false
+
+  sphinx.ext.viewcode:
+    priority: 4
+    required: true
+
+  sphinx.ext.intersphinx:
+    priority: 5
+    required: true
+    config:
+      intersphinx_mapping:
+        python: ["https://docs.python.org/3", null]
+        pydantic: ["https://docs.pydantic.dev/latest", null]
+        sphinx: ["https://www.sphinx-doc.org/en/master", null]
+
+# Enhanced API Documentation (Priority 11-20)
+api_enhanced:
+  sphinxcontrib.autodoc_pydantic:
+    priority: 11
+    package: autodoc-pydantic
+    config:
+      autodoc_pydantic_model_show_json: true
+      autodoc_pydantic_model_show_config_summary: true
+      autodoc_pydantic_model_show_validator_summary: true
+      autodoc_pydantic_model_show_field_summary: true
+      autodoc_pydantic_model_show_validator_members: true
+      autodoc_pydantic_field_list_validators: true
+      autodoc_pydantic_field_show_constraints: true
+      autodoc_pydantic_model_erdantic_figure: true
+      autodoc_pydantic_model_erdantic_figure_collapsed: false
+
+  enum_tools.autoenum:
+    priority: 12
+    package: enum-tools
+    requires: [sphinx-toolbox]
+
+  sphinx_autodoc_typehints:
+    priority: 13
+    package: sphinx-autodoc-typehints
+    config:
+      typehints_fully_qualified: false
+      typehints_use_signature: true
+
+# Content & Design (Priority 21-30) - FOCUS AREA
+content_design:
+  myst_parser:
+    priority: 21
+    package: myst-parser
+    config:
+      myst_enable_extensions:
+        - deflist
+        - tasklist
+        - html_image
+        - colon_fence
+        - smartquotes
+        - replacements
+        - linkify
+        - strikethrough
+        - attrs_inline
+        - attrs_block
+      myst_heading_anchors: 3
+      myst_fence_as_directive: ["mermaid", "note", "warning"]
+
+  sphinx_design:
+    priority: 22
+    package: sphinx-design
+    required: true # INTENSE FURO THEMING
+    config:
+      sd_fontawesome_latex: true
+
+  sphinx_togglebutton:
+    priority: 23
+    package: sphinx-togglebutton
+    config:
+      togglebutton_hint: "Click to expand"
+      togglebutton_hint_hide: "Click to collapse"
+
+  sphinx_copybutton:
+    priority: 24
+    package: sphinx-copybutton
+    config:
+      copybutton_prompt_text: '>>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: '
+      copybutton_prompt_is_regexp: true
+      copybutton_remove_prompts: true
+
+  sphinx_tabs.tabs:
+    priority: 25
+    package: sphinx-tabs
+    config:
+      sphinx_tabs_disable_tab_closing: true
+
+# Execution & Code Examples (Priority 31-40) - TESTING FOCUS
+execution:
+  sphinx_exec_code:
+    priority: 31
+    package: sphinx-exec-code
+    config:
+      exec_code_working_dir: "."
+      exec_code_source_folders: ["../../../src"]
+
+  sphinxcontrib.programoutput:
+    priority: 32
+    package: sphinxcontrib-programoutput
+    config:
+      programoutput_use_ansi: true
+
+  sphinx_runpython:
+    priority: 33
+    package: sphinx-runpython
+    config:
+      runpython_show_source: true
+
+# Diagrams & Visualization (Priority 41-50)
+diagrams:
+  sphinx.ext.graphviz:
+    priority: 41
+    required: true
+
+  sphinxcontrib.mermaid:
+    priority: 42
+    package: sphinxcontrib-mermaid
+    config:
+      mermaid_params:
+        [
+          "--theme",
+          "neutral",
+          "--width",
+          "800",
+          "--backgroundColor",
+          "transparent",
+        ]
+      mermaid_verbose: true
+      mermaid_cmd: "mmdc" # or "npx @mermaid-js/mermaid-cli"
+
+  sphinxcontrib.plantuml:
+    priority: 43
+    package: sphinxcontrib-plantuml
+    config:
+      plantuml_output_format: svg
+      plantuml: plantuml
+
+# Utility Extensions (Priority 51-60)
+utilities:
+  sphinx_sitemap:
+    priority: 51
+    package: sphinx-sitemap
+    config:
+      html_baseurl: "https://pyautodoc.readthedocs.io/"
+
+  sphinx_codeautolink:
+    priority: 52
+    package: sphinx-codeautolink
+    config:
+      codeautolink_autodoc_inject: true
+      codeautolink_concat_default: true
+
+# Multi-version (Priority 61-70)
+versioning:
+  sphinx_multiversion:
+    priority: 61
+    package: sphinx-multiversion
+    enabled_by_default: false # Enable manually when needed
+
+# Build Profiles
+profiles:
+  minimal:
+    - core
+
+  standard:
+    - core
+    - api_enhanced
+    - content_design
+    - diagrams
+
+  full:
+    - core
+    - api_enhanced
+    - content_design
+    - execution
+    - diagrams
+    - utilities
+
+  development:
+    - core
+    - api_enhanced
+    - content_design
+    - execution
+    - diagrams
+    - utilities
+    - versioning

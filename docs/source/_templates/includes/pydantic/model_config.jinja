@@ -1,0 +1,9 @@
+.. rubric:: Pydantic Model Config
+
+{% for child in obj.children %}
+  {% if child.name == "model_config" %}
+    .. code-block:: python
+
+       {{ child.docstring | indent(4) }}
+  {% endif %}
+{% endfor %}

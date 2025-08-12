@@ -1,0 +1,359 @@
+/* Enhanced API Documentation Styling */
+/* Complements furo-intense.css for better API presentation */
+
+/* Pydantic Model Enhancements */
+.pydantic-model {
+  background: var(--color-api-background);
+  border: 2px solid var(--color-brand-primary);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.pydantic-model::before {
+  content: "🔧 Pydantic Model";
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--color-brand-primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-bottom-left-radius: 8px;
+}
+
+.pydantic-model .sig-name {
+  color: var(--color-brand-primary);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.pydantic-model-summary {
+  background: rgba(37, 99, 235, 0.05);
+  border-left: 4px solid var(--color-brand-primary);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Enum Documentation Styling */
+.enum-class {
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  border: 2px solid #10b981;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.enum-class::before {
+  content: "📊 Enum";
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #10b981;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-bottom-left-radius: 8px;
+}
+
+.enum-class .sig-name {
+  color: #059669;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.enum-member {
+  background: rgba(16, 185, 129, 0.1);
+  border-left: 3px solid #10b981;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.enum-member .sig-name {
+  color: #047857;
+  font-weight: 600;
+}
+
+/* Function and Method Styling */
+.py.function,
+.py.method {
+  background: var(--color-background-secondary);
+  border: 1px solid var(--color-background-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  transition: all 0.2s ease;
+}
+
+.py.function:hover,
+.py.method:hover {
+  background: var(--color-api-background-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.py.function .sig-name,
+.py.method .sig-name {
+  color: var(--color-brand-content);
+  font-weight: 600;
+}
+
+/* Parameter Lists */
+.sig-param {
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  margin: 0 0.25rem;
+  font-family: var(--font-stack--monospace);
+}
+
+.sig-param-name {
+  color: var(--color-brand-primary);
+  font-weight: 600;
+}
+
+.sig-param-type {
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Return Type Annotations */
+.sig-return {
+  color: #059669;
+  font-weight: 600;
+}
+
+.sig-return::before {
+  content: "→ ";
+  color: #9ca3af;
+}
+
+/* Docstring Styling */
+.py .docstring {
+  background: var(--color-background-secondary);
+  border-left: 4px solid var(--color-brand-primary);
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.py .docstring p:first-child {
+  font-weight: 600;
+  color: var(--color-foreground-primary);
+  margin-bottom: 1rem;
+}
+
+/* Field Documentation (Pydantic) */
+.pydantic-field {
+  background: rgba(37, 99, 235, 0.05);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 6px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+}
+
+.pydantic-field-name {
+  color: var(--color-brand-primary);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.pydantic-field-type {
+  color: #6b7280;
+  font-family: var(--font-stack--monospace);
+  background: rgba(107, 114, 128, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.pydantic-field-constraints {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 4px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.pydantic-field-constraints::before {
+  content: "⚠️ Constraints: ";
+  font-weight: 600;
+  color: #d97706;
+}
+
+/* Validator Documentation */
+.pydantic-validator {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 6px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+}
+
+.pydantic-validator::before {
+  content: "🔍 Validator";
+  display: block;
+  font-weight: 600;
+  color: #7c3aed;
+  margin-bottom: 0.5rem;
+}
+
+/* JSON Schema Display */
+.pydantic-json-schema {
+  background: #1e293b;
+  color: #cbd5e1;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  font-family: var(--font-stack--monospace);
+  font-size: 0.875rem;
+  overflow-x: auto;
+}
+
+.pydantic-json-schema pre {
+  margin: 0;
+  padding: 0;
+}
+
+/* Inheritance Diagrams */
+.inheritance-diagram {
+  text-align: center;
+  background: var(--color-background-secondary);
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.inheritance-diagram svg {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Module Index Styling */
+.autoapi-section {
+  margin: 2rem 0;
+}
+
+.autoapi-section h2 {
+  color: var(--color-brand-primary);
+  border-bottom: 2px solid var(--color-brand-primary);
+  padding-bottom: 0.5rem;
+}
+
+/* Table of Contents for API */
+.api-toc {
+  background: var(--color-background-secondary);
+  border: 1px solid var(--color-background-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.api-toc ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.api-toc li {
+  padding: 0.25rem 0;
+  border-left: 3px solid transparent;
+  padding-left: 1rem;
+  transition: all 0.2s ease;
+}
+
+.api-toc li:hover {
+  border-left-color: var(--color-brand-primary);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.api-toc a {
+  text-decoration: none;
+  color: var(--color-foreground-primary);
+  font-weight: 500;
+}
+
+.api-toc a:hover {
+  color: var(--color-brand-primary);
+}
+
+/* Source Code Links */
+.viewcode-link {
+  background: var(--color-brand-primary);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.viewcode-link:hover {
+  background: var(--color-brand-content);
+  transform: translateY(-1px);
+}
+
+/* Exception Classes */
+.exception-class {
+  background: linear-gradient(135deg, #fef2f2, #fecaca);
+  border: 2px solid #ef4444;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.exception-class::before {
+  content: "⚠️ Exception";
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #ef4444;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-bottom-left-radius: 8px;
+}
+
+.exception-class .sig-name {
+  color: #dc2626;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pydantic-model,
+  .enum-class,
+  .exception-class {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  .pydantic-model::before,
+  .enum-class::before,
+  .exception-class::before {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+  }
+
+  .pydantic-json-schema {
+    padding: 1rem;
+    font-size: 0.75rem;
+  }
+
+  .sig-param {
+    display: block;
+    margin: 0.25rem 0;
+  }
+}

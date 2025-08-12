@@ -243,7 +243,6 @@ optional = true
 haive-cli = { path = "./tools/haive-cli", develop = true }
 haive-dev = { path = "./tools/haive-dev", develop = true }
 haive-testing = { path = "./tools/haive-testing", develop = true }
-pydevelop-docs = { path = "./tools/pydevelop-docs", develop = true }
 
 jupyter = "^1.1.1"
 ace-tools = "^0.0"
@@ -608,6 +607,7 @@ seed-intersphinx-mapping = "^1.2.2"
 sphinx-apischema = "^0.1"
 sphinx-exec-code = "^0.16"
 sphinx-runpython = "^0.4.0"
+pydevelop-docs = {path = "tools/pydevelop-docs"}
 
 [tool.poetry.group.gmail_toolkit.dependencies]
 google-api-python-client = "^2.165.0"

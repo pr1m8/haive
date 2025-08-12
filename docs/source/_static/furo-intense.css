@@ -1,0 +1,506 @@
+/* Intense Furo Theme Customizations */
+/* Enhanced styling for PyAutoDoc with sphinx-design integration */
+
+/* API Documentation Enhancements */
+.api-object {
+  background: var(--color-api-background);
+  border: 1px solid var(--color-background-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  transition: all 0.2s ease;
+}
+
+.api-object:hover {
+  background: var(--color-api-background-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced Code Blocks */
+.highlight {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.highlight pre {
+  padding: 1.5rem;
+  margin: 0;
+}
+
+/* DARK MODE CODE VISIBILITY FIX */
+/* Ensure code is visible in dark mode */
+body[data-theme="dark"] .highlight,
+body[data-theme="dark"] .highlight pre {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+/* Fix specific syntax highlighting colors for dark mode */
+body[data-theme="dark"] .highlight .n {
+  color: #e2e8f0 !important;
+} /* Names */
+body[data-theme="dark"] .highlight .s,
+body[data-theme="dark"] .highlight .s1,
+body[data-theme="dark"] .highlight .s2 {
+  color: #a3e635 !important;
+} /* Strings */
+body[data-theme="dark"] .highlight .k,
+body[data-theme="dark"] .highlight .kn {
+  color: #60a5fa !important;
+} /* Keywords */
+body[data-theme="dark"] .highlight .c1,
+body[data-theme="dark"] .highlight .c {
+  color: #94a3b8 !important;
+} /* Comments */
+body[data-theme="dark"] .highlight .nf {
+  color: #fbbf24 !important;
+} /* Function names */
+body[data-theme="dark"] .highlight .nb {
+  color: #c084fc !important;
+} /* Built-ins */
+body[data-theme="dark"] .highlight .o {
+  color: #f87171 !important;
+} /* Operators */
+body[data-theme="dark"] .highlight .p {
+  color: #cbd5e1 !important;
+} /* Punctuation */
+body[data-theme="dark"] .highlight .mi,
+body[data-theme="dark"] .highlight .mf {
+  color: #34d399 !important;
+} /* Numbers */
+body[data-theme="dark"] .highlight .sa,
+body[data-theme="dark"] .highlight .se {
+  color: #fde047 !important;
+} /* String prefixes/escapes */
+
+/* Fix inline code in dark mode */
+body[data-theme="dark"] code.literal {
+  background-color: #334155 !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #475569 !important;
+}
+
+/* Fix code in docstrings and API docs */
+body[data-theme="dark"] .sig-prename,
+body[data-theme="dark"] .sig-name,
+body[data-theme="dark"] .sig-paren {
+  color: #e2e8f0 !important;
+}
+
+/* API REFERENCE ENHANCEMENTS */
+/* Hide repetitive View Source Code links */
+.viewcode-link:nth-of-type(n + 2) {
+  display: none !important;
+}
+
+/* Style the remaining View Source Code link */
+.viewcode-link {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: white !important;
+  padding: 0.25rem 0.75rem !important;
+  border-radius: 6px !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  display: inline-block !important;
+  margin-left: 0.5rem !important;
+}
+
+.viewcode-link:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Enhance API index pages */
+.api-index {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  gap: 1.5rem !important;
+  margin: 2rem 0 !important;
+}
+
+/* Style module links as cards */
+.toctree-wrapper ul li {
+  background: var(--color-api-background) !important;
+  border: 1px solid var(--color-background-border) !important;
+  border-radius: 8px !important;
+  padding: 1rem !important;
+  margin: 0.5rem 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.toctree-wrapper ul li:hover {
+  background: var(--color-api-background-hover) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Style API Reference page specifically */
+body[data-pagename="autoapi/index"] .section > ul {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 1.5rem !important;
+  list-style: none !important;
+  padding: 0 !important;
+}
+
+body[data-pagename="autoapi/index"] .section > ul > li {
+  background: linear-gradient(
+    135deg,
+    var(--color-api-background),
+    #f8fafc
+  ) !important;
+  border: 2px solid var(--color-brand-primary) !important;
+  border-radius: 12px !important;
+  padding: 1.5rem !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+body[data-pagename="autoapi/index"] .section > ul > li::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 4px !important;
+  background: linear-gradient(
+    90deg,
+    var(--color-brand-primary),
+    var(--color-brand-content)
+  ) !important;
+}
+
+body[data-pagename="autoapi/index"] .section > ul > li a {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: var(--color-brand-primary) !important;
+  text-decoration: none !important;
+}
+
+body[data-pagename="autoapi/index"] .section > ul > li a:hover {
+  color: var(--color-brand-content) !important;
+}
+
+/* API Module Cards Enhancement */
+.api-module-card {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 1rem !important;
+}
+
+.api-module-icon {
+  font-size: 2rem !important;
+  min-width: 3rem !important;
+  text-align: center !important;
+}
+
+.api-module-content {
+  flex: 1 !important;
+}
+
+.api-module-title {
+  margin: 0 0 0.5rem 0 !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: var(--color-brand-primary) !important;
+}
+
+.api-module-description {
+  margin: 0 0 1rem 0 !important;
+  color: var(--color-foreground-muted) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.5 !important;
+}
+
+.api-module-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  background: linear-gradient(
+    135deg,
+    var(--color-brand-primary),
+    var(--color-brand-content)
+  ) !important;
+  color: white !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.api-module-link:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+  color: white !important;
+}
+
+/* Method toggle button */
+.method-toggle-btn {
+  background: var(--color-background-secondary) !important;
+  border: 1px solid var(--color-background-border) !important;
+  border-radius: 6px !important;
+  padding: 0.5rem 1rem !important;
+  margin: 1rem 0 !important;
+  color: var(--color-brand-primary) !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  display: block !important;
+  width: 100% !important;
+}
+
+.method-toggle-btn:hover {
+  background: var(--color-background-hover) !important;
+  border-color: var(--color-brand-primary) !important;
+}
+
+/* BACK TO TOP BUTTON - SIMPLE SMALL BLACK */
+.back-to-top {
+  position: fixed !important;
+  bottom: 1rem !important;
+  right: 1rem !important;
+  background: #1a1a1a !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 0.5rem !important;
+  font-size: 0.75rem !important;
+  font-weight: normal !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  transition: opacity 0.2s ease !important;
+  z-index: 1000 !important;
+  text-decoration: none !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.back-to-top:hover {
+  background: #000 !important;
+  color: white !important;
+  opacity: 0.8 !important;
+}
+
+/* Copy Button Styling */
+.copybtn {
+  background: var(--color-brand-primary) !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 0.5rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.copybtn:hover {
+  background: var(--color-brand-content) !important;
+  transform: scale(1.05);
+}
+
+/* Toggle Button Enhancements */
+.toggle-button {
+  background: linear-gradient(
+    135deg,
+    var(--color-brand-primary),
+    var(--color-brand-content)
+  );
+  border: none;
+  border-radius: 6px;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Sphinx Design Card Enhancements */
+.sd-card {
+  border: none !important;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  transition: all 0.3s ease !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.sd-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+.sd-card-header {
+  background: linear-gradient(
+    135deg,
+    var(--color-brand-primary),
+    var(--color-brand-content)
+  ) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 1rem 1.5rem !important;
+}
+
+.sd-card-body {
+  padding: 1.5rem !important;
+}
+
+/* Grid System Enhancements */
+.sd-container-fluid {
+  padding: 0 !important;
+}
+
+.sd-row {
+  margin: 0 !important;
+  gap: 1.5rem;
+}
+
+.sd-col {
+  padding: 0 !important;
+}
+
+/* Button Styling */
+.sd-btn {
+  border-radius: 8px !important;
+  padding: 0.75rem 2rem !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+}
+
+.sd-btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--color-brand-primary),
+    var(--color-brand-content)
+  ) !important;
+  border: none !important;
+  color: white !important;
+}
+
+.sd-btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3) !important;
+}
+
+/* Tab Enhancements */
+.sd-tab-set {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.sd-tab-label {
+  padding: 1rem 2rem !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+.sd-tab-label:hover {
+  background: var(--color-background-hover) !important;
+}
+
+.sd-tab-label.sd-tab-label--active {
+  background: var(--color-brand-primary) !important;
+  color: white !important;
+}
+
+.sd-tab-content {
+  padding: 2rem !important;
+}
+
+/* Badge Styling */
+.sd-badge {
+  padding: 0.375rem 0.75rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+}
+
+/* Admonition Enhancements */
+.admonition {
+  border-radius: 8px !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  margin: 1.5rem 0 !important;
+}
+
+.admonition-title {
+  font-weight: 700 !important;
+  padding: 1rem 1.5rem !important;
+  margin: 0 !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.admonition > p,
+.admonition > .last {
+  padding: 0 1.5rem 1.5rem 1.5rem !important;
+}
+
+/* Pydantic Model Styling */
+.py.class {
+  background: var(--color-api-background);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border-left: 4px solid var(--color-brand-primary);
+}
+
+.py.class .sig-name {
+  color: var(--color-brand-primary);
+  font-weight: 700;
+}
+
+/* Enum Styling */
+.py.class.enum {
+  border-left-color: #10b981; /* Emerald-500 */
+}
+
+/* Mermaid Diagram Container */
+.mermaid-container {
+  background: var(--color-background-secondary);
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Enhancements */
+.search-input {
+  border-radius: 8px !important;
+  border: 2px solid var(--color-background-border) !important;
+  transition: all 0.2s ease !important;
+}
+
+.search-input:focus {
+  border-color: var(--color-brand-primary) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sd-card {
+    margin-bottom: 1rem !important;
+  }
+
+  .api-object {
+    padding: 1rem;
+  }
+
+  .sd-btn {
+    padding: 0.625rem 1.5rem !important;
+    font-size: 0.875rem !important;
+  }
+}
