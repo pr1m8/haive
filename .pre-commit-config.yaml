@@ -368,8 +368,7 @@ repos:
         pass_filenames: false
         always_run: true
         stages: [pre-commit]
-# .pre-commit-config.yaml
-repos:
+
   - repo: https://github.com/commitizen-tools/commitizen
     rev: v3.18.3
     hooks:
