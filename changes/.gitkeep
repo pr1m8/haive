@@ -1,0 +1,4 @@
+# This directory contains news fragments for towncrier
+# Create changelog entries with:
+# poetry run towncrier create <issue>.<type>.md
+# Types: feature, bugfix, improvement, deprecation, breaking, security, performance, docs, dev, misc
