@@ -58,7 +58,7 @@ langchain-experimental = "^0.3.4"
 tavily-python = "^0.5.1"
 langgraph-checkpoint-postgres = "^2.0.15"
 matplotlib = "^3.10.0"
-ipython = "^8.32.0"
+ipython = "^9.4.0"
 langchain-openai = "<=0.3.6"
 wikipedia = "^1.4.0"
 arxiv = "^2.1.3"
@@ -239,6 +239,12 @@ source = "pytorch_cuda"
 optional = true
 
 [tool.poetry.group.dev.dependencies]
+# Development tools - direct access at root level
+haive-cli = { path = "./tools/haive-cli", develop = true }
+haive-dev = { path = "./tools/haive-dev", develop = true }
+haive-testing = { path = "./tools/haive-testing", develop = true }
+pydevelop-docs = { path = "./tools/pydevelop-docs", develop = true }
+
 jupyter = "^1.1.1"
 ace-tools = "^0.0"
 loguru = "^0.7.3"
@@ -265,7 +271,7 @@ taskipy = "^1.14.0"
 pyupgrade = "^3.19.0"
 autoimport = "^1.5.0"
 py-spy = "^0.4.0"
-ruff = "^0.11.6"
+ruff = "^0.12.8"
 pyright = "^1.1.399"
 sourcery = "^1.35.0"
 coverage = "^7.8.0"
@@ -1072,12 +1078,12 @@ precommit-check = "poetry run pre-commit run --all-files --show-diff-on-failure"
 # ===================================================================
 
 [tool.towncrier]
-package = "haive"
+package_dir = "."
 filename = "CHANGELOG.md"
 directory = "changes"
 title_format = "# Changelog\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),\nand this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\n<!-- towncrier release notes start -->"
 issue_format = "[#{issue}](https://github.com/prim8/haive/issues/{issue})"
-# template = "changes/.template.md"  # Using default template
+template = "changes/.template.md"
 start_string = "<!-- towncrier release notes start -->"
 underlines = ["", "", ""]
 all_bullets = false
