@@ -1,0 +1,5 @@
+.. admonition:: Pydantic Model Summary
+
+   - Fields: {{ obj.children | selectattr("type", "equalto", "attribute") | list | length }}
+   - Validators: {{ obj.children | selectattr("name", "search", "validate_") | list | length }}
+   - Config: `model_config` defined or inherited

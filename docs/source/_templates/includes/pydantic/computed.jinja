@@ -1,0 +1,7 @@
+.. rubric:: Computed Fields
+
+{% for method in obj.children %}
+  {% if "@computed_field" in (method.docstring or "") %}
+    .. automethod:: {{ method.full_name }}
+  {% endif %}
+{% endfor %}

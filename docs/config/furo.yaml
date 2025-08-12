@@ -1,0 +1,112 @@
+# Intense Furo Theme Configuration
+# Advanced Furo theming with sphinx-design integration
+
+theme:
+  name: furo
+
+options:
+  # Core Branding
+  sidebar_hide_name: false
+  light_css_variables:
+    # Brand colors
+    color-brand-primary: "#2563eb" # Blue-600
+    color-brand-content: "#1d4ed8" # Blue-700
+
+    # Backgrounds
+    color-background-primary: "#ffffff"
+    color-background-secondary: "#f8fafc" # Slate-50
+    color-background-hover: "#e2e8f0" # Slate-200
+    color-background-border: "#cbd5e1" # Slate-300
+
+    # Code blocks
+    color-code-background: "#1e293b" # Slate-800
+    color-code-foreground: "#e2e8f0" # Slate-200
+
+    # Sidebar
+    color-sidebar-background: "#0f172a" # Slate-900
+    color-sidebar-foreground: "#cbd5e1" # Slate-300
+    color-sidebar-item-background--current: "#1e40af" # Blue-700
+    color-sidebar-item-background--hover: "#1e293b" # Slate-800
+
+    # API documentation
+    color-api-background: "#f1f5f9" # Slate-100
+    color-api-background-hover: "#e2e8f0" # Slate-200
+
+    # Admonitions
+    color-admonition-background: "#dbeafe" # Blue-100
+
+  dark_css_variables:
+    # Brand colors (dark mode)
+    color-brand-primary: "#60a5fa" # Blue-400
+    color-brand-content: "#3b82f6" # Blue-500
+
+    # Backgrounds
+    color-background-primary: "#0f172a" # Slate-900
+    color-background-secondary: "#1e293b" # Slate-800
+    color-background-hover: "#334155" # Slate-700
+    color-background-border: "#475569" # Slate-600
+
+    # Code blocks
+    color-code-background: "#0f172a" # Slate-900
+    color-code-foreground: "#cbd5e1" # Slate-300
+
+    # Sidebar
+    color-sidebar-background: "#020617" # Slate-950
+    color-sidebar-foreground: "#94a3b8" # Slate-400
+    color-sidebar-item-background--current: "#1d4ed8" # Blue-700
+    color-sidebar-item-background--hover: "#1e293b" # Slate-800
+
+  # Navigation & Repository
+  source_repository: "https://github.com/yourusername/pyautodoc/"
+  source_branch: "main"
+  source_directory: "docs/"
+
+  # Announcements & Features
+  announcement: |
+    🚀 <strong>PyAutoDoc 0.1.0</strong> - Hyper-organized documentation with intense Furo theming!
+    <a href="/changelog/">See what's new →</a>
+
+  # Footer customization
+  footer_icons:
+    - name: GitHub
+      url: https://github.com/yourusername/pyautodoc/
+      html: >
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+        </svg>
+
+# Sphinx Design Integration (Intense Theming)
+sphinx_design:
+  # Card styling
+  cards:
+    default_header_bg: "primary"
+    default_footer_bg: "light"
+
+  # Button styling
+  buttons:
+    primary_color: "primary"
+    secondary_color: "secondary"
+
+  # Grid system
+  grids:
+    default_column_class: "col-12 col-md-6 col-lg-4"
+
+  # Tabs styling
+  tabs:
+    default_active_tab: "primary"
+
+  # Badges
+  badges:
+    primary_color: "primary"
+    secondary_color: "secondary"
+
+# Custom CSS additions
+custom_css:
+  - "css/furo-intense.css"
+  - "css/api-docs.css"
+  - "css/mermaid-custom.css"
+
+# Custom JavaScript
+custom_js:
+  - "js/furo-enhancements.js"
+  - "js/mermaid-config.js"
