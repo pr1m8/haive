@@ -24,6 +24,11 @@
 - **@memory_index/by_date/** - Chronological memory tracking
 - **@project_docs/README.md** - Main project documentation hub
 
+### 📖 Documentation Tools & Solutions
+
+- **@project_docs/pydevelop_docs/AUTOAPI_SOLUTION_IMPLEMENTATION_PLAN.md** - ✅ **READY** AutoAPI hierarchical fix for Issue #4
+- **@project_docs/pydevelop_docs/AUTOAPI_HIERARCHICAL_ORGANIZATION_ANALYSIS.md** - Complete analysis of AutoAPI flattening problem
+
 ### Standards & Guides (Import for details)
 
 - @project_docs/active/standards/coding/COMMAND_EXECUTION_GUIDE.md

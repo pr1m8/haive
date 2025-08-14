@@ -652,3 +652,89 @@ nohup.out
 server.log
 dynamic_graph.log
 archive/
+
+# =============================================================================
+# 📚 PyDevelop-Docs and Documentation Build System
+# =============================================================================
+# PyDevelop-Docs configuration and cache
+.pydevelop/
+!.pydevelop/docs.yaml  # Keep the main docs configuration
+.pydevelop/cache/
+.pydevelop/hooks/*.log
+.pydevelop/templates/_build/
+.pydevelop/config.yaml  # Auto-generated config with serialization issues
+
+# Documentation build artifacts
+**/docs/build/
+**/docs/_build/
+**/docs/logs/
+**/docs/autoapi/
+docs/_tags/
+docs/autoapi/
+docs/source/packages/
+docs/source/test-projects/
+docs/source/tutorials/
+docs/source/_static/css/hub.css
+
+# Package-level documentation builds
+packages/*/docs/build/
+packages/*/docs/logs/
+packages/*/docs/autoapi/
+packages/*/docs/_build/
+
+# Root level documentation artifacts
+logs/
+logs/monorepo_build_*.log
+logs/build_*.log
+
+# Sphinx temporary files
+*.rst~
+**/*.rst~
+
+# Build status and temporary analysis files
+haive-agp-analysis.md
+*_analysis.md
+*_status.md
+build-root-docs.sh
+
+# Coverage and quality reports
+.coveragerc
+coveragerc
+.pre-commit-docstring-hooks.yaml
+trunk_docstring_integration.yaml
+
+# Development tools and scripts
+tools/pydevelop-docs/
+scripts/all_docstring_issues_to_fix.md
+scripts/docstring_issues_list.md
+scripts/docstring_pattern_analysis.py
+scripts/dry_run_nested_rst_fix.py
+scripts/examine_docstring_issues.py
+scripts/fix-rst-docstrings.py
+scripts/fix-rst-examples.py
+scripts/fix_preview.txt
+scripts/fix_submodule_docstrings.sh
+scripts/maintenance/cleanup_root_repository.py
+scripts/preview_fixed_conversations.py
+scripts/debug/screenshot_docs.py
+scripts/dev/documentation/
+scripts/dev/quality/
+
+# Quality and backup directories
+quality_fix_backups/
+project_docs/quality_reports/
+project_docs/todo_analysis/
+project_docs/pydevelop_docs/
+project_docs/design/
+project_docs/guides/docstring_formatting_research.md
+project_docs/memory_index/by_date/2025-01-29/
+project_docs/packages/haive-agents/architecture/
+project_docs/packages/haive-agents/guides/
+project_docs/SUBMODULE_MANAGEMENT_README.md
+
+# Test development
+tests/dev/
+
+# Claude AI temporary files
+.claude/settings.local.json.tmp.*
+.claude/settings.local.json.tmp.*/
