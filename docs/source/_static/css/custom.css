@@ -194,8 +194,129 @@ div.highlight {
 }
 
 /* ============================= */
-/* Dark Mode Support             */
+/* Dark Mode Support & Fixes     */
 /* ============================= */
+
+/* CRITICAL FIXES: White-on-white text issue resolution */
+[data-theme="dark"] {
+  --pydantic-field-color: #4da6ff;
+  --pydantic-validator-color: #66ff66;
+  --enum-member-color: #ffaa66;
+  --dataclass-color: #cc99ff;
+}
+
+/* Force proper text contrast in dark mode */
+[data-theme="dark"] .pydantic.field,
+[data-theme="dark"] .pydantic.validator,
+[data-theme="dark"] .enum-member {
+  color: #fff !important;
+}
+
+[data-theme="dark"] .pydantic.field {
+  background-color: rgba(77, 166, 255, 0.15) !important;
+  border: 1px solid rgba(77, 166, 255, 0.3);
+}
+
+[data-theme="dark"] .pydantic.validator {
+  background-color: rgba(102, 255, 102, 0.15) !important;
+  border: 1px solid rgba(102, 255, 102, 0.3);
+}
+
+[data-theme="dark"] .enum-member {
+  background-color: rgba(255, 170, 102, 0.15) !important;
+  border: 1px solid rgba(255, 170, 102, 0.3);
+}
+
+/* Fix field constraints visibility */
+[data-theme="dark"] .field-constraints {
+  color: #ccc !important;
+}
+
+[data-theme="dark"] .field-constraints strong {
+  color: #fff !important;
+}
+
+/* Code block contrast fixes */
+[data-theme="dark"] div.highlight {
+  background-color: #1e1e1e !important;
+  border: 1px solid #333;
+}
+
+[data-theme="dark"] div.highlight pre {
+  color: #f8f8f2 !important;
+  background-color: #1e1e1e !important;
+}
+
+/* Fix copy button visibility in dark mode */
+[data-theme="dark"] button.copybtn {
+  background-color: #333 !important;
+  color: #fff !important;
+  border: 1px solid #555 !important;
+}
+
+[data-theme="dark"] button.copybtn:hover {
+  background-color: #444 !important;
+}
+
+/* Fix tab content visibility */
+[data-theme="dark"] .sd-tab-content {
+  background-color: var(--color-background-primary) !important;
+  color: var(--color-foreground-primary) !important;
+}
+
+/* Fix table styling in dark mode */
+[data-theme="dark"] table.docutils {
+  border-color: #444 !important;
+}
+
+[data-theme="dark"] table.docutils th {
+  background-color: #2d2d2d !important;
+  color: #fff !important;
+  border-color: #444 !important;
+}
+
+[data-theme="dark"] table.docutils td {
+  border-color: #444 !important;
+  color: #ddd !important;
+}
+
+/* AutoAPI signature fixes */
+[data-theme="dark"] .sig-name {
+  color: #79dafa !important;
+}
+
+[data-theme="dark"] .sig-paren {
+  color: #fff !important;
+}
+
+[data-theme="dark"] .sig-param {
+  color: #66d9ef !important;
+}
+
+/* Navigation fixes for better contrast */
+[data-theme="dark"] .bd-sidebar {
+  background-color: var(--color-background-secondary) !important;
+}
+
+[data-theme="dark"] .bd-sidebar a {
+  color: var(--color-foreground-primary) !important;
+}
+
+/* Admonition fixes */
+[data-theme="dark"] .admonition {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .admonition .admonition-title {
+  color: #fff !important;
+}
+
+[data-theme="dark"] .admonition p {
+  color: #ddd !important;
+}
+
+/* Legacy media query support */
 @media (prefers-color-scheme: dark) {
   :root {
     --pydantic-field-color: #4da6ff;
@@ -205,22 +326,38 @@ div.highlight {
   }
 
   .pydantic.field {
-    background-color: rgba(77, 166, 255, 0.1);
+    background-color: rgba(77, 166, 255, 0.15);
+    color: #fff;
+    border: 1px solid rgba(77, 166, 255, 0.3);
   }
 
   .pydantic.validator {
-    background-color: rgba(102, 255, 102, 0.1);
+    background-color: rgba(102, 255, 102, 0.15);
+    color: #fff;
+    border: 1px solid rgba(102, 255, 102, 0.3);
   }
 
   .enum-member {
-    background-color: rgba(255, 170, 102, 0.1);
+    background-color: rgba(255, 170, 102, 0.15);
+    color: #fff;
+    border: 1px solid rgba(255, 170, 102, 0.3);
   }
 
   .field-constraints {
-    color: #aaa;
+    color: #ccc;
   }
 
   .field-constraints strong {
-    color: #ddd;
+    color: #fff;
+  }
+
+  /* Code blocks */
+  div.highlight {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+  }
+
+  div.highlight pre {
+    color: #f8f8f2;
   }
 }
