@@ -7,8 +7,6 @@ Welcome to haive Documentation
    :caption: Contents:
 
    autoapi/index
-   guides/index
-   examples/index
    changelog
 
 Indices and tables

@@ -88,6 +88,49 @@ body[data-theme="dark"] .sig-paren {
   color: #e2e8f0 !important;
 }
 
+/* COMPREHENSIVE SIGNATURE ELEMENT FIXES - Fix **kwargs and all signature elements */
+/* Dark mode signature visibility - covers all elements in function signatures */
+body[data-theme="dark"] .sig .o,      /* Operators like ** in **kwargs */
+body[data-theme="dark"] .sig .p,      /* Punctuation in signatures */
+body[data-theme="dark"] .sig .n,      /* Names in signatures */
+body[data-theme="dark"] .descname,    /* Description names */
+body[data-theme="dark"] .sig em,      /* Emphasized elements */
+body[data-theme="dark"] .sig .pre,    /* Preformatted signature text */
+body[data-theme="dark"] .sig .nb,     /* Built-ins in signatures (Dict, str, Any) */
+body[data-theme="dark"] .sig .k {
+  /* Keywords in signatures */
+  color: #e2e8f0 !important;
+}
+
+/* Light mode signature visibility - ensure good contrast */
+body[data-theme="light"] .sig-paren,
+body[data-theme="light"] .sig .o,      /* Operators like ** in **kwargs */
+body[data-theme="light"] .sig .p,      /* Punctuation in signatures */
+body[data-theme="light"] .sig .n,      /* Names in signatures */
+body[data-theme="light"] .descname,    /* Description names */
+body[data-theme="light"] .sig em,      /* Emphasized elements */
+body[data-theme="light"] .sig .pre,    /* Preformatted signature text */
+body[data-theme="light"] .sig .nb,     /* Built-ins in signatures */
+body[data-theme="light"] .sig .k {
+  /* Keywords in signatures */
+  color: #1f2937 !important;
+}
+
+/* Universal fallback for light gray inline styles */
+[data-theme="dark"] *[style*="color:#999"],
+[data-theme="dark"] *[style*="color:#aaa"],
+[data-theme="dark"] *[style*="color:#ccc"],
+[data-theme="dark"] *[style*="color:#ddd"] {
+  color: #e2e8f0 !important;
+}
+
+/* Force visibility for any remaining light elements */
+[data-theme="light"] *[style*="color:#999"],
+[data-theme="light"] *[style*="color:#aaa"],
+[data-theme="light"] *[style*="color:#ccc"] {
+  color: #1f2937 !important;
+}
+
 /* API REFERENCE ENHANCEMENTS */
 /* Hide repetitive View Source Code links */
 .viewcode-link:nth-of-type(n + 2) {
