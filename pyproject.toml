@@ -35,6 +35,8 @@ pythonpath = [
   "packages/haive-games/src",
   "packages/haive-prebuilt/src",
   "packages/haive-dataflow/src",
+  "packages/haive-mcp/src",
+  "packages/haive-ui/src",
 ]
 
 # ============================================================
@@ -47,6 +49,8 @@ testpaths = [
   "packages/haive-games/tests",
   "packages/haive-prebuilt/tests",
   "packages/haive-dataflow/tests",
+  "packages/haive-mcp/tests",
+  "packages/haive-ui/tests",
 ]
 
 # Naming conventions
@@ -576,6 +580,7 @@ xenon = "^0.9.3"
 deptry = "^0.23.1"
 pip-audit = "^2.9.0"
 deadcode = "^2.4.1"
+libcst = ">=1.5.0,<1.6.0"
 
 [tool.poetry.group.dev.dependencies.torch]
 version = "2.6.0+cu118"
@@ -754,6 +759,7 @@ sphinx-exec-code = "^0.16"
 sphinx-runpython = "^0.4.0"
 pydevelop-docs = { path = "tools/pydevelop-docs" }
 #sphinxcontrib-autodoc-pydantic = "^2.2.0"
+
 
 [tool.poetry.group.gmail_toolkit.dependencies]
 google-api-python-client = "^2.165.0"
