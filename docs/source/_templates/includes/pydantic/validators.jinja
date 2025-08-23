@@ -1,7 +1,0 @@
-.. rubric:: Validators
-
-{% for method in obj.children %}
-  {% if method.name.startswith("validate_") %}
-    .. automethod:: {{ method.full_name }}
-  {% endif %}
-{% endfor %}

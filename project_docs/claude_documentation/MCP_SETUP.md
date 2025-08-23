@@ -4,9 +4,11 @@
 
 Model Context Protocol enables Claude Code to connect to external tools and data sources, extending its capabilities beyond file editing. Think of it as "USB-C for AI" - a standardized way to connect Claude to various services.
 
-## Top MCP Servers for Haive Development
+## ✅ Verified MCP Servers for Haive Development
 
-### 1. PostgreSQL Server (Database Operations)
+**All servers listed below have been verified to exist on npm and install successfully.**
+
+### 1. PostgreSQL Server (Database Operations) ✅
 
 ```bash
 # Standard installation
@@ -18,7 +20,7 @@ claude mcp add haive-db -s user -- npx -y @modelcontextprotocol/server-postgres 
 # Usage: @haive-db to query schemas, run SQL, analyze performance
 ```
 
-### 2. Filesystem Server (Enhanced File Operations)
+### 2. Filesystem Server (Enhanced File Operations) ✅
 
 ```bash
 # Configure with project directories
@@ -30,12 +32,9 @@ claude mcp add haive-files -s user -- npx -y @modelcontextprotocol/server-filesy
 # Usage: @haive-files for advanced file operations beyond basic editing
 ```
 
-### 3. GitHub Server (Repository Management)
+### 3. GitHub Server (Repository Management) ✅
 
 ```bash
-# Install globally first
-npm install -g @modelcontextprotocol/server-github
-
 # Configure with your repo
 claude mcp add haive-github -s user -e GITHUB_TOKEN=$GITHUB_TOKEN -- \
   npx -y @modelcontextprotocol/server-github --owner=yourusername --repo=haive
@@ -43,7 +42,7 @@ claude mcp add haive-github -s user -e GITHUB_TOKEN=$GITHUB_TOKEN -- \
 # Usage: @haive-github for issues, PRs, commits, CI/CD
 ```
 
-### 4. Puppeteer Server (Browser Automation & Testing)
+### 4. Puppeteer Server (Browser Automation & Testing) ✅
 
 ```bash
 # For UI testing and browser automation
@@ -52,7 +51,7 @@ claude mcp add haive-browser -s user -- npx -y @modelcontextprotocol/server-pupp
 # Usage: @haive-browser to take screenshots, test UI, automate browser tasks
 ```
 
-### 5. Sequential Thinking Server (Complex Problem Solving)
+### 5. Sequential Thinking Server (Complex Problem Solving) ✅
 
 ```bash
 # For breaking down complex tasks
@@ -61,7 +60,7 @@ claude mcp add haive-thinking -s user -- npx -y @modelcontextprotocol/server-seq
 # Usage: @haive-thinking for step-by-step problem solving
 ```
 
-### 6. Brave Search Server (Web Research)
+### 6. Brave Search Server (Web Research) ✅
 
 ```bash
 # Get API key from https://api.search.brave.com/
@@ -71,22 +70,31 @@ claude mcp add haive-search -s user -e BRAVE_API_KEY=YOUR_KEY -- \
 # Usage: @haive-search for current docs, examples, and research
 ```
 
-### 7. Docker Server (Container Management)
-
-```bash
-# For running code in isolated containers
-claude mcp add haive-docker -s user -- npx -y @modelcontextprotocol/server-docker
-
-# Usage: @haive-docker to run tests in containers, manage environments
-```
-
-### 8. Memory Bank Server (Persistent Context)
+### 7. Memory Bank Server (Persistent Context) ✅
 
 ```bash
 # For maintaining context across sessions
 claude mcp add haive-memory -s user -- npx -y @modelcontextprotocol/server-memory
 
 # Usage: @haive-memory to store and recall important context
+```
+
+### 8. Time Utilities (Community) ✅
+
+```bash
+# Time awareness for LLMs
+claude mcp add haive-time -s user -- npx -y time-mcp
+
+# Usage: @haive-time for current time, scheduling, date operations
+```
+
+### 9. Enhanced File Operations ✅
+
+```bash
+# FileNexus for advanced file operations
+claude mcp add haive-filenexus -s user -- npx -y filenexus
+
+# Usage: @haive-filenexus for enhanced file management
 ```
 
 ## Configuration Scopes

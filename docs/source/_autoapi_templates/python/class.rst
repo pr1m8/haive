@@ -1,89 +1,104 @@
-{% if not obj.display %}
-:orphan:
-{% endif %}
+{% if obj.display %}
+   {% if is_own_page %}
+{{ obj.id }}
+{{ "=" * obj.id | length }}
 
-{# -------------------------------------------------------- #}
-{#  Detect Class Type: Pydantic, Dataclass, Enum, or Flag  #}
-{# -------------------------------------------------------- #}
-{% set bases_string = obj.bases | join(" ") %}
-{% set is_pydantic = "BaseModel" in bases_string or "BaseSettings" in bases_string %}
-{% set is_dataclass = "@dataclass" in (obj.docstring or "") or "dataclass" in (obj.docstring or "") %}
-{% set is_enum = "Enum" in bases_string %}
-{% set is_flag = "Flag" in bases_string %}
-
-
-{# ------------------------------ #}
-{#  Graphviz Inheritance Diagram  #}
-{# ------------------------------ #}
-.. toggle:: Show Inheritance Diagram
-
-   Inheritance diagram for {{ obj.name }}:
-
-   .. graphviz::
-      :align: center
-
-      digraph inheritance_{{ obj.name | replace('.', '_') }} {
-        node [shape=record];
-        "{{ obj.name }}" [label="{{ obj.name }}"];
-        {% for base in obj.bases %}
-        "{{ base }}" -> "{{ obj.name }}";
-        {% endfor %}
-      }
-
-{# ----------------------------- #}
-{#        Pydantic Model        #}
-{# ----------------------------- #}
-{% if is_pydantic %}
-.. autopydantic_model:: {{ obj.id }}
-   :members:
-   :undoc-members:
-   :show-inheritance:
-   :model-show-field-summary:
-   :model-show-config-summary:
-   :model-show-validator-members:
-   :model-show-validator-summary:
-   :model-show-json:
-   :field-list-validators:
-   :field-show-constraints:
-
-{# ----------------------------- #}
-{#         Dataclass             #}
-{# ----------------------------- #}
-{% elif is_dataclass %}
-.. autoclass:: {{ obj.id }}
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-   .. note::
-
-      **{{ obj.name }}** is a dataclass. Enhanced schema documentation will be available soon.
-
-{# ----------------------------- #}
-{#         Enum Classes         #}
-{# ----------------------------- #}
-{% elif is_enum or is_flag %}
-.. autoclass:: {{ obj.id }}
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-   {% if is_flag %}
-   .. note::
-
-      **{{ obj.name }}** is a Flag Enum defined in ``{{ obj.module or obj.id.split('.')[:-1] | join('.') }}``.
-   {% else %}
-   .. note::
-
-      **{{ obj.name }}** is an Enum defined in ``{{ obj.module or obj.id.split('.')[:-1] | join('.') }}``.
    {% endif %}
+   {% set visible_children = obj.children|selectattr("display")|list %}
+   {% set own_page_children = visible_children|selectattr("type", "in", own_page_types)|list %}
+   {% if is_own_page and own_page_children %}
+.. toctree::
+   :hidden:
 
-{# ----------------------------- #}
-{#        Fallback Default      #}
-{# ----------------------------- #}
-{% else %}
-.. autoclass:: {{ obj.id }}
-   :members:
-   :undoc-members:
-   :show-inheritance:
+      {% for child in own_page_children %}
+   {{ child.include_path }}
+      {% endfor %}
+
+   {% endif %}
+.. py:{{ obj.type }}:: {% if is_own_page %}{{ obj.id }}{% else %}{{ obj.short_name }}{% endif %}{% if obj.args %}({{ obj.args }}){% endif %}
+
+   {% for (args, return_annotation) in obj.overloads %}
+      {{ " " * (obj.type | length) }}   {{ obj.short_name }}{% if args %}({{ args }}){% endif %}
+
+   {% endfor %}
+   {% if obj.bases %}
+      {% if "show-inheritance" in autoapi_options %}
+
+   Bases: {% for base in obj.bases %}{{ base|link_objs }}{% if not loop.last %}, {% endif %}{% endfor %}
+      {% endif %}
+
+
+      {% if "show-inheritance-diagram" in autoapi_options and obj.bases != ["object"] %}
+   .. autoapi-inheritance-diagram:: {{ obj.obj["full_name"] }}
+      :parts: 1
+         {% if "private-members" in autoapi_options %}
+      :private-bases:
+         {% endif %}
+
+      {% endif %}
+   {% endif %}
+   {% if obj.docstring %}
+
+   {{ obj.docstring|indent(3) }}
+   {% endif %}
+   {% for obj_item in visible_children %}
+      {% if obj_item.type not in own_page_types %}
+
+   {{ obj_item.render()|indent(3) }}
+      {% endif %}
+   {% endfor %}
+   {% if is_own_page and own_page_children %}
+      {% set visible_attributes = own_page_children|selectattr("type", "equalto", "attribute")|list %}
+      {% if visible_attributes %}
+Attributes
+----------
+
+.. autoapisummary::
+
+         {% for attribute in visible_attributes %}
+   {{ attribute.id }}
+         {% endfor %}
+
+
+      {% endif %}
+      {% set visible_exceptions = own_page_children|selectattr("type", "equalto", "exception")|list %}
+      {% if visible_exceptions %}
+Exceptions
+----------
+
+.. autoapisummary::
+
+         {% for exception in visible_exceptions %}
+   {{ exception.id }}
+         {% endfor %}
+
+
+      {% endif %}
+      {% set visible_classes = own_page_children|selectattr("type", "equalto", "class")|list %}
+      {% if visible_classes %}
+Classes
+-------
+
+.. autoapisummary::
+
+         {% for klass in visible_classes %}
+   {{ klass.id }}
+         {% endfor %}
+
+
+      {% endif %}
+      {% set visible_methods = own_page_children|selectattr("type", "equalto", "method")|list %}
+      {% if visible_methods %}
+Methods
+-------
+
+.. autoapisummary::
+
+            {% for method in visible_methods %}
+   {{ method.id }}
+            {% endfor %}
+
+
+      {% endif %}
+   {% endif %}
 {% endif %}
