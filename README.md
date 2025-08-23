@@ -34,7 +34,21 @@ poetry run pydevelop-docs build
 
 ## Documentation
 
-Full documentation is available at `/docs/build/html/index.html` after building.
+### 🚀 Enhanced Package Documentation
+
+- **haive-core**: Enhanced documentation with Furo theme, sphinx-design cards, and interactive navigation
+  - Build: `cd packages/haive-core && poetry run sphinx-build -b html docs/source docs/build`
+  - View: Open `packages/haive-core/docs/build/html/index.html` in your browser
+  - Features: Purple/violet color scheme, emojis, tooltips, and 36+ Sphinx extensions
+
+### Full Framework Documentation
+
+Build all documentation:
+```bash
+poetry run pydevelop-docs build
+```
+
+View at `/docs/build/html/index.html` after building.
 
 ## License
 

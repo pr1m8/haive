@@ -14,16 +14,17 @@ Usage:
     python scripts/cleanup_backups.py --clean --all
 """
 
+from __future__ import annotations
+
 import argparse
-import os
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import List, Tuple
 
 
 def find_backup_files(
-    root_path: Path = None, pattern: str = "*.py.bak"
-) -> List[Tuple[Path, float]]:
+    root_path: Path = None,
+    pattern: str = "*.py.bak",
+) -> list[tuple[Path, float]]:
     """Find all backup files with modification times.
 
     Args:
@@ -67,8 +68,16 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
-    parser.add_argument("--list", action="store_true", help="List all backup files")
-    parser.add_argument("--clean", action="store_true", help="Remove backup files")
+    parser.add_argument(
+        "--list",
+        action="store_true",
+        help="List all backup files",
+    )
+    parser.add_argument(
+        "--clean",
+        action="store_true",
+        help="Remove backup files",
+    )
     parser.add_argument(
         "--days",
         type=int,
@@ -76,7 +85,9 @@ def main():
         help="Remove backups older than N days (default: 7)",
     )
     parser.add_argument(
-        "--all", action="store_true", help="Remove all backups regardless of age"
+        "--all",
+        action="store_true",
+        help="Remove all backups regardless of age",
     )
     parser.add_argument(
         "--pattern",
@@ -84,7 +95,10 @@ def main():
         help="File pattern to match (default: *.py.bak)",
     )
     parser.add_argument(
-        "--dir", type=Path, default=None, help="Directory to search (default: current)"
+        "--dir",
+        type=Path,
+        default=None,
+        help="Directory to search (default: current)",
     )
     parser.add_argument(
         "--dry-run",
@@ -122,9 +136,8 @@ def main():
             cutoff_date = datetime.now() - timedelta(days=args.days)
             cutoff_time = cutoff_date.timestamp()
 
-        files_to_remove = [
-            (f, t) for f, t in backup_files if args.all or t < cutoff_time
-        ]
+        files_to_remove = [(f, t) for f, t in backup_files
+                           if args.all or t < cutoff_time]
 
         if not files_to_remove:
             print(f"No backup files older than {args.days} days.")
@@ -140,7 +153,8 @@ def main():
                 print(f"  {format_file_info(file_path, mtime)}")
         else:
             # Confirm before removing
-            response = input(f"\nRemove {len(files_to_remove)} backup files? [y/N] ")
+            response = input(
+                f"\nRemove {len(files_to_remove)} backup files? [y/N] ", )
             if response.lower() != "y":
                 print("Cancelled.")
                 return 0

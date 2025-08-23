@@ -353,7 +353,68 @@ else:
         print("❌ No valid packages specified, defaulting to haive-core")
         autoapi_dirs = [ALL_PACKAGES["core"]]
 
-autodoc_mock_imports = []
+autodoc_mock_imports = [
+    # LangChain core dependencies
+    "langchain",
+    "langchain_core",
+    "langchain_text_splitters",
+    "langchain_community",
+    "langchain_openai",
+    "langchain_anthropic",
+    "langchain_google_genai",
+    "langchain_google_vertexai",
+    "langchain_huggingface",
+    "langgraph",
+    "langgraph.checkpoint",
+    "langgraph.checkpoint.memory",
+    "langgraph.checkpoint.postgres",
+    "langgraph.checkpoint.postgres.aio",
+    
+    # Other AI/ML dependencies that might not be available in docs build
+    "openai",
+    "anthropic", 
+    "google.generativeai",
+    "tiktoken",
+    "transformers",
+    "torch",
+    "numpy",
+    "pandas",
+    "scipy",
+    "sklearn",
+    "matplotlib",
+    "plotly",
+    "streamlit",
+    "gradio",
+    
+    # Optional dependencies
+    "redis",
+    "elasticsearch",
+    "weaviate",
+    "chromadb",
+    "pinecone",
+    "qdrant_client",
+    "pymongo",
+    "psycopg2",
+    "psycopg_pool", 
+    "psycopg",
+    "sqlite3",
+    "dotenv",
+    "lazy_loader",
+    
+    # Additional missing dependencies
+    "sentence_transformers",
+    "faiss",
+    "boto3",
+    
+    # Development/testing dependencies
+    "pytest",
+    "pytest_asyncio",
+    "coverage",
+    "mypy",
+    "black",
+    "isort",
+    "flake8",
+]
 
 autoapi_root = "api"
 autoapi_add_toctree_entry = True
@@ -361,7 +422,7 @@ autoapi_generate_api_docs = True
 autoapi_python_class_content = "both"
 autoapi_member_order = "bysource"
 autoapi_keep_files = True
-autoapi_python_use_implicit_namespaces = False
+autoapi_python_use_implicit_namespaces = True
 
 # Include ALL members and show everything
 autoapi_options = [
@@ -724,7 +785,8 @@ autodoc_default_options = {
 autodoc_typehints = "description"
 autodoc_typehints_description_target = "documented"
 autodoc_typehints_format = "short"
-autodoc_mock_imports = []
+# Use the same mock imports list defined above
+# autodoc_mock_imports is already defined above with all necessary dependencies
 autodoc_class_signature = "separated"
 autodoc_preserve_defaults = True
 
