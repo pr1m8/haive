@@ -44,3 +44,7 @@
 [submodule "tools/haive-docs"]
 	path = tools/haive-docs
 	url = https://github.com/pr1m8/haive-docs.git
+[submodule "packages/haive-hap"]
+	path = packages/haive-hap
+	url = https://github.com/pr1m8/haive-hap.git
+	branch = main
