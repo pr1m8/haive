@@ -40,7 +40,7 @@
       "path": "packages/haive-games",
       "settings": {
         "git.openRepositoryInParentFolders": "never",
-        "python.defaultInterpreterPath": "../../.venv/bin/python"
+        "python.defaultInterpreterPath": "/home/will/Projects/haive/.venv/bin/python"
       }
     },
     { 
@@ -48,7 +48,11 @@
       "path": "packages/haive-mcp",
       "settings": {
         "git.openRepositoryInParentFolders": "never",
-        "python.defaultInterpreterPath": "../../.venv/bin/python"
+        "python.defaultInterpreterPath": "../../.venv/bin/python",
+        "files.exclude": {
+          "**/docs/build": false,
+          "docs/build": false
+        }
       }
     },
     { 
@@ -127,7 +131,8 @@
       "**/.mypy_cache": true,
       "**/.venv": true,
       "**/node_modules": true,
-      "**/.git": false
+      "**/.git": false,
+      "**/docs/build": false
     },
 
     // Git configuration for multi-repo workspace
@@ -159,7 +164,9 @@
       "**/.venv": true,
       "**/node_modules": true,
       "**/__pycache__": true,
-      "**/*.pyc": true
+      "**/*.pyc": true,
+      "**/docs/build": false,
+      "**/build": false
     },
 
     // GitLens configuration for better submodule visibility
@@ -174,7 +181,8 @@
     "gitlens.showWhatsNewAfterUpgrades": false,
     "gitlens.currentLine.enabled": true,
     "gitlens.codeLens.enabled": true,
-    "gitlens.statusBar.enabled": true
+    "gitlens.statusBar.enabled": true,
+    "liveServer.settings.multiRootWorkspaceName": "🏠 Haive (meta)"
   },
 
   "extensions": {
