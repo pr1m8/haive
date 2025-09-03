@@ -34,5 +34,5 @@ Documents to evaluate:
 
 For each document, provide a clear PASS/FAIL decision with justification.""",
         ),
-    ]
+    ],
 )

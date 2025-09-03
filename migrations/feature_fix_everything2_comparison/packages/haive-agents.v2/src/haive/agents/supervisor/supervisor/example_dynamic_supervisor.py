@@ -21,11 +21,11 @@ This example shows how to create a dynamic supervisor system that can:
 4. Track performance
 """
 
-import asyncio
 import logging
-
+import asyncio
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage, SystemMessage
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -38,7 +38,6 @@ async def create_dynamic_supervisor_system():
     try:
         from dynamic_multi_agent import DynamicMultiAgent
 
-        from haive.agents.react.agent import ReactAgent
         from haive.agents.simple.agent import SimpleAgent
     except ImportError:
         return None
@@ -70,9 +69,7 @@ async def create_dynamic_supervisor_system():
 
     # Simple agents for basic tasks
     research_agent = SimpleAgent(name="research_specialist", engine=research_engine)
-    research_agent.capability = (
-        "research, information gathering, fact-finding, web search"
-    )
+    research_agent.capability = "research, information gathering, fact-finding, web search"
 
     writing_agent = SimpleAgent(name="content_writer", engine=writing_engine)
     writing_agent.capability = "writing, content creation, documentation, storytelling"
@@ -98,10 +95,10 @@ async def demonstrate_dynamic_capabilities(supervisor, analysis_engine):
         {
             "messages": [
                 HumanMessage(
-                    content="Research the latest developments in quantum computing"
-                )
-            ]
-        }
+                    content="Research the latest developments in quantum computing",
+                ),
+            ],
+        },
     )
 
     result1.get("messages", [])[-1]
@@ -112,10 +109,10 @@ async def demonstrate_dynamic_capabilities(supervisor, analysis_engine):
         {
             "messages": [
                 HumanMessage(
-                    content="Write a blog post introduction about the future of AI"
-                )
-            ]
-        }
+                    content="Write a blog post introduction about the future of AI",
+                ),
+            ],
+        },
     )
 
     # Test 3: Analysis request (no analyst yet)
@@ -123,9 +120,9 @@ async def demonstrate_dynamic_capabilities(supervisor, analysis_engine):
     await supervisor.ainvoke(
         {
             "messages": [
-                HumanMessage(content="Analyze the trends in the research findings")
-            ]
-        }
+                HumanMessage(content="Analyze the trends in the research findings"),
+            ],
+        },
     )
 
     # Add analysis agent dynamically
@@ -133,13 +130,12 @@ async def demonstrate_dynamic_capabilities(supervisor, analysis_engine):
     from haive.agents.simple.agent import SimpleAgent
 
     analysis_agent = SimpleAgent(name="data_analyst", engine=analysis_engine)
-    analysis_agent.capability = (
-        "analysis, data processing, pattern recognition, insights"
-    )
+    analysis_agent.capability = "analysis, data processing, pattern recognition, insights"
 
     # Register the new agent
     supervisor.register_agent_dynamically(
-        analysis_agent, capability="data analysis and insights generation"
+        analysis_agent,
+        capability="data analysis and insights generation",
     )
 
     # Test 4: Analysis request with analyst
@@ -147,9 +143,9 @@ async def demonstrate_dynamic_capabilities(supervisor, analysis_engine):
     await supervisor.ainvoke(
         {
             "messages": [
-                HumanMessage(content="Analyze the market trends for AI adoption")
-            ]
-        }
+                HumanMessage(content="Analyze the market trends for AI adoption"),
+            ],
+        },
     )
 
     # Show performance metrics
@@ -164,7 +160,7 @@ async def demonstrate_complex_workflow(supervisor):
     messages = [
         SystemMessage(content="You are part of a research project team."),
         HumanMessage(
-            content="Let's research and write about the impact of AI on healthcare"
+            content="Let's research and write about the impact of AI on healthcare",
         ),
     ]
 
@@ -175,8 +171,8 @@ async def demonstrate_complex_workflow(supervisor):
     # Step 2: Analysis
     messages.append(
         HumanMessage(
-            content="Now analyze the key findings and identify the main trends"
-        )
+            content="Now analyze the key findings and identify the main trends",
+        ),
     )
     result2 = await supervisor.ainvoke({"messages": messages})
     messages = result2.get("messages", messages)
@@ -184,8 +180,8 @@ async def demonstrate_complex_workflow(supervisor):
     # Step 3: Writing
     messages.append(
         HumanMessage(
-            content="Write a comprehensive report based on the research and analysis"
-        )
+            content="Write a comprehensive report based on the research and analysis",
+        ),
     )
     result3 = await supervisor.ainvoke({"messages": messages})
     messages = result3.get("messages", messages)
@@ -201,12 +197,10 @@ async def demonstrate_complex_workflow(supervisor):
 async def demonstrate_react_agent_integration(supervisor):
     """Show how to add a ReactAgent with tools."""
     try:
+        from haive.agents.react.agent import ReactAgent
         from haive.tools.math import calculator
         from haive.tools.web import web_search
-
-        from haive.agents.react.agent import ReactAgent
     except ImportError:
-
         # Create mock tools for demo
         class MockTool:
             def __init__(self, name: str, description):
@@ -234,7 +228,8 @@ async def demonstrate_react_agent_integration(supervisor):
     # Add to supervisor
 
     supervisor.register_agent_dynamically(
-        react_agent, capability="specialized tool usage and problem solving"
+        react_agent,
+        capability="specialized tool usage and problem solving",
     )
 
     # Test tool usage
@@ -243,10 +238,10 @@ async def demonstrate_react_agent_integration(supervisor):
         {
             "messages": [
                 HumanMessage(
-                    content="Calculate the compound interest on $10,000 at 5% for 10 years"
-                )
-            ]
-        }
+                    content="Calculate the compound interest on $10,000 at 5% for 10 years",
+                ),
+            ],
+        },
     )
 
     # Note: In real usage, the ReactAgent would use the calculator tool

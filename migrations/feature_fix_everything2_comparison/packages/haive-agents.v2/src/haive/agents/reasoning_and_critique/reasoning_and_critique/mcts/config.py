@@ -11,13 +11,13 @@ Functions:
 
 # src/haive/agents/mcts/config.py
 
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
 
 from haive.agents.reasoning_and_critique.mcts.state import TreeState
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 class MCTSAgentConfig(AgentConfig):
@@ -34,32 +34,39 @@ class MCTSAgentConfig(AgentConfig):
 
     # Tools
     tools: list[BaseTool] = Field(
-        default_factory=list, description="Tools available to the agent"
+        default_factory=list,
+        description="Tools available to the agent",
     )
 
     # MCTS parameters
     max_rollouts: int = Field(default=5, description="Maximum depth of rollouts")
     candidates_per_rollout: int = Field(
-        default=5, description="Number of candidates to generate per rollout"
+        default=5,
+        description="Number of candidates to generate per rollout",
     )
     exploration_weight: float = Field(
-        default=1.0, description="Exploration weight for UCB"
+        default=1.0,
+        description="Exploration weight for UCB",
     )
 
     # Prompts
     initial_prompt_template: ChatPromptTemplate | None = Field(
-        default=None, description="Template for initial response"
+        default=None,
+        description="Template for initial response",
     )
     expansion_prompt_template: ChatPromptTemplate | None = Field(
-        default=None, description="Template for candidate expansion"
+        default=None,
+        description="Template for candidate expansion",
     )
     reflection_prompt_template: ChatPromptTemplate | None = Field(
-        default=None, description="Template for reflection"
+        default=None,
+        description="Template for reflection",
     )
 
     # System prompt
     system_prompt: str = Field(
-        default="You are an AI assistant.", description="System prompt for the agent"
+        default="You are an AI assistant.",
+        description="System prompt for the agent",
     )
 
     @classmethod
@@ -68,12 +75,13 @@ class MCTSAgentConfig(AgentConfig):
         llm_config: LLMConfig | None = None,
         tools: list[BaseTool] | None = None,
         system_prompt: str | None = None,
-        **kwargs
+        **kwargs,
     ) -> "MCTSAgentConfig":
         """Create an MCTS Agent config from LLM config and tools."""
         # Use defaults if not provided
         llm_config = llm_config or AzureLLMConfig(
-            model="gpt-4o", parameters={"temperature": 0.7}
+            model="gpt-4o",
+            parameters={"temperature": 0.7},
         )
         tools = tools or []
         system_prompt = system_prompt or "You are an AI assistant."
@@ -87,7 +95,7 @@ class MCTSAgentConfig(AgentConfig):
                     ("system", system_prompt),
                     ("user", "{input}"),
                     MessagesPlaceholder(variable_name="messages", optional=True),
-                ]
+                ],
             )
             kwargs["initial_prompt_template"] = initial_prompt
 
@@ -97,7 +105,7 @@ class MCTSAgentConfig(AgentConfig):
                     ("system", system_prompt),
                     ("user", "{input}"),
                     MessagesPlaceholder(variable_name="messages"),
-                ]
+                ],
             )
             kwargs["expansion_prompt_template"] = expansion_prompt
 
@@ -110,10 +118,13 @@ class MCTSAgentConfig(AgentConfig):
                     ),
                     ("user", "{input}"),
                     MessagesPlaceholder(variable_name="candidate"),
-                ]
+                ],
             )
             kwargs["reflection_prompt_template"] = reflection_prompt
 
         return cls(
-            llm_config=llm_config, tools=tools, system_prompt=system_prompt, **kwargs
+            llm_config=llm_config,
+            tools=tools,
+            system_prompt=system_prompt,
+            **kwargs,
         )

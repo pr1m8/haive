@@ -9,15 +9,17 @@ Functions:
     retriever: Retriever functionality.
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any
 
-from haive.core.engine.agent.agent import Agent, register_agent
 from langgraph.graph import END, START
 from langgraph.types import Command
 
 from haive.agents.rag.filtered.config import FilteredRAGConfig
 from haive.agents.rag.filtered.state import FilteredRAGState
+from haive.core.engine.agent.agent import Agent, register_agent
 
 logger = logging.getLogger(__name__)
 
@@ -93,7 +95,7 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
                 update={
                     "error": f"Error retrieving documents: {e!s}",
                     "retrieved_documents": [],
-                }
+                },
             )
 
     def filter_documents(self, state: FilteredRAGState) -> Command:
@@ -126,7 +128,7 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
 
                 try:
                     score = self.document_filter.invoke(
-                        {"query": query, "document": doc.page_content}
+                        {"query": query, "document": doc.page_content},
                     )
 
                     # Try to convert the score to a float
@@ -150,7 +152,7 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
                 update={
                     "filtered_documents": filtered_docs,
                     "relevance_scores": relevance_scores,
-                }
+                },
             )
 
         except Exception as e:
@@ -159,7 +161,7 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
                 update={
                     "error": f"Error filtering documents: {e!s}",
                     "filtered_documents": documents,  # Fall back to all documents
-                }
+                },
             )
 
     def generate_answer(self, state: FilteredRAGState) -> Command:
@@ -180,15 +182,17 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
             if not documents:
                 return Command(
                     update={
-                        "answer": "I couldn't find any relevant documents to answer your query."
-                    }
+                        "answer": "I couldn't find any relevant documents to answer your query.",
+                    },
                 )
 
             if not self.answer_generator:
                 return Command(
                     update={
-                        "answer": f"Found {len(documents)} relevant documents, but no answer generator is configured."
-                    }
+                        "answer": f"Found {
+                            len(documents)
+                        } relevant documents, but no answer generator is configured.",
+                    },
                 )
 
             # Prepare context from documents
@@ -213,7 +217,7 @@ class FilteredRAGAgent(Agent[FilteredRAGConfig]):
                 update={
                     "error": f"Error generating answer: {e!s}",
                     "answer": "I encountered an error while trying to generate an answer.",
-                }
+                },
             )
 
     def setup_workflow(self) -> None:

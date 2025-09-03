@@ -1,0 +1,18 @@
+---
+name: CI with Submodules
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive # Fetch and checkout all submodules
+          fetch-depth: 0 # Ensures full history for submodules if needed
+      - name: Confirm submodules
+        run: |-
+          git submodule status

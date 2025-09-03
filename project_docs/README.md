@@ -96,12 +96,17 @@ Use `@memory_index/` to reference specific memories throughout the project.
 Organized documentation for each Haive framework package:
 
 - **[Packages Overview](packages/README.md)** - Package documentation hub
+- **[haive-core](../packages/haive-core/docs/build/html/index.html)** - 🚀 **Enhanced Documentation Available!**
+  - Beautiful Furo theme with purple/violet color scheme
+  - Interactive navigation with sphinx-design cards
+  - Comprehensive API reference with emojis and tooltips
+  - Enhanced AutoAPI with better organization
+  - Full integration of 36+ Sphinx extensions
 - **[haive-agents](packages/haive-agents/README.md)** - Agent implementations, patterns, and guides
   - [User Guides](packages/haive-agents/guides/) - Tutorials and usage examples
   - [Implementation Details](packages/haive-agents/implementation/) - Technical implementation
   - [Design Patterns](packages/haive-agents/patterns/) - Common patterns and fixes
   - [Architecture](packages/haive-agents/architecture/) - Agent architecture documentation
-- **haive-core** - Core framework documentation (see [Active Architecture](active/architecture/))
 - **haive-tools** - Tool integration guides (planned)
 - **haive-games** - Game environment documentation (planned)
 

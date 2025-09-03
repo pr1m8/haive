@@ -23,7 +23,8 @@ def fix_grid_directives(content):
     """Replace grid directives with standard RST."""
     # Replace grid directive with table or list
     content = re.sub(r"\.\. grid::[^\n]*\n(?:   :[^\n]*\n)*", "", content)
-    content = re.sub(r"\.\. grid-item-card::[^\n]*\n(?:   :[^\n]*\n)*", ".. card::\n", content)
+    content = re.sub(r"\.\. grid-item-card::[^\n]*\n(?:   :[^\n]*\n)*",
+                     ".. card::\n", content)
 
     return content
 

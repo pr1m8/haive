@@ -336,5 +336,5 @@ For detailed API documentation, see the [API Reference](../../../../docs/source/
 - [Base Conversation Agent](../base/README.md) - Core conversation infrastructure
 - [Directed Conversation](../directed/README.md) - Moderator-controlled alternative
 - [Debate Conversation](../debate/README.md) - Structured argumentative format
-- [Collaborative Conversation](../collaberative/README.md) - Team-based problem solving
+- [Collaborative Conversation](../collaborative/README.md) - Team-based problem solving
 - [Social Media Conversation](../social_media/README.md) - Platform-style interactions

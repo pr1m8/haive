@@ -11,10 +11,13 @@ Key improvements:
 - Controlled document length
 """
 
+from __future__ import annotations
+
 from enum import Enum
 
 from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 
 class HyDEPromptType(str, Enum):
@@ -61,7 +64,7 @@ HYDE_GENERATION_PROMPTS: dict[HyDEPromptType, ChatPromptTemplate] = {
             - Do not mention this is hypothetical - write as if it's real content""",
             ),
             ("human", "Write a comprehensive document that answers: {query}"),
-        ]
+        ],
     ),
     HyDEPromptType.TECHNICAL: ChatPromptTemplate.from_messages(
         [
@@ -80,7 +83,7 @@ HYDE_GENERATION_PROMPTS: dict[HyDEPromptType, ChatPromptTemplate] = {
             - Structure as technical reference material""",
             ),
             ("human", "Write technical documentation that covers: {query}"),
-        ]
+        ],
     ),
     HyDEPromptType.ACADEMIC: ChatPromptTemplate.from_messages(
         [
@@ -99,7 +102,7 @@ HYDE_GENERATION_PROMPTS: dict[HyDEPromptType, ChatPromptTemplate] = {
             - Structure as academic literature""",
             ),
             ("human", "Write an academic passage addressing: {query}"),
-        ]
+        ],
     ),
     HyDEPromptType.NEWS: ChatPromptTemplate.from_messages(
         [
@@ -118,7 +121,7 @@ HYDE_GENERATION_PROMPTS: dict[HyDEPromptType, ChatPromptTemplate] = {
             - Structure as news reporting""",
             ),
             ("human", "Write a news article covering: {query}"),
-        ]
+        ],
     ),
     HyDEPromptType.TUTORIAL: ChatPromptTemplate.from_messages(
         [
@@ -137,7 +140,7 @@ HYDE_GENERATION_PROMPTS: dict[HyDEPromptType, ChatPromptTemplate] = {
             - Structure as educational content""",
             ),
             ("human", "Write a tutorial explaining: {query}"),
-        ]
+        ],
     ),
     HyDEPromptType.REFERENCE: ChatPromptTemplate.from_messages(
         [
@@ -156,7 +159,7 @@ HYDE_GENERATION_PROMPTS: dict[HyDEPromptType, ChatPromptTemplate] = {
             - Structure as reference material""",
             ),
             ("human", "Write a reference entry for: {query}"),
-        ]
+        ],
     ),
     HyDEPromptType.BUSINESS: ChatPromptTemplate.from_messages(
         [
@@ -175,10 +178,9 @@ HYDE_GENERATION_PROMPTS: dict[HyDEPromptType, ChatPromptTemplate] = {
             - Structure as business documentation""",
             ),
             ("human", "Write business content addressing: {query}"),
-        ]
+        ],
     ),
 }
-
 
 # ==============================================================================
 # MULTI-PERSPECTIVE GENERATION
@@ -202,9 +204,8 @@ HYDE_PERSPECTIVE_PROMPT = ChatPromptTemplate.from_messages(
         Write approximately {target_length} characters.""",
         ),
         ("human", "From the perspective of a {perspective}, write about: {query}"),
-    ]
+    ],
 )
-
 
 # ==============================================================================
 # ANALYSIS AND PARSING PROMPTS (Separate from generation)
@@ -236,9 +237,8 @@ Original Query: {query}
 
 Provide structured analysis including document type, key concepts, target audience, and retrieval strategy.""",
         ),
-    ]
+    ],
 )
-
 
 HYDE_EXTRACTION_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -261,9 +261,8 @@ HYDE_EXTRACTION_PROMPT = ChatPromptTemplate.from_messages(
 
 Provide a structured extraction suitable for semantic search and retrieval.""",
         ),
-    ]
+    ],
 )
-
 
 # ==============================================================================
 # CONTROLLED LENGTH GENERATION
@@ -285,9 +284,8 @@ HYDE_LENGTH_CONTROLLED_PROMPT = ChatPromptTemplate.from_messages(
         - Long (2000 chars): Comprehensive coverage with context""",
         ),
         ("human", "Question: {query}"),
-    ]
+    ],
 )
-
 
 # ==============================================================================
 # ENSEMBLE GENERATION (Multiple documents)
@@ -308,9 +306,8 @@ HYDE_ENSEMBLE_PROMPT = ChatPromptTemplate.from_messages(
         Vary the approach while maintaining quality and relevance.""",
         ),
         ("human", "Generate {num_documents} different documents answering: {query}"),
-    ]
+    ],
 )
-
 
 # ==============================================================================
 # UTILITY FUNCTIONS
@@ -318,7 +315,8 @@ HYDE_ENSEMBLE_PROMPT = ChatPromptTemplate.from_messages(
 
 
 def get_generation_prompt(
-    prompt_type: HyDEPromptType = HyDEPromptType.GENERAL, target_length: int = 1000
+    prompt_type: HyDEPromptType = HyDEPromptType.GENERAL,
+    target_length: int = 1000,
 ) -> ChatPromptTemplate:
     """Get a generation prompt for the specified type and length.
 
@@ -334,7 +332,8 @@ def get_generation_prompt(
 
 
 def get_perspective_prompt(
-    perspective: HyDEPerspective, target_length: int = 1000
+    perspective: HyDEPerspective,
+    target_length: int = 1000,
 ) -> ChatPromptTemplate:
     """Get a perspective-based generation prompt.
 
@@ -346,12 +345,14 @@ def get_perspective_prompt(
         Configured ChatPromptTemplate
     """
     return HYDE_PERSPECTIVE_PROMPT.partial(
-        perspective=perspective.value, target_length=target_length
+        perspective=perspective.value,
+        target_length=target_length,
     )
 
 
 def get_ensemble_prompt(
-    num_documents: int = 3, target_length: int = 1000
+    num_documents: int = 3,
+    target_length: int = 1000,
 ) -> ChatPromptTemplate:
     """Get an ensemble generation prompt for multiple documents.
 
@@ -363,7 +364,8 @@ def get_ensemble_prompt(
         Configured ChatPromptTemplate
     """
     return HYDE_ENSEMBLE_PROMPT.partial(
-        num_documents=num_documents, target_length=target_length
+        num_documents=num_documents,
+        target_length=target_length,
     )
 
 
@@ -376,19 +378,24 @@ class HyDEPromptConfig(BaseModel):
     """Configuration for HyDE prompt selection."""
 
     prompt_type: HyDEPromptType = Field(
-        default=HyDEPromptType.GENERAL, description="Type of prompt to use"
+        default=HyDEPromptType.GENERAL,
+        description="Type of prompt to use",
     )
     perspective: HyDEPerspective | None = Field(
-        default=None, description="Optional perspective for generation"
+        default=None,
+        description="Optional perspective for generation",
     )
     target_length: int = Field(
-        default=1000, description="Target character length for generated documents"
+        default=1000,
+        description="Target character length for generated documents",
     )
     use_ensemble: bool = Field(
-        default=False, description="Whether to generate multiple documents"
+        default=False,
+        description="Whether to generate multiple documents",
     )
     num_documents: int = Field(
-        default=3, description="Number of documents for ensemble generation"
+        default=3,
+        description="Number of documents for ensemble generation",
     )
 
 

@@ -1,0 +1,1132 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.utils.haive_discovery - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/will-astley/haive/blob/main/docs/source/api_clean/haive/core/utils/haive_discovery/index.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/will-astley/haive/edit/main/docs/source/api_clean/haive/core/utils/haive_discovery/index.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="haive-core-utils-haive-discovery">
+<h1><a class="reference internal" href="#module-0" title="haive.core.utils.haive_discovery"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core.utils.haive_discovery</span></code></a><a class="headerlink" href="#haive-core-utils-haive-discovery" title="Link to this heading">¶</a></h1>
+<p id="module-haive.core.utils.haive_discovery">Haive Component Discovery System</p>
+<p>A comprehensive tool for discovering, analyzing, and documenting components
+in the Haive AI framework.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="base_analyzer/index.html#module-haive.core.utils.haive_discovery.base_analyzer" title="haive.core.utils.haive_discovery.base_analyzer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">haive.core.utils.haive_discovery.base_analyzer</span></code></a></p></td>
+<td><p>Base analyzer class and common functionality for component analysis.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">¶</a></h2>
+<p class="rubric">haive.core.utils.haive_discovery.__all__</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer" title="haive.core.utils.haive_discovery.ComponentAnalyzer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">haive.core.utils.haive_discovery.ComponentAnalyzer</span></code></a></p></td>
+<td><p>Abstract base class for component analyzers.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p id="module-0">Haive Component Discovery System</p>
+<p>A comprehensive tool for discovering, analyzing, and documenting components
+in the Haive AI framework.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentAnalyzer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">ComponentAnalyzer</span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/base_analyzer.html#ComponentAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentAnalyzer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>Abstract base class for component analyzers.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentAnalyzer.analyze">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/base_analyzer.html#ComponentAnalyzer.analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.analyze" title="Link to this definition">¶</a></dt>
+<dd><p>Analyze the object and return component info.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentAnalyzer.can_analyze">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">can_analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/base_analyzer.html#ComponentAnalyzer.can_analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.can_analyze" title="Link to this definition">¶</a></dt>
+<dd><p>Check if this analyzer can handle the given object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentAnalyzer.create_engine_config">
+<span class="sig-name descname"><span class="pre">create_engine_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/base_analyzer.html#ComponentAnalyzer.create_engine_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.create_engine_config" title="Link to this definition">¶</a></dt>
+<dd><p>Create a Haive engine config if possible.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentAnalyzer.create_pydantic_model">
+<span class="sig-name descname"><span class="pre">create_pydantic_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><span class="pre">type</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_serializable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">BaseModel</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/base_analyzer.html#ComponentAnalyzer.create_pydantic_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.create_pydantic_model" title="Link to this definition">¶</a></dt>
+<dd><p>Create a Pydantic model from a class signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentAnalyzer.create_tool">
+<span class="sig-name descname"><span class="pre">create_tool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/base_analyzer.html#ComponentAnalyzer.create_tool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.create_tool" title="Link to this definition">¶</a></dt>
+<dd><p>Convert component to a StructuredTool if possible.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentAnalyzer.detect_env_vars">
+<span class="sig-name descname"><span class="pre">detect_env_vars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/base_analyzer.html#ComponentAnalyzer.detect_env_vars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.detect_env_vars" title="Link to this definition">¶</a></dt>
+<dd><p>Detect environment variables in source code.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentAnalyzer.extract_schema">
+<span class="sig-name descname"><span class="pre">extract_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/base_analyzer.html#ComponentAnalyzer.extract_schema"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.extract_schema" title="Link to this definition">¶</a></dt>
+<dd><p>Extract schema information from object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentAnalyzer.get_source_code">
+<span class="sig-name descname"><span class="pre">get_source_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/base_analyzer.html#ComponentAnalyzer.get_source_code"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.get_source_code" title="Link to this definition">¶</a></dt>
+<dd><p>Extract source code from object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentAnalyzer.safe_get_class_name">
+<span class="sig-name descname"><span class="pre">safe_get_class_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/base_analyzer.html#ComponentAnalyzer.safe_get_class_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.safe_get_class_name" title="Link to this definition">¶</a></dt>
+<dd><p>Safely get the class name of an object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentAnalyzer.safe_get_name">
+<span class="sig-name descname"><span class="pre">safe_get_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Component'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/base_analyzer.html#ComponentAnalyzer.safe_get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.safe_get_name" title="Link to this definition">¶</a></dt>
+<dd><p>Safely get the name of an object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">ComponentInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_vars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tool_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/component_info.html#ComponentInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Standardized component information with serialization support.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.class_name">
+<span class="sig-name descname"><span class="pre">class_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.class_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.component_type">
+<span class="sig-name descname"><span class="pre">component_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.component_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.description" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.engine_config">
+<span class="sig-name descname"><span class="pre">engine_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.engine_config" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.env_vars">
+<span class="sig-name descname"><span class="pre">env_vars</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.env_vars" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.metadata" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.module_path">
+<span class="sig-name descname"><span class="pre">module_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.module_path" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.schema" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.source_code">
+<span class="sig-name descname"><span class="pre">source_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.source_code" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.timestamp">
+<span class="sig-name descname"><span class="pre">timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.timestamp" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/component_info.html#ComponentInfo.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.to_dict" title="Link to this definition">¶</a></dt>
+<dd><p>Convert to dictionary, handling non-serializable fields.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.to_document_content">
+<span class="sig-name descname"><span class="pre">to_document_content</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/component_info.html#ComponentInfo.to_document_content"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.to_document_content" title="Link to this definition">¶</a></dt>
+<dd><p>Convert to RAG-friendly document content.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ComponentInfo.tool_instance">
+<span class="sig-name descname"><span class="pre">tool_instance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#haive.core.utils.haive_discovery.ComponentInfo.tool_instance" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.DocumentLoaderAnalyzer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">DocumentLoaderAnalyzer</span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/tool_analyzers.html#DocumentLoaderAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.DocumentLoaderAnalyzer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer" title="haive.core.utils.haive_discovery.base_analyzer.ComponentAnalyzer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComponentAnalyzer</span></code></a></p>
+<p>Analyzer for document loaders.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.DocumentLoaderAnalyzer.analyze">
+<span class="sig-name descname"><span class="pre">analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/tool_analyzers.html#DocumentLoaderAnalyzer.analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.DocumentLoaderAnalyzer.analyze" title="Link to this definition">¶</a></dt>
+<dd><p>Analyze the object and return component info.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.DocumentLoaderAnalyzer.can_analyze">
+<span class="sig-name descname"><span class="pre">can_analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/tool_analyzers.html#DocumentLoaderAnalyzer.can_analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.DocumentLoaderAnalyzer.can_analyze" title="Link to this definition">¶</a></dt>
+<dd><p>Check if this analyzer can handle the given object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.DocumentLoaderAnalyzer.create_tool">
+<span class="sig-name descname"><span class="pre">create_tool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/tool_analyzers.html#DocumentLoaderAnalyzer.create_tool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.DocumentLoaderAnalyzer.create_tool" title="Link to this definition">¶</a></dt>
+<dd><p>Convert document loader to a StructuredTool.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.DocumentationWriter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">DocumentationWriter</span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/documentation_writer.html#DocumentationWriter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.DocumentationWriter" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Handles writing documentation for discovered components.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.DocumentationWriter.save_to_project_docs">
+<span class="sig-name descname"><span class="pre">save_to_project_docs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subfolder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'component_discovery'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/documentation_writer.html#DocumentationWriter.save_to_project_docs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.DocumentationWriter.save_to_project_docs" title="Link to this definition">¶</a></dt>
+<dd><p>Save components to timestamped project documentation with separate files for each type.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.EngineAnalyzer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">EngineAnalyzer</span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/engine_analyzer.html#EngineAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.EngineAnalyzer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer" title="haive.core.utils.haive_discovery.base_analyzer.ComponentAnalyzer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComponentAnalyzer</span></code></a></p>
+<p>Analyzer for Haive engines.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.EngineAnalyzer.analyze">
+<span class="sig-name descname"><span class="pre">analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/engine_analyzer.html#EngineAnalyzer.analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.EngineAnalyzer.analyze" title="Link to this definition">¶</a></dt>
+<dd><p>Analyze the object and return component info.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.EngineAnalyzer.can_analyze">
+<span class="sig-name descname"><span class="pre">can_analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/engine_analyzer.html#EngineAnalyzer.can_analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.EngineAnalyzer.can_analyze" title="Link to this definition">¶</a></dt>
+<dd><p>Check if this analyzer can handle the given object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.EnhancedComponentDiscovery">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">EnhancedComponentDiscovery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/discovery_engine.html#EnhancedComponentDiscovery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.EnhancedComponentDiscovery" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Enhanced discovery engine with tool creation capabilities.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.EnhancedComponentDiscovery.add_analyzer">
+<span class="sig-name descname"><span class="pre">add_analyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer" title="haive.core.utils.haive_discovery.base_analyzer.ComponentAnalyzer"><span class="pre">ComponentAnalyzer</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/discovery_engine.html#EnhancedComponentDiscovery.add_analyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.EnhancedComponentDiscovery.add_analyzer" title="Link to this definition">¶</a></dt>
+<dd><p>Add a custom analyzer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.EnhancedComponentDiscovery.discover_from_directory">
+<span class="sig-name descname"><span class="pre">discover_from_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_errors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/discovery_engine.html#EnhancedComponentDiscovery.discover_from_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.EnhancedComponentDiscovery.discover_from_directory" title="Link to this definition">¶</a></dt>
+<dd><p>Discover components from a directory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.EnhancedComponentDiscovery.get_engine_configs">
+<span class="sig-name descname"><span class="pre">get_engine_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/discovery_engine.html#EnhancedComponentDiscovery.get_engine_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.EnhancedComponentDiscovery.get_engine_configs" title="Link to this definition">¶</a></dt>
+<dd><p>Extract all engine configs from components.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.EnhancedComponentDiscovery.get_tools">
+<span class="sig-name descname"><span class="pre">get_tools</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/discovery_engine.html#EnhancedComponentDiscovery.get_tools"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.EnhancedComponentDiscovery.get_tools" title="Link to this definition">¶</a></dt>
+<dd><p>Extract all created tools from components.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.HaiveComponentDiscovery">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">HaiveComponentDiscovery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">haive_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/haive_discovery.html#HaiveComponentDiscovery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#haive.core.utils.haive_discovery.EnhancedComponentDiscovery" title="haive.core.utils.haive_discovery.discovery_engine.EnhancedComponentDiscovery"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnhancedComponentDiscovery</span></code></a></p>
+<p>Specialized discovery for Haive project structure.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_all_categorized">
+<span class="sig-name descname"><span class="pre">discover_all_categorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">create_tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/haive_discovery.html#HaiveComponentDiscovery.discover_all_categorized"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_all_categorized" title="Link to this definition">¶</a></dt>
+<dd><p>Discover all components, properly categorized.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_document_loaders">
+<span class="sig-name descname"><span class="pre">discover_document_loaders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">create_tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/haive_discovery.html#HaiveComponentDiscovery.discover_document_loaders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_document_loaders" title="Link to this definition">¶</a></dt>
+<dd><p>Discover document loaders.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_engines">
+<span class="sig-name descname"><span class="pre">discover_engines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">create_tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/haive_discovery.html#HaiveComponentDiscovery.discover_engines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_engines" title="Link to this definition">¶</a></dt>
+<dd><p>Discover engines from haive-core package.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_individual_tools">
+<span class="sig-name descname"><span class="pre">discover_individual_tools</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">create_tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/haive_discovery.html#HaiveComponentDiscovery.discover_individual_tools"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_individual_tools" title="Link to this definition">¶</a></dt>
+<dd><p>Discover individual tools (not toolkits).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_retrievers">
+<span class="sig-name descname"><span class="pre">discover_retrievers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">create_tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/haive_discovery.html#HaiveComponentDiscovery.discover_retrievers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_retrievers" title="Link to this definition">¶</a></dt>
+<dd><p>Discover retrievers from engine package.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_toolkits">
+<span class="sig-name descname"><span class="pre">discover_toolkits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">create_tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/haive_discovery.html#HaiveComponentDiscovery.discover_toolkits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_toolkits" title="Link to this definition">¶</a></dt>
+<dd><p>Discover toolkits (collections of tools).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_vector_stores">
+<span class="sig-name descname"><span class="pre">discover_vector_stores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">create_tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/haive_discovery.html#HaiveComponentDiscovery.discover_vector_stores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_vector_stores" title="Link to this definition">¶</a></dt>
+<dd><p>Discover vector stores from engine package.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.HaiveComponentDiscovery.save_to_project_docs">
+<span class="sig-name descname"><span class="pre">save_to_project_docs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subfolder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'component_discovery'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/haive_discovery.html#HaiveComponentDiscovery.save_to_project_docs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.save_to_project_docs" title="Link to this definition">¶</a></dt>
+<dd><p>Save components to project documentation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.RetrieverAnalyzer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">RetrieverAnalyzer</span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/retriever_analyzers.html#RetrieverAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.RetrieverAnalyzer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer" title="haive.core.utils.haive_discovery.base_analyzer.ComponentAnalyzer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComponentAnalyzer</span></code></a></p>
+<p>Analyzer for retrievers.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.RetrieverAnalyzer.analyze">
+<span class="sig-name descname"><span class="pre">analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/retriever_analyzers.html#RetrieverAnalyzer.analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.RetrieverAnalyzer.analyze" title="Link to this definition">¶</a></dt>
+<dd><p>Analyze the object and return component info.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.RetrieverAnalyzer.can_analyze">
+<span class="sig-name descname"><span class="pre">can_analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/retriever_analyzers.html#RetrieverAnalyzer.can_analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.RetrieverAnalyzer.can_analyze" title="Link to this definition">¶</a></dt>
+<dd><p>Check if this analyzer can handle the given object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.RetrieverAnalyzer.create_engine_config">
+<span class="sig-name descname"><span class="pre">create_engine_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/retriever_analyzers.html#RetrieverAnalyzer.create_engine_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.RetrieverAnalyzer.create_engine_config" title="Link to this definition">¶</a></dt>
+<dd><p>Create a Haive RetrieverEngine config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.RetrieverAnalyzer.create_tool">
+<span class="sig-name descname"><span class="pre">create_tool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/retriever_analyzers.html#RetrieverAnalyzer.create_tool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.RetrieverAnalyzer.create_tool" title="Link to this definition">¶</a></dt>
+<dd><p>Convert retriever to a StructuredTool.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ToolAnalyzer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">ToolAnalyzer</span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/tool_analyzers.html#ToolAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ToolAnalyzer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer" title="haive.core.utils.haive_discovery.base_analyzer.ComponentAnalyzer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComponentAnalyzer</span></code></a></p>
+<p>Analyzer for LangChain tools.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ToolAnalyzer.analyze">
+<span class="sig-name descname"><span class="pre">analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/tool_analyzers.html#ToolAnalyzer.analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ToolAnalyzer.analyze" title="Link to this definition">¶</a></dt>
+<dd><p>Analyze the object and return component info.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.ToolAnalyzer.can_analyze">
+<span class="sig-name descname"><span class="pre">can_analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/tool_analyzers.html#ToolAnalyzer.can_analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.ToolAnalyzer.can_analyze" title="Link to this definition">¶</a></dt>
+<dd><p>Check if this analyzer can handle the given object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.VectorStoreAnalyzer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">VectorStoreAnalyzer</span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/retriever_analyzers.html#VectorStoreAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.VectorStoreAnalyzer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer" title="haive.core.utils.haive_discovery.base_analyzer.ComponentAnalyzer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComponentAnalyzer</span></code></a></p>
+<p>Analyzer for vector stores.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.VectorStoreAnalyzer.analyze">
+<span class="sig-name descname"><span class="pre">analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/retriever_analyzers.html#VectorStoreAnalyzer.analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.VectorStoreAnalyzer.analyze" title="Link to this definition">¶</a></dt>
+<dd><p>Analyze the object and return component info.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.VectorStoreAnalyzer.can_analyze">
+<span class="sig-name descname"><span class="pre">can_analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/retriever_analyzers.html#VectorStoreAnalyzer.can_analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.VectorStoreAnalyzer.can_analyze" title="Link to this definition">¶</a></dt>
+<dd><p>Check if this analyzer can handle the given object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.VectorStoreAnalyzer.create_engine_config">
+<span class="sig-name descname"><span class="pre">create_engine_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/retriever_analyzers.html#VectorStoreAnalyzer.create_engine_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.VectorStoreAnalyzer.create_engine_config" title="Link to this definition">¶</a></dt>
+<dd><p>Create a Haive VectorStoreEngine config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.VectorStoreAnalyzer.create_tool">
+<span class="sig-name descname"><span class="pre">create_tool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/retriever_analyzers.html#VectorStoreAnalyzer.create_tool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.VectorStoreAnalyzer.create_tool" title="Link to this definition">¶</a></dt>
+<dd><p>Convert vector store to a StructuredTool.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.analyze_failed_imports">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">analyze_failed_imports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">discovery</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery" title="haive.core.utils.haive_discovery.haive_discovery.HaiveComponentDiscovery"><span class="pre">HaiveComponentDiscovery</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#analyze_failed_imports"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.analyze_failed_imports" title="Link to this definition">¶</a></dt>
+<dd><p>Analyze failed module imports from a discovery run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>discovery</strong> – Discovery instance that has been run</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary categorizing failures</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.create_custom_analyzer">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">create_custom_analyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_analyze_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyze_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_tool_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_engine_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer" title="haive.core.utils.haive_discovery.base_analyzer.ComponentAnalyzer"><span class="pre">ComponentAnalyzer</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#create_custom_analyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.create_custom_analyzer" title="Link to this definition">¶</a></dt>
+<dd><p>Create a custom analyzer class dynamically.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Name for the analyzer class</p></li>
+<li><p><strong>can_analyze_func</strong> – Function to check if object can be analyzed</p></li>
+<li><p><strong>analyze_func</strong> – Function to analyze the object</p></li>
+<li><p><strong>create_tool_func</strong> – Optional function to create tools</p></li>
+<li><p><strong>create_engine_func</strong> – Optional function to create engine configs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Custom analyzer class</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">can_analyze_custom</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;custom_attribute&quot;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">analyze_custom</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">module_path</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">ComponentInfo</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">name</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">component_type</span><span class="o">=</span><span class="s2">&quot;custom&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">module_path</span><span class="o">=</span><span class="n">module_path</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="c1"># ... other fields</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CustomAnalyzer</span> <span class="o">=</span> <span class="n">create_custom_analyzer</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;CustomAnalyzer&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">can_analyze_custom</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">analyze_custom</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">discovery</span> <span class="o">=</span> <span class="n">create_discovery</span><span class="p">(</span><span class="n">custom_analyzers</span><span class="o">=</span><span class="p">[</span><span class="n">CustomAnalyzer</span><span class="p">()])</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.create_discovery">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">create_discovery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_analyzers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer" title="haive.core.utils.haive_discovery.base_analyzer.ComponentAnalyzer"><span class="pre">ComponentAnalyzer</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery" title="haive.core.utils.haive_discovery.haive_discovery.HaiveComponentDiscovery"><span class="pre">HaiveComponentDiscovery</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#create_discovery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.create_discovery" title="Link to this definition">¶</a></dt>
+<dd><p>Create a configured discovery instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_root</strong> – Root directory of the Haive project</p></li>
+<li><p><strong>custom_analyzers</strong> – Additional analyzers to add</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Configured HaiveComponentDiscovery instance</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">discovery</span> <span class="o">=</span> <span class="n">create_discovery</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">components</span> <span class="o">=</span> <span class="n">discovery</span><span class="o">.</span><span class="n">discover_all_categorized</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.create_tool_from_component">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">create_tool_from_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#create_tool_from_component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.create_tool_from_component" title="Link to this definition">¶</a></dt>
+<dd><p>Create a tool from a component if possible.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>component</strong> – Component info object</p></li>
+<li><p><strong>force</strong> – Force creation even if tool already exists</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tool instance or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.discover_all">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">discover_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#discover_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.discover_all" title="Link to this definition">¶</a></dt>
+<dd><p>Discover all components across all categories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_root</strong> – Root directory of the Haive project</p></li>
+<li><p><strong>create_tools</strong> – Whether to create tool instances</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of all discovered components</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.discover_engines">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">discover_engines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#discover_engines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.discover_engines" title="Link to this definition">¶</a></dt>
+<dd><p>Discover all engines.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.discover_loaders">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">discover_loaders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#discover_loaders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.discover_loaders" title="Link to this definition">¶</a></dt>
+<dd><p>Discover all document loaders.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.discover_retrievers">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">discover_retrievers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#discover_retrievers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.discover_retrievers" title="Link to this definition">¶</a></dt>
+<dd><p>Discover all retrievers.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.discover_tools">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">discover_tools</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#discover_tools"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.discover_tools" title="Link to this definition">¶</a></dt>
+<dd><p>Discover all tools (individual tools and toolkits).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.discover_vector_stores">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">discover_vector_stores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#discover_vector_stores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.discover_vector_stores" title="Link to this definition">¶</a></dt>
+<dd><p>Discover all vector stores.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.find_components_by_name">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">find_components_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">case_sensitive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#find_components_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.find_components_by_name" title="Link to this definition">¶</a></dt>
+<dd><p>Find components matching a name pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>components</strong> – List of component info objects</p></li>
+<li><p><strong>pattern</strong> – Name pattern to search for</p></li>
+<li><p><strong>case_sensitive</strong> – Whether to do case-sensitive matching</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of matching components</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.find_components_with_env_vars">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">find_components_with_env_vars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#find_components_with_env_vars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.find_components_with_env_vars" title="Link to this definition">¶</a></dt>
+<dd><p>Find components that use environment variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>components</strong> – List of component info objects</p></li>
+<li><p><strong>env_var</strong> – Specific environment variable to search for (None for any)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of components using environment variables</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.generate_json_catalog">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">generate_json_catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#generate_json_catalog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.generate_json_catalog" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a JSON catalog of discovered components.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.generate_markdown_report">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">generate_markdown_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#generate_markdown_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.generate_markdown_report" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a markdown report of discovered components.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.get_all_engine_configs">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">get_all_engine_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#get_all_engine_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.get_all_engine_configs" title="Link to this definition">¶</a></dt>
+<dd><p>Extract all engine configurations from components.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.get_all_tools">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">get_all_tools</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#get_all_tools"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.get_all_tools" title="Link to this definition">¶</a></dt>
+<dd><p>Extract all tool instances from components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>components</strong> – List of component info objects</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of tool instances</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">components</span> <span class="o">=</span> <span class="n">discover_all</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tools</span> <span class="o">=</span> <span class="n">get_all_tools</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Created </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span><span class="si">}</span><span class="s2"> tools from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">)</span><span class="si">}</span><span class="s2"> components&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.get_discovery_stats">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">get_discovery_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#get_discovery_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.get_discovery_stats" title="Link to this definition">¶</a></dt>
+<dd><p>Get statistics about discovered components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>components</strong> – List of component info objects</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with various statistics</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.get_engines_by_type">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">get_engines_by_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#get_engines_by_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.get_engines_by_type" title="Link to this definition">¶</a></dt>
+<dd><p>Get engine configs of a specific type.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.get_tools_by_type">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">get_tools_by_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#get_tools_by_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.get_tools_by_type" title="Link to this definition">¶</a></dt>
+<dd><p>Get tools created from a specific component type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>components</strong> – List of component info objects</p></li>
+<li><p><strong>component_type</strong> – Type of component to filter</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of tool instances from that component type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.quick_discover">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">quick_discover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_tools</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#quick_discover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.quick_discover" title="Link to this definition">¶</a></dt>
+<dd><p>Quick discovery of components with minimal configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_root</strong> – Root directory of the Haive project (auto-detected if None)</p></li>
+<li><p><strong>component_type</strong> – Specific type to discover (None for all)</p></li>
+<li><p><strong>create_tools</strong> – Whether to create tool instances</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of discovered components</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">components</span> <span class="o">=</span> <span class="n">quick_discover</span><span class="p">(</span><span class="n">component_type</span><span class="o">=</span><span class="s2">&quot;retriever&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">)</span><span class="si">}</span><span class="s2"> retrievers&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.utils.haive_discovery.save_discovery_report">
+<span class="sig-prename descclassname"><span class="pre">haive.core.utils.haive_discovery.</span></span><span class="sig-name descname"><span class="pre">save_discovery_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo" title="haive.core.utils.haive_discovery.component_info.ComponentInfo"><span class="pre">ComponentInfo</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/utils/haive_discovery/utils.html#save_discovery_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.utils.haive_discovery.save_discovery_report" title="Link to this definition">¶</a></dt>
+<dd><p>Save a comprehensive discovery report.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>components</strong> – List of discovered components</p></li>
+<li><p><strong>output_dir</strong> – Output directory (auto-created if None)</p></li>
+<li><p><strong>format</strong> – Output format - “json”, “markdown”, or “all”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary of created file paths</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core.utils.haive_discovery</span></code></a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer"><code class="docutils literal notranslate"><span class="pre">ComponentAnalyzer</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.analyze"><code class="docutils literal notranslate"><span class="pre">ComponentAnalyzer.analyze()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.can_analyze"><code class="docutils literal notranslate"><span class="pre">ComponentAnalyzer.can_analyze()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.create_engine_config"><code class="docutils literal notranslate"><span class="pre">ComponentAnalyzer.create_engine_config()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.create_pydantic_model"><code class="docutils literal notranslate"><span class="pre">ComponentAnalyzer.create_pydantic_model()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.create_tool"><code class="docutils literal notranslate"><span class="pre">ComponentAnalyzer.create_tool()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.detect_env_vars"><code class="docutils literal notranslate"><span class="pre">ComponentAnalyzer.detect_env_vars()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.extract_schema"><code class="docutils literal notranslate"><span class="pre">ComponentAnalyzer.extract_schema()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.get_source_code"><code class="docutils literal notranslate"><span class="pre">ComponentAnalyzer.get_source_code()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.safe_get_class_name"><code class="docutils literal notranslate"><span class="pre">ComponentAnalyzer.safe_get_class_name()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentAnalyzer.safe_get_name"><code class="docutils literal notranslate"><span class="pre">ComponentAnalyzer.safe_get_name()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo"><code class="docutils literal notranslate"><span class="pre">ComponentInfo</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.class_name"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.class_name</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.component_type"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.component_type</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.description"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.description</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.engine_config"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.engine_config</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.env_vars"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.env_vars</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.metadata"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.metadata</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.module_path"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.module_path</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.name"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.name</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.schema"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.schema</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.source_code"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.source_code</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.timestamp"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.timestamp</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.to_dict"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.to_dict()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.to_document_content"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.to_document_content()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ComponentInfo.tool_instance"><code class="docutils literal notranslate"><span class="pre">ComponentInfo.tool_instance</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.DocumentLoaderAnalyzer"><code class="docutils literal notranslate"><span class="pre">DocumentLoaderAnalyzer</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.DocumentLoaderAnalyzer.analyze"><code class="docutils literal notranslate"><span class="pre">DocumentLoaderAnalyzer.analyze()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.DocumentLoaderAnalyzer.can_analyze"><code class="docutils literal notranslate"><span class="pre">DocumentLoaderAnalyzer.can_analyze()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.DocumentLoaderAnalyzer.create_tool"><code class="docutils literal notranslate"><span class="pre">DocumentLoaderAnalyzer.create_tool()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.DocumentationWriter"><code class="docutils literal notranslate"><span class="pre">DocumentationWriter</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.DocumentationWriter.save_to_project_docs"><code class="docutils literal notranslate"><span class="pre">DocumentationWriter.save_to_project_docs()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.EngineAnalyzer"><code class="docutils literal notranslate"><span class="pre">EngineAnalyzer</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.EngineAnalyzer.analyze"><code class="docutils literal notranslate"><span class="pre">EngineAnalyzer.analyze()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.EngineAnalyzer.can_analyze"><code class="docutils literal notranslate"><span class="pre">EngineAnalyzer.can_analyze()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.EnhancedComponentDiscovery"><code class="docutils literal notranslate"><span class="pre">EnhancedComponentDiscovery</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.EnhancedComponentDiscovery.add_analyzer"><code class="docutils literal notranslate"><span class="pre">EnhancedComponentDiscovery.add_analyzer()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.EnhancedComponentDiscovery.discover_from_directory"><code class="docutils literal notranslate"><span class="pre">EnhancedComponentDiscovery.discover_from_directory()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.EnhancedComponentDiscovery.get_engine_configs"><code class="docutils literal notranslate"><span class="pre">EnhancedComponentDiscovery.get_engine_configs()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.EnhancedComponentDiscovery.get_tools"><code class="docutils literal notranslate"><span class="pre">EnhancedComponentDiscovery.get_tools()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery"><code class="docutils literal notranslate"><span class="pre">HaiveComponentDiscovery</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_all_categorized"><code class="docutils literal notranslate"><span class="pre">HaiveComponentDiscovery.discover_all_categorized()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_document_loaders"><code class="docutils literal notranslate"><span class="pre">HaiveComponentDiscovery.discover_document_loaders()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_engines"><code class="docutils literal notranslate"><span class="pre">HaiveComponentDiscovery.discover_engines()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_individual_tools"><code class="docutils literal notranslate"><span class="pre">HaiveComponentDiscovery.discover_individual_tools()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_retrievers"><code class="docutils literal notranslate"><span class="pre">HaiveComponentDiscovery.discover_retrievers()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_toolkits"><code class="docutils literal notranslate"><span class="pre">HaiveComponentDiscovery.discover_toolkits()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.discover_vector_stores"><code class="docutils literal notranslate"><span class="pre">HaiveComponentDiscovery.discover_vector_stores()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.HaiveComponentDiscovery.save_to_project_docs"><code class="docutils literal notranslate"><span class="pre">HaiveComponentDiscovery.save_to_project_docs()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.RetrieverAnalyzer"><code class="docutils literal notranslate"><span class="pre">RetrieverAnalyzer</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.RetrieverAnalyzer.analyze"><code class="docutils literal notranslate"><span class="pre">RetrieverAnalyzer.analyze()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.RetrieverAnalyzer.can_analyze"><code class="docutils literal notranslate"><span class="pre">RetrieverAnalyzer.can_analyze()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.RetrieverAnalyzer.create_engine_config"><code class="docutils literal notranslate"><span class="pre">RetrieverAnalyzer.create_engine_config()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.RetrieverAnalyzer.create_tool"><code class="docutils literal notranslate"><span class="pre">RetrieverAnalyzer.create_tool()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ToolAnalyzer"><code class="docutils literal notranslate"><span class="pre">ToolAnalyzer</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ToolAnalyzer.analyze"><code class="docutils literal notranslate"><span class="pre">ToolAnalyzer.analyze()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.ToolAnalyzer.can_analyze"><code class="docutils literal notranslate"><span class="pre">ToolAnalyzer.can_analyze()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.VectorStoreAnalyzer"><code class="docutils literal notranslate"><span class="pre">VectorStoreAnalyzer</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.VectorStoreAnalyzer.analyze"><code class="docutils literal notranslate"><span class="pre">VectorStoreAnalyzer.analyze()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.VectorStoreAnalyzer.can_analyze"><code class="docutils literal notranslate"><span class="pre">VectorStoreAnalyzer.can_analyze()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.VectorStoreAnalyzer.create_engine_config"><code class="docutils literal notranslate"><span class="pre">VectorStoreAnalyzer.create_engine_config()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.VectorStoreAnalyzer.create_tool"><code class="docutils literal notranslate"><span class="pre">VectorStoreAnalyzer.create_tool()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.analyze_failed_imports"><code class="docutils literal notranslate"><span class="pre">analyze_failed_imports()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.create_custom_analyzer"><code class="docutils literal notranslate"><span class="pre">create_custom_analyzer()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.create_discovery"><code class="docutils literal notranslate"><span class="pre">create_discovery()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.create_tool_from_component"><code class="docutils literal notranslate"><span class="pre">create_tool_from_component()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.discover_all"><code class="docutils literal notranslate"><span class="pre">discover_all()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.discover_engines"><code class="docutils literal notranslate"><span class="pre">discover_engines()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.discover_loaders"><code class="docutils literal notranslate"><span class="pre">discover_loaders()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.discover_retrievers"><code class="docutils literal notranslate"><span class="pre">discover_retrievers()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.discover_tools"><code class="docutils literal notranslate"><span class="pre">discover_tools()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.discover_vector_stores"><code class="docutils literal notranslate"><span class="pre">discover_vector_stores()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.find_components_by_name"><code class="docutils literal notranslate"><span class="pre">find_components_by_name()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.find_components_with_env_vars"><code class="docutils literal notranslate"><span class="pre">find_components_with_env_vars()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.generate_json_catalog"><code class="docutils literal notranslate"><span class="pre">generate_json_catalog()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.generate_markdown_report"><code class="docutils literal notranslate"><span class="pre">generate_markdown_report()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.get_all_engine_configs"><code class="docutils literal notranslate"><span class="pre">get_all_engine_configs()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.get_all_tools"><code class="docutils literal notranslate"><span class="pre">get_all_tools()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.get_discovery_stats"><code class="docutils literal notranslate"><span class="pre">get_discovery_stats()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.get_engines_by_type"><code class="docutils literal notranslate"><span class="pre">get_engines_by_type()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.get_tools_by_type"><code class="docutils literal notranslate"><span class="pre">get_tools_by_type()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.quick_discover"><code class="docutils literal notranslate"><span class="pre">quick_discover()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.utils.haive_discovery.save_discovery_report"><code class="docutils literal notranslate"><span class="pre">save_discovery_report()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

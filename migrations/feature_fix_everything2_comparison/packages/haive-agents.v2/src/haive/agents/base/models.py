@@ -94,7 +94,8 @@ class AgentInfo(BaseModel):
     description: str = Field(..., description="Agent description for routing")
     agent_class: str = Field(..., description="Agent class name")
     capabilities: list[str] = Field(
-        default_factory=list, description="List of agent capabilities"
+        default_factory=list,
+        description="List of agent capabilities",
     )
     is_active: bool = Field(default=True, description="Whether agent is active")
     created_at: datetime = Field(default_factory=datetime.now)
@@ -149,7 +150,8 @@ class SupervisorTask(BaseModel):
     content: str = Field(..., description="Task content/description")
     target_agent: str | None = Field(None, description="Preferred agent")
     context: dict[str, Any] = Field(
-        default_factory=dict, description="Additional task context"
+        default_factory=dict,
+        description="Additional task context",
     )
     priority: int = Field(default=1, description="Task priority (1-10)")
     created_at: datetime = Field(default_factory=datetime.now)
@@ -165,7 +167,8 @@ class SupervisorResult(BaseModel):
     success: bool = Field(..., description="Whether execution succeeded")
     error_message: str | None = Field(None, description="Error if failed")
     metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional result metadata"
+        default_factory=dict,
+        description="Additional result metadata",
     )
     completed_at: datetime = Field(default_factory=datetime.now)
 
@@ -177,7 +180,8 @@ class RoutingDecision(BaseModel):
     confidence: float = Field(..., ge=0.0, le=1.0, description="Routing confidence")
     reasoning: str = Field(..., description="Why this agent was selected")
     alternatives: list[str] = Field(
-        default_factory=list, description="Alternative agents considered"
+        default_factory=list,
+        description="Alternative agents considered",
     )
     routing_method: str = Field(..., description="Method used for routing")
 

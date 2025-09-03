@@ -11,18 +11,20 @@ Functions:
     check_relevance: Check Relevance functionality.
 """
 
+from __future__ import annotations
+
 import logging
-
-# Set up logging
 from typing import Any
-
-from haive.core.engine.agent.agent import register_agent
-from haive.core.graph.dynamic_graph_builder import DynamicGraph
-from langgraph.graph import END, START
-from langgraph.types import Command
 
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.llm_rag.config import LLMRAGConfig
+from haive.core.engine.agent.agent import register_agent
+from haive.core.graph.dynamic_graph_builder import DynamicGraph
+from langgraph.graph import END
+from langgraph.graph import START
+from langgraph.types import Command
+
+# Set up logging
 
 logger = logging.getLogger(__name__)
 
@@ -41,8 +43,9 @@ class LLMRAGAgent(BaseRAGAgent):
     def setup_workflow(self) -> None:
         """Set up the dynamic workflow for the LLM RAG agent.
 
-        Creates a graph that extends the base RAG workflow with additional
-        functionality for checking relevance and generating answers.
+        Creates a graph that extends the base RAG workflow with
+        additional functionality for checking relevance and generating
+        answers.
         """
         # Get engines from the config
         retriever_engine = self.config.retriever_config
@@ -54,7 +57,7 @@ class LLMRAGAgent(BaseRAGAgent):
         logger.info(f"- Retriever: {retriever_engine.name}")
         logger.info(f"- LLM: {llm_engine.name}")
         logger.info(
-            f"- Relevance Checker: {relevance_checker.name if relevance_checker else 'None'}"
+            f"- Relevance Checker: {relevance_checker.name if relevance_checker else 'None'}",
         )
 
         # Create a dynamic graph builder with all components
@@ -71,25 +74,26 @@ class LLMRAGAgent(BaseRAGAgent):
         )
 
         # Use the base RAG agent as a subgraph
-        # This leverages the parent's create_runnable method to create the retrieval functionality
+        # This leverages the parent's create_runnable method to create the
+        # retrieval functionality
         base_rag_subgraph = super().create_runnable()
 
         # Define function to invoke the base RAG subgraph
         def retrieve_documents(state: dict[str, Any]):
             logger.info(
-                f"Invoking base RAG for document retrieval with query: '{state.query}'"
+                f"Invoking base RAG for document retrieval with query: '{state.query}'",
             )
             try:
                 # Invoke the base RAG agent as a subgraph
                 result = base_rag_subgraph.invoke(state)
                 logger.info(
-                    f"Retrieved {len(result.get('retrieved_documents', []))} documents"
+                    f"Retrieved {len(result.get('retrieved_documents', []))} documents",
                 )
 
                 # Pass the result to the relevance checker
                 return Command(
                     # No need to update state since the subgraph already did that
-                    goto="check_relevance"
+                    goto="check_relevance",
                 )
             except Exception as e:
                 logger.exception(f"Error in document retrieval: {e}")
@@ -101,7 +105,7 @@ class LLMRAGAgent(BaseRAGAgent):
         # Define a function to check document relevance
         def check_relevance(state: dict[str, Any]):
             logger.info(
-                f"Checking relevance of {len(state.retrieved_documents)} documents"
+                f"Checking relevance of {len(state.retrieved_documents)} documents",
             )
 
             # If no documents retrieved, mark as not relevant
@@ -124,7 +128,8 @@ class LLMRAGAgent(BaseRAGAgent):
                 logger.info(f"Relevance check result: {is_relevant}")
 
                 return Command(
-                    update={"is_relevant": is_relevant}, goto="generate_answer"
+                    update={"is_relevant": is_relevant},
+                    goto="generate_answer",
                 )
             except Exception as e:
                 logger.exception(f"Error in relevance checker: {e}")
@@ -142,7 +147,7 @@ class LLMRAGAgent(BaseRAGAgent):
                 if not state.is_relevant:
                     return Command(
                         update={
-                            "answer": "The retrieved documents are not relevant to the question."
+                            "answer": "The retrieved documents are not relevant to the question.",
                         },
                         goto=END,
                     )
@@ -203,6 +208,7 @@ class LLMRAGAgent(BaseRAGAgent):
 
 def format_documents(documents: list[Any]) -> str:
     """Format a list of documents into a text string for LLM input.
+
     Handles both Document objects and strings.
     """
     formatted_texts = []
@@ -220,13 +226,14 @@ def format_documents(documents: list[Any]) -> str:
 
         # Clean up the text
         text = text.replace("\n\n", " ").replace("  ", " ").strip()
-        formatted_texts.append(f"[{i+1}] {text}")
+        formatted_texts.append(f"[{i + 1}] {text}")
 
     return "\n\n".join(formatted_texts)
 
 
 def parse_relevance_result(result: Any) -> bool:
-    """Parse the output from the relevance checker to determine if documents are relevant."""
+    """Parse the output from the relevance checker to determine if documents
+    are relevant."""
     if isinstance(result, dict):
         # Check for various possible response formats
         if "output" in result:
@@ -262,7 +269,8 @@ def parse_relevance_result(result: Any) -> bool:
 
 
 def extract_answer(result: Any) -> str:
-    """Extract the answer string from an LLM result, which could be in various formats."""
+    """Extract the answer string from an LLM result, which could be in various
+    formats."""
     if isinstance(result, str):
         return result.strip()
 

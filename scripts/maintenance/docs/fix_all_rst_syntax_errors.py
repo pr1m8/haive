@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Find and fix RST syntax errors in documentation files."""
+from __future__ import annotations
 
 import re
 from pathlib import Path
@@ -115,7 +116,6 @@ def main():
     """Main function to check all RST files."""
     project_root = Path(__file__).parent
     docs_dir = project_root / "docs" / "source"
-
 
     # Find all RST files
     rst_files = list(docs_dir.rglob("*.rst"))

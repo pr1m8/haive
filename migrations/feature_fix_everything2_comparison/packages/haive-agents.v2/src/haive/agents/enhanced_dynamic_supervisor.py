@@ -1,7 +1,10 @@
 """Enhanced DynamicSupervisor implementation extending SupervisorAgent.
 
-DynamicSupervisor = SupervisorAgent + dynamic worker management + adaptive strategies.
+DynamicSupervisor = SupervisorAgent + dynamic worker management +
+adaptive strategies.
 """
+
+from __future__ import annotations
 
 import logging
 from typing import Any
@@ -60,37 +63,50 @@ class DynamicSupervisor(SupervisorAgent):
 
     # Dynamic supervisor specific fields
     max_workers: int = Field(
-        default=10, ge=1, le=50, description="Maximum number of workers"
+        default=10,
+        ge=1,
+        le=50,
+        description="Maximum number of workers",
     )
 
     min_workers: int = Field(
-        default=1, ge=0, le=10, description="Minimum number of workers to maintain"
+        default=1,
+        ge=0,
+        le=10,
+        description="Minimum number of workers to maintain",
     )
 
     worker_performance: dict[str, dict[str, Any]] = Field(
-        default_factory=dict, description="Performance metrics for each worker"
+        default_factory=dict,
+        description="Performance metrics for each worker",
     )
 
     auto_scale: bool = Field(default=False, description="Enable automatic scaling")
 
     worker_timeout: float = Field(
-        default=60.0, gt=0, description="Timeout for worker tasks in seconds"
+        default=60.0,
+        gt=0,
+        description="Timeout for worker tasks in seconds",
     )
 
     recycling_enabled: bool = Field(
-        default=True, description="Enable recycling of idle workers"
+        default=True,
+        description="Enable recycling of idle workers",
     )
 
     worker_templates: dict[str, type] = Field(
-        default_factory=dict, description="Templates for creating new workers"
+        default_factory=dict,
+        description="Templates for creating new workers",
     )
 
     active_tasks: dict[str, str] = Field(
-        default_factory=dict, description="Map of task_id to worker_name"
+        default_factory=dict,
+        description="Map of task_id to worker_name",
     )
 
     idle_workers: set[str] = Field(
-        default_factory=set, description="Set of idle worker names"
+        default_factory=set,
+        description="Set of idle worker names",
     )
 
     @field_validator("min_workers")
@@ -100,7 +116,7 @@ class DynamicSupervisor(SupervisorAgent):
         max_workers = info.data.get("max_workers", 10)
         if v > max_workers:
             raise ValueError(
-                f"min_workers ({v}) cannot exceed max_workers ({max_workers})"
+                f"min_workers ({v}) cannot exceed max_workers ({max_workers})",
             )
         return v
 
@@ -115,7 +131,7 @@ class DynamicSupervisor(SupervisorAgent):
 
         # Scale up if all workers are busy
         return len(self.idle_workers) == 0 and len(self.active_tasks) >= len(
-            self.workers
+            self.workers,
         )
 
     def should_scale_down(self) -> bool:
@@ -166,7 +182,7 @@ class DynamicSupervisor(SupervisorAgent):
             return True
 
         except Exception as e:
-            logger.error(f"Failed to create worker from template: {e}")
+            logger.exception(f"Failed to create worker from template: {e}")
             return False
 
     def remove_idle_worker(self) -> str | None:
@@ -202,7 +218,7 @@ class DynamicSupervisor(SupervisorAgent):
         """
         # Auto-scale if needed
         if self.should_scale_up() and self.worker_templates:
-            template_name = list(self.worker_templates.keys())[0]
+            template_name = next(iter(self.worker_templates.keys()))
             worker_name = f"dynamic_worker_{len(self.workers)}"
             self.add_worker_from_template(template_name, worker_name)
 
@@ -223,7 +239,10 @@ class DynamicSupervisor(SupervisorAgent):
         return assigned
 
     def complete_task(
-        self, task_id: str, success: bool = True, duration: float = 0.0
+        self,
+        task_id: str,
+        success: bool = True,
+        duration: float = 0.0,
     ) -> None:
         """Mark a task as completed.
 
@@ -324,37 +343,24 @@ if __name__ == "__main__":
         },
     )
 
-    print(f"Created: {supervisor}")
-    print(f"Auto-scaling: {supervisor.auto_scale}")
-    print(f"Worker limits: {supervisor.min_workers}-{supervisor.max_workers}")
-
     # Simulate task assignment
-    print("\nSimulating task flow:")
 
     # Add initial workers
     supervisor.add_worker_from_template("analyst", "analyst_1")
     supervisor.add_worker_from_template("processor", "processor_1")
-    print(f"Initial state: {supervisor}")
 
     # Assign tasks
     task1 = supervisor.assign_task("task_001")
-    print(f"Assigned task_001 to: {task1}")
 
     task2 = supervisor.assign_task("task_002")
-    print(f"Assigned task_002 to: {task2}")
 
     # All workers busy, should trigger scale up
     task3 = supervisor.assign_task("task_003")
-    print(f"Assigned task_003 to: {task3}")
-    print(f"After scaling: {supervisor}")
 
     # Complete some tasks
     supervisor.complete_task("task_001", success=True, duration=5.0)
     supervisor.complete_task("task_002", success=False, duration=3.0)
 
     # Check metrics
-    print("\nWorker metrics:")
-    for name, metrics in supervisor.get_worker_metrics().items():
-        print(
-            f"  {name}: success_rate={metrics['success_rate']:.2f}, avg_time={metrics['average_time']:.2f}s"
-        )
+    for _name, _metrics in supervisor.get_worker_metrics().items():
+        pass

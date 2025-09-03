@@ -1,6 +1,5 @@
-from pathlib import Path
+from __future__ import annotations
 
-import libcst as cst
 from rich.console import Console
 from validator_inspector_cli.core.fixer import fix_validators
 from validator_inspector_cli.core.post_validation import validate_fixed_code

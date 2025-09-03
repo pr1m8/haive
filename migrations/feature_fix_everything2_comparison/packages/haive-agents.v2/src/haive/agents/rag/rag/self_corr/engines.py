@@ -16,7 +16,6 @@ Formulate an improved question:
 
 REWRITER_PROMPT_TEMPLATE = PromptTemplate.from_template(REWRITER_PROMPT)
 
-
 GENERATE_PROMPT = (
     "You are an assistant for question-answering tasks. "
     "Use the following pieces of retrieved context to answer the question. "
@@ -27,7 +26,6 @@ GENERATE_PROMPT = (
 )
 
 GENERATE_PROMPT_TEMPLATE = PromptTemplate.from_template(GENERATE_PROMPT)
-
 
 GRADE_PROMPT = (
     "You are a grader assessing relevance of a retrieved document to a user question. \n "

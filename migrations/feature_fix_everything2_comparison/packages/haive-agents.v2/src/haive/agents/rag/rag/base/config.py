@@ -11,20 +11,24 @@ Functions:
     setup_engine: Setup Engine functionality.
 """
 
+from __future__ import annotations
+
 import uuid
 from typing import Any
 
+from haive.agents.rag.base.state import BaseRAGInputState
+from haive.agents.rag.base.state import BaseRAGOutputState
+from haive.agents.rag.base.state import BaseRAGState
 from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.retriever import BaseRetrieverConfig, VectorStoreRetrieverConfig
+from haive.core.engine.retriever import BaseRetrieverConfig
+from haive.core.engine.retriever import VectorStoreRetrieverConfig
 from haive.core.engine.vectorstore import VectorStoreConfig
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel
+from pydantic import ConfigDict
+from pydantic import Field
+from pydantic import model_validator
 
 # Import state models
-from haive.agents.rag.base.state import (
-    BaseRAGInputState,
-    BaseRAGOutputState,
-    BaseRAGState,
-)
 
 
 class BaseRAGConfig(AgentConfig):
@@ -38,7 +42,8 @@ class BaseRAGConfig(AgentConfig):
 
     # Allow either a VectorStoreConfig or RetrieverConfig to be provided
     retriever_config: BaseRetrieverConfig | VectorStoreConfig = Field(
-        ..., description="Configuration for the retriever component"  # Required
+        ...,
+        description="Configuration for the retriever component",  # Required
     )
 
     # Use class attributes instead of ClassVar for schema references
@@ -50,7 +55,9 @@ class BaseRAGConfig(AgentConfig):
     @classmethod
     def convert_vector_store_to_retriever(cls, data: dict[str, Any]) -> dict[str, Any]:
         """Pre-validation converter from VectorStoreConfig to RetrieverConfig.
-        This runs before Pydantic validation, ensuring the type checking works.
+
+        This runs before Pydantic validation, ensuring the type checking
+        works.
         """
         if isinstance(data, dict) and "retriever_config" in data:
             if isinstance(data["retriever_config"], VectorStoreConfig):
@@ -62,8 +69,9 @@ class BaseRAGConfig(AgentConfig):
         return data
 
     @model_validator(mode="after")
-    def setup_engine(self) -> "BaseRAGConfig":
+    def setup_engine(self) -> BaseRAGConfig:
         """After validation, set the engine property to the retriever_config.
+
         This ensures the agent can use the retriever directly.
         """
         self.engine = self.retriever_config

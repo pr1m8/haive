@@ -32,24 +32,24 @@ Available RAG Strategies:
     - FLARE RAG: Forward-looking active retrieval with refinement
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any
 
+from haive.agents.chain import ChainAgent
+from haive.agents.chain import flow_with_edges
+from haive.agents.rag.models import FusionResult
+from haive.agents.rag.models import HyDEResult
+from haive.agents.rag.models import SpeculativeResult
+from haive.agents.rag.models import StepBackResult
 from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.models.llm.base import LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 
-from haive.agents.chain import ChainAgent, flow_with_edges
-from haive.agents.rag.models import (
-    FusionResult,
-    HyDEResult,
-    SpeculativeResult,
-    StepBackResult,
-)
-
 logger = logging.getLogger(__name__)
-
 
 # Models are now imported from haive.agents.rag.models
 
@@ -70,7 +70,8 @@ class RAGChainCollection:
 
     @staticmethod
     def create_simple_rag(
-        documents: list[Document], llm_config: LLMConfig
+        documents: list[Document],
+        llm_config: LLMConfig,
     ) -> ChainAgent:
         """Create a simple RAG agent with basic retrieve-and-generate pattern.
 
@@ -106,7 +107,7 @@ class RAGChainCollection:
                 [
                     ("system", "Answer based on the provided context"),
                     ("human", "Context: {context}\n\nQuery: {query}"),
-                ]
+                ],
             ),
             output_key="response",
         )
@@ -126,7 +127,7 @@ class RAGChainCollection:
                         "Generate a hypothetical document that would answer this query",
                     ),
                     ("human", "{query}"),
-                ]
+                ],
             ),
             structured_output_model=HyDEResult,
             output_key="hyde_result",
@@ -161,7 +162,7 @@ class RAGChainCollection:
 
                 Provide a comprehensive answer.""",
                     ),
-                ]
+                ],
             ),
             output_key="response",
         )
@@ -170,7 +171,8 @@ class RAGChainCollection:
 
     @staticmethod
     def create_fusion_rag(
-        documents: list[Document], llm_config: LLMConfig
+        documents: list[Document],
+        llm_config: LLMConfig,
     ) -> ChainAgent:
         """Fusion RAG - multiple queries with reciprocal rank fusion."""
         # Multi-query generator
@@ -183,7 +185,7 @@ class RAGChainCollection:
                         "Generate 3 different queries to comprehensively answer the question",
                     ),
                     ("human", "{query}"),
-                ]
+                ],
             ),
             output_key="multi_queries",
         )
@@ -218,7 +220,7 @@ class RAGChainCollection:
 
                 Create comprehensive answer.""",
                     ),
-                ]
+                ],
             ),
             output_key="response",
         )
@@ -227,7 +229,8 @@ class RAGChainCollection:
 
     @staticmethod
     def create_step_back_rag(
-        documents: list[Document], llm_config: LLMConfig
+        documents: list[Document],
+        llm_config: LLMConfig,
     ) -> ChainAgent:
         """Step-Back RAG - abstract reasoning before specific answer."""
         # Step-back reasoner
@@ -240,7 +243,7 @@ class RAGChainCollection:
                         "Think step-back: what higher-level concept does this query relate to?",
                     ),
                     ("human", "{query}"),
-                ]
+                ],
             ),
             structured_output_model=StepBackResult,
             output_key="step_back_result",
@@ -273,7 +276,7 @@ class RAGChainCollection:
 
                 Provide a well-reasoned answer.""",
                     ),
-                ]
+                ],
             ),
             output_key="response",
         )
@@ -282,7 +285,8 @@ class RAGChainCollection:
 
     @staticmethod
     def create_speculative_rag(
-        documents: list[Document], llm_config: LLMConfig
+        documents: list[Document],
+        llm_config: LLMConfig,
     ) -> ChainAgent:
         """Speculative RAG - generate and verify hypotheses."""
         # Hypothesis generator
@@ -292,7 +296,7 @@ class RAGChainCollection:
                 [
                     ("system", "Generate 3 hypotheses that could answer this query"),
                     ("human", "{query}"),
-                ]
+                ],
             ),
             structured_output_model=SpeculativeResult,
             output_key="speculative_result",
@@ -329,18 +333,22 @@ class RAGChainCollection:
 
                 Synthesize final answer.""",
                     ),
-                ]
+                ],
             ),
             output_key="response",
         )
 
         return ChainAgent(
-            hypothesis_gen, verify_hypotheses, synthesizer, name="Speculative RAG"
+            hypothesis_gen,
+            verify_hypotheses,
+            synthesizer,
+            name="Speculative RAG",
         )
 
     @staticmethod
     def create_memory_aware_rag(
-        documents: list[Document], llm_config: LLMConfig
+        documents: list[Document],
+        llm_config: LLMConfig,
     ) -> ChainAgent:
         """Memory-Aware RAG - uses conversation memory."""
 
@@ -352,9 +360,7 @@ class RAGChainCollection:
 
             # Extract relevant past context (simplified)
             past_topics = ["AI", "machine learning"] if len(messages) > 1 else []
-            temporal_context = (
-                "Continuing previous discussion" if past_topics else "New topic"
-            )
+            temporal_context = "Continuing previous discussion" if past_topics else "New topic"
 
             return {
                 "relevant_memories": past_topics,
@@ -391,18 +397,22 @@ class RAGChainCollection:
 
                 Provide contextually aware answer.""",
                     ),
-                ]
+                ],
             ),
             output_key="response",
         )
 
         return ChainAgent(
-            analyze_memory, memory_retrieve, answerer, name="Memory-Aware RAG"
+            analyze_memory,
+            memory_retrieve,
+            answerer,
+            name="Memory-Aware RAG",
         )
 
     @staticmethod
     def create_flare_rag(
-        documents: list[Document], llm_config: LLMConfig
+        documents: list[Document],
+        llm_config: LLMConfig,
     ) -> ChainAgent:
         """FLARE RAG - forward-looking active retrieval."""
         # Initial answer attempt
@@ -415,7 +425,7 @@ class RAGChainCollection:
                         "Provide initial answer, noting what additional info you need",
                     ),
                     ("human", "{query}"),
-                ]
+                ],
             ),
             output_key="initial_answer",
         )
@@ -432,7 +442,7 @@ class RAGChainCollection:
             if needs_more_info:
                 # Retrieve additional context
                 additional_context = "\n".join(
-                    [doc.page_content for doc in documents[1:3]]
+                    [doc.page_content for doc in documents[1:3]],
                 )
                 return {
                     "additional_context": additional_context,
@@ -457,7 +467,7 @@ class RAGChainCollection:
 
                         Provide refined answer.""",
                             ),
-                        ]
+                        ],
                     ),
                     output_key="response",
                 )
@@ -509,9 +519,7 @@ def create_rag_pipeline(
     llm_config: LLMConfig | None = None,
 ) -> ChainAgent:
     """Create a pipeline of multiple RAG approaches."""
-    chains = [
-        create_rag_chain(rag_type, documents, llm_config) for rag_type in rag_types
-    ]
+    chains = [create_rag_chain(rag_type, documents, llm_config) for rag_type in rag_types]
 
     if combination_strategy == "sequential":
         # Sequential execution
@@ -522,7 +530,8 @@ def create_rag_pipeline(
             return {"combined_responses": [state.get("response", "")]}
 
         return flow_with_edges(
-            [*chains, combiner], *[f"{i}->-1" for i in range(len(chains))]
+            [*chains, combiner],
+            *[f"{i}->-1" for i in range(len(chains))],
         )
     raise ValueError(f"Unknown combination strategy: {combination_strategy}")
 

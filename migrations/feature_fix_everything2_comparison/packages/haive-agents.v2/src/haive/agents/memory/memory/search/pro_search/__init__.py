@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from pro_search.agent import (
     ProSearchAgent,
     extract_contextual_insights,

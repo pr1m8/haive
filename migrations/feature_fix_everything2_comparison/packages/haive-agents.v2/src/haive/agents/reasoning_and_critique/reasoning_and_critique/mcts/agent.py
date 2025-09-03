@@ -12,25 +12,24 @@ Functions:
 """
 
 # src/haive/agents/mcts/agent.py
+from __future__ import annotations
 
 import logging
 from collections import defaultdict
 from typing import Any
 
+from haive.agents.base.agent import Agent
+from haive.agents.reasoning_and_critique.mcts.models import Reflection
+from haive.agents.reasoning_and_critique.mcts.models import TreeNode
+from haive.agents.reasoning_and_critique.mcts.state import TreeState
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from langchain_core.messages import AIMessage
-from langchain_core.output_parsers.openai_tools import (
-    JsonOutputToolsParser,
-    PydanticToolsParser,
-)
-from langchain_core.runnables import RunnableConfig
+from langchain_core.output_parsers.openai_tools import JsonOutputToolsParser
+from langchain_core.output_parsers.openai_tools import PydanticToolsParser
 from langchain_core.runnables import chain as as_runnable
+from langchain_core.runnables import RunnableConfig
 from langgraph.graph import END
 from langgraph.prebuilt import ToolNode
-
-from haive.agents.base.agent import Agent
-from haive.agents.reasoning_and_critique.mcts.models import Reflection, TreeNode
-from haive.agents.reasoning_and_critique.mcts.state import TreeState
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -39,8 +38,8 @@ logger = logging.getLogger(__name__)
 class MCTSAgent(Agent):
     """Monte Carlo Tree Search Agent implementation.
 
-    This agent uses a Monte Carlo Tree Search approach to iteratively explore
-    and find the best solution path.
+    This agent uses a Monte Carlo Tree Search approach to iteratively
+    explore and find the best solution path.
     """
 
     def setup_workflow(self) -> None:
@@ -49,7 +48,8 @@ class MCTSAgent(Agent):
 
         # Create a DynamicGraph with our state schema
         gb = DynamicGraph(
-            components=[self.config.state_schema], state_schema=self.state_schema
+            components=[self.config.state_schema],
+            state_schema=self.state_schema,
         )
 
         # Configure LLM with tools
@@ -64,7 +64,8 @@ class MCTSAgent(Agent):
 
         # Add nodes to the graph
         gb.add_node(
-            name="generate_initial_response", config=self._generate_initial_response
+            name="generate_initial_response",
+            config=self._generate_initial_response,
         )
 
         gb.add_node(name="expand", config=self._expand)
@@ -77,7 +78,9 @@ class MCTSAgent(Agent):
         )
 
         gb.add_conditional_edges(
-            "expand", self._should_continue, {"end": END, "expand": "expand"}
+            "expand",
+            self._should_continue,
+            {"end": END, "expand": "expand"},
         )
 
         # Set the entry point
@@ -105,7 +108,7 @@ class MCTSAgent(Agent):
         reflection_llm_chain = (
             self.config.reflection_prompt_template
             | llm.bind_tools(tools=[Reflection], tool_choice="Reflection").with_config(
-                run_name="Reflection"
+                run_name="Reflection",
             )
             | PydanticToolsParser(tools=[Reflection])
         )
@@ -133,9 +136,7 @@ class MCTSAgent(Agent):
             )
             return [gen.message for gen in chat_result.generations[0]]
 
-        self.expansion_chain = (
-            self.config.expansion_prompt_template | generate_candidates
-        )
+        self.expansion_chain = self.config.expansion_prompt_template | generate_candidates
 
     def _generate_initial_response(self, state: TreeState) -> dict[str, Any]:
         """Generate the initial candidate response."""
@@ -162,11 +163,11 @@ class MCTSAgent(Agent):
                                         "name": r["type"],
                                         "args": r["args"],
                                         "id": r["id"],
-                                    }
+                                    },
                                 ],
-                            )
-                        ]
-                    }
+                            ),
+                        ],
+                    },
                 )
                 tool_responses.append(tool_resp["messages"][0])
 
@@ -175,7 +176,7 @@ class MCTSAgent(Agent):
 
             # Perform reflection
             reflection = self.reflection_chain.invoke(
-                {"input": input_text, "candidate": output_messages}
+                {"input": input_text, "candidate": output_messages},
             )
 
             # Create root node
@@ -212,7 +213,8 @@ class MCTSAgent(Agent):
             }
 
     def _expand(self, state: TreeState, config: RunnableConfig) -> dict[str, Any]:
-        """Expand the search tree by generating new candidates from the best node."""
+        """Expand the search tree by generating new candidates from the best
+        node."""
         try:
             # Get current nodes store
             nodes_store = state.nodes
@@ -235,7 +237,7 @@ class MCTSAgent(Agent):
 
             # Get trajectory messages
             trajectory_messages = nodes_store.deserialize_messages(
-                nodes_store.get_trajectory(best_node_id, include_reflections=False)
+                nodes_store.get_trajectory(best_node_id, include_reflections=False),
             )
 
             # Set N in config for number of candidates
@@ -246,7 +248,8 @@ class MCTSAgent(Agent):
 
             # Generate candidate expansions
             new_candidates = self.expansion_chain.invoke(
-                {"input": state.input, "messages": trajectory_messages}, config_with_n
+                {"input": state.input, "messages": trajectory_messages},
+                config_with_n,
             )
 
             # Parse tool calls from candidates
@@ -271,11 +274,11 @@ class MCTSAgent(Agent):
                                         "name": tool_call["type"],
                                         "args": tool_call["args"],
                                         "id": tool_call["id"],
-                                    }
+                                    },
                                 ],
-                            )
-                        ]
-                    }
+                            ),
+                        ],
+                    },
                 )
                 tool_responses.append((i, resp["messages"][0]))
 
@@ -300,7 +303,9 @@ class MCTSAgent(Agent):
             found_solution = state.solved
 
             for candidate_msgs, reflection in zip(
-                output_messages, reflections, strict=False
+                output_messages,
+                reflections,
+                strict=False,
             ):
                 # Create node
                 node_data = TreeNode(
@@ -319,7 +324,8 @@ class MCTSAgent(Agent):
 
                 # Backpropagate score
                 updated_nodes.backpropagate(
-                    node_data.node_id, reflection.normalized_score
+                    node_data.node_id,
+                    reflection.normalized_score,
                 )
 
                 # Mark tree as solved if solution found
@@ -342,8 +348,9 @@ class MCTSAgent(Agent):
                 # Update messages with best solution
                 solution_messages = updated_nodes.deserialize_messages(
                     updated_nodes.get_trajectory(
-                        best_solution.node_id, include_reflections=False
-                    )
+                        best_solution.node_id,
+                        include_reflections=False,
+                    ),
                 )
                 updated_state["messages"] = solution_messages
 

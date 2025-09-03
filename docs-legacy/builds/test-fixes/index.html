@@ -1,0 +1,528 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta property="article:modified_time" content="2025-08-07T03:31:25-04:00" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🤖 Haive AI Agent Framework Documentation &mdash; 🤖 Haive AI Agent Framework Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx_paramlinks.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=5044e660" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://haive.readthedocs.io/index.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=6894dda5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=af94cf59"></script>
+      <script src="_static/scripts/sphinx-book-theme.js"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script src="https://wavedrom.com/skins/default.js"></script>
+      <script src="https://wavedrom.com/wavedrom.min.js"></script>
+      <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX"></script>
+      <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-XXXXXXX');
+            </script>
+      <script src="_static/js/rtd_search_config.js"></script>
+      <script src="_static/js/rtd_sphinx_search.min.js"></script>
+      <script src="_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+      <script src="_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+      <script src="_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+      <script src="_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+      <script src="_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+      <script defer="defer" src="https://unpkg.com/@popperjs/core@2"></script>
+      <script defer="defer" src="https://unpkg.com/tippy.js@6"></script>
+      <script defer="defer" src="_static/tippy/index.756dda13-ae76-423b-9547-56aa5a1174f6.js"></script>
+      <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+      <script src="_static/dark_mode_js/default_dark.js?v=fd565c74"></script>
+      <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Haive AI Agent Framework
+          </a>
+<div id="searchbox"></div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcp_servers.html">MCP Server Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Haive AI Agent Framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="haive-ai-agent-framework-documentation">
+<h1>🤖 Haive AI Agent Framework Documentation<a class="headerlink" href="#haive-ai-agent-framework-documentation" title="Link to this heading">#</a></h1>
+<div class="hero-banner docutils container">
+<div class="hero-content docutils container">
+<a class="hero-logo reference internal image-reference" href="_images/haive-logo-light.svg"><img alt="Haive Logo" class="hero-logo align-center" src="_images/haive-logo-light.svg" style="width: 200px;" />
+</a>
+<p><strong>Build Intelligent AI Agents with Professional Tools</strong></p>
+<p>Professional framework for creating sophisticated AI agents with conversational intelligence,
+tool orchestration, game strategies, and multi-agent coordination.</p>
+<p><a class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-primary sd-rounded-pill reference internal" href="quickstart.html"><span class="doc">🚀 Get Started</span></a></p>
+<p><a class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-secondary sd-rounded-pill reference external" href="https://github.com/will-astley/haive"><span>📚 View on GitHub</span></a></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-rounded-3 docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🎯 Quick Start</div>
+<p class="sd-card-text">Jump right in with our 5-minute quick start guide.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><span class="sd-d-grid"><a class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-primary reference internal" href="quickstart.html"><span class="doc">&lt;no title&gt;</span></a></span></p>
+</div>
+</div>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 feature-grid docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-3 sd-row-cols-lg-3 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-lg docutils">
+<div class="sd-card-body feature-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🧠 AI Agents</div>
+<p class="sd-card-text">Build intelligent agents with memory, reasoning, and tool integration capabilities.</p>
+<div class="pst-scrollable-table-container"><table class="feature-list table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p class="sd-card-text"><strong>Types</strong></p></td>
+<td><p class="sd-card-text">Simple • React • RAG • Multi-Agent</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text"><strong>Features</strong></p></td>
+<td><p class="sd-card-text">Auto-persistence • Tool routing • State management</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-lg docutils">
+<div class="sd-card-body feature-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🎮 Game Intelligence</div>
+<p class="sd-card-text">Create AI opponents for strategic games with advanced algorithms and decision making.</p>
+<div class="pst-scrollable-table-container"><table class="feature-list table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p class="sd-card-text"><strong>Games</strong></p></td>
+<td><p class="sd-card-text">Chess • Go • Poker • Board Games</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text"><strong>Features</strong></p></td>
+<td><p class="sd-card-text">Strategy AI • Game state • Player modeling</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-lg docutils">
+<div class="sd-card-body feature-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🔧 Tool Orchestration</div>
+<p class="sd-card-text">Connect agents to APIs, databases, search engines, and external services seamlessly.</p>
+<div class="pst-scrollable-table-container"><table class="feature-list table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p class="sd-card-text"><strong>Types</strong></p></td>
+<td><p class="sd-card-text">Web APIs • Databases • File Systems</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text"><strong>Features</strong></p></td>
+<td><p class="sd-card-text">Auto-discovery • Type safety • Error handling</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-lg docutils">
+<div class="sd-card-body feature-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+📡 MCP Integration</div>
+<p class="sd-card-text">1,960+ Model Context Protocol servers with hot-reload and AI-powered discovery.</p>
+<div class="pst-scrollable-table-container"><table class="feature-list table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p class="sd-card-text"><strong>Servers</strong></p></td>
+<td><p class="sd-card-text">1,960+ available • Auto-discovery</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text"><strong>Features</strong></p></td>
+<td><p class="sd-card-text">Hot-reload • Plugin system • Integration</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="quickstart" for="sd-tab-item-0">
+🚀 Quick Start</label><div class="sd-tab-content docutils">
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Create your first agent</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="copy-button highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleAgent</span>
+<span class="linenos"> 2</span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">AugLLMConfig</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1"># Configure with enhanced settings</span>
+<span class="linenos"> 5</span><span class="n">config</span> <span class="o">=</span> <span class="n">AugLLMConfig</span><span class="p">(</span>
+<span class="linenos"> 6</span>    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+<span class="linenos"> 7</span>    <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;You are a helpful AI assistant with expertise in technical topics.&quot;</span><span class="p">,</span>
+<span class="hll"><span class="linenos"> 8</span>    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1000</span>
+</span><span class="hll"><span class="linenos"> 9</span><span class="p">)</span>
+</span><span class="hll"><span class="linenos">10</span>
+</span><span class="linenos">11</span><span class="c1"># Create and run agent</span>
+<span class="linenos">12</span><span class="n">agent</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<span class="linenos">13</span><span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">agent</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="s2">&quot;Explain quantum computing in simple terms&quot;</span><span class="p">)</span>
+<span class="linenos">14</span><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="tools" for="sd-tab-item-1">
+🔧 Tool Integration</label><div class="sd-tab-content docutils">
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Agent with tools</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="copy-button highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReactAgent</span>
+<span class="linenos"> 2</span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebSearchTool</span><span class="p">,</span> <span class="n">CalculatorTool</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1"># Create tools</span>
+<span class="linenos"> 5</span><span class="n">search</span> <span class="o">=</span> <span class="n">WebSearchTool</span><span class="p">()</span>
+<span class="linenos"> 6</span><span class="n">calc</span> <span class="o">=</span> <span class="n">CalculatorTool</span><span class="p">()</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="c1"># Configure agent with tools</span>
+<span class="linenos"> 9</span><span class="n">agent</span> <span class="o">=</span> <span class="n">ReactAgent</span><span class="p">(</span>
+<span class="linenos">10</span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;research_agent&quot;</span><span class="p">,</span>
+<span class="linenos">11</span>    <span class="n">engine</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+<span class="linenos">12</span>    <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">search</span><span class="p">,</span> <span class="n">calc</span><span class="p">]</span>
+<span class="hll"><span class="linenos">13</span><span class="p">)</span>
+</span><span class="hll"><span class="linenos">14</span>
+</span><span class="hll"><span class="linenos">15</span><span class="c1"># Agent can now search and calculate</span>
+</span><span class="hll"><span class="linenos">16</span><span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">agent</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="s2">&quot;What&#39;s the population of Tokyo and what&#39;s 20</span><span class="si">% o</span><span class="s2">f that?&quot;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="multiagent" for="sd-tab-item-2">
+🤝 Multi-Agent</label><div class="sd-tab-content docutils">
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Multi-agent coordination</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<div class="copy-button highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiAgent</span><span class="p">,</span> <span class="n">SimpleAgent</span><span class="p">,</span> <span class="n">ReactAgent</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="c1"># Create specialized agents</span>
+<span class="linenos"> 4</span><span class="n">researcher</span> <span class="o">=</span> <span class="n">ReactAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;researcher&quot;</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">search</span><span class="p">])</span>
+<span class="linenos"> 5</span><span class="n">writer</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;writer&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">creative_config</span><span class="p">)</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="c1"># Coordinate agents</span>
+<span class="hll"><span class="linenos"> 8</span><span class="n">team</span> <span class="o">=</span> <span class="n">MultiAgent</span><span class="p">(</span>
+</span><span class="hll"><span class="linenos"> 9</span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;content_team&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="linenos">10</span>    <span class="n">agents</span><span class="o">=</span><span class="p">[</span><span class="n">researcher</span><span class="p">,</span> <span class="n">writer</span><span class="p">],</span>
+</span><span class="hll"><span class="linenos">11</span>    <span class="n">execution_mode</span><span class="o">=</span><span class="s2">&quot;sequential&quot;</span>
+</span><span class="hll"><span class="linenos">12</span><span class="p">)</span>
+</span><span class="linenos">13</span>
+<span class="linenos">14</span><span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">team</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="s2">&quot;Research AI trends and write a summary&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-info sd-bg-text-info">
+<span class="sd-summary-icon"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-light-bulb" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg></span><span class="sd-summary-text">💡 Why Choose Haive?</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-4 sd-row-cols-lg-4 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-column benefit-item docutils">
+<div class="benefit-icon docutils container">
+<p class="sd-card-text">⚡</p>
+</div>
+<p class="sd-card-text"><strong>Production Ready</strong></p>
+<p class="sd-card-text">Battle-tested in production environments with comprehensive error handling.</p>
+</div>
+<div class="sd-col sd-d-flex-column benefit-item docutils">
+<div class="benefit-icon docutils container">
+<p class="sd-card-text">🔒</p>
+</div>
+<p class="sd-card-text"><strong>Type Safe</strong></p>
+<p class="sd-card-text">Full type hints and Pydantic models for reliable development.</p>
+</div>
+<div class="sd-col sd-d-flex-column benefit-item docutils">
+<div class="benefit-icon docutils container">
+<p class="sd-card-text">🚀</p>
+</div>
+<p class="sd-card-text"><strong>High Performance</strong></p>
+<p class="sd-card-text">Async-first architecture with optimized execution and caching.</p>
+</div>
+<div class="sd-col sd-d-flex-column benefit-item docutils">
+<div class="benefit-icon docutils container">
+<p class="sd-card-text">🎯</p>
+</div>
+<p class="sd-card-text"><strong>Extensible</strong></p>
+<p class="sd-card-text">Plugin architecture allows custom agents, tools, and integrations.</p>
+</div>
+</div>
+</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-info sd-bg-text-info">
+<span class="sd-summary-icon"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-graph" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 1.75V13.5h13.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75V1.75a.75.75 0 0 1 1.5 0Zm14.28 2.53-5.25 5.25a.75.75 0 0 1-1.06 0L7 7.06 4.28 9.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.25-3.25a.75.75 0 0 1 1.06 0L10 7.94l4.72-4.72a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"></path></svg></span><span class="sd-summary-text">📊 Live Performance Metrics</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Real-time system metrics</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">platform</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="linenos"> 4</span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🕰️ Timestamp: </span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%H:%M:%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🚀 Python: </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💻 Platform: </span><span class="si">{</span><span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚡ CPU Count: </span><span class="si">{</span><span class="n">platform</span><span class="o">.</span><span class="n">machine</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="c1"># Simulate performance metrics</span>
+<span class="linenos">12</span><span class="n">response_time</span> <span class="o">=</span> <span class="s2">&quot;&lt;100ms&quot;</span>
+<span class="linenos">13</span><span class="n">agents_per_hour</span> <span class="o">=</span> <span class="s2">&quot;10K+&quot;</span>
+<span class="linenos">14</span><span class="n">uptime</span> <span class="o">=</span> <span class="s2">&quot;99.9%&quot;</span>
+<span class="linenos">15</span><span class="n">extensions</span> <span class="o">=</span> <span class="s2">&quot;86+&quot;</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Performance Metrics:&quot;</span><span class="p">)</span>
+<span class="linenos">18</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ⏱️  Response Time: </span><span class="si">{</span><span class="n">response_time</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">19</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  🤖 Agents/Hour: </span><span class="si">{</span><span class="n">agents_per_hour</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">20</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  🟢 Uptime: </span><span class="si">{</span><span class="n">uptime</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">21</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  🗏 Extensions: </span><span class="si">{</span><span class="n">extensions</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>🕰️ Timestamp: 05:39:20
+🚀 Python: 3.12.3
+💻 Platform: Linux
+⚡ CPU Count: x86_64
+
+📊 Performance Metrics:
+  ⏱️  Response Time: &lt;100ms
+  🤖 Agents/Hour: 10K+
+  🟢 Uptime: 99.9%
+  🗏 Extensions: 86+
+</pre></div>
+</div>
+</div>
+</details><section id="documentation-sections">
+<h2>📖 Documentation Sections<a class="headerlink" href="#documentation-sections" title="Link to this heading">#</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docs-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-3 sd-row-cols-lg-3 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+📚 Getting Started</div>
+<p class="sd-card-text">Installation, quickstart, and core concepts to get you up and running.</p>
+<ul class="simple">
+<li><p class="sd-card-text">Installation guide</p></li>
+<li><p class="sd-card-text">Quick start tutorial</p></li>
+<li><p class="sd-card-text">Core concepts overview</p></li>
+<li><p class="sd-card-text">Best practices</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🤖 Agent Development</div>
+<p class="sd-card-text">Comprehensive guide to building and deploying AI agents.</p>
+<ul class="simple">
+<li><p class="sd-card-text">Agent types and patterns</p></li>
+<li><p class="sd-card-text">Configuration and setup</p></li>
+<li><p class="sd-card-text">Advanced features</p></li>
+<li><p class="sd-card-text">Real-world examples</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+📖 API Reference</div>
+<p class="sd-card-text">Complete API documentation with enhanced Pydantic model docs.</p>
+<ul class="simple">
+<li><p class="sd-card-text">Full API coverage</p></li>
+<li><p class="sd-card-text">Pydantic models</p></li>
+<li><p class="sd-card-text">Type information</p></li>
+<li><p class="sd-card-text">Usage examples</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+💻 Examples &amp; Demos</div>
+<p class="sd-card-text">Interactive examples and step-by-step tutorials.</p>
+<ul class="simple">
+<li><p class="sd-card-text">Live code examples</p></li>
+<li><p class="sd-card-text">Jupyter notebooks</p></li>
+<li><p class="sd-card-text">Demo applications</p></li>
+<li><p class="sd-card-text">Video tutorials</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🔧 Tools &amp; Integrations</div>
+<p class="sd-card-text">Tool creation, integration patterns, and MCP servers.</p>
+<ul class="simple">
+<li><p class="sd-card-text">Custom tool creation</p></li>
+<li><p class="sd-card-text">MCP integration</p></li>
+<li><p class="sd-card-text">API connections</p></li>
+<li><p class="sd-card-text">Database integration</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🎮 Game Intelligence</div>
+<p class="sd-card-text">Game AI development and strategy implementation.</p>
+<ul class="simple">
+<li><p class="sd-card-text">Game engine integration</p></li>
+<li><p class="sd-card-text">Strategy algorithms</p></li>
+<li><p class="sd-card-text">Multi-player systems</p></li>
+<li><p class="sd-card-text">Tournament modes</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/javascript">
+        function init() {
+            WaveDrom.ProcessAll();
+        }
+        window.onload = init;
+    </script>
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Haive Team.
+      <span class="lastupdated">Last updated on Aug 07, 2025.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

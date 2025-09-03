@@ -3,6 +3,8 @@
 This module provides prompts functionality for the Haive framework.
 """
 
+from __future__ import annotations
+
 from langchain_core.prompts import ChatPromptTemplate
 
 RAG_HALLUCINATION_DETECTION_COMPREHENSIVE = ChatPromptTemplate.from_messages(
@@ -65,7 +67,7 @@ Be thorough, precise, and evidence-based in your analysis.""",
 
 Provide detailed analysis with specific examples and evidence.""",
         ),
-    ]
+    ],
 )
 
 RAG_HALLUCINATION_DETECTION_BINARY = ChatPromptTemplate.from_messages(
@@ -98,5 +100,5 @@ Provide clear HALLUCINATION DETECTED / NO HALLUCINATION decisions.""",
 
 Provide a clear decision with detailed justification and specific issues if found.""",
         ),
-    ]
+    ],
 )

@@ -8,8 +8,11 @@ Classes:
     BaseRAGState: BaseRAGState implementation.
 """
 
+from __future__ import annotations
+
 from langchain.schema import Document
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 
 class BaseRAGInputState(BaseModel):
@@ -22,7 +25,8 @@ class BaseRAGOutputState(BaseModel):
     """Output state for RAG agents."""
 
     retrieved_documents: list[Document] | list[str] | None = Field(
-        default=[], description="The results of the RAG search."
+        default=[],
+        description="The results of the RAG search.",
     )
 
 

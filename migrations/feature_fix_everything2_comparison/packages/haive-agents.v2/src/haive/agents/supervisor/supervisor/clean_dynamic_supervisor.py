@@ -12,25 +12,23 @@ Functions:
 """
 
 # src/haive/agents/supervisor/clean_dynamic_supervisor.py
-
 """Clean Dynamic Supervisor Implementation.
 
 A dynamic supervisor that can add/remove agents at runtime and
 adapt routing based on agent capabilities.
 """
 
-import logging
 from typing import Any
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
+import logging
 from langchain_core.tools import tool
 from langgraph.graph import END
 from pydantic import BaseModel, Field
-
 from haive.agents.base import Agent
 from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
+
 
 logger = logging.getLogger(__name__)
 
@@ -60,23 +58,28 @@ class DynamicSupervisor(ReactAgent):
     # ========================================================================
 
     registered_agents: dict[str, Agent] = Field(
-        default_factory=dict, description="Currently registered agents"
+        default_factory=dict,
+        description="Currently registered agents",
     )
 
     agent_capabilities: dict[str, str] = Field(
-        default_factory=dict, description="Agent capability descriptions"
+        default_factory=dict,
+        description="Agent capability descriptions",
     )
 
     auto_rebuild: bool = Field(
-        default=True, description="Automatically rebuild graph on agent changes"
+        default=True,
+        description="Automatically rebuild graph on agent changes",
     )
 
     enable_tool_aggregation: bool = Field(
-        default=True, description="Aggregate tools from all agents"
+        default=True,
+        description="Aggregate tools from all agents",
     )
 
     state_schema: type[BaseModel] = Field(
-        default=DynamicSupervisorState, description="Use dynamic supervisor state"
+        default=DynamicSupervisorState,
+        description="Use dynamic supervisor state",
     )
 
     # ========================================================================

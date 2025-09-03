@@ -8,29 +8,27 @@ Functions:
     control_workflow: Control Workflow functionality.
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any
 
+from haive.agents.multi.enhanced_base import MultiAgentBase
+from haive.agents.reasoning_and_critique.tot.v2.models import Candidate
+from haive.agents.reasoning_and_critique.tot.v2.models import CandidateEvaluation
+from haive.agents.reasoning_and_critique.tot.v2.models import CandidateGeneration
+from haive.agents.reasoning_and_critique.tot.v2.models import ScoredCandidate
+from haive.agents.reasoning_and_critique.tot.v2.models import SearchControl
+from haive.agents.reasoning_and_critique.tot.v2.prompts import control_prompt
+from haive.agents.reasoning_and_critique.tot.v2.prompts import expansion_prompt
+from haive.agents.reasoning_and_critique.tot.v2.prompts import scoring_prompt
+from haive.agents.reasoning_and_critique.tot.v2.state import ExpansionState
+from haive.agents.reasoning_and_critique.tot.v2.state import ToTState
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.agent_schema_composer import BuildMode
 from langgraph.graph import END
 from langgraph.types import Send
-
-from haive.agents.multi.enhanced_base import MultiAgentBase
-from haive.agents.reasoning_and_critique.tot.v2.models import (
-    Candidate,
-    CandidateEvaluation,
-    CandidateGeneration,
-    ScoredCandidate,
-    SearchControl,
-)
-from haive.agents.reasoning_and_critique.tot.v2.prompts import (
-    control_prompt,
-    expansion_prompt,
-    scoring_prompt,
-)
-from haive.agents.reasoning_and_critique.tot.v2.state import ExpansionState, ToTState
-from haive.agents.simple.agent import SimpleAgent
 
 logger = logging.getLogger(__name__)
 # In agent.py, fix the engines:
@@ -79,9 +77,7 @@ def expansion_workflow(state: ToTState) -> dict[str, Any]:
                 candidate = Candidate(
                     content=candidate_data,
                     depth=state.depth,
-                    parent_id=(
-                        state.seed.id if hasattr(state, "seed") and state.seed else None
-                    ),
+                    parent_id=(state.seed.id if hasattr(state, "seed") and state.seed else None),
                     expansion_index=i,
                 )
                 new_candidates.append(candidate)
@@ -155,9 +151,7 @@ def control_workflow(state: ToTState) -> dict[str, Any]:
                     "depth": 1,  # Increment depth
                 }
 
-                if best and (
-                    not state.best_solution or best.score > state.best_solution.score
-                ):
+                if best and (not state.best_solution or best.score > state.best_solution.score):
                     updates["best_solution"] = best
 
                 return updates
@@ -216,7 +210,7 @@ def create_tree_of_thoughts(
     beam_size: int = 3,
     expansion_factor: int = 5,
     threshold: float = 0.9,
-    **kwargs
+    **kwargs,
 ) -> MultiAgentBase:
     """Create a Tree of Thoughts multi-agent system."""
     # Define branches for routing
@@ -243,7 +237,7 @@ def create_tree_of_thoughts(
         state_schema_override=ToTState,
         schema_build_mode=BuildMode.SEQUENCE,
         workflow_nodes=workflow_nodes,
-        **kwargs
+        **kwargs,
     )
 
     # Set initial state values
@@ -263,7 +257,7 @@ def solve_with_tot(
     problem_type: str | None = None,
     max_depth: int = 5,
     beam_size: int = 3,
-    **kwargs
+    **kwargs,
 ) -> dict[str, Any]:
     """Solve a problem using Tree of Thoughts."""
     system = create_tree_of_thoughts(max_depth=max_depth, beam_size=beam_size, **kwargs)

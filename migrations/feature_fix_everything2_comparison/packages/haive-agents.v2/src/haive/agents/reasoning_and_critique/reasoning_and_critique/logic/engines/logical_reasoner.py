@@ -7,13 +7,14 @@ Functions:
 """
 
 # src/haive/agents/reasoning/logical_reasoner.py
+from __future__ import annotations
 
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from haive.agents.reasoning_and_critique.logic.models import ReasoningChain
+from haive.core.engine.aug_llm import AugLLMConfig
 
 LOGICAL_REASONING_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -151,7 +152,7 @@ For each step specify:
             "Build a logical argument for this reasoning chain:\n{reasoning_chain}",
         ),
         MessagesPlaceholder(variable_name="messages", optional=True),
-    ]
+    ],
 )
 
 

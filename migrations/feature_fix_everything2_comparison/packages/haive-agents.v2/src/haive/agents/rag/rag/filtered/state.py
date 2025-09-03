@@ -6,6 +6,8 @@ Classes:
     FilteredRAGState: FilteredRAGState implementation.
 """
 
+from __future__ import annotations
+
 from langchain_core.documents import Document
 from pydantic import Field
 

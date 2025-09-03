@@ -7,14 +7,6 @@ plugins
 user_trunk.yaml
 user.yaml
 tmp
-test_utilities
-tests
-scripts
-.venv
-.pytest_cache
-.mypy_cache
-.ruff_cache
-.vscode
-.idea
-.DS_Store
-.env
+
+# Ignore tool submodules - they have their own trunk configs
+tools/

@@ -12,26 +12,25 @@ Functions:
 """
 
 # src/haive/agents/selfdiscover/agent.py
+from __future__ import annotations
 
 import logging
 
-from haive.core.engine.agent.agent import Agent, register_agent
+from haive.agents.reasoning_and_critique.self_discover.config import (
+    SelfDiscoverAgentConfig,
+)
+from haive.agents.reasoning_and_critique.self_discover.models import ModuleAdaptationResult
+from haive.agents.reasoning_and_critique.self_discover.models import ModuleSelectionResult
+from haive.agents.reasoning_and_critique.self_discover.models import ReasoningOutput
+from haive.agents.reasoning_and_critique.self_discover.models import ReasoningStructure
+from haive.agents.reasoning_and_critique.self_discover.state import SelfDiscoverState
+from haive.core.engine.agent.agent import Agent
+from haive.core.engine.agent.agent import register_agent
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from langchain_core.messages import AIMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END
 from langgraph.types import Command
-
-from haive.agents.reasoning_and_critique.self_discover.config import (
-    SelfDiscoverAgentConfig,
-)
-from haive.agents.reasoning_and_critique.self_discover.models import (
-    ModuleAdaptationResult,
-    ModuleSelectionResult,
-    ReasoningOutput,
-    ReasoningStructure,
-)
-from haive.agents.reasoning_and_critique.self_discover.state import SelfDiscoverState
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -39,7 +38,9 @@ logger = logging.getLogger(__name__)
 
 @register_agent(SelfDiscoverAgentConfig)
 class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
-    """An agent that implements the SelfDiscover methodology with structured output models.
+    """An agent that implements the SelfDiscover methodology with structured.
+
+    output models.
 
     This agent follows a four-stage approach:
     1. Select appropriate reasoning modules for the task
@@ -90,13 +91,15 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 # Fall back to string representation
                 selected_modules = self._extract_string_result(result)
                 return Command(
-                    update={"selected_modules": selected_modules}, goto="adapt"
+                    update={"selected_modules": selected_modules},
+                    goto="adapt",
                 )
 
             except Exception as e:
                 logger.exception(f"Error in select_modules: {e!s}")
                 return Command(
-                    update={"error": f"Error in module selection: {e!s}"}, goto=END
+                    update={"error": f"Error in module selection: {e!s}"},
+                    goto=END,
                 )
 
         def adapt_modules(state: SelfDiscoverState) -> Command:
@@ -105,7 +108,8 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 # Check if we have selected modules
                 if not state.selected_modules:
                     return Command(
-                        update={"error": "No modules selected for adaptation"}, goto=END
+                        update={"error": "No modules selected for adaptation"},
+                        goto=END,
                     )
 
                 # Prepare inputs
@@ -138,13 +142,15 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 # Fall back to string representation
                 adapted_modules = self._extract_string_result(result)
                 return Command(
-                    update={"adapted_modules": adapted_modules}, goto="structure"
+                    update={"adapted_modules": adapted_modules},
+                    goto="structure",
                 )
 
             except Exception as e:
                 logger.exception(f"Error in adapt_modules: {e!s}")
                 return Command(
-                    update={"error": f"Error in module adaptation: {e!s}"}, goto=END
+                    update={"error": f"Error in module adaptation: {e!s}"},
+                    goto=END,
                 )
 
         def create_structure(state: SelfDiscoverState) -> Command:
@@ -187,13 +193,15 @@ class SelfDiscoverAgent(Agent[SelfDiscoverAgentConfig]):
                 # Fall back to string representation
                 reasoning_structure = self._extract_string_result(result)
                 return Command(
-                    update={"reasoning_structure": reasoning_structure}, goto="reason"
+                    update={"reasoning_structure": reasoning_structure},
+                    goto="reason",
                 )
 
             except Exception as e:
                 logger.exception(f"Error in create_structure: {e!s}")
                 return Command(
-                    update={"error": f"Error in structure creation: {e!s}"}, goto=END
+                    update={"error": f"Error in structure creation: {e!s}"},
+                    goto=END,
                 )
 
         def execute_reasoning(state: SelfDiscoverState) -> Command:

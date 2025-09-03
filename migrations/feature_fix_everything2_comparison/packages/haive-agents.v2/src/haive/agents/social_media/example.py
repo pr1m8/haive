@@ -11,13 +11,9 @@ Functions:
 # examples/conversation/social_media_example.py
 """Examples for social media style conversations with engagement mechanics."""
 
+
+from __future__ import annotations
 import logging
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import AIMessage, SystemMessage
-
-from haive.agents.conversation.social_media.agent import SocialMediaConversation
-from haive.agents.simple.agent import SimpleAgent
 
 # Set logging
 logging.getLogger("haive").setLevel(logging.WARNING)

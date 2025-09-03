@@ -1,13 +1,15 @@
 """Pro Search Agent implementation.
 
-Provides deep, contextual search with user preferences and advanced reasoning.
-Similar to Perplexity's Pro Search feature that goes deeper and considers user context.
+Provides deep, contextual search with user preferences and advanced
+reasoning. Similar to Perplexity's Pro Search feature that goes deeper
+and considers user context.
 """
+
+from __future__ import annotations
 
 import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.tools import Tool
 
 from haive.agents.memory.search.base import BaseSearchAgent, SearchResponse
@@ -16,6 +18,7 @@ from haive.agents.memory.search.pro_search.models import (
     ProSearchResponse,
     SearchRefinement,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
 
 logger = logging.getLogger(__name__)
 
@@ -212,7 +215,9 @@ Process each query with thoroughness and attention to user context."""
         )
 
     def extract_contextual_insights(
-        self, query: str, context: dict[str, Any]
+        self,
+        query: str,
+        context: dict[str, Any],
     ) -> list[ContextualInsight]:
         """Extract contextual insights from available context.
 
@@ -234,7 +239,7 @@ Process each query with thoroughness and attention to user context."""
                         insight=f"Found {len(memory_items)} related items in search history",
                         relevance_score=0.8,
                         source_type="memory",
-                    )
+                    ),
                 )
 
         # Preference insights
@@ -246,7 +251,7 @@ Process each query with thoroughness and attention to user context."""
                         insight=f"Applied user preferences: {', '.join(prefs.keys())}",
                         relevance_score=0.9,
                         source_type="preferences",
-                    )
+                    ),
                 )
 
         # Domain insights
@@ -257,13 +262,15 @@ Process each query with thoroughness and attention to user context."""
                     insight=f"Search contextualized for {domain} domain",
                     relevance_score=0.7,
                     source_type="context",
-                )
+                ),
             )
 
         return insights
 
     def generate_reasoning_steps(
-        self, query: str, context: dict[str, Any]
+        self,
+        query: str,
+        context: dict[str, Any],
     ) -> list[str]:
         """Generate reasoning steps for the search process.
 
@@ -292,7 +299,10 @@ Process each query with thoroughness and attention to user context."""
         return steps
 
     def generate_follow_up_questions(
-        self, query: str, response: str, context: dict[str, Any]
+        self,
+        query: str,
+        response: str,
+        context: dict[str, Any],
     ) -> list[str]:
         """Generate relevant follow-up questions.
 
@@ -313,15 +323,15 @@ Process each query with thoroughness and attention to user context."""
 
         if "best practices" in query.lower():
             follow_ups.append(
-                "Are there particular constraints or requirements in your situation?"
+                "Are there particular constraints or requirements in your situation?",
             )
             follow_ups.append(
-                "Would you like examples of how others have implemented these practices?"
+                "Would you like examples of how others have implemented these practices?",
             )
 
         if "comparison" in query.lower() or "vs" in query.lower():
             follow_ups.append(
-                "Which specific criteria are most important for your decision?"
+                "Which specific criteria are most important for your decision?",
             )
             follow_ups.append("Would you like detailed pros and cons for each option?")
 
@@ -329,7 +339,7 @@ Process each query with thoroughness and attention to user context."""
         if context.get("domain"):
             domain = context["domain"]
             follow_ups.append(
-                f"Are there {domain}-specific considerations I should address?"
+                f"Are there {domain}-specific considerations I should address?",
             )
 
         # Generic useful follow-ups
@@ -396,14 +406,18 @@ Process each query with thoroughness and attention to user context."""
 
         # Get base response with refined query
         base_response = await super().process_search(
-            refinement.refined_query, context, save_to_memory
+            refinement.refined_query,
+            context,
+            save_to_memory,
         )
 
         # Generate follow-up questions
         follow_ups = []
         if generate_follow_ups:
             follow_ups = self.generate_follow_up_questions(
-                query, base_response.response, context
+                query,
+                base_response.response,
+                context,
             )
 
         # Calculate processing time

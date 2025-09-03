@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from hyde.enhanced_prompts import (
     HyDEPerspective,
     HyDEPromptConfig,

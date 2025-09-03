@@ -8,21 +8,19 @@ This implementation provides state-of-the-art RAG capabilities:
 5. Adaptive retrieval based on query complexity
 """
 
+from __future__ import annotations
+
 import asyncio
-import json
-import logging
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
+import json
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain.retrievers import EnsembleRetriever
 from langchain.retrievers.contextual_compression import ContextualCompressionRetriever
-from langchain.retrievers.document_compressors import (
-    CrossEncoderReranker,
-    LLMChainExtractor,
-)
+from langchain.retrievers.document_compressors import CrossEncoderReranker, LLMChainExtractor
 from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_community.cross_encoders import HuggingFaceCrossEncoder
 from langchain_community.embeddings import OpenAIEmbeddings
@@ -33,6 +31,7 @@ from langchain_core.documents import Document
 from haive.agents.memory_v2.time_weighted_retriever import TimeWeightedRetriever
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 logger = logging.getLogger(__name__)
 
@@ -111,8 +110,8 @@ class AdvancedRAGConfig:
 class AdvancedRAGMemoryAgent:
     """Advanced RAG Memory Agent with multi-stage retrieval.
 
-    This agent implements state-of-the-art retrieval-augmented generation
-    with sophisticated memory management capabilities.
+    This agent implements state-of-the-art retrieval-augmented
+    generation with sophisticated memory management capabilities.
     """
 
     def __init__(self, config: AdvancedRAGConfig):
@@ -151,12 +150,11 @@ class AdvancedRAGMemoryAgent:
                         embedding_function=embeddings,
                     )
                 self.logger.info(
-                    f"Loaded existing vector store from {
-                        self.config.memory_store_path}"
+                    f"Loaded existing vector store from {self.config.memory_store_path}",
                 )
             except Exception as e:
                 self.logger.warning(
-                    f"Could not load existing store: {e}, creating new one"
+                    f"Could not load existing store: {e}, creating new one",
                 )
                 self._create_new_vector_store(embeddings)
         else:
@@ -186,7 +184,7 @@ class AdvancedRAGMemoryAgent:
         """Initialize all retrieval components."""
         # Dense retriever (vector similarity)
         self.dense_retriever = self.vector_store.as_retriever(
-            search_kwargs={"k": self.config.k_initial}
+            search_kwargs={"k": self.config.k_initial},
         )
 
         # Time-weighted dense retriever
@@ -201,7 +199,8 @@ class AdvancedRAGMemoryAgent:
         if self.config.enable_bm25 and self.documents:
             try:
                 self.sparse_retriever = BM25Retriever.from_documents(
-                    self.documents, k=self.config.k_initial
+                    self.documents,
+                    k=self.config.k_initial,
                 )
                 self.sparse_retriever.k = self.config.k_initial
             except Exception as e:
@@ -223,7 +222,8 @@ class AdvancedRAGMemoryAgent:
         if self.config.enable_query_expansion:
             llm = self.config.llm_config.instantiate()
             self.multi_query_retriever = MultiQueryRetriever.from_llm(
-                retriever=self.ensemble_retriever, llm=llm
+                retriever=self.ensemble_retriever,
+                llm=llm,
             )
 
         # Contextual compression retriever
@@ -239,7 +239,8 @@ class AdvancedRAGMemoryAgent:
             compressor = LLMChainExtractor.from_llm(llm)
 
             self.contextual_retriever = ContextualCompressionRetriever(
-                base_compressor=compressor, base_retriever=self.ensemble_retriever
+                base_compressor=compressor,
+                base_retriever=self.ensemble_retriever,
             )
         except Exception as e:
             self.logger.warning(f"Could not initialize contextual retriever: {e}")
@@ -254,14 +255,16 @@ class AdvancedRAGMemoryAgent:
         try:
             # Initialize cross-encoder for reranking
             cross_encoder = HuggingFaceCrossEncoder(
-                model_name=self.config.reranker_model
+                model_name=self.config.reranker_model,
             )
             reranker = CrossEncoderReranker(
-                model=cross_encoder, top_k=self.config.rerank_top_k
+                model=cross_encoder,
+                top_k=self.config.rerank_top_k,
             )
 
             self.reranking_retriever = ContextualCompressionRetriever(
-                base_compressor=reranker, base_retriever=self.ensemble_retriever
+                base_compressor=reranker,
+                base_retriever=self.ensemble_retriever,
             )
         except Exception as e:
             self.logger.warning(f"Could not initialize reranking: {e}")
@@ -280,12 +283,14 @@ class AdvancedRAGMemoryAgent:
             # Fallback to basic agent
             self.logger.warning(f"Could not create SimpleRAGAgent: {e}")
             self.memory_agent = SimpleAgent(
-                name="fallback_memory_agent", engine=self.config.llm_config
+                name="fallback_memory_agent",
+                engine=self.config.llm_config,
             )
 
         # Citation generator
         self.citation_agent = SimpleAgent(
-            name="citation_generator", engine=self.config.llm_config
+            name="citation_generator",
+            engine=self.config.llm_config,
         )
 
     def analyze_query_complexity(self, query: str) -> QueryComplexity:
@@ -295,35 +300,23 @@ class AdvancedRAGMemoryAgent:
         # Count indicators of complexity
         complexity_indicators = {
             "multi_entity": len(
-                [w for w in ["and", "or", "between", "among"] if w in query_lower]
+                [w for w in ["and", "or", "between", "among"] if w in query_lower],
             ),
             "temporal": len(
-                [
-                    w
-                    for w in ["when", "before", "after", "during", "since"]
-                    if w in query_lower
-                ]
+                [w for w in ["when", "before", "after", "during", "since"] if w in query_lower],
             ),
             "relational": len(
                 [
                     w
                     for w in ["how", "why", "relationship", "connection", "related"]
                     if w in query_lower
-                ]
+                ],
             ),
             "comparative": len(
-                [
-                    w
-                    for w in ["compare", "difference", "similar", "versus"]
-                    if w in query_lower
-                ]
+                [w for w in ["compare", "difference", "similar", "versus"] if w in query_lower],
             ),
             "quantitative": len(
-                [
-                    w
-                    for w in ["how many", "count", "number", "statistics"]
-                    if w in query_lower
-                ]
+                [w for w in ["how many", "count", "number", "statistics"] if w in query_lower],
             ),
         }
 
@@ -337,7 +330,9 @@ class AdvancedRAGMemoryAgent:
         return QueryComplexity.SIMPLE
 
     def choose_retrieval_strategy(
-        self, query: str, complexity: QueryComplexity
+        self,
+        query: str,
+        complexity: QueryComplexity,
     ) -> RetrievalStrategy:
         """Choose optimal retrieval strategy based on query and complexity."""
         if self.config.strategy != RetrievalStrategy.ADAPTIVE:
@@ -390,7 +385,8 @@ class AdvancedRAGMemoryAgent:
                 docs = self.ensemble_retriever.get_relevant_documents(query)
 
             elif strategy == RetrievalStrategy.MULTI_QUERY and hasattr(
-                self, "multi_query_retriever"
+                self,
+                "multi_query_retriever",
             ):
                 docs = self.multi_query_retriever.get_relevant_documents(query)
 
@@ -429,9 +425,7 @@ class AdvancedRAGMemoryAgent:
 
         # Sort by importance while maintaining relative order within importance
         # levels
-        docs_with_scores = [
-            (doc, importance_score(doc), i) for i, doc in enumerate(docs)
-        ]
+        docs_with_scores = [(doc, importance_score(doc), i) for i, doc in enumerate(docs)]
         docs_with_scores.sort(key=lambda x: (-x[1], x[2]))
 
         return [doc for doc, _, _ in docs_with_scores]
@@ -529,7 +523,8 @@ Answer:"""
         if self.config.enable_bm25:
             try:
                 self.sparse_retriever = BM25Retriever.from_documents(
-                    self.documents, k=self.config.k_initial
+                    self.documents,
+                    k=self.config.k_initial,
                 )
 
                 # Update ensemble retriever
@@ -624,7 +619,7 @@ Answer:"""
                 timestamp_str = doc.metadata.get("timestamp", "")
                 if timestamp_str:
                     doc_time = datetime.fromisoformat(
-                        timestamp_str.replace("Z", "+00:00")
+                        timestamp_str.replace("Z", "+00:00"),
                     ).timestamp()
                     if doc_time > recent_threshold:
                         doc_stats["recent_additions"] += 1

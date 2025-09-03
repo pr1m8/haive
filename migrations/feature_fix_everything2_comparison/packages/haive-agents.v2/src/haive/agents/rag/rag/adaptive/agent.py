@@ -1,39 +1,42 @@
 """Adaptive RAG Agent.
 
-Dynamic strategy selection based on query complexity.
-Routes queries to appropriate RAG strategies.
+Dynamic strategy selection based on query complexity. Routes queries to
+appropriate RAG strategies.
 """
 
-from typing import Any, Literal
+from __future__ import annotations
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import LLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field
+from typing import Any
+from typing import Literal
 
 from haive.agents.multi.base import ConditionalAgent
 from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import LLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel
+from pydantic import Field
 
 
 class QueryAnalysis(BaseModel):
     """Analysis of query characteristics."""
 
     complexity: Literal["simple", "medium", "complex", "known"] = Field(
-        description="Query complexity level"
+        description="Query complexity level",
     )
     topics: list[str] = Field(description="Main topics in the query")
     requires_multi_hop: bool = Field(
-        description="Whether query requires multiple reasoning steps"
+        description="Whether query requires multiple reasoning steps",
     )
     temporal_sensitivity: bool = Field(
-        description="Whether query is about current/recent events"
+        description="Whether query is about current/recent events",
     )
     domain_specific: bool = Field(
-        description="Whether query requires specialized knowledge"
+        description="Whether query requires specialized knowledge",
     )
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence in the analysis")
 
@@ -65,9 +68,8 @@ Query: {query}
 
 Provide a structured analysis.""",
         ),
-    ]
+    ],
 )
-
 
 DIRECT_ANSWER_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -76,7 +78,7 @@ DIRECT_ANSWER_PROMPT = ChatPromptTemplate.from_messages(
             "You are a knowledgeable assistant. Answer common questions directly.",
         ),
         ("human", "Answer this question based on general knowledge: {query}"),
-    ]
+    ],
 )
 
 
@@ -89,7 +91,7 @@ class AdaptiveRAGAgent(ConditionalAgent):
         documents: list[Document],
         llm_config: LLMConfig | None = None,
         embedding_model: str | None = None,
-        **kwargs
+        **kwargs,
     ):
         """Create Adaptive RAG from documents.
 
@@ -116,26 +118,32 @@ class AdaptiveRAGAgent(ConditionalAgent):
         # Direct answer agent (for known/simple queries)
         direct_agent = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=DIRECT_ANSWER_PROMPT
+                llm_config=llm_config,
+                prompt_template=DIRECT_ANSWER_PROMPT,
             ),
             name="Direct Answer",
         )
 
         # Simple RAG for basic queries
         simple_rag = SimpleRAGAgent.from_documents(
-            documents=documents, llm_config=llm_config
+            documents=documents,
+            llm_config=llm_config,
         )
         simple_rag.name = "Simple RAG"
 
         # Multi-Query RAG for medium complexity
         multi_rag = MultiQueryRAGAgent.from_documents(
-            documents=documents, llm_config=llm_config, embedding_model=embedding_model
+            documents=documents,
+            llm_config=llm_config,
+            embedding_model=embedding_model,
         )
         multi_rag.name = "Multi-Query RAG"
 
         # HyDE RAG for complex/abstract queries
         hyde_rag = HyDERAGAgentV2.from_documents(
-            documents=documents, llm_config=llm_config, embedding_model=embedding_model
+            documents=documents,
+            llm_config=llm_config,
+            embedding_model=embedding_model,
         )
         hyde_rag.name = "HyDE RAG"
 
@@ -176,12 +184,12 @@ class AdaptiveRAGAgent(ConditionalAgent):
                     "multi_rag": "multi_rag",
                     "hyde_rag": "hyde_rag",
                 },
-            }
+            },
         }
 
         return cls(
             agents=[query_analyzer, direct_agent, simple_rag, multi_rag, hyde_rag],
             branches=branches,
             name=kwargs.get("name", "Adaptive RAG Agent"),
-            **kwargs
+            **kwargs,
         )

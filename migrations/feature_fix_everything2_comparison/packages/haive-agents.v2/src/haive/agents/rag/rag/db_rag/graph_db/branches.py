@@ -3,6 +3,8 @@
 This module provides branches functionality for the Haive framework.
 """
 
+from __future__ import annotations
+
 from haive.core.graph.branches import Branch
 from langgraph.graph import END
 

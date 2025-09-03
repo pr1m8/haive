@@ -17,19 +17,19 @@ These schemas define the structure of memories that will be extracted
 and managed by the LTM agent.
 """
 
-
-from pydantic import BaseModel, Field
-
 # ============================================================================
 # BASIC MEMORY SCHEMA (from LangMem)
 # ============================================================================
+
+
+from pydantic import BaseModel, Field
 
 
 class Memory(BaseModel):
     """Basic memory schema following LangMem patterns."""
 
     content: str = Field(
-        description="The memory as a well-written, standalone episode/fact/note/preference/etc."
+        description="The memory as a well-written, standalone episode/fact/note/preference/etc.",
     )
 
 
@@ -45,7 +45,8 @@ class UserPreference(BaseModel):
     preference: str = Field(description="The actual preference")
     context: str = Field(description="Context or reasoning behind the preference")
     confidence: float = Field(
-        default=0.8, description="Confidence level in this preference (0.0-1.0)"
+        default=0.8,
+        description="Confidence level in this preference (0.0-1.0)",
     )
 
 
@@ -68,7 +69,8 @@ class PersonalContext(BaseModel):
     relationship: str = Field(description="Relationship to the user")
     context: str = Field(description="Important context about this person/relationship")
     importance: str = Field(
-        default="medium", description="Importance level: low, medium, high, critical"
+        default="medium",
+        description="Importance level: low, medium, high, critical",
     )
 
 
@@ -78,10 +80,12 @@ class ConversationalMemory(BaseModel):
     content: str = Field(description="The conversational memory content")
     topic: str = Field(description="Main topic or theme")
     emotional_tone: str | None = Field(
-        default=None, description="Emotional tone if relevant"
+        default=None,
+        description="Emotional tone if relevant",
     )
     action_items: list[str] = Field(
-        default_factory=list, description="Any action items or follow-ups mentioned"
+        default_factory=list,
+        description="Any action items or follow-ups mentioned",
     )
 
 

@@ -1,1 +1,0 @@
-941b43fc refs/remotes/origin/fix/autosummary-module-detection@{2025-07-06 15:20:39 -0400}: update by push

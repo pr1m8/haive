@@ -35,13 +35,15 @@ class HallucinationClaim(BaseModel):
     claim: str = Field(description="The specific claim being evaluated")
     is_supported: bool = Field(description="Whether the claim is supported by sources")
     support_type: str = Field(
-        description="Type of support: explicit, inferred, or unsupported"
+        description="Type of support: explicit, inferred, or unsupported",
     )
     source_reference: str | None = Field(
-        default=None, description="Reference to supporting source if available"
+        default=None,
+        description="Reference to supporting source if available",
     )
     hallucination_type: HallucinationType | None = Field(
-        default=None, description="Type of hallucination if detected"
+        default=None,
+        description="Type of hallucination if detected",
     )
     severity: float = Field(
         default=0.0,
@@ -62,15 +64,16 @@ class HallucinationDetectionResponse(BaseModel):
         description="Overall hallucination score (0.0 = no hallucinations)",
     )
     claim_analysis: list[HallucinationClaim] = Field(
-        description="Analysis of individual claims"
+        description="Analysis of individual claims",
     )
     supported_claims: list[str] = Field(description="Claims well-supported by sources")
     unsupported_claims: list[str] = Field(description="Claims lacking source support")
     contradictory_claims: list[str] = Field(
-        default_factory=list, description="Claims that contradict the sources"
+        default_factory=list,
+        description="Claims that contradict the sources",
     )
     recommendations: list[str] = Field(
-        description="Recommendations for improving answer accuracy"
+        description="Recommendations for improving answer accuracy",
     )
 
 
@@ -80,12 +83,13 @@ class HallucinationBinaryResponse(BaseModel):
     query: str = Field(description="Original query")
     generated_answer: str = Field(description="Answer being evaluated")
     hallucination_detected: bool = Field(
-        description="Whether hallucination was detected"
+        description="Whether hallucination was detected",
     )
     severity_level: Literal["none", "minor", "moderate", "major", "severe"] = Field(
-        description="none, minor, moderate, major, or severe"
+        description="none, minor, moderate, major, or severe",
     )
     justification: str = Field(description="Detailed reasoning for the decision")
     specific_issues: list[str] = Field(
-        default_factory=list, description="Specific hallucinated content identified"
+        default_factory=list,
+        description="Specific hallucinated content identified",
     )

@@ -3,6 +3,7 @@
 
 Comprehensive summary of all documentation fixes and the import issue analysis.
 """
+from __future__ import annotations
 
 import json
 from datetime import datetime

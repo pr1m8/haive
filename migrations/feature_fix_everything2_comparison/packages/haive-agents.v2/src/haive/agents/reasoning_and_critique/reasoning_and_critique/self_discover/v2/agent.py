@@ -6,23 +6,9 @@ This module provides agent functionality for the Haive framework.
 # src/haive/agents/self_discovery/agents.py
 """Self-Discovery agent implementation using SimpleAgent and ProperMultiAgent."""
 
-
-from haive.core.engine.aug_llm import AugLLMConfig
-
 from haive.agents.multi.proper_base import ProperMultiAgent
-from haive.agents.reasoning_and_critique.self_discover.v2.models import (
-    AdaptedModules,
-    FinalAnswer,
-    ReasoningStructure,
-    SelectedModules,
-)
-from haive.agents.reasoning_and_critique.self_discover.v2.prompts import (
-    adapt_prompt,
-    reasoning_prompt,
-    select_prompt,
-    structured_prompt,
-)
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 # Default reasoning modules
 default_reasoning_modules = [
@@ -70,8 +56,8 @@ select_engine = AugLLMConfig(
     structured_output_version="v2",
     prompt_template=select_prompt.partial(
         reasoning_modules="\n".join(
-            [f"{i+1}. {module}" for i, module in enumerate(default_reasoning_modules)]
-        )
+            [f"{i + 1}. {module}" for i, module in enumerate(default_reasoning_modules)],
+        ),
     ),
     temperature=0.7,
 )
@@ -100,18 +86,13 @@ reason_engine = AugLLMConfig(
     temperature=0.1,
 )
 
-
 # Create SimpleAgent for each step
 select_agent = SimpleAgent(name="select_modules", engine=select_engine)
 adapt_agent = SimpleAgent(name="adapt_modules", engine=adapt_engine)
 structure_agent = SimpleAgent(name="create_structure", engine=structure_engine)
 reason_agent = SimpleAgent(name="final_reasoning", engine=reason_engine)
 
-
 # Import our proper state schema
-from haive.agents.reasoning_and_critique.self_discover.v2.state import (
-    SelfDiscoveryState,
-)
 
 # Create the ProperMultiAgent with sequential execution and our state schema
 self_discovery = ProperMultiAgent(

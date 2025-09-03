@@ -32,10 +32,9 @@ Example:
     ```
 """
 
-
+from datetime import datetime
 import logging
 import traceback
-from datetime import datetime
 from typing import Any
 
 from langgraph.types import Command, Send
@@ -91,51 +90,62 @@ class MetaAgentNodeConfig(NodeConfig):
 
     # Meta agent execution configuration
     input_preparation: str = Field(
-        default="auto", description="How to prepare input for the embedded agent"
+        default="auto",
+        description="How to prepare input for the embedded agent",
     )
 
     output_handling: str = Field(
-        default="merge", description="How to handle output from the embedded agent"
+        default="merge",
+        description="How to handle output from the embedded agent",
     )
 
     error_handling: str = Field(
-        default="capture", description="How to handle errors during agent execution"
+        default="capture",
+        description="How to handle errors during agent execution",
     )
 
     # Execution options
     include_messages: bool = Field(
-        default=True, description="Whether to include messages in agent input"
+        default=True,
+        description="Whether to include messages in agent input",
     )
 
     include_meta_context: bool = Field(
-        default=False, description="Whether to include meta context in agent input"
+        default=False,
+        description="Whether to include meta context in agent input",
     )
 
     update_execution_history: bool = Field(
-        default=True, description="Whether to update execution history in meta state"
+        default=True,
+        description="Whether to update execution history in meta state",
     )
 
     sync_messages: bool = Field(
-        default=True, description="Whether to sync messages back from agent output"
+        default=True,
+        description="Whether to sync messages back from agent output",
     )
 
     # Agent selection (if multiple agents in state)
     agent_field: str = Field(
-        default="agent", description="Field name containing the agent to execute"
+        default="agent",
+        description="Field name containing the agent to execute",
     )
 
     # Custom configuration
     custom_input_fields: list[str] = Field(
-        default_factory=list, description="Additional fields to include in agent input"
+        default_factory=list,
+        description="Additional fields to include in agent input",
     )
 
     exclude_fields: list[str] = Field(
-        default_factory=list, description="Fields to exclude from agent input"
+        default_factory=list,
+        description="Fields to exclude from agent input",
     )
 
     # Execution control
     max_execution_time: float | None = Field(
-        default=None, description="Maximum execution time in seconds"
+        default=None,
+        description="Maximum execution time in seconds",
     )
 
     timeout_behavior: str = Field(
@@ -144,7 +154,9 @@ class MetaAgentNodeConfig(NodeConfig):
     )
 
     def __call__(
-        self, state: StateLike, config: ConfigLike | None = None
+        self,
+        state: StateLike,
+        config: ConfigLike | None = None,
     ) -> Command | Send:
         """Execute the embedded agent from meta state.
 
@@ -164,16 +176,14 @@ class MetaAgentNodeConfig(NodeConfig):
             # Validate state is meta state
             if not self._is_meta_state(state):
                 raise ValueError(
-                    f"State must be a MetaStateSchema instance, got {
-                        type(state)}"
+                    f"State must be a MetaStateSchema instance, got {type(state)}",
                 )
 
             # Extract the embedded agent
             agent = self._extract_agent(state)
             if agent is None:
                 raise ValueError(
-                    f"No agent found in state field '{
-                        self.agent_field}'"
+                    f"No agent found in state field '{self.agent_field}'",
                 )
 
             logger.info(f"✅ Found embedded agent: {type(agent).__name__}")
@@ -181,8 +191,7 @@ class MetaAgentNodeConfig(NodeConfig):
             # Prepare input for the embedded agent
             agent_input = self._prepare_agent_input(state, config)
             logger.debug(
-                f"Prepared agent input with {
-                    len(agent_input)} fields"
+                f"Prepared agent input with {len(agent_input)} fields",
             )
 
             # Prepare execution configuration
@@ -190,7 +199,10 @@ class MetaAgentNodeConfig(NodeConfig):
 
             # Execute the embedded agent
             execution_result = self._execute_embedded_agent(
-                state, agent, agent_input, execution_config
+                state,
+                agent,
+                agent_input,
+                execution_config,
             )
 
             # Handle the execution output
@@ -221,12 +233,13 @@ class MetaAgentNodeConfig(NodeConfig):
         return None
 
     def _prepare_agent_input(
-        self, state: StateLike, config: ConfigLike | None = None
+        self,
+        state: StateLike,
+        config: ConfigLike | None = None,
     ) -> dict[str, Any]:
         """Prepare input data for the embedded agent based on configuration."""
         logger.debug(
-            f"Preparing agent input using strategy: {
-                self.input_preparation}"
+            f"Preparing agent input using strategy: {self.input_preparation}",
         )
 
         if self.input_preparation == "auto":
@@ -240,7 +253,7 @@ class MetaAgentNodeConfig(NodeConfig):
         if self.input_preparation == "custom":
             return self._prepare_custom_input(state, config)
         raise ValueError(
-            f"Unknown input preparation strategy: {self.input_preparation}"
+            f"Unknown input preparation strategy: {self.input_preparation}",
         )
 
     def _prepare_auto_input(self, state: StateLike) -> dict[str, Any]:
@@ -272,7 +285,9 @@ class MetaAgentNodeConfig(NodeConfig):
         return input_data
 
     def _prepare_custom_input(
-        self, state: StateLike, config: ConfigLike | None = None
+        self,
+        state: StateLike,
+        config: ConfigLike | None = None,
     ) -> dict[str, Any]:
         """Prepare custom input - override this method for custom logic."""
         # Default implementation uses auto strategy
@@ -280,7 +295,9 @@ class MetaAgentNodeConfig(NodeConfig):
         return self._prepare_auto_input(state)
 
     def _prepare_execution_config(
-        self, state: StateLike, config: ConfigLike | None = None
+        self,
+        state: StateLike,
+        config: ConfigLike | None = None,
     ) -> dict[str, Any]:
         """Prepare execution configuration for the embedded agent."""
         execution_config = {}
@@ -308,9 +325,7 @@ class MetaAgentNodeConfig(NodeConfig):
     ) -> dict[str, Any]:
         """Execute the embedded agent and return execution result."""
         logger.info(
-            f"Executing embedded agent with input: {
-                list(
-                    agent_input.keys())}"
+            f"Executing embedded agent with input: {list(agent_input.keys())}",
         )
 
         start_time = datetime.now()
@@ -328,8 +343,7 @@ class MetaAgentNodeConfig(NodeConfig):
                 result = agent(agent_input)
             else:
                 raise RuntimeError(
-                    f"Agent {
-                        type(agent).__name__} is not executable"
+                    f"Agent {type(agent).__name__} is not executable",
                 )
 
             end_time = datetime.now()
@@ -347,8 +361,7 @@ class MetaAgentNodeConfig(NodeConfig):
             }
 
             logger.info(
-                f"✅ Agent execution completed in {
-                    execution_time:.2f}s"
+                f"✅ Agent execution completed in {execution_time:.2f}s",
             )
             return execution_result
 
@@ -357,7 +370,7 @@ class MetaAgentNodeConfig(NodeConfig):
             execution_time = (end_time - start_time).total_seconds()
 
             logger.exception(
-                f"❌ Agent execution failed after {execution_time:.2f}s: {e}"
+                f"❌ Agent execution failed after {execution_time:.2f}s: {e}",
             )
 
             # Create error result
@@ -389,19 +402,23 @@ class MetaAgentNodeConfig(NodeConfig):
             return execution_result
 
     def _handle_custom_error(
-        self, state: StateLike, error: Exception, execution_result: dict[str, Any]
+        self,
+        state: StateLike,
+        error: Exception,
+        execution_result: dict[str, Any],
     ) -> dict[str, Any]:
         """Handle custom error - override this method for custom logic."""
         logger.warning("Custom error handling not implemented, falling back to capture")
         return execution_result
 
     def _handle_agent_output(
-        self, state: StateLike, execution_result: dict[str, Any]
+        self,
+        state: StateLike,
+        execution_result: dict[str, Any],
     ) -> StateLike:
         """Handle agent execution output and update meta state."""
         logger.debug(
-            f"Handling agent output using strategy: {
-                self.output_handling}"
+            f"Handling agent output using strategy: {self.output_handling}",
         )
 
         # Create a copy of the state to avoid modifying the original
@@ -420,12 +437,13 @@ class MetaAgentNodeConfig(NodeConfig):
         if self.output_handling == "custom":
             return self._handle_custom_output(updated_state, execution_result)
         raise ValueError(
-            f"Unknown output handling strategy: {
-                self.output_handling}"
+            f"Unknown output handling strategy: {self.output_handling}",
         )
 
     def _merge_output(
-        self, state: StateLike, execution_result: dict[str, Any]
+        self,
+        state: StateLike,
+        execution_result: dict[str, Any],
     ) -> StateLike:
         """Merge agent output back to meta state."""
         result = execution_result.get("result", {})
@@ -478,7 +496,9 @@ class MetaAgentNodeConfig(NodeConfig):
         return state
 
     def _replace_output(
-        self, state: StateLike, execution_result: dict[str, Any]
+        self,
+        state: StateLike,
+        execution_result: dict[str, Any],
     ) -> StateLike:
         """Replace agent_output field with new output."""
         result = execution_result.get("result", {})
@@ -496,7 +516,9 @@ class MetaAgentNodeConfig(NodeConfig):
         return state
 
     def _append_output(
-        self, state: StateLike, execution_result: dict[str, Any]
+        self,
+        state: StateLike,
+        execution_result: dict[str, Any],
     ) -> StateLike:
         """Append output to execution history only."""
         if self.update_execution_history and hasattr(state, "execution_history"):
@@ -511,14 +533,18 @@ class MetaAgentNodeConfig(NodeConfig):
         return state
 
     def _handle_custom_output(
-        self, state: StateLike, execution_result: dict[str, Any]
+        self,
+        state: StateLike,
+        execution_result: dict[str, Any],
     ) -> StateLike:
         """Handle custom output - override this method for custom logic."""
         logger.warning("Custom output handling not implemented, falling back to merge")
         return self._merge_output(state, execution_result)
 
     def _update_execution_metadata(
-        self, state: StateLike, execution_result: dict[str, Any]
+        self,
+        state: StateLike,
+        execution_result: dict[str, Any],
     ) -> None:
         """Update execution metadata in the state."""
         if hasattr(state, "execution_status"):
@@ -553,7 +579,10 @@ class MetaAgentNodeConfig(NodeConfig):
         return Command(update=update_dict, goto=self.command_goto)
 
     def _handle_execution_error(
-        self, state: StateLike, error: Exception, config: ConfigLike | None = None
+        self,
+        state: StateLike,
+        error: Exception,
+        config: ConfigLike | None = None,
     ) -> Command | Send:
         """Handle errors that occur during node execution."""
         logger.error(f"Meta agent node execution failed: {error}")
@@ -561,9 +590,7 @@ class MetaAgentNodeConfig(NodeConfig):
         # Create error state update
         error_update = {}
 
-        error_update = (
-            state.model_dump() if hasattr(state, "model_dump") else dict(state)
-        )
+        error_update = state.model_dump() if hasattr(state, "model_dump") else dict(state)
 
         # Update error information
         error_update.update(
@@ -575,7 +602,7 @@ class MetaAgentNodeConfig(NodeConfig):
                     "timestamp": datetime.now().isoformat(),
                     "node": self.name,
                 },
-            }
+            },
         )
 
         # Return error response

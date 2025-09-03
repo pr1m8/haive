@@ -1,17 +1,18 @@
 """Example demonstrating the use of the Tree of Thoughts agent.
 
-This example shows how to instantiate and run the ToT agent
-with different problem types.
+This example shows how to instantiate and run the ToT agent with
+different problem types.
 """
+
+from __future__ import annotations
 
 import asyncio
 import logging
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-
 from haive.agents.reasoning_and_critique.tot.agent import ToTAgent
 from haive.agents.reasoning_and_critique.tot.config import TOTAgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -56,14 +57,16 @@ async def run_math_example():
                 name="math_generator",
                 description="Generates mathematical solutions",
                 llm_config=AzureLLMConfig(
-                    model="gpt-4o", parameters={"temperature": 0.7}
+                    model="gpt-4o",
+                    parameters={"temperature": 0.7},
                 ),
             ),
             "evaluator": AugLLMConfig(
                 name="math_evaluator",
                 description="Evaluates mathematical solutions",
                 llm_config=AzureLLMConfig(
-                    model="gpt-4o", parameters={"temperature": 0.1}
+                    model="gpt-4o",
+                    parameters={"temperature": 0.1},
                 ),
             ),
         },
@@ -72,7 +75,9 @@ async def run_math_example():
     agent = ToTAgent(config)
 
     # Define a Game of 24 problem
-    problem = "Use the numbers 4, 7, 8, and 9 exactly once with basic operations (+, -, *, /) to get 24."
+    problem = (
+        "Use the numbers 4, 7, 8, and 9 exactly once with basic operations (+, -, *, /) to get 24."
+    )
 
     # Run the agent
     result = await agent.run(problem)
@@ -103,14 +108,16 @@ async def run_complex_reasoning_example():
                 name="reasoning_generator",
                 description="Generates solutions for complex reasoning problems",
                 llm_config=AzureLLMConfig(
-                    model="gpt-4o", parameters={"temperature": 0.8, "max_tokens": 2000}
+                    model="gpt-4o",
+                    parameters={"temperature": 0.8, "max_tokens": 2000},
                 ),
             ),
             "evaluator": AugLLMConfig(
                 name="reasoning_evaluator",
                 description="Evaluates solutions for complex reasoning problems",
                 llm_config=AzureLLMConfig(
-                    model="gpt-4o", parameters={"temperature": 0.1, "max_tokens": 1000}
+                    model="gpt-4o",
+                    parameters={"temperature": 0.1, "max_tokens": 1000},
                 ),
             ),
         },

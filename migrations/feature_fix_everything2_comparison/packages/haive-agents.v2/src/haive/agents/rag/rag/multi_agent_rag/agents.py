@@ -1,14 +1,15 @@
 """Multi-Agent RAG System Components.
 
-This module provides specialized RAG agents that can be composed into complex workflows
-using the multi-agent framework. Each agent focuses on a specific aspect of the RAG process.
+This module provides specialized RAG agents that can be composed into
+complex workflows using the multi-agent framework. Each agent focuses on
+a specific aspect of the RAG process.
 """
+
+from __future__ import annotations
 
 from collections.abc import Callable
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.fixtures.documents import conversation_documents
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -26,6 +27,8 @@ from haive.agents.rag.multi_agent_rag.state import (
     RAGOperationType,
 )
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.fixtures.documents import conversation_documents
 
 # ============================================================================
 # PROMPT TEMPLATES
@@ -47,7 +50,7 @@ Query: {query}
 Retrieved Documents: {retrieved_documents}
 """,
         ),
-    ]
+    ],
 )
 
 RAG_DOCUMENT_ITERATOR_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages(
@@ -75,7 +78,7 @@ Document to evaluate: {document}
 Provide your assessment of this document's relevance to the query.
 """,
         ),
-    ]
+    ],
 )
 
 RAG_RETRIEVAL_PROMPT_TEMPLATE = ChatPromptTemplate.from_messages(
@@ -98,9 +101,8 @@ Available Documents: {available_documents}
 Select the most relevant documents by returning their indices.
 """,
         ),
-    ]
+    ],
 )
-
 
 # ============================================================================
 # SPECIALIZED RAG AGENTS
@@ -110,12 +112,16 @@ Select the most relevant documents by returning their indices.
 class SimpleRAGAgent(SimpleAgent):
     """Simple RAG agent that retrieves documents and provides basic answers.
 
-    This agent provides fundamental RAG functionality using conversation documents
-    as the knowledge base. It can be composed with other agents for more complex workflows.
+    This agent provides fundamental RAG functionality using conversation
+    documents as the knowledge base. It can be composed with other
+    agents for more complex workflows.
     """
 
     def __init__(
-        self, documents: list[Document] | None = None, max_documents: int = 5, **kwargs
+        self,
+        documents: list[Document] | None = None,
+        max_documents: int = 5,
+        **kwargs,
     ):
         # Set up default engine if none provided
         if "engine" not in kwargs:
@@ -160,7 +166,7 @@ class SimpleRAGAgent(SimpleAgent):
         documents: list[Document],
         prompt_template: ChatPromptTemplate | None = None,
         **kwargs,
-    ) -> "SimpleRAGAgent":
+    ) -> SimpleRAGAgent:
         """Create SimpleRAGAgent from a document collection."""
         engine_config = AugLLMConfig(
             prompt_template=prompt_template or RAG_ANSWER_BASE_PROMPT_TEMPLATE,
@@ -170,7 +176,9 @@ class SimpleRAGAgent(SimpleAgent):
         return cls(engine=engine_config, documents=documents, **kwargs)
 
     def retrieve_documents(
-        self, query: str, top_k: int | None = None
+        self,
+        query: str,
+        top_k: int | None = None,
     ) -> list[Document]:
         """Simple document retrieval based on text matching."""
         top_k = top_k or self.max_documents
@@ -195,28 +203,30 @@ class SimpleRAGAgent(SimpleAgent):
             "retrieved_documents": retrieved,
             "current_operation": RAGOperationType.RETRIEVE,
             "retrieval_confidence": min(
-                1.0, len(retrieved) / 3.0
+                1.0,
+                len(retrieved) / 3.0,
             ),  # Simple confidence measure
         }
 
 
 class SimpleRAGAnswerAgent(SimpleAgent):
-    """RAG answer generation agent that creates responses from retrieved documents.
+    """RAG answer generation agent that creates responses from retrieved.
 
-    This agent focuses specifically on generating high-quality answers from
-    retrieved documents using structured prompts.
+    documents.
+
+    This agent focuses specifically on generating high-quality answers
+    from retrieved documents using structured prompts.
     """
 
     def __init__(self, use_citations: bool = False, **kwargs):
         # Choose appropriate prompt template
-        prompt_template = (
-            RAG_ANSWER_WITH_CITATIONS if use_citations else RAG_ANSWER_STANDARD
-        )
+        prompt_template = RAG_ANSWER_WITH_CITATIONS if use_citations else RAG_ANSWER_STANDARD
 
         # Set up default engine if none provided
         if "engine" not in kwargs:
             kwargs["engine"] = AugLLMConfig(
-                prompt_template=prompt_template, name="rag_answer_engine"
+                prompt_template=prompt_template,
+                name="rag_answer_engine",
             )
 
         # Set default name
@@ -242,7 +252,7 @@ class SimpleRAGAnswerAgent(SimpleAgent):
         """Generate answer from query and documents."""
         # Format documents for the prompt
         doc_text = "\n\n".join(
-            [f"Document {i+1}: {doc.page_content}" for i, doc in enumerate(documents)]
+            [f"Document {i + 1}: {doc.page_content}" for i, doc in enumerate(documents)],
         )
 
         # Use the engine to generate response
@@ -274,8 +284,8 @@ class SimpleRAGAnswerAgent(SimpleAgent):
 class DocumentGradingAgent(SimpleAgent):
     """Document grading agent that evaluates document relevance.
 
-    This agent can iterate over retrieved documents and grade each one for
-    relevance to the query using configurable grading strategies.
+    This agent can iterate over retrieved documents and grade each one
+    for relevance to the query using configurable grading strategies.
     """
 
     def __init__(
@@ -333,12 +343,14 @@ class DocumentGradingAgent(SimpleAgent):
     def grade_document(self, query: str, document: Document) -> DocumentGradingResult:
         """Grade a single document for relevance."""
         # Format the document for evaluation
-        doc_text = f"Title: {document.metadata.get('title', 'N/A')}\nContent: {document.page_content}"
+        doc_text = (
+            f"Title: {document.metadata.get('title', 'N/A')}\nContent: {document.page_content}"
+        )
 
         if self.grading_mode == "binary":
             # Use binary grading
             response = self.engine.invoke(
-                {"query": query, "retrieved_documents": doc_text}
+                {"query": query, "retrieved_documents": doc_text},
             )
 
             # Extract grading decision (this would be more sophisticated in practice)
@@ -365,7 +377,9 @@ class DocumentGradingAgent(SimpleAgent):
         )
 
     def grade_documents(
-        self, query: str, documents: list[Document]
+        self,
+        query: str,
+        documents: list[Document],
     ) -> list[DocumentGradingResult]:
         """Grade multiple documents."""
         results = []
@@ -390,8 +404,7 @@ class DocumentGradingAgent(SimpleAgent):
         relevant_docs = [
             result.document
             for result in grading_results
-            if result.is_relevant
-            and result.relevance_score >= self.min_relevance_threshold
+            if result.is_relevant and result.relevance_score >= self.min_relevance_threshold
         ]
 
         return {
@@ -404,8 +417,8 @@ class DocumentGradingAgent(SimpleAgent):
 class IterativeDocumentGradingAgent(DocumentGradingAgent):
     """Specialized grading agent that processes documents one by one.
 
-    This agent demonstrates the capability to iterate over retrieved documents
-    and process each one individually with custom callables.
+    This agent demonstrates the capability to iterate over retrieved
+    documents and process each one individually with custom callables.
     """
 
     def __init__(self, custom_grader: Callable | None = None, **kwargs):
@@ -437,7 +450,8 @@ class IterativeDocumentGradingAgent(DocumentGradingAgent):
                         relevance_score=custom_result.get("score", 0.5),
                         is_relevant=custom_result.get("relevant", True),
                         grading_reason=custom_result.get(
-                            "reason", "Custom grader result"
+                            "reason",
+                            "Custom grader result",
                         ),
                         grader_type="custom",
                     )
@@ -466,8 +480,7 @@ class IterativeDocumentGradingAgent(DocumentGradingAgent):
         relevant_docs = [
             result.document
             for result in grading_results
-            if result.is_relevant
-            and result.relevance_score >= self.min_relevance_threshold
+            if result.is_relevant and result.relevance_score >= self.min_relevance_threshold
         ]
 
         return {
@@ -483,32 +496,40 @@ class IterativeDocumentGradingAgent(DocumentGradingAgent):
 
 
 def create_simple_rag_agent(
-    documents: list[Document] | None = None, **kwargs
+    documents: list[Document] | None = None,
+    **kwargs,
 ) -> SimpleRAGAgent:
     """Create a simple RAG agent with default configuration."""
     return SimpleRAGAgent.from_documents(
-        documents=documents or conversation_documents, **kwargs
+        documents=documents or conversation_documents,
+        **kwargs,
     )
 
 
 def create_rag_answer_agent(
-    use_citations: bool = False, **kwargs
+    use_citations: bool = False,
+    **kwargs,
 ) -> SimpleRAGAnswerAgent:
     """Create a RAG answer agent with default configuration."""
     return SimpleRAGAnswerAgent(use_citations=use_citations, **kwargs)
 
 
 def create_document_grading_agent(
-    grading_mode: str = "binary", min_threshold: float = 0.5, **kwargs
+    grading_mode: str = "binary",
+    min_threshold: float = 0.5,
+    **kwargs,
 ) -> DocumentGradingAgent:
     """Create a document grading agent with default configuration."""
     return DocumentGradingAgent(
-        grading_mode=grading_mode, min_relevance_threshold=min_threshold, **kwargs
+        grading_mode=grading_mode,
+        min_relevance_threshold=min_threshold,
+        **kwargs,
     )
 
 
 def create_iterative_grading_agent(
-    custom_grader: Callable | None = None, **kwargs
+    custom_grader: Callable | None = None,
+    **kwargs,
 ) -> IterativeDocumentGradingAgent:
     """Create an iterative document grading agent."""
     return IterativeDocumentGradingAgent(custom_grader=custom_grader, **kwargs)
@@ -523,5 +544,5 @@ SIMPLE_RAG_AGENT = SimpleRAGAgent.from_documents(conversation_documents)
 
 # Simple RAG Answer Agent with the exact template from the prompt
 SIMPLE_RAG_ANSWER_AGENT = SimpleRAGAnswerAgent(
-    engine=AugLLMConfig(prompt_template=RAG_ANSWER_BASE_PROMPT_TEMPLATE)
+    engine=AugLLMConfig(prompt_template=RAG_ANSWER_BASE_PROMPT_TEMPLATE),
 )

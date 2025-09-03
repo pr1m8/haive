@@ -5,36 +5,33 @@ integrating all components including classification, storage, retrieval,
 knowledge graph generation, and multi-agent coordination.
 """
 
+from __future__ import annotations
+
 import asyncio
 import logging
 from datetime import datetime
 from typing import Any
 
+from haive.agents.memory.agentic_rag_coordinator import AgenticRAGCoordinator
+from haive.agents.memory.agentic_rag_coordinator import AgenticRAGCoordinatorConfig
+from haive.agents.memory.core.classifier import MemoryClassifier
+from haive.agents.memory.core.classifier import MemoryClassifierConfig
+from haive.agents.memory.core.stores import MemoryStoreConfig
+from haive.agents.memory.core.stores import MemoryStoreManager
+from haive.agents.memory.core.types import MemoryType
+from haive.agents.memory.enhanced_retriever import EnhancedRetrieverConfig
+from haive.agents.memory.graph_rag_retriever import GraphRAGRetriever
+from haive.agents.memory.graph_rag_retriever import GraphRAGRetrieverConfig
+from haive.agents.memory.kg_generator_agent import KGGeneratorAgent
+from haive.agents.memory.kg_generator_agent import KGGeneratorAgentConfig
+from haive.agents.memory.multi_agent_coordinator import MultiAgentCoordinatorConfig
+from haive.agents.memory.multi_agent_coordinator import MultiAgentMemoryCoordinator
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.persistence.store.types import StoreType
 from haive.core.tools.store_manager import StoreManager
-from pydantic import BaseModel, ConfigDict, Field
-
-from haive.agents.memory.agentic_rag_coordinator import (
-    AgenticRAGCoordinator,
-    AgenticRAGCoordinatorConfig,
-)
-from haive.agents.memory.core.classifier import MemoryClassifier, MemoryClassifierConfig
-from haive.agents.memory.core.stores import MemoryStoreConfig, MemoryStoreManager
-from haive.agents.memory.core.types import MemoryType
-from haive.agents.memory.enhanced_retriever import EnhancedRetrieverConfig
-from haive.agents.memory.graph_rag_retriever import (
-    GraphRAGRetriever,
-    GraphRAGRetrieverConfig,
-)
-from haive.agents.memory.kg_generator_agent import (
-    KGGeneratorAgent,
-    KGGeneratorAgentConfig,
-)
-from haive.agents.memory.multi_agent_coordinator import (
-    MultiAgentCoordinatorConfig,
-    MultiAgentMemoryCoordinator,
-)
+from pydantic import BaseModel
+from pydantic import ConfigDict
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 
@@ -107,54 +104,66 @@ class MemorySystemConfig(BaseModel):
 
     # Store configuration
     store_type: str = Field(
-        default="memory", description="Store type (memory, postgres, etc.)"
+        default="memory",
+        description="Store type (memory, postgres, etc.)",
     )
     collection_name: str = Field(
-        default="haive_memories", description="Collection name"
+        default="haive_memories",
+        description="Collection name",
     )
     default_namespace: tuple[str, ...] = Field(
-        default=("user", "general"), description="Default namespace"
+        default=("user", "general"),
+        description="Default namespace",
     )
 
     # LLM configuration
     llm_config: AugLLMConfig = Field(
-        default_factory=AugLLMConfig, description="LLM configuration"
+        default_factory=AugLLMConfig,
+        description="LLM configuration",
     )
 
     # Classification configuration
     enable_auto_classification: bool = Field(
-        default=True, description="Enable automatic classification"
+        default=True,
+        description="Enable automatic classification",
     )
     classification_confidence_threshold: float = Field(
-        default=0.6, description="Classification confidence threshold"
+        default=0.6,
+        description="Classification confidence threshold",
     )
 
     # Retrieval configuration
     enable_enhanced_retrieval: bool = Field(
-        default=True, description="Enable enhanced retrieval"
+        default=True,
+        description="Enable enhanced retrieval",
     )
     enable_graph_rag: bool = Field(default=True, description="Enable graph RAG")
     enable_multi_agent_coordination: bool = Field(
-        default=True, description="Enable multi-agent coordination"
+        default=True,
+        description="Enable multi-agent coordination",
     )
 
     # Performance configuration
     max_concurrent_operations: int = Field(
-        default=5, description="Maximum concurrent operations"
+        default=5,
+        description="Maximum concurrent operations",
     )
     operation_timeout_seconds: int = Field(default=300, description="Operation timeout")
 
     # Memory lifecycle
     enable_memory_consolidation: bool = Field(
-        default=True, description="Enable memory consolidation"
+        default=True,
+        description="Enable memory consolidation",
     )
     consolidation_interval_hours: int = Field(
-        default=24, description="Consolidation interval"
+        default=24,
+        description="Consolidation interval",
     )
 
 
 class MemorySystemResult(BaseModel):
-    """Comprehensive result from memory system operations with metrics and analysis.
+    """Comprehensive result from memory system operations with metrics and
+    analysis.
 
     This class encapsulates all information returned from memory system operations,
     including success status, operation results, performance metrics, quality scores,
@@ -224,7 +233,8 @@ class MemorySystemResult(BaseModel):
 
     # Performance metrics
     execution_time_ms: float = Field(
-        default=0.0, description="Execution time in milliseconds"
+        default=0.0,
+        description="Execution time in milliseconds",
     )
     agent_used: str | None = Field(default=None, description="Agent used for operation")
 
@@ -234,10 +244,12 @@ class MemorySystemResult(BaseModel):
 
     # Metadata
     timestamp: datetime = Field(
-        default_factory=datetime.utcnow, description="Result timestamp"
+        default_factory=datetime.utcnow,
+        description="Result timestamp",
     )
     metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional metadata"
+        default_factory=dict,
+        description="Additional metadata",
     )
 
 
@@ -395,7 +407,8 @@ class UnifiedMemorySystem:
     """
 
     def __init__(self, config: MemorySystemConfig):
-        """Initialize the unified memory system with comprehensive component setup.
+        """Initialize the unified memory system with comprehensive component
+        setup.
 
         Creates and configures all memory system components including stores, classifiers,
         knowledge graph generators, retrievers, and coordinators based on the provided
@@ -514,7 +527,6 @@ class UnifiedMemorySystem:
                 memory_classifier=self.classifier,
             )
             # Note: We'll need to create EnhancedRetriever class
-            # self.retrievers["enhanced"] = EnhancedRetriever(enhanced_config)
 
         # Graph RAG retriever
         if self.config.enable_graph_rag:
@@ -581,7 +593,8 @@ class UnifiedMemorySystem:
             # Use coordinator if available
             if self.coordinator:
                 result = await self.coordinator.store_memory(
-                    content=content, namespace=namespace
+                    content=content,
+                    namespace=namespace,
                 )
                 memory_id = result
             else:
@@ -711,7 +724,9 @@ class UnifiedMemorySystem:
             )
 
     async def classify_memory(
-        self, content: str, user_context: dict[str, Any] | None = None
+        self,
+        content: str,
+        user_context: dict[str, Any] | None = None,
     ) -> MemorySystemResult:
         """Classify memory content.
 
@@ -735,7 +750,8 @@ class UnifiedMemorySystem:
             else:
                 # Direct classification
                 classification = self.classifier.classify_memory(
-                    content=content, user_context=user_context
+                    content=content,
+                    user_context=user_context,
                 )
 
             self._update_operation_stats(start_time, success=True)
@@ -786,10 +802,8 @@ class UnifiedMemorySystem:
                     raise Exception(result["error"])
             else:
                 # Direct KG generation
-                knowledge_graph = (
-                    await self.kg_generator.extract_knowledge_graph_from_memories(
-                        namespace=namespace
-                    )
+                knowledge_graph = await self.kg_generator.extract_knowledge_graph_from_memories(
+                    namespace=namespace,
                 )
 
             self._update_operation_stats(start_time, success=True)
@@ -816,7 +830,9 @@ class UnifiedMemorySystem:
             )
 
     async def consolidate_memories(
-        self, namespace: tuple[str, ...] | None = None, dry_run: bool = False
+        self,
+        namespace: tuple[str, ...] | None = None,
+        dry_run: bool = False,
     ) -> MemorySystemResult:
         """Consolidate memories by removing duplicates and expired entries.
 
@@ -832,7 +848,8 @@ class UnifiedMemorySystem:
         try:
             # Use memory store consolidation
             result = await self.memory_store.consolidate_memories(
-                namespace=namespace, dry_run=dry_run
+                namespace=namespace,
+                dry_run=dry_run,
             )
 
             self._update_operation_stats(start_time, success=True)
@@ -863,7 +880,8 @@ class UnifiedMemorySystem:
             )
 
     async def get_memory_statistics(
-        self, namespace: tuple[str, ...] | None = None
+        self,
+        namespace: tuple[str, ...] | None = None,
     ) -> MemorySystemResult:
         """Get comprehensive memory statistics.
 
@@ -917,7 +935,9 @@ class UnifiedMemorySystem:
             )
 
     async def search_entities(
-        self, entity_name: str, namespace: tuple[str, ...] | None = None
+        self,
+        entity_name: str,
+        namespace: tuple[str, ...] | None = None,
     ) -> MemorySystemResult:
         """Search for entities in the knowledge graph.
 
@@ -991,7 +1011,8 @@ class UnifiedMemorySystem:
             # Test memory store
             try:
                 test_id = await self.memory_store.store_memory(
-                    content="System diagnostic test", namespace=("system", "diagnostic")
+                    content="System diagnostic test",
+                    namespace=("system", "diagnostic"),
                 )
                 await self.memory_store.get_memory_by_id(test_id)
                 diagnostic_results["memory_store"] = {"status": "healthy"}
@@ -1013,9 +1034,7 @@ class UnifiedMemorySystem:
 
             # Test KG generator
             try:
-                kg_stats = (
-                    f"KG has {len(self.kg_generator.knowledge_graph.nodes)} nodes"
-                )
+                kg_stats = f"KG has {len(self.kg_generator.knowledge_graph.nodes)} nodes"
                 diagnostic_results["kg_generatof"] = {
                     "status": "healthy",
                     "info": kg_stats,
@@ -1222,7 +1241,8 @@ async def quick_memory_demo():
     """
     # Create memory system
     memory_system = await create_memory_system(
-        store_type="memory", collection_name="demo_memories"
+        store_type="memory",
+        collection_name="demo_memories",
     )
 
     memory_system.get_system_info()
@@ -1261,7 +1281,6 @@ async def quick_memory_demo():
     ]
 
     for query in queries:
-
         # Test different retrieval modes
         modes = [
             ("Multi-Agent", True, True),

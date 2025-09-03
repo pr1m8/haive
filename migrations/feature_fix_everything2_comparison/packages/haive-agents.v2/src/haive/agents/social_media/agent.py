@@ -13,7 +13,6 @@ import logging
 import random
 from typing import Any, Literal
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langchain_core.tools import StructuredTool
 from pydantic import Field
@@ -26,6 +25,7 @@ from haive.agents.conversation.social_media.models import (
 )
 from haive.agents.conversation.social_media.state import SocialMediaState
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.WARNING)
@@ -46,7 +46,7 @@ class SocialMediaConversation(BaseConversationAgent):
 
     # Platform configuration
     platform_type: Literal["twitter", "instagram", "tiktok", "generic"] = Field(
-        default="generic"
+        default="generic",
     )
     viral_threshold: int = Field(default=10)
 
@@ -63,7 +63,7 @@ class SocialMediaConversation(BaseConversationAgent):
             "instagram": 2200,
             "tiktok": 150,
             "generic": 500,
-        }
+        },
     )
 
     def get_conversation_state_schema(self) -> type:
@@ -142,7 +142,9 @@ class SocialMediaConversation(BaseConversationAgent):
         return f"@{reply_to} {content}"
 
     def _share_post_handler(
-        self, original_author: str, comment: str | None = None
+        self,
+        original_author: str,
+        comment: str | None = None,
     ) -> str:
         """Handler for share_post tool."""
         if comment:
@@ -164,7 +166,7 @@ class SocialMediaConversation(BaseConversationAgent):
         return HumanMessage(
             content=f"{emoji} New thread: {self.topic}\n"
             f"Platform: {self.platform_type} (max {char_limit} chars)\n"
-            f"Share your thoughts! Go viral at {self.viral_threshold} likes 🔥"
+            f"Share your thoughts! Go viral at {self.viral_threshold} likes 🔥",
         )
 
     def select_speaker(self, state: SocialMediaState) -> dict[str, Any]:
@@ -209,7 +211,9 @@ class SocialMediaConversation(BaseConversationAgent):
         return {"current_speaker": selected[0] if selected else None}
 
     def _prepare_agent_input(
-        self, state: SocialMediaState, agent_name: str
+        self,
+        state: SocialMediaState,
+        agent_name: str,
     ) -> dict[str, Any]:
         """Prepare input with social media context."""
         base_input = super()._prepare_agent_input(state, agent_name)
@@ -222,8 +226,8 @@ class SocialMediaConversation(BaseConversationAgent):
         context_msg = SystemMessage(
             content=f"""[@{agent_name}]
 Stats: {likes} likes | {followers} followers
-Trending: {', '.join(trending) if trending else 'Nothing trending'}
-Keep it under {self.char_limits.get(state.platform_type, 500)} characters!"""
+Trending: {", ".join(trending) if trending else "Nothing trending"}
+Keep it under {self.char_limits.get(state.platform_type, 500)} characters!""",
         )
 
         # Show recent posts in feed style
@@ -232,12 +236,12 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!"""
             if isinstance(msg, AIMessage) and hasattr(msg, "name"):
                 post_likes = state.likes.get(str(msg.name), 0)
                 recent_posts.append(
-                    f"@{msg.name}: {msg.content[:100]}... ({post_likes}❤️)"
+                    f"@{msg.name}: {msg.content[:100]}... ({post_likes}❤️)",
                 )
 
         if recent_posts:
             feed_msg = SystemMessage(
-                content="Recent posts:\n" + "\n".join(recent_posts)
+                content="Recent posts:\n" + "\n".join(recent_posts),
             )
             base_input["messages"] = [
                 context_msg,
@@ -335,21 +339,24 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!"""
         return update
 
     def _check_custom_end_conditions(
-        self, state: SocialMediaState
+        self,
+        state: SocialMediaState,
     ) -> dict[str, Any] | None:
         """Check for viral threshold."""
         # Check if anyone went viral
         for speaker, like_count in state.likes.items():
             if like_count >= state.viral_threshold:
                 viral_msg = SystemMessage(
-                    content=f"🎉 @{speaker} went viral with {like_count} likes! Thread closed. 🔥"
+                    content=f"🎉 @{speaker} went viral with {like_count} likes! Thread closed. 🔥",
                 )
                 return {"messages": [viral_msg], "conversation_ended": True}
 
         return None
 
     def _create_conclusion(
-        self, state: SocialMediaState, reason: str
+        self,
+        state: SocialMediaState,
+        reason: str,
     ) -> dict[str, Any]:
         """Create social media style conclusion."""
         # Get top posts
@@ -366,7 +373,7 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!"""
 
         if state.trending_topics:
             summary_parts.append(
-                f"\n📈 Trending: {', '.join(state.trending_topics[:3])}"
+                f"\n📈 Trending: {', '.join(state.trending_topics[:3])}",
             )
 
         conclusion_msg = SystemMessage(content="\n".join(summary_parts))
@@ -375,7 +382,11 @@ Keep it under {self.char_limits.get(state.platform_type, 500)} characters!"""
 
     @classmethod
     def create_twitter_thread(
-        cls, topic: str, personas: dict[str, str], viral_threshold: int = 10, **kwargs
+        cls,
+        topic: str,
+        personas: dict[str, str],
+        viral_threshold: int = 10,
+        **kwargs,
     ):
         """Create a Twitter-style conversation thread.
 

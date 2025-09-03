@@ -1,55 +1,44 @@
 #!/usr/bin/env python3
-"""Minimal documentation build script"""
+"""Minimal documentation build script."""
+from __future__ import annotations
 
 import os
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
 
 def build_minimal_docs():
-    """Build minimal documentation"""
-    print("🚀 Building minimal documentation...")
-
+    """Build minimal documentation."""
     # Change to project directory
     os.chdir(Path(__file__).parent)
 
     # Clean previous build
-    subprocess.run(["rm", "-rf", "docs/build"], check=False)
+    subprocess.run(['rm', '-rf', 'docs/build'], check=False)
 
     # Build with minimal settings
-    result = subprocess.run(
+    subprocess.run(
         [
-            "poetry",
-            "run",
-            "sphinx-build",
-            "-b",
-            "html",
-            "-E",  # Rebuild all files
-            "-a",  # Rebuild all files
-            "--keep-going",
-            "docs/source",
-            "docs/build",
+            'poetry',
+            'run',
+            'sphinx-build',
+            '-b',
+            'html',
+            '-E',  # Rebuild all files
+            '-a',  # Rebuild all files
+            '--keep-going',
+            'docs/source',
+            'docs/build',
         ],
         check=False,
         capture_output=True,
         text=True,
     )
 
-    print("Build result:", result.returncode)
-    print("STDOUT:", result.stdout[-1000:])  # Last 1000 chars
-    print("STDERR:", result.stderr[-1000:])  # Last 1000 chars
-
     # Check if HTML files were generated
-    html_files = list(Path("docs/build").rglob("*.html"))
-    print(f"Generated {len(html_files)} HTML files")
+    html_files = list(Path('docs/build').rglob('*.html'))
 
-    if html_files:
-        print("✅ Documentation built successfully!")
-        print(f"📁 View at: {Path('docs/build/index.html').absolute()}")
-        return True
-    print("❌ No HTML files generated")
-    return False
+    return bool(html_files)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     build_minimal_docs()

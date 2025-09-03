@@ -10,11 +10,11 @@ Key changes:
 
 # The AugLLMConfig already inherits from ToolRouteMixin
 # We need to override/enhance certain methods to use the new functionality
-
 # Add this import
-
-
 # Override the comprehensive_validation_and_setup method to use enhanced tool handling
+from __future__ import annotations
+
+
 def comprehensive_validation_and_setup(self):
     """Enhanced validation that uses improved tool management."""
     # ... existing validation code ...
@@ -72,10 +72,7 @@ def get_tools_for_binding(self) -> List[Union[BaseTool, Type[BaseModel], Callabl
         elif route == "pydantic_model":
             # Only include Pydantic models that are meant for tool use
             metadata = self.tool_metadata.get(tool_name, {})
-            if (
-                metadata.get("is_executable")
-                or metadata.get("purpose") == "structured_output"
-            ):
+            if metadata.get("is_executable") or metadata.get("purpose") == "structured_output":
                 binding_tools.append(tool)
 
     return binding_tools
@@ -176,7 +173,7 @@ def prepare_tools_for_provider(self, provider: str = "openai") -> List[Any]:
                 # Functions might need conversion
                 # This would need actual conversion logic
                 logger.debug(
-                    f"Function {getattr(tool, '__name__', 'unknown')} may need conversion"
+                    f"Function {getattr(tool, '__name__', 'unknown')} may need conversion",
                 )
 
         # Add other provider-specific handling as needed

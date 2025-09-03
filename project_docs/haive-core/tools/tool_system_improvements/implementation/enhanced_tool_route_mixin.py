@@ -1,4 +1,5 @@
-"""Enhanced tool route mixin with improved callable support and dynamic routing.
+"""Enhanced tool route mixin with improved callable support and dynamic
+routing.
 
 This module provides enhancements to the existing ToolRouteMixin to support:
 - Better callable analysis (async, type hints, parameter inspection)
@@ -6,6 +7,8 @@ This module provides enhancements to the existing ToolRouteMixin to support:
 - Context-aware Pydantic model routing
 - Integration with structured output detection
 """
+
+from __future__ import annotations
 
 from collections.abc import Callable
 import inspect
@@ -15,7 +18,6 @@ from typing import Any, get_type_hints
 from pydantic import BaseModel, Field
 
 from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
-
 
 logger = logging.getLogger(__name__)
 
@@ -31,17 +33,26 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
     """
 
     # Additional fields for enhanced functionality
-    dynamic_routes: bool = Field(default=True, description="Allow dynamic route updates")
+    dynamic_routes: bool = Field(
+        default=True,
+        description="Allow dynamic route updates",
+    )
 
     structured_output_routes: dict[str, str] = Field(
-        default_factory=dict, description="Routes for structured output models"
+        default_factory=dict,
+        description="Routes for structured output models",
     )
 
     callable_metadata_cache: dict[str, dict[str, Any]] = Field(
-        default_factory=dict, description="Cache for callable analysis results"
+        default_factory=dict,
+        description="Cache for callable analysis results",
     )
 
-    def update_tool_route(self, tool_name: str, new_route: str) -> "EnhancedToolRouteMixin":
+    def update_tool_route(
+        self,
+        tool_name: str,
+        new_route: str,
+    ) -> EnhancedToolRouteMixin:
         """Update an existing tool's route dynamically.
 
         Args:
@@ -237,7 +248,7 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
         route: str,
         metadata: dict[str, Any] | None = None,
         update_existing: bool = True,
-    ) -> "EnhancedToolRouteMixin":
+    ) -> EnhancedToolRouteMixin:
         """Add a tool with enhanced routing and metadata.
 
         Args:
@@ -250,7 +261,11 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
             Self for method chaining
         """
         # Generate tool name
-        tool_name = self._generate_tool_name(tool, f"dynamic_{route}", len(self.routed_tools))
+        tool_name = self._generate_tool_name(
+            tool,
+            f"dynamic_{route}",
+            len(self.routed_tools),
+        )
 
         # Check if already exists
         if tool_name in self.tool_routes and not update_existing:
@@ -276,7 +291,11 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
         logger.debug(f"Added enhanced routed tool '{tool_name}' with route '{route}'")
         return self
 
-    def route_pydantic_model_smart(self, model: type[BaseModel], context: str | None = None) -> str:
+    def route_pydantic_model_smart(
+        self,
+        model: type[BaseModel],
+        context: str | None = None,
+    ) -> str:
         """Smart routing for Pydantic models based on context and capabilities.
 
         Args:
@@ -342,7 +361,7 @@ class EnhancedToolRouteMixin(ToolRouteMixin):
 
         return None
 
-    def debug_enhanced_routes(self) -> "EnhancedToolRouteMixin":
+    def debug_enhanced_routes(self) -> EnhancedToolRouteMixin:
         """Enhanced debug output with additional information."""
         # Call parent debug
         super().debug_tool_routes()

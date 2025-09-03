@@ -1,6 +1,0 @@
-57079243 feature/fix_everythign@{2025-07-11 00:43:35 -0400}: commit: chore: Update .gitignore to include additional directories for better file management
-92cb544a feature/fix_everythign@{2025-07-11 00:36:47 -0400}: commit: chore: Comprehensive update to .gitignore for improved file management
-58235c04 feature/fix_everythign@{2025-07-11 00:31:22 -0400}: commit: chore: Update .gitignore for improved file management and clarity
-a4978380 feature/fix_everythign@{2025-07-11 00:19:41 -0400}: commit: chore: Update haive.code-workspace with enhanced settings and organization
-7a129113 feature/fix_everythign@{2025-07-11 00:09:27 -0400}: commit: empty
-7c406e7b feature/fix_everythign@{2025-07-11 00:09:14 -0400}: branch: Created from HEAD

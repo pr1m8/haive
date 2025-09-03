@@ -8,15 +8,16 @@ This example demonstrates:
 - Dynamic routing based on agent capabilities and tools
 """
 
-import asyncio
+from __future__ import annotations
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import HumanMessage
-from rich.console import Console
+import asyncio
 
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.agents.supervisor.integrated_supervisor import IntegratedDynamicSupervisor
+from haive.core.engine.aug_llm import AugLLMConfig
+from langchain_core.messages import HumanMessage
+from rich.console import Console
 
 console = Console()
 
@@ -24,7 +25,7 @@ console = Console()
 async def demonstrate_integrated_supervisor():
     """Complete demonstration of integrated dynamic supervisor."""
     console.print(
-        "\n[bold blue]🚀 Integrated Dynamic Multi-Agent Supervisor Demo[/bold blue]\n"
+        "\n[bold blue]🚀 Integrated Dynamic Multi-Agent Supervisor Demo[/bold blue]\n",
     )
 
     # Create integrated supervisor with all features enabled
@@ -49,9 +50,10 @@ async def demonstrate_integrated_supervisor():
 
     supervisor.print_integrated_dashboard()
 
-    # Simulate tool calls for adding agents (in real usage, these would come from LLM tool calls)
+    # Simulate tool calls for adding agents (in real usage, these would come
+    # from LLM tool calls)
     console.print(
-        "\n[yellow]Simulating: 'add a research agent that can search the web'[/yellow]"
+        "\n[yellow]Simulating: 'add a research agent that can search the web'[/yellow]",
     )
 
     # Manually add agents to demonstrate the flow (normally done via tool calls)
@@ -175,7 +177,8 @@ async def demonstrate_integrated_supervisor():
 
             elif "change" in request.lower() and "priority" in request.lower():
                 success = await supervisor.update_agent_config(
-                    "research_agent", {"priority": 5}
+                    "research_agent",
+                    {"priority": 5},
                 )
                 status = "✅ Updated" if success else "❌ Failed to update"
                 console.print(f"{status} research agent priority")
@@ -249,7 +252,7 @@ async def demonstrate_dynamic_choice_model_integration():
         console.print(f"Choice model after removal: {choice_model.option_names}")
 
     console.print(
-        "\n[bold green]🎯 DynamicChoiceModel Integration Demo Complete![/bold green]"
+        "\n[bold green]🎯 DynamicChoiceModel Integration Demo Complete![/bold green]",
     )
 
 
@@ -258,7 +261,8 @@ async def demonstrate_tool_routing():
     console.print("\n[bold blue]🔧 Tool-Based Routing Demo[/bold blue]\n")
 
     supervisor = IntegratedDynamicSupervisor(
-        name="tool_routing_supervisor", engine=AugLLMConfig()
+        name="tool_routing_supervisor",
+        engine=AugLLMConfig(),
     )
 
     # Add agents with different tool capabilities
@@ -272,7 +276,8 @@ async def demonstrate_tool_routing():
     )
 
     await supervisor.register_agent(
-        research_agent, "Research agent with search and Wikipedia tools"
+        research_agent,
+        "Research agent with search and Wikipedia tools",
     )
 
     # Math agent with calculation tools
@@ -283,14 +288,15 @@ async def demonstrate_tool_routing():
     )
 
     await supervisor.register_agent(
-        math_agent, "Math agent with calculator and plotting tools"
+        math_agent,
+        "Math agent with calculator and plotting tools",
     )
 
     # Show tool-to-agent mapping
     if hasattr(supervisor, "_state") and supervisor._state:
         state = supervisor._state
         console.print(
-            f"Tool-to-agent mapping: {state.agent_registry.tool_to_agent_mapping}"
+            f"Tool-to-agent mapping: {state.agent_registry.tool_to_agent_mapping}",
         )
 
         # Simulate tool routing
@@ -308,7 +314,7 @@ async def demonstrate_tool_routing():
 async def main():
     """Run all integrated supervisor demonstrations."""
     console.print(
-        "[bold magenta]Integrated Dynamic Multi-Agent Supervisor Examples[/bold magenta]"
+        "[bold magenta]Integrated Dynamic Multi-Agent Supervisor Examples[/bold magenta]",
     )
     console.print("=" * 60)
 

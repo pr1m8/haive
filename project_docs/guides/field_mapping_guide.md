@@ -1,8 +1,8 @@
 # Field Mapping Guide - Haive Framework
 
-**Version**: 1.0  
-**Date**: 2025-01-21  
-**Status**: Available Now - Production Ready  
+**Version**: 1.0
+**Date**: 2025-01-21
+**Status**: Available Now - Production Ready
 
 ## 🎯 **Overview**
 
@@ -50,7 +50,7 @@ input_fields = ["messages", "query"]      # Extract only these fields
 output_fields = ["result", "metadata"]    # Output only these fields
 ```
 
-### 2. Dict Format (Rename Mapping) 
+### 2. Dict Format (Rename Mapping)
 ```python
 # Rename fields during mapping
 input_fields = {
@@ -76,14 +76,14 @@ from haive.core.graph.node.engine_node import EngineNodeConfig
 class CustomRAGAgent(BaseRAGAgent):
     def build_graph(self):
         graph = super().build_graph()
-        
+
         # Override retriever node to use custom output field
         retriever_node = EngineNodeConfig(
             name="retriever",
             engine=self.engines["retriever"],
             output_fields={"retrieved_documents": "research_data"}  # Custom mapping
         )
-        
+
         graph.add_node("retriever", retriever_node)
         return graph
 ```
@@ -103,14 +103,14 @@ analysis_agent = SimpleAgent(name="analyzer")
 class CoordinatedWorkflow(EnhancedMultiAgent):
     def build_graph(self):
         graph = super().build_graph()
-        
+
         # Add field mapping between agents
         research_node = EngineNodeConfig(
             name="researcher",
             agent=research_agent,
             output_fields={"findings": "data"}  # Map findings → data for next agent
         )
-        
+
         graph.add_node("researcher", research_node)
         return graph
 ```
@@ -148,7 +148,7 @@ def create_mapped_agent(
 ):
     """Factory to create agents with field mapping."""
     agent = agent_class(name=name, engine=engine_config)
-    
+
     # Apply field mapping at node level
     node_config = EngineNodeConfig(
         name=name,
@@ -156,7 +156,7 @@ def create_mapped_agent(
         input_fields=input_mapping,
         output_fields=output_mapping
     )
-    
+
     return agent, node_config
 
 # Usage
@@ -173,28 +173,28 @@ agent, node = create_mapped_agent(
 ```python
 class MappedWorkflow(EnhancedMultiAgent):
     """Workflow with automatic field mapping between agents."""
-    
+
     def __init__(self, agents, field_mappings=None):
         super().__init__(agents=agents)
         self.field_mappings = field_mappings or {}
-    
+
     def build_graph(self):
         graph = super().build_graph()
-        
+
         # Apply field mappings to each agent node
         for i, (agent_name, agent) in enumerate(self.agents.items()):
             if agent_name in self.field_mappings:
                 mapping = self.field_mappings[agent_name]
-                
+
                 node_config = EngineNodeConfig(
                     name=agent_name,
                     agent=agent,
                     input_fields=mapping.get("input", None),
                     output_fields=mapping.get("output", None)
                 )
-                
+
                 graph.add_node(agent_name, node_config)
-        
+
         return graph
 
 # Usage
@@ -215,19 +215,19 @@ from pydantic import Field
 
 class MappedWorkflowState(StateSchema):
     """State schema that supports field mapping."""
-    
+
     # Original fields
     query: str = Field(...)
     context: str = Field(default="")
-    
+
     # Mapped fields (different names for same data)
     question: str = Field(default="")  # Maps from query
     background: str = Field(default="")  # Maps from context
-    
+
     # Output fields
     result: str = Field(default="")
     potato: str = Field(default="")  # Custom output field
-    
+
     def sync_mapped_fields(self):
         """Sync mapped fields after updates."""
         self.question = self.query
@@ -238,7 +238,7 @@ class MappedWorkflowState(StateSchema):
 
 ### What's Available Now
 - ✅ Basic field renaming (`"result" → "potato"`)
-- ✅ Multiple field mapping 
+- ✅ Multiple field mapping
 - ✅ Input and output mapping
 - ✅ Type preservation (dict values preserve types)
 - ✅ Agent node integration
@@ -285,7 +285,7 @@ output_fields = {
     "confidence_score": "reliability"
 }
 
-# ❌ Bad - Unclear purpose  
+# ❌ Bad - Unclear purpose
 output_fields = {"result": "data", "score": "num"}
 ```
 
@@ -293,12 +293,12 @@ output_fields = {"result": "data", "score": "num"}
 ```python
 class DocumentedAgent(SimpleAgent):
     """Agent with documented field mappings.
-    
+
     Field Mappings:
         Input: query → question (user's question)
         Output: result → formatted_answer (processed response)
     """
-    
+
     def build_graph(self):
         # Use documented mapping
         node = EngineNodeConfig(
@@ -314,13 +314,13 @@ class DocumentedAgent(SimpleAgent):
 def test_field_mapping():
     """Test that field mapping works correctly."""
     agent = SimpleAgent(engine=AugLLMConfig())
-    
+
     node = EngineNodeConfig(
         name="test",
         agent=agent,
         output_fields={"result": "potato"}
     )
-    
+
     # Test with mock state
     result = node(test_state)
     assert hasattr(result, "potato")  # Mapped field exists
@@ -359,14 +359,14 @@ node = EngineNodeConfig(
 class MappedMultiAgent(EnhancedMultiAgent):
     def build_graph(self):
         graph = super().build_graph()
-        
+
         # Apply mapping to specific agent
         mapped_node = EngineNodeConfig(
             name="agent1",
             agent=self.agents["agent1"],
             output_fields={"result": "potato"}
         )
-        
+
         graph.add_node("agent1", mapped_node)
         return graph
 ```

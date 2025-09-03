@@ -7,6 +7,7 @@ This implementation extends the existing ReWOO pattern with:
 - Comprehensive error handling
 - No mocks - all real components
 """
+from __future__ import annotations
 
 import asyncio
 import logging
@@ -18,7 +19,10 @@ from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.prebuilt.messages_state import MessagesState
 from langchain_core.tools import tool
-from pydantic import BaseModel, Field, computed_field, field_validator
+from pydantic import BaseModel
+from pydantic import computed_field
+from pydantic import Field
+from pydantic import field_validator
 
 logger = logging.getLogger(__name__)
 
@@ -466,7 +470,7 @@ async def test_enhanced_rewoo_agent():
         try:
             result = eval(expression)
             return f"Calculation result: {result}"
-        except:
+        except BaseException:
             return f"Error calculating: {expression}"
 
     @tool

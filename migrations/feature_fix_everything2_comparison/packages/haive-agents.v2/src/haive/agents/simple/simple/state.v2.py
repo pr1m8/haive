@@ -14,21 +14,24 @@ Functions:
 from collections.abc import Sequence
 from typing import Annotated
 
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from langgraph.graph import add_messages
 from pydantic import Field
+
+from haive.core.schema.state_schema import StateSchema
 
 
 class SimpleAgentState(StateSchema):
     """Base state for simple agents.
 
     This provides a standard chat-based state with a messages field that
-    supports proper message history management through the add_messages reducer.
+    supports proper message history management through the add_messages
+    reducer.
     """
 
     messages: Annotated[Sequence[BaseMessage], add_messages] = Field(
-        default_factory=list, description="Chat message history"
+        default_factory=list,
+        description="Chat message history",
     )
 
     def add_human_message(self, content: str) -> "SimpleAgentState":

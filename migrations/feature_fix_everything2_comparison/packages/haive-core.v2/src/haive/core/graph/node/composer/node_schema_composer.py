@@ -8,8 +8,10 @@ This solves the critical gap where you cannot easily modify node input/output
 schemas or create composed nodes with custom field mappings.
 """
 
-import logging
+from __future__ import annotations
+
 from collections.abc import Callable
+import logging
 from typing import Any, TypeVar
 
 from pydantic import BaseModel
@@ -90,7 +92,7 @@ class NodeSchemaComposer:
                 "str_to_bool": lambda x: str(x).lower() in ("true", "1", "yes"),
                 "parse_int": lambda x: int(x) if x is not None else 0,
                 "parse_float": lambda x: float(x) if x is not None else 0.0,
-            }
+            },
         )
 
     def register_extract_function(self, name: str, func: ExtractFunction):
@@ -124,7 +126,9 @@ class NodeSchemaComposer:
         logger.debug(f"Registered transform function: {name}")
 
     def create_extract_function(
-        self, mappings: list[FieldMapping], fallback_extract: str | None = None
+        self,
+        mappings: list[FieldMapping],
+        fallback_extract: str | None = None,
     ) -> ExtractFunction:
         """Create extract function from field mappings.
 
@@ -142,14 +146,18 @@ class NodeSchemaComposer:
                 # Single mapping - return value directly
                 mapping = mappings[0]
                 value = self.path_resolver.extract_value(
-                    state, mapping.source_path, mapping.default
+                    state,
+                    mapping.source_path,
+                    mapping.default,
                 )
                 return self._apply_transforms(value, mapping.transform)
             # Multiple mappings - return dict
             result = {}
             for mapping in mappings:
                 value = self.path_resolver.extract_value(
-                    state, mapping.source_path, mapping.default
+                    state,
+                    mapping.source_path,
+                    mapping.default,
                 )
                 transformed = self._apply_transforms(value, mapping.transform)
                 result[mapping.target_path] = transformed
@@ -158,7 +166,9 @@ class NodeSchemaComposer:
         return _extract
 
     def create_update_function(
-        self, mappings: list[FieldMapping], merge_mode: str = "replace"
+        self,
+        mappings: list[FieldMapping],
+        merge_mode: str = "replace",
     ) -> UpdateFunction:
         """Create update function from field mappings.
 
@@ -223,7 +233,7 @@ class NodeSchemaComposer:
         input_mappings: list[FieldMapping] | None = None,
         output_mappings: list[FieldMapping] | None = None,
         name: str | None = None,
-    ) -> "ComposedNode":
+    ) -> ComposedNode:
         """Compose a node with custom I/O mappings.
 
         Args:
@@ -270,7 +280,7 @@ class NodeSchemaComposer:
         output_mappings: list[FieldMapping] | None = None,
         name: str | None = None,
         **callable_kwargs,
-    ) -> "ComposedCallableNode":
+    ) -> ComposedCallableNode:
         """Create a composed node from a callable function.
 
         Args:
@@ -311,7 +321,9 @@ class NodeSchemaComposer:
 
         # Create base callable node
         base_node = CallableNodeConfig(
-            name=name or func.__name__, callable_func=func, **callable_kwargs
+            name=name or func.__name__,
+            callable_func=func,
+            **callable_kwargs,
         )
 
         return ComposedCallableNode(
@@ -328,7 +340,7 @@ class NodeSchemaComposer:
         target_schema: type[BaseModel],
         field_mappings: list[FieldMapping],
         name: str | None = None,
-    ) -> "SchemaAdapter":
+    ) -> SchemaAdapter:
         """Create an adapter between two schemas.
 
         Args:
@@ -355,8 +367,7 @@ class NodeSchemaComposer:
             source_schema=source_schema,
             target_schema=target_schema,
             field_mappings=field_mappings,
-            name=name
-            or f"adapter_{source_schema.__name__}_to_{target_schema.__name__}",
+            name=name or f"adapter_{source_schema.__name__}_to_{target_schema.__name__}",
             composer=self,
         )
 
@@ -364,8 +375,8 @@ class NodeSchemaComposer:
 class ComposedNode:
     """A node composed with custom I/O mappings.
 
-    This wraps an existing node and applies field mappings to transform inputs and
-    outputs according to the "result → potato" pattern.
+    This wraps an existing node and applies field mappings to transform
+    inputs and outputs according to the "result → potato" pattern.
     """
 
     def __init__(
@@ -486,7 +497,9 @@ class SchemaAdapter:
         mapped_data = {}
         for mapping in self.field_mappings:
             value = self.composer.path_resolver.extract_value(
-                source_instance, mapping.source_path, mapping.default
+                source_instance,
+                mapping.source_path,
+                mapping.default,
             )
             transformed = self.composer._apply_transforms(value, mapping.transform)
             mapped_data[mapping.target_path] = transformed
@@ -516,7 +529,8 @@ def change_output_key(node: Any, old_key: str, new_key: str) -> ComposedNode:
     """
     composer = NodeSchemaComposer()
     return composer.compose_node(
-        base_node=node, output_mappings=[FieldMapping(old_key, new_key)]
+        base_node=node,
+        output_mappings=[FieldMapping(old_key, new_key)],
     )
 
 
@@ -533,7 +547,8 @@ def change_input_key(node: Any, old_key: str, new_key: str) -> ComposedNode:
     """
     composer = NodeSchemaComposer()
     return composer.compose_node(
-        base_node=node, input_mappings=[FieldMapping(new_key, old_key)]
+        base_node=node,
+        input_mappings=[FieldMapping(new_key, old_key)],
     )
 
 
@@ -573,5 +588,7 @@ def remap_fields(
             output_mappings.append(FieldMapping(node_field, state_field))
 
     return composer.compose_node(
-        base_node=node, input_mappings=input_mappings, output_mappings=output_mappings
+        base_node=node,
+        input_mappings=input_mappings,
+        output_mappings=output_mappings,
     )

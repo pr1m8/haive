@@ -3,16 +3,18 @@ Add these methods to the existing ToolRouteMixin class
 Location: /haive-core/src/haive/core/common/mixins/tool_route_mixin.py.
 """
 
-# Add these imports at the top
-from datetime import datetime
+from __future__ import annotations
+
 import inspect
+from datetime import datetime
 from typing import get_type_hints
 
+# Add these imports at the top
 
 # Add these methods to the ToolRouteMixin class:
 
 
-def update_tool_route(self, tool_name: str, new_route: str) -> "ToolRouteMixin":
+def update_tool_route(self, tool_name: str, new_route: str) -> ToolRouteMixin:
     """Update an existing tool's route dynamically.
 
     This allows runtime modification of tool routes, useful for:
@@ -43,7 +45,7 @@ def update_tool_route(self, tool_name: str, new_route: str) -> "ToolRouteMixin":
             "route_updated": True,
             "previous_route": old_route,
             "update_timestamp": datetime.now().isoformat(),
-        }
+        },
     )
 
     logger.debug(f"Updated route for '{tool_name}': {old_route} -> {new_route}")
@@ -106,7 +108,11 @@ def _get_callable_metadata(self, callable_obj: Callable) -> Dict[str, Any]:
     return metadata
 
 
-def route_pydantic_model(self, model: Type[BaseModel], context: Optional[str] = None) -> str:
+def route_pydantic_model(
+    self,
+    model: Type[BaseModel],
+    context: Optional[str] = None,
+) -> str:
     """Determine appropriate route for a Pydantic model based on context.
 
     This method provides smart routing for Pydantic models:
@@ -149,7 +155,8 @@ def route_pydantic_model(self, model: Type[BaseModel], context: Optional[str] = 
 def _analyze_tool(self, tool: Any) -> Tuple[str, Optional[Dict[str, Any]]]:
     """Analyze a tool to determine its route and metadata.
 
-    Enhanced version with better callable analysis and context awareness.
+    Enhanced version with better callable analysis and context
+    awareness.
     """
     metadata = {}
 

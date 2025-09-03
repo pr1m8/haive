@@ -1,13 +1,10 @@
 """Corrective RAG (CRAG) Agent.
 
-from typing import Any, Dict
-Self-correcting retrieval with quality assessment.
-Implements architecture from rag-architectures-flows.md:
+from typing import Any, Dict Self-correcting retrieval with quality
+assessment. Implements architecture from rag-architectures-flows.md:
 Retrieval → Relevance Check → Knowledge Refinement/Web Search/Combine
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -15,6 +12,8 @@ from haive.agents.multi.base import ConditionalAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.common.document_graders.models import DocumentGrade
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 DOCUMENT_GRADER_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -31,9 +30,8 @@ Document: {document}
 
 Give a binary score 'yes' or 'no' to indicate whether the document is relevant to the question.""",
         ),
-    ]
+    ],
 )
-
 
 ANSWER_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -48,7 +46,7 @@ ANSWER_PROMPT = ChatPromptTemplate.from_messages(
 Question: {query}
 Context: {retrieved_documents}""",
         ),
-    ]
+    ],
 )
 
 
@@ -61,7 +59,7 @@ class CorrectiveRAGAgent(ConditionalAgent):
         documents: list[Document],
         llm_config: LLMConfig | None = None,
         relevance_threshold: float = 0.7,
-        **kwargs
+        **kwargs,
     ):
         """Create Corrective RAG from documents.
 
@@ -83,7 +81,8 @@ class CorrectiveRAGAgent(ConditionalAgent):
 
         # Create agents
         retrieval_agent = BaseRAGAgent.from_documents(
-            documents=documents, name="CRAG Retriever"
+            documents=documents,
+            name="CRAG Retriever",
         )
 
         grader_agent = SimpleAgent(
@@ -119,12 +118,12 @@ class CorrectiveRAGAgent(ConditionalAgent):
                     "web_search": "web_search",  # Would add web search agent
                     "refine": "refiner",  # Would add refinement agent
                 },
-            }
+            },
         }
 
         return cls(
             agents=[retrieval_agent, grader_agent, answer_agent],
             branches=branches,
             name=kwargs.get("name", "Corrective RAG Agent"),
-            **kwargs
+            **kwargs,
         )

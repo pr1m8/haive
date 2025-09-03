@@ -3,15 +3,14 @@
 This module provides aug llms functionality for the Haive framework.
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.utils.parser_utils import parse_reasoning_modules_to_string
+from __future__ import annotations
+
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 
-from haive.agents.reasoning_and_critique.self_discover.models import (
-    AdaptedModules,
-    Plan,
-)
+from haive.agents.reasoning_and_critique.self_discover.models import AdaptedModules, Plan
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.utils.parser_utils import parse_reasoning_modules_to_string
 
 reasoning_prompt = """
 Step {step_id}: {step_description}
@@ -31,7 +30,6 @@ step_reasoning_chain = AugLLMConfig(
 )
 reasoning_modules_instance = ReasoningModules()  # ✅ Create an instance
 
-
 select_prompt_template = PromptTemplate(
     template="""
 Select several reasoning modules that are crucial to utilize in order to solve the given task:
@@ -42,19 +40,18 @@ All reasoning module descriptions:
 Task: {task_description}
 
 Select several modules that are crucial for solving the task above:
-"""
+""",
 )
 select_prompt_template = select_prompt_template.partial(
     reasoning_modules=parse_reasoning_modules_to_string(
-        reasoning_modules_instance.modules
-    )
+        reasoning_modules_instance.modules,
+    ),
 )
 select_chain = AugLLMConfig(
     name="select",
     prompt_template=select_prompt_template,
     structured_output_model=ReasoningModules,
 )
-
 
 adapt_template = """
 Rephrase and specify each reasoning module so that it better helps solving the task:
@@ -72,7 +69,6 @@ adapt_chain = AugLLMConfig(
     prompt_template=adapt_prompt_template,
     structured_output_model=AdaptedModules,
 )
-
 
 structured_template_prompt = """
 Operationalize the reasoning modules into a step-by-step reasoning plan in JSON format:

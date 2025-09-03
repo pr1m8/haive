@@ -6,6 +6,8 @@ Classes:
     SocialMediaState: SocialMediaState implementation.
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Literal
 
@@ -34,11 +36,11 @@ class SocialMediaState(ConversationState):
     viral_threshold: int = Field(default=10)
     trending_topics: list[str] = Field(default_factory=list)
     viral_posts: list[tuple[str, str]] = Field(
-        default_factory=list
+        default_factory=list,
     )  # (author, content)
 
     # Platform state
     platform_type: Literal["twitter", "instagram", "tiktok", "generic"] = Field(
-        default="generic"
+        default="generic",
     )
     hashtags_used: dict[str, list[str]] = Field(default_factory=dict)

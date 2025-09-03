@@ -1,15 +1,12 @@
 """Corrective RAG (CRAG) Agent V2.
 
-from typing import Any
-Self-correcting retrieval with proper quality assessment.
-Implements architecture from rag-architectures-flows.md:
+from typing import Any Self-correcting retrieval with proper quality
+assessment. Implements architecture from rag-architectures-flows.md:
 Retrieval → Relevance Check → Knowledge Refinement/Web Search/Combine
 """
 
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -21,6 +18,8 @@ from haive.agents.rag.common.document_graders.binary_grader.prompt import (
 )
 from haive.agents.rag.common.document_graders.models import DocumentBinaryResponse
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import LLMConfig
 
 # Web search prompt for when documents aren't relevant
 WEB_SEARCH_PROMPT = ChatPromptTemplate.from_messages(
@@ -38,9 +37,8 @@ Failed documents: {retrieved_documents}
 
 Generate 2-3 web search queries that would help find relevant information.""",
         ),
-    ]
+    ],
 )
-
 
 # Document refinement prompt
 REFINE_DOCS_PROMPT = ChatPromptTemplate.from_messages(
@@ -59,7 +57,7 @@ Grading results: {document_decisions}
 
 Extract and organize only the relevant portions that help answer the query.""",
         ),
-    ]
+    ],
 )
 
 
@@ -72,7 +70,7 @@ class CorrectiveRAGAgentV2(ConditionalAgent):
         documents: list[Document],
         llm_config: LLMConfig | None = None,
         relevance_threshold: float = 0.7,
-        **kwargs
+        **kwargs,
     ):
         """Create Corrective RAG from documents.
 
@@ -87,7 +85,8 @@ class CorrectiveRAGAgentV2(ConditionalAgent):
         """
         # Create agents
         retrieval_agent = BaseRAGAgent.from_documents(
-            documents=documents, name="CRAG Retriever"
+            documents=documents,
+            name="CRAG Retriever",
         )
 
         grader_agent = SimpleAgent(
@@ -102,7 +101,8 @@ class CorrectiveRAGAgentV2(ConditionalAgent):
         # Web search agent (placeholder for now)
         web_search_agent = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=WEB_SEARCH_PROMPT
+                llm_config=llm_config,
+                prompt_template=WEB_SEARCH_PROMPT,
             ),
             name="Web Search Query Generator",
         )
@@ -110,14 +110,16 @@ class CorrectiveRAGAgentV2(ConditionalAgent):
         # Document refiner agent
         refiner_agent = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=REFINE_DOCS_PROMPT
+                llm_config=llm_config,
+                prompt_template=REFINE_DOCS_PROMPT,
             ),
             name="Document Refiner",
         )
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=RAG_ANSWER_STANDARD
+                llm_config=llm_config,
+                prompt_template=RAG_ANSWER_STANDARD,
             ),
             name="Answer Generator",
         )
@@ -130,9 +132,7 @@ class CorrectiveRAGAgentV2(ConditionalAgent):
                 decisions = state["document_decisions"]
 
                 # Count passing documents
-                passing_docs = sum(
-                    1 for decision in decisions if decision.decision == "pass"
-                )
+                passing_docs = sum(1 for decision in decisions if decision.decision == "pass")
                 total_docs = len(decisions)
 
                 if total_docs == 0:
@@ -189,5 +189,5 @@ class CorrectiveRAGAgentV2(ConditionalAgent):
             ],
             branches=branches,
             name=kwargs.get("name", "Corrective RAG Agent V2"),
-            **kwargs
+            **kwargs,
         )

@@ -10,6 +10,14 @@
 - Overall Styliung, theme colours
 - Broken imporst
 
+## Completed Documentation Updates
+
+- [x] Tool Routing Refactor (2025-01-08)
+  - Changed structured_output_model to use `parse_output` route instead of `pydantic_model`
+  - Updated ValidationNodeV2 and ValidationNodeConfigV2 to handle both routes
+  - Created guide at @project_docs/guides/TOOL_ROUTING_REFACTOR.md
+  - Added deprecation warnings for pydantic_model route
+
 # Package Wise
 
 ## Root
@@ -19,12 +27,12 @@
 
 ## Haive-Core
 
-### Documnt Loading
+### Document Loading
 
 - [] (haive-py3.12) will@DESKTOP-JM28UET:~/Projects/haive/backend/haive$ poetry add --group document_loaders pybtex pypdfium2 pdfminer youtube-transcript-api docx selenium pdfplumber pytesseract ebooklib google-cloud-storage notion-client google-auth beautifulsoup4 vsdx extract-msg web3 shareplum pyairtable cassandra-driver couchbase airbyte-cdk duckdb mwxml conllu atlassian-python-api pyyaml
 - [] Fix the other loader issues form langchain_community
 - [] Perssistence Issues
-  -poetry add --group docs sphinx breathe docxsphinx javasphinx numpydoc sphinx-gallery sphinx-git sphinx-jekyll-builder sphinx-markdown-builder sphinx-prompt sphinx-pyreverse sphinxcontrib-autoprogram sphinxcontrib-blockdiag sphinxcontrib-constdata sphinxcontrib-cldomain sphinxcontrib-docbookrestapi sphinxcontrib-fulltoc sphinxcontrib-httpdomain sphinxcontrib-programoutput sphinxcontrib-napoleon tut sphinx-needs nbsphinx sphinxcontrib-proof sphinxcontrib-packages sphinx-sitemap sphinx-jsonschema sphinx-gitstamp sphinx-intl django-sphinxdoc sphobjinv myst-parser jupyter-book alabaster flask-sphinx-themes sphinx-readable-theme sphinx-better-theme sphinx-rtd-theme sphinx-typo3-theme sphinx-py3doc-enhanced-theme sphinx-bootstrap-theme sphinx-foundation-theme sphinx-nameko-theme crate-docs-theme solar-theme mdn-sphinx-theme sphinx-adc-theme sphinx-autobuild ghp-import okydoky  
+  -poetry add --group docs sphinx breathe docxsphinx javasphinx numpydoc sphinx-gallery sphinx-git sphinx-jekyll-builder sphinx-markdown-builder sphinx-prompt sphinx-pyreverse sphinxcontrib-autoprogram sphinxcontrib-blockdiag sphinxcontrib-constdata sphinxcontrib-cldomain sphinxcontrib-docbookrestapi sphinxcontrib-fulltoc sphinxcontrib-httpdomain sphinxcontrib-programoutput sphinxcontrib-napoleon tut sphinx-needs nbsphinx sphinxcontrib-proof sphinxcontrib-packages sphinx-sitemap sphinx-jsonschema sphinx-gitstamp sphinx-intl django-sphinxdoc sphobjinv myst-parser jupyter-book alabaster flask-sphinx-themes sphinx-readable-theme sphinx-better-theme sphinx-rtd-theme sphinx-typo3-theme sphinx-py3doc-enhanced-theme sphinx-bootstrap-theme sphinx-foundation-theme sphinx-nameko-theme crate-docs-theme solar-theme mdn-sphinx-theme sphinx-adc-theme sphinx-autobuild ghp-import okydoky
   ll@DESKTOP-JM28UET:~/Projects/haive/backend/haive$ source .venv/bin/activate
   (haive-py3.12) will@DESKTOP-JM28UET:~/Projects/haive/backend/haive$ poetry add --group dev typer rich libcst pydantic gitpython
   Using version ^0.16.0 for typer

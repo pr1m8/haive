@@ -1,9 +1,11 @@
 """Base configuration and fixtures for pytest with modern rich integration."""
 
-import logging
-import uuid
+from __future__ import annotations
+
 from datetime import UTC, datetime
+import logging
 from pathlib import Path
+import uuid
 
 import pytest
 from rich.console import Console
@@ -29,7 +31,7 @@ def setup_logging() -> logging.Logger:
                 markup=True,
                 show_path=False,
                 enable_link_path=True,
-            )
+            ),
         ],
     )
     return logging.getLogger("conftest")

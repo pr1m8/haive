@@ -10,10 +10,10 @@ Functions:
 
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from haive.agents.reasoning_and_critique.logic.models import ReasoningReport
+from haive.core.engine.aug_llm import AugLLMConfig
 
 REASONING_SYNTHESIS_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -223,7 +223,7 @@ Remember: Great synthesis doesn't just summarize - it creates new understanding 
             "Synthesize these reasoning analyses into a final report:\n{analyses}",
         ),
         MessagesPlaceholder(variable_name="messages", optional=True),
-    ]
+    ],
 )
 
 

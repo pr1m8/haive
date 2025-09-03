@@ -14,14 +14,14 @@ import os
 import sys
 from typing import Any
 
-# Add the project root to the path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from agents.tot.modular.factory import (
     create_game24_tot_agent,
     create_math_tot_agent,
     create_tot_agent,
 )
+
+# Add the project root to the path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def print_state(state: dict[str, Any], detailed: bool = False) -> None:

@@ -5,10 +5,11 @@ This module implements additional RAG architectures beyond the simple enhanced w
 including memory-based, multi-query, fusion, and advanced reasoning patterns.
 """
 
-from haive.core.schema.prebuilt.rag_state import RAGState
+from __future__ import annotations
 
 from haive.agents.multi.base import ExecutionMode, MultiAgent
 from haive.agents.simple import SimpleAgent
+from haive.core.schema.prebuilt.rag_state import RAGState
 
 
 class MemoryRAGState(RAGState):
@@ -36,7 +37,8 @@ class SelfRAGState(RAGState):
 
 
 class SimpleRAGWithMemoryAgent(MultiAgent):
-    """Simple RAG with Memory - incorporates conversation history and previous queries
+    """Simple RAG with Memory - incorporates conversation history and previous queries.
+
     to provide contextually aware responses.
     """
 
@@ -90,7 +92,7 @@ class SimpleRAGWithMemoryAgent(MultiAgent):
             agents=agents,
             execution_mode=ExecutionMode.SEQUENCE,
             state_schema=MemoryRAGState,
-            **kwargs
+            **kwargs,
         )
 
     def build_custom_graph(self) -> Any:
@@ -100,7 +102,8 @@ class SimpleRAGWithMemoryAgent(MultiAgent):
 
 
 class SelfRAGAgent(MultiAgent):
-    """Self-RAG with reflection tokens - determines whether retrieval is needed
+    """Self-RAG with reflection tokens - determines whether retrieval is needed.
+
     and reflects on the quality of generated answers.
     """
 
@@ -160,7 +163,7 @@ class SelfRAGAgent(MultiAgent):
             agents=agents,
             execution_mode=ExecutionMode.CONDITIONAL,
             state_schema=SelfRAGState,
-            **kwargs
+            **kwargs,
         )
 
     def build_custom_graph(self) -> Any:
@@ -169,7 +172,8 @@ class SelfRAGAgent(MultiAgent):
 
 
 class MultiQueryRAGAgent(MultiAgent):
-    """Multi-Query RAG - generates multiple diverse queries and retrieves documents
+    """Multi-Query RAG - generates multiple diverse queries and retrieves documents.
+
     for each, then synthesizes results.
     """
 
@@ -226,7 +230,7 @@ class MultiQueryRAGAgent(MultiAgent):
             agents=agents,
             execution_mode=ExecutionMode.SEQUENCE,
             state_schema=MultiQueryRAGState,
-            **kwargs
+            **kwargs,
         )
 
     def build_custom_graph(self) -> Any:
@@ -235,7 +239,8 @@ class MultiQueryRAGAgent(MultiAgent):
 
 
 class RAGFusionAgent(MultiAgent):
-    """RAG Fusion - combines multiple retrieval strategies and fuses results
+    """RAG Fusion - combines multiple retrieval strategies and fuses results.
+
     using reciprocal rank fusion and other techniques.
     """
 
@@ -298,7 +303,7 @@ class RAGFusionAgent(MultiAgent):
             agents=agents,
             execution_mode=ExecutionMode.SEQUENCE,
             state_schema=MultiQueryRAGState,  # Reuse for similar structure
-            **kwargs
+            **kwargs,
         )
 
     def build_custom_graph(self) -> Any:
@@ -307,7 +312,8 @@ class RAGFusionAgent(MultiAgent):
 
 
 class StepBackPromptingRAGAgent(MultiAgent):
-    """Step-Back Prompting RAG - asks broader conceptual questions before
+    """Step-Back Prompting RAG - asks broader conceptual questions before.
+
     specific retrieval to get better context.
     """
 
@@ -371,7 +377,7 @@ class StepBackPromptingRAGAgent(MultiAgent):
             agents=agents,
             execution_mode=ExecutionMode.SEQUENCE,
             state_schema=RAGState,
-            **kwargs
+            **kwargs,
         )
 
     def build_custom_graph(self) -> Any:
@@ -380,7 +386,8 @@ class StepBackPromptingRAGAgent(MultiAgent):
 
 
 class QueryDecompositionRAGAgent(MultiAgent):
-    """Query Decomposition RAG - breaks complex queries into simpler sub-questions,
+    """Query Decomposition RAG - breaks complex queries into simpler sub-questions,.
+
     retrieves for each, then composes the final answer.
     """
 
@@ -439,7 +446,7 @@ class QueryDecompositionRAGAgent(MultiAgent):
             agents=agents,
             execution_mode=ExecutionMode.SEQUENCE,
             state_schema=MultiQueryRAGState,  # Reuse for similar structure
-            **kwargs
+            **kwargs,
         )
 
     def build_custom_graph(self) -> Any:

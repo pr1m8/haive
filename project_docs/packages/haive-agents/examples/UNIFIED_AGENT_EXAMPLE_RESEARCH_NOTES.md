@@ -42,7 +42,7 @@ Examples exist in **3 different patterns**:
 
 1. **Conversation Agents** (5 types):
    - `conversation/base/agent.py` + `example.py`
-   - `conversation/collaberative/agent.py` + `example.py`
+   - `conversation/collaborative/agent.py` + `example.py`
    - `conversation/debate/agent.py` + `example.py`
    - `conversation/directed/agent.py` + `example.py`
    - `conversation/social_media/agent.py` + `example.py`
@@ -325,7 +325,7 @@ def analyze_agent_imports(agent_file):
 
 ### **Research Session 3: Visualization Survey**
 
-**Time**: 20-30 minutes  
+**Time**: 20-30 minutes
 **Goal**: Map visualization capabilities
 
 1. **Test visualization** on working agents

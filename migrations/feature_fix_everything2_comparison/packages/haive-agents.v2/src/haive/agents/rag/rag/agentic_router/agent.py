@@ -1,18 +1,16 @@
 """Agentic RAG Router with ReAct Pattern Agents.
 
-from typing import Any
-Implementation of autonomous RAG routing using ReAct (Reason + Act) patterns.
-Provides intelligent agent selection, strategy planning, and execution coordination.
+from typing import Any Implementation of autonomous RAG routing using
+ReAct (Reason + Act) patterns. Provides intelligent agent selection,
+strategy planning, and execution coordination.
 """
 
-import logging
+from __future__ import annotations
+
 from enum import Enum
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from haive.core.schema.prebuilt.rag_state import RAGState
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
@@ -24,6 +22,10 @@ from haive.agents.rag.fusion.agent import RAGFusionAgent
 from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.agents.rag.simple.agent import SimpleRAGAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from haive.core.schema.prebuilt.rag_state import RAGState
 
 logger = logging.getLogger(__name__)
 
@@ -49,10 +51,12 @@ class ReasoningStep(BaseModel):
     observation: str = Field(description="Observation from action result")
 
     confidence: float = Field(
-        ge=0.0, le=1.0, description="Confidence in this reasoning step"
+        ge=0.0,
+        le=1.0,
+        description="Confidence in this reasoning step",
     )
     next_step_needed: bool = Field(
-        description="Whether another reasoning step is needed"
+        description="Whether another reasoning step is needed",
     )
 
 
@@ -65,10 +69,12 @@ class ReActPlan(BaseModel):
     # Strategy selection
     selected_strategy: RAGStrategy = Field(description="Selected RAG strategy")
     strategy_confidence: float = Field(
-        ge=0.0, le=1.0, description="Confidence in strategy selection"
+        ge=0.0,
+        le=1.0,
+        description="Confidence in strategy selection",
     )
     fallback_strategies: list[RAGStrategy] = Field(
-        description="Fallback strategies if primary fails"
+        description="Fallback strategies if primary fails",
     )
 
     # Execution planning
@@ -78,13 +84,15 @@ class ReActPlan(BaseModel):
 
     # Resource estimation
     estimated_complexity: float = Field(
-        ge=0.0, le=1.0, description="Estimated query complexity"
+        ge=0.0,
+        le=1.0,
+        description="Estimated query complexity",
     )
     estimated_time: float = Field(description="Estimated processing time")
     resource_requirements: dict[str, Any] = Field(description="Required resources")
 
     planning_metadata: dict[str, Any] = Field(
-        description="Additional planning metadata"
+        description="Additional planning metadata",
     )
 
 
@@ -101,13 +109,19 @@ class ExecutionResult(BaseModel):
 
     # Quality metrics
     result_confidence: float = Field(
-        ge=0.0, le=1.0, description="Confidence in result quality"
+        ge=0.0,
+        le=1.0,
+        description="Confidence in result quality",
     )
     completeness_score: float = Field(
-        ge=0.0, le=1.0, description="Completeness of answer"
+        ge=0.0,
+        le=1.0,
+        description="Completeness of answer",
     )
     relevance_score: float = Field(
-        ge=0.0, le=1.0, description="Relevance to original query"
+        ge=0.0,
+        le=1.0,
+        description="Relevance to original query",
     )
 
     # Content
@@ -131,14 +145,16 @@ class AgenticRouterResult(BaseModel):
     # Reasoning analytics
     reasoning_steps: int = Field(description="Number of reasoning steps")
     decision_confidence: float = Field(
-        ge=0.0, le=1.0, description="Confidence in routing decision"
+        ge=0.0,
+        le=1.0,
+        description="Confidence in routing decision",
     )
     autonomous_decisions: int = Field(description="Number of autonomous decisions made")
 
     # Strategy analytics
     primary_strategy: RAGStrategy = Field(description="Primary strategy selected")
     strategies_considered: list[RAGStrategy] = Field(
-        description="All strategies considered"
+        description="All strategies considered",
     )
     strategy_switch_count: int = Field(description="Number of strategy switches")
 
@@ -146,20 +162,24 @@ class AgenticRouterResult(BaseModel):
     total_processing_time: float = Field(description="Total processing time")
     efficiency_score: float = Field(ge=0.0, le=1.0, description="Processing efficiency")
     resource_utilization: dict[str, float] = Field(
-        description="Resource utilization metrics"
+        description="Resource utilization metrics",
     )
 
     # Quality analytics
     answer_quality: float = Field(ge=0.0, le=1.0, description="Overall answer quality")
     reasoning_quality: float = Field(
-        ge=0.0, le=1.0, description="Quality of reasoning process"
+        ge=0.0,
+        le=1.0,
+        description="Quality of reasoning process",
     )
     evidence_strength: float = Field(
-        ge=0.0, le=1.0, description="Strength of supporting evidence"
+        ge=0.0,
+        le=1.0,
+        description="Strength of supporting evidence",
     )
 
     processing_metadata: dict[str, Any] = Field(
-        description="Complete processing metadata"
+        description="Complete processing metadata",
     )
 
 
@@ -223,9 +243,8 @@ Use systematic reasoning to select optimal RAG strategies.""",
 
 Use ReAct methodology - provide clear reasoning for each decision point.""",
         ),
-    ]
+    ],
 )
-
 
 STRATEGY_EXECUTION_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -281,9 +300,8 @@ Execute the planned strategy with precision and continuous quality monitoring.""
 
 Focus on high-quality execution with continuous monitoring and validation.""",
         ),
-    ]
+    ],
 )
-
 
 AGENTIC_SYNTHESIS_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -339,15 +357,17 @@ Create comprehensive, high-quality final results with full process transparency.
 
 Focus on creating the highest quality integrated result with full process insight.""",
         ),
-    ]
+    ],
 )
 
 
 class AgenticRAGRouterAgent(Agent):
-    """Complete Agentic RAG Router with ReAct patterns and autonomous decision-making.
+    """Complete Agentic RAG Router with ReAct patterns and autonomous decision-.
 
-    This agent uses conditional edges to route between different RAG strategies based on
-    query analysis and planning.
+    making.
+
+    This agent uses conditional edges to route between different RAG
+    strategies based on query analysis and planning.
     """
 
     name: str = "Agentic RAG Router"
@@ -357,13 +377,16 @@ class AgenticRAGRouterAgent(Agent):
 
     # Engines for different stages (initialized in setup_agent)
     planning_engine: AugLLMConfig | None = Field(
-        default=None, description="Engine for ReAct planning"
+        default=None,
+        description="Engine for ReAct planning",
     )
     synthesis_engine: AugLLMConfig | None = Field(
-        default=None, description="Engine for result synthesis"
+        default=None,
+        description="Engine for result synthesis",
     )
     strategy_agents: dict[RAGStrategy, Agent] | None = Field(
-        default=None, description="RAG strategy agents"
+        default=None,
+        description="RAG strategy agents",
     )
 
     def setup_agent(self) -> None:
@@ -387,19 +410,24 @@ class AgenticRAGRouterAgent(Agent):
         # Create strategy agents
         self.strategy_agents = {
             RAGStrategy.SIMPLE: SimpleRAGAgent.from_documents(
-                documents=self.documents, llm_config=self.llm_config
+                documents=self.documents,
+                llm_config=self.llm_config,
             ),
             RAGStrategy.MULTI_QUERY: MultiQueryRAGAgent.from_documents(
-                documents=self.documents, llm_config=self.llm_config
+                documents=self.documents,
+                llm_config=self.llm_config,
             ),
             RAGStrategy.HYDE: HyDERAGAgentV2.from_documents(
-                documents=self.documents, llm_config=self.llm_config
+                documents=self.documents,
+                llm_config=self.llm_config,
             ),
             RAGStrategy.FUSION: RAGFusionAgent.from_documents(
-                documents=self.documents, llm_config=self.llm_config
+                documents=self.documents,
+                llm_config=self.llm_config,
             ),
             RAGStrategy.FLARE: FLARERAGAgent.from_documents(
-                documents=self.documents, llm_config=self.llm_config
+                documents=self.documents,
+                llm_config=self.llm_config,
             ),
         }
 
@@ -425,11 +453,13 @@ class AgenticRAGRouterAgent(Agent):
                 "available_resources": available_resources,
                 "requirements": requirements,
                 "previous_results": previous_results,
-            }
+            },
         )
 
         logger.info(
-            f"ReAct planning: Strategy={react_plan.selected_strategy}, Confidence={react_plan.strategy_confidence}"
+            f"ReAct planning: Strategy={react_plan.selected_strategy}, Confidence={
+                react_plan.strategy_confidence
+            }",
         )
 
         return {
@@ -453,7 +483,7 @@ class AgenticRAGRouterAgent(Agent):
         """Execute multi-query RAG strategy."""
         logger.info("Executing multi-query RAG strategy")
         result = self.strategy_agents[RAGStrategy.MULTI_QUERY].run(
-            {"query": state.query}
+            {"query": state.query},
         )
         return self._process_strategy_result(state, result, RAGStrategy.MULTI_QUERY)
 
@@ -476,7 +506,10 @@ class AgenticRAGRouterAgent(Agent):
         return self._process_strategy_result(state, result, RAGStrategy.FLARE)
 
     def _process_strategy_result(
-        self, state: RAGState, result: dict[str, Any], strategy: RAGStrategy
+        self,
+        state: RAGState,
+        result: dict[str, Any],
+        strategy: RAGStrategy,
     ) -> dict[str, Any]:
         """Process the result from a strategy execution."""
         return {
@@ -499,15 +532,15 @@ class AgenticRAGRouterAgent(Agent):
         # Prepare synthesis inputs
         react_plan_summary = "No ReAct plan available"
         if react_plan:
-            react_plan_summary = f"Strategy: {react_plan.selected_strategy}, Steps: {len(react_plan.reasoning_chain)}"
+            react_plan_summary = f"Strategy: {react_plan.selected_strategy}, Steps: {
+                len(react_plan.reasoning_chain)
+            }"
 
         execution_summary = f"Success: {execution_successful}"
         if execution_result:
             execution_summary += f", Response length: {len(final_response)}"
 
-        strategy_performance = (
-            f"Strategy used: {strategy_used if strategy_used else 'Unknown'}"
-        )
+        strategy_performance = f"Strategy used: {strategy_used if strategy_used else 'Unknown'}"
         quality_metrics = f"Execution success: {execution_successful}"
         resource_usage = f"Documents: {len(self.documents)}"
 
@@ -520,11 +553,11 @@ class AgenticRAGRouterAgent(Agent):
                 "strategy_performance": strategy_performance,
                 "quality_metrics": quality_metrics,
                 "resource_usage": resource_usage,
-            }
+            },
         )
 
         logger.info(
-            f"Agentic synthesis completed: Quality={agentic_result.answer_quality}"
+            f"Agentic synthesis completed: Quality={agentic_result.answer_quality}",
         )
 
         return {
@@ -540,7 +573,10 @@ class AgenticRAGRouterAgent(Agent):
         }
 
     def strategy_router(self, state: RAGState) -> str:
-        """Route to the appropriate strategy execution node based on the selected strategy."""
+        """Route to the appropriate strategy execution node based on the.
+
+        selected strategy.
+        """
         selected_strategy = getattr(state, "selected_strategy", RAGStrategy.SIMPLE)
 
         if selected_strategy == RAGStrategy.SIMPLE:

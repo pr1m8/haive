@@ -10,10 +10,10 @@ Functions:
 
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from haive.agents.reasoning_and_critique.logic.models import ReasoningChain
+from haive.core.engine.aug_llm import AugLLMConfig
 
 PREMISE_EXTRACTION_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -122,7 +122,7 @@ Remember: Good reasoning requires making ALL premises explicit, especially the h
         ),
         ("human", "{question}\n\nContext: {context}"),
         MessagesPlaceholder(variable_name="messages", optional=True),
-    ]
+    ],
 )
 
 

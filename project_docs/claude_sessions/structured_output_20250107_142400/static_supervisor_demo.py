@@ -2,14 +2,9 @@
 """Demo of static supervisor with ReactAgent inheritance and state sync."""
 
 import asyncio
+import logging
 from pathlib import Path
 import sys
-
-
-# Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
-
-import logging
 
 from langchain_core.messages import HumanMessage
 
@@ -20,10 +15,13 @@ from haive.agents.experiments.static_supervisor_with_sync import (
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 
+# Add parent directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 # Configure detailed logging
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 
 
@@ -54,7 +52,8 @@ async def demonstrate_static_supervisor():
     """Show how the static supervisor works with state synchronization."""
     # Create supervisor with mock engine
     supervisor_engine = MockEngine(
-        name="supervisor_engine", system_message="You are a task routing supervisor"
+        name="supervisor_engine",
+        system_message="You are a task routing supervisor",
     )
 
     # Note: In real usage, you'd use AugLLMEngine
@@ -64,12 +63,18 @@ async def demonstrate_static_supervisor():
 
     research_agent = SimpleAgent(
         name="research_agent",
-        engine=MockEngine(name="research_engine", system_message="You are a research assistant"),
+        engine=MockEngine(
+            name="research_engine",
+            system_message="You are a research assistant",
+        ),
     )
 
     coding_agent = ReactAgent(
         name="coding_agent",
-        engine=MockEngine(name="coding_engine", system_message="You are a Python coding expert"),
+        engine=MockEngine(
+            name="coding_engine",
+            system_message="You are a Python coding expert",
+        ),
     )
 
     # Register agents - triggers model validator
@@ -108,7 +113,7 @@ async def demonstrate_static_supervisor():
                             "name": "coding_agent",
                             "id": "call_123",
                             "args": {"task": "Write Python code to sort a list"},
-                        }
+                        },
                     ],
                 },
             )(),

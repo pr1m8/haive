@@ -1,7 +1,9 @@
+---
 extends: existence
-message: "Parameters should follow format: 'parameter_name: Description starting with capital.'"
+message:
+  "Parameters should follow format: 'parameter_name: Description starting with\
+  \ capital.'"
 link: https://google.github.io/styleguide/pyguide.html#383-functions-and-methods
 level: warning
 scope: raw
-tokens:
-  - 'Args:'
+tokens: ["Args:"]

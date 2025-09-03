@@ -1,19 +1,27 @@
 """Multi-agent node with hierarchical state projection.
 
-This module provides node configurations for multi-agent systems that properly handle
-state projection between the container state and individual agent states.
+This module provides node configurations for multi-agent systems that
+properly handle state projection between the container state and
+individual agent states.
 """
 
+from __future__ import annotations
+
 import logging
-from typing import Any, Self, TypeVar
+from typing import Any
+from typing import Self
+from typing import TypeVar
 
 from haive.agents.base.agent import Agent
-from langgraph.types import Command
-from pydantic import BaseModel, Field, model_validator
-
-from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
+from haive.core.graph.common.types import ConfigLike
+from haive.core.graph.common.types import NodeType
+from haive.core.graph.common.types import StateLike
 from haive.core.graph.node.base_node_config import BaseNodeConfig
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
+from langgraph.types import Command
+from pydantic import BaseModel
+from pydantic import Field
+from pydantic import model_validator
 
 logger = logging.getLogger(__name__)
 
@@ -36,12 +44,13 @@ class MultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]):
     """
 
     node_type: NodeType = Field(
-        default=NodeType.AGENT, description="Node type for multi-agent execution"
+        default=NodeType.AGENT,
+        description="Node type for multi-agent execution",
     )
 
     # Agent configuration
     agent_name: str = Field(
-        description="Name of the agent to execute (key in agents dict)"
+        description="Name of the agent to execute (key in agents dict)",
     )
 
     # Optional agent reference (will be extracted from state if not provided)
@@ -52,11 +61,13 @@ class MultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]):
 
     # State projection settings
     project_state: bool = Field(
-        default=True, description="Whether to project state to agent's expected schema"
+        default=True,
+        description="Whether to project state to agent's expected schema",
     )
 
     share_messages: bool = Field(
-        default=True, description="Whether to share messages with agent state"
+        default=True,
+        description="Whether to share messages with agent state",
     )
 
     # Update handling
@@ -73,7 +84,9 @@ class MultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]):
         return self
 
     def __call__(
-        self, state: MultiAgentState, config: ConfigLike | None = None
+        self,
+        state: MultiAgentState,
+        config: ConfigLike | None = None,
     ) -> Command:
         """Execute agent with state projection."""
         logger.info(f"{'=' * 60}")
@@ -86,8 +99,7 @@ class MultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]):
             agent = self._get_agent(state)
             if not agent:
                 raise ValueError(
-                    f"Agent '{
-                        self.agent_name}' not found in state"
+                    f"Agent '{self.agent_name}' not found in state",
                 )
 
             # Set as active agent
@@ -124,7 +136,7 @@ class MultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]):
                 "agent_outputs": {
                     **state.agent_outputs,
                     self.agent_name: {"error": str(e)},
-                }
+                },
             }
 
             return Command(update=state_update, goto=self._get_goto_node())
@@ -137,12 +149,14 @@ class MultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]):
         return state.get_agent(self.agent_name)
 
     def _project_state_for_agent(
-        self, state: MultiAgentState, agent: Agent
+        self,
+        state: MultiAgentState,
+        agent: Agent,
     ) -> dict[str, Any]:
         """Project container state to agent's expected schema.
 
-        This is the key method that gives each agent its exact expected state type
-        instead of a flattened global state.
+        This is the key method that gives each agent its exact expected
+        state type instead of a flattened global state.
         """
         # Start with agent's isolated state
         agent_state = state.get_agent_state(self.agent_name)
@@ -165,7 +179,9 @@ class MultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]):
                     elif hasattr(state, field_name):
                         # Check if field is marked as shared in schema
                         shared_fields = getattr(
-                            expected_schema, "__shared_fields__", set()
+                            expected_schema,
+                            "__shared_fields__",
+                            set(),
                         )
                         if field_name in shared_fields:
                             projected[field_name] = getattr(state, field_name)
@@ -190,7 +206,9 @@ class MultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]):
             return projected
 
     def _update_container_state(
-        self, state: MultiAgentState, agent_result: Any
+        self,
+        state: MultiAgentState,
+        agent_result: Any,
     ) -> dict[str, Any]:
         """Update container state with agent results."""
         state_update = {}
@@ -251,12 +269,13 @@ class MultiAgentNode(BaseNodeConfig[MultiAgentState, MultiAgentState]):
 class StateProjectionNode(BaseNodeConfig[TInput, TOutput]):
     """Generic state projection node for any schema transformation.
 
-    This node can project from any input schema to any output schema, useful for
-    bridging between different state representations.
+    This node can project from any input schema to any output schema,
+    useful for bridging between different state representations.
     """
 
     node_type: NodeType = Field(
-        default=NodeType.TRANSFORM, description="Transform node type"
+        default=NodeType.TRANSFORM,
+        description="Transform node type",
     )
 
     # Schema specifications
@@ -266,20 +285,20 @@ class StateProjectionNode(BaseNodeConfig[TInput, TOutput]):
 
     # Field mappings
     field_mappings: dict[str, str] = Field(
-        default_factory=dict, description="Map input fields to output fields"
+        default_factory=dict,
+        description="Map input fields to output fields",
     )
 
     # Default values for missing fields
     defaults: dict[str, Any] = Field(
-        default_factory=dict, description="Default values for output fields"
+        default_factory=dict,
+        description="Default values for output fields",
     )
 
     def __call__(self, state: StateLike, config: ConfigLike | None = None) -> Command:
         """Project state from input to output schema."""
         logger.info(
-            f"Projecting state: {
-                self.input_schema.__name__} → {
-                self.output_schema.__name__}"
+            f"Projecting state: {self.input_schema.__name__} → {self.output_schema.__name__}",
         )
 
         # Extract input data
@@ -325,9 +344,12 @@ class StateProjectionNode(BaseNodeConfig[TInput, TOutput]):
 
 
 def create_multi_agent_node(
-    agent_name: str, name: str | None = None, **kwargs
+    agent_name: str,
+    name: str | None = None,
+    **kwargs,
 ) -> MultiAgentNode:
-    """Create a multi-agent node for executing an agent from MultiAgentState."""
+    """Create a multi-agent node for executing an agent from
+    MultiAgentState."""
     if not name:
         name = f"execute_{agent_name}"
 
@@ -345,5 +367,8 @@ def create_projection_node(
         name = f"project_{input_schema.__name__}_to_{output_schema.__name__}"
 
     return StateProjectionNode(
-        name=name, input_schema=input_schema, output_schema=output_schema, **kwargs
+        name=name,
+        input_schema=input_schema,
+        output_schema=output_schema,
+        **kwargs,
     )

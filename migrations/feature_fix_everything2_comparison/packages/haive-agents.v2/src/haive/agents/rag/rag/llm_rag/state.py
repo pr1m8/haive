@@ -8,13 +8,12 @@ Classes:
     LLMRAGState: LLMRAGState implementation.
 """
 
-from pydantic import Field
+from __future__ import annotations
 
-from haive.agents.rag.base.state import (
-    BaseRAGInputState,
-    BaseRAGOutputState,
-    BaseRAGState,
-)
+from haive.agents.rag.base.state import BaseRAGInputState
+from haive.agents.rag.base.state import BaseRAGOutputState
+from haive.agents.rag.base.state import BaseRAGState
+from pydantic import Field
 
 
 class LLMRAGInputState(BaseRAGInputState):
@@ -25,7 +24,8 @@ class LLMRAGOutputState(BaseRAGOutputState):
     """Output state for LLM RAG agents."""
 
     answer: str = Field(
-        default="", description="The generated answer based on retrieved documents"
+        default="",
+        description="The generated answer based on retrieved documents",
     )
     is_relevant: bool = Field(
         default=False,

@@ -1,8 +1,8 @@
 # Agent Collaboration Workspace
 
-**Primary Agent**: Doc (Claude Sonnet 4)  
-**Created**: 2025-01-18  
-**Purpose**: Coordination space for multi-agent collaboration  
+**Primary Agent**: Doc (Claude Sonnet 4)
+**Created**: 2025-01-18
+**Purpose**: Coordination space for multi-agent collaboration
 **Status**: Active - Ready for Partner Agent
 
 ## 👥 Current Team Setup

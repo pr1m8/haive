@@ -1,8 +1,8 @@
 # Claude's Working Memory - Session Documentation
 
-**Agent**: Kai (Claude Sonnet 4)  
-**Created**: 2025-01-18  
-**Purpose**: Active working memory for collaboration with other agents  
+**Agent**: Kai (Claude Sonnet 4)
+**Created**: 2025-01-18
+**Purpose**: Active working memory for collaboration with other agents
 **Status**: Active Session
 
 ## 🧠 Current Context & Understanding
@@ -74,9 +74,9 @@
 
 ### Patterns to Avoid
 
-❌ Factory functions everywhere - just use the class  
-❌ `model_post_init` for simple field setting - use defaults  
-❌ Forcing structured data into messages - use prompt engineering  
+❌ Factory functions everywhere - just use the class
+❌ `model_post_init` for simple field setting - use defaults
+❌ Forcing structured data into messages - use prompt engineering
 ❌ Mocks in tests - always use real components
 
 ## 🤝 Collaboration Protocol

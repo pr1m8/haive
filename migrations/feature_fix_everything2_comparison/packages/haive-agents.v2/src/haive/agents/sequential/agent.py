@@ -11,17 +11,10 @@ Functions:
 """
 
 # haive/agents/multi/sequential.py
-
 """Sequential multi-agent implementation for the Haive framework."""
+from __future__ import annotations
 
 import logging
-from typing import Any
-
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from langgraph.graph import END, START
-from langgraph.types import Command
-
-from haive.agents.multi.base import MultiAgent
 
 logger = logging.getLogger(__name__)
 
@@ -84,5 +77,5 @@ class SequentialMultiAgent(MultiAgent):
                 "current_agent": self._agent_order[0] if self._agent_order else None,
                 "completed_agents": [],
                 "execution_mode": "sequential",
-            }
+            },
         )

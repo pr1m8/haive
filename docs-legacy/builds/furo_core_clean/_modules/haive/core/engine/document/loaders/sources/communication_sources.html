@@ -1,0 +1,1429 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.engine.document.loaders.sources.communication_sources - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../../../api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../../api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for haive.core.engine.document.loaders.sources.communication_sources</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Communication and collaboration platform source registrations.</span>
+
+<span class="sd">This module implements the final comprehensive set of communication, collaboration,</span>
+<span class="sd">and productivity platform loaders including:</span>
+<span class="sd">- Additional messaging platforms (Matrix, XMPP, IRC)</span>
+<span class="sd">- International social media (WeChat, LINE, Kakao)</span>
+<span class="sd">- Video conferencing platforms (Zoom, Teams, Meet)</span>
+<span class="sd">- Collaboration tools (Miro, Figma, Canva)</span>
+<span class="sd">- Documentation platforms (Gitiles, Bookstack, Outline)</span>
+<span class="sd">- Regional platforms and specialized services</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Field</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.enhanced_registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">enhanced_registry</span><span class="p">,</span> <span class="n">register_bulk_source</span><span class="p">,</span> <span class="n">register_source</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.source_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">CredentialType</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="p">,</span> <span class="n">RemoteSource</span><span class="p">,</span> <span class="n">SourceCategory</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CommunicationPlatform</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Communication and collaboration platforms.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Advanced Messaging</span>
+    <span class="n">MATRIX</span> <span class="o">=</span> <span class="s2">&quot;matrix&quot;</span>
+    <span class="n">XMPP</span> <span class="o">=</span> <span class="s2">&quot;xmpp&quot;</span>
+    <span class="n">IRC</span> <span class="o">=</span> <span class="s2">&quot;irc&quot;</span>
+    <span class="n">ROCKETCHAT</span> <span class="o">=</span> <span class="s2">&quot;rocketchat&quot;</span>
+    <span class="n">MATTERMOST</span> <span class="o">=</span> <span class="s2">&quot;mattermost&quot;</span>
+
+    <span class="c1"># International Social Media</span>
+    <span class="n">WECHAT</span> <span class="o">=</span> <span class="s2">&quot;wechat&quot;</span>
+    <span class="n">LINE</span> <span class="o">=</span> <span class="s2">&quot;line&quot;</span>
+    <span class="n">KAKAO</span> <span class="o">=</span> <span class="s2">&quot;kakao&quot;</span>
+    <span class="n">VIBER</span> <span class="o">=</span> <span class="s2">&quot;viber&quot;</span>
+    <span class="n">SIGNAL</span> <span class="o">=</span> <span class="s2">&quot;signal&quot;</span>
+
+    <span class="c1"># Video Conferencing</span>
+    <span class="n">ZOOM</span> <span class="o">=</span> <span class="s2">&quot;zoom&quot;</span>
+    <span class="n">TEAMS</span> <span class="o">=</span> <span class="s2">&quot;teams&quot;</span>
+    <span class="n">GOOGLE_MEET</span> <span class="o">=</span> <span class="s2">&quot;google_meet&quot;</span>
+    <span class="n">WEBEX</span> <span class="o">=</span> <span class="s2">&quot;webex&quot;</span>
+    <span class="n">GOTO_MEETING</span> <span class="o">=</span> <span class="s2">&quot;goto_meeting&quot;</span>
+
+    <span class="c1"># Design &amp; Collaboration</span>
+    <span class="n">FIGMA</span> <span class="o">=</span> <span class="s2">&quot;figma&quot;</span>
+    <span class="n">MIRO</span> <span class="o">=</span> <span class="s2">&quot;miro&quot;</span>
+    <span class="n">CANVA</span> <span class="o">=</span> <span class="s2">&quot;canva&quot;</span>
+    <span class="n">SKETCH</span> <span class="o">=</span> <span class="s2">&quot;sketch&quot;</span>
+    <span class="n">INVISION</span> <span class="o">=</span> <span class="s2">&quot;invision&quot;</span>
+
+    <span class="c1"># Documentation Platforms</span>
+    <span class="n">GITILES</span> <span class="o">=</span> <span class="s2">&quot;gitiles&quot;</span>
+    <span class="n">BOOKSTACK</span> <span class="o">=</span> <span class="s2">&quot;bookstack&quot;</span>
+    <span class="n">OUTLINE</span> <span class="o">=</span> <span class="s2">&quot;outline&quot;</span>
+    <span class="n">SLAB</span> <span class="o">=</span> <span class="s2">&quot;slab&quot;</span>
+    <span class="n">TETTRA</span> <span class="o">=</span> <span class="s2">&quot;tettra&quot;</span>
+
+    <span class="c1"># Regional Platforms</span>
+    <span class="n">DINGTALK</span> <span class="o">=</span> <span class="s2">&quot;dingtalk&quot;</span>  <span class="c1"># China</span>
+    <span class="n">LARK</span> <span class="o">=</span> <span class="s2">&quot;lark&quot;</span>  <span class="c1"># ByteDance</span>
+    <span class="n">SLACK_CONNECT</span> <span class="o">=</span> <span class="s2">&quot;slack_connect&quot;</span>
+    <span class="n">DISCORD_STAGE</span> <span class="o">=</span> <span class="s2">&quot;discord_stage&quot;</span>
+
+    <span class="c1"># Specialized</span>
+    <span class="n">INTERCOM</span> <span class="o">=</span> <span class="s2">&quot;intercom&quot;</span>
+    <span class="n">ZENDESK_CHAT</span> <span class="o">=</span> <span class="s2">&quot;zendesk_chat&quot;</span>
+    <span class="n">FRESHCHAT</span> <span class="o">=</span> <span class="s2">&quot;freshchat&quot;</span>
+    <span class="n">DRIFT</span> <span class="o">=</span> <span class="s2">&quot;drift&quot;</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ContentType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Types of communication content.&quot;&quot;&quot;</span>
+
+    <span class="n">MESSAGES</span> <span class="o">=</span> <span class="s2">&quot;messages&quot;</span>
+    <span class="n">THREADS</span> <span class="o">=</span> <span class="s2">&quot;threads&quot;</span>
+    <span class="n">CHANNELS</span> <span class="o">=</span> <span class="s2">&quot;channels&quot;</span>
+    <span class="n">DIRECT_MESSAGES</span> <span class="o">=</span> <span class="s2">&quot;direct_messages&quot;</span>
+    <span class="n">FILES</span> <span class="o">=</span> <span class="s2">&quot;files&quot;</span>
+    <span class="n">RECORDINGS</span> <span class="o">=</span> <span class="s2">&quot;recordings&quot;</span>
+    <span class="n">TRANSCRIPTS</span> <span class="o">=</span> <span class="s2">&quot;transcripts&quot;</span>
+    <span class="n">DESIGNS</span> <span class="o">=</span> <span class="s2">&quot;designs&quot;</span>
+    <span class="n">COMMENTS</span> <span class="o">=</span> <span class="s2">&quot;comments&quot;</span>
+    <span class="n">REACTIONS</span> <span class="o">=</span> <span class="s2">&quot;reactions&quot;</span>
+    <span class="n">PRESENCE</span> <span class="o">=</span> <span class="s2">&quot;presence&quot;</span>
+    <span class="n">ANALYTICS</span> <span class="o">=</span> <span class="s2">&quot;analytics&quot;</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ExportFormat</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Export formats for communication data.&quot;&quot;&quot;</span>
+
+    <span class="n">JSON</span> <span class="o">=</span> <span class="s2">&quot;json&quot;</span>
+    <span class="n">CSV</span> <span class="o">=</span> <span class="s2">&quot;csv&quot;</span>
+    <span class="n">HTML</span> <span class="o">=</span> <span class="s2">&quot;html&quot;</span>
+    <span class="n">XML</span> <span class="o">=</span> <span class="s2">&quot;xml&quot;</span>
+    <span class="n">MBOX</span> <span class="o">=</span> <span class="s2">&quot;mbox&quot;</span>
+    <span class="n">EML</span> <span class="o">=</span> <span class="s2">&quot;eml&quot;</span>
+    <span class="n">PDF</span> <span class="o">=</span> <span class="s2">&quot;pdf&quot;</span>
+    <span class="n">MARKDOWN</span> <span class="o">=</span> <span class="s2">&quot;markdown&quot;</span>
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Advanced Messaging Platforms</span>
+<span class="c1"># =============================================================================</span>
+
+
+<span class="nd">@register_bulk_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;matrix&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;matrix&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;MatrixLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;matrix-client&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;matrix&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Matrix decentralized chat protocol loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">BULK_LOADING</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">REAL_TIME</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">ENCRYPTION_SUPPORT</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">FEDERATION</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">supports_scrape_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MatrixSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Matrix decentralized messaging source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;matrix&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">CommunicationPlatform</span> <span class="o">=</span> <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">MATRIX</span>
+
+    <span class="c1"># Matrix configuration</span>
+    <span class="n">homeserver_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Matrix homeserver URL&quot;</span><span class="p">)</span>
+    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Access token&quot;</span><span class="p">)</span>
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Username&quot;</span><span class="p">)</span>
+    <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Password&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Room selection</span>
+    <span class="n">room_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific room IDs&quot;</span><span class="p">)</span>
+    <span class="n">room_aliases</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Room aliases&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Content options</span>
+    <span class="n">include_media</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include media files&quot;</span><span class="p">)</span>
+    <span class="n">include_redacted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include redacted messages&quot;</span><span class="p">)</span>
+    <span class="n">decrypt_events</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Decrypt encrypted events&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Time range</span>
+    <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Start date&quot;</span><span class="p">)</span>
+    <span class="n">end_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;End date&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_loader_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_loader_kwargs</span><span class="p">()</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;homeserver&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">homeserver_url</span><span class="p">,</span>
+                <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_api_key</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;get_api_key&quot;</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="kc">None</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;include_media&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_media</span><span class="p">,</span>
+                <span class="s2">&quot;include_redacted&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_redacted</span><span class="p">,</span>
+                <span class="s2">&quot;decrypt_events&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">decrypt_events</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">room_ids</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;room_ids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">room_ids</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">room_aliases</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;room_aliases&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">room_aliases</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_date</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;start_timestamp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_date</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;end_timestamp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_date</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">scrape_all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Scrape all accessible rooms.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;include_joined_rooms&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;include_invited_rooms&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;include_media&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_media</span><span class="p">,</span>
+            <span class="s2">&quot;export_format&quot;</span><span class="p">:</span> <span class="s2">&quot;json&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;rocketchat&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;rocketchat&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;RocketChatLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;rocketchat-api&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;rocketchat&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Rocket.Chat team collaboration platform loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">BULK_LOADING</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">REAL_TIME</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">THREADING</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RocketChatSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Rocket.Chat collaboration source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rocketchat&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">CommunicationPlatform</span> <span class="o">=</span> <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">ROCKETCHAT</span>
+
+    <span class="c1"># RocketChat configuration</span>
+    <span class="n">server_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Rocket.Chat server URL&quot;</span><span class="p">)</span>
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Username&quot;</span><span class="p">)</span>
+    <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Password&quot;</span><span class="p">)</span>
+    <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;User ID&quot;</span><span class="p">)</span>
+    <span class="n">auth_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Auth token&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Channel/Room selection</span>
+    <span class="n">channels</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Channel names&quot;</span><span class="p">)</span>
+    <span class="n">private_groups</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Private group names&quot;</span><span class="p">)</span>
+    <span class="n">direct_messages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include direct messages&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Content options</span>
+    <span class="n">include_attachments</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include file attachments&quot;</span><span class="p">)</span>
+    <span class="n">include_threads</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include message threads&quot;</span><span class="p">)</span>
+    <span class="n">include_reactions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include reactions&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_loader_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_loader_kwargs</span><span class="p">()</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;server_url&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_url</span><span class="p">,</span>
+                <span class="s2">&quot;include_attachments&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_attachments</span><span class="p">,</span>
+                <span class="s2">&quot;include_threads&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_threads</span><span class="p">,</span>
+                <span class="s2">&quot;include_reactions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_reactions</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Authentication</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_token</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;auth_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth_token</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span>
+
+        <span class="c1"># Content selection</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;channels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">private_groups</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;private_groups&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">private_groups</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;direct_messages&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">direct_messages</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mattermost&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;mattermost&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;MattermostLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;mattermostdriver&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;mattermost&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Mattermost team messaging platform loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">BULK_LOADING</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">THREADING</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">FILE_ATTACHMENTS</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MattermostSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mattermost team messaging source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mattermost&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">CommunicationPlatform</span> <span class="o">=</span> <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">MATTERMOST</span>
+
+    <span class="c1"># Mattermost configuration</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Mattermost server URL&quot;</span><span class="p">)</span>
+    <span class="n">token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Personal access token&quot;</span><span class="p">)</span>
+    <span class="n">login_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Login ID&quot;</span><span class="p">)</span>
+    <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Password&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Team and channel selection</span>
+    <span class="n">team_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Team name&quot;</span><span class="p">)</span>
+    <span class="n">channel_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific channels&quot;</span><span class="p">)</span>
+    <span class="n">include_direct_messages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include DMs&quot;</span><span class="p">)</span>
+    <span class="n">include_group_messages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include group messages&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Content options</span>
+    <span class="n">include_files</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include file attachments&quot;</span><span class="p">)</span>
+    <span class="n">include_deleted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include deleted messages&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_loader_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_loader_kwargs</span><span class="p">()</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                <span class="s2">&quot;team_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_name</span><span class="p">,</span>
+                <span class="s2">&quot;include_files&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_files</span><span class="p">,</span>
+                <span class="s2">&quot;include_deleted&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_deleted</span><span class="p">,</span>
+                <span class="s2">&quot;include_direct_messages&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_direct_messages</span><span class="p">,</span>
+                <span class="s2">&quot;include_group_messages&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_group_messages</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;login_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">login_id</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel_names</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;channel_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel_names</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># International Social Media Platforms</span>
+<span class="c1"># =============================================================================</span>
+
+
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;wechat&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;wechat&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;WeChatLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;slow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;itchat&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;wechat&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;WeChat messaging platform loader (China)&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">OAUTH</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">QR_CODE_AUTH</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">MEDIA_CONTENT</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">CONTACT_SYNC</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">WeChatSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;WeChat messaging source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;wechat&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">CommunicationPlatform</span> <span class="o">=</span> <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">WECHAT</span>
+
+    <span class="c1"># WeChat options</span>
+    <span class="n">include_contacts</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include contact information&quot;</span><span class="p">)</span>
+    <span class="n">include_groups</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include group chats&quot;</span><span class="p">)</span>
+    <span class="n">include_moments</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include WeChat Moments&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Media options</span>
+    <span class="n">download_media</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Download media files&quot;</span><span class="p">)</span>
+    <span class="n">media_types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="s2">&quot;video&quot;</span><span class="p">,</span> <span class="s2">&quot;file&quot;</span><span class="p">],</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Media types to include&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Time range</span>
+    <span class="n">days_back</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Number of days to go back&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_loader_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_loader_kwargs</span><span class="p">()</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;include_contacts&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_contacts</span><span class="p">,</span>
+                <span class="s2">&quot;include_groups&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_groups</span><span class="p">,</span>
+                <span class="s2">&quot;include_moments&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_moments</span><span class="p">,</span>
+                <span class="s2">&quot;download_media&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">download_media</span><span class="p">,</span>
+                <span class="s2">&quot;media_types&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">media_types</span><span class="p">,</span>
+                <span class="s2">&quot;days_back&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">days_back</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;line&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;LineLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;linebot-sdk&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;LINE messaging platform loader (Asia)&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">WEBHOOK_INTEGRATION</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">RICH_MESSAGING</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STICKERS</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LineSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LINE messaging source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;line&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">CommunicationPlatform</span> <span class="o">=</span> <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">LINE</span>
+
+    <span class="c1"># LINE configuration</span>
+    <span class="n">channel_access_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Channel access token&quot;</span><span class="p">)</span>
+    <span class="n">channel_secret</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Channel secret&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Content options</span>
+    <span class="n">include_text_messages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include text messages&quot;</span><span class="p">)</span>
+    <span class="n">include_stickers</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include sticker messages&quot;</span><span class="p">)</span>
+    <span class="n">include_images</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include image messages&quot;</span><span class="p">)</span>
+    <span class="n">include_videos</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include video messages&quot;</span><span class="p">)</span>
+    <span class="n">include_audio</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include audio messages&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_loader_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_loader_kwargs</span><span class="p">()</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;channel_access_token&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">channel_access_token</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_api_key</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;get_api_key&quot;</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="kc">None</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;channel_secret&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel_secret</span><span class="p">,</span>
+                <span class="s2">&quot;include_text_messages&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_text_messages</span><span class="p">,</span>
+                <span class="s2">&quot;include_stickers&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_stickers</span><span class="p">,</span>
+                <span class="s2">&quot;include_images&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_images</span><span class="p">,</span>
+                <span class="s2">&quot;include_videos&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_videos</span><span class="p">,</span>
+                <span class="s2">&quot;include_audio&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_audio</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Video Conferencing Platforms</span>
+<span class="c1"># =============================================================================</span>
+
+
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;zoom&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;zoom&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;ZoomLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;zoomus&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;zoom&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Zoom video conferencing platform loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">JWT</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">MEETING_RECORDINGS</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">TRANSCRIPTS</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">CHAT_LOGS</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">ANALYTICS</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ZoomSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Zoom video conferencing source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;zoom&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">CommunicationPlatform</span> <span class="o">=</span> <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">ZOOM</span>
+
+    <span class="c1"># Zoom configuration</span>
+    <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;JWT API key&quot;</span><span class="p">)</span>
+    <span class="n">api_secret</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;JWT API secret&quot;</span><span class="p">)</span>
+    <span class="n">jwt_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;JWT token&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Content selection</span>
+    <span class="n">include_meetings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include meeting metadata&quot;</span><span class="p">)</span>
+    <span class="n">include_recordings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include recordings&quot;</span><span class="p">)</span>
+    <span class="n">include_transcripts</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include transcripts&quot;</span><span class="p">)</span>
+    <span class="n">include_chat</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include chat messages&quot;</span><span class="p">)</span>
+    <span class="n">include_polls</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include poll results&quot;</span><span class="p">)</span>
+    <span class="n">include_participants</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include participant data&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Filtering</span>
+    <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific user ID&quot;</span><span class="p">)</span>
+    <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Start date filter&quot;</span><span class="p">)</span>
+    <span class="n">end_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;End date filter&quot;</span><span class="p">)</span>
+    <span class="n">meeting_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Meeting type filter&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_loader_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_loader_kwargs</span><span class="p">()</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;api_key&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_api_key</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;get_api_key&quot;</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="kc">None</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;api_secret&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_secret</span><span class="p">,</span>
+                <span class="s2">&quot;jwt_token&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">jwt_token</span><span class="p">,</span>
+                <span class="s2">&quot;include_meetings&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_meetings</span><span class="p">,</span>
+                <span class="s2">&quot;include_recordings&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_recordings</span><span class="p">,</span>
+                <span class="s2">&quot;include_transcripts&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_transcripts</span><span class="p">,</span>
+                <span class="s2">&quot;include_chat&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_chat</span><span class="p">,</span>
+                <span class="s2">&quot;include_polls&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_polls</span><span class="p">,</span>
+                <span class="s2">&quot;include_participants&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_participants</span><span class="p">,</span>
+                <span class="s2">&quot;meeting_type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meeting_type</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_date</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;from_date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_date</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;to_date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;teams&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;teams&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;TeamsLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;msal&quot;</span><span class="p">,</span> <span class="s2">&quot;requests&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;teams&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Microsoft Teams collaboration platform loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">OAUTH</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">CHANNEL_MESSAGES</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">MEETING_RECORDINGS</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">FILE_ATTACHMENTS</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">APPS_INTEGRATION</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TeamsSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Microsoft Teams collaboration source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;teams&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">CommunicationPlatform</span> <span class="o">=</span> <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">TEAMS</span>
+
+    <span class="c1"># Teams configuration</span>
+    <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Azure AD tenant ID&quot;</span><span class="p">)</span>
+    <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Application client ID&quot;</span><span class="p">)</span>
+    <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Client secret&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Team and channel selection</span>
+    <span class="n">team_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific team ID&quot;</span><span class="p">)</span>
+    <span class="n">channel_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific channel IDs&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Content options</span>
+    <span class="n">include_messages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include channel messages&quot;</span><span class="p">)</span>
+    <span class="n">include_files</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include file attachments&quot;</span><span class="p">)</span>
+    <span class="n">include_meetings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include meeting data&quot;</span><span class="p">)</span>
+    <span class="n">include_calls</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include call logs&quot;</span><span class="p">)</span>
+    <span class="n">include_apps</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include app interactions&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Time range</span>
+    <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Start date&quot;</span><span class="p">)</span>
+    <span class="n">end_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;End date&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_loader_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_loader_kwargs</span><span class="p">()</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span><span class="p">,</span>
+                <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+                <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
+                <span class="s2">&quot;include_messages&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_messages</span><span class="p">,</span>
+                <span class="s2">&quot;include_files&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_files</span><span class="p">,</span>
+                <span class="s2">&quot;include_meetings&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_meetings</span><span class="p">,</span>
+                <span class="s2">&quot;include_calls&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_calls</span><span class="p">,</span>
+                <span class="s2">&quot;include_apps&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_apps</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;team_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel_ids</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;channel_ids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel_ids</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_date</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;start_date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_date</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;end_date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Design &amp; Collaboration Platforms</span>
+<span class="c1"># =============================================================================</span>
+
+
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;figma&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;figma&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;FigmaLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;figma&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Figma design collaboration platform loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">COLLABORATIVE_EDITING</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">COMMENTS</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">TIME_TRAVEL</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">COLLABORATION_DATA</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FigmaSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Figma design collaboration source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;figma&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">CommunicationPlatform</span> <span class="o">=</span> <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">FIGMA</span>
+
+    <span class="c1"># Figma configuration</span>
+    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Personal access token&quot;</span><span class="p">)</span>
+
+    <span class="c1"># File selection</span>
+    <span class="n">file_keys</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific file keys&quot;</span><span class="p">)</span>
+    <span class="n">team_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Team ID for files&quot;</span><span class="p">)</span>
+    <span class="n">project_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Project ID for files&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Content options</span>
+    <span class="n">include_comments</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include file comments&quot;</span><span class="p">)</span>
+    <span class="n">include_version_history</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include version history&quot;</span><span class="p">)</span>
+    <span class="n">include_components</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include component details&quot;</span><span class="p">)</span>
+    <span class="n">export_images</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Export design images&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Export options</span>
+    <span class="n">image_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Image export format&quot;</span><span class="p">)</span>
+    <span class="n">image_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Image scale factor&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_loader_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_loader_kwargs</span><span class="p">()</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_api_key</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;get_api_key&quot;</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="kc">None</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;include_comments&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_comments</span><span class="p">,</span>
+                <span class="s2">&quot;include_version_history&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_version_history</span><span class="p">,</span>
+                <span class="s2">&quot;include_components&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_components</span><span class="p">,</span>
+                <span class="s2">&quot;export_images&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">export_images</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_keys</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;file_keys&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_keys</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;team_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;project_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_id</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">export_images</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;image_format&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_format</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;image_scale&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_scale</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;miro&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;miro&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;MiroLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;miro&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Miro online whiteboard collaboration platform loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">OAUTH</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">VISUALIZATION</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">COLLABORATION_DATA</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">REAL_TIME</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MiroSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Miro whiteboard collaboration source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;miro&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">CommunicationPlatform</span> <span class="o">=</span> <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">MIRO</span>
+
+    <span class="c1"># Miro configuration</span>
+    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;OAuth access token&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Board selection</span>
+    <span class="n">board_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific board IDs&quot;</span><span class="p">)</span>
+    <span class="n">team_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Team ID for boards&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Content options</span>
+    <span class="n">include_widgets</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include board widgets&quot;</span><span class="p">)</span>
+    <span class="n">include_comments</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include comments&quot;</span><span class="p">)</span>
+    <span class="n">include_metadata</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include board metadata&quot;</span><span class="p">)</span>
+    <span class="n">export_format</span><span class="p">:</span> <span class="n">ExportFormat</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">ExportFormat</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Export format&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_loader_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_loader_kwargs</span><span class="p">()</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_api_key</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;get_api_key&quot;</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="kc">None</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;include_widgets&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_widgets</span><span class="p">,</span>
+                <span class="s2">&quot;include_comments&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_comments</span><span class="p">,</span>
+                <span class="s2">&quot;include_metadata&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_metadata</span><span class="p">,</span>
+                <span class="s2">&quot;export_format&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">export_format</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board_ids</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;board_ids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">board_ids</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;team_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Documentation Platforms</span>
+<span class="c1"># =============================================================================</span>
+
+
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;outline&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;outline&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;OutlineLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;outline&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Outline team knowledge base loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">COLLABORATIVE_EDITING</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">TIME_TRAVEL</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OutlineSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Outline knowledge base source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;outline&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">CommunicationPlatform</span> <span class="o">=</span> <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">OUTLINE</span>
+
+    <span class="c1"># Outline configuration</span>
+    <span class="n">api_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;API token&quot;</span><span class="p">)</span>
+    <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Outline instance URL&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Content selection</span>
+    <span class="n">collection_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific collections&quot;</span><span class="p">)</span>
+    <span class="n">document_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific documents&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Options</span>
+    <span class="n">include_archived</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include archived documents&quot;</span><span class="p">)</span>
+    <span class="n">include_drafts</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include draft documents&quot;</span><span class="p">)</span>
+    <span class="n">export_format</span><span class="p">:</span> <span class="n">ExportFormat</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">ExportFormat</span><span class="o">.</span><span class="n">MARKDOWN</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Export format&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_loader_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_loader_kwargs</span><span class="p">()</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;api_token&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">api_token</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_api_key</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;get_api_key&quot;</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="kc">None</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;base_url&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span>
+                <span class="s2">&quot;include_archived&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_archived</span><span class="p">,</span>
+                <span class="s2">&quot;include_drafts&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_drafts</span><span class="p">,</span>
+                <span class="s2">&quot;export_format&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">export_format</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection_ids</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;collection_ids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection_ids</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">document_ids</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;document_ids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document_ids</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bookstack&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;bookstack&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;BookStackLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;bookstack&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;BookStack self-hosted wiki platform loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">FULL_TEXT_SEARCH</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">ATTACHMENTS</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BookStackSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;BookStack wiki platform source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;bookstack&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">CommunicationPlatform</span> <span class="o">=</span> <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">BOOKSTACK</span>
+
+    <span class="c1"># BookStack configuration</span>
+    <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;BookStack instance URL&quot;</span><span class="p">)</span>
+    <span class="n">token_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;API token ID&quot;</span><span class="p">)</span>
+    <span class="n">token_secret</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;API token secret&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Content selection</span>
+    <span class="n">shelf_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific shelf IDs&quot;</span><span class="p">)</span>
+    <span class="n">book_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific book IDs&quot;</span><span class="p">)</span>
+    <span class="n">chapter_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific chapter IDs&quot;</span><span class="p">)</span>
+    <span class="n">page_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific page IDs&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Options</span>
+    <span class="n">include_attachments</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include attachments&quot;</span><span class="p">)</span>
+    <span class="n">include_images</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include images&quot;</span><span class="p">)</span>
+    <span class="n">export_format</span><span class="p">:</span> <span class="n">ExportFormat</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">ExportFormat</span><span class="o">.</span><span class="n">HTML</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Export format&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_loader_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_loader_kwargs</span><span class="p">()</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;base_url&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span>
+                <span class="s2">&quot;token_id&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">token_id</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_api_key</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;get_api_key&quot;</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="kc">None</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;token_secret&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_secret</span><span class="p">,</span>
+                <span class="s2">&quot;include_attachments&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_attachments</span><span class="p">,</span>
+                <span class="s2">&quot;include_images&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_images</span><span class="p">,</span>
+                <span class="s2">&quot;export_format&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">export_format</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shelf_ids</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;shelf_ids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shelf_ids</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">book_ids</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;book_ids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">book_ids</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chapter_ids</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;chapter_ids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chapter_ids</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">page_ids</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;page_ids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">page_ids</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Customer Support Platforms</span>
+<span class="c1"># =============================================================================</span>
+
+
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;intercom&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;intercom&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;IntercomLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;python-intercom&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;intercom&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Intercom customer messaging platform loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">CHAT_LOGS</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">CONTACT_SYNC</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">AUTOMATION_LOGS</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IntercomSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Intercom customer messaging source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;intercom&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="n">CommunicationPlatform</span> <span class="o">=</span> <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">INTERCOM</span>
+
+    <span class="c1"># Intercom configuration</span>
+    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Access token&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Data selection</span>
+    <span class="n">include_conversations</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include conversations&quot;</span><span class="p">)</span>
+    <span class="n">include_users</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include user data&quot;</span><span class="p">)</span>
+    <span class="n">include_leads</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include lead data&quot;</span><span class="p">)</span>
+    <span class="n">include_events</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include event data&quot;</span><span class="p">)</span>
+    <span class="n">include_articles</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include help articles&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Filtering</span>
+    <span class="n">conversation_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Conversation state filter&quot;</span><span class="p">)</span>
+    <span class="n">date_range</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Days to look back&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_loader_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_loader_kwargs</span><span class="p">()</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_api_key</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;get_api_key&quot;</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="kc">None</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;include_conversations&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_conversations</span><span class="p">,</span>
+                <span class="s2">&quot;include_users&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_users</span><span class="p">,</span>
+                <span class="s2">&quot;include_leads&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_leads</span><span class="p">,</span>
+                <span class="s2">&quot;include_events&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_events</span><span class="p">,</span>
+                <span class="s2">&quot;include_articles&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_articles</span><span class="p">,</span>
+                <span class="s2">&quot;conversation_state&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversation_state</span><span class="p">,</span>
+                <span class="s2">&quot;date_range&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_range</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Utility Functions</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="get_communication_sources_statistics">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/communication_sources/index.html#haive.core.engine.document.loaders.sources.communication_sources.get_communication_sources_statistics">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_communication_sources_statistics</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get statistics about communication sources.&quot;&quot;&quot;</span>
+    <span class="n">registry</span> <span class="o">=</span> <span class="n">enhanced_registry</span>
+
+    <span class="c1"># Count by platform type</span>
+    <span class="n">platform_counts</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">platform</span> <span class="ow">in</span> <span class="n">CommunicationPlatform</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">name</span>
+                <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">reg</span> <span class="ow">in</span> <span class="n">registry</span><span class="o">.</span><span class="n">_sources</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="s2">&quot;platform&quot;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="s2">&quot;platform&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="n">platform</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">platform_counts</span><span class="p">[</span><span class="n">platform</span><span class="o">.</span><span class="n">value</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+
+    <span class="c1"># Category statistics</span>
+    <span class="n">comm_sources</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">find_sources_by_category</span><span class="p">(</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">)</span>
+
+    <span class="c1"># Real-time sources</span>
+    <span class="n">real_time</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">name</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">comm_sources</span>
+            <span class="k">if</span> <span class="n">registry</span><span class="o">.</span><span class="n">_sources</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">capabilities</span>
+            <span class="ow">and</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">REAL_TIME</span> <span class="ow">in</span> <span class="n">registry</span><span class="o">.</span><span class="n">_sources</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">capabilities</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="c1"># International platforms</span>
+    <span class="n">international</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">name</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;wechat&quot;</span><span class="p">,</span> <span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="s2">&quot;kakao&quot;</span><span class="p">,</span> <span class="s2">&quot;dingtalk&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">registry</span><span class="o">.</span><span class="n">_sources</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;total_communication_sources&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">comm_sources</span><span class="p">),</span>
+        <span class="s2">&quot;platform_breakdown&quot;</span><span class="p">:</span> <span class="n">platform_counts</span><span class="p">,</span>
+        <span class="s2">&quot;real_time_sources&quot;</span><span class="p">:</span> <span class="n">real_time</span><span class="p">,</span>
+        <span class="s2">&quot;international_platforms&quot;</span><span class="p">:</span> <span class="n">international</span><span class="p">,</span>
+        <span class="s2">&quot;content_types&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">ContentType</span><span class="p">),</span>
+        <span class="s2">&quot;export_formats&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">ExportFormat</span><span class="p">),</span>
+    <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="validate_communication_sources">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/communication_sources/index.html#haive.core.engine.document.loaders.sources.communication_sources.validate_communication_sources">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_communication_sources</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate communication source registrations.&quot;&quot;&quot;</span>
+    <span class="n">registry</span> <span class="o">=</span> <span class="n">enhanced_registry</span>
+
+    <span class="n">required_sources</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;matrix&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rocketchat&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;zoom&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;teams&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;figma&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;outline&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;intercom&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;miro&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">missing</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">source_name</span> <span class="ow">in</span> <span class="n">required_sources</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">source_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">registry</span><span class="o">.</span><span class="n">_sources</span><span class="p">:</span>
+            <span class="n">missing</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">source_name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">missing</span></div>
+
+
+
+<div class="viewcode-block" id="detect_communication_platform">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/communication_sources/index.html#haive.core.engine.document.loaders.sources.communication_sources.detect_communication_platform">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">detect_communication_platform</span><span class="p">(</span>
+    <span class="n">url_or_identifier</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CommunicationPlatform</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Auto-detect communication platform from URL or identifier.&quot;&quot;&quot;</span>
+    <span class="n">lower</span> <span class="o">=</span> <span class="n">url_or_identifier</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="n">patterns</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">ZOOM</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;zoom.us&quot;</span><span class="p">,</span> <span class="s2">&quot;zoom://&quot;</span><span class="p">],</span>
+        <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">TEAMS</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;teams.microsoft.com&quot;</span><span class="p">,</span> <span class="s2">&quot;teams://&quot;</span><span class="p">],</span>
+        <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">FIGMA</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;figma.com&quot;</span><span class="p">],</span>
+        <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">MIRO</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;miro.com&quot;</span><span class="p">],</span>
+        <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">OUTLINE</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;getoutline.com&quot;</span><span class="p">],</span>
+        <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">INTERCOM</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;intercom.io&quot;</span><span class="p">,</span> <span class="s2">&quot;intercom.com&quot;</span><span class="p">],</span>
+        <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">ROCKETCHAT</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;rocket.chat&quot;</span><span class="p">],</span>
+        <span class="n">CommunicationPlatform</span><span class="o">.</span><span class="n">MATTERMOST</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;mattermost.com&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">platform</span><span class="p">,</span> <span class="n">keywords</span> <span class="ow">in</span> <span class="n">patterns</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">keyword</span> <span class="ow">in</span> <span class="n">lower</span> <span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">keywords</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">platform</span>
+
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<span class="c1"># Auto-validate on import</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">validate_communication_sources</span><span class="p">()</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">get_communication_sources_statistics</span><span class="p">()</span>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

@@ -6,16 +6,15 @@ MultiAgent[AgentsT] where AgentsT represents the agents it contains.
 import logging
 from typing import Any, Generic, Literal, TypeVar
 
-from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END, START
 from pydantic import Field, field_validator
 
 # Import base enhanced agent when available
-# from haive.agents.base.enhanced_agent import Agent
 # For now, use our working base class
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase
+from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 # Define Agent as alias to avoid import issues
 Agent = EnhancedAgentBase
@@ -81,21 +80,25 @@ class MultiAgent(Agent, Generic[AgentsT]):
 
     # Execution mode
     mode: Literal["sequential", "parallel", "conditional", "branch"] = Field(
-        default="sequential", description="Execution mode for agents"
+        default="sequential",
+        description="Execution mode for agents",
     )
 
     # Branching configuration
     branch_condition: Any | None = Field(
-        default=None, description="Condition function for branching"
+        default=None,
+        description="Condition function for branching",
     )
 
     branch_map: dict[str, str] | None = Field(
-        default=None, description="Mapping of condition outputs to agent names"
+        default=None,
+        description="Mapping of condition outputs to agent names",
     )
 
     # Other MultiAgent specific fields
     max_iterations: int = Field(
-        default=10, description="Maximum iterations for conditional/branch modes"
+        default=10,
+        description="Maximum iterations for conditional/branch modes",
     )
 
     @field_validator("agents")
@@ -205,7 +208,9 @@ class BranchingMultiAgent(MultiAgent[dict[str, Agent]]):
 
         # Add conditional edges from router
         graph.add_conditional_edges(
-            "routef", route_condition, {name: name for name in self.agents}
+            "routef",
+            route_condition,
+            {name: name for name in self.agents},
         )
 
         return graph
@@ -218,12 +223,14 @@ class ConditionalMultiAgent(MultiAgent[dict[str, Agent]]):
     """
 
     mode: Literal["conditional"] = Field(
-        default="conditional", description="Always conditional mode"
+        default="conditional",
+        description="Always conditional mode",
     )
 
     # Condition rules
     condition_rules: dict[str, dict[str, Any]] = Field(
-        default_factory=dict, description="Rules for conditional execution"
+        default_factory=dict,
+        description="Rules for conditional execution",
     )
 
     def should_continue(self, state: dict[str, Any], current_agent: str) -> str | None:
@@ -263,15 +270,22 @@ class AdaptiveBranchingMultiAgent(BranchingMultiAgent):
 
     # Performance tracking
     agent_performance: dict[str, dict[str, float]] = Field(
-        default_factory=dict, description="Performance metrics per agent"
+        default_factory=dict,
+        description="Performance metrics per agent",
     )
 
     adaptation_rate: float = Field(
-        default=0.1, ge=0.0, le=1.0, description="How quickly to adapt routing"
+        default=0.1,
+        ge=0.0,
+        le=1.0,
+        description="How quickly to adapt routing",
     )
 
     def update_performance(
-        self, agent_name: str, success: bool, duration: float
+        self,
+        agent_name: str,
+        success: bool,
+        duration: float,
     ) -> None:
         """Update agent performance metrics."""
         if agent_name not in self.agent_performance:
@@ -333,7 +347,9 @@ if __name__ == "__main__":
 
     # Create MultiAgent with proper typing
     report_team: MultiAgent[ReportTeamAgents] = MultiAgent(
-        name="report_team", agents=agents, mode="sequential"
+        name="report_team",
+        agents=agents,
+        mode="sequential",
     )
 
     # Branching example

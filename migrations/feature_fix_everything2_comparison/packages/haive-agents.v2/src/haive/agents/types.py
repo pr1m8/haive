@@ -1,8 +1,8 @@
 # haive/agents/base/types.py
-
 """Core type system for the Haive agent framework.
 
-Defines type variables, constraints, and base protocols for type-safe agent design.
+Defines type variables, constraints, and base protocols for type-safe
+agent design.
 """
 
 from enum import Enum
@@ -14,9 +14,10 @@ from typing import (
     runtime_checkable,
 )
 
+from pydantic import BaseModel
+
 from haive.core.engine.base import Engine, InvokableEngine
 from haive.core.schema.state_schema import StateSchema
-from pydantic import BaseModel
 
 # ============================================================================
 # CORE TYPE VARIABLES
@@ -64,17 +65,21 @@ class StateProvider(Protocol[TState]):
 
 
 @runtime_checkable
-class Invokable(Protocol[TInput, TOutput]):
+class Invocable(Protocol[TInput, TOutput]):
     """Protocol for objects that can be invoked."""
 
     def invoke(
-        self, input_data: TInput, config: dict[str, Any] | None = None
+        self,
+        input_data: TInput,
+        config: dict[str, Any] | None = None,
     ) -> TOutput:
         """Invoke with input data."""
         ...
 
     async def ainvoke(
-        self, input_data: TInput, config: dict[str, Any] | None = None
+        self,
+        input_data: TInput,
+        config: dict[str, Any] | None = None,
     ) -> TOutput:
         """Async invoke with input data."""
         ...
@@ -103,7 +108,7 @@ class EngineProvider(Protocol[TEngine]):
 class Agent(
     GraphProvider[TState],
     StateProvider[TState],
-    Invokable[TInput, TOutput],
+    Invocable[TInput, TOutput],
     EngineProvider[TEngine],
     Protocol[TEngine, TInput, TOutput, TState],
 ):
@@ -184,9 +189,7 @@ class HookContext(BaseModel, Generic[TState]):
 
 
 # Type for hook functions
-# Callable[[Any, HookContext], Any]
 HookFunction = TypeVar("HookFunction", bound=Any)
-
 
 # ============================================================================
 # DEFAULT AGENT SCHEMAS

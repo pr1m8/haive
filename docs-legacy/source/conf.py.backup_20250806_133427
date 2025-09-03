@@ -1,0 +1,472 @@
+"""Stable Sphinx configuration matching the working archived version."""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+# Add conf_modules to Python path for imports
+conf_modules_dir = Path(__file__).parent / "conf_modules"
+sys.path.insert(0, str(conf_modules_dir))
+
+
+# =============================================================================
+# PROJECT INFORMATION
+# =============================================================================
+
+project = "Haive AI Agent Framework"
+copyright = "2024, Haive Team"
+author = "Haive Team"
+version = "1.0"
+release = "1.0.0"
+
+# =============================================================================
+# GENERAL CONFIGURATION
+# =============================================================================
+
+templates_path = ["_templates"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**/*.md"]
+pygments_style = "sphinx"
+
+# =============================================================================
+# STABLE EXTENSIONS - Tested and working
+# =============================================================================
+
+extensions = [
+    # Core Sphinx extensions
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.todo",
+    "sphinx.ext.coverage",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.ifconfig",
+    "sphinx.ext.viewcode",  # Re-enabled with patch for IndexError
+    "sphinx.ext.githubpages",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.inheritance_diagram",
+    "sphinx.ext.graphviz",
+    # AutoAPI for automatic documentation
+    "autoapi.extension",
+    # Markdown support
+    "myst_parser",
+    # Enhanced features
+    "sphinx_copybutton",
+    # "sphinx_design",  # Not installed
+    # "sphinxcontrib.mermaid",  # Not installed
+    # "sphinx_togglebutton",  # Not installed
+    # "sphinx_tabs.tabs",  # Not installed
+]
+
+# =============================================================================
+# AUTOAPI CONFIGURATION - ALL PACKAGES
+# =============================================================================
+
+autoapi_type = "python"
+# Fix namespace issue - point directly to the haive namespace root
+autoapi_dirs = [
+    "../../packages/haive-core/src/haive",
+    "../../packages/haive-agents/src/haive", 
+    "../../packages/haive-tools/src/haive",
+    "../../packages/haive-games/src/haive",
+    "../../packages/haive-dataflow/src/haive",
+    "../../packages/haive-mcp/src/haive",
+    "../../packages/haive-prebuilt/src/haive",
+]
+
+autoapi_root = "api"
+autoapi_add_toctree_entry = True
+autoapi_generate_api_docs = 1
+# autoapi_python_class_content = "both"  # Moved to line 101 for duplicate prevention
+autoapi_member_order = "bysource"
+autoapi_options = [
+    "members",
+    # "undoc-members",     # Removed to prevent Pydantic field duplication
+    "show-inheritance",
+    "show-module-summary",
+    # "special-members",   # Removed to prevent Pydantic __init__ duplication
+    # "imported-members",  # Removed to prevent duplicate documentation of re-exported symbols
+]
+
+# Tell AutoAPI to use implicit namespaces
+autoapi_python_use_implicit_namespaces = True
+
+# Keep generated files for debugging duplicates (temporarily)
+# autoapi_keep_files = True  # Commented out - this writes to source directory
+
+# Additional duplicate prevention
+autoapi_ignore_module_all = False
+
+# Control duplicate object handling
+autoapi_python_class_content = "class"  # Only document class docstring, not __init__
+# autoapi_template_dir = "_templates/autoapi"  # Disabled - using default templates
+
+# Reduce cross-package duplicate discovery
+autoapi_own_page_level = "module"  # Only create pages at module level to reduce duplication
+
+# Pydantic-specific duplicate prevention
+# autoapi_python_use_implicit_namespaces = True  # Already set above on line 92
+
+# Ignore patterns - be specific to avoid blocking legitimate source files
+autoapi_ignore = [
+    # Examples and demos (keep these)
+    "**/examples/**/*.py",
+    "**/example*.py", 
+    "**/*example*.py",
+    "**/demos/**/*.py",
+    "**/demo*.py",
+    # Tests (keep these) 
+    "**/test*.py",
+    "**/tests/**/*.py",
+    # Cache and generated (keep these)
+    "**/.mypy_cache/**/*.py",
+    "**/docs/**/*.py", 
+    "**/__pycache__/**/*.py",
+    "**/build/**/*.py",
+    "**/dist/**/*.py",
+    # Archive directories (moved files)
+    "**/archive/**/*.py",
+    "**/archived/**/*.py",
+    # Potential duplicate sources
+    "**/*_backup.py",
+    "**/_copy.py",
+    "**/*_old.py",
+    # CRITICAL: Exclude modules with broken docstrings that cause build failures
+    "**/mongodb_toolkit/**/*.py",      # Has CRITICAL RST errors
+    "**/request_tools/**/*.py",        # Has ERROR: Unexpected indentation
+    "**/document_modifiers/tnt/**/*.py",  # Has malformed comments with semicolons that break viewcode
+    # Files with only 2 lines causing viewcode IndexError
+    "**/cards/standard/bs/prompts.py",
+    "**/games/core/base/state.py",
+    "**/games/core/base/engines.py",
+    "**/games/core/base/state_manager.py",
+    "**/games/core/base/models.py",
+    "**/games/core/base/player.py",
+    "**/games/base_v2/state.py",
+    "**/games/base_v2/player_agent.py",
+    "**/games/base_v2/models.py",
+    "**/games/single_player/config.py",
+    "**/games/single_player/rubiks/state.py",
+    "**/games/single_player/wordle/engines.py",
+    "**/games/single_player/towers_of_hanoi/postiition.py",
+    "**/games/single_player/towers_of_hanoi/container.py",
+    "**/games/single_player/towers_of_hanoi/piece.py",
+    "**/games/single_player/twenty_fourty_eight/game/piece.py",
+    "**/games/single_player/crossword_puzzle/game/cell.py",
+    "**/games/single_player/word_search/base.py",
+    "**/games/single_player/testing/base.py",
+    # Empty files that cause viewcode IndexError - comprehensive list
+    # Test files
+    "**/test_simple_agent.py",
+    "**/test_persistence.py",
+    "**/test_llm_rag_agent.py",
+    "**/test_react_human.py",
+    "**/test_deep_research.py",
+    "**/test_react_memory.py",
+    "**/test_react_agent.py",
+    "**/test_person_researcher.py",
+    "**/test_react_many_tools.py",
+    "**/test_svm_retriever.py",
+    # Agents empty files
+    "**/agents/config.py",
+    "**/agents/wiki_writer/base.py",
+    "**/agents/wiki_writer/nodes.py",
+    "**/agents/research/storm/related_topics_generator/agent.py",
+    "**/agents/task_analysis/decomposer/models.py",
+    "**/agents/simple/structured/agent.py",
+    "**/agents/document_modifiers/kg/kg_iterative_refinement/engines.py",
+    "**/agents/memory_reorganized/base/config.py",
+    "**/agents/react/state.v2.py",
+    "**/agents/react_class/react_agent2/many_tools/state.py",
+    "**/agents/reasoning_and_critique/tot/v2/engines.py",
+    # RAG empty files
+    "**/rag/adaptive_rag/agent.py",
+    "**/rag/base/utils.py",
+    "**/rag/common/document_graders/comprehensive_grader/models.py",
+    "**/rag/common/query_constructors/flare/prompt.py",
+    "**/rag/db_rag/graph_db/scratch.py",
+    "**/rag/hyde/models.py",
+    "**/rag/hyde/prompts.py",
+    "**/rag/self_rag2/configuration.py",
+    "**/rag/self_rag2/nodes/grade_documents.py",
+    "**/rag/self_rag2/prompts.py",
+    # Prebuilt empty files
+    "**/prebuilt/translator_agent.py",
+    "**/prebuilt/reflection.py",
+    "**/prebuilt/weather_agent.py",
+    "**/prebuilt/gmail_agent.py",
+    "**/prebuilt/github_agent.py",
+    "**/prebuilt/wolfram_alpha_agent.py",
+    "**/prebuilt/arxiv_agent.py",
+    "**/prebuilt/general/planner.py",
+    "**/prebuilt/content/kg_creator.py",
+    "**/prebuilt/content/qa_gen.py",
+    # Games empty files
+    "**/games/cards/standard/bs/prompts.py",
+    "**/games/core/base/state.py",
+    "**/games/core/base/engines.py",
+    "**/games/core/base/state_manager.py",
+    "**/games/core/base/models.py",
+    "**/games/core/base/player.py",
+    "**/games/base_v2/state.py",
+    "**/games/base_v2/player_agent.py",
+    "**/games/base_v2/models.py",
+    "**/games/single_player/rubiks/state.py",
+    "**/games/single_player/config.py",
+    "**/games/single_player/wordle/engines.py",
+    "**/games/single_player/towers_of_hanoi/postiition.py",
+    "**/games/single_player/towers_of_hanoi/container.py",
+    "**/games/single_player/towers_of_hanoi/piece.py",
+    "**/games/single_player/twenty_fourty_eight/game/piece.py",
+    "**/games/single_player/crossword_puzzle/game/cell.py",
+    "**/games/single_player/word_search/base.py",
+    "**/games/single_player/testing/base.py",
+    # Core empty files
+    "**/core/persistence/store/memory.py",
+    "**/core/persistence/store/__init__.py",
+    "**/core/persistence/store/wrappers/__init__.py",
+    "**/core/utils/tools/__init__.py",
+    "**/core/engine/document/sources/__init__.py",
+    "**/core/engine/document/loaders/adapters/local.py",
+    "**/core/engine/document/loaders/sources/remote/wikipedia_source.py",
+    "**/core/engine/document/loaders/sources/remote/youtube_source.py",
+    "**/core/engine/document/loaders/sources/base/__init__.py",
+    "**/core/engine/document/loaders/sources/chat/__init__.py",
+    "**/core/engine/document/loaders/sources/database/__init__.py",
+    "**/core/engine/document/loaders/sources/local/programming_languages/__init__.py",
+    "**/core/engine/document/loaders/sources/local/__init__.py",
+    "**/core/engine/agent/utils/__init__.py",
+    "**/core/graph/utils/__init__.py",
+    "**/core/graph/routers/__init__.py",
+    "**/core/graph/patterns/__init__.py",
+    # Dataflow empty files
+    "**/dataflow/api/routes/games.py",
+    # Additional prebuilt empty files that might be missing
+    "**/prebuilt/podcast_generator/interview/prompts.py",
+    "**/prebuilt/startup/state.py",
+    "**/prebuilt/startup/models.py",
+    "**/prebuilt/prompt_writing/system_prompt_writer.py",
+    "**/prebuilt/prompt_writing/base_model_prompt_writer.py",
+    "**/prebuilt/prompt_writing/tool_prompt_writer.py",
+    "**/prebuilt/simple/tagger/models.py",
+    "**/prebuilt/simple/tagger/__init__.py",
+    "**/prebuilt/simple/question_generator/models.py",
+    "**/prebuilt/simple/summarizer/models.py",
+    "**/prebuilt/simple/summarizer/prompts.py",
+    "**/prebuilt/simple/questiona_and_answer_generator/prompts.py",
+    "**/prebuilt/car_buyer_agent/state.py",
+    "**/prebuilt/constituional_agent/state.py",
+    "**/prebuilt/constituional_agent/config.py",
+    "**/prebuilt/constituional_agent/models.py",
+    "**/prebuilt/constituional_agent/prompts.py",
+    "**/prebuilt/gtla/state.py",
+    "**/prebuilt/misc/agent_management/goal_decompisition/prompts.py",
+    "**/prebuilt/misc/agent_management/decision_analysis/models.py",
+    "**/prebuilt/people_researcher/config.py",
+    "**/prebuilt/people_researcher/prompts.py"
+    # Remove the overly broad patterns that were blocking everything
+]
+
+# Mock imports for missing dependencies
+autodoc_mock_imports = [
+    "google_search_results",
+    "google-search-results",
+    "serpapi",
+    "agents",
+    "langgraph_supervisor",
+    "compiled_state_graph",
+    "agent_types",
+    "complex_rag",
+    "usage_examples",
+    "normalize_contents",
+    "map_branch",
+    "llm_compiler",
+    "plan_and_execute",
+    "web_nav",
+    "SolvabilityStatus",
+    "SimpleAgentConfig",
+    "tool",
+    "task_analysis",
+    "react_agent2",
+    "from_llms",
+    "models",
+    "base",
+    "WebSource",
+    "LocalSource",
+    "TypeConverter",
+    "Config",
+]
+
+# Fix for autoapi base.T KeyError issue
+autosummary_mock_imports = ["base"]
+
+# =============================================================================
+# HTML THEME CONFIGURATION
+# =============================================================================
+
+html_theme = "furo"
+html_title = f"{project} Documentation"
+html_short_title = "Haive Docs"
+
+html_theme_options = {
+    "source_repository": "https://github.com/yourusername/haive/",
+    "source_branch": "main",
+    "source_directory": "docs/source/",
+    "sidebar_hide_name": True,
+    "light_css_variables": {
+        "color-brand-primary": "#2563eb",
+        "color-brand-content": "#2563eb",
+    },
+    "dark_css_variables": {
+        "color-brand-primary": "#3b82f6",
+        "color-brand-content": "#3b82f6",
+    },
+}
+
+html_static_path = ["_static"]
+html_css_files = [
+    "custom.css",
+    "enhanced-docs.css",
+]
+html_js_files = ["custom.js"]
+
+# =============================================================================
+# MYST CONFIGURATION
+# =============================================================================
+
+myst_enable_extensions = [
+    "amsmath",
+    "colon_fence",
+    "deflist",
+    "dollarmath",
+    "fieldlist",
+    "html_admonition",
+    "html_image",
+    "linkify",
+    "replacements",
+    "smartquotes",
+    "strikethrough",
+    "substitution",
+    "tasklist",
+]
+
+myst_heading_anchors = 3
+myst_footnote_transition = True
+myst_dmath_double_inline = True
+
+# =============================================================================
+# AUTODOC CONFIGURATION
+# =============================================================================
+
+autodoc_default_options = {
+    "members": True,
+    "member-order": "bysource",
+    "special-members": "__init__",
+    "undoc-members": True,
+    "exclude-members": "__weakref__",
+}
+
+autodoc_typehints = "description"
+autodoc_typehints_description_target = "documented"
+autosummary_generate = False
+
+# Type hint configuration - Fix for base.T issue
+typehints_fully_qualified = False
+autodoc_typehints_format = "short"
+autodoc_typehints = "description"  # Move type hints to descriptions to avoid KeyError
+
+# Enable better type hint resolution
+python_use_unqualified_type_names = True
+
+# Suppress warnings including autoapi type resolution
+suppress_warnings = ["ref.python", "autosummary", "autoapi", "autoapi.python_domain"]
+
+# =============================================================================
+# INTERSPHINX MAPPING
+# =============================================================================
+
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "pandas": ("https://pandas.pydata.org/docs/", None),
+    "pydantic": ("https://docs.pydantic.dev/latest/", None),
+    "langchain": ("https://python.langchain.com/docs/", None),
+}
+
+# =============================================================================
+# ENHANCED FEATURES
+# =============================================================================
+
+# Napoleon settings for Google/NumPy style docstrings
+napoleon_google_docstring = True
+napoleon_numpy_docstring = True
+napoleon_include_init_with_doc = False
+napoleon_include_private_with_doc = False
+napoleon_include_special_with_doc = True
+
+# Enhanced copybutton configuration
+copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
+copybutton_prompt_is_regexp = True
+
+# Enhanced diagrams
+if "sphinxcontrib.mermaid" in extensions:
+    mermaid_output_format = "svg"
+
+# Todo extension settings
+todo_include_todos = True
+todo_emit_warnings = False
+
+# =============================================================================
+# CONFIGURATION SUMMARY
+# =============================================================================
+
+# =============================================================================
+# AUTOAPI EVENT CALLBACKS - Fix for base.T KeyError
+# =============================================================================
+
+def skip_problematic_members(app, what, name, obj, skip, options):
+    """Skip only the specific base.T member that causes KeyError."""
+    # Only skip the exact problematic reference
+    if name == "base.T":
+        print(f"🚫 Skipping problematic member: {name}")
+        return True
+    return skip
+
+def skip_empty_files(app, what, name, obj, skip, options):
+    """Skip empty Python files that cause viewcode IndexError."""
+    import os
+    if what == "module" and hasattr(obj, "_module_path"):
+        try:
+            if os.path.getsize(obj._module_path) == 0:
+                print(f"🚫 Skipping empty file: {name}")
+                return True
+        except (AttributeError, OSError):
+            pass
+    return skip
+
+def setup(app):
+    """Setup function for Sphinx configuration."""
+    app.connect("autoapi-skip-member", skip_problematic_members)
+    app.connect("autoapi-skip-member", skip_empty_files)
+    
+    # Apply viewcode monkey patch early to fix IndexError
+    try:
+        from viewcode_monkey_patch import apply_viewcode_monkey_patch
+        apply_viewcode_monkey_patch()
+        print("✅ viewcode monkey patch applied successfully")
+    except ImportError:
+        # Fallback to viewcode_safe if monkey patch not available
+        try:
+            from viewcode_safe import setup_viewcode_safe
+            setup_viewcode_safe(app)
+            print("✅ viewcode safety patches applied")
+        except Exception as e:
+            print(f"⚠️  Could not apply viewcode patches: {e}")
+
+print("✅ STABLE Sphinx configuration loaded successfully!")
+print(f"📦 Extensions: {len(extensions)}")
+print(f"🎨 Theme: {html_theme}")
+print("🔧 AutoAPI configured for all 7 Haive packages")
+print("🚀 Building documentation with stable, tested extensions!")
+print("🛠️ Added AutoAPI event callbacks to handle type variable issues")

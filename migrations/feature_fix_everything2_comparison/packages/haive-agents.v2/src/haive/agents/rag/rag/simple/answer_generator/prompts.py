@@ -5,6 +5,7 @@ This module provides prompts functionality for the Haive framework.
 
 #!/usr/bin/env python3
 """Prompt templates for RAG answer generation."""
+from __future__ import annotations
 
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -37,8 +38,7 @@ Question: {query}
 
 Please provide a structured answer based on the context above.""",
         ),
-    ]
+    ],
 )
-
 
 __all__ = ["RAG_CHAT_TEMPLATE"]

@@ -1,0 +1,3837 @@
+{
+  "version": "1.1.403",
+  "time": "1754107147063",
+  "generalDiagnostics": [
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/__init__.py",
+      "severity": "error",
+      "message": "\"create_for_mcp_research\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 4,
+          "character": 4
+        },
+        "end": {
+          "line": 4,
+          "character": 27
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/__init__.py",
+      "severity": "error",
+      "message": "\"create_for_mcp_setup\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 5,
+          "character": 4
+        },
+        "end": {
+          "line": 5,
+          "character": 24
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/__init__.py",
+      "severity": "error",
+      "message": "\"get_pending_approvals\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 14,
+          "character": 4
+        },
+        "end": {
+          "line": 14,
+          "character": 25
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/__init__.py",
+      "severity": "error",
+      "message": "\"get_recommendation_history\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 15,
+          "character": 4
+        },
+        "end": {
+          "line": 15,
+          "character": 30
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/__init__.py",
+      "severity": "error",
+      "message": "\"create_with_mcp_servers\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 25,
+          "character": 8
+        },
+        "end": {
+          "line": 25,
+          "character": 31
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/__init__.py",
+      "severity": "error",
+      "message": "\"get_available_capabilities\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 26,
+          "character": 8
+        },
+        "end": {
+          "line": 26,
+          "character": 34
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/__init__.py",
+      "severity": "error",
+      "message": "\"setup_agent\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 27,
+          "character": 8
+        },
+        "end": {
+          "line": 27,
+          "character": 19
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/__init__.py",
+      "severity": "error",
+      "message": "\"tool_count\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 28,
+          "character": 8
+        },
+        "end": {
+          "line": 28,
+          "character": 18
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/__init__.py",
+      "severity": "error",
+      "message": "\"create_collaborative_agents\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 43,
+          "character": 4
+        },
+        "end": {
+          "line": 43,
+          "character": 31
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/__init__.py",
+      "severity": "error",
+      "message": "\"get_transfer_status\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 44,
+          "character": 4
+        },
+        "end": {
+          "line": 44,
+          "character": 23
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"arun\" for class \"MCPDocumentationAgent*\"\n  Could not bind method \"arun\" because \"Self@MCPDocumentationAgent\" is not assignable to parameter \"self\"\n    \"MCPDocumentationAgent*\" is incompatible with protocol \"AgentProtocol\"\n      \"config\" is not present\n      \"_disable_checkpointing\" is not present\n        \"input_schema\" is invariant because it is mutable\n        \"input_schema\" is an incompatible type\n          Type \"type[BaseModel] | dict[str, Any] | None\" is not assignable to type \"type[BaseModel] | None\"\n        \"output_schema\" is invariant because it is mutable",
+      "range": {
+        "start": {
+          "line": 352,
+          "character": 47
+        },
+        "end": {
+          "line": 352,
+          "character": 51
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"api_key\", \"health_check_interval\"",
+      "range": {
+        "start": {
+          "line": 597,
+          "character": 15
+        },
+        "end": {
+          "line": 607,
+          "character": 9
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"_extract_setup_info\" for class \"MCPDocumentationLoader\"\n  Attribute \"_extract_setup_info\" is unknown",
+      "range": {
+        "start": {
+          "line": 621,
+          "character": 31
+        },
+        "end": {
+          "line": 621,
+          "character": 50
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/documentation_agent.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"categories\", \"required_capabilities\", \"on_server_connected\", \"on_server_failed\", \"on_tool_discovered\"",
+      "range": {
+        "start": {
+          "line": 655,
+          "character": 15
+        },
+        "end": {
+          "line": 655,
+          "character": 76
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/intelligent_mcp_agent.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"url\", \"api_key\", \"category\", \"description\", \"health_check_interval\"",
+      "range": {
+        "start": {
+          "line": 278,
+          "character": 29
+        },
+        "end": {
+          "line": 283,
+          "character": 21
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/intelligent_mcp_agent.py",
+      "severity": "error",
+      "message": "\"discover_mcp_servers\" is not defined",
+      "range": {
+        "start": {
+          "line": 545,
+          "character": 53
+        },
+        "end": {
+          "line": 545,
+          "character": 73
+        }
+      },
+      "rule": "reportUndefinedVariable"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/intelligent_mcp_agent.py",
+      "severity": "error",
+      "message": "\"install_mcp_server\" is not defined",
+      "range": {
+        "start": {
+          "line": 559,
+          "character": 59
+        },
+        "end": {
+          "line": 559,
+          "character": 77
+        }
+      },
+      "rule": "reportUndefinedVariable"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/mcp_agent.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"categories\", \"required_capabilities\", \"on_server_connected\", \"on_server_failed\", \"on_tool_discovered\"",
+      "range": {
+        "start": {
+          "line": 246,
+          "character": 21
+        },
+        "end": {
+          "line": 246,
+          "character": 61
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/mcp_agent.py",
+      "severity": "error",
+      "message": "No parameter named \"engine\"",
+      "range": {
+        "start": {
+          "line": 249,
+          "character": 12
+        },
+        "end": {
+          "line": 249,
+          "character": 18
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/mcp_agent.py",
+      "severity": "error",
+      "message": "No parameter named \"name\"",
+      "range": {
+        "start": {
+          "line": 249,
+          "character": 50
+        },
+        "end": {
+          "line": 249,
+          "character": 54
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/mcp_agent.py",
+      "severity": "error",
+      "message": "Invalid exception class or object\n  \"None\" does not derive from BaseException",
+      "range": {
+        "start": {
+          "line": 313,
+          "character": 14
+        },
+        "end": {
+          "line": 313,
+          "character": 24
+        }
+      },
+      "rule": "reportGeneralTypeIssues"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py",
+      "severity": "error",
+      "message": "\"model_dump\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 223,
+          "character": 48
+        },
+        "end": {
+          "line": 223,
+          "character": 58
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py",
+      "severity": "error",
+      "message": "No parameter named \"engine\"",
+      "range": {
+        "start": {
+          "line": 626,
+          "character": 16
+        },
+        "end": {
+          "line": 626,
+          "character": 22
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py",
+      "severity": "error",
+      "message": "No parameter named \"name\"",
+      "range": {
+        "start": {
+          "line": 628,
+          "character": 16
+        },
+        "end": {
+          "line": 628,
+          "character": 20
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py",
+      "severity": "error",
+      "message": "No parameter named \"share_client\"",
+      "range": {
+        "start": {
+          "line": 629,
+          "character": 16
+        },
+        "end": {
+          "line": 629,
+          "character": 28
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/agents/transferable_mcp_agent.py",
+      "severity": "error",
+      "message": "No parameter named \"client_pool_key\"",
+      "range": {
+        "start": {
+          "line": 630,
+          "character": 16
+        },
+        "end": {
+          "line": 630,
+          "character": 31
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/cli.py",
+      "severity": "error",
+      "message": "Argument of type \"list[dict[str, Any]] | None\" cannot be assigned to parameter \"servers\" of type \"list[dict[Unknown, Unknown]]\" in function \"print_servers\"\n  Type \"list[dict[str, Any]] | None\" is not assignable to type \"list[dict[Unknown, Unknown]]\"\n    \"None\" is not assignable to \"list[dict[Unknown, Unknown]]\"",
+      "range": {
+        "start": {
+          "line": 84,
+          "character": 18
+        },
+        "end": {
+          "line": 84,
+          "character": 25
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"install_dir\" for class \"GeneralMCPDownloader\"\n  Attribute \"install_dir\" is unknown",
+      "range": {
+        "start": {
+          "line": 40,
+          "character": 43
+        },
+        "end": {
+          "line": 40,
+          "character": 54
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"patterns\" for class \"GeneralMCPDownloader\"\n  Attribute \"patterns\" is unknown",
+      "range": {
+        "start": {
+          "line": 52,
+          "character": 38
+        },
+        "end": {
+          "line": 52,
+          "character": 46
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"discover_servers_from_registry\" for class \"GeneralMCPDownloader\"\n  Attribute \"discover_servers_from_registry\" is unknown",
+      "range": {
+        "start": {
+          "line": 55,
+          "character": 48
+        },
+        "end": {
+          "line": 55,
+          "character": 78
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"version\"",
+      "range": {
+        "start": {
+          "line": 108,
+          "character": 21
+        },
+        "end": {
+          "line": 114,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py",
+      "severity": "error",
+      "message": "Type \"DownloadResult\" is not assignable to return type \"dict[Unknown, Unknown]\"\n  \"DownloadResult\" is not assignable to \"dict[Unknown, Unknown]\"",
+      "range": {
+        "start": {
+          "line": 122,
+          "character": 15
+        },
+        "end": {
+          "line": 122,
+          "character": 55
+        }
+      },
+      "rule": "reportReturnType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py",
+      "severity": "error",
+      "message": "Argument of type \"DownloadResult\" cannot be assigned to parameter \"install_result\" of type \"dict[Unknown, Unknown]\" in function \"_update_server_status\"\n  \"DownloadResult\" is not assignable to \"dict[Unknown, Unknown]\"",
+      "range": {
+        "start": {
+          "line": 161,
+          "character": 41
+        },
+        "end": {
+          "line": 161,
+          "character": 47
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/cli/mcp_manager.py",
+      "severity": "error",
+      "message": "Type \"DownloadResult\" is not assignable to return type \"dict[Unknown, Unknown]\"\n  \"DownloadResult\" is not assignable to \"dict[Unknown, Unknown]\"",
+      "range": {
+        "start": {
+          "line": 163,
+          "character": 15
+        },
+        "end": {
+          "line": 163,
+          "character": 21
+        }
+      },
+      "rule": "reportReturnType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/complete_mcp_example.py",
+      "severity": "error",
+      "message": "\"MCPDocumentationLoader\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 27,
+          "character": 36
+        },
+        "end": {
+          "line": 27,
+          "character": 58
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/complete_mcp_example.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"servers\" for class \"MCPServer\"\n  Attribute \"servers\" is unknown",
+      "range": {
+        "start": {
+          "line": 259,
+          "character": 50
+        },
+        "end": {
+          "line": 259,
+          "character": 57
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/complete_mcp_example.py",
+      "severity": "error",
+      "message": "\"aget_relevant_documents\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 275,
+          "character": 36
+        },
+        "end": {
+          "line": 275,
+          "character": 59
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/complete_mcp_example.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[str, dict[str, Unknown]]\" cannot be assigned to parameter \"connections\" of type \"dict[str, Connection] | None\" in function \"__init__\"\n  Type \"dict[str, dict[str, Unknown]]\" is not assignable to type \"dict[str, Connection] | None\"\n    \"dict[str, dict[str, Unknown]]\" is not assignable to \"dict[str, Connection]\"\n      Type parameter \"_VT@dict\" is invariant, but \"dict[str, Unknown]\" is not the same as \"Connection\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type\n    \"dict[str, dict[str, Unknown]]\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 389,
+          "character": 38
+        },
+        "end": {
+          "line": 389,
+          "character": 51
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/complete_mcp_example.py",
+      "severity": "error",
+      "message": "\"aget_relevant_documents\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 454,
+          "character": 40
+        },
+        "end": {
+          "line": 454,
+          "character": 63
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/complete_mcp_with_parent_retriever.py",
+      "severity": "error",
+      "message": "\"MCPDocumentationLoader\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 37,
+          "character": 36
+        },
+        "end": {
+          "line": 37,
+          "character": 58
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/complete_mcp_with_parent_retriever.py",
+      "severity": "error",
+      "message": "\"aget_relevant_documents\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 219,
+          "character": 50
+        },
+        "end": {
+          "line": 219,
+          "character": 73
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/complete_mcp_with_parent_retriever.py",
+      "severity": "error",
+      "message": "\"aget_relevant_documents\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 227,
+          "character": 58
+        },
+        "end": {
+          "line": 227,
+          "character": 81
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/complete_mcp_with_parent_retriever.py",
+      "severity": "error",
+      "message": "\"arun\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 235,
+          "character": 42
+        },
+        "end": {
+          "line": 235,
+          "character": 46
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/complete_mcp_with_parent_retriever.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"arun\" for class \"BaseRAGAgent\"\n  Could not bind method \"arun\" because \"BaseRAGAgent\" is not assignable to parameter \"self\"\n    \"BaseRAGAgent\" is incompatible with protocol \"AgentProtocol\"\n      \"config\" is not present\n      \"_disable_checkpointing\" is not present\n        \"input_schema\" is invariant because it is mutable\n        \"input_schema\" is an incompatible type\n          Type \"type[BaseModel] | dict[str, Any] | None\" is not assignable to type \"type[BaseModel] | None\"\n        \"output_schema\" is invariant because it is mutable",
+      "range": {
+        "start": {
+          "line": 235,
+          "character": 42
+        },
+        "end": {
+          "line": 235,
+          "character": 46
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/complete_mcp_with_parent_retriever.py",
+      "severity": "error",
+      "message": "\"aget_relevant_documents\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 247,
+          "character": 47
+        },
+        "end": {
+          "line": 247,
+          "character": 70
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/complete_mcp_with_parent_retriever.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[str, dict[str, Unknown]]\" cannot be assigned to parameter \"connections\" of type \"dict[str, Connection] | None\" in function \"__init__\"\n  Type \"dict[str, dict[str, Unknown]]\" is not assignable to type \"dict[str, Connection] | None\"\n    \"dict[str, dict[str, Unknown]]\" is not assignable to \"dict[str, Connection]\"\n      Type parameter \"_VT@dict\" is invariant, but \"dict[str, Unknown]\" is not the same as \"Connection\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type\n    \"dict[str, dict[str, Unknown]]\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 353,
+          "character": 38
+        },
+        "end": {
+          "line": 353,
+          "character": 51
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py",
+      "severity": "error",
+      "message": "Import \"plotly.express\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 15,
+          "character": 7
+        },
+        "end": {
+          "line": 15,
+          "character": 21
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py",
+      "severity": "error",
+      "message": "Import \"streamlit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 16,
+          "character": 7
+        },
+        "end": {
+          "line": 16,
+          "character": 16
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py",
+      "severity": "error",
+      "message": "Import \"csv_viewer\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 17,
+          "character": 5
+        },
+        "end": {
+          "line": 17,
+          "character": 15
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/comprehensive_mcp_web.py",
+      "severity": "error",
+      "message": "Import \"self_query_mcp_agent\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 18,
+          "character": 5
+        },
+        "end": {
+          "line": 18,
+          "character": 25
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/csv_viewer.py",
+      "severity": "error",
+      "message": "Import \"streamlit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 14,
+          "character": 7
+        },
+        "end": {
+          "line": 14,
+          "character": 16
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/discovery/__init__.py",
+      "severity": "error",
+      "message": "Import \"discovery.analyzer\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 2,
+          "character": 5
+        },
+        "end": {
+          "line": 2,
+          "character": 23
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/discovery/__init__.py",
+      "severity": "error",
+      "message": "Import \"discovery.server_discovery\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 10,
+          "character": 5
+        },
+        "end": {
+          "line": 10,
+          "character": 31
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/documentation/__init__.py",
+      "severity": "error",
+      "message": "Import \"documentation.doc_loader\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 2,
+          "character": 5
+        },
+        "end": {
+          "line": 2,
+          "character": 29
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/documentation/doc_loader.py",
+      "severity": "error",
+      "message": "\"GitHubLoader\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 51,
+          "character": 4
+        },
+        "end": {
+          "line": 51,
+          "character": 16
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/documentation/doc_loader.py",
+      "severity": "error",
+      "message": "\"WebScraper\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 52,
+          "character": 4
+        },
+        "end": {
+          "line": 52,
+          "character": 14
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/__init__.py",
+      "severity": "error",
+      "message": "\"Config\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 33,
+          "character": 4
+        },
+        "end": {
+          "line": 33,
+          "character": 10
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/__init__.py",
+      "severity": "error",
+      "message": "\"get_all_prompts\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 37,
+          "character": 4
+        },
+        "end": {
+          "line": 37,
+          "character": 19
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/__init__.py",
+      "severity": "error",
+      "message": "\"get_all_resources\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 38,
+          "character": 4
+        },
+        "end": {
+          "line": 38,
+          "character": 21
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/__init__.py",
+      "severity": "error",
+      "message": "\"get_all_tools\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 39,
+          "character": 4
+        },
+        "end": {
+          "line": 39,
+          "character": 17
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/__init__.py",
+      "severity": "error",
+      "message": "\"get_capability_summary\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 40,
+          "character": 4
+        },
+        "end": {
+          "line": 40,
+          "character": 26
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/__init__.py",
+      "severity": "error",
+      "message": "\"get_tools_by_capability\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 41,
+          "character": 4
+        },
+        "end": {
+          "line": 41,
+          "character": 27
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/__init__.py",
+      "severity": "error",
+      "message": "\"get_tools_by_server\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 42,
+          "character": 4
+        },
+        "end": {
+          "line": 42,
+          "character": 23
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/__init__.py",
+      "severity": "error",
+      "message": "\"create_default_config\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 54,
+          "character": 4
+        },
+        "end": {
+          "line": 54,
+          "character": 25
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/__init__.py",
+      "severity": "error",
+      "message": "\"load_config\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 55,
+          "character": 4
+        },
+        "end": {
+          "line": 55,
+          "character": 15
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/core.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"health_check\"",
+      "range": {
+        "start": {
+          "line": 222,
+          "character": 12
+        },
+        "end": {
+          "line": 229,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/core.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"health_check\"",
+      "range": {
+        "start": {
+          "line": 230,
+          "character": 12
+        },
+        "end": {
+          "line": 237,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/core.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"health_check\"",
+      "range": {
+        "start": {
+          "line": 238,
+          "character": 12
+        },
+        "end": {
+          "line": 246,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/core.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"health_check\"",
+      "range": {
+        "start": {
+          "line": 247,
+          "character": 12
+        },
+        "end": {
+          "line": 254,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/core.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"health_check\"",
+      "range": {
+        "start": {
+          "line": 255,
+          "character": 12
+        },
+        "end": {
+          "line": 262,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/core.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"version\"",
+      "range": {
+        "start": {
+          "line": 267,
+          "character": 12
+        },
+        "end": {
+          "line": 273,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/core.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"version\"",
+      "range": {
+        "start": {
+          "line": 274,
+          "character": 12
+        },
+        "end": {
+          "line": 280,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/core.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"version\"",
+      "range": {
+        "start": {
+          "line": 281,
+          "character": 12
+        },
+        "end": {
+          "line": 287,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/core.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"last_check\", \"last_success\", \"install_result\", \"health_status\", \"error\"",
+      "range": {
+        "start": {
+          "line": 721,
+          "character": 40
+        },
+        "end": {
+          "line": 721,
+          "character": 63
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/core.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"version\"",
+      "range": {
+        "start": {
+          "line": 849,
+          "character": 21
+        },
+        "end": {
+          "line": 856,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/core.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"config_file\"",
+      "range": {
+        "start": {
+          "line": 868,
+          "character": 15
+        },
+        "end": {
+          "line": 876,
+          "character": 9
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/core.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"last_check\", \"last_success\", \"install_result\", \"health_status\", \"error\"",
+      "range": {
+        "start": {
+          "line": 907,
+          "character": 51
+        },
+        "end": {
+          "line": 907,
+          "character": 76
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/discovery.py",
+      "severity": "error",
+      "message": "Type \"None\" is not assignable to return type \"str\"\n  \"None\" is not assignable to \"str\"",
+      "range": {
+        "start": {
+          "line": 623,
+          "character": 19
+        },
+        "end": {
+          "line": 623,
+          "character": 23
+        }
+      },
+      "rule": "reportReturnType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/github_mass_downloader.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"version\"",
+      "range": {
+        "start": {
+          "line": 145,
+          "character": 15
+        },
+        "end": {
+          "line": 151,
+          "character": 9
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/github_mass_downloader.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"get\" for class \"DownloadResult\"\n  Attribute \"get\" is unknown",
+      "range": {
+        "start": {
+          "line": 225,
+          "character": 49
+        },
+        "end": {
+          "line": 225,
+          "character": 52
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/github_mass_downloader.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"get\" for class \"DownloadResult\"\n  Attribute \"get\" is unknown",
+      "range": {
+        "start": {
+          "line": 226,
+          "character": 45
+        },
+        "end": {
+          "line": 226,
+          "character": 48
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "\"StdioServerParameters\" is not defined",
+      "range": {
+        "start": {
+          "line": 111,
+          "character": 32
+        },
+        "end": {
+          "line": 111,
+          "character": 53
+        }
+      },
+      "rule": "reportUndefinedVariable"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "\"stdio_client\" is not defined",
+      "range": {
+        "start": {
+          "line": 117,
+          "character": 40
+        },
+        "end": {
+          "line": 117,
+          "character": 52
+        }
+      },
+      "rule": "reportUndefinedVariable"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "\"SSEConnection\" is not defined",
+      "range": {
+        "start": {
+          "line": 123,
+          "character": 34
+        },
+        "end": {
+          "line": 123,
+          "character": 47
+        }
+      },
+      "rule": "reportUndefinedVariable"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "\"connect\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 126,
+          "character": 38
+        },
+        "end": {
+          "line": 126,
+          "character": 45
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "\"list_tools\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 161,
+          "character": 46
+        },
+        "end": {
+          "line": 161,
+          "character": 56
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "\"list_resources\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 169,
+          "character": 50
+        },
+        "end": {
+          "line": 169,
+          "character": 64
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "\"list_prompts\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 175,
+          "character": 48
+        },
+        "end": {
+          "line": 175,
+          "character": 60
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"connection\"",
+      "range": {
+        "start": {
+          "line": 233,
+          "character": 21
+        },
+        "end": {
+          "line": 233,
+          "character": 87
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"capabilities\" for class \"BaseTool\"\n  Attribute \"capabilities\" is unknown",
+      "range": {
+        "start": {
+          "line": 358,
+          "character": 68
+        },
+        "end": {
+          "line": 358,
+          "character": 80
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "\"__getitem__\" method not defined on type \"DownloadResult\"",
+      "range": {
+        "start": {
+          "line": 431,
+          "character": 15
+        },
+        "end": {
+          "line": 431,
+          "character": 21
+        }
+      },
+      "rule": "reportIndexIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "\"__getitem__\" method not defined on type \"DownloadResult\"",
+      "range": {
+        "start": {
+          "line": 433,
+          "character": 55
+        },
+        "end": {
+          "line": 433,
+          "character": 61
+        }
+      },
+      "rule": "reportIndexIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"install_dir\" for class \"GeneralMCPDownloader\"\n  Attribute \"install_dir\" is unknown",
+      "range": {
+        "start": {
+          "line": 439,
+          "character": 28
+        },
+        "end": {
+          "line": 439,
+          "character": 39
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"install_dir\" for class \"GeneralMCPDownloader\"\n  Attribute \"install_dir\" is unknown",
+      "range": {
+        "start": {
+          "line": 656,
+          "character": 38
+        },
+        "end": {
+          "line": 656,
+          "character": 49
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"api_key\", \"category\", \"description\", \"health_check_interval\"",
+      "range": {
+        "start": {
+          "line": 672,
+          "character": 28
+        },
+        "end": {
+          "line": 680,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/integration.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"categories\", \"required_capabilities\", \"on_server_connected\", \"on_server_failed\", \"on_tool_discovered\"",
+      "range": {
+        "start": {
+          "line": 682,
+          "character": 15
+        },
+        "end": {
+          "line": 684,
+          "character": 9
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py",
+      "severity": "error",
+      "message": "Method declaration \"_run_command\" is obscured by a declaration of the same name",
+      "range": {
+        "start": {
+          "line": 118,
+          "character": 14
+        },
+        "end": {
+          "line": 118,
+          "character": 26
+        }
+      },
+      "rule": "reportRedeclaration"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py",
+      "severity": "error",
+      "message": "Method declaration \"_run_command\" is obscured by a declaration of the same name",
+      "range": {
+        "start": {
+          "line": 222,
+          "character": 14
+        },
+        "end": {
+          "line": 222,
+          "character": 26
+        }
+      },
+      "rule": "reportRedeclaration"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py",
+      "severity": "error",
+      "message": "Method declaration \"_run_command\" is obscured by a declaration of the same name",
+      "range": {
+        "start": {
+          "line": 302,
+          "character": 14
+        },
+        "end": {
+          "line": 302,
+          "character": 26
+        }
+      },
+      "rule": "reportRedeclaration"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py",
+      "severity": "error",
+      "message": "Method declaration \"_run_command\" is obscured by a declaration of the same name",
+      "range": {
+        "start": {
+          "line": 401,
+          "character": 14
+        },
+        "end": {
+          "line": 401,
+          "character": 26
+        }
+      },
+      "rule": "reportRedeclaration"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py",
+      "severity": "error",
+      "message": "\"safe_load\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 513,
+          "character": 30
+        },
+        "end": {
+          "line": 513,
+          "character": 39
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py",
+      "severity": "error",
+      "message": "\"dump\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 604,
+          "character": 17
+        },
+        "end": {
+          "line": 604,
+          "character": 21
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py",
+      "severity": "error",
+      "message": "\"ClientSession\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 616,
+          "character": 31
+        },
+        "end": {
+          "line": 616,
+          "character": 44
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"get\" for class \"BaseException\"\n  Attribute \"get\" is unknown",
+      "range": {
+        "start": {
+          "line": 754,
+          "character": 24
+        },
+        "end": {
+          "line": 754,
+          "character": 27
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"get\" for class \"BaseException\"\n  Attribute \"get\" is unknown",
+      "range": {
+        "start": {
+          "line": 760,
+          "character": 40
+        },
+        "end": {
+          "line": 760,
+          "character": 43
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/downloader/legacy_core.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"env_vars\" for class \"ServerConfig\"\n  Attribute \"env_vars\" is unknown",
+      "range": {
+        "start": {
+          "line": 858,
+          "character": 55
+        },
+        "end": {
+          "line": 858,
+          "character": 63
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/dynamic_activation_mcp.py",
+      "severity": "error",
+      "message": "\"execute_agent\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 422,
+          "character": 43
+        },
+        "end": {
+          "line": 422,
+          "character": 56
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/dynamic_mcp_tool.py",
+      "severity": "error",
+      "message": "\"MCPDocumentationLoader\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 22,
+          "character": 36
+        },
+        "end": {
+          "line": 22,
+          "character": 58
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/dynamic_mcp_tool.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"setup\" for class \"MCPDocumentationAgent\"\n  Attribute \"setup\" is unknown",
+      "range": {
+        "start": {
+          "line": 100,
+          "character": 28
+        },
+        "end": {
+          "line": 100,
+          "character": 33
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/dynamic_mcp_tool.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[Unknown, dict[str, Unknown]]\" cannot be assigned to parameter \"connections\" of type \"dict[str, Connection] | None\" in function \"__init__\"\n  Type \"dict[Unknown, dict[str, Unknown]]\" is not assignable to type \"dict[str, Connection] | None\"\n    \"dict[Unknown, dict[str, Unknown]]\" is not assignable to \"dict[str, Connection]\"\n      Type parameter \"_VT@dict\" is invariant, but \"dict[str, Unknown]\" is not the same as \"Connection\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type\n    \"dict[Unknown, dict[str, Unknown]]\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 213,
+          "character": 42
+        },
+        "end": {
+          "line": 213,
+          "character": 55
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/dynamic_mcp_tool.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[Unknown, dict[str, Unknown]]\" cannot be assigned to parameter \"connections\" of type \"dict[str, Connection] | None\" in function \"__init__\"\n  Type \"dict[Unknown, dict[str, Unknown]]\" is not assignable to type \"dict[str, Connection] | None\"\n    \"dict[Unknown, dict[str, Unknown]]\" is not assignable to \"dict[str, Connection]\"\n      Type parameter \"_VT@dict\" is invariant, but \"dict[str, Unknown]\" is not the same as \"Connection\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type\n    \"dict[Unknown, dict[str, Unknown]]\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 278,
+          "character": 42
+        },
+        "end": {
+          "line": 278,
+          "character": 55
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py",
+      "severity": "error",
+      "message": "\"get\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 77,
+          "character": 36
+        },
+        "end": {
+          "line": 77,
+          "character": 39
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/enhance_mcp_data.py",
+      "severity": "error",
+      "message": "Argument of type \"slice[None, Literal[3], None]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"slice[None, Literal[3], None]\" is not assignable to \"str\"",
+      "range": {
+        "start": {
+          "line": 158,
+          "character": 24
+        },
+        "end": {
+          "line": 158,
+          "character": 36
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/enhanced_parent_self_query_retriever.py",
+      "severity": "error",
+      "message": "\"AttributeInfo\" is not exported from module \"langchain.chains.query_constructor.base\"\n  Import from \"langchain.chains.query_constructor.schema\" instead",
+      "range": {
+        "start": {
+          "line": 18,
+          "character": 52
+        },
+        "end": {
+          "line": 18,
+          "character": 65
+        }
+      },
+      "rule": "reportPrivateImportUsage"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/enhanced_parent_self_query_retriever.py",
+      "severity": "error",
+      "message": "\"MCPDocumentationLoader\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 25,
+          "character": 36
+        },
+        "end": {
+          "line": 25,
+          "character": 58
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/enhanced_parent_self_query_retriever.py",
+      "severity": "error",
+      "message": "Argument of type \"Any | None\" cannot be assigned to parameter \"vectorstore\" of type \"VectorStore\" in function \"from_llm\"\n  Type \"Any | None\" is not assignable to type \"VectorStore\"\n    \"None\" is not assignable to \"VectorStore\"",
+      "range": {
+        "start": {
+          "line": 201,
+          "character": 24
+        },
+        "end": {
+          "line": 201,
+          "character": 46
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py",
+      "severity": "error",
+      "message": "\"enhanced_query\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 102,
+          "character": 36
+        },
+        "end": {
+          "line": 102,
+          "character": 50
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/fastapi_mcp_server.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[str, dict[str, Unknown]]\" cannot be assigned to parameter \"connections\" of type \"dict[str, Connection] | None\" in function \"__init__\"\n  Type \"dict[str, dict[str, Unknown]]\" is not assignable to type \"dict[str, Connection] | None\"\n    \"dict[str, dict[str, Unknown]]\" is not assignable to \"dict[str, Connection]\"\n      Type parameter \"_VT@dict\" is invariant, but \"dict[str, Unknown]\" is not the same as \"Connection\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type\n    \"dict[str, dict[str, Unknown]]\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 227,
+          "character": 38
+        },
+        "end": {
+          "line": 227,
+          "character": 51
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/haive_agent_mcp_integration.py",
+      "severity": "error",
+      "message": "Import \"fastmcp_runner\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 15,
+          "character": 5
+        },
+        "end": {
+          "line": 15,
+          "character": 19
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/haive_agent_mcp_integration.py",
+      "severity": "error",
+      "message": "Import \"integrated_mcp_system\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 19,
+          "character": 5
+        },
+        "end": {
+          "line": 19,
+          "character": 26
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/__init__.py",
+      "severity": "error",
+      "message": "Import \"installers.advanced_code_installer\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 2,
+          "character": 5
+        },
+        "end": {
+          "line": 2,
+          "character": 39
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/__init__.py",
+      "severity": "error",
+      "message": "Import \"installers.config_manager\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 15,
+          "character": 5
+        },
+        "end": {
+          "line": 15,
+          "character": 30
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/__init__.py",
+      "severity": "error",
+      "message": "Import \"installers.safe_pattern_installer\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 27,
+          "character": 5
+        },
+        "end": {
+          "line": 27,
+          "character": 38
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/advanced_code_installer.py",
+      "severity": "error",
+      "message": "Type \"BaseTool\" is not assignable to return type \"StructuredTool\"\n  \"BaseTool\" is not assignable to \"StructuredTool\"",
+      "range": {
+        "start": {
+          "line": 253,
+          "character": 15
+        },
+        "end": {
+          "line": 260,
+          "character": 9
+        }
+      },
+      "rule": "reportReturnType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/advanced_code_installer.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[str, bool]\" cannot be assigned to parameter \"interrupt_config\" of type \"HumanInterruptConfig\" in function \"add_human_in_the_loop\"\n  \"allow_ignore\" is required in \"HumanInterruptConfig\"",
+      "range": {
+        "start": {
+          "line": 255,
+          "character": 29
+        },
+        "end": {
+          "line": 259,
+          "character": 13
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/advanced_code_installer.py",
+      "severity": "error",
+      "message": "Type \"BaseTool\" is not assignable to return type \"StructuredTool\"\n  \"BaseTool\" is not assignable to \"StructuredTool\"",
+      "range": {
+        "start": {
+          "line": 332,
+          "character": 15
+        },
+        "end": {
+          "line": 332,
+          "character": 36
+        }
+      },
+      "rule": "reportReturnType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/safe_pattern_installer.py",
+      "severity": "error",
+      "message": "Type \"BaseTool\" is not assignable to return type \"StructuredTool\"\n  \"BaseTool\" is not assignable to \"StructuredTool\"",
+      "range": {
+        "start": {
+          "line": 228,
+          "character": 19
+        },
+        "end": {
+          "line": 235,
+          "character": 13
+        }
+      },
+      "rule": "reportReturnType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/safe_pattern_installer.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[str, bool]\" cannot be assigned to parameter \"interrupt_config\" of type \"HumanInterruptConfig\" in function \"add_human_in_the_loop\"\n  \"allow_ignore\" is required in \"HumanInterruptConfig\"",
+      "range": {
+        "start": {
+          "line": 230,
+          "character": 33
+        },
+        "end": {
+          "line": 234,
+          "character": 17
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/safe_pattern_installer.py",
+      "severity": "error",
+      "message": "\"write\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 339,
+          "character": 26
+        },
+        "end": {
+          "line": 339,
+          "character": 31
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/safe_pattern_installer.py",
+      "severity": "error",
+      "message": "\"flush\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 340,
+          "character": 26
+        },
+        "end": {
+          "line": 340,
+          "character": 31
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/safe_pattern_installer.py",
+      "severity": "error",
+      "message": "\"readline\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 344,
+          "character": 38
+        },
+        "end": {
+          "line": 344,
+          "character": 46
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/safe_pattern_installer.py",
+      "severity": "error",
+      "message": "\"write\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 350,
+          "character": 34
+        },
+        "end": {
+          "line": 350,
+          "character": 39
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/safe_pattern_installer.py",
+      "severity": "error",
+      "message": "\"flush\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 351,
+          "character": 34
+        },
+        "end": {
+          "line": 351,
+          "character": 39
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/safe_pattern_installer.py",
+      "severity": "error",
+      "message": "\"write\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 360,
+          "character": 34
+        },
+        "end": {
+          "line": 360,
+          "character": 39
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/safe_pattern_installer.py",
+      "severity": "error",
+      "message": "\"flush\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 361,
+          "character": 34
+        },
+        "end": {
+          "line": 361,
+          "character": 39
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/installers/safe_pattern_installer.py",
+      "severity": "error",
+      "message": "\"readline\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 364,
+          "character": 52
+        },
+        "end": {
+          "line": 364,
+          "character": 60
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integrated_launcher.py",
+      "severity": "error",
+      "message": "Import \"streamlit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 22,
+          "character": 15
+        },
+        "end": {
+          "line": 22,
+          "character": 24
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integrated_launcher.py",
+      "severity": "error",
+      "message": "Import \"plotly\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 27,
+          "character": 15
+        },
+        "end": {
+          "line": 27,
+          "character": 21
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py",
+      "severity": "error",
+      "message": "Import \"plotly.express\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 23,
+          "character": 7
+        },
+        "end": {
+          "line": 23,
+          "character": 21
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py",
+      "severity": "error",
+      "message": "Import \"streamlit\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 24,
+          "character": 7
+        },
+        "end": {
+          "line": 24,
+          "character": 16
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py",
+      "severity": "error",
+      "message": "Import \"csv_viewer\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 25,
+          "character": 5
+        },
+        "end": {
+          "line": 25,
+          "character": 15
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integrated_mcp_system.py",
+      "severity": "error",
+      "message": "Import \"self_query_mcp_agent\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 26,
+          "character": 5
+        },
+        "end": {
+          "line": 26,
+          "character": 25
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integration/aug_llm_mcp_extension.py",
+      "severity": "error",
+      "message": "\"name\" overrides a field of the same name but is missing a default value",
+      "range": {
+        "start": {
+          "line": 48,
+          "character": 4
+        },
+        "end": {
+          "line": 48,
+          "character": 8
+        }
+      },
+      "rule": "reportGeneralTypeIssues"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integration/aug_llm_mcp_extension.py",
+      "severity": "error",
+      "message": "Expected 0 positional arguments",
+      "range": {
+        "start": {
+          "line": 124,
+          "character": 42
+        },
+        "end": {
+          "line": 124,
+          "character": 57
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integration/aug_llm_mcp_extension.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"initialize\" for class \"MCPManager\"\n  Attribute \"initialize\" is unknown",
+      "range": {
+        "start": {
+          "line": 125,
+          "character": 35
+        },
+        "end": {
+          "line": 125,
+          "character": 45
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integration/aug_llm_mcp_extension.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"clients\" for class \"MCPManager\"\n  Attribute \"clients\" is unknown",
+      "range": {
+        "start": {
+          "line": 152,
+          "character": 52
+        },
+        "end": {
+          "line": 152,
+          "character": 59
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integration/aug_llm_mcp_extension.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"clients\" for class \"MCPManager\"\n  Attribute \"clients\" is unknown",
+      "range": {
+        "start": {
+          "line": 189,
+          "character": 52
+        },
+        "end": {
+          "line": 189,
+          "character": 59
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integration/aug_llm_mcp_extension.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"content\"",
+      "range": {
+        "start": {
+          "line": 195,
+          "character": 35
+        },
+        "end": {
+          "line": 200,
+          "character": 21
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integration/aug_llm_mcp_extension.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"clients\" for class \"MCPManager\"\n  Attribute \"clients\" is unknown",
+      "range": {
+        "start": {
+          "line": 215,
+          "character": 52
+        },
+        "end": {
+          "line": 215,
+          "character": 59
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integration/aug_llm_mcp_extension.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"clients\" for class \"MCPManager\"\n  Attribute \"clients\" is unknown",
+      "range": {
+        "start": {
+          "line": 283,
+          "character": 52
+        },
+        "end": {
+          "line": 283,
+          "character": 59
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/integration/aug_llm_mcp_extension.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"categories\", \"required_capabilities\", \"on_server_connected\", \"on_server_failed\", \"on_tool_discovered\"",
+      "range": {
+        "start": {
+          "line": 342,
+          "character": 17
+        },
+        "end": {
+          "line": 342,
+          "character": 88
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/manager.py",
+      "severity": "error",
+      "message": "\"stdio_client\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 75,
+          "character": 4
+        },
+        "end": {
+          "line": 75,
+          "character": 16
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/manager.py",
+      "severity": "error",
+      "message": "Argument of type \"str | None\" cannot be assigned to parameter \"command\" of type \"str\" in function \"__init__\"\n  Type \"str | None\" is not assignable to type \"str\"\n    \"None\" is not assignable to \"str\"",
+      "range": {
+        "start": {
+          "line": 345,
+          "character": 28
+        },
+        "end": {
+          "line": 345,
+          "character": 42
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/manager.py",
+      "severity": "error",
+      "message": "No overloads for \"run\" match the provided arguments",
+      "range": {
+        "start": {
+          "line": 454,
+          "character": 25
+        },
+        "end": {
+          "line": 459,
+          "character": 17
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/manager.py",
+      "severity": "error",
+      "message": "Argument of type \"list[str | None]\" cannot be assigned to parameter \"args\" of type \"_CMD\" in function \"run\"\n  Type \"str | None\" is not assignable to type \"StrOrBytesPath\"\n    Type \"None\" is not assignable to type \"StrOrBytesPath\"\n      \"None\" is not assignable to \"str\"\n      \"None\" is not assignable to \"bytes\"\n      \"None\" is incompatible with protocol \"PathLike[str]\"\n        \"__fspath__\" is not present\n      \"None\" is incompatible with protocol \"PathLike[bytes]\"\n        \"__fspath__\" is not present",
+      "range": {
+        "start": {
+          "line": 455,
+          "character": 21
+        },
+        "end": {
+          "line": 455,
+          "character": 35
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/manager.py",
+      "severity": "error",
+      "message": "Argument of type \"str | None\" cannot be assigned to parameter \"url\" of type \"StrOrURL\" in function \"get\"\n  Type \"str | None\" is not assignable to type \"StrOrURL\"\n    Type \"None\" is not assignable to type \"StrOrURL\"\n      \"None\" is not assignable to \"str\"\n      \"None\" is not assignable to \"URL\"",
+      "range": {
+        "start": {
+          "line": 468,
+          "character": 20
+        },
+        "end": {
+          "line": 468,
+          "character": 30
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/manager.py",
+      "severity": "error",
+      "message": "\"dict\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 606,
+          "character": 54
+        },
+        "end": {
+          "line": 606,
+          "character": 58
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mcp_rag_agent.py",
+      "severity": "error",
+      "message": "Cannot assign to attribute \"system_message\" for class \"BaseRAGAgent\"\n  Attribute \"system_message\" is unknown",
+      "range": {
+        "start": {
+          "line": 47,
+          "character": 10
+        },
+        "end": {
+          "line": 47,
+          "character": 24
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mcp_rag_agent.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"arun\" for class \"BaseRAGAgent\"\n  Could not bind method \"arun\" because \"BaseRAGAgent\" is not assignable to parameter \"self\"\n    \"BaseRAGAgent\" is incompatible with protocol \"AgentProtocol\"\n      \"config\" is not present\n      \"_disable_checkpointing\" is not present\n        \"input_schema\" is invariant because it is mutable\n        \"input_schema\" is an incompatible type\n          Type \"type[BaseModel] | dict[str, Any] | None\" is not assignable to type \"type[BaseModel] | None\"\n        \"output_schema\" is invariant because it is mutable",
+      "range": {
+        "start": {
+          "line": 330,
+          "character": 33
+        },
+        "end": {
+          "line": 330,
+          "character": 37
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mcp_simple_rag_agent.py",
+      "severity": "error",
+      "message": "No parameter named \"provider\"",
+      "range": {
+        "start": {
+          "line": 131,
+          "character": 8
+        },
+        "end": {
+          "line": 131,
+          "character": 16
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mcp_simple_rag_agent.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"arun\" for class \"BaseRAGAgent\"\n  Could not bind method \"arun\" because \"BaseRAGAgent\" is not assignable to parameter \"self\"\n    \"BaseRAGAgent\" is incompatible with protocol \"AgentProtocol\"\n      \"config\" is not present\n      \"_disable_checkpointing\" is not present\n        \"input_schema\" is invariant because it is mutable\n        \"input_schema\" is an incompatible type\n          Type \"type[BaseModel] | dict[str, Any] | None\" is not assignable to type \"type[BaseModel] | None\"\n        \"output_schema\" is invariant because it is mutable",
+      "range": {
+        "start": {
+          "line": 452,
+          "character": 33
+        },
+        "end": {
+          "line": 452,
+          "character": 37
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mcp_simple_rag_agent.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"_compiled_app\" for class \"BaseRAGAgent\"\n  Attribute \"_compiled_app\" is unknown",
+      "range": {
+        "start": {
+          "line": 500,
+          "character": 34
+        },
+        "end": {
+          "line": 500,
+          "character": 47
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mcp_simple_rag_agent.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"create_vectorstore\" for class \"BaseRetrieverConfig\"\n  Attribute \"create_vectorstore\" is unknown",
+      "range": {
+        "start": {
+          "line": 505,
+          "character": 62
+        },
+        "end": {
+          "line": 505,
+          "character": 80
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mcp_simple_tool_agent.py",
+      "severity": "error",
+      "message": "\"MCPDocumentationLoader\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 19,
+          "character": 36
+        },
+        "end": {
+          "line": 19,
+          "character": 58
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mcp_simple_tool_agent.py",
+      "severity": "error",
+      "message": "No parameter named \"tools\"",
+      "range": {
+        "start": {
+          "line": 191,
+          "character": 8
+        },
+        "end": {
+          "line": 191,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mcp_simple_tool_agent.py",
+      "severity": "error",
+      "message": "No parameter named \"system_prompt\"",
+      "range": {
+        "start": {
+          "line": 192,
+          "character": 8
+        },
+        "end": {
+          "line": 192,
+          "character": 21
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mcp_simple_tool_agent.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"arun\" for class \"SimpleAgent\"\n  Could not bind method \"arun\" because \"SimpleAgent\" is not assignable to parameter \"self\"\n    \"SimpleAgent\" is incompatible with protocol \"AgentProtocol\"\n      \"config\" is not present\n      \"_disable_checkpointing\" is not present\n        \"input_schema\" is invariant because it is mutable\n        \"input_schema\" is an incompatible type\n          Type \"type[BaseModel] | dict[str, Any] | None\" is not assignable to type \"type[BaseModel] | None\"\n        \"output_schema\" is invariant because it is mutable",
+      "range": {
+        "start": {
+          "line": 443,
+          "character": 33
+        },
+        "end": {
+          "line": 443,
+          "character": 37
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/__init__.py",
+      "severity": "error",
+      "message": "Import \"mixins.mcp_mixin\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 2,
+          "character": 5
+        },
+        "end": {
+          "line": 2,
+          "character": 21
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "Import \"haive.core.utils.component_discovery\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 49,
+          "character": 5
+        },
+        "end": {
+          "line": 49,
+          "character": 41
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "Variable not allowed in type expression",
+      "range": {
+        "start": {
+          "line": 135,
+          "character": 17
+        },
+        "end": {
+          "line": 135,
+          "character": 37
+        }
+      },
+      "rule": "reportInvalidTypeForm"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "Variable not allowed in type expression",
+      "range": {
+        "start": {
+          "line": 137,
+          "character": 26
+        },
+        "end": {
+          "line": 137,
+          "character": 34
+        }
+      },
+      "rule": "reportInvalidTypeForm"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "\"lazy_init\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 164,
+          "character": 61
+        },
+        "end": {
+          "line": 164,
+          "character": 70
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"tools\" for class \"MCPMixin*\"\n  Attribute \"tools\" is unknown",
+      "range": {
+        "start": {
+          "line": 169,
+          "character": 58
+        },
+        "end": {
+          "line": 169,
+          "character": 63
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"tools\" for class \"MCPMixin*\"\n  Attribute \"tools\" is unknown",
+      "range": {
+        "start": {
+          "line": 171,
+          "character": 40
+        },
+        "end": {
+          "line": 171,
+          "character": 45
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"tools\" for class \"MCPMixin*\"\n  Attribute \"tools\" is unknown",
+      "range": {
+        "start": {
+          "line": 172,
+          "character": 29
+        },
+        "end": {
+          "line": 172,
+          "character": 34
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "Object of type \"None\" cannot be called",
+      "range": {
+        "start": {
+          "line": 228,
+          "character": 35
+        },
+        "end": {
+          "line": 228,
+          "character": 74
+        }
+      },
+      "rule": "reportOptionalCall"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[str, dict[str, Any]]\" cannot be assigned to parameter \"connections\" of type \"dict[str, Connection] | None\" in function \"__init__\"\n  Type \"dict[str, dict[str, Any]]\" is not assignable to type \"dict[str, Connection] | None\"\n    \"dict[str, dict[str, Any]]\" is not assignable to \"dict[str, Connection]\"\n      Type parameter \"_VT@dict\" is invariant, but \"dict[str, Any]\" is not the same as \"Connection\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type\n    \"dict[str, dict[str, Any]]\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 228,
+          "character": 56
+        },
+        "end": {
+          "line": 228,
+          "character": 73
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "\"servers\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 259,
+          "character": 58
+        },
+        "end": {
+          "line": 259,
+          "character": 65
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "Object of type \"None\" cannot be called",
+      "range": {
+        "start": {
+          "line": 279,
+          "character": 26
+        },
+        "end": {
+          "line": 279,
+          "character": 59
+        }
+      },
+      "rule": "reportOptionalCall"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[str, dict[str, Any]]\" cannot be assigned to parameter \"connections\" of type \"dict[str, Connection] | None\" in function \"__init__\"\n  Type \"dict[str, dict[str, Any]]\" is not assignable to type \"dict[str, Connection] | None\"\n    \"dict[str, dict[str, Any]]\" is not assignable to \"dict[str, Connection]\"\n      Type parameter \"_VT@dict\" is invariant, but \"dict[str, Any]\" is not the same as \"Connection\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type\n    \"dict[str, dict[str, Any]]\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 279,
+          "character": 47
+        },
+        "end": {
+          "line": 279,
+          "character": 58
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/mixins/mcp_mixin.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"close\" for class \"MultiServerMCPClient\"\n  Attribute \"close\" is unknown",
+      "range": {
+        "start": {
+          "line": 288,
+          "character": 34
+        },
+        "end": {
+          "line": 288,
+          "character": 39
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/production_mcp_tool.py",
+      "severity": "error",
+      "message": "\"MCPDocumentationLoader\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 24,
+          "character": 36
+        },
+        "end": {
+          "line": 24,
+          "character": 58
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/production_mcp_tool.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"setup\" for class \"MCPDocumentationAgent\"\n  Attribute \"setup\" is unknown",
+      "range": {
+        "start": {
+          "line": 158,
+          "character": 28
+        },
+        "end": {
+          "line": 158,
+          "character": 33
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/production_mcp_tool.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[str, dict[str, Unknown]]\" cannot be assigned to parameter \"connections\" of type \"dict[str, Connection] | None\" in function \"__init__\"\n  Type \"dict[str, dict[str, Unknown]]\" is not assignable to type \"dict[str, Connection] | None\"\n    \"dict[str, dict[str, Unknown]]\" is not assignable to \"dict[str, Connection]\"\n      Type parameter \"_VT@dict\" is invariant, but \"dict[str, Unknown]\" is not the same as \"Connection\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type\n    \"dict[str, dict[str, Unknown]]\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 343,
+          "character": 47
+        },
+        "end": {
+          "line": 343,
+          "character": 75
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/production_mcp_tool.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[str, dict[str, Unknown]]\" cannot be assigned to parameter \"connections\" of type \"dict[str, Connection] | None\" in function \"__init__\"\n  Type \"dict[str, dict[str, Unknown]]\" is not assignable to type \"dict[str, Connection] | None\"\n    \"dict[str, dict[str, Unknown]]\" is not assignable to \"dict[str, Connection]\"\n      Type parameter \"_VT@dict\" is invariant, but \"dict[str, Unknown]\" is not the same as \"Connection\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type\n    \"dict[str, dict[str, Unknown]]\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 420,
+          "character": 47
+        },
+        "end": {
+          "line": 420,
+          "character": 75
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/production_mcp_tool.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"_generate_generic_tools\" for class \"ProductionMCPTool*\"\n  Attribute \"_generate_generic_tools\" is unknown",
+      "range": {
+        "start": {
+          "line": 476,
+          "character": 25
+        },
+        "end": {
+          "line": 476,
+          "character": 48
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/self_query_mcp_agent.py",
+      "severity": "error",
+      "message": "\"AttributeInfo\" is not exported from module \"langchain.chains.query_constructor.base\"\n  Import from \"langchain.chains.query_constructor.schema\" instead",
+      "range": {
+        "start": {
+          "line": 11,
+          "character": 52
+        },
+        "end": {
+          "line": 11,
+          "character": 65
+        }
+      },
+      "rule": "reportPrivateImportUsage"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/__init__.py",
+      "severity": "error",
+      "message": "Import \"servers.dataflow_mcp_server\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 2,
+          "character": 5
+        },
+        "end": {
+          "line": 2,
+          "character": 32
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/__init__.py",
+      "severity": "error",
+      "message": "Import \"servers.http_server\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 3,
+          "character": 5
+        },
+        "end": {
+          "line": 3,
+          "character": 24
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/__init__.py",
+      "severity": "error",
+      "message": "Import \"servers.simple_http_server\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 4,
+          "character": 5
+        },
+        "end": {
+          "line": 4,
+          "character": 31
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/dataflow_mcp_server.py",
+      "severity": "error",
+      "message": "Object of type \"ModuleType\" is not callable\n  Attribute \"__call__\" is unknown",
+      "range": {
+        "start": {
+          "line": 70,
+          "character": 60
+        },
+        "end": {
+          "line": 70,
+          "character": 83
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/dataflow_mcp_server.py",
+      "severity": "error",
+      "message": "No parameter named \"auto_register\"",
+      "range": {
+        "start": {
+          "line": 129,
+          "character": 37
+        },
+        "end": {
+          "line": 129,
+          "character": 50
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/dataflow_mcp_server.py",
+      "severity": "error",
+      "message": "No parameter named \"auto_register\"",
+      "range": {
+        "start": {
+          "line": 140,
+          "character": 35
+        },
+        "end": {
+          "line": 140,
+          "character": 48
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/dataflow_mcp_server.py",
+      "severity": "error",
+      "message": "No parameter named \"temperature\"",
+      "range": {
+        "start": {
+          "line": 188,
+          "character": 52
+        },
+        "end": {
+          "line": 188,
+          "character": 63
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py",
+      "severity": "error",
+      "message": "\"ModuleType\" is not iterable\n  \"__iter__\" method not defined",
+      "range": {
+        "start": {
+          "line": 51,
+          "character": 31
+        },
+        "end": {
+          "line": 51,
+          "character": 41
+        }
+      },
+      "rule": "reportGeneralTypeIssues"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py",
+      "severity": "error",
+      "message": "Object of type \"ModuleType\" is not callable\n  Attribute \"__call__\" is unknown",
+      "range": {
+        "start": {
+          "line": 64,
+          "character": 30
+        },
+        "end": {
+          "line": 64,
+          "character": 56
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py",
+      "severity": "error",
+      "message": "Object of type \"ModuleType\" is not callable\n  Attribute \"__call__\" is unknown",
+      "range": {
+        "start": {
+          "line": 146,
+          "character": 22
+        },
+        "end": {
+          "line": 146,
+          "character": 48
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py",
+      "severity": "error",
+      "message": "Object of type \"ModuleType\" is not callable\n  Attribute \"__call__\" is unknown",
+      "range": {
+        "start": {
+          "line": 182,
+          "character": 18
+        },
+        "end": {
+          "line": 182,
+          "character": 35
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py",
+      "severity": "error",
+      "message": "Object of type \"ModuleType\" is not callable\n  Attribute \"__call__\" is unknown",
+      "range": {
+        "start": {
+          "line": 185,
+          "character": 18
+        },
+        "end": {
+          "line": 185,
+          "character": 34
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py",
+      "severity": "error",
+      "message": "Object of type \"ModuleType\" is not callable\n  Attribute \"__call__\" is unknown",
+      "range": {
+        "start": {
+          "line": 188,
+          "character": 18
+        },
+        "end": {
+          "line": 188,
+          "character": 36
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"server_info\" for class \"FastMCP\"\n  Attribute \"server_info\" is unknown",
+      "range": {
+        "start": {
+          "line": 332,
+          "character": 5
+        },
+        "end": {
+          "line": 332,
+          "character": 16
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/dataflow_server.py",
+      "severity": "error",
+      "message": "Argument of type \"None\" cannot be assigned to parameter \"main\" of type \"Coroutine[Any, Any, _T@run]\" in function \"run\"\n  \"None\" is not assignable to \"Coroutine[Any, Any, _T@run]\"",
+      "range": {
+        "start": {
+          "line": 363,
+          "character": 16
+        },
+        "end": {
+          "line": 363,
+          "character": 25
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/http_server.py",
+      "severity": "error",
+      "message": "\"SSEServerTransport\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 14,
+          "character": 27
+        },
+        "end": {
+          "line": 14,
+          "character": 45
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/servers/http_server.py",
+      "severity": "error",
+      "message": "\"handle_connection\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 190,
+          "character": 47
+        },
+        "end": {
+          "line": 190,
+          "character": 64
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/simple_faiss_retriever.py",
+      "severity": "error",
+      "message": "\"MCPDocumentationLoader\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 16,
+          "character": 36
+        },
+        "end": {
+          "line": 16,
+          "character": 58
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/simple_rag_mcp_agent.py",
+      "severity": "error",
+      "message": "No parameter named \"retriever_config\"",
+      "range": {
+        "start": {
+          "line": 41,
+          "character": 36
+        },
+        "end": {
+          "line": 41,
+          "character": 52
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/simple_rag_mcp_agent.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"arun\" for class \"MCPSimpleRAGAgent\"\n  Could not bind method \"arun\" because \"MCPSimpleRAGAgent\" is not assignable to parameter \"self\"\n    \"MCPSimpleRAGAgent\" is incompatible with protocol \"AgentProtocol\"\n      \"config\" is not present\n      \"_disable_checkpointing\" is not present\n        \"input_schema\" is invariant because it is mutable\n        \"input_schema\" is an incompatible type\n          Type \"type[BaseModel] | dict[str, Any] | None\" is not assignable to type \"type[BaseModel] | None\"\n        \"output_schema\" is invariant because it is mutable",
+      "range": {
+        "start": {
+          "line": 124,
+          "character": 20
+        },
+        "end": {
+          "line": 124,
+          "character": 24
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/simple_rag_mcp_agent.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"arun\" for class \"MCPSimpleRAGAgent\"\n  Could not bind method \"arun\" because \"MCPSimpleRAGAgent\" is not assignable to parameter \"self\"\n    \"MCPSimpleRAGAgent\" is incompatible with protocol \"AgentProtocol\"\n      \"config\" is not present\n      \"_disable_checkpointing\" is not present\n        \"input_schema\" is invariant because it is mutable\n        \"input_schema\" is an incompatible type\n          Type \"type[BaseModel] | dict[str, Any] | None\" is not assignable to type \"type[BaseModel] | None\"\n        \"output_schema\" is invariant because it is mutable",
+      "range": {
+        "start": {
+          "line": 318,
+          "character": 35
+        },
+        "end": {
+          "line": 318,
+          "character": 39
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/simple_rag_mcp_agent.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"retriever_config\" for class \"MCPSimpleRAGAgent\"\n  Attribute \"retriever_config\" is unknown",
+      "range": {
+        "start": {
+          "line": 321,
+          "character": 38
+        },
+        "end": {
+          "line": 321,
+          "character": 54
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/test_direct.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"arun\" for class \"BaseRAGAgent\"\n  Could not bind method \"arun\" because \"BaseRAGAgent\" is not assignable to parameter \"self\"\n    \"BaseRAGAgent\" is incompatible with protocol \"AgentProtocol\"\n      \"config\" is not present\n      \"_disable_checkpointing\" is not present\n        \"input_schema\" is invariant because it is mutable\n        \"input_schema\" is an incompatible type\n          Type \"type[BaseModel] | dict[str, Any] | None\" is not assignable to type \"type[BaseModel] | None\"\n        \"output_schema\" is invariant because it is mutable",
+      "range": {
+        "start": {
+          "line": 23,
+          "character": 33
+        },
+        "end": {
+          "line": 23,
+          "character": 37
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/test_direct.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"create_vectorstore\" for class \"BaseRetrieverConfig\"\n  Attribute \"create_vectorstore\" is unknown",
+      "range": {
+        "start": {
+          "line": 42,
+          "character": 43
+        },
+        "end": {
+          "line": 42,
+          "character": 61
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/__init__.py",
+      "severity": "error",
+      "message": "Import \"tools.ai_assistant\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 2,
+          "character": 5
+        },
+        "end": {
+          "line": 2,
+          "character": 23
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/__init__.py",
+      "severity": "error",
+      "message": "Import \"tools.server_selector\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 12,
+          "character": 5
+        },
+        "end": {
+          "line": 12,
+          "character": 26
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/__init__.py",
+      "severity": "error",
+      "message": "Import \"tools.server_tester\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 29,
+          "character": 5
+        },
+        "end": {
+          "line": 29,
+          "character": 24
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"categories\", \"required_capabilities\", \"on_server_connected\", \"on_server_failed\", \"on_tool_discovered\"",
+      "range": {
+        "start": {
+          "line": 436,
+          "character": 15
+        },
+        "end": {
+          "line": 442,
+          "character": 9
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"url\", \"api_key\", \"category\", \"health_check_interval\"",
+      "range": {
+        "start": {
+          "line": 484,
+          "character": 21
+        },
+        "end": {
+          "line": 491,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/ai_assistant.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"url\", \"api_key\", \"category\", \"health_check_interval\"",
+      "range": {
+        "start": {
+          "line": 492,
+          "character": 26
+        },
+        "end": {
+          "line": 499,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_selector.py",
+      "severity": "error",
+      "message": "Type \"dict[str, dict[str, Any]]\" is not assignable to declared type \"list[dict[str, Any]] | None\"\n  Type \"dict[str, dict[str, Any]]\" is not assignable to type \"list[dict[str, Any]] | None\"\n    \"dict[str, dict[str, Any]]\" is not assignable to \"list[dict[str, Any]]\"\n    \"dict[str, dict[str, Any]]\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 357,
+          "character": 22
+        },
+        "end": {
+          "line": 357,
+          "character": 53
+        }
+      },
+      "rule": "reportAssignmentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_selector.py",
+      "severity": "error",
+      "message": "Argument of type \"list[dict[str, Any]] | None\" cannot be assigned to parameter \"servers\" of type \"list[dict[str, Any]]\" in function \"__init__\"\n  Type \"list[dict[str, Any]] | None\" is not assignable to type \"list[dict[str, Any]]\"\n    \"None\" is not assignable to \"list[dict[str, Any]]\"",
+      "range": {
+        "start": {
+          "line": 360,
+          "character": 35
+        },
+        "end": {
+          "line": 360,
+          "character": 42
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_selector.py",
+      "severity": "error",
+      "message": "Object of type \"None\" cannot be used as iterable value",
+      "range": {
+        "start": {
+          "line": 365,
+          "character": 22
+        },
+        "end": {
+          "line": 365,
+          "character": 29
+        }
+      },
+      "rule": "reportOptionalIterable"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_selector.py",
+      "severity": "error",
+      "message": "Object of type \"None\" cannot be used as iterable value",
+      "range": {
+        "start": {
+          "line": 417,
+          "character": 22
+        },
+        "end": {
+          "line": 417,
+          "character": 34
+        }
+      },
+      "rule": "reportOptionalIterable"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_selector.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"categories\", \"required_capabilities\", \"on_server_connected\", \"on_server_failed\", \"on_tool_discovered\"",
+      "range": {
+        "start": {
+          "line": 589,
+          "character": 15
+        },
+        "end": {
+          "line": 591,
+          "character": 9
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_selector.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"api_key\", \"health_check_interval\"",
+      "range": {
+        "start": {
+          "line": 618,
+          "character": 19
+        },
+        "end": {
+          "line": 628,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_tester.py",
+      "severity": "error",
+      "message": "Type \"None\" is not assignable to declared type \"list[str]\"\n  \"None\" is not assignable to \"list[str]\"",
+      "range": {
+        "start": {
+          "line": 74,
+          "character": 36
+        },
+        "end": {
+          "line": 74,
+          "character": 40
+        }
+      },
+      "rule": "reportAssignmentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_tester.py",
+      "severity": "error",
+      "message": "Type \"None\" is not assignable to declared type \"list[str]\"\n  \"None\" is not assignable to \"list[str]\"",
+      "range": {
+        "start": {
+          "line": 75,
+          "character": 26
+        },
+        "end": {
+          "line": 75,
+          "character": 30
+        }
+      },
+      "rule": "reportAssignmentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_tester.py",
+      "severity": "error",
+      "message": "\"MCPAdapter\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 212,
+          "character": 51
+        },
+        "end": {
+          "line": 212,
+          "character": 61
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_tester.py",
+      "severity": "error",
+      "message": "Argument of type \"dict[str, dict[str, Any]]\" cannot be assigned to parameter \"connections\" of type \"dict[str, Connection] | None\" in function \"__init__\"\n  Type \"dict[str, dict[str, Any]]\" is not assignable to type \"dict[str, Connection] | None\"\n    \"dict[str, dict[str, Any]]\" is not assignable to \"dict[str, Connection]\"\n      Type parameter \"_VT@dict\" is invariant, but \"dict[str, Any]\" is not the same as \"Connection\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type\n    \"dict[str, dict[str, Any]]\" is not assignable to \"None\"",
+      "range": {
+        "start": {
+          "line": 229,
+          "character": 46
+        },
+        "end": {
+          "line": 229,
+          "character": 57
+        }
+      },
+      "rule": "reportArgumentType"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/tools/server_tester.py",
+      "severity": "error",
+      "message": "Cannot access attribute \"close\" for class \"MultiServerMCPClient\"\n  Attribute \"close\" is unknown",
+      "range": {
+        "start": {
+          "line": 256,
+          "character": 37
+        },
+        "end": {
+          "line": 256,
+          "character": 42
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/utils/__init__.py",
+      "severity": "error",
+      "message": "Import \"utils.extract_mcp_github_repos\" could not be resolved",
+      "range": {
+        "start": {
+          "line": 2,
+          "character": 5
+        },
+        "end": {
+          "line": 2,
+          "character": 35
+        }
+      },
+      "rule": "reportMissingImports"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py",
+      "severity": "error",
+      "message": "\"get\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 288,
+          "character": 36
+        },
+        "end": {
+          "line": 288,
+          "character": 39
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py",
+      "severity": "error",
+      "message": "Arguments missing for parameters \"stars\", \"last_updated\", \"license\", \"readme_url\", \"api_base_url\"",
+      "range": {
+        "start": {
+          "line": 344,
+          "character": 31
+        },
+        "end": {
+          "line": 355,
+          "character": 21
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py",
+      "severity": "error",
+      "message": "\"get\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 377,
+          "character": 40
+        },
+        "end": {
+          "line": 377,
+          "character": 43
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py",
+      "severity": "error",
+      "message": "\"get\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 388,
+          "character": 40
+        },
+        "end": {
+          "line": 388,
+          "character": 43
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py",
+      "severity": "error",
+      "message": "\"get\" is not a known attribute of \"None\"",
+      "range": {
+        "start": {
+          "line": 420,
+          "character": 36
+        },
+        "end": {
+          "line": 420,
+          "character": 39
+        }
+      },
+      "rule": "reportOptionalMemberAccess"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py",
+      "severity": "error",
+      "message": "Argument missing for parameter \"content_hash\"",
+      "range": {
+        "start": {
+          "line": 454,
+          "character": 23
+        },
+        "end": {
+          "line": 456,
+          "character": 13
+        }
+      },
+      "rule": "reportCallIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/utils/extract_mcp_github_repos.py",
+      "severity": "error",
+      "message": "Expected class but received \"(obj: object, /) -> TypeIs[(...) -> object]\"",
+      "range": {
+        "start": {
+          "line": 664,
+          "character": 76
+        },
+        "end": {
+          "line": 664,
+          "character": 84
+        }
+      },
+      "rule": "reportGeneralTypeIssues"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/working_enhanced_retriever.py",
+      "severity": "error",
+      "message": "\"AttributeInfo\" is not exported from module \"langchain.chains.query_constructor.base\"\n  Import from \"langchain.chains.query_constructor.schema\" instead",
+      "range": {
+        "start": {
+          "line": 11,
+          "character": 52
+        },
+        "end": {
+          "line": 11,
+          "character": 65
+        }
+      },
+      "rule": "reportPrivateImportUsage"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/working_enhanced_retriever.py",
+      "severity": "error",
+      "message": "\"MCPDocumentationLoader\" is unknown import symbol",
+      "range": {
+        "start": {
+          "line": 20,
+          "character": 36
+        },
+        "end": {
+          "line": 20,
+          "character": 58
+        }
+      },
+      "rule": "reportAttributeAccessIssue"
+    },
+    {
+      "file": "/home/will/Projects/haive/backend/haive/packages/haive-mcp/src/haive/mcp/working_enhanced_retriever.py",
+      "severity": "error",
+      "message": "Argument of type \"Chroma | None\" cannot be assigned to parameter \"vectorstore\" of type \"VectorStore\" in function \"from_llm\"\n  Type \"Chroma | None\" is not assignable to type \"VectorStore\"\n    \"None\" is not assignable to \"VectorStore\"",
+      "range": {
+        "start": {
+          "line": 143,
+          "character": 24
+        },
+        "end": {
+          "line": 143,
+          "character": 46
+        }
+      },
+      "rule": "reportArgumentType"
+    }
+  ],
+  "summary": {
+    "filesAnalyzed": 67,
+    "errorCount": 239,
+    "warningCount": 1,
+    "informationCount": 0,
+    "timeInSec": 12.021
+  }
+}

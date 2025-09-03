@@ -41,7 +41,6 @@ Example:
 
 from typing import Any
 
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import BaseMessage
 from pydantic import Field
 
@@ -51,6 +50,7 @@ from haive.agents.supervisor_new.base.models import (
     SupervisorResult,
     SupervisorTask,
 )
+from haive.core.schema.state_schema import StateSchema
 
 
 class BaseSupervisorState(StateSchema):
@@ -115,7 +115,8 @@ class BaseSupervisorState(StateSchema):
 
     # Core messaging (inherited from ReactAgent pattern)
     messages: list[BaseMessage] = Field(
-        default_factory=list, description="Conversation messages"
+        default_factory=list,
+        description="Conversation messages",
     )
 
     # Supervisor-specific state
@@ -123,40 +124,49 @@ class BaseSupervisorState(StateSchema):
 
     # Task management
     current_task: SupervisorTask | None = Field(
-        None, description="Currently executing task"
+        None,
+        description="Currently executing task",
     )
     task_history: list[SupervisorTask] = Field(
-        default_factory=list, description="History of executed tasks"
+        default_factory=list,
+        description="History of executed tasks",
     )
     results_history: list[SupervisorResult] = Field(
-        default_factory=list, description="History of task results"
+        default_factory=list,
+        description="History of task results",
     )
 
     # Routing and decision tracking
     last_routing_decision: RoutingDecision | None = Field(
-        None, description="Last routing decision made"
+        None,
+        description="Last routing decision made",
     )
     routing_history: list[RoutingDecision] = Field(
-        default_factory=list, description="History of routing decisions"
+        default_factory=list,
+        description="History of routing decisions",
     )
 
     # Agent management (basic tracking)
     registered_agent_names: list[str] = Field(
-        default_factory=list, description="Names of registered agents"
+        default_factory=list,
+        description="Names of registered agents",
     )
     active_agent_names: list[str] = Field(
-        default_factory=list, description="Names of currently active agents"
+        default_factory=list,
+        description="Names of currently active agents",
     )
 
     # Performance tracking
     agent_performance: dict[str, AgentPerformanceMetrics] = Field(
-        default_factory=dict, description="Performance metrics per agent"
+        default_factory=dict,
+        description="Performance metrics per agent",
     )
 
     # Execution context
     execution_count: int = Field(default=0, description="Total number of executions")
     last_agent_used: str | None = Field(
-        None, description="Last agent that was executed"
+        None,
+        description="Last agent that was executed",
     )
 
     # Error handling
@@ -165,7 +175,8 @@ class BaseSupervisorState(StateSchema):
 
     # Metadata
     supervisor_metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional supervisor metadata"
+        default_factory=dict,
+        description="Additional supervisor metadata",
     )
 
     def add_task(self, task: SupervisorTask) -> None:
@@ -183,7 +194,7 @@ class BaseSupervisorState(StateSchema):
         agent_name = result.agent_used
         if agent_name not in self.agent_performance:
             self.agent_performance[agent_name] = AgentPerformanceMetrics(
-                agent_name=agent_name
+                agent_name=agent_name,
             )
 
         metrics = self.agent_performance[agent_name]
@@ -224,10 +235,7 @@ class BaseSupervisorState(StateSchema):
 
     def activate_agent(self, agent_name: str) -> None:
         """Activate an agent."""
-        if (
-            agent_name in self.registered_agent_names
-            and agent_name not in self.active_agent_names
-        ):
+        if agent_name in self.registered_agent_names and agent_name not in self.active_agent_names:
             self.active_agent_names.append(agent_name)
 
     def set_error(self, error_message: str) -> None:

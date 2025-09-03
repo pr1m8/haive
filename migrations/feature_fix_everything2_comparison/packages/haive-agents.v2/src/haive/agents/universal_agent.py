@@ -7,16 +7,17 @@ of concerns through agent types rather than complex inheritance hierarchies.
 
 from __future__ import annotations
 
-import logging
 from abc import ABC, abstractmethod
+import logging
 from typing import Any
+
+from langchain_core.runnables import RunnableConfig
+from langgraph.graph.graph import CompiledGraph
+from pydantic import BaseModel, Field
 
 from haive.core.engine.base.agent_types import AgentType, get_agent_capabilities
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.state_schema import StateSchema
-from langchain_core.runnables import RunnableConfig
-from langgraph.graph.graph import CompiledGraph
-from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
@@ -44,33 +45,39 @@ class Agent(BaseModel, ABC):
 
     # Agent type classification
     agent_type: AgentType = Field(
-        description="Type of agent that determines available capabilities"
+        description="Type of agent that determines available capabilities",
     )
 
     # Schema definitions
     state_schema: type[StateSchema] | type[BaseModel] | dict[str, Any] | None = Field(
-        default=None, description="Schema defining the state structure for this agent"
+        default=None,
+        description="Schema defining the state structure for this agent",
     )
     input_schema: type[BaseModel] | dict[str, Any] | None = Field(
-        default=None, description="Schema for input validation (optional)"
+        default=None,
+        description="Schema for input validation (optional)",
     )
     output_schema: type[BaseModel] | dict[str, Any] | None = Field(
-        default=None, description="Schema for output validation (optional)"
+        default=None,
+        description="Schema for output validation (optional)",
     )
 
     # Optional metadata
     description: str | None = Field(
-        default=None, description="Optional description of agent functionality"
+        default=None,
+        description="Optional description of agent functionality",
     )
 
     # Runtime configuration
     runnable_config: RunnableConfig | None = Field(
-        default=None, description="Default runtime configuration for execution"
+        default=None,
+        description="Default runtime configuration for execution",
     )
 
     # Debug and visualization
     verbose: bool = Field(
-        default=False, description="Enable verbose logging during execution"
+        default=False,
+        description="Enable verbose logging during execution",
     )
 
     @abstractmethod
@@ -110,7 +117,9 @@ class Agent(BaseModel, ABC):
         return compiled_graph.invoke(input_data, config=config)
 
     async def ainvoke(
-        self, input_data: Any, config: dict[str, Any] | None = None
+        self,
+        input_data: Any,
+        config: dict[str, Any] | None = None,
     ) -> Any:
         """Asynchronous invoke method.
 
@@ -173,7 +182,7 @@ class Agent(BaseModel, ABC):
             if not capabilities.get("reasoning"):
                 raise AttributeError(
                     f"'{self.__class__.__name__}' agent (type: {self.agent_type}) "
-                    f"does not support reasoning method '{name}'"
+                    f"does not support reasoning method '{name}'",
                 )
 
         # Processing-specific methods
@@ -181,7 +190,7 @@ class Agent(BaseModel, ABC):
             if not capabilities.get("batch_processing"):
                 raise AttributeError(
                     f"'{self.__class__.__name__}' agent (type: {self.agent_type}) "
-                    f"does not support processing method '{name}'"
+                    f"does not support processing method '{name}'",
                 )
 
         # Orchestration-specific methods
@@ -189,7 +198,7 @@ class Agent(BaseModel, ABC):
             if not capabilities.get("orchestration"):
                 raise AttributeError(
                     f"'{self.__class__.__name__}' agent (type: {self.agent_type}) "
-                    f"does not support orchestration method '{name}'"
+                    f"does not support orchestration method '{name}'",
                 )
 
         # Default behavior for unknown attributes
@@ -197,9 +206,7 @@ class Agent(BaseModel, ABC):
 
     def __str__(self) -> str:
         """String representation of the agent."""
-        return (
-            f"{self.__class__.__name__}(name='{self.name}', type='{self.agent_type}')"
-        )
+        return f"{self.__class__.__name__}(name='{self.name}', type='{self.agent_type}')"
 
     def __repr__(self) -> str:
         """Detailed string representation of the agent."""

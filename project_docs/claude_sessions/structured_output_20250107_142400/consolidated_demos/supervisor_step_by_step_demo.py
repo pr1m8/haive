@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Demo showing supervisor's step-by-step decision process with actual execution."""
+from __future__ import annotations
 
 import asyncio
 import logging
 
 from haive.agents.experiments.dynamic_supervisor import DynamicSupervisorAgent
 from haive.agents.simple.agent import SimpleAgent
-from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.messages import AIMessage
+from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")

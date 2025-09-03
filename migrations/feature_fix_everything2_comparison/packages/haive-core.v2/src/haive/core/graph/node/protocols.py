@@ -14,6 +14,7 @@ Functions:
 """
 
 # src/haive/core/graph/node/protocols.py
+from __future__ import annotations
 
 from typing import Any, Protocol, runtime_checkable
 
@@ -32,7 +33,10 @@ class CommandHandler(Protocol):
     """Protocol for handlers that process command patterns."""
 
     def process_result(
-        self, result: Any, config: Any, original_state: dict[str, Any]
+        self,
+        result: Any,
+        config: Any,
+        original_state: dict[str, Any],
     ) -> Any: ...
 
 
@@ -48,5 +52,8 @@ class OutputProcessor(Protocol):
     """Protocol for output processing strategies."""
 
     def process_output(
-        self, result: Any, config: Any, original_state: dict[str, Any]
+        self,
+        result: Any,
+        config: Any,
+        original_state: dict[str, Any],
     ) -> dict[str, Any]: ...

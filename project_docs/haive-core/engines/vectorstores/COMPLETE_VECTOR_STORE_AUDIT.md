@@ -79,7 +79,7 @@ We discovered **80+ vector store implementations** in the LangChain ecosystem! W
 13. **bigquery_vector_search** - Google BigQuery
 14. **databricks_vector_search** - Databricks
 15. **matching_engine** - Google Vertex AI
-16. **momento_vector_index** - Momento cache
+16. **momento_vector_index** - Memento cache
 17. **alibabacloud_opensearch** - Alibaba Cloud
 18. **baiducloud_vector_search** - Baidu Cloud
 19. **tencentvectordb** - Tencent Cloud

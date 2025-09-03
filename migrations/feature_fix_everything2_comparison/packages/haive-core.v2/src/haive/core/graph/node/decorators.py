@@ -16,21 +16,13 @@ This module provides decorators that make it easy to create various types
 of nodes from functions, with proper configuration and registration.
 """
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any
-
 from langgraph.types import RetryPolicy
-
 from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.factory import NodeFactory
-from haive.core.graph.node.types import (
-    CommandGoto,
-    ConfigType,
-    NodeType,
-    StateInput,
-    StateOutput,
-)
+
 
 logger = logging.getLogger(__name__)
 
@@ -113,9 +105,7 @@ def tool_node(
         name=name,
         node_type=NodeType.TOOL,
         command_goto=command_goto,
-        input_mapping=(
-            {"messages": messages_field} if messages_field != "messages" else None
-        ),
+        input_mapping=({"messages": messages_field} if messages_field != "messages" else None),
         tools=tools,
         messages_field=messages_field,
         handle_tool_errors=handle_tool_errors,
@@ -143,9 +133,7 @@ def validation_node(
         name=name,
         node_type=NodeType.VALIDATION,
         command_goto=command_goto,
-        input_mapping=(
-            {"messages": messages_field} if messages_field != "messages" else None
-        ),
+        input_mapping=({"messages": messages_field} if messages_field != "messages" else None),
         validation_schemas=schemas,
         messages_field=messages_field,
     )
@@ -205,8 +193,8 @@ def send_node(
 
 # Add a new debug decorator
 def debug_node(name: str | None = None):
-    """Decorator to add detailed debug logging to a node function. Logs input state and
-    output result but does not modify the function behavior.
+    """Decorator to add detailed debug logging to a node function. Logs input
+    state and output result but does not modify the function behavior.
 
     Args:
         name: Name for the node in logs (defaults to function name)
@@ -227,10 +215,9 @@ def debug_node(name: str | None = None):
             # Log input
             console.print(
                 Panel.fit(
-                    f"[bold cyan]Node {func_name} Input:[/bold cyan]\n{
-                        Pretty(state)}",
+                    f"[bold cyan]Node {func_name} Input:[/bold cyan]\n{Pretty(state)}",
                     border_style="cyan",
-                )
+                ),
             )
 
             # Call original function
@@ -242,7 +229,7 @@ def debug_node(name: str | None = None):
                 Panel.fit(
                     f"[bold green]Node {func_name} Output:[/bold green]\n{result_display}",
                     border_style="green",
-                )
+                ),
             )
 
             # Special handling for Command objects
@@ -252,12 +239,12 @@ def debug_node(name: str | None = None):
                 console.print(
                     Panel.fit(
                         "[bold yellow]Command Object Detected:[/bold yellow]\n"
-                        + f"Type: {type(result).__name__}\n"
-                        + f"Attributes: {dir(result)}\n"
-                        + f"Update: {getattr(result, 'update', None)}\n"
-                        + f"Branch: {getattr(result, 'branch', None)}",
+                        f"Type: {type(result).__name__}\n"
+                        f"Attributes: {dir(result)}\n"
+                        f"Update: {getattr(result, 'update', None)}\n"
+                        f"Branch: {getattr(result, 'branch', None)}",
                         border_style="yellow",
-                    )
+                    ),
                 )
 
             # Return original result unchanged

@@ -13,6 +13,7 @@ Functions:
 # ============================================================================
 # OUTPUT PARSER NODE CONFIG - EXTENSION OF PARSER NODE
 # ============================================================================
+from __future__ import annotations
 
 import logging
 from typing import Any
@@ -33,21 +34,26 @@ logger.setLevel(logging.WARNING)
 
 
 class OutputParserNodeConfig(ParserNodeConfig):
-    """Configuration for a node that parses LLM output using LangChain output parsers.
+    """Configuration for a node that parses LLM output using LangChain output.
 
-    This extends ParserNodeConfig to handle regular output parsing (not tool calls). It
-    parses the last message content using a LangChain BaseOutputParser.
+    parsers.
+
+    This extends ParserNodeConfig to handle regular output parsing (not
+    tool calls). It parses the last message content using a LangChain
+    BaseOutputParser.
     """
 
     node_type: NodeType = Field(default=NodeType.OUTPUT_PARSER)
 
     # Output parser configuration
     output_parser: BaseOutputParser = Field(
-        ..., description="LangChain output parser to use for parsing"
+        ...,
+        description="LangChain output parser to use for parsing",
     )
 
     output_key: str = Field(
-        default="parsed_output", description="Key to store parsed output in state"
+        default="parsed_output",
+        description="Key to store parsed output in state",
     )
 
     # Override default behavior - we don't need tool info for output parsing
@@ -72,8 +78,7 @@ class OutputParserNodeConfig(ParserNodeConfig):
 
         if not messages:
             logger.warning(
-                f"No messages found in state key '{
-                    self.messages_key}'"
+                f"No messages found in state key '{self.messages_key}'",
             )
             return Command(
                 update={self.output_key: None, "parse_error": "No messages found"},
@@ -89,8 +94,7 @@ class OutputParserNodeConfig(ParserNodeConfig):
 
             if content is None:
                 logger.warning(
-                    f"Unable to extract content from message: {
-                        type(last_message)}"
+                    f"Unable to extract content from message: {type(last_message)}",
                 )
                 return Command(
                     update={
@@ -107,8 +111,7 @@ class OutputParserNodeConfig(ParserNodeConfig):
                 update_dict = {self.output_key: parsed_result}
 
                 logger.info(
-                    f"Successfully parsed output using {
-                        self.output_parser.__class__.__name__}"
+                    f"Successfully parsed output using {self.output_parser.__class__.__name__}",
                 )
                 return Command(update=update_dict, goto=goto_node)
 
@@ -128,8 +131,7 @@ class OutputParserNodeConfig(ParserNodeConfig):
             return Command(
                 update={
                     self.output_key: None,
-                    "parse_error": f"Node error: {
-                        e!s}",
+                    "parse_error": f"Node error: {e!s}",
                 },
                 goto=goto_node,
             )

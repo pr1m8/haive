@@ -1,3 +1,4 @@
+---
 name: Get Poetry Info
 description: Extracts Poetry information from pyproject.toml
 outputs:
@@ -39,7 +40,7 @@ runs:
   steps:
     - id: extract
       shell: bash
-      run: |
+      run: |-
         NAME="haive"
         VERSION="0.1.0"
         PYTHON_VERSION="3.12"
@@ -51,7 +52,6 @@ runs:
         REPOSITORY=""
         DOCUMENTATION=""
         CLASSIFIERS=""
-
         echo "Current directory: $(pwd)"
         echo "Looking for pyproject.toml"
         if [ -f "pyproject.toml" ]; then

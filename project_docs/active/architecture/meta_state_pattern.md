@@ -1,7 +1,7 @@
 # MetaStateSchema Pattern Documentation
 
-**Version**: 1.0  
-**Purpose**: Guide for using MetaStateSchema for meta-capable agents  
+**Version**: 1.0
+**Purpose**: Guide for using MetaStateSchema for meta-capable agents
 **Last Updated**: 2025-01-15
 
 ## 🎯 Overview

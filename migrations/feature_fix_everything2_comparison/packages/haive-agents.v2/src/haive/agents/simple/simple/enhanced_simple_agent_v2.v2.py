@@ -13,36 +13,26 @@ Functions:
 """
 
 # src/haive/agents/simple/enhanced_simple_agent_v2.py
-
 """Enhanced SimpleAgent V2 - Using the enhanced Agent pattern directly.
 
 This version imports the enhanced Agent class directly to avoid conflicts
 with the regular Agent class.
 """
 
+
+from __future__ import annotations
 import logging
-import os
 
 # Import enhanced Agent directly - bypassing base/__init__.py
-import sys
-from typing import Any, Literal
-
-from langchain_core.messages import AIMessage
-from langgraph.graph import END, START
-from pydantic import Field, model_validator
 
 sys.path.insert(
-    0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    0,
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
 )
 
 # Now import the enhanced Agent directly
-from base.enhanced_agent import Agent as EnhancedAgent
 
 # Import other dependencies normally
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.node.tool_node_config_v2 import ToolNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 logger = logging.getLogger(__name__)
 
@@ -112,14 +102,16 @@ class SimpleAgentV2(EnhancedAgent[AugLLMConfig]):
             graph.add_node("tools", tool_node)
 
             # Conditional routing
-            def check_tools(state: dict[str, Any]) -> Literal["tools", "end"]:
+            def check_tools(state: dict[str, Any]) -> Literal[tools, end]:
                 msgs = state.get("messages", [])
                 if msgs and isinstance(msgs[-1], AIMessage) and msgs[-1].tool_calls:
                     return "tools"
                 return "end"
 
             graph.add_conditional_edges(
-                "agent", check_tools, {"tools": "tools", "end": END}
+                "agent",
+                check_tools,
+                {"tools": "tools", "end": END},
             )
             graph.add_edge("tools", END)
         else:

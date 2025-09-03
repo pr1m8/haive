@@ -70,18 +70,18 @@ html_theme_options = {
     "light_css_variables": {
         # Layout enhancements
         "sidebar-width": "22rem",
-        "content-width": "46rem", 
+        "content-width": "46rem",
         "content-padding": "3rem",
-        
+
         # Typography improvements
         "font-stack--headings": "'Inter', system-ui, sans-serif",
         "line-height--normal": "1.7",
-        
+
         # API documentation specific
         "color-api-background": "#f8fafc",
         "color-api-name": "#0f172a",
         "color-api-keyword": "#7c3aed",
-        
+
         # Enhanced inline code
         "color-inline-code-background": "#f1f5f9",
         "color-inline-code-foreground": "#334155",
@@ -96,7 +96,7 @@ Current AutoAPI output can be dramatically improved:
 # Enhanced AutoAPI configuration
 autoapi_options = [
     "members",
-    "show-inheritance", 
+    "show-inheritance",
     "show-module-summary",
     "special-members",  # Show __init__, __call__
     "private-members",  # Show documented private methods
@@ -132,7 +132,7 @@ Better responsive design with Furo-specific mobile optimizations:
 
 #### High Impact Changes
 1. **API Documentation CSS Variables**: Dramatically improve readability
-2. **Enhanced AutoAPI Configuration**: Better organized, more complete docs  
+2. **Enhanced AutoAPI Configuration**: Better organized, more complete docs
 3. **Advanced Navigation**: Prev/next buttons, breadcrumbs, depth control
 4. **Mobile Optimization**: Better responsive behavior
 
@@ -152,7 +152,7 @@ Better responsive design with Furo-specific mobile optimizations:
 
 ### Phase 2: API Documentation Enhancement (2-3 hours)
 - [ ] Implement advanced AutoAPI configuration
-- [ ] Add API-specific CSS styling 
+- [ ] Add API-specific CSS styling
 - [ ] Enhance code block and syntax highlighting
 - [ ] Test API documentation readability
 

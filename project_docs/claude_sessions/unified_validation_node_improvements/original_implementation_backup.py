@@ -4,6 +4,7 @@ This replaces the artificial separation between ValidationNodeV2 and validation_
 with a single node that validates and routes in one unified operation.
 """
 
+import logging
 from typing import Any
 
 from langchain_core.messages import AIMessage, ToolMessage
@@ -12,8 +13,6 @@ from pydantic import Field, model_validator
 
 from haive.core.graph.node.base_node_config import BaseNodeConfig
 from haive.core.graph.node.types import NodeType
-import logging
-
 
 logger = logging.getLogger(__name__)
 
@@ -29,19 +28,27 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
     """
 
     node_type: NodeType = Field(
-        default=NodeType.CALLABLE, description="Node type for unified validation"
+        default=NodeType.CALLABLE,
+        description="Node type for unified validation",
     )
 
     engine_name: str = Field(description="Name of the engine to get tool routes from")
 
     # Routing destinations
-    tool_node: str = Field(default="tool_node", description="Node for langchain tool execution")
-
-    parse_output_node: str = Field(
-        default="parse_output", description="Node for parsing structured output"
+    tool_node: str = Field(
+        default="tool_node",
+        description="Node for langchain tool execution",
     )
 
-    agent_node: str = Field(default="agent_node", description="Node to return to agent on errors")
+    parse_output_node: str = Field(
+        default="parse_output",
+        description="Node for parsing structured output",
+    )
+
+    agent_node: str = Field(
+        default="agent_node",
+        description="Node to return to agent on errors",
+    )
 
     # Validation settings
     create_tool_messages: bool = Field(
@@ -50,7 +57,8 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
     )
 
     parallel_execution: bool = Field(
-        default=True, description="Whether to use Send for parallel tool execution"
+        default=True,
+        description="Whether to use Send for parallel tool execution",
     )
 
     @model_validator(mode="after")
@@ -61,10 +69,15 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
             raise ValueError("At least one destination node must be specified")
         return self
 
-    def __call__(self, state: dict[str, Any], config: dict[str, Any] | None = None) -> Command:
+    def __call__(
+        self,
+        state: dict[str, Any],
+        config: dict[str, Any] | None = None,
+    ) -> Command:
         """Unified validation and routing function.
 
-        This is the main entry point that processes tool calls and routes them.
+        This is the main entry point that processes tool calls and
+        routes them.
         """
         logger.info(f"Unified validation processing for engine: {self.engine_name}")
 
@@ -120,7 +133,10 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
         return Command(update=update_dict, goto=destination)
 
     def _process_tool_call(
-        self, tool_call: dict[str, Any], engine: Any, state: dict[str, Any]
+        self,
+        tool_call: dict[str, Any],
+        engine: Any,
+        state: dict[str, Any],
     ) -> dict[str, Any]:
         """Process a single tool call and determine routing.
 
@@ -148,7 +164,12 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
         # Handle different routes
         if route == "pydantic_model":
             # Validate Pydantic model
-            validation_result = self._validate_pydantic_model(tool_name, tool_args, tool_id, engine)
+            validation_result = self._validate_pydantic_model(
+                tool_name,
+                tool_args,
+                tool_id,
+                engine,
+            )
             decision.update(validation_result)
 
             # Route based on validation success
@@ -223,7 +244,11 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
         return any(hasattr(tool, "name") and tool.name == tool_name for tool in tools)
 
     def _validate_pydantic_model(
-        self, tool_name: str, tool_args: dict[str, Any], tool_id: str, engine: Any
+        self,
+        tool_name: str,
+        tool_args: dict[str, Any],
+        tool_id: str,
+        engine: Any,
     ) -> dict[str, Any]:
         """Validate a Pydantic model and create ToolMessage."""
         result = {
@@ -269,7 +294,10 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
 
         return result
 
-    def _create_send_objects(self, routing_decisions: list[dict[str, Any]]) -> list[Send]:
+    def _create_send_objects(
+        self,
+        routing_decisions: list[dict[str, Any]],
+    ) -> list[Send]:
         """Create Send objects for parallel execution."""
         sends = []
 
@@ -285,12 +313,15 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
                             "success": decision["success"],
                             "error": decision["error"],
                         },
-                    )
+                    ),
                 )
 
         return sends
 
-    def _determine_single_destination(self, routing_decisions: list[dict[str, Any]]) -> str:
+    def _determine_single_destination(
+        self,
+        routing_decisions: list[dict[str, Any]],
+    ) -> str:
         """Determine single destination from routing decisions."""
         if not routing_decisions:
             return self.agent_node
@@ -312,7 +343,9 @@ class UnifiedValidationNodeConfig(BaseNodeConfig):
 
 # Convenience function for creating unified validation nodes
 def create_unified_validation_node(
-    name: str = "unified_validation", engine_name: str = "main_engine", **kwargs
+    name: str = "unified_validation",
+    engine_name: str = "main_engine",
+    **kwargs,
 ) -> UnifiedValidationNodeConfig:
     """Create a unified validation node with sensible defaults."""
     return UnifiedValidationNodeConfig(name=name, engine_name=engine_name, **kwargs)

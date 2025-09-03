@@ -87,11 +87,11 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Any
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 from pydantic import Field, model_validator
 
 from haive.agents.base.agent import Agent
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
 
 
 class MultiAgent(Agent):
@@ -155,7 +155,8 @@ class MultiAgent(Agent):
     )
 
     agent: Agent | None = Field(
-        default=None, description="Main/default agent for this multi-agent"
+        default=None,
+        description="Main/default agent for this multi-agent",
     )
 
     # Execution mode
@@ -241,7 +242,8 @@ class MultiAgent(Agent):
     def build_graph(self) -> BaseGraph:
         """Build the BaseGraph for this multi-agent.
 
-        Uses intelligent routing from BaseGraph for sequence inference and branching.
+        Uses intelligent routing from BaseGraph for sequence inference
+        and branching.
         """
         # Create BaseGraph with state schema
         graph = BaseGraph(name=f"{self.name}_graph", state_schema=self.state_schema)
@@ -293,7 +295,8 @@ class MultiAgent(Agent):
                     return condition_wrapper
 
                 graph.add_conditional_edges(
-                    source, make_condition_fn(condition_fn, routes)
+                    source,
+                    make_condition_fn(condition_fn, routes),
                 )
                 processed_sources.add(source)
                 has_entry_edges = True
@@ -482,7 +485,9 @@ class MultiAgent(Agent):
         }
 
     def add_parallel_group(
-        self, agent_names: list[str], next_agent: str | None = None
+        self,
+        agent_names: list[str],
+        next_agent: str | None = None,
     ) -> None:
         """Add a group of agents that run in parallel.
 
@@ -580,7 +585,9 @@ class MultiAgent(Agent):
         self.agents = ordered_agents
 
     def add_conditional_edges(
-        self, source: str, path: Callable[[dict[str, Any]], str]
+        self,
+        source: str,
+        path: Callable[[dict[str, Any]], str],
     ) -> None:
         """Add conditional edges for backward compatibility with examples.
 

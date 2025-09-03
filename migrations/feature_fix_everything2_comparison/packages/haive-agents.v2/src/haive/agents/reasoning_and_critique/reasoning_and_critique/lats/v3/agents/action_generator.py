@@ -1,6 +1,6 @@
 """Action Generator Agent for LATS v3 - Generates candidate actions."""
 
-from haive.core.engine.aug_llm import AugLLMConfig
+from __future__ import annotations
 
 from haive.agents.reasoning_and_critique.lats.v3.models.action_models import (
     ActionGeneration,
@@ -8,14 +8,16 @@ from haive.agents.reasoning_and_critique.lats.v3.models.action_models import (
 )
 from haive.agents.reasoning_and_critique.lats.v3.models.tree_models import LATSNode
 from haive.agents.simple.agent_v3 import SimpleAgentV3
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class ActionGenerator:
     """Agent that generates candidate actions for a given node in LATS.
 
-    This agent analyzes the current state and generates multiple candidate
-    actions that could be taken, each with confidence scores and reasoning.
-    Uses composition pattern to avoid Pydantic inheritance issues.
+    This agent analyzes the current state and generates multiple
+    candidate actions that could be taken, each with confidence scores
+    and reasoning. Uses composition pattern to avoid Pydantic
+    inheritance issues.
     """
 
     def __init__(
@@ -89,20 +91,20 @@ Diversity is crucial - avoid generating similar actions."""
 
         if current_node.reflection_reasoning:
             prompt_parts.append(
-                f"Previous reflection: {current_node.reflection_reasoning}"
+                f"Previous reflection: {current_node.reflection_reasoning}",
             )
 
         if search_history:
             prompt_parts.append("\nSearch history (most recent first):")
             for i, action in enumerate(search_history[:5]):  # Limit to recent 5
-                prompt_parts.append(f"  {i+1}. {action}")
+                prompt_parts.append(f"  {i + 1}. {action}")
 
         prompt_parts.extend(
             [
                 f"\nGenerate {self.num_candidates} diverse candidate actions for the next step.",
                 "Each action should explore a different approach or strategy.",
                 "Consider what hasn't been tried and what might lead to success.",
-            ]
+            ],
         )
 
         return "\n".join(prompt_parts)
@@ -124,7 +126,9 @@ Diversity is crucial - avoid generating similar actions."""
             ActionGeneration with candidate actions
         """
         prompt = self.create_generation_prompt(
-            current_node, problem_description, search_history
+            current_node,
+            problem_description,
+            search_history,
         )
 
         # Use the composed agent's arun method

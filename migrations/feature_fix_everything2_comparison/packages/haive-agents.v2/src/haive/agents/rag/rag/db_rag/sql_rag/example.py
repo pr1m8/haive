@@ -35,24 +35,24 @@ Note:
 
 import argparse
 import contextlib
+from datetime import datetime
 import json
 import logging
 import sys
-from datetime import datetime
 from typing import Any
-
-from haive.core.engine.aug_llm import AugLLMConfig
 
 from haive.agents.rag.db_rag.sql_rag.agent import SQLRAGAgent
 from haive.agents.rag.db_rag.sql_rag.config import SQLDatabaseConfig, SQLRAGConfig
 from haive.agents.rag.db_rag.sql_rag.engines import default_sql_engines
+from haive.core.engine.aug_llm import AugLLMConfig
 
 # For backward compatibility
 SQLDatabaseAgent = SQLRAGAgent
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
@@ -148,7 +148,8 @@ def sqlite_example() -> dict[str, Any]:
     """
     # Configure SQLite connection
     db_config = SQLDatabaseConfig(
-        db_type="sqlite", db_name="./data/sample.db"  # Path to SQLite file
+        db_type="sqlite",
+        db_name="./data/sample.db",  # Path to SQLite file
     )
 
     # Simple configuration
@@ -203,7 +204,7 @@ def mysql_example() -> dict[str, Any]:
                     "question": "Customer retention rate",
                     "query": "SELECT COUNT(DISTINCT customer_id) as returning_customers FROM orders WHERE customer_id IN (SELECT customer_id FROM orders WHERE order_date < DATE_SUB(NOW(), INTERVAL 1 YEAR))",
                 },
-            ]
+            ],
         },
     )
 
@@ -212,7 +213,7 @@ def mysql_example() -> dict[str, Any]:
 
     # Run trend analysis
     result = agent.run(
-        {"question": "What's the product sales trend for the last 6 months?"}
+        {"question": "What's the product sales trend for the last 6 months?"},
     )
 
     return result
@@ -267,9 +268,7 @@ def custom_llm_example() -> dict[str, Any]:
         model="gpt-4",
         temperature=0.1,  # Very low temperature for consistent SQL
         prompt_template=default_sql_engines["generate_sql"].prompt_template,
-        structured_output_model=default_sql_engines[
-            "generate_sql"
-        ].structured_output_model,
+        structured_output_model=default_sql_engines["generate_sql"].structured_output_model,
     )
 
     # Custom engines configuration
@@ -334,7 +333,7 @@ def batch_processing_example() -> list[dict[str, Any]]:
                     "sql": result.get("sql_statement", ""),
                     "time": query_time,
                     "success": True,
-                }
+                },
             )
 
         except Exception as e:
@@ -454,7 +453,6 @@ def main() -> Union[int, float]:
     try:
         # If custom query is provided
         if args.query:
-
             # Load config from file if provided
             if args.config:
                 with open(args.config) as f:

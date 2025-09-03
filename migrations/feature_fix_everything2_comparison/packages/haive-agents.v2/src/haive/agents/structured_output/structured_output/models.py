@@ -1,5 +1,7 @@
 """Common structured output models for various agent patterns."""
 
+from __future__ import annotations
+
 from typing import Any
 
 from pydantic import BaseModel, Field
@@ -16,7 +18,9 @@ class Critique(BaseModel):
     weaknesses: list[str] = Field(description="List of weaknesses or issues")
     suggestions: list[str] = Field(description="Specific suggestions for improvement")
     overall_quality: float = Field(
-        ge=0.0, le=1.0, description="Overall quality score (0-1)"
+        ge=0.0,
+        le=1.0,
+        description="Overall quality score (0-1)",
     )
     needs_revision: bool = Field(description="Whether the output needs revision")
 
@@ -27,7 +31,7 @@ class Improvement(BaseModel):
     original_issue: str = Field(description="Description of the issue to improve")
     proposed_solution: str = Field(description="Proposed solution or improvement")
     implementation_steps: list[str] = Field(
-        description="Steps to implement the improvement"
+        description="Steps to implement the improvement",
     )
     expected_impact: str = Field(description="Expected impact of the improvement")
     priority: str = Field(description="Priority level: high, medium, low")
@@ -53,14 +57,17 @@ class ValidationResult(BaseModel):
 
     is_valid: bool = Field(description="Whether the output is valid")
     errors: list[str] = Field(
-        default_factory=list, description="List of validation errors"
+        default_factory=list,
+        description="List of validation errors",
     )
     warnings: list[str] = Field(
-        default_factory=list, description="List of validation warnings"
+        default_factory=list,
+        description="List of validation warnings",
     )
     score: float = Field(ge=0.0, le=1.0, description="Validation score (0-1)")
     details: dict[str, Any] = Field(
-        default_factory=dict, description="Detailed validation results"
+        default_factory=dict,
+        description="Detailed validation results",
     )
 
 
@@ -68,7 +75,9 @@ class QualityCheck(BaseModel):
     """Quality assessment result."""
 
     completeness: float = Field(
-        ge=0.0, le=1.0, description="How complete the output is"
+        ge=0.0,
+        le=1.0,
+        description="How complete the output is",
     )
     accuracy: float = Field(ge=0.0, le=1.0, description="Accuracy of the information")
     clarity: float = Field(ge=0.0, le=1.0, description="Clarity of expression")
@@ -90,7 +99,8 @@ class Analysis(BaseModel):
     key_points: list[str] = Field(description="Key points identified")
     insights: list[str] = Field(description="Key insights discovered")
     data_points: dict[str, Any] = Field(
-        default_factory=dict, description="Relevant data points"
+        default_factory=dict,
+        description="Relevant data points",
     )
     conclusions: list[str] = Field(description="Conclusions drawn")
     confidence_level: str = Field(description="Confidence level: high, medium, low")
@@ -103,10 +113,12 @@ class Summary(BaseModel):
     executive_summary: str = Field(description="Brief executive summary")
     main_points: list[str] = Field(description="Main points covered")
     details: dict[str, str] = Field(
-        default_factory=dict, description="Detailed sections"
+        default_factory=dict,
+        description="Detailed sections",
     )
     action_items: list[str] = Field(
-        default_factory=list, description="Action items if any"
+        default_factory=list,
+        description="Action items if any",
     )
     word_count: int = Field(description="Approximate word count")
 
@@ -124,10 +136,12 @@ class TaskResult(BaseModel):
     result: Any = Field(description="Task result")
     error: str | None = Field(default=None, description="Error message if failed")
     metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional metadata"
+        default_factory=dict,
+        description="Additional metadata",
     )
     duration_ms: int | None = Field(
-        default=None, description="Execution duration in milliseconds"
+        default=None,
+        description="Execution duration in milliseconds",
     )
 
 
@@ -155,7 +169,8 @@ class SearchQuery(BaseModel):
     sort_by: str | None = Field(default=None, description="Sort field")
     limit: int = Field(default=10, ge=1, le=100, description="Number of results")
     include_fields: list[str] = Field(
-        default_factory=list, description="Fields to include"
+        default_factory=list,
+        description="Fields to include",
     )
 
 
@@ -166,10 +181,12 @@ class SearchResult(BaseModel):
     total_results: int = Field(description="Total number of results")
     results: list[dict[str, Any]] = Field(description="List of results")
     facets: dict[str, list[str]] = Field(
-        default_factory=dict, description="Faceted search results"
+        default_factory=dict,
+        description="Faceted search results",
     )
     next_page_token: str | None = Field(
-        default=None, description="Token for pagination"
+        default=None,
+        description="Token for pagination",
     )
 
 
@@ -183,13 +200,17 @@ class Intent(BaseModel):
 
     primary_intent: str = Field(description="Primary user intent")
     secondary_intents: list[str] = Field(
-        default_factory=list, description="Secondary intents"
+        default_factory=list,
+        description="Secondary intents",
     )
     entities: dict[str, Any] = Field(
-        default_factory=dict, description="Extracted entities"
+        default_factory=dict,
+        description="Extracted entities",
     )
     confidence: float = Field(
-        ge=0.0, le=1.0, description="Confidence in classification"
+        ge=0.0,
+        le=1.0,
+        description="Confidence in classification",
     )
     suggested_action: str = Field(description="Suggested action based on intent")
 
@@ -202,7 +223,8 @@ class Response(BaseModel):
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence in response")
     sources: list[str] = Field(default_factory=list, description="Sources used")
     follow_up: str | None = Field(
-        default=None, description="Follow-up question or suggestion"
+        default=None,
+        description="Follow-up question or suggestion",
     )
 
 
@@ -215,13 +237,16 @@ class ExtractedData(BaseModel):
     """Extracted structured data."""
 
     entities: dict[str, list[str]] = Field(
-        default_factory=dict, description="Extracted entities by type"
+        default_factory=dict,
+        description="Extracted entities by type",
     )
     relationships: list[dict[str, str]] = Field(
-        default_factory=list, description="Relationships between entities"
+        default_factory=list,
+        description="Relationships between entities",
     )
     facts: list[str] = Field(default_factory=list, description="Extracted facts")
     metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional metadata"
+        default_factory=dict,
+        description="Additional metadata",
     )
     source_text: str | None = Field(default=None, description="Original source text")

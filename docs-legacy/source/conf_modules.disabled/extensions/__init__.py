@@ -1,0 +1,487 @@
+"""Extensions module for modular Sphinx configuration.
+
+This module organizes all Sphinx extensions into logical groups and
+provides debugging/logging capabilities to test each part procedurally.
+"""
+
+from __future__ import annotations
+
+import logging
+from typing import Any
+
+# Try to use rich for better UI, fall back to basic logging if not available
+try:
+    from rich.console import Console
+    from rich.logging import RichHandler
+    from rich.panel import Panel
+    from rich.table import Table
+    import sys
+
+    # Check if output is being piped to avoid BrokenPipeError
+    if hasattr(sys.stdout, "isatty") and sys.stdout.isatty():
+        # Interactive terminal - use Rich
+        console = Console()
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(message)s",
+            datefmt="[%X]",
+            handlers=[RichHandler(console=console, rich_tracebacks=True)],
+        )
+        RICH_AVAILABLE = True
+    else:
+        # Piped output - use basic logging to avoid BrokenPipeError
+        logging.basicConfig(
+            level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
+        console = None
+        RICH_AVAILABLE = False
+except ImportError:
+    # Fall back to basic logging
+    logging.basicConfig(level=logging.INFO)
+    console = None
+    RICH_AVAILABLE = False
+
+logger = logging.getLogger("sphinx_config")
+
+
+def get_core_sphinx_extensions() -> list[str]:
+    """Get core Sphinx extensions with debugging."""
+    logger.info("🔧 Loading core Sphinx extensions...")
+
+    extensions = [
+        "sphinx.ext.autodoc",
+        "sphinx.ext.autosummary",
+        "sphinx.ext.doctest",
+        "sphinx.ext.intersphinx",
+        "sphinx.ext.todo",
+        "sphinx.ext.coverage",
+        "sphinx.ext.mathjax",
+        "sphinx.ext.ifconfig",
+        "sphinx.ext.viewcode",
+        "sphinx.ext.githubpages",
+        "sphinx.ext.napoleon",
+        "sphinx.ext.extlinks",
+        "sphinx.ext.graphviz",
+        "sphinx.ext.inheritance_diagram",
+    ]
+
+    logger.info(f"✅ Loaded {len(extensions)} core Sphinx extensions")
+    return extensions
+
+
+def get_autoapi_extensions() -> list[str]:
+    """Get AutoAPI extensions with debugging."""
+    logger.info("📚 Loading AutoAPI extensions...")
+
+    extensions = ["autoapi.extension"]
+
+    # Test if autoapi is available
+    try:
+        logger.info("✅ AutoAPI available and loaded")
+    except ImportError:
+        logger.warning("⚠️  AutoAPI not installed, removing from extensions")
+        extensions = []
+
+    return extensions
+
+
+def get_myst_extensions() -> list[str]:
+    """Get MyST extensions with debugging."""
+    logger.info("📝 Loading MyST extensions...")
+
+    # Temporarily disable myst_nb to fix transform conflict
+    extensions = ["myst_parser"]  # Removed "myst_nb" temporarily
+
+    # Test if MyST is available
+    available_extensions = []
+    for ext in extensions:
+        try:
+            if ext == "myst_parser" or ext == "myst_nb":
+                pass
+            available_extensions.append(ext)
+        except ImportError:
+            logger.warning(f"⚠️  {ext} not installed")
+
+    logger.info(f"✅ Loaded {len(available_extensions)} MyST extensions")
+    return available_extensions
+
+
+def get_additional_extensions() -> list[str]:
+    """Get additional Sphinx extensions with availability testing."""
+    logger.info("🎨 Loading additional extensions...")
+
+    # Extensions to test
+    extension_tests = {
+        # UI/UX Extensions
+        "sphinx_copybutton": "sphinx_copybutton",
+        # "sphinx_design": # "sphinx_design",  # DISABLED: Incompatible with Sphinx 8.2.3  # ERROR: sphinx_design_css_changed attribute error
+        "sphinx_tabs.tabs": "sphinx_tabs",
+        "sphinx_togglebutton": "sphinx_togglebutton",
+        # "sphinx_external_toc": "sphinx_external_toc",  # DISABLED: requires _toc.yml
+        "sphinx_favicon": "sphinx_favicon",
+        "sphinx_notfound_page": "sphinx_notfound_page",
+        # "sphinxcontrib.fulltoc": "sphinxcontrib.fulltoc",  # DISABLED: May conflict with Furo theme toctree
+        "sphinxcontrib.jquery": "sphinxcontrib.jquery",
+        # REMOVED: sphinxemoji (no setup function)
+        # Diagram Extensions
+        "sphinxcontrib.mermaid": "sphinxcontrib.mermaid",
+        "sphinxcontrib.plantuml": "sphinxcontrib.plantuml",
+        "sphinxcontrib.blockdiag": "sphinxcontrib.blockdiag",
+        "sphinxcontrib.seqdiag": "sphinxcontrib.seqdiag",
+        "sphinxcontrib.drawio": "sphinxcontrib.drawio",
+        # API Documentation
+        "sphinxcontrib.bibtex": "sphinxcontrib.bibtex",
+        "sphinxcontrib.openapi": "sphinxcontrib.openapi",
+        "sphinxcontrib.redoc": "sphinxcontrib.redoc",
+        "sphinxcontrib.httpdomain": "sphinxcontrib.httpdomain",
+        # Media Extensions
+        # "sphinxcontrib.images": "sphinxcontrib.images",  # ERROR: BuildEnvironment has no attribute remote_images
+        "sphinxcontrib.youtube": "sphinxcontrib.youtube",
+        # SEO/Web Extensions
+        # "sphinx_sitemap": "sphinx_sitemap",  # DISABLED: Incompatible with Sphinx 8.2.3 - is_directory_builder attribute error
+        "sphinx_reredirects": "sphinx_reredirects",
+        "sphinxext.opengraph": "sphinxext.opengraph",
+        "sphinxext.rediraffe": "sphinxext.rediraffe",
+        # "sphinx_last_updated_by_git": "sphinx_last_updated_by_git",  # ERROR: BuildEnvironment has no attribute git_last_updated
+        # REMOVED: sphinxcontrib.versioning (setup function issues)
+        # Output Format Extensions
+        "sphinxcontrib.applehelp": "sphinxcontrib.applehelp",
+        "sphinxcontrib.devhelp": "sphinxcontrib.devhelp",
+        "sphinxcontrib.htmlhelp": "sphinxcontrib.htmlhelp",
+        "sphinxcontrib.qthelp": "sphinxcontrib.qthelp",
+        "sphinxcontrib.serializinghtml": "sphinxcontrib.serializinghtml",
+        # "sphinxcontrib.jsmath": "sphinxcontrib.jsmath",  # ERROR: jsmath_path config value not set
+    }
+
+    available_extensions = []
+    unavailable_extensions = []
+
+    for ext_name, import_name in extension_tests.items():
+        try:
+            __import__(import_name)
+            available_extensions.append(ext_name)
+            logger.debug(f"✅ {ext_name}")
+        except ImportError:
+            unavailable_extensions.append(ext_name)
+            logger.debug(f"❌ {ext_name} (not installed)")
+
+    if unavailable_extensions:
+        logger.warning(
+            f"⚠️  {len(unavailable_extensions)} extensions not available",
+        )
+
+    logger.info(f"✅ Loaded {len(available_extensions)} additional extensions")
+    return available_extensions
+
+
+def get_development_extensions() -> list[str]:
+    """Get development and testing extensions."""
+    logger.info("🔬 Loading development extensions...")
+
+    extension_tests = {
+        # Core Development Extensions
+        "sphinx_autodoc_typehints": "sphinx_autodoc_typehints",
+        "sphinx_paramlinks": "sphinx_paramlinks",
+        # NOTE: sphinx-toolbox is incompatible with Sphinx 8.x
+        # Removed due to ForwardRef compatibility issues
+        # REMOVED: sphinx_inline_tabs (directive 'tab' already registered)
+        "sphinx_prompt": "sphinx_prompt",
+        "sphinx_substitution_extensions": "sphinx_substitution_extensions",
+        # AutoDoc Extensions
+        "sphinx_autoapi": "sphinx_autoapi",
+        "sphinx_autodoc2": "sphinx_autodoc2",
+        "sphinx_autodocgen": "sphinx_autodocgen",
+        "sphinx_autofixture": "sphinx_autofixture",
+        # "sphinx_autoindex": "sphinx_autoindex",  # DISABLED: Problematic with multi-package structure
+        "sphinx_autoissues": "sphinx_autoissues",
+        "sphinx_automagicdoc": "sphinx_automagicdoc",
+        # "sphinx_automodapi": "sphinx_automodapi",  # REMOVED: No setup() function
+        "sphinx_autopackagesummary": "sphinx_autopackagesummary",
+        "sphinx_autopages": "sphinx_autopages",
+        "sphinx_autorun": "sphinx_autorun",
+        "sphinx_autosummary_accessors": "sphinx_autosummary_accessors",
+        "sphinxcontrib.autodoc_pydantic": "sphinxcontrib.autodoc_pydantic",
+        "autodocsumm": "autodocsumm",
+        # Code Documentation
+        "sphinx_argparse": "sphinx_argparse",
+        "sphinx_click": "sphinx_click",
+        # REMOVED: sphinx_codeautolink - causes NodeType.MESSAGE_TRANSFORMER error
+        # with Sphinx 8.2.3
+        # "sphinx_codefence": "sphinx_codefence",  # ERROR: NameError: name 'docutils' is not defined
+        "sphinx_codelinks": "sphinx_codelinks",
+        "sphinx_exec_directive": "sphinx_exec_directive",
+        # "sphinx_inlinecode": "sphinx_inlinecode",  # DISABLED: Path issues with doctree files
+        # Documentation Management
+        # "sphinx_cmd": "sphinx_cmd",  # REMOVED: No setup() function
+        "sphinx_debuginfo": "sphinx_debuginfo",
+        "sphinx_dust": "sphinx_dust",
+        # "sphinx_feedback": "sphinx_feedback",  # REMOVED: No setup() function
+        "sphinx_interrogatedb": "sphinx_interrogatedb",
+        "sphinx_lint": "sphinx_lint",
+        # "sphinx_reports": "sphinx_reports",  # REMOVED: typing.Dict conversion errors
+        # "sphinx_watch": "sphinx_watch",  # REMOVED: No setup() function
+    }
+
+    available_extensions = []
+
+    for ext_name, import_name in extension_tests.items():
+        try:
+            __import__(import_name)
+            available_extensions.append(ext_name)
+            logger.debug(f"✅ {ext_name}")
+        except ImportError:
+            logger.debug(f"❌ {ext_name} (not installed)")
+
+    logger.info(f"✅ Loaded {len(available_extensions)} development extensions")
+    return available_extensions
+
+
+def get_enhanced_extensions() -> list[str]:
+    """Get enhanced feature extensions."""
+    logger.info("✨ Loading enhanced extensions...")
+
+    extension_tests = {
+        # Advanced Layout Extensions
+        "sphinx_panels": "sphinx_panels",
+        # "sphinx_book_theme": "sphinx_book_theme",  # DISABLED: Theme extension, not a regular extension
+        "sphinx_examples": "sphinx_examples",
+        # "sphinx_gallery.gen_gallery": "sphinx_gallery",  # Temporarily disabled - requires proper example structure
+        "sphinx_version_warning": "sphinx_version_warning",
+        # "sphinx_multitoc_numbering": "sphinx_multitoc_numbering",  # DISABLED: toctree conflict
+        # Advanced Documentation Features
+        "sphinx_comments": "sphinx_comments",
+        "sphinx_proof": "sphinx_proof",
+        "sphinx_exercise": "sphinx_exercise",
+        "sphinx_thebe": "sphinx_thebe",
+        # "sphinx_thebelab": "sphinx_thebelab",  # DISABLED: Conflicts with sphinx_thebe (both register thebe_config)
+        # Interactive Features
+        "sphinx_collapse": "sphinx_collapse",
+        # "sphinx_charts": "sphinx_charts",  # WARNING: no setup() function
+        # "sphinx_carousel": "sphinx_carousel",  # WARNING: no setup() function
+        "sphinx_data_viewer": "sphinx_data_viewer",
+        "sphinx_galleria": "sphinx_galleria",
+        "sphinx_hoverxref": "sphinx_hoverxref",
+        # "sphinx_tippy": "sphinx_tippy",  # DISABLED: Incompatible with Sphinx 8.2.3 - tippy_config attribute error
+        "sphinx_treeview": "sphinx_treeview",
+        # "sphinx_visualized": "sphinx_visualized",  # DISABLED: KeyError 'index' in node_map
+        # Specialized Content
+        "sphinx_changelog": "sphinx_changelog",
+        "sphinx_contributors": "sphinx_contributors",
+        "sphinx_git": "sphinx_git",
+        # "sphinx_issues": "sphinx_issues",  # WARNING: duplicate role registration
+        "sphinx_needs": "sphinx_needs",
+        "sphinx_timeline": "sphinx_timeline",
+        "sphinx_tags": "sphinx_tags",
+        # Themes and Styling
+        # "sphinx_basic_ng": "sphinx_basic_ng",  # DISABLED: Theme extension
+        "sphinx_library": "sphinx_library",
+        # REMOVED: sphinx_modern_theme (no setup function)
+        # "sphinx_rtd_theme": "sphinx_rtd_theme",  # DISABLED: Theme extension
+        # "sphinx_typlog_theme": "sphinx_typlog_theme",  # DISABLED: Theme extension
+        # Icons and UI Elements
+        "sphinx_btn": "sphinx_btn",
+        "sphinx_icon": "sphinx_icon",
+        # "sphinx_fasvg": "sphinx_fasvg",  # WARNING: duplicate role registration
+        # Mathematical and Scientific
+        # DISABLED: sphinx_math_dollar incompatible with Sphinx 8.2.3 - causes NotImplementedError
+        # "sphinx_uml": "sphinx_uml",  # WARNING: duplicate directive registration
+        "sphinx_mindmap": "sphinx_mindmap",
+        # "sphinx_diagrams": "sphinx_diagrams",  # WARNING: deprecation warnings
+        # Markdown Integration - DISABLED due to conflict with myst_parser
+        # Social and External Integration - REMOVED: No setup() functions
+        # "sphinx_disqus": "sphinx_disqus",  # WARNING: no setup() function
+        # "sphinx_social": "sphinx_social",  # WARNING: no setup() function
+        # "sphinx_desktop": "sphinx_desktop",  # WARNING: no setup() function
+        # Internationalization - REMOVED: sphinx_intl (no setup function)
+        "sphinx_tsegsearch": "sphinx_tsegsearch",
+        # PDF and Export
+        # "sphinx_pdf_generate": "sphinx_pdf_generate",  # DISABLED: Incompatible with Sphinx 8.2.3 - sphinx_pdfgen_data attribute error
+        "sphinx_simplepdf": "sphinx_simplepdf",
+        "sphinx_revealjs": "sphinx_revealjs",
+        # Advanced Features
+        "sphinx_collections": "sphinx_collections",
+        "sphinx_combine": "sphinx_combine",
+        "sphinx_cache": "sphinx_cache",
+        # "sphinx_inplace": "sphinx_inplace",  # WARNING: no setup() function
+        # "sphinx_me": "sphinx_me",  # WARNING: no setup() function
+        "sphinx_multiproject": "sphinx_multiproject",
+        # "sphinx_multiversion": "sphinx_multiversion",  # DISABLED: May cause toctree conflicts
+        # "sphinx_polyversion": "sphinx_polyversion",  # WARNING: no setup() function
+        # REMOVED: sphinx_selective_exclude (no setup function)
+        "sphinx_variations": "sphinx_variations",
+        "sphinx_versions": "sphinx_versions",
+        # REMOVED: sphinx_pyproject (use in conf.py instead)
+        # "sphinx_toml": "sphinx_toml",  # WARNING: no setup() function
+        # Web Framework Integration
+        "sphinx_webtools": "sphinx_webtools",
+        "sphinx_pyscript": "sphinx_pyscript",
+        # Specialized Extensions
+        "sphinx_icontract": "sphinx_icontract",
+        # "sphinx_jinja": "sphinx_jinja",  # DISABLED: May conflict with template system
+        # REMOVED: sphinx_jinja2 (no setup function)
+        # "sphinx_jinja2_compat": "sphinx_jinja2_compat",  # DISABLED: no setup() function
+        "sphinx_jsonschema": "sphinx_jsonschema",
+        "sphinx_lastupdate": "sphinx_lastupdate",
+        # "sphinx_mcp": "sphinx_mcp",  # DISABLED: Requires MCP config - commented out per user request
+        "sphinx_openapi": "sphinx_openapi",
+        "sphinx_refdoc": "sphinx_refdoc",
+        "sphinx_removed_in": "sphinx_removed_in",
+        # "sphinx_sql": "sphinx_sql",  # WARNING: no setup() function
+        # "sphinx_tagtoctree": "sphinx_tagtoctree",  # DISABLED: May conflict with Furo theme toctree
+        "sphinx_toggleprompt": "sphinx_toggleprompt",
+        # "sphinx_typesafe": "sphinx_typesafe",  # WARNING: no setup() function
+    }
+
+    available_extensions = []
+
+    for ext_name, import_name in extension_tests.items():
+        try:
+            __import__(import_name)
+            available_extensions.append(ext_name)
+            logger.debug(f"✅ {ext_name}")
+        except ImportError:
+            logger.debug(f"❌ {ext_name} (not installed)")
+
+    logger.info(f"✅ Loaded {len(available_extensions)} enhanced extensions")
+    return available_extensions
+
+
+def get_all_extensions() -> list[str]:
+    """Get all available extensions with comprehensive testing and rich UI."""
+    if RICH_AVAILABLE and console:
+        console.print(
+            Panel.fit(
+                "🚀 [bold blue]Loading Sphinx Extensions[/bold blue]",
+                border_style="blue",
+            ),
+        )
+    else:
+        logger.info("🚀 Loading Sphinx Extensions")
+
+    # Load all extension groups
+    core = get_core_sphinx_extensions()
+    autoapi = get_autoapi_extensions()
+    myst = get_myst_extensions()
+    additional = get_additional_extensions()
+    development = get_development_extensions()
+    enhanced = get_enhanced_extensions()
+
+    # Combine all extensions
+    all_extensions = core + autoapi + myst + additional + development + enhanced
+
+    # Create summary table or simple output
+    if RICH_AVAILABLE and console:
+        table = Table(
+            title="Extension Summary",
+            show_header=True,
+            header_style="bold magenta",
+        )
+        table.add_column("Category", style="cyan")
+        table.add_column("Count", justify="right", style="green")
+        table.add_column("Extensions", style="yellow")
+
+        table.add_row(
+            "Core Sphinx",
+            str(len(core)),
+            ", ".join(core[:3]) + "..." if len(core) > 3 else ", ".join(core),
+        )
+        table.add_row("AutoAPI", str(len(autoapi)), ", ".join(autoapi))
+        table.add_row("MyST", str(len(myst)), ", ".join(myst))
+        table.add_row(
+            "Additional",
+            str(len(additional)),
+            f"{len(additional)} available extensions",
+        )
+        table.add_row(
+            "Development",
+            str(len(development)),
+            f"{len(development)} available extensions",
+        )
+        table.add_row(
+            "Enhanced",
+            str(len(enhanced)),
+            f"{len(enhanced)} available extensions",
+        )
+        table.add_row(
+            "[bold]TOTAL[/bold]",
+            f"[bold]{len(all_extensions)}[/bold]",
+            "[bold]extensions loaded[/bold]",
+        )
+
+        console.print(table)
+        console.print(
+            Panel.fit(
+                f"✅ [bold green]{len(all_extensions)} extensions ready for use![/bold green]",
+                border_style="green",
+            ),
+        )
+    else:
+        logger.info("Extension Summary:")
+        logger.info(f"  Core Sphinx: {len(core)}")
+        logger.info(f"  AutoAPI: {len(autoapi)}")
+        logger.info(f"  MyST: {len(myst)}")
+        logger.info(f"  Additional: {len(additional)}")
+        logger.info(f"  Development: {len(development)}")
+        logger.info(f"  Enhanced: {len(enhanced)}")
+        logger.info(f"  TOTAL: {len(all_extensions)} extensions loaded")
+
+    return all_extensions
+
+
+def test_extension_compatibility() -> dict[str, Any]:
+    """Test extension compatibility and provide debugging info."""
+    if RICH_AVAILABLE and console:
+        console.print(
+            Panel.fit(
+                "🧪 [bold yellow]Testing Extension Compatibility[/bold yellow]",
+                border_style="yellow",
+            ),
+        )
+    else:
+        logger.info("🧪 Testing Extension Compatibility")
+
+    results = {
+        "total_extensions": 0,
+        "working_extensions": 0,
+        "failed_extensions": [],
+        "warnings": [],
+    }
+
+    extensions = get_all_extensions()
+    results["total_extensions"] = len(extensions)
+
+    # Test each extension individually
+    for ext in extensions:
+        try:
+            # Simple import test
+            if "." in ext:
+                module_parts = ext.split(".")
+                __import__(module_parts[0])
+            else:
+                __import__(ext)
+
+            results["working_extensions"] += 1
+            logger.debug(f"✅ {ext}")
+
+        except ImportError as e:
+            results["failed_extensions"].append((ext, str(e)))
+            logger.debug(f"❌ {ext}: {e}")
+        except Exception as e:
+            results["warnings"].append((ext, str(e)))
+            logger.debug(f"⚠️  {ext}: {e}")
+
+    # Summary
+    if results["failed_extensions"]:
+        logger.warning(
+            f"❌ {len(results['failed_extensions'])} extensions failed",
+        )
+    if results["warnings"]:
+        logger.warning(
+            f"⚠️  {len(results['warnings'])} extensions have warnings",
+        )
+
+    logger.info(
+        f"✅ {results['working_extensions']}/{results['total_extensions']} extensions working",
+    )
+
+    return results

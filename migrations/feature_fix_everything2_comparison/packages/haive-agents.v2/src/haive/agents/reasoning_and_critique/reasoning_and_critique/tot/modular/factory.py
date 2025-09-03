@@ -18,12 +18,12 @@ Functions:
 from collections.abc import Callable
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
 from langchain_core.prompts import ChatPromptTemplate
 
 from haive.agents.reasoning_and_critique.tot.modular.agent import ToTAgent
 from haive.agents.reasoning_and_critique.tot.modular.config import ToTAgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
 
 
 def create_tot_agent(
@@ -69,7 +69,7 @@ def create_tot_agent(
                 ("system", expand_prompt),
                 ("user", "Problem: {problem}"),
                 ("user", "Previous attempt: {seed}" if "{seed}" in kwargs else ""),
-            ]
+            ],
         )
 
     if isinstance(score_prompt, str) and not score_function:
@@ -79,7 +79,7 @@ def create_tot_agent(
                 ("system", score_prompt),
                 ("user", "Problem: {problem}"),
                 ("user", "Solution attempt: {candidate}"),
-            ]
+            ],
         )
 
     # Create default prompts if none provided
@@ -93,7 +93,7 @@ def create_tot_agent(
                 ),
                 ("user", "Problem: {problem}"),
                 ("user", "Previous attempt: {seed}" if "{seed}" in kwargs else ""),
-            ]
+            ],
         )
 
     # Create the ToTAgentConfig
@@ -118,7 +118,10 @@ def create_tot_agent(
 
 
 def create_math_tot_agent(
-    model: str = "gpt-4o", temperature: float = 0.7, name: str | None = None, **kwargs
+    model: str = "gpt-4o",
+    temperature: float = 0.7,
+    name: str | None = None,
+    **kwargs,
 ) -> ToTAgent:
     """Create a Tree of Thoughts agent specifically for math problems.
 
@@ -162,7 +165,7 @@ def create_math_tot_agent(
 
         # Check for a clear final answer
         has_answer = bool(
-            re.search(r"answer|result|solution|=\s*\d+(?:\.\d+)?$", solution.lower())
+            re.search(r"answer|result|solution|=\s*\d+(?:\.\d+)?$", solution.lower()),
         )
 
         # Calculate a base score
@@ -201,7 +204,10 @@ def create_math_tot_agent(
 
 
 def create_game24_tot_agent(
-    model: str = "gpt-4o", temperature: float = 0.7, name: str | None = None, **kwargs
+    model: str = "gpt-4o",
+    temperature: float = 0.7,
+    name: str | None = None,
+    **kwargs,
 ) -> ToTAgent:
     """Create a Tree of Thoughts agent specifically for "Game of 24" problems.
 
@@ -228,10 +234,10 @@ def create_game24_tot_agent(
         """An equation attempting to reach 24 using the provided numbers."""
 
         formula: str = Field(
-            description="Mathematical formula using all four numbers and basic operations"
+            description="Mathematical formula using all four numbers and basic operations",
         )
         reasoning: str = Field(
-            description="Step-by-step reasoning for how this formula works"
+            description="Step-by-step reasoning for how this formula works",
         )
 
         @field_validator("formula")
@@ -240,7 +246,7 @@ def create_game24_tot_agent(
             """Validate the formula has basic math operators."""
             if not any(op in v for op in ["+", "-", "*", "/"]):
                 raise ValueError(
-                    "Formula must contain at least one mathematical operator"
+                    "Formula must contain at least one mathematical operator",
                 )
             return v
 
@@ -260,7 +266,7 @@ def create_game24_tot_agent(
             ),
             ("user", "Numbers: {problem}"),
             ("user", "Previous attempt: {seed}" if "{seed}" in kwargs else ""),
-        ]
+        ],
     )
 
     # Create score prompt with structured output
@@ -273,7 +279,7 @@ def create_game24_tot_agent(
             ),
             ("user", "Numbers: {problem}"),
             ("user", "Equation: {candidate}"),
-        ]
+        ],
     )
 
     # Define a function to score Game of 24 solutions
@@ -363,7 +369,7 @@ def create_game24_tot_agent(
         """Score for a Game of 24 solution."""
 
         score: float = Field(
-            description="Score between 0.0 and 1.0, with 1.0 being exactly 24"
+            description="Score between 0.0 and 1.0, with 1.0 being exactly 24",
         )
         feedback: str = Field(description="Explanation of the score and correctness")
 

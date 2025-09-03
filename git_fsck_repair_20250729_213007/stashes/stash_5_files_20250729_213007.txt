@@ -1,4 +1,0 @@
-migrations/feature_fix_everything2_comparison/packages/haive-agents.v2/src/haive/agents/dynamic/prompts.py
-project_docs/sessions/active/kai_validation_node_v2_memories_20250729.md
-project_docs/sessions/active/validation_node_v2_analysis_20250729.md
-pyproject.toml

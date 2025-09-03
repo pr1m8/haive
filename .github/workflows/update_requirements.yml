@@ -1,0 +1,30 @@
+name: Update requirements on push
+
+on:
+  push:
+    branches:
+      - main # or any branch you want
+
+jobs:
+  update-reqs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python & Poetry
+        run: |
+          pip install poetry
+          poetry install
+
+      - name: Export requirements
+        run: |
+          poetry export -f requirements.txt -o docs/requirements.txt --without-hashes
+          poetry export -f requirements.txt --with dev -o docs/requirements-dev.txt --without-hashes
+
+      - name: Commit & Push (if changed)
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add docs/requirements*.txt
+          git diff --cached --quiet || git commit -m "chore: update requirements from CI"
+          git push || echo "Nothing to push"

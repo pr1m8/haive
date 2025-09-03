@@ -193,7 +193,7 @@ def process(thing: Any) -> Any:
     if isinstance(thing, Engine):
         # Maybe it's an engine
     elif hasattr(thing, 'invoke'):
-        # Maybe it's invokable
+        # Maybe it's invocable
     elif callable(thing):
         # Maybe it's a function
     # WHO KNOWS?!

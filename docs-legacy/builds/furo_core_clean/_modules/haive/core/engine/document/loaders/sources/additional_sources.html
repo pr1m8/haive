@@ -1,0 +1,1759 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.engine.document.loaders.sources.additional_sources - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../../../api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../../api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for haive.core.engine.document.loaders.sources.additional_sources</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Additional comprehensive source registrations to reach 231 langchain_community loaders.</span>
+
+<span class="sd">This module implements additional loaders from langchain_community including:</span>
+<span class="sd">- Academic and research platforms</span>
+<span class="sd">- News and media sources</span>
+<span class="sd">- API documentation sources</span>
+<span class="sd">- Knowledge management systems</span>
+<span class="sd">- Collaboration tools</span>
+<span class="sd">- Specialized file formats</span>
+<span class="sd">- Social platforms</span>
+<span class="sd">- Developer tools</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Field</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.enhanced_registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_source</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.source_types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CredentialType</span><span class="p">,</span>
+    <span class="n">DatabaseSource</span><span class="p">,</span>
+    <span class="n">LoaderCapability</span><span class="p">,</span>
+    <span class="n">LocalFileSource</span><span class="p">,</span>
+    <span class="n">RemoteSource</span><span class="p">,</span>
+    <span class="n">SourceCategory</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Academic and Research Sources</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="BiorxivSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.BiorxivSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;biorxiv&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">ACADEMIC_RESEARCH</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;biorxiv&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;BiorxivLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">,</span> <span class="s2">&quot;beautifulsoup4&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;biorxiv&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;bioRxiv preprint repository loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">METADATA_EXTRACTION</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BiorxivSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;bioRxiv preprint source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;biorxiv&quot;</span>
+    <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Search query&quot;</span><span class="p">)</span>
+    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Maximum results&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="MedrxivSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.MedrxivSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;medrxiv&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">ACADEMIC_RESEARCH</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;medrxiv&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;MedrxivLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">,</span> <span class="s2">&quot;beautifulsoup4&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;medrxiv&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;medRxiv medical preprint repository loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">METADATA_EXTRACTION</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MedrxivSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;medRxiv medical preprint source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;medrxiv&quot;</span>
+    <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Search query&quot;</span><span class="p">)</span>
+    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Maximum results&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SSRNSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.SSRNSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ssrn&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">ACADEMIC_RESEARCH</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;ssrn&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;SSRNLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;ssrn&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;SSRN social science research network loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">METADATA_EXTRACTION</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SSRNSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;SSRN research paper source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ssrn&quot;</span>
+    <span class="n">paper_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;SSRN paper ID&quot;</span><span class="p">)</span>
+    <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Search query&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># News and Media Sources</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="NewsAPISource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.NewsAPISource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;news_api&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">SPECIALIZED</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;newsapi&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;NewsAPILoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;newsapi-python&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;newsapi&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;News API aggregator loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">REAL_TIME</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NewsAPISource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;News API aggregator source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;news_api&quot;</span>
+    <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Search query&quot;</span><span class="p">)</span>
+    <span class="n">sources</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;News sources&quot;</span><span class="p">)</span>
+    <span class="n">from_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Start date&quot;</span><span class="p">)</span>
+    <span class="n">to_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;End date&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="HackerNewsSearchSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.HackerNewsSearchSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hackernews_search&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">SPECIALIZED</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;hn_search&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;HNSearchLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;hn_search&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Hacker News search API loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">COMMENTS</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HackerNewsSearchSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Hacker News search source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;hackernews_search&quot;</span>
+    <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Search query&quot;</span><span class="p">)</span>
+    <span class="n">search_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;story&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;story, comment, or all&quot;</span><span class="p">)</span>
+    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Maximum results&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="GuardianSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.GuardianSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;the_guardian&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">SPECIALIZED</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;guardian&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;GuardianLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;guardian&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The Guardian news article loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">METADATA_EXTRACTION</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GuardianSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Guardian news source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;the_guardian&quot;</span>
+    <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Search query&quot;</span><span class="p">)</span>
+    <span class="n">section</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;News section&quot;</span><span class="p">)</span>
+    <span class="n">from_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Start date&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Developer and API Documentation</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="PostmanCollectionSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.PostmanCollectionSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;postman_collection&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">DEVELOPMENT_VCS</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;postman&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;PostmanCollectionLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;postman&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Postman API collection loader&quot;</span><span class="p">,</span>
+    <span class="n">file_extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.json&quot;</span><span class="p">],</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PostmanCollectionSource</span><span class="p">(</span><span class="n">LocalFileSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Postman collection source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;postman_collection&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">DEVELOPMENT_VCS</span></div>
+
+
+
+<div class="viewcode-block" id="SwaggerAPISource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.SwaggerAPISource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;swagger_api&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">DEVELOPMENT_VCS</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;swagger&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;SwaggerLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;pyyaml&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;swagger&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Swagger/OpenAPI documentation loader&quot;</span><span class="p">,</span>
+    <span class="n">file_extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;.yml&quot;</span><span class="p">,</span> <span class="s2">&quot;.json&quot;</span><span class="p">],</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SwaggerAPISource</span><span class="p">(</span><span class="n">LocalFileSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Swagger/OpenAPI documentation source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;swagger_api&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">DEVELOPMENT_VCS</span></div>
+
+
+
+<div class="viewcode-block" id="GitLabSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.GitLabSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gitlab&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">DEVELOPMENT_VCS</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;gitlab&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;GitLabLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;python-gitlab&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;gitlab&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;GitLab repository and issue loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">BULK_LOADING</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">METADATA_EXTRACTION</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GitLabSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;GitLab repository source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;gitlab&quot;</span>
+    <span class="n">project_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;GitLab project ID&quot;</span><span class="p">)</span>
+    <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Branch name&quot;</span><span class="p">)</span>
+    <span class="n">file_pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;File pattern to match&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Knowledge Management Systems</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="RoamResearchSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.RoamResearchSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;roam_research&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">KNOWLEDGE_PERSONAL</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;roam&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;RoamLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;roam&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Roam Research knowledge graph loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">METADATA_EXTRACTION</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RoamResearchSource</span><span class="p">(</span><span class="n">LocalFileSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Roam Research export source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;roam_research&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">KNOWLEDGE_PERSONAL</span></div>
+
+
+
+<div class="viewcode-block" id="LogseqSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.LogseqSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;logseq&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">KNOWLEDGE_PERSONAL</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;logseq&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;LogseqLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;logseq&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Logseq knowledge management loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">METADATA_EXTRACTION</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LogseqSource</span><span class="p">(</span><span class="n">LocalFileSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Logseq knowledge base source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;logseq&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">KNOWLEDGE_PERSONAL</span></div>
+
+
+
+<div class="viewcode-block" id="DendronSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.DendronSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;dendron&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">KNOWLEDGE_PERSONAL</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;dendron&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;DendronLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;dendron&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Dendron hierarchical note-taking loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">RECURSIVE</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DendronSource</span><span class="p">(</span><span class="n">LocalFileSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dendron note-taking source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dendron&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">KNOWLEDGE_PERSONAL</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Social Media and Forums</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="LinkedInSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.LinkedInSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;linkedin&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">SOCIAL_MEDIA</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;linkedin&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;LinkedInLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;slow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;linkedin-api&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;linkedin&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;LinkedIn profile and post loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">USERNAME_PASSWORD</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">CONTACT_SYNC</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">METADATA_EXTRACTION</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LinkedInSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LinkedIn social media source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;linkedin&quot;</span>
+    <span class="n">profile_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Profile URL&quot;</span><span class="p">)</span>
+    <span class="n">company_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Company page URL&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="FacebookSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.FacebookSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;facebook&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">SOCIAL_MEDIA</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;facebook&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;FacebookPostsLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;facebook-sdk&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;facebook&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Facebook posts and pages loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">OAUTH</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">MEDIA_CONTENT</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">COMMENTS</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FacebookSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Facebook social media source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;facebook&quot;</span>
+    <span class="n">page_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Facebook page ID&quot;</span><span class="p">)</span>
+    <span class="n">group_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Facebook group ID&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="InstagramSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.InstagramSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;instagram&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">SOCIAL_MEDIA</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;instagram&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;InstagramLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;instaloader&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;instagram&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Instagram posts and stories loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">USERNAME_PASSWORD</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">MEDIA_CONTENT</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">COMMENTS</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InstagramSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Instagram social media source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;instagram&quot;</span>
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Instagram username&quot;</span><span class="p">)</span>
+    <span class="n">include_stories</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include stories&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Specialized File Formats</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="AsciiDocSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.AsciiDocSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;asciidoc&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">FILE_DOCUMENT</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;asciidoc&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;AsciiDocLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;asciidoc&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;AsciiDoc documentation format loader&quot;</span><span class="p">,</span>
+    <span class="n">file_extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.adoc&quot;</span><span class="p">,</span> <span class="s2">&quot;.asciidoc&quot;</span><span class="p">,</span> <span class="s2">&quot;.asc&quot;</span><span class="p">],</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">TEXT_EXTRACTION</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AsciiDocSource</span><span class="p">(</span><span class="n">LocalFileSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;AsciiDoc documentation source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;asciidoc&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">FILE_DOCUMENT</span></div>
+
+
+
+<div class="viewcode-block" id="OrgModeSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.OrgModeSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;org_mode&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">FILE_DOCUMENT</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;org&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;OrgModeLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;org&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Emacs Org-mode document loader&quot;</span><span class="p">,</span>
+    <span class="n">file_extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.org&quot;</span><span class="p">],</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrgModeSource</span><span class="p">(</span><span class="n">LocalFileSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Org-mode document source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;org_mode&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">FILE_DOCUMENT</span></div>
+
+
+
+<div class="viewcode-block" id="TextileSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.TextileSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;textile&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">FILE_DOCUMENT</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;textile&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;TextileLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;textile&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;textile&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Textile markup language loader&quot;</span><span class="p">,</span>
+    <span class="n">file_extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.textile&quot;</span><span class="p">],</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">TEXT_EXTRACTION</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TextileSource</span><span class="p">(</span><span class="n">LocalFileSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Textile markup source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;textile&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">FILE_DOCUMENT</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># E-commerce and Business</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="StripeSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.StripeSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;stripe&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;stripe&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;StripeLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;stripe&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;stripe&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Stripe payment data loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">REAL_TIME</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StripeSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stripe payment platform source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;stripe&quot;</span>
+    <span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;charges&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Stripe resource type&quot;</span><span class="p">)</span>
+    <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Number of records&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SquareSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.SquareSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;square&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;square&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;SquareLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;squareup&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;square&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Square payment and POS data loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">OAUTH</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">REAL_TIME</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SquareSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Square payment platform source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;square&quot;</span>
+    <span class="n">location_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Square location ID&quot;</span><span class="p">)</span>
+    <span class="n">object_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;payments&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Object type to load&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Media and Content Platforms</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="VimeoSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.VimeoSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;vimeo&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">MEDIA_VIDEO</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;vimeo&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;VimeoLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;vimeo&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;vimeo&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Vimeo video platform loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">OAUTH</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">MEDIA_CONTENT</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">TRANSCRIPTS</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">VimeoSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Vimeo video platform source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;vimeo&quot;</span>
+    <span class="n">video_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific video ID&quot;</span><span class="p">)</span>
+    <span class="n">channel_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Channel ID&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TwitchSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.TwitchSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;twitch&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">MEDIA_VIDEO</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;twitch&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;TwitchLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;python-twitch-client&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;twitch&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Twitch streaming platform loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">OAUTH</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">REAL_TIME</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">CHAT_LOGS</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TwitchSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Twitch streaming platform source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;twitch&quot;</span>
+    <span class="n">channel_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Twitch channel name&quot;</span><span class="p">)</span>
+    <span class="n">include_chat</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include chat messages&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Productivity and Office Tools</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="OneNoteSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.OneNoteSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;onenote&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">BUSINESS_PRODUCTIVITY</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;onenote&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;OneNoteLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;msal&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;onenote&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Microsoft OneNote notebook loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">OAUTH</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">COLLABORATIVE_EDITING</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OneNoteSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Microsoft OneNote source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;onenote&quot;</span>
+    <span class="n">notebook_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific notebook ID&quot;</span><span class="p">)</span>
+    <span class="n">section_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Specific section ID&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="AppleNotesSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.AppleNotesSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;apple_notes&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">BUSINESS_PRODUCTIVITY</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;apple_notes&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;AppleNotesLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;apple_notes&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Apple Notes app loader (macOS)&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AppleNotesSource</span><span class="p">(</span><span class="n">LocalFileSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apple Notes source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;apple_notes&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">SourceCategory</span> <span class="o">=</span> <span class="n">SourceCategory</span><span class="o">.</span><span class="n">BUSINESS_PRODUCTIVITY</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Analytics and BI Platforms</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="LookerSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.LookerSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;looker&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">ANALYTICS</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;looker&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;LookerLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;looker-sdk&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;looker&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Looker business intelligence platform loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">VISUALIZATION</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LookerSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Looker BI platform source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;looker&quot;</span>
+    <span class="n">dashboard_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Dashboard ID&quot;</span><span class="p">)</span>
+    <span class="n">look_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Look ID&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="MetabaseSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.MetabaseSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;metabase&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">ANALYTICS</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;metabase&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;MetabaseLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;metabase&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Metabase open-source BI tool loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">QUERY</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MetabaseSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Metabase analytics source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;metabase&quot;</span>
+    <span class="n">question_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Question ID&quot;</span><span class="p">)</span>
+    <span class="n">collection_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Collection ID&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Communication and Support</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="ZendeskSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.ZendeskSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;zendesk&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;zendesk&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;ZendeskLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;zenpy&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;zendesk&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Zendesk support ticket loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ZendeskSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Zendesk support platform source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;zendesk&quot;</span>
+    <span class="n">subdomain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Zendesk subdomain&quot;</span><span class="p">)</span>
+    <span class="n">ticket_status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Ticket status filter&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="FreshdeskSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.FreshdeskSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;freshdesk&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">COMMUNICATION</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;freshdesk&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;FreshdeskLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;freshdesk&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Freshdesk customer support loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">FILTERING</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FreshdeskSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Freshdesk support source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;freshdesk&quot;</span>
+    <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Freshdesk domain&quot;</span><span class="p">)</span>
+    <span class="n">ticket_filter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Ticket filter&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Database and Data Warehouse</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="ClickHouseSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.ClickHouseSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;clickhouse&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">DATABASE_SQL</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;clickhouse&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;ClickHouseLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;clickhouse-driver&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;clickhouse&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;ClickHouse columnar database loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">CONNECTION_STRING</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">QUERY</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ClickHouseSource</span><span class="p">(</span><span class="n">DatabaseSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ClickHouse database source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;clickhouse&quot;</span>
+    <span class="n">cluster</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;ClickHouse cluster&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="DuckDBSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.DuckDBSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;duckdb&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">DATABASE_SQL</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;duckdb&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;DuckDBLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;duckdb&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;duckdb&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;DuckDB embedded analytical database loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">QUERY</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DuckDBSource</span><span class="p">(</span><span class="n">DatabaseSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;DuckDB analytical database source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;duckdb&quot;</span>
+    <span class="n">database_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;:memory:&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Database file path&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># File Processing Tools</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="TesseractOCRSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.TesseractOCRSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;tesseract_ocr&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">FILE_DOCUMENT</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;tesseract&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;TesseractOCRLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;slow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;pytesseract&quot;</span><span class="p">,</span> <span class="s2">&quot;pillow&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;tesseract&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Tesseract OCR for scanned documents&quot;</span><span class="p">,</span>
+    <span class="n">file_extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;.jpeg&quot;</span><span class="p">,</span> <span class="s2">&quot;.tiff&quot;</span><span class="p">,</span> <span class="s2">&quot;.bmp&quot;</span><span class="p">],</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">OCR</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">TEXT_EXTRACTION</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TesseractOCRSource</span><span class="p">(</span><span class="n">LocalFileSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tesseract OCR source for images.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;tesseract_ocr&quot;</span>
+    <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;eng&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;OCR language&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="CamelotTablesSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.CamelotTablesSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;camelot_tables&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">FILE_DOCUMENT</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;camelot&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;CamelotLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;camelot-py&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;camelot&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Camelot table extraction from PDFs&quot;</span><span class="p">,</span>
+    <span class="n">file_extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.pdf&quot;</span><span class="p">],</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">TEXT_EXTRACTION</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CamelotTablesSource</span><span class="p">(</span><span class="n">LocalFileSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Camelot PDF table extraction source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;camelot_tables&quot;</span>
+    <span class="n">pages</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Pages to extract tables from&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Geographic and Mapping</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="OpenStreetMapSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.OpenStreetMapSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;openstreetmap&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">SPECIALIZED</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;osm&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;OpenStreetMapLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;osmium&quot;</span><span class="p">,</span> <span class="s2">&quot;shapely&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;osm&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;OpenStreetMap geographic data loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">GEOSPATIAL_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OpenStreetMapSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;OpenStreetMap geographic data source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;openstreetmap&quot;</span>
+    <span class="n">bbox</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Bounding box [min_lon, min_lat, max_lon, max_lat]&quot;</span>
+    <span class="p">)</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;OSM tags to filter&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Gaming and Virtual Worlds</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="SteamSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.SteamSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;steam&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">SPECIALIZED</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;steam&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;SteamLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;steam&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;steam&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Steam gaming platform data loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">METADATA_EXTRACTION</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SteamSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Steam gaming platform source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;steam&quot;</span>
+    <span class="n">app_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Steam app ID&quot;</span><span class="p">)</span>
+    <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Steam user ID&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Financial Data</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="AlphaVantageSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.AlphaVantageSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;alpha_vantage&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">SPECIALIZED</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;alphavantage&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;AlphaVantageLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;alpha-vantage&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;alphavantage&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Alpha Vantage financial data loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">REAL_TIME</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">TIMESERIES_DATA</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AlphaVantageSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Alpha Vantage financial data source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;alpha_vantage&quot;</span>
+    <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Stock symbol&quot;</span><span class="p">)</span>
+    <span class="n">function</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;TIME_SERIES_DAILY&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;API function&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># IoT and Sensor Data</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="MQTTSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.MQTTSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mqtt&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">SPECIALIZED</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;mqtt&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;MQTTLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;paho-mqtt&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;mqtt&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;MQTT IoT message broker loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">REAL_TIME</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">SENSOR_DATA</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MQTTSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;MQTT IoT messaging source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mqtt&quot;</span>
+    <span class="n">broker_host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;MQTT broker host&quot;</span><span class="p">)</span>
+    <span class="n">topic</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;MQTT topic to subscribe&quot;</span><span class="p">)</span>
+    <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">1883</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;MQTT broker port&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Legal and Compliance</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="SECEdgarSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.SECEdgarSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;sec_edgar&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">GOVERNMENT</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;edgar&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;SECEdgarLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;sec-edgar-downloader&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;edgar&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;SEC EDGAR financial filings loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SECEdgarSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;SEC EDGAR filings source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;sec_edgar&quot;</span>
+    <span class="n">ticker</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Company ticker symbol&quot;</span><span class="p">)</span>
+    <span class="n">filing_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;10-K&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Filing type (10-K, 10-Q, 8-K)&quot;</span><span class="p">)</span>
+    <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Start date&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Package Repositories</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="PyPISource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.PyPISource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;pypi&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">DEVELOPMENT_VCS</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;pypi&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;PyPILoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;pypi&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Python Package Index (PyPI) loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">METADATA_EXTRACTION</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PyPISource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;PyPI package repository source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pypi&quot;</span>
+    <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Python package name&quot;</span><span class="p">)</span>
+    <span class="n">include_readme</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include README content&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="NPMSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.NPMSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;npm&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">DEVELOPMENT_VCS</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;npm&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;NPMLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;npm&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;NPM JavaScript package registry loader&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">METADATA_EXTRACTION</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NPMSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;NPM package registry source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;npm&quot;</span>
+    <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;NPM package name&quot;</span><span class="p">)</span>
+    <span class="n">include_readme</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Include README content&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Time Tracking and Project Management</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="TogglSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.TogglSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;toggl&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">BUSINESS_PRODUCTIVITY</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;toggl&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;TogglLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;toggl-cli&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;toggl&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Toggl time tracking data loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">TIMESERIES_DATA</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TogglSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Toggl time tracking source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;toggl&quot;</span>
+    <span class="n">workspace_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Toggl workspace ID&quot;</span><span class="p">)</span>
+    <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Start date for time entries&quot;</span><span class="p">)</span>
+    <span class="n">end_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;End date for time entries&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Weather and Environmental Data</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="OpenWeatherSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.OpenWeatherSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;openweather&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">SPECIALIZED</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;openweather&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;OpenWeatherLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;fast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;pyowm&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;openweather&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;OpenWeather weather data loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">REAL_TIME</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">GEOSPATIAL_DATA</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OpenWeatherSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;OpenWeather API source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;openweather&quot;</span>
+    <span class="n">location</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Location for weather data&quot;</span><span class="p">)</span>
+    <span class="n">forecast_days</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Number of forecast days&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Blockchain and Crypto</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="EtherscanSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.EtherscanSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;etherscan&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">SPECIALIZED</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;etherscan&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;EtherscanLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;etherscan-python&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;etherscan&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Etherscan blockchain explorer loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">API_KEY</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">BLOCKCHAIN_DATA</span><span class="p">,</span>
+        <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">TRANSACTION_HISTORY</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EtherscanSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Etherscan blockchain explorer source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;etherscan&quot;</span>
+    <span class="n">address</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Ethereum address&quot;</span><span class="p">)</span>
+    <span class="n">network</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;mainnet&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Ethereum network&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Calendar and Scheduling</span>
+<span class="c1"># =============================================================================</span>
+
+
+<div class="viewcode-block" id="GoogleCalendarSource">
+<a class="viewcode-back" href="../../../../../../../api_clean/haive/core/engine/document/loaders/sources/additional_sources/index.html#haive.core.engine.document.loaders.sources.additional_sources.GoogleCalendarSource">[docs]</a>
+<span class="nd">@register_source</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;google_calendar&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">SourceCategory</span><span class="o">.</span><span class="n">BUSINESS_PRODUCTIVITY</span><span class="p">,</span>
+    <span class="n">loaders</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;gcal&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;GoogleCalendarLoader&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;speed&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;quality&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;langchain_community.document_loaders&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;requires_packages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;google-api-python-client&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">default_loader</span><span class="o">=</span><span class="s2">&quot;gcal&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Google Calendar events loader&quot;</span><span class="p">,</span>
+    <span class="n">requires_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">credential_type</span><span class="o">=</span><span class="n">CredentialType</span><span class="o">.</span><span class="n">OAUTH</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">LoaderCapability</span><span class="o">.</span><span class="n">STRUCTURED_DATA</span><span class="p">,</span> <span class="n">LoaderCapability</span><span class="o">.</span><span class="n">REAL_TIME</span><span class="p">],</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GoogleCalendarSource</span><span class="p">(</span><span class="n">RemoteSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Google Calendar source.&quot;&quot;&quot;</span>
+
+    <span class="n">source_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;google_calendar&quot;</span>
+    <span class="n">calendar_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;primary&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Calendar ID&quot;</span><span class="p">)</span>
+    <span class="n">time_min</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Start time&quot;</span><span class="p">)</span>
+    <span class="n">time_max</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;End time&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># Register all sources on import</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Financial</span>
+    <span class="s2">&quot;AlphaVantageSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AppleNotesSource&quot;</span><span class="p">,</span>
+    <span class="c1"># File formats</span>
+    <span class="s2">&quot;AsciiDocSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Academic</span>
+    <span class="s2">&quot;BiorxivSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CamelotTablesSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Database</span>
+    <span class="s2">&quot;ClickHouseSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DendronSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DuckDBSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Blockchain</span>
+    <span class="s2">&quot;EtherscanSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FacebookSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FreshdeskSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GitLabSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Calendar</span>
+    <span class="s2">&quot;GoogleCalendarSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GuardianSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HackerNewsSearchSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;InstagramSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Social</span>
+    <span class="s2">&quot;LinkedInSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LogseqSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Analytics</span>
+    <span class="s2">&quot;LookerSource&quot;</span><span class="p">,</span>
+    <span class="c1"># IoT</span>
+    <span class="s2">&quot;MQTTSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MedrxivSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MetabaseSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NPMSource&quot;</span><span class="p">,</span>
+    <span class="c1"># News</span>
+    <span class="s2">&quot;NewsAPISource&quot;</span><span class="p">,</span>
+    <span class="c1"># Productivity</span>
+    <span class="s2">&quot;OneNoteSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Geographic</span>
+    <span class="s2">&quot;OpenStreetMapSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Weather</span>
+    <span class="s2">&quot;OpenWeatherSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OrgModeSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Developer</span>
+    <span class="s2">&quot;PostmanCollectionSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Package repos</span>
+    <span class="s2">&quot;PyPISource&quot;</span><span class="p">,</span>
+    <span class="c1"># Knowledge</span>
+    <span class="s2">&quot;RoamResearchSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Legal</span>
+    <span class="s2">&quot;SECEdgarSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SSRNSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SquareSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Gaming</span>
+    <span class="s2">&quot;SteamSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Business</span>
+    <span class="s2">&quot;StripeSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SwaggerAPISource&quot;</span><span class="p">,</span>
+    <span class="c1"># OCR</span>
+    <span class="s2">&quot;TesseractOCRSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TextileSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Time tracking</span>
+    <span class="s2">&quot;TogglSource&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TwitchSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Media</span>
+    <span class="s2">&quot;VimeoSource&quot;</span><span class="p">,</span>
+    <span class="c1"># Support</span>
+    <span class="s2">&quot;ZendeskSource&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

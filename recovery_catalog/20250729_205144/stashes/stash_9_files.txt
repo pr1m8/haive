@@ -1,8 +1,0 @@
-commit 4eff8b004dfcc225828b97d26cc5aac59c06230a
-Merge: 15ca1591 e492765a
-Author: pr1m8 <william.astley@algebraicwealth.com>
-Date:   Tue Jul 29 17:44:22 2025 -0400
-
-    On feature/fix_everything: CONFIG_SYNC_CHECKPOINT_20250729_174422
-
-pyproject.toml

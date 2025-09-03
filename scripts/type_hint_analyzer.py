@@ -299,7 +299,6 @@ class TypeHintAnalyzer:
         if not package_path.exists():
             return {}
 
-
         python_files = list(package_path.rglob("*.py"))
         results = {
             "package": package_name,
@@ -417,4 +416,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

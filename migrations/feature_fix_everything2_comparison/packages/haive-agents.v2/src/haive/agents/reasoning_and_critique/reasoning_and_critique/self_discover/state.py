@@ -31,11 +31,13 @@ class SelfDiscoverState(BaseModel):
 
     # Communication and tracking fields
     messages: Annotated[Sequence[BaseMessage], add_messages] = Field(
-        default_factory=list, description="Messages in the conversation"
+        default_factory=list,
+        description="Messages in the conversation",
     )
 
     error: str | None = Field(
-        default=None, description="Error message if any step fails"
+        default=None,
+        description="Error message if any step fails",
     )
 
     # Core SelfDiscover fields
@@ -45,11 +47,13 @@ class SelfDiscoverState(BaseModel):
     )
 
     task_description: str = Field(
-        default="", description="Description of the task to solve"
+        default="",
+        description="Description of the task to solve",
     )
 
     selected_modules: str | None = Field(
-        default=None, description="Selected reasoning modules suitable for the task"
+        default=None,
+        description="Selected reasoning modules suitable for the task",
     )
 
     adapted_modules: str | None = Field(
@@ -58,11 +62,13 @@ class SelfDiscoverState(BaseModel):
     )
 
     reasoning_structure: str | None = Field(
-        default=None, description="Structured reasoning plan in JSON format"
+        default=None,
+        description="Structured reasoning plan in JSON format",
     )
 
     answer: str | None = Field(
-        default=None, description="Final solution to the problem"
+        default=None,
+        description="Final solution to the problem",
     )
 
     # Optional metadata fields

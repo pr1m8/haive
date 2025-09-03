@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Safe documentation build with error handling."""
+from __future__ import annotations
 
 import os
 import subprocess
@@ -109,7 +110,6 @@ old_extensions = [""",
         f.write(safe_config)
 
 
-
 def build_safe_docs():
     """Build documentation with safe configuration."""
 
@@ -143,7 +143,6 @@ def build_safe_docs():
         capture_output=True,
         text=True,
     )
-
 
     # Show last part of output
     if result.stdout:

@@ -12,10 +12,16 @@ Functions:
     get_db_schema: Get Db Schema functionality.
 """
 
-from abc import ABC, abstractmethod
-from typing import Any, Generic, TypeVar
+from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from abc import ABC
+from abc import abstractmethod
+from typing import Any
+from typing import Generic
+from typing import TypeVar
+
+from pydantic import BaseModel
+from pydantic import Field
 
 # Type variable for the database connection object
 T = TypeVar("T")
@@ -29,7 +35,7 @@ class BaseDBConfig(ABC, BaseModel, Generic[T]):
     """
 
     db_type: str = Field(
-        description="Type of database (e.g., 'sql', 'graph', 'document')"
+        description="Type of database (e.g., 'sql', 'graph', 'document')",
     )
 
     @abstractmethod

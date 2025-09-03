@@ -11,15 +11,6 @@ Functions:
 """Example usage of the Self-Discovery reasoning system."""
 
 
-from haive.agents.reasoning_and_critique.self_discover.v2.agent import (
-    DEFAULT_REASONING_MODULES,
-    self_discovery,
-)
-from haive.agents.reasoning_and_critique.self_discover.v2.state import (
-    SelfDiscoveryState,
-)
-
-
 def run_self_discovery_example() -> None:
     """Run the self-discovery agent on example tasks."""
     # Example 1: Simple math problem
@@ -36,7 +27,8 @@ def run_self_discovery_example() -> None:
     # Run on first task
 
     state1 = SelfDiscoveryState(
-        task_description=task1, reasoning_modules=reasoning_modules_str
+        task_description=task1,
+        reasoning_modules=reasoning_modules_str,
     )
 
     self_discovery.invoke(state1)
@@ -44,7 +36,8 @@ def run_self_discovery_example() -> None:
     # Run on second task
 
     state2 = SelfDiscoveryState(
-        task_description=task2, reasoning_modules=reasoning_modules_str
+        task_description=task2,
+        reasoning_modules=reasoning_modules_str,
     )
 
     result2 = self_discovery.invoke(state2)
@@ -69,7 +62,8 @@ def run_custom_task(task_description: str, custom_modules: list[str] | None = No
     reasoning_modules_str = "\n".join(modules)
 
     state = SelfDiscoveryState(
-        task_description=task_description, reasoning_modules=reasoning_modules_str
+        task_description=task_description,
+        reasoning_modules=reasoning_modules_str,
     )
 
     result = self_discovery.invoke(state)

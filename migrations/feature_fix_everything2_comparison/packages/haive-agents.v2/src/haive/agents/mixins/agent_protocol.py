@@ -11,14 +11,16 @@ from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel
 
 if TYPE_CHECKING:
+    from langgraph.graph.graph import CompiledGraph
+
     from haive.core.engine.base import Engine
     from haive.core.graph.state_graph.base_graph2 import BaseGraph
     from haive.core.schema.state_schema import StateSchema
-    from langgraph.graph.graph import CompiledGraph
 
 
 class AgentProtocol(Protocol):
-    """Protocol defining the interface an Agent class must provide for mixins."""
+    """Protocol defining the interface an Agent class must provide for
+    mixins."""
 
     # Attributes from Agent class required by ExecutionMixin
     name: str

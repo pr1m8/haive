@@ -1,8 +1,0 @@
-commit 6c4d0b4c0a9dd0aaa71f3e11ae0016b8381031b0
-Merge: 3568665c db92c29a
-Author: pr1m8 <william.astley@algebraicwealth.com>
-Date:   Tue Jul 29 19:37:59 2025 -0400
-
-    On feature/fix_everything: emergency-checkpoint-before-direct-fixes-20250729_193759
-
-pyproject.toml

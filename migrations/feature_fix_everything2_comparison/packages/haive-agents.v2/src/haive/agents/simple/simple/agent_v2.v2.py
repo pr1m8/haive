@@ -15,6 +15,14 @@ Key improvements over V1:
 import logging
 from typing import Any, Literal
 
+from langchain_core.messages import AIMessage
+
+# Import BaseOutputParser to ensure it's available for LangGraph type evaluation
+from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
+from langgraph.graph import END, START
+from pydantic import BaseModel, Field, field_validator
+
+from haive.agents.base.agent import Agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.node.parser_node_config import ParserNodeConfig
@@ -25,14 +33,6 @@ from haive.core.graph.node.validation_router_v2 import validation_router_v2
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.models.llm.base import LLMConfig
 from haive.core.schema.schema_composer import SchemaComposer
-from langchain_core.messages import AIMessage
-
-# Import BaseOutputParser to ensure it's available for LangGraph type evaluation
-from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
-from langgraph.graph import END, START
-from pydantic import BaseModel, Field, field_validator
-
-from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 
@@ -68,7 +68,8 @@ class SimpleAgentV2(Agent):
     # ========================================================================
 
     engine: AugLLMConfig = Field(
-        default_factory=AugLLMConfig, description="The AugLLM engine for this agent"
+        default_factory=AugLLMConfig,
+        description="The AugLLM engine for this agent",
     )
 
     # ========================================================================
@@ -86,15 +87,18 @@ class SimpleAgentV2(Agent):
 
     # Structured output - THIS IS THE KEY FIELD
     structured_output_model: type[BaseModel] | None = Field(
-        default=None, description="Structured output model"
+        default=None,
+        description="Structured output model",
     )
     structured_output_version: Literal["v1", "v2"] | None = Field(
-        default=None, description="Structured output version"
+        default=None,
+        description="Structured output version",
     )
 
     # Prompting
     prompt_template: ChatPromptTemplate | PromptTemplate | None = Field(
-        default=None, description="Prompt template"
+        default=None,
+        description="Prompt template",
     )
     system_message: str | None = Field(default=None, description="System message")
 
@@ -103,7 +107,8 @@ class SimpleAgentV2(Agent):
 
     # V2 Configuration options
     use_parser_safety_net: bool = Field(
-        default=True, description="Use V2 parser with ToolMessage safety net"
+        default=True,
+        description="Use V2 parser with ToolMessage safety net",
     )
     parser_safety_net_mode: str = Field(
         default="create",
@@ -117,7 +122,9 @@ class SimpleAgentV2(Agent):
     # Note: In agent context, output parsing is handled by parser nodes,
     # not by storing parser instances. These fields track configuration only.
     output_parser_field: str | None = Field(
-        default=None, description="Output parser field name", exclude=True
+        default=None,
+        description="Output parser field name",
+        exclude=True,
     )
 
     # ========================================================================
@@ -152,7 +159,8 @@ class SimpleAgentV2(Agent):
             self.set_schema = True
 
     def _register_engine_in_registry(self) -> None:
-        """Register the engine in EngineRegistry so other nodes can find it by name."""
+        """Register the engine in EngineRegistry so other nodes can find it by
+        name."""
         if not self.engine:
             return
 
@@ -167,12 +175,12 @@ class SimpleAgentV2(Agent):
                 logger.info(f"Registered engine '{self.engine.name}' in EngineRegistry")
             else:
                 logger.debug(
-                    f"Engine '{self.engine.name}' already registered in EngineRegistry"
+                    f"Engine '{self.engine.name}' already registered in EngineRegistry",
                 )
 
         except ImportError:
             logger.warning(
-                "Could not import EngineRegistry - engine registration skipped"
+                "Could not import EngineRegistry - engine registration skipped",
             )
         except Exception as e:
             logger.warning(f"Failed to register engine in registry: {e}")
@@ -194,7 +202,8 @@ class SimpleAgentV2(Agent):
         if self.force_tool_use is not None and hasattr(self.engine, "force_tool_use"):
             self.engine.force_tool_use = self.force_tool_use
         if self.structured_output_model is not None and hasattr(
-            self.engine, "structured_output_model"
+            self.engine,
+            "structured_output_model",
         ):
             self.engine.structured_output_model = self.structured_output_model
         if self.system_message is not None and hasattr(self.engine, "system_message"):
@@ -203,12 +212,13 @@ class SimpleAgentV2(Agent):
             self.engine.llm_config = self.llm_config
 
     def _modify_engine_schema(self) -> None:
-        """MODIFY the engine's output schema to include structured output fields."""
+        """MODIFY the engine's output schema to include structured output
+        fields."""
         if not self.structured_output_model or not self.engine:
             return
 
         logger.info(
-            f"Modifying engine schema to include {self.structured_output_model.__name__}"
+            f"Modifying engine schema to include {self.structured_output_model.__name__}",
         )
 
         # Get the engine's current output schema
@@ -219,7 +229,7 @@ class SimpleAgentV2(Agent):
 
         logger.info(
             f"Skipping engine schema modification for {self.structured_output_model.__name__} "
-            f"- extraction handled by validation nodes"
+            f"- extraction handled by validation nodes",
         )
 
     # ========================================================================
@@ -247,20 +257,17 @@ class SimpleAgentV2(Agent):
 
         # Check for structured output
         has_structured_output = bool(
-            self.structured_output_model
-            or getattr(self.engine, "structured_output_model", None)
+            self.structured_output_model or getattr(self.engine, "structured_output_model", None),
         )
 
         # Check for output parser in engine (not in agent)
         has_output_parser = bool(
-            getattr(self.engine, "output_parser", None) is not None
+            getattr(self.engine, "output_parser", None) is not None,
         )
 
         # Check for pydantic tools
         tool_routes = self.get_tool_routes()
-        pydantic_tools = [
-            tool for tool, route in tool_routes.items() if route == "pydantic_model"
-        ]
+        pydantic_tools = [tool for tool, route in tool_routes.items() if route == "pydantic_model"]
 
         return has_structured_output or has_output_parser or len(pydantic_tools) > 0
 
@@ -271,7 +278,7 @@ class SimpleAgentV2(Agent):
             or getattr(self.engine, "force_tool_choice", False)
             or (self.force_tool_use is not None and self.force_tool_use)
             or (self.structured_output_model is not None)
-            or (getattr(self.engine, "structured_output_model", None) is not None)
+            or (getattr(self.engine, "structured_output_model", None) is not None),
         )
 
     def get_tool_routes(self) -> dict[str, str]:
@@ -339,7 +346,7 @@ class SimpleAgentV2(Agent):
                     safety_net_mode=self.parser_safety_net_mode,
                 )
                 logger.info(
-                    f"Using V2 parser with safety net mode: {self.parser_safety_net_mode}"
+                    f"Using V2 parser with safety net mode: {self.parser_safety_net_mode}",
                 )
             else:
                 # Use V1 parser (original behavior)
@@ -360,7 +367,9 @@ class SimpleAgentV2(Agent):
         else:
             # Use conditional branching for tool calls
             graph.add_conditional_edges(
-                "agent_node", has_tool_calls_v2, {True: "validation_v2", False: END}
+                "agent_node",
+                has_tool_calls_v2,
+                {True: "validation_v2", False: END},
             )
 
         # V2 Router: validation_v2 → validation_router_v2 → destinations
@@ -378,11 +387,12 @@ class SimpleAgentV2(Agent):
 
         return graph
 
-    def create_runnable(self, runnable_config: dict[str, Any] = None):
+    def create_runnable(self, runnable_config: dict[str, Any] | None = None):
         """Override to ensure state includes required fields."""
         compiled = super().create_runnable(runnable_config)
 
-        # Wrap to inject additional state fields (engine is now handled in _prepare_input)
+        # Wrap to inject additional state fields (engine is now handled in
+        # _prepare_input)
         original_ainvoke = compiled.ainvoke
 
         async def wrapped_ainvoke(input_data, config=None):
@@ -394,7 +404,8 @@ class SimpleAgentV2(Agent):
                     input_data["tool_routes"] = self.get_tool_routes()
                 if "available_nodes" not in input_data and hasattr(self, "graph"):
                     input_data["available_nodes"] = self.graph.metadata.get(
-                        "available_nodes", []
+                        "available_nodes",
+                        [],
                     )
 
             return await original_ainvoke(input_data, config)
@@ -407,7 +418,9 @@ class SimpleAgentV2(Agent):
     # ========================================================================
 
     def add_prompt_template(
-        self, name: str, template: ChatPromptTemplate | PromptTemplate
+        self,
+        name: str,
+        template: ChatPromptTemplate | PromptTemplate,
     ) -> None:
         """Add a named prompt template to the engine.
 
@@ -499,7 +512,9 @@ class SimpleAgentV2(Agent):
         """
         # Update engine with structured output
         self.engine = self.engine.with_structured_output(
-            model=model, version=version, include_instructions=include_instructions
+            model=model,
+            version=version,
+            include_instructions=include_instructions,
         )
 
         # Update convenience fields
@@ -510,7 +525,9 @@ class SimpleAgentV2(Agent):
         self.set_schema = True
 
         logger.info(
-            f"Set structured output to {model.__name__} (version {version}) for agent '{self.name}'"
+            f"Set structured output to {model.__name__} (version {version}) for agent '{
+                self.name
+            }'",
         )
 
     def clear_structured_output(self) -> None:
@@ -546,9 +563,7 @@ class SimpleAgentV2(Agent):
             "active_template": self.get_active_template(),
             "available_templates": self.list_prompt_templates(),
             "tools_count": (
-                len(self.engine.tools)
-                if self.engine and hasattr(self.engine, "tools")
-                else 0
+                len(self.engine.tools) if self.engine and hasattr(self.engine, "tools") else 0
             ),
             "structured_output": (
                 self.get_structured_output_model().__name__
@@ -576,5 +591,7 @@ class SimpleAgentV2(Agent):
 
     def __repr__(self) -> str:
         engine_info = f"model={getattr(self.engine, 'model', 'unknown')}"
-        schema_info = f"structured_output={self.structured_output_model.__name__ if self.structured_output_model else 'None'}"
+        schema_info = f"structured_output={
+            self.structured_output_model.__name__ if self.structured_output_model else 'None'
+        }"
         return f"SimpleAgentV2(name='{self.name}', {engine_info}, {schema_info})"

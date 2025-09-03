@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 """Using the prebuilt state schemas for multi-agent systems.
 
-This shows how to properly use MetaAgentState and MultiAgentState
-from base_state_schemas.py
+This shows how to properly use MetaAgentState and MultiAgentState from
+base_state_schemas.py
 """
 
+from __future__ import annotations
+
 import sys
-
-
-sys.path.insert(0, "/home/will/Projects/haive/backend/haive")
-
 
 from langchain_core.messages import HumanMessage
 
@@ -18,6 +16,8 @@ from haive.core.schema.base_state_schemas import (
     MetaAgentState,
     MultiAgentState,
 )
+
+sys.path.insert(0, "/home/will/Projects/haive/backend/haive")
 
 
 def test_meta_agent_state():
@@ -31,13 +31,22 @@ def test_meta_agent_state():
 
     # Spawn sub-agents
     meta_state.spawn_sub_agent(
-        name="planner", agent_type="llm", initial_state={"task": "Create project plan"}
+        name="planner",
+        agent_type="llm",
+        initial_state={"task": "Create project plan"},
     )
 
-    meta_state.spawn_sub_agent(name="coder", agent_type="llm", initial_state={"task": "Write code"})
+    meta_state.spawn_sub_agent(
+        name="coder",
+        agent_type="llm",
+        initial_state={"task": "Write code"},
+    )
 
     # Update results
-    meta_state.update_sub_agent_result("planner", {"plan": "1. Design\n2. Code\n3. Test"})
+    meta_state.update_sub_agent_result(
+        "planner",
+        {"plan": "1. Design\n2. Code\n3. Test"},
+    )
 
     return meta_state
 
@@ -45,7 +54,9 @@ def test_meta_agent_state():
 def test_multi_agent_state():
     """Test using the prebuilt MultiAgentState."""
     # MultiAgentState provides isolation between agents
-    multi_state = MultiAgentState(messages=[HumanMessage(content="Analyze this document")])
+    multi_state = MultiAgentState(
+        messages=[HumanMessage(content="Analyze this document")],
+    )
 
     # Each agent gets its own state
     planner_state = multi_state.get_agent_state("planner")

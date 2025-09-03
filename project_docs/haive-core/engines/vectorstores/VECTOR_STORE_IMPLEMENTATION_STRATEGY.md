@@ -50,7 +50,7 @@ Using our successful retriever implementation experience, we'll systematically i
 
 ### **Phase 9: Remaining & DocArray (10+ stores)** ⭐
 
-**Priority**: Complete coverage 56. **DocArrayHNSWConfig** - DocArray HNSW backend 57. **DocArrayInMemoryConfig** - DocArray in-memory 58. **USer​archVectorStoreConfig** - High-performance search 59. **VearchVectorStoreConfig** - Vearch engine 60. **VespaVectorStoreConfig** - Vespa search 61. **TileDBVectorStoreConfig** - TileDB arrays 62. **SurrealDBVectorStoreConfig** - SurrealDB 63. **SemaDBVectorStoreConfig** - SemaDB 64. **RocksetDBVectorStoreConfig** - Rockset 65. **RelytVectorStoreConfig** - Relyt database 66. **MomentoVectorIndexConfig** - Momento cache 67. **LLMRailsVectorConfig** - LLM Rails 68. **LanternVectorStoreConfig** - Lantern extension 69. **KDBaiVectorStoreConfig** - KDB.ai 70. **InfinispanVectorStoreConfig** - Infinispan
+**Priority**: Complete coverage 56. **DocArrayHNSWConfig** - DocArray HNSW backend 57. **DocArrayInMemoryConfig** - DocArray in-memory 58. **USer​archVectorStoreConfig** - High-performance search 59. **VearchVectorStoreConfig** - Vearch engine 60. **VespaVectorStoreConfig** - Vespa search 61. **TileDBVectorStoreConfig** - TileDB arrays 62. **SurrealDBVectorStoreConfig** - SurrealDB 63. **SemaDBVectorStoreConfig** - SemaDB 64. **RocksetDBVectorStoreConfig** - Rockset 65. **RelytVectorStoreConfig** - Relyt database 66. **MomentoVectorIndexConfig** - Memento cache 67. **LLMRailsVectorConfig** - LLM Rails 68. **LanternVectorStoreConfig** - Lantern extension 69. **KDBaiVectorStoreConfig** - KDB.ai 70. **InfinispanVectorStoreConfig** - Infinispan
 
 ## 🔄 **Proven Implementation Process**
 

@@ -168,7 +168,7 @@ class ComponentNode(NodeConfig):
             result = self.component.invoke(input_data, config)
             return self._wrap_component_result(result, state)
         else:
-            raise ValueError(f"Component {self.component} is not invokable")
+            raise ValueError(f"Component {self.component} is not invocable")
 
     def _extract_component_input(self, state):
         """Extract input based on component type."""

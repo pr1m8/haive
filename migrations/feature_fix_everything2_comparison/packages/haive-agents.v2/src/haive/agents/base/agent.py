@@ -40,13 +40,14 @@ Example:
     Task completed: True
 """
 
-import logging
-import time
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from datetime import datetime
+import logging
+import time
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 
 from haive.agents.base.agent import Agent
@@ -57,12 +58,10 @@ from haive.agents.supervisor_new.base.models import (
     SupervisorResult,
     SupervisorTask,
 )
-from haive.agents.supervisor_new.base.prompts import (
-    create_system_prompt,
-    format_agent_list,
-)
+from haive.agents.supervisor_new.base.prompts import create_system_prompt, format_agent_list
 from haive.agents.supervisor_new.base.state import BaseSupervisorState
 from haive.agents.supervisor_new.base.tools import SupervisorToolFactory
+from haive.core.engine.aug_llm import AugLLMConfig
 
 logger = logging.getLogger(__name__)
 
@@ -206,14 +205,16 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
 
         # Set max iterations from config
         kwargs["max_iterations"] = kwargs.get(
-            "max_iterations", self.config.max_iterations
+            "max_iterations",
+            self.config.max_iterations,
         )
 
         # Create system prompt
         if "system_message" not in kwargs:
             agent_list = self._format_initial_agents(initial_agents or {})
             kwargs["system_message"] = create_system_prompt(
-                agent_list=agent_list, supervisor_name=name
+                agent_list=agent_list,
+                supervisor_name=name,
             )
 
         # Initialize ReactAgent parent
@@ -253,21 +254,21 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
         if hasattr(self, "state") and self.state:
             self.state.supervisor_name = self.name
             # Register agent names in state
-            for agent_name in self.registered_agents.keys():
+            for agent_name in self.registered_agents:
                 self.state.register_agent_name(agent_name)
 
     def _format_initial_agents(self, agents: dict[str, Agent]) -> str:
         """Format initial agents for system prompt."""
         if not agents:
-            return (
-                "No agents currently available. Agents will be registered dynamically."
-            )
+            return "No agents currently available. Agents will be registered dynamically."
 
         descriptions = {}
         for name, agent in agents.items():
             # Try to get description from agent, fall back to class name
             description = getattr(
-                agent, "description", f"{agent.__class__.__name__} agent"
+                agent,
+                "description",
+                f"{agent.__class__.__name__} agent",
             )
             descriptions[name] = description
 
@@ -294,7 +295,9 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
         # Create agent info
         if description is None:
             description = getattr(
-                agent, "description", f"{agent.__class__.__name__} agent"
+                agent,
+                "description",
+                f"{agent.__class__.__name__} agent",
             )
 
         self.agent_info[name] = AgentInfo(
@@ -350,11 +353,7 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
         Returns:
             Dict mapping agent names to descriptions
         """
-        return {
-            name: info.description
-            for name, info in self.agent_info.items()
-            if info.is_active
-        }
+        return {name: info.description for name, info in self.agent_info.items() if info.is_active}
 
     def get_agent_info(self, name: str) -> AgentInfo | None:
         """Get information about a registered agent.
@@ -414,9 +413,7 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
 
         # Get active agents
         active_agents = {
-            name: info.description
-            for name, info in self.agent_info.items()
-            if info.is_active
+            name: info.description for name, info in self.agent_info.items() if info.is_active
         }
 
         # Create all tools
@@ -434,11 +431,7 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
 
     def _get_agent_descriptions(self) -> dict[str, str]:
         """Get active agent descriptions for tools."""
-        return {
-            name: info.description
-            for name, info in self.agent_info.items()
-            if info.is_active
-        }
+        return {name: info.description for name, info in self.agent_info.items() if info.is_active}
 
     def _get_agent_info(self, name: str) -> AgentInfo | None:
         """Get agent info for tools."""
@@ -549,7 +542,7 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
                 self.state.complete_task(result_obj)
                 self.state.set_error(error_msg)
 
-            logger.error(f"Error executing agent {agent_name}: {e}")
+            logger.exception(f"Error executing agent {agent_name}: {e}")
             return f"Error executing agent {agent_name}: {error_msg}"
 
     @abstractmethod
@@ -575,7 +568,7 @@ class BaseSupervisor(ReactAgent[BaseSupervisorState], ABC):
         state = BaseSupervisorState(supervisor_name=self.name)
 
         # Register agent names
-        for agent_name in self.registered_agents.keys():
+        for agent_name in self.registered_agents:
             state.register_agent_name(agent_name)
 
         return state

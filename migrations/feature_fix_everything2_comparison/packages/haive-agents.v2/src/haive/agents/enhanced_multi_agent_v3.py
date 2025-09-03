@@ -15,11 +15,18 @@ Key Features:
 - Backward compatibility with existing patterns
 """
 
+from __future__ import annotations
+
+from collections.abc import Callable
 import logging
 import time
-from collections.abc import Callable
 from typing import Any, Generic, TypeVar
 
+from pydantic import Field, field_validator, model_validator
+from rich.console import Console
+from rich.table import Table
+
+from haive.agents.base.agent import Agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
@@ -27,19 +34,14 @@ from haive.core.schema.prebuilt.enhanced_multi_agent_state import (
     EnhancedMultiAgentState,
 )
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
-from pydantic import Field, field_validator, model_validator
-from rich.console import Console
-from rich.table import Table
 
 # Import the enhanced base Agent
-from haive.agents.base.agent import Agent
 
 logger = logging.getLogger(__name__)
 console = Console()
 
 # Generic type for agents contained in MultiAgent
 AgentsT = TypeVar("AgentsT", bound=dict[str, Agent] | list[Agent])
-
 
 # ========================================================================
 # ENHANCED MULTI AGENT V3
@@ -209,23 +211,28 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
 
     # Enhanced capabilities
     multi_engine_mode: bool = Field(
-        default=False, description="Enable multiple engines for coordination"
+        default=False,
+        description="Enable multiple engines for coordination",
     )
 
     advanced_routing: bool = Field(
-        default=False, description="Enable sophisticated routing algorithms"
+        default=False,
+        description="Enable sophisticated routing algorithms",
     )
 
     performance_mode: bool = Field(
-        default=False, description="Enable performance tracking and optimization"
+        default=False,
+        description="Enable performance tracking and optimization",
     )
 
     debug_mode: bool = Field(
-        default=False, description="Enable rich debugging and observability"
+        default=False,
+        description="Enable rich debugging and observability",
     )
 
     persistence_config: dict[str, Any] | None = Field(
-        default=None, description="Advanced persistence configuration"
+        default=None,
+        description="Advanced persistence configuration",
     )
 
     # ========================================================================
@@ -234,7 +241,8 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
 
     # Performance tracking for adaptive routing
     agent_performance: dict[str, dict[str, float]] = Field(
-        default_factory=dict, description="Performance metrics for each agent"
+        default_factory=dict,
+        description="Performance metrics for each agent",
     )
 
     adaptation_rate: float = Field(
@@ -358,7 +366,7 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
                         and not hasattr(agent, "invoke")
                     ):
                         raise ValueError(
-                            f"Agent '{name}' must have run/arun/invoke method"
+                            f"Agent '{name}' must have run/arun/invoke method",
                         )
         elif isinstance(v, list):
             # Allow empty list during initialization - some subclasses populate later
@@ -371,7 +379,7 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
                         and not hasattr(agent, "invoke")
                     ):
                         raise ValueError(
-                            f"Agent at index {i} must have run/arun/invoke method"
+                            f"Agent at index {i} must have run/arun/invoke method",
                         )
         else:
             raise ValueError("Agents must be dict or list")
@@ -408,7 +416,8 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
 
         # Set default state schema if none provided
         if self.state_schema is None:
-            # Use enhanced state schema for V3 features, fallback to basic for compatibility
+            # Use enhanced state schema for V3 features, fallback to basic for
+            # compatibility
             if any([self.performance_mode, self.debug_mode, self.advanced_routing]):
                 self.state_schema = EnhancedMultiAgentState
                 logger.debug(f"Using EnhancedMultiAgentState for {self.name}")
@@ -445,7 +454,7 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
                     "total_duration": 0.0,
                 }
         logger.debug(
-            f"Initialized performance tracking for {len(self.agent_performance)} agents"
+            f"Initialized performance tracking for {len(self.agent_performance)} agents",
         )
 
     def _setup_multi_engine_mode(self) -> None:
@@ -495,8 +504,9 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
     def build_graph(self) -> BaseGraph:
         """Build the BaseGraph for this multi-agent.
 
-        Uses intelligent routing from BaseGraph for sequence inference and branching.
-        Enhanced with V3 debugging and performance features.
+        Uses intelligent routing from BaseGraph for sequence inference
+        and branching. Enhanced with V3 debugging and performance
+        features.
         """
         if self.debug_mode:
             logger.info(f"Building graph for EnhancedMultiAgent V3: {self.name}")
@@ -578,7 +588,8 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
                     return condition_wrapper
 
                 graph.add_conditional_edges(
-                    source, make_condition_fn(condition_fn, routes)
+                    source,
+                    make_condition_fn(condition_fn, routes),
                 )
                 processed_sources.add(source)
                 has_entry_edges = True
@@ -698,7 +709,9 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
         }
 
     def add_parallel_group(
-        self, agent_names: list[str], next_agent: str | None = None
+        self,
+        agent_names: list[str],
+        next_agent: str | None = None,
     ) -> None:
         """Add a group of agents that run in parallel.
 
@@ -749,7 +762,10 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
     # ========================================================================
 
     def update_performance(
-        self, agent_name: str, success: bool, duration: float
+        self,
+        agent_name: str,
+        success: bool,
+        duration: float,
     ) -> None:
         """Update agent performance metrics."""
         if not self.performance_mode or agent_name not in self.agent_performance:
@@ -773,7 +789,9 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
 
         if self.debug_mode:
             logger.debug(
-                f"Updated performance for {agent_name}: success_rate={new_rate:.3f}, avg_duration={metrics['avg_duration']:.3f}s"
+                f"Updated performance for {agent_name}: success_rate={new_rate:.3f}, avg_duration={
+                    metrics['avg_duration']:.3f
+                }s",
             )
 
     def get_best_agent_for_task(self, task_type: str = "general") -> str:
@@ -786,7 +804,6 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
         best_score = 0.0
 
         for agent_name, metrics in self.agent_performance.items():
-            # Score = success_rate / avg_duration (higher is better)
             score = metrics["success_rate"] / max(metrics["avg_duration"], 0.1)
             if score > best_score:
                 best_score = score
@@ -857,8 +874,7 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
             "performance": {
                 "tracked_agents": len(self.agent_performance),
                 "total_executions": sum(
-                    metrics.get("task_count", 0)
-                    for metrics in self.agent_performance.values()
+                    metrics.get("task_count", 0) for metrics in self.agent_performance.values()
                 ),
             },
         }
@@ -883,18 +899,19 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
                 "avg_duration": round(metrics["avg_duration"], 3),
                 "task_count": metrics["task_count"],
                 "efficiency_score": round(
-                    metrics["success_rate"] / max(metrics["avg_duration"], 0.1), 3
+                    metrics["success_rate"] / max(metrics["avg_duration"], 0.1),
+                    3,
                 ),
             }
 
         # Overall statistics
         if self.agent_performance:
-            avg_success = sum(
-                m["success_rate"] for m in self.agent_performance.values()
-            ) / len(self.agent_performance)
-            avg_duration = sum(
-                m["avg_duration"] for m in self.agent_performance.values()
-            ) / len(self.agent_performance)
+            avg_success = sum(m["success_rate"] for m in self.agent_performance.values()) / len(
+                self.agent_performance,
+            )
+            avg_duration = sum(m["avg_duration"] for m in self.agent_performance.values()) / len(
+                self.agent_performance,
+            )
             total_tasks = sum(m["task_count"] for m in self.agent_performance.values())
 
             analysis["overall"] = {
@@ -917,7 +934,7 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
         name: str = "multi_agent",
         execution_mode: str = "infer",
         **kwargs,
-    ) -> "EnhancedMultiAgent":
+    ) -> EnhancedMultiAgent:
         """Create an enhanced multi-agent from a collection of agents.
 
         This factory method provides a convenient way to create an EnhancedMultiAgent

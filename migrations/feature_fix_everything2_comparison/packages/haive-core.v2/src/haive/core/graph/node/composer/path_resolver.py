@@ -1,8 +1,11 @@
 """Path resolver for extracting values from objects using path notation.
 
-This module provides path-based value extraction from objects, supporting simple field
-access initially, with progressive enhancement for complex paths.
+This module provides path-based value extraction from objects,
+supporting simple field access initially, with progressive enhancement
+for complex paths.
 """
+
+from __future__ import annotations
 
 from typing import Any
 
@@ -56,7 +59,10 @@ class PathResolver:
         return self._extract_simple_field(obj, path, default)
 
     def _extract_simple_field(
-        self, obj: Any, field_name: str, default: Any = None
+        self,
+        obj: Any,
+        field_name: str,
+        default: Any = None,
     ) -> Any:
         """Extract a simple field from an object (Phase 1 logic)."""
         try:

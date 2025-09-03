@@ -1,9 +1,11 @@
 # .trunk/trunk.yaml
-# See: https://docs.trunk.io/reference/trunk-yaml
+# Purpose: Use Trunk's full-repo pre-commit/pre-push hooks with optional pre-commit integration
+
 version: 0.1
 
 cli:
   version: 1.24.0
+
 plugins:
   sources:
     - id: trunk
@@ -18,56 +20,103 @@ runtimes:
 
 lint:
   enabled:
+    - codespell@2.4.1
+    - flake8@7.3.0
+    - pyright@1.1.403
+    - vale@3.12.0
+    - pre-commit-hooks@5.0.0
     - actionlint@1.7.7
     - bandit@1.8.6
     - black@25.1.0
-    - checkov@3.2.451
+    - checkov@3.2.457
     - dotenv-linter@3.3.0
     - git-diff-check
     - hadolint@2.12.1-beta
     - isort@6.0.1
     - markdownlint@0.45.0
-    - mypy@1.17.0
+    - mypy@1.17.1
     - osv-scanner@2.0.3
     - oxipng@9.1.5
     - prettier@3.6.2
-    - ruff@0.12.3
+    - ruff@0.12.7
     - shellcheck@0.10.0
     - shfmt@3.6.0
     - taplo@0.9.3
-    - trufflehog@3.90.0
+    - trufflehog@3.90.2
     - yamllint@1.37.1
+
   ignore:
     - linters: [ALL]
       paths:
         - "**/migrations/**"
         - "**/__pycache__/**"
-        - ".history/**"
-        - ".venv/**"
-        - "node_modules/**"
-        - "projects/**"
-        - "haive-core/**"
-        - "data/**"
-        #- "docs/**"
-        - "resources/**"
-        - "assets/**"
-        - "dist/**"
-        - "build/**"
+        - .history/**
+        - .venv/**
+        - node_modules/**
+        - data/**
+        - resources/**
+        - assets/**
+        - dist/**
+        - build/**
         - "*.egg-info/**"
-        # Allow packages to be linted now
-        - "packages/**/test_*.py"
-        - "packages/**/*test*.py"
-        - "packages/**/.venv/**"
+        - syntax_errors_*.json
+        - syntax_errors_*.txt
+        - docs/source/conf.py
+        - docs/source/conf_modules/**
+        - scripts/**/dryrun_wrapper.py
+        - scripts/**/smart_dryrun_wrapper.py
+        - scripts/debug/diagnose_test_performance.py
+        - tools/**
 
 actions:
+  output_level: verbose
+
   disabled:
-    - trunk-announce
+    - trunk-announce # silence Trunk marketing messages
+
   enabled:
-    - trunk-check-pre-push
-    - trunk-fmt-pre-commit
-    - trunk-check-pre-commit
     - git-lfs
+    - trunk-cache-prune
     - trunk-upgrade-available
-# Optional: If your main branch is not "main" or "master", set it here
-# repo:
-#   trunk_branch: main
+    - trunk-fmt-pre-commit
+    - trunk-check-pre-push
+    - run-pre-commit-hook # ✅ Lint staged files on pre-commit
+    - run-commit-msg-hook # ✅ Validate commit messages
+    - setup-pre-commit # ✅ Update pre-commit hooks
+  definitions:
+    - id: setup-pre-commit
+      display_name: Update pre-commit hooks
+      description: Update `.pre-commit-config.yaml` hook versions
+      run: |
+        echo "📦 Updating pre-commit hook versions..."
+        pre-commit autoupdate
+      triggers: []
+      interactive: true
+
+    - id: run-pre-commit-hook
+      display_name: Run pre-commit hooks
+      description: Lint staged files on pre-commit
+      triggers:
+        - git_hooks: [pre-commit]
+      run: |
+        FILES=$(git diff --cached --name-only | grep -v '^$' || true)
+        if [ -z "$FILES" ]; then
+          echo "✅ No staged files to lint with pre-commit"
+          exit 0
+        fi
+        echo "🔧 Running pre-commit on staged files..."
+        pre-commit run --files $FILES
+      interactive: false
+      notify_on_error: false
+
+    - id: run-commit-msg-hook
+      display_name: Validate commit message
+      description: Run commitizen to enforce Conventional Commits
+      triggers:
+        - git_hooks: [commit-msg]
+      run: |
+        COMMIT_MSG_FILE="${TRUNK_COMMIT_MSG_FILE:-.git/COMMIT_EDITMSG}"
+        echo "🔧 Validating commit message with Commitizen at $COMMIT_MSG_FILE"
+        pre-commit run commitizen --hook-stage commit-msg --commit-msg-filename "$COMMIT_MSG_FILE"
+      interactive: false
+      notify_on_error: false

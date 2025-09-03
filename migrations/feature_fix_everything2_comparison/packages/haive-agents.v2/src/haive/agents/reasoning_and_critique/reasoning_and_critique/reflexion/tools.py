@@ -7,6 +7,7 @@ Functions:
 """
 
 # from haive_agents.reflexion.models import ReviseAnswer,
+from __future__ import annotations
 
 from langchain_community.tools import TavilySearchResults
 

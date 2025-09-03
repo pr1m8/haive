@@ -13,16 +13,14 @@ Functions:
 # src/haive/agents/conversation/collaborative/state.py
 """State for collaborative conversation agents."""
 
+
+from __future__ import annotations
 import operator
-from typing import Literal
-
-from pydantic import Field
-
-from haive.agents.conversation.base.state import ConversationState
 
 
 def merge_document_sections(
-    current: dict[str, str], update: dict[str, str]
+    current: dict[str, str],
+    update: dict[str, str],
 ) -> dict[str, str]:
     """Merge document sections, preserving existing content."""
     result = current.copy()
@@ -39,7 +37,8 @@ def merge_document_sections(
 
 
 def merge_contribution_counts(
-    current: dict[str, int], update: dict[str, int]
+    current: dict[str, int],
+    update: dict[str, int],
 ) -> dict[str, int]:
     """Merge contribution counts by summing values."""
     result = current.copy()
@@ -69,15 +68,17 @@ class CollaborativeState(ConversationState):
 
     # Review and consensus
     pending_reviews: list[tuple[str, str]] = Field(
-        default_factory=list, description="List of (section, content) pending review"
+        default_factory=list,
+        description="List of (section, content) pending review",
     )
     approvals: dict[str, list[str]] = Field(
-        default_factory=dict, description="Section -> list of approvers"
+        default_factory=dict,
+        description="Section -> list of approvers",
     )
 
     # Output format
-    output_format: Literal["markdown", "code", "outline", "report"] = Field(
-        default="markdown"
+    output_format: Literal[markdown, code, outline, report] = Field(
+        default="markdown",
     )
 
     # Add custom reducers for proper merging

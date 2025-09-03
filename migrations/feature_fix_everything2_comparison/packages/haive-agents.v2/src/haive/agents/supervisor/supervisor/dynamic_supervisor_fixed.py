@@ -1,19 +1,20 @@
 """Fixed Dynamic Supervisor with Proper Graph Rebuilding.
 
-This implementation correctly handles dynamic agent addition after compilation
-based on BaseGraph2 limitations and requirements.
+This implementation correctly handles dynamic agent addition after
+compilation based on BaseGraph2 limitations and requirements.
 """
+
+from __future__ import annotations
 
 import asyncio
 import logging
 from collections.abc import Callable
 from typing import Any
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from pydantic import Field
-
 from haive.agents.react.agent import ReactAgent
 from haive.agents.supervisor.dynamic_state import DynamicSupervisorState
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +80,9 @@ class DynamicSupervisorFixed(ReactAgent):
         return True
 
     def unregister_agent(
-        self, agent_name: str, rebuild_immediately: bool = False
+        self,
+        agent_name: str,
+        rebuild_immediately: bool = False,
     ) -> bool:
         """Unregister an agent.
 
@@ -300,7 +303,8 @@ if __name__ == "__main__":
         """Test the fixed dynamic supervisor."""
         # Create supervisor
         supervisor = DynamicSupervisorFixed(
-            name="fixed_supervisor", auto_rebuild_graph=True
+            name="fixed_supervisor",
+            auto_rebuild_graph=True,
         )
 
         # Create mock agents

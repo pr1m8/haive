@@ -84,7 +84,7 @@ Socrates: Can we truly say we possess knowledge if we have not questioned it our
 
 - current_phase -> 'complete'
 - phase_transitions -> [('complete', 1)]
-- messag...
+- message...
 ```
 
 ---

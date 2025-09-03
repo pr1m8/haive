@@ -1,7 +1,0 @@
-3d1fa180 docs/fix-documentation-20250121@{2025-07-22 23:05:31 -0400}: commit: fix: update .gitmodules to reflect correct branches
-25f3578f docs/fix-documentation-20250121@{2025-07-22 23:03:09 -0400}: commit: feat(recovery): complete submodule recovery and conflict resolution
-c1fda95e docs/fix-documentation-20250121@{2025-07-22 22:27:50 -0400}: reset: moving to HEAD~1
-1849da1f docs/fix-documentation-20250121@{2025-07-22 22:27:26 -0400}: commit: feat: recover and organize example files from haive-agents
-c1fda95e docs/fix-documentation-20250121@{2025-07-22 13:31:23 -0400}: commit: feat(docs): comprehensive documentation styling and structure overhaul
-cf6da01b docs/fix-documentation-20250121@{2025-07-21 15:15:55 -0400}: commit: feat(docs): comprehensive documentation styling and structure overhaul
-35fbeeb8 docs/fix-documentation-20250121@{2025-07-21 02:29:11 -0400}: branch: Created from HEAD

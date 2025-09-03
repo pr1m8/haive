@@ -11,8 +11,6 @@ Functions:
 import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.schema.agent_schema_composer import BuildMode
 from langgraph.graph import END
 from langgraph.prebuilt import ToolNode
 from langgraph.types import Send
@@ -32,6 +30,8 @@ from haive.agents.reasoning_and_critique.lats.v2.prompts import (
 )
 from haive.agents.reasoning_and_critique.lats.v2.state import LATSState
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.schema.agent_schema_composer import BuildMode
 
 logger = logging.getLogger(__name__)
 
@@ -117,7 +117,7 @@ def execute_tool_calls(state: LATSState) -> dict[str, Any] | list[Send]:
                 Send(
                     "tool_node",
                     {**state.dict(), "messages": [{"tool_calls": [node.action]}]},
-                )
+                ),
             )
 
     # Check candidate nodes
@@ -131,7 +131,7 @@ def execute_tool_calls(state: LATSState) -> dict[str, Any] | list[Send]:
                         "current_node_id": candidate.id,
                         "messages": [{"tool_calls": [candidate.action]}],
                     },
-                )
+                ),
             )
 
     return sends if sends else {}
@@ -191,7 +191,7 @@ def evaluate_candidates(state: LATSState) -> list[Send]:
     for candidate in state.candidate_nodes:
         # Prepare evaluation context
         response_to_evaluate = "\n".join(
-            [f"{msg['role']}: {msg['content']}" for msg in candidate.messages]
+            [f"{msg['role']}: {msg['content']}" for msg in candidate.messages],
         )
 
         if candidate.tool_response:
@@ -227,7 +227,9 @@ def process_reflection(state: LATSState) -> dict[str, Any]:
 
             # Backpropagate score
             updated_nodes = backpropagate(
-                state.nodes, node.id, reflection.normalized_score
+                state.nodes,
+                node.id,
+                reflection.normalized_score,
             )
 
             # Check for best solution
@@ -247,7 +249,9 @@ def process_reflection(state: LATSState) -> dict[str, Any]:
 
 
 def backpropagate(
-    nodes: dict[str, TreeNode], node_id: str, reward: float
+    nodes: dict[str, TreeNode],
+    node_id: str,
+    reward: float,
 ) -> dict[str, TreeNode]:
     """Backpropagate reward up the tree."""
     updated = {}
@@ -322,9 +326,7 @@ def create_lats(
         # After reflection of initial response
         (
             reflection_agent,
-            lambda s: (
-                "selector" if s.current_node_id == s.root_id else "process_reflection"
-            ),
+            lambda s: ("selector" if s.current_node_id == s.root_id else "process_reflection"),
             {"selector": selection_agent, "process_reflection": "process_reflection"},
         ),
         # Selection leads to expansion

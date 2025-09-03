@@ -10,13 +10,9 @@ Functions:
 
 # examples/conversation/collaborative_example.py
 """Examples for collaborative conversation patterns where participants build shared content."""
+from __future__ import annotations
 
 import logging
-
-from haive.core.engine.aug_llm import AugLLMConfig
-
-from haive.agents.conversation.collaberative.agent import CollaborativeConversation
-from haive.agents.simple.agent import SimpleAgent
 
 # Set logging
 logging.getLogger("haive").setLevel(logging.WARNING)
@@ -41,7 +37,9 @@ def example_brainstorming_session() -> None:
 
     # Run session
     result = session.run(
-        {}, config={"configurable": {"recursion_limit": 100}}, debug=True
+        {},
+        config={"configurable": {"recursion_limit": 100}},
+        debug=True,
     )
 
     # Display final document
@@ -69,7 +67,9 @@ def example_code_review() -> None:
 
     # Run review
     result = review.run(
-        {}, config={"configurable": {"recursion_limit": 100}}, debug=True
+        {},
+        config={"configurable": {"recursion_limit": 100}},
+        debug=True,
     )
 
     # Display code review document
@@ -146,7 +146,9 @@ def example_project_planning() -> None:
     )
 
     result = planning.run(
-        {}, config={"configurable": {"recursion_limit": 100}}, debug=True
+        {},
+        config={"configurable": {"recursion_limit": 100}},
+        debug=True,
     )
 
     # Display project plan

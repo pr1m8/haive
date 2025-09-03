@@ -15,11 +15,11 @@ We just need to enhance the discovery mechanisms in the existing nodes.
 
 from typing import Any
 
-from haive.agents.simple.agent import SimpleAgent
 from langchain_core.messages import HumanMessage
 from langgraph.types import Command
 from pydantic import Field
 
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.parser_node_config import ParserNodeConfig
 from haive.core.graph.node.validation_node_config_v2 import ValidationNodeConfigV2
@@ -33,13 +33,14 @@ from haive.core.schema.prebuilt.meta_state import MetaStateSchema
 class StatefulValidationNodeV2(ValidationNodeConfigV2):
     """Enhanced ValidationNodeConfigV2 with stateful discovery capabilities.
 
-    This extends the existing ValidationNodeConfigV2 to add dynamic discovery while
-    maintaining full backward compatibility.
+    This extends the existing ValidationNodeConfigV2 to add dynamic
+    discovery while maintaining full backward compatibility.
     """
 
     # Enable stateful discovery
     discovery_enabled: bool = Field(
-        default=True, description="Enable dynamic discovery"
+        default=True,
+        description="Enable dynamic discovery",
     )
 
     def discover_routing_destinations(self, state: Any) -> dict[str, str]:
@@ -54,7 +55,8 @@ class StatefulValidationNodeV2(ValidationNodeConfigV2):
             routing_config = state.routing_config
             discovered["tool_node"] = routing_config.get("tool_node", self.tool_node)
             discovered["parser_node"] = routing_config.get(
-                "parser_node", self.parser_node
+                "parser_node",
+                self.parser_node,
             )
 
         # Strategy 2: From state attributes
@@ -108,7 +110,8 @@ class StatefulParserNodeV2(ParserNodeConfig):
 
     # Enable stateful discovery
     discovery_enabled: bool = Field(
-        default=True, description="Enable dynamic discovery"
+        default=True,
+        description="Enable dynamic discovery",
     )
 
     def discover_agent_node(self, state: Any) -> str:
@@ -233,7 +236,9 @@ class StatefulSimpleAgent(SimpleAgent):
             from haive.agents.simple.agent import has_tool_calls
 
             graph.add_conditional_edges(
-                "agent_node", has_tool_calls, {True: "validation", False: END}
+                "agent_node",
+                has_tool_calls,
+                {True: "validation", False: END},
             )
 
         # Store metadata for stateful discovery
@@ -279,7 +284,8 @@ class StatefulSimpleAgent(SimpleAgent):
 
 
 def practical_stateful_example() -> Any:
-    """Practical example showing how stateful nodes work with current architecture."""
+    """Practical example showing how stateful nodes work with current
+    architecture."""
     # 1. Create a normal SimpleAgent (or use StatefulSimpleAgent)
     agent = StatefulSimpleAgent(
         name="practical_agent",
@@ -289,7 +295,7 @@ def practical_stateful_example() -> Any:
 
     # 2. Create input that will trigger tool calls
     input_data = {
-        "messages": [HumanMessage(content="Calculate 15 * 23 and explain the result")]
+        "messages": [HumanMessage(content="Calculate 15 * 23 and explain the result")],
     }
 
     # 3. The agent will automatically:
@@ -315,7 +321,8 @@ def meta_state_integration_example() -> Any:
     """Show how stateful nodes work with MetaStateSchema."""
     # 1. Create stateful agent
     agent = StatefulSimpleAgent(
-        name="meta_agent", engine=AugLLMConfig(name="meta_engine", model="gpt-4")
+        name="meta_agent",
+        engine=AugLLMConfig(name="meta_engine", model="gpt-4"),
     )
 
     # 2. Create meta state with routing configuration
@@ -326,14 +333,14 @@ def meta_state_integration_example() -> Any:
                 "tool_node": "custom_tool_executor",
                 "parser_node": "custom_parser",
                 "agent_node": "main_agent",
-            }
+            },
         },
         graph_context={"discovery_mode": "full"},
     )
 
     # 3. Execute - the stateful nodes will discover the custom routing
     meta_state.execute_agent(
-        input_data={"messages": [HumanMessage(content="Test message")]}
+        input_data={"messages": [HumanMessage(content="Test message")]},
     )
 
     return meta_state
@@ -348,7 +355,8 @@ def backward_compatibility_example() -> dict[str, Any]:
     """Show that existing code continues to work unchanged."""
     # 1. Create regular SimpleAgent (existing code)
     regular_agent = SimpleAgent(
-        name="regular_agent", engine=AugLLMConfig(name="regular_engine", model="gpt-4")
+        name="regular_agent",
+        engine=AugLLMConfig(name="regular_engine", model="gpt-4"),
     )
 
     # 2. Create stateful agent
@@ -373,7 +381,6 @@ def backward_compatibility_example() -> dict[str, Any]:
 # =============================================================================
 
 if __name__ == "__main__":
-
     practical_stateful_example()
 
     meta_state_integration_example()

@@ -1,14 +1,13 @@
 """Recompilation Hook Example for BaseGraph2.
 
-This demonstrates how to extend BaseGraph2 to automatically detect
-when tool routes change and signal recompilation needs.
+This demonstrates how to extend BaseGraph2 to automatically detect when
+tool routes change and signal recompilation needs.
 """
 
 from collections.abc import Callable
 from datetime import datetime
 import logging
 from typing import Any
-
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +45,7 @@ class RecompilationAwareGraph:
         changed = current_hash != self._tool_route_hash
         if changed:
             logger.info(
-                f"Tool routes changed - old hash: {self._tool_route_hash}, new hash: {current_hash}"
+                f"Tool routes changed - old hash: {self._tool_route_hash}, new hash: {current_hash}",
             )
         return changed
 
@@ -73,7 +72,8 @@ class RecompilationAwareGraph:
             if self.check_tool_routes_changed():
                 self._needs_recompile = True
                 self._notify_recompile_needed(
-                    "tool_route_added", {"tool_name": tool_name, "route": route}
+                    "tool_route_added",
+                    {"tool_name": tool_name, "route": route},
                 )
 
     def remove_tool_route(self, tool_name: str) -> None:
@@ -82,10 +82,14 @@ class RecompilationAwareGraph:
             old_route = self.tool_routes.pop(tool_name)
             self._needs_recompile = True
             self._notify_recompile_needed(
-                "tool_route_removed", {"tool_name": tool_name, "old_route": old_route}
+                "tool_route_removed",
+                {"tool_name": tool_name, "old_route": old_route},
             )
 
-    def register_recompile_callback(self, callback: Callable[[str, dict], None]) -> None:
+    def register_recompile_callback(
+        self,
+        callback: Callable[[str, dict], None],
+    ) -> None:
         """Register a callback for recompilation events."""
         self._recompile_callbacks.append(callback)
 
@@ -199,7 +203,9 @@ class DynamicToolAgent:
         """Execute agent logic."""
         # Check if recompilation is needed before execution
         if self.graph.needs_recompile():
-            logger.warning(f"Agent {self.name} executing but graph needs recompilation!")
+            logger.warning(
+                f"Agent {self.name} executing but graph needs recompilation!",
+            )
             # In production, this might trigger automatic recompilation
 
         # Normal agent execution
@@ -248,7 +254,7 @@ def demonstrate_recompilation_hooks():
         "dynamic_tools": [
             {"name": "formatter", "route": "format_route"},
             {"name": "validator", "route": "validate_route"},
-        ]
+        ],
     }
     validation_node(state)
 
@@ -256,7 +262,6 @@ def demonstrate_recompilation_hooks():
 # ============================================================================
 # KEY PATTERNS
 # ============================================================================
-
 """
 Key Patterns for Dynamic Tool Routing with Recompilation:
 

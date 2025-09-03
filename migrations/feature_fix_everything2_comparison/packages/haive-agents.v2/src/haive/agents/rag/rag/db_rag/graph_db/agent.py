@@ -51,8 +51,6 @@ import json
 import logging
 import os
 
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.graph.branches import Branch
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores.chroma import Chroma
 from langchain_core.documents import Document
@@ -63,13 +61,16 @@ from langgraph.types import Command
 
 from haive.agents.rag.db_rag.graph_db.config import GraphDBRAGConfig
 from haive.agents.rag.db_rag.graph_db.state import OverallState
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.graph.branches import Branch
 
 logger = logging.getLogger(__name__)
 
 
 @register_agent(GraphDBRAGConfig)
 class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
-    """Graph Database RAG Agent for natural language querying of Neo4j databases.
+    """Graph Database RAG Agent for natural language querying of Neo4j
+    databases.
 
     This agent implements a sophisticated workflow for converting natural language
     questions into Cypher queries, executing them against a Neo4j database, and
@@ -212,10 +213,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
             domain_examples = []
 
             # Try to get examples for the configured domain
-            if (
-                hasattr(config, "domain_examples")
-                and config.domain_name in config.domain_examples
-            ):
+            if hasattr(config, "domain_examples") and config.domain_name in config.domain_examples:
                 domain_examples = config.domain_examples[config.domain_name]
 
             # Try to load examples from a file if specified
@@ -235,7 +233,8 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
             # Create documents for embedding
             documents = [
                 Document(
-                    page_content=ex["query"], metadata={"question": ex["question"]}
+                    page_content=ex["query"],
+                    metadata={"question": ex["question"]},
                 )
                 for ex in domain_examples
             ]
@@ -244,7 +243,9 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
             try:
                 embedding = OpenAIEmbeddings()
                 vectorstore = Chroma.from_documents(
-                    documents, embedding, collection_name="cypher_examples"
+                    documents,
+                    embedding,
+                    collection_name="cypher_examples",
                 )
                 self.example_selector = SemanticSimilarityExampleSelector(
                     vectorstore=vectorstore,
@@ -268,7 +269,9 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
             logger.exception(f"Error initializing example selector: {e}")
             # Create a dummy selector that returns empty examples if all else fails
             self.example_selector = type(
-                "DummySelectof", (), {"select_examples": lambda self, query: []}
+                "DummySelectof",
+                (),
+                {"select_examples": lambda self, query: []},
             )()
 
     def _get_default_examples(self, domain_name: str) -> list[dict[str, str]]:
@@ -387,7 +390,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                     "question": state.question,
                     "domain_name": domain_name,
                     "category": category,
-                }
+                },
             )
 
             database_records = None
@@ -407,7 +410,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                         decision = parsed.get("decision", "continue")
                     else:
                         decision = "continue"  # Default if we can't parse
-                except:
+                except BaseException:
                     # If parsing fails, default to continue
                     decision = "continue"
             else:
@@ -422,7 +425,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                     "next_action": decision,
                     "database_records": database_records,
                     "steps": ["check_domain_relevance"],
-                }
+                },
             )
         except Exception as e:
             logger.exception(f"Error in check_domain_relevance: {e}")
@@ -430,7 +433,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                 update={
                     "error": f"Error checking domain relevance: {e!s}",
                     "next_action": "end",
-                }
+                },
             )
 
     def generate_query(self, state: OverallState) -> Command:
@@ -463,18 +466,18 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
 
             # Get examples for few-shot learning
             examples = self.example_selector.select_examples(
-                {"question": state.question}
+                {"question": state.question},
             )
 
             fewshot_examples = "\n".join(
                 [
                     f"Question: {example['question']}\nCypher query: {example['query']}"
                     for example in examples
-                ]
+                ],
             )
 
             cypher_statement = self.engines["text2cyphef"].invoke(
-                {"question": state.question, "fewshot_examples": fewshot_examples}
+                {"question": state.question, "fewshot_examples": fewshot_examples},
             )
 
             logger.info(f"Generated Cypher query: {cypher_statement}")
@@ -483,7 +486,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                 update={
                     "cypher_statement": cypher_statement,
                     "steps": [*state.steps, "generate_query"],
-                }
+                },
             )
         except Exception as e:
             logger.exception(f"Error in generate_query: {e}")
@@ -491,7 +494,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                 update={
                     "error": f"Error generating Cypher query: {e!s}",
                     "next_action": "end",
-                }
+                },
             )
 
     def validate_query(self, state: OverallState) -> Command:
@@ -529,7 +532,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                     "question": state.question,
                     "cypher": state.cypher_statement,
                     "schema": self.graph_db_enhanced_schema.schema,
-                }
+                },
             )
 
             if not validation_result.is_valid:
@@ -538,13 +541,13 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                         "next_action": "correct_cypher",
                         "cypher_errors": validation_result.errors,
                         "steps": [*state.steps, "validate_query"],
-                    }
+                    },
                 )
             return Command(
                 update={
                     "next_action": "execute_query",
                     "steps": [*state.steps, "validate_query"],
-                }
+                },
             )
         except Exception as e:
             logger.exception(f"Error in validate_query: {e}")
@@ -552,7 +555,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                 update={
                     "error": f"Error validating Cypher query: {e!s}",
                     "next_action": "end",
-                }
+                },
             )
 
     def correct_query(self, state: OverallState) -> Command:
@@ -593,7 +596,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                     "errors": state.cypher_errors,
                     "cypher": state.cypher_statement,
                     "schema": self.graph_db_enhanced_schema.schema,
-                }
+                },
             )
 
             return Command(
@@ -601,7 +604,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                     "next_action": "validate_query",
                     "cypher_statement": corrected_cypher,
                     "steps": [*state.steps, "correct_query"],
-                }
+                },
             )
         except Exception as e:
             logger.exception(f"Error in correct_query: {e}")
@@ -609,7 +612,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                 update={
                     "error": f"Error correcting Cypher query: {e!s}",
                     "next_action": "end",
-                }
+                },
             )
 
     def execute_query(self, state: OverallState) -> Command:
@@ -647,7 +650,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                     "database_records": records if records else self.no_results,
                     "next_action": "generate_answer",
                     "steps": [*state.steps, "execute_query"],
-                }
+                },
             )
         except Exception as e:
             logger.exception(f"Error in execute_query: {e}")
@@ -655,7 +658,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                 update={
                     "error": f"Error executing Cypher query: {e!s}",
                     "next_action": "end",
-                }
+                },
             )
 
     def generate_answer(self, state: OverallState) -> Command:
@@ -689,14 +692,14 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
         try:
             if "generate_final_answer" not in self.engines:
                 raise ValueError(
-                    "Missing 'generate_final_answer' engine in configuration"
+                    "Missing 'generate_final_answer' engine in configuration",
                 )
 
             if state.database_records == self.no_results:
                 answer = f"I couldn't find any information about your question: {state.question}"
             else:
                 answer = self.engines["generate_final_answef"].invoke(
-                    {"question": state.question, "results": state.database_records}
+                    {"question": state.question, "results": state.database_records},
                 )
 
             return Command(
@@ -704,7 +707,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                     "answer": answer,
                     "next_action": "end",
                     "steps": [*state.steps, "generate_answer"],
-                }
+                },
             )
         except Exception as e:
             logger.exception(f"Error in generate_answer: {e}")
@@ -713,7 +716,7 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
                     "error": f"Error generating answer: {e!s}",
                     "answer": f"An error occurred while generating the answer: {e!s}",
                     "next_action": "end",
-                }
+                },
             )
 
     def domain_router(self, state: OverallState) -> str:
@@ -817,7 +820,9 @@ class GraphDBRAGAgent(Agent[GraphDBRAGConfig]):
         )
 
         self.graph.add_conditional_edges(
-            "validate_query", validation_branch, validation_branch.destinations
+            "validate_query",
+            validation_branch,
+            validation_branch.destinations,
         )
 
         self.graph.add_edge("correct_query", "validate_query")

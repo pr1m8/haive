@@ -1,8 +1,10 @@
 """Field mapping for flexible node I/O configuration.
 
-This module provides the core data structures for mapping fields between source and
-target paths with optional transformations.
+This module provides the core data structures for mapping fields between
+source and target paths with optional transformations.
 """
+
+from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any

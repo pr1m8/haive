@@ -1,8 +1,11 @@
 """Tree of Thoughts (ToT) models and data structures.
 
-This module defines the core data models for the Tree of Thoughts reasoning algorithm,
-including candidate solutions and structured output models.
+This module defines the core data models for the Tree of Thoughts
+reasoning algorithm, including candidate solutions and structured output
+models.
 """
+
+from __future__ import annotations
 
 import operator
 from typing import Any, Generic, Literal, TypeVar, Union
@@ -21,7 +24,8 @@ class Candidate(BaseModel, Generic[T]):
 
     content: T = Field(description="The candidate solution content")
     metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional metadata"
+        default_factory=dict,
+        description="Additional metadata",
     )
 
     # Use Pydantic v2 configuration
@@ -34,9 +38,7 @@ class Candidate(BaseModel, Generic[T]):
     def __str__(self) -> str:
         """String representation of the candidate."""
         content_str = str(self.content)
-        content_preview = (
-            content_str[:50] + "..." if len(content_str) > 50 else content_str
-        )
+        content_preview = content_str[:50] + "..." if len(content_str) > 50 else content_str
         return f"Candidate(content='{content_preview}')"
 
 
@@ -48,7 +50,8 @@ class Score(BaseModel):
 
     value: float = Field(description="Numerical score between 0 and 1", ge=0, le=1)
     feedback: str | None = Field(
-        default=None, description="Feedback explaining the score"
+        default=None,
+        description="Feedback explaining the score",
     )
 
     model_config = ConfigDict(
@@ -108,7 +111,8 @@ class ScoredCandidate(BaseModel, Generic[T]):
 
 
 def update_candidates(
-    existing: list[Any] | None = None, updates: list[Any] | str | None = None
+    existing: list[Any] | None = None,
+    updates: list[Any] | str | None = None,
 ) -> list[Any]:
     """Update candidate list, handling special cases like clearing.
 
@@ -137,13 +141,15 @@ def update_candidates(
 class CandidateGeneration(BaseModel, Generic[T]):
     """Structured output model for generating multiple candidate solutions.
 
-    This model is used when the generator LLM produces structured output.
+    This model is used when the generator LLM produces structured
+    output.
     """
 
     reasoning: str = Field(description="The reasoning behind the generated candidates")
 
     candidate_contents: list[T] = Field(
-        description="List of candidate solution contents", min_items=1
+        description="List of candidate solution contents",
+        min_items=1,
     )
 
     model_config = ConfigDict(
@@ -157,8 +163,8 @@ class CandidateGeneration(BaseModel, Generic[T]):
                         "Second candidate solution...",
                         "Third candidate solution...",
                     ],
-                }
-            ]
+                },
+            ],
         },
     )
 
@@ -170,11 +176,14 @@ class CandidateGeneration(BaseModel, Generic[T]):
 class CandidateEvaluation(BaseModel):
     """Structured output model for evaluating a candidate solution.
 
-    This model is used when the evaluator LLM produces structured output.
+    This model is used when the evaluator LLM produces structured
+    output.
     """
 
     value: float = Field(
-        description="Score between 0 and 1, where 1 is perfect", ge=0, le=1
+        description="Score between 0 and 1, where 1 is perfect",
+        ge=0,
+        le=1,
     )
 
     feedback: str = Field(description="Feedback explaining the score")
@@ -185,9 +194,9 @@ class CandidateEvaluation(BaseModel):
                 {
                     "value": 0.85,
                     "feedback": "This solution is good because... However, it could be improved by...",
-                }
-            ]
-        }
+                },
+            ],
+        },
     )
 
     def to_score(self) -> Score:
@@ -205,13 +214,16 @@ TokenType = Union[float, OperatorType]
 
 
 class Equation(BaseModel):
-    """An equation in reverse-polish notation that combines numbers to reach a target value.
+    """An equation in reverse-polish notation that combines numbers to reach a.
 
-    This is one possible implementation of a solution type for mathematical problems.
+    target value.
+
+    This is one possible implementation of a solution type for
+    mathematical problems.
     """
 
     tokens: list[TokenType] = Field(
-        description="The stack of tokens and operators in reverse-polish notation. Example: [3, 4, '+', -1, '*'] would evaluate to (3 + 4) * -1 = -7."
+        description="The stack of tokens and operators in reverse-polish notation. Example: [3, 4, '+', -1, '*'] would evaluate to (3 + 4) * -1 = -7.",
     )
 
     model_config = ConfigDict(
@@ -219,8 +231,8 @@ class Equation(BaseModel):
             "examples": [
                 {"tokens": [3.0, 4.0, "+", -1.0, "*"]},
                 {"tokens": [7.0, 5.0, "*", 12.0, "/"]},
-            ]
-        }
+            ],
+        },
     )
 
     def compute(self) -> float:
@@ -259,11 +271,13 @@ class EquationGeneration(BaseModel):
     reasoning: str = Field(description="The reasoning behind the generated equations")
 
     equations: list[Equation] = Field(
-        description="List of equation solutions", min_items=1
+        description="List of equation solutions",
+        min_items=1,
     )
 
     explanations: list[str] | None = Field(
-        default=None, description="Optional explanations for each equation"
+        default=None,
+        description="Optional explanations for each equation",
     )
 
     model_config = ConfigDict(
@@ -280,8 +294,8 @@ class EquationGeneration(BaseModel):
                         "Using the numbers in RPN: 3 4 + 8 *",
                         "Grouping differently: 3 * (4 + 8)",
                     ],
-                }
-            ]
+                },
+            ],
         },
     )
 
@@ -294,8 +308,9 @@ class EquationGeneration(BaseModel):
             for i, equation in enumerate(self.equations):
                 candidates.append(
                     Candidate(
-                        content=equation, metadata={"explanation": self.explanations[i]}
-                    )
+                        content=equation,
+                        metadata={"explanation": self.explanations[i]},
+                    ),
                 )
         else:
             # Otherwise just use the equations

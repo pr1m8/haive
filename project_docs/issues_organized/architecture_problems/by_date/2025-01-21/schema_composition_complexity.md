@@ -1,8 +1,8 @@
 # Schema Composition Complexity
 
-**Date Discovered**: 2025-01-21 (ongoing issue)  
-**Priority**: Critical  
-**Status**: Active  
+**Date Discovered**: 2025-01-21 (ongoing issue)
+**Priority**: Critical
+**Status**: Active
 **Package(s)**: haive-core
 
 ## Problem Description
@@ -154,7 +154,7 @@ class MetaStateSchema(StateSchema):
 
 ## Resolution Notes
 
-**2025-01-15**: MetaStateSchema pattern designed and tested with real components.  
+**2025-01-15**: MetaStateSchema pattern designed and tested with real components.
 **2025-01-21**: Multi-agent sequential pattern in development.
 
 _Continued updates as implementation progresses_

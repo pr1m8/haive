@@ -13,11 +13,11 @@ reflection flows.
 import asyncio
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langchain_core.prompts import ChatPromptTemplate
 
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 # Import what we can, but handle the missing MESSAGE_TRANSFORMER gracefully
 try:
@@ -39,7 +39,8 @@ except (ImportError, AttributeError):
 
 
 class SimpleReflectionTransformer:
-    """Simple reflection transformer for when message_transformation_v2 is not available."""
+    """Simple reflection transformer for when message_transformation_v2 is not
+    available."""
 
     def __init__(self, preserve_first_message: bool = True):
         self.preserve_first_message = preserve_first_message
@@ -66,7 +67,7 @@ class SimpleReflectionTransformer:
                     HumanMessage(
                         content=msg.content,
                         additional_kwargs=getattr(msg, "additional_kwargs", {}),
-                    )
+                    ),
                 )
             elif isinstance(msg, HumanMessage):
                 # Human → AI
@@ -74,7 +75,7 @@ class SimpleReflectionTransformer:
                     AIMessage(
                         content=msg.content,
                         additional_kwargs=getattr(msg, "additional_kwargs", {}),
-                    )
+                    ),
                 )
             else:
                 # Keep other message types unchanged
@@ -86,9 +87,10 @@ class SimpleReflectionTransformer:
 class MessageTransformerReflectionAgent:
     """Reflection agent using message transformer v2 pattern.
 
-    Instead of structured output extraction, this uses message transformation
-    to add reflection context directly to conversations, following the
-    pattern from reflection_agent_pattern.md lines 565-594.
+    Instead of structured output extraction, this uses message
+    transformation to add reflection context directly to conversations,
+    following the pattern from reflection_agent_pattern.md lines
+    565-594.
     """
 
     def __init__(
@@ -116,7 +118,7 @@ class MessageTransformerReflectionAgent:
         else:
             # Create a simple reflection transformer function
             self.reflection_transformer = SimpleReflectionTransformer(
-                preserve_first_message
+                preserve_first_message,
             )
 
         # Create reflection analyzer agent
@@ -135,18 +137,21 @@ Your role is to:
 Focus on the conversation dynamics and response quality.""",
                 ),
                 ("human", "Analyze this conversation and provide reflection insights."),
-            ]
+            ],
         )
 
         self.analyzer = SimpleAgent(
             name=f"{name}_analyzer",
             engine=AugLLMConfig(
-                prompt_template=reflection_prompt, temperature=temperature
+                prompt_template=reflection_prompt,
+                temperature=temperature,
             ),
         )
 
     async def reflect_on_conversation(
-        self, messages: list[BaseMessage], original_query: str | None = None
+        self,
+        messages: list[BaseMessage],
+        original_query: str | None = None,
     ) -> dict[str, Any]:
         """Perform reflection analysis using message transformation.
 
@@ -159,7 +164,7 @@ Focus on the conversation dynamics and response quality.""",
         """
         # Apply reflection transformation to messages
         transformed_messages = self.reflection_transformer._apply_transformation(
-            messages
+            messages,
         )
 
         # Create context for analysis
@@ -216,7 +221,6 @@ def create_reflection_context_transformer(
                     "Critique",
                     "ReflectionResult",
                 ]:
-
                     try:
                         import json
 
@@ -225,9 +229,9 @@ def create_reflection_context_transformer(
                         # Add reflection as context
                         reflection_context = f"""
 Previous response reflection:
-- Quality assessment: {reflection_data.get('critique', {}).get('overall_quality', 'N/A')}
-- Key insights: {reflection_data.get('summary', 'No summary available')}
-- Improvement areas: {', '.join(reflection_data.get('critique', {}).get('weaknesses', []))}
+- Quality assessment: {reflection_data.get("critique", {}).get("overall_quality", "N/A")}
+- Key insights: {reflection_data.get("summary", "No summary available")}
+- Improvement areas: {", ".join(reflection_data.get("critique", {}).get("weaknesses", []))}
 """
                         enhanced.append(HumanMessage(content=reflection_context))
                         break
@@ -238,7 +242,8 @@ Previous response reflection:
 
 
 class ConversationalReflectionAgent:
-    """Reflection agent that maintains conversational flow with reflection context.
+    """Reflection agent that maintains conversational flow with reflection
+    context.
 
     This integrates message transformation to create natural reflection
     patterns within conversations, rather than separate analysis steps.
@@ -264,11 +269,12 @@ class ConversationalReflectionAgent:
 
         # Create reflection transformer for context injection
         self.context_transformer = SimpleCustomTransformer(
-            create_reflection_context_transformer
+            create_reflection_context_transformer,
         )
 
     async def run_with_reflection(
-        self, input_data: str | dict[str, Any]
+        self,
+        input_data: str | dict[str, Any],
     ) -> dict[str, Any]:
         """Run the base agent with reflection context injection.
 
@@ -291,7 +297,7 @@ class ConversationalReflectionAgent:
 
                 # Transform messages to add reflection context
                 transformed_messages = self.context_transformer._apply_transformation(
-                    messages
+                    messages,
                 )
 
                 # Update result with transformed messages
@@ -344,7 +350,7 @@ ongoing conversation. Focus on:
 Keep reflections concise and conversational.""",
                     ),
                     ("human", "Please reflect on this conversation flow."),
-                ]
+                ],
             )
 
             self.reflection_agent = SimpleAgent(
@@ -362,11 +368,14 @@ Keep reflections concise and conversational.""",
         )
 
         self.reflection_transformer = create_reflection_transformer(
-            name=f"{name}_reflection", preserve_first_message=True
+            name=f"{name}_reflection",
+            preserve_first_message=True,
         )
 
     async def run_primary_with_reflection(
-        self, query: str, include_reflection: bool = True
+        self,
+        query: str,
+        include_reflection: bool = True,
     ) -> dict[str, Any]:
         """Run primary agent and optionally add reflection insights.
 
@@ -385,17 +394,13 @@ Keep reflections concise and conversational.""",
             "reflection_included": include_reflection,
         }
 
-        if (
-            include_reflection
-            and isinstance(primary_result, dict)
-            and "messages" in primary_result
-        ):
+        if include_reflection and isinstance(primary_result, dict) and "messages" in primary_result:
             # Step 2: Transform messages for reflection context
             messages = primary_result["messages"]
 
             # Apply AI -> Human transformation for reflection agent
-            transformed_for_reflection = (
-                self.ai_to_human_transformer._apply_transformation(messages)
+            transformed_for_reflection = self.ai_to_human_transformer._apply_transformation(
+                messages,
             )
 
             # Step 3: Get reflection insights
@@ -410,7 +415,7 @@ Keep reflections concise and conversational.""",
             if isinstance(reflection_result, dict) and "messages" in reflection_result:
                 all_messages = messages + reflection_result["messages"]
                 final_transformed = self.reflection_transformer._apply_transformation(
-                    all_messages
+                    all_messages,
                 )
 
                 result.update(
@@ -423,7 +428,7 @@ Keep reflections concise and conversational.""",
                             "reflection_analysis",
                             "reflection_transformation",
                         ],
-                    }
+                    },
                 )
 
         return result
@@ -431,20 +436,28 @@ Keep reflections concise and conversational.""",
 
 # Factory functions for easy creation
 def create_message_transformer_reflection_agent(
-    name: str = "mt_reflector", temperature: float = 0.3, **kwargs
+    name: str = "mt_reflector",
+    temperature: float = 0.3,
+    **kwargs,
 ) -> MessageTransformerReflectionAgent:
     """Create a message transformer reflection agent."""
     return MessageTransformerReflectionAgent(
-        name=name, temperature=temperature, **kwargs
+        name=name,
+        temperature=temperature,
+        **kwargs,
     )
 
 
 def create_conversational_reflection_agent(
-    base_agent: SimpleAgent, name: str = "conv_reflector", reflection_frequency: int = 3
+    base_agent: SimpleAgent,
+    name: str = "conv_reflector",
+    reflection_frequency: int = 3,
 ) -> ConversationalReflectionAgent:
     """Create a conversational reflection agent."""
     return ConversationalReflectionAgent(
-        base_agent=base_agent, name=name, reflection_frequency=reflection_frequency
+        base_agent=base_agent,
+        name=name,
+        reflection_frequency=reflection_frequency,
     )
 
 
@@ -455,15 +468,15 @@ def create_reflection_message_flow(
 ) -> ReflectionMessageFlow:
     """Create a reflection message flow system."""
     return ReflectionMessageFlow(
-        primary_agent=primary_agent, reflection_agent=reflection_agent, name=name
+        primary_agent=primary_agent,
+        reflection_agent=reflection_agent,
+        name=name,
     )
 
 
 # Example usage functions
 async def example_message_transformer_reflection():
     """Example: Reflection using message transformer patterns."""
-    print("\n=== Message Transformer Reflection Example ===\n")
-
     # Create reflection agent using message transformation
     mt_reflector = create_message_transformer_reflection_agent()
 
@@ -473,30 +486,21 @@ async def example_message_transformer_reflection():
     conversation = [
         HumanMessage(content="What is artificial intelligence?"),
         AIMessage(
-            content="AI is computer intelligence that can learn and solve problems."
+            content="AI is computer intelligence that can learn and solve problems.",
         ),
         HumanMessage(content="Can you explain it in more detail?"),
         AIMessage(content="AI uses algorithms and data to simulate human thinking."),
     ]
 
-    print(f"Original conversation has {len(conversation)} messages")
-
     # Apply reflection analysis with message transformation
-    reflection_result = await mt_reflector.reflect_on_conversation(
-        conversation, original_query="What is artificial intelligence?"
+    await mt_reflector.reflect_on_conversation(
+        conversation,
+        original_query="What is artificial intelligence?",
     )
-
-    print("\n✅ Reflection Analysis:")
-    print(f"Transformation applied: {reflection_result['transformation_applied']}")
-    print(f"Messages before: {reflection_result['message_count_before']}")
-    print(f"Messages after: {reflection_result['message_count_after']}")
-    print(f"\nAnalysis: {reflection_result['analysis'][:200]}...")
 
 
 async def example_conversational_reflection():
     """Example: Conversational reflection with context injection."""
-    print("\n\n=== Conversational Reflection Example ===\n")
-
     # Create base agent
     base_agent = SimpleAgent(
         name="chat_assistant",
@@ -508,7 +512,8 @@ async def example_conversational_reflection():
 
     # Wrap with conversational reflection
     conv_reflector = create_conversational_reflection_agent(
-        base_agent=base_agent, reflection_frequency=2  # Reflect every 2 messages
+        base_agent=base_agent,
+        reflection_frequency=2,  # Reflect every 2 messages
     )
 
     # Simulate conversation with reflection
@@ -518,24 +523,19 @@ async def example_conversational_reflection():
         "Are there any recent technological solutions?",
     ]
 
-    for i, query in enumerate(queries, 1):
-        print(f"\n--- Turn {i}: {query} ---")
-
+    for _i, query in enumerate(queries, 1):
         result = await conv_reflector.run_with_reflection(query)
 
-        reflection_applied = result.get("reflection_applied", False)
-        print(f"Reflection applied: {reflection_applied}")
+        result.get("reflection_applied", False)
 
         if isinstance(result, dict) and "messages" in result:
             last_message = result["messages"][-1]
             if hasattr(last_message, "content"):
-                print(f"Response: {last_message.content[:150]}...")
+                pass
 
 
 async def example_reflection_message_flow():
     """Example: Complete reflection message flow system."""
-    print("\n\n=== Reflection Message Flow Example ===\n")
-
     # Create primary agent
     primary_agent = SimpleAgent(
         name="knowledge_assistant",
@@ -547,39 +547,29 @@ async def example_reflection_message_flow():
 
     # Create reflection flow system
     reflection_flow = create_reflection_message_flow(
-        primary_agent=primary_agent, name="knowledge_reflection_flow"
+        primary_agent=primary_agent,
+        name="knowledge_reflection_flow",
     )
 
     # Test query
     query = "Explain the concept of machine learning in simple terms"
 
-    print(f"Query: {query}")
-
     # Run with reflection
     flow_result = await reflection_flow.run_primary_with_reflection(
-        query=query, include_reflection=True
+        query=query,
+        include_reflection=True,
     )
 
-    print("\n📊 Flow Results:")
-    print(f"Reflection included: {flow_result['reflection_included']}")
-
     if "transformation_steps" in flow_result:
-        print(
-            f"Transformation steps: {' → '.join(flow_result['transformation_steps'])}"
-        )
+        pass
 
     if "enhanced_messages" in flow_result:
         enhanced_messages = flow_result["enhanced_messages"]
-        print(f"Enhanced message count: {len(enhanced_messages)}")
 
         # Show the reflection transformation effect
-        print("\n📝 Message Flow with Reflection:")
-        for i, msg in enumerate(enhanced_messages):
-            msg_type = type(msg).__name__
-            content_preview = (
-                msg.content[:80] + "..." if len(msg.content) > 80 else msg.content
-            )
-            print(f"  {i+1}. {msg_type}: {content_preview}")
+        for _i, msg in enumerate(enhanced_messages):
+            type(msg).__name__
+            (msg.content[:80] + "..." if len(msg.content) > 80 else msg.content)
 
 
 async def main():

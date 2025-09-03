@@ -1,0 +1,1380 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.engine.document.path_analysis - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for haive.core.engine.document.path_analysis</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Path Analysis System for Document Loader Engine.</span>
+
+<span class="sd">This module provides a path analysis system for the document loader engine,</span>
+<span class="sd">which analyzes paths and URLs to determine their nature and properties.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mimetypes</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlparse</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">computed_field</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PathType">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.PathType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PathType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Primary path type classification.&quot;&quot;&quot;</span>
+
+    <span class="n">LOCAL_FILE</span> <span class="o">=</span> <span class="s2">&quot;local_file&quot;</span>
+    <span class="n">LOCAL_DIRECTORY</span> <span class="o">=</span> <span class="s2">&quot;local_directory&quot;</span>
+    <span class="n">LOCAL_SYMLINK</span> <span class="o">=</span> <span class="s2">&quot;local_symlink&quot;</span>
+    <span class="n">LOCAL_NONEXISTENT</span> <span class="o">=</span> <span class="s2">&quot;local_nonexistent&quot;</span>
+    <span class="n">URL_HTTP</span> <span class="o">=</span> <span class="s2">&quot;url_http&quot;</span>
+    <span class="n">URL_HTTPS</span> <span class="o">=</span> <span class="s2">&quot;url_https&quot;</span>
+    <span class="n">URL_FTP</span> <span class="o">=</span> <span class="s2">&quot;url_ftp&quot;</span>
+    <span class="n">URL_FILE</span> <span class="o">=</span> <span class="s2">&quot;url_file&quot;</span>
+    <span class="n">DATABASE_URI</span> <span class="o">=</span> <span class="s2">&quot;database_uri&quot;</span>
+    <span class="n">CLOUD_STORAGE</span> <span class="o">=</span> <span class="s2">&quot;cloud_storage&quot;</span>
+    <span class="n">NETWORK_SHARE</span> <span class="o">=</span> <span class="s2">&quot;network_share&quot;</span>
+    <span class="n">SPECIAL_PATH</span> <span class="o">=</span> <span class="s2">&quot;special_path&quot;</span>
+    <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="FileCategory">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.FileCategory">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FileCategory</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;High-level file category.&quot;&quot;&quot;</span>
+
+    <span class="n">DOCUMENT</span> <span class="o">=</span> <span class="s2">&quot;document&quot;</span>
+    <span class="n">IMAGE</span> <span class="o">=</span> <span class="s2">&quot;image&quot;</span>
+    <span class="n">VIDEO</span> <span class="o">=</span> <span class="s2">&quot;video&quot;</span>
+    <span class="n">AUDIO</span> <span class="o">=</span> <span class="s2">&quot;audio&quot;</span>
+    <span class="n">CODE</span> <span class="o">=</span> <span class="s2">&quot;code&quot;</span>
+    <span class="n">DATA</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+    <span class="n">ARCHIVE</span> <span class="o">=</span> <span class="s2">&quot;archive&quot;</span>
+    <span class="n">EXECUTABLE</span> <span class="o">=</span> <span class="s2">&quot;executable&quot;</span>
+    <span class="n">TEXT</span> <span class="o">=</span> <span class="s2">&quot;text&quot;</span>
+    <span class="n">FONT</span> <span class="o">=</span> <span class="s2">&quot;font&quot;</span>
+    <span class="n">MODEL</span> <span class="o">=</span> <span class="s2">&quot;model&quot;</span>
+    <span class="n">SYSTEM</span> <span class="o">=</span> <span class="s2">&quot;system&quot;</span>
+    <span class="n">UNKNOWN_FILE</span> <span class="o">=</span> <span class="s2">&quot;unknown_file&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="DatabaseType">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.DatabaseType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DatabaseType</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Database type classification.&quot;&quot;&quot;</span>
+
+    <span class="n">POSTGRESQL</span> <span class="o">=</span> <span class="s2">&quot;postgresql&quot;</span>
+    <span class="n">MYSQL</span> <span class="o">=</span> <span class="s2">&quot;mysql&quot;</span>
+    <span class="n">SQLITE</span> <span class="o">=</span> <span class="s2">&quot;sqlite&quot;</span>
+    <span class="n">MONGODB</span> <span class="o">=</span> <span class="s2">&quot;mongodb&quot;</span>
+    <span class="n">REDIS</span> <span class="o">=</span> <span class="s2">&quot;redis&quot;</span>
+    <span class="n">ORACLE</span> <span class="o">=</span> <span class="s2">&quot;oracle&quot;</span>
+    <span class="n">MSSQL</span> <span class="o">=</span> <span class="s2">&quot;mssql&quot;</span>
+    <span class="n">CASSANDRA</span> <span class="o">=</span> <span class="s2">&quot;cassandra&quot;</span>
+    <span class="n">ELASTICSEARCH</span> <span class="o">=</span> <span class="s2">&quot;elasticsearch&quot;</span>
+    <span class="n">CLICKHOUSE</span> <span class="o">=</span> <span class="s2">&quot;clickhouse&quot;</span>
+    <span class="n">SNOWFLAKE</span> <span class="o">=</span> <span class="s2">&quot;snowflake&quot;</span>
+    <span class="n">BIGQUERY</span> <span class="o">=</span> <span class="s2">&quot;bigquery&quot;</span>
+    <span class="n">DYNAMODB</span> <span class="o">=</span> <span class="s2">&quot;dynamodb&quot;</span>
+    <span class="n">COUCHDB</span> <span class="o">=</span> <span class="s2">&quot;couchdb&quot;</span>
+    <span class="n">INFLUXDB</span> <span class="o">=</span> <span class="s2">&quot;influxdb&quot;</span>
+    <span class="n">UNKNOWN_DB</span> <span class="o">=</span> <span class="s2">&quot;unknown_db&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="CloudProvider">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.CloudProvider">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CloudProvider</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cloud storage provider classification.&quot;&quot;&quot;</span>
+
+    <span class="n">AWS_S3</span> <span class="o">=</span> <span class="s2">&quot;aws_s3&quot;</span>
+    <span class="n">AZURE_BLOB</span> <span class="o">=</span> <span class="s2">&quot;azure_blob&quot;</span>
+    <span class="n">GOOGLE_CLOUD</span> <span class="o">=</span> <span class="s2">&quot;google_cloud&quot;</span>
+    <span class="n">DROPBOX</span> <span class="o">=</span> <span class="s2">&quot;dropbox&quot;</span>
+    <span class="n">BOX</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span>
+    <span class="n">ONEDRIVE</span> <span class="o">=</span> <span class="s2">&quot;onedrive&quot;</span>
+    <span class="n">ICLOUD</span> <span class="o">=</span> <span class="s2">&quot;icloud&quot;</span>
+    <span class="n">BACKBLAZE</span> <span class="o">=</span> <span class="s2">&quot;backblaze&quot;</span>
+    <span class="n">UNKNOWN_CLOUD</span> <span class="o">=</span> <span class="s2">&quot;unknown_cloud&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="URLComponents">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.URLComponents">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">URLComponents</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Components of a URL.&quot;&quot;&quot;</span>
+
+    <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">netloc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">hostname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">params</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">fragment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="DomainInfo">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.DomainInfo">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DomainInfo</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Information about a domain.&quot;&quot;&quot;</span>
+
+    <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">tld</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">subdomain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">is_ip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">is_localhost</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="PathAnalysisResult">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.PathAnalysisResult">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PathAnalysisResult</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Result of path analysis.</span>
+
+<span class="sd">    This model contains comprehensive information about a path, including its type,</span>
+<span class="sd">    properties, and metadata.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Original input</span>
+    <span class="n">original_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Original path string eqthat was analyzed&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Primary classification</span>
+    <span class="n">path_type</span><span class="p">:</span> <span class="n">PathType</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">PathType</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Primary path type classification&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Basic properties</span>
+    <span class="n">is_local</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Whether the path is on the local filesystem&quot;</span>
+    <span class="p">)</span>
+    <span class="n">is_remote</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Whether the path is remote (URL, cloud, etc.)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">is_file</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Whether the path is a file&quot;</span><span class="p">)</span>
+    <span class="n">is_directory</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Whether the path is a directory&quot;</span>
+    <span class="p">)</span>
+    <span class="n">is_symlink</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Whether the path is a symbolic link&quot;</span>
+    <span class="p">)</span>
+    <span class="n">exists</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Whether the path exists&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Path components</span>
+    <span class="n">normalized_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Normalized version of the path&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parent_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parent directory of the path&quot;</span>
+    <span class="p">)</span>
+    <span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;File name (if applicable)&quot;</span><span class="p">)</span>
+    <span class="n">file_extension</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;File extension (if applicable)&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># File properties</span>
+    <span class="n">file_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;File size in bytes (if available)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">mime_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;MIME type (if available)&quot;</span><span class="p">)</span>
+    <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;File encoding (if available)&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Categorization</span>
+    <span class="n">file_category</span><span class="p">:</span> <span class="n">FileCategory</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;High-level file category&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># URL-specific properties</span>
+    <span class="n">url_components</span><span class="p">:</span> <span class="n">URLComponents</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Components of the URL (if applicable)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">domain_info</span><span class="p">:</span> <span class="n">DomainInfo</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Domain information (if applicable)&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Database-specific properties</span>
+    <span class="n">database_type</span><span class="p">:</span> <span class="n">DatabaseType</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Database type (if applicable)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">database_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Database name (if applicable)&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Cloud storage properties</span>
+    <span class="n">cloud_provider</span><span class="p">:</span> <span class="n">CloudProvider</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Cloud storage provider (if applicable)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">bucket_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Bucket name (if applicable)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">object_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Object key (if applicable)&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Network properties</span>
+    <span class="n">is_secure</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Whether the connection is secure (https, sftp, etc.)&quot;</span>
+    <span class="p">)</span>
+
+    <span class="nd">@computed_field</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">source_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a summary of the source.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">PathType</span><span class="o">.</span><span class="n">LOCAL_FILE</span><span class="p">,</span> <span class="n">PathType</span><span class="o">.</span><span class="n">LOCAL_DIRECTORY</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Local </span><span class="si">{</span><span class="s1">&#39;directory&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">is_directory</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;file&#39;</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">original_path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">PathType</span><span class="o">.</span><span class="n">URL_HTTP</span><span class="p">,</span> <span class="n">PathType</span><span class="o">.</span><span class="n">URL_HTTPS</span><span class="p">]:</span>
+            <span class="n">domain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain_info</span><span class="o">.</span><span class="n">domain</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain_info</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Web URL (</span><span class="si">{</span><span class="n">domain</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">original_path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_type</span> <span class="o">==</span> <span class="n">PathType</span><span class="o">.</span><span class="n">DATABASE_URI</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Database (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">database_type</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">original_path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_type</span> <span class="o">==</span> <span class="n">PathType</span><span class="o">.</span><span class="n">CLOUD_STORAGE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Cloud storage (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cloud_provider</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">original_path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Unknown source: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">original_path</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+<span class="c1"># File extension to MIME type mappings (in addition to standard ones)</span>
+<span class="n">EXTRA_MIME_TYPES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;.md&quot;</span><span class="p">:</span> <span class="s2">&quot;text/markdown&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.ipynb&quot;</span><span class="p">:</span> <span class="s2">&quot;application/x-ipynb+json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.yaml&quot;</span><span class="p">:</span> <span class="s2">&quot;application/x-yaml&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.yml&quot;</span><span class="p">:</span> <span class="s2">&quot;application/x-yaml&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.toml&quot;</span><span class="p">:</span> <span class="s2">&quot;application/toml&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.rst&quot;</span><span class="p">:</span> <span class="s2">&quot;text/x-rst&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;.epub&quot;</span><span class="p">:</span> <span class="s2">&quot;application/epub+zip&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># File extension to category mappings</span>
+<span class="n">FILE_CATEGORY_MAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Documents</span>
+    <span class="s2">&quot;.pdf&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DOCUMENT</span><span class="p">,</span>
+    <span class="s2">&quot;.doc&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DOCUMENT</span><span class="p">,</span>
+    <span class="s2">&quot;.docx&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DOCUMENT</span><span class="p">,</span>
+    <span class="s2">&quot;.odt&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DOCUMENT</span><span class="p">,</span>
+    <span class="s2">&quot;.rtf&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DOCUMENT</span><span class="p">,</span>
+    <span class="s2">&quot;.epub&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DOCUMENT</span><span class="p">,</span>
+    <span class="s2">&quot;.md&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DOCUMENT</span><span class="p">,</span>
+    <span class="s2">&quot;.markdown&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DOCUMENT</span><span class="p">,</span>
+    <span class="s2">&quot;.rst&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DOCUMENT</span><span class="p">,</span>
+    <span class="s2">&quot;.txt&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span>
+    <span class="s2">&quot;.html&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span>
+    <span class="s2">&quot;.htm&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span>
+    <span class="c1"># Data formats</span>
+    <span class="s2">&quot;.csv&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="s2">&quot;.json&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="s2">&quot;.xml&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="s2">&quot;.yaml&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="s2">&quot;.yml&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="s2">&quot;.toml&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="s2">&quot;.ini&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="s2">&quot;.conf&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="s2">&quot;.sqlite&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="s2">&quot;.db&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="s2">&quot;.xlsx&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="s2">&quot;.xls&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="s2">&quot;.ods&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span>
+    <span class="c1"># Code</span>
+    <span class="s2">&quot;.py&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">CODE</span><span class="p">,</span>
+    <span class="s2">&quot;.js&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">CODE</span><span class="p">,</span>
+    <span class="s2">&quot;.ts&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">CODE</span><span class="p">,</span>
+    <span class="s2">&quot;.java&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">CODE</span><span class="p">,</span>
+    <span class="s2">&quot;.c&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">CODE</span><span class="p">,</span>
+    <span class="s2">&quot;.cpp&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">CODE</span><span class="p">,</span>
+    <span class="s2">&quot;.cs&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">CODE</span><span class="p">,</span>
+    <span class="s2">&quot;.go&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">CODE</span><span class="p">,</span>
+    <span class="s2">&quot;.rs&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">CODE</span><span class="p">,</span>
+    <span class="s2">&quot;.rb&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">CODE</span><span class="p">,</span>
+    <span class="s2">&quot;.php&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">CODE</span><span class="p">,</span>
+    <span class="s2">&quot;.ipynb&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">CODE</span><span class="p">,</span>
+    <span class="c1"># Images</span>
+    <span class="s2">&quot;.jpg&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">IMAGE</span><span class="p">,</span>
+    <span class="s2">&quot;.jpeg&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">IMAGE</span><span class="p">,</span>
+    <span class="s2">&quot;.png&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">IMAGE</span><span class="p">,</span>
+    <span class="s2">&quot;.gif&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">IMAGE</span><span class="p">,</span>
+    <span class="s2">&quot;.bmp&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">IMAGE</span><span class="p">,</span>
+    <span class="s2">&quot;.tiff&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">IMAGE</span><span class="p">,</span>
+    <span class="s2">&quot;.webp&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">IMAGE</span><span class="p">,</span>
+    <span class="s2">&quot;.svg&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">IMAGE</span><span class="p">,</span>
+    <span class="s2">&quot;.ico&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">IMAGE</span><span class="p">,</span>
+    <span class="c1"># Video</span>
+    <span class="s2">&quot;.mp4&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">VIDEO</span><span class="p">,</span>
+    <span class="s2">&quot;.avi&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">VIDEO</span><span class="p">,</span>
+    <span class="s2">&quot;.mov&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">VIDEO</span><span class="p">,</span>
+    <span class="s2">&quot;.mkv&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">VIDEO</span><span class="p">,</span>
+    <span class="s2">&quot;.webm&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">VIDEO</span><span class="p">,</span>
+    <span class="s2">&quot;.wmv&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">VIDEO</span><span class="p">,</span>
+    <span class="s2">&quot;.flv&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">VIDEO</span><span class="p">,</span>
+    <span class="c1"># Audio</span>
+    <span class="s2">&quot;.mp3&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">AUDIO</span><span class="p">,</span>
+    <span class="s2">&quot;.wav&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">AUDIO</span><span class="p">,</span>
+    <span class="s2">&quot;.ogg&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">AUDIO</span><span class="p">,</span>
+    <span class="s2">&quot;.flac&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">AUDIO</span><span class="p">,</span>
+    <span class="s2">&quot;.aac&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">AUDIO</span><span class="p">,</span>
+    <span class="s2">&quot;.m4a&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">AUDIO</span><span class="p">,</span>
+    <span class="c1"># Archives</span>
+    <span class="s2">&quot;.zip&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">ARCHIVE</span><span class="p">,</span>
+    <span class="s2">&quot;.tar&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">ARCHIVE</span><span class="p">,</span>
+    <span class="s2">&quot;.gz&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">ARCHIVE</span><span class="p">,</span>
+    <span class="s2">&quot;.7z&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">ARCHIVE</span><span class="p">,</span>
+    <span class="s2">&quot;.rar&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">ARCHIVE</span><span class="p">,</span>
+    <span class="s2">&quot;.bz2&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">ARCHIVE</span><span class="p">,</span>
+    <span class="s2">&quot;.xz&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">ARCHIVE</span><span class="p">,</span>
+    <span class="c1"># Executables</span>
+    <span class="s2">&quot;.exe&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">EXECUTABLE</span><span class="p">,</span>
+    <span class="s2">&quot;.app&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">EXECUTABLE</span><span class="p">,</span>
+    <span class="s2">&quot;.bin&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">EXECUTABLE</span><span class="p">,</span>
+    <span class="s2">&quot;.sh&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">EXECUTABLE</span><span class="p">,</span>
+    <span class="s2">&quot;.bat&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">EXECUTABLE</span><span class="p">,</span>
+    <span class="s2">&quot;.dll&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">EXECUTABLE</span><span class="p">,</span>
+    <span class="s2">&quot;.so&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">EXECUTABLE</span><span class="p">,</span>
+    <span class="c1"># Fonts</span>
+    <span class="s2">&quot;.ttf&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">FONT</span><span class="p">,</span>
+    <span class="s2">&quot;.otf&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">FONT</span><span class="p">,</span>
+    <span class="s2">&quot;.woff&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">FONT</span><span class="p">,</span>
+    <span class="s2">&quot;.woff2&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">FONT</span><span class="p">,</span>
+    <span class="s2">&quot;.eot&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">FONT</span><span class="p">,</span>
+    <span class="c1"># Models</span>
+    <span class="s2">&quot;.onnx&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span>
+    <span class="s2">&quot;.pkl&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span>
+    <span class="s2">&quot;.h5&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span>
+    <span class="s2">&quot;.pth&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span>
+    <span class="s2">&quot;.pt&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span>
+    <span class="s2">&quot;.pb&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span>
+    <span class="s2">&quot;.tflite&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span>
+    <span class="c1"># System files</span>
+    <span class="s2">&quot;.sys&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">SYSTEM</span><span class="p">,</span>
+    <span class="s2">&quot;.log&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">SYSTEM</span><span class="p">,</span>
+    <span class="s2">&quot;.tmp&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">SYSTEM</span><span class="p">,</span>
+    <span class="s2">&quot;.bak&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">SYSTEM</span><span class="p">,</span>
+    <span class="s2">&quot;.cache&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">SYSTEM</span><span class="p">,</span>
+    <span class="s2">&quot;.config&quot;</span><span class="p">:</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">SYSTEM</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Database URI patterns</span>
+<span class="n">DATABASE_URI_PATTERNS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sa">r</span><span class="s2">&quot;^postgresql://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">POSTGRESQL</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^postgres://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">POSTGRESQL</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^mysql://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">MYSQL</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^mariadb://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">MYSQL</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^sqlite://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">SQLITE</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^mongodb://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">MONGODB</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^mongodb\+srv://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">MONGODB</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^redis://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">REDIS</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^oracle://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">ORACLE</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^mssql://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">MSSQL</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^sqlserver://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">MSSQL</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^cassandra://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">CASSANDRA</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^elasticsearch://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">ELASTICSEARCH</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^clickhouse://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">CLICKHOUSE</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^snowflake://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">SNOWFLAKE</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^bigquery://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">BIGQUERY</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^dynamodb://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">DYNAMODB</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^couchdb://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">COUCHDB</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^influxdb://&quot;</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">INFLUXDB</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Cloud storage patterns</span>
+<span class="n">CLOUD_STORAGE_PATTERNS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sa">r</span><span class="s2">&quot;^s3://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">AWS_S3</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^s3a://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">AWS_S3</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^s3n://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">AWS_S3</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^azure://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">AZURE_BLOB</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^wasb://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">AZURE_BLOB</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^wasbs://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">AZURE_BLOB</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^adl://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">AZURE_BLOB</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^gs://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">GOOGLE_CLOUD</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^gcs://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">GOOGLE_CLOUD</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^dropbox://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">DROPBOX</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^box://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">BOX</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^onedrive://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">ONEDRIVE</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^icloud://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">ICLOUD</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;^b2://&quot;</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">BACKBLAZE</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="detect_mime_type">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.detect_mime_type">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">detect_mime_type</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect the MIME type of a file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_path: Path to the file</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        MIME type string, or None if unable to determine</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Register additional MIME types</span>
+    <span class="k">for</span> <span class="n">ext</span><span class="p">,</span> <span class="n">mime_type</span> <span class="ow">in</span> <span class="n">EXTRA_MIME_TYPES</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">mimetypes</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="n">mime_type</span><span class="p">,</span> <span class="n">ext</span><span class="p">)</span>
+
+    <span class="c1"># Get MIME type from file extension</span>
+    <span class="n">mime_type</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+    <span class="c1"># If not found and file exists, try to detect from content</span>
+    <span class="k">if</span> <span class="n">mime_type</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">magic</span>
+
+            <span class="n">mime_type</span> <span class="o">=</span> <span class="n">magic</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
+            <span class="c1"># python-magic not available or error</span>
+            <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">mime_type</span></div>
+
+
+
+<div class="viewcode-block" id="is_binary_file">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.is_binary_file">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_binary_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if a file is binary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_path: Path to the file</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if the file is binary, False otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># Check file extension first</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="s2">&quot;.pdf&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.docx&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.xlsx&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.pptx&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.jpeg&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.png&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.gif&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.zip&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.tar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.gz&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.mp3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.mp4&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.exe&quot;</span><span class="p">,</span>
+    <span class="p">]:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># Check MIME type</span>
+    <span class="n">mime_type</span> <span class="o">=</span> <span class="n">detect_mime_type</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mime_type</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">mime_type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span>
+        <span class="p">(</span><span class="s2">&quot;text/&quot;</span><span class="p">,</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="s2">&quot;application/xml&quot;</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># Check content (first few KB)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">chunk</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span>
+            <span class="k">if</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">chunk</span><span class="p">:</span>  <span class="c1"># Null bytes indicate binary</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+            <span class="c1"># Try to decode as text</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">chunk</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
+        <span class="c1"># If we can&#39;t read the file, assume it&#39;s not binary</span>
+        <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="detect_encoding">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.detect_encoding">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">detect_encoding</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect the encoding of a text file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_path: Path to the file</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Encoding name, or None if unable to determine</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">is_binary_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">chardet</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">chardet</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4096</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;encoding&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;confidence&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.7</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
+        <span class="c1"># chardet not available or error</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># Default to UTF-8</span>
+    <span class="k">return</span> <span class="s2">&quot;utf-8&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="extract_url_components">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.extract_url_components">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_url_components</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">URLComponents</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract components from a URL.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        url: URL string</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        URLComponents object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">url</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">URLComponents</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="c1"># Extract hostname and port</span>
+        <span class="n">hostname</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">hostname</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">port</span>
+
+        <span class="k">return</span> <span class="n">URLComponents</span><span class="p">(</span>
+            <span class="n">scheme</span><span class="o">=</span><span class="n">parsed</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span>
+            <span class="n">netloc</span><span class="o">=</span><span class="n">parsed</span><span class="o">.</span><span class="n">netloc</span><span class="p">,</span>
+            <span class="n">hostname</span><span class="o">=</span><span class="n">hostname</span><span class="p">,</span>
+            <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span>
+            <span class="n">path</span><span class="o">=</span><span class="n">parsed</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="n">parsed</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+            <span class="n">query</span><span class="o">=</span><span class="n">parsed</span><span class="o">.</span><span class="n">query</span><span class="p">,</span>
+            <span class="n">fragment</span><span class="o">=</span><span class="n">parsed</span><span class="o">.</span><span class="n">fragment</span><span class="p">,</span>
+            <span class="n">username</span><span class="o">=</span><span class="n">parsed</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
+            <span class="n">password</span><span class="o">=</span><span class="n">parsed</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">URLComponents</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="extract_domain_info">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.extract_domain_info">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_domain_info</span><span class="p">(</span><span class="n">url_components</span><span class="p">:</span> <span class="n">URLComponents</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DomainInfo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract domain information from URL components.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        url_components: URLComponents object</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DomainInfo object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hostname</span> <span class="o">=</span> <span class="n">url_components</span><span class="o">.</span><span class="n">hostname</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1"># Check if it&#39;s an IP address</span>
+    <span class="n">is_ip</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$&quot;</span><span class="p">,</span> <span class="n">hostname</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="c1"># Check if it&#39;s localhost</span>
+    <span class="n">is_localhost</span> <span class="o">=</span> <span class="n">hostname</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="s2">&quot;::1&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Extract domain and subdomain</span>
+    <span class="k">if</span> <span class="n">is_ip</span> <span class="ow">or</span> <span class="n">is_localhost</span><span class="p">:</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="n">hostname</span>
+        <span class="n">tld</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">subdomain</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">hostname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Handle cases like example.com, www.example.com, sub.example.com</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">domain</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">tld</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">subdomain</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">domain</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">tld</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">subdomain</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tld</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">domain</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">subdomain</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">DomainInfo</span><span class="p">(</span>
+        <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span>
+        <span class="n">tld</span><span class="o">=</span><span class="n">tld</span><span class="p">,</span>
+        <span class="n">subdomain</span><span class="o">=</span><span class="n">subdomain</span><span class="p">,</span>
+        <span class="n">is_ip</span><span class="o">=</span><span class="n">is_ip</span><span class="p">,</span>
+        <span class="n">is_localhost</span><span class="o">=</span><span class="n">is_localhost</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_database_info</span><span class="p">(</span><span class="n">uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">db_type</span><span class="p">:</span> <span class="n">DatabaseType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract database information from a URI.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uri: Database URI</span>
+<span class="sd">        db_type: Database type</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with database information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">extract_url_components</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;database_type&quot;</span><span class="p">:</span> <span class="n">db_type</span><span class="p">,</span> <span class="s2">&quot;connection_uri&quot;</span><span class="p">:</span> <span class="n">uri</span><span class="p">}</span>
+
+    <span class="c1"># Extract database name from path</span>
+    <span class="k">if</span> <span class="n">components</span><span class="o">.</span><span class="n">path</span> <span class="ow">and</span> <span class="n">components</span><span class="o">.</span><span class="n">path</span> <span class="o">!=</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+        <span class="n">db_name</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">db_name</span><span class="p">:</span>
+            <span class="n">info</span><span class="p">[</span><span class="s2">&quot;database_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_name</span>
+
+    <span class="c1"># Extract host and port</span>
+    <span class="k">if</span> <span class="n">components</span><span class="o">.</span><span class="n">hostname</span><span class="p">:</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">hostname</span>
+    <span class="k">if</span> <span class="n">components</span><span class="o">.</span><span class="n">port</span><span class="p">:</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">port</span>
+
+    <span class="c1"># Extract credentials</span>
+    <span class="k">if</span> <span class="n">components</span><span class="o">.</span><span class="n">username</span><span class="p">:</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">username</span>
+
+    <span class="k">return</span> <span class="n">info</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_cloud_storage_info</span><span class="p">(</span><span class="n">uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">provider</span><span class="p">:</span> <span class="n">CloudProvider</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract cloud storage information from a URI.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uri: Cloud storage URI</span>
+<span class="sd">        provider: Cloud provider</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with cloud storage information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;cloud_provider&quot;</span><span class="p">:</span> <span class="n">provider</span><span class="p">,</span> <span class="s2">&quot;uri&quot;</span><span class="p">:</span> <span class="n">uri</span><span class="p">}</span>
+
+    <span class="c1"># Parse URI to extract bucket and key</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;://&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">parts</span><span class="p">:</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;bucket_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">info</span><span class="p">[</span><span class="s2">&quot;object_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">info</span>
+
+
+<div class="viewcode-block" id="analyze_local_path">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.analyze_local_path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">analyze_local_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PathAnalysisResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze a local filesystem path.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path: Path to analyze</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        PathAnalysisResult object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Basic result with common properties</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">PathAnalysisResult</span><span class="p">(</span>
+        <span class="n">original_path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+        <span class="n">is_local</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">normalized_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
+        <span class="n">parent_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Check if path exists</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">exists</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Check if it&#39;s a symlink</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">path_type</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">LOCAL_SYMLINK</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">is_symlink</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="c1"># Determine if the target is a file or directory</span>
+            <span class="n">target_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">target_path</span><span class="p">):</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">is_file</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">target_path</span><span class="p">):</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">is_directory</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Check if it&#39;s a file</span>
+        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">path_type</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">LOCAL_FILE</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">is_file</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+            <span class="c1"># Get file extension</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ext</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">file_extension</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+                <span class="c1"># Get file category</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">file_category</span> <span class="o">=</span> <span class="n">FILE_CATEGORY_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">UNKNOWN_FILE</span>
+                <span class="p">)</span>
+
+            <span class="c1"># Get file size</span>
+            <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">file_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+            <span class="c1"># Get MIME type</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">mime_type</span> <span class="o">=</span> <span class="n">detect_mime_type</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+            <span class="c1"># Get encoding for text files</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_binary_file</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="n">detect_encoding</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="c1"># Check if it&#39;s a directory</span>
+        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">path_type</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">LOCAL_DIRECTORY</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">is_directory</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">path_type</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">LOCAL_NONEXISTENT</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="analyze_url">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.analyze_url">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">analyze_url</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PathAnalysisResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze a URL.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        url: URL to analyze</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        PathAnalysisResult object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Basic result with common properties</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">PathAnalysisResult</span><span class="p">(</span><span class="n">original_path</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">is_remote</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Extract URL components</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">extract_url_components</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">url_components</span> <span class="o">=</span> <span class="n">components</span>
+
+    <span class="c1"># Extract domain information</span>
+    <span class="k">if</span> <span class="n">components</span><span class="o">.</span><span class="n">hostname</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">domain_info</span> <span class="o">=</span> <span class="n">extract_domain_info</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+
+    <span class="c1"># Set URL-specific properties</span>
+    <span class="n">scheme</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">scheme</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;http&quot;</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">path_type</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">URL_HTTP</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">is_secure</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">elif</span> <span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;https&quot;</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">path_type</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">URL_HTTPS</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">is_secure</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">scheme</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ftp&quot;</span><span class="p">,</span> <span class="s2">&quot;sftp&quot;</span><span class="p">]:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">path_type</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">URL_FTP</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">is_secure</span> <span class="o">=</span> <span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;sftp&quot;</span>
+    <span class="k">elif</span> <span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;file&quot;</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">path_type</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">URL_FILE</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">is_local</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># Convert to local path for further analysis</span>
+        <span class="n">local_path</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">path</span>
+        <span class="n">local_result</span> <span class="o">=</span> <span class="n">analyze_local_path</span><span class="p">(</span><span class="n">local_path</span><span class="p">)</span>
+
+        <span class="c1"># Copy relevant properties</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">is_file</span> <span class="o">=</span> <span class="n">local_result</span><span class="o">.</span><span class="n">is_file</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">is_directory</span> <span class="o">=</span> <span class="n">local_result</span><span class="o">.</span><span class="n">is_directory</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">exists</span> <span class="o">=</span> <span class="n">local_result</span><span class="o">.</span><span class="n">exists</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">local_result</span><span class="o">.</span><span class="n">file_name</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">file_extension</span> <span class="o">=</span> <span class="n">local_result</span><span class="o">.</span><span class="n">file_extension</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">file_category</span> <span class="o">=</span> <span class="n">local_result</span><span class="o">.</span><span class="n">file_category</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">file_size</span> <span class="o">=</span> <span class="n">local_result</span><span class="o">.</span><span class="n">file_size</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">mime_type</span> <span class="o">=</span> <span class="n">local_result</span><span class="o">.</span><span class="n">mime_type</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="n">local_result</span><span class="o">.</span><span class="n">encoding</span>
+
+    <span class="c1"># Extract file information from path</span>
+    <span class="k">if</span> <span class="n">components</span><span class="o">.</span><span class="n">path</span> <span class="ow">and</span> <span class="n">components</span><span class="o">.</span><span class="n">path</span> <span class="o">!=</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_name</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">file_name</span>
+
+            <span class="c1"># Get file extension</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ext</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">file_extension</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+                <span class="c1"># Get file category</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">file_category</span> <span class="o">=</span> <span class="n">FILE_CATEGORY_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">UNKNOWN_FILE</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Assume it&#39;s a file if it has an extension</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">is_file</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="analyze_database_uri">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.analyze_database_uri">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">analyze_database_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PathAnalysisResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze a database URI.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uri: Database URI to analyze</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        PathAnalysisResult object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Basic result with common properties</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">PathAnalysisResult</span><span class="p">(</span>
+        <span class="n">original_path</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">path_type</span><span class="o">=</span><span class="n">PathType</span><span class="o">.</span><span class="n">DATABASE_URI</span><span class="p">,</span> <span class="n">is_remote</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Extract URL components</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">extract_url_components</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">url_components</span> <span class="o">=</span> <span class="n">components</span>
+
+    <span class="c1"># Determine database type</span>
+    <span class="n">db_type</span> <span class="o">=</span> <span class="n">DatabaseType</span><span class="o">.</span><span class="n">UNKNOWN_DB</span>
+    <span class="k">for</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">db</span> <span class="ow">in</span> <span class="n">DATABASE_URI_PATTERNS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
+            <span class="n">db_type</span> <span class="o">=</span> <span class="n">db</span>
+            <span class="k">break</span>
+
+    <span class="n">result</span><span class="o">.</span><span class="n">database_type</span> <span class="o">=</span> <span class="n">db_type</span>
+
+    <span class="c1"># Extract database name from path</span>
+    <span class="k">if</span> <span class="n">components</span><span class="o">.</span><span class="n">path</span> <span class="ow">and</span> <span class="n">components</span><span class="o">.</span><span class="n">path</span> <span class="o">!=</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+        <span class="n">db_name</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">db_name</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">database_name</span> <span class="o">=</span> <span class="n">db_name</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="analyze_cloud_path">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.analyze_cloud_path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">analyze_cloud_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PathAnalysisResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze a cloud storage path.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path: Cloud storage path to analyze</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        PathAnalysisResult object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Basic result with common properties</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">PathAnalysisResult</span><span class="p">(</span>
+        <span class="n">original_path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">path_type</span><span class="o">=</span><span class="n">PathType</span><span class="o">.</span><span class="n">CLOUD_STORAGE</span><span class="p">,</span> <span class="n">is_remote</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Determine cloud provider</span>
+    <span class="n">provider</span> <span class="o">=</span> <span class="n">CloudProvider</span><span class="o">.</span><span class="n">UNKNOWN_CLOUD</span>
+    <span class="k">for</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">prov</span> <span class="ow">in</span> <span class="n">CLOUD_STORAGE_PATTERNS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+            <span class="n">provider</span> <span class="o">=</span> <span class="n">prov</span>
+            <span class="k">break</span>
+
+    <span class="n">result</span><span class="o">.</span><span class="n">cloud_provider</span> <span class="o">=</span> <span class="n">provider</span>
+
+    <span class="c1"># Parse path to extract bucket and key</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">scheme</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;://&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">rest</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">parts</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">bucket_name</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">object_key</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+                <span class="c1"># Determine if it&#39;s a file or directory</span>
+                <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">object_key</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">is_directory</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">is_file</span> <span class="o">=</span> <span class="kc">True</span>
+
+                    <span class="c1"># Extract file name and extension</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">object_key</span><span class="p">)</span>
+                    <span class="n">_</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">ext</span><span class="p">:</span>
+                        <span class="n">result</span><span class="o">.</span><span class="n">file_extension</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+                        <span class="c1"># Get file category</span>
+                        <span class="n">result</span><span class="o">.</span><span class="n">file_category</span> <span class="o">=</span> <span class="n">FILE_CATEGORY_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">UNKNOWN_FILE</span>
+                        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="c1"># Unable to parse, leave properties as defaults</span>
+        <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="analyze_network_path">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.analyze_network_path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">analyze_network_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PathAnalysisResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze a network share path.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path: Network path to analyze</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        PathAnalysisResult object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Basic result with common properties</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">PathAnalysisResult</span><span class="p">(</span>
+        <span class="n">original_path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">path_type</span><span class="o">=</span><span class="n">PathType</span><span class="o">.</span><span class="n">NETWORK_SHARE</span><span class="p">,</span> <span class="n">is_remote</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Parse UNC path (\\server\share\path)</span>
+    <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\\\</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">server</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">share</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># Store in URL components</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">url_components</span> <span class="o">=</span> <span class="n">URLComponents</span><span class="p">(</span>
+                <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
+                <span class="n">netloc</span><span class="o">=</span><span class="n">server</span><span class="p">,</span>
+                <span class="n">hostname</span><span class="o">=</span><span class="n">server</span><span class="p">,</span>
+                <span class="n">path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">share</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+    <span class="c1"># Determine if it&#39;s a file or directory</span>
+    <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)):</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">is_directory</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Check file extension</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ext</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">is_file</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">file_extension</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+            <span class="c1"># Get file category</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">file_category</span> <span class="o">=</span> <span class="n">FILE_CATEGORY_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">FileCategory</span><span class="o">.</span><span class="n">UNKNOWN_FILE</span>
+            <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="analyze_special_path">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.analyze_special_path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">analyze_special_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PathAnalysisResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze a special path (e.g., git SSH URL).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path: Special path to analyze</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        PathAnalysisResult object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Basic result with common properties</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">PathAnalysisResult</span><span class="p">(</span>
+        <span class="n">original_path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">path_type</span><span class="o">=</span><span class="n">PathType</span><span class="o">.</span><span class="n">SPECIAL_PATH</span><span class="p">,</span> <span class="n">is_remote</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Handle git SSH URLs (git@github.com:user/repo.git)</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^git@[a-zA-Z0-9.-]+:[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+\.git$&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="c1"># Parse git SSH URL</span>
+        <span class="n">user_host</span><span class="p">,</span> <span class="n">repo_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">user</span><span class="p">,</span> <span class="n">host</span> <span class="o">=</span> <span class="n">user_host</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;@&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Store in URL components</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">url_components</span> <span class="o">=</span> <span class="n">URLComponents</span><span class="p">(</span>
+            <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;ssh&quot;</span><span class="p">,</span>
+            <span class="n">netloc</span><span class="o">=</span><span class="n">host</span><span class="p">,</span>
+            <span class="n">hostname</span><span class="o">=</span><span class="n">host</span><span class="p">,</span>
+            <span class="n">username</span><span class="o">=</span><span class="n">user</span><span class="p">,</span>
+            <span class="n">path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">repo_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Store in domain info</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">domain_info</span> <span class="o">=</span> <span class="n">extract_domain_info</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">url_components</span><span class="p">)</span>
+
+        <span class="c1"># It&#39;s a Git repository</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">is_file</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">is_directory</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="analyze_path_comprehensive">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/document/path_analysis/index.html#haive.core.engine.document.analyze_path_comprehensive">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">analyze_path_comprehensive</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PathAnalysisResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze a path comprehensively.</span>
+
+<span class="sd">    This function analyzes a path to determine its type, properties, and metadata.</span>
+<span class="sd">    It handles various path types including local files, URLs, database URIs, and</span>
+<span class="sd">    cloud storage paths.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path: Path to analyze (string or Path object)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        PathAnalysisResult object with comprehensive information about the path</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Convert Path to string</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="c1"># Normalize path</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="c1"># Handle empty path</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">PathAnalysisResult</span><span class="p">(</span><span class="n">original_path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">path_type</span><span class="o">=</span><span class="n">PathType</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">)</span>
+
+    <span class="c1"># Check for URL</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^(https?|ftp|sftp|file)://&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">analyze_url</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="c1"># Check for database URI</span>
+    <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">DATABASE_URI_PATTERNS</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">analyze_database_uri</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="c1"># Check for cloud storage path</span>
+    <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">CLOUD_STORAGE_PATTERNS</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">analyze_cloud_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="c1"># Check for network share (UNC path)</span>
+    <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\\\</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">analyze_network_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="c1"># Check for special paths (like git SSH URLs)</span>
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^git@[a-zA-Z0-9.-]+:&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">analyze_special_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="c1"># Default to local path</span>
+    <span class="k">return</span> <span class="n">analyze_local_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;CloudProvider&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DatabaseType&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DomainInfo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FileCategory&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PathAnalysisResult&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PathType&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;URLComponents&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;analyze_cloud_path&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;analyze_database_uri&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;analyze_local_path&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;analyze_network_path&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;analyze_path_comprehensive&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;analyze_special_path&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;analyze_url&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;detect_encoding&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;detect_mime_type&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extract_domain_info&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extract_url_components&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;is_binary_file&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

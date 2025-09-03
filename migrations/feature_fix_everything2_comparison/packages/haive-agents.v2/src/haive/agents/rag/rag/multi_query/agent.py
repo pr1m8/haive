@@ -1,14 +1,13 @@
 """Multi-Query RAG Agent.
 
-Improves recall through query diversification.
-Generates multiple query variations and retrieves from all.
+Improves recall through query diversification. Generates multiple query
+variations and retrieves from all.
 """
+
+from __future__ import annotations
 
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
@@ -18,6 +17,9 @@ from haive.agents.base.agent import Agent
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import LLMConfig
 
 
 class QueryVariations(BaseModel):
@@ -48,7 +50,7 @@ Create:
 
 Return the three query variations.""",
         ),
-    ]
+    ],
 )
 
 
@@ -76,7 +78,7 @@ class MultiRetrievalAgent(Agent):
                         variations.get("specific_query", ""),
                         variations.get("broader_query", ""),
                         variations.get("alternative_query", ""),
-                    ]
+                    ],
                 )
 
             # Remove empty queries
@@ -141,7 +143,7 @@ class MultiQueryRAGAgent(SequentialAgent):
         documents: list[Document],
         llm_config: LLMConfig | None = None,
         embedding_model: str | None = None,
-        **kwargs
+        **kwargs,
     ):
         """Create Multi-Query RAG from documents.
 
@@ -167,12 +169,15 @@ class MultiQueryRAGAgent(SequentialAgent):
 
         # Step 2: Create base retriever
         base_retriever = BaseRAGAgent.from_documents(
-            documents=documents, embedding_model=embedding_model, name="Base Retriever"
+            documents=documents,
+            embedding_model=embedding_model,
+            name="Base Retriever",
         )
 
         # Step 3: Multi-query retriever
         multi_retriever = MultiRetrievalAgent(
-            base_retriever=base_retriever, name="Multi-Query Retriever"
+            base_retriever=base_retriever,
+            name="Multi-Query Retriever",
         )
 
         # Step 4: Answer generation
@@ -182,7 +187,8 @@ class MultiQueryRAGAgent(SequentialAgent):
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=RAG_ANSWER_STANDARD
+                llm_config=llm_config,
+                prompt_template=RAG_ANSWER_STANDARD,
             ),
             name="Answer Generator",
         )
@@ -190,5 +196,5 @@ class MultiQueryRAGAgent(SequentialAgent):
         return cls(
             agents=[query_expander, multi_retriever, answer_agent],
             name=kwargs.get("name", "Multi-Query RAG Agent"),
-            **kwargs
+            **kwargs,
         )

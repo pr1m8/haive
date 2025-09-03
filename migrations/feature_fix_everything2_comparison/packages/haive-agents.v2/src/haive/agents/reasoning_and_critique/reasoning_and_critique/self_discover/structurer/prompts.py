@@ -6,7 +6,6 @@ STRUCTURER_SYSTEM_MESSAGE = """You are an expert at organizing complex reasoning
 
 Your role is to take adapted reasoning modules and create a coherent, step-by-step plan for applying them to solve specific problems. You excel at creating logical flow, identifying dependencies, and ensuring comprehensive coverage of the problem space."""
 
-
 STRUCTURER_PROMPT = PromptTemplate(
     input_variables=["adapted_modules", "task_description"],
     template="""Create a structured reasoning plan from the following adapted modules.

@@ -1,7 +1,7 @@
 # EnhancedMultiAgent V3 Field Mapping Analysis
 
-**Date**: 2025-01-21  
-**Status**: Complete Analysis with Action Plan  
+**Date**: 2025-01-21
+**Status**: Complete Analysis with Action Plan
 
 ## 🔍 **Executive Summary**
 
@@ -30,12 +30,12 @@ After analyzing EnhancedMultiAgent V3, AgentNode V3, and SimpleAgent configurati
 def _project_state_for_agent(self, state, agent):
     # 1. Start with agent's isolated state
     agent_state = agent_states.get(agent_name, {})
-    
+
     # 2. Add shared fields from container
     for field in shared_fields:
         if hasattr(state, field):
             projected[field] = getattr(state, field)
-    
+
     # 3. Agent sees combined view
     return projected
 ```
@@ -93,24 +93,24 @@ def ensure_aug_llm_config(cls, v):
 ## 📊 **Problem Analysis**
 
 ### Issue 1: Field Name Conflicts
-**Problem**: Multiple agents might output to same field  
-**Example**: Both agents output "result" → overwrites occur  
-**Current Workaround**: Use agent-specific field names or `agent_outputs` dict  
+**Problem**: Multiple agents might output to same field
+**Example**: Both agents output "result" → overwrites occur
+**Current Workaround**: Use agent-specific field names or `agent_outputs` dict
 
 ### Issue 2: Limited Field Transformation
-**Problem**: Can't easily map "agent.output.nested.field" → "state.simple_field"  
-**Current Limitation**: Only supports top-level field mapping  
-**Needed**: Path-based extraction with transformations  
+**Problem**: Can't easily map "agent.output.nested.field" → "state.simple_field"
+**Current Limitation**: Only supports top-level field mapping
+**Needed**: Path-based extraction with transformations
 
 ### Issue 3: Type Preservation During Mapping
-**Problem**: Field mapping doesn't guarantee type preservation  
-**Risk**: `str` field mapped to `int` field causes runtime errors  
-**Solution**: Type-aware mapping system  
+**Problem**: Field mapping doesn't guarantee type preservation
+**Risk**: `str` field mapped to `int` field causes runtime errors
+**Solution**: Type-aware mapping system
 
 ### Issue 4: Multi-Agent State Coordination
-**Problem**: Complex to coordinate state between sequential agents  
-**Example**: Agent1.findings → Agent2.context requires manual setup  
-**Needed**: Declarative state transfer rules  
+**Problem**: Complex to coordinate state between sequential agents
+**Example**: Agent1.findings → Agent2.context requires manual setup
+**Needed**: Declarative state transfer rules
 
 ## 🛠️ **Recommended Solutions**
 
@@ -134,7 +134,7 @@ class FieldMapping:
 
 class NodeSchemaComposer:
     """Compose node schemas with flexible field mapping."""
-    
+
     def __init__(
         self,
         input_schema: Type[BaseModel],
@@ -144,13 +144,13 @@ class NodeSchemaComposer:
         self.input_schema = input_schema
         self.output_schema = output_schema
         self.field_mappings = field_mappings
-    
+
     def extract_value(self, data: dict, path: str) -> Any:
         """Extract value from nested path."""
         # Implementation: support dot notation and array indices
         # "messages[-1].content" → data["messages"][-1]["content"]
         pass
-    
+
     def apply_transforms(self, value: Any, transforms: List[str]) -> Any:
         """Apply transformation pipeline."""
         for transform in transforms:
@@ -160,22 +160,22 @@ class NodeSchemaComposer:
                 value = value.upper()
             # Add more transforms
         return value
-    
+
     def map_fields(self, input_data: dict) -> dict:
         """Map fields from input to output schema."""
         output_data = {}
-        
+
         for mapping in self.field_mappings:
             # Extract value
             value = self.extract_value(input_data, mapping.source_path)
-            
+
             # Apply transforms
             if mapping.transform:
                 value = self.apply_transforms(value, mapping.transform)
-            
+
             # Set in output
             self.set_nested_value(output_data, mapping.target_path, value)
-        
+
         return output_data
 ```
 
@@ -186,13 +186,13 @@ Extend AgentNode to support advanced mapping:
 ```python
 class EnhancedAgentNode(AgentNodeV3):
     """AgentNode with advanced field mapping."""
-    
+
     field_mappings: Optional[List[FieldMapping]] = None
-    
+
     def invoke(self, state: StateType) -> StateType:
         # Regular agent execution
         result = super().invoke(state)
-        
+
         # Apply field mappings if configured
         if self.field_mappings:
             composer = NodeSchemaComposer(
@@ -201,11 +201,11 @@ class EnhancedAgentNode(AgentNodeV3):
                 field_mappings=self.field_mappings
             )
             mapped_data = composer.map_fields(result.model_dump())
-            
+
             # Update state with mapped fields
             for key, value in mapped_data.items():
                 setattr(state, key, value)
-        
+
         return state
 ```
 
@@ -216,24 +216,24 @@ Add field coordination to EnhancedMultiAgent:
 ```python
 class EnhancedMultiAgentV4(EnhancedMultiAgent):
     """MultiAgent with field coordination support."""
-    
+
     # Define how fields transfer between agents
     field_transfers: Optional[Dict[Tuple[str, str], Dict[str, str]]] = None
     # Example: {("agent1", "agent2"): {"findings": "context"}}
-    
+
     async def execute_sequential(self, input_data: Any) -> Any:
         """Execute with field transfers."""
         current_data = input_data
-        
+
         for i, (agent_name, agent) in enumerate(self.agents.items()):
             # Execute agent
             result = await agent.arun(current_data)
-            
+
             # Apply field transfers to next agent
             if i < len(self.agents) - 1:
                 next_agent_name = list(self.agents.keys())[i + 1]
                 transfer_key = (agent_name, next_agent_name)
-                
+
                 if transfer_key in self.field_transfers:
                     transfers = self.field_transfers[transfer_key]
                     # Map fields for next agent
@@ -241,16 +241,16 @@ class EnhancedMultiAgentV4(EnhancedMultiAgent):
                     for source, target in transfers.items():
                         if hasattr(result, source):
                             transferred_data[target] = getattr(result, source)
-                    
+
                     # Merge with result
                     if isinstance(result, dict):
                         result.update(transferred_data)
                     else:
                         for k, v in transferred_data.items():
                             setattr(result, k, v)
-            
+
             current_data = result
-        
+
         return current_data
 ```
 
@@ -267,16 +267,16 @@ workflow = EnhancedMultiAgent.create(
         # Map research_agent.findings → analysis_agent.data
         FieldMap(from_agent="research_agent", from_field="findings",
                  to_agent="analysis_agent", to_field="data"),
-        
+
         # Map analysis_agent.result → report_agent.content with transform
         FieldMap(from_agent="analysis_agent", from_field="result",
                  to_agent="report_agent", to_field="content",
                  transform=["strip", "format_markdown"]),
-        
+
         # Map nested field with default
-        FieldMap(from_agent="analysis_agent", 
+        FieldMap(from_agent="analysis_agent",
                  from_field="metadata.confidence",
-                 to_agent="report_agent", 
+                 to_agent="report_agent",
                  to_field="confidence_score",
                  default=0.5)
     ]
@@ -286,7 +286,7 @@ workflow = EnhancedMultiAgent.create(
 ## 📋 **Implementation Plan**
 
 ### Phase 1: Core Infrastructure (Priority: High)
-1. **Implement NodeSchemaComposer** 
+1. **Implement NodeSchemaComposer**
    - Path-based field extraction
    - Transform pipeline
    - Type preservation
@@ -363,13 +363,13 @@ agent = SimpleAgent(
 async def coordinate_agents(input_data):
     # Agent 1
     result1 = await agent1.arun(input_data)
-    
+
     # Manual field mapping
     agent2_input = {
         "context": result1.get("findings"),  # Map findings → context
         "query": input_data.get("query")
     }
-    
+
     # Agent 2
     result2 = await agent2.arun(agent2_input)
     return result2
@@ -386,7 +386,7 @@ async def coordinate_agents(input_data):
 
 The current system has basic field mapping capabilities but lacks:
 - Advanced path-based extraction
-- Transform pipelines  
+- Transform pipelines
 - Type-safe mapping
 - Declarative multi-agent coordination
 

@@ -10,19 +10,20 @@ Functions:
 """
 
 # src/haive/agents/selfdiscover/config.py
+from __future__ import annotations
 
 from datetime import datetime
-
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field
 
 from haive.agents.reasoning_and_critique.self_discover.engines import (
     create_selfdiscover_engines,
 )
 from haive.agents.reasoning_and_critique.self_discover.state import SelfDiscoverState
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel
+from pydantic import Field
 
 
 class SelfDiscoverAgentConfig(AgentConfig):
@@ -36,7 +37,8 @@ class SelfDiscoverAgentConfig(AgentConfig):
 
     # State schema
     state_schema: type[BaseModel] = Field(
-        default=SelfDiscoverState, description="Schema for the agent state"
+        default=SelfDiscoverState,
+        description="Schema for the agent state",
     )
 
     # Engines for each stage
@@ -74,7 +76,8 @@ class SelfDiscoverAgentConfig(AgentConfig):
 
     # Reasoning modules library
     reasoning_modules: list[str] = Field(
-        default_factory=list, description="Library of reasoning modules to select from"
+        default_factory=list,
+        description="Library of reasoning modules to select from",
     )
 
     @classmethod
@@ -89,7 +92,7 @@ class SelfDiscoverAgentConfig(AgentConfig):
         structure_prompt: str | ChatPromptTemplate | None = None,
         reasoning_prompt: str | ChatPromptTemplate | None = None,
         **kwargs,
-    ) -> "SelfDiscoverAgentConfig":
+    ) -> SelfDiscoverAgentConfig:
         """Create a SelfDiscoverAgentConfig with default settings.
 
         Args:

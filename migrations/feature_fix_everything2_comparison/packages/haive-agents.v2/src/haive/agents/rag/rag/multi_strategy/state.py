@@ -18,12 +18,15 @@ class MultiStrategyRAGState(SelfCorrectiveRAGState):
 
     query_type: str | None = Field(default=None, description="Classified query type")
     strategy_name: str | None = Field(
-        default=None, description="Selected retrieval strategy"
+        default=None,
+        description="Selected retrieval strategy",
     )
     query_variations: list[str] = Field(
-        default_factory=list, description="Generated query variations"
+        default_factory=list,
+        description="Generated query variations",
     )
     rewritten_query: str | None = Field(default=None, description="Rewritten query")
     strategy_metrics: dict[str, Any] = Field(
-        default_factory=dict, description="Metrics for the selected strategy"
+        default_factory=dict,
+        description="Metrics for the selected strategy",
     )

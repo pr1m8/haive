@@ -1,33 +1,35 @@
 """Memory state models for Memory V2 system using original Haive memory models.
 
-This module integrates the proven memory models from haive.agents.memory.models
-and haive.agents.ltm.memory_schemas with our V2 enhancements for token tracking,
-graph integration, and advanced memory management.
+This module integrates the proven memory models from
+haive.agents.memory.models and haive.agents.ltm.memory_schemas with our
+V2 enhancements for token tracking, graph integration, and advanced
+memory management.
 """
 
-import logging
+from __future__ import annotations
+
 from datetime import datetime
 from enum import Enum
+import logging
 from uuid import uuid4
 
 from pydantic import BaseModel, Field
 
-# Import original proven memory models
-from .memory_models_standalone import (
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.memory_v2.memory_v2.memory_models_standalone import (
     EnhancedMemoryItem,
     ImportanceLevel,
     KnowledgeTriple,
     MemoryItem,
 )
 
+# Import original proven memory models
+
 # Commenting out broken imports
 # from haive.agents.ltm.memory_schemas import (
 #     Memory, UserPreference, FactualMemory, PersonalContext, ConversationalMemory,
 #     DEFAULT_MEMORY_SCHEMAS, EXTENDED_MEMORY_SCHEMAS, MINIMAL_MEMORY_SCHEMAS
-# )
 
 logger = logging.getLogger(__name__)
-
 
 # ============================================================================
 # ENHANCED MEMORY TYPES (extending originals)
@@ -54,7 +56,6 @@ class MemoryType(str, Enum):
 
 
 # ImportanceLevel is now imported from memory_models_standalone
-
 
 # ============================================================================
 # ENHANCED MEMORY MODELS (extending originals)
@@ -92,7 +93,10 @@ class EnhancedKnowledgeTriple(KnowledgeTriple):
 
 
 class UnifiedMemoryEntry(BaseModel):
-    """Unified memory entry that can hold both MemoryItem and KnowledgeTriple data."""
+    """Unified memory entry that can hold both MemoryItem and KnowledgeTriple.
+
+    data.
+    """
 
     # Core identification
     id: str = Field(default_factory=lambda: str(uuid4()))
@@ -115,11 +119,15 @@ class UnifiedMemoryEntry(BaseModel):
         if self.entry_type == "memory_item" and self.memory_item:
             return self.memory_item.content
         if self.entry_type == "knowledge_triple" and self.knowledge_triple:
-            return f"{self.knowledge_triple.subject} {self.knowledge_triple.predicate} {self.knowledge_triple.object}"
+            return f"{
+                self.knowledge_triple.subject} {
+                self.knowledge_triple.predicate} {
+                self.knowledge_triple.object}"
         return ""
 
     @classmethod
-    def from_memory_item(cls, memory_item: EnhancedMemoryItem) -> "UnifiedMemoryEntry":
+    def from_memory_item(
+            cls, memory_item: EnhancedMemoryItem) -> UnifiedMemoryEntry:
         """Create from memory item."""
         return cls(
             entry_type="memory_item",
@@ -130,8 +138,9 @@ class UnifiedMemoryEntry(BaseModel):
 
     @classmethod
     def from_knowledge_triple(
-        cls, triple: EnhancedKnowledgeTriple
-    ) -> "UnifiedMemoryEntry":
+        cls,
+        triple: EnhancedKnowledgeTriple,
+    ) -> UnifiedMemoryEntry:
         """Create from knowledge triple."""
         return cls(
             entry_type="knowledge_triple",
@@ -154,7 +163,8 @@ class MemoryStats(BaseModel):
     total_knowledge_triples: int = Field(default=0)
 
     memories_by_type: dict[MemoryType, int] = Field(default_factory=dict)
-    memories_by_importance: dict[ImportanceLevel, int] = Field(default_factory=dict)
+    memories_by_importance: dict[ImportanceLevel,
+                                 int] = Field(default_factory=dict)
 
     # Usage stats
     total_retrievals: int = Field(default=0)
@@ -199,35 +209,39 @@ class MemoryState(BaseModel):
         self._update_stats()
 
     def add_schema_memory(
-        self, schema_memory: BaseModel, memory_type: MemoryType
+        self,
+        schema_memory: BaseModel,
+        memory_type: MemoryType,
     ) -> None:
         """Add memory from original schema."""
         enhanced_memory = EnhancedMemoryItem.from_schema_memory(
-            schema_memory, memory_type
+            schema_memory,
+            memory_type,
         )
         self.add_memory_item(enhanced_memory)
 
     def get_memory_items(self) -> list[EnhancedMemoryItem]:
         """Get all memory items."""
         return [
-            entry.memory_item
-            for entry in self.memories
+            entry.memory_item for entry in self.memories
             if entry.entry_type == "memory_item" and entry.memory_item
         ]
 
     def get_knowledge_triples(self) -> list[EnhancedKnowledgeTriple]:
         """Get all knowledge triples."""
         return [
-            entry.knowledge_triple
-            for entry in self.memories
-            if entry.entry_type == "knowledge_triple" and entry.knowledge_triple
+            entry.knowledge_triple for entry in self.memories if
+            entry.entry_type == "knowledge_triple" and entry.knowledge_triple
         ]
 
-    def get_memories_by_type(self, memory_type: MemoryType) -> list[UnifiedMemoryEntry]:
+    def get_memories_by_type(
+            self, memory_type: MemoryType) -> list[UnifiedMemoryEntry]:
         """Get memories of specific type."""
         return [m for m in self.memories if m.memory_type == memory_type]
 
-    def search_memories(self, query: str, limit: int = 10) -> list[UnifiedMemoryEntry]:
+    def search_memories(self,
+                        query: str,
+                        limit: int = 10) -> list[UnifiedMemoryEntry]:
         """Simple text-based memory search."""
         results = []
         query_lower = query.lower()
@@ -245,11 +259,9 @@ class MemoryState(BaseModel):
         """Update memory statistics."""
         self.stats.total_memories = len(self.memories)
         self.stats.total_memory_items = len(
-            [m for m in self.memories if m.entry_type == "memory_item"]
-        )
+            [m for m in self.memories if m.entry_type == "memory_item"], )
         self.stats.total_knowledge_triples = len(
-            [m for m in self.memories if m.entry_type == "knowledge_triple"]
-        )
+            [m for m in self.memories if m.entry_type == "knowledge_triple"], )
 
         # Count by type
         type_counts = {}
@@ -262,7 +274,8 @@ class MemoryState(BaseModel):
 
             # Importance counts
             importance = memory.importance
-            importance_counts[importance] = importance_counts.get(importance, 0) + 1
+            importance_counts[importance] = importance_counts.get(
+                importance, 0) + 1
 
         self.stats.memories_by_type = type_counts
         self.stats.memories_by_importance = importance_counts
@@ -275,19 +288,19 @@ class MemoryState(BaseModel):
 
 # Export original models for compatibility
 __all__ = [
-    # Original models
-    "MemoryItem",
-    "KnowledgeTriple",
+    "EnhancedKnowledgeTriple",
     # Commented out undefined models: "Memory", "UserPreference", "FactualMemory", "PersonalContext", "ConversationalMemory",
     # Enhanced V2 models
     "EnhancedMemoryItem",
-    "EnhancedKnowledgeTriple",
-    "UnifiedMemoryEntry",
+    "ImportanceLevel",
+    "KnowledgeTriple",
+    # Original models
+    "MemoryItem",
+    "MemoryState",
+    "MemoryStats",
     # V2 infrastructure
     "MemoryType",
-    "ImportanceLevel",
-    "MemoryStats",
-    "MemoryState",
+    "UnifiedMemoryEntry",
     # Schema collections removed as they're undefined
     # "DEFAULT_MEMORY_SCHEMAS", "EXTENDED_MEMORY_SCHEMAS", "MINIMAL_MEMORY_SCHEMAS"
 ]

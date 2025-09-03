@@ -9,6 +9,8 @@ Flow:
 2. V2 Validation Router: Reads updated state, makes routing decisions
 """
 
+from __future__ import annotations
+
 import json
 import logging
 from typing import Any
@@ -26,7 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationNodeV2(NodeConfig, ToolRouteMixin):
-    """V2 Validation node that updates state with ToolMessages using schema-aware I/O.
+    """V2 Validation node that updates state with ToolMessages using schema-
+    aware I/O.
 
     This node processes AIMessages with tool calls and:
     1. Validates Pydantic models and creates ToolMessages
@@ -69,7 +72,8 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
 
     # Router node to go to after updating state
     router_node: str = Field(
-        default="validation_router", description="Router node for routing decisions"
+        default="validation_router",
+        description="Router node for routing decisions",
     )
 
     def _get_engine_from_state(self, state: StateLike) -> Any | None:
@@ -84,8 +88,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
             engine = state.engines.get(self.engine_name)
             if engine:
                 logger.info(
-                    f"Found engine in state.engines: {
-                        self.engine_name}"
+                    f"Found engine in state.engines: {self.engine_name}",
                 )
                 return engine
 
@@ -93,8 +96,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
             for _key, eng in state.engines.items():
                 if hasattr(eng, "name") and eng.name == self.engine_name:
                     logger.info(
-                        f"Found engine by name attribute: {
-                            self.engine_name}"
+                        f"Found engine by name attribute: {self.engine_name}",
                     )
                     return eng
 
@@ -126,7 +128,9 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
         return {}
 
     def _find_pydantic_model_class(
-        self, tool_name: str, engine: Any
+        self,
+        tool_name: str,
+        engine: Any,
     ) -> type[BaseModel] | None:
         """Find Pydantic model class by name in engine."""
         # Check structured_output_model
@@ -225,7 +229,10 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
             )
 
     def _create_error_tool_message(
-        self, tool_name: str, tool_id: str, error_msg: str
+        self,
+        tool_name: str,
+        tool_id: str,
+        error_msg: str,
     ) -> ToolMessage:
         """Create error ToolMessage for unknown tools or other errors."""
         error_content = {"success": False, "tool": tool_name, "errof": error_msg}
@@ -254,25 +261,21 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
             return Command(goto=self.router_node)
 
         # EXTRACT ENGINE NAME FROM AI MESSAGE ATTRIBUTION
-        if (
-            hasattr(last_message, "additional_kwargs")
-            and last_message.additional_kwargs
-        ):
+        if hasattr(last_message, "additional_kwargs") and last_message.additional_kwargs:
             engine_name_from_message = last_message.additional_kwargs.get("engine_name")
             if engine_name_from_message:
                 logger.info(
-                    f"Found engine attribution in AI message: {engine_name_from_message}"
+                    f"Found engine attribution in AI message: {engine_name_from_message}",
                 )
                 # Override the validation node's engine_name with the one from
                 # the message
                 self.engine_name = engine_name_from_message
                 logger.debug(
-                    f"Updated validation node engine_name to: {
-                        self.engine_name}"
+                    f"Updated validation node engine_name to: {self.engine_name}",
                 )
             else:
                 logger.debug(
-                    "No engine attribution found in AI message additional_kwargs"
+                    "No engine attribution found in AI message additional_kwargs",
                 )
 
         # Get tool calls
@@ -307,13 +310,10 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
             # CHECK IF TOOLMESSAGE ALREADY EXISTS FOR THIS TOOL CALL
             tool_message_exists = False
             for msg in messages:
-                if (
-                    isinstance(msg, ToolMessage)
-                    and getattr(msg, "tool_call_id", None) == tool_id
-                ):
+                if isinstance(msg, ToolMessage) and getattr(msg, "tool_call_id", None) == tool_id:
                     tool_message_exists = True
                     logger.debug(
-                        f"ToolMessage already exists for tool call {tool_id}, skipping"
+                        f"ToolMessage already exists for tool call {tool_id}, skipping",
                     )
                     break
 
@@ -329,7 +329,10 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
                 model_class = self._find_pydantic_model_class(tool_name, engine)
                 if model_class:
                     tool_msg = self._create_tool_message_for_pydantic(
-                        tool_name, tool_id, args, model_class
+                        tool_name,
+                        tool_id,
+                        args,
+                        model_class,
                     )
                     new_tool_messages.append(tool_msg)
                     logger.info(f"Created ToolMessage for Pydantic model: {tool_name}")
@@ -337,7 +340,9 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
                     # Unknown Pydantic model
                     error_msg = f"Pydantic model '{tool_name}' not found in engine"
                     tool_msg = self._create_error_tool_message(
-                        tool_name, tool_id, error_msg
+                        tool_name,
+                        tool_id,
+                        error_msg,
                     )
                     new_tool_messages.append(tool_msg)
                     logger.warning(f"Unknown Pydantic model: {tool_name}")
@@ -351,7 +356,9 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
                 # Unknown tool
                 error_msg = f"Unknown tool: {tool_name}"
                 tool_msg = self._create_error_tool_message(
-                    tool_name, tool_id, error_msg
+                    tool_name,
+                    tool_id,
+                    error_msg,
                 )
                 new_tool_messages.append(tool_msg)
                 logger.warning(f"Unknown tool: {tool_name}")
@@ -362,8 +369,7 @@ class ValidationNodeV2(NodeConfig, ToolRouteMixin):
             updated_messages = list(messages) + new_tool_messages
             update_dict[self.messages_key] = updated_messages
             logger.info(
-                f"Added {
-                    len(new_tool_messages)} ToolMessages to state"
+                f"Added {len(new_tool_messages)} ToolMessages to state",
             )
 
             # Log the ToolMessages for debugging

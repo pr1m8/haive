@@ -1,5 +1,7 @@
 """Reflection Agent Implementation."""
 
+from __future__ import annotations
+
 import logging
 from datetime import datetime
 from typing import Any
@@ -12,7 +14,8 @@ from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from langchain_core.messages import AIMessage
 from langchain_core.output_parsers.openai_tools import PydanticToolsParser
 from langchain_core.prompts import ChatPromptTemplate
-from langgraph.graph import END, START
+from langgraph.graph import END
+from langgraph.graph import START
 from langgraph.types import Command
 
 # Set up logging
@@ -21,10 +24,12 @@ logger = logging.getLogger(__name__)
 
 @register_agent(ReflectionAgentConfig)
 class ReflectionAgent(SimpleAgent):
-    """An agent with self-reflection capabilities that can improve its responses.
+    """An agent with self-reflection capabilities that can improve its.
 
-    This agent extends SimpleAgent by adding reflection and improvement steps
-    to iteratively refine responses based on self-critique.
+    responses.
+
+    This agent extends SimpleAgent by adding reflection and improvement
+    steps to iteratively refine responses based on self-critique.
     """
 
     def __init__(self, config: ReflectionAgentConfig):
@@ -34,9 +39,7 @@ class ReflectionAgent(SimpleAgent):
 
         # Initialize reflection engine
         if self.config.reflection.reflection_llm:
-            self.reflection_engine = (
-                self.config.reflection.reflection_llm.create_runnable()
-            )
+            self.reflection_engine = self.config.reflection.reflection_llm.create_runnable()
         else:
             # Use the same engine as the main agent
             self.reflection_engine = self.engine
@@ -130,9 +133,7 @@ class ReflectionAgent(SimpleAgent):
                 # Use the engine to generate an initial response
                 result = self.engine.invoke({"messages": state.messages})
 
-                response_content = (
-                    result.content if hasattr(result, "content") else str(result)
-                )
+                response_content = result.content if hasattr(result, "content") else str(result)
 
                 # Extract the original request (last human message)
                 original_request = state.last_human_message
@@ -156,19 +157,19 @@ class ReflectionAgent(SimpleAgent):
         """Create a function for the reflection node."""
         # Create structured output parser for reflection
         reflection_parser = PydanticToolsParser(
-            tools=[self.config.reflection_output_model]
+            tools=[self.config.reflection_output_model],
         )
 
         # Create prompt template for reflection
         reflection_prompt = ChatPromptTemplate.from_template(
-            self.config.reflection.reflection_prompt_template
+            self.config.reflection.reflection_prompt_template,
         )
 
         # Create chain with structured output
         reflection_chain = (
             reflection_prompt
             | self.reflection_engine.bind_tools(
-                tools=[self.config.reflection_output_model]
+                tools=[self.config.reflection_output_model],
             )
             | reflection_parser
         )
@@ -210,13 +211,15 @@ class ReflectionAgent(SimpleAgent):
                         "response": response,
                         "reflection": reflection.model_dump(),
                         "timestamp": datetime.now().isoformat(),
-                    }
+                    },
                 )
 
                 # Update state
                 state_update = {
                     **state.model_dump(),
-                    "feedback": f"Reflection: {reflection.reflection}\nMissing: {reflection.missing}\nSuperfluous: {reflection.superfluous}\nScore: {reflection.score}",
+                    "feedback": f"Reflection: {reflection.reflection}\nMissing: {
+                        reflection.missing
+                    }\nSuperfluous: {reflection.superfluous}\nScore: {reflection.score}",
                     "reflection_round": reflection_round,
                     "reflection_score": reflection.normalized_score,
                     "reflection_history": reflection_history,
@@ -243,7 +246,7 @@ class ReflectionAgent(SimpleAgent):
 
         # Create prompt template for generating search queries
         search_query_prompt = ChatPromptTemplate.from_template(
-            self.config.reflection.search_query_prompt_template
+            self.config.reflection.search_query_prompt_template,
         )
 
         def search_function(state: ReflectionAgentState) -> dict[str, Any]:
@@ -266,7 +269,7 @@ class ReflectionAgent(SimpleAgent):
 
                 # Generate search queries
                 search_result = self.engine.invoke(
-                    search_query_prompt.format(**search_input)
+                    search_query_prompt.format(**search_input),
                 )
 
                 if hasattr(search_result, "content"):
@@ -300,7 +303,7 @@ class ReflectionAgent(SimpleAgent):
 
         # Create prompt template for improvement
         improvement_prompt = ChatPromptTemplate.from_template(
-            self.config.reflection.improvement_prompt_template
+            self.config.reflection.improvement_prompt_template,
         )
 
         def improvement_function(state: ReflectionAgentState) -> dict[str, Any]:
@@ -331,7 +334,7 @@ class ReflectionAgent(SimpleAgent):
 
                 # Generate improved response
                 improved_result = self.engine.invoke(
-                    improvement_prompt.format(**improvement_input)
+                    improvement_prompt.format(**improvement_input),
                 )
 
                 if hasattr(improved_result, "content"):
@@ -372,10 +375,16 @@ class ReflectionAgent(SimpleAgent):
         return improvement_function
 
     def _create_evaluation_function(self):
-        """Create a function to evaluate if the improved response is good enough."""
+        """Create a function to evaluate if the improved response is good.
+
+        enough.
+        """
 
         def evaluation_function(state: ReflectionAgentState) -> dict[str, Any]:
-            """Simple evaluation based on round count and auto-accept threshold."""
+            """Simple evaluation based on round count and auto-accept.
+
+            threshold.
+            """
             reflection_round = state.reflection_round
             max_rounds = self.config.reflection.max_reflection_rounds
             reflection_score = state.reflection_score or 0.0
@@ -389,20 +398,23 @@ class ReflectionAgent(SimpleAgent):
             # Check if we've reached the acceptance threshold
             if reflection_score >= auto_threshold:
                 logger.info(
-                    f"Response quality meets auto-accept threshold: {reflection_score} >= {auto_threshold}"
+                    f"Response quality meets auto-accept threshold: {reflection_score} >= {auto_threshold}",
                 )
                 return Command(update=state, goto="end")
 
             # Continue for another round
             logger.info(
-                f"Continuing reflection: round {reflection_round}, score {reflection_score}"
+                f"Continuing reflection: round {reflection_round}, score {reflection_score}",
             )
             return Command(update=state, goto="continue")
 
         return evaluation_function
 
     def _should_continue_reflection(self, state: ReflectionAgentState) -> str:
-        """Determine if we should continue to the search/improvement step or end."""
+        """Determine if we should continue to the search/improvement step or.
+
+        end.
+        """
         # Check if reflection is disabled
         if not self.config.reflection.enabled:
             return "end"
@@ -420,7 +432,10 @@ class ReflectionAgent(SimpleAgent):
         return "continue"
 
     def _should_continue_improvement(self, state: ReflectionAgentState) -> str:
-        """Determine if we should continue with another reflection round or end."""
+        """Determine if we should continue with another reflection round or.
+
+        end.
+        """
         # Check if we've reached the max rounds
         if state.reflection_round >= self.config.reflection.max_reflection_rounds:
             return "end"

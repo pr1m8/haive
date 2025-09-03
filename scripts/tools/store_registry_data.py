@@ -1,56 +1,54 @@
 #!/usr/bin/env python
-"""Script to extract agent/component schema information and store it in Supabase.
+"""Script to extract agent/component schema information and store it in
+Supabase.
 
 This script demonstrates:
 1. How to extract agent schemas and graphs
 2. How to store this information in Supabase
 3. How to retrieve the stored information
 """
+from __future__ import annotations
 
 import logging
 import os
 from datetime import datetime
 
 from dotenv import load_dotenv
+from haive.haive.dataflow.registry import ComponentRegistry
+from haive.haive.dataflow.registry import extract_agent_graph
+from haive.haive.dataflow.registry import extract_agent_schema
+from haive.haive.dataflow.registry import extract_component_schema
+from haive.haive.dataflow.registry.agent import AgentTypeRegistry
+from haive.haive.dataflow.registry.db import AgentGraph
+from haive.haive.dataflow.registry.db import registry_db
+from haive.haive.dataflow.registry.db import RegistrySchema
+from haive.haive.dataflow.registry.db import SchemaDefinition
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 )
 logger = logging.getLogger(__name__)
 
 # Load environment variables from .env
-load_dotenv(".env")
-
-from haive.haive.dataflow.registry import (
-    ComponentRegistry,
-    extract_agent_graph,
-    extract_agent_schema,
-    extract_component_schema,
-)
+load_dotenv('.env')
 
 # Import registry components
 # Import AgentTypeRegistry directly
-from haive.haive.dataflow.registry.agent import AgentTypeRegistry
 
 # Import database models and client
-from haive.haive.dataflow.registry.db import (
-    AgentGraph,
-    RegistrySchema,
-    SchemaDefinition,
-    registry_db,
-)
 
 
 def setup_supabase():
     """Setup Supabase connection and verify it's working."""
     # Check if Supabase environment variables are set
-    supabase_url = os.getenv("SUPABASE_URL")
-    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
+    supabase_url = os.getenv('SUPABASE_URL')
+    supabase_key = os.getenv('SUPABASE_SERVICE_KEY') or os.getenv('SUPABASE_ANON_KEY')
 
     if not supabase_url or not supabase_key:
         logger.error(
-            "Supabase URL or KEY not set in environment. Check your .env file."
+            'Supabase URL or KEY not set in environment. Check your .env file.',
         )
         return False
 
@@ -85,10 +83,10 @@ def store_agent_data(agent_name):
         # 1. Store agent in registry
         registry_item = RegistrySchema(
             name=agent_name,
-            class_name=metadata.get("class_name", ""),
-            module_path=metadata.get("module_path", ""),
-            item_type="agent",
-            description=metadata.get("description", ""),
+            class_name=metadata.get('class_name', ''),
+            module_path=metadata.get('module_path', ''),
+            item_type='agent',
+            description=metadata.get('description', ''),
             timestamp=datetime.now(),
             metadata=metadata,
         )
@@ -99,7 +97,7 @@ def store_agent_data(agent_name):
             return False
 
         logger.info(
-            f"Stored agent {agent_name} in registry with ID: {registry_item_id}"
+            f"Stored agent {agent_name} in registry with ID: {registry_item_id}",
         )
 
         # 2. Store agent schemas
@@ -107,7 +105,7 @@ def store_agent_data(agent_name):
             if schema.input_schema:
                 input_schema = SchemaDefinition(
                     registry_item_id=registry_item_id,
-                    schema_type="input",
+                    schema_type='input',
                     schema_json=schema.input_schema,
                     timestamp=datetime.now(),
                 )
@@ -117,7 +115,7 @@ def store_agent_data(agent_name):
             if schema.output_schema:
                 output_schema = SchemaDefinition(
                     registry_item_id=registry_item_id,
-                    schema_type="output",
+                    schema_type='output',
                     schema_json=schema.output_schema,
                     timestamp=datetime.now(),
                 )
@@ -127,7 +125,7 @@ def store_agent_data(agent_name):
             if schema.state_schema:
                 state_schema = SchemaDefinition(
                     registry_item_id=registry_item_id,
-                    schema_type="state",
+                    schema_type='state',
                     schema_json=schema.state_schema,
                     timestamp=datetime.now(),
                 )
@@ -179,10 +177,10 @@ def store_component_data(component_name):
         # 1. Store component in registry
         registry_item = RegistrySchema(
             name=component_name,
-            class_name=metadata.get("class_name", ""),
-            module_path=metadata.get("module_path", ""),
-            item_type="component",
-            description=metadata.get("description", ""),
+            class_name=metadata.get('class_name', ''),
+            module_path=metadata.get('module_path', ''),
+            item_type='component',
+            description=metadata.get('description', ''),
             timestamp=datetime.now(),
             metadata=metadata,
         )
@@ -193,7 +191,7 @@ def store_component_data(component_name):
             return False
 
         logger.info(
-            f"Stored component {component_name} in registry with ID: {registry_item_id}"
+            f"Stored component {component_name} in registry with ID: {registry_item_id}",
         )
 
         # 2. Store component schemas
@@ -201,7 +199,7 @@ def store_component_data(component_name):
             if schema.input_schema:
                 input_schema = SchemaDefinition(
                     registry_item_id=registry_item_id,
-                    schema_type="input",
+                    schema_type='input',
                     schema_json=schema.input_schema,
                     timestamp=datetime.now(),
                 )
@@ -211,7 +209,7 @@ def store_component_data(component_name):
             if schema.output_schema:
                 output_schema = SchemaDefinition(
                     registry_item_id=registry_item_id,
-                    schema_type="output",
+                    schema_type='output',
                     schema_json=schema.output_schema,
                     timestamp=datetime.now(),
                 )
@@ -221,7 +219,7 @@ def store_component_data(component_name):
             if schema.state_schema:
                 state_schema = SchemaDefinition(
                     registry_item_id=registry_item_id,
-                    schema_type="state",
+                    schema_type='state',
                     schema_json=schema.state_schema,
                     timestamp=datetime.now(),
                 )
@@ -242,23 +240,23 @@ def main():
         return
 
     # Process agents
-    logger.info("Storing agent information...")
+    logger.info('Storing agent information...')
     agents = AgentTypeRegistry.list_agents()
     for agent in agents:
-        agent_name = agent.get("name")
+        agent_name = agent.get('name')
         if agent_name:
             store_agent_data(agent_name)
 
     # Process components
-    logger.info("Storing component information...")
+    logger.info('Storing component information...')
     components = ComponentRegistry.list_components()
     for component in components:
-        component_name = component.get("name")
+        component_name = component.get('name')
         if component_name:
             store_component_data(component_name)
 
-    logger.info("Data storage complete!")
+    logger.info('Data storage complete!')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

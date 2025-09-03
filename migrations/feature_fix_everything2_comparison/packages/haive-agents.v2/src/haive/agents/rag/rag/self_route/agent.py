@@ -1,17 +1,14 @@
 """Self-Route RAG Agents.
 
-from typing import Any
-Implementation of self-routing RAG with dynamic strategy selection and iterative planning.
-Uses structured output models for complex routing decisions and preprocessing.
+from typing import Any Implementation of self-routing RAG with dynamic
+strategy selection and iterative planning. Uses structured output models
+for complex routing decisions and preprocessing.
 """
 
-import logging
 from enum import Enum
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
@@ -20,6 +17,9 @@ from pydantic import BaseModel, Field
 from haive.agents.base.agent import Agent
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 logger = logging.getLogger(__name__)
 
@@ -53,52 +53,56 @@ class QueryAnalysis(BaseModel):
 
     # Complexity Analysis
     complexity_level: QueryComplexity = Field(
-        description="Overall complexity assessment"
+        description="Overall complexity assessment",
     )
     complexity_score: float = Field(
-        ge=0.0, le=1.0, description="Complexity score (0-1)"
+        ge=0.0,
+        le=1.0,
+        description="Complexity score (0-1)",
     )
 
     # Query Characteristics
     requires_factual_accuracy: bool = Field(
-        description="Needs highly accurate factual information"
+        description="Needs highly accurate factual information",
     )
     requires_multiple_perspectives: bool = Field(
-        description="Benefits from multiple viewpoints"
+        description="Benefits from multiple viewpoints",
     )
     requires_domain_expertise: bool = Field(
-        description="Needs specialized domain knowledge"
+        description="Needs specialized domain knowledge",
     )
     requires_recent_information: bool = Field(
-        description="Needs up-to-date information"
+        description="Needs up-to-date information",
     )
     requires_reasoning: bool = Field(
-        description="Involves logical reasoning or inference"
+        description="Involves logical reasoning or inference",
     )
 
     # Technical Indicators
     named_entities: list[str] = Field(description="Identified named entities")
     domain_topics: list[str] = Field(description="Domain-specific topics")
     query_intent: str = Field(
-        description="Primary intent (factual, analytical, creative, etc.)"
+        description="Primary intent (factual, analytical, creative, etc.)",
     )
 
     # Preprocessing Requirements
     needs_decomposition: bool = Field(
-        description="Would benefit from query decomposition"
+        description="Would benefit from query decomposition",
     )
     needs_expansion: bool = Field(description="Needs query expansion/reformulation")
     needs_context_enrichment: bool = Field(description="Requires additional context")
 
     # Routing Recommendations
     primary_strategy: RoutingStrategy = Field(
-        description="Primary recommended strategy"
+        description="Primary recommended strategy",
     )
     fallback_strategies: list[RoutingStrategy] = Field(
-        description="Alternative strategies"
+        description="Alternative strategies",
     )
     confidence: float = Field(
-        ge=0.0, le=1.0, description="Confidence in routing decision"
+        ge=0.0,
+        le=1.0,
+        description="Confidence in routing decision",
     )
 
     reasoning: str = Field(description="Detailed reasoning for routing decision")
@@ -113,18 +117,20 @@ class IterativePlan(BaseModel):
     # Per-iteration planning
     iteration_goals: dict[str, str] = Field(description="Goals for each iteration")
     iteration_strategies: dict[str, RoutingStrategy] = Field(
-        description="Strategy for each iteration"
+        description="Strategy for each iteration",
     )
 
     # Loop control
     convergence_criteria: str = Field(description="When to stop iterating")
     quality_threshold: float = Field(
-        ge=0.0, le=1.0, description="Quality threshold for completion"
+        ge=0.0,
+        le=1.0,
+        description="Quality threshold for completion",
     )
 
     # State tracking
     accumulated_context: str = Field(
-        description="Context accumulated across iterations"
+        description="Context accumulated across iterations",
     )
     iteration_results: dict[str, str] = Field(description="Results from each iteration")
     should_continue: bool = Field(description="Whether to continue iterations")
@@ -140,7 +146,9 @@ class RoutingDecision(BaseModel):
 
     # Quality assurance
     expected_quality: float = Field(
-        ge=0.0, le=1.0, description="Expected result quality"
+        ge=0.0,
+        le=1.0,
+        description="Expected result quality",
     )
     risk_factors: list[str] = Field(description="Potential risks or limitations")
     mitigation_strategies: list[str] = Field(description="Risk mitigation approaches")
@@ -152,7 +160,7 @@ class RoutingDecision(BaseModel):
     # Fallback planning
     fallback_enabled: bool = Field(description="Whether fallback is configured")
     fallback_trigger: str | None = Field(
-        description="Conditions for fallback activation"
+        description="Conditions for fallback activation",
     )
 
 
@@ -209,9 +217,8 @@ Provide comprehensive analysis including:
 
 Focus on actionable routing decisions with clear justification.""",
         ),
-    ]
+    ],
 )
-
 
 ITERATIVE_PLANNING_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -260,9 +267,8 @@ Design a plan with:
 
 Focus on efficient convergence with high-quality results.""",
         ),
-    ]
+    ],
 )
-
 
 ROUTING_DECISION_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -307,7 +313,7 @@ Provide final routing decision with:
 
 Focus on actionable, optimized routing decisions.""",
         ),
-    ]
+    ],
 )
 
 
@@ -353,7 +359,9 @@ class QueryAnalyzerAgent(Agent):
             """Perform comprehensive query analysis."""
             query = getattr(state, "query", "")
             context = getattr(state, "context", "") or getattr(
-                state, "retrieved_documents", ""
+                state,
+                "retrieved_documents",
+                "",
             )
 
             # Format context for analysis
@@ -361,18 +369,16 @@ class QueryAnalyzerAgent(Agent):
                 context_str = (
                     "\n".join(
                         [
-                            f"Doc {i+1}: {doc.page_content[:150]}..."
+                            f"Doc {i + 1}: {doc.page_content[:150]}..."
                             for i, doc in enumerate(context[:3])
-                        ]
+                        ],
                     )
                     if context
                     else "No context available"
                 )
             else:
                 context_str = (
-                    str(context)[:500] + "..."
-                    if len(str(context)) > 500
-                    else str(context)
+                    str(context)[:500] + "..." if len(str(context)) > 500 else str(context)
                 )
 
             # Extract domain information from query
@@ -380,7 +386,7 @@ class QueryAnalyzerAgent(Agent):
 
             # Perform structured analysis
             analysis_result = analysis_engine.invoke(
-                {"query": query, "context": context_str, "domain_info": domain_info}
+                {"query": query, "context": context_str, "domain_info": domain_info},
             )
 
             return {
@@ -440,7 +446,10 @@ class IterativePlannerAgent(Agent):
     name: str = "Iterative Planner"
 
     def __init__(
-        self, llm_config: LLMConfig | None = None, max_iterations: int = 3, **kwargs
+        self,
+        llm_config: LLMConfig | None = None,
+        max_iterations: int = 3,
+        **kwargs,
     ):
         """Initialize iterative planner.
 
@@ -474,7 +483,9 @@ class IterativePlannerAgent(Agent):
             query = getattr(state, "query", "")
             query_analysis = getattr(state, "query_analysis", None)
             current_context = getattr(state, "context", "") or getattr(
-                state, "retrieved_documents", ""
+                state,
+                "retrieved_documents",
+                "",
             )
 
             # Available strategies based on analysis
@@ -503,9 +514,7 @@ class IterativePlannerAgent(Agent):
                 {
                     "query": query,
                     "query_analysis": (
-                        str(query_analysis)
-                        if query_analysis
-                        else "No analysis available"
+                        str(query_analysis) if query_analysis else "No analysis available"
                     ),
                     "available_strategies": ", ".join(available_strategies),
                     "current_context": (
@@ -514,12 +523,13 @@ class IterativePlannerAgent(Agent):
                         else str(current_context)
                     ),
                     "quality_requirements": quality_requirements,
-                }
+                },
             )
 
             # Ensure plan doesn't exceed max iterations
             plan_result.total_iterations = min(
-                plan_result.total_iterations, self.max_iterations
+                plan_result.total_iterations,
+                self.max_iterations,
             )
 
             return {
@@ -583,28 +593,22 @@ class RoutingDecisionAgent(Agent):
             iterative_plan = getattr(state, "iterative_plan", None)
 
             # Available resources and performance requirements
-            available_resources = (
-                "standard"  # Could be configured based on system state
-            )
-            performance_requirements = (
-                "balanced"  # Could be derived from query analysis
-            )
+            available_resources = "standard"  # Could be configured based on system state
+            performance_requirements = "balanced"  # Could be derived from query analysis
 
             # Make routing decision
             decision_result = decision_engine.invoke(
                 {
                     "query": query,
                     "query_analysis": (
-                        str(query_analysis)
-                        if query_analysis
-                        else "No analysis available"
+                        str(query_analysis) if query_analysis else "No analysis available"
                     ),
                     "iterative_plan": (
                         str(iterative_plan) if iterative_plan else "No iterative plan"
                     ),
                     "available_resources": available_resources,
                     "performance_requirements": performance_requirements,
-                }
+                },
             )
 
             # Configure fallback if enabled
@@ -630,7 +634,10 @@ class RoutingDecisionAgent(Agent):
 
 
 class SelfRouteRAGAgent(SequentialAgent):
-    """Complete Self-Route RAG agent with structured analysis and iterative planning."""
+    """Complete Self-Route RAG agent with structured analysis and iterative.
+
+    planning.
+    """
 
     @classmethod
     def from_documents(
@@ -664,7 +671,9 @@ class SelfRouteRAGAgent(SequentialAgent):
 
         # Step 1: Query analysis with structured output
         query_analyzer = QueryAnalyzerAgent(
-            llm_config=llm_config, analysis_depth=analysis_depth, name="Query Analyzer"
+            llm_config=llm_config,
+            analysis_depth=analysis_depth,
+            name="Query Analyzer",
         )
 
         # Step 2: Iterative planning with loop structure
@@ -695,7 +704,7 @@ class SelfRouteRAGAgent(SequentialAgent):
                             "human",
                             "Execute routing strategy: {selected_strategy}\nExecution plan: {execution_plan}\nQuery: {query}",
                         ),
-                    ]
+                    ],
                 ),
             ),
             name="Strategy Executor",
@@ -746,7 +755,9 @@ def create_self_route_rag_agent(
         kwargs.setdefault("enable_fallback", True)
 
     return SelfRouteRAGAgent.from_documents(
-        documents=documents, llm_config=llm_config, **kwargs
+        documents=documents,
+        llm_config=llm_config,
+        **kwargs,
     )
 
 

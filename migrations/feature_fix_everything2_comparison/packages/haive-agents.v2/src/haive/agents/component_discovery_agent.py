@@ -9,15 +9,15 @@ Based on: @project_docs/active/patterns/dynamic_activation_pattern.md
 
 import logging
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
-from haive.core.engine.retriever import BaseRetrieverConfig
-from haive.core.schema.prebuilt.meta_state import MetaStateSchema
-from haive.core.utils.haive_discovery import HaiveComponentDiscovery
 from langchain_core.documents import Document
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_validator
 
 from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.core.engine.retriever import BaseRetrieverConfig
+from haive.core.schema.prebuilt.meta_state import MetaStateSchema
+from haive.core.utils.haive_discovery import HaiveComponentDiscovery
 
 logger = logging.getLogger(__name__)
 
@@ -94,35 +94,42 @@ class ComponentDiscoveryAgent(BaseModel):
     """
 
     model_config = ConfigDict(
-        arbitrary_types_allowed=True, validate_assignment=True, extra="forbid"
+        arbitrary_types_allowed=True,
+        validate_assignment=True,
+        extra="forbid",
     )
 
     # Core configuration
     document_path: str = Field(
-        ..., description="Path to documentation or component sources"
+        ...,
+        description="Path to documentation or component sources",
     )
 
     # Component instances (initialized via model_validator)
-    discovery_agent: Optional[BaseRAGAgent] = Field(
-        default=None, description="BaseRAGAgent for performing retrieval"
+    discovery_agent: BaseRAGAgent | None = Field(
+        default=None,
+        description="BaseRAGAgent for performing retrieval",
     )
 
-    meta_state: Optional[MetaStateSchema] = Field(
-        default=None, description="MetaStateSchema wrapper for the discovery agent"
+    meta_state: MetaStateSchema | None = Field(
+        default=None,
+        description="MetaStateSchema wrapper for the discovery agent",
     )
 
     # Configuration and caching
     discovery_config: dict[str, Any] = Field(
-        default_factory=dict, description="Configuration for discovery behavior"
+        default_factory=dict,
+        description="Configuration for discovery behavior",
     )
 
     component_cache: dict[str, list[dict[str, Any]]] = Field(
-        default_factory=dict, description="Cache for discovered components"
+        default_factory=dict,
+        description="Cache for discovered components",
     )
 
     # Internal state (private attributes)
     _documents: list[Document] | None = PrivateAttr(default=None)
-    _haive_discovery: Optional[HaiveComponentDiscovery] = PrivateAttr(default=None)
+    _haive_discovery: HaiveComponentDiscovery | None = PrivateAttr(default=None)
 
     @model_validator(mode="after")
     def setup_discovery_agent(self) -> "ComponentDiscoveryAgent":
@@ -147,17 +154,19 @@ class ComponentDiscoveryAgent(BaseModel):
                         Document(
                             page_content="No components found",
                             metadata={"source": "empty", "type": "placeholder"},
-                        )
+                        ),
                     ]
 
                 # Create retriever configuration
                 retriever_config = BaseRetrieverConfig(
-                    name="component_retriever", documents=self._documents
+                    name="component_retriever",
+                    documents=self._documents,
                 )
 
                 # Create RAG agent with retriever
                 self.discovery_agent = BaseRAGAgent(
-                    name="component_discovery", engine=retriever_config
+                    name="component_discovery",
+                    engine=retriever_config,
                 )
 
                 # Wrap in MetaStateSchema for tracking
@@ -172,7 +181,7 @@ class ComponentDiscoveryAgent(BaseModel):
                 )
 
                 logger.info(
-                    f"Initialized discovery agent with {len(self._documents)} documents"
+                    f"Initialized discovery agent with {len(self._documents)} documents",
                 )
 
             except Exception as e:
@@ -205,12 +214,14 @@ class ComponentDiscoveryAgent(BaseModel):
 
         # Create basic retriever
         retriever_config = BaseRetrieverConfig(
-            name="fallback_retriever", documents=[fallback_doc]
+            name="fallback_retriever",
+            documents=[fallback_doc],
         )
 
         # Create basic agent
         self.discovery_agent = BaseRAGAgent(
-            name="fallback_discovery", engine=retriever_config
+            name="fallback_discovery",
+            engine=retriever_config,
         )
 
         # Wrap in MetaStateSchema
@@ -267,7 +278,7 @@ class ComponentDiscoveryAgent(BaseModel):
 
             # Discover all components
             all_components = self._haive_discovery.discover_all_categorized(
-                create_tools=True
+                create_tools=True,
             )
 
             # Convert to documents
@@ -346,7 +357,7 @@ class ComponentDiscoveryAgent(BaseModel):
                                     "type": "file",
                                     "filename": file_path.name,
                                     "relative_path": str(
-                                        file_path.relative_to(path_obj)
+                                        file_path.relative_to(path_obj),
                                     ),
                                 },
                             )
@@ -405,7 +416,8 @@ class ComponentDiscoveryAgent(BaseModel):
             """
 
             result = await self.meta_state.execute_agent(
-                input_data=discovery_prompt, update_state=True
+                input_data=discovery_prompt,
+                update_state=True,
             )
 
             # Parse components from result
@@ -515,12 +527,14 @@ class ComponentDiscoveryAgent(BaseModel):
         # Fallback to metadata or default
         metadata = doc.metadata
         return metadata.get(
-            "description", f"Component from {metadata.get('source', 'unknown source')}"
+            "description",
+            f"Component from {metadata.get('source', 'unknown source')}",
         )
 
     async def load_component_from_doc(
-        self, component_doc: dict[str, Any]
-    ) -> Optional[Any]:
+        self,
+        component_doc: dict[str, Any],
+    ) -> Any | None:
         """Load actual component instance from component document.
 
         Args:
@@ -552,7 +566,7 @@ class ComponentDiscoveryAgent(BaseModel):
 
         except Exception as e:
             logger.exception(
-                f"Failed to load component {component_doc.get('name', 'unknown')}: {e}"
+                f"Failed to load component {component_doc.get('name', 'unknown')}: {e}",
             )
 
         return None
@@ -582,9 +596,7 @@ class ComponentDiscoveryAgent(BaseModel):
                 print(f"Cached queries: {stats['cached_queries']}")
                 print(f"Total components: {stats['total_components']}")
         """
-        total_components = sum(
-            len(components) for components in self.component_cache.values()
-        )
+        total_components = sum(len(components) for components in self.component_cache.values())
 
         return {
             "cached_queries": len(self.component_cache),

@@ -1,19 +1,20 @@
 """Dynamic LangGraph-style Supervisor Implementation.
 
-This module provides a dynamic supervisor agent that can add/remove agents at runtime,
-adapt agent responses, and handle complex multi-agent coordination patterns similar
-to LangGraph's supervisor package but with enhanced Haive-specific functionality.
+This module provides a dynamic supervisor agent that can add/remove
+agents at runtime, adapt agent responses, and handle complex multi-agent
+coordination patterns similar to LangGraph's supervisor package but with
+enhanced Haive-specific functionality.
 """
 
+from __future__ import annotations
+
 import asyncio
+from collections.abc import Callable
 import logging
 import time
-from collections.abc import Callable
 from typing import Any
 from uuid import uuid4
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import START
 from rich.console import Console
@@ -28,13 +29,17 @@ from haive.agents.supervisor.dynamic_state import (
     SupervisorDecision,
 )
 from haive.agents.supervisor.registry import AgentRegistry
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 logger = logging.getLogger(__name__)
 console = Console()
 
 
 class DynamicSupervisorAgent(ReactAgent):
-    """Dynamic supervisor agent with runtime agent management and adaptive responses.
+    """Dynamic supervisor agent with runtime agent management and adaptive.
+
+    responses.
 
     This supervisor extends the base haive Agent architecture to provide:
     - Runtime agent registration/deregistration
@@ -90,14 +95,19 @@ class DynamicSupervisorAgent(ReactAgent):
         from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 
         routing_model = DynamicChoiceModel[str](
-            options=[], model_name="DynamicSupervisorChoice", include_end=True
+            options=[],
+            model_name="DynamicSupervisorChoice",
+            include_end=True,
         )
         self.agent_registry = AgentRegistry(routing_model)
 
         logger.info(f"DynamicSupervisorAgent '{name}' initialized")
 
     def _aggregate_agent_tools(self) -> dict:
-        """Aggregate tools from all registered agents into supervisor routing options."""
+        """Aggregate tools from all registered agents into supervisor routing.
+
+        options.
+        """
         aggregated_tools = {}
         tool_to_agent_mapping = {}
 
@@ -111,9 +121,7 @@ class DynamicSupervisorAgent(ReactAgent):
             if hasattr(agent, "tools") and agent.tools:
                 agent_tools.extend(agent.tools)
             if (
-                hasattr(agent, "engine")
-                and agent.engine
-                and hasattr(agent.engine, "tools")
+                hasattr(agent, "engine") and agent.engine and hasattr(agent.engine, "tools")
             ) and agent.engine.tools:
                 agent_tools.extend(agent.engine.tools)
 
@@ -126,7 +134,10 @@ class DynamicSupervisorAgent(ReactAgent):
         return {"tools": aggregated_tools, "tool_to_agent": tool_to_agent_mapping}
 
     def _create_dynamic_tool_choice(self) -> str:
-        """Create dynamic routing choice that includes tools from registered agents."""
+        """Create dynamic routing choice that includes tools from registered.
+
+        agents.
+        """
         tool_info = self._aggregate_agent_tools()
 
         # Update supervisor's routing model to include agent tools as options
@@ -153,7 +164,9 @@ class DynamicSupervisorAgent(ReactAgent):
         if hasattr(self.main_engine, "tools"):
             self.main_engine.tools = aggregated_tools
             logger.info(
-                f"Updated supervisor tools: {len(aggregated_tools)} total tools from registered agents"
+                f"Updated supervisor tools: {
+                    len(aggregated_tools)
+                } total tools from registered agents",
             )
 
         # Update tool routes mapping
@@ -184,8 +197,7 @@ class DynamicSupervisorAgent(ReactAgent):
         # Create execution config
         config = AgentExecutionConfig(
             agent_name=agent.name,
-            capability_description=capability_description
-            or f"Handles {agent.name} tasks",
+            capability_description=capability_description or f"Handles {agent.name} tasks",
             agent_type=agent.__class__.__name__,
             **(execution_config or {}),
         )
@@ -202,9 +214,7 @@ class DynamicSupervisorAgent(ReactAgent):
             self._update_supervisor_tools()
 
             # Rebuild graph if needed
-            should_rebuild = (
-                rebuild_graph if rebuild_graph is not None else self.auto_rebuild_graph
-            )
+            should_rebuild = rebuild_graph if rebuild_graph is not None else self.auto_rebuild_graph
             if should_rebuild and self._graph_built:
                 await self._rebuild_graph()
 
@@ -213,7 +223,9 @@ class DynamicSupervisorAgent(ReactAgent):
         return success
 
     async def unregister_agent(
-        self, agent_name: str, rebuild_graph: bool | None = None
+        self,
+        agent_name: str,
+        rebuild_graph: bool | None = None,
     ) -> bool:
         """Unregister an agent with graph rebuilding.
 
@@ -235,9 +247,7 @@ class DynamicSupervisorAgent(ReactAgent):
             self._update_supervisor_tools()
 
             # Rebuild graph if needed
-            should_rebuild = (
-                rebuild_graph if rebuild_graph is not None else self.auto_rebuild_graph
-            )
+            should_rebuild = rebuild_graph if rebuild_graph is not None else self.auto_rebuild_graph
             if should_rebuild and self._graph_built:
                 await self._rebuild_graph()
 
@@ -246,7 +256,9 @@ class DynamicSupervisorAgent(ReactAgent):
         return success
 
     async def update_agent_config(
-        self, agent_name: str, config_updates: dict[str, Any]
+        self,
+        agent_name: str,
+        config_updates: dict[str, Any],
     ) -> bool:
         """Update agent execution configuration at runtime.
 
@@ -322,7 +334,7 @@ class DynamicSupervisorAgent(ReactAgent):
         self.agent_registry.mark_rebuilt()
 
         logger.info(
-            f"Supervisor graph rebuilt with {len(self.agent_registry.get_available_agents())} agents"
+            f"Supervisor graph rebuilt with {len(self.agent_registry.get_available_agents())} agents",
         )
 
         # Log new routing destinations for debugging
@@ -349,14 +361,18 @@ class DynamicSupervisorAgent(ReactAgent):
 
                 # Create enhanced prompt with reasoning including tool capabilities
                 prompt = self._create_enhanced_decision_prompt(
-                    state, input_analysis, available_agents, tool_info
+                    state,
+                    input_analysis,
+                    available_agents,
+                    tool_info,
                 )
 
                 # Get LLM decision with reasoning
                 if self.main_engine:
                     response = await self.main_engine.ainvoke(prompt, config)
                     decision_data = self._parse_decision_response(
-                        response, available_agents
+                        response,
+                        available_agents,
                     )
                 else:
                     decision_data = {
@@ -456,7 +472,8 @@ class DynamicSupervisorAgent(ReactAgent):
 
             agent_name = state.current_execution.agent_name
             adapted_messages = state.adapt_response_for_agent(
-                agent_name, state.current_execution.messages
+                agent_name,
+                state.current_execution.messages,
             )
 
             # Update execution result with adapted response
@@ -501,7 +518,9 @@ class DynamicSupervisorAgent(ReactAgent):
             return "__end__"
 
         graph.add_conditional_edges(
-            "coordinator", routing_condition, routing_destinations
+            "coordinator",
+            routing_condition,
+            routing_destinations,
         )
 
     def _create_enhanced_agent_wrapper(self, agent_name: str) -> Callable:
@@ -521,9 +540,7 @@ class DynamicSupervisorAgent(ReactAgent):
 
                 # Get agent configuration
                 agent_config = state.get_agent_config(agent_name)
-                execution_timeout = (
-                    agent_config.execution_timeout if agent_config else 300.0
-                )
+                execution_timeout = agent_config.execution_timeout if agent_config else 300.0
 
                 try:
                     # Start execution tracking
@@ -534,7 +551,8 @@ class DynamicSupervisorAgent(ReactAgent):
 
                     # Execute with timeout
                     result = await asyncio.wait_for(
-                        agent.ainvoke(agent_state, config), timeout=execution_timeout
+                        agent.ainvoke(agent_state, config),
+                        timeout=execution_timeout,
                     )
 
                     end_time = time.time()
@@ -637,7 +655,8 @@ class DynamicSupervisorAgent(ReactAgent):
         return analysis
 
     def _get_available_agents_with_context(
-        self, state: DynamicSupervisorState
+        self,
+        state: DynamicSupervisorState,
     ) -> dict[str, dict[str, Any]]:
         """Get available agents with performance context."""
         agents_context = {}
@@ -651,8 +670,7 @@ class DynamicSupervisorAgent(ReactAgent):
                 "performance": performance,
                 "priority": agent_config.priority if agent_config else 1,
                 "available": not (
-                    agent_config
-                    and agent_config.retry_count >= agent_config.max_retries
+                    agent_config and agent_config.retry_count >= agent_config.max_retries
                 ),
             }
 
@@ -686,30 +704,22 @@ class DynamicSupervisorAgent(ReactAgent):
                     if owner == agent_name
                 ]
 
-            tools_text = (
-                f"Tools: {', '.join(agent_tools)}" if agent_tools else "No tools"
-            )
+            tools_text = f"Tools: {', '.join(agent_tools)}" if agent_tools else "No tools"
 
             description = f"""- {agent_name} (Priority: {priority}, {status})
   Capability: {capability}
   {tools_text}
-  Performance: {success_rate:.1f}% success rate, {performance.get('executions', 0)} executions"""
+  Performance: {success_rate:.1f}% success rate, {performance.get("executions", 0)} executions"""
 
             agent_descriptions.append(description)
 
-        agents_text = (
-            "\n".join(agent_descriptions)
-            if agent_descriptions
-            else "No agents available"
-        )
+        agents_text = "\n".join(agent_descriptions) if agent_descriptions else "No agents available"
 
         # Add overall tool summary
         tool_summary = ""
         if tool_info and tool_info.get("tools"):
             total_tools = len(tool_info["tools"])
-            tool_summary = (
-                f"\n\nAVAILABLE TOOLS ACROSS ALL AGENTS: {total_tools} tools total\n"
-            )
+            tool_summary = f"\n\nAVAILABLE TOOLS ACROSS ALL AGENTS: {total_tools} tools total\n"
             for tool_name, agent_name in tool_info.get("tool_to_agent", {}).items():
                 tool_summary += f"- {tool_name} (via {agent_name})\n"
 
@@ -725,9 +735,9 @@ class DynamicSupervisorAgent(ReactAgent):
 Your task is to analyze the user's request and select the most appropriate agent or end the conversation.
 
 INPUT ANALYSIS:
-- Type: {input_analysis.get('type', 'unknown')}
-- Complexity: {input_analysis.get('complexity', 'simple')}
-- Keywords: {', '.join(input_analysis.get('keywords', [])[:5])}
+- Type: {input_analysis.get("type", "unknown")}
+- Complexity: {input_analysis.get("complexity", "simple")}
+- Keywords: {", ".join(input_analysis.get("keywords", [])[:5])}
 
 AVAILABLE AGENTS:
 {agents_text}
@@ -742,23 +752,24 @@ INSTRUCTIONS:
 
 RESPONSE FORMAT:
 Provide a JSON response with:
-{{
-  "target": "agent_name_or_END",
+{"target": "agent_name_or_END",
   "reasoning": "Detailed explanation of your choice",
   "confidence": 0.0-1.0,
   "alternatives": [
-    {{"agent": "alternative_name", "score": 0.0-1.0}}
+    {"agent": "alternative_name", "score": 0.0-1.0}
   ]
-}}
+}
 
 {context_text}"""
 
         return ChatPromptTemplate.from_messages(
-            [("system", system_prompt), ("placeholder", "{messages}")]
+            [("system", system_prompt), ("placeholder", "{messages}")],
         )
 
     def _parse_decision_response(
-        self, response: Any, available_agents: dict[str, Any]
+        self,
+        response: Any,
+        available_agents: dict[str, Any],
     ) -> dict[str, Any]:
         """Parse LLM decision response."""
         content = getattr(response, "content", str(response))
@@ -804,7 +815,9 @@ Provide a JSON response with:
         }
 
     def _prepare_enhanced_agent_state(
-        self, supervisor_state: DynamicSupervisorState, agent: Agent
+        self,
+        supervisor_state: DynamicSupervisorState,
+        agent: Agent,
     ) -> Any:
         """Prepare enhanced state for agent execution."""
         # Try to use agent's specific state schema
@@ -816,10 +829,7 @@ Provide a JSON response with:
                 # Add additional fields if they exist in target schema
                 schema_fields = agent.state_schema.model_fields
                 for field_name in schema_fields:
-                    if (
-                        hasattr(supervisor_state, field_name)
-                        and field_name != "messages"
-                    ):
+                    if hasattr(supervisor_state, field_name) and field_name != "messages":
                         state_data[field_name] = getattr(supervisor_state, field_name)
 
                 return agent.state_schema(**state_data)
@@ -849,7 +859,7 @@ Provide a JSON response with:
         # Add per-agent performance
         for agent_name in state.get_available_agents():
             summary["agent_performance"][agent_name] = state.get_agent_performance(
-                agent_name
+                agent_name,
             )
 
         return summary
@@ -943,8 +953,4 @@ class PerformanceMonitor:
             logger.debug(f"Decision to {target} took {duration:.3f}s")
 
     def get_average_decision_time(self) -> float:
-        return (
-            self.total_decision_time / self.decision_count
-            if self.decision_count > 0
-            else 0.0
-        )
+        return self.total_decision_time / self.decision_count if self.decision_count > 0 else 0.0

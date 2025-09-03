@@ -1,23 +1,22 @@
 """Structured Output Enhancer for RAG Agents.
 
-from typing import Any, Dict
-This utility enables any agent to be enhanced with structured output by appending
-a SimpleAgent with the appropriate prompt template and Pydantic model. This follows
-the pattern of keeping prompts focused on generation while parsers handle structure.
+from typing import Any, Dict This utility enables any agent to be
+enhanced with structured output by appending a SimpleAgent with the
+appropriate prompt template and Pydantic model. This follows the pattern
+of keeping prompts focused on generation while parsers handle structure.
 """
+
+from __future__ import annotations
 
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import LLMConfig
-from haive.core.utils.pydantic_utils.base_model_to_prompt import (
-    PromptGenerator,
-    PromptStyle,
-)
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel
 
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import LLMConfig
+from haive.core.utils.pydantic_utils.base_model_to_prompt import PromptGenerator, PromptStyle
 
 
 class StructuredOutputEnhancer:
@@ -64,7 +63,9 @@ class StructuredOutputEnhancer:
         return PromptGenerator.create_format_instructions(self.output_model)
 
     def create_enhancement_prompt(
-        self, context_prompt: str, include_state_context: bool = True
+        self,
+        context_prompt: str,
+        include_state_context: bool = True,
     ) -> ChatPromptTemplate:
         """Create a prompt template for structured output enhancement.
 
@@ -100,7 +101,7 @@ Retrieved Documents: {retrieved_documents}
 {additional_context}
 
 Please provide your structured analysis.""",
-                )
+                ),
             )
         else:
             messages.append(("human", "{query}"))
@@ -128,7 +129,8 @@ Please provide your structured analysis.""",
             SimpleAgent configured for structured output
         """
         prompt_template = self.create_enhancement_prompt(
-            context_prompt=context_prompt, include_state_context=include_state_context
+            context_prompt=context_prompt,
+            include_state_context=include_state_context,
         )
 
         output_key = f"{self.output_model.__name__.lower()}_result"
@@ -152,7 +154,9 @@ Please provide your structured analysis.""",
         context_prompt: str | None = None,
         **kwargs,
     ) -> list[Any]:
-        """Enhance a sequence of agents by appending structured output processing.
+        """Enhance a sequence of agents by appending structured output.
+
+        processing.
 
         Args:
             agents: List of existing agents
@@ -170,7 +174,9 @@ Please provide your structured analysis.""",
             )
 
         enhancement_agent = self.create_enhancement_agent(
-            llm_config=llm_config, context_prompt=context_prompt, **kwargs
+            llm_config=llm_config,
+            context_prompt=context_prompt,
+            **kwargs,
         )
 
         return [*agents, enhancement_agent]
@@ -182,7 +188,8 @@ def create_hyde_enhancer() -> StructuredOutputEnhancer:
     from haive.agents.rag.models import HyDEResult
 
     return StructuredOutputEnhancer(
-        output_model=HyDEResult, prompt_style=PromptStyle.DESCRIPTIVE
+        output_model=HyDEResult,
+        prompt_style=PromptStyle.DESCRIPTIVE,
     )
 
 
@@ -191,7 +198,8 @@ def create_fusion_enhancer() -> StructuredOutputEnhancer:
     from haive.agents.rag.models import FusionResult
 
     return StructuredOutputEnhancer(
-        output_model=FusionResult, prompt_style=PromptStyle.STRUCTURED
+        output_model=FusionResult,
+        prompt_style=PromptStyle.STRUCTURED,
     )
 
 
@@ -200,7 +208,8 @@ def create_speculative_enhancer() -> StructuredOutputEnhancer:
     from haive.agents.rag.models import SpeculativeResult
 
     return StructuredOutputEnhancer(
-        output_model=SpeculativeResult, prompt_style=PromptStyle.CONVERSATIONAL
+        output_model=SpeculativeResult,
+        prompt_style=PromptStyle.CONVERSATIONAL,
     )
 
 
@@ -209,7 +218,8 @@ def create_memory_enhancer() -> StructuredOutputEnhancer:
     from haive.agents.rag.models import MemoryAnalysis
 
     return StructuredOutputEnhancer(
-        output_model=MemoryAnalysis, prompt_style=PromptStyle.DESCRIPTIVE
+        output_model=MemoryAnalysis,
+        prompt_style=PromptStyle.DESCRIPTIVE,
     )
 
 
@@ -249,7 +259,8 @@ def demonstrate_enhancement_patterns() -> Dict[str, Any]:
         recommendations: list[str]
 
     custom_enhancer = StructuredOutputEnhancer(
-        output_model=CustomAnalysis, prompt_style=PromptStyle.CONVERSATIONAL
+        output_model=CustomAnalysis,
+        prompt_style=PromptStyle.CONVERSATIONAL,
     )
 
     custom_agent = custom_enhancer.create_enhancement_agent(
@@ -270,7 +281,8 @@ class RAGEnhancementFactory:
 
     @staticmethod
     def enhance_simple_rag(
-        llm_config: LLMConfig, enhancement_type: str = "hyde"
+        llm_config: LLMConfig,
+        enhancement_type: str = "hyde",
     ) -> list[SimpleAgent]:
         """Create a simple RAG with structured output enhancement.
 

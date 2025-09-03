@@ -1,8 +1,8 @@
 """Memory store management system integrating with existing Haive store tools.
 
-This module provides enhanced memory storage and retrieval capabilities that build on
-the existing store tools with intelligent classification, self-query retrieval, and
-memory lifecycle management.
+This module provides enhanced memory storage and retrieval capabilities
+that build on the existing store tools with intelligent classification,
+self-query retrieval, and memory lifecycle management.
 """
 
 import logging
@@ -28,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class MemoryStoreConfig(BaseModel):
-    """Configuration for enhanced memory store management.
-    """
+    """Configuration for enhanced memory store management."""
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
@@ -72,7 +71,9 @@ class MemoryStoreConfig(BaseModel):
 
 
 class MemoryStoreManager:
-    """Enhanced memory store manager with intelligent classification and retrieval.
+    """Enhanced memory store manager with intelligent classification and.
+
+    retrieval.
 
     This manager builds on the existing store tools to provide:
     - Automatic memory classification and metadata extraction
@@ -82,8 +83,7 @@ class MemoryStoreManager:
     """
 
     def __init__(self, config: MemoryStoreConfig):
-        """Initialize memory store manager with configuration.
-        """
+        """Initialize memory store manager with configuration."""
         self.config = config
         self.store_manager = config.store_manager
         self.classifier = (
@@ -100,7 +100,9 @@ class MemoryStoreManager:
         force_classification: Optional[MemoryType] = None,
         importance_override: Optional[float] = None,
     ) -> str:
-        """Store a memory with automatic classification and metadata extraction.
+        """Store a memory with automatic classification and metadata.
+
+        extraction.
 
         Args:
             content: Memory content to store
@@ -376,8 +378,9 @@ class MemoryStoreManager:
         max_age_hours: Optional[int] = None,
         dry_run: bool = False,
     ) -> MemoryConsolidationResult:
-        """Consolidate memories by removing duplicates, summarizing old memories, and
-        cleaning up.
+        """Consolidate memories by removing duplicates, summarizing old.
+
+        memories, and cleaning up.
 
         Args:
             namespace: Namespace to consolidate (if None, consolidate all)
@@ -557,8 +560,7 @@ class MemoryStoreManager:
             return {}
 
     def _should_consolidate(self) -> bool:
-        """Check if memory consolidation should be triggered.
-        """
+        """Check if memory consolidation should be triggered."""
         time_since_consolidation = datetime.utcnow() - self._last_consolidation
         return time_since_consolidation.total_seconds() > (
             self.config.consolidation_interval_hours * 3600
@@ -566,8 +568,7 @@ class MemoryStoreManager:
 
     async def _schedule_consolidation(
             self, namespace: tuple[str, ...]) -> None:
-        """Schedule background memory consolidation.
-        """
+        """Schedule background memory consolidation."""
         try:
             # In a production system, this would trigger a background task
             # For now, we'll just log that consolidation is needed
@@ -581,8 +582,7 @@ class MemoryStoreManager:
             logger.exception(f"Error scheduling consolidation: {e}")
 
     async def _update_access_metadata(self, memory_id: str) -> None:
-        """Update access metadata for a memory.
-        """
+        """Update access metadata for a memory."""
         try:
             self.store_manager.update_memory(
                 memory_id=memory_id,
@@ -598,8 +598,7 @@ class MemoryStoreManager:
     def _calculate_ranking_score(
         self, memory: dict[str, Any], query_intent: Optional[MemoryQueryIntent] = None
     ) -> float:
-        """Calculate ranking score for memory retrieval.
-        """
+        """Calculate ranking score for memory retrieval."""
         metadata = memory.get("metadata", {})
         base_score = memory.get("similarity_score", 0.5)  # From search
 
@@ -647,8 +646,7 @@ class MemoryStoreManager:
     def _calculate_recency_boost(
         self, created_at: datetime, last_accessed: datetime
     ) -> float:
-        """Calculate recency boost for ranking.
-        """
+        """Calculate recency boost for ranking."""
         now = datetime.utcnow()
 
         # Boost for recent access
@@ -668,8 +666,7 @@ class MemoryStoreManager:
     def _calculate_current_weight(
         self, created_at: datetime, importance_score: float, decay_rate: float
     ) -> float:
-        """Calculate current weight based on age and decay.
-        """
+        """Calculate current weight based on age and decay."""
         time_since_creation = (
             datetime.utcnow() - created_at
         ).total_seconds() / 3600  # hours
@@ -686,8 +683,7 @@ class MemoryStoreManager:
     def _find_duplicate_memories(
         self, memories: list[dict[str, Any]]
     ) -> list[list[str]]:
-        """Find groups of duplicate memories based on content similarity.
-        """
+        """Find groups of duplicate memories based on content similarity."""
         duplicates = []
         processed_ids = set()
 
@@ -719,7 +715,9 @@ class MemoryStoreManager:
     def _are_contents_similar(
         self, content1: str, content2: str, threshold: float = 0.8
     ) -> bool:
-        """Check if two memory contents are similar enough to be considered duplicates.
+        """Check if two memory contents are similar enough to be considered.
+
+        duplicates.
         """
         # Simple similarity based on common words
         words1 = set(content1.split())

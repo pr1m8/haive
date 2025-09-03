@@ -1,5 +1,4 @@
-"""Clean_Simple_Rag core module.
-from __future__ import annotations
+"""Clean_Simple_Rag core module. from __future__ import annotations.
 
 This module provides clean simple rag functionality for the Haive framework.
 
@@ -72,21 +71,11 @@ Examples:
             llm_config=AugLLMConfig()
         )
 """
-
+from __future__ import annotations
 
 import logging
-from typing import Any
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.engine.retriever import BaseRetrieverConfig
-from haive.core.engine.vectorstore import VectorStoreConfig
-from langchain_core.documents import Document
-from pydantic import BaseModel, Field, field_validator, model_validator
 
 # Import the CLEAN MultiAgent implementation
-from haive.agents.multi.clean import MultiAgent
-from haive.agents.rag.base.agent import BaseRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 
 logger = logging.getLogger(__name__)
 
@@ -158,7 +147,8 @@ class SimpleRAG(MultiAgent):
     )
 
     llm_config: AugLLMConfig = Field(
-        ..., description="Configuration for answer generation LLM"
+        ...,
+        description="Configuration for answer generation LLM",
     )
 
     # Retrieval parameters
@@ -178,7 +168,8 @@ class SimpleRAG(MultiAgent):
 
     # Generation parameters
     structured_output_model: type[BaseModel] | None = Field(
-        default=None, description="Pydantic model for structured output formatting"
+        default=None,
+        description="Pydantic model for structured output formatting",
     )
 
     system_prompt_template: str = Field(
@@ -206,21 +197,21 @@ class SimpleRAG(MultiAgent):
     def validate_context_template(cls, v: str) -> str:
         """Validate context template has required placeholders."""
         required_placeholders = {"{context}", "{query}"}
-        missing = required_placeholders - {
-            ph for ph in required_placeholders if ph in v
-        }
+        missing = required_placeholders - {ph for ph in required_placeholders if ph in v}
         if missing:
             raise ValueError(
-                f"Context template missing required placeholders: {missing}"
+                f"Context template missing required placeholders: {missing}",
             )
         return v
 
     @model_validator(mode="after")
     def setup_rag_agents(self) -> SimpleRAG:
-        """Setup the retriever and generator agents using the clean MultiAgent pattern."""
+        """Setup the retriever and generator agents using the clean MultiAgent
+        pattern."""
         # Create retriever agent
         retriever_agent = BaseRAGAgent(
-            name=f"{self.name}_retriever", engine=self.retriever_config
+            name=f"{self.name}_retriever",
+            engine=self.retriever_config,
         )
 
         # Create generator agent with customized system prompt
@@ -371,14 +362,17 @@ class SimpleRAG(MultiAgent):
 
         # Fallback: create document from string result
         logger.warning(
-            "Could not extract documents from retrieval result, using fallback"
+            "Could not extract documents from retrieval result, using fallback",
         )
         return [
-            Document(page_content=str(result), metadata={"source": "retrieval_result"})
+            Document(page_content=str(result), metadata={"source": "retrieval_result"}),
         ]
 
     async def generate_answer(
-        self, query: str, documents: list[Document], **kwargs
+        self,
+        query: str,
+        documents: list[Document],
+        **kwargs,
     ) -> Any:
         """Generate answer using the generator agent.
 
@@ -395,7 +389,7 @@ class SimpleRAG(MultiAgent):
         for i, doc in enumerate(documents):
             content = doc.page_content.strip()
             if content:
-                source = doc.metadata.get("source", f"Document {i+1}")
+                source = doc.metadata.get("source", f"Document {i + 1}")
                 context_parts.append(f"Source: {source}\n{content}")
 
         context = "\n\n".join(context_parts)
@@ -412,7 +406,10 @@ class SimpleRAG(MultiAgent):
     # =============================
 
     async def arun(
-        self, input_data: str | dict[str, Any], debug: bool = False, **kwargs
+        self,
+        input_data: str | dict[str, Any],
+        debug: bool = False,
+        **kwargs,
     ) -> Any:
         """Execute RAG pipeline using clean MultiAgent sequential execution.
 
@@ -496,20 +493,17 @@ class SimpleRAG(MultiAgent):
 # Alias for backward compatibility
 SimpleRAGAgent = SimpleRAG
 
-
 # ================================
 # Export for Easy Import
 # ================================
 
 __all__ = ["SimpleRAG", "SimpleRAGAgent"]  # Legacy alias
 
-
 # ================================
 # Example Usage
 # ================================
 
 if __name__ == "__main__":
-
     from langchain_core.documents import Document
 
     async def demo():
@@ -527,17 +521,7 @@ if __name__ == "__main__":
         ]
 
         # This would create a proper SimpleRAG with real configs
-        # rag = SimpleRAG.from_documents(
-        #     documents=docs,
-        #     embedding_config=embedding_config,
-        #     llm_config=AugLLMConfig(temperature=0.7)
-        # )
-
-        # print(f"📋 RAG Info: {rag.get_rag_info()}")
-        # print(f"🏗️ Structure: {rag}")
 
         # result = await rag.arun("What is machine learning?", debug=True)
-        # print(f"💬 Result: {result}")
 
     # Uncomment to run demo
-    # asyncio.run(demo())

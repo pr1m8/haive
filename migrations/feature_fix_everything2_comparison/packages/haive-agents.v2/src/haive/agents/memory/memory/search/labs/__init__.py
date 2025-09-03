@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from labs.agent import (
     LabsAgent,
     create_interactive_app,

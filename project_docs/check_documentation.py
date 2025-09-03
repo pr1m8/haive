@@ -13,16 +13,26 @@ Systematically checks all packages for documentation completeness including:
 Usage:
     python scripts/check_documentation.py
 """
+from __future__ import annotations
 
 import ast
 import inspect
 import json
 import os
 import re
-from dataclasses import asdict, dataclass
+from dataclasses import asdict
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple, Union, get_args, get_origin
+from typing import Any
+from typing import Dict
+from typing import get_args
+from typing import get_origin
+from typing import List
+from typing import Optional
+from typing import Set
+from typing import Tuple
+from typing import Union
 
 
 @dataclass
@@ -279,7 +289,9 @@ class DocumentationChecker:
                                     file_path=str(file_path),
                                     line_number=item.lineno,
                                     issue_type="missing_method_docstring",
-                                    description=f"Method '{node.name}.{item.name}' missing docstring",
+                                    description=f"Method '{
+    node.name}.{
+        item.name}' missing docstring",
                                     severity="minor",
                                 )
                             )
@@ -292,7 +304,9 @@ class DocumentationChecker:
                                     file_path=str(file_path),
                                     line_number=item.lineno,
                                     issue_type="missing_type_hints",
-                                    description=f"Method '{node.name}.{item.name}' missing type hints",
+                                    description=f"Method '{
+    node.name}.{
+        item.name}' missing type hints",
                                     severity="minor",
                                 )
                             )
@@ -437,7 +451,8 @@ class DocumentationChecker:
         for arg in func_node.args.args:
             if arg.annotation and self._is_generic_type(arg.annotation):
                 issues.append(
-                    f"Function '{func_name}' uses overly generic type 'Any' for parameter '{arg.arg}'"
+                    f"Function '{func_name}' uses overly generic type 'Any' for parameter '{
+    arg.arg}'"
                 )
 
         if func_node.returns and self._is_generic_type(func_node.returns):
@@ -454,7 +469,8 @@ class DocumentationChecker:
         for arg in func_node.args.args:
             if arg.annotation and self._has_type_name_mismatch(arg.arg, arg.annotation):
                 issues.append(
-                    f"Function '{func_name}' parameter '{arg.arg}' name doesn't match type hint"
+                    f"Function '{func_name}' parameter '{
+    arg.arg}' name doesn't match type hint"
                 )
 
         return issues
@@ -494,13 +510,15 @@ class DocumentationChecker:
                                 item.value
                             ):
                                 issues.append(
-                                    f"Pydantic field '{field_name}' in class '{node.name}' missing Field description"
+                                    f"Pydantic field '{field_name}' in class '{
+    node.name}' missing Field description"
                                 )
 
                             # Check for proper type annotations on fields
                             if not item.annotation:
                                 issues.append(
-                                    f"Pydantic field '{field_name}' in class '{node.name}' missing type annotation"
+                                    f"Pydantic field '{field_name}' in class '{
+    node.name}' missing type annotation"
                                 )
 
         return issues
@@ -514,7 +532,8 @@ class DocumentationChecker:
                 # Check for generic classes without proper TypeVar usage
                 if self._uses_generics_without_typevar(node):
                     issues.append(
-                        f"Class '{node.name}' uses generic types but doesn't define TypeVar"
+                        f"Class '{
+    node.name}' uses generic types but doesn't define TypeVar"
                     )
 
             elif isinstance(node, ast.FunctionDef):
@@ -637,7 +656,6 @@ class DocumentationChecker:
         # Generate priority action list
         self._generate_action_list(reports, timestamp_dir)
 
-
     def _generate_summary_report(
         self, reports: dict[str, PackageReport], output_dir: Path
     ) -> None:
@@ -679,7 +697,13 @@ class DocumentationChecker:
                 readme_status = "✅" if report.has_readme else "❌"
                 examples_status = "✅" if report.has_examples else "❌"
                 f.write(
-                    f"| {pkg_name} | {report.total_issues} | {report.critical_issues} | {report.major_issues} | {report.minor_issues} | {report.type_signature_issues} | {report.pydantic_issues} | {readme_status} | {examples_status} |\n"
+                    f"| {pkg_name} | {
+    report.total_issues} | {
+        report.critical_issues} | {
+            report.major_issues} | {
+                report.minor_issues} | {
+                    report.type_signature_issues} | {
+                        report.pydantic_issues} | {readme_status} | {examples_status} |\n"
                 )
 
     def _generate_package_report(self, report: PackageReport, output_dir: Path) -> None:
@@ -795,7 +819,6 @@ def main():
 
     checker = DocumentationChecker(str(root_dir))
 
-
     reports = checker.check_all_packages()
 
     if not reports:
@@ -807,11 +830,10 @@ def main():
     total_issues = sum(r.total_issues for r in reports.values())
     critical_issues = sum(r.critical_issues for r in reports.values())
 
-
     if critical_issues > 0:
         pass
     elif total_issues > 0:
-        pass.")
+        pass .")
     else:
         pass")
 

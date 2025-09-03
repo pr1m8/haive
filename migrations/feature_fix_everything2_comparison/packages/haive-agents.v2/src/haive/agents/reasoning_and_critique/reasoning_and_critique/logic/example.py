@@ -8,6 +8,7 @@ Functions:
 """
 
 # src/haive/agents/reasoning/examples.py
+from __future__ import annotations
 
 from typing import Any
 
@@ -101,7 +102,7 @@ def example_quick_reasoning() -> Any:
                 },
             },
             "constraints": ["Need work-life balance", "Have young kids"],
-        }
+        },
     )
 
     return result

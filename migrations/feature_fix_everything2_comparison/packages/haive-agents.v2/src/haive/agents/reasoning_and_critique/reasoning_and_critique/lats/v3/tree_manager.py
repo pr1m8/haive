@@ -1,8 +1,10 @@
 """Tree Manager for LATS algorithm.
 
-Manages the Monte Carlo Tree Search tree structure, including
-node relationships, path finding, and tree statistics.
+Manages the Monte Carlo Tree Search tree structure, including node
+relationships, path finding, and tree statistics.
 """
+
+from __future__ import annotations
 
 import logging
 
@@ -156,7 +158,7 @@ class TreeManager:
 
             logger.debug(
                 f"Backpropagated to {current_id}: "
-                f"visits={node.visits}, avg_reward={node.average_reward():.3f}"
+                f"visits={node.visits}, avg_reward={node.average_reward():.3f}",
             )
 
             current_id = node.parent_id
@@ -203,7 +205,9 @@ class TreeManager:
 
         # Find most visited path
         most_visited_leaf = max(
-            self.get_leaf_nodes().values(), key=lambda n: n.visits, default=None
+            self.get_leaf_nodes().values(),
+            key=lambda n: n.visits,
+            default=None,
         )
 
         most_visited_path = []

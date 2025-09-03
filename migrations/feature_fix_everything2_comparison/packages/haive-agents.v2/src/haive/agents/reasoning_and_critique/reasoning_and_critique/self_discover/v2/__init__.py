@@ -1,12 +1,12 @@
 """Module exports."""
 
-from haive.agents.reasoning_and_critique.self_discover.v2.models import (
-    AdaptedModules,
-    Config,
-    FinalAnswer,
-    ReasoningStructure,
-    SelectedModules,
-)
+from __future__ import annotations
+
+from haive.agents.reasoning_and_critique.self_discover.v2.models import AdaptedModules
+from haive.agents.reasoning_and_critique.self_discover.v2.models import Config
+from haive.agents.reasoning_and_critique.self_discover.v2.models import FinalAnswer
+from haive.agents.reasoning_and_critique.self_discover.v2.models import ReasoningStructure
+from haive.agents.reasoning_and_critique.self_discover.v2.models import SelectedModules
 from haive.agents.reasoning_and_critique.self_discover.v2.state import (
     SelfDiscoveryState,
 )

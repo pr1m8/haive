@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from search.base import (
     BaseSearchAgent,
     SearchResponse,

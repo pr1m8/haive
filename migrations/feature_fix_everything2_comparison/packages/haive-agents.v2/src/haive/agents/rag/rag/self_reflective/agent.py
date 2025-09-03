@@ -1,23 +1,27 @@
 """Self-Reflective Agentic RAG Agent.
 
-from typing import Any
-Implementation of self-reflective RAG with critique and iterative improvement.
-Uses reflection loops to assess and enhance answer quality.
+from typing import Any Implementation of self-reflective RAG with
+critique and iterative improvement. Uses reflection loops to assess and
+enhance answer quality.
 """
+
+from __future__ import annotations
 
 import logging
 from enum import Enum
 from typing import Any
 
+from haive.agents.base.agent import Agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.models.llm.base import LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
-from langgraph.graph import END, START
-from pydantic import BaseModel, Field
-
-from haive.agents.base.agent import Agent
+from langgraph.graph import END
+from langgraph.graph import START
+from pydantic import BaseModel
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 
@@ -46,19 +50,23 @@ class ReflectionCritique(BaseModel):
 
     # Improvement suggestions
     improvement_suggestions: list[str] = Field(
-        description="Specific improvements needed"
+        description="Specific improvements needed",
     )
     requires_more_retrieval: bool = Field(
-        description="Whether more retrieval is needed"
+        description="Whether more retrieval is needed",
     )
     requires_rephrasing: bool = Field(description="Whether rephrasing is needed")
 
     # Priority
     improvement_priority: float = Field(
-        ge=0.0, le=1.0, description="Priority of improvements"
+        ge=0.0,
+        le=1.0,
+        description="Priority of improvements",
     )
     estimated_improvement: float = Field(
-        ge=0.0, le=1.0, description="Potential improvement"
+        ge=0.0,
+        le=1.0,
+        description="Potential improvement",
     )
 
 
@@ -83,7 +91,9 @@ class ReflectionPlan(BaseModel):
     termination_reason: str = Field(description="Reason if stopping iterations")
 
     confidence_in_plan: float = Field(
-        ge=0.0, le=1.0, description="Confidence in improvement plan"
+        ge=0.0,
+        le=1.0,
+        description="Confidence in improvement plan",
     )
 
 
@@ -126,13 +136,13 @@ class SelfReflectiveResult(BaseModel):
     # Retrieval statistics
     initial_retrievals: int = Field(description="Initial retrieval count")
     additional_retrievals: int = Field(
-        description="Additional retrievals during reflection"
+        description="Additional retrievals during reflection",
     )
     unique_sources_used: int = Field(description="Unique sources referenced")
 
     # Process insights
     most_effective_improvements: list[str] = Field(
-        description="Most effective improvements"
+        description="Most effective improvements",
     )
     persistent_challenges: list[str] = Field(description="Challenges that remained")
     termination_reason: str = Field(description="Why reflection loop ended")
@@ -160,9 +170,8 @@ Focus on accuracy and use of evidence, knowing that the answer will be critiqued
 
 Provide a comprehensive initial answer with clear evidence references.""",
         ),
-    ]
+    ],
 )
-
 
 REFLECTION_CRITIQUE_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -202,9 +211,8 @@ Provide constructive, actionable critique for improvement.""",
 
 Analyze the answer across all dimensions and provide specific improvement guidance.""",
         ),
-    ]
+    ],
 )
-
 
 IMPROVEMENT_PLANNING_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -251,9 +259,8 @@ Create effective improvement plans.""",
 
 Create an improvement plan or decide to terminate with reasoning.""",
         ),
-    ]
+    ],
 )
-
 
 ANSWER_IMPROVEMENT_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -294,14 +301,15 @@ Create improved answers that address all feedback.""",
 
 Generate an improved answer addressing all identified issues.""",
         ),
-    ]
+    ],
 )
 
 
 class SelfReflectiveRAGAgent(Agent):
     """Self-Reflective RAG agent with iterative improvement capabilities.
 
-    This agent uses conditional edges to iterate through reflection loops.
+    This agent uses conditional edges to iterate through reflection
+    loops.
     """
 
     name: str = "Self-Reflective RAG Agent"
@@ -309,24 +317,30 @@ class SelfReflectiveRAGAgent(Agent):
     llm_config: LLMConfig = Field(description="LLM configuration")
     max_iterations: int = Field(default=3, description="Maximum reflection iterations")
     quality_threshold: float = Field(
-        default=0.85, description="Quality threshold to stop iterating"
+        default=0.85,
+        description="Quality threshold to stop iterating",
     )
 
     # Engines for different stages (initialized in setup_agent)
     initial_answer_engine: AugLLMConfig | None = Field(
-        default=None, description="Engine for initial answer"
+        default=None,
+        description="Engine for initial answer",
     )
     critique_engine: AugLLMConfig | None = Field(
-        default=None, description="Engine for reflection critique"
+        default=None,
+        description="Engine for reflection critique",
     )
     planning_engine: AugLLMConfig | None = Field(
-        default=None, description="Engine for improvement planning"
+        default=None,
+        description="Engine for improvement planning",
     )
     improvement_engine: AugLLMConfig | None = Field(
-        default=None, description="Engine for answer improvement"
+        default=None,
+        description="Engine for answer improvement",
     )
     synthesis_engine: AugLLMConfig | None = Field(
-        default=None, description="Engine for result synthesis"
+        default=None,
+        description="Engine for result synthesis",
     )
 
     def setup_agent(self) -> None:
@@ -369,7 +383,7 @@ class SelfReflectiveRAGAgent(Agent):
                 [
                     ("system", "Synthesize the self-reflective RAG results."),
                     ("human", "{context}"),
-                ]
+                ],
             ),
             structured_output_model=SelfReflectiveResult,
             output_key="reflective_result",
@@ -428,11 +442,11 @@ class SelfReflectiveRAGAgent(Agent):
                 "query": query,
                 "documents": "\n\n".join(
                     [
-                        f"Document {i+1}: {doc.page_content[:500]}..."
+                        f"Document {i + 1}: {doc.page_content[:500]}..."
                         for i, doc in enumerate(self.documents[:5])
-                    ]
+                    ],
                 ),
-            }
+            },
         )
 
         current_answer = initial_result.get("initial_answer", "")
@@ -467,11 +481,9 @@ class SelfReflectiveRAGAgent(Agent):
                     "answer": current_answer,
                     "iteration": iteration + 1,
                     "previous_critiques": str(
-                        reflection_history[-1].critiques
-                        if reflection_history
-                        else "None"
+                        reflection_history[-1].critiques if reflection_history else "None",
                     ),
-                }
+                },
             )
             critiques.append(critique)
 
@@ -485,7 +497,7 @@ class SelfReflectiveRAGAgent(Agent):
                 "critiques": "\n".join([str(c) for c in critiques]),
                 "iteration": iteration + 1,
                 "max_iterations": self.max_iterations,
-            }
+            },
         )
 
         reflection_history.append(reflection_plan)
@@ -528,7 +540,7 @@ class SelfReflectiveRAGAgent(Agent):
                 "improvement_plan": str(reflection_plan.improvement_actions),
                 "new_retrievals": "Additional context from documents...",  # Simplified
                 "focus_areas": ", ".join(reflection_plan.focus_areas),
-            }
+            },
         )
 
         iteration_history.append(improved)
@@ -557,8 +569,8 @@ class SelfReflectiveRAGAgent(Agent):
             Iterations: {len(iteration_history)}
             Initial Quality: 0.6
             Final Quality: {current_quality}
-            """
-            }
+            """,
+            },
         )
 
         return {
@@ -634,7 +646,9 @@ def create_self_reflective_rag_agent(
         kwargs.setdefault("quality_threshold", 0.85)
 
     return SelfReflectiveRAGAgent.from_documents(
-        documents=documents, llm_config=llm_config, **kwargs
+        documents=documents,
+        llm_config=llm_config,
+        **kwargs,
     )
 
 

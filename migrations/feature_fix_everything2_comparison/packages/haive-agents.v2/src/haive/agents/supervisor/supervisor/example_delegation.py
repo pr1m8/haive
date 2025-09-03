@@ -1,20 +1,23 @@
 """Example delegation tasks following LangGraph tutorial pattern.
 
-This example demonstrates the Haive Supervisor agent managing specialized
-worker agents for different types of tasks, similar to the LangGraph tutorial.
+This example demonstrates the Haive Supervisor agent managing
+specialized worker agents for different types of tasks, similar to the
+LangGraph tutorial.
 """
+
+from __future__ import annotations
 
 import asyncio
 import logging
 
+from haive.agents.simple.agent import SimpleAgent
+from haive.agents.supervisor.agent import SupervisorAgent
+from haive.agents.supervisor.agent import SupervisorState
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import LLMConfig
 from langchain_core.messages import HumanMessage
 from rich.console import Console
 from rich.panel import Panel
-
-from haive.agents.simple.agent import SimpleAgent
-from haive.agents.supervisor.agent import SupervisorAgent, SupervisorState
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -86,7 +89,7 @@ def create_supervisor_agent() -> SupervisorAgent:
 async def test_delegation_flow():
     """Test the delegation flow with various task types."""
     console.print(
-        Panel("🚀 Starting Haive Supervisor Delegation Test", style="bold blue")
+        Panel("🚀 Starting Haive Supervisor Delegation Test", style="bold blue"),
     )
 
     # Create supervisor
@@ -138,14 +141,14 @@ async def test_delegation_flow():
     # Run test cases
     for i, test_case in enumerate(test_cases, 1):
         console.print(
-            f"\n[bold green]🧪 Test Case {i}: {test_case['description']}[/bold green]"
+            f"\n[bold green]🧪 Test Case {i}: {test_case['description']}[/bold green]",
         )
         console.print(f"[dim]Message: {test_case['message']}[/dim]")
 
         try:
             # Create initial state
             initial_state = SupervisorState(
-                messages=[HumanMessage(content=test_case["message"])]
+                messages=[HumanMessage(content=test_case["message"])],
             )
 
             # Build and compile graph
@@ -168,14 +171,16 @@ async def test_delegation_flow():
                     console.print("[green]✅ Expected routing achieved![/green]")
                 else:
                     console.print(
-                        f"[yellow]⚠️  Expected {test_case['expected_agent']}, got {routing_decision}[/yellow]"
+                        f"[yellow]⚠️  Expected {test_case['expected_agent']}, got {
+                            routing_decision
+                        }[/yellow]",
                     )
 
             # Show final messages
             final_messages = getattr(result, "messages", [])
             if final_messages:
                 console.print(
-                    f"[dim]Final message: {final_messages[-1].content if final_messages else 'None'}[/dim]"
+                    f"[dim]Final message: {final_messages[-1].content if final_messages else 'None'}[/dim]",
                 )
 
         except Exception as e:
@@ -219,7 +224,7 @@ async def test_dynamic_agent_management():
     console.print("\n[yellow]🧪 Testing routing with reduced agent set:[/yellow]")
 
     initial_state = SupervisorState(
-        messages=[HumanMessage(content="Calculate the area of a circle with radius 5")]
+        messages=[HumanMessage(content="Calculate the area of a circle with radius 5")],
     )
 
     try:
@@ -252,7 +257,7 @@ with Haive's ReactAgent architecture.
     """,
             title="Supervisor Test Suite",
             style="bold blue",
-        )
+        ),
     )
 
     try:

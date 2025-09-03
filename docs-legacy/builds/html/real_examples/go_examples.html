@@ -1,0 +1,217 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta property="article:modified_time" content="2025-07-31T06:08:05-04:00" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Go Agent Examples &mdash; 🤖 Haive AI Agent Framework Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css?v=a0a71c94" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_paramlinks.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5044e660" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://haive.readthedocs.io/real_examples/go_examples.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=6894dda5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=af94cf59"></script>
+      <script src="../_static/scripts/sphinx-book-theme.js"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script src="https://wavedrom.com/skins/default.js"></script>
+      <script src="https://wavedrom.com/wavedrom.min.js"></script>
+      <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX"></script>
+      <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-XXXXXXX');
+            </script>
+      <script src="../_static/js/rtd_search_config.js"></script>
+      <script src="../_static/js/rtd_sphinx_search.min.js"></script>
+      <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+      <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+      <script src="../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+      <script src="../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+      <script src="../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+      <script defer="defer" src="https://unpkg.com/@popperjs/core@2"></script>
+      <script defer="defer" src="https://unpkg.com/tippy.js@6"></script>
+      <script defer="defer" src="../_static/tippy/real_examples/go_examples.474d409c-7f80-456a-95ad-6762d4ba4925.js"></script>
+      <script>DOCUMENTATION_OPTIONS.pagename = 'real_examples/go_examples';</script>
+      <script src="../_static/dark_mode_js/default_dark.js?v=fd565c74"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Haive AI Agent Framework
+          </a>
+<div id="searchbox"></div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Haive AI Agent Framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Go Agent Examples</span></li>
+  </ul>
+</nav>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="go-agent-examples">
+<h1>Go Agent Examples<a class="headerlink" href="#go-agent-examples" title="Link to this heading">#</a></h1>
+<p>Real examples and outputs from the go agent.</p>
+<section id="go-readme">
+<h2>go_README<a class="headerlink" href="#go-readme" title="Link to this heading">#</a></h2>
+<p><strong>Source</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/go/README.md</span></code></p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="go">
+<h1>Go<a class="headerlink" href="#go" title="Link to this heading">#</a></h1>
+<p>Advanced Go (Weiqi/Baduk) game implementation with LLM-powered AI players and SGF support.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>The Go module provides a comprehensive implementation of the ancient strategy game Go, featuring AI players that understand complex territorial concepts, strategic patterns, and traditional Go principles. Built on the Haive framework with SGF (Smart Game Format) support for professional game analysis.</p>
+<p><strong>Key Features:</strong></p>
+<ul class="simple">
+<li><p><strong>Complete Go Rules</strong>: Full implementation including ko rule, territory scoring, and game ending</p></li>
+<li><p><strong>Multiple Board Sizes</strong>: Support for 9x9, 13x13, and 19x19 boards</p></li>
+<li><p><strong>AI Players</strong>: LLM-based agents that understand Go strategy, joseki patterns, and territorial concepts</p></li>
+<li><p><strong>SGF Integration</strong>: Import/export games in standard SGF format using the sente library</p></li>
+<li><p><strong>Position Analysis</strong>: Deep evaluation of board positions, territory estimation, and move suggestions</p></li>
+<li><p><strong>Professional Features</strong>: Handicap stones, komi, and tournament-style timing</p></li>
+<li><p><strong>Rich Visualization</strong>: Beautiful terminal display with coordinate systems and move history</p></li>
+</ul>
+<p><strong>Go Concepts Implemented:</strong></p>
+<ul class="simple">
+<li><p><strong>Territory Control</strong>: Area scoring with dead stone removal</p></li>
+<li><p><strong>Capture Mechanics</strong>: Stone capture and liberties calculation</p></li>
+<li><p><strong>Ko Rule</strong>: Prevention of immediate board repetition</p></li>
+<li><p><strong>Life and Death</strong>: Basic tsumego (life and death) analysis</p></li>
+<li><p><strong>Strategic Patterns</strong>: Opening principles, middle game fighting, endgame technique</p></li>
+</ul>
+</section>
+<section id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Link to this heading">#</a></h2>
+<p>The Go implementation follows traditional game engine architecture with AI enhancements:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>GoAgent
+├── Configuration (GoAgentConfig)
+├── Game Engine (sente library integration)
+├── State Management (GoGameStateManager)
+├── LLM Players (black_player, white_player, analyzer)
+├── SGF Support (game import/export)
+└── Workflow (LangGraph-based game flow)
+</pre></div>
+</div>
+<section id="core-components">
+<h3>Core Components<a class="headerlink" href="#core-components" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>GoAgent</strong>: Main game controller with LangGraph workflow</p></li>
+<li><p><strong>GoGameState</strong>: Complete board state with move history and scoring</p></li>
+<li><p><strong>GoGameStateManager</strong>: Rule en</p></li>
+</ul>
+<p>… (truncated)</p>
+<hr class="docutils" />
+</section>
+</section>
+</section>
+
+    <script type="text/javascript">
+        function init() {
+            WaveDrom.ProcessAll();
+        }
+        window.onload = init;
+    </script>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Haive Team.
+      <span class="lastupdated">Last updated on Jul 31, 2025.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,15 +1,17 @@
 # haive/core/engine/agent/mixins/state_mixin.py
+from __future__ import annotations
 
+from datetime import datetime
 import json
 import logging
 import os
-import uuid
-from datetime import datetime
 from typing import Any
+import uuid
+
+from langchain_core.runnables import RunnableConfig
 
 from haive.core.persistence.handlers import ensure_pool_open
 from haive.core.utils.pydantic_utils import ensure_json_serializable
-from langchain_core.runnables import RunnableConfig
 
 logger = logging.getLogger(__name__)
 
@@ -39,9 +41,7 @@ class StateMixin:
         # Use provided runnable config or create default
         if not runnable_config:
             runnable_config = (
-                self._prepare_runnable_config()
-                if hasattr(self, "_prepare_runnable_config")
-                else {}
+                self._prepare_runnable_config() if hasattr(self, "_prepare_runnable_config") else {}
             )
 
         try:
@@ -71,7 +71,8 @@ class StateMixin:
                 agent_name = getattr(self, "name", "agent")
                 safe_name = agent_name.replace(" ", "_").replace("/", "_")
                 self._state_filename = os.path.join(
-                    output_dir, f"{safe_name}_{timestamp}.json"
+                    output_dir,
+                    f"{safe_name}_{timestamp}.json",
                 )
 
             # Save to file
@@ -86,7 +87,8 @@ class StateMixin:
             return False
 
     async def save_state_history_async(
-        self, runnable_config: RunnableConfig | None = None
+        self,
+        runnable_config: RunnableConfig | None = None,
     ) -> bool:
         """Asynchronously save the current agent state to a JSON file.
 
@@ -100,11 +102,14 @@ class StateMixin:
 
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
-            None, lambda: self.save_state_history(runnable_config)
+            None,
+            lambda: self.save_state_history(runnable_config),
         )
 
     def inspect_state(
-        self, thread_id: str | None = None, config: RunnableConfig | None = None
+        self,
+        thread_id: str | None = None,
+        config: RunnableConfig | None = None,
     ) -> None:
         """Inspect the current state of the agent.
 
@@ -161,7 +166,9 @@ class StateMixin:
             logger.exception(f"Error inspecting state: {e}")
 
     async def inspect_state_async(
-        self, thread_id: str | None = None, config: RunnableConfig | None = None
+        self,
+        thread_id: str | None = None,
+        config: RunnableConfig | None = None,
     ) -> None:
         """Asynchronously inspect the current state of the agent.
 
@@ -175,7 +182,9 @@ class StateMixin:
         await loop.run_in_executor(None, lambda: self.inspect_state(thread_id, config))
 
     def reset_state(
-        self, thread_id: str | None = None, config: RunnableConfig | None = None
+        self,
+        thread_id: str | None = None,
+        config: RunnableConfig | None = None,
     ) -> bool:
         """Reset the agent's state for a thread.
 
@@ -200,9 +209,7 @@ class StateMixin:
 
         # Extract thread ID from config
         thread_id = (
-            runtime_config["configurable"].get("thread_id", None)
-            if runtime_config
-            else thread_id
+            runtime_config["configurable"].get("thread_id", None) if runtime_config else thread_id
         )
         if not thread_id:
             logger.warning("Cannot reset state: No thread ID provided")
@@ -219,7 +226,8 @@ class StateMixin:
                 conn = checkpointer.conn
                 with conn.connection() as db_conn, db_conn.cursor() as cursor:
                     cursor.execute(
-                        "DELETE FROM checkpoints WHERE thread_id = %s", (thread_id,)
+                        "DELETE FROM checkpoints WHERE thread_id = %s",
+                        (thread_id,),
                     )
 
             logger.info(f"State reset successfully for thread {thread_id}")
@@ -230,7 +238,9 @@ class StateMixin:
             return False
 
     async def reset_state_async(
-        self, thread_id: str | None = None, config: RunnableConfig | None = None
+        self,
+        thread_id: str | None = None,
+        config: RunnableConfig | None = None,
     ) -> bool:
         """Asynchronously reset the agent's state for a thread.
 
@@ -245,11 +255,14 @@ class StateMixin:
 
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
-            None, lambda: self.reset_state(thread_id, config)
+            None,
+            lambda: self.reset_state(thread_id, config),
         )
 
     def load_from_state(
-        self, state_data: dict[str, Any] | str, thread_id: str | None = None
+        self,
+        state_data: dict[str, Any] | str,
+        thread_id: str | None = None,
     ) -> bool:
         """Load agent state from a saved state file or dictionary.
 
@@ -314,9 +327,12 @@ class StateMixin:
             return False
 
     async def load_from_state_async(
-        self, state_data: dict[str, Any] | str, thread_id: str | None = None
+        self,
+        state_data: dict[str, Any] | str,
+        thread_id: str | None = None,
     ) -> bool:
-        """Asynchronously load agent state from a saved state file or dictionary.
+        """Asynchronously load agent state from a saved state file or
+        dictionary.
 
         Args:
             state_data: Dictionary or path to JSON file containing state data
@@ -329,7 +345,8 @@ class StateMixin:
 
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
-            None, lambda: self.load_from_state(state_data, thread_id)
+            None,
+            lambda: self.load_from_state(state_data, thread_id),
         )
 
     def get_state_filename(self) -> str | None:

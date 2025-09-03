@@ -7,6 +7,7 @@ This implementation creates a sophisticated LLM Compiler that:
 - Uses structured outputs with comprehensive validation
 - No mocks - all real components
 """
+from __future__ import annotations
 
 import asyncio
 import logging
@@ -20,7 +21,10 @@ from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.schema.prebuilt.messages_state import MessagesState
 from langchain_core.tools import tool
-from pydantic import BaseModel, Field, computed_field, field_validator
+from pydantic import BaseModel
+from pydantic import computed_field
+from pydantic import Field
+from pydantic import field_validator
 
 logger = logging.getLogger(__name__)
 
@@ -465,8 +469,10 @@ Focus on creating an efficient graph that can execute in parallel where possible
 
         for group_idx, node_group in enumerate(execution_groups):
             logger.info(
-                f"Executing group {group_idx + 1}/{len(execution_groups)} with {len(node_group)} nodes"
-            )
+                f"Executing group {
+                    group_idx + 1}/{
+                    len(execution_groups)} with {
+                    len(node_group)} nodes")
 
             # Execute nodes in parallel
             tasks = []

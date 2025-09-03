@@ -3,6 +3,8 @@
 This module provides prompt functionality for the Haive framework.
 """
 
+from __future__ import annotations
+
 from langchain_core.prompts import ChatPromptTemplate
 
 RAG_HYDE_GENERATION = ChatPromptTemplate.from_messages(
@@ -54,5 +56,5 @@ Generate documents from different angles or viewpoints to capture various aspect
 
 Focus on creating documents that would contain the exact information needed to answer the query comprehensively.""",
         ),
-    ]
+    ],
 )

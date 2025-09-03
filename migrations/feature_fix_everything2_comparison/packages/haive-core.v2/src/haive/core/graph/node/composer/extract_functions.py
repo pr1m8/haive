@@ -1,10 +1,11 @@
 """Extract function library for NodeSchemaComposer.
 
-This module provides common extract patterns identified from node analysis, offering
-pluggable extract functions for flexible I/O configuration.
+This module provides common extract patterns identified from node
+analysis, offering pluggable extract functions for flexible I/O
+configuration.
 
-Based on analysis of 6 node types, these functions handle the most common extraction
-patterns found in actual Haive nodes.
+Based on analysis of 6 node types, these functions handle the most
+common extraction patterns found in actual Haive nodes.
 """
 
 from typing import Any
@@ -21,7 +22,9 @@ class ExtractFunctions:
         self._path_resolver = PathResolver()
 
     def extract_simple_field(
-        self, field_name: str, default: Any = None
+        self,
+        field_name: str,
+        default: Any = None,
     ) -> ExtractFunction:
         """Create extract function for simple field access.
 
@@ -81,7 +84,9 @@ class ExtractFunctions:
         return _extract
 
     def extract_with_projection(
-        self, field_name: str, projection_fields: list[str]
+        self,
+        field_name: str,
+        projection_fields: list[str],
     ) -> ExtractFunction:
         """Create extract function with field projection.
 
@@ -123,7 +128,8 @@ class ExtractFunctions:
         return _extract
 
     def extract_messages_content(
-        self, messages_field: str = "messages"
+        self,
+        messages_field: str = "messages",
     ) -> ExtractFunction:
         """Create extract function for message content.
 
@@ -208,7 +214,9 @@ class ExtractFunctions:
         return _extract
 
     def extract_multi_field(
-        self, field_paths: dict[str, str], defaults: dict[str, Any] | None = None
+        self,
+        field_paths: dict[str, str],
+        defaults: dict[str, Any] | None = None,
     ) -> ExtractFunction:
         """Create extract function for multiple fields.
 
@@ -242,7 +250,9 @@ class ExtractFunctions:
             for output_key, source_path in field_paths.items():
                 default_value = default_values.get(output_key)
                 result[output_key] = self._path_resolver.extract_value(
-                    state, source_path, default_value
+                    state,
+                    source_path,
+                    default_value,
                 )
 
             return result
@@ -250,7 +260,10 @@ class ExtractFunctions:
         return _extract
 
     def extract_typed(
-        self, path: str, expected_type: type, default: Any = None
+        self,
+        path: str,
+        expected_type: type,
+        default: Any = None,
     ) -> ExtractFunction:
         """Create extract function with type validation.
 

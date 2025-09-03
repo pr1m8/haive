@@ -4,6 +4,7 @@
 This script checks all Python files for syntax errors before running the documentation build,
 saving time by catching issues early.
 """
+from __future__ import annotations
 
 import ast
 import py_compile

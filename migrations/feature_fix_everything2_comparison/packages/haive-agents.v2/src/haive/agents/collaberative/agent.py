@@ -14,13 +14,12 @@ Functions:
 
 import logging
 from typing import Any, Literal
-
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langgraph.types import Command
 from pydantic import Field
-
 from haive.agents.conversation.base.agent import BaseConversationAgent
-from haive.agents.conversation.collaberative.state import CollaborativeState
+from haive.agents.conversation.collaborative.state import CollaborativeState
+
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.WARNING)
@@ -48,21 +47,25 @@ class CollaborativeConversation(BaseConversationAgent):
 
     # Collaboration settings
     require_approval: bool = Field(
-        default=False, description="Require approval before finalizing sections"
+        default=False,
+        description="Require approval before finalizing sections",
     )
     min_contributions_per_section: int = Field(
-        default=1, description="Minimum contributions per section"
+        default=1,
+        description="Minimum contributions per section",
     )
     allow_revisions: bool = Field(
-        default=True, description="Allow revision of completed sections"
+        default=True,
+        description="Allow revision of completed sections",
     )
 
     # Output configuration
     output_format: Literal["markdown", "code", "outline", "report"] = Field(
-        default="markdown"
+        default="markdown",
     )
     include_attribution: bool = Field(
-        default=True, description="Include contributor names in output"
+        default=True,
+        description="Include contributor names in output",
     )
 
     def get_conversation_state_schema(self) -> type:
@@ -104,7 +107,7 @@ We'll work together on these sections:
 Format: {self.output_format}
 Min contributions per section: {self.min_contributions_per_section}
 
-Let's start with: {self.sections[0] if self.sections else 'open discussion'}"""
+Let's start with: {self.sections[0] if self.sections else "open discussion"}""",
         )
 
     def select_speaker(self, state: CollaborativeState) -> Command:
@@ -131,9 +134,7 @@ Let's start with: {self.sections[0] if self.sections else 'open discussion'}"""
         section_contributors = {}
         for contributor, section, _ in state.contributions:
             if section == current_section:
-                section_contributors[contributor] = (
-                    section_contributors.get(contributor, 0) + 1
-                )
+                section_contributors[contributor] = section_contributors.get(contributor, 0) + 1
 
         logger.debug(f"Section contributors: {section_contributors}")
 
@@ -151,7 +152,7 @@ Let's start with: {self.sections[0] if self.sections else 'open discussion'}"""
         # If everyone has contributed minimum, pick least active overall
         if min_count >= self.min_contributions_per_section:
             logger.debug(
-                f"Everyone has contributed minimum ({self.min_contributions_per_section})"
+                f"Everyone has contributed minimum ({self.min_contributions_per_section})",
             )
             return self._select_least_active_overall(state)
 
@@ -172,7 +173,7 @@ Let's start with: {self.sections[0] if self.sections else 'open discussion'}"""
         # Check if section has enough contributions
         min_total = self.min_contributions_per_section * len(state.speakers)
         logger.debug(
-            f"Section {current_section}: {section_contribution_count}/{min_total} contributions"
+            f"Section {current_section}: {section_contribution_count}/{min_total} contributions",
         )
 
         if section_contribution_count >= min_total:
@@ -189,18 +190,15 @@ Let's start with: {self.sections[0] if self.sections else 'open discussion'}"""
 
             if next_section:
                 transition_msg = SystemMessage(
-                    content=f"✅ Section '{current_section}' complete. "
-                    f"Moving to '{next_section}'."
+                    content=f"✅ Section '{current_section}' complete. Moving to '{next_section}'.",
                 )
                 return Command(
                     update={
                         "completed_sections": completed,
                         "current_section": next_section,
                         "messages": [transition_msg],
-                        "current_speaker": (
-                            state.speakers[0] if state.speakers else None
-                        ),
-                    }
+                        "current_speaker": (state.speakers[0] if state.speakers else None),
+                    },
                 )
             # All sections complete
             logger.debug("All sections complete - finalizing document")
@@ -224,7 +222,9 @@ Let's start with: {self.sections[0] if self.sections else 'open discussion'}"""
         return Command(update={"current_speaker": min_speaker})
 
     def _prepare_agent_input(
-        self, state: CollaborativeState, agent_name: str
+        self,
+        state: CollaborativeState,
+        agent_name: str,
     ) -> dict[str, Any]:
         """Prepare input with collaboration context."""
         base_input = super()._prepare_agent_input(state, agent_name)
@@ -249,12 +249,12 @@ Let's start with: {self.sections[0] if self.sections else 'open discussion'}"""
         if section_content:
             instruction = SystemMessage(
                 content="Build upon or enhance the existing content. "
-                "Be constructive and collaborative."
+                "Be constructive and collaborative.",
             )
         else:
             instruction = SystemMessage(
                 content=f"Start the '{current_section}' section. "
-                "Provide a solid foundation for others to build on."
+                "Provide a solid foundation for others to build on.",
             )
 
         messages = [context_msg, instruction, *base_input.get("messages", [])]
@@ -315,11 +315,13 @@ Let's start with: {self.sections[0] if self.sections else 'open discussion'}"""
                 "contribution_count": new_contribution_count,
                 "document_sections": new_document_sections,
                 "shared_document": new_shared_document,
-            }
+            },
         )
 
     def _compile_document(
-        self, state: CollaborativeState, sections: dict[str, str]
+        self,
+        state: CollaborativeState,
+        sections: dict[str, str],
     ) -> str:
         """Compile sections into final document."""
         # Get title from current document or use default
@@ -365,7 +367,7 @@ Total Contributions: {total_contributions}
 Contributors:
 {chr(10).join(contributor_summary)}
 
-The final document has been compiled."""
+The final document has been compiled.""",
         )
 
         return Command(update={"messages": [summary_msg], "conversation_ended": True})
@@ -395,9 +397,8 @@ The final document has been compiled."""
         if sections is None:
             sections = ["Problem Statement", "Ideas", "Evaluation", "Action Items"]
 
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         agents = {}
         for name in participants:
@@ -413,11 +414,10 @@ The final document has been compiled."""
             agents[name] = SimpleAgent(name=f"{name}_agent", engine=engine)
 
         # Calculate appropriate max_rounds
-        # Each participant needs to contribute min_contributions_per_section times per section
+        # Each participant needs to contribute min_contributions_per_section times
+        # per section
         min_contributions = kwargs.get("min_contributions_per_section", 1)
-        total_contributions_needed = (
-            len(participants) * len(sections) * min_contributions
-        )
+        total_contributions_needed = len(participants) * len(sections) * min_contributions
 
         # Add some buffer for conversation flow
         suggested_max_rounds = total_contributions_needed + len(sections) + 5
@@ -449,9 +449,8 @@ The final document has been compiled."""
             reviewers: Dictionary mapping reviewer names to expertise
             **kwargs: Additional configuration
         """
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         agents = {}
         for name, expertise in reviewers.items():

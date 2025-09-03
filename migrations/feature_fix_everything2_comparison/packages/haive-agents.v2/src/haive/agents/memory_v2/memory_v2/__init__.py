@@ -45,6 +45,8 @@ This package provides memory-capable agents built on BaseRAGAgent as requested:
 """
 
 # Import working standalone RAG memory components
+from __future__ import annotations
+
 from haive.agents.memory_v2.standalone_rag_memory import (
     ConversationMemoryAgent,
     FactualMemoryAgent,
@@ -92,18 +94,18 @@ except ImportError:
 
 # Core exports (always available with BaseRAGAgent)
 __all__ = [
-    # RAG-based memory agents (working)
-    "UnifiedMemoryRAGAgent",
     "ConversationMemoryAgent",
     "FactualMemoryAgent",
-    "PreferencesMemoryAgent",
-    "StandaloneMemoryItem",
+    "ImportanceLevel",
     "MemoryRAGConfig",
     "MemoryType",
-    "ImportanceLevel",
+    "PreferencesMemoryAgent",
+    "StandaloneMemoryItem",
+    # RAG-based memory agents (working)
+    "UnifiedMemoryRAGAgent",
+    "create_conversation_memory_agent",
     # Factory functions
     "create_unified_memory_agent",
-    "create_conversation_memory_agent",
 ]
 
 # Add optional exports if available
@@ -115,5 +117,5 @@ if DOCUMENT_CONVERTER_AVAILABLE:
 
 if EXTRACTION_AVAILABLE:
     __all__.extend(
-        ["EXTRACTION_PROMPTS", "get_all_extraction_types", "get_extraction_prompt"]
+        ["EXTRACTION_PROMPTS", "get_all_extraction_types", "get_extraction_prompt"],
     )

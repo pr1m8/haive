@@ -1,10 +1,13 @@
 """State schema for the Reflection Agent."""
 
+from __future__ import annotations
+
 from typing import Any
 
 from agents.reflection.models import ReflectionResult
 from agents.simple.state import SimpleAgentState
-from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.messages import AIMessage
+from langchain_core.messages import HumanMessage
 from pydantic import Field
 
 
@@ -49,7 +52,7 @@ class ReflectionAgentState(SimpleAgentState):
                 "round": self.reflection_round,
                 "reflection": reflection.model_dump(),
                 "response": self.response,
-            }
+            },
         )
         self.reflection_round += 1
         self.reflection_score = reflection.normalized_score

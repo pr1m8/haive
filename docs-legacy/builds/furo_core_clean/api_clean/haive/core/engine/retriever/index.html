@@ -1,0 +1,1414 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.engine.retriever - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/will-astley/haive/blob/main/docs/source/api_clean/haive/core/engine/retriever/index.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/will-astley/haive/edit/main/docs/source/api_clean/haive/core/engine/retriever/index.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="haive-core-engine-retriever">
+<h1><a class="reference internal" href="#module-0" title="haive.core.engine.retriever"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core.engine.retriever</span></code></a><a class="headerlink" href="#haive-core-engine-retriever" title="Link to this heading">¶</a></h1>
+<p id="module-haive.core.engine.retriever">Retriever module for the Haive framework.</p>
+<p>This module provides a comprehensive interface for document retrieval in the Haive
+framework. It includes configuration classes, type definitions, and utilities for
+creating and using various types of document retrievers, with support for different
+retrieval strategies and extensibility mechanisms.</p>
+<p>Key components:
+- BaseRetrieverConfig: Base configuration class for all retrievers
+- VectorStoreRetrieverConfig: Configuration for vector store-based retrievers
+- RetrieverType: Enumeration of supported retriever types
+- Utility functions for creating and using retrievers</p>
+<p>The retriever system is designed to be highly extensible, with a plugin architecture
+that allows new retriever implementations to be added simply by registering them
+with the appropriate type. The system includes built-in support for vector store-based
+retrievers, ensemble retrievers, and various specialized retrieval strategies.</p>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseRetrieverConfig</span><span class="p">,</span> <span class="n">RetrieverType</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.vectorstore</span><span class="w"> </span><span class="kn">import</span> <span class="n">VectorStoreConfig</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a vector store config</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vs_config</span> <span class="o">=</span> <span class="n">VectorStoreConfig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;document_store&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a retriever config</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">retriever_config</span> <span class="o">=</span> <span class="n">BaseRetrieverConfig</span><span class="o">.</span><span class="n">from_retriever_type</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">RetrieverType</span><span class="o">.</span><span class="n">VECTOR_STORE</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_retriever&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">vector_store_config</span><span class="o">=</span><span class="n">vs_config</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">k</span><span class="o">=</span><span class="mi">5</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create and use the retriever</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">retriever</span> <span class="o">=</span> <span class="n">retriever_config</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">documents</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">get_relevant_documents</span><span class="p">(</span><span class="s2">&quot;What is machine learning?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="providers/index.html#module-0" title="haive.core.engine.retriever.providers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">haive.core.engine.retriever.providers</span></code></a></p></td>
+<td><p>Retriever provider implementations for the Haive framework.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="mixins/index.html#module-haive.core.engine.retriever.mixins" title="haive.core.engine.retriever.mixins"><code class="xref py py-obj docutils literal notranslate"><span class="pre">haive.core.engine.retriever.mixins</span></code></a></p></td>
+<td><p>Retriever mixins for the Haive framework.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">¶</a></h2>
+<p class="rubric">haive.core.engine.retriever.__all__</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig" title="haive.core.engine.retriever.BaseRetrieverConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">haive.core.engine.retriever.BaseRetrieverConfig</span></code></a></p></td>
+<td><p>Base configuration for all retriever engines in the Haive framework.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p id="module-0">Retriever module for the Haive framework.</p>
+<p>This module provides a comprehensive interface for document retrieval in the Haive
+framework. It includes configuration classes, type definitions, and utilities for
+creating and using various types of document retrievers, with support for different
+retrieval strategies and extensibility mechanisms.</p>
+<p>Key components:
+- BaseRetrieverConfig: Base configuration class for all retrievers
+- VectorStoreRetrieverConfig: Configuration for vector store-based retrievers
+- RetrieverType: Enumeration of supported retriever types
+- Utility functions for creating and using retrievers</p>
+<p>The retriever system is designed to be highly extensible, with a plugin architecture
+that allows new retriever implementations to be added simply by registering them
+with the appropriate type. The system includes built-in support for vector store-based
+retrievers, ensemble retrievers, and various specialized retrieval strategies.</p>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseRetrieverConfig</span><span class="p">,</span> <span class="n">RetrieverType</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.vectorstore</span><span class="w"> </span><span class="kn">import</span> <span class="n">VectorStoreConfig</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a vector store config</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vs_config</span> <span class="o">=</span> <span class="n">VectorStoreConfig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;document_store&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a retriever config</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">retriever_config</span> <span class="o">=</span> <span class="n">BaseRetrieverConfig</span><span class="o">.</span><span class="n">from_retriever_type</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">RetrieverType</span><span class="o">.</span><span class="n">VECTOR_STORE</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_retriever&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">vector_store_config</span><span class="o">=</span><span class="n">vs_config</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">k</span><span class="o">=</span><span class="mi">5</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create and use the retriever</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">retriever</span> <span class="o">=</span> <span class="n">retriever_config</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">documents</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">get_relevant_documents</span><span class="p">(</span><span class="s2">&quot;What is machine learning?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.engine.retriever.</span></span><span class="sig-name descname"><span class="pre">BaseRetrieverConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine_type:</span> <span class="pre">~haive.core.engine.base.types.EngineType</span> <span class="pre">=</span> <span class="pre">EngineType.RETRIEVER</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_schema:</span> <span class="pre">type[~pydantic.main.BaseModel]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'haive.core.engine.retriever.retriever.RetrieverInput'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema:</span> <span class="pre">type[~pydantic.main.BaseModel]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'haive.core.engine.retriever.retriever.RetrieverOutput'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'1.0.0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata:</span> <span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retriever_type:</span> <span class="pre">~haive.core.engine.retriever.types.RetrieverType</span> <span class="pre">=</span> <span class="pre">RetrieverType.VECTOR_STORE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_type:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'similarity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_kwargs:</span> <span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter:</span> <span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#BaseRetrieverConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">InvokableEngine[RetrieverInput,</span> <span class="pre">RetrieverOutput]</span></code></p>
+<p>Base configuration for all retriever engines in the Haive framework.</p>
+<p>This class serves as the foundation for all retriever configurations, providing a consistent
+interface for document retrieval operations. It supports automatic discovery and registration
+of retriever implementations through a plugin architecture.</p>
+<p>The registry system allows new retriever types to be created simply by adding a new module
+with a properly decorated class, without having to manually update central registries.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.engine_type">
+<span class="sig-name descname"><span class="pre">engine_type</span></span><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.engine_type" title="Link to this definition">¶</a></dt>
+<dd><p>The type of engine (always RETRIEVER).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">EngineType</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.retriever_type">
+<span class="sig-name descname"><span class="pre">retriever_type</span></span><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.retriever_type" title="Link to this definition">¶</a></dt>
+<dd><p>The specific type of retriever to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType" title="haive.core.engine.retriever.RetrieverType"><code class="xref py py-class docutils literal notranslate"><span class="pre">RetrieverType</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.search_type">
+<span class="sig-name descname"><span class="pre">search_type</span></span><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.search_type" title="Link to this definition">¶</a></dt>
+<dd><p>The type of search to perform (‘similarity’, ‘mmr’, etc.).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.search_kwargs">
+<span class="sig-name descname"><span class="pre">search_kwargs</span></span><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.search_kwargs" title="Link to this definition">¶</a></dt>
+<dd><p>Additional search parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict[str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Any]</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.k">
+<span class="sig-name descname"><span class="pre">k</span></span><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.k" title="Link to this definition">¶</a></dt>
+<dd><p>Number of documents to retrieve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.filter" title="Link to this definition">¶</a></dt>
+<dd><p>Optional filter to apply to vector store search.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Optional[Dict[str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Any]]</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig._registry">
+<span class="sig-name descname"><span class="pre">_registry</span></span><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig._registry" title="Link to this definition">¶</a></dt>
+<dd><p>Registry for retriever types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassVar[Dict[RetrieverType</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Type[``</span></code>’RetrieverConfig’<a href="#id1"><span class="problematic" id="id2">``</span></a><code class="xref py py-class docutils literal notranslate"><span class="pre">]]]</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p><a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id5"><span class="problematic" id="id6">`</span></a>python
+from haive.core.engine.retriever import RetrieverConfig, RetrieverType
+from haive.core.engine.vectorstore import VectorStoreConfig</p>
+<p># Create a basic retriever config
+config = RetrieverConfig(</p>
+<blockquote>
+<div><p>name=”my_retriever”,
+retriever_type=RetrieverType.VECTOR_STORE,
+k=4,
+search_type=”similarity”</p>
+</div></blockquote>
+<p>)</p>
+<p># Create and use the retriever
+retriever = config.instantiate()
+docs = retriever.get_relevant_documents(“query”)
+<a href="#id7"><span class="problematic" id="id8">``</span></a><a href="#id9"><span class="problematic" id="id10">`</span></a></p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.apply_runnable_config">
+<span class="sig-name descname"><span class="pre">apply_runnable_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runnable_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RunnableConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#BaseRetrieverConfig.apply_runnable_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.apply_runnable_config" title="Link to this definition">¶</a></dt>
+<dd><p>Extract parameters from runnable_config relevant to this retriever.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>runnable_config</strong> – Runtime configuration</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary of relevant parameters</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.create_retriever_tool">
+<span class="sig-name descname"><span class="pre">create_retriever_tool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#BaseRetrieverConfig.create_retriever_tool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.create_retriever_tool" title="Link to this definition">¶</a></dt>
+<dd><p>Create a LangChain tool from this retriever configuration.</p>
+<p>This method creates a tool that can be used with LangChain agents
+to perform document retrieval operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Optional tool name, defaults to retriever name + ‘_tool’</p></li>
+<li><p><strong>description</strong> – Optional tool description</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A LangChain tool that performs retrieval using this configuration</p>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">VectorStoreRetrieverConfig</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">retriever_config</span> <span class="o">=</span> <span class="n">VectorStoreRetrieverConfig</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_retriever&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">vector_store_config</span><span class="o">=</span><span class="n">vs_config</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">k</span><span class="o">=</span><span class="mi">3</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tool</span> <span class="o">=</span> <span class="n">retriever_config</span><span class="o">.</span><span class="n">create_retriever_tool</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;search_documents&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Search knowledge base for relevant information&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.create_runnable">
+<span class="sig-name descname"><span class="pre">create_runnable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runnable_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RunnableConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseRetriever</span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#BaseRetrieverConfig.create_runnable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.create_runnable" title="Link to this definition">¶</a></dt>
+<dd><p>Create a retriever with runtime configuration applied.</p>
+<p>This method creates a retriever instance with the current configuration,
+applying any runtime overrides specified in the runnable_config. It extracts
+relevant parameters from the runnable_config, updates the current configuration
+with those parameters, and then creates the retriever instance.</p>
+<p>The method handles common retriever parameters like k (number of results),
+filter, and search_type, ensuring they’re properly propagated to the
+retriever instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>runnable_config</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Optional[RunnableConfig]</span></code>) – Runtime configuration containing
+parameter overrides for this execution. This can include parameters like
+k, filter, and search_type in the “configurable” section.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>An instantiated retriever with the current configuration</dt><dd><p>and any runtime overrides applied.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BaseRetriever</p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">VectorStoreRetrieverConfig</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_retriever&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">vector_store_config</span><span class="o">=</span><span class="n">vs_config</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">k</span><span class="o">=</span><span class="mi">4</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create with default configuration</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">default_retriever</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">create_runnable</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create with runtime overrides</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">runtime_config</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;configurable&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;filter&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;metadata.source&quot;</span><span class="p">:</span> <span class="s2">&quot;wikipedia&quot;</span><span class="p">}</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">custom_retriever</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">create_runnable</span><span class="p">(</span><span class="n">runtime_config</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># This retriever will use k=10 instead of k=4</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">engine_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../index.html#haive.core.engine.EngineType" title="haive.core.engine.base.types.EngineType"><span class="pre">EngineType</span></a></em><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">filter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#id11" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.from_retriever_type">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_retriever_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retriever_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType" title="haive.core.engine.retriever.types.RetrieverType"><span class="pre">RetrieverType</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig" title="haive.core.engine.retriever.retriever.BaseRetrieverConfig"><span class="pre">BaseRetrieverConfig</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#BaseRetrieverConfig.from_retriever_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.from_retriever_type" title="Link to this definition">¶</a></dt>
+<dd><p>Create the appropriate config for the given retriever type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>retriever_type</strong> – Type of retriever to create</p></li>
+<li><p><strong>**kwargs</strong> – Additional parameters for the config</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Configured retriever config</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.get_config_class">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_config_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retriever_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType" title="haive.core.engine.retriever.types.RetrieverType"><span class="pre">RetrieverType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig" title="haive.core.engine.retriever.retriever.BaseRetrieverConfig"><span class="pre">BaseRetrieverConfig</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#BaseRetrieverConfig.get_config_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.get_config_class" title="Link to this definition">¶</a></dt>
+<dd><p>Get the appropriate config class for the retriever type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>retriever_type</strong> – Type of retriever</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Retriever config class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.get_input_fields">
+<span class="sig-name descname"><span class="pre">get_input_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><span class="pre">type</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#BaseRetrieverConfig.get_input_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.get_input_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Return input field definitions from the RetrieverInput model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary mapping field names to (type, default) tuples</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.get_output_fields">
+<span class="sig-name descname"><span class="pre">get_output_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><span class="pre">type</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#BaseRetrieverConfig.get_output_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.get_output_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Return output field definitions from the RetrieverOutput model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary mapping field names to (type, default) tuples</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.input_schema">
+<span class="sig-name descname"><span class="pre">input_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">BaseModel</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.input_schema" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseRetriever</span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#BaseRetrieverConfig.instantiate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.instantiate" title="Link to this definition">¶</a></dt>
+<dd><p>Create the retriever instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Instantiated retriever</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.13)"><strong>NotImplementedError</strong></a> – If not implemented by subclass</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">k</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#id12" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True}</span></em><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.output_schema">
+<span class="sig-name descname"><span class="pre">output_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">BaseModel</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.output_schema" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.register">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retriever_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType" title="haive.core.engine.retriever.types.RetrieverType"><span class="pre">RetrieverType</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#BaseRetrieverConfig.register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.register" title="Link to this definition">¶</a></dt>
+<dd><p>Register a retriever config implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>retriever_type</strong> – Type of retriever to register</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Decorator function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">retriever_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType" title="haive.core.engine.retriever.types.RetrieverType"><span class="pre">RetrieverType</span></a></em><a class="headerlink" href="#id13" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">search_kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id14" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">search_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#id15" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.BaseRetrieverConfig.validate_engine_type">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_engine_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#BaseRetrieverConfig.validate_engine_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.BaseRetrieverConfig.validate_engine_type" title="Link to this definition">¶</a></dt>
+<dd><p>Validate that the engine type is RETRIEVER.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.engine.retriever.</span></span><span class="sig-name descname"><span class="pre">RetrieverType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/types.html#RetrieverType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>Enumeration of supported retriever types in the Haive framework.</p>
+<p>This enum defines all available retriever implementations that can be used for document
+retrieval. The retrievers are categorized into different groups based on their
+functionality and approach to document retrieval.</p>
+<dl>
+<dt>Categories:</dt><dd><dl>
+<dt>Base Vector Store Retrievers:</dt><dd><p>Simple retrievers that directly use vector stores for similarity search.</p>
+</dd>
+<dt>Advanced Retrieval Strategies:</dt><dd><blockquote>
+<div><p>Sophisticated retrieval methods that enhance basic vector similarity search:</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>TIME_WEIGHTED: Considers document recency in retrieval</p></li>
+<li><p>MULTI_QUERY: Generates multiple queries for better coverage</p></li>
+<li><p>MULTI_VECTOR: Uses multiple vector representations per document</p></li>
+<li><p>PARENT_DOCUMENT: Retrieves parent documents based on child matches</p></li>
+<li><p>SELF_QUERY: Automatically generates structured queries</p></li>
+<li><p>CONTEXTUAL_COMPRESSION: Compresses retrieved documents contextually</p></li>
+<li><p>REPHRASE_QUERY: Reformulates queries for better results</p></li>
+</ul>
+</dd>
+<dt>Ensemble Methods:</dt><dd><p>Combine multiple retrievers for improved performance:
+- MERGER: Combines results from multiple retrievers
+- ENSEMBLE: Weighted combination of multiple retrievers</p>
+</dd>
+<dt>Sparse Retrievers:</dt><dd><p>Traditional information retrieval methods:
+- SPARSE: Generic sparse retrieval
+- KNN: K-Nearest Neighbors
+- TFIDF: Term Frequency-Inverse Document Frequency
+- BM25: Best Match 25 algorithm
+- SVM: Support Vector Machine based retrieval</p>
+</dd>
+<dt>Specific Implementations:</dt><dd><p>Retrievers for specific vector store backends:
+- ELASTICSEARCH: Elasticsearch-based retrieval
+- FAISS: Facebook AI Similarity Search
+- IN_MEMORY: In-memory vector store
+- PINECONE: Pinecone vector database
+- QDRANT: Qdrant vector database</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p><a href="#id16"><span class="problematic" id="id17">``</span></a><a href="#id18"><span class="problematic" id="id19">`</span></a>python
+from haive.core.engine.retriever.types import RetrieverType
+from haive.core.engine.retriever import create_retriever_config</p>
+<p># Create a vector store retriever config
+config = create_retriever_config(</p>
+<blockquote>
+<div><p>retriever_type=RetrieverType.VECTOR_STORE,
+name=”my_retriever”,
+vector_store_config=vs_config</p>
+</div></blockquote>
+<p>)</p>
+<p># Create an ensemble retriever config
+ensemble_config = create_retriever_config(</p>
+<blockquote>
+<div><p>retriever_type=RetrieverType.ENSEMBLE,
+name=”ensemble_retriever”,
+retrievers=[config1, config2]</p>
+</div></blockquote>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.AMAZON_KNOWLEDGE_BASES">
+<span class="sig-name descname"><span class="pre">AMAZON_KNOWLEDGE_BASES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AmazonKnowledgeBasesRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.AMAZON_KNOWLEDGE_BASES" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.ARCEE">
+<span class="sig-name descname"><span class="pre">ARCEE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ArceeRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.ARCEE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.ARXIV">
+<span class="sig-name descname"><span class="pre">ARXIV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ArxivRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.ARXIV" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.ASK_NEWS">
+<span class="sig-name descname"><span class="pre">ASK_NEWS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AskNewsRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.ASK_NEWS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.AZURE_AI_SEARCH">
+<span class="sig-name descname"><span class="pre">AZURE_AI_SEARCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AzureAISearchRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.AZURE_AI_SEARCH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.AZURE_COGNITIVE_SEARCH">
+<span class="sig-name descname"><span class="pre">AZURE_COGNITIVE_SEARCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AzureCognitiveSearchRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.AZURE_COGNITIVE_SEARCH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.BEDROCK">
+<span class="sig-name descname"><span class="pre">BEDROCK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BedrockRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.BEDROCK" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.BM25">
+<span class="sig-name descname"><span class="pre">BM25</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BM25Retriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.BM25" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.BREEBS">
+<span class="sig-name descname"><span class="pre">BREEBS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BreebsRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.BREEBS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.CHAINDESK">
+<span class="sig-name descname"><span class="pre">CHAINDESK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ChaindeskRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.CHAINDESK" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.CHATGPT_PLUGIN">
+<span class="sig-name descname"><span class="pre">CHATGPT_PLUGIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ChatGPTPluginRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.CHATGPT_PLUGIN" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.CHROMA">
+<span class="sig-name descname"><span class="pre">CHROMA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ChromaRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.CHROMA" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.COHERE_RAG">
+<span class="sig-name descname"><span class="pre">COHERE_RAG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CohereRAGRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.COHERE_RAG" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.CONTEXTUAL_COMPRESSION">
+<span class="sig-name descname"><span class="pre">CONTEXTUAL_COMPRESSION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ContextualCompressionRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.CONTEXTUAL_COMPRESSION" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.DATABERRY">
+<span class="sig-name descname"><span class="pre">DATABERRY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DataberryRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.DATABERRY" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.DOC_ARRAY">
+<span class="sig-name descname"><span class="pre">DOC_ARRAY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DocArrayRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.DOC_ARRAY" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.DRIA">
+<span class="sig-name descname"><span class="pre">DRIA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DriaRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.DRIA" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.ELASTICSEARCH">
+<span class="sig-name descname"><span class="pre">ELASTICSEARCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ElasticsearchRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.ELASTICSEARCH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.ELASTICSEARCH_BM25">
+<span class="sig-name descname"><span class="pre">ELASTICSEARCH_BM25</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ElasticSearchBM25Retriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.ELASTICSEARCH_BM25" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.EMBEDCHAIN">
+<span class="sig-name descname"><span class="pre">EMBEDCHAIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'EmbedchainRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.EMBEDCHAIN" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.ENSEMBLE">
+<span class="sig-name descname"><span class="pre">ENSEMBLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'EnsembleRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.ENSEMBLE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.FAISS">
+<span class="sig-name descname"><span class="pre">FAISS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FAISSRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.FAISS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.GOOGLE_CLOUD_ENTERPRISE_SEARCH">
+<span class="sig-name descname"><span class="pre">GOOGLE_CLOUD_ENTERPRISE_SEARCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GoogleCloudEnterpriseSearchRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.GOOGLE_CLOUD_ENTERPRISE_SEARCH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.GOOGLE_DOCUMENT_AI_WAREHOUSE">
+<span class="sig-name descname"><span class="pre">GOOGLE_DOCUMENT_AI_WAREHOUSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GoogleDocumentAIWarehouseRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.GOOGLE_DOCUMENT_AI_WAREHOUSE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.GOOGLE_VERTEX_AI_MULTI_TURN_SEARCH">
+<span class="sig-name descname"><span class="pre">GOOGLE_VERTEX_AI_MULTI_TURN_SEARCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GoogleVertexAIMultiTurnSearchRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.GOOGLE_VERTEX_AI_MULTI_TURN_SEARCH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.GOOGLE_VERTEX_AI_SEARCH">
+<span class="sig-name descname"><span class="pre">GOOGLE_VERTEX_AI_SEARCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GoogleVertexAISearchRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.GOOGLE_VERTEX_AI_SEARCH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.IN_MEMORY">
+<span class="sig-name descname"><span class="pre">IN_MEMORY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'InMemoryRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.IN_MEMORY" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.KAY_AI">
+<span class="sig-name descname"><span class="pre">KAY_AI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'KayAiRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.KAY_AI" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.KENDRA">
+<span class="sig-name descname"><span class="pre">KENDRA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'KendraRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.KENDRA" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.KNN">
+<span class="sig-name descname"><span class="pre">KNN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'KNNRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.KNN" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.LLAMA_INDEX">
+<span class="sig-name descname"><span class="pre">LLAMA_INDEX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LlamaIndexRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.LLAMA_INDEX" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.LLAMA_INDEX_GRAPH">
+<span class="sig-name descname"><span class="pre">LLAMA_INDEX_GRAPH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'LlamaIndexGraphRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.LLAMA_INDEX_GRAPH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.MERGER">
+<span class="sig-name descname"><span class="pre">MERGER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MergerRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.MERGER" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.METAL">
+<span class="sig-name descname"><span class="pre">METAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MetalRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.METAL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.MILVUS">
+<span class="sig-name descname"><span class="pre">MILVUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MilvusRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.MILVUS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.MULTI_QUERY">
+<span class="sig-name descname"><span class="pre">MULTI_QUERY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MultiQueryRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.MULTI_QUERY" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.MULTI_VECTOR">
+<span class="sig-name descname"><span class="pre">MULTI_VECTOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MultiVectorRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.MULTI_VECTOR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.NANO_PQ">
+<span class="sig-name descname"><span class="pre">NANO_PQ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NanoPQRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.NANO_PQ" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.NEEDLE">
+<span class="sig-name descname"><span class="pre">NEEDLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NeedleRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.NEEDLE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.NEURAL_DB">
+<span class="sig-name descname"><span class="pre">NEURAL_DB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NeuralDBRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.NEURAL_DB" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.OUTLINE">
+<span class="sig-name descname"><span class="pre">OUTLINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OutlineRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.OUTLINE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.PARENT_DOCUMENT">
+<span class="sig-name descname"><span class="pre">PARENT_DOCUMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ParentDocumentRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.PARENT_DOCUMENT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.PGVECTOR">
+<span class="sig-name descname"><span class="pre">PGVECTOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PGVectorRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.PGVECTOR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.PINECONE">
+<span class="sig-name descname"><span class="pre">PINECONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PineconeRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.PINECONE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.PINECONE_HYBRID_SEARCH">
+<span class="sig-name descname"><span class="pre">PINECONE_HYBRID_SEARCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PineconeHybridSearchRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.PINECONE_HYBRID_SEARCH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.PUBMED">
+<span class="sig-name descname"><span class="pre">PUBMED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PubMedRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.PUBMED" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.QDRANT">
+<span class="sig-name descname"><span class="pre">QDRANT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'QdrantRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.QDRANT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.QDRANT_SPARSE_VECTOR">
+<span class="sig-name descname"><span class="pre">QDRANT_SPARSE_VECTOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'QdrantSparseVectorRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.QDRANT_SPARSE_VECTOR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.REDIS">
+<span class="sig-name descname"><span class="pre">REDIS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RedisRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.REDIS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.REMEMBERIZER">
+<span class="sig-name descname"><span class="pre">REMEMBERIZER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RememberizerRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.REMEMBERIZER" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.REMOTE_LANGCHAIN">
+<span class="sig-name descname"><span class="pre">REMOTE_LANGCHAIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RemoteLangChainRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.REMOTE_LANGCHAIN" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.REPHRASE_QUERY">
+<span class="sig-name descname"><span class="pre">REPHRASE_QUERY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RePhraseQueryRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.REPHRASE_QUERY" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.SELF_QUERY">
+<span class="sig-name descname"><span class="pre">SELF_QUERY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SelfQueryRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.SELF_QUERY" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.SPARSE">
+<span class="sig-name descname"><span class="pre">SPARSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SparseRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.SPARSE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.SVM">
+<span class="sig-name descname"><span class="pre">SVM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SVMRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.SVM" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.TAVILY_SEARCH_API">
+<span class="sig-name descname"><span class="pre">TAVILY_SEARCH_API</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TavilySearchAPIRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.TAVILY_SEARCH_API" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.TFIDF">
+<span class="sig-name descname"><span class="pre">TFIDF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TFIDFRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.TFIDF" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.TIME_WEIGHTED">
+<span class="sig-name descname"><span class="pre">TIME_WEIGHTED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TimeWeightedVectorStoreRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.TIME_WEIGHTED" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.VECTOR_STORE">
+<span class="sig-name descname"><span class="pre">VECTOR_STORE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'VectorStoreRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.VECTOR_STORE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.VESPA">
+<span class="sig-name descname"><span class="pre">VESPA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'VespaRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.VESPA" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.WEAVIATE">
+<span class="sig-name descname"><span class="pre">WEAVIATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'WeaviateRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.WEAVIATE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.WEAVIATE_HYBRID_SEARCH">
+<span class="sig-name descname"><span class="pre">WEAVIATE_HYBRID_SEARCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'WeaviateHybridSearchRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.WEAVIATE_HYBRID_SEARCH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.WEB_RESEARCH">
+<span class="sig-name descname"><span class="pre">WEB_RESEARCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'WebResearchRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.WEB_RESEARCH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.WIKIPEDIA">
+<span class="sig-name descname"><span class="pre">WIKIPEDIA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'WikipediaRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.WIKIPEDIA" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.YOU">
+<span class="sig-name descname"><span class="pre">YOU</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'YouRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.YOU" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.ZEP">
+<span class="sig-name descname"><span class="pre">ZEP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ZepRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.ZEP" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.ZEP_CLOUD">
+<span class="sig-name descname"><span class="pre">ZEP_CLOUD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ZepCloudRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.ZEP_CLOUD" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.RetrieverType.ZILLIZ">
+<span class="sig-name descname"><span class="pre">ZILLIZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ZillizRetriever'</span></em><a class="headerlink" href="#haive.core.engine.retriever.RetrieverType.ZILLIZ" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.__getattr__">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.retriever.</span></span><span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever.html#__getattr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.__getattr__" title="Link to this definition">¶</a></dt>
+<dd><p>Lazy load VectorStoreRetrieverConfig to avoid registration overhead.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.create_retriever_config">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.retriever.</span></span><span class="sig-name descname"><span class="pre">create_retriever_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retriever_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType" title="haive.core.engine.retriever.types.RetrieverType"><span class="pre">RetrieverType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig" title="haive.core.engine.retriever.retriever.BaseRetrieverConfig"><span class="pre">BaseRetrieverConfig</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#create_retriever_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.create_retriever_config" title="Link to this definition">¶</a></dt>
+<dd><p>Factory function to create the appropriate retriever configuration.</p>
+<p>This function serves as a central factory for creating retriever configurations
+of any type supported by the system. It automatically determines the correct
+configuration class based on the provided retriever type and initializes it
+with the specified parameters.</p>
+<p>The function handles dynamic loading of retriever implementations and converts
+string-based retriever types to the appropriate enum values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>retriever_type</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Union[RetrieverType</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str]</span></code>) – Type of retriever to create,
+either as a RetrieverType enum value or a string matching an enum value.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – Name identifier for this retriever instance, used for referencing
+and debugging.</p></li>
+<li><p><strong>description</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Optional[str]</span></code>) – Optional human-readable description of the
+retriever’s purpose.</p></li>
+<li><p><strong>**kwargs</strong> – Additional parameters specific to the retriever type, such as
+vector_store_config for VectorStoreRetriever, k for number of results, etc.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The appropriate retriever configuration object for</dt><dd><p>the specified type, properly initialized with the provided parameters.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig" title="haive.core.engine.retriever.BaseRetrieverConfig">BaseRetrieverConfig</a></p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_retriever_config</span><span class="p">,</span> <span class="n">RetrieverType</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.vectorstore</span><span class="w"> </span><span class="kn">import</span> <span class="n">VectorStoreConfig</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a vector store config</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vs_config</span> <span class="o">=</span> <span class="n">VectorStoreConfig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;docs&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a vector store retriever config</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vs_retriever</span> <span class="o">=</span> <span class="n">create_retriever_config</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">retriever_type</span><span class="o">=</span><span class="n">RetrieverType</span><span class="o">.</span><span class="n">VECTOR_STORE</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;doc_retriever&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Retrieves relevant documents from the vector store&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">vector_store_config</span><span class="o">=</span><span class="n">vs_config</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">k</span><span class="o">=</span><span class="mi">5</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a multi-query retriever config using string type</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mq_retriever</span> <span class="o">=</span> <span class="n">create_retriever_config</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">retriever_type</span><span class="o">=</span><span class="s2">&quot;MultiQueryRetriever&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;multi_query_retriever&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">base_retriever</span><span class="o">=</span><span class="n">vs_retriever</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">llm_config</span><span class="o">=</span><span class="n">llm_config</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.engine.retriever.create_retriever_from_vectorstore">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.retriever.</span></span><span class="sig-name descname"><span class="pre">create_retriever_from_vectorstore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_store_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig" title="haive.core.engine.vectorstore.vectorstore.VectorStoreConfig"><span class="pre">VectorStoreConfig</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseRetriever</span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/retriever/retriever.html#create_retriever_from_vectorstore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.retriever.create_retriever_from_vectorstore" title="Link to this definition">¶</a></dt>
+<dd><p>Create a retriever directly from a vector store configuration.</p>
+<p>This convenience function creates a VectorStoreRetrieverConfig and instantiates
+a retriever from it in a single operation. It’s a shortcut for the common case
+of creating a retriever from an existing vector store configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vector_store_config</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">VectorStoreConfig</span></code>) – Configuration for the vector store
+that will be used as the retrieval source. This contains information about
+the documents, embedding model, and vector store provider.</p></li>
+<li><p><strong>**kwargs</strong> – Additional parameters for the retriever, such as k (number of results),
+search_type (“similarity”, “mmr”, etc.), filter, or search_kwargs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instantiated retriever ready for document retrieval.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BaseRetriever</p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_retriever_from_vectorstore</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.vectorstore</span><span class="w"> </span><span class="kn">import</span> <span class="n">VectorStoreConfig</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a vector store config</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vs_config</span> <span class="o">=</span> <span class="n">VectorStoreConfig</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;product_catalog&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">documents</span><span class="o">=</span><span class="p">[</span><span class="n">Document</span><span class="p">(</span><span class="n">page_content</span><span class="o">=</span><span class="s2">&quot;iPhone 13: The latest smartphone&quot;</span><span class="p">)],</span>
+<span class="gp">... </span>    <span class="n">vector_store_provider</span><span class="o">=</span><span class="s2">&quot;FAISS&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a retriever directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">retriever</span> <span class="o">=</span> <span class="n">create_retriever_from_vectorstore</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">vector_store_config</span><span class="o">=</span><span class="n">vs_config</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">search_type</span><span class="o">=</span><span class="s2">&quot;mmr&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">search_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;fetch_k&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;lambda_mult&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Use the retriever</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">docs</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">get_relevant_documents</span><span class="p">(</span><span class="s2">&quot;smartphone&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core.engine.retriever</span></code></a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.engine_type"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.engine_type</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.retriever_type"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.retriever_type</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.search_type"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.search_type</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.search_kwargs"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.search_kwargs</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.k"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.k</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.filter"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.filter</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig._registry"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig._registry</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.apply_runnable_config"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.apply_runnable_config()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.create_retriever_tool"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.create_retriever_tool()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.create_runnable"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.create_runnable()</span></code></a></li>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.engine_type</span></code></a></li>
+<li><a class="reference internal" href="#id11"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.filter</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.from_retriever_type"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.from_retriever_type()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.get_config_class"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.get_config_class()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.get_input_fields"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.get_input_fields()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.get_output_fields"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.get_output_fields()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.input_schema"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.input_schema</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#id12"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.k</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.model_config"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.model_config</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.output_schema"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.output_schema</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.register"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.register()</span></code></a></li>
+<li><a class="reference internal" href="#id13"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.retriever_type</span></code></a></li>
+<li><a class="reference internal" href="#id14"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.search_kwargs</span></code></a></li>
+<li><a class="reference internal" href="#id15"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.search_type</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.BaseRetrieverConfig.validate_engine_type"><code class="docutils literal notranslate"><span class="pre">BaseRetrieverConfig.validate_engine_type()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType"><code class="docutils literal notranslate"><span class="pre">RetrieverType</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.AMAZON_KNOWLEDGE_BASES"><code class="docutils literal notranslate"><span class="pre">RetrieverType.AMAZON_KNOWLEDGE_BASES</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.ARCEE"><code class="docutils literal notranslate"><span class="pre">RetrieverType.ARCEE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.ARXIV"><code class="docutils literal notranslate"><span class="pre">RetrieverType.ARXIV</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.ASK_NEWS"><code class="docutils literal notranslate"><span class="pre">RetrieverType.ASK_NEWS</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.AZURE_AI_SEARCH"><code class="docutils literal notranslate"><span class="pre">RetrieverType.AZURE_AI_SEARCH</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.AZURE_COGNITIVE_SEARCH"><code class="docutils literal notranslate"><span class="pre">RetrieverType.AZURE_COGNITIVE_SEARCH</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.BEDROCK"><code class="docutils literal notranslate"><span class="pre">RetrieverType.BEDROCK</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.BM25"><code class="docutils literal notranslate"><span class="pre">RetrieverType.BM25</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.BREEBS"><code class="docutils literal notranslate"><span class="pre">RetrieverType.BREEBS</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.CHAINDESK"><code class="docutils literal notranslate"><span class="pre">RetrieverType.CHAINDESK</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.CHATGPT_PLUGIN"><code class="docutils literal notranslate"><span class="pre">RetrieverType.CHATGPT_PLUGIN</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.CHROMA"><code class="docutils literal notranslate"><span class="pre">RetrieverType.CHROMA</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.COHERE_RAG"><code class="docutils literal notranslate"><span class="pre">RetrieverType.COHERE_RAG</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.CONTEXTUAL_COMPRESSION"><code class="docutils literal notranslate"><span class="pre">RetrieverType.CONTEXTUAL_COMPRESSION</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.DATABERRY"><code class="docutils literal notranslate"><span class="pre">RetrieverType.DATABERRY</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.DOC_ARRAY"><code class="docutils literal notranslate"><span class="pre">RetrieverType.DOC_ARRAY</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.DRIA"><code class="docutils literal notranslate"><span class="pre">RetrieverType.DRIA</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.ELASTICSEARCH"><code class="docutils literal notranslate"><span class="pre">RetrieverType.ELASTICSEARCH</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.ELASTICSEARCH_BM25"><code class="docutils literal notranslate"><span class="pre">RetrieverType.ELASTICSEARCH_BM25</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.EMBEDCHAIN"><code class="docutils literal notranslate"><span class="pre">RetrieverType.EMBEDCHAIN</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.ENSEMBLE"><code class="docutils literal notranslate"><span class="pre">RetrieverType.ENSEMBLE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.FAISS"><code class="docutils literal notranslate"><span class="pre">RetrieverType.FAISS</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.GOOGLE_CLOUD_ENTERPRISE_SEARCH"><code class="docutils literal notranslate"><span class="pre">RetrieverType.GOOGLE_CLOUD_ENTERPRISE_SEARCH</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.GOOGLE_DOCUMENT_AI_WAREHOUSE"><code class="docutils literal notranslate"><span class="pre">RetrieverType.GOOGLE_DOCUMENT_AI_WAREHOUSE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.GOOGLE_VERTEX_AI_MULTI_TURN_SEARCH"><code class="docutils literal notranslate"><span class="pre">RetrieverType.GOOGLE_VERTEX_AI_MULTI_TURN_SEARCH</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.GOOGLE_VERTEX_AI_SEARCH"><code class="docutils literal notranslate"><span class="pre">RetrieverType.GOOGLE_VERTEX_AI_SEARCH</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.IN_MEMORY"><code class="docutils literal notranslate"><span class="pre">RetrieverType.IN_MEMORY</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.KAY_AI"><code class="docutils literal notranslate"><span class="pre">RetrieverType.KAY_AI</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.KENDRA"><code class="docutils literal notranslate"><span class="pre">RetrieverType.KENDRA</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.KNN"><code class="docutils literal notranslate"><span class="pre">RetrieverType.KNN</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.LLAMA_INDEX"><code class="docutils literal notranslate"><span class="pre">RetrieverType.LLAMA_INDEX</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.LLAMA_INDEX_GRAPH"><code class="docutils literal notranslate"><span class="pre">RetrieverType.LLAMA_INDEX_GRAPH</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.MERGER"><code class="docutils literal notranslate"><span class="pre">RetrieverType.MERGER</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.METAL"><code class="docutils literal notranslate"><span class="pre">RetrieverType.METAL</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.MILVUS"><code class="docutils literal notranslate"><span class="pre">RetrieverType.MILVUS</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.MULTI_QUERY"><code class="docutils literal notranslate"><span class="pre">RetrieverType.MULTI_QUERY</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.MULTI_VECTOR"><code class="docutils literal notranslate"><span class="pre">RetrieverType.MULTI_VECTOR</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.NANO_PQ"><code class="docutils literal notranslate"><span class="pre">RetrieverType.NANO_PQ</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.NEEDLE"><code class="docutils literal notranslate"><span class="pre">RetrieverType.NEEDLE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.NEURAL_DB"><code class="docutils literal notranslate"><span class="pre">RetrieverType.NEURAL_DB</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.OUTLINE"><code class="docutils literal notranslate"><span class="pre">RetrieverType.OUTLINE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.PARENT_DOCUMENT"><code class="docutils literal notranslate"><span class="pre">RetrieverType.PARENT_DOCUMENT</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.PGVECTOR"><code class="docutils literal notranslate"><span class="pre">RetrieverType.PGVECTOR</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.PINECONE"><code class="docutils literal notranslate"><span class="pre">RetrieverType.PINECONE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.PINECONE_HYBRID_SEARCH"><code class="docutils literal notranslate"><span class="pre">RetrieverType.PINECONE_HYBRID_SEARCH</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.PUBMED"><code class="docutils literal notranslate"><span class="pre">RetrieverType.PUBMED</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.QDRANT"><code class="docutils literal notranslate"><span class="pre">RetrieverType.QDRANT</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.QDRANT_SPARSE_VECTOR"><code class="docutils literal notranslate"><span class="pre">RetrieverType.QDRANT_SPARSE_VECTOR</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.REDIS"><code class="docutils literal notranslate"><span class="pre">RetrieverType.REDIS</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.REMEMBERIZER"><code class="docutils literal notranslate"><span class="pre">RetrieverType.REMEMBERIZER</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.REMOTE_LANGCHAIN"><code class="docutils literal notranslate"><span class="pre">RetrieverType.REMOTE_LANGCHAIN</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.REPHRASE_QUERY"><code class="docutils literal notranslate"><span class="pre">RetrieverType.REPHRASE_QUERY</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.SELF_QUERY"><code class="docutils literal notranslate"><span class="pre">RetrieverType.SELF_QUERY</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.SPARSE"><code class="docutils literal notranslate"><span class="pre">RetrieverType.SPARSE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.SVM"><code class="docutils literal notranslate"><span class="pre">RetrieverType.SVM</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.TAVILY_SEARCH_API"><code class="docutils literal notranslate"><span class="pre">RetrieverType.TAVILY_SEARCH_API</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.TFIDF"><code class="docutils literal notranslate"><span class="pre">RetrieverType.TFIDF</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.TIME_WEIGHTED"><code class="docutils literal notranslate"><span class="pre">RetrieverType.TIME_WEIGHTED</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.VECTOR_STORE"><code class="docutils literal notranslate"><span class="pre">RetrieverType.VECTOR_STORE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.VESPA"><code class="docutils literal notranslate"><span class="pre">RetrieverType.VESPA</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.WEAVIATE"><code class="docutils literal notranslate"><span class="pre">RetrieverType.WEAVIATE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.WEAVIATE_HYBRID_SEARCH"><code class="docutils literal notranslate"><span class="pre">RetrieverType.WEAVIATE_HYBRID_SEARCH</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.WEB_RESEARCH"><code class="docutils literal notranslate"><span class="pre">RetrieverType.WEB_RESEARCH</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.WIKIPEDIA"><code class="docutils literal notranslate"><span class="pre">RetrieverType.WIKIPEDIA</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.YOU"><code class="docutils literal notranslate"><span class="pre">RetrieverType.YOU</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.ZEP"><code class="docutils literal notranslate"><span class="pre">RetrieverType.ZEP</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.ZEP_CLOUD"><code class="docutils literal notranslate"><span class="pre">RetrieverType.ZEP_CLOUD</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.RetrieverType.ZILLIZ"><code class="docutils literal notranslate"><span class="pre">RetrieverType.ZILLIZ</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.__getattr__"><code class="docutils literal notranslate"><span class="pre">__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.create_retriever_config"><code class="docutils literal notranslate"><span class="pre">create_retriever_config()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.retriever.create_retriever_from_vectorstore"><code class="docutils literal notranslate"><span class="pre">create_retriever_from_vectorstore()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

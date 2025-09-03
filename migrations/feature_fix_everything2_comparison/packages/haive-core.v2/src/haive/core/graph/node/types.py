@@ -17,19 +17,19 @@ This module defines the fundamental types, protocols, and enums used
 throughout the node system, providing type safety and standardization.
 """
 
-
 # src/haive/core/graph/node/types.py
+from pydantic import BaseModel
+from langgraph.types import Command, Send
+from langchain_core.runnables import RunnableConfig
 from enum import Enum
 from typing import Any, Literal, Protocol, TypeVar, Union, runtime_checkable
 
-from langchain_core.runnables import RunnableConfig
-from langgraph.types import Command, Send
-from pydantic import BaseModel
 
 # Type variables for better type safety
 StateInput = TypeVar("StateInput", bound=BaseModel | dict[str, Any] | Any)
 StateOutput = TypeVar(
-    "StateOutput", bound=dict[str, Any] | Command | Send | list[Send] | Any
+    "StateOutput",
+    bound=dict[str, Any] | Command | Send | list[Send] | Any,
 )
 ConfigType = Union[RunnableConfig, dict[str, Any], None]
 
@@ -41,12 +41,10 @@ class NodeType(str, Enum):
     CALLABLE = "callable"  # Nodes created from callable functions
     TOOL = "tool"  # Tool nodes for handling tool calls
     VALIDATION = "validation"  # Validation nodes for schema validation
-    # BRANCH = "branch"  # Branch nodes for conditional routing
     AGENT = "agent"  # Agent nodes for agent-specific behavior
 
     # Message handling nodes
     MESSAGE_TRANSFORMER = "message_transformer"
-    # SEND = "send"  # Send nodes for dynamic routing
     CUSTOM = "custom"  # Custom node types
     PARSER = "parser"  # Parser nodes for parsing tool results
     OUTPUT_PARSER = "output_parser"  # Output parser nodes for parsing LLM outputs
@@ -60,12 +58,15 @@ CommandGoto = Union[str, Literal["END"], Send, list[Send | str]]
 class NodeFunction(Protocol[StateInput, StateOutput]):
     """Protocol for node functions.
 
-    A node function takes a state and optional config and returns an output. This output
-    can be a dictionary (state update), Command, Send, or list of Send objects.
+    A node function takes a state and optional config and returns an
+    output. This output can be a dictionary (state update), Command,
+    Send, or list of Send objects.
     """
 
     def __call__(
-        self, state: StateInput, config: ConfigType | None = None
+        self,
+        state: StateInput,
+        config: ConfigType | None = None,
     ) -> StateOutput:
         """Execute the node with the given state and configuration."""
         ...
@@ -75,11 +76,14 @@ class NodeFunction(Protocol[StateInput, StateOutput]):
 class AsyncNodeFunction(Protocol[StateInput, StateOutput]):
     """Protocol for async node functions.
 
-    An async node function is like a regular node function but executes asynchronously.
+    An async node function is like a regular node function but executes
+    asynchronously.
     """
 
     async def __call__(
-        self, state: StateInput, config: ConfigType | None = None
+        self,
+        state: StateInput,
+        config: ConfigType | None = None,
     ) -> StateOutput:
         """Execute the node asynchronously."""
         ...

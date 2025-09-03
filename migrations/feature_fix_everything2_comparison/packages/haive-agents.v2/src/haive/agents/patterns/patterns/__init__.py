@@ -1,6 +1,7 @@
 """Agent patterns module.
 
-This module provides reusable patterns for combining agents in various ways.
+This module provides reusable patterns for combining agents in various
+ways.
 """
 
 from haive.agents.patterns.sequential_with_structured_output import (

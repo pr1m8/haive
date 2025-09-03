@@ -3,6 +3,8 @@
 This module provides prompt functionality for the Haive framework.
 """
 
+from __future__ import annotations
+
 from langchain_core.prompts import ChatPromptTemplate
 
 RAG_DOCUMENT_GRADE_COMPREHENSIVE = ChatPromptTemplate.from_messages(
@@ -54,5 +56,5 @@ Provide comprehensive evaluation with structured output.""",
 
 Provide comprehensive evaluation with scores, justifications, key information identified, and limitations for each document.""",
         ),
-    ]
+    ],
 )

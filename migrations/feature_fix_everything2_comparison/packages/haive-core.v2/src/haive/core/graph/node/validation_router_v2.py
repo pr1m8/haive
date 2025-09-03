@@ -9,6 +9,8 @@ Flow:
 3. Routes to appropriate nodes (tool_node, parse_output, agent_node, END)
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any
 
@@ -117,10 +119,7 @@ def validation_router_v2(state: dict[str, Any]) -> str | list[str] | Send:
         # Find corresponding ToolMessage (if any)
         tool_message = None
         for msg in messages:
-            if (
-                isinstance(msg, ToolMessage)
-                and getattr(msg, "tool_call_id", None) == tool_id
-            ):
+            if isinstance(msg, ToolMessage) and getattr(msg, "tool_call_id", None) == tool_id:
                 tool_message = msg
                 break
 

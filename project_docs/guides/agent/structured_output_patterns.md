@@ -1,7 +1,7 @@
 # Structured Output Patterns in Haive
 
-**Version**: 1.0  
-**Purpose**: Design patterns and best practices for structured output in agent workflows  
+**Version**: 1.0
+**Purpose**: Design patterns and best practices for structured output in agent workflows
 **Last Updated**: 2025-01-18
 
 ## 🎯 Overview

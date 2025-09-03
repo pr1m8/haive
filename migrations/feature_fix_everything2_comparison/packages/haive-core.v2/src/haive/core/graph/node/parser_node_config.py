@@ -11,6 +11,7 @@ Functions:
 """
 
 # src/haive/core/graph/node/parser_node_config.py
+from __future__ import annotations
 
 import json
 import logging
@@ -24,6 +25,7 @@ from pydantic import BaseModel, Field
 from haive.core.graph.common.types import ConfigLike, StateLike
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.node.types import NodeType
+
 
 # Configure logger with rich handler
 logger = logging.getLogger(__name__)
@@ -48,19 +50,21 @@ if not any(isinstance(handler, logging.StreamHandler) for handler in logger.hand
 class ParserNodeConfig(NodeConfig):
     """Configuration for a node that parses tool outputs into Pydantic models.
 
-    This node extracts tool information from the AI messages and parses the tool
-    responses into structured Pydantic models.
+    This node extracts tool information from the AI messages and parses
+    the tool responses into structured Pydantic models.
     """
 
     node_type: NodeType = Field(default=NodeType.PARSER)
     messages_key: str = Field(default="messages")
     agent_node: str = Field(
-        default="agent", description="Node to return to after parsing"
+        default="agent",
+        description="Node to return to after parsing",
     )
 
     # Engine reference for getting tools
     engine_name: str | None = Field(
-        default=None, description="Name of engine to get tools from"
+        default=None,
+        description="Name of engine to get tools from",
     )
 
     def _get_engine_from_state(self, state: StateLike) -> Any | None:
@@ -75,17 +79,14 @@ class ParserNodeConfig(NodeConfig):
         if hasattr(state, "engines") and isinstance(state.engines, dict):
             logger.debug(f"  State has engines dict with {len(state.engines)} engines")
             logger.debug(
-                f"  Available engine keys: {
-                    list(
-                        state.engines.keys())}"
+                f"  Available engine keys: {list(state.engines.keys())}",
             )
 
             # Try exact name match
             engine = state.engines.get(self.engine_name)
             if engine:
                 logger.info(
-                    f"[bold green]✓ Found engine in state.engines:[/bold green] {
-                        self.engine_name}"
+                    f"[bold green]✓ Found engine in state.engines:[/bold green] {self.engine_name}",
                 )
                 logger.debug(f"    Engine type: {type(engine).__name__}")
                 return engine
@@ -95,7 +96,8 @@ class ParserNodeConfig(NodeConfig):
                 if hasattr(eng, "name") and eng.name == self.engine_name:
                     logger.info(
                         f"[bold green]✓ Found engine by name attribute:[/bold green] {
-                            self.engine_name} (key: {key})"
+                            self.engine_name
+                        } (key: {key})",
                     )
                     return eng
 
@@ -104,8 +106,7 @@ class ParserNodeConfig(NodeConfig):
         if hasattr(state, self.engine_name):
             engine = getattr(state, self.engine_name)
             logger.info(
-                f"[bold green]✓ Found engine as state attribute:[/bold green] {
-                    self.engine_name}"
+                f"[bold green]✓ Found engine as state attribute:[/bold green] {self.engine_name}",
             )
             return engine
 
@@ -119,17 +120,17 @@ class ParserNodeConfig(NodeConfig):
             if engine:
                 logger.info(
                     f"[bold green]✓ Found engine in EngineRegistry:[/bold green] {
-                        self.engine_name}"
+                        self.engine_name
+                    }",
                 )
                 return engine
             logger.warning(
-                f"[bold yellow]Engine not found in registry:[/bold yellow] {
-                    self.engine_name}"
+                f"[bold yellow]Engine not found in registry:[/bold yellow] {self.engine_name}",
             )
             return None
         except ImportError as e:
             logger.exception(
-                f"[bold red]Failed to import EngineRegistry:[/bold red] {e}"
+                f"[bold red]Failed to import EngineRegistry:[/bold red] {e}",
             )
             return None
         except Exception as e:
@@ -139,7 +140,7 @@ class ParserNodeConfig(NodeConfig):
     def _find_tool_in_engine(self, engine: Any, tool_name: str) -> Any | None:
         """Find a tool/schema in the engine by name."""
         logger.debug(
-            f"[bold blue]Searching for tool:[/bold blue] '{tool_name}' in engine"
+            f"[bold blue]Searching for tool:[/bold blue] '{tool_name}' in engine",
         )
 
         # Collect all possible tools/schemas from engine
@@ -161,17 +162,13 @@ class ParserNodeConfig(NodeConfig):
             logger.debug(f"  Found {len(engine.pydantic_tools)} pydantic_tools")
 
         # Check structured_output_model
-        if (
-            hasattr(engine, "structured_output_model")
-            and engine.structured_output_model
-        ):
+        if hasattr(engine, "structured_output_model") and engine.structured_output_model:
             candidates.append(engine.structured_output_model)
             logger.debug("  Found structured_output_model")
 
         # Search through candidates
         logger.debug(
-            f"[bold cyan]Searching through {
-                len(candidates)} candidates[/bold cyan]"
+            f"[bold cyan]Searching through {len(candidates)} candidates[/bold cyan]",
         )
         for candidate in candidates:
             candidate_name = None
@@ -183,18 +180,17 @@ class ParserNodeConfig(NodeConfig):
                 candidate_name = candidate.name
 
             logger.debug(
-                f"  Checking candidate: {candidate_name} (type: {
-                    type(candidate).__name__})"
+                f"  Checking candidate: {candidate_name} (type: {type(candidate).__name__})",
             )
 
             if candidate_name == tool_name:
                 logger.info(
-                    f"[bold green]✓ Found matching tool:[/bold green] {tool_name}"
+                    f"[bold green]✓ Found matching tool:[/bold green] {tool_name}",
                 )
                 return candidate
 
         logger.warning(
-            f"[bold yellow]Tool '{tool_name}' not found in engine[/bold yellow]"
+            f"[bold yellow]Tool '{tool_name}' not found in engine[/bold yellow]",
         )
 
         # Log available tools for debugging
@@ -211,7 +207,8 @@ class ParserNodeConfig(NodeConfig):
         return None
 
     def _extract_tool_from_messages(
-        self, messages: list[BaseMessage]
+        self,
+        messages: list[BaseMessage],
     ) -> tuple[str | None, Any | None, ToolMessage | None]:
         """Extract tool information from messages."""
         logger.debug("[bold blue]Extracting tool information from messages[/bold blue]")
@@ -221,24 +218,20 @@ class ParserNodeConfig(NodeConfig):
         for i, msg in enumerate(reversed(messages)):
             if isinstance(msg, AIMessage):
                 logger.debug(
-                    f"  Found AIMessage at position {
-                        len(messages) - 1 - i}"
+                    f"  Found AIMessage at position {len(messages) - 1 - i}",
                 )
                 if hasattr(msg, "tool_calls") and msg.tool_calls:
                     last_ai_message = msg
                     logger.debug(f"    Has {len(msg.tool_calls)} tool calls")
                     break
-                if (
-                    hasattr(msg, "additional_kwargs")
-                    and "tool_calls" in msg.additional_kwargs
-                ):
+                if hasattr(msg, "additional_kwargs") and "tool_calls" in msg.additional_kwargs:
                     last_ai_message = msg
                     logger.debug("    Has tool calls in additional_kwargs")
                     break
 
         if not last_ai_message:
             logger.warning(
-                "[bold yellow]No AIMessage with tool calls found[/bold yellow]"
+                "[bold yellow]No AIMessage with tool calls found[/bold yellow]",
             )
             return None, None, None
 
@@ -254,7 +247,7 @@ class ParserNodeConfig(NodeConfig):
 
         if not tool_calls:
             logger.warning(
-                "[bold yellow]No tool calls found in AIMessage[/bold yellow]"
+                "[bold yellow]No tool calls found in AIMessage[/bold yellow]",
             )
             return None, None, None
 
@@ -274,28 +267,16 @@ class ParserNodeConfig(NodeConfig):
             tool_name = tool_call["function"]["name"]
         else:
             logger.error(
-                "[bold red]Could not extract tool name from tool call[/bold red]"
+                "[bold red]Could not extract tool name from tool call[/bold red]",
             )
             return None, None, None
 
         logger.info(f"[bold cyan]Found tool call:[/bold cyan] {tool_name}")
         logger.debug(
-            f"  Tool call ID: {
-                getattr(
-                    tool_call,
-                    'id',
-                    tool_call.get(
-                        'id',
-                        'N/A'))}"
+            f"  Tool call ID: {getattr(tool_call, 'id', tool_call.get('id', 'N/A'))}",
         )
         logger.debug(
-            f"  Tool call args: {
-                getattr(
-                    tool_call,
-                    'args',
-                    tool_call.get(
-                        'args',
-                        {}))}"
+            f"  Tool call args: {getattr(tool_call, 'args', tool_call.get('args', {}))}",
         )
 
         # Find corresponding ToolMessage
@@ -314,7 +295,7 @@ class ParserNodeConfig(NodeConfig):
 
         if not tool_message:
             logger.warning(
-                f"[bold yellow]No ToolMessage found for tool '{tool_name}'[/bold yellow]"
+                f"[bold yellow]No ToolMessage found for tool '{tool_name}'[/bold yellow]",
             )
 
         return tool_name, tool_call, tool_message
@@ -322,8 +303,7 @@ class ParserNodeConfig(NodeConfig):
     def _parse_tool_content(self, content: Any, tool_class: type[BaseModel]) -> Any:
         """Parse tool content into a Pydantic model."""
         logger.debug(
-            f"[bold blue]Parsing content for:[/bold blue] {
-                tool_class.__name__}"
+            f"[bold blue]Parsing content for:[/bold blue] {tool_class.__name__}",
         )
         logger.debug(f"  Content type: {type(content)}")
         logger.debug(f"  Content preview: {str(content)[:200]}...")
@@ -344,7 +324,8 @@ class ParserNodeConfig(NodeConfig):
                 model_instance = tool_class.model_validate(json_data)
                 logger.info(
                     f"[bold green]✓ Successfully created {
-                        tool_class.__name__} from JSON[/bold green]"
+                        tool_class.__name__
+                    } from JSON[/bold green]",
                 )
                 return model_instance
 
@@ -360,7 +341,8 @@ class ParserNodeConfig(NodeConfig):
                 model_instance = tool_class.model_validate(content)
                 logger.info(
                     f"[bold green]✓ Successfully created {
-                        tool_class.__name__} from dict[/bold green]"
+                        tool_class.__name__
+                    } from dict[/bold green]",
                 )
                 return model_instance
             except Exception as e:
@@ -372,7 +354,7 @@ class ParserNodeConfig(NodeConfig):
             parser = PydanticOutputParser(pydantic_object=tool_class)
             model_instance = parser.parse(str(content))
             logger.info(
-                "[bold green]✓ Successfully parsed with PydanticOutputParser[/bold green]"
+                "[bold green]✓ Successfully parsed with PydanticOutputParser[/bold green]",
             )
             return model_instance
         except Exception as e:
@@ -380,7 +362,7 @@ class ParserNodeConfig(NodeConfig):
 
         # Final fallback
         logger.warning(
-            "[bold yellow]All parsing attempts failed, returning content as dict[/bold yellow]"
+            "[bold yellow]All parsing attempts failed, returning content as dict[/bold yellow]",
         )
         return {"content": content, "parse_error": "Could not parse into model"}
 
@@ -396,10 +378,8 @@ class ParserNodeConfig(NodeConfig):
         if hasattr(state, "engines"):
             logger.debug(
                 f"State.engines keys: {
-                    list(
-                        state.engines.keys()) if isinstance(
-                        state.engines,
-                        dict) else 'Not a dict'}"
+                    list(state.engines.keys()) if isinstance(state.engines, dict) else 'Not a dict'
+                }",
             )
 
         # Determine goto node
@@ -413,8 +393,7 @@ class ParserNodeConfig(NodeConfig):
             return Command(update={"error": "No messages found"}, goto=goto_node)
 
         logger.info(
-            f"[bold cyan]Processing {
-                len(messages)} messages[/bold cyan]"
+            f"[bold cyan]Processing {len(messages)} messages[/bold cyan]",
         )
 
         # Extract tool information from messages
@@ -422,10 +401,11 @@ class ParserNodeConfig(NodeConfig):
 
         if not tool_name:
             logger.error(
-                "[bold red]Could not extract tool information from messages[/bold red]"
+                "[bold red]Could not extract tool information from messages[/bold red]",
             )
             return Command(
-                update={"error": "No tool information found"}, goto=goto_node
+                update={"error": "No tool information found"},
+                goto=goto_node,
             )
 
         # Get the tool class from engine
@@ -438,7 +418,7 @@ class ParserNodeConfig(NodeConfig):
             tool_class = self._find_tool_in_engine(engine, tool_name)
         else:
             logger.warning(
-                "[bold yellow]No engine available for tool lookup[/bold yellow]"
+                "[bold yellow]No engine available for tool lookup[/bold yellow]",
             )
 
         if not tool_class:
@@ -469,7 +449,8 @@ class ParserNodeConfig(NodeConfig):
         else:
             logger.error("[bold red]No content available for parsing[/bold red]")
             return Command(
-                update={"error": f"No content for tool '{tool_name}'"}, goto=goto_node
+                update={"error": f"No content for tool '{tool_name}'"},
+                goto=goto_node,
             )
 
         # Parse the content
@@ -478,8 +459,7 @@ class ParserNodeConfig(NodeConfig):
                 parsed_result = self._parse_tool_content(content, tool_class)
             else:
                 logger.warning(
-                    f"[bold yellow]Tool is not a Pydantic model:[/bold yellow] {
-                        type(tool_class)}"
+                    f"[bold yellow]Tool is not a Pydantic model:[/bold yellow] {type(tool_class)}",
                 )
                 parsed_result = content
 
@@ -491,12 +471,7 @@ class ParserNodeConfig(NodeConfig):
                 field_name = field_info["field_name"]
             else:
                 # Fallback for non-Pydantic models
-                field_name = (
-                    tool_name.lower()
-                    .replace("response", "")
-                    .replace("result", "")
-                    .strip()
-                )
+                field_name = tool_name.lower().replace("response", "").replace("result", "").strip()
                 if not field_name:
                     field_name = "parsed_result"
 
@@ -510,13 +485,11 @@ class ParserNodeConfig(NodeConfig):
             # Log the update for debugging
             if isinstance(parsed_result, BaseModel):
                 logger.debug(
-                    f"  Parsed model fields: {
-                        list(
-                            parsed_result.model_fields.keys())}"
+                    f"  Parsed model fields: {list(parsed_result.model_fields.keys())}",
                 )
 
             logger.info(
-                "[bold green]=== Parser completed successfully ===[/bold green]"
+                "[bold green]=== Parser completed successfully ===[/bold green]",
             )
             return Command(update=update_dict, goto=goto_node)
 

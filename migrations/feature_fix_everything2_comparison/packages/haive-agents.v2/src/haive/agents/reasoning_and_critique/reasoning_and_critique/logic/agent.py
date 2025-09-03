@@ -13,31 +13,28 @@ Functions:
 """
 
 # src/haive/agents/reasoning/orchestrator.py
+from __future__ import annotations
 
 from typing import Any
 
+from haive.agents.base.agent import Agent
+from haive.agents.reasoning_and_critique.logic.engines import create_bias_detector
+from haive.agents.reasoning_and_critique.logic.engines import create_logical_reasoner
+from haive.agents.reasoning_and_critique.logic.engines import create_premise_extractor
+from haive.agents.reasoning_and_critique.logic.engines import create_synthesis_agent
+from haive.agents.reasoning_and_critique.logic.engines import create_uncertainty_analyzer
+from haive.agents.reasoning_and_critique.logic.engines import Dict
+from haive.agents.reasoning_and_critique.logic.models import Evidence
+from haive.agents.reasoning_and_critique.logic.models import ReasoningAnalysis
+from haive.agents.reasoning_and_critique.logic.models import ReasoningChain
+from haive.agents.reasoning_and_critique.logic.models import ReasoningReport
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.state_schema import StateSchema
 from langchain_core.messages import BaseMessage
-from langgraph.graph import END, START
+from langgraph.graph import END
+from langgraph.graph import START
 from pydantic import Field
-
-from haive.agents.base.agent import Agent
-from haive.agents.reasoning_and_critique.logic.engines import (
-    Dict,
-    create_bias_detector,
-    create_logical_reasoner,
-    create_premise_extractor,
-    create_synthesis_agent,
-    create_uncertainty_analyzer,
-)
-from haive.agents.reasoning_and_critique.logic.models import (
-    Evidence,
-    ReasoningAnalysis,
-    ReasoningChain,
-    ReasoningReport,
-)
 
 
 # Define the actual state we want
@@ -75,7 +72,7 @@ class ReasoningSystem(Agent):
     logical_reasoner: AugLLMConfig = Field(default_factory=create_logical_reasoner)
     bias_detector: AugLLMConfig = Field(default_factory=create_bias_detector)
     uncertainty_analyzer: AugLLMConfig = Field(
-        default_factory=create_uncertainty_analyzer
+        default_factory=create_uncertainty_analyzer,
     )
     synthesizer: AugLLMConfig = Field(default_factory=create_synthesis_agent)
 

@@ -55,7 +55,6 @@ def add_automation_tools():
         ("memray", "latest", "Memory profiler"),
     ]
 
-
     added = []
     skipped = []
     failed = []
@@ -164,7 +163,6 @@ paths_to_mutate = "packages/"
 tests_dir = "tests/"
 runner = "python -m pytest -x"
 """
-
 
 
 if __name__ == "__main__":

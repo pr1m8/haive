@@ -1,7 +1,7 @@
 # Handling Various Output Formats in Haive Agents
 
-**Version**: 1.0  
-**Purpose**: Comprehensive guide for handling different output formats in agent workflows  
+**Version**: 1.0
+**Purpose**: Comprehensive guide for handling different output formats in agent workflows
 **Last Updated**: 2025-01-18
 
 ## 🎯 Overview

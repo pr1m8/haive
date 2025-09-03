@@ -1,13 +1,16 @@
-"""From typing import Any, Dict
+"""From typing import Any, Dict.
+
 Stateful Node Integration Example - How it works with SimpleAgent and LLMState.
 
 This example shows how the stateful node architecture integrates with the existing
 SimpleAgent, LLMState, and MetaStateSchema to provide truly dynamic discovery.
 """
 
-from haive.agents.simple.agent import SimpleAgent
+from __future__ import annotations
+
 from langchain_core.messages import AIMessage, HumanMessage
 
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.stateful_node_config import (
     StatefulParserNodeConfig,
@@ -64,7 +67,7 @@ def create_llm_state_with_dynamic_nodes() -> Any:
                         "name": "calculator",
                         "id": "calc_1",
                         "args": {"expression": "15 * 23"},
-                    }
+                    },
                 ],
             ),
         ],
@@ -97,7 +100,7 @@ def demonstrate_stateful_discovery() -> Any:
                         "name": "Plan",
                         "id": "plan_1",
                         "args": {"task": "analyze", "steps": ["step1", "step2"]},
-                    }
+                    },
                 ],
             ),
         ],
@@ -162,7 +165,7 @@ def demonstrate_meta_state_composition() -> Any:
     # The meta state can execute the inner agent
     # The inner agent's nodes will discover engines from the meta state
     meta_state.execute_agent(
-        input_data={"messages": [HumanMessage(content="Hello from meta state")]}
+        input_data={"messages": [HumanMessage(content="Hello from meta state")]},
     )
 
     return meta_state
@@ -215,7 +218,10 @@ def demonstrate_dynamic_field_configuration() -> Any:
 
 
 def show_integration_with_simple_agent() -> Any:
-    """Show how stateful nodes integrate with existing SimpleAgent graph building."""
+    """Show how stateful nodes integrate with existing SimpleAgent graph.
+
+    building.
+    """
     # Create SimpleAgent as usual
     agent = SimpleAgent(
         name="integrated_agent",
@@ -266,9 +272,7 @@ def show_integration_with_simple_agent() -> Any:
         graph.add_conditional_edges(
             "agent_node",
             lambda state: (
-                bool(getattr(state.messages[-1], "tool_calls", None))
-                if state.messages
-                else False
+                bool(getattr(state.messages[-1], "tool_calls", None)) if state.messages else False
             ),
             {True: "validation", False: END},
         )
@@ -326,9 +330,9 @@ def complete_integration_example() -> dict[str, Any]:
     result = meta_state.execute_agent(
         input_data={
             "messages": [
-                HumanMessage(content="Calculate 15 * 23 and explain the result")
-            ]
-        }
+                HumanMessage(content="Calculate 15 * 23 and explain the result"),
+            ],
+        },
     )
 
     return {"agent": agent, "state": state, "meta_state": meta_state, "result": result}
@@ -337,7 +341,6 @@ def complete_integration_example() -> dict[str, Any]:
 # =============================================================================
 # KEY INSIGHTS FROM INTEGRATION
 # =============================================================================
-
 """
 KEY INSIGHTS:
 
@@ -374,7 +377,6 @@ KEY INSIGHTS:
 """
 
 if __name__ == "__main__":
-
     # Run examples
     agent = create_simple_agent_with_stateful_nodes()
 

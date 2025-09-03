@@ -1,0 +1,1358 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.engine.vectorstore.vectorstore - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for haive.core.engine.vectorstore.vectorstore</h1><div class="highlight"><pre>
+<span></span><span class="c1"># src/haive/core/engine/vectorstore.py</span>
+
+<span class="sd">&quot;&quot;&quot;Vector store engine implementation for the Haive framework.</span>
+
+<span class="sd">from typing import Any</span>
+<span class="sd">This module provides a comprehensive interface for working with vector stores in the Haive framework.</span>
+<span class="sd">It includes configuration models and utilities for creating, managing, and interacting with various</span>
+<span class="sd">vector store backends.</span>
+
+<span class="sd">Attributes:</span>
+<span class="sd">    VectorStoreProvider (Enum): Supported vector store providers (Chroma, FAISS, Pinecone, etc.)</span>
+
+<span class="sd">Classes:</span>
+<span class="sd">    VectorStoreConfig: Main configuration class for vector stores</span>
+<span class="sd">    VectorStoreProvider: Enumeration of supported vector store providers</span>
+<span class="sd">    VectorStoreProviderRegistry: Registry for extending supported providers</span>
+
+<span class="sd">Example:</span>
+<span class="sd">    Basic usage of creating a vector store:</span>
+<span class="sd">    ```python</span>
+<span class="sd">    from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider</span>
+<span class="sd">    from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig</span>
+
+<span class="sd">    # Create a vector store config</span>
+<span class="sd">    config = VectorStoreConfig(</span>
+<span class="sd">        name=&quot;my_vectorstore&quot;,</span>
+<span class="sd">        documents=[Document(page_content=&quot;Hello world&quot;)],</span>
+<span class="sd">        vector_store_provider=VectorStoreProvider.FAISS,</span>
+<span class="sd">        embedding_model=HuggingFaceEmbeddingConfig(</span>
+<span class="sd">            model=&quot;sentence-transformers/all-MiniLM-L6-v2&quot;</span>
+<span class="sd">        )</span>
+<span class="sd">    )</span>
+
+<span class="sd">    # Create the vector store</span>
+<span class="sd">    vectorstore = config.create_vectorstore()</span>
+<span class="sd">    ```</span>
+
+<span class="sd">    Registering a custom vector store provider:</span>
+<span class="sd">    ```python</span>
+<span class="sd">    from haive.core.engine.vectorstore import VectorStoreProviderRegistry</span>
+
+<span class="sd">    # Direct registration with a class</span>
+<span class="sd">    class MyVectorStore(VectorStore):</span>
+<span class="sd">        # Implementation of VectorStore methods</span>
+<span class="sd">        ...</span>
+
+<span class="sd">    VectorStoreProviderRegistry.register_provider(&quot;MyCustomStore&quot;, MyVectorStore)</span>
+
+<span class="sd">    # Or with a factory function for lazy loading</span>
+<span class="sd">    def get_my_vectorstore_class():</span>
+<span class="sd">        from my_package.vectorstore import MyOtherVectorStore</span>
+<span class="sd">        return MyOtherVectorStore</span>
+
+<span class="sd">    VectorStoreProviderRegistry.register_provider_factory(&quot;MyOtherStore&quot;, get_my_vectorstore_class)</span>
+
+<span class="sd">    # Now you can use these custom providers</span>
+<span class="sd">    config = VectorStoreConfig(</span>
+<span class="sd">        name=&quot;custom_vectorstore&quot;,</span>
+<span class="sd">        vector_store_provider=&quot;MyCustomStore&quot;</span>
+<span class="sd">    )</span>
+<span class="sd">    ```</span>
+
+<span class="sd">    TODO: Need to seperate and implement the registry system, similar to retrievers and add base.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.documents</span><span class="w"> </span><span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.retrievers</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseRetriever</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.runnables</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunnableConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">VectorStore</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">field_validator</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvokableEngine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.base.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">EngineType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.models.embeddings.base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BaseEmbeddingConfig</span><span class="p">,</span>
+    <span class="n">HuggingFaceEmbeddingConfig</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="VectorStoreProvider">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreProvider">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">VectorStoreProvider</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enumeration of supported vector store providers.</span>
+
+<span class="sd">    This enum defines the built-in vector store providers supported by the Haive framework.</span>
+<span class="sd">    Each provider corresponds to a specific vector database implementation with its own</span>
+<span class="sd">    features, capabilities, and requirements.</span>
+
+<span class="sd">    The enum can be dynamically extended at runtime using the extend() method</span>
+<span class="sd">    or through the VectorStoreProviderRegistry, allowing for custom providers</span>
+<span class="sd">    without modifying the core code.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        CHROMA (str): Chroma vector database</span>
+<span class="sd">        FAISS (str): Facebook AI Similarity Search</span>
+<span class="sd">        PINECONE (str): Pinecone managed vector database</span>
+<span class="sd">        WEAVIATE (str): Weaviate vector database</span>
+<span class="sd">        ZILLIZ (str): Zilliz cloud vector database</span>
+<span class="sd">        MILVUS (str): Milvus vector database</span>
+<span class="sd">        QDRANT (str): Qdrant vector database</span>
+<span class="sd">        IN_MEMORY (str): In-memory vector store (for testing/development)</span>
+<span class="sd">        PGVECTOR (str): PostgreSQL with pgvector extension</span>
+<span class="sd">        ELASTICSEARCH (str): Elasticsearch vector search</span>
+<span class="sd">        REDIS (str): Redis vector database</span>
+<span class="sd">        SUPABASE (str): Supabase vector store</span>
+<span class="sd">        MONGODB_ATLAS (str): MongoDB Atlas vector search</span>
+<span class="sd">        AZURE_SEARCH (str): Azure Cognitive Search</span>
+<span class="sd">        OPENSEARCH (str): OpenSearch vector search</span>
+<span class="sd">        CASSANDRA (str): Apache Cassandra vector store</span>
+<span class="sd">        CLICKHOUSE (str): ClickHouse vector database</span>
+<span class="sd">        TYPESENSE (str): Typesense vector search</span>
+<span class="sd">        LANCEDB (str): LanceDB vector database</span>
+<span class="sd">        NEO4J (str): Neo4j vector search</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from haive.core.engine.vectorstore import VectorStoreProvider</span>
+<span class="sd">        &gt;&gt;&gt; # Using an enum value</span>
+<span class="sd">        &gt;&gt;&gt; provider = VectorStoreProvider.FAISS</span>
+<span class="sd">        &gt;&gt;&gt; str(provider)</span>
+<span class="sd">        &#39;FAISS&#39;</span>
+<span class="sd">        &gt;&gt;&gt; # Checking if a value is in the enum</span>
+<span class="sd">        &gt;&gt;&gt; &quot;Chroma&quot; in [p.value for p in VectorStoreProvider]</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">CHROMA</span> <span class="o">=</span> <span class="s2">&quot;Chroma&quot;</span>
+    <span class="n">FAISS</span> <span class="o">=</span> <span class="s2">&quot;FAISS&quot;</span>
+    <span class="n">PINECONE</span> <span class="o">=</span> <span class="s2">&quot;Pinecone&quot;</span>
+    <span class="n">WEAVIATE</span> <span class="o">=</span> <span class="s2">&quot;Weaviate&quot;</span>
+    <span class="n">ZILLIZ</span> <span class="o">=</span> <span class="s2">&quot;Zilliz&quot;</span>
+    <span class="n">MILVUS</span> <span class="o">=</span> <span class="s2">&quot;Milvus&quot;</span>
+    <span class="n">QDRANT</span> <span class="o">=</span> <span class="s2">&quot;Qdrant&quot;</span>
+    <span class="n">IN_MEMORY</span> <span class="o">=</span> <span class="s2">&quot;InMemory&quot;</span>
+    <span class="n">PGVECTOR</span> <span class="o">=</span> <span class="s2">&quot;PGVector&quot;</span>
+    <span class="n">ELASTICSEARCH</span> <span class="o">=</span> <span class="s2">&quot;Elasticsearch&quot;</span>
+    <span class="n">REDIS</span> <span class="o">=</span> <span class="s2">&quot;Redis&quot;</span>
+    <span class="n">SUPABASE</span> <span class="o">=</span> <span class="s2">&quot;Supabase&quot;</span>
+    <span class="n">MONGODB_ATLAS</span> <span class="o">=</span> <span class="s2">&quot;MongoDBAtlas&quot;</span>
+    <span class="n">AZURE_SEARCH</span> <span class="o">=</span> <span class="s2">&quot;AzureSearch&quot;</span>
+    <span class="n">OPENSEARCH</span> <span class="o">=</span> <span class="s2">&quot;OpenSearch&quot;</span>
+    <span class="n">CASSANDRA</span> <span class="o">=</span> <span class="s2">&quot;Cassandra&quot;</span>
+    <span class="n">CLICKHOUSE</span> <span class="o">=</span> <span class="s2">&quot;ClickHouse&quot;</span>
+    <span class="n">TYPESENSE</span> <span class="o">=</span> <span class="s2">&quot;Typesense&quot;</span>
+    <span class="n">LANCEDB</span> <span class="o">=</span> <span class="s2">&quot;LanceDB&quot;</span>
+    <span class="n">NEO4J</span> <span class="o">=</span> <span class="s2">&quot;Neo4j&quot;</span>
+
+<div class="viewcode-block" id="VectorStoreProvider.extend">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreProvider.extend">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extend</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extend the enum with a new provider value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: The enum member name (e.g., &#39;MY_PROVIDER&#39;)</span>
+<span class="sd">            value: The string value (e.g., &#39;MyProvider&#39;)</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This is a workaround to extend an Enum at runtime. For proper type</span>
+<span class="sd">            hinting, use the VectorStoreProviderRegistry instead.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_member_map_</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_value2member_map_</span><span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_member_map_</span><span class="p">[</span><span class="n">name</span><span class="p">]</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="VectorStoreConfig">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">VectorStoreConfig</span><span class="p">(</span><span class="n">InvokableEngine</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Document</span><span class="p">]]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configuration model for a vector store engine.</span>
+
+<span class="sd">    VectorStoreConfig provides a consistent interface for creating and using</span>
+<span class="sd">    vector stores with embeddings. It encapsulates all the configuration needed</span>
+<span class="sd">    to create and interact with various vector store backends, abstracting away</span>
+<span class="sd">    provider-specific implementation details.</span>
+
+<span class="sd">    This class enables:</span>
+<span class="sd">    1. Creating vector stores with various providers (FAISS, Chroma, Pinecone, etc.)</span>
+<span class="sd">    2. Managing documents and embeddings for vector storage</span>
+<span class="sd">    3. Performing similarity searches with configurable parameters</span>
+<span class="sd">    4. Creating retrievers that can be used in retrieval chains</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        engine_type (EngineType): The type of engine (always VECTOR_STORE).</span>
+<span class="sd">        embedding_model (BaseEmbeddingConfig): Configuration for the embedding model.</span>
+<span class="sd">        vector_store_provider (VectorStoreProvider): The vector store provider to use.</span>
+<span class="sd">        documents (List[Document]): Documents to store in the vector store.</span>
+<span class="sd">        vector_store_path (str): Path for storing vector indices on disk.</span>
+<span class="sd">        docstore_path (str): Path for storing document data.</span>
+<span class="sd">        k (int): Default number of documents to retrieve in searches.</span>
+<span class="sd">        score_threshold (Optional[float]): Minimum similarity score for results.</span>
+<span class="sd">        search_type (str): Search algorithm to use (e.g., &quot;similarity&quot;, &quot;mmr&quot;).</span>
+<span class="sd">        vector_store_kwargs (Dict[str, Any]): Additional provider-specific parameters.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider</span>
+<span class="sd">        &gt;&gt;&gt; from haive.core.models.embeddings.base import HuggingFaceEmbeddingConfig</span>
+<span class="sd">        &gt;&gt;&gt; from langchain_core.documents import Document</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Create configuration</span>
+<span class="sd">        &gt;&gt;&gt; config = VectorStoreConfig(</span>
+<span class="sd">        ...     name=&quot;product_search&quot;,</span>
+<span class="sd">        ...     documents=[Document(page_content=&quot;iPhone 13: The latest smartphone from Apple&quot;)],</span>
+<span class="sd">        ...     vector_store_provider=VectorStoreProvider.FAISS,</span>
+<span class="sd">        ...     embedding_model=HuggingFaceEmbeddingConfig(</span>
+<span class="sd">        ...         model=&quot;sentence-transformers/all-MiniLM-L6-v2&quot;</span>
+<span class="sd">        ...     ),</span>
+<span class="sd">        ...     k=5</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Create vector store</span>
+<span class="sd">        &gt;&gt;&gt; vectorstore = config.create_vectorstore()</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Perform similarity search</span>
+<span class="sd">        &gt;&gt;&gt; results = config.similarity_search(&quot;smartphone&quot;, k=3)</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Create a retriever</span>
+<span class="sd">        &gt;&gt;&gt; retriever = config.create_retriever(search_type=&quot;mmr&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">engine_type</span><span class="p">:</span> <span class="n">EngineType</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">EngineType</span><span class="o">.</span><span class="n">VECTOR_STORE</span><span class="p">)</span>
+
+    <span class="c1"># Core components</span>
+    <span class="n">embedding_model</span><span class="p">:</span> <span class="n">BaseEmbeddingConfig</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">HuggingFaceEmbeddingConfig</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="s2">&quot;sentence-transformers/all-mpnet-base-v2&quot;</span>
+        <span class="p">),</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The embedding model to use for the vector store&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">vector_store_provider</span><span class="p">:</span> <span class="n">VectorStoreProvider</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">FAISS</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The type of vector store to use&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Content and storage</span>
+    <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Document</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The raw documents to store&quot;</span>
+    <span class="p">)</span>
+    <span class="n">vector_store_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;vector_store&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The path to the vector store&quot;</span>
+    <span class="p">)</span>
+    <span class="n">docstore_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;docstore&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Where to store raw and processed documents&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Search parameters</span>
+    <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Default number of documents to retrieve&quot;</span><span class="p">)</span>
+    <span class="n">score_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Score threshold for similarity search&quot;</span>
+    <span class="p">)</span>
+    <span class="n">search_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;similarity&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Default search type (similarity, mmr, etc.)&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Additional configuration</span>
+    <span class="n">vector_store_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Optional kwargs for the vector store&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">arbitrary_types_allowed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="VectorStoreConfig.validate_engine_type">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.validate_engine_type">[docs]</a>
+    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;engine_type&quot;</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_engine_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="o">!=</span> <span class="n">EngineType</span><span class="o">.</span><span class="n">VECTOR_STORE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;engine_type must be VECTOR_STORE&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">v</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreConfig.get_input_fields">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.get_input_fields">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_input_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return input field definitions as field_name -&gt; (type, default) pairs.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary mapping field names to (type, default) tuples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
+            <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="s2">&quot;filter&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="s2">&quot;score_threshold&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="s2">&quot;search_type&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreConfig.get_output_fields">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.get_output_fields">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_output_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return output field definitions as field_name -&gt; (type, default) pairs.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary mapping field names to (type, default) tuples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;documents&quot;</span><span class="p">:</span> <span class="p">(</span><span class="nb">list</span><span class="p">[</span><span class="n">Document</span><span class="p">],</span> <span class="p">[])}</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreConfig.add_document">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.add_document">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">:</span> <span class="n">Document</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a single document to the vector store config.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            document: Document to add</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreConfig.add_documents">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.add_documents">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_documents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Document</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add multiple documents to the vector store config.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            documents: List of documents to add</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreConfig.create_runnable">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.create_runnable">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_runnable</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">runnable_config</span><span class="p">:</span> <span class="n">RunnableConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VectorStore</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a vector store instance with configuration applied.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            runnable_config: Optional runtime configuration</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Instantiated vector store</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Extract config parameters</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_runnable_config</span><span class="p">(</span><span class="n">runnable_config</span><span class="p">)</span>
+
+        <span class="c1"># Apply embedding model override if specified</span>
+        <span class="k">if</span> <span class="s2">&quot;embedding_model&quot;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_vectorstore</span><span class="p">(</span><span class="n">embedding</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;embedding_model&quot;</span><span class="p">])</span>
+
+        <span class="c1"># Create vector store with existing configuration</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_vectorstore</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreConfig.similarity_search">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.similarity_search">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">similarity_search</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">score_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">filter</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">search_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">runnable_config</span><span class="p">:</span> <span class="n">RunnableConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Document</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform similarity search with configurable parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            query: Query string</span>
+<span class="sd">            k: Number of documents to retrieve (overrides default)</span>
+<span class="sd">            score_threshold: Score threshold for filtering results</span>
+<span class="sd">            filter: Optional filter for the search</span>
+<span class="sd">            search_type: Search type (similarity, mmr, etc.)</span>
+<span class="sd">            runnable_config: Optional runtime configuration</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of retrieved documents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create vector store</span>
+        <span class="n">vectorstore</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_runnable</span><span class="p">(</span><span class="n">runnable_config</span><span class="p">)</span>
+
+        <span class="c1"># Extract search parameters from config</span>
+        <span class="n">search_params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">runnable_config</span> <span class="ow">and</span> <span class="s2">&quot;configurable&quot;</span> <span class="ow">in</span> <span class="n">runnable_config</span><span class="p">:</span>
+            <span class="n">configurable</span> <span class="o">=</span> <span class="n">runnable_config</span><span class="p">[</span><span class="s2">&quot;configurable&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;k&quot;</span> <span class="ow">in</span> <span class="n">configurable</span><span class="p">:</span>
+                <span class="n">search_params</span><span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configurable</span><span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;score_threshold&quot;</span> <span class="ow">in</span> <span class="n">configurable</span><span class="p">:</span>
+                <span class="n">search_params</span><span class="p">[</span><span class="s2">&quot;score_threshold&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configurable</span><span class="p">[</span><span class="s2">&quot;score_threshold&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;filter&quot;</span> <span class="ow">in</span> <span class="n">configurable</span><span class="p">:</span>
+                <span class="n">search_params</span><span class="p">[</span><span class="s2">&quot;filter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configurable</span><span class="p">[</span><span class="s2">&quot;filter&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;search_type&quot;</span> <span class="ow">in</span> <span class="n">configurable</span><span class="p">:</span>
+                <span class="n">search_type</span> <span class="o">=</span> <span class="n">configurable</span><span class="p">[</span><span class="s2">&quot;search_type&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Override with explicit parameters if provided</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">search_params</span><span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+        <span class="k">if</span> <span class="n">score_threshold</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">search_params</span><span class="p">[</span><span class="s2">&quot;score_threshold&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">score_threshold</span>
+        <span class="k">if</span> <span class="nb">filter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">search_params</span><span class="p">[</span><span class="s2">&quot;filter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">filter</span>
+
+        <span class="c1"># Use default k if not specified</span>
+        <span class="k">if</span> <span class="s2">&quot;k&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">search_params</span><span class="p">:</span>
+            <span class="n">search_params</span><span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span>
+
+        <span class="c1"># Use default search type if not specified</span>
+        <span class="n">search_type</span> <span class="o">=</span> <span class="n">search_type</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_type</span>
+
+        <span class="c1"># Perform search based on search type</span>
+        <span class="k">if</span> <span class="n">search_type</span> <span class="o">==</span> <span class="s2">&quot;similarity&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">vectorstore</span><span class="o">.</span><span class="n">similarity_search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="o">**</span><span class="n">search_params</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">search_type</span> <span class="o">==</span> <span class="s2">&quot;mmr&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">vectorstore</span><span class="o">.</span><span class="n">max_marginal_relevance_search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="o">**</span><span class="n">search_params</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported search type: </span><span class="si">{</span><span class="n">search_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreConfig.invoke">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.invoke">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">invoke</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">input_data</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">runnable_config</span><span class="p">:</span> <span class="n">RunnableConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Document</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Invoke the vector store with input data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            input_data: Query string or dictionary with search parameters</span>
+<span class="sd">            runnable_config: Optional runtime configuration</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of retrieved documents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Handle different input formats</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">input_data</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">score_threshold</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">search_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;query&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filter&quot;</span><span class="p">)</span>
+            <span class="n">score_threshold</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;score_threshold&quot;</span><span class="p">)</span>
+            <span class="n">search_type</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;search_type&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported input type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Perform search</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">similarity_search</span><span class="p">(</span>
+            <span class="n">query</span><span class="p">,</span>
+            <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
+            <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span>
+            <span class="n">score_threshold</span><span class="o">=</span><span class="n">score_threshold</span><span class="p">,</span>
+            <span class="n">search_type</span><span class="o">=</span><span class="n">search_type</span><span class="p">,</span>
+            <span class="n">runnable_config</span><span class="o">=</span><span class="n">runnable_config</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreConfig.create_vectorstore">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.create_vectorstore">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_vectorstore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">async_mode</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VectorStore</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a vector store instance from this configuration.</span>
+
+<span class="sd">        Instantiates a vector store of the configured provider type, using the</span>
+<span class="sd">        documents and embedding model specified in the configuration. This method</span>
+<span class="sd">        handles the details of creating the appropriate vector store class,</span>
+<span class="sd">        initializing it with the correct parameters, and populating it with documents.</span>
+
+<span class="sd">        The method supports both synchronous and asynchronous initialization paths,</span>
+<span class="sd">        and includes special handling for empty document collections.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            async_mode (bool): Whether to use async methods for vector store creation.</span>
+<span class="sd">                Default is False. If True, the method will use asynchronous variants</span>
+<span class="sd">                of the vector store creation methods if available.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            VectorStore: An instantiated vector store of the configured provider type,</span>
+<span class="sd">                populated with the configured documents and using the specified embedding model.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If an empty vector store cannot be created with the specified provider.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; config = VectorStoreConfig(</span>
+<span class="sd">            ...     name=&quot;product_catalog&quot;,</span>
+<span class="sd">            ...     vector_store_provider=VectorStoreProvider.FAISS,</span>
+<span class="sd">            ...     documents=[Document(page_content=&quot;Product description...&quot;)]</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; vectorstore = config.create_vectorstore()</span>
+<span class="sd">            &gt;&gt;&gt;</span>
+<span class="sd">            &gt;&gt;&gt; # With async mode</span>
+<span class="sd">            &gt;&gt;&gt; async def create_async():</span>
+<span class="sd">            ...     return await config.create_vectorstore(async_mode=True)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Dynamically select the backend</span>
+        <span class="n">vs_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_vectorstore_class</span><span class="p">()</span>
+
+        <span class="c1"># Get embedding model</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+
+        <span class="c1"># Check if we have documents</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Creating empty vector store: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Use from_texts with empty list for providers that support it</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">vs_cls</span><span class="p">,</span> <span class="s2">&quot;from_texts&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">vs_cls</span><span class="p">,</span> <span class="s2">&quot;afrom_texts&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">async_mode</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">vs_cls</span><span class="p">,</span> <span class="s2">&quot;afrom_texts&quot;</span><span class="p">):</span>
+                        <span class="k">return</span> <span class="n">vs_cls</span><span class="o">.</span><span class="n">afrom_texts</span><span class="p">(</span>
+                            <span class="p">[],</span> <span class="n">embedding</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_store_kwargs</span>
+                        <span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">vs_cls</span><span class="p">,</span> <span class="s2">&quot;from_texts&quot;</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">vs_cls</span><span class="o">.</span><span class="n">from_texts</span><span class="p">([],</span> <span class="n">embedding</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_store_kwargs</span><span class="p">)</span>
+
+            <span class="c1"># Fallback to empty constructor if available</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">vs_cls</span><span class="p">,</span> <span class="s2">&quot;__init__&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">vs_cls</span><span class="p">(</span><span class="n">embedding_function</span><span class="o">=</span><span class="n">embedding</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_store_kwargs</span><span class="p">)</span>
+
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot create empty vector store with this provider&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Instantiate the vector store with provided documents</span>
+        <span class="k">if</span> <span class="n">async_mode</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">vs_cls</span><span class="o">.</span><span class="n">afrom_documents</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_store_kwargs</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">vs_cls</span><span class="o">.</span><span class="n">from_documents</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_store_kwargs</span>
+        <span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_vectorstore_class</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">VectorStore</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the vector store class based on provider.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            VectorStore class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if provider is in registry first</span>
+        <span class="n">provider_class</span> <span class="o">=</span> <span class="n">VectorStoreProviderRegistry</span><span class="o">.</span><span class="n">get_provider_class</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">provider_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">provider_class</span>
+
+        <span class="c1"># Fall back to built-in providers</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">CHROMA</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chroma</span>
+
+            <span class="k">return</span> <span class="n">Chroma</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">FAISS</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">FAISS</span>
+
+            <span class="k">return</span> <span class="n">FAISS</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">PINECONE</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pinecone</span>
+
+            <span class="k">return</span> <span class="n">Pinecone</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">WEAVIATE</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">Weaviate</span>
+
+            <span class="k">return</span> <span class="n">Weaviate</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">ZILLIZ</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">Zilliz</span>
+
+            <span class="k">return</span> <span class="n">Zilliz</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">MILVUS</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">Milvus</span>
+
+            <span class="k">return</span> <span class="n">Milvus</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">QDRANT</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qdrant</span>
+
+            <span class="k">return</span> <span class="n">Qdrant</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">IN_MEMORY</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">InMemoryVectorStore</span>
+
+            <span class="k">return</span> <span class="n">InMemoryVectorStore</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">PGVECTOR</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">PGVector</span>
+
+            <span class="k">return</span> <span class="n">PGVector</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">ELASTICSEARCH</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElasticsearchStore</span>
+
+            <span class="k">return</span> <span class="n">ElasticsearchStore</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">REDIS</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores.redis</span><span class="w"> </span><span class="kn">import</span> <span class="n">Redis</span>
+
+            <span class="k">return</span> <span class="n">Redis</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">SUPABASE</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">SupabaseVectorStore</span>
+
+            <span class="k">return</span> <span class="n">SupabaseVectorStore</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">MONGODB_ATLAS</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">MongoDBAtlasVectorSearch</span>
+
+            <span class="k">return</span> <span class="n">MongoDBAtlasVectorSearch</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">AZURE_SEARCH</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">AzureSearch</span>
+
+            <span class="k">return</span> <span class="n">AzureSearch</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">OPENSEARCH</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenSearchVectorSearch</span>
+
+            <span class="k">return</span> <span class="n">OpenSearchVectorSearch</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">CASSANDRA</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cassandra</span>
+
+            <span class="k">return</span> <span class="n">Cassandra</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">CLICKHOUSE</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clickhouse</span>
+
+            <span class="k">return</span> <span class="n">Clickhouse</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">TYPESENSE</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">Typesense</span>
+
+            <span class="k">return</span> <span class="n">Typesense</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">LANCEDB</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">LanceDB</span>
+
+            <span class="k">return</span> <span class="n">LanceDB</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span> <span class="o">==</span> <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">NEO4J</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_community.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">Neo4jVector</span>
+
+            <span class="k">return</span> <span class="n">Neo4jVector</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Unsupported vector store provider: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="VectorStoreConfig.create_retriever">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.create_retriever">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_retriever</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">search_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">search_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseRetriever</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a retriever from the vector store.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            search_type: Search type (similarity, mmr, etc.)</span>
+<span class="sd">            search_kwargs: Search parameters</span>
+<span class="sd">            **kwargs: Additional parameters for the retriever</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Configured retriever</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create vector store</span>
+        <span class="n">vectorstore</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_vectorstore</span><span class="p">()</span>
+
+        <span class="c1"># Set default search kwargs if not provided</span>
+        <span class="k">if</span> <span class="n">search_kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">search_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">}</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_threshold</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">search_kwargs</span><span class="p">[</span><span class="s2">&quot;score_threshold&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_threshold</span>
+
+        <span class="c1"># Use specified search type or default</span>
+        <span class="n">search_type</span> <span class="o">=</span> <span class="n">search_type</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_type</span>
+
+        <span class="c1"># Create retriever</span>
+        <span class="k">return</span> <span class="n">vectorstore</span><span class="o">.</span><span class="n">as_retriever</span><span class="p">(</span>
+            <span class="n">search_type</span><span class="o">=</span><span class="n">search_type</span><span class="p">,</span> <span class="n">search_kwargs</span><span class="o">=</span><span class="n">search_kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreConfig.get_vectorstore">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.get_vectorstore">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_vectorstore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">async_mode</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VectorStore</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the vector store with optional embedding override.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            embedding: Optional embedding model override</span>
+<span class="sd">            async_mode: Whether to use async methods</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Instantiated vector store</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">embedding</span><span class="p">:</span>
+            <span class="c1"># Save original embedding</span>
+            <span class="n">original_embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span>
+            <span class="c1"># Set the provided embedding</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span> <span class="o">=</span> <span class="n">embedding</span>
+            <span class="c1"># Create vector store</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_vectorstore</span><span class="p">(</span><span class="n">async_mode</span><span class="p">)</span>
+            <span class="c1"># Restore original embedding</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span> <span class="o">=</span> <span class="n">original_embedding</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_vectorstore</span><span class="p">(</span><span class="n">async_mode</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreConfig.extract_params">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.extract_params">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extract_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract parameters from this engine for serialization.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary of engine parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">extract_params</span><span class="p">()</span>
+
+        <span class="c1"># Add vector store specific parameters</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span>
+                <span class="s2">&quot;search_type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_type</span><span class="p">,</span>
+                <span class="s2">&quot;vector_store_provider&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_store_provider</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_threshold</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;score_threshold&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_threshold</span>
+
+        <span class="k">return</span> <span class="n">params</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreConfig.create_vs_config_from_documents">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.create_vs_config_from_documents">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_vs_config_from_documents</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Document</span><span class="p">],</span>
+        <span class="n">embedding_model</span><span class="p">:</span> <span class="n">BaseEmbeddingConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VectorStoreConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a VectorStoreConfig from a list of documents.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            documents: List of documents to include</span>
+<span class="sd">            embedding_model: Optional embedding model configuration</span>
+<span class="sd">            **kwargs: Additional parameters for the config</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Configured VectorStoreConfig</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">embedding_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">embedding_model</span> <span class="o">=</span> <span class="n">HuggingFaceEmbeddingConfig</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">=</span><span class="s2">&quot;sentence-transformers/all-mpnet-base-v2&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">documents</span><span class="o">=</span><span class="n">documents</span><span class="p">,</span> <span class="n">embedding_model</span><span class="o">=</span><span class="n">embedding_model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreConfig.create_vs_from_documents">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreConfig.create_vs_from_documents">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_vs_from_documents</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Document</span><span class="p">],</span>
+        <span class="n">embedding_model</span><span class="p">:</span> <span class="n">BaseEmbeddingConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VectorStore</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a VectorStore from a list of documents.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            documents: List of documents to include</span>
+<span class="sd">            embedding_model: Optional embedding model configuration</span>
+<span class="sd">            **kwargs: Additional parameters for the config</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Instantiated VectorStore</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">create_vs_config_from_documents</span><span class="p">(</span>
+            <span class="n">documents</span><span class="p">,</span> <span class="n">embedding_model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">create_vectorstore</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="VectorStoreProviderRegistry">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreProviderRegistry">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">VectorStoreProviderRegistry</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Registry for custom vector store providers.</span>
+
+<span class="sd">    This registry allows adding custom vector store providers without modifying</span>
+<span class="sd">    the core VectorStoreProvider enum. It provides a flexible extension mechanism</span>
+<span class="sd">    that supports both direct class registration and lazy-loading through factory</span>
+<span class="sd">    functions, enabling integration with third-party vector store implementations.</span>
+
+<span class="sd">    The registry maintains:</span>
+<span class="sd">    1. A mapping of provider names to vector store classes</span>
+<span class="sd">    2. A mapping of provider names to factory functions that return vector store classes</span>
+<span class="sd">    3. Methods to dynamically extend the VectorStoreProvider enum</span>
+
+<span class="sd">    This approach allows for runtime extension of the vector store system without</span>
+<span class="sd">    modifying core code, supporting both built-in and custom provider implementations.</span>
+
+<span class="sd">    Class Attributes:</span>
+<span class="sd">        providers (Dict[Union[str, VectorStoreProvider], Type[VectorStore]]):</span>
+<span class="sd">            Direct mapping of provider names to vector store classes.</span>
+<span class="sd">        provider_factories (Dict[Union[str, VectorStoreProvider], Callable[..., Type[VectorStore]]]):</span>
+<span class="sd">            Mapping of provider names to factory functions.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from haive.core.engine.vectorstore import VectorStoreProviderRegistry</span>
+<span class="sd">        &gt;&gt;&gt; from langchain_community.vectorstores import Chroma</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Register a custom vector store class directly</span>
+<span class="sd">        &gt;&gt;&gt; class MyCustomVectorStore(VectorStore):</span>
+<span class="sd">        ...     # Implementation...</span>
+<span class="sd">        ...     pass</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; VectorStoreProviderRegistry.register_provider(&quot;MyCustomStore&quot;, MyCustomVectorStore)</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Register a factory function for lazy loading</span>
+<span class="sd">        &gt;&gt;&gt; def get_special_vector_store():</span>
+<span class="sd">        ...     # Import and return the class only when needed</span>
+<span class="sd">        ...     from my_package.vectorstores import SpecialVectorStore</span>
+<span class="sd">        ...     return SpecialVectorStore</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; VectorStoreProviderRegistry.register_provider_factory(&quot;SpecialStore&quot;, get_special_vector_store)</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Use the registered providers</span>
+<span class="sd">        &gt;&gt;&gt; providers = VectorStoreProviderRegistry.list_providers()</span>
+<span class="sd">        &gt;&gt;&gt; &quot;MyCustomStore&quot; in providers</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Use class variables without underscore prefixes for Pydantic</span>
+    <span class="c1"># compatibility</span>
+    <span class="n">providers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">VectorStoreProvider</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">VectorStore</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">provider_factories</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
+        <span class="nb">str</span> <span class="o">|</span> <span class="n">VectorStoreProvider</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">VectorStore</span><span class="p">]]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="VectorStoreProviderRegistry.register_provider">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreProviderRegistry.register_provider">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_provider</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">provider_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">VectorStoreProvider</span><span class="p">,</span>
+        <span class="n">provider_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">VectorStore</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a vector store provider class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            provider_name: Name or enum value for the provider</span>
+<span class="sd">            provider_class: The VectorStore class to use for this provider</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">providers</span><span class="p">[</span><span class="n">provider_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">provider_class</span>
+
+        <span class="c1"># If it&#39;s a string, try to extend the enum</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">provider_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span>
+            <span class="n">provider</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">provider_name</span> <span class="k">for</span> <span class="n">provider</span> <span class="ow">in</span> <span class="n">VectorStoreProvider</span>
+        <span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">enum_name</span> <span class="o">=</span> <span class="n">provider_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+                <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">enum_name</span><span class="p">,</span> <span class="n">provider_name</span><span class="p">)</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">providers</span><span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">VectorStoreProvider</span><span class="p">,</span> <span class="n">enum_name</span><span class="p">)]</span> <span class="o">=</span> <span class="n">provider_class</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not extend VectorStoreProvider enum: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreProviderRegistry.register_provider_factory">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreProviderRegistry.register_provider_factory">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_provider_factory</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">provider_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">VectorStoreProvider</span><span class="p">,</span>
+        <span class="n">factory</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">VectorStore</span><span class="p">]],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a factory function that returns a vector store class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            provider_name: Name or enum value for the provider</span>
+<span class="sd">            factory: Function that returns a VectorStore class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">provider_factories</span><span class="p">[</span><span class="n">provider_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">factory</span>
+
+        <span class="c1"># If it&#39;s a string, try to extend the enum</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">provider_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span>
+            <span class="n">provider</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">provider_name</span> <span class="k">for</span> <span class="n">provider</span> <span class="ow">in</span> <span class="n">VectorStoreProvider</span>
+        <span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">enum_name</span> <span class="o">=</span> <span class="n">provider_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+                <span class="n">VectorStoreProvider</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">enum_name</span><span class="p">,</span> <span class="n">provider_name</span><span class="p">)</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">provider_factories</span><span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">VectorStoreProvider</span><span class="p">,</span> <span class="n">enum_name</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">factory</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not extend VectorStoreProvider enum: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreProviderRegistry.get_provider_class">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreProviderRegistry.get_provider_class">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_provider_class</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">provider_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">VectorStoreProvider</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">VectorStore</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the vector store class for a provider.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            provider_name: Name or enum value for the provider</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            VectorStore class if found, None otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check direct registrations first</span>
+        <span class="k">if</span> <span class="n">provider_class</span> <span class="o">:=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">provider_name</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">provider_class</span>
+
+        <span class="c1"># Check if we have a factory for this provider</span>
+        <span class="k">if</span> <span class="n">factory</span> <span class="o">:=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">provider_factories</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">provider_name</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">provider_class</span> <span class="o">=</span> <span class="n">factory</span><span class="p">()</span>
+                <span class="c1"># Cache the result</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">providers</span><span class="p">[</span><span class="n">provider_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">provider_class</span>
+                <span class="k">return</span> <span class="n">provider_class</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error creating vector store class from factory: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="VectorStoreProviderRegistry.list_providers">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/index.html#haive.core.engine.vectorstore.VectorStoreProviderRegistry.list_providers">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_providers</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List all registered provider names.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of provider names</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">providers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="c1"># Add enum values</span>
+        <span class="k">for</span> <span class="n">provider</span> <span class="ow">in</span> <span class="n">VectorStoreProvider</span><span class="p">:</span>
+            <span class="n">providers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">provider</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># Add string keys</span>
+        <span class="k">for</span> <span class="n">provider</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">provider_factories</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">provider</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">providers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">provider</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">providers</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># Shorthand creator functions</span>
+<div class="viewcode-block" id="create_vectorstore">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/vectorstore/index.html#haive.core.engine.vectorstore.create_vectorstore">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_vectorstore</span><span class="p">(</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">VectorStoreConfig</span><span class="p">,</span> <span class="n">async_mode</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VectorStore</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a vector store from a configuration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config: Vector store configuration</span>
+<span class="sd">        async_mode: Whether to use async methods</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Instantiated vector store</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">create_vectorstore</span><span class="p">(</span><span class="n">async_mode</span><span class="o">=</span><span class="n">async_mode</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_retriever">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/vectorstore/index.html#haive.core.engine.vectorstore.create_retriever">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_retriever</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">VectorStoreConfig</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseRetriever</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a retriever from a vector store configuration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config: Vector store configuration</span>
+<span class="sd">        **kwargs: Additional parameters for the retriever</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Configured retriever</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">create_retriever</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_vs_config_from_documents">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/vectorstore/index.html#haive.core.engine.vectorstore.create_vs_config_from_documents">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_vs_config_from_documents</span><span class="p">(</span>
+    <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Document</span><span class="p">],</span>
+    <span class="n">embedding_model</span><span class="p">:</span> <span class="n">BaseEmbeddingConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VectorStoreConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a VectorStoreConfig from a list of documents.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        documents: List of documents to include</span>
+<span class="sd">        embedding_model: Optional embedding model configuration</span>
+<span class="sd">        **kwargs: Additional parameters for the config</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Configured VectorStoreConfig</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">VectorStoreConfig</span><span class="o">.</span><span class="n">create_vs_config_from_documents</span><span class="p">(</span>
+        <span class="n">documents</span><span class="p">,</span> <span class="n">embedding_model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_vs_from_documents">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/vectorstore/index.html#haive.core.engine.vectorstore.create_vs_from_documents">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_vs_from_documents</span><span class="p">(</span>
+    <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Document</span><span class="p">],</span>
+    <span class="n">embedding_model</span><span class="p">:</span> <span class="n">BaseEmbeddingConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VectorStore</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a VectorStore from a list of documents.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        documents: List of documents to include</span>
+<span class="sd">        embedding_model: Optional embedding model configuration</span>
+<span class="sd">        **kwargs: Additional parameters for the config</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Instantiated VectorStore</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">VectorStoreConfig</span><span class="o">.</span><span class="n">create_vs_from_documents</span><span class="p">(</span>
+        <span class="n">documents</span><span class="p">,</span> <span class="n">embedding_model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_retriever_from_documents">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/engine/vectorstore/vectorstore/index.html#haive.core.engine.vectorstore.create_retriever_from_documents">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_retriever_from_documents</span><span class="p">(</span>
+    <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Document</span><span class="p">],</span>
+    <span class="n">embedding_model</span><span class="p">:</span> <span class="n">BaseEmbeddingConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseRetriever</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a retriever directly from documents.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        documents: List of documents to include</span>
+<span class="sd">        embedding_model: Optional embedding model configuration</span>
+<span class="sd">        **kwargs: Additional parameters for the retriever</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Configured retriever</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">VectorStoreConfig</span><span class="o">.</span><span class="n">create_vs_config_from_documents</span><span class="p">(</span>
+        <span class="n">documents</span><span class="p">,</span> <span class="n">embedding_model</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">create_retriever</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

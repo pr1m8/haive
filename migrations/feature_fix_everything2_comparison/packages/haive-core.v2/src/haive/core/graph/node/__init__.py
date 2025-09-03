@@ -93,6 +93,8 @@ Factory functions for quick node creation::
     )
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 from typing import Any
 
@@ -101,67 +103,68 @@ from langgraph.prebuilt import ToolNode, ValidationNode
 from langgraph.types import Command, RetryPolicy, Send
 from pydantic import BaseModel
 
+from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.engine_node import EngineNodeConfig
+
 # ===== ENGINE NODES =====
-from .engine_node import EngineNodeConfig
 
 # Try to import additional engine nodes
 try:
-    from .engine_node_generic import GenericEngineNode
+    from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.engine_node_generic import GenericEngineNode
 except ImportError:
     GenericEngineNode = None
 
 # ===== AGENT NODES =====
-from .agent_node_v3 import AgentNodeV3Config as AgentNodeV3
+from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.agent_node_v3 import AgentNodeV3Config as AgentNodeV3
 
 # Try to import additional agent nodes
 try:
-    from .multi_agent_node import MultiAgentNode
+    from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.multi_agent_node import MultiAgentNode
 except ImportError:
     MultiAgentNode = None
 
 try:
-    from .intelligent_multi_agent_node import IntelligentMultiAgentNode
+    from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.intelligent_multi_agent_node import IntelligentMultiAgentNode
 except ImportError:
     IntelligentMultiAgentNode = None
 
 # ===== VALIDATION & ROUTING NODES =====
 try:
-    from .validation_node_config import ValidationNodeConfig
+    from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.validation_node_config import ValidationNodeConfig
 except ImportError:
     ValidationNodeConfig = None
 
 try:
-    from .routing_validation_node import RoutingValidationNode
+    from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.routing_validation_node import RoutingValidationNode
 except ImportError:
     RoutingValidationNode = None
 
 try:
-    from .state_updating_validation_node import StateUpdatingValidationNode
+    from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.state_updating_validation_node import StateUpdatingValidationNode
 except ImportError:
     StateUpdatingValidationNode = None
 
 try:
-    from .unified_validation_node import UnifiedValidationNode
+    from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.unified_validation_node import UnifiedValidationNode
 except ImportError:
     UnifiedValidationNode = None
 
 # ===== FIELD MAPPING & COMPOSITION =====
 try:
-    from .composer.field_mapping import FieldMapping, FieldMappingConfig
+    from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.composer.field_mapping import FieldMapping, FieldMappingConfig
 except ImportError:
     FieldMapping = None
     FieldMappingConfig = None
 
 try:
-    from .composer.node_schema_composer import NodeSchemaComposer
+    from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.composer.node_schema_composer import NodeSchemaComposer
 except ImportError:
     NodeSchemaComposer = None
 
 # ===== BASE CLASSES & TYPES =====
-from .config import NodeConfig
+from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.config import NodeConfig
 
 # Import decorators for compatibility
-from .decorators import (
+from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.decorators import (
     branch_node,
     register_node,
     send_node,
@@ -170,9 +173,9 @@ from .decorators import (
 )
 
 # ===== UTILITIES & FACTORIES =====
-from .factory import NodeFactory
-from .registry import NodeRegistry
-from .types import (
+from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.factory import NodeFactory
+from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.registry import NodeRegistry
+from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.types import (
     AsyncNodeFunction,
     CommandGoto,
     ConfigType,
@@ -183,7 +186,7 @@ from .types import (
 )
 
 # Import utility functions
-from .utils import (
+from migrations.feature_fix_everything2_comparison.packages.haive-core.v2.src.haive.core.graph.node.utils import (
     create_send_node,
     extract_io_mapping_from_schema,
 )
@@ -198,7 +201,7 @@ def create_node(
     input_mapping: dict[str, str] | None = None,
     output_mapping: dict[str, str] | None = None,
     retry_policy: RetryPolicy | None = None,
-    **kwargs
+    **kwargs,
 ) -> NodeFunction:
     """Create a node function from an engine or callable.
 
@@ -231,13 +234,14 @@ def create_node(
     """
     # Create node config
     node_config = NodeConfig(
-        name=name or getattr(engine_or_callable, "name", None) or "unnamed_node",
+        name=name or getattr(engine_or_callable, 'name', None)
+        or 'unnamed_node',
         engine=engine_or_callable,
         command_goto=command_goto,
         input_mapping=input_mapping,
         output_mapping=output_mapping,
         retry_policy=retry_policy,
-        **kwargs
+        **kwargs,
     )
 
     # Create and return node function
@@ -282,7 +286,7 @@ def create_validation_node(
     schemas: list[type[BaseModel] | Callable],
     name: str | None = None,
     command_goto: CommandGoto | None = None,
-    messages_key: str = "messages",
+    messages_key: str = 'messages',
 ) -> NodeFunction:
     """Create a validation node.
 
@@ -300,12 +304,12 @@ def create_validation_node(
     """
     return create_node(
         None,
-        name=name or "validation",
+        name=name or 'validation',
         node_type=NodeType.VALIDATION,
         command_goto=command_goto,
-        input_mapping=(
-            {"messages": messages_key} if messages_key != "messages" else None
-        ),
+        input_mapping=({
+            'messages': messages_key
+        } if messages_key != 'messages' else None),
         validation_schemas=schemas,
     )
 
@@ -314,7 +318,7 @@ def create_tool_node(
     tools: list[Any],
     name: str | None = None,
     command_goto: CommandGoto | None = None,
-    messages_key: str = "messages",
+    messages_key: str = 'messages',
     handle_tool_errors: bool | str | Callable[..., str] = True,
 ) -> NodeFunction:
     """Create a tool node.
@@ -333,12 +337,12 @@ def create_tool_node(
     """
     return create_node(
         None,
-        name=name or "tools",
+        name=name or 'tools',
         node_type=NodeType.TOOL,
         command_goto=command_goto,
-        input_mapping=(
-            {"messages": messages_key} if messages_key != "messages" else None
-        ),
+        input_mapping=({
+            'messages': messages_key
+        } if messages_key != 'messages' else None),
         tools=tools,
         handle_tool_errors=handle_tool_errors,
     )
@@ -366,7 +370,7 @@ def create_branch_node(
     """
     return create_node(
         None,
-        name=name or "branch",
+        name=name or 'branch',
         node_type=NodeType.BRANCH,
         input_mapping=input_mapping,
         condition=condition,
@@ -379,7 +383,8 @@ def get_registry() -> NodeRegistry:
     return NodeRegistry.get_instance()
 
 
-def register_custom_node_type(name: str, config_class: type[NodeConfig]) -> None:
+def register_custom_node_type(name: str,
+                              config_class: type[NodeConfig]) -> None:
     """Register a custom node type."""
     NodeRegistry.get_instance().register_custom_node_type(name, config_class)
 
@@ -389,64 +394,64 @@ factory = NodeFactory()
 
 # Build __all__ list dynamically based on what's available
 __all__ = [
-    "END",
-    "AgentNodeV3",
+    'END',
+    'AgentNodeV3',
     # ===== TYPES =====
-    "AsyncNodeFunction",
+    'AsyncNodeFunction',
     # ===== LANGRAPH RE-EXPORTS =====
-    "Command",
-    "CommandGoto",
-    "ConfigType",
-    "EngineNodeConfig",
+    'Command',
+    'CommandGoto',
+    'ConfigType',
+    'EngineNodeConfig',
     # ===== CORE CLASSES =====
-    "NodeConfig",
+    'NodeConfig',
     # ===== UTILITIES =====
-    "NodeFactory",
-    "NodeFunction",
-    "NodeRegistry",
-    "NodeType",
-    "RetryPolicy",
-    "Send",
-    "StateInput",
-    "StateOutput",
-    "ToolNode",
-    "ValidationNode",
+    'NodeFactory',
+    'NodeFunction',
+    'NodeRegistry',
+    'NodeType',
+    'RetryPolicy',
+    'Send',
+    'StateInput',
+    'StateOutput',
+    'ToolNode',
+    'ValidationNode',
     # ===== DECORATORS =====
-    "branch_node",
-    "create_branch_node",
-    "create_engine_node",
+    'branch_node',
+    'create_branch_node',
+    'create_engine_node',
     # ===== FACTORY FUNCTIONS =====
-    "create_node",
-    "create_send_node",
-    "create_tool_node",
-    "create_validation_node",
+    'create_node',
+    'create_send_node',
+    'create_tool_node',
+    'create_validation_node',
     # ===== UTILITIES =====
-    "extract_io_mapping_from_schema",
-    "factory",
-    "get_registry",
-    "register_custom_node_type",
-    "register_node",
-    "send_node",
-    "tool_node",
-    "validation_node",
+    'extract_io_mapping_from_schema',
+    'factory',
+    'get_registry',
+    'register_custom_node_type',
+    'register_node',
+    'send_node',
+    'tool_node',
+    'validation_node',
 ]
 
 # Add conditionally available items
 if GenericEngineNode:
-    __all__.append("GenericEngineNode")
+    __all__.append('GenericEngineNode')
 if MultiAgentNode:
-    __all__.append("MultiAgentNode")
+    __all__.append('MultiAgentNode')
 if IntelligentMultiAgentNode:
-    __all__.append("IntelligentMultiAgentNode")
+    __all__.append('IntelligentMultiAgentNode')
 if ValidationNodeConfig:
-    __all__.append("ValidationNodeConfig")
+    __all__.append('ValidationNodeConfig')
 if RoutingValidationNode:
-    __all__.append("RoutingValidationNode")
+    __all__.append('RoutingValidationNode')
 if StateUpdatingValidationNode:
-    __all__.append("StateUpdatingValidationNode")
+    __all__.append('StateUpdatingValidationNode')
 if UnifiedValidationNode:
-    __all__.append("UnifiedValidationNode")
+    __all__.append('UnifiedValidationNode')
 if FieldMapping:
-    __all__.extend(["FieldMapping", "FieldMappingConfig"])
+    __all__.extend(['FieldMapping', 'FieldMappingConfig'])
 if NodeSchemaComposer:
-    __all__.append("NodeSchemaComposer")
+    __all__.append('NodeSchemaComposer')

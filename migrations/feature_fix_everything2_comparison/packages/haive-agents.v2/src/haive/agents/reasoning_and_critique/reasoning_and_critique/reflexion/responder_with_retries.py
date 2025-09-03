@@ -11,15 +11,17 @@ Functions:
 
 import json
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import ToolMessage
 from langchain_core.output_parsers import PydanticToolsParser
 from langgraph.types import Command
 from pydantic import BaseModel, ValidationError
 
+from haive.core.engine.aug_llm import AugLLMConfig
+
 
 class ResponderWithRetries:
-    """A responder that retries a given runnable a number of times if it fails to validate."""
+    """A responder that retries a given runnable a number of times if it fails
+    to validate."""
 
     def __init__(
         self,
@@ -43,7 +45,8 @@ class ResponderWithRetries:
         reflections_count = state.reflections_count
         for attempt in range(self.num_retries):
             response = self.runnable.invoke(
-                {"messages": state.messages}, {"tags": [f"attempt:{attempt}"]}
+                {"messages": state.messages},
+                {"tags": [f"attempt:{attempt}"]},
             )
             try:
                 self.validator.invoke(response)
@@ -52,7 +55,7 @@ class ResponderWithRetries:
                         update={
                             "messages": response,
                             "reflections_count": reflections_count + 1,
-                        }
+                        },
                     )
                 return Command(update={"messages": response})
             except ValidationError as e:
@@ -70,6 +73,6 @@ class ResponderWithRetries:
                 update={
                     "messages": response,
                     "reflections_count": reflections_count + 1,
-                }
+                },
             )
         return Command(update={"messages": response})

@@ -1,0 +1,552 @@
+
+/* Haive Documentation Custom Styles */
+
+/* Modern fonts */
+body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.7;
+}
+
+code, pre, .rst-content tt, .rst-content code {
+    font-family: 'Fira Code', 'JetBrains Mono', Consolas, Monaco, 'Courier New', monospace;
+    font-variant-ligatures: normal;
+}
+
+/* Better headings */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+/* Enhanced code blocks */
+.highlight {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin: 1.5em 0;
+    position: relative;
+}
+
+.highlight pre {
+    margin: 0;
+    padding: 1.25em;
+    overflow-x: auto;
+}
+
+/* Copy button styling */
+.highlight button.copybtn {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.highlight:hover button.copybtn {
+    opacity: 1;
+}
+
+/* API documentation enhancements */
+.py.class, .py.function, .py.method {
+    margin: 2em 0;
+    border-left: 3px solid #2563eb;
+    padding-left: 1em;
+    transition: all 0.2s ease;
+}
+
+.py.class:hover, .py.function:hover, .py.method:hover {
+    border-left-color: #1d4ed8;
+    background: rgba(37, 99, 235, 0.03);
+}
+
+.py.class > dt, .py.function > dt, .py.method > dt {
+    background: #f8fafc;
+    padding: 0.75em 1em;
+    font-weight: 600;
+    border-radius: 0 6px 6px 0;
+    font-size: 1.05em;
+}
+
+/* Enum styling */
+.py.class.enum {
+    border-left-color: #8b5cf6;
+}
+
+.py.class.enum:hover {
+    border-left-color: #7c3aed;
+    background: rgba(139, 92, 246, 0.03);
+}
+
+.py.class.enum > dt {
+    background: #faf5ff;
+}
+
+/* Attribute and data field styling */
+.py.attribute, .py.data {
+    margin: 1.5em 0;
+    border-left: 3px solid #10b981;
+    padding-left: 1em;
+    transition: all 0.2s ease;
+}
+
+.py.attribute:hover, .py.data:hover {
+    border-left-color: #059669;
+    background: rgba(16, 185, 129, 0.03);
+}
+
+.py.attribute > dt, .py.data > dt {
+    background: #f0fdf4;
+    padding: 0.5em 1em;
+    font-weight: 600;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.95em;
+}
+
+/* Property styling */
+.py.property {
+    margin: 1.5em 0;
+    border-left: 3px solid #f59e0b;
+    padding-left: 1em;
+}
+
+.py.property:hover {
+    border-left-color: #d97706;
+    background: rgba(245, 158, 11, 0.03);
+}
+
+.py.property > dt {
+    background: #fffbeb;
+    padding: 0.5em 1em;
+    font-weight: 600;
+    border-radius: 0 6px 6px 0;
+}
+
+/* Exception styling */
+.py.exception {
+    margin: 2em 0;
+    border-left: 3px solid #ef4444;
+    padding-left: 1em;
+}
+
+.py.exception:hover {
+    border-left-color: #dc2626;
+    background: rgba(239, 68, 68, 0.03);
+}
+
+.py.exception > dt {
+    background: #fef2f2;
+    padding: 0.75em 1em;
+    font-weight: 600;
+    border-radius: 0 6px 6px 0;
+}
+
+/* Module styling */
+.py.module {
+    margin: 2em 0;
+    border-left: 3px solid #6366f1;
+    padding-left: 1em;
+}
+
+.py.module > dt {
+    background: #eef2ff;
+    padding: 0.75em 1em;
+    font-weight: 600;
+    border-radius: 0 6px 6px 0;
+    font-size: 1.1em;
+}
+
+/* Type alias and TypeVar styling */
+.py.type, .py.typevar {
+    margin: 1.5em 0;
+    border-left: 3px solid #ec4899;
+    padding-left: 1em;
+}
+
+.py.type > dt, .py.typevar > dt {
+    background: #fdf2f8;
+    padding: 0.5em 1em;
+    font-weight: 600;
+    border-radius: 0 6px 6px 0;
+}
+
+/* Constant/literal values */
+.py.data code.literal {
+    background: #dbeafe;
+    color: #1e40af;
+    font-weight: 600;
+}
+
+/* Enum member values */
+.py.attribute code.literal {
+    background: #e9d5ff;
+    color: #6b21a8;
+    font-weight: 600;
+}
+
+/* Parameter names in signatures */
+.sig-param .n {
+    color: #059669;
+    font-weight: 500;
+}
+
+/* Type annotations */
+.sig-param .p {
+    color: #6b7280;
+}
+
+/* Return type annotations */
+.sig-return {
+    color: #7c3aed;
+}
+
+/* Class bases */
+.sig-paren + .p + .n {
+    color: #2563eb;
+    font-style: italic;
+}
+
+/* Better admonitions */
+.admonition {
+    border-radius: 8px;
+    padding: 1.25em;
+    margin: 1.5em 0;
+    border-left: 4px solid;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.admonition.note {
+    background: #eff6ff;
+    border-color: #3b82f6;
+}
+
+.admonition.warning {
+    background: #fffbeb;
+    border-color: #f59e0b;
+}
+
+.admonition.danger, .admonition.error {
+    background: #fef2f2;
+    border-color: #ef4444;
+}
+
+.admonition.tip, .admonition.hint {
+    background: #f0fdf4;
+    border-color: #10b981;
+}
+
+.admonition-title {
+    font-weight: 600;
+    margin-bottom: 0.5em;
+}
+
+/* Navigation improvements */
+.toctree-wrapper {
+    margin: 2.5em 0;
+}
+
+.toctree-wrapper .caption {
+    font-weight: 700;
+    font-size: 1.25em;
+    margin-bottom: 0.75em;
+    color: #1f2937;
+}
+
+/* Tables */
+table.docutils {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1.5em 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table.docutils td, table.docutils th {
+    border: 1px solid #e5e7eb;
+    padding: 0.75em 1em;
+}
+
+table.docutils th {
+    background: #f9fafb;
+    font-weight: 600;
+}
+
+table.docutils tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* Inline code */
+code.literal {
+    background: #f1f5f9;
+    padding: 0.125em 0.375em;
+    border-radius: 4px;
+    font-size: 0.875em;
+    color: #0f172a;
+    font-weight: 500;
+}
+
+/* Search styling */
+.search input[type="text"] {
+    width: 100%;
+    padding: 0.75em 1em;
+    border: 2px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border-color 0.2s;
+}
+
+.search input[type="text"]:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+/* Sidebar enhancements */
+.sidebar {
+    background: #f9fafb;
+    border-right: 1px solid #e5e7eb;
+}
+
+.sidebar .caption {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.875em;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    margin: 1.5em 0 0.5em 0;
+}
+
+/* Module index cards */
+.modindex-jumpbox {
+    background: #f8fafc;
+    padding: 1.5em;
+    border-radius: 8px;
+    margin-bottom: 2em;
+    border: 1px solid #e5e7eb;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .content {
+        padding: 1em;
+    }
+    
+    .py.class, .py.function, .py.method {
+        margin: 1em 0;
+        padding-left: 0.5em;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body[data-theme="auto"] {
+        --color-background: #0f172a;
+        --color-foreground: #f1f5f9;
+    }
+    
+    .highlight {
+        background: #1e293b !important;
+        border-color: #334155;
+    }
+    
+    code.literal {
+        background: #334155;
+        color: #f1f5f9;
+    }
+    
+    .admonition {
+        filter: brightness(0.8);
+    }
+    
+    /* Dark mode API colors */
+    .py.class, .py.function, .py.method {
+        border-left-color: #60a5fa;
+    }
+    
+    .py.class > dt, .py.function > dt, .py.method > dt {
+        background: #1e293b;
+    }
+    
+    .py.class.enum {
+        border-left-color: #a78bfa;
+    }
+    
+    .py.class.enum > dt {
+        background: #2e1065;
+    }
+    
+    .py.attribute, .py.data {
+        border-left-color: #34d399;
+    }
+    
+    .py.attribute > dt, .py.data > dt {
+        background: #064e3b;
+    }
+    
+    .py.property {
+        border-left-color: #fbbf24;
+    }
+    
+    .py.property > dt {
+        background: #451a03;
+    }
+    
+    .py.exception {
+        border-left-color: #f87171;
+    }
+    
+    .py.exception > dt {
+        background: #450a0a;
+    }
+    
+    .py.module {
+        border-left-color: #818cf8;
+    }
+    
+    .py.module > dt {
+        background: #312e81;
+    }
+    
+    .py.type, .py.typevar {
+        border-left-color: #f472b6;
+    }
+    
+    .py.type > dt, .py.typevar > dt {
+        background: #500724;
+    }
+    
+    /* Dark mode value colors */
+    .py.data code.literal {
+        background: #1e3a8a;
+        color: #93c5fd;
+    }
+    
+    .py.attribute code.literal {
+        background: #581c87;
+        color: #d8b4fe;
+    }
+    
+    .sig-param .n {
+        color: #86efac;
+    }
+    
+    .sig-return {
+        color: #c4b5fd;
+    }
+}
+
+/* Sphinx design cards */
+.sd-card {
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
+}
+
+.sd-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Tabs styling */
+.sphinx-tabs {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.sphinx-tabs .sphinx-tabs-nav {
+    background: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.sphinx-tabs .sphinx-tabs-tab[aria-selected="true"] {
+    background: white;
+    border-bottom: 2px solid #2563eb;
+}
+
+/* Toggle button styling */
+.toggle-button {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.toggle-button:hover {
+    background: #e5e7eb;
+}
+
+/* API page improvements */
+.api h1 {
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+
+.api .toc-tree {
+    background: #f9fafb;
+    padding: 1em;
+    border-radius: 8px;
+    margin: 1em 0;
+}
+
+/* Collapsible navigation improvements */
+.sidebar-tree .toctree-l1 > a {
+    font-weight: 600;
+    padding: 0.5em 1em;
+}
+
+.sidebar-tree .toctree-l2 {
+    font-size: 0.95em;
+}
+
+.sidebar-tree .toctree-l3 {
+    font-size: 0.9em;
+    margin-left: 1em;
+}
+
+/* Collapse/expand indicators */
+.toctree-expand {
+    cursor: pointer;
+    user-select: none;
+}
+
+.toctree-expand::before {
+    content: "▶";
+    display: inline-block;
+    margin-right: 0.5em;
+    transition: transform 0.2s;
+    font-size: 0.8em;
+}
+
+.toctree-expand.expanded::before {
+    transform: rotate(90deg);
+}
+
+/* Hide deeply nested items by default */
+.toctree-l3, .toctree-l4, .toctree-l5 {
+    display: none;
+}
+
+.toctree-l2.current-page ~ .toctree-l3,
+.toctree-l2.expanded ~ .toctree-l3,
+.toctree-l3.current-page ~ .toctree-l4,
+.toctree-l3.expanded ~ .toctree-l4 {
+    display: block;
+}
+
+/* Better hierarchy visualization */
+.sidebar-tree .toctree-l1 {
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+}
+
+.sidebar-tree .toctree-l1.current {
+    border-left-color: #2563eb;
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.sidebar-tree .toctree-l1:hover {
+    border-left-color: #60a5fa;
+    background: rgba(96, 165, 250, 0.05);
+}

@@ -1,12 +1,14 @@
 """Data models for Labs Agent."""
 
+from __future__ import annotations
+
 from datetime import datetime
 from enum import Enum
 from typing import Any
 
-from pydantic import BaseModel, Field
-
 from haive.agents.memory.search.base import SearchResponse
+from pydantic import BaseModel
+from pydantic import Field
 
 
 class AssetType(str, Enum):
@@ -33,11 +35,13 @@ class ProjectAsset(BaseModel):
     content: str | None = Field(default=None, description="Asset content or code")
     metadata: dict[str, Any] = Field(default_factory=dict, description="Asset metadata")
     created_at: datetime = Field(
-        default_factory=datetime.now, description="Creation timestamp"
+        default_factory=datetime.now,
+        description="Creation timestamp",
     )
     size_bytes: int = Field(default=0, description="Asset size in bytes")
     downloadable: bool = Field(
-        default=True, description="Whether asset can be downloaded"
+        default=True,
+        description="Whether asset can be downloaded",
     )
 
 
@@ -49,15 +53,18 @@ class WorkflowStep(BaseModel):
     description: str = Field(..., description="Step description")
     tool_used: str | None = Field(default=None, description="Tool used for this step")
     input_data: dict[str, Any] = Field(
-        default_factory=dict, description="Input data for step"
+        default_factory=dict,
+        description="Input data for step",
     )
     output_data: dict[str, Any] = Field(
-        default_factory=dict, description="Output data from step"
+        default_factory=dict,
+        description="Output data from step",
     )
     duration_seconds: float = Field(default=0.0, description="Step execution time")
     success: bool = Field(default=True, description="Whether step succeeded")
     error_message: str | None = Field(
-        default=None, description="Error message if failed"
+        default=None,
+        description="Error message if failed",
     )
 
 
@@ -68,19 +75,23 @@ class InteractiveApp(BaseModel):
     name: str = Field(..., description="App name")
     description: str = Field(..., description="App description")
     app_type: str = Field(
-        ..., description="Type of app (dashboard, slideshow, website)"
+        ...,
+        description="Type of app (dashboard, slideshow, website)",
     )
     html_content: str = Field(..., description="HTML content of the app")
     css_styles: str | None = Field(default=None, description="CSS styles")
     javascript_code: str | None = Field(default=None, description="JavaScript code")
     data_sources: list[str] = Field(
-        default_factory=list, description="Data sources used"
+        default_factory=list,
+        description="Data sources used",
     )
     interactive_elements: list[str] = Field(
-        default_factory=list, description="Interactive elements"
+        default_factory=list,
+        description="Interactive elements",
     )
     deployment_url: str | None = Field(
-        default=None, description="Deployment URL if deployed"
+        default=None,
+        description="Deployment URL if deployed",
     )
 
 
@@ -93,32 +104,41 @@ class LabsResponse(SearchResponse):
     search_type: str = Field(default="Labs", description="Type of search performed")
     project_name: str = Field(default="", description="Name of the project")
     workflow_steps: list[WorkflowStep] = Field(
-        default_factory=list, description="Workflow steps executed"
+        default_factory=list,
+        description="Workflow steps executed",
     )
     assets_created: list[ProjectAsset] = Field(
-        default_factory=list, description="Assets created"
+        default_factory=list,
+        description="Assets created",
     )
     interactive_apps: list[InteractiveApp] = Field(
-        default_factory=list, description="Interactive apps created"
+        default_factory=list,
+        description="Interactive apps created",
     )
     total_work_time: float = Field(
-        default=0.0, description="Total work time in seconds"
+        default=0.0,
+        description="Total work time in seconds",
     )
     tools_used: list[str] = Field(
-        default_factory=list, description="Tools used in workflow"
+        default_factory=list,
+        description="Tools used in workflow",
     )
     code_execution_results: list[dict[str, Any]] = Field(
-        default_factory=list, description="Code execution results"
+        default_factory=list,
+        description="Code execution results",
     )
     data_analysis_results: dict[str, Any] = Field(
-        default_factory=dict, description="Data analysis results"
+        default_factory=dict,
+        description="Data analysis results",
     )
     visualizations_created: int = Field(
-        default=0, description="Number of visualizations created"
+        default=0,
+        description="Number of visualizations created",
     )
     project_summary: str = Field(default="", description="Summary of project work")
     next_steps: list[str] = Field(
-        default_factory=list, description="Suggested next steps"
+        default_factory=list,
+        description="Suggested next steps",
     )
 
     class Config:
@@ -143,7 +163,7 @@ class LabsResponse(SearchResponse):
                         "output_data": {"rows": 1250, "columns": 15},
                         "duration_seconds": 2.3,
                         "success": True,
-                    }
+                    },
                 ],
                 "assets_created": [
                     {
@@ -157,7 +177,7 @@ class LabsResponse(SearchResponse):
                         "created_at": "2025-01-15T10:30:00",
                         "size_bytes": 45000,
                         "downloadable": True,
-                    }
+                    },
                 ],
                 "interactive_apps": [
                     {
@@ -170,7 +190,7 @@ class LabsResponse(SearchResponse):
                         "javascript_code": "function updateChart() { ... }",
                         "data_sources": ["survey_data.csv"],
                         "interactive_elements": ["filters", "dropdowns", "charts"],
-                    }
+                    },
                 ],
                 "total_work_time": 180.5,
                 "tools_used": ["pandas", "matplotlib", "d3.js", "html"],
@@ -179,7 +199,7 @@ class LabsResponse(SearchResponse):
                         "code": "df.describe()",
                         "output": "Statistical summary of survey data",
                         "success": True,
-                    }
+                    },
                 ],
                 "data_analysis_results": {
                     "total_responses": 1250,
@@ -194,7 +214,7 @@ class LabsResponse(SearchResponse):
                     "Deploy to production environment",
                 ],
                 "metadata": {},
-            }
+            },
         }
 
 
@@ -202,25 +222,34 @@ class LabsRequest(BaseModel):
     """Request model for Labs operations."""
 
     query: str = Field(
-        ..., min_length=1, max_length=2000, description="Project description or request"
+        ...,
+        min_length=1,
+        max_length=2000,
+        description="Project description or request",
     )
     project_type: str = Field(
-        default="analysis", description="Type of project (analysis, dashboard, app)"
+        default="analysis",
+        description="Type of project (analysis, dashboard, app)",
     )
     data_sources: list[str] = Field(
-        default_factory=list, description="Data sources to use"
+        default_factory=list,
+        description="Data sources to use",
     )
     required_tools: list[str] = Field(
-        default_factory=list, description="Required tools"
+        default_factory=list,
+        description="Required tools",
     )
     output_format: str = Field(
-        default="interactive", description="Desired output format"
+        default="interactive",
+        description="Desired output format",
     )
     enable_code_execution: bool = Field(
-        default=True, description="Enable code execution"
+        default=True,
+        description="Enable code execution",
     )
     create_interactive_app: bool = Field(
-        default=True, description="Create interactive app"
+        default=True,
+        description="Create interactive app",
     )
     max_work_time: int = Field(default=600, description="Maximum work time in seconds")
 
@@ -237,5 +266,5 @@ class LabsRequest(BaseModel):
                 "enable_code_execution": True,
                 "create_interactive_app": True,
                 "max_work_time": 600,
-            }
+            },
         }

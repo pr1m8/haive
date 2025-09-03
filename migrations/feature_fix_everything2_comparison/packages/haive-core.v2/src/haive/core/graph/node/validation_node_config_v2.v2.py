@@ -13,6 +13,8 @@ Key improvements:
 - Dynamic routing based on actual tool calls
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any
 
@@ -50,25 +52,26 @@ class ValidationNodeConfigV2(BaseNodeConfig):
     tool_node: str = Field(default="tool_node", description="Tool execution node name")
     parser_node: str = Field(default="parse_output", description="Parser node name")
     available_nodes: list[str] = Field(
-        default_factory=list, description="Available nodes"
+        default_factory=list,
+        description="Available nodes",
     )
     pydantic_models: dict[str, type[BaseModel]] = Field(
-        default_factory=dict, description="Pydantic models for validation"
+        default_factory=dict,
+        description="Pydantic models for validation",
     )
     node_type: NodeType = Field(default=NodeType.VALIDATION, description="Node type")
 
     def __call__(self, state: StateLike) -> Command:
-        """Process tool calls and update state with ToolMessages using LangGraph
-        ValidationNode pattern.
+        """Process tool calls and update state with ToolMessages using.
+
+        LangGraph ValidationNode pattern.
         """
         # Store current state for use in processing
         self._current_state = state
 
         # Get messages from state (StateLike supports both dict and BaseModel access)
         messages = (
-            state.get("messages", [])
-            if hasattr(state, "get")
-            else getattr(state, "messages", [])
+            state.get("messages", []) if hasattr(state, "get") else getattr(state, "messages", [])
         )
         if not messages:
             return Command(goto="END")
@@ -106,12 +109,16 @@ class ValidationNodeConfigV2(BaseNodeConfig):
             # Create LangGraph ValidationNode with collected schemas
             validation_node = ValidationNode(schemas=list(schemas_by_name.values()))
 
-            # Run LangGraph validation using .invoke() like V1 does (this adds proper ToolMessages to state)
+            # Run LangGraph validation using .invoke() like V1 does (this adds proper
+            # ToolMessages to state)
             validation_result = validation_node.invoke(state)
 
-            # Process validation results and determine routing using Send objects like dynamic routing examples
+            # Process validation results and determine routing using Send objects like
+            # dynamic routing examples
             return self._process_validation_results(
-                validation_result, tool_routes, tool_calls
+                validation_result,
+                tool_routes,
+                tool_calls,
             )
 
         except Exception as e:
@@ -128,7 +135,7 @@ class ValidationNodeConfigV2(BaseNodeConfig):
                             tool_call_id=tool_id,
                             name=tool_name,
                             additional_kwargs={"is_error": True},
-                        )
+                        ),
                     )
 
             return Command(
@@ -137,14 +144,19 @@ class ValidationNodeConfigV2(BaseNodeConfig):
             )
 
     def _process_validation_results(
-        self, validation_result: dict, tool_routes: dict, tool_calls: list
+        self,
+        validation_result: dict,
+        tool_routes: dict,
+        tool_calls: list,
     ) -> Command:
-        """Process LangGraph validation results and route using Send objects like dynamic
-        routing examples.
+        """Process LangGraph validation results and route using Send objects.
+
+        like dynamic routing examples.
         """
         logger.info("Processing LangGraph validation results with dynamic routing")
 
-        # Get the ToolMessages from validation result and combine with original state messages
+        # Get the ToolMessages from validation result and combine with original
+        # state messages
         validation_tool_messages = validation_result.get("messages", [])
 
         # The validation_result contains only new ToolMessages, we need to add them to the original state
@@ -159,7 +171,9 @@ class ValidationNodeConfigV2(BaseNodeConfig):
         # Combine original messages with new ToolMessages
         messages = original_messages + validation_tool_messages
         logger.info(
-            f"Combined {len(original_messages)} original messages with {len(validation_tool_messages)} validation results"
+            f"Combined {len(original_messages)} original messages with {
+                len(validation_tool_messages)
+            } validation results",
         )
 
         # Analyze the ToolMessages added by LangGraph ValidationNode
@@ -207,7 +221,7 @@ class ValidationNodeConfigV2(BaseNodeConfig):
                     has_errors = True
                 else:
                     logger.info(
-                        f"Tool validation passed for {tool_name}, routing to tool_node"
+                        f"Tool validation passed for {tool_name}, routing to tool_node",
                     )
                     destinations.add("tool_node")
                     # Keep validated tool call for injection into AIMessage
@@ -222,25 +236,35 @@ class ValidationNodeConfigV2(BaseNodeConfig):
         updated_messages = messages
         if "tool_node" in destinations and validated_tool_calls:
             updated_messages = self._inject_validated_tool_calls(
-                messages, validated_tool_calls
+                messages,
+                validated_tool_calls,
             )
 
         # Use Send objects for dynamic routing like the examples show
         return self._route_with_send_objects(
-            {"messages": updated_messages}, destinations, has_errors
+            {"messages": updated_messages},
+            destinations,
+            has_errors,
         )
 
     def _route_with_send_objects(
-        self, validation_result: dict, destinations: set, has_errors: bool
+        self,
+        validation_result: dict,
+        destinations: set,
+        has_errors: bool,
     ) -> Command:
-        """Route using Send objects for dynamic routing without compile-time literals."""
+        """Route using Send objects for dynamic routing without compile-time.
+
+        literals.
+        """
         destinations_list = list(destinations)
 
         logger.info(
-            f"Dynamic routing - Destinations: {destinations_list}, Has errors: {has_errors}"
+            f"Dynamic routing - Destinations: {destinations_list}, Has errors: {has_errors}",
         )
 
-        # Update state with validation results (which already includes injected AIMessage if needed)
+        # Update state with validation results (which already includes injected
+        # AIMessage if needed)
         update_dict = validation_result
 
         if not destinations_list:
@@ -270,7 +294,9 @@ class ValidationNodeConfigV2(BaseNodeConfig):
         return Command(update=update_dict, goto=destination)
 
     def _get_tool_args_schema(
-        self, tool_name: str, state: StateLike
+        self,
+        tool_name: str,
+        state: StateLike,
     ) -> type[BaseModel] | None:
         """Get tool.args_schema like LangGraph ValidationNode does.
 
@@ -295,7 +321,7 @@ class ValidationNodeConfigV2(BaseNodeConfig):
                 # This is a BaseTool - get its args_schema
                 if hasattr(tool, "args_schema") and tool.args_schema:
                     logger.info(
-                        f"Found tool.args_schema for {tool_name}: {tool.args_schema}"
+                        f"Found tool.args_schema for {tool_name}: {tool.args_schema}",
                     )
                     return tool.args_schema
                 logger.warning(f"Tool {tool_name} has no args_schema")
@@ -317,11 +343,7 @@ class ValidationNodeConfigV2(BaseNodeConfig):
             return None
 
         # Try state.engines first (handle both dict and BaseModel access)
-        engines = (
-            state.get("engines")
-            if hasattr(state, "get")
-            else getattr(state, "engines", None)
-        )
+        engines = state.get("engines") if hasattr(state, "get") else getattr(state, "engines", None)
 
         if engines and isinstance(engines, dict):
             engine = engines.get(self.engine_name)
@@ -351,7 +373,9 @@ class ValidationNodeConfigV2(BaseNodeConfig):
         return None
 
     def _find_model_class_from_engine(
-        self, tool_name: str, state: StateLike
+        self,
+        tool_name: str,
+        state: StateLike,
     ) -> type[BaseModel] | None:
         """Find Pydantic model class from engine."""
         engine = self._get_engine_from_state(state)
@@ -384,7 +408,9 @@ class ValidationNodeConfigV2(BaseNodeConfig):
         return None
 
     def _find_model_class(
-        self, tool_name: str, state: StateLike | None = None
+        self,
+        tool_name: str,
+        state: StateLike | None = None,
     ) -> type[BaseModel] | None:
         """Try to find Pydantic model class by name."""
         # FIRST: Try to find from engine (using attribution)
@@ -423,9 +449,13 @@ class ValidationNodeConfigV2(BaseNodeConfig):
         return None
 
     def _inject_validated_tool_calls(
-        self, messages: list, validated_tool_calls: list
+        self,
+        messages: list,
+        validated_tool_calls: list,
     ) -> list:
-        """Inject validated tool calls back into AIMessage for ToolNode execution.
+        """Inject validated tool calls back into AIMessage for ToolNode.
+
+        execution.
 
         This is critical for langchain_tool routes - ToolNode expects AIMessage with tool_calls.
         """
@@ -438,11 +468,7 @@ class ValidationNodeConfigV2(BaseNodeConfig):
         # Find the AIMessage that contains these tool calls
         for i in reversed(range(len(updated_messages))):
             msg = updated_messages[i]
-            if (
-                isinstance(msg, AIMessage)
-                and hasattr(msg, "tool_calls")
-                and msg.tool_calls
-            ):
+            if isinstance(msg, AIMessage) and hasattr(msg, "tool_calls") and msg.tool_calls:
                 # Create new AIMessage with only the validated tool calls
                 validated_ai_message = AIMessage(
                     content=msg.content,
@@ -458,7 +484,7 @@ class ValidationNodeConfigV2(BaseNodeConfig):
                 # Replace the original AIMessage
                 updated_messages[i] = validated_ai_message
                 logger.info(
-                    f"Injected {len(validated_tool_calls)} validated tool calls into AIMessage"
+                    f"Injected {len(validated_tool_calls)} validated tool calls into AIMessage",
                 )
                 break
 

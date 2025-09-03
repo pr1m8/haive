@@ -18,12 +18,12 @@ This module provides a registry for node configurations, allowing nodes to be
 registered, looked up, and managed throughout the application.
 """
 
+from haive.core.registry.base import AbstractRegistry
+from haive.core.graph.node.types import NodeType
+from haive.core.graph.node.config import NodeConfig
 import builtins
 import logging
 
-from haive.core.graph.node.config import NodeConfig
-from haive.core.graph.node.types import NodeType
-from haive.core.registry.base import AbstractRegistry
 
 logger = logging.getLogger(__name__)
 
@@ -143,7 +143,9 @@ class NodeRegistry(AbstractRegistry[NodeConfig]):
         return names
 
     def register_custom_node_type(
-        self, name: str, config_class: type[NodeConfig]
+        self,
+        name: str,
+        config_class: type[NodeConfig],
     ) -> None:
         """Register a custom node configuration class.
 

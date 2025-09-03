@@ -1,17 +1,17 @@
 """Quick Search Agent implementation.
 
-Provides fast, basic search responses optimized for speed and concise answers. Similar
-to Perplexity's Quick Search feature.
+Provides fast, basic search responses optimized for speed and concise
+answers. Similar to Perplexity's Quick Search feature.
 """
 
 import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.tools import Tool
 
 from haive.agents.memory.search.base import BaseSearchAgent, SearchResponse
 from haive.agents.memory.search.quick_search.models import QuickSearchResponse
+from haive.core.engine.aug_llm import AugLLMConfig
 
 logger = logging.getLogger(__name__)
 

@@ -1,0 +1,1222 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.common.mixins.tool_route_mixin - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for haive.core.common.mixins.tool_route_mixin</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Tool routing mixin for managing tool destinations and metadata.</span>
+
+<span class="sd">This module provides a mixin for managing tool routes and related metadata in</span>
+<span class="sd">configuration classes. It enables mapping tool names to their types or destinations,</span>
+<span class="sd">keeping track of metadata, and provides utilities for creating tools from configs.</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    ```python</span>
+<span class="sd">    from pydantic import BaseModel</span>
+<span class="sd">    from haive.core.common.mixins import ToolRouteMixin</span>
+
+<span class="sd">    class AgentConfig(ToolRouteMixin, BaseModel):</span>
+<span class="sd">        name: str</span>
+<span class="sd">        description: str</span>
+
+<span class="sd">        def _create_tool_implementation(self, name, description, **kwargs):</span>
+<span class="sd">            # Custom tool creation logic</span>
+<span class="sd">            return SomeTool(name=name, description=description)</span>
+
+<span class="sd">    # Create config with tool routes</span>
+<span class="sd">    config = AgentConfig(</span>
+<span class="sd">        name=&quot;MyAgent&quot;,</span>
+<span class="sd">        description=&quot;Agent configuration&quot;</span>
+<span class="sd">    )</span>
+
+<span class="sd">    # Set tool routes</span>
+<span class="sd">    config.set_tool_route(&quot;search&quot;, &quot;retriever&quot;, {&quot;source&quot;: &quot;web&quot;})</span>
+<span class="sd">    config.set_tool_route(&quot;math&quot;, &quot;function&quot;, {&quot;language&quot;: &quot;python&quot;})</span>
+
+<span class="sd">    # Create a tool</span>
+<span class="sd">    search_tool = config.to_tool(name=&quot;search&quot;, description=&quot;Web search tool&quot;)</span>
+
+<span class="sd">    # Get routes by type</span>
+<span class="sd">    retriever_tools = config.list_tools_by_route(&quot;retriever&quot;)</span>
+<span class="sd">    ```</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Self</span><span class="p">,</span> <span class="n">get_type_hints</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">model_validator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">Console</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich.table</span><span class="w"> </span><span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tree</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="ToolRouteMixin">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ToolRouteMixin</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enhanced mixin for managing tools, routes, and converting configurations to tools.</span>
+
+<span class="sd">    This mixin provides functionality for:</span>
+<span class="sd">    - Setting and managing tool routes (mapping tool names to types/destinations)</span>
+<span class="sd">    - Storing and retrieving tool metadata</span>
+<span class="sd">    - Supporting tools as dict with string keys for tool lists</span>
+<span class="sd">    - Supporting routed tools with before validators for tuple handling</span>
+<span class="sd">    - Generating tools from configurations</span>
+<span class="sd">    - Visualizing tool routing information</span>
+
+<span class="sd">    Tool routes define where a tool request should be directed, such as to a</span>
+<span class="sd">    specific retriever, model, or function. This helps implement routing logic</span>
+<span class="sd">    in agents and other tool-using components.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        tool_routes: Dictionary mapping tool names to their routes/types.</span>
+<span class="sd">        tool_metadata: Dictionary with additional metadata for each tool.</span>
+<span class="sd">        tools_dict: Dictionary mapping tool category strings to lists of tools.</span>
+<span class="sd">        routed_tools: List of tuples containing (tool, route) pairs.</span>
+<span class="sd">        before_tool_validator: Optional callable to validate tools before routing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Tool routes mapping tool names to their types/destinations</span>
+    <span class="n">tool_routes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Mapping of tool names to their routes/types&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Tool metadata for enhanced management</span>
+    <span class="n">tool_metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Metadata for each tool&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Enhanced tool management</span>
+    <span class="n">tools_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Dictionary mapping tool category strings to lists of tools&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">routed_tools</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;List of (tool, route) tuples for explicit routing&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">before_tool_validator</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Optional callable to validate tools before routing&quot;</span><span class="p">,</span>
+        <span class="n">exclude</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Exclude from serialization</span>
+    <span class="p">)</span>
+
+    <span class="c1"># NEW: Actual tool storage</span>
+    <span class="n">tools</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;List of tools (BaseTool, StructuredTool, Pydantic models, callables)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># NEW: Tool instance mapping for quick lookup</span>
+    <span class="n">tool_instances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Mapping of tool names to actual tool instances&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="ToolRouteMixin.set_tool_route">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.set_tool_route">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_tool_route</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set a tool route with optional metadata.</span>
+
+<span class="sd">        This method defines where a tool request should be routed, along</span>
+<span class="sd">        with optional metadata to inform the routing decision.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_name: Name of the tool.</span>
+<span class="sd">            route: Route/type for the tool (e.g., &#39;retriever&#39;, &#39;pydantic_model&#39;, &#39;function&#39;).</span>
+<span class="sd">            metadata: Optional metadata for the tool.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Self for method chaining.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">route</span>
+
+        <span class="k">if</span> <span class="n">metadata</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool_metadata&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Set tool route: </span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">metadata</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Metadata: </span><span class="si">{</span><span class="n">metadata</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.get_tool_route">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.get_tool_route">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tool_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the route for a specific tool.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_name: Name of the tool to look up.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The route string if found, None otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tool_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.get_tool_metadata">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.get_tool_metadata">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tool_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get metadata for a specific tool.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_name: Name of the tool to look up.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary of metadata if found, None otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool_metadata&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tool_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.list_tools_by_route">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.list_tools_by_route">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_tools_by_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get all tool names for a specific route.</span>
+
+<span class="sd">        This method finds all tools that are routed to a specific destination.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            route: The route to search for.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of tool names with the matching route.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="n">route</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.remove_tool_route">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.remove_tool_route">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_tool_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove a tool route and its metadata.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_name: Name of the tool to remove.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Self for method chaining.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">tool_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool_metadata&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">tool_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Removed tool route: </span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.update_tool_routes">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.update_tool_routes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_tool_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">routes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update multiple tool routes at once.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            routes: Dictionary mapping tool names to routes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Self for method chaining.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">routes</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Updated tool routes: </span><span class="si">{</span><span class="n">routes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.clear_tool_routes">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.clear_tool_routes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_tool_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear all tool routes and metadata.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Self for method chaining.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool_metadata&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Cleared all tool routes&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_and_process_tools</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process tools_dict and routed_tools into tool_routes after initialization.&quot;&quot;&quot;</span>
+        <span class="c1"># Process tools_dict into tool_routes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_tools_dict</span><span class="p">()</span>
+
+        <span class="c1"># Process routed_tools into tool_routes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_routed_tools</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_tools_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process tools_dict into individual tool routes.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">category</span><span class="p">,</span> <span class="n">tool_list</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tool</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tool_list</span><span class="p">):</span>
+                <span class="c1"># Apply validator if provided</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">before_tool_validator</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">tool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">before_tool_validator</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Tool validation failed for </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="p">)</span>
+                        <span class="k">continue</span>
+
+                <span class="c1"># Generate tool name</span>
+                <span class="n">tool_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_tool_name</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+                <span class="c1"># Determine route and metadata</span>
+                <span class="n">route</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_analyze_tool</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span> <span class="ow">or</span> <span class="p">{}</span>
+                <span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="n">category</span><span class="p">,</span>
+                        <span class="s2">&quot;index_in_category&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+                        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;tools_dict&quot;</span><span class="p">,</span>
+                    <span class="p">}</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Set the route</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_tool_route</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_routed_tools</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process routed_tools tuples into tool routes.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">route</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">routed_tools</span><span class="p">):</span>
+            <span class="c1"># Apply validator if provided</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">before_tool_validator</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">tool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">before_tool_validator</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tool validation failed for routed_tools[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+
+            <span class="c1"># Generate tool name</span>
+            <span class="n">tool_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_tool_name</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;routed_</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+            <span class="c1"># Get metadata from tool analysis</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_analyze_tool</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span> <span class="ow">or</span> <span class="p">{}</span>
+            <span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;explicit_route&quot;</span><span class="p">:</span> <span class="n">route</span><span class="p">,</span>
+                    <span class="s2">&quot;index_in_routed&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+                    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;routed_tools&quot;</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Set the route (use explicit route)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_tool_route</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_tool_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a unique tool name for a tool.&quot;&quot;&quot;</span>
+        <span class="c1"># Try to get name from tool</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">tool</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">base_name</span> <span class="o">=</span> <span class="n">tool</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">):</span>
+            <span class="n">base_name</span> <span class="o">=</span> <span class="n">tool</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">base_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;tool_</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Create prefixed name</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">base_name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">prefix</span> <span class="k">else</span> <span class="n">base_name</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_analyze_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Analyze a tool to determine its route and metadata.&quot;&quot;&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">BaseModel</span><span class="p">):</span>
+            <span class="n">route</span> <span class="o">=</span> <span class="s2">&quot;pydantic_model&quot;</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;class_name&quot;</span><span class="p">:</span> <span class="n">tool</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;__module__&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;tool_type&quot;</span><span class="p">:</span> <span class="s2">&quot;pydantic_model&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="c1"># Check if it has explicitly defined __call__ method (executable tool)</span>
+            <span class="c1"># Only consider it executable if __call__ is defined in the class</span>
+            <span class="c1"># itself</span>
+            <span class="n">has_explicit_call</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;__call__&quot;</span> <span class="ow">in</span> <span class="n">tool</span><span class="o">.</span><span class="vm">__dict__</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;__dict__&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">has_explicit_call</span> <span class="ow">and</span> <span class="nb">callable</span><span class="p">(</span><span class="n">tool</span><span class="o">.</span><span class="fm">__call__</span><span class="p">):</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;is_executable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">route</span> <span class="o">=</span> <span class="s2">&quot;pydantic_tool&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;is_executable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;__class__&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;BaseTool&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">tool</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">):</span>
+            <span class="n">route</span> <span class="o">=</span> <span class="s2">&quot;langchain_tool&quot;</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;tool_type&quot;</span><span class="p">:</span> <span class="s2">&quot;BaseTool&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;is_instance&quot;</span><span class="p">:</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">type</span><span class="p">),</span>
+            <span class="p">}</span>
+        <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="n">tool</span><span class="p">):</span>
+            <span class="n">route</span> <span class="o">=</span> <span class="s2">&quot;function&quot;</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;callable_type&quot;</span><span class="p">:</span> <span class="nb">type</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                <span class="s2">&quot;has_annotations&quot;</span><span class="p">:</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;__annotations__&quot;</span><span class="p">),</span>
+            <span class="p">}</span>
+            <span class="c1"># Enhanced callable analysis</span>
+            <span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_callable_metadata</span><span class="p">(</span><span class="n">tool</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">route</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;original_type&quot;</span><span class="p">:</span> <span class="nb">type</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">route</span><span class="p">,</span> <span class="n">metadata</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_callable_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callable_obj</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract enhanced metadata from callable objects.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callable_obj: Callable to analyze</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary of metadata</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Check if async</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;is_async&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">callable_obj</span><span class="p">)</span>
+
+            <span class="c1"># Get signature</span>
+            <span class="n">sig</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">callable_obj</span><span class="p">)</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sig</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;parameter_count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sig</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+
+            <span class="c1"># Check for type hints</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">hints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="n">callable_obj</span><span class="p">)</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;has_type_hints&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">hints</span><span class="p">)</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;has_return_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;return&quot;</span> <span class="ow">in</span> <span class="n">hints</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;has_type_hints&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;has_return_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># Determine callable kind</span>
+            <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">ismethod</span><span class="p">(</span><span class="n">callable_obj</span><span class="p">):</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;callable_kind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;method&quot;</span>
+            <span class="k">elif</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isfunction</span><span class="p">(</span><span class="n">callable_obj</span><span class="p">):</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;callable_kind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;function&quot;</span>
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="nb">hasattr</span><span class="p">(</span><span class="n">callable_obj</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">callable_obj</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;&lt;lambda&gt;&quot;</span>
+            <span class="p">):</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;callable_kind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;callable_kind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;callable_object&quot;</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error analyzing callable: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">metadata</span>
+
+<div class="viewcode-block" id="ToolRouteMixin.add_tools_to_category">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.add_tools_to_category">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_tools_to_category</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tools</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add tools to a specific category in tools_dict.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tools_dict</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools_dict</span><span class="p">[</span><span class="n">category</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span>
+
+        <span class="c1"># Reprocess to update routes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_tools_dict</span><span class="p">()</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Added </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span><span class="si">}</span><span class="s2"> tools to category &#39;</span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.add_routed_tool">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.add_routed_tool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_routed_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a single tool with explicit route.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">routed_tools</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tool</span><span class="p">,</span> <span class="n">route</span><span class="p">))</span>
+
+        <span class="c1"># Reprocess to update routes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_routed_tools</span><span class="p">()</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Added routed tool to route &#39;</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.set_tool_route_for_existing">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.set_tool_route_for_existing">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_tool_route_for_existing</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tool_identifier</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_route</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set or update the route for an existing tool by name or partial match.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_identifier: Tool name or partial name to match</span>
+<span class="sd">            new_route: New route to assign to the tool</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Self for method chaining.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Find matching tool names</span>
+        <span class="n">matching_tools</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">name</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span>
+            <span class="k">if</span> <span class="n">tool_identifier</span> <span class="ow">in</span> <span class="n">name</span> <span class="ow">or</span> <span class="n">name</span> <span class="o">==</span> <span class="n">tool_identifier</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">matching_tools</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No tools found matching identifier &#39;</span><span class="si">{</span><span class="n">tool_identifier</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="k">for</span> <span class="n">tool_name</span> <span class="ow">in</span> <span class="n">matching_tools</span><span class="p">:</span>
+            <span class="c1"># Get existing metadata and update it</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tool_metadata</span><span class="p">(</span><span class="n">tool_name</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;route_updated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;previous_route&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_tool_route</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">new_route</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Updated route for &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;previous_route&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">new_route</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.get_tools_by_category">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.get_tools_by_category">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tools_by_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get all tools in a specific category.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="p">[])</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.get_all_tools_flat">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.get_all_tools_flat">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_all_tools_flat</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get all tools from tools_dict and routed_tools as a flat list.&quot;&quot;&quot;</span>
+        <span class="n">all_tools</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Add tools from tools_dict</span>
+        <span class="k">for</span> <span class="n">tool_list</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools_dict</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">all_tools</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tool_list</span><span class="p">)</span>
+
+        <span class="c1"># Add tools from routed_tools</span>
+        <span class="k">for</span> <span class="n">tool</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">routed_tools</span><span class="p">:</span>
+            <span class="n">all_tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">all_tools</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.add_tools_from_list">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.add_tools_from_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_tools_from_list</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tools</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span> <span class="n">clear_existing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add tools from a list to tool_routes without clearing existing routes.</span>
+
+<span class="sd">        This method analyzes a list of tools and automatically creates</span>
+<span class="sd">        appropriate routes based on their types. Supports both regular tools</span>
+<span class="sd">        and tuples of (tool, route) for explicit routing.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tools: List of tools or (tool, route) tuples to analyze and create routes for.</span>
+<span class="sd">            clear_existing: Whether to clear existing routes first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Self for method chaining.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">clear_existing</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear_tool_routes</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tool_item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tools</span><span class="p">):</span>
+            <span class="c1"># Check if this is a tuple (tool, route)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool_item</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">tool_item</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">tool</span><span class="p">,</span> <span class="n">explicit_route</span> <span class="o">=</span> <span class="n">tool_item</span>
+                <span class="c1"># Apply validator if provided</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">before_tool_validator</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">tool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">before_tool_validator</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tool validation failed for tools[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">continue</span>
+
+                <span class="c1"># Generate tool name</span>
+                <span class="n">tool_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_tool_name</span><span class="p">(</span>
+                    <span class="n">tool</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;explicit_</span><span class="si">{</span><span class="n">explicit_route</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">i</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Get metadata from tool analysis</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_analyze_tool</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span> <span class="ow">or</span> <span class="p">{}</span>
+                <span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;explicit_route&quot;</span><span class="p">:</span> <span class="n">explicit_route</span><span class="p">,</span>
+                        <span class="s2">&quot;index_in_tools&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+                        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;tools_list_tuple&quot;</span><span class="p">,</span>
+                    <span class="p">}</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Set the route (use explicit route)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_tool_route</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">explicit_route</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Regular tool processing</span>
+            <span class="n">tool</span> <span class="o">=</span> <span class="n">tool_item</span>
+            <span class="c1"># Determine tool name</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
+                <span class="n">tool_name</span> <span class="o">=</span> <span class="n">tool</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">):</span>
+                <span class="n">tool_name</span> <span class="o">=</span> <span class="n">tool</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tool_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;tool_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="c1"># Determine route/type and metadata</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">BaseModel</span><span class="p">):</span>
+                <span class="n">route</span> <span class="o">=</span> <span class="s2">&quot;pydantic_model&quot;</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;class_name&quot;</span><span class="p">:</span> <span class="n">tool</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                    <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;__module__&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">),</span>
+                    <span class="s2">&quot;tool_type&quot;</span><span class="p">:</span> <span class="s2">&quot;pydantic_model&quot;</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;__class__&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;BaseTool&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span>
+                <span class="n">tool</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__mro__</span>
+            <span class="p">):</span>
+                <span class="n">route</span> <span class="o">=</span> <span class="s2">&quot;langchain_tool&quot;</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;tool_type&quot;</span><span class="p">:</span> <span class="s2">&quot;BaseTool&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;is_instance&quot;</span><span class="p">:</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">type</span><span class="p">),</span>
+                <span class="p">}</span>
+            <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="n">tool</span><span class="p">):</span>
+                <span class="n">route</span> <span class="o">=</span> <span class="s2">&quot;function&quot;</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;callable_type&quot;</span><span class="p">:</span> <span class="nb">type</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                    <span class="s2">&quot;has_annotations&quot;</span><span class="p">:</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;__annotations__&quot;</span><span class="p">),</span>
+                <span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">route</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;original_type&quot;</span><span class="p">:</span> <span class="nb">type</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">}</span>
+
+            <span class="c1"># Set the route with metadata</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_tool_route</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.sync_tool_routes_from_tools">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.sync_tool_routes_from_tools">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sync_tool_routes_from_tools</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tools</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Synchronize tool_routes with a list of tools.</span>
+
+<span class="sd">        This method analyzes a list of tools and automatically creates</span>
+<span class="sd">        appropriate routes based on their types.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tools: List of tools to analyze and create routes for.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Self for method chaining.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Clear existing routes and start fresh</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_tools_from_list</span><span class="p">(</span><span class="n">tools</span><span class="p">,</span> <span class="n">clear_existing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.to_tool">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.to_tool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_tool</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">route</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert this configuration to a tool.</span>
+
+<span class="sd">        This method provides a base implementation for creating tools from</span>
+<span class="sd">        configuration objects. Specific config classes should override the</span>
+<span class="sd">        _create_tool_implementation method to provide custom tool creation logic.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: Tool name (defaults to config name if available).</span>
+<span class="sd">            description: Tool description (defaults to config description if available).</span>
+<span class="sd">            route: Tool route/type to set.</span>
+<span class="sd">            **kwargs: Additional kwargs for tool creation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tool that can be used with LLMs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get default name and description from config</span>
+        <span class="n">config_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">config_description</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">tool_name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="n">config_name</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;tool_</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">tool_description</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">description</span>
+            <span class="ow">or</span> <span class="n">config_description</span>
+            <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;Tool created from </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Set tool route if provided</span>
+        <span class="k">if</span> <span class="n">route</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_tool_route</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Call the specific implementation</span>
+        <span class="n">tool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_tool_implementation</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">tool_description</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Created tool: </span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tool</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_tool_implementation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the actual tool implementation.</span>
+
+<span class="sd">        This method should be overridden by specific config types to provide</span>
+<span class="sd">        custom tool creation logic. For example:</span>
+<span class="sd">        - RetrieverConfig: Create retriever tools</span>
+<span class="sd">        - LLMConfig: Create LLM function tools</span>
+<span class="sd">        - Other configs: Create appropriate tools</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: Tool name.</span>
+<span class="sd">            description: Tool description.</span>
+<span class="sd">            **kwargs: Additional parameters for tool creation.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NotImplementedError: If not implemented by the subclass.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tool instance when implemented by subclasses.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Tool creation not implemented for </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Override _create_tool_implementation() to create tools from this config type.&quot;</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ToolRouteMixin.debug_tool_routes">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.debug_tool_routes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">debug_tool_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Print debug information about tool routes.</span>
+
+<span class="sd">        This method uses the Rich library to create a visual representation</span>
+<span class="sd">        of the tool routes and metadata, including the new dict and routed tools.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Self for method chaining.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;[bold blue]🛤️ ENHANCED TOOL ROUTES DEBUG[/bold blue]&quot;</span><span class="p">)</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+
+        <span class="c1"># Show tools_dict structure</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools_dict</span><span class="p">:</span>
+            <span class="n">dict_tree</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="s2">&quot;📁 [cyan]Tools Dict Categories[/cyan]&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">category</span><span class="p">,</span> <span class="n">tools</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">category_branch</span> <span class="o">=</span> <span class="n">dict_tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;[green]</span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">[/green] (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span><span class="si">}</span><span class="s2"> tools)&quot;</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tool</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tools</span><span class="p">):</span>
+                    <span class="n">tool_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_tool_name</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                    <span class="n">category_branch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2"> [dim](</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">)[/dim]&quot;</span>
+                    <span class="p">)</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">dict_tree</span><span class="p">)</span>
+
+        <span class="c1"># Show routed_tools structure</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">routed_tools</span><span class="p">:</span>
+            <span class="n">routed_tree</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="s2">&quot;🎯 [cyan]Explicitly Routed Tools[/cyan]&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">route</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">routed_tools</span><span class="p">):</span>
+                <span class="n">tool_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_tool_name</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;routed_</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                <span class="n">routed_tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2"> → [yellow]</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s2">[/yellow] [dim](</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">)[/dim]&quot;</span>
+                <span class="p">)</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">routed_tree</span><span class="p">)</span>
+
+        <span class="c1"># Show computed tool routes</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">:</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;[yellow]No tool routes configured[/yellow]&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="c1"># Create a tree for routes</span>
+        <span class="n">routes_tree</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="s2">&quot;🛤️ [cyan]Computed Tool Routes[/cyan]&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Group by route type</span>
+        <span class="n">route_groups</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">tool_name</span><span class="p">,</span> <span class="n">route</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">route</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">route_groups</span><span class="p">:</span>
+                <span class="n">route_groups</span><span class="p">[</span><span class="n">route</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">route_groups</span><span class="p">[</span><span class="n">route</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool_name</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">route</span><span class="p">,</span> <span class="n">tools</span> <span class="ow">in</span> <span class="n">route_groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">route_branch</span> <span class="o">=</span> <span class="n">routes_tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;[yellow]</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s2">[/yellow] (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span><span class="si">}</span><span class="s2"> tools)&quot;</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">tool_name</span> <span class="ow">in</span> <span class="n">tools</span><span class="p">:</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tool_metadata</span><span class="p">(</span><span class="n">tool_name</span><span class="p">)</span>
+                <span class="n">source</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">metadata</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span>
+                <span class="n">category</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">metadata</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">source_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[dim](</span><span class="si">{</span><span class="n">source</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="k">if</span> <span class="n">category</span><span class="p">:</span>
+                    <span class="n">source_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[dim](</span><span class="si">{</span><span class="n">source</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="n">route_branch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">source_str</span><span class="si">}</span><span class="s2">[/dim]&quot;</span><span class="p">)</span>
+
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">routes_tree</span><span class="p">)</span>
+
+        <span class="c1"># Show metadata table if available</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool_metadata&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span><span class="p">:</span>
+            <span class="n">metadata_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Tool Metadata Details&quot;</span><span class="p">,</span> <span class="n">show_header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">metadata_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s2">&quot;Tool&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;cyan&quot;</span><span class="p">)</span>
+            <span class="n">metadata_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s2">&quot;Source&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+            <span class="n">metadata_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s2">&quot;Category/Route&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;yellow&quot;</span><span class="p">)</span>
+            <span class="n">metadata_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s2">&quot;Type&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;magenta&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">tool_name</span><span class="p">,</span> <span class="n">metadata</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">source</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span>
+                <span class="n">category</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;explicit_route&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+                <span class="n">tool_type</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="s2">&quot;tool_type&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;original_type&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">metadata_table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">tool_type</span><span class="p">)</span>
+
+            <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">metadata_table</span><span class="p">)</span>
+
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.add_tool">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.add_tool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_tool</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">route</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a tool with automatic routing and metadata.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool: Tool instance to add</span>
+<span class="sd">            route: Optional explicit route (auto-detected if not provided)</span>
+<span class="sd">            metadata: Optional metadata for the tool</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Self for method chaining</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get tool name</span>
+        <span class="n">tool_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tool_name</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">))</span>
+
+        <span class="c1"># Add to tools list if not already there</span>
+        <span class="k">if</span> <span class="n">tool</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+
+        <span class="c1"># Store tool instance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_instances</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">tool</span>
+
+        <span class="c1"># Determine route if not provided</span>
+        <span class="k">if</span> <span class="n">route</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">route</span><span class="p">,</span> <span class="n">auto_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_analyze_tool</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">metadata</span><span class="p">:</span>
+                <span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">auto_metadata</span> <span class="ow">or</span> <span class="p">{})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="n">auto_metadata</span>
+
+        <span class="c1"># Set route and metadata</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_tool_route</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Added tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; with route &#39;</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.get_tool">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.get_tool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a tool instance by name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_name: Name of the tool</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tool instance or None if not found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_instances</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tool_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.get_tools_by_route">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.get_tools_by_route">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tools_by_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get all tools with a specific route.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            route: Route to filter by</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of tools with that route</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tools</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">tool_route</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">tool_route</span> <span class="o">==</span> <span class="n">route</span><span class="p">:</span>
+                <span class="n">tool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tool</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">tool</span><span class="p">:</span>
+                    <span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tools</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.clear_tools">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.clear_tools">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_tools</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear all tools and routes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Self for method chaining</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_instances</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Cleared all tools and routes&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ToolRouteMixin.update_tool_route">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/common/mixins/index.html#haive.core.common.mixins.ToolRouteMixin.update_tool_route">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_tool_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_route</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ToolRouteMixin&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update an existing tool&#39;s route dynamically.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_name: Name of the tool to update</span>
+<span class="sd">            new_route: New route to assign</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Self for method chaining</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">tool_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; not found in routes&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="n">old_route</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_route</span>
+
+        <span class="c1"># Update metadata to track changes</span>
+        <span class="k">if</span> <span class="n">tool_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;route_updated&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;previous_route&quot;</span><span class="p">:</span> <span class="n">old_route</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Updated route for &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">old_route</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">new_route</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_tool_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a standardized tool name for a tool.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool: Tool instance to name</span>
+<span class="sd">            index: Index/position of tool for fallback naming</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Standardized tool name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Try to get name from tool</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">tool</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tool</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">tool</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;tool_</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

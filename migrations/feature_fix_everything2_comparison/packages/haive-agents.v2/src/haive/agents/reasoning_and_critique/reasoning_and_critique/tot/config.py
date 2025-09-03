@@ -4,14 +4,16 @@ This module defines the configuration schema for the ToT agent,
 including engine configurations, algorithm parameters, and state schema.
 """
 
+from __future__ import annotations
+
 from typing import TypeVar
 
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig
 from pydantic import BaseModel, ConfigDict, Field, create_model
 
 from haive.agents.reasoning_and_critique.tot.state import TOTInput, TOTOutput, TOTState
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
 
 # Generic type variable for solution content
 T = TypeVar("T")
@@ -20,8 +22,8 @@ T = TypeVar("T")
 class TOTAgentConfig(AgentConfig):
     """Configuration for the Tree of Thoughts agent.
 
-    This configuration specifies the LLM engines used for generation and scoring,
-    as well as the parameters for the search algorithm.
+    This configuration specifies the LLM engines used for generation and
+    scoring, as well as the parameters for the search algorithm.
     """
 
     # Engine configurations
@@ -32,7 +34,8 @@ class TOTAgentConfig(AgentConfig):
                 name="candidate_generator",
                 description="Generates candidate solutions for the problem",
                 llm_config=AzureLLMConfig(
-                    model="gpt-4o", parameters={"temperature": 0.7, "max_tokens": 1500}
+                    model="gpt-4o",
+                    parameters={"temperature": 0.7, "max_tokens": 1500},
                 ),
             ),
             # Evaluator engine for scoring solutions
@@ -40,7 +43,8 @@ class TOTAgentConfig(AgentConfig):
                 name="solution_evaluator",
                 description="Evaluates candidate solutions",
                 llm_config=AzureLLMConfig(
-                    model="gpt-4o", parameters={"temperature": 0.1, "max_tokens": 500}
+                    model="gpt-4o",
+                    parameters={"temperature": 0.1, "max_tokens": 500},
                 ),
             ),
         },
@@ -70,7 +74,8 @@ class TOTAgentConfig(AgentConfig):
 
     # Search algorithm parameters
     max_depth: int = Field(
-        default=3, description="Maximum depth of the Tree of Thoughts search"
+        default=3,
+        description="Maximum depth of the Tree of Thoughts search",
     )
 
     beam_width: int = Field(
@@ -84,7 +89,8 @@ class TOTAgentConfig(AgentConfig):
     )
 
     threshold: float = Field(
-        default=0.9, description="Score threshold for accepting a solution"
+        default=0.9,
+        description="Score threshold for accepting a solution",
     )
 
     # Node names for the graph
@@ -105,7 +111,8 @@ class TOTAgentConfig(AgentConfig):
 
     # Parallelization settings
     parallel_evaluation: bool = Field(
-        default=True, description="Whether to evaluate candidates in parallel"
+        default=True,
+        description="Whether to evaluate candidates in parallel",
     )
 
     parallel_expansion: bool = Field(
@@ -142,9 +149,12 @@ class TOTAgentConfig(AgentConfig):
 
     @classmethod
     def create_for_problem_type(
-        cls, content_type: str = "string", **kwargs
-    ) -> "TOTAgentConfig":
-        """Create a TOT agent configuration specialized for a specific problem type.
+        cls,
+        content_type: str = "string",
+        **kwargs,
+    ) -> TOTAgentConfig:
+        """Create a TOT agent configuration specialized for a specific problem
+        type.
 
         Args:
             content_type: Type of content ('string', 'equation', etc.)

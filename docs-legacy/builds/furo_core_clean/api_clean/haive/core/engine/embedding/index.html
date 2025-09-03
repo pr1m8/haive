@@ -1,0 +1,1178 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.engine.embedding - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/will-astley/haive/blob/main/docs/source/api_clean/haive/core/engine/embedding/index.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/will-astley/haive/edit/main/docs/source/api_clean/haive/core/engine/embedding/index.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="haive-core-engine-embedding">
+<h1><a class="reference internal" href="#module-0" title="haive.core.engine.embedding"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core.engine.embedding</span></code></a><a class="headerlink" href="#haive-core-engine-embedding" title="Link to this heading">¶</a></h1>
+<p id="module-haive.core.engine.embedding">Embedding engine module for the Haive framework.</p>
+<p>This module provides comprehensive embedding functionality with support for
+multiple providers including OpenAI, Azure OpenAI, HuggingFace, Cohere,
+Google Vertex AI, Ollama, and more.</p>
+<p>The module follows a factory pattern where embedding configurations are created
+through provider-specific config classes, then instantiated to create the actual
+embedding instances. All providers are lazily loaded to minimize startup time.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">BaseEmbeddingConfig</span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/base.html#BaseEmbeddingConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for all embedding configurations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingConfigFactory">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">EmbeddingConfigFactory</span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/config.html#EmbeddingConfigFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingConfigFactory" title="Link to this definition">¶</a></dt>
+<dd><p>Factory for creating embedding configurations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">EmbeddingType</span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/types.html#EmbeddingType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType" title="Link to this definition">¶</a></dt>
+<dd><p>Enum of supported embedding providers.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.create_embedding_config">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">create_embedding_config</span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/config.html#create_embedding_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.create_embedding_config" title="Link to this definition">¶</a></dt>
+<dd><p>Factory function for creating configurations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.providers">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">providers</span></span><a class="headerlink" href="#haive.core.engine.embedding.providers" title="Link to this definition">¶</a></dt>
+<dd><p>Lazily loaded providers module.</p>
+</dd></dl>
+
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>Basic usage with OpenAI embeddings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.embedding</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseEmbeddingConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.embedding.providers</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAIEmbeddingConfig</span>
+
+<span class="c1"># Create configuration</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">OpenAIEmbeddingConfig</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_embeddings&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;text-embedding-3-large&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Instantiate embeddings</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+
+<span class="c1"># Embed text</span>
+<span class="n">vectors</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">embed_documents</span><span class="p">([</span><span class="s2">&quot;Hello world&quot;</span><span class="p">,</span> <span class="s2">&quot;How are you?&quot;</span><span class="p">])</span>
+<span class="n">query_vector</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">embed_query</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Configuration discovery and dynamic provider selection:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.embedding</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseEmbeddingConfig</span>
+
+<span class="c1"># List all registered providers</span>
+<span class="n">available_providers</span> <span class="o">=</span> <span class="n">BaseEmbeddingConfig</span><span class="o">.</span><span class="n">list_registered_types</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Available providers: </span><span class="si">{</span><span class="n">available_providers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get specific provider class</span>
+<span class="n">provider_class</span> <span class="o">=</span> <span class="n">BaseEmbeddingConfig</span><span class="o">.</span><span class="n">get_config_class</span><span class="p">(</span><span class="s2">&quot;OpenAI&quot;</span><span class="p">)</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">provider_class</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;dynamic_embeddings&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using the factory function for simplified creation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.embedding</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_embedding_config</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">create_embedding_config</span><span class="p">(</span>
+    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;OpenAI&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;text-embedding-3-large&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_embeddings&quot;</span>
+<span class="p">)</span>
+
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All provider classes are lazily loaded through the <cite>providers</cite> attribute
+to avoid import overhead during module initialization. This allows the
+framework to start quickly even when many providers are available.</p>
+</div>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="providers/index.html#module-0" title="haive.core.engine.embedding.providers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">haive.core.engine.embedding.providers</span></code></a></p></td>
+<td><p>Embedding provider configurations.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="base/index.html#module-haive.core.engine.embedding.base" title="haive.core.engine.embedding.base"><code class="xref py py-obj docutils literal notranslate"><span class="pre">haive.core.engine.embedding.base</span></code></a></p></td>
+<td><p>Base embedding engine configuration and registry.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">¶</a></h2>
+<p class="rubric">haive.core.engine.embedding.__all__</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id5" title="haive.core.engine.embedding.BaseEmbeddingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">haive.core.engine.embedding.BaseEmbeddingConfig</span></code></a></p></td>
+<td><p>Base configuration for all embedding implementations.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p id="module-0">Embedding engine module for the Haive framework.</p>
+<p>This module provides comprehensive embedding functionality with support for
+multiple providers including OpenAI, Azure OpenAI, HuggingFace, Cohere,
+Google Vertex AI, Ollama, and more.</p>
+<p>The module follows a factory pattern where embedding configurations are created
+through provider-specific config classes, then instantiated to create the actual
+embedding instances. All providers are lazily loaded to minimize startup time.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">BaseEmbeddingConfig</span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/base.html#BaseEmbeddingConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for all embedding configurations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">EmbeddingConfigFactory</span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/config.html#EmbeddingConfigFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
+<dd><p>Factory for creating embedding configurations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">EmbeddingType</span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/types.html#EmbeddingType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition">¶</a></dt>
+<dd><p>Enum of supported embedding providers.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">create_embedding_config</span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/config.html#create_embedding_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition">¶</a></dt>
+<dd><p>Factory function for creating configurations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">providers</span></span><a class="headerlink" href="#id4" title="Link to this definition">¶</a></dt>
+<dd><p>Lazily loaded providers module.</p>
+</dd></dl>
+
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>Basic usage with OpenAI embeddings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.embedding</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseEmbeddingConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.embedding.providers</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAIEmbeddingConfig</span>
+
+<span class="c1"># Create configuration</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">OpenAIEmbeddingConfig</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_embeddings&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;text-embedding-3-large&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Instantiate embeddings</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+
+<span class="c1"># Embed text</span>
+<span class="n">vectors</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">embed_documents</span><span class="p">([</span><span class="s2">&quot;Hello world&quot;</span><span class="p">,</span> <span class="s2">&quot;How are you?&quot;</span><span class="p">])</span>
+<span class="n">query_vector</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">embed_query</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Configuration discovery and dynamic provider selection:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.embedding</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseEmbeddingConfig</span>
+
+<span class="c1"># List all registered providers</span>
+<span class="n">available_providers</span> <span class="o">=</span> <span class="n">BaseEmbeddingConfig</span><span class="o">.</span><span class="n">list_registered_types</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Available providers: </span><span class="si">{</span><span class="n">available_providers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get specific provider class</span>
+<span class="n">provider_class</span> <span class="o">=</span> <span class="n">BaseEmbeddingConfig</span><span class="o">.</span><span class="n">get_config_class</span><span class="p">(</span><span class="s2">&quot;OpenAI&quot;</span><span class="p">)</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">provider_class</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;dynamic_embeddings&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using the factory function for simplified creation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.embedding</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_embedding_config</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">create_embedding_config</span><span class="p">(</span>
+    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;OpenAI&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;text-embedding-3-large&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_embeddings&quot;</span>
+<span class="p">)</span>
+
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All provider classes are lazily loaded through the <cite>providers</cite> attribute
+to avoid import overhead during module initialization. This allows the
+framework to start quickly even when many providers are available.</p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="id5">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">BaseEmbeddingConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine_type:</span> <span class="pre">~haive.core.engine.base.types.EngineType</span> <span class="pre">=</span> <span class="pre">EngineType.EMBEDDINGS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_schema:</span> <span class="pre">type[~pydantic.main.BaseModel]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_schema:</span> <span class="pre">type[~pydantic.main.BaseModel]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'1.0.0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata:</span> <span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_type:</span> <span class="pre">~haive.core.engine.embedding.types.EmbeddingType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimensions:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key:</span> <span class="pre">~pydantic.types.SecretStr</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/base.html#BaseEmbeddingConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../../common/mixins/index.html#haive.core.common.mixins.SecureConfigMixin" title="haive.core.common.mixins.secure_config.SecureConfigMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">SecureConfigMixin</span></code></a>, <a class="reference internal" href="../index.html#haive.core.engine.InvokableEngine" title="haive.core.engine.base.base.InvokableEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">InvokableEngine</span></code></a></p>
+<p>Base configuration for all embedding implementations.</p>
+<p>This class provides the foundation for all embedding provider configurations
+in the Haive framework. It includes registration capabilities, secure configuration
+management, and the required interface for creating embedding instances.</p>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>Basic usage with a provider:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.engine.embedding.providers</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAIEmbeddingConfig</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">OpenAIEmbeddingConfig</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_embeddings&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;text-embedding-3-large&quot;</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-...&quot;</span>
+<span class="p">)</span>
+
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Using with configuration discovery:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># List all available providers</span>
+<span class="n">providers</span> <span class="o">=</span> <span class="n">BaseEmbeddingConfig</span><span class="o">.</span><span class="n">list_registered_types</span><span class="p">()</span>
+
+<span class="c1"># Get specific provider class</span>
+<span class="n">provider_class</span> <span class="o">=</span> <span class="n">BaseEmbeddingConfig</span><span class="o">.</span><span class="n">get_config_class</span><span class="p">(</span><span class="n">EmbeddingType</span><span class="o">.</span><span class="n">OPENAI</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.embedding_type">
+<span class="sig-name descname"><span class="pre">embedding_type</span></span><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.embedding_type" title="Link to this definition">¶</a></dt>
+<dd><p>The type of embedding provider</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../index.html#haive.core.engine.EmbeddingType" title="haive.core.engine.embedding.types.EmbeddingType">haive.core.engine.embedding.types.EmbeddingType</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.name" title="Link to this definition">¶</a></dt>
+<dd><p>Human-readable name for this configuration</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.model" title="Link to this definition">¶</a></dt>
+<dd><p>Model name/identifier for the embedding provider</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.dimensions">
+<span class="sig-name descname"><span class="pre">dimensions</span></span><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.dimensions" title="Link to this definition">¶</a></dt>
+<dd><p>Optional output dimensions for the embeddings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.api_key">
+<span class="sig-name descname"><span class="pre">api_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SecretStr</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.api_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.create_runnable">
+<span class="sig-name descname"><span class="pre">create_runnable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runnable_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/base.html#BaseEmbeddingConfig.create_runnable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.create_runnable" title="Link to this definition">¶</a></dt>
+<dd><p>Create a runnable embedding instance.</p>
+<p>This method is required by the InvokableEngine interface and provides
+a standardized way to create embedding instances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>runnable_config</strong> – Optional configuration for the runnable</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The embedding instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">dimensions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#id6" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">embedding_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../index.html#haive.core.engine.EmbeddingType" title="haive.core.engine.embedding.types.EmbeddingType"><span class="pre">EmbeddingType</span></a></em><a class="headerlink" href="#id7" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.engine_type">
+<span class="sig-name descname"><span class="pre">engine_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../index.html#haive.core.engine.EngineType" title="haive.core.engine.base.types.EngineType"><span class="pre">EngineType</span></a></em><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.engine_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.get_config_class">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_config_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../index.html#haive.core.engine.EmbeddingType" title="haive.core.engine.embedding.types.EmbeddingType"><span class="pre">EmbeddingType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../index.html#haive.core.engine.BaseEmbeddingConfig" title="haive.core.engine.embedding.base.BaseEmbeddingConfig"><span class="pre">BaseEmbeddingConfig</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/base.html#BaseEmbeddingConfig.get_config_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.get_config_class" title="Link to this definition">¶</a></dt>
+<dd><p>Get the configuration class for a specific embedding type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>embedding_type</strong> – The embedding type to get the config class for</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The configuration class if found, None otherwise</p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>Getting a provider class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config_class</span> <span class="o">=</span> <span class="n">BaseEmbeddingConfig</span><span class="o">.</span><span class="n">get_config_class</span><span class="p">(</span><span class="n">EmbeddingType</span><span class="o">.</span><span class="n">OPENAI</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">config_class</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">config_class</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;text-embedding-3-large&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.get_input_fields">
+<span class="sig-name descname"><span class="pre">get_input_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/base.html#BaseEmbeddingConfig.get_input_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.get_input_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Define the input schema for this embedding configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary mapping field names to (type, Field) tuples</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.get_output_fields">
+<span class="sig-name descname"><span class="pre">get_output_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/base.html#BaseEmbeddingConfig.get_output_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.get_output_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Define the output schema for this embedding configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary mapping field names to (type, Field) tuples</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.get_provider_info">
+<span class="sig-name descname"><span class="pre">get_provider_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/base.html#BaseEmbeddingConfig.get_provider_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.get_provider_info" title="Link to this definition">¶</a></dt>
+<dd><p>Get information about this embedding provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary containing provider information</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.instantiate">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/base.html#BaseEmbeddingConfig.instantiate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.instantiate" title="Link to this definition">¶</a></dt>
+<dd><p>Create an embedding instance from this configuration.</p>
+<p>This method must be implemented by each provider-specific configuration
+class to create the actual embedding instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The embedding instance (typically a LangChain embedding object)</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.13)"><strong>NotImplementedError</strong></a> – If not implemented by subclass</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ImportError" title="(in Python v3.13)"><strong>ImportError</strong></a> – If required dependencies are not installed</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If configuration is invalid</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>Implementing instantiate method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">instantiate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OpenAIEmbeddings</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAIEmbeddings</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Install: pip install langchain-openai&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">OpenAIEmbeddings</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">api_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_api_key</span><span class="p">()</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.list_registered_types">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_registered_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../index.html#haive.core.engine.BaseEmbeddingConfig" title="haive.core.engine.embedding.base.BaseEmbeddingConfig"><span class="pre">BaseEmbeddingConfig</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/base.html#BaseEmbeddingConfig.list_registered_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.list_registered_types" title="Link to this definition">¶</a></dt>
+<dd><p>List all registered embedding configuration types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary mapping type names to configuration classes</p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>Listing all providers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">providers</span> <span class="o">=</span> <span class="n">BaseEmbeddingConfig</span><span class="o">.</span><span class="n">list_registered_types</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">config_class</span> <span class="ow">in</span> <span class="n">providers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Available provider: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#id8" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True}</span></em><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.register">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../index.html#haive.core.engine.EmbeddingType" title="haive.core.engine.embedding.types.EmbeddingType"><span class="pre">EmbeddingType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/base.html#BaseEmbeddingConfig.register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.register" title="Link to this definition">¶</a></dt>
+<dd><p>Register an embedding configuration class.</p>
+<p>This decorator registers embedding configuration classes with the global
+registry, allowing them to be discovered and instantiated dynamically.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>embedding_type</strong> – The embedding type to register this class for</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The decorator function</p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>Registering a new provider:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@BaseEmbeddingConfig</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">EmbeddingType</span><span class="o">.</span><span class="n">OPENAI</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OpenAIEmbeddingConfig</span><span class="p">(</span><span class="n">BaseEmbeddingConfig</span><span class="p">):</span>
+    <span class="c1"># Implementation here</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.BaseEmbeddingConfig.validate_configuration">
+<span class="sig-name descname"><span class="pre">validate_configuration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/base.html#BaseEmbeddingConfig.validate_configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.BaseEmbeddingConfig.validate_configuration" title="Link to this definition">¶</a></dt>
+<dd><p>Validate the configuration before instantiation.</p>
+<p>This method can be overridden by subclasses to add provider-specific
+validation logic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If configuration is invalid</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="id9">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">EmbeddingConfigFactory</span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/config.html#EmbeddingConfigFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id9" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Factory class for creating embedding configurations.</p>
+<p>This factory provides a convenient way to create embedding configurations
+without needing to import specific provider classes.</p>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>Create OpenAI configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">factory</span> <span class="o">=</span> <span class="n">EmbeddingConfigFactory</span><span class="p">()</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;OpenAI&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;text-embedding-3-large&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_embeddings&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>List available providers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">factory</span> <span class="o">=</span> <span class="n">EmbeddingConfigFactory</span><span class="p">()</span>
+<span class="n">providers</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">list_providers</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Get provider information:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">factory</span> <span class="o">=</span> <span class="n">EmbeddingConfigFactory</span><span class="p">()</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">get_provider_info</span><span class="p">(</span><span class="s2">&quot;OpenAI&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingConfigFactory.create">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../index.html#haive.core.engine.EmbeddingType" title="haive.core.engine.embedding.types.EmbeddingType"><span class="pre">EmbeddingType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default_embedding'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../index.html#haive.core.engine.BaseEmbeddingConfig" title="haive.core.engine.embedding.base.BaseEmbeddingConfig"><span class="pre">BaseEmbeddingConfig</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/config.html#EmbeddingConfigFactory.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingConfigFactory.create" title="Link to this definition">¶</a></dt>
+<dd><p>Create an embedding configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>provider</strong> – Provider name or EmbeddingType enum</p></li>
+<li><p><strong>model</strong> – Model name for the provider</p></li>
+<li><p><strong>name</strong> – Configuration name</p></li>
+<li><p><strong>**kwargs</strong> – Additional provider-specific parameters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Configured embedding instance</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If provider is not found or configuration is invalid</p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>Create OpenAI config:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">EmbeddingConfigFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;OpenAI&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;text-embedding-3-large&quot;</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-...&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Create HuggingFace config:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">EmbeddingConfigFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;HuggingFace&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;sentence-transformers/all-MiniLM-L6-v2&quot;</span><span class="p">,</span>
+    <span class="n">use_cache</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingConfigFactory.get_provider_info">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_provider_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../index.html#haive.core.engine.EmbeddingType" title="haive.core.engine.embedding.types.EmbeddingType"><span class="pre">EmbeddingType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/config.html#EmbeddingConfigFactory.get_provider_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingConfigFactory.get_provider_info" title="Link to this definition">¶</a></dt>
+<dd><p>Get information about a specific provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>provider</strong> – Provider name or EmbeddingType enum</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with provider information</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingConfigFactory.list_providers">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_providers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/config.html#EmbeddingConfigFactory.list_providers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingConfigFactory.list_providers" title="Link to this definition">¶</a></dt>
+<dd><p>List all available embedding providers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of provider names</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingConfigFactory.validate_provider">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_provider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../index.html#haive.core.engine.EmbeddingType" title="haive.core.engine.embedding.types.EmbeddingType"><span class="pre">EmbeddingType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/config.html#EmbeddingConfigFactory.validate_provider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingConfigFactory.validate_provider" title="Link to this definition">¶</a></dt>
+<dd><p>Check if a provider is available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>provider</strong> – Provider name or EmbeddingType enum</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if provider is available, False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="id10">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">EmbeddingType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/types.html#EmbeddingType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id10" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>Enumeration of supported embedding providers.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.ANTHROPIC">
+<span class="sig-name descname"><span class="pre">ANTHROPIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Anthropic'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.ANTHROPIC" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.AWS_BEDROCK">
+<span class="sig-name descname"><span class="pre">AWS_BEDROCK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AWSBedrock'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.AWS_BEDROCK" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.AZURE">
+<span class="sig-name descname"><span class="pre">AZURE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Azure'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.AZURE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.AZURE_OPENAI">
+<span class="sig-name descname"><span class="pre">AZURE_OPENAI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AzureOpenAI'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.AZURE_OPENAI" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.COHERE">
+<span class="sig-name descname"><span class="pre">COHERE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Cohere'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.COHERE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.ELASTICSEARCH">
+<span class="sig-name descname"><span class="pre">ELASTICSEARCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Elasticsearch'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.ELASTICSEARCH" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.FAKE">
+<span class="sig-name descname"><span class="pre">FAKE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Fake'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.FAKE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.FIREWORKS">
+<span class="sig-name descname"><span class="pre">FIREWORKS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Fireworks'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.FIREWORKS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.GOOGLE_GEMINI">
+<span class="sig-name descname"><span class="pre">GOOGLE_GEMINI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GoogleGemini'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.GOOGLE_GEMINI" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.GOOGLE_VERTEX_AI">
+<span class="sig-name descname"><span class="pre">GOOGLE_VERTEX_AI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GoogleVertexAI'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.GOOGLE_VERTEX_AI" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.HUGGINGFACE">
+<span class="sig-name descname"><span class="pre">HUGGINGFACE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'HuggingFace'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.HUGGINGFACE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.IBM_WATSONX">
+<span class="sig-name descname"><span class="pre">IBM_WATSONX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'IBMWatsonx'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.IBM_WATSONX" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.MISTRAL">
+<span class="sig-name descname"><span class="pre">MISTRAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MistralAI'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.MISTRAL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.NOMIC">
+<span class="sig-name descname"><span class="pre">NOMIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Nomic'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.NOMIC" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.NVIDIA">
+<span class="sig-name descname"><span class="pre">NVIDIA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NVIDIA'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.NVIDIA" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.OLLAMA">
+<span class="sig-name descname"><span class="pre">OLLAMA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Ollama'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.OLLAMA" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.OPENAI">
+<span class="sig-name descname"><span class="pre">OPENAI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OpenAI'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.OPENAI" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.PINECONE">
+<span class="sig-name descname"><span class="pre">PINECONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Pinecone'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.PINECONE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.SENTENCE_TRANSFORMERS">
+<span class="sig-name descname"><span class="pre">SENTENCE_TRANSFORMERS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SentenceTransformers'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.SENTENCE_TRANSFORMERS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.TOGETHER_AI">
+<span class="sig-name descname"><span class="pre">TOGETHER_AI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TogetherAI'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.TOGETHER_AI" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.VOYAGE_AI">
+<span class="sig-name descname"><span class="pre">VOYAGE_AI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'VoyageAI'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.VOYAGE_AI" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.EmbeddingType.WEAVIATE">
+<span class="sig-name descname"><span class="pre">WEAVIATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Weaviate'</span></em><a class="headerlink" href="#haive.core.engine.embedding.EmbeddingType.WEAVIATE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="haive.core.engine.embedding.__getattr__">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding.html#__getattr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#haive.core.engine.embedding.__getattr__" title="Link to this definition">¶</a></dt>
+<dd><p>Lazy load providers to avoid import-time registration overhead.</p>
+<p>This function enables lazy loading of the providers module, which contains
+all embedding provider configurations. By deferring the import until first
+access, we significantly reduce module initialization time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – The attribute name being accessed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>“providers”: The providers module containing all embedding configs.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The requested module or attribute. Currently supports</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AttributeError" title="(in Python v3.13)"><strong>AttributeError</strong></a> – If the requested attribute doesn’t exist.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The imported module is cached in globals() to avoid repeated imports
+on subsequent accesses.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-prename descclassname"><span class="pre">haive.core.engine.embedding.</span></span><span class="sig-name descname"><span class="pre">create_embedding_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../index.html#haive.core.engine.EmbeddingType" title="haive.core.engine.embedding.types.EmbeddingType"><span class="pre">EmbeddingType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default_embedding'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../index.html#haive.core.engine.BaseEmbeddingConfig" title="haive.core.engine.embedding.base.BaseEmbeddingConfig"><span class="pre">BaseEmbeddingConfig</span></a></span></span><a class="reference internal" href="../../../../../_modules/haive/core/engine/embedding/config.html#create_embedding_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id11" title="Link to this definition">¶</a></dt>
+<dd><p>Create an embedding configuration using the factory.</p>
+<p>This is a convenience function that wraps EmbeddingConfigFactory.create().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>provider</strong> – Provider name or EmbeddingType enum</p></li>
+<li><p><strong>model</strong> – Model name for the provider</p></li>
+<li><p><strong>name</strong> – Configuration name</p></li>
+<li><p><strong>**kwargs</strong> – Additional provider-specific parameters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Configured embedding instance</p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>Create OpenAI config:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">create_embedding_config</span><span class="p">(</span>
+    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;OpenAI&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;text-embedding-3-large&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Create with custom parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">create_embedding_config</span><span class="p">(</span>
+    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;HuggingFace&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;sentence-transformers/all-MiniLM-L6-v2&quot;</span><span class="p">,</span>
+    <span class="n">use_cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">cache_folder</span><span class="o">=</span><span class="s2">&quot;./my_cache&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core.engine.embedding</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingConfigFactory"><code class="docutils literal notranslate"><span class="pre">EmbeddingConfigFactory</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType"><code class="docutils literal notranslate"><span class="pre">EmbeddingType</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.create_embedding_config"><code class="docutils literal notranslate"><span class="pre">create_embedding_config</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.providers"><code class="docutils literal notranslate"><span class="pre">providers</span></code></a></li>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig</span></code></a></li>
+<li><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">EmbeddingConfigFactory</span></code></a></li>
+<li><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">EmbeddingType</span></code></a></li>
+<li><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">create_embedding_config</span></code></a></li>
+<li><a class="reference internal" href="#id4"><code class="docutils literal notranslate"><span class="pre">providers</span></code></a></li>
+<li><a class="reference internal" href="#id5"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.embedding_type"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.embedding_type</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.name"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.name</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.model"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.model</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.dimensions"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.dimensions</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.api_key"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.api_key</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.create_runnable"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.create_runnable()</span></code></a></li>
+<li><a class="reference internal" href="#id6"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.dimensions</span></code></a></li>
+<li><a class="reference internal" href="#id7"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.embedding_type</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.engine_type"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.engine_type</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.get_config_class"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.get_config_class()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.get_input_fields"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.get_input_fields()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.get_output_fields"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.get_output_fields()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.get_provider_info"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.get_provider_info()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.list_registered_types"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.list_registered_types()</span></code></a></li>
+<li><a class="reference internal" href="#id8"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.model</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.model_config"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.model_config</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.register"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.register()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.BaseEmbeddingConfig.validate_configuration"><code class="docutils literal notranslate"><span class="pre">BaseEmbeddingConfig.validate_configuration()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9"><code class="docutils literal notranslate"><span class="pre">EmbeddingConfigFactory</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingConfigFactory.create"><code class="docutils literal notranslate"><span class="pre">EmbeddingConfigFactory.create()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingConfigFactory.get_provider_info"><code class="docutils literal notranslate"><span class="pre">EmbeddingConfigFactory.get_provider_info()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingConfigFactory.list_providers"><code class="docutils literal notranslate"><span class="pre">EmbeddingConfigFactory.list_providers()</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingConfigFactory.validate_provider"><code class="docutils literal notranslate"><span class="pre">EmbeddingConfigFactory.validate_provider()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10"><code class="docutils literal notranslate"><span class="pre">EmbeddingType</span></code></a><ul>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.ANTHROPIC"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.ANTHROPIC</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.AWS_BEDROCK"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.AWS_BEDROCK</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.AZURE"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.AZURE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.AZURE_OPENAI"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.AZURE_OPENAI</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.COHERE"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.COHERE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.ELASTICSEARCH"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.ELASTICSEARCH</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.FAKE"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.FAKE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.FIREWORKS"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.FIREWORKS</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.GOOGLE_GEMINI"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.GOOGLE_GEMINI</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.GOOGLE_VERTEX_AI"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.GOOGLE_VERTEX_AI</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.HUGGINGFACE"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.HUGGINGFACE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.IBM_WATSONX"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.IBM_WATSONX</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.MISTRAL"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.MISTRAL</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.NOMIC"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.NOMIC</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.NVIDIA"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.NVIDIA</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.OLLAMA"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.OLLAMA</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.OPENAI"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.OPENAI</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.PINECONE"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.PINECONE</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.SENTENCE_TRANSFORMERS"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.SENTENCE_TRANSFORMERS</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.TOGETHER_AI"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.TOGETHER_AI</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.VOYAGE_AI"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.VOYAGE_AI</span></code></a></li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.EmbeddingType.WEAVIATE"><code class="docutils literal notranslate"><span class="pre">EmbeddingType.WEAVIATE</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#haive.core.engine.embedding.__getattr__"><code class="docutils literal notranslate"><span class="pre">__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#id11"><code class="docutils literal notranslate"><span class="pre">create_embedding_config()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

@@ -1,0 +1,6 @@
+# Default: everything requires @pr1m8
+* @pr1m8
+
+# Example exceptions (uncomment if desired)
+# docs/** @someone-else
+# .github/workflows/** @ci-admin

@@ -1,5 +1,7 @@
 """Data models for Pro Search Agent."""
 
+from __future__ import annotations
+
 from typing import Any
 
 from pydantic import BaseModel, Field
@@ -30,25 +32,34 @@ class ProSearchResponse(SearchResponse):
     """
 
     search_type: str = Field(
-        default="ProSearch", description="Type of search performed"
+        default="ProSearch",
+        description="Type of search performed",
     )
     refinements: list[SearchRefinement] = Field(
-        default_factory=list, description="Query refinements made"
+        default_factory=list,
+        description="Query refinements made",
     )
     contextual_insights: list[ContextualInsight] = Field(
-        default_factory=list, description="Contextual insights"
+        default_factory=list,
+        description="Contextual insights",
     )
     user_preferences_applied: dict[str, Any] = Field(
-        default_factory=dict, description="User preferences considered"
+        default_factory=dict,
+        description="User preferences considered",
     )
     reasoning_steps: list[str] = Field(
-        default_factory=list, description="Reasoning steps taken"
+        default_factory=list,
+        description="Reasoning steps taken",
     )
     follow_up_questions: list[str] = Field(
-        default_factory=list, description="Suggested follow-up questions"
+        default_factory=list,
+        description="Suggested follow-up questions",
     )
     depth_level: int = Field(
-        default=1, ge=1, le=5, description="Depth level of search (1-5)"
+        default=1,
+        ge=1,
+        le=5,
+        description="Depth level of search (1-5)",
     )
 
     class Config:
@@ -67,14 +78,14 @@ class ProSearchResponse(SearchResponse):
                         "original_query": "How can I improve my productivity while working from home?",
                         "refined_query": "evidence-based work from home productivity strategies structured approach",
                         "refinement_reason": "Added specificity for evidence-based and structured approaches based on user preferences",
-                    }
+                    },
                 ],
                 "contextual_insights": [
                     {
                         "insight": "User prefers structured, actionable advice over general tips",
                         "relevance_score": 0.9,
                         "source_type": "memory",
-                    }
+                    },
                 ],
                 "user_preferences_applied": {
                     "learning_style": "structured",
@@ -94,7 +105,7 @@ class ProSearchResponse(SearchResponse):
                 ],
                 "depth_level": 3,
                 "metadata": {},
-            }
+            },
         }
 
 
@@ -103,14 +114,19 @@ class ProSearchRequest(BaseModel):
 
     query: str = Field(..., min_length=1, max_length=1000, description="Search query")
     context: dict[str, Any] | None = Field(
-        default=None, description="Additional context"
+        default=None,
+        description="Additional context",
     )
     depth_level: int = Field(
-        default=3, ge=1, le=5, description="Desired depth level (1-5)"
+        default=3,
+        ge=1,
+        le=5,
+        description="Desired depth level (1-5)",
     )
     include_reasoning: bool = Field(default=True, description="Include reasoning steps")
     generate_follow_ups: bool = Field(
-        default=True, description="Generate follow-up questions"
+        default=True,
+        description="Generate follow-up questions",
     )
     use_preferences: bool = Field(default=True, description="Apply user preferences")
 
@@ -125,5 +141,5 @@ class ProSearchRequest(BaseModel):
                 "include_reasoning": True,
                 "generate_follow_ups": True,
                 "use_preferences": True,
-            }
+            },
         }

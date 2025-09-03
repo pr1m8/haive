@@ -1,7 +1,7 @@
 # Architecture Problems Summary
 
-**Category**: Architecture Problems  
-**Total Issues**: Multiple ongoing structural challenges  
+**Category**: Architecture Problems
+**Total Issues**: Multiple ongoing structural challenges
 **Last Updated**: 2025-01-21
 
 ## 📊 Overview

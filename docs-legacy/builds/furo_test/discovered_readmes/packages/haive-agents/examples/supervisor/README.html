@@ -1,0 +1,817 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>Supervisor Examples - 🤖 Haive Test Build</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index_core_only.html"><div class="brand">🤖 Haive Test Build</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Test Build</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/haive/core/index.html">haive.core</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../../../../_sources/discovered_readmes/packages/haive-agents/examples/supervisor/README.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="supervisor-examples">
+<h1>Supervisor Examples<a class="headerlink" href="#supervisor-examples" title="Link to this heading">¶</a></h1>
+<p>This directory contains comprehensive examples demonstrating different supervisor patterns and usage scenarios. Examples are organized by complexity and use case.</p>
+<section id="directory-structure">
+<h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Link to this heading">¶</a></h2>
+<section id="basic">
+<h3><code class="docutils literal notranslate"><span class="pre">/basic/</span></code><a class="headerlink" href="#basic" title="Link to this heading">¶</a></h3>
+<p>Simple, straightforward examples for getting started:</p>
+<ul class="simple">
+<li><p><strong>basic_supervisor_example.py</strong> - Basic supervisor with multiple agents</p></li>
+</ul>
+</section>
+<section id="advanced">
+<h3><code class="docutils literal notranslate"><span class="pre">/advanced/</span></code><a class="headerlink" href="#advanced" title="Link to this heading">¶</a></h3>
+<p>Complex examples showing sophisticated patterns:</p>
+<ul class="simple">
+<li><p><strong>dynamic_activation_example.py</strong> - Dynamic agent activation based on capabilities</p></li>
+</ul>
+</section>
+<section id="patterns">
+<h3><code class="docutils literal notranslate"><span class="pre">/patterns/</span></code><a class="headerlink" href="#patterns" title="Link to this heading">¶</a></h3>
+<p>Architectural pattern demonstrations:</p>
+<ul class="simple">
+<li><p><strong>agent_execution_node_pattern.py</strong> - Agent execution node pattern</p></li>
+<li><p><strong>dynamic_tool_generation_pattern.py</strong> - Dynamic tool generation</p></li>
+<li><p><strong>state_synchronized_tools_pattern.py</strong> - State-synchronized tool management</p></li>
+<li><p><strong>base_supervisor_pattern.py</strong> - Base supervisor implementation</p></li>
+<li><p><strong>three_node_supervisor_pattern.py</strong> - Three-node supervisor architecture</p></li>
+<li><p><strong>integrated_supervisor_with_handoff.py</strong> - Integrated supervisor with handoffs</p></li>
+<li><p><strong>enhanced_supervisor_with_choice.py</strong> - Enhanced supervisor with choice models</p></li>
+</ul>
+</section>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h2>
+<section id="basic-supervisor-usage">
+<h3>Basic Supervisor Usage<a class="headerlink" href="#basic-supervisor-usage" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.dynamic_supervisor</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_dynamic_supervisor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.agents.simple</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleAgent</span>
+
+<span class="c1"># Create supervisor</span>
+<span class="n">supervisor</span> <span class="o">=</span> <span class="n">create_dynamic_supervisor</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;task_router&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create state and add agents</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">create_initial_state</span><span class="p">()</span>
+<span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="s2">&quot;math_agent&quot;</span><span class="p">,</span> <span class="n">math_agent</span><span class="p">,</span> <span class="s2">&quot;Mathematics expert&quot;</span><span class="p">)</span>
+<span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="s2">&quot;search_agent&quot;</span><span class="p">,</span> <span class="n">search_agent</span><span class="p">,</span> <span class="s2">&quot;Web search specialist&quot;</span><span class="p">)</span>
+
+<span class="c1"># Route tasks</span>
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="s2">&quot;Calculate 15 * 23&quot;</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="running-examples">
+<h3>Running Examples<a class="headerlink" href="#running-examples" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run basic example</span>
+poetry<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/supervisor/basic/basic_supervisor_example.py
+
+<span class="c1"># Run advanced example</span>
+poetry<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/supervisor/advanced/dynamic_activation_example.py
+
+<span class="c1"># Run pattern examples</span>
+poetry<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/supervisor/patterns/agent_execution_node_pattern.py
+</pre></div>
+</div>
+</section>
+</section>
+<section id="example-categories">
+<h2>Example Categories<a class="headerlink" href="#example-categories" title="Link to this heading">¶</a></h2>
+<section id="basic-examples">
+<h3>1. Basic Examples<a class="headerlink" href="#basic-examples" title="Link to this heading">¶</a></h3>
+<section id="basic-supervisor-example-py">
+<h4>basic_supervisor_example.py<a class="headerlink" href="#basic-supervisor-example-py" title="Link to this heading">¶</a></h4>
+<p>Demonstrates fundamental supervisor concepts:</p>
+<ul class="simple">
+<li><p>Creating specialized agents</p></li>
+<li><p>Setting up supervisor with factory function</p></li>
+<li><p>Adding agents to supervisor state</p></li>
+<li><p>Basic task routing</p></li>
+<li><p>Multi-step coordination</p></li>
+</ul>
+<p><strong>Key Concepts:</strong></p>
+<ul class="simple">
+<li><p>Agent specialization</p></li>
+<li><p>Supervisor configuration</p></li>
+<li><p>State management</p></li>
+<li><p>Task routing</p></li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<ul class="simple">
+<li><p>Simple task delegation</p></li>
+<li><p>Multi-agent coordination</p></li>
+<li><p>Basic routing decisions</p></li>
+</ul>
+</section>
+</section>
+<section id="advanced-examples">
+<h3>2. Advanced Examples<a class="headerlink" href="#advanced-examples" title="Link to this heading">¶</a></h3>
+<section id="dynamic-activation-example-py">
+<h4>dynamic_activation_example.py<a class="headerlink" href="#dynamic-activation-example-py" title="Link to this heading">¶</a></h4>
+<p>Shows sophisticated agent lifecycle management:</p>
+<ul class="simple">
+<li><p>Starting with subset of active agents</p></li>
+<li><p>Keeping agents in registry but inactive</p></li>
+<li><p>Task analysis to identify required capabilities</p></li>
+<li><p>Dynamic agent activation based on need</p></li>
+<li><p>Resource-efficient multi-agent systems</p></li>
+</ul>
+<p><strong>Key Concepts:</strong></p>
+<ul class="simple">
+<li><p>Capability-based routing</p></li>
+<li><p>Agent lifecycle management</p></li>
+<li><p>Resource optimization</p></li>
+<li><p>Dynamic activation</p></li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<ul class="simple">
+<li><p>Resource-constrained environments</p></li>
+<li><p>Scalable multi-agent systems</p></li>
+<li><p>On-demand agent activation</p></li>
+<li><p>Cost-efficient agent management</p></li>
+</ul>
+</section>
+</section>
+<section id="pattern-examples">
+<h3>3. Pattern Examples<a class="headerlink" href="#pattern-examples" title="Link to this heading">¶</a></h3>
+<section id="agent-execution-node-pattern-py">
+<h4>agent_execution_node_pattern.py<a class="headerlink" href="#agent-execution-node-pattern-py" title="Link to this heading">¶</a></h4>
+<p>Demonstrates clean agent execution architecture:</p>
+<ul class="simple">
+<li><p>Single generic execution node</p></li>
+<li><p>State-based routing decisions</p></li>
+<li><p>Clean separation of concerns</p></li>
+<li><p>Flexible agent selection</p></li>
+</ul>
+<p><strong>Key Concepts:</strong></p>
+<ul class="simple">
+<li><p>Agent execution node</p></li>
+<li><p>State-based routing</p></li>
+<li><p>Generic execution patterns</p></li>
+<li><p>Clean architecture</p></li>
+</ul>
+</section>
+<section id="dynamic-tool-generation-pattern-py">
+<h4>dynamic_tool_generation_pattern.py<a class="headerlink" href="#dynamic-tool-generation-pattern-py" title="Link to this heading">¶</a></h4>
+<p>Shows dynamic tool creation and management:</p>
+<ul class="simple">
+<li><p>Registry-based tool generation</p></li>
+<li><p>Dynamic choice models</p></li>
+<li><p>Tool rebuilding on changes</p></li>
+<li><p>Validated agent selection</p></li>
+</ul>
+<p><strong>Key Concepts:</strong></p>
+<ul class="simple">
+<li><p>Dynamic tool creation</p></li>
+<li><p>Registry patterns</p></li>
+<li><p>Choice model integration</p></li>
+<li><p>Tool lifecycle management</p></li>
+</ul>
+</section>
+<section id="state-synchronized-tools-pattern-py">
+<h4>state_synchronized_tools_pattern.py<a class="headerlink" href="#state-synchronized-tools-pattern-py" title="Link to this heading">¶</a></h4>
+<p>Demonstrates state-tool synchronization:</p>
+<ul class="simple">
+<li><p>Tools synchronized from state</p></li>
+<li><p>State-driven tool generation</p></li>
+<li><p>Complex state management</p></li>
+<li><p>Tool-state coordination</p></li>
+</ul>
+<p><strong>Key Concepts:</strong></p>
+<ul class="simple">
+<li><p>State-tool synchronization</p></li>
+<li><p>Complex state management</p></li>
+<li><p>Tool generation patterns</p></li>
+<li><p>State coordination</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="id1">
+<h2>Running Examples<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<section id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install dependencies</span>
+poetry<span class="w"> </span>install
+
+<span class="c1"># Set up environment variables (if needed)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span>your_key_here
+<span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>your_key_here
+</pre></div>
+</div>
+</section>
+<section id="basic-execution">
+<h3>Basic Execution<a class="headerlink" href="#basic-execution" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run from project root</span>
+poetry<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/supervisor/basic/basic_supervisor_example.py
+
+<span class="c1"># Run with verbose output</span>
+poetry<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/supervisor/basic/basic_supervisor_example.py<span class="w"> </span>--verbose
+
+<span class="c1"># Run specific pattern</span>
+poetry<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/supervisor/patterns/agent_execution_node_pattern.py
+</pre></div>
+</div>
+</section>
+<section id="advanced-execution">
+<h3>Advanced Execution<a class="headerlink" href="#advanced-execution" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run with custom configuration</span>
+poetry<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/supervisor/advanced/dynamic_activation_example.py<span class="w"> </span>--config<span class="w"> </span>custom_config.json
+
+<span class="c1"># Run with different models</span>
+poetry<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/supervisor/basic/basic_supervisor_example.py<span class="w"> </span>--model<span class="w"> </span>gpt-4-turbo
+
+<span class="c1"># Run with debugging</span>
+poetry<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/supervisor/patterns/dynamic_tool_generation_pattern.py<span class="w"> </span>--debug
+</pre></div>
+</div>
+</section>
+</section>
+<section id="example-modifications">
+<h2>Example Modifications<a class="headerlink" href="#example-modifications" title="Link to this heading">¶</a></h2>
+<section id="customizing-agents">
+<h3>Customizing Agents<a class="headerlink" href="#customizing-agents" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create custom agents for your use case</span>
+<span class="n">custom_agent</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;custom_agent&quot;</span><span class="p">,</span>
+    <span class="n">engine</span><span class="o">=</span><span class="n">AugLLMConfig</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">,</span>
+        <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">your_custom_tools</span><span class="p">],</span>
+        <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;Your custom system message&quot;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Add to supervisor</span>
+<span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="s2">&quot;custom&quot;</span><span class="p">,</span> <span class="n">custom_agent</span><span class="p">,</span> <span class="s2">&quot;Custom agent description&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="modifying-supervisor-configuration">
+<h3>Modifying Supervisor Configuration<a class="headerlink" href="#modifying-supervisor-configuration" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create custom supervisor</span>
+<span class="n">supervisor</span> <span class="o">=</span> <span class="n">DynamicSupervisorAgent</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;custom_supervisor&quot;</span><span class="p">,</span>
+    <span class="n">engine</span><span class="o">=</span><span class="n">AugLLMConfig</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4&quot;</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">system_message</span><span class="o">=</span><span class="s2">&quot;Custom supervisor instructions&quot;</span>
+    <span class="p">),</span>
+    <span class="n">enable_agent_builder</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">auto_sync_tools</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="adding-custom-tools">
+<h3>Adding Custom Tools<a class="headerlink" href="#adding-custom-tools" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">tool</span>
+
+<span class="nd">@tool</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">custom_tool</span><span class="p">(</span><span class="n">input_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    \<span class="s2">&quot;</span><span class="se">\&quot;\&quot;</span><span class="s2">Custom tool for specific functionality.</span><span class="se">\&quot;\&quot;\&quot;</span>
+    <span class="c1"># Your tool implementation</span>
+    <span class="k">return</span> <span class="n">processed_result</span>
+
+<span class="c1"># Add to agent</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">SimpleAgent</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;tool_agent&quot;</span><span class="p">,</span>
+    <span class="n">engine</span><span class="o">=</span><span class="n">AugLLMConfig</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">custom_tool</span><span class="p">])</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="common-patterns">
+<h2>Common Patterns<a class="headerlink" href="#common-patterns" title="Link to this heading">¶</a></h2>
+<section id="multi-domain-coordination">
+<h3>1. Multi-Domain Coordination<a class="headerlink" href="#multi-domain-coordination" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Agents for different domains</span>
+<span class="n">agents</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;math&quot;</span><span class="p">:</span> <span class="n">create_math_agent</span><span class="p">(),</span>
+    <span class="s2">&quot;search&quot;</span><span class="p">:</span> <span class="n">create_search_agent</span><span class="p">(),</span>
+    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">create_code_agent</span><span class="p">(),</span>
+    <span class="s2">&quot;analysis&quot;</span><span class="p">:</span> <span class="n">create_analysis_agent</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="c1"># Supervisor coordinates across domains</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">agent</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s2"> specialist&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="hierarchical-supervision">
+<h3>2. Hierarchical Supervision<a class="headerlink" href="#hierarchical-supervision" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create sub-supervisors for specific domains</span>
+<span class="n">research_supervisor</span> <span class="o">=</span> <span class="n">create_research_supervisor</span><span class="p">()</span>
+<span class="n">analysis_supervisor</span> <span class="o">=</span> <span class="n">create_analysis_supervisor</span><span class="p">()</span>
+
+<span class="c1"># Main supervisor coordinates sub-supervisors</span>
+<span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="s2">&quot;research&quot;</span><span class="p">,</span> <span class="n">research_supervisor</span><span class="p">,</span> <span class="s2">&quot;Research coordination&quot;</span><span class="p">)</span>
+<span class="n">state</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="s2">&quot;analysis&quot;</span><span class="p">,</span> <span class="n">analysis_supervisor</span><span class="p">,</span> <span class="s2">&quot;Analysis coordination&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="conditional-agent-activation">
+<h3>3. Conditional Agent Activation<a class="headerlink" href="#conditional-agent-activation" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Activate agents based on task analysis</span>
+<span class="n">task_analysis</span> <span class="o">=</span> <span class="n">analyze_task</span><span class="p">(</span><span class="n">user_request</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">capability</span> <span class="ow">in</span> <span class="n">task_analysis</span><span class="o">.</span><span class="n">required_capabilities</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">capability</span> <span class="o">==</span> <span class="s2">&quot;search&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">is_agent_active</span><span class="p">(</span><span class="s2">&quot;search&quot;</span><span class="p">):</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">activate_agent</span><span class="p">(</span><span class="s2">&quot;search&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">capability</span> <span class="o">==</span> <span class="s2">&quot;calculation&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">is_agent_active</span><span class="p">(</span><span class="s2">&quot;math&quot;</span><span class="p">):</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">activate_agent</span><span class="p">(</span><span class="s2">&quot;math&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="error-handling-and-recovery">
+<h3>4. Error Handling and Recovery<a class="headerlink" href="#error-handling-and-recovery" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">AgentExecutionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c1"># Handle agent execution errors</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Agent execution failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Implement retry logic or fallback</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="n">simplified_task</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading">¶</a></h2>
+<section id="agent-design">
+<h3>1. Agent Design<a class="headerlink" href="#agent-design" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Specialized agents</strong> for specific tasks</p></li>
+<li><p><strong>Clear agent descriptions</strong> for routing</p></li>
+<li><p><strong>Robust error handling</strong> in agent implementations</p></li>
+<li><p><strong>Appropriate tool selection</strong> for each agent</p></li>
+</ul>
+</section>
+<section id="supervisor-configuration">
+<h3>2. Supervisor Configuration<a class="headerlink" href="#supervisor-configuration" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Clear system messages</strong> for routing logic</p></li>
+<li><p><strong>Appropriate model selection</strong> for complexity</p></li>
+<li><p><strong>Proper state management</strong> for multi-turn interactions</p></li>
+<li><p><strong>Resource optimization</strong> for cost efficiency</p></li>
+</ul>
+</section>
+<section id="state-management">
+<h3>3. State Management<a class="headerlink" href="#state-management" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Minimal state</strong> for performance</p></li>
+<li><p><strong>Clear state transitions</strong> for debugging</p></li>
+<li><p><strong>Proper state persistence</strong> for long conversations</p></li>
+<li><p><strong>State validation</strong> for correctness</p></li>
+</ul>
+</section>
+<section id="error-handling">
+<h3>4. Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Graceful degradation</strong> when agents fail</p></li>
+<li><p><strong>Retry logic</strong> for transient failures</p></li>
+<li><p><strong>Fallback agents</strong> for critical functions</p></li>
+<li><p><strong>Comprehensive logging</strong> for debugging</p></li>
+</ul>
+</section>
+</section>
+<section id="performance-considerations">
+<h2>Performance Considerations<a class="headerlink" href="#performance-considerations" title="Link to this heading">¶</a></h2>
+<section id="agent-activation">
+<h3>1. Agent Activation<a class="headerlink" href="#agent-activation" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Lazy loading</strong> - Only activate agents when needed</p></li>
+<li><p><strong>Resource pooling</strong> - Share resources between agents</p></li>
+<li><p><strong>Caching</strong> - Cache agent results when appropriate</p></li>
+<li><p><strong>Monitoring</strong> - Track agent performance and usage</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>2. State Management<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>State size</strong> - Keep state minimal for performance</p></li>
+<li><p><strong>State updates</strong> - Batch updates when possible</p></li>
+<li><p><strong>State persistence</strong> - Use appropriate storage</p></li>
+<li><p><strong>State cleanup</strong> - Clean up old state regularly</p></li>
+</ul>
+</section>
+<section id="tool-management">
+<h3>3. Tool Management<a class="headerlink" href="#tool-management" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Tool caching</strong> - Cache tool results when appropriate</p></li>
+<li><p><strong>Tool optimization</strong> - Optimize tool implementations</p></li>
+<li><p><strong>Tool monitoring</strong> - Track tool usage and performance</p></li>
+<li><p><strong>Tool updates</strong> - Keep tools synchronized with state</p></li>
+</ul>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">¶</a></h2>
+<section id="common-issues">
+<h3>Common Issues<a class="headerlink" href="#common-issues" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Agent not found</strong> - Check agent registration and activation</p></li>
+<li><p><strong>Tool generation fails</strong> - Verify agent descriptions and state</p></li>
+<li><p><strong>Execution errors</strong> - Check agent implementations and tool definitions</p></li>
+<li><p><strong>Performance issues</strong> - Monitor agent usage and state size</p></li>
+</ol>
+</section>
+<section id="debug-tips">
+<h3>Debug Tips<a class="headerlink" href="#debug-tips" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enable debug logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="c1"># Check agent registry</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">list_agents</span><span class="p">())</span>
+
+<span class="c1"># Verify tool generation</span>
+<span class="n">tools</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_all_tools</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">tool</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">tool</span> <span class="ow">in</span> <span class="n">tools</span><span class="p">])</span>
+
+<span class="c1"># Monitor execution</span>
+<span class="n">supervisor</span><span class="o">.</span><span class="n">auto_sync_tools</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">¶</a></h2>
+<p>When adding new examples:</p>
+<ol class="arabic simple">
+<li><p>Follow the existing structure and naming conventions</p></li>
+<li><p>Include comprehensive docstrings and comments</p></li>
+<li><p>Test examples thoroughly before submission</p></li>
+<li><p>Update this README with new example descriptions</p></li>
+<li><p>Ensure examples work with current API versions</p></li>
+</ol>
+</section>
+<section id="related-documentation">
+<h2>Related Documentation<a class="headerlink" href="#related-documentation" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#../../src/haive/agents/supervisor/"><span class="xref myst">Supervisor Implementation</span></a> - Main supervisor code</p></li>
+<li><p><a class="reference internal" href="#../../src/haive/agents/dynamic_supervisor/"><span class="xref myst">Dynamic Supervisor</span></a> - Dynamic supervisor implementation</p></li>
+<li><p><a class="reference internal" href="#../../tests/supervisor/"><span class="xref myst">Tests</span></a> - Test implementations</p></li>
+<li><p><a class="reference internal" href="#../../docs/supervisor/"><span class="xref myst">Documentation</span></a> - Architecture and patterns</p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Supervisor Examples</a><ul>
+<li><a class="reference internal" href="#directory-structure">Directory Structure</a><ul>
+<li><a class="reference internal" href="#basic"><code class="docutils literal notranslate"><span class="pre">/basic/</span></code></a></li>
+<li><a class="reference internal" href="#advanced"><code class="docutils literal notranslate"><span class="pre">/advanced/</span></code></a></li>
+<li><a class="reference internal" href="#patterns"><code class="docutils literal notranslate"><span class="pre">/patterns/</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#quick-start">Quick Start</a><ul>
+<li><a class="reference internal" href="#basic-supervisor-usage">Basic Supervisor Usage</a></li>
+<li><a class="reference internal" href="#running-examples">Running Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example-categories">Example Categories</a><ul>
+<li><a class="reference internal" href="#basic-examples">1. Basic Examples</a><ul>
+<li><a class="reference internal" href="#basic-supervisor-example-py">basic_supervisor_example.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-examples">2. Advanced Examples</a><ul>
+<li><a class="reference internal" href="#dynamic-activation-example-py">dynamic_activation_example.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pattern-examples">3. Pattern Examples</a><ul>
+<li><a class="reference internal" href="#agent-execution-node-pattern-py">agent_execution_node_pattern.py</a></li>
+<li><a class="reference internal" href="#dynamic-tool-generation-pattern-py">dynamic_tool_generation_pattern.py</a></li>
+<li><a class="reference internal" href="#state-synchronized-tools-pattern-py">state_synchronized_tools_pattern.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id1">Running Examples</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#basic-execution">Basic Execution</a></li>
+<li><a class="reference internal" href="#advanced-execution">Advanced Execution</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example-modifications">Example Modifications</a><ul>
+<li><a class="reference internal" href="#customizing-agents">Customizing Agents</a></li>
+<li><a class="reference internal" href="#modifying-supervisor-configuration">Modifying Supervisor Configuration</a></li>
+<li><a class="reference internal" href="#adding-custom-tools">Adding Custom Tools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#common-patterns">Common Patterns</a><ul>
+<li><a class="reference internal" href="#multi-domain-coordination">1. Multi-Domain Coordination</a></li>
+<li><a class="reference internal" href="#hierarchical-supervision">2. Hierarchical Supervision</a></li>
+<li><a class="reference internal" href="#conditional-agent-activation">3. Conditional Agent Activation</a></li>
+<li><a class="reference internal" href="#error-handling-and-recovery">4. Error Handling and Recovery</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a><ul>
+<li><a class="reference internal" href="#agent-design">1. Agent Design</a></li>
+<li><a class="reference internal" href="#supervisor-configuration">2. Supervisor Configuration</a></li>
+<li><a class="reference internal" href="#state-management">3. State Management</a></li>
+<li><a class="reference internal" href="#error-handling">4. Error Handling</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#performance-considerations">Performance Considerations</a><ul>
+<li><a class="reference internal" href="#agent-activation">1. Agent Activation</a></li>
+<li><a class="reference internal" href="#id2">2. State Management</a></li>
+<li><a class="reference internal" href="#tool-management">3. Tool Management</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#common-issues">Common Issues</a></li>
+<li><a class="reference internal" href="#debug-tips">Debug Tips</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#contributing">Contributing</a></li>
+<li><a class="reference internal" href="#related-documentation">Related Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

@@ -1,7 +1,7 @@
 """Dynamic Executor Node for Dynamic Supervisor.
 
-This node dynamically executes agents by name, properly handling state extraction
-and merging based on the EngineNode/AgentNode patterns.
+This node dynamically executes agents by name, properly handling state
+extraction and merging based on the EngineNode/AgentNode patterns.
 """
 
 import logging
@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 
 
 class DynamicExecutorNode:
-    """Node that dynamically executes agents by name with proper state handling."""
+    """Node that dynamically executes agents by name with proper state
+    handling."""
 
     def __init__(self, agent_registry: dict[str, Any]):
         """Initialize with agent registry.
@@ -131,10 +132,7 @@ class DynamicExecutorNode:
                     logger.debug(f"  Extracted field: {field_name}")
 
             # Ensure engines if needed
-            if (
-                "engines" in agent.state_schema.model_fields
-                and "engines" not in agent_input
-            ):
+            if "engines" in agent.state_schema.model_fields and "engines" not in agent_input:
                 if "engines" in state:
                     agent_input["engines"] = state["engines"]
                 elif hasattr(agent, "engines"):
@@ -169,7 +167,10 @@ class DynamicExecutorNode:
         return agent_input
 
     def _process_agent_result(
-        self, result: Any, state: dict[str, Any], agent_name: str
+        self,
+        result: Any,
+        state: dict[str, Any],
+        agent_name: str,
     ) -> dict[str, Any]:
         """Process agent result and create state update.
 

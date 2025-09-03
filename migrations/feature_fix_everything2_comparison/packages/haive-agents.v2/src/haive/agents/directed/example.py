@@ -11,13 +11,9 @@ Functions:
 # examples/conversation/directed_example.py
 """Examples for directed conversation patterns with mentions and targeted responses."""
 
+
+from __future__ import annotations
 import logging
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import AIMessage, HumanMessage
-
-from haive.agents.conversation.directed.agent import DirectedConversation
-from haive.agents.simple.agent import SimpleAgent
 
 # Set logging
 logging.getLogger("haive").setLevel(logging.WARNING)
@@ -33,7 +29,9 @@ def example_classroom_discussion() -> None:
     )
 
     result = classroom.run(
-        {}, debug=True, config={"configurable": {"recursion_limit": 50}}
+        {},
+        debug=True,
+        config={"configurable": {"recursion_limit": 50}},
     )
 
     # Display conversation
@@ -99,9 +97,9 @@ def example_team_meeting() -> None:
         {
             "messages": [
                 HumanMessage(
-                    content="Let's start our sprint update meeting. Manager, please begin."
-                )
-            ]
+                    content="Let's start our sprint update meeting. Manager, please begin.",
+                ),
+            ],
         },
         debug=True,
     )
@@ -114,7 +112,8 @@ def example_team_meeting() -> None:
             for participant in participants:
                 if f"@{participant}" in content:
                     content = str(content).replace(
-                        f"@{participant}", f"**@{participant}**"
+                        f"@{participant}",
+                        f"**@{participant}**",
                     )
 
 
@@ -165,13 +164,13 @@ def example_customer_support() -> None:
         {
             "messages": [
                 HumanMessage(
-                    content="Customer: My application keeps crashing when I try to export data. This is urgent!"
+                    content="Customer: My application keeps crashing when I try to export data. This is urgent!",
                 ),
                 AIMessage(
                     content="I'll help you with that. Let me check...",
                     name="SupportBot",
                 ),
-            ]
+            ],
         },
         debug=True,
     )

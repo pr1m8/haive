@@ -1,7 +1,7 @@
 """Real Dynamic Multi-Agent System with Tool Routing and Recompilation.
 
-This example uses actual Haive agents (SimpleAgent, ReactAgent) to demonstrate
-dynamic tool routing and recompilation signaling.
+This example uses actual Haive agents (SimpleAgent, ReactAgent) to
+demonstrate dynamic tool routing and recompilation signaling.
 """
 
 from datetime import datetime
@@ -22,7 +22,6 @@ from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 
-
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -39,7 +38,7 @@ def calculate(expression: str) -> float:
         allowed_names = {k: v for k, v in math.__dict__.items() if not k.startswith("_")}
         allowed_names.update({"abs": abs, "round": round})
         return eval(expression, {"__builtins__": {}}, allowed_names)
-    except:
+    except BaseException:
         return 0.0
 
 
@@ -105,7 +104,9 @@ class RecompilableAgent:
         needs_recompile = current_hash != self._tool_route_hash
 
         if needs_recompile:
-            logger.info(f"Agent {self.base_agent.name} needs recompilation - tool routes changed")
+            logger.info(
+                f"Agent {self.base_agent.name} needs recompilation - tool routes changed",
+            )
 
         return needs_recompile
 
@@ -124,14 +125,18 @@ class RecompilableAgent:
 
             # Check updated tool routes
             if hasattr(self.base_agent.engine, "tool_routes"):
-                logger.debug(f"Updated tool routes: {self.base_agent.engine.tool_routes}")
+                logger.debug(
+                    f"Updated tool routes: {self.base_agent.engine.tool_routes}",
+                )
 
             # Mark for recompilation
             self._pending_tool_additions.append(
-                {"tool": tool_func, "route": route, "added_at": datetime.now()}
+                {"tool": tool_func, "route": route, "added_at": datetime.now()},
             )
         else:
-            logger.warning(f"Engine for agent {self.base_agent.name} does not support add_tool")
+            logger.warning(
+                f"Engine for agent {self.base_agent.name} does not support add_tool",
+            )
 
     def recompile_if_needed(self) -> bool:
         """Recompile the agent's graph if needed."""
@@ -140,7 +145,7 @@ class RecompilableAgent:
 
             # Debug: Show what's about to be recompiled
             logger.debug(
-                f"Agent {self.base_agent.name} pending additions: {self._pending_tool_additions}"
+                f"Agent {self.base_agent.name} pending additions: {self._pending_tool_additions}",
             )
 
             # Check if agent has graph and build_graph method
@@ -153,12 +158,14 @@ class RecompilableAgent:
                 # Debug: Show graph structure after rebuild
                 if hasattr(self.base_agent.graph, "nodes"):
                     logger.debug(
-                        f"Graph nodes after rebuild: {list(self.base_agent.graph.nodes.keys())}"
+                        f"Graph nodes after rebuild: {list(self.base_agent.graph.nodes.keys())}",
                     )
 
                 logger.info(f"Successfully recompiled agent {self.base_agent.name}")
             else:
-                logger.warning(f"Agent {self.base_agent.name} doesn't have build_graph method")
+                logger.warning(
+                    f"Agent {self.base_agent.name} doesn't have build_graph method",
+                )
 
             # Update tracking
             self._tool_route_hash = self._compute_tool_route_hash()
@@ -179,35 +186,45 @@ class DynamicMultiAgentState(BaseModel):
 
     # Messages
     messages: Annotated[list[BaseMessage], operator.add] = Field(
-        default_factory=list, description="Conversation messages"
+        default_factory=list,
+        description="Conversation messages",
     )
 
     # Agent management
     agents: dict[str, Any] = Field(
-        default_factory=dict, description="Available agents keyed by name"
+        default_factory=dict,
+        description="Available agents keyed by name",
     )
     selected_agent_names: Annotated[list[str], operator.add] = Field(
-        default_factory=list, description="History of selected agents"
+        default_factory=list,
+        description="History of selected agents",
     )
 
     # Tool routing
     global_tool_routes: dict[str, str] = Field(
-        default_factory=dict, description="Global tool name to agent.route mapping"
+        default_factory=dict,
+        description="Global tool name to agent.route mapping",
     )
     pending_tool_additions: list[dict[str, Any]] = Field(
-        default_factory=list, description="Tools waiting to be added"
+        default_factory=list,
+        description="Tools waiting to be added",
     )
 
     # Execution tracking
     execution_results: dict[str, Any] = Field(
-        default_factory=dict, description="Results from agent executions"
+        default_factory=dict,
+        description="Results from agent executions",
     )
 
     # Recompilation tracking
     agents_needing_recompile: set[str] = Field(
-        default_factory=set, description="Agent names that need recompilation"
+        default_factory=set,
+        description="Agent names that need recompilation",
     )
-    recompilation_count: int = Field(default=0, description="Number of recompilations performed")
+    recompilation_count: int = Field(
+        default=0,
+        description="Number of recompilations performed",
+    )
 
     @computed_field
     @property
@@ -252,14 +269,17 @@ def agent_router(state: DynamicMultiAgentState) -> Send | list[Send] | Command:
     # Check if any agents need recompilation
     if state.agents_needing_recompile:
         logger.info(
-            f"Routing to recompilation_manager for agents: {state.agents_needing_recompile}"
+            f"Routing to recompilation_manager for agents: {state.agents_needing_recompile}",
         )
         return Send("recompilation_manager", state)
 
     # Route to current agent if selected
     if state.current_agent_name and state.current_agent_name in state.agents:
         logger.info(f"Routing to agent_executor for {state.current_agent_name}")
-        return Send("agent_executor", {"agent_name": state.current_agent_name, "state": state})
+        return Send(
+            "agent_executor",
+            {"agent_name": state.current_agent_name, "state": state},
+        )
 
     # If no agent selected but we have messages, select based on content
     if state.messages and state.agents:
@@ -278,7 +298,10 @@ def agent_router(state: DynamicMultiAgentState) -> Send | list[Send] | Command:
             )
 
         logger.info(f"Auto-selecting agent: {agent_name}")
-        return Command(update={"selected_agent_names": [agent_name]}, goto="agent_router")
+        return Command(
+            update={"selected_agent_names": [agent_name]},
+            goto="agent_router",
+        )
 
     # Default: go to end
     return Command(goto=END)
@@ -291,7 +314,9 @@ def tool_manager(arg: DynamicMultiAgentState | dict[str, Any]) -> Command:
     """
     state = arg if isinstance(arg, DynamicMultiAgentState) else arg.get("state")
 
-    logger.debug(f"Tool manager processing {len(state.pending_tool_additions)} pending additions")
+    logger.debug(
+        f"Tool manager processing {len(state.pending_tool_additions)} pending additions",
+    )
 
     updates = {}
     agents_to_recompile = set()
@@ -304,7 +329,7 @@ def tool_manager(arg: DynamicMultiAgentState | dict[str, Any]) -> Command:
         route = addition.get("route", "tool_node")
 
         logger.debug(
-            f"Processing tool addition: {tool_func.name} -> {agent_name} with route {route}"
+            f"Processing tool addition: {tool_func.name} -> {agent_name} with route {route}",
         )
 
         if agent_name in state.agents:
@@ -317,7 +342,9 @@ def tool_manager(arg: DynamicMultiAgentState | dict[str, Any]) -> Command:
             # Show current tools before addition
             if hasattr(base_agent.engine, "tool_routes"):
                 logger.debug(
-                    f"Agent {agent_name} current tools: {list(base_agent.engine.tool_routes.keys())}"
+                    f"Agent {agent_name} current tools: {
+                        list(base_agent.engine.tool_routes.keys())
+                    }",
                 )
 
             # Add tool to agent if it's a RecompilableAgent
@@ -334,12 +361,16 @@ def tool_manager(arg: DynamicMultiAgentState | dict[str, Any]) -> Command:
             state.global_tool_routes[tool_name] = f"{agent_name}.{route}"
             added_tools.append(tool_name)
 
-            logger.info(f"Added tool {tool_name} to agent {agent_name} with route {route}")
+            logger.info(
+                f"Added tool {tool_name} to agent {agent_name} with route {route}",
+            )
 
             # Debug: Show tools after addition
             if hasattr(base_agent.engine, "tool_routes"):
                 logger.debug(
-                    f"Agent {agent_name} tools after addition: {list(base_agent.engine.tool_routes.keys())}"
+                    f"Agent {agent_name} tools after addition: {
+                        list(base_agent.engine.tool_routes.keys())
+                    }",
                 )
         else:
             logger.warning(f"Agent {agent_name} not found in state.agents")
@@ -348,10 +379,14 @@ def tool_manager(arg: DynamicMultiAgentState | dict[str, Any]) -> Command:
     updates["pending_tool_additions"] = []
     updates["agents_needing_recompile"] = list(agents_to_recompile)
     updates["messages"] = [
-        AIMessage(content=f"Successfully added tools: {', '.join(added_tools)} to agents")
+        AIMessage(
+            content=f"Successfully added tools: {', '.join(added_tools)} to agents",
+        ),
     ]
 
-    logger.debug(f"Tool manager completed. Agents needing recompile: {agents_to_recompile}")
+    logger.debug(
+        f"Tool manager completed. Agents needing recompile: {agents_to_recompile}",
+    )
 
     # Route to recompilation manager
     return Command(update=updates, goto="recompilation_manager")
@@ -363,7 +398,9 @@ def recompilation_manager(
     """Handle agent recompilation when tool routes change."""
     state = arg if isinstance(arg, DynamicMultiAgentState) else arg.get("state")
 
-    logger.debug(f"Recompilation manager handling {len(state.agents_needing_recompile)} agents")
+    logger.debug(
+        f"Recompilation manager handling {len(state.agents_needing_recompile)} agents",
+    )
 
     recompiled = []
     failed = []
@@ -376,26 +413,40 @@ def recompilation_manager(
 
             try:
                 if isinstance(agent, RecompilableAgent):
-                    logger.debug(f"Using RecompilableAgent.recompile_if_needed() for {agent_name}")
+                    logger.debug(
+                        f"Using RecompilableAgent.recompile_if_needed() for {agent_name}",
+                    )
                     if agent.recompile_if_needed():
                         recompiled.append(agent_name)
                 else:
                     # For regular agents, rebuild their graph
-                    logger.debug(f"Manual recompilation for non-RecompilableAgent {agent_name}")
+                    logger.debug(
+                        f"Manual recompilation for non-RecompilableAgent {agent_name}",
+                    )
                     base_agent = agent.base_agent if hasattr(agent, "base_agent") else agent
 
                     # Show current graph structure before rebuild
-                    if hasattr(base_agent, "graph") and hasattr(base_agent.graph, "nodes"):
+                    if hasattr(base_agent, "graph") and hasattr(
+                        base_agent.graph,
+                        "nodes",
+                    ):
                         logger.debug(
-                            f"Agent {agent_name} current graph nodes: {list(base_agent.graph.nodes.keys())}"
+                            f"Agent {agent_name} current graph nodes: {
+                                list(base_agent.graph.nodes.keys())
+                            }",
                         )
 
                     base_agent.graph = base_agent.build_graph()
 
                     # Show new graph structure after rebuild
-                    if hasattr(base_agent, "graph") and hasattr(base_agent.graph, "nodes"):
+                    if hasattr(base_agent, "graph") and hasattr(
+                        base_agent.graph,
+                        "nodes",
+                    ):
                         logger.debug(
-                            f"Agent {agent_name} new graph nodes: {list(base_agent.graph.nodes.keys())}"
+                            f"Agent {agent_name} new graph nodes: {
+                                list(base_agent.graph.nodes.keys())
+                            }",
                         )
 
                     recompiled.append(agent_name)
@@ -412,12 +463,14 @@ def recompilation_manager(
         "messages": [
             AIMessage(
                 content=f"Recompilation complete. Success: {', '.join(recompiled)}. "
-                f"Failed: {', '.join(failed) if failed else 'None'}"
-            )
+                f"Failed: {', '.join(failed) if failed else 'None'}",
+            ),
         ],
     }
 
-    logger.debug(f"Recompilation manager completed. Recompiled: {recompiled}, Failed: {failed}")
+    logger.debug(
+        f"Recompilation manager completed. Recompiled: {recompiled}, Failed: {failed}",
+    )
 
     # Continue to agent execution
     return Command(update=updates, goto="agent_router")
@@ -432,7 +485,10 @@ def agent_executor(arg: dict[str, Any]) -> Command:
     state = arg.get("state")
 
     if not isinstance(state, DynamicMultiAgentState):
-        return Command(update={"messages": [AIMessage(content="Invalid state")]}, goto=END)
+        return Command(
+            update={"messages": [AIMessage(content="Invalid state")]},
+            goto=END,
+        )
 
     if agent_name not in state.agents:
         return Command(
@@ -479,7 +535,7 @@ def agent_executor(arg: dict[str, Any]) -> Command:
                     "timestamp": datetime.now().isoformat(),
                     "input": last_input,
                     "success": True,
-                }
+                },
             },
         }
 
@@ -492,7 +548,7 @@ def agent_executor(arg: dict[str, Any]) -> Command:
                     "timestamp": datetime.now().isoformat(),
                     "success": False,
                     "error": str(e),
-                }
+                },
             },
         }
 
@@ -557,22 +613,21 @@ def demonstrate_real_dynamic_agents():
     app = graph.compile()
 
     for _name, agent in initial_state.agents.items():
-        tools = []
         base_agent = agent.base_agent if hasattr(agent, "base_agent") else agent
         if hasattr(base_agent.engine, "tool_routes"):
-            tools = list(base_agent.engine.tool_routes.keys())
+            list(base_agent.engine.tool_routes.keys())
 
     # Run with initial configuration
     app.invoke(initial_state)
 
     # Add a tool dynamically to simple_agent
     initial_state.pending_tool_additions = [
-        {"agent_name": "simple_agent", "tool": summarize, "route": "tool_node"}
+        {"agent_name": "simple_agent", "tool": summarize, "route": "tool_node"},
     ]
     initial_state.messages.append(
         HumanMessage(
-            content="Can you summarize this text: 'Dynamic tool routing is a powerful feature.'"
-        )
+            content="Can you summarize this text: 'Dynamic tool routing is a powerful feature.'",
+        ),
     )
 
     app.invoke(initial_state)
@@ -583,15 +638,18 @@ def demonstrate_real_dynamic_agents():
         {"agent_name": "react_agent", "tool": calculate, "route": "tool_node"},
     ]
     initial_state.messages.append(
-        HumanMessage(content="Search for information about dynamic graphs and calculate 2+2")
+        HumanMessage(
+            content="Search for information about dynamic graphs and calculate 2+2",
+        ),
     )
-    initial_state.selected_agent_names = ["react_agent"]  # Explicitly select react agent
+    initial_state.selected_agent_names = [
+        "react_agent",
+    ]  # Explicitly select react agent
 
     result3 = app.invoke(initial_state)
 
     # Show final tool configuration
     for _name, agent in result3["agents"].items():
-        tools = []
         base_agent = agent.base_agent if hasattr(agent, "base_agent") else agent
         if hasattr(base_agent.engine, "tool_routes"):
             list(base_agent.engine.tool_routes.keys())

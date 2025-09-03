@@ -13,15 +13,14 @@ Functions:
 """
 
 # src/haive/agents/simple/enhanced_simple_minimal.py
-
 """Minimal Enhanced SimpleAgent - showing the pattern in action.
 
 This is the absolute minimal version showing SimpleAgent as Agent[AugLLMConfig].
 It's self-contained to avoid import issues.
 """
+from __future__ import annotations
 
-from abc import ABC, abstractmethod
-from typing import Any, Generic, TypeVar
+from abc import ABC
 
 
 # Minimal type definitions to show the pattern
@@ -85,13 +84,9 @@ if __name__ == "__main__":
     config = AugLLMConfig()
     agent = SimpleAgent(name="demo", engine=config)
 
-    print(f"Created: {agent}")
-    print(f"Engine type: {type(agent.engine).__name__}")
-
     # Execute
     async def demo():
-        result = await agent.execute("Hello world")
-        print(f"Result: {result}")
+        await agent.execute("Hello world")
 
     asyncio.run(demo())
 

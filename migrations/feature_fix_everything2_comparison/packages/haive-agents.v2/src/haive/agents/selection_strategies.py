@@ -1,18 +1,17 @@
 """Tool selection strategies for dynamic tool selection.
 
-This module implements various strategies for selecting tools based on different
-criteria and approaches, providing flexibility in how tools are chosen for different
-contexts and use cases.
+This module implements various strategies for selecting tools based on
+different criteria and approaches, providing flexibility in how tools
+are chosen for different contexts and use cases.
 """
 
-import logging
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
+import logging
 from typing import Any
 
-from haive.agents.discovery.dynamic_tool_selector import (
-    ContextAwareState,
-    ToolSelectionResult,
-)
+from haive.agents.discovery.dynamic_tool_selector import ContextAwareState, ToolSelectionResult
 from haive.agents.discovery.semantic_discovery import (
     ComponentMetadata,
 )
@@ -56,7 +55,7 @@ class SemanticSelectionStrategy(BaseSelectionStrategy):
         for tool in available_tools:
             # Calculate similarity score
             tool_words = set(
-                (tool.description + " " + " ".join(tool.capabilities)).lower().split()
+                (tool.description + " " + " ".join(tool.capabilities)).lower().split(),
             )
             common_words = query_words.intersection(tool_words)
             similarity = len(common_words) / max(len(query_words), len(tool_words), 1)
@@ -100,7 +99,8 @@ class CapabilityBasedStrategy(BaseSelectionStrategy):
         scored_tools = []
         for tool in available_tools:
             capability_score = self._calculate_capability_match(
-                required_capabilities, tool.capabilities
+                required_capabilities,
+                tool.capabilities,
             )
 
             if capability_score > 0:
@@ -141,7 +141,9 @@ class CapabilityBasedStrategy(BaseSelectionStrategy):
         return detected_capabilities
 
     def _calculate_capability_match(
-        self, required: list[str], available: list[str]
+        self,
+        required: list[str],
+        available: list[str],
     ) -> float:
         """Calculate capability match score."""
         if not required:
@@ -246,9 +248,7 @@ class ContextualSelectionStrategy(BaseSelectionStrategy):
             history_score = self._calculate_history_relevance(tool, context)
 
             # Combine scores
-            combined_score = (
-                0.5 * semantic_score + 0.3 * context_score + 0.2 * history_score
-            )
+            combined_score = 0.5 * semantic_score + 0.3 * context_score + 0.2 * history_score
 
             tool.composite_score = combined_score
             if combined_score > 0.2:
@@ -281,16 +281,16 @@ class ContextualSelectionStrategy(BaseSelectionStrategy):
         return len(common_words) / max(len(query_words), len(tool_words))
 
     def _calculate_context_relevance(
-        self, tool: ComponentMetadata, context: ContextAwareState
+        self,
+        tool: ComponentMetadata,
+        context: ContextAwareState,
     ) -> float:
         """Calculate how relevant tool is to current context."""
         relevance_score = 0.0
 
         # Check if tool capabilities match context requirements
         context_domain = context.current_context.get("domain", "")
-        if context_domain and context_domain.lower() in [
-            tag.lower() for tag in tool.tags
-        ]:
+        if context_domain and context_domain.lower() in [tag.lower() for tag in tool.tags]:
             relevance_score += 0.5
 
         # Check user preferences
@@ -306,7 +306,9 @@ class ContextualSelectionStrategy(BaseSelectionStrategy):
         return min(1.0, relevance_score)
 
     def _calculate_history_relevance(
-        self, tool: ComponentMetadata, context: ContextAwareState
+        self,
+        tool: ComponentMetadata,
+        context: ContextAwareState,
     ) -> float:
         """Calculate tool relevance based on conversation history."""
         if not context.conversation_history:
@@ -324,7 +326,7 @@ class ContextualSelectionStrategy(BaseSelectionStrategy):
                 msg.content
                 for msg in context.conversation_history
                 if hasattr(msg, "content") and msg.content
-            ]
+            ],
         )
 
         # Simple topic relevance
@@ -365,7 +367,10 @@ class EnsembleSelectionStrategy(BaseSelectionStrategy):
         for strategy in self.strategies:
             try:
                 result = await strategy.select_tools(
-                    query, available_tools, context, max_tools * 2
+                    query,
+                    available_tools,
+                    context,
+                    max_tools * 2,
                 )
                 strategy_results.append(result)
             except Exception as e:
@@ -395,7 +400,9 @@ class EnsembleSelectionStrategy(BaseSelectionStrategy):
 
         # Sort by ensemble score and select top tools
         ranked_tools = sorted(
-            tool_scores.values(), key=lambda x: x["score"], reverse=True
+            tool_scores.values(),
+            key=lambda x: x["score"],
+            reverse=True,
         )
 
         selected_tools = [item["tool"] for item in ranked_tools[:max_tools]]
@@ -414,7 +421,10 @@ class EnsembleSelectionStrategy(BaseSelectionStrategy):
 
 
 class LearningSelectionStrategy(BaseSelectionStrategy):
-    """Selection strategy that learns from user feedback and tool performance."""
+    """Selection strategy that learns from user feedback and tool.
+
+    performance.
+    """
 
     def __init__(self) -> None:
         self.tool_ratings: dict[str, list[float]] = {}
@@ -441,9 +451,7 @@ class LearningSelectionStrategy(BaseSelectionStrategy):
             context_score = self._get_context_learning_score(tool.name, context)
 
             # Combine scores
-            final_score = (
-                0.4 * base_score + 0.4 * performance_score + 0.2 * context_score
-            )
+            final_score = 0.4 * base_score + 0.4 * performance_score + 0.2 * context_score
             tool.composite_score = final_score
 
             if final_score > 0.3:
@@ -458,15 +466,17 @@ class LearningSelectionStrategy(BaseSelectionStrategy):
             selection_metadata={
                 "strategy": "learning",
                 "learned_tools": len(self.tool_ratings),
-                "feedback_entries": sum(
-                    len(feedback) for feedback in self.user_feedback.values()
-                ),
+                "feedback_entries": sum(len(feedback) for feedback in self.user_feedback.values()),
             },
             selection_confidence=0.9 if selected else 0.0,
         )
 
     def add_feedback(
-        self, tool_name: str, rating: float, context: str, feedback_data: dict[str, Any]
+        self,
+        tool_name: str,
+        rating: float,
+        context: str,
+        feedback_data: dict[str, Any],
     ) -> None:
         """Add user feedback for learning."""
         if tool_name not in self.tool_ratings:
@@ -483,7 +493,9 @@ class LearningSelectionStrategy(BaseSelectionStrategy):
             self.context_patterns[context].append(tool_name)
 
     def _calculate_base_compatibility(
-        self, query: str, tool: ComponentMetadata
+        self,
+        query: str,
+        tool: ComponentMetadata,
     ) -> float:
         """Calculate basic query-tool compatibility."""
         query_words = set(query.lower().split())
@@ -494,7 +506,7 @@ class LearningSelectionStrategy(BaseSelectionStrategy):
             return 0.0
 
         return len(query_words.intersection(tool_words)) / len(
-            query_words.union(tool_words)
+            query_words.union(tool_words),
         )
 
     def _get_learned_performance(self, tool_name: str) -> float:
@@ -506,7 +518,9 @@ class LearningSelectionStrategy(BaseSelectionStrategy):
         return sum(ratings) / len(ratings)
 
     def _get_context_learning_score(
-        self, tool_name: str, context: ContextAwareState
+        self,
+        tool_name: str,
+        context: ContextAwareState,
     ) -> float:
         """Get context-based learning score."""
         # Extract context key

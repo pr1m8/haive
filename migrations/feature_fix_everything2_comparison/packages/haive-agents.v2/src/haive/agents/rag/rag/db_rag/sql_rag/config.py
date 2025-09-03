@@ -32,19 +32,21 @@ Note:
     for security. See SQLDatabaseConfig for supported variables.
 """
 
+from __future__ import annotations
+
 import inspect
 import os
 from typing import Any
 
 from dotenv import load_dotenv
-from haive.core.engine.agent.agent import AgentConfig
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_community.utilities import SQLDatabase
 from pydantic import BaseModel, Field, field_validator
 
 from haive.agents.rag.db_rag.sql_rag.engines import default_sql_engines
 from haive.agents.rag.db_rag.sql_rag.state import InputState, OutputState, OverallState
+from haive.core.engine.agent.agent import AgentConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 load_dotenv(".env")
 
@@ -114,7 +116,8 @@ class SQLDatabaseConfig(BaseModel):
         description="Type of SQL database (postgresql, mysql, sqlite, etc.)",
     )
     db_uri: str | None = Field(
-        default=None, description="The database connection URI (if provided directly)"
+        default=None,
+        description="The database connection URI (if provided directly)",
     )
     db_user: str = Field(
         default=os.getenv("SQL_DB_USER", "postgres"),
@@ -125,13 +128,16 @@ class SQLDatabaseConfig(BaseModel):
         description="The database password",
     )
     db_host: str = Field(
-        default=os.getenv("SQL_DB_HOST", "localhost"), description="The database host"
+        default=os.getenv("SQL_DB_HOST", "localhost"),
+        description="The database host",
     )
     db_port: str = Field(
-        default=os.getenv("SQL_DB_PORT", "5432"), description="The database port"
+        default=os.getenv("SQL_DB_PORT", "5432"),
+        description="The database port",
     )
     db_name: str = Field(
-        default=os.getenv("SQL_DB_NAME", "postgres"), description="The database name"
+        default=os.getenv("SQL_DB_NAME", "postgres"),
+        description="The database name",
     )
     include_tables: list[str] | None = Field(
         default_factory=lambda: (
@@ -150,10 +156,12 @@ class SQLDatabaseConfig(BaseModel):
         description="Tables to exclude from schema",
     )
     sample_rows_in_table_info: int = Field(
-        default=3, description="Number of sample rows to include in table info"
+        default=3,
+        description="Number of sample rows to include in table info",
     )
     custom_query: str | None = Field(
-        default=None, description="Custom query to execute for schema info"
+        default=None,
+        description="Custom query to execute for schema info",
     )
 
     def get_connection_string(self) -> str:
@@ -181,7 +189,9 @@ class SQLDatabaseConfig(BaseModel):
             return self.db_uri
 
         if self.db_type == "postgresql":
-            return f"postgresql+psycopg2://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
+            return f"postgresql+psycopg2://{self.db_user}:{self.db_password}@{self.db_host}:{
+                self.db_port
+            }/{self.db_name}"
         if self.db_type == "mysql":
             return f"mysql+pymysql://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
         if self.db_type == "sqlite":
@@ -192,7 +202,8 @@ class SQLDatabaseConfig(BaseModel):
         raise ValueError(f"Unsupported database type: {self.db_type}")
 
     def get_sql_db(self) -> SQLDatabase | None:
-        """Create and return a SQLDatabase object for interacting with the database.
+        """Create and return a SQLDatabase object for interacting with the
+        database.
 
         Returns:
             Optional[SQLDatabase]: Connected database object or None if connection fails.
@@ -351,7 +362,8 @@ class SQLRAGConfig(AgentConfig):
     )
 
     state_schema: Any = Field(
-        default=OverallState, description="The state schema for the SQL database agent"
+        default=OverallState,
+        description="The state schema for the SQL database agent",
     )
 
     db_config: SQLDatabaseConfig = Field(
@@ -360,15 +372,18 @@ class SQLRAGConfig(AgentConfig):
     )
 
     input_schema: Any = Field(
-        default=InputState, description="The input schema for the SQL database agent"
+        default=InputState,
+        description="The input schema for the SQL database agent",
     )
 
     output_schema: Any = Field(
-        default=OutputState, description="The output schema for the SQL database agent"
+        default=OutputState,
+        description="The output schema for the SQL database agent",
     )
 
     hallucination_check: bool = Field(
-        default=True, description="Whether to check for hallucinations in the response"
+        default=True,
+        description="Whether to check for hallucinations in the response",
     )
 
     answer_grading: bool = Field(
@@ -377,7 +392,8 @@ class SQLRAGConfig(AgentConfig):
     )
 
     examples_path: str | None = Field(
-        default=None, description="Path to examples JSON file"
+        default=None,
+        description="Path to examples JSON file",
     )
 
     domain_examples: dict[str, list[dict[str, str]]] = Field(
@@ -386,12 +402,14 @@ class SQLRAGConfig(AgentConfig):
     )
 
     max_iterations: int = Field(
-        default=5, description="Maximum number of iterations for retrying SQL queries"
+        default=5,
+        description="Maximum number of iterations for retrying SQL queries",
     )
 
     @field_validator("engines")
     def check_required_engines(
-        self, v: dict[str, AugLLMConfig]
+        self,
+        v: dict[str, AugLLMConfig],
     ) -> dict[str, AugLLMConfig]:
         """Validate that all required engines are present.
 
@@ -411,11 +429,7 @@ class SQLRAGConfig(AgentConfig):
             "guardrails",
             "generate_final_answer",
         ]
-        missing = [
-            engine
-            for engine in required_engines
-            if engine not in v or v[engine] is None
-        ]
+        missing = [engine for engine in required_engines if engine not in v or v[engine] is None]
         if missing:
             raise ValueError(f"Missing required engines: {', '.join(missing)}")
         return v

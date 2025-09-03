@@ -11,10 +11,6 @@ ReactAgent-based supervisor with:
 import logging
 import time
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.engine.base.base import Engine
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.schema.prebuilt.messages_state import MessagesState
 from langchain_core.messages import AIMessage
 from langchain_core.tools import tool
 from langgraph.graph import END
@@ -24,6 +20,10 @@ from rich.panel import Panel
 
 from haive.agents.base.agent import Agent
 from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.engine.base.base import Engine
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.schema.prebuilt.messages_state import MessagesState
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -34,12 +34,14 @@ class SupervisorState(MessagesState):
 
     # Engine registry for node lookups
     engines: dict[str, Engine] = Field(
-        default_factory=dict, description="Engines indexed by name"
+        default_factory=dict,
+        description="Engines indexed by name",
     )
 
     # Agent registry in state
     agents: dict[str, Agent] = Field(
-        default_factory=dict, description="Available agents in state"
+        default_factory=dict,
+        description="Available agents in state",
     )
 
     # Routing information
@@ -62,7 +64,10 @@ class SupervisorAgent(ReactAgent):
     """
 
     def __init__(
-        self, name: str = "supervisor", engine: AugLLMConfig | None = None, **kwargs
+        self,
+        name: str = "supervisor",
+        engine: AugLLMConfig | None = None,
+        **kwargs,
     ):
         """Initialize supervisor agent.
 
@@ -107,7 +112,7 @@ class SupervisorAgent(ReactAgent):
                 self.engines = {}
             self.engines[self.main_engine.name] = self.main_engine
             logger.debug(
-                f"Registered engine '{self.main_engine.name}' in agent engines dict"
+                f"Registered engine '{self.main_engine.name}' in agent engines dict",
             )
 
     def build_graph(self) -> BaseGraph:
@@ -141,16 +146,14 @@ class SupervisorAgent(ReactAgent):
                     if hasattr(state, "messages") and state.messages
                     else None
                 )
-                if (
-                    last_message
-                    and hasattr(last_message, "tool_calls")
-                    and last_message.tool_calls
-                ):
+                if last_message and hasattr(last_message, "tool_calls") and last_message.tool_calls:
                     return "tool_node"
                 return END
 
             graph.add_conditional_edges(
-                "agent_node", should_continue, ["tool_node", END]
+                "agent_node",
+                should_continue,
+                ["tool_node", END],
             )
             graph.add_edge("tool_node", "agent_node")  # ReactAgent loop
         else:
@@ -227,7 +230,9 @@ If no suitable agent exists, use add_agent to create one first.
 """
 
     def add_worker_agent(
-        self, agent: Agent, capability_description: str | None = None
+        self,
+        agent: Agent,
+        capability_description: str | None = None,
     ) -> bool:
         """Add a worker agent to the supervisor registry.
 
@@ -274,7 +279,8 @@ If no suitable agent exists, use add_agent to create one first.
         return list(self._agent_registry.keys())
 
     def create_generic_agent_execution_node(self) -> Any:
-        """Create generic agent execution node that takes routing output and runs selected agent."""
+        """Create generic agent execution node that takes routing output and
+        runs selected agent."""
 
         async def generic_agent_node(state, config=None):
             """Generic node that executes the selected agent."""
@@ -286,9 +292,9 @@ If no suitable agent exists, use add_agent to create one first.
                     "messages": [
                         *getattr(state, "messages", []),
                         AIMessage(
-                            content=f"No valid agent found for routing: {next_agent}"
+                            content=f"No valid agent found for routing: {next_agent}",
                         ),
-                    ]
+                    ],
                 }
 
             # Get the selected agent
@@ -323,7 +329,7 @@ If no suitable agent exists, use add_agent to create one first.
 
                 current_messages = list(getattr(state, "messages", []))
                 current_messages.append(
-                    AIMessage(content=f"Agent {next_agent} failed: {e!s}")
+                    AIMessage(content=f"Agent {next_agent} failed: {e!s}"),
                 )
 
                 return {"messages": current_messages, "last_agent": next_agent}
@@ -350,7 +356,7 @@ If no suitable agent exists, use add_agent to create one first.
         panel_content = f"""
 [bold]Supervisor:[/bold] {self.name} (ReactAgent)
 [bold]Worker Agents:[/bold] {len(self._agent_registry)}
-[bold]Available Routes:[/bold] {', '.join(self._agent_registry.keys())}
+[bold]Available Routes:[/bold] {", ".join(self._agent_registry.keys())}
 [bold]Tools:[/bold] add_agent, get_routing_options
         """
 

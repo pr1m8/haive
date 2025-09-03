@@ -8,23 +8,26 @@ Classes:
 Functions:
 """
 
+from __future__ import annotations
+
 import logging
 import time
 from typing import Any
 
-from haive.core.engine.agent.agent import register_agent
-from haive.core.graph import DynamicGraph
-from langgraph.graph import END, START
-
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.dynamic.config import DynamicRAGConfig
+from haive.core.engine.agent.agent import register_agent
+from haive.core.graph import DynamicGraph
+from langgraph.graph import END
+from langgraph.graph import START
 
 logger = logging.getLogger(__name__)
 
 
 @register_agent(DynamicRAGConfig)
 class DynamicRAGAgent(BaseRAGAgent):
-    """Implements a dynamic RAG pipeline that routes queries to appropriate data sources."""
+    """Implements a dynamic RAG pipeline that routes queries to appropriate
+    data sources."""
 
     def __init__(self, config: DynamicRAGConfig):
         super().__init__(config)
@@ -62,10 +65,7 @@ class DynamicRAGAgent(BaseRAGAgent):
 
         if not self.router:
             # Use default source or all sources if no router
-            if (
-                self.config.default_source
-                and self.config.default_source in self.retrievers
-            ):
+            if self.config.default_source and self.config.default_source in self.retrievers:
                 selected_sources = [self.config.default_source]
             else:
                 selected_sources = list(self.retrievers.keys())
@@ -76,12 +76,11 @@ class DynamicRAGAgent(BaseRAGAgent):
         try:
             # Prepare input for router with available sources
             source_descriptions = {
-                name: config.description
-                for name, config in self.config.data_sources.items()
+                name: config.description for name, config in self.config.data_sources.items()
             }
 
             router_result = self.router.invoke(
-                {"query": query, "available_sources": source_descriptions}
+                {"query": query, "available_sources": source_descriptions},
             )
 
             if isinstance(router_result, dict):
@@ -99,7 +98,7 @@ class DynamicRAGAgent(BaseRAGAgent):
                     if not isinstance(selected_sources, list):
                         selected_sources = [router_result]
                     explanation = ""
-                except:
+                except BaseException:
                     selected_sources = [router_result]
                     explanation = ""
 
@@ -108,9 +107,7 @@ class DynamicRAGAgent(BaseRAGAgent):
 
             # Limit number of sources if needed
             if len(validated_sources) > self.config.max_sources_per_query:
-                validated_sources = validated_sources[
-                    : self.config.max_sources_per_query
-                ]
+                validated_sources = validated_sources[: self.config.max_sources_per_query]
 
             if not validated_sources and self.config.default_source:
                 validated_sources = [self.config.default_source]
@@ -124,10 +121,7 @@ class DynamicRAGAgent(BaseRAGAgent):
             logger.exception(f"Error in query routing: {e}")
 
             # Fall back to default source
-            if (
-                self.config.default_source
-                and self.config.default_source in self.retrievers
-            ):
+            if self.config.default_source and self.config.default_source in self.retrievers:
                 return {"selected_sources": [self.config.default_source]}
 
             # Or use all sources as last resort
@@ -167,8 +161,7 @@ class DynamicRAGAgent(BaseRAGAgent):
 
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 futures = [
-                    executor.submit(retrieve_from_source, source)
-                    for source in selected_sources
+                    executor.submit(retrieve_from_source, source) for source in selected_sources
                 ]
 
                 for future in concurrent.futures.as_completed(futures):
@@ -242,12 +235,10 @@ class DynamicRAGAgent(BaseRAGAgent):
         # Use merger for more sophisticated merging
         try:
             # Group documents by source for the merger
-            docs_by_source = {
-                source: docs for source, docs in source_documents.items() if docs
-            }
+            docs_by_source = {source: docs for source, docs in source_documents.items() if docs}
 
             merged_docs = self.merger.invoke(
-                {"query": state.query, "docs_by_source": docs_by_source}
+                {"query": state.query, "docs_by_source": docs_by_source},
             )
 
             if isinstance(merged_docs, list):

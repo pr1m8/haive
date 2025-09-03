@@ -24,12 +24,18 @@
 - **@memory_index/by_date/** - Chronological memory tracking
 - **@project_docs/README.md** - Main project documentation hub
 
+### 📖 Documentation Tools & Solutions
+
+- **@project_docs/pydevelop_docs/AUTOAPI_SOLUTION_IMPLEMENTATION_PLAN.md** - ✅ **READY** AutoAPI hierarchical fix for Issue #4
+- **@project_docs/pydevelop_docs/AUTOAPI_HIERARCHICAL_ORGANIZATION_ANALYSIS.md** - Complete analysis of AutoAPI flattening problem
+
 ### Standards & Guides (Import for details)
 
 - @project_docs/active/standards/coding/COMMAND_EXECUTION_GUIDE.md
 - @project_docs/active/standards/coding/PYDANTIC_PATTERNS.md
 - @project_docs/active/standards/testing/philosophy.md
 - @project_docs/active/standards/git/workflow.md
+- @project_docs/guides/TOOL_ROUTING_REFACTOR.md - **NEW** Routing changes for structured output
 
 ### Architecture & Patterns
 
@@ -43,6 +49,30 @@
 - **Active Work**: MultiAgent Sequential Pattern (ReactAgent → SimpleAgent)
 - **Issues**: @project_docs/sessions/active/current_issues.md
 - **Recent Achievements**: See @memory_index/by_date/2025-01-23/
+
+## 🎯 Recent Completed Work (2025-01-29)
+
+### BaseModel Tool Routing & Mixin Fixes ✅ **COMPLETED**
+
+**Problem Solved**: Comprehensive fix for BaseModel tool routing and mixin integration issues.
+
+**Key Fixes**:
+
+- **StructuredOutputMixin**: Fixed to use `"parse_output"` route instead of deprecated `"structured_output"`
+- **AugLLMConfig add_tool()**: Fixed to always sync routes, resolving `with_structured_output()` not setting routes
+- **ValidationNodeV2**: Enhanced to handle all three BaseModel routes properly
+- **Tool Routing System**: Complete validation of routing patterns
+
+**Routes Now Working**:
+
+- `structured_output_model` → `"parse_output"` route
+- BaseModel without `__call__` → `"pydantic_model"` route (error case)
+- BaseModel with `__call__` → `"pydantic_tool"` route (executable tool)
+- BaseModel instances → `"function"` route
+
+**Testing**: All BaseModel patterns validated with real components, no mocks used.
+
+**Documentation**: Updated `@project_docs/guides/TOOL_ROUTING_REFACTOR.md` with complete details.
 
 ## 🔥 Git Safety Protocol (CRITICAL)
 

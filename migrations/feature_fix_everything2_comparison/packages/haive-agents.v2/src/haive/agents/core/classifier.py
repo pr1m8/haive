@@ -1,7 +1,7 @@
 """Memory classification system using LLM-based analysis.
 
-This module provides intelligent classification of memories into types, importance
-scoring, and metadata extraction using language models.
+This module provides intelligent classification of memories into types,
+importance scoring, and metadata extraction using language models.
 """
 
 import logging
@@ -28,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class MemoryClassifierConfig(BaseModel):
-    """Configuration for memory classification system.
-    """
+    """Configuration for memory classification system."""
 
     llm_config: AugLLMConfig = Field(
         default_factory=AugLLMConfig, description="LLM for classification"
@@ -64,8 +63,8 @@ class MemoryClassifierConfig(BaseModel):
 
 
 class MemoryClassifier:
-    """LLM-based memory classifier for automatic memory type detection and metadata
-    extraction.
+    """LLM-based memory classifier for automatic memory type detection and
+    metadata extraction.
 
     This classifier analyzes memory content to:
     - Determine memory types (semantic, episodic, procedural, etc.)
@@ -75,15 +74,13 @@ class MemoryClassifier:
     """
 
     def __init__(self, config: MemoryClassifierConfig = None):
-        """Initialize memory classifier with configuration.
-        """
+        """Initialize memory classifier with configuration."""
         self.config = config or MemoryClassifierConfig()
         self._setup_llm()
         self._setup_classification_prompts()
 
     def _setup_llm(self) -> None:
-        """Setup LLM for classification tasks.
-        """
+        """Setup LLM for classification tasks."""
         # Configure LLM for classification
         self.config.llm_config.temperature = (
             0.1  # Low temperature for consistent classification
@@ -99,8 +96,7 @@ class MemoryClassifier:
         self.llm = self.config.llm_config.create_runnable()
 
     def _setup_classification_prompts(self) -> None:
-        """Setup prompts for different classification tasks.
-        """
+        """Setup prompts for different classification tasks."""
         self.classification_prompt = """You are an expert memory analyst. Analyze the given content and classify it according to cognitive memory types.
 
 MEMORY TYPES:
@@ -331,8 +327,7 @@ Determine:
     def _parse_classification_result(
         self, llm_response: str, original_content: str
     ) -> MemoryClassificationResult:
-        """Parse LLM response into structured classification result.
-        """
+        """Parse LLM response into structured classification result."""
         try:
             # If structured output worked, this should already be parsed
             # This is a fallback parser for non-structured responses
@@ -389,8 +384,7 @@ Determine:
 
     def _fallback_classification(
             self, content: str) -> MemoryClassificationResult:
-        """Provide fallback classification when LLM fails.
-        """
+        """Provide fallback classification when LLM fails."""
         # Simple rule-based classification
         memory_types = [MemoryType.SEMANTIC]  # Default to semantic
 
@@ -426,8 +420,7 @@ Determine:
     def _parse_query_intent(
         self, llm_response: str, original_query: str
     ) -> MemoryQueryIntent:
-        """Parse LLM response for query intent analysis.
-        """
+        """Parse LLM response for query intent analysis."""
         # Simple parsing for now - could be enhanced with structured output
         memory_types = []
         for memory_type in MemoryType:
@@ -462,8 +455,7 @@ Determine:
         )
 
     def _fallback_query_intent(self, query: str) -> MemoryQueryIntent:
-        """Provide fallback query intent when LLM fails.
-        """
+        """Provide fallback query intent when LLM fails."""
         return MemoryQueryIntent(
             memory_types=[MemoryType.SEMANTIC],
             complexity="simple",
@@ -475,8 +467,7 @@ Determine:
         )
 
     def _extract_entities_simple(self, text: str) -> list[str]:
-        """Simple entity extraction using regex patterns.
-        """
+        """Simple entity extraction using regex patterns."""
         entities = []
 
         # Extract capitalized words (potential proper nouns)
@@ -500,8 +491,7 @@ Determine:
         return unique_entities[:10]  # Limit to top 10
 
     def _extract_topics_simple(self, text: str) -> list[str]:
-        """Simple topic extraction using key analysis.
-        """
+        """Simple topic extraction using key analysis."""
         # Common topic keywords
         topic_keywords = {
             "technology": ["computer", "software", "app", "website", "digital", "tech"],
