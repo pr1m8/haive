@@ -681,10 +681,25 @@ packages/*/docs/build/
 packages/*/docs/logs/
 packages/*/docs/autoapi/
 packages/*/docs/_build/
+packages/*/docs/source/_autosummary/
+packages/*/docs/source/_autoapi_templates/
+packages/*/docs/_build/html/
+packages/*/docs/build/html/
 
 # Root level documentation artifacts
 logs/
 logs/monorepo_build_*.log
+docs/autoapi_audit.html
+docs/test_view.html
+docs/VIEW_DOCS.md
+docs/source/_autosummary/
+docs/source/_autoapi_templates/
+
+# Script generated files
+scripts/docstring_analyzer/*.backup.*
+scripts/docstring_analyzer/test_*.py
+scripts/*_audit.html
+toctree_audit.html
 logs/build_*.log
 
 # Sphinx temporary files
