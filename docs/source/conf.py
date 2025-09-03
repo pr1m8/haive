@@ -18,11 +18,23 @@ copyright = f"{date.today().year}, haive Team"
 author = "haive Team"
 release = "0.1.0"
 
-# -- Import shared configuration from pydevelop_docs -------------------------
-from pydevelop_docs.config import get_haive_config
+# -- Import centralized Haive configuration ----------------------------------
+from haive_docs_config import get_haive_config
 
-# Get the standardized configuration
-_config = get_haive_config(project, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Get the standardized configuration for the main hub
+_config = get_haive_config(
+    package_name="haive",
+    source_path="../../scripts"  # Main hub doesn't need package source
+)
+
+# Remove AutoAPI extension and config for main hub
+if 'extensions' in _config:
+    _config['extensions'] = [ext for ext in _config['extensions'] if ext != 'autoapi.extension']
+
+# Remove AutoAPI-related keys
+autoapi_keys = [k for k in _config.keys() if k.startswith('autoapi_')]
+for key in autoapi_keys:
+    del _config[key]
 
 # Apply all configuration settings
 for key, value in _config.items():
@@ -30,12 +42,14 @@ for key, value in _config.items():
         globals()[key] = value
 
 # -- Project-specific overrides ----------------------------------------------
-# Override autoapi_dirs for this specific project structure
-autoapi_dirs = ["../../scripts", "../../noxfiles", "../../docstring_fixers"]
+# Disable AutoAPI for main hub (just focus on navigation)
+autoapi_dirs = []
 
 # -- Additional setup --------------------------------------------------------
 
 def setup(app):
+    """Add custom setup for navigation dropdown."""
+    app.add_js_file('navigation-dropdown.js')
     """Sphinx setup hook."""
     # Modern CSS files (matches html_css_files)
     css_files = [

@@ -757,7 +757,7 @@ seed-intersphinx-mapping = "^1.2.2"
 sphinx-apischema = "^0.1"
 sphinx-exec-code = "^0.16"
 sphinx-runpython = "^0.4.0"
-pydvlp-docs = { path = "tools/pydvlp-docs" }
+pydevelop-docs = { path = "tools/pydvlp-docs" }
 #sphinxcontrib-autodoc-pydantic = "^2.2.0"
 #sphinxcontrib-autodoc-pydantic = "^2.2.0"
 
