@@ -1,6 +1,6 @@
 # Multi-Agent Reflection API Reference
 
-**Version**: 1.0  
+**Version**: 1.0
 **Last Updated**: 2025-01-21
 
 ## 📚 Table of Contents

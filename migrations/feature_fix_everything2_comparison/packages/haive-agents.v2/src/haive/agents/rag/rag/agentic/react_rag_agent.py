@@ -1,26 +1,31 @@
 """Enhanced ReactAgent with Retriever Node and Routing for Agentic RAG.
 
-This agent extends ReactAgent to add a dedicated retrieval node to the graph,
-with intelligent routing between tool calls and retrieval based on the query.
+This agent extends ReactAgent to add a dedicated retrieval node to the
+graph, with intelligent routing between tool calls and retrieval based
+on the query.
 """
+
+from __future__ import annotations
 
 import contextlib
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.engine.retriever import BaseRetrieverConfig
-from haive.core.engine.vectorstore import VectorStoreConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage
 from langchain_core.tools import Tool
 from langgraph.graph import END
 from pydantic import Field
 
 from haive.agents.react import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.engine.retriever import BaseRetrieverConfig
+from haive.core.engine.vectorstore import VectorStoreConfig
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 
 class ReactRAGAgent(ReactAgent):
-    """Enhanced ReactAgent with a dedicated retrieval node and intelligent routing.
+    """Enhanced ReactAgent with a dedicated retrieval node and intelligent.
+
+    routing.
 
     This agent extends ReactAgent by adding a retrieval node to the graph that works
     alongside regular tool nodes. The agent can route between:
@@ -50,17 +55,18 @@ class ReactRAGAgent(ReactAgent):
             result = await agent.arun("What is the capital of France?")  # Uses retriever
             result = await agent.arun("Calculate 15 * 23")  # Uses calculator tool
             result = await agent.arun("Search for Python tutorials")  # Uses web search
-
     """
 
     # Retriever configuration
     retriever_config: BaseRetrieverConfig | VectorStoreConfig | None = Field(
-        default=None, description="Retriever configuration for RAG functionality"
+        default=None,
+        description="Retriever configuration for RAG functionality",
     )
 
     # Routing configuration
     use_retriever_for_knowledge: bool = Field(
-        default=True, description="Whether to use retriever for knowledge-based queries"
+        default=True,
+        description="Whether to use retriever for knowledge-based queries",
     )
 
     routing_strategy: str = Field(
@@ -69,7 +75,7 @@ class ReactRAGAgent(ReactAgent):
     )
 
     @classmethod
-    def create_default(cls, **kwargs) -> "ReactRAGAgent":
+    def create_default(cls, **kwargs) -> ReactRAGAgent:
         """Create a default ReactRAG agent with retriever and tools.
 
         Args:
@@ -141,8 +147,9 @@ class ReactRAGAgent(ReactAgent):
         def trigger_retrieval(query: str) -> str:
             """Trigger retrieval from the knowledge base.
 
-            This is a placeholder that signals the graph to route to the retrieval node.
-            The actual retrieval happens in the dedicated node.
+            This is a placeholder that signals the graph to route to the
+            retrieval node. The actual retrieval happens in the
+            dedicated node.
             """
             return f"Searching knowledge base for: {query}"
 
@@ -159,8 +166,10 @@ class ReactRAGAgent(ReactAgent):
 
     @classmethod
     def from_vectorstore(
-        cls, vector_store_config: VectorStoreConfig, **kwargs
-    ) -> "ReactRAGAgent":
+        cls,
+        vector_store_config: VectorStoreConfig,
+        **kwargs,
+    ) -> ReactRAGAgent:
         """Create ReactRAG agent from a vector store configuration.
 
         Args:
@@ -182,7 +191,8 @@ class ReactRAGAgent(ReactAgent):
         if self.retriever_config:
             # Create retrieval node using EngineNodeConfig
             retrieval_node = EngineNodeConfig(
-                engine=self.retriever_config, name="retrieval_node"
+                engine=self.retriever_config,
+                name="retrieval_node",
             )
 
             # Add the retrieval node to the graph
@@ -241,7 +251,8 @@ class ReactRAGAgent(ReactAgent):
         return "tools" if self._needs_tool_node() else "end"
 
     def add_retriever_tool(
-        self, retriever_config: BaseRetrieverConfig | VectorStoreConfig
+        self,
+        retriever_config: BaseRetrieverConfig | VectorStoreConfig,
     ) -> None:
         """Add or update the retriever tool and rebuild graph.
 

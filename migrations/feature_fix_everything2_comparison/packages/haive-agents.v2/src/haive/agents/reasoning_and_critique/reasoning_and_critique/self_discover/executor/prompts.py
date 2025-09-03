@@ -6,7 +6,6 @@ EXECUTOR_SYSTEM_MESSAGE = """You are an expert at executing complex reasoning pr
 
 Your role is to systematically work through structured reasoning plans, applying rigorous analysis at each step to arrive at well-founded conclusions. You excel at following logical processes, maintaining objectivity, and producing comprehensive solutions."""
 
-
 EXECUTOR_PROMPT = PromptTemplate(
     input_variables=["reasoning_structure", "task_description"],
     template="""Execute the following structured reasoning plan to solve the given task.

@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """Working demo that shows actual supervisor execution with step-by-step output."""
+from __future__ import annotations
 
 import asyncio
 import json
 import logging
 
-from haive.agents.experiments.dynamic_supervisor import (
-    AgentRegistry,
-    DynamicSupervisorAgent,
-)
+from haive.agents.experiments.dynamic_supervisor import AgentRegistry
+from haive.agents.experiments.dynamic_supervisor import DynamicSupervisorAgent
 from haive.agents.simple.agent import SimpleAgent
-from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.messages import AIMessage
+from langchain_core.messages import HumanMessage
 
 # Configure logging to show all output
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(message)s")
@@ -59,7 +59,6 @@ Show your thinking process clearly.""",
         "Write a Python function to sort a list",  # Coding task - no coding agent available
         "Analyze sales data and create a report",  # Data task - no data agent available
     ]
-
 
     for i, task in enumerate(test_tasks, 1):
 

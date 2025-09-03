@@ -6,6 +6,8 @@ Classes:
     DataSourceType: DataSourceType implementation.
 """
 
+from __future__ import annotations
+
 from enum import Enum
 
 

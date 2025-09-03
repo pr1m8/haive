@@ -3,6 +3,8 @@
 This module provides graph functionality for the Haive framework.
 """
 
+from __future__ import annotations
+
 from langgraph.graph import END, START, StateGraph
 
 from haive.haive.self_rag.nodes import (

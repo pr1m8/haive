@@ -18,8 +18,8 @@ User asked me to research:
 5. Better work with nodes, tool nodes, and routing for tools in a unified way
 
 Goal: Create validation node that updates state AND has dynamic router
-- "we need ot maek a new version not getting rid of hte old oen where it iss na updater with an asosoicatied router function"
-- "how does thworok with teh state schema na dwhatnot"
+- "we need ot maek a new version not getting rid of the old one where it iss na updater with an asosoicatied router function"
+- "how does thworok with the state schema na dwhatnot"
 - "but look ath ow the validation ondoe was and was used"
 ```
 

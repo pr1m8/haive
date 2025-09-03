@@ -1,1 +1,0 @@
-f378e7c4 feature/schema-simplification@{2025-07-06 12:35:09 -0400}: branch: Created from HEAD

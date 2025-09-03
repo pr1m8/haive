@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from self_corr.agent import (
     SelfCorrectiveRAGAgent,
     correct_answer,

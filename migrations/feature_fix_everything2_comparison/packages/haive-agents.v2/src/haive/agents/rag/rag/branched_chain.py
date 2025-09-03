@@ -1,19 +1,19 @@
 """Branched RAG using ChainAgent.
 
-RAG system that branches into multiple specialized retrieval paths based on query type,
-then merges results for comprehensive answers.
+RAG system that branches into multiple specialized retrieval paths based
+on query type, then merges results for comprehensive answers.
 """
 
 from enum import Enum
 from typing import Any, Literal
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
 from haive.agents.chain import ChainAgent, flow_with_edges
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 class QueryType(str, Enum):
@@ -30,10 +30,11 @@ class QueryClassification(BaseModel):
 
     primary_type: QueryType = Field(description="Primary query type")
     secondary_type: QueryType | None = Field(
-        default=None, description="Secondary type if applicable"
+        default=None,
+        description="Secondary type if applicable",
     )
     complexity: Literal["simple", "medium", "complex"] = Field(
-        description="Query complexity"
+        description="Query complexity",
     )
     confidence: float = Field(ge=0.0, le=1.0, description="Classification confidence")
 
@@ -52,7 +53,7 @@ class MergedResult(BaseModel):
 
     primary_answer: str = Field(description="Primary answer")
     supporting_evidence: list[str] = Field(
-        description="Supporting evidence from branches"
+        description="Supporting evidence from branches",
     )
     confidence_score: float = Field(ge=0.0, le=1.0, description="Overall confidence")
     sources_used: list[str] = Field(description="Sources used")
@@ -87,7 +88,7 @@ def create_branched_rag_chain(
             Complexity: simple (direct lookup), medium (some analysis), complex (multi-step reasoning)""",
                 ),
                 ("human", "Query: {query}"),
-            ]
+            ],
         ),
         structured_output_model=QueryClassification,
         output_key="classification",
@@ -103,9 +104,7 @@ def create_branched_rag_chain(
         relevant_docs = [
             doc
             for doc in documents
-            if any(
-                word.lower() in doc.page_content.lower() for word in query.split()[:5]
-            )
+            if any(word.lower() in doc.page_content.lower() for word in query.split()[:5])
         ][:3]
 
         # Extract precise facts
@@ -118,7 +117,7 @@ def create_branched_rag_chain(
                 retrieved_docs=facts,
                 branch_answer=answer,
                 relevance_score=0.9 if relevant_docs else 0.3,
-            )
+            ),
         }
 
     # Step 3: Analytical retrieval branch
@@ -134,7 +133,7 @@ def create_branched_rag_chain(
 
             Provide analytical insights and reasoning.""",
                 ),
-            ]
+            ],
         ),
         output_key="analytical_answer",
     )
@@ -149,7 +148,7 @@ def create_branched_rag_chain(
                 retrieved_docs=[doc.page_content for doc in documents[:2]],
                 branch_answer=analytical_answer,
                 relevance_score=0.8,
-            )
+            ),
         }
 
     # Step 4: Creative retrieval branch
@@ -165,7 +164,7 @@ def create_branched_rag_chain(
 
             Provide creative and innovative responses.""",
                 ),
-            ]
+            ],
         ),
         output_key="creative_answer",
     )
@@ -180,7 +179,7 @@ def create_branched_rag_chain(
                 retrieved_docs=[doc.page_content for doc in documents[:2]],
                 branch_answer=creative_answer,
                 relevance_score=0.7,
-            )
+            ),
         }
 
     # Step 5: Procedural retrieval branch
@@ -196,7 +195,7 @@ def create_branched_rag_chain(
 
             Provide clear, step-by-step instructions.""",
                 ),
-            ]
+            ],
         ),
         output_key="procedural_answer",
     )
@@ -211,7 +210,7 @@ def create_branched_rag_chain(
                 retrieved_docs=[doc.page_content for doc in documents[:2]],
                 branch_answer=procedural_answer,
                 relevance_score=0.85,
-            )
+            ),
         }
 
     # Step 6: Context preparation for branches
@@ -243,7 +242,7 @@ def create_branched_rag_chain(
 
             Create a comprehensive, well-structured response.""",
                 ),
-            ]
+            ],
         ),
         structured_output_model=MergedResult,
         output_key="merged_result",
@@ -262,7 +261,7 @@ def create_branched_rag_chain(
 
             Provide a clear, comprehensive response.""",
                 ),
-            ]
+            ],
         ),
         output_key="response",
     )
@@ -304,9 +303,11 @@ def create_branched_rag_chain(
 
 
 def create_adaptive_branched_rag(
-    documents: list[Document], llm_config: LLMConfig | None = None
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
 ) -> ChainAgent:
-    """Create an adaptive branched RAG that selects branches based on query type."""
+    """Create an adaptive branched RAG that selects branches based on query
+    type."""
     if not llm_config:
         llm_config = AzureLLMConfig(
             deployment_name="gpt-4",
@@ -324,7 +325,7 @@ def create_adaptive_branched_rag(
                     "Classify query type: factual, analytical, creative, or procedural",
                 ),
                 ("human", "{query}"),
-            ]
+            ],
         ),
         output_key="query_type",
     )
@@ -336,7 +337,7 @@ def create_adaptive_branched_rag(
             [
                 ("system", "Extract precise factual information"),
                 ("human", "Query: {query}\nContext: {context}"),
-            ]
+            ],
         ),
         output_key="response",
     )
@@ -347,7 +348,7 @@ def create_adaptive_branched_rag(
             [
                 ("system", "Provide analytical insights and reasoning"),
                 ("human", "Query: {query}\nContext: {context}"),
-            ]
+            ],
         ),
         output_key="response",
     )
@@ -358,7 +359,7 @@ def create_adaptive_branched_rag(
             [
                 ("system", "Generate creative solutions and ideas"),
                 ("human", "Query: {query}\nContext: {context}"),
-            ]
+            ],
         ),
         output_key="response",
     )
@@ -369,7 +370,7 @@ def create_adaptive_branched_rag(
             [
                 ("system", "Provide step-by-step procedures"),
                 ("human", "Query: {query}\nContext: {context}"),
-            ]
+            ],
         ),
         output_key="response",
     )
@@ -404,7 +405,8 @@ def create_adaptive_branched_rag(
 
 
 def create_parallel_branched_rag(
-    documents: list[Document], llm_config: LLMConfig | None = None
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
 ) -> ChainAgent:
     """Create a parallel branched RAG that runs all branches simultaneously."""
     if not llm_config:
@@ -426,7 +428,7 @@ def create_parallel_branched_rag(
             [
                 ("system", "Extract factual information"),
                 ("human", "Query: {query}\nContext: {context}"),
-            ]
+            ],
         ),
         output_key="factual_response",
     )
@@ -437,7 +439,7 @@ def create_parallel_branched_rag(
             [
                 ("system", "Provide analytical insights"),
                 ("human", "Query: {query}\nContext: {context}"),
-            ]
+            ],
         ),
         output_key="analytical_response",
     )
@@ -448,7 +450,7 @@ def create_parallel_branched_rag(
             [
                 ("system", "Generate creative ideas"),
                 ("human", "Query: {query}\nContext: {context}"),
-            ]
+            ],
         ),
         output_key="creative_response",
     )
@@ -471,7 +473,7 @@ def create_parallel_branched_rag(
 
             Create final response.""",
                 ),
-            ]
+            ],
         ),
         output_key="response",
     )

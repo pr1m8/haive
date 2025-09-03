@@ -30,7 +30,9 @@ def example_math_problem():
     problem = "Lisa has 10 apples. She gives 3 apples to her friend and then buys 5 more apples from the store. How many apples does Lisa have now?"
 
     agent = create_self_discover_agent(
-        name="math_problem_solver", model="gpt-4o", temperature=0.0
+        name="math_problem_solver",
+        model="gpt-4o",
+        temperature=0.0,
     )
 
     agent.run(problem)
@@ -71,8 +73,8 @@ def example_svg_interpretation():
 
 def example_logical_reasoning():
     """Example using SelfDiscover for a logical reasoning problem."""
-    problem = """Four people (Alex, Blake, Casey, and Dana) each have a different favorite color 
-(red, blue, green, and yellow) and a different favorite fruit (apple, banana, cherry, and date). 
+    problem = """Four people (Alex, Blake, Casey, and Dana) each have a different favorite color
+(red, blue, green, and yellow) and a different favorite fruit (apple, banana, cherry, and date).
 Given the following clues, determine each person\'s favorite color and fruit:
 
 1. The person who likes red also likes dates.
@@ -109,7 +111,9 @@ Given the following clues, determine each person\'s favorite color and fruit:
 
 
 def create_custom_domain_agent(
-    domain: str, custom_modules: list[str] | None = None, model: str = "gpt-4o"
+    domain: str,
+    custom_modules: list[str] | None = None,
+    model: str = "gpt-4o",
 ) -> SelfDiscoverAgent:
     """Create a SelfDiscover agent specialized for a particular domain.
 
@@ -179,9 +183,12 @@ def create_custom_domain_agent(
 
 
 def run_batch_problems(
-    agent: SelfDiscoverAgent, problems: list[str], output_file: str | None = None
+    agent: SelfDiscoverAgent,
+    problems: list[str],
+    output_file: str | None = None,
 ):
-    """Run a batch of problems through a SelfDiscover agent and optionally save results.
+    """Run a batch of problems through a SelfDiscover agent and optionally save
+    results.
 
     Args:
         agent: SelfDiscoverAgent to use
@@ -210,7 +217,7 @@ def run_batch_problems(
             # Print just the answer for progress tracking
 
         except Exception as e:
-            logger.exception(f"Error processing problem {i+1}: {e!s}")
+            logger.exception(f"Error processing problem {i + 1}: {e!s}")
             results.append({"problem": problem, "error": str(e)})
 
     # Save to file if requested
@@ -244,7 +251,7 @@ def example_advanced_configuration():
         Selected reasoning techniques (list only the numbers of your chosen techniques):
         """,
             ),
-        ]
+        ],
     )
 
     adapt_prompt = ChatPromptTemplate.from_messages(
@@ -263,7 +270,7 @@ def example_advanced_configuration():
         For each technique, provide a customized version that addresses the specific challenges of this problem:
         """,
             ),
-        ]
+        ],
     )
 
     structure_prompt = ChatPromptTemplate.from_messages(
@@ -284,7 +291,7 @@ def example_advanced_configuration():
         JSON reasoning plan structure:
         """,
             ),
-        ]
+        ],
     )
 
     reasoning_prompt = ChatPromptTemplate.from_messages(
@@ -305,7 +312,7 @@ def example_advanced_configuration():
         Complete solution with all reasoning steps:
         """,
             ),
-        ]
+        ],
     )
 
     # Custom set of reasoning modules
@@ -344,9 +351,11 @@ def example_advanced_configuration():
 
 
 def analyze_reasoning_process(
-    agent_results: list[dict], output_file: str | None = None
+    agent_results: list[dict],
+    output_file: str | None = None,
 ):
-    """Analyze the reasoning process across multiple problems to identify patterns.
+    """Analyze the reasoning process across multiple problems to identify
+    patterns.
 
     Args:
         agent_results: List of results from run_batch_problems
@@ -371,9 +380,7 @@ def analyze_reasoning_process(
         if result.get("error"):
             analysis["failed_problems"] += 1
             error = result.get("error")
-            analysis["common_errors"][error] = (
-                analysis["common_errors"].get(error, 0) + 1
-            )
+            analysis["common_errors"][error] = analysis["common_errors"].get(error, 0) + 1
         else:
             analysis["successful_problems"] += 1
 
@@ -395,7 +402,9 @@ def analyze_reasoning_process(
 
     # Sort modules by usage
     sorted_modules = sorted(
-        analysis["module_usage"].items(), key=lambda x: x[1]["count"], reverse=True
+        analysis["module_usage"].items(),
+        key=lambda x: x[1]["count"],
+        reverse=True,
     )
 
     # Print analysis
@@ -405,7 +414,9 @@ def analyze_reasoning_process(
 
     if analysis["common_errors"]:
         for error, count in sorted(
-            analysis["common_errors"].items(), key=lambda x: x[1], reverse=True
+            analysis["common_errors"].items(),
+            key=lambda x: x[1],
+            reverse=True,
         )[:3]:
             pass
 
@@ -429,7 +440,9 @@ def example_compare_models():
 
     for model in models:
         agent = create_self_discover_agent(
-            name=f"{model}_sequence_agent", model=model, temperature=0.0
+            name=f"{model}_sequence_agent",
+            model=model,
+            temperature=0.0,
         )
 
         result = agent.run(problem)

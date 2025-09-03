@@ -8,17 +8,17 @@ This script demonstrates how to:
 """
 
 import logging
-import uuid
 from pathlib import Path
+import uuid
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.engine.retriever import VectorStoreRetrieverConfig
-from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider
 from langchain.schema import Document
 from langchain_core.prompts import ChatPromptTemplate
 
 from haive.agents.rag.llm_rag.agent import LLMRAGAgent
 from haive.agents.rag.llm_rag.config import LLMRAGConfig
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.engine.retriever import VectorStoreRetrieverConfig
+from haive.core.engine.vectorstore import VectorStoreConfig, VectorStoreProvider
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -157,7 +157,7 @@ def run_example_queries(agent: Any):
 
     # Run each query and collect results
     for i, query in enumerate(example_queries):
-        logger.info(f"\n\n--- Query {i+1}: '{query}' ---")
+        logger.info(f"\n\n--- Query {i + 1}: '{query}' ---")
 
         # Create input state with just the query
         input_state = {"query": query}
@@ -177,7 +177,7 @@ def run_example_queries(agent: Any):
                 "doc_count": len(result.get("retrieved_documents", [])),
                 "is_relevant": result.get("is_relevant", False),
                 "answer": result.get("answer", "No answer generated"),
-            }
+            },
         )
 
     return results

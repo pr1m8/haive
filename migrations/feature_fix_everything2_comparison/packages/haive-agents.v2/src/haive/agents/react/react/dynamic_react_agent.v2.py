@@ -12,15 +12,15 @@ Based on:
 
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.registry import RegistryItem
-from haive.core.schema.prebuilt.dynamic_activation_state import DynamicActivationState
-from haive.core.schema.prebuilt.meta_state import MetaStateSchema
 from langchain_core.tools import BaseTool
 from pydantic import Field, PrivateAttr
 
 from haive.agents.discovery.component_discovery_agent import ComponentDiscoveryAgent
 from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.registry import RegistryItem
+from haive.core.schema.prebuilt.dynamic_activation_state import DynamicActivationState
+from haive.core.schema.prebuilt.meta_state import MetaStateSchema
 
 
 class DynamicToolState(DynamicActivationState):
@@ -63,19 +63,23 @@ class DynamicToolState(DynamicActivationState):
 
     # Tool-specific fields
     tool_categories: dict[str, list[str]] = Field(
-        default_factory=dict, description="Categorization of tools by type"
+        default_factory=dict,
+        description="Categorization of tools by type",
     )
 
     tool_usage_stats: dict[str, int] = Field(
-        default_factory=dict, description="Usage statistics for each tool"
+        default_factory=dict,
+        description="Usage statistics for each tool",
     )
 
     last_tool_discovery: str | None = Field(
-        default=None, description="Timestamp of last tool discovery"
+        default=None,
+        description="Timestamp of last tool discovery",
     )
 
     discovery_queries: list[str] = Field(
-        default_factory=list, description="History of discovery queries"
+        default_factory=list,
+        description="History of discovery queries",
     )
 
     def get_active_tools(self) -> list[BaseTool]:
@@ -254,7 +258,8 @@ class DynamicReactAgent(ReactAgent):
     # Tool discovery agents (part of agent's persistent state)
     discovery_agent: ComponentDiscoveryAgent | None = Field(default=None, exclude=True)
     rag_tool_agent: Any | None = Field(
-        default=None, exclude=True
+        default=None,
+        exclude=True,
     )  # BaseRAGAgent for tool discovery
 
     # Private attributes for internal state (not serialized)
@@ -264,8 +269,8 @@ class DynamicReactAgent(ReactAgent):
     def setup_agent(self) -> None:
         """Setup the dynamic React agent.
 
-        This method is called during agent initialization to set up
-        the agent's internal state and discovery capabilities.
+        This method is called during agent initialization to set up the
+        agent's internal state and discovery capabilities.
         """
         # Set state schema before parent setup
         if not hasattr(self, "state_schema") or self.state_schema is None:
@@ -277,7 +282,7 @@ class DynamicReactAgent(ReactAgent):
         # Initialize discovery agent if config is provided
         if hasattr(self, "_discovery_config"):
             self.discovery_agent = ComponentDiscoveryAgent(
-                document_path=self._discovery_config["document_path"]
+                document_path=self._discovery_config["document_path"],
             )
 
         # Initialize RAG tool agent if config is provided
@@ -422,7 +427,11 @@ class DynamicReactAgent(ReactAgent):
 
     @classmethod
     def create_with_tools(
-        cls, name: str, tools: list[dict[str, Any]], engine: AugLLMConfig, **kwargs
+        cls,
+        name: str,
+        tools: list[dict[str, Any]],
+        engine: AugLLMConfig,
+        **kwargs,
     ) -> "DynamicReactAgent":
         """Factory method to create agent with pre-registered tools.
 
@@ -481,7 +490,8 @@ class DynamicReactAgent(ReactAgent):
 
             # Setup tool loader if discovery agent is available
             if self.discovery_agent and hasattr(
-                self.discovery_agent, "_haive_discovery"
+                self.discovery_agent,
+                "_haive_discovery",
             ):
                 self._tool_loader = self.discovery_agent._haive_discovery
             else:
@@ -523,14 +533,14 @@ class DynamicReactAgent(ReactAgent):
     def _setup_rag_tool_agent(self) -> None:
         """Setup RAG-based tool discovery agent.
 
-        This creates a BaseRAGAgent that can search through tool documentation
-        to find and suggest appropriate tools for tasks.
+        This creates a BaseRAGAgent that can search through tool
+        documentation to find and suggest appropriate tools for tasks.
         """
         try:
-            from haive.core.engine.retriever import BaseRetrieverConfig
             from langchain_core.documents import Document
 
             from haive.agents.rag.base.agent import BaseRAGAgent
+            from haive.core.engine.retriever import BaseRetrieverConfig
 
             # Get configuration
             rag_config = self._rag_config
@@ -547,19 +557,21 @@ class DynamicReactAgent(ReactAgent):
                                 "source": "tool_docs",
                                 "type": "tool_documentation",
                             },
-                        )
+                        ),
                     )
                 else:
                     documents.append(doc)
 
             # Create retriever configuration
             retriever_config = BaseRetrieverConfig(
-                name="tool_discovery_retriever", documents=documents
+                name="tool_discovery_retriever",
+                documents=documents,
             )
 
             # Create RAG agent for tool discovery
             self.rag_tool_agent = BaseRAGAgent(
-                name=f"{self.name}_tool_discovery", engine=retriever_config
+                name=f"{self.name}_tool_discovery",
+                engine=retriever_config,
             )
 
         except Exception:
@@ -602,8 +614,7 @@ class DynamicReactAgent(ReactAgent):
 
                     if tools:
                         tool_names = [
-                            tool.name if hasattr(tool, "name") else str(tool)
-                            for tool in tools
+                            tool.name if hasattr(tool, "name") else str(tool) for tool in tools
                         ]
                         return f"Discovered and loaded {len(tools)} tools: {', '.join(tool_names)}"
                     return "No suitable tools found for this task"
@@ -663,7 +674,7 @@ class DynamicReactAgent(ReactAgent):
                 # Discover tools using RAG
                 discovery_query = f"tools needed for: {task}"
                 tool_docs = await self.discovery_agent.discover_components(
-                    discovery_query
+                    discovery_query,
                 )
 
                 # Track discovery query
@@ -689,7 +700,8 @@ class DynamicReactAgent(ReactAgent):
                 rag_result = await self.rag_tool_agent.arun(query)
 
                 # Parse RAG result to find tool suggestions
-                # This is a simplified approach - you might want more sophisticated parsing
+                # This is a simplified approach - you might want more sophisticated
+                # parsing
                 tool_suggestions = self._parse_rag_tool_suggestions(rag_result, task)
 
                 for suggestion in tool_suggestions:
@@ -725,7 +737,7 @@ class DynamicReactAgent(ReactAgent):
                             "description": item.description,
                             "component": tool,
                             "metadata": item.metadata,
-                        }
+                        },
                     )
 
                 # Add to engine immediately
@@ -733,7 +745,8 @@ class DynamicReactAgent(ReactAgent):
 
                 # Categorize tool based on task
                 category = self._infer_tool_category(
-                    task, {"name": item.name, "description": item.description}
+                    task,
+                    {"name": item.name, "description": item.description},
                 )
                 if category and hasattr(self, "state"):
                     self.state.categorize_tool(item.name, category)
@@ -747,7 +760,7 @@ class DynamicReactAgent(ReactAgent):
         # Mark for recompilation if tools were loaded
         if loaded_tools and self._meta_self:
             self._meta_self.mark_for_recompile(
-                f"Added {len(loaded_tools)} new tools for task: {task}"
+                f"Added {len(loaded_tools)} new tools for task: {task}",
             )
 
             # Trigger recompilation
@@ -756,7 +769,9 @@ class DynamicReactAgent(ReactAgent):
         return loaded_tools
 
     def _parse_rag_tool_suggestions(
-        self, rag_result: str, task: str
+        self,
+        rag_result: str,
+        task: str,
     ) -> list[dict[str, Any]]:
         """Parse RAG result to extract tool suggestions.
 
@@ -775,9 +790,7 @@ class DynamicReactAgent(ReactAgent):
 
         for line in lines:
             line = line.strip()
-            if any(
-                key in line.lower() for key in ["tool", "function", "method", "api"]
-            ):
+            if any(key in line.lower() for key in ["tool", "function", "method", "api"]):
                 # Extract potential tool information
                 suggestion = {
                     "name": self._extract_tool_name(line),
@@ -810,15 +823,14 @@ class DynamicReactAgent(ReactAgent):
         # Look for words that might be tool names
         words = line.split()
         for word in words:
-            if (word.islower() and "_" in word) or (
-                word[0].isupper() and len(word) > 3
-            ):
+            if (word.islower() and "_" in word) or (word[0].isupper() and len(word) > 3):
                 return word
 
         return ""
 
     async def _load_tool_from_suggestion(
-        self, suggestion: dict[str, Any]
+        self,
+        suggestion: dict[str, Any],
     ) -> BaseTool | None:
         """Load a tool from a RAG suggestion.
 
@@ -859,7 +871,8 @@ class DynamicReactAgent(ReactAgent):
             return None
 
     async def discover_and_load_tools_legacy(self, task: str) -> list[BaseTool]:
-        """Legacy version of discover_and_load_tools for backward compatibility."""
+        """Legacy version of discover_and_load_tools for backward
+        compatibility."""
         loaded_tools = []
 
         if not self.discovery_agent:
@@ -905,7 +918,7 @@ class DynamicReactAgent(ReactAgent):
             # Mark for recompilation if tools were loaded
             if loaded_tools and self._meta_self:
                 self._meta_self.mark_for_recompile(
-                    f"Added {len(loaded_tools)} new tools for task: {task}"
+                    f"Added {len(loaded_tools)} new tools for task: {task}",
                 )
 
                 # Trigger recompilation
@@ -916,13 +929,14 @@ class DynamicReactAgent(ReactAgent):
 
             logger = logging.getLogger(__name__)
             logger.exception(
-                f"Failed to discover and load tools for task '{task}': {e}"
+                f"Failed to discover and load tools for task '{task}': {e}",
             )
 
         return loaded_tools
 
     async def _load_tool_from_document(
-        self, tool_doc: dict[str, Any]
+        self,
+        tool_doc: dict[str, Any],
     ) -> BaseTool | None:
         """Load actual tool instance from tool document.
 
@@ -1107,7 +1121,8 @@ class DynamicReactAgent(ReactAgent):
                 if meta_state:
                     # Update engine tools if needed
                     if hasattr(self.engine, "tools") and isinstance(
-                        item.component, BaseTool
+                        item.component,
+                        BaseTool,
                     ):
                         current_tools = getattr(self.engine, "tools", [])
                         if item.component not in current_tools:
@@ -1141,13 +1156,12 @@ class DynamicReactAgent(ReactAgent):
                 if success:
                     # Remove from engine tools if needed
                     if hasattr(self.engine, "tools") and isinstance(
-                        item.component, BaseTool
+                        item.component,
+                        BaseTool,
                     ):
                         current_tools = getattr(self.engine, "tools", [])
                         if item.component in current_tools:
-                            self.engine.tools = [
-                                t for t in current_tools if t != item.component
-                            ]
+                            self.engine.tools = [t for t in current_tools if t != item.component]
 
                     return True
 

@@ -1,7 +1,7 @@
 # SimpleRAG Agent - Dead Simple RAG Pattern
 
-**Version**: 1.0  
-**Date**: 2025-01-21  
+**Version**: 1.0
+**Date**: 2025-01-21
 **Status**: Production Ready
 
 ## 🎯 **Overview**

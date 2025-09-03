@@ -4,12 +4,14 @@ This module provides reusable grading agents for document relevance,
 answer quality, and hallucination detection.
 """
 
+from __future__ import annotations
+
 from typing import Any
 
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field
-
 from haive.agents.simple import SimpleAgent
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel
+from pydantic import Field
 
 # ===== MODELS =====
 
@@ -81,7 +83,7 @@ Provide a detailed relevance assessment with:
 3. Reasoning for your assessment
 4. Key information extracted (if relevant)""",
         ),
-    ]
+    ],
 )
 
 ANSWER_QUALITY_PROMPT = ChatPromptTemplate.from_messages(
@@ -129,7 +131,7 @@ Provide a comprehensive quality assessment including:
 4. Identified weaknesses
 5. Concrete suggestions for improvement""",
         ),
-    ]
+    ],
 )
 
 HALLUCINATION_DETECTION_PROMPT = ChatPromptTemplate.from_messages(
@@ -172,9 +174,8 @@ Analyze for hallucinations:
 4. Specific problematic claims
 5. List of supported vs unsupported claims""",
         ),
-    ]
+    ],
 )
-
 
 # ===== GRADING AGENTS =====
 
@@ -264,7 +265,7 @@ Provide:
 3. Reasoning for top 3 documents
 4. Documents to potentially exclude (if any)""",
         ),
-    ]
+    ],
 )
 
 
@@ -315,7 +316,7 @@ Provide comprehensive analysis including:
 5. Information requirements
 6. Potential ambiguities or clarifications needed""",
         ),
-    ]
+    ],
 )
 
 
@@ -352,7 +353,10 @@ class CompositeGradingAgent:
         self.query_analyzer = create_query_analyzer()
 
     async def grade_rag_pipeline(
-        self, query: str, documents: list[dict[str, Any]], answer: str
+        self,
+        query: str,
+        documents: list[dict[str, Any]],
+        answer: str,
     ) -> dict[str, Any]:
         """Perform comprehensive grading of entire RAG pipeline."""
         # Analyze query
@@ -362,23 +366,23 @@ class CompositeGradingAgent:
         document_grades = []
         for doc in documents:
             grade = await self.document_grader.ainvoke(
-                {"query": query, "document": doc.get("content", doc)}
+                {"query": query, "document": doc.get("content", doc)},
             )
             document_grades.append(grade)
 
         # Prioritize documents
         priority_ranking = await self.priority_ranker.ainvoke(
-            {"query": query, "documents": documents}
+            {"query": query, "documents": documents},
         )
 
         # Grade answer quality
         answer_grade = await self.answer_grader.ainvoke(
-            {"query": query, "answer": answer, "source_documents": documents}
+            {"query": query, "answer": answer, "source_documents": documents},
         )
 
         # Check for hallucinations
         hallucination_grade = await self.hallucination_grader.ainvoke(
-            {"query": query, "answer": answer, "source_documents": documents}
+            {"query": query, "answer": answer, "source_documents": documents},
         )
 
         return {
@@ -388,18 +392,22 @@ class CompositeGradingAgent:
             "answer_grade": answer_grade,
             "hallucination_grade": hallucination_grade,
             "overall_pipeline_score": self._calculate_overall_score(
-                document_grades, answer_grade, hallucination_grade
+                document_grades,
+                answer_grade,
+                hallucination_grade,
             ),
         }
 
     def _calculate_overall_score(
-        self, document_grades: list[dict], answer_grade: dict, hallucination_grade: dict
+        self,
+        document_grades: list[dict],
+        answer_grade: dict,
+        hallucination_grade: dict,
     ) -> float:
         """Calculate overall pipeline score."""
         # Average document relevance
         doc_score = (
-            sum(g.get("relevance_score", 0) for g in document_grades)
-            / len(document_grades)
+            sum(g.get("relevance_score", 0) for g in document_grades) / len(document_grades)
             if document_grades
             else 0
         )
@@ -411,8 +419,6 @@ class CompositeGradingAgent:
         hallucination_penalty = hallucination_grade.get("hallucination_score", 0)
 
         # Weighted combination
-        overall = (0.3 * doc_score + 0.5 * answer_score) * (
-            1 - 0.5 * hallucination_penalty
-        )
+        overall = (0.3 * doc_score + 0.5 * answer_score) * (1 - 0.5 * hallucination_penalty)
 
         return min(max(overall, 0.0), 1.0)

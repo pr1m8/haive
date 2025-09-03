@@ -4,12 +4,12 @@ import logging
 import os
 import sys
 
-# Add project root to path for imports
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from agents.lats.agent import create_lats_agent
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_community.utilities.tavily_search import TavilySearchAPIWrapper
+
+# Add project root to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -45,7 +45,7 @@ def main():
     questions = [
         # "Generate a table with the average size and weight, as well as the oldest recorded instance for each of the top 5 most common birds.",
         # "What is the chemical composition of lithium-ion batteries and their environmental impact?",
-        "Write out magnus carlson series of moves in his game against Alireza Firouzja and propose an alternate strategy"
+        "Write out magnus carlson series of moves in his game against Alireza Firouzja and propose an alternate strategy",
     ]
 
     # Run the agent on each question
@@ -58,7 +58,9 @@ def main():
 
         # Stream the agent's processing steps
         for step in agent.app.stream(
-            {"input": question}, debug=True, config=agent.config.runnable_config
+            {"input": question},
+            debug=True,
+            config=agent.config.runnable_config,
         ):
             step_count += 1
             last_step = step

@@ -9,10 +9,9 @@ Classes:
 # src/haive/agents/self_discovery/state.py
 """State schema for Self-Discovery reasoning system."""
 
-from typing import Any
 
-from haive.core.schema.prebuilt.messages.messages_state import MessagesState
-from pydantic import Field
+from __future__ import annotations
+from typing import Any
 
 
 class SelfDiscoveryState(MessagesState):
@@ -24,29 +23,34 @@ class SelfDiscoveryState(MessagesState):
         description="Available reasoning modules to choose from (formatted string)",
     )
     task_description: str = Field(
-        default="", description="Description of the task to solve"
+        default="",
+        description="Description of the task to solve",
     )
 
     # Intermediate fields
     selected_modules: str | None = Field(
-        default=None, description="Selected reasoning modules suitable for the task"
+        default=None,
+        description="Selected reasoning modules suitable for the task",
     )
     adapted_modules: str | None = Field(
         default=None,
         description="Customized versions of the selected modules for this task",
     )
     reasoning_structure: str | None = Field(
-        default=None, description="Structured reasoning plan in JSON format"
+        default=None,
+        description="Structured reasoning plan in JSON format",
     )
 
     # Output field
     answer: str | None = Field(
-        default=None, description="Final solution to the problem"
+        default=None,
+        description="Final solution to the problem",
     )
 
     # Error handling and metadata (from original version)
     error: str | None = Field(
-        default=None, description="Error message if any step fails"
+        default=None,
+        description="Error message if any step fails",
     )
 
     # Optional metadata fields

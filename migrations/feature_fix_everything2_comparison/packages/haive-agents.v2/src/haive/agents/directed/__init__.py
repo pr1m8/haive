@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from haive.agents.conversation.directed.agent import (
     DirectedConversation,
     DirectedConversationConfig,

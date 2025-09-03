@@ -1,0 +1,114 @@
+name: Changelog Management
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+  release:
+    types: [published]
+
+jobs:
+  check-changelog:
+    name: Check for Changelog Entry
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Check for changelog entry
+        run: |
+          # Check if PR has a changelog entry
+          if ! ls changes/*.md 2>/dev/null | grep -v -E '(README|\.template)\.md$'; then
+            echo "::warning::No changelog entry found. Please add one with: poetry run towncrier create <issue>.<type>.md"
+            echo "Types: feature, bugfix, improvement, deprecation, breaking, security, performance, docs, dev, misc"
+          fi
+
+  preview-changelog:
+    name: Preview Changelog Updates
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Preview towncrier changes
+        run: |
+          echo "## 📝 Towncrier Preview (Manual Entries)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          poetry run towncrier build --draft >> $GITHUB_STEP_SUMMARY 2>/dev/null || echo "No new entries" >> $GITHUB_STEP_SUMMARY
+
+      - name: Install git-cliff
+        uses: kenji-miyake/setup-git-cliff@v2
+
+      - name: Preview git-cliff changes
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 🔍 Git-cliff Preview (From Commits)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          git cliff --unreleased --strip all >> $GITHUB_STEP_SUMMARY
+
+  update-changelog:
+    name: Update Changelog on Release
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Install git-cliff
+        uses: kenji-miyake/setup-git-cliff@v2
+
+      - name: Update CHANGELOG.md with towncrier
+        run: |
+          # Build the changelog with towncrier (removes fragment files)
+          poetry run towncrier build --version ${{ github.event.release.tag_name }}
+
+      - name: Generate full changelog with git-cliff
+        run: |
+          # Generate comprehensive changelog from all commits
+          git cliff --output CHANGELOG-COMMITS.md
+
+      - name: Commit changelog updates
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add CHANGELOG.md CHANGELOG-COMMITS.md changes/
+          git commit -m "chore: update changelog for ${{ github.event.release.tag_name }}" || echo "No changes to commit"
+          git push

@@ -7,17 +7,22 @@ class ReasoningStep(BaseModel):
     """A single step in the structured reasoning process."""
 
     step_number: int = Field(
-        ..., description="The order of this step in the reasoning process"
+        ...,
+        description="The order of this step in the reasoning process",
     )
     step_name: str = Field(..., description="Descriptive name for this reasoning step")
     guiding_questions: list[str] = Field(
-        ..., description="Key questions to address in this step", min_length=2
+        ...,
+        description="Key questions to address in this step",
+        min_length=2,
     )
     expected_output: str = Field(
-        ..., description="What should be produced or decided in this step"
+        ...,
+        description="What should be produced or decided in this step",
     )
     dependencies: list[str] = Field(
-        default_factory=list, description="Names of previous steps this step depends on"
+        default_factory=list,
+        description="Names of previous steps this step depends on",
     )
 
 
@@ -25,13 +30,17 @@ class ReasoningStructure(BaseModel):
     """The complete structured reasoning plan."""
 
     task_context: str = Field(
-        ..., description="Brief context about the task this structure addresses"
+        ...,
+        description="Brief context about the task this structure addresses",
     )
     reasoning_steps: list[ReasoningStep] = Field(
-        ..., description="Ordered list of reasoning steps to follow", min_length=3
+        ...,
+        description="Ordered list of reasoning steps to follow",
+        min_length=3,
     )
     integration_approach: str = Field(
-        ..., description="How the steps work together to solve the problem"
+        ...,
+        description="How the steps work together to solve the problem",
     )
     success_criteria: list[str] = Field(
         ...,
@@ -39,5 +48,6 @@ class ReasoningStructure(BaseModel):
         min_length=2,
     )
     execution_notes: str = Field(
-        ..., description="Important notes for executing this reasoning structure"
+        ...,
+        description="Important notes for executing this reasoning structure",
     )

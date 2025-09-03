@@ -9,19 +9,18 @@ This module extends NodeSchemaComposer with advanced patterns for:
 5. Automatic signature inspection
 """
 
-import inspect
-import logging
+from __future__ import annotations
+
 from collections.abc import Callable
 from functools import wraps
+import inspect
+import logging
 from typing import Any, TypeVar, get_type_hints
 
 from langgraph.types import Command, Send
 
 from haive.core.graph.node.composer.field_mapping import FieldMapping
-from haive.core.graph.node.composer.node_schema_composer import (
-    ComposedNode,
-    NodeSchemaComposer,
-)
+from haive.core.graph.node.composer.node_schema_composer import ComposedNode, NodeSchemaComposer
 from haive.core.graph.node.composer.protocols import ExtractFunction, UpdateFunction
 
 logger = logging.getLogger(__name__)
@@ -53,8 +52,10 @@ class AdvancedNodeComposer(NodeSchemaComposer):
         auto_detect_signature: bool = True,
         handle_command: bool = True,
         **callable_kwargs,
-    ) -> "AdvancedComposedNode":
-        """Create advanced composed node from callable with flexible signatures.
+    ) -> AdvancedComposedNode:
+        """Create advanced composed node from callable with flexible.
+
+        signatures.
 
         Args:
             func: Callable with various signature patterns
@@ -86,9 +87,7 @@ class AdvancedNodeComposer(NodeSchemaComposer):
             # All are handled automatically!
         """
         # Analyze function signature
-        sig_info = (
-            self._analyze_callable_signature(func) if auto_detect_signature else {}
-        )
+        sig_info = self._analyze_callable_signature(func) if auto_detect_signature else {}
 
         # Create wrapped function that normalizes signatures
         wrapped_func = self._create_normalized_callable(func, sig_info, handle_command)
@@ -97,7 +96,9 @@ class AdvancedNodeComposer(NodeSchemaComposer):
         from haive.core.graph.node.callable_node import CallableNodeConfig
 
         base_node = CallableNodeConfig(
-            name=name or func.__name__, callable_func=wrapped_func, **callable_kwargs
+            name=name or func.__name__,
+            callable_func=wrapped_func,
+            **callable_kwargs,
         )
 
         return AdvancedComposedNode(
@@ -154,7 +155,10 @@ class AdvancedNodeComposer(NodeSchemaComposer):
         return info
 
     def _create_normalized_callable(
-        self, func: Callable, sig_info: dict[str, Any], handle_command: bool
+        self,
+        func: Callable,
+        sig_info: dict[str, Any],
+        handle_command: bool,
     ) -> Callable:
         """Create normalized callable that handles different signatures.
 
@@ -209,7 +213,7 @@ class AdvancedNodeComposer(NodeSchemaComposer):
         output_mappings: list[FieldMapping] | None = None,
         validate_types: bool = True,
         **kwargs,
-    ) -> "TypedCallableNode":
+    ) -> TypedCallableNode:
         """Create type-safe callable node with validation.
 
         Args:
@@ -232,13 +236,11 @@ class AdvancedNodeComposer(NodeSchemaComposer):
             if validate_types:
                 if not isinstance(state, state_type):
                     logger.warning(
-                        f"State type mismatch: expected {state_type}, got {
-                            type(state)}"
+                        f"State type mismatch: expected {state_type}, got {type(state)}",
                     )
                 if not isinstance(config, config_type):
                     logger.warning(
-                        f"Config type mismatch: expected {config_type}, got {
-                            type(config)}"
+                        f"Config type mismatch: expected {config_type}, got {type(config)}",
                     )
 
             result = func(state, config)
@@ -246,8 +248,7 @@ class AdvancedNodeComposer(NodeSchemaComposer):
             # Validate output type if specified
             if validate_types and result_type and not isinstance(result, result_type):
                 logger.warning(
-                    f"Result type mismatch: expected {result_type}, got {
-                        type(result)}"
+                    f"Result type mismatch: expected {result_type}, got {type(result)}",
                 )
 
             return result
@@ -309,7 +310,8 @@ class AdvancedNodeComposer(NodeSchemaComposer):
 
         # Create a callable that uses the pipeline
         def pipeline_callable(
-            state: Any, config: dict[str, Any] | None = None
+            state: Any,
+            config: dict[str, Any] | None = None,
         ) -> Command:
             config = config or {}
 
@@ -373,9 +375,7 @@ class AdvancedComposedNode(ComposedNode):
                     extracted_input.update(mapped_input)
         else:
             # Use standard extraction
-            extracted_input = (
-                self.extract_func(state, config) if self.extract_func else state
-            )
+            extracted_input = self.extract_func(state, config) if self.extract_func else state
 
         # Prepare state for node
         if isinstance(extracted_input, dict) and hasattr(state, "model_copy"):
@@ -444,7 +444,9 @@ class TypedCallableNode:
 
 # Factory functions for common patterns
 def callable_to_node(
-    func: Callable, composer: AdvancedNodeComposer | None = None, **kwargs
+    func: Callable,
+    composer: AdvancedNodeComposer | None = None,
+    **kwargs,
 ) -> AdvancedComposedNode:
     """Quick conversion of any callable to node.
 

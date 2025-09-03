@@ -3,15 +3,17 @@
 Simplified version using the new ChainAgent approach.
 """
 
+from __future__ import annotations
+
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
 from haive.agents.chain import ChainAgent, flow_with_edges
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 class QueryPlan(BaseModel):
@@ -54,7 +56,7 @@ def create_query_planning_chain(
             Focus on atomic, answerable questions.""",
                 ),
                 ("human", "Query: {query}\nCreate execution plan."),
-            ]
+            ],
         ),
         structured_output_model=QueryPlan,
         output_key="plan",
@@ -70,7 +72,7 @@ def create_query_planning_chain(
         results = []
         for i, sub_query in enumerate(sub_queries[:3]):  # Limit to 3
             # Mock answer generation
-            answer = f"Answer to sub-query {i+1}: {sub_query}"
+            answer = f"Answer to sub-query {i + 1}: {sub_query}"
             results.append({"query": sub_query, "answer": answer, "confidence": 0.8})
 
         return {"sub_results": results, "total_sub_queries": len(sub_queries)}
@@ -88,7 +90,7 @@ def create_query_planning_chain(
 
             Create a complete, coherent response.""",
                 ),
-            ]
+            ],
         ),
         output_key="final_response",
     )
@@ -103,7 +105,8 @@ def create_query_planning_chain(
 
 
 def create_simple_decomposition_chain(
-    documents: list[Document], llm_config: LLMConfig | None = None
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
 ) -> ChainAgent:
     """Even simpler version - just decompose and answer."""
     if not llm_config:
@@ -117,7 +120,7 @@ def create_simple_decomposition_chain(
     decomposer = AugLLMConfig(
         llm_config=llm_config,
         prompt_template=ChatPromptTemplate.from_messages(
-            [("system", "Break query into 2-3 simple questions"), ("human", "{query}")]
+            [("system", "Break query into 2-3 simple questions"), ("human", "{query}")],
         ),
         output_key="sub_queries",
     )
@@ -135,7 +138,7 @@ def create_simple_decomposition_chain(
             [
                 ("system", "Combine these answers into one response"),
                 ("human", "Original: {query}\nAnswers: {answers}"),
-            ]
+            ],
         ),
         output_key="response",
     )
@@ -145,7 +148,8 @@ def create_simple_decomposition_chain(
 
 # With conditional execution based on complexity
 def create_adaptive_planning_chain(
-    documents: list[Document], llm_config: LLMConfig | None = None
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
 ) -> ChainAgent:
     """Adaptive planning based on query complexity."""
     if not llm_config:
@@ -162,7 +166,7 @@ def create_adaptive_planning_chain(
             [
                 ("system", "Rate query complexity: 'simple' or 'complex'"),
                 ("human", "{query}"),
-            ]
+            ],
         ),
         output_key="complexity",
     )
@@ -171,14 +175,16 @@ def create_adaptive_planning_chain(
     simple_answer = AugLLMConfig(
         llm_config=llm_config,
         prompt_template=ChatPromptTemplate.from_messages(
-            [("system", "Answer this simple query directly"), ("human", "{query}")]
+            [("system", "Answer this simple query directly"), ("human", "{query}")],
         ),
         output_key="response",
     )
 
     # Complex planning chain
     complex_planning = create_query_planning_chain(
-        documents, llm_config, "Complex Planning"
+        documents,
+        llm_config,
+        "Complex Planning",
     )
 
     # Route based on complexity

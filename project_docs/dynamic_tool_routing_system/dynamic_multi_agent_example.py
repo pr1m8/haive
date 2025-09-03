@@ -15,7 +15,6 @@ from langgraph.graph import END, START, StateGraph
 from langgraph.types import Command, Send
 from pydantic import BaseModel, Field, computed_field
 
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -146,14 +145,19 @@ def agent_router(state: MultiAgentState) -> Send | list[Send] | Command:
     # Route to selected agent
     if state.selected_agent and state.selected_agent in state.agents:
         # Use Send for dynamic routing - no Literal needed!
-        return Send("agent_executor", {"agent_name": state.selected_agent, "state": state})
+        return Send(
+            "agent_executor",
+            {"agent_name": state.selected_agent, "state": state},
+        )
 
     # Or route to multiple agents in parallel
     if len(state.agents) > 1:
         # Send to multiple agents dynamically
         sends = []
         for agent_name in state.agents:
-            sends.append(Send("agent_executor", {"agent_name": agent_name, "state": state}))
+            sends.append(
+                Send("agent_executor", {"agent_name": agent_name, "state": state}),
+            )
         return sends
 
     # Default: go to end
@@ -163,8 +167,8 @@ def agent_router(state: MultiAgentState) -> Send | list[Send] | Command:
 def tool_manager(arg: dict[str, Any]) -> Command:
     """Manage dynamic tool additions.
 
-    This node handles adding tools to agents and marking them
-    for recompilation.
+    This node handles adding tools to agents and marking them for
+    recompilation.
     """
     state = arg if isinstance(arg, MultiAgentState) else arg.get("state")
 
@@ -297,7 +301,7 @@ def demonstrate_dynamic_tool_routing():
 
     # Create initial state
     initial_state = MultiAgentState(
-        agents={"simple_agent": simple_agent, "react_agent": react_agent}
+        agents={"simple_agent": simple_agent, "react_agent": react_agent},
     )
 
     # Build graph
@@ -312,7 +316,7 @@ def demonstrate_dynamic_tool_routing():
 
     # Now add a tool dynamically
     initial_state.pending_tool_additions = [
-        {"agent_name": "simple_agent", "tool": analyze, "route": "analysis_route"}
+        {"agent_name": "simple_agent", "tool": analyze, "route": "analysis_route"},
     ]
 
     # Run again - this will trigger tool addition and recompilation
@@ -336,7 +340,6 @@ def demonstrate_dynamic_tool_routing():
 # ============================================================================
 # KEY INSIGHTS
 # ============================================================================
-
 """
 Key Insights from this implementation:
 

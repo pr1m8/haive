@@ -1,13 +1,14 @@
 """ReactAgent with memory tools for dynamic memory management.
 
-This implementation follows LangChain's long-term memory patterns but uses ReactAgent
-with tools for flexible memory operations.
+This implementation follows LangChain's long-term memory patterns but
+uses ReactAgent with tools for flexible memory operations.
 """
+
+from __future__ import annotations
 
 from datetime import datetime
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
@@ -15,6 +16,7 @@ from langchain_core.tools import tool
 
 from haive.agents.memory_v2.time_weighted_retriever import TimeWeightedRetriever
 from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class ReactMemoryAgent:
@@ -57,14 +59,14 @@ class ReactMemoryAgent:
                     self.embeddings,
                     allow_dangerous_deserialization=True,
                 )
-            except:
+            except BaseException:
                 # Create new if doesn't exist
                 self.vector_store = FAISS.from_documents(
                     [
                         Document(
                             page_content="Initial memory",
                             metadata={"timestamp": datetime.now().isoformat()},
-                        )
+                        ),
                     ],
                     self.embeddings,
                 )
@@ -74,7 +76,7 @@ class ReactMemoryAgent:
                     Document(
                         page_content="Initial memory",
                         metadata={"timestamp": datetime.now().isoformat()},
-                    )
+                    ),
                 ],
                 self.embeddings,
             )
@@ -82,7 +84,9 @@ class ReactMemoryAgent:
         # Initialize retrievers
         if self.use_time_weighting:
             self.retriever = TimeWeightedRetriever(
-                vectorstore=self.vector_store, decay_rate=self.decay_rate, k=self.k
+                vectorstore=self.vector_store,
+                decay_rate=self.decay_rate,
+                k=self.k,
             )
         else:
             self.retriever = self.vector_store.as_retriever(search_kwargs={"k": self.k})
@@ -154,7 +158,7 @@ Always strive to use memories to provide more helpful, personalized responses.""
 
                     memories.append(
                         f"Memory {i} [{memory_type}] (from {timestamp}, importance: {importance}):\n"
-                        f"{doc.page_content}"
+                        f"{doc.page_content}",
                     )
 
                 return "\n\n".join(memories)
@@ -163,7 +167,9 @@ Always strive to use memories to provide more helpful, personalized responses.""
 
         @tool
         def search_memories_by_time(
-            start_date: str, end_date: str | None = None, k: int | None = None
+            start_date: str,
+            end_date: str | None = None,
+            k: int | None = None,
         ) -> str:
             """Search memories within a time range.
 
@@ -196,7 +202,8 @@ Always strive to use memories to provide more helpful, personalized responses.""
 
                 # Sort by timestamp and limit
                 filtered_docs.sort(
-                    key=lambda d: d.metadata.get("timestamp", ""), reverse=True
+                    key=lambda d: d.metadata.get("timestamp", ""),
+                    reverse=True,
                 )
                 filtered_docs = filtered_docs[:k]
 
@@ -210,8 +217,7 @@ Always strive to use memories to provide more helpful, personalized responses.""
                     memory_type = doc.metadata.get("type", "general")
 
                     memories.append(
-                        f"Memory {i} [{memory_type}] (from {timestamp}):\n"
-                        f"{doc.page_content}"
+                        f"Memory {i} [{memory_type}] (from {timestamp}):\n{doc.page_content}",
                     )
 
                 return "\n\n".join(memories)
@@ -280,7 +286,8 @@ Always strive to use memories to provide more helpful, personalized responses.""
                 }
 
                 doc = Document(
-                    page_content=f"[UPDATED MEMORY] {new_content}", metadata=metadata
+                    page_content=f"[UPDATED MEMORY] {new_content}",
+                    metadata=metadata,
                 )
 
                 self.vector_store.add_documents([doc])
@@ -351,7 +358,7 @@ Always strive to use memories to provide more helpful, personalized responses.""
 
                     memories.append(
                         f"{i}. [{memory_type}] {timestamp} (importance: {importance}):\n"
-                        f"   {doc.page_content[:100]}..."
+                        f"   {doc.page_content[:100]}...",
                     )
 
                 return "Recent memories:\n" + "\n".join(memories)
@@ -368,7 +375,10 @@ Always strive to use memories to provide more helpful, personalized responses.""
         ]
 
     async def arun(
-        self, query: str, auto_save: bool = True, include_metadata: bool = False
+        self,
+        query: str,
+        auto_save: bool = True,
+        include_metadata: bool = False,
     ) -> dict[str, Any]:
         """Run the ReactAgent with memory tools.
 
@@ -390,7 +400,7 @@ Always strive to use memories to provide more helpful, personalized responses.""
 
             # Use store_memory tool to save
             await self.agent.arun(
-                f"Please store this conversation as a memory: {conversation_memory}"
+                f"Please store this conversation as a memory: {conversation_memory}",
             )
 
         if include_metadata:
@@ -418,7 +428,7 @@ Always strive to use memories to provide more helpful, personalized responses.""
         engine: AugLLMConfig | None = None,
         custom_tools: list[Any] | None = None,
         **kwargs,
-    ) -> "ReactMemoryAgent":
+    ) -> ReactMemoryAgent:
         """Create ReactMemoryAgent with additional custom tools.
 
         Args:
@@ -451,25 +461,23 @@ async def example_basic_usage():
     """Example of basic ReactMemoryAgent usage."""
     # Create agent
     agent = ReactMemoryAgent(
-        name="personal_assistant", user_id="alice_smith", k=5, use_time_weighting=True
+        name="personal_assistant",
+        user_id="alice_smith",
+        k=5,
+        use_time_weighting=True,
     )
 
     # First conversation
-    response1 = await agent.arun(
+    await agent.arun(
         "Hi, I'm Alice. I work as a data scientist at TechCorp and I love hiking.",
         auto_save=True,
     )
-    print("Response 1:", response1)
 
     # Later conversation - agent should remember
-    response2 = await agent.arun("What do you remember about my job?", auto_save=True)
-    print("Response 2:", response2)
+    await agent.arun("What do you remember about my job?", auto_save=True)
 
     # Search specific memories
-    response3 = await agent.arun(
-        "Search my memories for information about hiking", auto_save=False
-    )
-    print("Response 3:", response3)
+    await agent.arun("Search my memories for information about hiking", auto_save=False)
 
     # Save vector store
     agent.save_vector_store("alice_memories")
@@ -488,7 +496,7 @@ async def example_with_custom_tools():
             past_date = datetime.fromisoformat(date_str)
             days = (datetime.now() - past_date).days
             return f"{days} days have passed since {date_str}"
-        except:
+        except BaseException:
             return "Invalid date format. Use YYYY-MM-DD"
 
     # Create agent with custom tool
@@ -499,11 +507,10 @@ async def example_with_custom_tools():
     )
 
     # Use both memory and custom tools
-    response = await agent.arun(
+    await agent.arun(
         "Store a memory that I started my new job on 2024-01-15, "
-        "then calculate how many days I've been working there."
+        "then calculate how many days I've been working there.",
     )
-    print("Response:", response)
 
 
 if __name__ == "__main__":
@@ -511,4 +518,3 @@ if __name__ == "__main__":
 
     # Run examples
     asyncio.run(example_basic_usage())
-    # asyncio.run(example_with_custom_tools())

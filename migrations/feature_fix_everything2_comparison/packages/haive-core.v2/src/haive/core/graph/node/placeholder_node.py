@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from langgraph.types import Command
 from pydantic import BaseModel
 

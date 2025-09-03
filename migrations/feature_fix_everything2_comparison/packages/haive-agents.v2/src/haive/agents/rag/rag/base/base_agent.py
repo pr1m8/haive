@@ -14,11 +14,11 @@ Functions:
 import logging
 from typing import Any
 
-from haive.core.engine.agent.agent import Agent, register_agent
-from haive.core.graph.dynamic_graph_builder import DynamicGraph
 from langgraph.types import Command
 
 from haive.agents.rag.base.config import BaseRAGConfig
+from haive.core.engine.agent.agent import Agent, register_agent
+from haive.core.graph.dynamic_graph_builder import DynamicGraph
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -39,11 +39,11 @@ class BaseRAGAgent(Agent[BaseRAGConfig]):
         documents = state.retrieved_documents
         if not documents:
             return {
-                "answer": "I couldn't find any relevant documents to answer your query."
+                "answer": "I couldn't find any relevant documents to answer your query.",
             }
         context = "\n\n".join([doc.page_content for doc in documents])
         answer = self.config.engine.create_runnable().invoke(
-            {"query": query, "context": context}
+            {"query": query, "context": context},
         )
         return Command(update={"answer": answer})
 

@@ -11,9 +11,11 @@ Functions:
     normalized_score: Normalized Score functionality.
 """
 
-import math
+from __future__ import annotations
+
 from collections import deque
-from typing import Any, Optional
+import math
+from typing import Any
 
 from langchain_core.messages import BaseMessage, HumanMessage
 from pydantic import BaseModel, Field
@@ -22,7 +24,7 @@ from pydantic import BaseModel, Field
 class Reflection(BaseModel):
     reflections: str = Field(
         description="The critique and reflections on the sufficiency, superfluency,"
-        " and general quality of the response"
+        " and general quality of the response",
     )
     score: int = Field(
         description="Score from 0-10 on the quality of the candidate response.",
@@ -30,12 +32,12 @@ class Reflection(BaseModel):
         lte=10,
     )
     found_solution: bool = Field(
-        description="Whether the response has fully solved the question or task."
+        description="Whether the response has fully solved the question or task.",
     )
 
     def as_message(self) -> Any:
         return HumanMessage(
-            content=f"Reasoning: {self.reflections}\nScore: {self.score}"
+            content=f"Reasoning: {self.reflections}\nScore: {self.score}",
         )
 
     @property
@@ -48,7 +50,7 @@ class Node:
         self,
         messages: list[BaseMessage],
         reflection: Reflection,
-        parent: Optional["Node"] = None,
+        parent: Node | None = None,
     ):
         self.messages = messages
         self.parent = parent
@@ -92,7 +94,10 @@ class Node:
         return 1
 
     def upper_confidence_bound(self, exploration_weight=1.0) -> Any:
-        """Return the UCT score. This helps balance exploration vs. exploitation of a branch."""
+        """Return the UCT score.
+
+        This helps balance exploration vs. exploitation of a branch.
+        """
         if self.parent is None:
             raise ValueError("Cannot obtain UCT from root node")
         if self.visits == 0:
@@ -122,7 +127,7 @@ class Node:
         node = self
         while node:
             messages.extend(
-                node.get_messages(include_reflections=include_reflections)[::-1]
+                node.get_messages(include_reflections=include_reflections)[::-1],
             )
             node = node.parent
         # Reverse the final back-tracked trajectory to return in the correct order

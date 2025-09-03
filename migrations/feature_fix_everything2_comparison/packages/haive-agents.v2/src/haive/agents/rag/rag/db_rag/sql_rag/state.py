@@ -24,9 +24,12 @@ Example:
         >>> state.answer = "The top customers by revenue are..."
 """
 
+from __future__ import annotations
+
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 
 class InputState(BaseModel):
@@ -70,13 +73,16 @@ class OutputState(BaseModel):
 
     answer: str = Field(description="The answer to the question")
     sql_statement: str = Field(
-        default="", description="The SQL statement that was executed"
+        default="",
+        description="The SQL statement that was executed",
     )
     hallucination_check: str | None = Field(
-        default=None, description="Result of hallucination check"
+        default=None,
+        description="Result of hallucination check",
     )
     answer_grade: str | None = Field(
-        default=None, description="Result of answer grading"
+        default=None,
+        description="Result of answer grading",
     )
 
 
@@ -139,10 +145,12 @@ class OverallState(InputState, OutputState):
 
     # Intermediary fields
     steps: list[str] = Field(
-        default_factory=list, description="Steps executed in the agent workflow"
+        default_factory=list,
+        description="Steps executed in the agent workflow",
     )
     next_action: str = Field(
-        default="", description="The next action to take in the workflow"
+        default="",
+        description="The next action to take in the workflow",
     )
     analysis: dict[str, Any] = Field(
         default_factory=dict,
@@ -154,13 +162,16 @@ class OverallState(InputState, OutputState):
     )
     sql_query: str = Field(default="", description="The SQL query to execute")
     query_result: str = Field(
-        default=None, description="Raw text results from the database query"
+        default=None,
+        description="Raw text results from the database query",
     )
     database_records: Any = Field(
-        default=None, description="Structured results from the database query"
+        default=None,
+        description="Structured results from the database query",
     )
     messages: list[Any] = Field(
-        default_factory=list, description="Messages in the conversation for context"
+        default_factory=list,
+        description="Messages in the conversation for context",
     )
 
     # Output - inherited from OutputState

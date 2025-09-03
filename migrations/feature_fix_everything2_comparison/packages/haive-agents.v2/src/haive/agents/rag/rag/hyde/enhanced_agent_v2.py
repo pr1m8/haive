@@ -1,4 +1,5 @@
-"""Enhanced HyDE RAG Agent v2 with Advanced Prompt Selection and Multi-Document Generation.
+"""Enhanced HyDE RAG Agent v2 with Advanced Prompt Selection and Multi-Document
+Generation.
 
 from typing import Any
 This version integrates the new enhanced prompt system with:
@@ -9,35 +10,37 @@ This version integrates the new enhanced prompt system with:
 - Ensemble retrieval using multiple hypothetical documents
 """
 
+from __future__ import annotations
+
 from enum import Enum
 from typing import Any
 
-from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field, model_validator
-
 from haive.agents.base.agent import Agent
-from haive.agents.common.utils.pydantic_prompt_utils import (
-    PromptStyle,
-    PydanticPromptConfig,
-    create_generation_and_parsing_prompts,
-)
+from haive.agents.common.utils.pydantic_prompt_utils import create_generation_and_parsing_prompts
+from haive.agents.common.utils.pydantic_prompt_utils import PromptStyle
+from haive.agents.common.utils.pydantic_prompt_utils import PydanticPromptConfig
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
+from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import get_ensemble_prompt
+from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import get_generation_prompt
+from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import get_perspective_prompt
+from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import HYDE_ANALYSIS_PROMPT
+from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import HyDEPerspective
+from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import HyDEPromptType
 from haive.agents.rag.common.query_constructors.hyde.enhanced_prompts import (
-    HYDE_ANALYSIS_PROMPT,
-    HyDEPerspective,
-    HyDEPromptType,
-    get_ensemble_prompt,
-    get_generation_prompt,
-    get_perspective_prompt,
     select_prompt_automatically,
 )
 from haive.agents.rag.models import HyDEResult
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.models.llm.base import LLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel
+from pydantic import Field
+from pydantic import model_validator
 
 
 class HyDEGenerationMode(str, Enum):
@@ -53,10 +56,12 @@ class HyDEAgentConfig(BaseModel):
     """Configuration for Enhanced HyDE RAG Agent."""
 
     generation_mode: HyDEGenerationMode = Field(
-        default=HyDEGenerationMode.SINGLE, description="Mode for document generation"
+        default=HyDEGenerationMode.SINGLE,
+        description="Mode for document generation",
     )
     auto_select_prompt: bool = Field(
-        default=True, description="Automatically select prompt type based on query"
+        default=True,
+        description="Automatically select prompt type based on query",
     )
     prompt_type: HyDEPromptType = Field(
         default=HyDEPromptType.GENERAL,
@@ -67,22 +72,26 @@ class HyDEAgentConfig(BaseModel):
         description="Perspectives for multi-perspective generation",
     )
     target_length: int = Field(
-        default=1000, description="Target character length for generated documents"
+        default=1000,
+        description="Target character length for generated documents",
     )
     num_ensemble_docs: int = Field(
-        default=3, description="Number of documents for ensemble generation"
+        default=3,
+        description="Number of documents for ensemble generation",
     )
     use_structured_analysis: bool = Field(
         default=True,
         description="Whether to use structured analysis of generated documents",
     )
     enable_query_rewriting: bool = Field(
-        default=True, description="Whether to enable query rewriting based on analysis"
+        default=True,
+        description="Whether to enable query rewriting based on analysis",
     )
 
 
 class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
-    """Enhanced HyDE RAG Agent with advanced prompt selection and multi-document generation.
+    """Enhanced HyDE RAG Agent with advanced prompt selection and multi-
+    document generation.
 
     Key Features:
     - Automatic prompt type selection based on query analysis
@@ -94,12 +103,13 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
     """
 
     config: HyDEAgentConfig = Field(
-        default_factory=HyDEAgentConfig, description="Configuration for HyDE agent"
+        default_factory=HyDEAgentConfig,
+        description="Configuration for HyDE agent",
     )
 
     @model_validator(mode="after")
     @classmethod
-    def setup_hyde_agent(cls) -> "EnhancedHyDERAGAgentV2":
+    def setup_hyde_agent(cls) -> EnhancedHyDERAGAgentV2:
         """Setup HyDE agent with enhanced prompts."""
         # Set up tool routing for any additional tools
         if hasattr(self, "tools") and self.tools:
@@ -114,7 +124,7 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
         embedding_model: str | None = None,
         config: HyDEAgentConfig | None = None,
         **kwargs,
-    ) -> "EnhancedHyDERAGAgentV2":
+    ) -> EnhancedHyDERAGAgentV2:
         """Create Enhanced HyDE RAG Agent v2 from documents.
 
         Args:
@@ -140,31 +150,47 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
         # Create agents based on generation mode
         if config.generation_mode == HyDEGenerationMode.SINGLE:
             agents = cls._create_single_document_pipeline(
-                documents, llm_config, embedding_model, config
+                documents,
+                llm_config,
+                embedding_model,
+                config,
             )
         elif config.generation_mode == HyDEGenerationMode.MULTI_PERSPECTIVE:
             agents = cls._create_multi_perspective_pipeline(
-                documents, llm_config, embedding_model, config
+                documents,
+                llm_config,
+                embedding_model,
+                config,
             )
         elif config.generation_mode == HyDEGenerationMode.MULTI_DOMAIN:
             agents = cls._create_multi_domain_pipeline(
-                documents, llm_config, embedding_model, config
+                documents,
+                llm_config,
+                embedding_model,
+                config,
             )
         elif config.generation_mode == HyDEGenerationMode.ENSEMBLE:
             agents = cls._create_ensemble_pipeline(
-                documents, llm_config, embedding_model, config
+                documents,
+                llm_config,
+                embedding_model,
+                config,
             )
         else:
             # Fallback to single document
             agents = cls._create_single_document_pipeline(
-                documents, llm_config, embedding_model, config
+                documents,
+                llm_config,
+                embedding_model,
+                config,
             )
 
         return cls(
             agents=agents,
             config=config,
             name=kwargs.get(
-                "name", f"Enhanced HyDE RAG v2 ({config.generation_mode.value})"
+                "name",
+                f"Enhanced HyDE RAG v2 ({config.generation_mode.value})",
             ),
             **kwargs,
         )
@@ -219,7 +245,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=RAG_ANSWER_STANDARD
+                llm_config=llm_config,
+                prompt_template=RAG_ANSWER_STANDARD,
             ),
             name="Answer Generator",
         )
@@ -244,7 +271,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
                 engine=AugLLMConfig(
                     llm_config=llm_config,
                     prompt_template=get_perspective_prompt(
-                        perspective, config.target_length
+                        perspective,
+                        config.target_length,
                     ),
                     output_key=f"hypothetical_doc_{perspective.value}",
                 ),
@@ -268,7 +296,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=RAG_ANSWER_STANDARD
+                llm_config=llm_config,
+                prompt_template=RAG_ANSWER_STANDARD,
             ),
             name="Answer Generator",
         )
@@ -289,7 +318,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
 
         # Query analysis to determine relevant domain types
         domain_analyzer = DomainAnalysisAgent(
-            llm_config=llm_config, name="Domain Analyzer"
+            llm_config=llm_config,
+            name="Domain Analyzer",
         )
         agents.append(domain_analyzer)
 
@@ -305,7 +335,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
                 engine=AugLLMConfig(
                     llm_config=llm_config,
                     prompt_template=get_generation_prompt(
-                        domain_type, config.target_length
+                        domain_type,
+                        config.target_length,
                     ),
                     output_key=f"hypothetical_doc_{domain_type.value}",
                 ),
@@ -329,7 +360,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=RAG_ANSWER_STANDARD
+                llm_config=llm_config,
+                prompt_template=RAG_ANSWER_STANDARD,
             ),
             name="Answer Generator",
         )
@@ -351,7 +383,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
             engine=AugLLMConfig(
                 llm_config=llm_config,
                 prompt_template=get_ensemble_prompt(
-                    config.num_ensemble_docs, config.target_length
+                    config.num_ensemble_docs,
+                    config.target_length,
                 ),
                 output_key="ensemble_documents",
             ),
@@ -360,7 +393,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
 
         # Parse ensemble output
         ensemble_parser = EnsembleDocumentParser(
-            llm_config=llm_config, name="Ensemble Document Parser"
+            llm_config=llm_config,
+            name="Ensemble Document Parser",
         )
 
         # Ensemble retrieval
@@ -378,7 +412,8 @@ class EnhancedHyDERAGAgentV2(SequentialAgent, ToolRouteMixin):
 
         answer_agent = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=RAG_ANSWER_STANDARD
+                llm_config=llm_config,
+                prompt_template=RAG_ANSWER_STANDARD,
             ),
             name="Answer Generator",
         )
@@ -395,7 +430,8 @@ class QueryAnalysisAgent(SimpleAgent):
     """Agent that analyzes queries and selects appropriate prompt types."""
 
     auto_select: bool = Field(
-        default=True, description="Whether to auto-select prompt type"
+        default=True,
+        description="Whether to auto-select prompt type",
     )
     default_prompt_type: HyDEPromptType = Field(
         default=HyDEPromptType.GENERAL,
@@ -418,7 +454,7 @@ class QueryAnalysisAgent(SimpleAgent):
             Provide analysis that will guide document generation strategy.""",
                 ),
                 ("human", "Analyze this query for HyDE generation: {query}"),
-            ]
+            ],
         )
 
         super().__init__(
@@ -453,7 +489,8 @@ class AdaptiveHyDEGenerator(SimpleAgent):
     def __init__(self, llm_config: LLMConfig, **kwargs):
         # Default prompt - will be replaced based on analysis
         default_prompt = get_generation_prompt(
-            HyDEPromptType.GENERAL, kwargs.get("target_length", 1000)
+            HyDEPromptType.GENERAL,
+            kwargs.get("target_length", 1000),
         )
 
         super().__init__(
@@ -486,10 +523,12 @@ class AdaptiveHyDEGenerator(SimpleAgent):
 
 
 class HyDEDocumentAnalyzer(SimpleAgent):
-    """Analyzes generated hypothetical documents and extracts structured information."""
+    """Analyzes generated hypothetical documents and extracts structured
+    information."""
 
     enable_query_rewriting: bool = Field(
-        default=True, description="Enable query rewriting"
+        default=True,
+        description="Enable query rewriting",
     )
 
     def __init__(self, llm_config: LLMConfig, **kwargs):
@@ -512,7 +551,8 @@ class HyDEDocumentAnalyzer(SimpleAgent):
 
 
 class DomainAnalysisAgent(SimpleAgent):
-    """Analyzes queries to determine relevant domains for multi-domain generation."""
+    """Analyzes queries to determine relevant domains for multi-domain
+    generation."""
 
     def __init__(self, llm_config: LLMConfig, **kwargs):
         domain_prompt = ChatPromptTemplate.from_messages(
@@ -532,7 +572,7 @@ class DomainAnalysisAgent(SimpleAgent):
             Rank the top 3 domains that would provide the best hypothetical documents for this query.""",
                 ),
                 ("human", "Analyze query for domain relevance: {query}"),
-            ]
+            ],
         )
 
         super().__init__(
@@ -564,7 +604,7 @@ class EnsembleDocumentParser(SimpleAgent):
             Structure the output so each document can be used independently for retrieval.""",
                 ),
                 ("human", "Parse this ensemble output: {ensemble_documents}"),
-            ]
+            ],
         )
 
         super().__init__(
@@ -583,14 +623,16 @@ class EnsembleDocumentParser(SimpleAgent):
 
 
 class EnhancedHyDERetrieverV2(Agent):
-    """Enhanced retriever with better state handling and fallback mechanisms."""
+    """Enhanced retriever with better state handling and fallback
+    mechanisms."""
 
     documents: list[Document] = Field(default_factory=list)
     embedding_model: str | None = Field(default=None)
 
     def build_graph(self) -> Any:
-        from haive.core.graph.state_graph.base_graph2 import BaseGraph
         from langgraph.graph import END, START
+
+        from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
         graph = BaseGraph(name="EnhancedHyDERetrieverV2")
 
@@ -662,13 +704,15 @@ class EnsembleHyDERetriever(Agent):
     ensemble_mode: bool = Field(default=False)
 
     def build_graph(self) -> Any:
-        from haive.core.graph.state_graph.base_graph2 import BaseGraph
         from langgraph.graph import END, START
+
+        from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
         graph = BaseGraph(name="EnsembleHyDERetriever")
 
         def ensemble_retrieval(state: dict[str, Any]) -> dict[str, Any]:
-            """Retrieve using multiple hypothetical documents and combine results."""
+            """Retrieve using multiple hypothetical documents and combine
+            results."""
             all_docs = []
             queries_used = []
 
@@ -690,7 +734,8 @@ class EnsembleHyDERetriever(Agent):
             # Fallback to single document if no ensemble/perspective docs
             if not queries_used:
                 single_doc = state.get("hypothetical_document") or state.get(
-                    "query", ""
+                    "query",
+                    "",
                 )
                 if single_doc:
                     queries_used = [single_doc]
@@ -721,11 +766,7 @@ class EnsembleHyDERetriever(Agent):
             seen = set()
             unique_docs = []
             for doc in all_docs:
-                doc_id = (
-                    hash(doc.page_content)
-                    if hasattr(doc, "page_content")
-                    else hash(str(doc))
-                )
+                doc_id = hash(doc.page_content) if hasattr(doc, "page_content") else hash(str(doc))
                 if doc_id not in seen:
                     seen.add(doc_id)
                     unique_docs.append(doc)
@@ -753,8 +794,9 @@ class MultiDomainHyDERetriever(Agent):
     domain_types: list[str] = Field(default_factory=list)
 
     def build_graph(self) -> Any:
-        from haive.core.graph.state_graph.base_graph2 import BaseGraph
         from langgraph.graph import END, START
+
+        from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
         graph = BaseGraph(name="MultiDomainHyDERetriever")
 
@@ -797,11 +839,7 @@ class MultiDomainHyDERetriever(Agent):
             seen = set()
             unique_docs = []
             for doc in all_docs:
-                doc_id = (
-                    hash(doc.page_content)
-                    if hasattr(doc, "page_content")
-                    else hash(str(doc))
-                )
+                doc_id = hash(doc.page_content) if hasattr(doc, "page_content") else hash(str(doc))
                 if doc_id not in seen:
                     seen.add(doc_id)
                     unique_docs.append(doc)
@@ -846,11 +884,15 @@ def create_enhanced_hyde_v2(
         Configured Enhanced HyDE RAG Agent v2
     """
     config = HyDEAgentConfig(
-        generation_mode=generation_mode, auto_select_prompt=auto_select_prompt, **kwargs
+        generation_mode=generation_mode,
+        auto_select_prompt=auto_select_prompt,
+        **kwargs,
     )
 
     return EnhancedHyDERAGAgentV2.from_documents(
-        documents=documents, llm_config=llm_config, config=config
+        documents=documents,
+        llm_config=llm_config,
+        config=config,
     )
 
 
@@ -872,11 +914,15 @@ def create_multi_perspective_hyde(
         Multi-perspective HyDE agent
     """
     config = HyDEAgentConfig(
-        generation_mode=HyDEGenerationMode.MULTI_PERSPECTIVE, perspectives=perspectives
+        generation_mode=HyDEGenerationMode.MULTI_PERSPECTIVE,
+        perspectives=perspectives,
     )
 
     return EnhancedHyDERAGAgentV2.from_documents(
-        documents=documents, llm_config=llm_config, config=config, **kwargs
+        documents=documents,
+        llm_config=llm_config,
+        config=config,
+        **kwargs,
     )
 
 
@@ -898,9 +944,13 @@ def create_ensemble_hyde(
         Ensemble HyDE agent
     """
     config = HyDEAgentConfig(
-        generation_mode=HyDEGenerationMode.ENSEMBLE, num_ensemble_docs=num_docs
+        generation_mode=HyDEGenerationMode.ENSEMBLE,
+        num_ensemble_docs=num_docs,
     )
 
     return EnhancedHyDERAGAgentV2.from_documents(
-        documents=documents, llm_config=llm_config, config=config, **kwargs
+        documents=documents,
+        llm_config=llm_config,
+        config=config,
+        **kwargs,
     )

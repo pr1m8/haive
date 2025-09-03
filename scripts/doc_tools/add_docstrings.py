@@ -12,6 +12,8 @@ Example:
     python add_docstrings.py --path ../src/haive/games/chess
 """
 
+from __future__ import annotations
+
 import argparse
 import ast
 import os
@@ -50,7 +52,8 @@ class DocstringVisitor(ast.NodeVisitor):
         self.current_class = old_class
 
     def visit_FunctionDef(self, node):
-        """Visit a function definition to check for function-level docstring."""
+        """Visit a function definition to check for function-level
+        docstring."""
         # Skip special methods
         if node.name.startswith("__") and node.name.endswith("__"):
             self.generic_visit(node)
@@ -442,7 +445,10 @@ Example:
 
 
 def generate_function_docstring(
-    func_name: str, func_def: ast.FunctionDef, module_name: str, file_path: str
+    func_name: str,
+    func_def: ast.FunctionDef,
+    module_name: str,
+    file_path: str,
 ) -> str:
     """Generate a docstring for a function based on its name and signature.
 
@@ -560,7 +566,9 @@ Returns:
 
 
 def generate_param_description(
-    param_name: str, func_name: str, module_name: str
+    param_name: str,
+    func_name: str,
+    module_name: str,
 ) -> str:
     """Generate a description for a function parameter based on its name.
 
@@ -619,7 +627,8 @@ def generate_param_description(
 
     # Return from common parameter descriptions or a generic description
     return param_descriptions.get(
-        param_name, f"The {param_name.replace('_', ' ')} for the operation."
+        param_name,
+        f"The {param_name.replace('_', ' ')} for the operation.",
     )
 
 
@@ -684,7 +693,7 @@ def add_docstrings_to_file(file_path: str, dry_run: bool = False) -> dict[str, i
             if file_content.startswith("#!"):
                 shebang_end = file_content.find("\n") + 1
                 modifications.append(
-                    (shebang_end, shebang_end, f'"""{docstring}"""\n\n')
+                    (shebang_end, shebang_end, f'"""{docstring}"""\n\n'),
                 )
             else:
                 modifications.append((0, 0, f'"""{docstring}"""\n\n'))
@@ -699,13 +708,16 @@ def add_docstrings_to_file(file_path: str, dry_run: bool = False) -> dict[str, i
                 node.col_offset + 4
             )  # 4 spaces after class indentation
             modifications.append(
-                (class_def_end, class_def_end, f'\n{indentation}"""{docstring}"""')
+                (class_def_end, class_def_end, f'\n{indentation}"""{docstring}"""'),
             )
             stats["class_added"] += 1
 
         elif node_type == "function":
             docstring = generate_function_docstring(
-                node_name, node, module_name, file_path
+                node_name,
+                node,
+                module_name,
+                file_path,
             )
             # Find position after function definition to insert docstring
             func_line = file_content.count("\n", 0, node.lineno - 1)
@@ -714,7 +726,7 @@ def add_docstrings_to_file(file_path: str, dry_run: bool = False) -> dict[str, i
                 node.col_offset + 4
             )  # 4 spaces after function indentation
             modifications.append(
-                (func_def_end, func_def_end, f'\n{indentation}"""{docstring}"""')
+                (func_def_end, func_def_end, f'\n{indentation}"""{docstring}"""'),
             )
             stats["function_added"] += 1
 
@@ -736,11 +748,11 @@ def add_docstrings_to_file(file_path: str, dry_run: bool = False) -> dict[str, i
 
     # Add skipped stats
     stats["module_skipped"] = len(
-        [n for n in visitor.has_docstrings if n[0] == "module"]
+        [n for n in visitor.has_docstrings if n[0] == "module"],
     )
     stats["class_skipped"] = len([n for n in visitor.has_docstrings if n[0] == "class"])
     stats["function_skipped"] = len(
-        [n for n in visitor.has_docstrings if n[0] == "function"]
+        [n for n in visitor.has_docstrings if n[0] == "function"],
     )
 
     return stats
@@ -825,7 +837,8 @@ def create_module_readme(module_path: str, dry_run: bool = False) -> bool:
                                 with open(os.path.join(module_path, filename)) as f:
                                     content = f.read()
                                     model_classes = re.findall(
-                                        r"class\s+(\w+)\(BaseModel", content
+                                        r"class\s+(\w+)\(BaseModel",
+                                        content,
                                     )
                                     for model_class in model_classes:
                                         components.append(model_class)
@@ -1007,7 +1020,7 @@ def process_directory(dir_path: str, dry_run: bool = False) -> dict[str, int]:
 def main():
     """Main entry point for the script."""
     parser = argparse.ArgumentParser(
-        description="Add Google-style docstrings to haive-games package."
+        description="Add Google-style docstrings to haive-games package.",
     )
     parser.add_argument(
         "--path",

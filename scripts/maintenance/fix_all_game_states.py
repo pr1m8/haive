@@ -2,6 +2,7 @@
 """Fix all game state initialization issues.
 Test and document proper initialization methods for each game.
 """
+from __future__ import annotations
 
 
 def test_game_state_initialization():

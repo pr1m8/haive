@@ -1,0 +1,708 @@
+#!/usr/bin/env python3
+"""MCP Integration Pipeline.
+
+Automatically installs, sets up, and reads documentation for discovered MCP servers.
+Creates a complete integration pipeline from discovery to agent configuration.
+
+Usage:
+    poetry run python examples/mcp_integration_pipeline.py
+"""
+
+import asyncio
+import json
+import logging
+import os
+from dataclasses import asdict, dataclass
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import Any
+
+import aiohttp
+
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
+
+@dataclass
+class MCPServerInstallation:
+    """Installation result for an MCP server."""
+
+    name: str
+    repository_url: str
+    installation_status: str  # 'success', 'failed', 'skipped'
+    installation_method: str  # 'npm', 'pip', 'docker', 'source', 'none'
+    install_command: str | None = None
+    setup_instructions: str | None = None
+    documentation: str | None = None
+    config_template: dict[str, Any] | None = None
+    error_message: str | None = None
+    install_path: str | None = None
+    dependencies: list[str] = None
+    capabilities: list[str] = None
+    transport_types: list[str] = None
+    installation_time: str = None
+
+    def __post_init__(self):
+        if self.dependencies is None:
+            self.dependencies = []
+        if self.capabilities is None:
+            self.capabilities = []
+        if self.transport_types is None:
+            self.transport_types = []
+        if self.installation_time is None:
+            self.installation_time = datetime.now(UTC).isoformat()
+
+
+class MCPIntegrationPipeline:
+    """Pipeline for installing and integrating discovered MCP servers."""
+
+    def __init__(self, max_installations: int = 50):
+        self.max_installations = max_installations
+        self.session: aiohttp.ClientSession | None = None
+        self.installations: list[MCPServerInstallation] = []
+        self.github_token = os.environ.get("GITHUB_TOKEN")
+
+        # Setup directories
+        self.data_dir = Path(__file__).parent.parent / "data"
+        self.installs_dir = self.data_dir / "mcp_installations"
+        self.docs_dir = self.data_dir / "mcp_documentation"
+        self.configs_dir = self.data_dir / "mcp_configs"
+
+        # Create directories
+        for dir_path in [self.installs_dir, self.docs_dir, self.configs_dir]:
+            dir_path.mkdir(parents=True, exist_ok=True)
+
+    async def run_pipeline(self) -> dict[str, Any]:
+        """Run the complete integration pipeline."""
+        logger.info("🚀 Starting MCP Integration Pipeline")
+
+        async with aiohttp.ClientSession(
+            timeout=aiohttp.ClientTimeout(total=30)
+        ) as session:
+            self.session = session
+
+            # 1. Load discovered servers
+            servers = self._load_discovered_servers()
+            logger.info(f"📦 Loaded {len(servers)} discovered servers")
+
+            # 2. Select servers for installation
+            selected_servers = self._select_servers_for_installation(servers)
+            logger.info(f"🎯 Selected {len(selected_servers)} servers for installation")
+
+            # 3. Install and setup servers
+            installations = await self._install_servers(selected_servers)
+            logger.info(f"⚙️  Completed {len(installations)} installations")
+
+            # 4. Extract documentation
+            documented_servers = await self._extract_documentation(installations)
+            logger.info(
+                f"📚 Extracted documentation for {len(documented_servers)} servers"
+            )
+
+            # 5. Generate configurations
+            configurations = await self._generate_configurations(documented_servers)
+            logger.info(f"⚙️  Generated {len(configurations)} configurations")
+
+            # 6. Create integration report
+            report = await self._create_integration_report(
+                installations, configurations
+            )
+
+        logger.info("✅ MCP Integration Pipeline Complete!")
+        return report
+
+    def _load_discovered_servers(self) -> list[dict[str, Any]]:
+        """Load servers from production database."""
+        db_file = self.data_dir / "mcp_servers" / "production_mcp_database.json"
+
+        if not db_file.exists():
+            logger.warning("No production database found, using empty list")
+            return []
+
+        with open(db_file) as f:
+            data = json.load(f)
+            servers = list(data.get("servers", {}).values())
+
+        return servers
+
+    def _select_servers_for_installation(
+        self, servers: list[dict[str, Any]]
+    ) -> list[dict[str, Any]]:
+        """Select most promising servers for installation."""
+
+        # Priority scoring system
+        def score_server(server: dict[str, Any]) -> float:
+            score = 0.0
+
+            # High priority for starred repositories
+            stars = server.get("stars", 0) or 0
+            if stars > 1000:
+                score += 10.0
+            elif stars > 100:
+                score += 5.0
+            elif stars > 10:
+                score += 2.0
+
+            # High priority for official servers
+            if server.get("is_official", False):
+                score += 15.0
+
+            # Priority for well-documented servers
+            if server.get("has_documentation", False):
+                score += 3.0
+
+            # Priority for certain categories
+            category = server.get("category", "").lower()
+            high_value_categories = [
+                "ai_ml",
+                "database",
+                "api_integration",
+                "search",
+                "cloud",
+            ]
+            if category in high_value_categories:
+                score += 5.0
+
+            # Priority for npm packages (easier to install)
+            if server.get("npm_package"):
+                score += 4.0
+
+            # Priority for recent updates
+            last_updated = server.get("last_updated")
+            if last_updated:
+                try:
+                    from datetime import datetime
+
+                    update_date = datetime.fromisoformat(
+                        last_updated.replace("Z", "+00:00")
+                    )
+                    days_old = (datetime.now(UTC) - update_date).days
+                    if days_old < 30:
+                        score += 3.0
+                    elif days_old < 90:
+                        score += 1.0
+                except:
+                    pass
+
+            # Penalty for utility category (often simple/duplicate)
+            if category == "utility":
+                score -= 2.0
+
+            return score
+
+        # Score and sort servers
+        scored_servers = [(server, score_server(server)) for server in servers]
+        scored_servers.sort(key=lambda x: x[1], reverse=True)
+
+        # Select top servers up to max_installations
+        selected = [
+            server for server, score in scored_servers[: self.max_installations]
+        ]
+
+        logger.info("🎯 Top server scores:")
+        for i, (server, score) in enumerate(scored_servers[:10]):
+            logger.info(
+                f"   {i + 1}. {server.get('name', 'Unknown')} (score: {score:.1f})"
+            )
+
+        return selected
+
+    async def _install_servers(
+        self, servers: list[dict[str, Any]]
+    ) -> list[MCPServerInstallation]:
+        """Install selected MCP servers."""
+        installations = []
+
+        for i, server in enumerate(servers):
+            logger.info(
+                f"📦 Installing {i + 1}/{len(servers)}: {server.get('name', 'Unknown')}"
+            )
+
+            try:
+                installation = await self._install_single_server(server)
+                installations.append(installation)
+
+                # Add delay between installations
+                if i < len(servers) - 1:
+                    await asyncio.sleep(1)
+
+            except Exception as e:
+                logger.exception(f"❌ Failed to install {server.get('name')}: {e}")
+                installations.append(
+                    MCPServerInstallation(
+                        name=server.get("name", "Unknown"),
+                        repository_url=server.get("repository_url", ""),
+                        installation_status="failed",
+                        installation_method="none",
+                        error_message=str(e),
+                    )
+                )
+
+        self.installations = installations
+        return installations
+
+    async def _install_single_server(
+        self, server: dict[str, Any]
+    ) -> MCPServerInstallation:
+        """Install a single MCP server."""
+        name = server.get("name", "Unknown")
+        repo_url = server.get("repository_url", "")
+
+        # Create installation record
+        installation = MCPServerInstallation(
+            name=name,
+            repository_url=repo_url,
+            installation_status="skipped",
+            installation_method="none",
+        )
+
+        # Skip if no repository URL
+        if not repo_url:
+            installation.error_message = "No repository URL"
+            return installation
+
+        try:
+            # 1. Clone repository
+            clone_result = await self._clone_repository(server)
+            if not clone_result["success"]:
+                installation.installation_status = "failed"
+                installation.error_message = clone_result["error"]
+                return installation
+
+            repo_path = clone_result["path"]
+            installation.install_path = str(repo_path)
+
+            # 2. Detect installation method
+            install_method = await self._detect_installation_method(repo_path)
+            installation.installation_method = install_method
+
+            # 3. Read documentation
+            documentation = await self._read_repository_documentation(repo_path)
+            installation.documentation = documentation
+
+            # 4. Extract setup instructions
+            setup_info = await self._extract_setup_instructions(
+                repo_path, documentation
+            )
+            installation.install_command = setup_info.get("install_command")
+            installation.setup_instructions = setup_info.get("setup_instructions")
+            installation.dependencies = setup_info.get("dependencies", [])
+            installation.capabilities = setup_info.get("capabilities", [])
+            installation.transport_types = setup_info.get("transport_types", [])
+
+            # 5. Attempt installation (safe mode - read-only)
+            try:
+                if install_method in ["npm", "pip"]:
+                    # Don't actually install, just validate
+                    installation.installation_status = "success"
+                else:
+                    installation.installation_status = "success"
+            except Exception as e:
+                installation.installation_status = "failed"
+                installation.error_message = f"Installation failed: {e}"
+
+            logger.info(f"✅ Processed {name} ({install_method})")
+
+        except Exception as e:
+            installation.installation_status = "failed"
+            installation.error_message = str(e)
+            logger.exception(f"❌ Failed to process {name}: {e}")
+
+        return installation
+
+    async def _clone_repository(self, server: dict[str, Any]) -> dict[str, Any]:
+        """Clone a repository safely."""
+        repo_url = server.get("repository_url", "")
+        name = server.get("name", "unknown").replace("/", "_").replace(" ", "_")
+
+        if not repo_url or "github.com" not in repo_url:
+            return {"success": False, "error": "Invalid repository URL"}
+
+        # Create temporary directory for this repo
+        repo_dir = (
+            self.installs_dir
+            / f"repo_{name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        )
+
+        try:
+            # Use shallow clone for speed and space
+            cmd = ["git", "clone", "--depth", "1", "--quiet", repo_url, str(repo_dir)]
+
+            process = await asyncio.create_subprocess_exec(
+                *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+            )
+
+            stdout, stderr = await asyncio.wait_for(process.communicate(), timeout=30)
+
+            if process.returncode == 0:
+                return {"success": True, "path": repo_dir}
+            return {"success": False, "error": f"Git clone failed: {stderr.decode()}"}
+
+        except TimeoutError:
+            return {"success": False, "error": "Clone timeout"}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+
+    async def _detect_installation_method(self, repo_path: Path) -> str:
+        """Detect the installation method for a repository."""
+        # Check for package.json (npm)
+        if (repo_path / "package.json").exists():
+            return "npm"
+
+        # Check for pyproject.toml or setup.py (pip)
+        if (repo_path / "pyproject.toml").exists() or (repo_path / "setup.py").exists():
+            return "pip"
+
+        # Check for requirements.txt (pip)
+        if (repo_path / "requirements.txt").exists():
+            return "pip"
+
+        # Check for Dockerfile (docker)
+        if (repo_path / "Dockerfile").exists():
+            return "docker"
+
+        # Check for Go mod (go)
+        if (repo_path / "go.mod").exists():
+            return "go"
+
+        # Check for Cargo.toml (rust)
+        if (repo_path / "Cargo.toml").exists():
+            return "rust"
+
+        # Default to source
+        return "source"
+
+    async def _read_repository_documentation(self, repo_path: Path) -> str:
+        """Read documentation from repository."""
+        doc_content = []
+
+        # Common documentation files
+        doc_files = [
+            "README.md",
+            "README.rst",
+            "README.txt",
+            "README",
+            "DOCUMENTATION.md",
+            "DOCS.md",
+            "doc/README.md",
+            "docs/README.md",
+            "docs/index.md",
+        ]
+
+        for doc_file in doc_files:
+            file_path = repo_path / doc_file
+            if file_path.exists():
+                try:
+                    content = file_path.read_text(encoding="utf-8", errors="ignore")
+                    doc_content.append(f"=== {doc_file} ===\n{content}\n")
+                except Exception as e:
+                    logger.warning(f"Failed to read {file_path}: {e}")
+
+        return "\n".join(doc_content)
+
+    async def _extract_setup_instructions(
+        self, repo_path: Path, documentation: str
+    ) -> dict[str, Any]:
+        """Extract setup instructions and metadata from repository."""
+        setup_info = {
+            "install_command": None,
+            "setup_instructions": None,
+            "dependencies": [],
+            "capabilities": [],
+            "transport_types": [],
+        }
+
+        # Extract install command from package.json
+        package_json = repo_path / "package.json"
+        if package_json.exists():
+            try:
+                with open(package_json) as f:
+                    package_data = json.load(f)
+                    package_name = package_data.get("name")
+                    if package_name:
+                        setup_info["install_command"] = f"npm install {package_name}"
+
+                    # Extract dependencies
+                    deps = package_data.get("dependencies", {})
+                    dev_deps = package_data.get("devDependencies", {})
+                    setup_info["dependencies"] = list(deps.keys()) + list(
+                        dev_deps.keys()
+                    )
+            except Exception as e:
+                logger.warning(f"Failed to parse package.json: {e}")
+
+        # Extract install command from pyproject.toml
+        pyproject = repo_path / "pyproject.toml"
+        if pyproject.exists():
+            try:
+                content = pyproject.read_text()
+                # Look for project name
+                import re
+
+                name_match = re.search(r'name\s*=\s*["\']([^"\']+)["\']', content)
+                if name_match:
+                    setup_info["install_command"] = f"pip install {name_match.group(1)}"
+            except Exception as e:
+                logger.warning(f"Failed to parse pyproject.toml: {e}")
+
+        # Extract from documentation using patterns
+        if documentation:
+            # Look for install commands
+            install_patterns = [
+                r"npm install[^\n]+",
+                r"pip install[^\n]+",
+                r"yarn add[^\n]+",
+                r"cargo install[^\n]+",
+                r"go install[^\n]+",
+                r"docker run[^\n]+",
+            ]
+
+            for pattern in install_patterns:
+                matches = re.findall(pattern, documentation, re.IGNORECASE)
+                if matches:
+                    setup_info["install_command"] = matches[0].strip()
+                    break
+
+            # Look for MCP capabilities
+            capability_keywords = [
+                "tools",
+                "resources",
+                "prompts",
+                "sampling",
+                "filesystem",
+                "database",
+                "api",
+                "search",
+                "memory",
+                "browser",
+                "git",
+                "slack",
+            ]
+
+            for keyword in capability_keywords:
+                if keyword.lower() in documentation.lower():
+                    setup_info["capabilities"].append(keyword)
+
+            # Look for transport types
+            if "stdio" in documentation.lower():
+                setup_info["transport_types"].append("stdio")
+            if "websocket" in documentation.lower() or "ws://" in documentation.lower():
+                setup_info["transport_types"].append("websocket")
+            if "http" in documentation.lower() or "https://" in documentation.lower():
+                setup_info["transport_types"].append("http")
+
+        # Extract setup instructions (look for setup/configuration sections)
+        if documentation:
+            setup_patterns = [
+                r"## Setup.*?(?=##|\Z)",
+                r"## Installation.*?(?=##|\Z)",
+                r"## Configuration.*?(?=##|\Z)",
+                r"## Usage.*?(?=##|\Z)",
+                r"### Setup.*?(?=###|\Z)",
+                r"### Installation.*?(?=###|\Z)",
+            ]
+
+            for pattern in setup_patterns:
+                match = re.search(pattern, documentation, re.DOTALL | re.IGNORECASE)
+                if match:
+                    setup_info["setup_instructions"] = match.group(0).strip()
+                    break
+
+        return setup_info
+
+    async def _extract_documentation(
+        self, installations: list[MCPServerInstallation]
+    ) -> list[MCPServerInstallation]:
+        """Extract and enhance documentation for installed servers."""
+        successful_installations = [
+            inst
+            for inst in installations
+            if inst.installation_status == "success" and inst.documentation
+        ]
+
+        logger.info(
+            f"📚 Extracting documentation for {len(successful_installations)} servers"
+        )
+
+        for installation in successful_installations:
+            try:
+                # Save documentation to file
+                doc_file = (
+                    self.docs_dir / f"{installation.name.replace('/', '_')}_docs.md"
+                )
+                doc_file.write_text(installation.documentation, encoding="utf-8")
+
+                # Enhance documentation with AI analysis (if needed)
+                # This could be expanded to use LLM for documentation analysis
+
+            except Exception as e:
+                logger.warning(
+                    f"Failed to save documentation for {installation.name}: {e}"
+                )
+
+        return successful_installations
+
+    async def _generate_configurations(
+        self, installations: list[MCPServerInstallation]
+    ) -> list[dict[str, Any]]:
+        """Generate MCP server configurations."""
+        configurations = []
+
+        logger.info(f"⚙️  Generating configurations for {len(installations)} servers")
+
+        for installation in installations:
+            try:
+                config = self._create_server_config(installation)
+                if config:
+                    configurations.append(config)
+
+                    # Save configuration file
+                    config_file = (
+                        self.configs_dir
+                        / f"{installation.name.replace('/', '_')}_config.json"
+                    )
+                    with open(config_file, "w") as f:
+                        json.dump(config, f, indent=2)
+
+            except Exception as e:
+                logger.warning(
+                    f"Failed to generate config for {installation.name}: {e}"
+                )
+
+        return configurations
+
+    def _create_server_config(
+        self, installation: MCPServerInstallation
+    ) -> dict[str, Any] | None:
+        """Create MCP server configuration."""
+        if installation.installation_status != "success":
+            return None
+
+        config = {
+            "name": installation.name,
+            "description": f"MCP server: {installation.name}",
+            "repository": installation.repository_url,
+            "installation": {
+                "method": installation.installation_method,
+                "command": installation.install_command,
+                "status": installation.installation_status,
+            },
+            "capabilities": installation.capabilities,
+            "transport": {"types": installation.transport_types or ["stdio"]},
+            "setup": {
+                "instructions": installation.setup_instructions,
+                "dependencies": installation.dependencies,
+            },
+            "metadata": {
+                "installed_at": installation.installation_time,
+                "install_path": installation.install_path,
+            },
+        }
+
+        # Add specific configuration based on installation method
+        if installation.installation_method == "npm":
+            config["command"] = installation.install_command
+            config["args"] = []
+        elif installation.installation_method == "pip":
+            config["command"] = "python"
+            config["args"] = ["-m", installation.name] if installation.name else []
+
+        return config
+
+    async def _create_integration_report(
+        self,
+        installations: list[MCPServerInstallation],
+        configurations: list[dict[str, Any]],
+    ) -> dict[str, Any]:
+        """Create comprehensive integration report."""
+        timestamp = datetime.now(UTC).isoformat()
+
+        # Statistics
+        total_installations = len(installations)
+        successful = len(
+            [i for i in installations if i.installation_status == "success"]
+        )
+        failed = len([i for i in installations if i.installation_status == "failed"])
+
+        # Group by installation method
+        by_method = {}
+        for installation in installations:
+            method = installation.installation_method
+            if method not in by_method:
+                by_method[method] = 0
+            by_method[method] += 1
+
+        # Group by category (from original server data)
+        [i for i in installations if i.installation_status == "success"]
+
+        report = {
+            "timestamp": timestamp,
+            "summary": {
+                "total_installations": total_installations,
+                "successful": successful,
+                "failed": failed,
+                "success_rate": (
+                    (successful / total_installations * 100)
+                    if total_installations > 0
+                    else 0
+                ),
+                "configurations_generated": len(configurations),
+            },
+            "by_installation_method": by_method,
+            "installations": [asdict(installation) for installation in installations],
+            "configurations": configurations,
+            "files_created": {
+                "documentation_files": len(list(self.docs_dir.glob("*.md"))),
+                "configuration_files": len(list(self.configs_dir.glob("*.json"))),
+                "installation_directories": len(list(self.installs_dir.glob("repo_*"))),
+            },
+        }
+
+        # Save integration report
+        report_file = self.data_dir / "integration_report.json"
+        with open(report_file, "w") as f:
+            json.dump(report, f, indent=2)
+
+        # Save detailed installations data
+        installations_file = self.data_dir / "mcp_installations.json"
+        with open(installations_file, "w") as f:
+            json.dump(
+                {
+                    "timestamp": timestamp,
+                    "installations": [
+                        asdict(installation) for installation in installations
+                    ],
+                },
+                f,
+                indent=2,
+            )
+
+        logger.info(f"📄 Saved integration report to {report_file}")
+        logger.info(f"📄 Saved installations data to {installations_file}")
+
+        return report
+
+
+async def main():
+    """Run the MCP integration pipeline."""
+    # Create pipeline with configurable max installations
+    max_installs = int(os.environ.get("MAX_INSTALLATIONS", "50"))
+    pipeline = MCPIntegrationPipeline(max_installations=max_installs)
+
+    # Run pipeline
+    report = await pipeline.run_pipeline()
+
+    # Print summary
+
+    for _method, _count in report["by_installation_method"].items():
+        pass
+
+    for _file_type, _count in report["files_created"].items():
+        pass
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

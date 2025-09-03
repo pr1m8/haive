@@ -10,18 +10,22 @@ Classes:
 """Answer generator models for SimpleRAG."""
 
 
-from pydantic import BaseModel, Field
+from __future__ import annotations
+from pydantic import BaseModel
 
 
 class RAGAnswer(BaseModel):
     """Structured output model for RAG answer generation."""
 
     answer: str = Field(
-        ..., min_length=1, description="Generated answer based on retrieved context"
+        ...,
+        min_length=1,
+        description="Generated answer based on retrieved context",
     )
 
     sources: list[str] = Field(
-        default_factory=list, description="List of source references used in the answer"
+        default_factory=list,
+        description="List of source references used in the answer",
     )
 
     confidence: float = Field(

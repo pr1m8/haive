@@ -1,13 +1,16 @@
 # Quick Reference - Most Used Patterns and Fixes
 
-## ValidationNodeV2 Pattern (2025-01-29)
+## BaseModel Tool Routing (2025-01-29)
 
 ```python
-# Key pattern: Conditional routing based on tool type
-if route == "pydantic_model":
-    tool_msg = self._create_tool_message_for_pydantic(...)
-elif route in ["langchain_tool", "function", "tool_node"]:
-    # No ToolMessage, let tool_node handle it
+# Three distinct routes for BaseModel:
+if route == "parse_output":
+    # Structured output model for LLM response parsing
+elif route == "pydantic_model":
+    # BaseModel without __call__ - error (cannot execute)
+elif route == "pydantic_tool":
+    # BaseModel with __call__ - executable tool
+    # Still needs conversion to StructuredTool by ToolEngine
 ```
 
 ## Pydantic Forward Reference Fix (2025-01-29)

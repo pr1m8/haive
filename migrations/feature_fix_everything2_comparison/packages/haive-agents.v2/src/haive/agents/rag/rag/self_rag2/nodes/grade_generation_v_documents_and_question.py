@@ -6,11 +6,15 @@ Functions:
     grade_generation_v_documents_and_question: Grade Generation V Documents And Question functionality.
 """
 
+from __future__ import annotations
+
 from typing import Any
 
 
 def grade_generation_v_documents_and_question(state: dict[str, Any]):
-    """Determines whether the generation is grounded in the document and answers question.
+    """Determines whether the generation is grounded in the document and.
+
+    answers question.
 
     Args:
         state (dict): The current graph state
@@ -23,7 +27,7 @@ def grade_generation_v_documents_and_question(state: dict[str, Any]):
     generation = state["generation"]
 
     score = hallucination_grader.invoke(
-        {"documents": documents, "generation": generation}
+        {"documents": documents, "generation": generation},
     )
     grade = score.binary_score
 

@@ -1,17 +1,14 @@
 """FLARE (Forward-Looking Active REtrieval) RAG Agents.
 
-from typing import Any
-Implementation of FLARE RAG with forward-looking retrieval and iterative generation.
-Uses structured output models for planning and managing active retrieval decisions.
+from typing import Any Implementation of FLARE RAG with forward-looking
+retrieval and iterative generation. Uses structured output models for
+planning and managing active retrieval decisions.
 """
 
-import logging
 from enum import Enum
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
@@ -21,6 +18,9 @@ from haive.agents.base.agent import Agent
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 logger = logging.getLogger(__name__)
 
@@ -50,37 +50,43 @@ class FLAREPlan(BaseModel):
 
     # Forward-looking analysis
     next_sentences_needed: int = Field(
-        ge=1, le=5, description="Number of sentences to generate next"
+        ge=1,
+        le=5,
+        description="Number of sentences to generate next",
     )
     confidence_in_current: ConfidenceLevel = Field(
-        description="Confidence in current generation"
+        description="Confidence in current generation",
     )
     uncertainty_tokens: list[str] = Field(description="Tokens indicating uncertainty")
 
     # Retrieval planning
     retrieval_decision: RetrievalDecision = Field(
-        description="Whether to retrieve more information"
+        description="Whether to retrieve more information",
     )
     retrieval_queries: list[str] = Field(description="Specific queries for retrieval")
     retrieval_justification: str = Field(description="Why retrieval is needed")
 
     # Generation planning
     next_generation_focus: str = Field(
-        description="What to focus on in next generation"
+        description="What to focus on in next generation",
     )
     expected_length: int = Field(description="Expected length of next generation")
     completion_criteria: str = Field(description="When to consider generation complete")
 
     # Quality control
     hallucination_risk: float = Field(
-        ge=0.0, le=1.0, description="Risk of hallucination"
+        ge=0.0,
+        le=1.0,
+        description="Risk of hallucination",
     )
     evidence_sufficiency: float = Field(
-        ge=0.0, le=1.0, description="Sufficiency of current evidence"
+        ge=0.0,
+        le=1.0,
+        description="Sufficiency of current evidence",
     )
 
     planning_metadata: dict[str, Any] = Field(
-        description="Additional planning metadata"
+        description="Additional planning metadata",
     )
 
 
@@ -94,30 +100,40 @@ class FLAREResult(BaseModel):
     total_iterations: int = Field(description="Total FLARE iterations")
     retrieval_rounds: int = Field(description="Number of retrieval rounds")
     generation_confidence: float = Field(
-        ge=0.0, le=1.0, description="Overall generation confidence"
+        ge=0.0,
+        le=1.0,
+        description="Overall generation confidence",
     )
 
     # Retrieval analytics
     retrieval_queries_used: list[str] = Field(description="All retrieval queries used")
     documents_retrieved: int = Field(description="Total documents retrieved")
     retrieval_efficiency: float = Field(
-        ge=0.0, le=1.0, description="Retrieval efficiency score"
+        ge=0.0,
+        le=1.0,
+        description="Retrieval efficiency score",
     )
 
     # Quality metrics
     evidence_coverage: float = Field(
-        ge=0.0, le=1.0, description="Evidence coverage of response"
+        ge=0.0,
+        le=1.0,
+        description="Evidence coverage of response",
     )
     uncertainty_reduction: float = Field(
-        ge=0.0, le=1.0, description="How much uncertainty was reduced"
+        ge=0.0,
+        le=1.0,
+        description="How much uncertainty was reduced",
     )
     factual_grounding: float = Field(
-        ge=0.0, le=1.0, description="Factual grounding score"
+        ge=0.0,
+        le=1.0,
+        description="Factual grounding score",
     )
 
     # Iteration details
     iteration_history: list[dict[str, Any]] = Field(
-        description="History of each iteration"
+        description="History of each iteration",
     )
     retrieval_decisions: list[str] = Field(description="Retrieval decisions made")
 
@@ -176,9 +192,8 @@ Analyze the current state and create a forward-looking plan:
 
 Focus on proactive information gathering and uncertainty reduction.""",
         ),
-    ]
+    ],
 )
-
 
 FLARE_GENERATION_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -230,7 +245,7 @@ Continue the response following the FLARE plan:
 
 Focus on natural, evidence-based progression toward complete answer.""",
         ),
-    ]
+    ],
 )
 
 
@@ -255,9 +270,9 @@ def create_flare_planner_callable(llm_config: LLMConfig):
             context_str = (
                 "\n".join(
                     [
-                        f"Evidence {i+1}: {doc.page_content[:200]}..."
+                        f"Evidence {i + 1}: {doc.page_content[:200]}..."
                         for i, doc in enumerate(current_context[:3])
-                    ]
+                    ],
                 )
                 if current_context
                 else "No context available"
@@ -276,11 +291,13 @@ def create_flare_planner_callable(llm_config: LLMConfig):
                 "generation_so_far": generation_so_far,
                 "current_context": context_str,
                 "iteration_number": iteration_number,
-            }
+            },
         )
 
         logger.info(
-            f"FLARE iteration {iteration_number}: {flare_plan.retrieval_decision} - {flare_plan.retrieval_justification}"
+            f"FLARE iteration {iteration_number}: {flare_plan.retrieval_decision} - {
+                flare_plan.retrieval_justification
+            }",
         )
 
         return {
@@ -291,17 +308,16 @@ def create_flare_planner_callable(llm_config: LLMConfig):
             "expected_length": flare_plan.expected_length,
             "confidence_level": flare_plan.confidence_in_current,
             "hallucination_risk": flare_plan.hallucination_risk,
-            "should_retrieve": flare_plan.retrieval_decision
-            == RetrievalDecision.RETRIEVE,
-            "should_complete": flare_plan.retrieval_decision
-            == RetrievalDecision.COMPLETE,
+            "should_retrieve": flare_plan.retrieval_decision == RetrievalDecision.RETRIEVE,
+            "should_complete": flare_plan.retrieval_decision == RetrievalDecision.COMPLETE,
         }
 
     return plan_flare_iteration
 
 
 def create_active_retrieval_callable(
-    documents: list[Document], embedding_model: str | None = None
+    documents: list[Document],
+    embedding_model: str | None = None,
 ):
     """Create callable function for active retrieval."""
 
@@ -345,7 +361,7 @@ def create_active_retrieval_callable(
 
             except Exception as e:
                 logger.warning(
-                    f"Active retrieval failed for query '{retrieval_query}': {e}"
+                    f"Active retrieval failed for query '{retrieval_query}': {e}",
                 )
 
         logger.info(f"Active retrieval completed: {len(all_new_docs)} new documents")
@@ -361,7 +377,8 @@ def create_active_retrieval_callable(
 
 
 class FLAREPlannerAgent(Agent):
-    """Agent that creates FLARE plans for iterative generation and active retrieval."""
+    """Agent that creates FLARE plans for iterative generation and active
+    retrieval."""
 
     name: str = "FLARE Planner"
     llm_config: LLMConfig = Field(description="LLM configuration for planning")
@@ -394,7 +411,8 @@ class ActiveRetrievalAgent(Agent):
 
         # Create callable function using the Pydantic fields
         active_retriever = create_active_retrieval_callable(
-            documents=self.documents, embedding_model=self.embedding_model
+            documents=self.documents,
+            embedding_model=self.embedding_model,
         )
 
         # Add callable node to graph
@@ -449,7 +467,8 @@ class FLARERAGAgent(SequentialAgent):
         # Step 3: Iterative generation
         iterative_generator = SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=llm_config, prompt_template=FLARE_GENERATION_PROMPT
+                llm_config=llm_config,
+                prompt_template=FLARE_GENERATION_PROMPT,
             ),
             name="FLARE Generator",
         )
@@ -468,7 +487,7 @@ class FLARERAGAgent(SequentialAgent):
                             "human",
                             "Synthesize final response from FLARE iterations: {flare_history}",
                         ),
-                    ]
+                    ],
                 ),
                 structured_output_model=FLAREResult,
                 output_key="flare_result",
@@ -519,7 +538,9 @@ def create_flare_rag_agent(
         kwargs.setdefault("confidence_threshold", 0.7)
 
     return FLARERAGAgent.from_documents(
-        documents=documents, llm_config=llm_config, **kwargs
+        documents=documents,
+        llm_config=llm_config,
+        **kwargs,
     )
 
 

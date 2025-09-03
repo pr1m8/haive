@@ -6,15 +6,14 @@ SequentialAgent = Agent[AugLLMConfig] + sequential execution of agents.
 import logging
 from typing import Any
 
-from haive.core.engine.aug_llm.config import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END, START
 from pydantic import Field, field_validator
 
 # Import base enhanced agent when available
-# from haive.agents.base.enhanced_agent import Agent
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase as Agent
+from haive.core.engine.aug_llm.config import AugLLMConfig
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 logger = logging.getLogger(__name__)
 
@@ -63,27 +62,36 @@ class SequentialAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
 
     # Sequential specific fields
     agents: list[Agent] = Field(
-        default_factory=list, description="Ordered list of agents to execute"
+        default_factory=list,
+        description="Ordered list of agents to execute",
     )
 
     process_between_steps: bool = Field(
-        default=False, description="Whether coordinator processes between steps"
+        default=False,
+        description="Whether coordinator processes between steps",
     )
 
     continue_on_error: bool = Field(
-        default=False, description="Continue pipeline if an agent fails"
+        default=False,
+        description="Continue pipeline if an agent fails",
     )
 
     return_all_outputs: bool = Field(
-        default=False, description="Return all intermediate outputs"
+        default=False,
+        description="Return all intermediate outputs",
     )
 
     max_retries_per_step: int = Field(
-        default=1, ge=1, le=3, description="Max retries for each step"
+        default=1,
+        ge=1,
+        le=3,
+        description="Max retries for each step",
     )
 
     step_timeout: float | None = Field(
-        default=None, gt=0, description="Timeout for each step in seconds"
+        default=None,
+        gt=0,
+        description="Timeout for each step in seconds",
     )
 
     # Convenience fields
@@ -140,7 +148,7 @@ class SequentialAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
         steps = []
         for i, agent in enumerate(self.agents):
             agent_name = getattr(agent, "name", type(agent).__name__)
-            steps.append(f"{i+1}. {agent_name}")
+            steps.append(f"{i + 1}. {agent_name}")
 
         return " → ".join(steps)
 
@@ -153,9 +161,7 @@ class SequentialAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
                 if self.process_between_steps:
                     self.engine.system_message = self._get_coordinator_prompt()
                 else:
-                    self.engine.system_message = (
-                        "You coordinate a sequential pipeline of agents."
-                    )
+                    self.engine.system_message = "You coordinate a sequential pipeline of agents."
 
     def _get_coordinator_prompt(self) -> str:
         """Get coordinator prompt for processing between steps."""
@@ -228,7 +234,7 @@ Always preserve key information while improving clarity and structure."""
             try:
                 # Execute agent
                 logger.debug(
-                    f"Executing step {i+1}: {getattr(agent, 'name', f'agent_{i}')}"
+                    f"Executing step {i + 1}: {getattr(agent, 'name', f'agent_{i}')}",
                 )
 
                 if hasattr(agent, "arun"):
@@ -246,16 +252,18 @@ Always preserve key information while improving clarity and structure."""
                             {
                                 "previous_output": output,
                                 "next_agent": getattr(
-                                    self.agents[i + 1], "name", f"agent_{i+1}"
+                                    self.agents[i + 1],
+                                    "name",
+                                    f"agent_{i + 1}",
                                 ),
                                 "instruction": "Process this output for the next agent",
-                            }
+                            },
                         )
 
                 current_input = output
 
             except Exception as e:
-                logger.error(f"Error in step {i+1}: {e}")
+                logger.exception(f"Error in step {i + 1}: {e}")
                 if not self.continue_on_error:
                     raise
                 outputs.append({"error": str(e)})
@@ -267,11 +275,9 @@ Always preserve key information while improving clarity and structure."""
         """String representation with pipeline info."""
         engine_type = type(self.engine).__name__ if self.engine else "None"
         pipeline = " → ".join(
-            [getattr(agent, "name", type(agent).__name__) for agent in self.agents]
+            [getattr(agent, "name", type(agent).__name__) for agent in self.agents],
         )
-        return (
-            f"SequentialAgent[{engine_type}](name='{self.name}', pipeline=[{pipeline}])"
-        )
+        return f"SequentialAgent[{engine_type}](name='{self.name}', pipeline=[{pipeline}])"
 
 
 # Example usage
@@ -298,20 +304,10 @@ if __name__ == "__main__":
         return_all_outputs=True,
     )
 
-    print(f"Created: {pipeline}")
-    print(f"Pipeline: {pipeline.get_pipeline_description()}")
-
     # Add another step
     pipeline.add_agent(MockAgent("formatter", "FORMAT"))
-    print(f"Updated pipeline: {pipeline.get_pipeline_description()}")
 
     # Example execution flow
-    print("\nExample execution:")
-    print("Input: 'Raw text data'")
-    print("Step 1: cleaner: CLEAN(Raw text data)")
-    print("Step 2: analyzer: ANALYZE(cleaner: CLEAN(Raw text data))")
-    print("Step 3: summarizer: SUMMARIZE(analyzer: ANALYZE(...))")
-    print("Step 4: formatter: FORMAT(summarizer: SUMMARIZE(...))")
 
     # With intermediate processing
     pipeline_enhanced = SequentialAgent(
@@ -320,6 +316,3 @@ if __name__ == "__main__":
         process_between_steps=True,
         system_message="Enhance outputs between steps",
     )
-
-    print(f"\nEnhanced pipeline: {pipeline_enhanced}")
-    print("Coordinator processes and enhances data between each step")

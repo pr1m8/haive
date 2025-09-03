@@ -1,17 +1,19 @@
-"""Validation node that returns Send objects for routing based on validation results."""
+"""Validation node that returns Send objects for routing based on validation
+results."""
+
+from __future__ import annotations
 
 import logging
 from typing import Any
 
+from haive.core.schema.prebuilt.tools.validation_state import RouteRecommendation
+from haive.core.schema.prebuilt.tools.validation_state import ValidationStateManager
+from haive.core.schema.prebuilt.tools.validation_state import ValidationStatus
 from langchain_core.messages import AIMessage
-from langgraph.types import END, Send
-from pydantic import BaseModel, Field
-
-from haive.core.schema.prebuilt.tools.validation_state import (
-    RouteRecommendation,
-    ValidationStateManager,
-    ValidationStatus,
-)
+from langgraph.types import END
+from langgraph.types import Send
+from pydantic import BaseModel
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +31,8 @@ class RoutingValidationNode(BaseModel):
     # Node configuration
     name: str = Field(default="routing_validation", description="Node name")
     engine_name: str | None = Field(
-        default=None, description="Name of engine to get tools/schemas from"
+        default=None,
+        description="Name of engine to get tools/schemas from",
     )
 
     # Route mappings from tool routes to node names
@@ -46,19 +49,24 @@ class RoutingValidationNode(BaseModel):
 
     # Validation options
     allow_partial_success: bool = Field(
-        default=True, description="Whether to continue with valid tools if some fail"
+        default=True,
+        description="Whether to continue with valid tools if some fail",
     )
 
     return_to_agent_on_all_failures: bool = Field(
-        default=True, description="Whether to route to agent if all validations fail"
+        default=True,
+        description="Whether to route to agent if all validations fail",
     )
 
     agent_node_name: str = Field(
-        default="agent", description="Name of agent node for error handling"
+        default="agent",
+        description="Name of agent node for error handling",
     )
 
     def __call__(
-        self, state: Any, config: dict[str, Any] | None = None
+        self,
+        state: Any,
+        config: dict[str, Any] | None = None,
     ) -> list[Send] | str:
         """Validate tool calls and return Send objects for routing.
 
@@ -167,7 +175,8 @@ class RoutingValidationNode(BaseModel):
         return []
 
     def _get_tools_and_routes(
-        self, state: Any
+        self,
+        state: Any,
     ) -> tuple[dict[str, Any], dict[str, str]]:
         """Get available tools and their routes from state/engine."""
         available_tools = {}
@@ -219,7 +228,9 @@ class RoutingValidationNode(BaseModel):
         return self.route_to_node_mapping.get(route, "langchain_tools")
 
     def _create_routing_decision(
-        self, validation_state: Any, original_tool_calls: list[dict[str, Any]]
+        self,
+        validation_state: Any,
+        original_tool_calls: list[dict[str, Any]],
     ) -> list[Send] | str:
         """Create routing decision based on validation results."""
         # Get valid tool calls

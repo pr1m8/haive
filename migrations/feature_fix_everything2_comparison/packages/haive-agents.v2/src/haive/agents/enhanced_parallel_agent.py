@@ -7,15 +7,14 @@ import asyncio
 import logging
 from typing import Any, Literal
 
-from haive.core.engine.aug_llm.config import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END, START
 from pydantic import Field, field_validator
 
 # Import base enhanced agent when available
-# from haive.agents.base.enhanced_agent import Agent
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase as Agent
+from haive.core.engine.aug_llm.config import AugLLMConfig
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 logger = logging.getLogger(__name__)
 
@@ -65,31 +64,40 @@ class ParallelAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
 
     # Parallel specific fields
     agents: list[Agent] = Field(
-        default_factory=list, description="List of agents to execute in parallel"
+        default_factory=list,
+        description="List of agents to execute in parallel",
     )
 
     aggregation_strategy: Literal["all", "first", "best", "majority", "merge"] = Field(
-        default="all", description="Strategy for aggregating results"
+        default="all",
+        description="Strategy for aggregating results",
     )
 
     timeout_per_agent: float | None = Field(
-        default=30.0, gt=0, description="Timeout for each agent in seconds"
+        default=30.0,
+        gt=0,
+        description="Timeout for each agent in seconds",
     )
 
     continue_on_timeout: bool = Field(
-        default=True, description="Continue if some agents timeout"
+        default=True,
+        description="Continue if some agents timeout",
     )
 
     min_agents_for_consensus: int = Field(
-        default=2, ge=1, description="Minimum agents needed for consensus strategies"
+        default=2,
+        ge=1,
+        description="Minimum agents needed for consensus strategies",
     )
 
     quality_scorer: Any | None = Field(
-        default=None, description="Function to score result quality for 'best' strategy"
+        default=None,
+        description="Function to score result quality for 'best' strategy",
     )
 
     merge_with_llm: bool = Field(
-        default=True, description="Use LLM to merge results in 'merge' strategy"
+        default=True,
+        description="Use LLM to merge results in 'merge' strategy",
     )
 
     # Convenience fields
@@ -141,19 +149,15 @@ class ParallelAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
                 if self.aggregation_strategy == "merge":
                     self.engine.system_message = self._get_merge_prompt()
                 else:
-                    self.engine.system_message = (
-                        "You coordinate parallel agent execution."
-                    )
+                    self.engine.system_message = "You coordinate parallel agent execution."
 
     def _get_merge_prompt(self) -> str:
         """Get prompt for merging results."""
-        agent_names = [
-            getattr(agent, "name", f"Agent{i}") for i, agent in enumerate(self.agents)
-        ]
+        agent_names = [getattr(agent, "name", f"Agent{i}") for i, agent in enumerate(self.agents)]
 
         return f"""You are aggregating results from multiple parallel agents:
 
-Agents: {', '.join(agent_names)}
+Agents: {", ".join(agent_names)}
 
 Your task:
 1. Receive all agent outputs
@@ -254,7 +258,9 @@ Create a unified response that leverages all agent contributions."""
         return await self._aggregate_results(results, input_data)
 
     async def _aggregate_results(
-        self, results: list[tuple[int, Any]], original_input: Any
+        self,
+        results: list[tuple[int, Any]],
+        original_input: Any,
     ) -> list[Any] | Any:
         """Aggregate results based on strategy.
 
@@ -282,9 +288,7 @@ Create a unified response that leverages all agent contributions."""
         if self.aggregation_strategy == "best":
             # Score and return best result
             if self.quality_scorer:
-                scored = [
-                    (i, result, self.quality_scorer(result)) for i, result in results
-                ]
+                scored = [(i, result, self.quality_scorer(result)) for i, result in results]
                 best = max(scored, key=lambda x: x[2])
                 return best[1]
             # Default to longest response
@@ -295,7 +299,7 @@ Create a unified response that leverages all agent contributions."""
             # Find consensus (simplified - real impl would be smarter)
             if len(results) < self.min_agents_for_consensus:
                 raise ValueError(
-                    f"Need at least {self.min_agents_for_consensus} agents for consensus"
+                    f"Need at least {self.min_agents_for_consensus} agents for consensus",
                 )
 
             # Group similar results (simplified)
@@ -329,7 +333,7 @@ Create a unified response that leverages all agent contributions."""
                 [
                     f"{getattr(self.agents[i], 'name', f'Agent {i}')}: {result}"
                     for i, result in results
-                ]
+                ],
             )
 
         return results
@@ -360,7 +364,9 @@ if __name__ == "__main__":
             import random
 
             await asyncio.sleep(random.uniform(0.1, 0.5))
-            return f"{self.name} ({self.specialty}): Analysis of '{input_data}' from {self.specialty} perspective"
+            return f"{self.name} ({self.specialty}): Analysis of '{input_data}' from {
+                self.specialty
+            } perspective"
 
     # Create parallel agent ensemble
     ensemble = ParallelAgent(
@@ -375,10 +381,6 @@ if __name__ == "__main__":
         timeout_per_agent=2.0,
     )
 
-    print(f"Created: {ensemble}")
-    print(f"Experts: {[agent.name for agent in ensemble.agents]}")
-    print(f"Strategy: {ensemble.aggregation_strategy}")
-
     # Different aggregation strategies
     strategies = {
         "all": "Returns all expert opinions",
@@ -388,16 +390,7 @@ if __name__ == "__main__":
         "merge": "LLM merges all responses",
     }
 
-    print("\nAggregation strategies:")
-    for strategy, description in strategies.items():
-        print(f"  {strategy}: {description}")
+    for _strategy, _description in strategies.items():
+        pass
 
     # Example execution
-    print("\nExample parallel execution:")
-    print("Input: 'Should we expand to European markets?'")
-    print("\nAll experts analyze simultaneously...")
-    print("- Alice (Finance): Financial feasibility analysis")
-    print("- Bob (Technology): Technical infrastructure needs")
-    print("- Carol (Marketing): Market opportunity assessment")
-    print("- Dave (Operations): Operational requirements")
-    print("\nResults aggregated based on strategy")

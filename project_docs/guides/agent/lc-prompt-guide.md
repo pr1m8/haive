@@ -1,6 +1,6 @@
 # The Complete Markdown Guide to Advanced Prompt Templates in LangChain
 
-> **Purpose**  
+> **Purpose**
 > This living document distills best-practice patterns for building, scaling, and maintaining sophisticated prompt templates in LangChain. It focuses on **string-level** and **chat-level** templates, highlights _partial_ and _optional_ variables, and shows how to bind or inject values from agent or graph state.
 
 ---

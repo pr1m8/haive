@@ -1,27 +1,31 @@
 """Static supervisor inheriting from ReactAgent with tool node modifications.
 
-This supervisor uses ReactAgent's looping behavior but modifies the tool node to execute
-agent handoffs stored in state.
+This supervisor uses ReactAgent's looping behavior but modifies the tool
+node to execute agent handoffs stored in state.
 """
+
+from __future__ import annotations
 
 import logging
 import pickle
 from typing import Any
 
+from haive.agents.base.agent import Agent
+from haive.agents.experiments.dynamic_supervisor import create_dynamic_handoff_tool
+from haive.agents.experiments.dynamic_supervisor import create_forward_message_tool
+from haive.agents.react.agent import ReactAgent
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.state_schema import StateSchema
-from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
-from langchain_core.tools import BaseTool, tool
-from pydantic import BaseModel, Field, model_validator
-
-from haive.agents.base.agent import Agent
+from langchain_core.messages import AIMessage
+from langchain_core.messages import HumanMessage
+from langchain_core.messages import ToolMessage
+from langchain_core.tools import BaseTool
+from langchain_core.tools import tool
+from pydantic import BaseModel
+from pydantic import Field
+from pydantic import model_validator
 
 # Import our own tool creators instead of external langgraph_supervisor
-from haive.agents.experiments.dynamic_supervisor import (
-    create_dynamic_handoff_tool,
-    create_forward_message_tool,
-)
-from haive.agents.react.agent import ReactAgent
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +39,7 @@ class AgentEntry(BaseModel):
     agent_class: str  # Class name for reconstruction
 
     @classmethod
-    def from_agent(cls, name: str, description: str, agent: Agent) -> "AgentEntry":
+    def from_agent(cls, name: str, description: str, agent: Agent) -> AgentEntry:
         """Create an AgentEntry from an agent instance."""
         return cls(
             name=name,
@@ -63,24 +67,26 @@ class SupervisorReactState(StateSchema):
 
     # Tool mappings synchronized with agents
     handoff_tools: dict[str, BaseTool] = Field(
-        default_factory=dict, description="Handoff tools mapped to agent names"
+        default_factory=dict,
+        description="Handoff tools mapped to agent names",
     )
 
     # Current execution context
     current_agent: str | None = Field(None, description="Currently active agent")
     last_handoff_result: Any | None = Field(
-        None, description="Result from last handoff"
+        None,
+        description="Result from last handoff",
     )
 
     @model_validator(mode="after")
-    def sync_tools_with_agents(self) -> "SupervisorReactState":
+    def sync_tools_with_agents(self) -> SupervisorReactState:
         """Ensure handoff tools are synchronized with registered agents.
 
-        This validator runs after field assignment to ensure tools always match the
-        registered agents.
+        This validator runs after field assignment to ensure tools
+        always match the registered agents.
         """
         # Create handoff tools for any agents missing them
-        for agent_name, agent_entry in self.registered_agents.items():
+        for agent_name, _agent_entry in self.registered_agents.items():
             if agent_name not in self.handoff_tools:
                 # Create handoff tool for this agent
                 # Note: We need a supervisor instance to create the tool
@@ -105,8 +111,9 @@ class SupervisorReactState(StateSchema):
 class StaticSupervisor(ReactAgent[SupervisorReactState]):
     """Supervisor that inherits ReactAgent behavior with modified tool node.
 
-    This supervisor uses ReactAgent's looping behavior but overrides the tool node to
-    execute agent handoffs from state instead of regular tools.
+    This supervisor uses ReactAgent's looping behavior but overrides the
+    tool node to execute agent handoffs from state instead of regular
+    tools.
     """
 
     def __init__(self, **kwargs) -> None:
@@ -127,9 +134,7 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
             return
 
         # Get current state
-        state = (
-            self.get_state() if hasattr(self, "get_state") else SupervisorReactState()
-        )
+        state = self.get_state() if hasattr(self, "get_state") else SupervisorReactState()
 
         # Build tool list
         tools = []
@@ -145,7 +150,8 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
         if hasattr(self.main_engine, "tools"):
             self.main_engine.tools = tools
         elif hasattr(self.main_engine, "config") and hasattr(
-            self.main_engine.config, "tools"
+            self.main_engine.config,
+            "tools",
         ):
             self.main_engine.config.tools = tools
 
@@ -155,11 +161,7 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
         @tool
         def list_agents() -> str:
             """List all available agents and their capabilities."""
-            state = (
-                self.get_state()
-                if hasattr(self, "get_state")
-                else SupervisorReactState()
-            )
+            state = self.get_state() if hasattr(self, "get_state") else SupervisorReactState()
             agents = state.registered_agents
 
             if not agents:
@@ -181,9 +183,7 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
         entry = AgentEntry.from_agent(name, description, agent)
 
         # Update state - this triggers the validator
-        current_state = (
-            self.get_state() if hasattr(self, "get_state") else SupervisorReactState()
-        )
+        current_state = self.get_state() if hasattr(self, "get_state") else SupervisorReactState()
         current_state.registered_agents[name] = entry
 
         if hasattr(self, "update_state"):
@@ -216,8 +216,8 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
     def _execute_tool_or_agent(self, state: SupervisorReactState) -> dict[str, Any]:
         """Execute tools or agent handoffs based on the tool call.
 
-        This replaces the standard tool node behavior to handle agent handoffs from
-        state instead of just executing tools.
+        This replaces the standard tool node behavior to handle agent
+        handoffs from state instead of just executing tools.
         """
         messages = state.messages
         if not messages:
@@ -238,19 +238,22 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
                 # Execute agent handoff
                 result = self._execute_agent_handoff(state, tool_name, tool_call)
                 tool_messages.append(
-                    ToolMessage(content=result, tool_call_id=tool_id, name=tool_name)
+                    ToolMessage(content=result, tool_call_id=tool_id, name=tool_name),
                 )
             else:
                 # Execute regular tool (list_agents, forward_message, etc)
                 result = self._execute_regular_tool(state, tool_name, tool_call)
                 tool_messages.append(
-                    ToolMessage(content=result, tool_call_id=tool_id, name=tool_name)
+                    ToolMessage(content=result, tool_call_id=tool_id, name=tool_name),
                 )
 
         return {"messages": tool_messages}
 
     def _execute_agent_handoff(
-        self, state: SupervisorReactState, agent_name: str, tool_call: dict
+        self,
+        state: SupervisorReactState,
+        agent_name: str,
+        tool_call: dict,
     ) -> str:
         """Execute handoff to a specific agent from state."""
         try:
@@ -284,7 +287,10 @@ class StaticSupervisor(ReactAgent[SupervisorReactState]):
             return error_msg
 
     def _execute_regular_tool(
-        self, state: SupervisorReactState, tool_name: str, tool_call: dict
+        self,
+        state: SupervisorReactState,
+        tool_name: str,
+        tool_call: dict,
     ) -> str:
         """Execute regular supervisor tools."""
         try:

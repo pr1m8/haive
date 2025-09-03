@@ -29,7 +29,7 @@
 │  │ │   Agent     │ │   Agent     │ │                     │ │ │
 │  │ │             │ │             │ │                     │ │ │
 │  │ │ • Token     │ │ • Neo4j     │ │ • BaseRAGAgent      │ │ │
-│  │ │   Tracking  │ │ • KG Extrac │ │ • Time-weighted     │ │ │
+│  │ │   Tracking  │ │ • KG Extract │ │ • Time-weighted     │ │ │
 │  │ │ • Summarize │ │ • Graph RAG │ │ • Multi-modal       │ │ │
 │  │ │ • Pre-hooks │ │ • Cypher    │ │ • Vector stores     │ │ │
 │  │ └─────────────┘ └─────────────┘ └─────────────────────┘ │ │

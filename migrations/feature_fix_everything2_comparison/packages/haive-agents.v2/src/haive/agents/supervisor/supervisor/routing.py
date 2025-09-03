@@ -1,20 +1,27 @@
 """Dynamic Routing Engine for Haive Supervisor System.
 
-Handles intelligent routing decisions using DynamicChoiceModel and LLM-based analysis.
-Provides context-aware agent selection with validation and fallback mechanisms.
+Handles intelligent routing decisions using DynamicChoiceModel and LLM-
+based analysis. Provides context-aware agent selection with validation
+and fallback mechanisms.
 """
+
+from __future__ import annotations
 
 import logging
 import time
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from typing import Any
 
 from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from haive.core.engine.base import InvokableEngine
-from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
+from langchain_core.messages import BaseMessage
+from langchain_core.messages import HumanMessage
+from langchain_core.messages import SystemMessage
 from langchain_core.runnables import RunnableConfig
 from langgraph.types import Command
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 from rich.console import Console
 from rich.table import Table
 
@@ -36,7 +43,8 @@ class RoutingContext(BaseModel):
     last_message: str = Field(..., description="Last message content")
     message_type: str = Field(..., description="Type of last message")
     task_keywords: list[str] = Field(
-        default_factory=list, description="Extracted keywords"
+        default_factory=list,
+        description="Extracted keywords",
     )
     conversation_length: int = Field(..., description="Number of messages")
     previous_agent: str | None = Field(None, description="Previously active agent")
@@ -133,7 +141,9 @@ class LLMRoutingStrategy(BaseRoutingStrategy):
     """LLM-based routing strategy using structured output."""
 
     def __init__(
-        self, routing_engine: InvokableEngine, routing_model: DynamicChoiceModel[str]
+        self,
+        routing_engine: InvokableEngine,
+        routing_model: DynamicChoiceModel[str],
     ):
         self.routing_engine = routing_engine
         self.routing_model = routing_model
@@ -148,7 +158,9 @@ class LLMRoutingStrategy(BaseRoutingStrategy):
         """Make LLM-based routing decision."""
         # Build routing prompt
         prompt = self._build_routing_prompt(
-            context, available_agents, agent_capabilities
+            context,
+            available_agents,
+            agent_capabilities,
         )
 
         # Get choice model for structured output
@@ -164,7 +176,7 @@ class LLMRoutingStrategy(BaseRoutingStrategy):
             # Get LLM decision with structured output
             if hasattr(self.routing_engine, "with_structured_output"):
                 structured_engine = self.routing_engine.with_structured_output(
-                    choice_model
+                    choice_model,
                 )
                 result = await structured_engine.ainvoke(messages, config)
                 return RoutingDecision(choice=result.choice)
@@ -234,7 +246,9 @@ Response Format: Provide only the agent name or END as your choice."""
         return available_options[0] if available_options else "END"
 
     def _fallback_routing(
-        self, context: RoutingContext, available_agents: list[str]
+        self,
+        context: RoutingContext,
+        available_agents: list[str],
     ) -> RoutingDecision:
         """Fallback routing when LLM fails."""
         logger.warning("Using fallback routing strategy")
@@ -246,13 +260,15 @@ Response Format: Provide only the agent name or END as your choice."""
             for agent in available_agents:
                 if task_type in agent.lower():
                     return RoutingDecision(
-                        choice=agent, reasoning="Fallback key matching"
+                        choice=agent,
+                        reasoning="Fallback key matching",
                     )
 
         # Ultimate fallback
         if available_agents and available_agents[0] != "END":
             return RoutingDecision(
-                choice=available_agents[0], reasoning="Fallback to first agent"
+                choice=available_agents[0],
+                reasoning="Fallback to first agent",
             )
 
         return RoutingDecision(choice="END", reasoning="Fallback to END")
@@ -283,7 +299,8 @@ class RuleBasedRoutingStrategy(BaseRoutingStrategy):
         for key, agent_name in self.routing_rules.items():
             if key.lower() in message_lower and agent_name in available_agents:
                 return RoutingDecision(
-                    choice=agent_name, reasoning=f"Rule match: {key}"
+                    choice=agent_name,
+                    reasoning=f"Rule match: {key}",
                 )
 
         # Default to first available agent
@@ -296,8 +313,8 @@ class RuleBasedRoutingStrategy(BaseRoutingStrategy):
 class DynamicRoutingEngine:
     """Main routing engine that orchestrates routing decisions.
 
-    Handles context extraction, strategy selection, and routing execution
-    with comprehensive error handling and fallback mechanisms.
+    Handles context extraction, strategy selection, and routing
+    execution with comprehensive error handling and fallback mechanisms.
     """
 
     def __init__(
@@ -332,7 +349,7 @@ class DynamicRoutingEngine:
                     "math": "math_agent",
                     "write": "writer_agent",
                     "code": "code_agent",
-                }
+                },
             )
 
         logger.info("DynamicRoutingEngine initialized")
@@ -363,24 +380,29 @@ class DynamicRoutingEngine:
             if not available_agents:
                 logger.warning("No agents available for routing")
                 return Command(
-                    goto="__end__", update={"routing_error": "No agents available"}
+                    goto="__end__",
+                    update={"routing_error": "No agents available"},
                 )
 
             # Make routing decision
             decision = await self.routing_strategy.make_routing_decision(
-                context, available_agents, agent_capabilities, config
+                context,
+                available_agents,
+                agent_capabilities,
+                config,
             )
 
             # Validate decision
             if not self.routing_model.validate_choice(decision.choice):
                 logger.error(f"Invalid routing choice: {decision.choice}")
                 decision = RoutingDecision(
-                    choice="END", reasoning="Invalid choice fallback"
+                    choice="END",
+                    reasoning="Invalid choice fallback",
                 )
 
             # Log decision
             logger.info(
-                f"Routing decision: {decision.choice} (reasoning: {decision.reasoning})"
+                f"Routing decision: {decision.choice} (reasoning: {decision.reasoning})",
             )
 
             # Create routing command
@@ -431,7 +453,10 @@ class DynamicRoutingEngine:
         )
 
     def _create_routing_command(
-        self, decision: RoutingDecision, state: Any, context: RoutingContext
+        self,
+        decision: RoutingDecision,
+        state: Any,
+        context: RoutingContext,
     ) -> Command:
         """Create routing command based on decision."""
         # Prepare state updates

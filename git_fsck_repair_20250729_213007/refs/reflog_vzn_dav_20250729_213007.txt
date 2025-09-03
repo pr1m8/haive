@@ -1,8 +1,0 @@
-46af0645 vzn/dav@{2025-07-03 19:19:58 -0400}: commit: added in sphinx gasllery and othe rrelated documentation packages
-1a97998e vzn/dav@{2025-07-02 21:04:59 -0400}: commit: Update submodule branches in .gitmodules to vzn/dav for haive packages
-eb119a92 vzn/dav@{2025-07-02 20:48:29 -0400}: commit: Refactor noxfile and add detailed conversation persistence test
-63150c94 vzn/dav@{2025-07-02 20:41:10 -0400}: commit: update
-e6d49beb vzn/dav@{2025-07-02 20:37:39 -0400}: commit: fixed trunk
-f4352fd7 vzn/dav@{2025-07-02 20:11:44 -0400}: commit: Update haive-dataflow submodule reference after history cleanup
-f4d0e42c vzn/dav@{2025-07-01 17:56:38 -0400}: commit: update
-5a4db92c vzn/dav@{2025-07-01 17:56:28 -0400}: branch: Created from HEAD

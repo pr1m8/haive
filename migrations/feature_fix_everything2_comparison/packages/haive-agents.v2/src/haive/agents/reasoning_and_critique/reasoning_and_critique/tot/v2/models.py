@@ -12,10 +12,12 @@ Functions:
     get_content_str: Get Content Str functionality.
 """
 
-import json
-import uuid
+from __future__ import annotations
+
 from datetime import datetime
+import json
 from typing import Any, Generic, Literal, TypeVar
+import uuid
 
 from langchain_core.messages import BaseMessage
 from pydantic import BaseModel, Field, field_validator
@@ -84,7 +86,8 @@ class ScoredCandidate(Candidate[T], Generic[T]):
     score: float = Field(description="Evaluation score")
     feedback: str = Field(description="Evaluation feedback/reasoning")
     scoring_metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional scoring information"
+        default_factory=dict,
+        description="Additional scoring information",
     )
 
     @field_validator("score")
@@ -97,8 +100,12 @@ class ScoredCandidate(Candidate[T], Generic[T]):
 
     @classmethod
     def from_candidate(
-        cls, candidate: Candidate[T], score: float, feedback: str, **kwargs
-    ) -> "ScoredCandidate[T]":
+        cls,
+        candidate: Candidate[T],
+        score: float,
+        feedback: str,
+        **kwargs,
+    ) -> ScoredCandidate[T]:
         """Create a ScoredCandidate from a Candidate."""
         return cls(
             id=candidate.id,
@@ -124,11 +131,12 @@ class CandidateGeneration(BaseModel):
     """Output from expansion agent."""
 
     candidates: list[dict[str, Any]] = Field(
-        description="List of generated candidate solutions"
+        description="List of generated candidate solutions",
     )
     reasoning: str = Field(description="Overall reasoning for this expansion")
     strategy: Literal["explore", "exploit", "refine"] = Field(
-        default="explore", description="Strategy used for generation"
+        default="explore",
+        description="Strategy used for generation",
     )
 
 
@@ -149,5 +157,5 @@ class SearchControl(BaseModel):
     should_terminate: bool
     termination_reason: str | None = None
     next_strategy: Literal["explore", "exploit", "refine", "terminate"] = Field(
-        default="explore"
+        default="explore",
     )

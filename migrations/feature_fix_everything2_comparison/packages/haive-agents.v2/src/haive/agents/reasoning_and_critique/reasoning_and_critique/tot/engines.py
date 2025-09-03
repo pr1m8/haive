@@ -1,17 +1,17 @@
 """Engine configurations for the Tree of Thoughts agent.
 
-This module defines specialized engine configurations for candidate generation,
-evaluation, and selection in the Tree of Thoughts algorithm.
+This module defines specialized engine configurations for candidate
+generation, evaluation, and selection in the Tree of Thoughts algorithm.
 """
 
+from __future__ import annotations
+
+from haive.agents.reasoning_and_critique.tot.models import CandidateEvaluation
+from haive.agents.reasoning_and_critique.tot.models import CandidateGeneration
 from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import SystemMessage
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-
-from haive.agents.reasoning_and_critique.tot.models import (
-    CandidateEvaluation,
-    CandidateGeneration,
-)
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import MessagesPlaceholder
 
 # =============================
 # Default Prompts
@@ -23,7 +23,7 @@ generator_system_message = SystemMessage(
 Your task is to generate diverse and creative candidate solutions for the problem.
 Explore different approaches and reasoning pathways.
 
-Return your response as a structured output with reasoning and multiple candidate solutions."""
+Return your response as a structured output with reasoning and multiple candidate solutions.""",
 )
 
 generator_prompt = ChatPromptTemplate.from_messages(
@@ -38,7 +38,7 @@ generator_prompt = ChatPromptTemplate.from_messages(
 
 Generate {expansion_count} different candidate solutions.""",
         ),
-    ]
+    ],
 )
 
 # Evaluator prompt
@@ -48,7 +48,7 @@ Your task is to evaluate a candidate solution and provide a score between 0 and 
 Be critical and analytical in your assessment.
 
 Return your response as a structured output with a numerical score between 0 and 1
-and detailed feedback explaining the score."""
+and detailed feedback explaining the score.""",
 )
 
 evaluator_prompt = ChatPromptTemplate.from_messages(
@@ -68,7 +68,7 @@ Evaluate this solution and provide a numerical score between 0 and 1, where:
 
 Your evaluation:""",
         ),
-    ]
+    ],
 )
 
 # =============================

@@ -56,6 +56,13 @@
 
 ## 🔄 Recently Resolved
 
+### 5. Tool Routing Refactor (Completed 2025-01-08)
+
+- **Change**: Structured output models now use `parse_output` route instead of `pydantic_model`
+- **Implementation**: Updated AugLLMConfig, ValidationNodeV2, and ValidationNodeConfigV2
+- **Documentation**: [Tool Routing Refactor Guide](../../guides/TOOL_ROUTING_REFACTOR.md)
+- **Status**: ✅ Resolved
+
 ### 1. Package Import Structure (Fixed 2025-01-08)
 
 - **Solution**: Standardized haive.core.\* imports

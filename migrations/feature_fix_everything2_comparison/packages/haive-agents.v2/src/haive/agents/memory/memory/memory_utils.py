@@ -8,13 +8,16 @@ Functions:
     save_unstructured_memories: Save Unstructured Memories functionality.
 """
 
+from __future__ import annotations
+
 import datetime
 import logging
 import uuid
 from collections.abc import Callable
 from typing import Any
 
-from agents.react.memory.state import KnowledgeTriple, MemoryItem
+from agents.react.memory.state import KnowledgeTriple
+from agents.react.memory.state import MemoryItem
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
 from langchain_core.vectorstores import VectorStore
@@ -64,7 +67,9 @@ def create_memory_vectorstore(embedding_model: Embeddings | None = None) -> Vect
 
 
 def save_unstructured_memories(
-    memories: list[str | MemoryItem], vector_store: VectorStore, user_id: str
+    memories: list[str | MemoryItem],
+    vector_store: VectorStore,
+    user_id: str,
 ) -> list[str]:
     """Save unstructured memories to vector store.
 
@@ -257,7 +262,10 @@ def create_memory_tools(vector_store: VectorStore):
 
     @tool
     def save_structured_memory(
-        subject: str, predicate: str, object_: str, user_id: str
+        subject: str,
+        predicate: str,
+        object_: str,
+        user_id: str,
     ) -> str:
         """Save a structured memory as a knowledge triple."""
         triple = {

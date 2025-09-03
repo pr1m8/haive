@@ -1,25 +1,28 @@
 """Document Grading RAG Agent.
 
-from typing import Any
-Iterative document grading with structured output.
-Uses CallableNodeConfig to iterate over retrieved documents.
+from typing import Any Iterative document grading with structured
+output. Uses CallableNodeConfig to iterate over retrieved documents.
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.callable_node import (
-    create_document_grader,
-)
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-from langgraph.graph import END, START
-from pydantic import BaseModel, Field
+from __future__ import annotations
 
 from haive.agents.base.agent import Agent
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.node.callable_node import (
+    create_document_grader,
+)
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.models.llm.base import LLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+from langgraph.graph import END
+from langgraph.graph import START
+from pydantic import BaseModel
+from pydantic import Field
 
 
 # Simple grading model for single document
@@ -53,7 +56,7 @@ Document:
 
 Provide your assessment.""",
         ),
-    ]
+    ],
 )
 
 
@@ -95,7 +98,7 @@ class DocumentGradingAgent(Agent):
 
             # Get structured grade
             grade = grading_engine.invoke(
-                {"query": query, "document": document.page_content}
+                {"query": query, "document": document.page_content},
             )
 
             # Return in format expected by CallableNode
@@ -108,7 +111,8 @@ class DocumentGradingAgent(Agent):
 
         # Create document grader node that loops over retrieved_documents
         grading_node = create_document_grader(
-            grading_func=grade_single_document, name="grade_documents"
+            grading_func=grade_single_document,
+            name="grade_documents",
         )
 
         graph.add_node("grade", grading_node)
@@ -139,12 +143,14 @@ class DocumentGradingRAGAgent(SequentialAgent):
 
         # Retrieval
         retrieval_agent = BaseRAGAgent.from_documents(
-            documents=documents, name="Grading RAG Retriever"
+            documents=documents,
+            name="Grading RAG Retriever",
         )
 
         # Grading with structured output
         grading_agent = DocumentGradingAgent(
-            llm_config=llm_config, relevance_threshold=relevance_threshold
+            llm_config=llm_config,
+            relevance_threshold=relevance_threshold,
         )
 
         # Answer generation based on relevant docs
@@ -164,7 +170,7 @@ class DocumentGradingRAGAgent(SequentialAgent):
 Query: {query}
 Relevant Documents: {graded_documents}""",
                         ),
-                    ]
+                    ],
                 ),
             ),
             name="Graded Answer Generator",

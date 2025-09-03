@@ -76,9 +76,9 @@ def create_reflection_prompt() -> ChatPromptTemplate:
         [
             SystemMessagePromptTemplate.from_template(REFLECTION_SYSTEM_PROMPT),
             HumanMessagePromptTemplate.from_template(
-                "Please reflect on and improve this response:\n\n{response}"
+                "Please reflect on and improve this response:\n\n{response}",
             ),
-        ]
+        ],
     )
 
 
@@ -88,9 +88,9 @@ def create_grading_prompt() -> ChatPromptTemplate:
         [
             SystemMessagePromptTemplate.from_template(GRADING_SYSTEM_PROMPT),
             HumanMessagePromptTemplate.from_template(
-                "Original query: {query}\n\nResponse to grade:\n{response}\n\nPlease provide a comprehensive evaluation."
+                "Original query: {query}\n\nResponse to grade:\n{response}\n\nPlease provide a comprehensive evaluation.",
             ),
-        ]
+        ],
     )
 
 
@@ -113,12 +113,13 @@ def create_expert_prompt(expertise_config: dict) -> ChatPromptTemplate:
         [
             SystemMessagePromptTemplate.from_template(system_prompt),
             HumanMessagePromptTemplate.from_template("{query}"),
-        ]
+        ],
     )
 
 
 def create_improvement_prompt(
-    include_grading: bool = True, improvement_focus: str = "all identified areas"
+    include_grading: bool = True,
+    improvement_focus: str = "all identified areas",
 ) -> ChatPromptTemplate:
     """Create an improvement prompt template."""
     template = IMPROVEMENT_PROMPT_TEMPLATE

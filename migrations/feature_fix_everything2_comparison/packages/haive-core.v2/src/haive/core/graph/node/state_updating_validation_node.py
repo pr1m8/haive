@@ -1,8 +1,10 @@
 """Validation node that updates state AND provides dynamic routing."""
 
-import logging
+from __future__ import annotations
+
 from collections.abc import Callable
 from enum import Enum
+import logging
 from typing import Any
 
 from langchain_core.messages import AIMessage, ToolMessage
@@ -28,7 +30,9 @@ class ValidationMode(str, Enum):
 
 
 class StateUpdatingValidationNode(BaseModel):
-    """Validation node that updates state with results and provides dynamic routing.
+    """Validation node that updates state with results and provides dynamic.
+
+    routing.
 
     This node combines state updates with routing logic:
     1. Validates tool calls from the state
@@ -39,34 +43,41 @@ class StateUpdatingValidationNode(BaseModel):
     # Node configuration
     name: str = Field(default="state_validation", description="Node name")
     engine_name: str | None = Field(
-        default=None, description="Name of engine to get tools/schemas from"
+        default=None,
+        description="Name of engine to get tools/schemas from",
     )
 
     # Validation mode
     validation_mode: ValidationMode = Field(
-        default=ValidationMode.PARTIAL, description="How strict validation should be"
+        default=ValidationMode.PARTIAL,
+        description="How strict validation should be",
     )
 
     # State update configuration
     update_messages: bool = Field(
-        default=True, description="Whether to add validation error messages"
+        default=True,
+        description="Whether to add validation error messages",
     )
 
     track_error_tools: bool = Field(
-        default=True, description="Whether to track error tool calls in state"
+        default=True,
+        description="Whether to track error tool calls in state",
     )
 
     add_validation_metadata: bool = Field(
-        default=True, description="Whether to add validation metadata to tool calls"
+        default=True,
+        description="Whether to add validation metadata to tool calls",
     )
 
     # Default nodes for routing
     agent_node: str = Field(
-        default="agent", description="Node for errors/clarification"
+        default="agent",
+        description="Node for errors/clarification",
     )
     tool_node: str = Field(default="tool_node", description="Node for tool execution")
     parser_node: str = Field(
-        default="parser_node", description="Node for structured output"
+        default="parser_node",
+        description="Node for structured output",
     )
 
     # Route mappings
@@ -107,20 +118,24 @@ class StateUpdatingValidationNode(BaseModel):
             # Validate each tool call
             for tool_call in tool_calls:
                 result = self._validate_tool_call(
-                    tool_call, available_tools, tool_routes
+                    tool_call,
+                    available_tools,
+                    tool_routes,
                 )
                 routing_state.add_validation_result(result)
 
             # Update state with validation results
             updated_state = self._apply_validation_to_state(
-                state, routing_state, tool_calls
+                state,
+                routing_state,
+                tool_calls,
             )
 
             logger.info(
                 f"[{self.name}] Validation complete: "
                 f"{len(routing_state.valid_tool_calls)} valid, "
                 f"{len(routing_state.invalid_tool_calls)} invalid, "
-                f"{len(routing_state.error_tool_calls)} errors"
+                f"{len(routing_state.error_tool_calls)} errors",
             )
 
             return updated_state
@@ -150,12 +165,9 @@ class StateUpdatingValidationNode(BaseModel):
             # Check validation mode
             if self.validation_mode == ValidationMode.STRICT:
                 # All tools must be valid
-                if (
-                    routing_decision["error_count"] > 0
-                    or routing_decision["invalid_count"] > 0
-                ):
+                if routing_decision["error_count"] > 0 or routing_decision["invalid_count"] > 0:
                     logger.info(
-                        f"[{self.name}] Strict mode: routing to agent due to failures"
+                        f"[{self.name}] Strict mode: routing to agent due to failures",
                     )
                     return self.agent_node
 
@@ -163,7 +175,7 @@ class StateUpdatingValidationNode(BaseModel):
                 # Continue unless all failed
                 if routing_decision["valid_count"] == 0:
                     logger.info(
-                        f"[{self.name}] Permissive mode: no valid tools, routing to agent"
+                        f"[{self.name}] Permissive mode: no valid tools, routing to agent",
                     )
                     return self.agent_node
 
@@ -203,7 +215,8 @@ class StateUpdatingValidationNode(BaseModel):
         return []
 
     def _get_tools_and_routes(
-        self, state: Any
+        self,
+        state: Any,
     ) -> tuple[dict[str, Any], dict[str, str]]:
         """Get available tools and routes from state/engine."""
         available_tools = {}
@@ -326,7 +339,7 @@ class StateUpdatingValidationNode(BaseModel):
                         "tool_name": error_result.tool_name,
                         "tool_id": tool_id,
                         "errors": error_result.errors,
-                    }
+                    },
                 )
 
         # Add validation messages if configured
@@ -340,7 +353,9 @@ class StateUpdatingValidationNode(BaseModel):
         return state
 
     def _add_validation_messages(
-        self, state: Any, routing_state: ValidationRoutingState
+        self,
+        state: Any,
+        routing_state: ValidationRoutingState,
     ):
         """Add validation error messages to state."""
         if not hasattr(state, "messages"):

@@ -98,7 +98,6 @@ See Also:
     - :mod:`langgraph.graph`: LangGraph integration
 """
 
-
 from typing import TYPE_CHECKING, Any, Self
 
 from pydantic import Field, computed_field, field_validator, model_validator
@@ -299,11 +298,13 @@ class MultiAgentState(ToolState):
     # ========================================================================
 
     active_agent: str | None = Field(
-        default=None, description="Currently executing agent name"
+        default=None,
+        description="Currently executing agent name",
     )
 
     agent_outputs: dict[str, Any] = Field(
-        default_factory=dict, description="Outputs from each agent execution"
+        default_factory=dict,
+        description="Outputs from each agent execution",
     )
 
     agent_execution_order: list[str] = Field(
@@ -316,15 +317,18 @@ class MultiAgentState(ToolState):
     # ========================================================================
 
     agents_needing_recompile: set[str] = Field(
-        default_factory=set, description="Agent names that need graph recompilation"
+        default_factory=set,
+        description="Agent names that need graph recompilation",
     )
 
     recompile_count: int = Field(
-        default=0, description="Total number of recompilations performed"
+        default=0,
+        description="Total number of recompilations performed",
     )
 
     recompile_history: list[dict[str, Any]] = Field(
-        default_factory=list, description="History of recompilation events"
+        default_factory=list,
+        description="History of recompilation events",
     )
 
     # ========================================================================
@@ -336,8 +340,8 @@ class MultiAgentState(ToolState):
     def convert_agents_to_dict(cls, v: list[Any] | dict[str, Any]) -> dict[str, Any]:
         """Convert list of agents to dict keyed by agent name.
 
-        This allows flexible initialization while maintaining consistent internal
-        representation for hierarchical access.
+        This allows flexible initialization while maintaining consistent
+        internal representation for hierarchical access.
         """
         if isinstance(v, list):
             # Convert list to dict using agent names
@@ -429,7 +433,9 @@ class MultiAgentState(ToolState):
     # ========================================================================
 
     def mark_agent_for_recompile(
-        self, agent_name: str, reason: str | None = None
+        self,
+        agent_name: str,
+        reason: str | None = None,
     ) -> None:
         """Mark an agent as needing recompilation.
 
@@ -446,7 +452,7 @@ class MultiAgentState(ToolState):
                 "reason": reason or "Manual recompilation request",
                 "timestamp": __import__("datetime").datetime.now().isoformat(),
                 "resolved": False,
-            }
+            },
         )
 
     def resolve_agent_recompile(self, agent_name: str) -> None:
@@ -586,18 +592,14 @@ class MultiAgentState(ToolState):
                 if name in self.agents_needing_recompile:
                     status_indicators.append("🔄 Needs Recompile")
 
-                status_str = (
-                    " | ".join(status_indicators) if status_indicators else "⏸️ Idle"
-                )
+                status_str = " | ".join(status_indicators) if status_indicators else "⏸️ Idle"
                 branch.add(f"{name} ({agent_type}) - {status_str}")
 
     def _add_state_hierarchy(self, branch: Tree) -> None:
         """Add state hierarchy information."""
         # Global state fields
         global_fields = [
-            f
-            for f in self.model_fields
-            if f not in ["agents", "agent_states", "agent_outputs"]
+            f for f in self.model_fields if f not in ["agents", "agent_states", "agent_outputs"]
         ]
         global_branch = branch.add(f"🌍 Global Fields ({len(global_fields)})")
         for field in global_fields[:5]:  # Show first 5
@@ -607,9 +609,7 @@ class MultiAgentState(ToolState):
             elif isinstance(value, dict):
                 global_branch.add(f"📁 {field}: {{{len(value)} keys}}")
             else:
-                value_str = (
-                    str(value)[:30] + "..." if len(str(value)) > 30 else str(value)
-                )
+                value_str = str(value)[:30] + "..." if len(str(value)) > 30 else str(value)
                 global_branch.add(f"📝 {field}: {value_str}")
 
         # Agent states
@@ -624,11 +624,7 @@ class MultiAgentState(ToolState):
                     elif isinstance(value, dict):
                         state_branch.add(f"📁 {key}: {{{len(value)} keys}}")
                     else:
-                        value_str = (
-                            str(value)[:20] + "..."
-                            if len(str(value)) > 20
-                            else str(value)
-                        )
+                        value_str = str(value)[:20] + "..." if len(str(value)) > 20 else str(value)
                         state_branch.add(f"📝 {key}: {value_str}")
 
     def _add_execution_status(self, branch: Tree) -> None:
@@ -642,12 +638,10 @@ class MultiAgentState(ToolState):
         # Execution order
         if self.agent_execution_order:
             order_branch = branch.add(
-                f"📋 Execution Order ({len(self.agent_execution_order)})"
+                f"📋 Execution Order ({len(self.agent_execution_order)})",
             )
             for i, agent_name in enumerate(self.agent_execution_order):
-                status = (
-                    "✅ Completed" if agent_name in self.agent_outputs else "⏳ Pending"
-                )
+                status = "✅ Completed" if agent_name in self.agent_outputs else "⏳ Pending"
                 order_branch.add(f"{i + 1}. {agent_name} - {status}")
 
         # Agent outputs
@@ -659,11 +653,7 @@ class MultiAgentState(ToolState):
                 elif isinstance(output, dict):
                     outputs_branch.add(f"✅ {agent_name}: {len(output)} fields")
                 else:
-                    output_str = (
-                        str(output)[:30] + "..."
-                        if len(str(output)) > 30
-                        else str(output)
-                    )
+                    output_str = str(output)[:30] + "..." if len(str(output)) > 30 else str(output)
                     outputs_branch.add(f"✅ {agent_name}: {output_str}")
 
     def _add_engine_management(self, branch: Tree) -> None:
@@ -689,8 +679,7 @@ class MultiAgentState(ToolState):
                 agent_eng_branch = engines_branch.add("🤖 Agent Engines")
                 for agent_name, engine_names in agent_engines.items():
                     agent_eng_branch.add(
-                        f"{agent_name}: {
-                            len(engine_names)} engines"
+                        f"{agent_name}: {len(engine_names)} engines",
                     )
 
             # Show global engines
@@ -710,7 +699,7 @@ class MultiAgentState(ToolState):
         # Agents needing recompilation
         if self.agents_needing_recompile:
             needs_branch = branch.add(
-                f"🔄 Needs Recompile ({len(self.agents_needing_recompile)})"
+                f"🔄 Needs Recompile ({len(self.agents_needing_recompile)})",
             )
             for agent_name in self.agents_needing_recompile:
                 needs_branch.add(f"⚠️ {agent_name}")
@@ -758,9 +747,7 @@ class MultiAgentState(ToolState):
                 has_output = "✅" if name in self.agent_outputs else "❌"
 
                 # Needs recompile
-                needs_recompile = (
-                    "⚠️ Yes" if name in self.agents_needing_recompile else "✅ No"
-                )
+                needs_recompile = "⚠️ Yes" if name in self.agents_needing_recompile else "✅ No"
 
                 table.add_row(
                     name,

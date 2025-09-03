@@ -1,0 +1,226 @@
+/* Custom CSS for PyAutoDoc Documentation */
+
+/* ============================= */
+/* Color Variables               */
+/* ============================= */
+:root {
+  --pydantic-field-color: #0066cc;
+  --pydantic-validator-color: #009900;
+  --enum-member-color: #cc6600;
+  --dataclass-color: #9900cc;
+  --custom-border-radius: 8px;
+}
+
+/* ============================= */
+/* Pydantic Model Styling        */
+/* ============================= */
+.pydantic.model {
+  border-left: 4px solid var(--pydantic-field-color);
+  padding-left: 1rem;
+  margin: 1rem 0;
+}
+
+.pydantic.field {
+  background-color: rgba(0, 102, 204, 0.05);
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-radius: var(--custom-border-radius);
+}
+
+.pydantic.validator {
+  background-color: rgba(0, 153, 0, 0.05);
+  border-left: 3px solid var(--pydantic-validator-color);
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+/* ============================= */
+/* Enum Styling                  */
+/* ============================= */
+.enum-class {
+  border-left: 4px solid var(--enum-member-color);
+  padding-left: 1rem;
+}
+
+.enum-member {
+  background-color: rgba(204, 102, 0, 0.05);
+  padding: 0.3rem 0.6rem;
+  margin: 0.2rem 0;
+  display: inline-block;
+  border-radius: var(--custom-border-radius);
+}
+
+/* ============================= */
+/* Dataclass Styling             */
+/* ============================= */
+.dataclass {
+  border-left: 4px solid var(--dataclass-color);
+  padding-left: 1rem;
+  margin: 1rem 0;
+}
+
+/* ============================= */
+/* Toggle Button Enhancements    */
+/* ============================= */
+.toggle-button {
+  background-color: var(--color-brand-primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--custom-border-radius);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================= */
+/* Code Block Enhancements       */
+/* ============================= */
+div.highlight {
+  border-radius: var(--custom-border-radius);
+  overflow: hidden;
+}
+
+/* JSON Schema display */
+.autodoc_pydantic_collapsable_json {
+  margin: 1rem 0;
+}
+
+.autodoc_pydantic_collapsable_json summary {
+  cursor: pointer;
+  padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: var(--custom-border-radius);
+  user-select: none;
+}
+
+.autodoc_pydantic_collapsable_json summary:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ============================= */
+/* Inheritance Diagrams          */
+/* ============================= */
+.graphviz {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.inheritance-diagram {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============================= */
+/* API Summary Tables            */
+/* ============================= */
+.autosummary table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.autosummary table td {
+  padding: 0.5rem;
+  vertical-align: top;
+}
+
+.autosummary table td:first-child {
+  font-family: var(--font-stack--monospace);
+  font-weight: 600;
+}
+
+/* ============================= */
+/* Field Constraints             */
+/* ============================= */
+.field-constraints {
+  font-size: 0.9em;
+  color: #666;
+  margin-left: 1rem;
+}
+
+.field-constraints strong {
+  color: #333;
+}
+
+/* ============================= */
+/* Notes and Warnings            */
+/* ============================= */
+.admonition.note {
+  border-left-color: #0066cc;
+}
+
+.admonition.warning {
+  border-left-color: #ff9900;
+}
+
+.admonition.error {
+  border-left-color: #cc0000;
+}
+
+/* ============================= */
+/* Module Headers                */
+/* ============================= */
+.module-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: var(--custom-border-radius);
+  margin-bottom: 2rem;
+}
+
+.module-header h1 {
+  margin: 0;
+  color: white;
+}
+
+/* ============================= */
+/* Responsive Design             */
+/* ============================= */
+@media (max-width: 768px) {
+  .pydantic.model,
+  .dataclass,
+  .enum-class {
+    padding-left: 0.5rem;
+    border-left-width: 3px;
+  }
+
+  .module-header {
+    padding: 1rem;
+  }
+}
+
+/* ============================= */
+/* Dark Mode Support             */
+/* ============================= */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pydantic-field-color: #4da6ff;
+    --pydantic-validator-color: #66ff66;
+    --enum-member-color: #ffaa66;
+    --dataclass-color: #cc99ff;
+  }
+
+  .pydantic.field {
+    background-color: rgba(77, 166, 255, 0.1);
+  }
+
+  .pydantic.validator {
+    background-color: rgba(102, 255, 102, 0.1);
+  }
+
+  .enum-member {
+    background-color: rgba(255, 170, 102, 0.1);
+  }
+
+  .field-constraints {
+    color: #aaa;
+  }
+
+  .field-constraints strong {
+    color: #ddd;
+  }
+}

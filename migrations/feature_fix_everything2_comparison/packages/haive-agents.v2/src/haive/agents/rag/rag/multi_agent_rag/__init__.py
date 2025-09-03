@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from multi_agent_rag.additional_workflows import (
     MemoryRAGState,
     MultiQueryRAGAgent,

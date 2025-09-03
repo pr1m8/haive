@@ -6,6 +6,8 @@ This module provides prompts functionality for the Haive framework.
 # src/haive/agents/self_discovery/prompts.py
 """Prompt templates for Self-Discovery reasoning system."""
 
+
+from __future__ import annotations
 from langchain_core.prompts import ChatPromptTemplate
 
 # Select reasoning modules prompt
@@ -30,9 +32,8 @@ Task: {task_description}
 
 Select several modules that are crucial for solving the task above. Explain your selection briefly.""",
         ),
-    ]
+    ],
 )
-
 
 # Adapt modules prompt
 adapt_prompt = ChatPromptTemplate.from_messages(
@@ -56,9 +57,8 @@ Task: {task_description}
 
 Adapt each reasoning module description to better solve the task. Make them specific and actionable.""",
         ),
-    ]
+    ],
 )
-
 
 # Structure reasoning prompt
 structured_prompt = ChatPromptTemplate.from_messages(
@@ -97,9 +97,8 @@ Implement a reasoning structure for solvers to follow step-by-step and arrive at
 
 Note: do NOT actually arrive at a conclusion in this pass. Your job is to generate a PLAN so that in the future you can fill it out and arrive at the correct conclusion for tasks like this.""",
         ),
-    ]
+    ],
 )
-
 
 # Final reasoning prompt
 reasoning_prompt = ChatPromptTemplate.from_messages(
@@ -123,5 +122,5 @@ Task: {task_description}
 
 Work through each step carefully and provide the final answer.""",
         ),
-    ]
+    ],
 )

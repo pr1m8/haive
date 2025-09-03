@@ -19,20 +19,19 @@ This example demonstrates how to create custom conversation agents by extending
 the BaseConversationAgent class and implementing core conversation patterns.
 """
 
-import asyncio
 import operator
+import asyncio
 from typing import Any
-
-from haive.core.exceptions import ConversationError
 from langchain_core.messages import AIMessage, HumanMessage
 from pydantic import Field
-
 from haive.agents.conversation.base import (
     BaseConversationAgent,
     ConversationState,
     get_conversation_progress,
 )
+from haive.core.exceptions import ConversationError
 from haive.agents.simple import SimpleAgent
+
 
 logger = logging.getLogger(__name__)
 
@@ -94,9 +93,7 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
                 # Sort by recent activity (those who spoke more recently)
                 recent_speakers = state.speaker_history[-len(state.speakers) :]
                 active_remaining = [
-                    s
-                    for s in state.remaining_speakers_this_round
-                    if s in recent_speakers
+                    s for s in state.remaining_speakers_this_round if s in recent_speakers
                 ]
                 if active_remaining:
                     return active_remaining[0]
@@ -138,7 +135,10 @@ class CustomConversationAgent(BaseConversationAgent[CustomConversationState]):
         return False
 
     async def execute_agent(
-        self, agent: Any, input_data: str, state: CustomConversationState
+        self,
+        agent: Any,
+        input_data: str,
+        state: CustomConversationState,
     ) -> str:
         """Execute agent with quality assessment and error handling."""
         try:
@@ -300,7 +300,7 @@ async def main():
         # Start the conversation
         await conversation.arun(
             "Let's discuss how AI can transform education. "
-            "Alice, what are your thoughts on AI-powered personalized learning?"
+            "Alice, what are your thoughts on AI-powered personalized learning?",
         )
 
         # Get final state

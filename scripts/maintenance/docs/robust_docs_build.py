@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Robust documentation build with comprehensive error tracking and recovery."""
+from __future__ import annotations
 
 import json
 import os

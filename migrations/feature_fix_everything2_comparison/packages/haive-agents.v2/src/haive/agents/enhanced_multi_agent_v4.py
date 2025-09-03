@@ -16,8 +16,8 @@ Key Features:
 
 from __future__ import annotations
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import TYPE_CHECKING, Any, Literal
 
 if TYPE_CHECKING:
@@ -27,11 +27,12 @@ else:
         from haive.agents.base.agent import Agent
     except ImportError:
         Agent = None
+from langgraph.graph import END, START
+from pydantic import Field, model_validator
+
 from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
-from langgraph.graph import END, START
-from pydantic import Field, model_validator
 
 logger = logging.getLogger(__name__)
 
@@ -77,11 +78,13 @@ class EnhancedMultiAgentV4(Agent):
     # ========================================================================
 
     agents: list[Agent] = Field(
-        default_factory=list, description="List of agents to coordinate"
+        default_factory=list,
+        description="List of agents to coordinate",
     )
 
     execution_mode: Literal["sequential", "parallel", "conditional", "manual"] = Field(
-        default="sequential", description="How to execute the agents"
+        default="sequential",
+        description="How to execute the agents",
     )
 
     build_mode: Literal["auto", "manual", "lazy"] = Field(
@@ -90,17 +93,20 @@ class EnhancedMultiAgentV4(Agent):
     )
 
     entry_point: str | None = Field(
-        default=None, description="Starting agent (defaults to first agent)"
+        default=None,
+        description="Starting agent (defaults to first agent)",
     )
 
     # Internal state - converted from list
     agent_dict: dict[str, Agent] = Field(
-        default_factory=dict, description="Agents converted to dict by name"
+        default_factory=dict,
+        description="Agents converted to dict by name",
     )
 
     # Conditional edges configuration
     conditional_edges: list[dict[str, Any]] = Field(
-        default_factory=list, description="Conditional edge configurations"
+        default_factory=list,
+        description="Conditional edge configurations",
     )
 
     # ========================================================================
@@ -134,7 +140,7 @@ class EnhancedMultiAgentV4(Agent):
                 # Handle duplicates by adding index
                 agent_dict[f"{agent.name}_{i}"] = agent
                 logger.warning(
-                    f"Duplicate agent name '{agent.name}', using '{agent.name}_{i}'"
+                    f"Duplicate agent name '{agent.name}', using '{agent.name}_{i}'",
                 )
             else:
                 agent_dict[agent.name] = agent
@@ -155,12 +161,13 @@ class EnhancedMultiAgentV4(Agent):
             raise ValueError("No agents to build graph with")
 
         logger.info(
-            f"Building {self.execution_mode} graph with {len(self.agent_dict)} agents"
+            f"Building {self.execution_mode} graph with {len(self.agent_dict)} agents",
         )
 
         # Create BaseGraph with MultiAgentState
         graph = BaseGraph(
-            name=f"{self.name}_graph", state_schema=self.state_schema or MultiAgentState
+            name=f"{self.name}_graph",
+            state_schema=self.state_schema or MultiAgentState,
         )
 
         # Add all agents as nodes using AgentNodeV3
@@ -196,9 +203,7 @@ class EnhancedMultiAgentV4(Agent):
             return
 
         # Determine entry point
-        start_agent = (
-            self.entry_point if self.entry_point in agent_names else agent_names[0]
-        )
+        start_agent = self.entry_point if self.entry_point in agent_names else agent_names[0]
 
         # START -> first agent
         graph.add_edge(START, start_agent)
@@ -229,9 +234,7 @@ class EnhancedMultiAgentV4(Agent):
         """Add conditional edges using BaseGraph2.add_conditional_edges()."""
         # Start with entry point or first agent
         agent_names = list(self.agent_dict.keys())
-        start_agent = (
-            self.entry_point if self.entry_point in agent_names else agent_names[0]
-        )
+        start_agent = self.entry_point if self.entry_point in agent_names else agent_names[0]
         graph.add_edge(START, start_agent)
 
         # Add configured conditional edges
@@ -254,9 +257,7 @@ class EnhancedMultiAgentV4(Agent):
         # Ensure unconnected agents go to END
         for agent_name in agent_names:
             # Check if agent has outgoing edges configured
-            has_outgoing = any(
-                edge["from_agent"] == agent_name for edge in self.conditional_edges
-            )
+            has_outgoing = any(edge["from_agent"] == agent_name for edge in self.conditional_edges)
             if not has_outgoing and agent_name != start_agent:
                 graph.add_edge(agent_name, END)
 
@@ -266,13 +267,11 @@ class EnhancedMultiAgentV4(Agent):
         """Manual mode - minimal setup, user adds edges."""
         # Just ensure START connects to entry point
         agent_names = list(self.agent_dict.keys())
-        start_agent = (
-            self.entry_point if self.entry_point in agent_names else agent_names[0]
-        )
+        start_agent = self.entry_point if self.entry_point in agent_names else agent_names[0]
         graph.add_edge(START, start_agent)
 
         logger.info(
-            "Manual mode - user must add edges with add_edge() or add_conditional_edge()"
+            "Manual mode - user must add edges with add_edge() or add_conditional_edge()",
         )
 
     # ========================================================================
@@ -324,7 +323,7 @@ class EnhancedMultiAgentV4(Agent):
             logger.info(f"Added conditional edge from {from_agent}")
 
         logger.info(
-            f"Configured conditional edge: {from_agent} -> {true_agent}/{false_agent}"
+            f"Configured conditional edge: {from_agent} -> {true_agent}/{false_agent}",
         )
 
     def add_multi_conditional_edge(
@@ -357,7 +356,7 @@ class EnhancedMultiAgentV4(Agent):
             )
 
         logger.info(
-            f"Configured multi-conditional edge from {from_agent} with {len(routes)} routes"
+            f"Configured multi-conditional edge from {from_agent} with {len(routes)} routes",
         )
 
     # ========================================================================
@@ -391,21 +390,8 @@ class EnhancedMultiAgentV4(Agent):
 
     def display_info(self):
         """Display workflow information."""
-        print(f"\n=== Enhanced MultiAgent V4: {self.name} ===")
-        print(f"Execution Mode: {self.execution_mode}")
-        print(f"Build Mode: {self.build_mode}")
-        print(f"Entry Point: {self.entry_point or 'auto'}")
-        print(f"Agents ({len(self.agent_dict)}):")
-
-        for i, (name, agent) in enumerate(self.agent_dict.items(), 1):
-            agent_type = type(agent).__name__
-            print(f"  {i}. {name} ({agent_type})")
-
-        print(f"Conditional Edges: {len(self.conditional_edges)}")
-        print(
-            f"Graph Built: {'Yes' if hasattr(self, 'graph') and self.graph else 'No'}"
-        )
-        print()
+        for _i, (_name, agent) in enumerate(self.agent_dict.items(), 1):
+            type(agent).__name__
 
     # ========================================================================
     # ENHANCED BASE AGENT INTEGRATION

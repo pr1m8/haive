@@ -1,17 +1,21 @@
 """Dynamic Supervisor with Proper Graph Rebuilding.
 
-This implementation correctly rebuilds the graph when agents are added/removed,
-following the Agent base class patterns.
+This implementation correctly rebuilds the graph when agents are
+added/removed, following the Agent base class patterns.
 """
+
+from __future__ import annotations
 
 import logging
 from typing import Any
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
-from pydantic import Field, PrivateAttr
-
 from haive.agents.react.agent import ReactAgent
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from langchain_core.messages import AIMessage
+from langchain_core.messages import BaseMessage
+from langchain_core.messages import HumanMessage
+from pydantic import Field
+from pydantic import PrivateAttr
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +32,8 @@ class RebuildDynamicSupervisor(ReactAgent):
 
     # Configuration
     auto_rebuild: bool = Field(
-        default=True, description="Auto rebuild on agent changes"
+        default=True,
+        description="Auto rebuild on agent changes",
     )
 
     # Private attributes
@@ -37,7 +42,10 @@ class RebuildDynamicSupervisor(ReactAgent):
     _needs_rebuild: bool = PrivateAttr(default=False)
 
     def register_agent(
-        self, agent: Any, capability: str | None = None, agent_name: str | None = None
+        self,
+        agent: Any,
+        capability: str | None = None,
+        agent_name: str | None = None,
     ) -> bool:
         """Register an agent and mark for rebuild.
 
@@ -87,7 +95,7 @@ class RebuildDynamicSupervisor(ReactAgent):
                 self._trigger_rebuild()
 
         logger.info(
-            f"✅ Unregistered {agent_name} ({len(self._agent_registry)} remaining)"
+            f"✅ Unregistered {agent_name} ({len(self._agent_registry)} remaining)",
         )
         return True
 
@@ -121,7 +129,7 @@ class RebuildDynamicSupervisor(ReactAgent):
         - Agents route back to supervisor
         """
         logger.info(
-            f"Building supervisor graph with {len(self._agent_registry)} agents"
+            f"Building supervisor graph with {len(self._agent_registry)} agents",
         )
 
         graph = BaseGraph(name=f"{self.name}Graph")
@@ -148,11 +156,13 @@ class RebuildDynamicSupervisor(ReactAgent):
 
         # Supervisor routes conditionally
         graph.add_conditional_edges(
-            "supervisor", self._route_from_supervisor, destinations
+            "supervisor",
+            self._route_from_supervisor,
+            destinations,
         )
 
         logger.info(
-            f"✅ Graph built with nodes: supervisor + {list(self._agent_registry.keys())}"
+            f"✅ Graph built with nodes: supervisor + {list(self._agent_registry.keys())}",
         )
         return graph
 
@@ -293,7 +303,10 @@ class RebuildDynamicSupervisor(ReactAgent):
         return agent_input
 
     def _process_agent_result(
-        self, result: Any, state: dict[str, Any], agent_name: str
+        self,
+        result: Any,
+        state: dict[str, Any],
+        agent_name: str,
     ) -> dict[str, Any]:
         """Process agent result into state update."""
         update = {"last_agent": agent_name, "last_agent_success": True}
@@ -390,7 +403,7 @@ if __name__ == "__main__":
 
         # First invocation - builds graph
         await supervisor.ainvoke(
-            {"messages": [HumanMessage(content="Research something")]}
+            {"messages": [HumanMessage(content="Research something")]},
         )
 
         # Add new agent - triggers rebuild on next invoke
@@ -398,7 +411,7 @@ if __name__ == "__main__":
 
         # Second invocation - rebuilds graph automatically
         await supervisor.ainvoke(
-            {"messages": [HumanMessage(content="Calculate something")]}
+            {"messages": [HumanMessage(content="Calculate something")]},
         )
 
     asyncio.run(test_rebuild_supervisor())

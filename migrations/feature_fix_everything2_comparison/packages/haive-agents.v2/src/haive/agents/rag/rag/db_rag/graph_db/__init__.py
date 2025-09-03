@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from graph_db.agent import (
     GraphDBRAGAgent,
     check_domain_relevance,

@@ -1,19 +1,21 @@
 """Dynamic Supervisor using DynamicChoiceModel for agent selection.
 
-The supervisor uses DynamicChoiceModel as a tool to select from available agents,
-and creates new ReactAgents when needed.
+The supervisor uses DynamicChoiceModel as a tool to select from
+available agents, and creates new ReactAgents when needed.
 """
+
+from __future__ import annotations
 
 import logging
 from typing import Any
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.tools import BaseTool
 from pydantic import Field, PrivateAttr
 
 from haive.agents.react.agent import ReactAgent
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 logger = logging.getLogger(__name__)
 
@@ -48,8 +50,7 @@ class AgentSelectionTool(BaseTool):
 
             # Simple matching based on agent name
             if "research" in agent_name.lower() and any(
-                word in task_lower
-                for word in ["research", "find", "search", "investigate"]
+                word in task_lower for word in ["research", "find", "search", "investigate"]
             ):
                 return agent_name
 
@@ -124,7 +125,9 @@ class AgentCreationTool(BaseTool):
 
             # Create ReactAgent
             new_agent = ReactAgent(
-                name=agent_name, engine=engine, tools=template["tools"]
+                name=agent_name,
+                engine=engine,
+                tools=template["tools"],
             )
 
             # Add to supervisor
@@ -167,7 +170,8 @@ class ChoiceModelSupervisor(ReactAgent):
 
         # Create choice model
         self._choice_model = DynamicChoiceModel(
-            option_names=["END"], option_descriptions=["End the conversation"]
+            option_names=["END"],
+            option_descriptions=["End the conversation"],
         )
 
         # Create tools
@@ -278,9 +282,9 @@ class ChoiceModelSupervisor(ReactAgent):
             supervisor_input = {
                 "messages": [
                     HumanMessage(
-                        content=f"Analyze this request and select the best agent or create one if needed: {content}"
-                    )
-                ]
+                        content=f"Analyze this request and select the best agent or create one if needed: {content}",
+                    ),
+                ],
             }
 
             # Use this ReactAgent's capabilities to make decision
@@ -427,9 +431,7 @@ class ChoiceModelSupervisor(ReactAgent):
     def get_choice_model_status(self) -> dict[str, Any]:
         """Get status of choice model."""
         return {
-            "available_options": (
-                self._choice_model.option_names if self._choice_model else []
-            ),
+            "available_options": (self._choice_model.option_names if self._choice_model else []),
             "total_agents": len(self._agents),
             "max_agents": self.max_agents,
         }
@@ -449,28 +451,28 @@ if __name__ == "__main__":
             {
                 "messages": [
                     HumanMessage(
-                        content="Research the latest developments in machine learning"
-                    )
-                ]
-            }
+                        content="Research the latest developments in machine learning",
+                    ),
+                ],
+            },
         )
 
         # Test 2: Coding request
         await supervisor.ainvoke(
             {
                 "messages": [
-                    HumanMessage(content="Write Python code to implement quicksort")
-                ]
-            }
+                    HumanMessage(content="Write Python code to implement quicksort"),
+                ],
+            },
         )
 
         # Test 3: Use existing agent
         await supervisor.ainvoke(
             {
                 "messages": [
-                    HumanMessage(content="Find information about quantum computing")
-                ]
-            }
+                    HumanMessage(content="Find information about quantum computing"),
+                ],
+            },
         )
 
     asyncio.run(test_choice_model_supervisor())

@@ -16,19 +16,21 @@ Implementation Notes:
 - Proper Pydantic patterns throughout
 """
 
+from __future__ import annotations
+
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph import BaseGraph
-from haive.core.registry import RegistryItem
-from haive.core.schema.prebuilt.dynamic_activation_state import DynamicActivationState
-from haive.core.schema.prebuilt.meta_state import MetaStateSchema
 from langchain_core.tools import tool
 from langgraph.graph import END
 from pydantic import PrivateAttr
 
 from haive.agents.base.agent import Agent
 from haive.agents.discovery.component_discovery_agent import ComponentDiscoveryAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph import BaseGraph
+from haive.core.registry import RegistryItem
+from haive.core.schema.prebuilt.dynamic_activation_state import DynamicActivationState
+from haive.core.schema.prebuilt.meta_state import MetaStateSchema
 
 
 class DynamicActivationSupervisor(Agent[DynamicActivationState]):
@@ -111,8 +113,8 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
     def setup_agent(self) -> None:
         """Setup the dynamic activation supervisor.
 
-        This method is called during agent initialization to set up
-        the supervisor's internal state and components.
+        This method is called during agent initialization to set up the
+        supervisor's internal state and components.
         """
         # Call parent setup
         super().setup_agent()
@@ -120,7 +122,7 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
         # Initialize discovery agent if config is provided
         if hasattr(self, "_discovery_config"):
             self._discovery_agent = ComponentDiscoveryAgent(
-                document_path=self._discovery_config["document_path"]
+                document_path=self._discovery_config["document_path"],
             )
 
         # Wrap self in MetaStateSchema for self-tracking
@@ -139,8 +141,12 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
 
     @classmethod
     def create_with_discovery(
-        cls, name: str, document_path: str, engine: AugLLMConfig, **kwargs
-    ) -> "DynamicActivationSupervisor":
+        cls,
+        name: str,
+        document_path: str,
+        engine: AugLLMConfig,
+        **kwargs,
+    ) -> DynamicActivationSupervisor:
         """Factory method to create supervisor with discovery agent.
 
         Args:
@@ -179,8 +185,12 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
 
     @classmethod
     def create_with_components(
-        cls, name: str, components: list[dict[str, Any]], engine: AugLLMConfig, **kwargs
-    ) -> "DynamicActivationSupervisor":
+        cls,
+        name: str,
+        components: list[dict[str, Any]],
+        engine: AugLLMConfig,
+        **kwargs,
+    ) -> DynamicActivationSupervisor:
         """Factory method to create supervisor with pre-registered components.
 
         Args:
@@ -248,23 +258,15 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
             # Simple capability detection (can be enhanced)
             task_lower = task_description.lower()
 
-            if any(
-                word in task_lower
-                for word in ["calculate", "math", "compute", "number"]
-            ):
+            if any(word in task_lower for word in ["calculate", "math", "compute", "number"]):
                 capabilities.append("math")
             if any(word in task_lower for word in ["search", "find", "lookup", "web"]):
                 capabilities.append("search")
-            if any(
-                word in task_lower for word in ["chart", "plot", "graph", "visualize"]
-            ):
+            if any(word in task_lower for word in ["chart", "plot", "graph", "visualize"]):
                 capabilities.append("visualization")
             if any(word in task_lower for word in ["file", "read", "write", "process"]):
                 capabilities.append("file_processing")
-            if any(
-                word in task_lower
-                for word in ["data", "analyze", "process", "transform"]
-            ):
+            if any(word in task_lower for word in ["data", "analyze", "process", "transform"]):
                 capabilities.append("data_processing")
 
             return {
@@ -297,7 +299,8 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
         # Tool for discovering components
         @tool
         def discover_components(
-            query: str, max_results: int = 5
+            query: str,
+            max_results: int = 5,
         ) -> list[dict[str, Any]]:
             """Discover components that match a query."""
             if self._discovery_agent:
@@ -307,7 +310,7 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
                 try:
                     loop = asyncio.get_event_loop()
                     components = loop.run_until_complete(
-                        self._discovery_agent.discover_components(query)
+                        self._discovery_agent.discover_components(query),
                     )
                     return components[:max_results]
                 except Exception as e:
@@ -326,7 +329,7 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
                                 "name": item.name,
                                 "description": item.description,
                                 "is_active": item.is_active,
-                            }
+                            },
                         )
 
                 return matches[:max_results]
@@ -366,7 +369,7 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
                     activate_component,
                     discover_components,
                     check_component_status,
-                ]
+                ],
             )
 
     def build_graph(self) -> BaseGraph:
@@ -460,7 +463,8 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
 
         # Execute through meta state for tracking
         result = await self._meta_self.execute_agent(
-            input_data=analysis_prompt, update_state=True
+            input_data=analysis_prompt,
+            update_state=True,
         )
 
         # Parse capabilities from result
@@ -472,7 +476,8 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
         return {"capabilities_identified": capabilities, "analysis_complete": True}
 
     async def _discover_components_node(
-        self, state: DynamicActivationState
+        self,
+        state: DynamicActivationState,
     ) -> dict[str, Any]:
         """Discover components for missing capabilities."""
         discovered_components = []
@@ -481,7 +486,7 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
             if self._discovery_agent:
                 # Use discovery agent
                 components = await self._discovery_agent.discover_components(
-                    f"components for {capability}"
+                    f"components for {capability}",
                 )
                 discovered_components.extend(components)
 
@@ -503,7 +508,8 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
         }
 
     async def _activate_components_node(
-        self, state: DynamicActivationState
+        self,
+        state: DynamicActivationState,
     ) -> dict[str, Any]:
         """Activate components to satisfy missing capabilities."""
         activated_components = []
@@ -515,10 +521,7 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
                 item = state.registry.get_item(item_id)
                 if item and not item.is_active:
                     # Simple matching - check if capability is in description
-                    if (
-                        capability in item.description.lower()
-                        or capability in item.name.lower()
-                    ):
+                    if capability in item.description.lower() or capability in item.name.lower():
                         meta_state = state.activate_component(item_id)
                         if meta_state:
                             activated_components.append(item_id)
@@ -555,7 +558,8 @@ class DynamicActivationSupervisor(Agent[DynamicActivationState]):
 
         # Execute through meta state
         result = await self._meta_self.execute_agent(
-            input_data=execution_prompt, update_state=True
+            input_data=execution_prompt,
+            update_state=True,
         )
 
         return {

@@ -3,6 +3,8 @@
 This module provides prompts functionality for the Haive framework.
 """
 
+from __future__ import annotations
+
 from langchain_core.prompts import ChatPromptTemplate
 
 # Initial response prompt
@@ -18,7 +20,7 @@ Analyze the user's request and decide whether to:
 Available tools: {tools}""",
         ),
         ("human", "{input_query}"),
-    ]
+    ],
 )
 
 # Expansion prompt - generates candidates
@@ -41,7 +43,7 @@ Current trajectory:
 
 Generate {n_candidates} diverse candidate next actions.""",
         ),
-    ]
+    ],
 )
 
 # Reflection prompt
@@ -71,7 +73,7 @@ Response to evaluate:
 
 Provide your reflection and score.""",
         ),
-    ]
+    ],
 )
 
 # Selection prompt
@@ -98,5 +100,5 @@ Rollouts completed: {rollouts_completed}/{max_rollouts}
 
 Should we continue searching? If so, which node should we expand?""",
         ),
-    ]
+    ],
 )

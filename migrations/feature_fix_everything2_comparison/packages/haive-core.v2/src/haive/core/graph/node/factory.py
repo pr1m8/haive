@@ -15,9 +15,9 @@ Functions:
 # src/haive/core/graph/node/factory.py
 
 import asyncio
+from collections.abc import Callable
 import inspect
 import logging
-from collections.abc import Callable
 from typing import Any
 
 from langgraph.graph import END
@@ -35,8 +35,9 @@ logger = logging.getLogger(__name__)
 class NodeFactory:
     """Factory for creating node functions from configurations.
 
-    This class provides methods for creating different types of node functions based on
-    their configuration, engine type, or specialized functionality.
+    This class provides methods for creating different types of node
+    functions based on their configuration, engine type, or specialized
+    functionality.
     """
 
     @classmethod
@@ -67,13 +68,16 @@ class NodeFactory:
 
     @classmethod
     def _create_invokable_engine_node(
-        cls, config: NodeConfig, engine: InvokableEngine, engine_id: str | None
+        cls,
+        config: NodeConfig,
+        engine: InvokableEngine,
+        engine_id: str | None,
     ) -> Callable:
-        """Create a node function for an invokable engine.
+        """Create a node function for an invocable engine.
 
         Args:
             config: Node configuration
-            engine: Invokable engine
+            engine: Invocable engine
             engine_id: Optional engine ID
 
         Returns:
@@ -85,9 +89,7 @@ class NodeFactory:
         output_mapping = config.get_output_mapping()
 
         # Get engine-specific ID or name for lookup
-        engine_id = (
-            engine_id or getattr(engine, "name", None) or getattr(engine, "id", None)
-        )
+        engine_id = engine_id or getattr(engine, "name", None) or getattr(engine, "id", None)
 
         def node_function(state: dict[str, Any], config: dict[str, Any] | None = None):
             """Node function that uses engine's invoke method."""
@@ -107,10 +109,7 @@ class NodeFactory:
                 processed_output = cls._process_output(result, output_mapping)
 
                 # Handle structured output models (special case)
-                if (
-                    hasattr(engine, "structured_output_model")
-                    and engine.structured_output_model
-                ):
+                if hasattr(engine, "structured_output_model") and engine.structured_output_model:
                     model_name = engine.structured_output_model.__name__.lower()
                     # If result is the model instance, ensure it's correctly
                     # mapped
@@ -123,8 +122,7 @@ class NodeFactory:
                 return Command(update=processed_output, goto=command_goto)
             except Exception as e:
                 logger.exception(
-                    f"Error in node {
-                        engine_id or 'unknown'}: {e}"
+                    f"Error in node {engine_id or 'unknown'}: {e}",
                 )
                 return Command(update={"error": str(e)}, goto=command_goto)
 
@@ -136,7 +134,10 @@ class NodeFactory:
 
     @classmethod
     def _create_non_invokable_engine_node(
-        cls, config: NodeConfig, engine: NonInvokableEngine, engine_id: str | None
+        cls,
+        config: NodeConfig,
+        engine: NonInvokableEngine,
+        engine_id: str | None,
     ) -> Callable:
         """Create a node function for a non-invokable engine.
 
@@ -184,8 +185,7 @@ class NodeFactory:
                 return Command(update=processed_output, goto=command_goto)
             except Exception as e:
                 logger.exception(
-                    f"Error in non-invokable node {
-                        engine_id or 'unknown'}: {e}"
+                    f"Error in non-invokable node {engine_id or 'unknown'}: {e}",
                 )
                 return Command(update={"error": str(e)}, goto=command_goto)
 
@@ -255,8 +255,7 @@ class NodeFactory:
 
                 # Handle result that's already a Command or Send
                 if isinstance(result, Command | Send) or (
-                    isinstance(result, list)
-                    and all(isinstance(item, Send) for item in result)
+                    isinstance(result, list) and all(isinstance(item, Send) for item in result)
                 ):
                     return result
 
@@ -286,8 +285,7 @@ class NodeFactory:
 
                     # Handle result that's already a Command or Send
                     if isinstance(result, Command | Send) or (
-                        isinstance(result, list)
-                        and all(isinstance(item, Send) for item in result)
+                        isinstance(result, list) and all(isinstance(item, Send) for item in result)
                     ):
                         return result
 
@@ -354,8 +352,7 @@ class NodeFactory:
 
                 # If result is already a Command or Send, return it
                 if isinstance(result, Command | Send) or (
-                    isinstance(result, list)
-                    and all(isinstance(item, Send) for item in result)
+                    isinstance(result, list) and all(isinstance(item, Send) for item in result)
                 ):
                     # If Command but no goto, add our goto
                     if (
@@ -394,8 +391,7 @@ class NodeFactory:
 
                     # If result is already a Command or Send, return it
                     if isinstance(result, Command | Send) or (
-                        isinstance(result, list)
-                        and all(isinstance(item, Send) for item in result)
+                        isinstance(result, list) and all(isinstance(item, Send) for item in result)
                     ):
                         # If Command but no goto, add our goto
                         if (
@@ -473,8 +469,7 @@ class NodeFactory:
 
                 # If result is already a Command or Send, return it
                 if isinstance(result, Command | Send) or (
-                    isinstance(result, list)
-                    and all(isinstance(item, Send) for item in result)
+                    isinstance(result, list) and all(isinstance(item, Send) for item in result)
                 ):
                     # If Command but no goto, add our goto
                     if (
@@ -691,7 +686,10 @@ class NodeFactory:
 
     @classmethod
     def _extract_input(
-        cls, state: Any, input_mapping: dict[str, str], engine_id: str | None = None
+        cls,
+        state: Any,
+        input_mapping: dict[str, str],
+        engine_id: str | None = None,
     ) -> Any:
         """Extract input from state based on mapping with engine I/O awareness.
 
@@ -787,7 +785,9 @@ class NodeFactory:
 
     @classmethod
     def _process_output(
-        cls, output: Any, output_mapping: dict[str, str]
+        cls,
+        output: Any,
+        output_mapping: dict[str, str],
     ) -> dict[str, Any]:
         """Process output according to mapping.
 

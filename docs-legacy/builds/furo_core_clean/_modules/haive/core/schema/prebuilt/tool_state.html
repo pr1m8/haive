@@ -1,0 +1,966 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>haive.core.schema.prebuilt.tool_state - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for haive.core.schema.prebuilt.tool_state</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Self</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseTool</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Field</span><span class="p">,</span> <span class="n">computed_field</span><span class="p">,</span> <span class="n">model_validator</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.common.mixins.tool_route_mixin</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToolRouteMixin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">haive.core.schema.prebuilt.messages.messages_with_token_usage</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">MessagesStateWithTokenUsage</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ToolState">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ToolState</span><span class="p">(</span><span class="n">ToolRouteMixin</span><span class="p">,</span> <span class="n">MessagesStateWithTokenUsage</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;State schema for tool-based agents with tool management and token tracking.</span>
+
+<span class="sd">    ToolState combines ToolRouteMixin and MessagesStateWithTokenUsage to provide specialized</span>
+<span class="sd">    functionality for agents that use tools. It provides robust tool management infrastructure</span>
+<span class="sd">    for tool registration, categorization, routing, and execution while maintaining token</span>
+<span class="sd">    tracking for all messages.</span>
+
+<span class="sd">    This schema serves as the foundation for tool-using agent states in the Haive framework,</span>
+<span class="sd">    providing seamless integration with various tool types including LangChain tools, Pydantic</span>
+<span class="sd">    models, and callable functions. It automatically categorizes tools by type, maintains tool</span>
+<span class="sd">    metadata, and tracks tool relationships while providing LLM-specific features like context</span>
+<span class="sd">    length awareness and token usage thresholds.</span>
+
+<span class="sd">    Key features include:</span>
+
+<span class="sd">    - Automatic tool registration and synchronization</span>
+<span class="sd">    - Automatic tool synchronization from class-level engines (__engines__)</span>
+<span class="sd">    - Tool categorization by type (LangChain tool, Pydantic model, function, etc.)</span>
+<span class="sd">    - Tool routing based on tool type and characteristics</span>
+<span class="sd">    - Support for structured tool inputs and outputs with Pydantic validation</span>
+<span class="sd">    - Tool schema extraction and management</span>
+<span class="sd">    - Tool execution tracking and result handling</span>
+<span class="sd">    - Compatible with all standard tool formats used in LLM agents</span>
+
+<span class="sd">    The schema follows the same tool routes pattern as AugLLMConfig for consistency,</span>
+<span class="sd">    making it easier to work with both components in the same application. It&#39;s the</span>
+<span class="sd">    default base class used by SchemaComposer when tool usage is detected in the</span>
+<span class="sd">    components being composed.</span>
+
+<span class="sd">    This class is commonly used as a base class for specialized agent states that</span>
+<span class="sd">    need both conversation and tool capabilities, particularly for task-oriented</span>
+<span class="sd">    agents that interact with external systems or perform complex operations.</span>
+
+<span class="sd">    Tool Synchronization:</span>
+<span class="sd">    --------------------</span>
+<span class="sd">    Tools are synchronized from multiple sources:</span>
+
+<span class="sd">    1. Instance-level engines: The setup_engines_and_tools validator finds engines</span>
+<span class="sd">       in instance fields and syncs their tools.</span>
+
+<span class="sd">    2. Class-level engines: The model_post_init method makes class engines (__engines__)</span>
+<span class="sd">       available on instances and syncs their tools.</span>
+
+<span class="sd">    This ensures tools are properly synchronized regardless of whether engines are</span>
+<span class="sd">    stored at the class level by SchemaComposer or added directly to instances.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Content field&quot;</span><span class="p">)</span>
+    <span class="n">output_schemas</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Output schemas for tools&quot;</span>
+    <span class="p">)</span>
+    <span class="n">engine_route_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;llm&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;langchain_tool&quot;</span><span class="p">,</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;pydantic_model&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;aug_llm&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;langchain_tool&quot;</span><span class="p">,</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;pydantic_model&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;retriever&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;retriever&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;parser&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;pydantic_model&quot;</span><span class="p">],</span>
+        <span class="p">},</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Configuration of which tool routes each engine type accepts&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="ToolState.sync_tools_and_update_routes">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.sync_tools_and_update_routes">[docs]</a>
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sync_tools_and_update_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sync tools from engines and update tool routes after model creation.</span>
+
+<span class="sd">        This runs after the parent validators, so engines and tool routes are already set up.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">pydantic_core</span><span class="w"> </span><span class="kn">import</span> <span class="n">PydanticUndefined</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span> <span class="ow">is</span> <span class="n">PydanticUndefined</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tools</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool_routes&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span> <span class="ow">is</span> <span class="n">PydanticUndefined</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool_metadata&quot;</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span> <span class="ow">is</span> <span class="n">PydanticUndefined</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool_instances&quot;</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_instances</span> <span class="ow">is</span> <span class="n">PydanticUndefined</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool_instances</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tools_dict&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools_dict</span> <span class="ow">is</span> <span class="n">PydanticUndefined</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tools_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;routed_tools&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">routed_tools</span> <span class="ow">is</span> <span class="n">PydanticUndefined</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">routed_tools</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">auto_track_all_tokens</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_validate_and_process_tools</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tools_from_instance_engines</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="s2">&quot;engines&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Initial tool sync from class engines for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tools_from_class_engines</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tool_routes</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tools_to_engines_by_route</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sync_tools_from_instance_engines</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sync tools from instance-level engine fields to state.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;engine_type&quot;</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Found instance engine field &#39;</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2">&#39; with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">field_value</span><span class="o">.</span><span class="n">tools</span><span class="p">)</span><span class="si">}</span><span class="s2"> tools&quot;</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">tool</span> <span class="ow">in</span> <span class="n">field_value</span><span class="o">.</span><span class="n">tools</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">tool</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                        <span class="n">tool_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tool</span><span class="p">))</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Added tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; from instance engine &#39;</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                        <span class="p">)</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;tool_routes&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">field_value</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Syncing tool routes from instance engine &#39;</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">field_value</span><span class="o">.</span><span class="n">tool_routes</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">field_value</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;tool_metadata&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">field_value</span><span class="o">.</span><span class="n">tool_metadata</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Syncing tool metadata from instance engine &#39;</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">field_value</span><span class="o">.</span><span class="n">tool_metadata</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tool_metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">field_value</span><span class="o">.</span><span class="n">tool_metadata</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sync_tools_from_class_engines</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sync tools from class-level engines to state.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="s2">&quot;engines&quot;</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">engine_name</span><span class="p">,</span> <span class="n">engine</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">engine</span><span class="o">.</span><span class="n">tools</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Syncing </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">engine</span><span class="o">.</span><span class="n">tools</span><span class="p">)</span><span class="si">}</span><span class="s2"> tools from class engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">tool</span> <span class="ow">in</span> <span class="n">engine</span><span class="o">.</span><span class="n">tools</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">tool</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                        <span class="n">tool_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tool</span><span class="p">))</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Added tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; from class engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sync_tools_to_engines_by_route</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sync tools to appropriate engines based on their routes and engine types.</span>
+<span class="sd">        Only syncs tools to engines that can handle their specific route type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="s2">&quot;engines&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">engine_name</span><span class="p">,</span> <span class="n">engine</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">):</span>
+                    <span class="n">engine_type</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;engine_type&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tools_to_engine_by_route</span><span class="p">(</span>
+                        <span class="n">engine</span><span class="p">,</span> <span class="n">engine_name</span><span class="p">,</span> <span class="n">engine_type</span><span class="p">,</span> <span class="n">is_class_level</span><span class="o">=</span><span class="kc">True</span>
+                    <span class="p">)</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">field_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;engine_type&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">):</span>
+                <span class="n">engine_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+                <span class="n">engine_type</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;engine_type&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tools_to_engine_by_route</span><span class="p">(</span>
+                    <span class="n">field_value</span><span class="p">,</span> <span class="n">engine_name</span><span class="p">,</span> <span class="n">engine_type</span><span class="p">,</span> <span class="n">is_class_level</span><span class="o">=</span><span class="kc">False</span>
+                <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sync_tools_to_engine_by_route</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">engine</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">engine_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">engine_type</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">is_class_level</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sync tools to a specific engine based on routing compatibility.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            engine: The engine object</span>
+<span class="sd">            engine_name: Name of the engine</span>
+<span class="sd">            engine_type: Type of the engine (e.g., &#39;llm&#39;, &#39;retriever&#39;, etc.)</span>
+<span class="sd">            is_class_level: Whether this is a class-level or instance-level engine</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">engine_tools</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">level_str</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span> <span class="k">if</span> <span class="n">is_class_level</span> <span class="k">else</span> <span class="s2">&quot;instance&quot;</span>
+        <span class="n">engine_type_str</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">engine_type</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine_type</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">engine_type</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">tool</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">:</span>
+            <span class="n">tool_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tool</span><span class="p">))</span>
+            <span class="n">tool_route</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tool_route</span><span class="p">(</span><span class="n">tool</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_sync_tool_to_engine</span><span class="p">(</span><span class="n">tool_route</span><span class="p">,</span> <span class="n">engine_type_str</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">tool</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">engine_tools</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Syncing tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; (route: </span><span class="si">{</span><span class="n">tool_route</span><span class="si">}</span><span class="s2">) to </span><span class="si">{</span><span class="n">level_str</span><span class="si">}</span><span class="s2"> engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39; (type: </span><span class="si">{</span><span class="n">engine_type_str</span><span class="si">}</span><span class="s2">)&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">engine_tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tool_routes&quot;</span><span class="p">):</span>
+                        <span class="n">engine</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">tool_route</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Skipping tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; (route: </span><span class="si">{</span><span class="n">tool_route</span><span class="si">}</span><span class="s2">) for </span><span class="si">{</span><span class="n">level_str</span><span class="si">}</span><span class="s2"> engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39; (type: </span><span class="si">{</span><span class="n">engine_type_str</span><span class="si">}</span><span class="s2">) - route mismatch&quot;</span>
+                <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_should_sync_tool_to_engine</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tool_route</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">engine_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if a tool should be synced to an engine based on routing logic.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_route: The route type of the tool (e.g., &#39;langchain_tool&#39;, &#39;pydantic_model&#39;, etc.)</span>
+<span class="sd">            engine_type: The type of the engine (e.g., &#39;llm&#39;, &#39;retriever&#39;, etc.)</span>
+<span class="sd">            engine: The actual engine object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if the tool should be synced to this engine</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;supported_tool_routes&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">tool_route</span> <span class="ow">in</span> <span class="n">engine</span><span class="o">.</span><span class="n">supported_tool_routes</span>
+        <span class="k">if</span> <span class="n">engine_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_route_config</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tool_route</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_route_config</span><span class="p">[</span><span class="n">engine_type</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tool_routes&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="ToolState.configure_engine_routes">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.configure_engine_routes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">configure_engine_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engine_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">routes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configure which tool routes an engine type should accept.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            engine_type: The engine type (e.g., &#39;llm&#39;, &#39;retriever&#39;, etc.)</span>
+<span class="sd">            routes: List of tool routes this engine type should accept</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine_route_config</span><span class="p">[</span><span class="n">engine_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">routes</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Configured engine type &#39;</span><span class="si">{</span><span class="n">engine_type</span><span class="si">}</span><span class="s2">&#39; to accept routes: </span><span class="si">{</span><span class="n">routes</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tools_to_engines_by_route</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ToolState.add_engine_route">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.add_engine_route">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_engine_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engine_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a tool route to an engine type&#39;s accepted routes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            engine_type: The engine type</span>
+<span class="sd">            route: The tool route to add</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">engine_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_route_config</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">engine_route_config</span><span class="p">[</span><span class="n">engine_type</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">route</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_route_config</span><span class="p">[</span><span class="n">engine_type</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">engine_route_config</span><span class="p">[</span><span class="n">engine_type</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">route</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Added route &#39;</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s2">&#39; to engine type &#39;</span><span class="si">{</span><span class="n">engine_type</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tools_to_engines_by_route</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ToolState.remove_engine_route">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.remove_engine_route">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_engine_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engine_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove a tool route from an engine type&#39;s accepted routes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            engine_type: The engine type</span>
+<span class="sd">            route: The tool route to remove</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">engine_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_route_config</span>
+            <span class="ow">and</span> <span class="n">route</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine_route_config</span><span class="p">[</span><span class="n">engine_type</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">engine_route_config</span><span class="p">[</span><span class="n">engine_type</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">route</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Removed route &#39;</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s2">&#39; from engine type &#39;</span><span class="si">{</span><span class="n">engine_type</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tools_to_engines_by_route</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sync_tool_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Synchronize tool_routes with current tools - matches AugLLMConfig pattern.&quot;&quot;&quot;</span>
+        <span class="n">new_routes</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tool</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">):</span>
+            <span class="n">tool_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tool_name</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">route</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tool_route</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+            <span class="n">new_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">route</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mapped tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; to route &#39;</span><span class="si">{</span><span class="n">route</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span> <span class="o">=</span> <span class="n">new_routes</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_tool_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract tool name from various possible attributes.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">super</span><span class="p">(),</span> <span class="s2">&quot;_get_tool_name&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_tool_name</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">tool</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="n">tool</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;tool_</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_tool_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine the route type for a tool.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_basemodel_subclass</span><span class="p">(</span><span class="n">tool</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;pydantic_model&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">BaseTool</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">BaseTool</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;langchain_tool&quot;</span>
+        <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">tool</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;function&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;unknown&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_basemodel_subclass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if tool is a BaseModel subclass.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+
+            <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">BaseModel</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@computed_field</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tool_types</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Computed field for backward compatibility.</span>
+
+<span class="sd">        Maps the new tool_routes to the old tool_types interface:</span>
+<span class="sd">        - pydantic_model → parse_output</span>
+<span class="sd">        - langchain_tool → tool_node</span>
+<span class="sd">        - function → tool_node</span>
+<span class="sd">        - unknown → tool_node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">legacy_mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;pydantic_model&quot;</span><span class="p">:</span> <span class="s2">&quot;parse_output&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;langchain_tool&quot;</span><span class="p">:</span> <span class="s2">&quot;tool_node&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;tool_node&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;unknown&quot;</span><span class="p">:</span> <span class="s2">&quot;tool_node&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool_routes&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{}</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">tool_name</span><span class="p">:</span> <span class="n">legacy_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="s2">&quot;tool_node&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">tool_name</span><span class="p">,</span> <span class="n">route</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span>
+
+<div class="viewcode-block" id="ToolState.add_tool">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.add_tool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_tool</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">target_engine</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a tool and update tool routes - matches AugLLMConfig pattern.</span>
+<span class="sd">        Syncs to appropriate engines based on routing logic.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool: Tool to add</span>
+<span class="sd">            route: Optional explicit route/type (pydantic_model, langchain_tool, function, unknown)</span>
+<span class="sd">            target_engine: Optional specific engine name to add tool to (bypasses routing logic)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">tool</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+            <span class="n">tool_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tool_name</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">route</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">route</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tool_route</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Added tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; with route &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">target_engine</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tool_to_specific_engine</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">target_engine</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sync_single_tool_to_engines</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ToolState.add_tool_to_engine">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.add_tool_to_engine">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_tool_to_engine</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">engine_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a tool to a specific engine, bypassing routing logic.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool: Tool to add</span>
+<span class="sd">            engine_name: Name of the engine to add tool to</span>
+<span class="sd">            route: Optional explicit route/type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">tool</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+        <span class="n">tool_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tool_name</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">route</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">route</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tool_route</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tool_to_specific_engine</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">engine_name</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sync_tool_to_specific_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">engine_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sync a tool to a specific engine by name.&quot;&quot;&quot;</span>
+        <span class="n">tool_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tool</span><span class="p">))</span>
+        <span class="n">tool_route</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tool_route</span><span class="p">(</span><span class="n">tool</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="s2">&quot;engines&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">engine_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">engines</span><span class="p">:</span>
+            <span class="n">engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">engines</span><span class="p">[</span><span class="n">engine_name</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">):</span>
+                <span class="n">engine_tools</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">,</span> <span class="p">[])</span>
+                <span class="k">if</span> <span class="n">tool</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">engine_tools</span><span class="p">:</span>
+                    <span class="n">engine_tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Added tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; to class engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tool_routes&quot;</span><span class="p">):</span>
+                        <span class="n">engine</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">tool_route</span>
+                <span class="k">return</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">field_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;engine_type&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">):</span>
+                <span class="n">current_engine_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">current_engine_name</span> <span class="o">==</span> <span class="n">engine_name</span><span class="p">:</span>
+                    <span class="n">engine_tools</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">,</span> <span class="p">[])</span>
+                    <span class="k">if</span> <span class="n">tool</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">engine_tools</span><span class="p">:</span>
+                        <span class="n">engine_tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Added tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; to instance engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">return</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39; not found for tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sync_single_tool_to_engines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sync a single tool to appropriate engines based on routing logic.&quot;&quot;&quot;</span>
+        <span class="n">tool_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tool</span><span class="p">))</span>
+        <span class="n">tool_route</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tool_route</span><span class="p">(</span><span class="n">tool</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="s2">&quot;engines&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">engine_name</span><span class="p">,</span> <span class="n">engine</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">):</span>
+                    <span class="n">engine_type</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;engine_type&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span>
+                    <span class="n">engine_type_str</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">engine_type</span><span class="o">.</span><span class="n">value</span>
+                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine_type</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span>
+                        <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">engine_type</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_sync_tool_to_engine</span><span class="p">(</span>
+                        <span class="n">tool_route</span><span class="p">,</span> <span class="n">engine_type_str</span><span class="p">,</span> <span class="n">engine</span>
+                    <span class="p">):</span>
+                        <span class="n">engine_tools</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">,</span> <span class="p">[])</span>
+                        <span class="k">if</span> <span class="n">tool</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">engine_tools</span><span class="p">:</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                                <span class="sa">f</span><span class="s2">&quot;Adding tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; (route: </span><span class="si">{</span><span class="n">tool_route</span><span class="si">}</span><span class="s2">) to class engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39; (type: </span><span class="si">{</span><span class="n">engine_type_str</span><span class="si">}</span><span class="s2">)&quot;</span>
+                            <span class="p">)</span>
+                            <span class="n">engine_tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tool_routes&quot;</span><span class="p">):</span>
+                                <span class="n">engine</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">tool_route</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Skipping tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; (route: </span><span class="si">{</span><span class="n">tool_route</span><span class="si">}</span><span class="s2">) for class engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39; (type: </span><span class="si">{</span><span class="n">engine_type_str</span><span class="si">}</span><span class="s2">) - route mismatch&quot;</span>
+                        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">field_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;engine_type&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">):</span>
+                <span class="n">engine_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+                <span class="n">engine_type</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;engine_type&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span>
+                <span class="n">engine_type_str</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">engine_type</span><span class="o">.</span><span class="n">value</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine_type</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">engine_type</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_sync_tool_to_engine</span><span class="p">(</span>
+                    <span class="n">tool_route</span><span class="p">,</span> <span class="n">engine_type_str</span><span class="p">,</span> <span class="n">field_value</span>
+                <span class="p">):</span>
+                    <span class="n">engine_tools</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">,</span> <span class="p">[])</span>
+                    <span class="k">if</span> <span class="n">tool</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">engine_tools</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Adding tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; (route: </span><span class="si">{</span><span class="n">tool_route</span><span class="si">}</span><span class="s2">) to instance engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39; (type: </span><span class="si">{</span><span class="n">engine_type_str</span><span class="si">}</span><span class="s2">)&quot;</span>
+                        <span class="p">)</span>
+                        <span class="n">engine_tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Skipping tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; (route: </span><span class="si">{</span><span class="n">tool_route</span><span class="si">}</span><span class="s2">) for instance engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39; (type: </span><span class="si">{</span><span class="n">engine_type_str</span><span class="si">}</span><span class="s2">) - route mismatch&quot;</span>
+                    <span class="p">)</span>
+
+<div class="viewcode-block" id="ToolState.remove_tool">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.remove_tool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove a tool and update tool routes.</span>
+<span class="sd">        Also removes from all engines.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool: Tool to remove</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">tool</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+            <span class="n">tool_name</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="n">tool</span><span class="p">:</span>
+                    <span class="n">tool_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tool_name</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">tool_name</span> <span class="ow">and</span> <span class="n">tool_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Removed tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_remove_tool_from_engines</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tool_routes</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_remove_tool_from_engines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove a tool from all engines.&quot;&quot;&quot;</span>
+        <span class="n">tool_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tool</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="s2">&quot;engines&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">engine_name</span><span class="p">,</span> <span class="n">engine</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">):</span>
+                    <span class="n">engine_tools</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">,</span> <span class="p">[])</span>
+                    <span class="k">if</span> <span class="n">tool</span> <span class="ow">in</span> <span class="n">engine_tools</span><span class="p">:</span>
+                        <span class="n">engine_tools</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Removed tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; from class engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                        <span class="p">)</span>
+                        <span class="k">if</span> <span class="p">(</span>
+                            <span class="nb">hasattr</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;tool_routes&quot;</span><span class="p">)</span>
+                            <span class="ow">and</span> <span class="n">tool_name</span> <span class="ow">in</span> <span class="n">engine</span><span class="o">.</span><span class="n">tool_routes</span>
+                        <span class="p">):</span>
+                            <span class="k">del</span> <span class="n">engine</span><span class="o">.</span><span class="n">tool_routes</span><span class="p">[</span><span class="n">tool_name</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field_value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">field_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;engine_type&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">):</span>
+                <span class="n">engine_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+                <span class="n">engine_tools</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field_value</span><span class="p">,</span> <span class="s2">&quot;tools&quot;</span><span class="p">,</span> <span class="p">[])</span>
+                <span class="k">if</span> <span class="n">tool</span> <span class="ow">in</span> <span class="n">engine_tools</span><span class="p">:</span>
+                    <span class="n">engine_tools</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Removed tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; from instance engine &#39;</span><span class="si">{</span><span class="n">engine_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                    <span class="p">)</span>
+
+<div class="viewcode-block" id="ToolState.get_tool_by_name">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.get_tool_by_name">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tool_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a tool by its name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_name: Name of tool to retrieve</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tool if found, None otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tool</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tool_name</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="n">tool_name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">tool</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="ToolState.get_tools_by_route">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.get_tools_by_route">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tools_by_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get all tools of a specific route type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            route: Route type to retrieve (pydantic_model, langchain_tool, function, unknown)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of tools of the specified route type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tool_name</span><span class="p">,</span> <span class="n">tool_route</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">tool_route</span> <span class="o">==</span> <span class="n">route</span><span class="p">:</span>
+                <span class="n">tool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tool_by_name</span><span class="p">(</span><span class="n">tool_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">tool</span><span class="p">:</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="ToolState.get_tools_by_type">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.get_tools_by_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tools_by_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get all tools of a specific type (legacy interface).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_type: Type of tools to retrieve (parse_output, tool_node)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of tools of the specified type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">type_to_routes</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;parse_output&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;pydantic_model&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;tool_node&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;langchain_tool&quot;</span><span class="p">,</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="n">routes</span> <span class="o">=</span> <span class="n">type_to_routes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tool_type</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">route</span> <span class="ow">in</span> <span class="n">routes</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tools_by_route</span><span class="p">(</span><span class="n">route</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="ToolState.has_tool_route">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.has_tool_route">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_tool_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if any tools of a specific route exist.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            route: Route to check for (pydantic_model, langchain_tool, function, unknown)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if any tools of this route exist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">route</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ToolState.has_tool_type">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.has_tool_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_tool_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if any tools of a specific type exist (legacy interface).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_type: Type to check for (parse_output, tool_node)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if any tools of this type exist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">tool_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_types</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ToolState.refresh_tool_routes">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.refresh_tool_routes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">refresh_tool_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Manually refresh tool routes if needed.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sync_tool_routes</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ToolState.update_tool_types">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.update_tool_types">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_tool_types</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Legacy interface - now calls refresh_tool_routes.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh_tool_routes</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ToolState.get_tool_route">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.get_tool_route">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tool_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the route of a specific tool.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_name: Name of the tool</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tool route if found (pydantic_model, langchain_tool, function, unknown), None otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_routes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tool_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ToolState.get_tool_type">
+<a class="viewcode-back" href="../../../../../api_clean/haive/core/schema/prebuilt/index.html#haive.core.schema.ToolState.get_tool_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tool_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the type of a specific tool (legacy interface).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tool_name: Name of the tool</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tool type if found (parse_output, tool_node), None otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_types</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tool_name</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

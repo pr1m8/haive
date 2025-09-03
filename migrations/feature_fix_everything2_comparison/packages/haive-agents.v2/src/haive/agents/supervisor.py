@@ -12,29 +12,24 @@ Functions:
     temp_node: Temp Node functionality.
 """
 
+from __future__ import annotations
+
 import operator
 from typing import Annotated
 
+from langchain_core.tools import tool
+from langgraph.graph import StateGraph
+from pydantic import Any, BaseModel, Dict, Field, computed_field
+
+from haive.agents.base.agent import Agent
+from haive.agents.react.agent import ReactAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.common.mixins.getter_mixin import GetterMixin
 from haive.core.engine.aug_llm import AugLLMConfig
 
 # ============================================================================
 # REACT AGENT
 # ============================================================================
-from langchain_core.tools import tool
-from pydantic import (
-    Any,
-    BaseModel,
-    Dict,
-    Field,
-    computed_field,
-)
-
-from haive.agents.base.agent import Agent
-from haive.agents.react.agent import ReactAgent
-
-# from haive.agents.rag.base.agent import SimpleRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 
 
 @tool
@@ -67,11 +62,8 @@ def temp_node(state: Dict[str, Any]):
     agent = state.get("selected_agent")
     if agent:
         agent.create_runnable()
-        # runnable.run(input_payload) # input_payload undefined
     return state
 
-
-from langgraph.graph import StateGraph
 
 base_graph = StateGraph(state_schema=MultiAgentState)
 base_graph.add_node(temp_node)

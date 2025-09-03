@@ -1,20 +1,23 @@
 """Enhanced Memory RAG with ReAct Pattern.
 
-RAG system that maintains conversation memory and uses ReAct (Reasoning + Acting)
-pattern for complex multi-step queries requiring reasoning and tool use.
+RAG system that maintains conversation memory and uses ReAct (Reasoning
++ Acting) pattern for complex multi-step queries requiring reasoning and
+tool use.
 """
 
-import json
+from __future__ import annotations
+
 from enum import Enum
+import json
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
 from haive.agents.chain import ChainAgent, flow_with_edges
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 class MemoryType(str, Enum):
@@ -42,7 +45,9 @@ class MemoryEntry(BaseModel):
     memory_type: MemoryType = Field(description="Type of memory")
     timestamp: str = Field(description="When this memory was created")
     relevance_score: float = Field(
-        ge=0.0, le=1.0, description="Relevance to current query"
+        ge=0.0,
+        le=1.0,
+        description="Relevance to current query",
     )
     context_tags: list[str] = Field(default_factory=list, description="Context tags")
 
@@ -117,18 +122,12 @@ def create_enhanced_memory_react_rag(
         )
 
         # Identify gaps in knowledge
-        memory_gaps = (
-            ["missing recent updates", "lacks specific examples"]
-            if mock_memories
-            else []
-        )
+        memory_gaps = ["missing recent updates", "lacks specific examples"] if mock_memories else []
 
         analysis = MemoryAnalysis(
             relevant_memories=mock_memories,
             memory_gaps=memory_gaps,
-            temporal_context=(
-                "Continuing conversation" if mock_memories else "New conversation"
-            ),
+            temporal_context=("Continuing conversation" if mock_memories else "New conversation"),
             confidence=0.8 if mock_memories else 0.4,
         )
 
@@ -152,7 +151,7 @@ def create_enhanced_memory_react_rag(
 
             THOUGHT: What should I think about and plan for this query?""",
                 ),
-            ]
+            ],
         ),
         structured_output_model=ReActStepResult,
         output_key="thought_result",
@@ -176,7 +175,7 @@ def create_enhanced_memory_react_rag(
 
             ACTION: What action should I take next?""",
                 ),
-            ]
+            ],
         ),
         structured_output_model=ReActStepResult,
         output_key="action_result",
@@ -236,7 +235,7 @@ def create_enhanced_memory_react_rag(
 
             OBSERVATION: What did I learn from this action?""",
                 ),
-            ]
+            ],
         ),
         structured_output_model=ReActStepResult,
         output_key="observation_result",
@@ -262,7 +261,7 @@ def create_enhanced_memory_react_rag(
 
             REFLECTION: Do I have enough information to answer well?""",
                 ),
-            ]
+            ],
         ),
         structured_output_model=ReActStepResult,
         output_key="reflection_result",
@@ -293,7 +292,7 @@ def create_enhanced_memory_react_rag(
 
             Generate a thoughtful, well-reasoned answer.""",
                 ),
-            ]
+            ],
         ),
         output_key="generated_answer",
     )
@@ -312,7 +311,7 @@ def create_enhanced_memory_react_rag(
                 timestamp="2024-01-01T12:00:00",
                 relevance_score=0.9,
                 context_tags=["recent_interaction"],
-            )
+            ),
         ]
 
         return {"new_memories": new_memories, "memory_updated": True}
@@ -335,7 +334,7 @@ def create_enhanced_memory_react_rag(
 
             Provide a clear, comprehensive response that shows your reasoning process.""",
                 ),
-            ]
+            ],
         ),
         structured_output_model=EnhancedResponse,
         output_key="enhanced_response",
@@ -375,7 +374,8 @@ def create_enhanced_memory_react_rag(
 
 
 def create_simple_memory_react_rag(
-    documents: list[Document], llm_config: LLMConfig | None = None
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
 ) -> ChainAgent:
     """Create a simplified memory-aware ReAct RAG."""
     if not llm_config:
@@ -413,7 +413,7 @@ def create_simple_memory_react_rag(
 
             Use ReAct reasoning to answer.""",
                 ),
-            ]
+            ],
         ),
         output_key="react_response",
     )
@@ -435,7 +435,7 @@ def create_simple_memory_react_rag(
 
             Final answer:""",
                 ),
-            ]
+            ],
         ),
         output_key="response",
     )
@@ -455,7 +455,8 @@ def create_simple_memory_react_rag(
 
 
 def create_memory_react_with_tools(
-    documents: list[Document], llm_config: LLMConfig | None = None
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
 ) -> ChainAgent:
     """Create memory ReAct RAG with tool integration."""
     if not llm_config:
@@ -494,7 +495,7 @@ def create_memory_react_with_tools(
 
             Use ReAct reasoning with tools to answer.""",
                 ),
-            ]
+            ],
         ),
         output_key="response",
     )
@@ -505,7 +506,10 @@ def create_memory_react_with_tools(
         return {"context": context}
 
     return ChainAgent(
-        check_tools, add_context, react_with_tools, name="Memory ReAct RAG with Tools"
+        check_tools,
+        add_context,
+        react_with_tools,
+        name="Memory ReAct RAG with Tools",
     )
 
 

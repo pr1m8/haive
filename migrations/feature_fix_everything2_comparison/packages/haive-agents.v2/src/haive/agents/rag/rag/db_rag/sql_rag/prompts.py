@@ -26,6 +26,8 @@ Example:
         >>> response = llm.invoke(messages)
 """
 
+from __future__ import annotations
+
 from langchain_core.prompts import ChatPromptTemplate
 
 # Prompt for analyzing a natural language query
@@ -55,7 +57,7 @@ Provide a detailed analysis of what's needed to answer this question with SQL.
 """
 
 ANALYZE_QUERY_PROMPT = ChatPromptTemplate.from_messages(
-    [("system", ANALYZE_QUERY_SYSTEM_PROMPT), ("human", ANALYZE_QUERY_USER_PROMPT)]
+    [("system", ANALYZE_QUERY_SYSTEM_PROMPT), ("human", ANALYZE_QUERY_USER_PROMPT)],
 )
 """Prompt for analyzing natural language queries.
 
@@ -107,7 +109,7 @@ Please generate a SQL query to answer this question:
 """
 
 GENERATE_SQL_PROMPT = ChatPromptTemplate.from_messages(
-    [("system", GENERATE_SQL_SYSTEM_PROMPT), ("human", GENERATE_SQL_USER_PROMPT)]
+    [("system", GENERATE_SQL_SYSTEM_PROMPT), ("human", GENERATE_SQL_USER_PROMPT)],
 )
 """Prompt for generating SQL queries.
 
@@ -163,7 +165,7 @@ Please validate this SQL query and identify any issues.
 """
 
 VALIDATE_SQL_PROMPT = ChatPromptTemplate.from_messages(
-    [("system", VALIDATE_SQL_SYSTEM_PROMPT), ("human", VALIDATE_SQL_USER_PROMPT)]
+    [("system", VALIDATE_SQL_SYSTEM_PROMPT), ("human", VALIDATE_SQL_USER_PROMPT)],
 )
 """Prompt for validating SQL queries.
 
@@ -209,7 +211,7 @@ Is this question about querying the database?
 """
 
 GUARDRAILS_PROMPT = ChatPromptTemplate.from_messages(
-    [("system", GUARDRAILS_SYSTEM_PROMPT), ("human", GUARDRAILS_USER_PROMPT)]
+    [("system", GUARDRAILS_SYSTEM_PROMPT), ("human", GUARDRAILS_USER_PROMPT)],
 )
 """Prompt for domain relevance checking (guardrails).
 
@@ -255,7 +257,7 @@ GENERATE_FINAL_ANSWER_PROMPT = ChatPromptTemplate.from_messages(
     [
         ("system", GENERATE_FINAL_ANSWER_SYSTEM_PROMPT),
         ("human", GENERATE_FINAL_ANSWER_USER_PROMPT),
-    ]
+    ],
 )
 """Prompt for generating natural language answers.
 
@@ -296,7 +298,7 @@ HALLUCINATION_CHECK_PROMPT = ChatPromptTemplate.from_messages(
     [
         ("system", HALLUCINATION_CHECK_SYSTEM_PROMPT),
         ("human", HALLUCINATION_CHECK_USER_PROMPT),
-    ]
+    ],
 )
 """Prompt for detecting hallucinations in answers.
 
@@ -332,7 +334,7 @@ Answer with 'yes' or 'no'.
 """
 
 ANSWER_GRADING_PROMPT = ChatPromptTemplate.from_messages(
-    [("system", ANSWER_GRADING_SYSTEM_PROMPT), ("human", ANSWER_GRADING_USER_PROMPT)]
+    [("system", ANSWER_GRADING_SYSTEM_PROMPT), ("human", ANSWER_GRADING_USER_PROMPT)],
 )
 """Prompt for grading answer relevance.
 

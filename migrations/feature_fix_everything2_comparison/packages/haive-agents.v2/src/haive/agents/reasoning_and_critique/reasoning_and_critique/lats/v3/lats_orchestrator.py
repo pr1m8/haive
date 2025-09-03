@@ -1,8 +1,10 @@
 """LATS Orchestrator using EnhancedMultiAgentV4.
 
-This orchestrator coordinates the LATS algorithm components using the same
-multi-agent pattern as TOT and Self-Discover implementations.
+This orchestrator coordinates the LATS algorithm components using the
+same multi-agent pattern as TOT and Self-Discover implementations.
 """
+
+from __future__ import annotations
 
 import logging
 from typing import Any
@@ -77,11 +79,14 @@ class LATSOrchestrator(EnhancedMultiAgentV4):
         )
 
         self.action_generator = ActionGenerator(
-            name="lats_action_generator", num_candidates=num_candidates, temperature=0.7
+            name="lats_action_generator",
+            num_candidates=num_candidates,
+            temperature=0.7,
         )
 
         self.reflection_evaluator = ReflectionEvaluator(
-            name="lats_reflection_evaluator", temperature=0.5
+            name="lats_reflection_evaluator",
+            temperature=0.5,
         )
 
         # Initialize with the agents in sequence
@@ -201,7 +206,10 @@ class LATSOrchestrator(EnhancedMultiAgentV4):
 
 # Factory function for easy creation
 def create_lats_orchestrator(
-    problem: str, goal: str, name: str = "lats_solver", **kwargs
+    problem: str,
+    goal: str,
+    name: str = "lats_solver",
+    **kwargs,
 ) -> LATSOrchestrator:
     """Create a LATS orchestrator for solving a problem.
 

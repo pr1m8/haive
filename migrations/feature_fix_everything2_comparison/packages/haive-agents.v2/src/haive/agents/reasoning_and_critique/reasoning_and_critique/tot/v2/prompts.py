@@ -3,6 +3,8 @@
 This module provides prompts functionality for the Haive framework.
 """
 
+from __future__ import annotations
+
 from langchain_core.prompts import ChatPromptTemplate
 
 # Expansion prompts - all fields must exist in ToTState
@@ -36,7 +38,7 @@ Parent candidates to expand from:
 Generate {expansion_factor} new candidate solutions.
 Each should be substantively different while building on what works.""",
         ),
-    ]
+    ],
 )
 
 # Scoring prompts - all fields exist in state or computed properties
@@ -72,7 +74,7 @@ Best candidates so far:
 
 Evaluate this candidate thoroughly and provide a score with detailed reasoning.""",
         ),
-    ]
+    ],
 )
 
 # Control/Pruning prompts - using only state fields
@@ -110,5 +112,5 @@ Parameters:
 Decide which candidates to keep and whether to continue searching.
 If continuing, suggest the strategy for the next iteration.""",
         ),
-    ]
+    ],
 )

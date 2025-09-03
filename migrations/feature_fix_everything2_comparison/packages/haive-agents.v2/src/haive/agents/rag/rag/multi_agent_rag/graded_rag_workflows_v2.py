@@ -4,20 +4,19 @@ This version uses state schemas with built-in configuration support,
 providing a cleaner approach to managing agent-specific parameters.
 """
 
+from __future__ import annotations
+
 from typing import Any
 
-from haive.agents.multi.base import ExecutionMode, MultiAgent
-from haive.agents.rag.multi_agent_rag.enhanced_state_schemas import (
-    GradedRAGState,
-    StateConfigMixin,
-)
-from haive.agents.rag.multi_agent_rag.grading_components import (
-    create_answer_grader,
-    create_document_grader,
-    create_hallucination_grader,
-    create_priority_ranker,
-    create_query_analyzer,
-)
+from haive.agents.multi.base import ExecutionMode
+from haive.agents.multi.base import MultiAgent
+from haive.agents.rag.multi_agent_rag.enhanced_state_schemas import GradedRAGState
+from haive.agents.rag.multi_agent_rag.enhanced_state_schemas import StateConfigMixin
+from haive.agents.rag.multi_agent_rag.grading_components import create_answer_grader
+from haive.agents.rag.multi_agent_rag.grading_components import create_document_grader
+from haive.agents.rag.multi_agent_rag.grading_components import create_hallucination_grader
+from haive.agents.rag.multi_agent_rag.grading_components import create_priority_ranker
+from haive.agents.rag.multi_agent_rag.grading_components import create_query_analyzer
 from haive.agents.simple import SimpleAgent
 
 
@@ -244,12 +243,14 @@ def create_graded_rag_agent(
     grading_criteria: list[str] | None = None,
     **kwargs,
 ) -> MultiAgent:
-    """Factory function to create graded RAG agents with proper configuration."""
+    """Factory function to create graded RAG agents with proper
+    configuration."""
     if workflow_type == "fully_graded":
         return FullyGradedRAGAgentV2(relevance_threshold=relevance_threshold, **kwargs)
     if workflow_type == "multi_criteria":
         return MultiCriteriaGradedRAGAgentV2(
-            grading_criteria=grading_criteria, **kwargs
+            grading_criteria=grading_criteria,
+            **kwargs,
         )
     raise ValueError(f"Unknown workflow type: {workflow_type}")
 
@@ -258,7 +259,9 @@ def create_graded_rag_agent(
 if __name__ == "__main__":
     # Create agent with configuration
     agent = create_graded_rag_agent(
-        workflow_type="fully_graded", relevance_threshold=0.7, name="production_rag"
+        workflow_type="fully_graded",
+        relevance_threshold=0.7,
+        name="production_rag",
     )
 
     # Configuration is stored in state, not agent
@@ -269,5 +272,5 @@ if __name__ == "__main__":
             # Can override configuration per-invocation
             "relevance_threshold": 0.8,
             "max_documents": 5,
-        }
+        },
     )

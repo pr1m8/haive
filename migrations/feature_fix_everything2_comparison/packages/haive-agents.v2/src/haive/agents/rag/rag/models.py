@@ -19,6 +19,8 @@ Typical usage:
     - Type hints for function parameters and returns
 """
 
+from __future__ import annotations
+
 from enum import Enum
 
 from pydantic import BaseModel, Field
@@ -178,7 +180,9 @@ class MemoryEntry(BaseModel):
     memory_type: MemoryType = Field(description="Type of memory")
     timestamp: str = Field(description="When this memory was created")
     relevance_score: float = Field(
-        ge=0.0, le=1.0, description="Relevance to current query"
+        ge=0.0,
+        le=1.0,
+        description="Relevance to current query",
     )
     context_tags: list[str] = Field(default_factory=list, description="Context tags")
 
@@ -236,7 +240,8 @@ class QueryClassification(BaseModel):
 
     primary_type: QueryType = Field(description="Primary query type")
     secondary_type: QueryType | None = Field(
-        default=None, description="Secondary type if applicable"
+        default=None,
+        description="Secondary type if applicable",
     )
     complexity: str = Field(description="Query complexity")
     confidence: float = Field(ge=0.0, le=1.0, description="Classification confidence")
@@ -276,7 +281,7 @@ class MergedResult(BaseModel):
 
     primary_answer: str = Field(description="Primary answer")
     supporting_evidence: list[str] = Field(
-        description="Supporting evidence from branches"
+        description="Supporting evidence from branches",
     )
     confidence_score: float = Field(ge=0.0, le=1.0, description="Overall confidence")
     sources_used: list[str] = Field(description="Sources used")

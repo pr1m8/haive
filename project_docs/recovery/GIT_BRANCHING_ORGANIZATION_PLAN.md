@@ -1,6 +1,6 @@
 # Git Branching Strategy for haive-core and haive-agents Organization
 
-**Date**: 2025-01-21  
+**Date**: 2025-01-21
 **Purpose**: Organize node system and submodules with proper git branching
 
 ## 🎯 **Strategy Overview**

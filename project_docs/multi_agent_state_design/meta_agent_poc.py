@@ -4,17 +4,17 @@
 This explores a state that contains agents and itself, with proper type safety
 and state projection capabilities.
 """
+from __future__ import annotations
+from pydantic import BaseModel, Field
+from langchain_core.messages import BaseMessage, HumanMessage
+from haive.core.schema.state_schema import StateSchema
+from typing import Any, Dict, Generic, List, Optional, Type, TypeVar
+from abc import ABC, abstractmethod
 
 import sys
 
 sys.path.insert(0, "/home/will/Projects/haive/backend/haive")
 
-from abc import ABC, abstractmethod
-from typing import Any, Dict, Generic, List, Optional, Type, TypeVar
-
-from haive.core.schema.state_schema import StateSchema
-from langchain_core.messages import BaseMessage, HumanMessage
-from pydantic import BaseModel, Field
 
 # Type variable for agent state schemas
 TAgentState = TypeVar("TAgentState", bound=StateSchema)
@@ -207,10 +207,8 @@ def test_meta_agent_state():
     meta_state.register_agent("executor", ExecutorState)
     meta_state.register_agent("reviewer", ReviewerState)
 
-
     # Test 1: Get planner view
     planner_view = meta_state.get_agent_view("planner")
-
 
     # Simulate planner execution
     planner_state = planner_view.agent_state
@@ -222,7 +220,6 @@ def test_meta_agent_state():
     # Update meta state
     meta_state.update_from_agent("planner", planner_state)
 
-
     # Test 2: Get executor view
     executor_view = meta_state.get_agent_view("executor")
 
@@ -233,7 +230,6 @@ def test_meta_agent_state():
     # Transfer plan from planner to executor
     planner_data = meta_state.agent_states["planner"]
     executor_state.plan = planner_data.get("plan", "")
-
 
     # Simulate execution
     executor_state.completed_steps = ["Design UI"]

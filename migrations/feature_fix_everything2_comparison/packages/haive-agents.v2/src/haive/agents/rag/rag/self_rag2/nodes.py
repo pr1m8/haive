@@ -8,7 +8,8 @@ Functions:
     grade_documents: Grade Documents functionality.
 """
 
-### Nodes
+# Nodes
+from __future__ import annotations
 
 from typing import Any
 
@@ -64,7 +65,7 @@ def grade_documents(state: dict[str, Any]):
     filtered_docs = []
     for d in documents:
         score = retrieval_grader.invoke(
-            {"question": question, "document": d.page_content}
+            {"question": question, "document": d.page_content},
         )
         grade = score.binary_score
         if grade == "yes":
@@ -91,7 +92,7 @@ def transform_query(state: dict[str, Any]):
     return {"documents": documents, "question": better_question}
 
 
-### Edges
+# Edges
 
 
 def transform_query(

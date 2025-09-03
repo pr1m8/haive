@@ -1,7 +1,7 @@
 # StructuredOutputAgent Guide
 
-**Version**: 1.0  
-**Purpose**: Complete guide to using StructuredOutputAgent for type-safe agent outputs  
+**Version**: 1.0
+**Purpose**: Complete guide to using StructuredOutputAgent for type-safe agent outputs
 **Last Updated**: 2025-01-18
 
 ## 🎯 Overview

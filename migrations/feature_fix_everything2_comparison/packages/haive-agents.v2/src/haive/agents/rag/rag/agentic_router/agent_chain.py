@@ -3,10 +3,10 @@
 Simplified version using the new ChainAgent approach.
 """
 
+from __future__ import annotations
+
 from enum import Enum
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
@@ -17,6 +17,8 @@ from haive.agents.rag.fusion.agent import RAGFusionAgent
 from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
 from haive.agents.rag.simple.agent import SimpleRAGAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 class RAGStrategy(str, Enum):
@@ -68,7 +70,7 @@ def create_agentic_rag_router_chain(
             - flare: Iterative refinement needed""",
                 ),
                 ("human", "Query: {query}\nSelect optimal strategy."),
-            ]
+            ],
         ),
         structured_output_model=StrategyDecision,
         output_key="strategy_decision",
@@ -95,7 +97,7 @@ def create_agentic_rag_router_chain(
 
             Create a comprehensive final response.""",
                 ),
-            ]
+            ],
         ),
         output_key="final_response",
     )
@@ -131,7 +133,8 @@ def create_agentic_rag_router_chain(
 
 # Even simpler version with just a few strategies
 def create_simple_rag_router_chain(
-    documents: list[Document], llm_config: LLMConfig | None = None
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
 ) -> ChainAgent:
     """Ultra-simple RAG router with just basic routing."""
     if not llm_config:
@@ -148,7 +151,7 @@ def create_simple_rag_router_chain(
             [
                 ("system", "Classify query complexity: 'simple' or 'complex'"),
                 ("human", "{query}"),
-            ]
+            ],
         ),
         output_key="complexity",
     )
@@ -166,8 +169,9 @@ def create_simple_rag_router_chain(
 
 # Integration with multi-agent
 def create_agentic_router_multi_agent(
-    documents: list[Document], llm_config: LLMConfig | None = None
-) -> "ChainMultiAgent":
+    documents: list[Document],
+    llm_config: LLMConfig | None = None,
+) -> ChainMultiAgent:
     """Create as a multi-agent system."""
     from haive.agents.chain.multi_integration import ChainMultiAgent
 

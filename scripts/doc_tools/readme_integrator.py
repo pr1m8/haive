@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""README Integration Tool for Haive Documentation
+"""README Integration Tool for Haive Documentation.
 
-This script discovers README files throughout the codebase and integrates
-them into the Sphinx documentation.
+This script discovers README files throughout the codebase and
+integrates them into the Sphinx documentation.
 """
+from __future__ import annotations
 
 import re
 import shutil
@@ -18,8 +19,8 @@ class ReadmeIntegrator:
     def __init__(self, workspace_root: Path, docs_source: Path):
         self.workspace_root = workspace_root
         self.docs_source = docs_source
-        self.packages_dir = workspace_root / "packages"
-        self.output_dir = docs_source / "discovered_readmes"
+        self.packages_dir = workspace_root / 'packages'
+        self.output_dir = docs_source / 'discovered_readmes'
 
     def discover_readmes(self) -> list[tuple[Path, Path]]:
         """Discover all README files in the workspace."""
@@ -27,26 +28,26 @@ class ReadmeIntegrator:
 
         # Patterns to exclude
         exclude_patterns = [
-            "node_modules",
-            "build",
-            "dist",
-            "__pycache__",
-            ".git",
-            ".tox",
-            ".pytest_cache",
-            "egg-info",
-            ".venv",
-            "venv",
-            ".nox",
-            "site-packages",
-            ".cache",
-            "resources/embeddings_cache",
+            'node_modules',
+            'build',
+            'dist',
+            '__pycache__',
+            '.git',
+            '.tox',
+            '.pytest_cache',
+            'egg-info',
+            '.venv',
+            'venv',
+            '.nox',
+            'site-packages',
+            '.cache',
+            'resources/embeddings_cache',
         ]
 
         # Find READMEs in packages directory only
-        for package_dir in self.packages_dir.glob("haive-*"):
+        for package_dir in self.packages_dir.glob('haive-*'):
             # Look for README in package root
-            for name in ["README.md", "readme.md", "README.rst"]:
+            for name in ['README.md', 'readme.md', 'README.rst']:
                 readme = package_dir / name
                 if readme.exists():
                     relative_path = readme.relative_to(self.workspace_root)
@@ -54,9 +55,9 @@ class ReadmeIntegrator:
                     break
 
             # Look for READMEs in src subdirectories
-            src_dir = package_dir / "src"
+            src_dir = package_dir / 'src'
             if src_dir.exists():
-                for readme in src_dir.rglob("README.md"):
+                for readme in src_dir.rglob('README.md'):
                     # Skip excluded paths
                     if any(pattern in str(readme) for pattern in exclude_patterns):
                         continue
@@ -65,14 +66,14 @@ class ReadmeIntegrator:
                     readme_files.append((readme, relative_path))
 
         # Add main README if exists
-        main_readme = self.workspace_root / "README.md"
+        main_readme = self.workspace_root / 'README.md'
         if main_readme.exists():
-            readme_files.insert(0, (main_readme, Path("README.md")))
+            readme_files.insert(0, (main_readme, Path('README.md')))
 
         # Add project docs READMEs
-        project_docs = self.workspace_root / "project_docs"
+        project_docs = self.workspace_root / 'project_docs'
         if project_docs.exists():
-            for readme in project_docs.rglob("README.md"):
+            for readme in project_docs.rglob('README.md'):
                 if any(pattern in str(readme) for pattern in exclude_patterns):
                     continue
                 relative_path = readme.relative_to(self.workspace_root)
@@ -83,18 +84,18 @@ class ReadmeIntegrator:
     def extract_readme_metadata(self, readme_path: Path) -> dict[str, str]:
         """Extract metadata from README file."""
         content = readme_path.read_text()
-        lines = content.split("\n")
+        lines = content.split('\n')
 
         metadata = {
-            "title": "",
-            "description": "",
-            "category": "general",
+            'title': '',
+            'description': '',
+            'category': 'general',
         }
 
         # Extract title (first heading)
         for line in lines:
-            if line.startswith("# "):
-                metadata["title"] = line[2:].strip()
+            if line.startswith('# '):
+                metadata['title'] = line[2:].strip()
                 break
 
         # Extract description (first paragraph)
@@ -104,48 +105,51 @@ class ReadmeIntegrator:
             line = line.strip()
             if not line and in_paragraph:
                 break
-            if line and not line.startswith("#") and not line.startswith("```"):
+            if line and not line.startswith('#') and not line.startswith('```'):
                 in_paragraph = True
                 description_lines.append(line)
 
-        metadata["description"] = " ".join(description_lines)[:200]
+        metadata['description'] = ' '.join(description_lines)[:200]
 
         # Determine category based on path
         relative_path = str(readme_path.relative_to(self.workspace_root))
-        if "haive-agents" in relative_path:
-            metadata["category"] = "agents"
-        elif "haive-tools" in relative_path:
-            metadata["category"] = "tools"
-        elif "haive-games" in relative_path:
-            metadata["category"] = "games"
-        elif "haive-core" in relative_path:
-            metadata["category"] = "core"
-        elif "haive-dataflow" in relative_path:
-            metadata["category"] = "dataflow"
-        elif "haive-prebuilt" in relative_path:
-            metadata["category"] = "prebuilt"
-        elif "haive-mcp" in relative_path:
-            metadata["category"] = "mcp"
+        if 'haive-agents' in relative_path:
+            metadata['category'] = 'agents'
+        elif 'haive-tools' in relative_path:
+            metadata['category'] = 'tools'
+        elif 'haive-games' in relative_path:
+            metadata['category'] = 'games'
+        elif 'haive-core' in relative_path:
+            metadata['category'] = 'core'
+        elif 'haive-dataflow' in relative_path:
+            metadata['category'] = 'dataflow'
+        elif 'haive-prebuilt' in relative_path:
+            metadata['category'] = 'prebuilt'
+        elif 'haive-mcp' in relative_path:
+            metadata['category'] = 'mcp'
 
         return metadata
 
     def convert_markdown_links(
-        self, content: str, source_path: Path, dest_path: Path
+        self,
+        content: str,
+        source_path: Path,
+        dest_path: Path,
     ) -> str:
         """Convert relative markdown links to work in new location."""
         # Pattern for markdown links: [text](url)
-        link_pattern = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
+        link_pattern = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
 
         def replace_link(match):
             text = match.group(1)
             url = match.group(2)
 
             # Skip external links
-            if url.startswith(("http://", "https://", "#")):
+            if url.startswith(('http://', 'https://', '#')):
                 return match.group(0)
 
             # Convert relative path
-            if not url.startswith("/"):
+            if not url.startswith('/'):
                 # Make path absolute relative to source README
                 abs_path = (source_path.parent / url).resolve()
 
@@ -194,19 +198,20 @@ class ReadmeIntegrator:
         return output_path
 
     def create_index_files(
-        self, processed_files: list[tuple[Path, dict[str, str]]]
+        self,
+        processed_files: list[tuple[Path, dict[str, str]]],
     ) -> None:
         """Create index files for discovered READMEs."""
         # Group by category
         by_category = {}
         for output_path, metadata in processed_files:
-            category = metadata["category"]
+            category = metadata['category']
             if category not in by_category:
                 by_category[category] = []
             by_category[category].append((output_path, metadata))
 
         # Create main index
-        main_index = self.output_dir / "index.rst"
+        main_index = self.output_dir / 'index.rst'
         main_content = """
 Discovered Documentation
 ========================
@@ -228,7 +233,7 @@ the Haive codebase, organized by category.
             category_dir = self.output_dir / category
             category_dir.mkdir(exist_ok=True)
 
-            category_index = category_dir / "index.rst"
+            category_index = category_dir / 'index.rst'
             category_content = f"""
 {category.title()} Documentation
 {"=" * (len(category) + 14)}
@@ -241,7 +246,8 @@ the Haive codebase, organized by category.
 
             # Add files to category index
             for output_path, metadata in sorted(
-                by_category[category], key=lambda x: x[0]
+                by_category[category],
+                key=lambda x: x[0],
             ):
                 # Get relative path from output directory
                 rel_path_from_output = output_path.relative_to(self.output_dir)
@@ -256,9 +262,7 @@ the Haive codebase, organized by category.
 
     def integrate_readmes(self) -> None:
         """Main integration process."""
-        print("Discovering README files...")
         readme_files = self.discover_readmes()
-        print(f"Found {len(readme_files)} README files")
 
         # Clean output directory
         if self.output_dir.exists():
@@ -268,48 +272,41 @@ the Haive codebase, organized by category.
         # Process each README
         processed_files = []
         for readme_path, relative_path in readme_files:
-            print(f"Processing: {relative_path}")
             try:
                 output_path = self.process_readme(readme_path, relative_path)
                 metadata = self.extract_readme_metadata(readme_path)
                 processed_files.append((output_path, metadata))
-            except Exception as e:
-                print(f"  Error: {e}")
+            except Exception:
+                pass
 
         # Create index files
-        print("Creating index files...")
         self.create_index_files(processed_files)
 
-        print(f"\nIntegration complete! Processed {len(processed_files)} files")
-        print(f"Output directory: {self.output_dir}")
-
         # Create summary file
-        summary_path = self.output_dir / "summary.yaml"
+        summary_path = self.output_dir / 'summary.yaml'
         summary_data = {
-            "total_files": len(processed_files),
-            "categories": {},
-            "files": [],
+            'total_files': len(processed_files),
+            'categories': {},
+            'files': [],
         }
 
         for output_path, metadata in processed_files:
-            category = metadata["category"]
-            if category not in summary_data["categories"]:
-                summary_data["categories"][category] = 0
-            summary_data["categories"][category] += 1
+            category = metadata['category']
+            if category not in summary_data['categories']:
+                summary_data['categories'][category] = 0
+            summary_data['categories'][category] += 1
 
-            summary_data["files"].append(
+            summary_data['files'].append(
                 {
-                    "path": str(output_path.relative_to(self.output_dir)),
-                    "title": metadata["title"],
-                    "category": category,
-                    "description": metadata["description"],
-                }
+                    'path': str(output_path.relative_to(self.output_dir)),
+                    'title': metadata['title'],
+                    'category': category,
+                    'description': metadata['description'],
+                },
             )
 
-        with open(summary_path, "w") as f:
+        with open(summary_path, 'w') as f:
             yaml.dump(summary_data, f, default_flow_style=False)
-
-        print(f"Summary saved to: {summary_path}")
 
 
 def main():
@@ -317,12 +314,12 @@ def main():
     # Get paths
     script_path = Path(__file__).resolve()
     workspace_root = script_path.parents[2]
-    docs_source = workspace_root / "docs" / "source"
+    docs_source = workspace_root / 'docs' / 'source'
 
     # Run integration
     integrator = ReadmeIntegrator(workspace_root, docs_source)
     integrator.integrate_readmes()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

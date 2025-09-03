@@ -1,7 +1,8 @@
 """Agentic RAG Coordinator for Memory System.
 
-This module provides an intelligent coordinator that selects and combines multiple
-retrieval strategies based on query analysis and context.
+This module provides an intelligent coordinator that selects and
+combines multiple retrieval strategies based on query analysis and
+context.
 """
 
 import asyncio
@@ -104,8 +105,8 @@ class RetrievalStrategy(BaseModel):
 
 
 class AgenticRAGResult(BaseModel):
-    """Comprehensive result from agentic RAG coordinator with performance metrics and
-    analysis.
+    """Comprehensive result from agentic RAG coordinator with performance
+    metrics and analysis.
 
     This class encapsulates all information from an agentic RAG retrieval operation,
     including the retrieved memories, strategy details, performance metrics, and
@@ -210,7 +211,8 @@ class AgenticRAGResult(BaseModel):
 
 
 class AgenticRAGCoordinatorConfig(BaseModel):
-    """Configuration for Agentic RAG Coordinator with intelligent strategy selection.
+    """Configuration for Agentic RAG Coordinator with intelligent strategy
+    selection.
 
     This configuration class defines all parameters needed to create and configure
     an AgenticRAGCoordinator, including core components, retrieval strategies,
@@ -370,8 +372,8 @@ class AgenticRAGCoordinatorConfig(BaseModel):
 
 
 class AgenticRAGCoordinator(SimpleAgent):
-    """Intelligent coordinator that selects and combines retrieval strategies for optimal
-    memory retrieval.
+    """Intelligent coordinator that selects and combines retrieval strategies
+    for optimal memory retrieval.
 
     The AgenticRAGCoordinator is an advanced memory retrieval agent that analyzes incoming
     queries and dynamically selects the most appropriate retrieval strategies from a
@@ -526,7 +528,8 @@ class AgenticRAGCoordinator(SimpleAgent):
     )
 
     def __init__(self, config: AgenticRAGCoordinatorConfig) -> None:
-        """Initialize the Agentic RAG Coordinator with comprehensive strategy setup.
+        """Initialize the Agentic RAG Coordinator with comprehensive strategy
+        setup.
 
         Sets up the coordinator with all necessary components including retrievers,
         strategies, and prompts for intelligent memory retrieval coordination.
@@ -603,8 +606,7 @@ class AgenticRAGCoordinator(SimpleAgent):
         self._setup_prompts()
 
     def _setup_retrievers(self) -> None:
-        """Setup individual retrievers.
-        """
+        """Setup individual retrievers."""
         # Enhanced retriever (vector similarity with memory types)
         if self.enhanced_retriever_config:
             from haive.agents.memory.enhanced_retriever import EnhancedRetriever
@@ -622,8 +624,7 @@ class AgenticRAGCoordinator(SimpleAgent):
         self.retrievers["basic"] = self.memory_store
 
     def _define_strategies(self) -> dict[str, RetrievalStrategy]:
-        """Define available retrieval strategies.
-        """
+        """Define available retrieval strategies."""
         strategies = {}
 
         # Enhanced similarity strategy
@@ -727,8 +728,7 @@ class AgenticRAGCoordinator(SimpleAgent):
         return strategies
 
     def _setup_prompts(self) -> None:
-        """Setup prompts for strategy selection and coordination.
-        """
+        """Setup prompts for strategy selection and coordination."""
         self.strategy_selection_prompt = PromptTemplate(
             template="""You are an expert retrieval strategy coordinator. Analyze the query and select the most appropriate retrieval strategies.
 
@@ -829,7 +829,8 @@ Fuse and rank results now:""",
         namespace: tuple[str, ...] | None = None,
         force_strategies: list[str] | None = None,
     ) -> AgenticRAGResult:
-        """Retrieve memories using intelligent strategy coordination and result fusion.
+        """Retrieve memories using intelligent strategy coordination and result
+        fusion.
 
         This method is the core of the agentic RAG coordinator. It analyzes the query,
         selects appropriate retrieval strategies, executes them in parallel, and fuses
@@ -984,8 +985,7 @@ Fuse and rank results now:""",
             return result
 
     async def _analyze_query(self, query: str) -> dict[str, Any]:
-        """Analyze query to understand intent and requirements.
-        """
+        """Analyze query to understand intent and requirements."""
         # Use classifier if available
         if self.classifier:
             query_intent = self.classifier.classify_query_intent(query)
@@ -1017,8 +1017,7 @@ Fuse and rank results now:""",
         query_analysis: dict[str, Any],
         memory_types: list[MemoryType] | None = None,
     ) -> tuple[list[str], str]:
-        """Select appropriate strategies for the query.
-        """
+        """Select appropriate strategies for the query."""
         try:
             # Prepare strategies description
             strategies_desc = []
@@ -1083,8 +1082,7 @@ Fuse and rank results now:""",
         query_analysis: dict[str, Any],
         memory_types: list[MemoryType] | None = None,
     ) -> tuple[list[str], str]:
-        """Fallback strategy selection using rules.
-        """
+        """Fallback strategy selection using rules."""
         complexity = query_analysis.get("complexity", "simple")
         memory_types_needed = query_analysis.get("memory_types", [])
         requires_reasoning = query_analysis.get("requires_reasoning", False)
@@ -1132,8 +1130,7 @@ Fuse and rank results now:""",
         memory_types: list[MemoryType] | None,
         namespace: tuple[str, ...] | None,
     ) -> dict[str, Any]:
-        """Execute selected strategies in parallel.
-        """
+        """Execute selected strategies in parallel."""
         # Create tasks for parallel execution
         tasks = []
         strategy_names = []
@@ -1178,8 +1175,7 @@ Fuse and rank results now:""",
         memory_types: list[MemoryType] | None,
         namespace: tuple[str, ...] | None,
     ) -> dict[str, Any]:
-        """Execute a single retrieval strategy.
-        """
+        """Execute a single retrieval strategy."""
         start_time = datetime.now()
 
         try:
@@ -1249,8 +1245,7 @@ Fuse and rank results now:""",
         namespace: tuple[str, ...] | None,
         parameters: dict[str, Any],
     ) -> list[dict[str, Any]]:
-        """Execute enhanced similarity strategy.
-        """
+        """Execute enhanced similarity strategy."""
         if "enhanced" in self.retrievers:
             retriever = self.retrievers["enhanced"]
             result = await retriever.retrieve_memories(
@@ -1270,8 +1265,7 @@ Fuse and rank results now:""",
         namespace: tuple[str, ...] | None,
         parameters: dict[str, Any],
     ) -> list[dict[str, Any]]:
-        """Execute graph traversal strategy.
-        """
+        """Execute graph traversal strategy."""
         if "graph_rag" in self.retrievers:
             retriever = self.retrievers["graph_rag"]
             result = await retriever.retrieve_memories(
@@ -1295,8 +1289,7 @@ Fuse and rank results now:""",
         namespace: tuple[str, ...] | None,
         parameters: dict[str, Any],
     ) -> list[dict[str, Any]]:
-        """Execute procedural search strategy.
-        """
+        """Execute procedural search strategy."""
         # Focus on procedural memories
         procedural_types = [MemoryType.PROCEDURAL, MemoryType.SEMANTIC]
 
@@ -1312,8 +1305,7 @@ Fuse and rank results now:""",
         namespace: tuple[str, ...] | None,
         parameters: dict[str, Any],
     ) -> list[dict[str, Any]]:
-        """Execute temporal search strategy.
-        """
+        """Execute temporal search strategy."""
         # Focus on temporal and episodic memories
         temporal_types = [MemoryType.TEMPORAL, MemoryType.EPISODIC]
 
@@ -1329,8 +1321,7 @@ Fuse and rank results now:""",
         namespace: tuple[str, ...] | None,
         parameters: dict[str, Any],
     ) -> list[dict[str, Any]]:
-        """Execute error/feedback search strategy.
-        """
+        """Execute error/feedback search strategy."""
         # Focus on error and feedback memories
         error_types = [MemoryType.ERROR, MemoryType.FEEDBACK]
 
@@ -1341,8 +1332,7 @@ Fuse and rank results now:""",
     async def _fuse_results(
         self, query: str, strategy_results: dict[str, Any], limit: int
     ) -> tuple[list[dict[str, Any]], list[float], dict[str, Any]]:
-        """Fuse results from multiple strategies.
-        """
+        """Fuse results from multiple strategies."""
         try:
             # Prepare strategy results for fusion
             results_summary = {}
@@ -1448,8 +1438,7 @@ Fuse and rank results now:""",
             return final_memories, final_scores, fusion_metrics
 
     def _parse_json_response(self, response: str) -> dict[str, Any] | None:
-        """Parse JSON response from LLM.
-        """
+        """Parse JSON response from LLM."""
         try:
             import json
 
@@ -1464,8 +1453,8 @@ Fuse and rank results now:""",
         return None
 
     async def run(self, user_input: str) -> str:
-        """Main execution method for the Agentic RAG Coordinator with comprehensive
-        reporting.
+        """Main execution method for the Agentic RAG Coordinator with
+        comprehensive reporting.
 
         This method serves as the primary interface for the coordinator, accepting natural
         language queries and returning formatted results with detailed performance metrics

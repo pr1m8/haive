@@ -3,21 +3,23 @@
 ReactAgent = Agent[AugLLMConfig] + reasoning loop with tools.
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any, Literal
 
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.node.tool_node_config_v2 import ToolNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage
 from langchain_core.tools import BaseTool
 from langgraph.graph import END
 from pydantic import Field, model_validator
 
-# Import base enhanced agent when available
-# from haive.agents.base.enhanced_agent import Agent
-# For now, using a minimal base
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase as Agent
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.node.tool_node_config_v2 import ToolNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
+# Import base enhanced agent when available
+# For now, using a minimal base
 
 logger = logging.getLogger(__name__)
 
@@ -69,31 +71,38 @@ class ReactAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
 
     # Tool configuration
     tools: list[BaseTool] = Field(
-        default_factory=list, description="List of tools available to the agent"
+        default_factory=list,
+        description="List of tools available to the agent",
     )
 
     # Iteration control
     max_iterations: int = Field(
-        default=10, description="Maximum number of reasoning iterations", ge=1, le=50
+        default=10,
+        description="Maximum number of reasoning iterations",
+        ge=1,
+        le=50,
     )
 
     # Prompting
     react_prompt: str | None = Field(
-        default=None, description="Custom prompt for ReAct pattern"
+        default=None,
+        description="Custom prompt for ReAct pattern",
     )
 
     # Execution mode
     execution_mode: Literal["react", "tool-calling", "hybrid"] = Field(
-        default="react", description="How to execute the reasoning loop"
+        default="react",
+        description="How to execute the reasoning loop",
     )
 
     # Tracking
     reasoning_history: list[dict[str, Any]] = Field(
-        default_factory=list, description="History of reasoning steps"
+        default_factory=list,
+        description="History of reasoning steps",
     )
 
     @model_validator(mode="after")
-    def validate_react_config(self) -> "ReactAgent":
+    def validate_react_config(self) -> ReactAgent:
         """Validate ReactAgent configuration."""
         # Ensure we have an engine
         if not hasattr(self, "engine") or self.engine is None:
@@ -115,12 +124,14 @@ class ReactAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
         4. Decision routing - continue or finish
         """
         graph = BaseGraph(
-            name=f"{self.name}_react_graph", state_schema=self.state_schema
+            name=f"{self.name}_react_graph",
+            state_schema=self.state_schema,
         )
 
         # Add reasoning node
         reasoning_config = EngineNodeConfig(
-            engines={"reasoner": self.engine}, system_message=self._get_react_prompt()
+            engines={"reasoner": self.engine},
+            system_message=self._get_react_prompt(),
         )
         graph.add_node("reason", reasoning_config)
 
@@ -151,15 +162,11 @@ class ReactAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
                 content = last_message.content.lower()
 
                 # Check if task is complete
-                if any(
-                    word in content for word in ["final answer", "complete", "finished"]
-                ):
+                if any(word in content for word in ["final answer", "complete", "finished"]):
                     return END
 
                 # Check if tool use is needed
-                if self.tools and any(
-                    word in content for word in ["use", "call", "need"]
-                ):
+                if self.tools and any(word in content for word in ["use", "call", "need"]):
                     return "act"
 
                 # Check iteration limit

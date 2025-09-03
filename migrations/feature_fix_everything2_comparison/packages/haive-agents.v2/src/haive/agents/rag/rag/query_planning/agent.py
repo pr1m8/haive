@@ -1,23 +1,25 @@
 """Query Planning Agentic RAG Agent.
 
-from typing import Any
-Implementation of query planning RAG with structured decomposition and execution.
-Provides intelligent query analysis, planning, and multi-stage retrieval strategies.
+from typing import Any Implementation of query planning RAG with
+structured decomposition and execution. Provides intelligent query
+analysis, planning, and multi-stage retrieval strategies.
 """
 
-import logging
+from __future__ import annotations
+
 from enum import Enum
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
 
 from haive.agents.base.agent import Agent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +59,9 @@ class SubQuery(BaseModel):
 
     retrieval_strategy: str = Field(description="Suggested retrieval approach")
     estimated_difficulty: float = Field(
-        ge=0.0, le=1.0, description="Estimated difficulty"
+        ge=0.0,
+        le=1.0,
+        description="Estimated difficulty",
     )
 
 
@@ -72,7 +76,7 @@ class QueryPlan(BaseModel):
     sub_queries: list[SubQuery] = Field(description="Decomposed sub-queries")
     execution_order: list[str] = Field(description="Order to execute sub-queries")
     parallel_groups: list[list[str]] = Field(
-        description="Groups that can run in parallel"
+        description="Groups that can run in parallel",
     )
 
     # Strategy
@@ -108,7 +112,9 @@ class SubQueryResult(BaseModel):
     # Quality metrics
     relevance_score: float = Field(ge=0.0, le=1.0, description="Relevance of results")
     completeness_score: float = Field(
-        ge=0.0, le=1.0, description="Completeness of answer"
+        ge=0.0,
+        le=1.0,
+        description="Completeness of answer",
     )
 
     metadata: dict[str, Any] = Field(description="Additional metadata")
@@ -123,10 +129,14 @@ class QueryPlanningResult(BaseModel):
     # Planning analytics
     query_plan: QueryPlan = Field(description="The executed query plan")
     plan_execution_rate: float = Field(
-        ge=0.0, le=1.0, description="How much of plan was executed"
+        ge=0.0,
+        le=1.0,
+        description="How much of plan was executed",
     )
     plan_success_rate: float = Field(
-        ge=0.0, le=1.0, description="Success rate of sub-queries"
+        ge=0.0,
+        le=1.0,
+        description="Success rate of sub-queries",
     )
 
     # Execution analytics
@@ -136,10 +146,14 @@ class QueryPlanningResult(BaseModel):
 
     # Quality metrics
     answer_confidence: float = Field(
-        ge=0.0, le=1.0, description="Confidence in final answer"
+        ge=0.0,
+        le=1.0,
+        description="Confidence in final answer",
     )
     answer_completeness: float = Field(
-        ge=0.0, le=1.0, description="Completeness of answer"
+        ge=0.0,
+        le=1.0,
+        description="Completeness of answer",
     )
     synthesis_quality: float = Field(ge=0.0, le=1.0, description="Quality of synthesis")
 
@@ -208,9 +222,8 @@ Create comprehensive, executable query plans.""",
 
 Provide a complete, actionable query plan.""",
         ),
-    ]
+    ],
 )
-
 
 SUB_QUERY_EXECUTION_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -266,9 +279,8 @@ Execute sub-queries with precision and efficiency.""",
 
 Focus on this sub-query only, not the broader context.""",
         ),
-    ]
+    ],
 )
-
 
 QUERY_SYNTHESIS_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -322,32 +334,37 @@ Create comprehensive, high-quality synthesized answers.""",
 
 Generate the best possible answer from all available sub-results.""",
         ),
-    ]
+    ],
 )
 
 
 class QueryPlanningRAGAgent(Agent):
     """Query Planning RAG agent with structured decomposition and execution.
 
-    This agent uses conditional edges to execute sub-queries in a planned order.
+    This agent uses conditional edges to execute sub-queries in a
+    planned order.
     """
 
     name: str = "Query Planning RAG Agent"
     documents: list[Document] = Field(description="Documents for retrieval")
     llm_config: LLMConfig = Field(description="LLM configuration")
     planning_depth: int = Field(
-        default=3, description="Maximum depth of query decomposition"
+        default=3,
+        description="Maximum depth of query decomposition",
     )
 
     # Engines for different stages (initialized in setup_agent)
     planning_engine: AugLLMConfig | None = Field(
-        default=None, description="Engine for query planning"
+        default=None,
+        description="Engine for query planning",
     )
     execution_engine: AugLLMConfig | None = Field(
-        default=None, description="Engine for sub-query execution"
+        default=None,
+        description="Engine for sub-query execution",
     )
     synthesis_engine: AugLLMConfig | None = Field(
-        default=None, description="Engine for result synthesis"
+        default=None,
+        description="Engine for result synthesis",
     )
 
     def setup_agent(self) -> None:
@@ -426,7 +443,7 @@ class QueryPlanningRAGAgent(Agent):
                 "context": context,
                 "available_resources": f"{len(self.documents)} documents",
                 "requirements": f"Planning depth: {self.planning_depth}",
-            }
+            },
         )
 
         logger.info(f"Query plan created: {len(query_plan.sub_queries)} sub-queries")
@@ -445,15 +462,13 @@ class QueryPlanningRAGAgent(Agent):
         results_by_id = state.get("results_by_id", {})
         sub_results = state.get("sub_query_results", [])
 
-        if (
-            current_idx >= len(query_plan.execution_order)
-            or current_idx >= self.planning_depth
-        ):
+        if current_idx >= len(query_plan.execution_order) or current_idx >= self.planning_depth:
             return state  # No more sub-queries to execute
 
         query_id = query_plan.execution_order[current_idx]
         sub_query = next(
-            (sq for sq in query_plan.sub_queries if sq.query_id == query_id), None
+            (sq for sq in query_plan.sub_queries if sq.query_id == query_id),
+            None,
         )
 
         if not sub_query:
@@ -477,7 +492,7 @@ class QueryPlanningRAGAgent(Agent):
                     "success_criteria": sub_query.success_criteria,
                     "dependent_results": str(dependent_results),
                     "documents_summary": f"{len(self.documents)} documents available",
-                }
+                },
             )
 
             sub_results.append(sub_result)
@@ -514,10 +529,7 @@ class QueryPlanningRAGAgent(Agent):
         query_plan = state.get("query_plan")
         current_idx = state.get("current_sub_query_idx", 0)
 
-        if (
-            current_idx < len(query_plan.execution_order)
-            and current_idx < self.planning_depth
-        ):
+        if current_idx < len(query_plan.execution_order) and current_idx < self.planning_depth:
             return "execute_sub_query"
         return "synthesize_results"
 
@@ -534,7 +546,7 @@ class QueryPlanningRAGAgent(Agent):
             [
                 f"Sub-Query {r.query_id}: {r.query_text}\nAnswer: {r.answer}\nConfidence: {r.confidence}"
                 for r in sub_results
-            ]
+            ],
         )
 
         execution_stats = {
@@ -551,11 +563,11 @@ class QueryPlanningRAGAgent(Agent):
                 "sub_query_results": sub_results_summary,
                 "execution_stats": str(execution_stats),
                 "synthesis_approach": query_plan.synthesis_approach,
-            }
+            },
         )
 
         logger.info(
-            f"Query planning completed: Confidence={planning_result.answer_confidence}"
+            f"Query planning completed: Confidence={planning_result.answer_confidence}",
         )
 
         return {
@@ -623,7 +635,9 @@ def create_query_planning_rag_agent(
         kwargs.setdefault("planning_depth", 5)
 
     return QueryPlanningRAGAgent.from_documents(
-        documents=documents, llm_config=llm_config, **kwargs
+        documents=documents,
+        llm_config=llm_config,
+        **kwargs,
     )
 
 

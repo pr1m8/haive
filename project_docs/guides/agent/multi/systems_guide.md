@@ -163,7 +163,7 @@ selector = SimpleAgent(
 )
 
 adapter = SimpleAgent(
-    name="adapter", 
+    name="adapter",
     engine=AugLLMConfig(),
     structured_output_model=AdaptedModules
 )
@@ -179,16 +179,16 @@ class SelfDiscoverState(MultiAgentState):
     # Input fields
     task_description: str = ""
     available_modules: List[str] = Field(default_factory=list)
-    
+
     # Output fields (directly updated by agents)
     selected_modules: List[str] = Field(default_factory=list)
     rationale: str = ""
     confidence: float = 0.0
-    
+
     adapted_modules: List[Dict[str, str]] = Field(default_factory=list)
     task_context: str = ""
     adaptation_notes: str = ""
-    
+
     reasoning_structure: Dict[str, Any] = Field(default_factory=dict)
     steps: List[str] = Field(default_factory=list)
     methodology: str = ""
@@ -286,12 +286,12 @@ class WorkflowState(MultiAgentState):
     # Input fields
     task_description: str
     requirements: List[str]
-    
+
     # Agent output fields
     analysis_result: str = ""
     plan: List[str] = Field(default_factory=list)
     execution_status: str = ""
-    
+
     # Metadata
     workflow_id: str = ""
     started_at: datetime = Field(default_factory=datetime.now)
@@ -303,16 +303,16 @@ class WorkflowState(MultiAgentState):
 # ✅ GOOD - Comprehensive error handling
 try:
     result = agent_node(state, config)
-    
+
     # Apply updates safely
     for key, value in result.update.items():
         if hasattr(state, key) and key != "agent_states":
             setattr(state, key, value)
-            
+
 except AgentExecutionError as e:
     logger.error(f"Agent execution failed: {e}")
     # Handle agent-specific errors
-    
+
 except ValidationError as e:
     logger.error(f"State validation failed: {e}")
     # Handle schema validation errors
@@ -365,7 +365,7 @@ async def batch_execution(agents, state, config):
     for agent_name in agents:
         node = create_agent_node_v3(agent_name)
         tasks.append(node(state, config))
-    
+
     results = await asyncio.gather(*tasks, return_exceptions=True)
     return results
 ```
@@ -375,7 +375,7 @@ async def batch_execution(agents, state, config):
 ### Common Issues
 
 1. **Agent Not Found**: Check agent is in `state.agents` dict
-2. **Field Not Updated**: Verify agent has `structured_output_model` 
+2. **Field Not Updated**: Verify agent has `structured_output_model`
 3. **Import Errors**: Use `poetry run` for all Python commands
 4. **Schema Validation**: Ensure state schema has all required fields
 
@@ -428,10 +428,10 @@ async def execute_workflow(request: WorkflowRequest):
         agents=get_agents(request.agents),
         task_description=request.task_description
     )
-    
+
     # Execute workflow
     result = await run_multi_agent_workflow(state)
-    
+
     return {
         "status": "completed",
         "results": result.model_dump(),
@@ -457,11 +457,11 @@ if st.button("Execute Workflow"):
         agents=get_agents(selected_agents),
         task_description=task
     )
-    
+
     # Execute with progress
     with st.spinner("Executing workflow..."):
         result = execute_multi_agent_workflow(state)
-    
+
     # Display results
     st.success("Workflow completed!")
     st.json(result.model_dump())

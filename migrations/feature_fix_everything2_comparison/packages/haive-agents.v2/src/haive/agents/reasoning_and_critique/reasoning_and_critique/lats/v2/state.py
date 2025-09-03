@@ -11,14 +11,16 @@ Functions:
     current_trajectory: Current Trajectory functionality.
 """
 
+from __future__ import annotations
+
 import operator
 from typing import Annotated, Any
 
-from haive.core.schema.prebuilt.messages_state import MessagesState
 from langchain_core.messages import HumanMessage
 from pydantic import Field, computed_field
 
 from haive.agents.reasoning_and_critique.lats.v2.models import TreeNode
+from haive.core.schema.prebuilt.messages_state import MessagesState
 
 
 def update_nodes(
@@ -42,7 +44,8 @@ class LATSState(MessagesState):
 
     # Tree structure
     nodes: Annotated[dict[str, TreeNode], update_nodes] = Field(
-        default_factory=dict, description="All nodes in the search tree, keyed by ID"
+        default_factory=dict,
+        description="All nodes in the search tree, keyed by ID",
     )
     root_id: str | None = Field(default=None, description="Root node ID")
 
@@ -51,18 +54,22 @@ class LATSState(MessagesState):
     max_rollouts: int = Field(default=10, description="Maximum number of expansions")
     rollouts_completed: Annotated[int, operator.add] = Field(default=0)
     exploration_weight: float = Field(
-        default=1.0, description="UCT exploration parameter"
+        default=1.0,
+        description="UCT exploration parameter",
     )
     n_candidates: int = Field(
-        default=5, description="Number of candidates per expansion"
+        default=5,
+        description="Number of candidates per expansion",
     )
 
     # Current search state
     current_node_id: str | None = Field(
-        default=None, description="Node being processed"
+        default=None,
+        description="Node being processed",
     )
     candidate_nodes: list[TreeNode] = Field(
-        default_factory=list, description="Nodes to evaluate"
+        default_factory=list,
+        description="Nodes to evaluate",
     )
 
     # Results
@@ -103,12 +110,12 @@ class LATSState(MessagesState):
                 trajectory.append(f"Step {node.depth}:")
                 for msg in node.messages:
                     trajectory.append(
-                        f"  {msg.get('role', 'unknown')}: {msg.get('content', '')}"
+                        f"  {msg.get('role', 'unknown')}: {msg.get('content', '')}",
                     )
 
             if node.reflection_text:
                 trajectory.append(
-                    f"  Reflection (score: {node.reflection_score:.1f}): {node.reflection_text}"
+                    f"  Reflection (score: {node.reflection_score:.1f}): {node.reflection_text}",
                 )
 
             node_id = node.parent_id

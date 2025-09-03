@@ -12,8 +12,8 @@ Functions:
 
 # src/haive/core/graph/node/tool_node_config.py
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any
 
 from langchain_core.messages import AIMessage, ToolMessage
@@ -24,6 +24,7 @@ from pydantic import Field
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.node.types import NodeType
 
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
@@ -31,8 +32,8 @@ logger.setLevel(logging.DEBUG)
 class ToolNodeConfig(NodeConfig):
     """Configuration for a tool node in a graph.
 
-    Tool nodes execute LangChain tools and handle tool calls from LLM messages. Uses
-    tools directly from the associated engine in state.
+    Tool nodes execute LangChain tools and handle tool calls from LLM
+    messages. Uses tools directly from the associated engine in state.
     """
 
     # Override node_type from base class
@@ -40,18 +41,22 @@ class ToolNodeConfig(NodeConfig):
 
     # Tool-specific fields
     tags: list[str] | None = Field(
-        default=None, description="Optional tags for the tool node"
+        default=None,
+        description="Optional tags for the tool node",
     )
-    handle_tool_errors: (
-        bool | str | Callable[..., str] | tuple[type[Exception], ...]
-    ) = Field(default=True, description="How to handle tool errors")
+    handle_tool_errors: bool | str | Callable[..., str] | tuple[type[Exception], ...] = Field(
+        default=True,
+        description="How to handle tool errors",
+    )
     messages_key: str = Field(
-        default="messages", description="The key to use for the messages field"
+        default="messages",
+        description="The key to use for the messages field",
     )
 
     # Engine reference for getting tools from state
     engine_name: str | None = Field(
-        default=None, description="Name of engine in state.engines dict"
+        default=None,
+        description="Name of engine in state.engines dict",
     )
 
     # Tool filtering - which routes should this node handle
@@ -80,34 +85,31 @@ class ToolNodeConfig(NodeConfig):
             return None
 
         logger.debug(
-            f"Available engines in state: {
-                list(
-                    engines_dict.keys())}"
+            f"Available engines in state: {list(engines_dict.keys())}",
         )
 
         if self.engine_name in engines_dict:
             engine = engines_dict[self.engine_name]
             if engine:
                 logger.info(
-                    f"✅ Found engine '{
-                        self.engine_name}' in state.engines"
+                    f"✅ Found engine '{self.engine_name}' in state.engines",
                 )
                 return engine
             logger.error(
-                f"Engine '{
-                    self.engine_name}' exists in state but is None"
+                f"Engine '{self.engine_name}' exists in state but is None",
             )
         else:
             logger.error(
-                f"Engine '{
-                    self.engine_name}' not found in state.engines"
+                f"Engine '{self.engine_name}' not found in state.engines",
             )
             logger.error(f"Available engines: {list(engines_dict.keys())}")
 
         return None
 
     def __call__(
-        self, state: dict[str, Any], config: dict[str, Any] | None = None
+        self,
+        state: dict[str, Any],
+        config: dict[str, Any] | None = None,
     ) -> Command:
         """Execute the tool node with the given state and configuration.
 
@@ -148,8 +150,7 @@ class ToolNodeConfig(NodeConfig):
         engine = self._get_engine_from_state(state)
         if not engine:
             logger.error(
-                f"Could not get engine '{
-                    self.engine_name}' from state"
+                f"Could not get engine '{self.engine_name}' from state",
             )
             return Command(update={}, goto=self.command_goto)
 
@@ -188,7 +189,8 @@ class ToolNodeConfig(NodeConfig):
         for tool in engine_tools:
             tool_name = getattr(tool, "name", getattr(tool, "__name__", str(tool)))
             route = tool_routes.get(
-                tool_name, "langchain_tool"
+                tool_name,
+                "langchain_tool",
             )  # Default to langchain_tool
 
             logger.debug(f"Tool '{tool_name}' has route '{route}'")
@@ -199,7 +201,8 @@ class ToolNodeConfig(NodeConfig):
             else:
                 logger.debug(
                     f"❌ Excluding tool '{tool_name}' (route: {route} not in allowed routes: {
-                        self.allowed_routes})"
+                        self.allowed_routes
+                    })",
                 )
 
         if not filtered_tools:
@@ -209,9 +212,7 @@ class ToolNodeConfig(NodeConfig):
             return Command(update={}, goto=self.command_goto)
 
         logger.info(
-            f"Tool node using {
-                len(filtered_tools)} tools from engine '{
-                self.engine_name}'"
+            f"Tool node using {len(filtered_tools)} tools from engine '{self.engine_name}'",
         )
 
         # Log tool names
@@ -241,9 +242,7 @@ class ToolNodeConfig(NodeConfig):
             if isinstance(result, dict) and self.messages_key in result:
                 updated_messages = result[self.messages_key]
                 logger.info(
-                    f"Tool node added {
-                        len(updated_messages) -
-                        len(messages)} ToolMessages"
+                    f"Tool node added {len(updated_messages) - len(messages)} ToolMessages",
                 )
 
                 # Count ToolMessages added
@@ -252,7 +251,7 @@ class ToolNodeConfig(NodeConfig):
                     if isinstance(msg, ToolMessage):
                         tool_msg_count += 1
                         logger.debug(
-                            f"ToolMessage: {msg.name} - {str(msg.content)[:100]}..."
+                            f"ToolMessage: {msg.name} - {str(msg.content)[:100]}...",
                         )
 
                 logger.info(f"✅ Added {tool_msg_count} ToolMessages to state")
@@ -260,8 +259,7 @@ class ToolNodeConfig(NodeConfig):
                 # Return the full result which includes the updated messages
                 return Command(update=result, goto=self.command_goto)
             logger.error(
-                f"Unexpected result format from ToolNode: {
-                    type(result)}"
+                f"Unexpected result format from ToolNode: {type(result)}",
             )
             logger.error(f"Result: {result}")
 
@@ -271,9 +269,7 @@ class ToolNodeConfig(NodeConfig):
 
             for tool_call in last_message.tool_calls:
                 # Find the tool
-                tool_name = (
-                    tool_call["name"] if isinstance(tool_call, dict) else tool_call.name
-                )
+                tool_name = tool_call["name"] if isinstance(tool_call, dict) else tool_call.name
                 tool_id = (
                     tool_call.get("id", f"call_{tool_name}")
                     if isinstance(tool_call, dict)
@@ -290,7 +286,8 @@ class ToolNodeConfig(NodeConfig):
                 logger.debug(f"Added error ToolMessage for {tool_name}")
 
             return Command(
-                update={self.messages_key: new_messages}, goto=self.command_goto
+                update={self.messages_key: new_messages},
+                goto=self.command_goto,
             )
 
         except Exception as e:
@@ -301,9 +298,7 @@ class ToolNodeConfig(NodeConfig):
             new_messages = list(messages)
 
             for tool_call in last_message.tool_calls:
-                tool_name = (
-                    tool_call["name"] if isinstance(tool_call, dict) else tool_call.name
-                )
+                tool_name = tool_call["name"] if isinstance(tool_call, dict) else tool_call.name
                 tool_id = (
                     tool_call.get("id", f"call_{tool_name}")
                     if isinstance(tool_call, dict)
@@ -319,7 +314,8 @@ class ToolNodeConfig(NodeConfig):
                 logger.debug(f"Added error ToolMessage for {tool_name}")
 
             return Command(
-                update={self.messages_key: new_messages}, goto=self.command_goto
+                update={self.messages_key: new_messages},
+                goto=self.command_goto,
             )
 
     @classmethod

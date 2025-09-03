@@ -19,7 +19,8 @@ class MemoryAgentState(ReactAgentState):
 
     # Loaded memories for the current conversation
     recall_memories: list[str] = Field(
-        default_factory=list, description="Memories retrieved for context"
+        default_factory=list,
+        description="Memories retrieved for context",
     )
 
     # Memories extracted from the current conversation
@@ -33,10 +34,12 @@ class MemoryAgentState(ReactAgentState):
 
     # Memory operation flags
     should_save_memories: bool = Field(
-        default=True, description="Whether to save memories"
+        default=True,
+        description="Whether to save memories",
     )
     memory_type: str = Field(
-        default="unstructured", description="Type of memory: unstructured or structured"
+        default="unstructured",
+        description="Type of memory: unstructured or structured",
     )
 
     model_config = ConfigDict(

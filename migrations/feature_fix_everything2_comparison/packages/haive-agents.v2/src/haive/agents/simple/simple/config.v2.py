@@ -1,29 +1,33 @@
 """Configuration for SimpleAgent with comprehensive schema handling.
 
-from typing import Any
-This module defines the configuration class for SimpleAgent with explicit
-input/output schema support, schema composition integration, and improved
-mapping capabilities.
+from typing import Any This module defines the configuration class for
+SimpleAgent with explicit input/output schema support, schema
+composition integration, and improved mapping capabilities.
 """
 
+from __future__ import annotations
+
+from datetime import datetime
 import logging
 import uuid
-from datetime import datetime
+
+from langchain_core.messages import SystemMessage
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from pydantic import BaseModel, Field
 
 from haive.core.engine.agent.agent import AgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
 from haive.core.schema.state_schema import StateSchema
-from langchain_core.messages import SystemMessage
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from pydantic import BaseModel, Field
 
 # Setup logging
 logger = logging.getLogger(__name__)
 
 
 class SimpleAgentConfig(AgentConfig):
-    """Configuration for a simple single-node agent with comprehensive schema handling.
+    """Configuration for a simple single-node agent with comprehensive schema.
+
+    handling.
 
     This config supports:
     - Explicit input/output schemas
@@ -40,15 +44,18 @@ class SimpleAgentConfig(AgentConfig):
 
     # Schema definitions
     input_schema: type[BaseModel] | type[StateSchema] | None = Field(
-        default=None, description="Schema defining agent inputs (None for auto-derive)"
+        default=None,
+        description="Schema defining agent inputs (None for auto-derive)",
     )
 
     output_schema: type[BaseModel] | type[StateSchema] | None = Field(
-        default=None, description="Schema defining agent outputs (None for auto-derive)"
+        default=None,
+        description="Schema defining agent outputs (None for auto-derive)",
     )
 
     state_schema: type[StateSchema] | type[BaseModel] | None = Field(
-        default=None, description="Schema for the agent state (None for auto-derive)"
+        default=None,
+        description="Schema for the agent state (None for auto-derive)",
     )
 
     # Mapping configuration
@@ -64,7 +71,8 @@ class SimpleAgentConfig(AgentConfig):
 
     # Node configuration
     node_name: str = Field(
-        default="process", description="Name for the single processing node"
+        default="process",
+        description="Name for the single processing node",
     )
 
     # Visualization settings
@@ -94,7 +102,7 @@ class SimpleAgentConfig(AgentConfig):
         for key, value in v.items():
             if not isinstance(key, str) or not isinstance(value, str):
                 raise TypeError(
-                    f"All keys and values in {info.field_name} must be strings"
+                    f"All keys and values in {info.field_name} must be strings",
                 )
 
         return v
@@ -109,7 +117,7 @@ class SimpleAgentConfig(AgentConfig):
         output_schema: type[BaseModel] | None = None,
         state_schema: type[StateSchema] | None = None,
         **kwargs,
-    ) -> "SimpleAgentConfig":
+    ) -> SimpleAgentConfig:
         """Create a SimpleAgentConfig from an existing AugLLMConfig.
 
         Args:
@@ -152,7 +160,7 @@ class SimpleAgentConfig(AgentConfig):
         output_schema: type[BaseModel] | None = None,
         state_schema: type[StateSchema] | None = None,
         **kwargs,
-    ) -> "SimpleAgentConfig":
+    ) -> SimpleAgentConfig:
         """Create a SimpleAgentConfig from scratch with a new AugLLMConfig.
 
         Args:
@@ -172,7 +180,8 @@ class SimpleAgentConfig(AgentConfig):
         """
         # Create base LLM config
         llm_config = AzureLLMConfig(
-            model=model, parameters={"temperature": temperature}
+            model=model,
+            parameters={"temperature": temperature},
         )
 
         # Create messages for prompt template
@@ -215,7 +224,7 @@ class SimpleAgentConfig(AgentConfig):
         temperature: float = 0.2,
         name: str | None = None,
         **kwargs,
-    ) -> "SimpleAgentConfig":
+    ) -> SimpleAgentConfig:
         """Create a SimpleAgentConfig with structured output capabilities.
 
         Args:

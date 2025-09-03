@@ -9,10 +9,12 @@ Functions:
     create_retriever: Create Retriever functionality.
 """
 
-from haive.core.models.retriever.base import RetrieverConfig
+from __future__ import annotations
+
 from pydantic import BaseModel, Field
 
 from haive.agents.rag.dynamic.data_source_types import DataSourceType
+from haive.core.models.retriever.base import RetrieverConfig
 
 
 class DataSourceConfig(BaseModel):

@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from quick_search.agent import (
     QuickSearchAgent,
     determine_answer_type,

@@ -10,21 +10,19 @@ Functions:
     setup_engines: Setup Engines functionality.
 """
 
+from __future__ import annotations
+
 import uuid
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-# Import from base RAG
 from haive.agents.rag.base.config import BaseRAGConfig
+from haive.agents.rag.llm_rag.state import LLMRAGInputState, LLMRAGOutputState, LLMRAGState
+from haive.core.engine.aug_llm import AugLLMConfig
 
+# Import from base RAG
 # Import state models
-from haive.agents.rag.llm_rag.state import (
-    LLMRAGInputState,
-    LLMRAGOutputState,
-    LLMRAGState,
-)
 
 # Define the prompt template for the LLM
 RAG_BASE_PROMPT = """You are an assistant for question-answering tasks.
@@ -64,7 +62,7 @@ class LLMRAGConfig(BaseRAGConfig):
 
     name: str = Field(default_factory=lambda: f"llm_rag_agent_{uuid.uuid4().hex[:8]}")
     description: str = Field(
-        default="LLM-enhanced Retrieval-Augmented Generation agent"
+        default="LLM-enhanced Retrieval-Augmented Generation agent",
     )
 
     # LLM configurations
@@ -91,9 +89,11 @@ class LLMRAGConfig(BaseRAGConfig):
 
     @model_validator(mode="after")
     @classmethod
-    def setup_engines(cls) -> "LLMRAGConfig":
+    def setup_engines(cls) -> LLMRAGConfig:
         """After validation, register all engines needed by the agent.
-        This ensures the agent workflow can access all the necessary components.
+
+        This ensures the agent workflow can access all the necessary
+        components.
         """
         # Ensure the retriever is set as the primary engine
         self.engine = self.retriever_config
@@ -106,8 +106,6 @@ class LLMRAGConfig(BaseRAGConfig):
             not self.relevance_checker_config.name
             or self.relevance_checker_config.name == "aug_llm"
         ):
-            self.relevance_checker_config.name = (
-                f"relevance_checker_{uuid.uuid4().hex[:6]}"
-            )
+            self.relevance_checker_config.name = f"relevance_checker_{uuid.uuid4().hex[:6]}"
 
         return self

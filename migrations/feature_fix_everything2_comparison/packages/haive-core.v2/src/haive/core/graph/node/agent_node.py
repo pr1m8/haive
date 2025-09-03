@@ -21,16 +21,15 @@ This module provides node configurations that properly handle:
 
 import logging
 from typing import Any, Literal
-
-from haive.agents.base.agent import Agent
 from langchain_core.messages import BaseMessage, ToolMessage
 from langchain_core.runnables import RunnableConfig
 from pydantic import BaseModel, Field
-
+from haive.agents.base.agent import Agent
 from haive.core.engine.base import EngineType
 from haive.core.graph.node.base_config import NodeConfig
 from haive.core.graph.node.engine_node import EngineNodeConfig
 from haive.core.graph.node.types import NodeType
+
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +49,8 @@ class AgentNodeConfig(EngineNodeConfig):
 
     # Agent-specific fields
     private_state_schema: type[BaseModel] | None = Field(
-        default=None, description="Private state schema for this agent"
+        default=None,
+        description="Private state schema for this agent",
     )
 
     # State transformation
@@ -59,7 +59,8 @@ class AgentNodeConfig(EngineNodeConfig):
         description="Whether to extract agent's private state before execution",
     )
     merge_agent_output: bool = Field(
-        default=True, description="Whether to merge agent output back to global state"
+        default=True,
+        description="Whether to merge agent output back to global state",
     )
 
     # Meta state tracking
@@ -107,10 +108,7 @@ class AgentNodeConfig(EngineNodeConfig):
         logger.info(f"  Agent ID: {agent_id}")
         logger.info(f"  Agent Type: {type(agent).__name__}")
         logger.info(
-            f"  Has compiled graph: {
-                hasattr(
-                    agent,
-                    '_app') and agent._app is not None}"
+            f"  Has compiled graph: {hasattr(agent, '_app') and agent._app is not None}",
         )
 
         # Log incoming state
@@ -131,8 +129,7 @@ class AgentNodeConfig(EngineNodeConfig):
             if hasattr(state, "messages"):
                 original_messages = state.messages
                 logger.info(
-                    f"INCOMING MESSAGES TYPE: {
-                        type(original_messages)}"
+                    f"INCOMING MESSAGES TYPE: {type(original_messages)}",
                 )
 
                 # Get the actual message objects
@@ -140,8 +137,7 @@ class AgentNodeConfig(EngineNodeConfig):
                     # MessageList with root attribute
                     actual_messages = original_messages.root
                     logger.info(
-                        f"  Extracted from .root: {
-                            type(actual_messages)}"
+                        f"  Extracted from .root: {type(actual_messages)}",
                     )
                 elif isinstance(original_messages, list | tuple):
                     # Direct list/tuple of messages
@@ -152,13 +148,11 @@ class AgentNodeConfig(EngineNodeConfig):
                     try:
                         actual_messages = list(original_messages)
                         logger.info(
-                            f"  Converted to list: {
-                                type(actual_messages)}"
+                            f"  Converted to list: {type(actual_messages)}",
                         )
                     except BaseException:
                         logger.warning(
-                            f"Cannot iterate over messages of type {
-                                type(original_messages)}"
+                            f"Cannot iterate over messages of type {type(original_messages)}",
                         )
                         actual_messages = []
 
@@ -166,34 +160,27 @@ class AgentNodeConfig(EngineNodeConfig):
                 logger.info("FINAL MESSAGE TYPES:")
                 for i, msg in enumerate(actual_messages):
                     logger.info(
-                        f"  Message {i}: {
-                            type(msg)} (is BaseMessage: {
-                            isinstance(
-                                msg, BaseMessage)})"
+                        f"  Message {i}: {type(msg)} (is BaseMessage: {
+                            isinstance(msg, BaseMessage)
+                        })",
                     )
                     if isinstance(msg, dict):
                         logger.warning(f"    DICT MESSAGE: {list(msg.keys())}")
                         if "tool_call_id" in msg:
                             logger.info(
-                                f"    Dict has tool_call_id: {
-                                    msg['tool_call_id']}"
+                                f"    Dict has tool_call_id: {msg['tool_call_id']}",
                             )
                         else:
                             logger.warning("    Dict missing tool_call_id!")
                     elif hasattr(msg, "tool_call_id"):
                         logger.info(
-                            f"    BaseMessage tool_call_id: {
-                                getattr(
-                                    msg,
-                                    'tool_call_id',
-                                    'None')}"
+                            f"    BaseMessage tool_call_id: {getattr(msg, 'tool_call_id', 'None')}",
                         )
 
                 # Keep actual BaseMessage objects - don't serialize them!
                 state_dict["messages"] = actual_messages
                 logger.info(
-                    f"  Extracted {
-                        len(actual_messages)} actual message objects"
+                    f"  Extracted {len(actual_messages)} actual message objects",
                 )
 
                 # Log message types for debugging
@@ -201,18 +188,12 @@ class AgentNodeConfig(EngineNodeConfig):
                     logger.info(f"    Message {i}: {type(msg).__name__}")
                     if isinstance(msg, ToolMessage):
                         logger.info(
-                            f"      ToolMessage name: {
-                                getattr(
-                                    msg,
-                                    'name',
-                                    'None')}"
+                            f"      ToolMessage name: {getattr(msg, 'name', 'None')}",
                         )
                         logger.info(
                             f"      ToolMessage tool_call_id: {
-                                getattr(
-                                    msg,
-                                    'tool_call_id',
-                                    'None')}"
+                                getattr(msg, 'tool_call_id', 'None')
+                            }",
                         )
                     elif hasattr(msg, "__dict__"):
                         logger.info(f"      Message data: {msg.__dict__}")
@@ -225,9 +206,7 @@ class AgentNodeConfig(EngineNodeConfig):
             if isinstance(value, list) and key == "messages":
                 logger.info(f"  {key}: {len(value)} messages")
             else:
-                value_str = (
-                    str(value)[:100] + "..." if len(str(value)) > 100 else str(value)
-                )
+                value_str = str(value)[:100] + "..." if len(str(value)) > 100 else str(value)
                 logger.info(f"  {key}: {type(value).__name__} = {value_str}")
 
         # 1. Update meta state - agent starting
@@ -244,8 +223,7 @@ class AgentNodeConfig(EngineNodeConfig):
             # schema
             if hasattr(agent, "state_schema") and agent.state_schema:
                 logger.info(
-                    f"  Using agent's own state schema: {
-                        agent.state_schema.__name__}"
+                    f"  Using agent's own state schema: {agent.state_schema.__name__}",
                 )
 
                 # Create agent-specific state from multi-agent state
@@ -256,7 +234,7 @@ class AgentNodeConfig(EngineNodeConfig):
                     if field_name in state:
                         agent_state_fields[field_name] = state[field_name]
                         logger.debug(
-                            f"    Extracted field '{field_name}' for agent state"
+                            f"    Extracted field '{field_name}' for agent state",
                         )
 
                 # IMPORTANT: Ensure engines are included if the agent schema
@@ -269,17 +247,13 @@ class AgentNodeConfig(EngineNodeConfig):
                     if state.get("engines"):
                         agent_state_fields["engines"] = state["engines"]
                         logger.debug(
-                            f"    Using engines from parent state: {
-                                list(
-                                    state['engines'].keys())}"
+                            f"    Using engines from parent state: {list(state['engines'].keys())}",
                         )
                     elif hasattr(agent, "engines") and agent.engines:
                         # Otherwise use the agent's own engines
                         agent_state_fields["engines"] = agent.engines
                         logger.debug(
-                            f"    Using agent's own engines: {
-                                list(
-                                    agent.engines.keys())}"
+                            f"    Using agent's own engines: {list(agent.engines.keys())}",
                         )
                     else:
                         # Empty dict as last resort
@@ -300,8 +274,8 @@ class AgentNodeConfig(EngineNodeConfig):
                     if agent_input.get("engines"):
                         logger.info(
                             f"    Using serialized engines from state: {
-                                list(
-                                    agent_input['engines'].keys())}"
+                                list(agent_input['engines'].keys())
+                            }",
                         )
 
                     # IMPORTANT: Also serialize tools to avoid msgpack errors
@@ -316,18 +290,19 @@ class AgentNodeConfig(EngineNodeConfig):
                                 if hasattr(tool, "model_dump"):
                                     try:
                                         tool_dict = tool.model_dump(
-                                            mode="json", exclude_none=True
+                                            mode="json",
+                                            exclude_none=True,
                                         )
                                         # Clean up args_schema - it's usually a
                                         # Pydantic class
                                         if tool_dict.get("args_schema"):
                                             if hasattr(
-                                                tool_dict["args_schema"], "__name__"
+                                                tool_dict["args_schema"],
+                                                "__name__",
                                             ):
-                                                tool_dict["args_schema"] = (
-                                                    f"<PydanticModel:{
-                                                        tool_dict['args_schema'].__name__}>"
-                                                )
+                                                tool_dict["args_schema"] = f"<PydanticModel:{
+                                                    tool_dict['args_schema'].__name__
+                                                }>"
                                             else:
                                                 tool_dict["args_schema"] = None
                                         serialized_tools.append(tool_dict)
@@ -337,13 +312,17 @@ class AgentNodeConfig(EngineNodeConfig):
                                         serialized_tools.append(
                                             {
                                                 "name": getattr(
-                                                    tool, "name", str(tool)
+                                                    tool,
+                                                    "name",
+                                                    str(tool),
                                                 ),
                                                 "description": getattr(
-                                                    tool, "description", ""
+                                                    tool,
+                                                    "description",
+                                                    "",
                                                 ),
                                                 "type": "tool",
-                                            }
+                                            },
                                         )
                                 else:
                                     # Tool doesn't have model_dump, create
@@ -352,25 +331,26 @@ class AgentNodeConfig(EngineNodeConfig):
                                         {
                                             "name": getattr(tool, "name", str(tool)),
                                             "description": getattr(
-                                                tool, "description", ""
+                                                tool,
+                                                "description",
+                                                "",
                                             ),
                                             "type": "tool",
-                                        }
+                                        },
                                     )
                         agent_input["tools"] = serialized_tools
                         logger.info(
-                            f"    Serialized {
-                                len(serialized_tools)} tools for agent input"
+                            f"    Serialized {len(serialized_tools)} tools for agent input",
                         )
 
                     logger.info(
-                        "  Created agent-specific state with agent's own tools/schemas"
+                        "  Created agent-specific state with agent's own tools/schemas",
                     )
 
                 except Exception as e:
                     logger.warning(f"  Could not create agent-specific state: {e}")
                     logger.warning(
-                        "  Falling back to prepared input from multi-agent state"
+                        "  Falling back to prepared input from multi-agent state",
                     )
                     agent_input = self._prepare_agent_input(state, agent)
             else:
@@ -378,17 +358,12 @@ class AgentNodeConfig(EngineNodeConfig):
                 agent_input = self._prepare_agent_input(state, agent)
 
             logger.info(
-                f"  Final agent input keys: {
-                    list(
-                        agent_input.keys())}"
+                f"  Final agent input keys: {list(agent_input.keys())}",
             )
             logger.info(f"  Agent input type: {type(agent_input)}")
             logger.info(f"  Is dict: {isinstance(agent_input, dict)}")
             logger.info(
-                f"  Is BaseModel: {
-                    isinstance(
-                        agent_input,
-                        BaseModel)}"
+                f"  Is BaseModel: {isinstance(agent_input, BaseModel)}",
             )
 
             for key, value in agent_input.items():
@@ -398,33 +373,20 @@ class AgentNodeConfig(EngineNodeConfig):
                     logger.info(f"  {key}: dict with {len(value)} engines")
                     for eng_name, eng in value.items():
                         logger.info(
-                            f"    - {eng_name}: {
-                                type(eng)} (is dict: {
-                                isinstance(
-                                    eng, dict)})"
+                            f"    - {eng_name}: {type(eng)} (is dict: {isinstance(eng, dict)})",
                         )
                         if hasattr(eng, "tools"):
                             logger.info(
                                 f"      Has tools attribute: {
-                                    len(
-                                        getattr(
-                                            eng,
-                                            'tools',
-                                            []))} tools"
+                                    len(getattr(eng, 'tools', []))
+                                } tools",
                             )
-                            for tool in getattr(eng, "tools", [])[
-                                :2
-                            ]:  # Show first 2 tools
+                            for tool in getattr(eng, "tools", [])[:2]:  # Show first 2 tools
                                 logger.info(f"        Tool type: {type(tool)}")
                 else:
-                    value_str = (
-                        str(value)[:100] + "..."
-                        if len(str(value)) > 100
-                        else str(value)
-                    )
+                    value_str = str(value)[:100] + "..." if len(str(value)) > 100 else str(value)
                     logger.info(
-                        f"  {key}: {
-                            type(value).__name__} = {value_str}"
+                        f"  {key}: {type(value).__name__} = {value_str}",
                     )
 
             # 3. Clean agent's engine tools before execution to prevent
@@ -440,15 +402,11 @@ class AgentNodeConfig(EngineNodeConfig):
                 if hasattr(engine, "tools"):
                     original_tools = engine.tools.copy() if engine.tools else []
                     logger.info(
-                        f"  Original tools: {[getattr(t,
-                                                      'name',
-                                                      str(t)) for t in original_tools]}"
+                        f"  Original tools: {[getattr(t, 'name', str(t)) for t in original_tools]}",
                     )
 
                 if hasattr(engine, "tool_routes"):
-                    original_tool_routes = (
-                        engine.tool_routes.copy() if engine.tool_routes else {}
-                    )
+                    original_tool_routes = engine.tool_routes.copy() if engine.tool_routes else {}
 
                 # Filter tools to only include legitimate ones (not Pydantic
                 # models)
@@ -458,7 +416,9 @@ class AgentNodeConfig(EngineNodeConfig):
 
                     for tool in engine.tools:
                         tool_name = getattr(
-                            tool, "name", getattr(tool, "__name__", str(tool))
+                            tool,
+                            "name",
+                            getattr(tool, "__name__", str(tool)),
                         )
 
                         # Skip Pydantic model classes that shouldn't be in
@@ -467,27 +427,22 @@ class AgentNodeConfig(EngineNodeConfig):
                             "BaseModel" in str(base) for base in tool.__bases__
                         ):
                             logger.info(
-                                f"  Filtering OUT Pydantic model from engine tools: {tool_name}"
+                                f"  Filtering OUT Pydantic model from engine tools: {tool_name}",
                             )
                             continue
 
                         # Skip non-callable items
                         if isinstance(tool, type) and hasattr(tool, "model_fields"):
                             logger.info(
-                                f"  Filtering OUT Pydantic model class from engine tools: {tool_name}"
+                                f"  Filtering OUT Pydantic model class from engine tools: {tool_name}",
                             )
                             continue
 
                         # Keep legitimate tools
                         if callable(tool) or hasattr(tool, "invoke"):
                             clean_tools.append(tool)
-                            if (
-                                original_tool_routes
-                                and tool_name in original_tool_routes
-                            ):
-                                clean_routes[tool_name] = original_tool_routes[
-                                    tool_name
-                                ]
+                            if original_tool_routes and tool_name in original_tool_routes:
+                                clean_routes[tool_name] = original_tool_routes[tool_name]
                             logger.info(f"  Keeping legitimate tool: {tool_name}")
 
                     # Apply cleaned tools to engine
@@ -496,22 +451,18 @@ class AgentNodeConfig(EngineNodeConfig):
                         engine.tool_routes = clean_routes
 
                     logger.info(
-                        f"  Cleaned tools: {[getattr(t,
-                                                     'name',
-                                                     str(t)) for t in clean_tools]}"
+                        f"  Cleaned tools: {[getattr(t, 'name', str(t)) for t in clean_tools]}",
                     )
                     logger.info(
-                        f"  Cleaned routes: {
-                            list(
-                                clean_routes.keys())}"
+                        f"  Cleaned routes: {list(clean_routes.keys())}",
                     )
 
             # 4. Execute agent with clean tools
             logger.info("Step 5: Executing Agent")
             logger.info(
                 f"  Method: {
-                    'compiled graph' if hasattr(
-                        agent, '_app') and agent._app else 'invoke method'}"
+                    'compiled graph' if hasattr(agent, '_app') and agent._app else 'invoke method'
+                }",
             )
 
             try:
@@ -524,43 +475,30 @@ class AgentNodeConfig(EngineNodeConfig):
                     # Use agent's invoke method
                     logger.info("  Using agent's invoke method")
                     logger.info(
-                        f"  About to invoke agent with input type: {
-                            type(agent_input)}"
+                        f"  About to invoke agent with input type: {type(agent_input)}",
                     )
                     logger.info(
-                        f"  Input is dict: {
-                            isinstance(
-                                agent_input,
-                                dict)}"
+                        f"  Input is dict: {isinstance(agent_input, dict)}",
                     )
                     logger.info(
-                        f"  Input is BaseModel: {
-                            isinstance(
-                                agent_input,
-                                BaseModel)}"
+                        f"  Input is BaseModel: {isinstance(agent_input, BaseModel)}",
                     )
                     if isinstance(agent_input, dict) and "engines" in agent_input:
                         logger.info(
-                            f"  Engines in input: {
-                                list(
-                                    agent_input['engines'].keys())}"
+                            f"  Engines in input: {list(agent_input['engines'].keys())}",
                         )
                         for eng_name, eng in agent_input["engines"].items():
                             logger.info(
-                                f"    Engine {eng_name} type: {
-                                    type(eng)}"
+                                f"    Engine {eng_name} type: {type(eng)}",
                             )
                     result = agent.invoke(agent_input, config)
             finally:
                 # Restore original tools after execution
-                if (
-                    original_tools is not None
-                    and hasattr(agent, "engine")
-                    and agent.engine
-                ):
+                if original_tools is not None and hasattr(agent, "engine") and agent.engine:
                     agent.engine.tools = original_tools
                     if original_tool_routes is not None and hasattr(
-                        agent.engine, "tool_routes"
+                        agent.engine,
+                        "tool_routes",
                     ):
                         agent.engine.tool_routes = original_tool_routes
                     logger.debug("  Restored original tools after execution")
@@ -577,9 +515,7 @@ class AgentNodeConfig(EngineNodeConfig):
                         logger.info(f"  {key}: {len(value)} items")
                     else:
                         value_str = (
-                            str(value)[:100] + "..."
-                            if len(str(value)) > 100
-                            else str(value)
+                            str(value)[:100] + "..." if len(str(value)) > 100 else str(value)
                         )
                         logger.info(f"  {key}: {type(value).__name__}")
 
@@ -614,12 +550,14 @@ class AgentNodeConfig(EngineNodeConfig):
             raise
 
     def _prepare_agent_input(
-        self, state: dict[str, Any], agent: Agent
+        self,
+        state: dict[str, Any],
+        agent: Agent,
     ) -> dict[str, Any]:
         """Prepare input for agent execution.
 
-        If agent has a private state schema, extract only relevant fields. Otherwise,
-        pass
+        If agent has a private state schema, extract only relevant
+        fields. Otherwise, pass
         """
         logger.debug("=== _prepare_agent_input called ===")
         logger.debug(f"  Agent: {agent.name}")
@@ -650,9 +588,7 @@ class AgentNodeConfig(EngineNodeConfig):
         if hasattr(agent, "input_schema") and agent.input_schema:
             logger.debug("Using agent's input_schema")
             logger.debug(
-                f"  Input schema fields: {
-                    list(
-                        agent.input_schema.model_fields.keys())}"
+                f"  Input schema fields: {list(agent.input_schema.model_fields.keys())}",
             )
 
             # Extract fields based on input schema
@@ -694,7 +630,10 @@ class AgentNodeConfig(EngineNodeConfig):
         return default_input if default_input else state
 
     def _process_agent_output(
-        self, result: Any, state: dict[str, Any], agent: Agent
+        self,
+        result: Any,
+        state: dict[str, Any],
+        agent: Agent,
     ) -> dict[str, Any]:
         """Process agent output and merge with global state.
 
@@ -715,7 +654,7 @@ class AgentNodeConfig(EngineNodeConfig):
             # BaseMessage objects
             if hasattr(result, "messages") and result.messages:
                 logger.info(
-                    f"Preserving {len(result.messages)} actual message objects from agent result"
+                    f"Preserving {len(result.messages)} actual message objects from agent result",
                 )
 
                 # Debug: Check what types the messages actually are
@@ -723,11 +662,7 @@ class AgentNodeConfig(EngineNodeConfig):
                     logger.info(f"  Result message {i}: {type(msg).__name__}")
                     if isinstance(msg, ToolMessage):
                         logger.info(
-                            f"    ToolMessage tool_call_id: {
-                                getattr(
-                                    msg,
-                                    'tool_call_id',
-                                    'None')}"
+                            f"    ToolMessage tool_call_id: {getattr(msg, 'tool_call_id', 'None')}",
                         )
                     elif isinstance(msg, dict):
                         logger.warning(f"    Message is dict, not BaseMessage: {msg}")
@@ -736,16 +671,14 @@ class AgentNodeConfig(EngineNodeConfig):
                 # dicts
                 state_update["messages"] = result.messages
                 logger.info(
-                    "STATE UPDATE: Setting messages to actual BaseMessage objects"
+                    "STATE UPDATE: Setting messages to actual BaseMessage objects",
                 )
                 for i, msg in enumerate(result.messages):
                     if hasattr(msg, "tool_call_id"):
                         logger.info(
                             f"  Storing ToolMessage {i} with tool_call_id={
-                                getattr(
-                                    msg,
-                                    'tool_call_id',
-                                    'None')}"
+                                getattr(msg, 'tool_call_id', 'None')
+                            }",
                         )
         elif isinstance(result, str):
             # String result - check if agent outputs to specific field
@@ -797,7 +730,8 @@ class CoordinatorNodeConfig(NodeConfig):
     """
 
     node_type: NodeType = Field(
-        default=NodeType.CALLABLE, description="Coordinator is a callable node"
+        default=NodeType.CALLABLE,
+        description="Coordinator is a callable node",
     )
 
     agents: list[Agent] = Field(description="Agents to coordinate")
@@ -805,7 +739,9 @@ class CoordinatorNodeConfig(NodeConfig):
     mode: Literal["fanout", "aggregate"] = Field(description="Coordination mode")
 
     def __call__(
-        self, state: dict[str, Any], config: RunnableConfig | None = None
+        self,
+        state: dict[str, Any],
+        config: RunnableConfig | None = None,
     ) -> dict[str, Any] | list[dict[str, Any]]:
         """Execute coordination logic.
 
@@ -847,7 +783,9 @@ class CoordinatorNodeConfig(NodeConfig):
 
 # Update engine_node.py to route agents to AgentNodeConfig
 def create_node_for_engine(
-    engine: Agent | Any, name: str, **kwargs
+    engine: Agent | Any,
+    name: str,
+    **kwargs,
 ) -> AgentNodeConfig | EngineNodeConfig:
     """Factory function to create appropriate node config for an engine/agent.
 

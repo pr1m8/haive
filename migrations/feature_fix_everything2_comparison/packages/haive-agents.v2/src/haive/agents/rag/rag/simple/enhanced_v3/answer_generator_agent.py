@@ -1,7 +1,8 @@
 """Specialized Answer Generator Agent for SimpleRAG V3.
 
-This module provides a specialized answer generation agent that extends SimpleAgent
-with enhanced features for generating answers from retrieved documents.
+This module provides a specialized answer generation agent that extends
+SimpleAgent with enhanced features for generating answers from retrieved
+documents.
 """
 
 import logging
@@ -16,14 +17,13 @@ from haive.agents.simple.agent import SimpleAgent
 
 logger = logging.getLogger(__name__)
 
-
 # RAG Answer Generation Prompt Template
 RAG_ANSWER_GENERATION = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            """You are a helpful AI assistant that answers questions based on retrieved documents. 
-Your responses should be accurate, well-sourced, and acknowledge any limitations 
+            """You are a helpful AI assistant that answers questions based on retrieved documents.
+Your responses should be accurate, well-sourced, and acknowledge any limitations
 in the available information. Always cite specific sources when possible.""",
         ),
         (
@@ -43,7 +43,7 @@ Instructions:
 
 Answer:""",
         ),
-    ]
+    ],
 )
 
 
@@ -98,7 +98,8 @@ class SimpleAnswerAgent(SimpleAgent):
 
     # Use ChatPromptTemplate instead of string template
     use_chat_prompt_template: bool = Field(
-        default=True, description="Use ChatPromptTemplate for formatting prompts"
+        default=True,
+        description="Use ChatPromptTemplate for formatting prompts",
     )
 
     system_prompt_template: str = Field(
@@ -112,7 +113,8 @@ class SimpleAnswerAgent(SimpleAgent):
 
     # Source handling
     include_citations: bool = Field(
-        default=True, description="Include source citations in answers"
+        default=True,
+        description="Include source citations in answers",
     )
 
     citation_style: str = Field(
@@ -122,7 +124,8 @@ class SimpleAnswerAgent(SimpleAgent):
 
     # Quality configuration
     require_source_support: bool = Field(
-        default=True, description="Require answers to be supported by sources"
+        default=True,
+        description="Require answers to be supported by sources",
     )
 
     min_confidence_threshold: float = Field(
@@ -134,15 +137,20 @@ class SimpleAnswerAgent(SimpleAgent):
 
     # Enhanced features
     performance_mode: bool = Field(
-        default=False, description="Enable performance tracking"
+        default=False,
+        description="Enable performance tracking",
     )
 
     debug_mode: bool = Field(
-        default=False, description="Enable debug information collection"
+        default=False,
+        description="Enable debug information collection",
     )
 
     async def arun(
-        self, input_data: str | dict[str, Any], debug: bool = False, **kwargs
+        self,
+        input_data: str | dict[str, Any],
+        debug: bool = False,
+        **kwargs,
     ) -> dict[str, Any] | str:
         """Enhanced answer generation with document processing.
 
@@ -169,17 +177,23 @@ class SimpleAnswerAgent(SimpleAgent):
         try:
             # Process documents and build context
             context_info = self._build_context_from_documents(
-                documents, query, debug or self.debug_mode
+                documents,
+                query,
+                debug or self.debug_mode,
             )
 
             # Format prompt with context
             formatted_prompt = self._format_prompt_with_context(
-                query, context_info, debug or self.debug_mode
+                query,
+                context_info,
+                debug or self.debug_mode,
             )
 
             # Generate answer using parent SimpleAgent
             generation_result = await super().arun(
-                formatted_prompt, debug=debug, **kwargs
+                formatted_prompt,
+                debug=debug,
+                **kwargs,
             )
 
             # Calculate timing
@@ -202,9 +216,11 @@ class SimpleAnswerAgent(SimpleAgent):
             return enhanced_result
 
         except Exception as e:
-            logger.error(f"❌ SimpleAnswerAgent error: {e}")
+            logger.exception(f"❌ SimpleAnswerAgent error: {e}")
             error_result = {
-                "answer": f"I apologize, but I encountered an error while generating the answer: {e!s}",
+                "answer": f"I apologize, but I encountered an error while generating the answer: {
+                    e!s
+                }",
                 "error": str(e),
                 "query": query,
                 "generation_time": time.time() - start_time,
@@ -232,7 +248,8 @@ class SimpleAnswerAgent(SimpleAgent):
             # Input from RetrieverAgent or BaseRAGAgent
             # Check for 'retrieved_documents' first (BaseRAG format)
             documents = input_data.get(
-                "retrieved_documents", input_data.get("documents", [])
+                "retrieved_documents",
+                input_data.get("documents", []),
             )
 
             return {
@@ -255,7 +272,10 @@ class SimpleAnswerAgent(SimpleAgent):
         }
 
     def _build_context_from_documents(
-        self, documents: list[Document], query: str, debug: bool = False
+        self,
+        documents: list[Document],
+        query: str,
+        debug: bool = False,
     ) -> dict[str, Any]:
         """Build formatted context from retrieved documents."""
         if not documents:
@@ -277,7 +297,7 @@ class SimpleAnswerAgent(SimpleAgent):
                 continue
 
             # Get source information
-            source = doc.metadata.get("source", f"Document {i+1}")
+            source = doc.metadata.get("source", f"Document {i + 1}")
             sources.append(source)
 
             # Format document for context
@@ -285,9 +305,9 @@ class SimpleAnswerAgent(SimpleAgent):
                 if self.citation_style == "inline":
                     doc_text = f"[Source: {source}]\n{content}"
                 elif self.citation_style == "numbered":
-                    doc_text = f"[{i+1}] {content}\n(Source: {source})"
+                    doc_text = f"[{i + 1}] {content}\n(Source: {source})"
                 else:  # footnote
-                    doc_text = f"{content} [{i+1}]"
+                    doc_text = f"{content} [{i + 1}]"
             else:
                 doc_text = content
 
@@ -295,7 +315,7 @@ class SimpleAnswerAgent(SimpleAgent):
             if total_length + len(doc_text) > self.max_context_length:
                 if debug:
                     logger.info(
-                        f"📏 Context length limit reached, truncating at document {i}"
+                        f"📏 Context length limit reached, truncating at document {i}",
                     )
                 break
 
@@ -307,7 +327,7 @@ class SimpleAnswerAgent(SimpleAgent):
 
         if debug:
             logger.info(
-                f"📝 Built context: {len(context_parts)} docs, {total_length} chars"
+                f"📝 Built context: {len(context_parts)} docs, {total_length} chars",
             )
 
         return {
@@ -319,11 +339,15 @@ class SimpleAnswerAgent(SimpleAgent):
         }
 
     def _format_prompt_with_context(
-        self, query: str, context_info: dict[str, Any], debug: bool = False
+        self,
+        query: str,
+        context_info: dict[str, Any],
+        debug: bool = False,
     ) -> str:
         """Format the prompt with context and query."""
         formatted_prompt = self.context_template.format(
-            context=context_info["formatted_context"], query=query
+            context=context_info["formatted_context"],
+            query=query,
         )
 
         if debug:
@@ -369,10 +393,8 @@ class SimpleAnswerAgent(SimpleAgent):
                 "generation_time": generation_time,
                 "answer_length": len(answer_text),
                 "context_length": context_info["total_length"],
-                "words_per_second": len(answer_text.split())
-                / max(generation_time, 0.001),
-                "compression_ratio": len(answer_text)
-                / max(context_info["total_length"], 1),
+                "words_per_second": len(answer_text.split()) / max(generation_time, 0.001),
+                "compression_ratio": len(answer_text) / max(context_info["total_length"], 1),
             }
 
         # Add debug information if enabled
@@ -393,8 +415,7 @@ class SimpleAnswerAgent(SimpleAgent):
             if self.citation_style == "footnote":
                 # Add footnote references
                 footnotes = [
-                    f"[{i+1}] {source}"
-                    for i, source in enumerate(context_info["sources"])
+                    f"[{i + 1}] {source}" for i, source in enumerate(context_info["sources"])
                 ]
                 enhanced_result["citations"] = footnotes
                 enhanced_result["answer"] += "\n\nSources:\n" + "\n".join(footnotes)
@@ -418,9 +439,7 @@ class SimpleAnswerAgent(SimpleAgent):
             "debug_mode": self.debug_mode,
             "has_structured_output": self.structured_output_model is not None,
             "structured_output_model": (
-                self.structured_output_model.__name__
-                if self.structured_output_model
-                else None
+                self.structured_output_model.__name__ if self.structured_output_model else None
             ),
             "engine_config": {
                 "temperature": getattr(self.engine, "temperature", None),

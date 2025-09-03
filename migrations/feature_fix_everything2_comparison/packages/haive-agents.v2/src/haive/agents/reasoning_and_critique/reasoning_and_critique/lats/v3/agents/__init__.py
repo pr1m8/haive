@@ -1,5 +1,7 @@
 """LATS v3 Agents - Individual agents for LATS algorithm components."""
 
+from __future__ import annotations
+
 from haive.agents.reasoning_and_critique.lats.v3.agents.action_generator import (
     ActionGenerator,
 )

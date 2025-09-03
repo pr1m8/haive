@@ -1,9 +1,0 @@
-Running test_multi_agent_sequential...
-SchemaComposer: SimpleAgentState
-└── Ready to compose schema
-SchemaComposer: ReactAgentState
-└── Ready to compose schema
-SchemaComposer: SimpleAgentState
-└── Ready to compose schema
-SchemaComposer: ReactAgentState
-└── Ready to compose schema

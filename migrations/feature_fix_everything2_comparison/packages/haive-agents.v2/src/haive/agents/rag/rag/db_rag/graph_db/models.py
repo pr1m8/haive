@@ -59,14 +59,15 @@ class PropertyFilter(BaseModel):
     """
 
     node_label: str = Field(
-        description="The label of the node to which this property belongs"
+        description="The label of the node to which this property belongs",
     )
     property_key: str = Field(description="The key of the property being filtered")
     property_value: Any | None = Field(
-        description="The value that the property is being matched against"
+        description="The value that the property is being matched against",
     )
     filter_type: Literal["=", "!=", ">", "<", ">=", "<="] | None = Field(
-        default="=", description="Type of filter operation used in the Cypher query"
+        default="=",
+        description="Type of filter operation used in the Cypher query",
     )
 
     @field_validatorvalidate_filter_type
@@ -86,7 +87,7 @@ class PropertyFilter(BaseModel):
         valid_types = {"=", "!=", ">", "<", ">=", "<="}
         if v not in valid_types:
             raise ValueError(
-                f"Invalid filter type '{v}'. Must be one of: {', '.join(valid_types)}"
+                f"Invalid filter type '{v}'. Must be one of: {', '.join(valid_types)}",
             )
         return v
 
@@ -154,7 +155,7 @@ class CypherQueryOutput(BaseModel):
 
         if not any(query_upper.startswith(kw) for kw in valid_keywords):
             raise ValueError(
-                f"Invalid Cypher query. Must start with one of: {', '.join(valid_keywords)}"
+                f"Invalid Cypher query. Must start with one of: {', '.join(valid_keywords)}",
             )
         return query
 
@@ -195,7 +196,8 @@ class ValidateCypherOutput(BaseModel):
     """
 
     is_valid: bool = Field(
-        default=True, description="Whether the Cypher query is valid"
+        default=True,
+        description="Whether the Cypher query is valid",
     )
     errors: list[str] | None = Field(
         default=[],
@@ -238,7 +240,7 @@ class GuardrailsOutput(BaseModel):
     """
 
     decision: str = Field(
-        description="Routing decision: 'end' or one of the allowed categories"
+        description="Routing decision: 'end' or one of the allowed categories",
     )
     allowed_categories: list[str] = Field(
         default=["movie", "sports", "music"],
@@ -261,8 +263,7 @@ class GuardrailsOutput(BaseModel):
         valid_values = ["end", *self.allowed_categories]
         if self.decision not in valid_values:
             raise ValueError(
-                f"Invalid decision '{self.decision}'. "
-                f"Must be one of: {', '.join(valid_values)}"
+                f"Invalid decision '{self.decision}'. Must be one of: {', '.join(valid_values)}",
             )
 
     class Config:
@@ -272,5 +273,5 @@ class GuardrailsOutput(BaseModel):
             "example": {
                 "decision": "movie",
                 "allowed_categories": ["movie", "sports", "music"],
-            }
+            },
         }

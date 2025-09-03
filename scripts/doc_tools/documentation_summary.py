@@ -4,6 +4,7 @@
 This script summarizes the comprehensive documentation system fixes and enhancements
 that have been implemented for the Haive project.
 """
+from __future__ import annotations
 
 import json
 from datetime import datetime
@@ -147,7 +148,6 @@ def create_documentation_summary():
     output_path = workspace_root / "docs" / "DOCUMENTATION_FIXES_SUMMARY.json"
     with open(output_path, "w") as f:
         json.dump(summary, f, indent=2)
-
 
     for fix_category in summary["fixes_implemented"]:
         for item in fix_category["items"]:

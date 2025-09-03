@@ -1,7 +1,7 @@
 # Documentation Issues Summary
 
-**Category**: Documentation Issues  
-**Total Issues**: 20,308 across 2,582 Python files  
+**Category**: Documentation Issues
+**Total Issues**: 20,308 across 2,582 Python files
 **Last Updated**: 2025-01-21
 
 ## 📊 Overview

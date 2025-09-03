@@ -11,18 +11,20 @@ Key Features:
 - Performance optimizations for iterative workflows
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langgraph.graph import END
 from pydantic import Field
 
-# Import the enhanced SimpleAgent as our base
 from haive.agents.simple.enhanced_agent_v3 import EnhancedSimpleAgent
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+
+# Import the enhanced SimpleAgent as our base
 
 logger = logging.getLogger(__name__)
-
 
 # ========================================================================
 # ENHANCED REACT AGENT V3
@@ -30,7 +32,8 @@ logger = logging.getLogger(__name__)
 
 
 class EnhancedReactAgent(EnhancedSimpleAgent):
-    """Enhanced ReactAgent V3 with complete ReAct pattern and advanced features.
+    """Enhanced ReactAgent V3 with complete ReAct pattern and advanced
+    features.
 
     This agent implements the full Reasoning and Acting (ReAct) pattern with
     sophisticated enhancements:
@@ -137,7 +140,10 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
     # ========================================================================
 
     max_iterations: int = Field(
-        default=10, ge=1, le=50, description="Maximum reasoning iterations"
+        default=10,
+        ge=1,
+        le=50,
+        description="Maximum reasoning iterations",
     )
 
     reasoning_mode: str = Field(
@@ -153,15 +159,18 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
     )
 
     loop_detection: bool = Field(
-        default=True, description="Enable infinite loop detection and prevention"
+        default=True,
+        description="Enable infinite loop detection and prevention",
     )
 
     reasoning_trace: bool = Field(
-        default=False, description="Preserve detailed reasoning traces"
+        default=False,
+        description="Preserve detailed reasoning traces",
     )
 
     performance_tracking: bool = Field(
-        default=False, description="Track performance metrics per iteration"
+        default=False,
+        description="Track performance metrics per iteration",
     )
 
     # ========================================================================
@@ -169,11 +178,14 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
     # ========================================================================
 
     iteration_timeout: float | None = Field(
-        default=None, ge=1.0, description="Timeout per iteration in seconds"
+        default=None,
+        ge=1.0,
+        description="Timeout per iteration in seconds",
     )
 
     tool_usage_optimization: bool = Field(
-        default=False, description="Enable tool usage caching and optimization"
+        default=False,
+        description="Enable tool usage caching and optimization",
     )
 
     reasoning_quality_threshold: float | None = Field(
@@ -184,7 +196,8 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
     )
 
     early_termination_conditions: list[str] | None = Field(
-        default=None, description="Custom early termination conditions"
+        default=None,
+        description="Custom early termination conditions",
     )
 
     # ========================================================================
@@ -242,7 +255,7 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
         # Setup early termination
         if self.early_termination_conditions:
             logger.debug(
-                f"Early termination conditions: {self.early_termination_conditions}"
+                f"Early termination conditions: {self.early_termination_conditions}",
             )
 
     def _setup_performance_tracking(self) -> None:
@@ -525,9 +538,5 @@ class EnhancedReactAgent(EnhancedSimpleAgent):
         if self.performance_tracking:
             react_features.append("perf_track")
 
-        react_str = (
-            f" ReAct({', '.join(react_features)})" if react_features else " ReAct"
-        )
-        return (
-            base_repr.replace("EnhancedSimpleAgent", "EnhancedReactAgent") + react_str
-        )
+        react_str = f" ReAct({', '.join(react_features)})" if react_features else " ReAct"
+        return base_repr.replace("EnhancedSimpleAgent", "EnhancedReactAgent") + react_str

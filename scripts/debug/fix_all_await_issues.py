@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """Fix all await outside function issues in documentation."""
 
-from pathlib import Path
+from __future__ import annotations
 
+from pathlib import Path
 
 FIXES = [
     # gallery.rst - Structured output
     {
-        "file": "docs/source/agents/gallery.rst",
-        "find": """   agent = StructuredSimpleAgent(
+        "file":
+        "docs/source/agents/gallery.rst",
+        "find":
+        """   agent = StructuredSimpleAgent(
        name="reviewer",
        output_schema=MovieReview
    )
@@ -17,7 +20,8 @@ FIXES = [
        "Review the movie 'Inception' directed by Christopher Nolan"
    )
    print(review.rating)  # Structured output""",
-        "replace": """   agent = StructuredSimpleAgent(
+        "replace":
+        """   agent = StructuredSimpleAgent(
        name="reviewer",
        output_schema=MovieReview
    )
@@ -35,8 +39,10 @@ FIXES = [
     },
     # gallery.rst - Research with tools
     {
-        "file": "docs/source/agents/gallery.rst",
-        "find": """   agent = ReactAgent(
+        "file":
+        "docs/source/agents/gallery.rst",
+        "find":
+        """   agent = ReactAgent(
        name="researcher",
        tools=[web_search_tool, calculator_tool],
        engine=AugLLMConfig()
@@ -45,7 +51,8 @@ FIXES = [
    result = await agent.arun(
        "What's the current population of Tokyo and how much has it grown in the last decade?"
    )""",
-        "replace": """   agent = ReactAgent(
+        "replace":
+        """   agent = ReactAgent(
        name="researcher",
        tools=[web_search_tool, calculator_tool],
        engine=AugLLMConfig()
@@ -63,8 +70,10 @@ FIXES = [
     },
     # gallery.rst - Code analysis
     {
-        "file": "docs/source/agents/gallery.rst",
-        "find": """   agent = CodeAnalysisAgent(
+        "file":
+        "docs/source/agents/gallery.rst",
+        "find":
+        """   agent = CodeAnalysisAgent(
        name="code_reviewer",
        analysis_depth="comprehensive"
    )
@@ -73,7 +82,8 @@ FIXES = [
        code_snippet=python_code,
        focus_areas=["security", "performance", "maintainability"]
    )""",
-        "replace": """   agent = CodeAnalysisAgent(
+        "replace":
+        """   agent = CodeAnalysisAgent(
        name="code_reviewer",
        analysis_depth="comprehensive"
    )
@@ -91,10 +101,13 @@ FIXES = [
     },
     # index.rst - Quick start
     {
-        "file": "docs/source/agents/index.rst",
-        "find": """result = await agent.arun("Tell me about the benefits of renewable energy")
+        "file":
+        "docs/source/agents/index.rst",
+        "find":
+        """result = await agent.arun("Tell me about the benefits of renewable energy")
 print(result)""",
-        "replace": """import asyncio
+        "replace":
+        """import asyncio
 
 async def main():
     result = await agent.arun("Tell me about the benefits of renewable energy")
@@ -104,11 +117,14 @@ asyncio.run(main())""",
     },
     # examples/index.rst
     {
-        "file": "docs/source/examples/index.rst",
-        "find": """# Run the agent
+        "file":
+        "docs/source/examples/index.rst",
+        "find":
+        """# Run the agent
 result = await agent.arun("What is machine learning?")
 print(result)""",
-        "replace": """# Run the agent
+        "replace":
+        """# Run the agent
 import asyncio
 
 async def run_agent():
@@ -120,12 +136,15 @@ result = asyncio.run(run_agent())""",
     },
     # examples/index.rst - second instance
     {
-        "file": "docs/source/examples/index.rst",
-        "find": """# Use the agent with tools
+        "file":
+        "docs/source/examples/index.rst",
+        "find":
+        """# Use the agent with tools
 result = await agent.arun(
     "Find the latest news about renewable energy and summarize the key points"
 )""",
-        "replace": """# Use the agent with tools
+        "replace":
+        """# Use the agent with tools
 import asyncio
 
 async def run_with_tools():
@@ -138,13 +157,16 @@ result = asyncio.run(run_with_tools())""",
     },
     # examples/index.rst - third instance
     {
-        "file": "docs/source/examples/index.rst",
-        "find": """# Run multi-agent system
+        "file":
+        "docs/source/examples/index.rst",
+        "find":
+        """# Run multi-agent system
 result = await team.arun({
     "task": "Create a marketing strategy for a new eco-friendly product",
     "requirements": ["market analysis", "competitor research", "campaign ideas"]
 })""",
-        "replace": """# Run multi-agent system
+        "replace":
+        """# Run multi-agent system
 import asyncio
 
 async def run_team():
@@ -158,15 +180,18 @@ result = asyncio.run(run_team())""",
     },
     # games/index.rst
     {
-        "file": "docs/source/games/index.rst",
-        "find": """# Play one move
+        "file":
+        "docs/source/games/index.rst",
+        "find":
+        """# Play one move
 state = game.get_state()
 action = await agent.arun({
     "game_state": state,
     "legal_moves": game.get_legal_moves()
 })
 game.make_move(action)""",
-        "replace": """# Play one move
+        "replace":
+        """# Play one move
 import asyncio
 
 async def play_move():

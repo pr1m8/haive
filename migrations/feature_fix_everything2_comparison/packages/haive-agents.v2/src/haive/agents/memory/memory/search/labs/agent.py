@@ -1,15 +1,17 @@
 """Labs Agent implementation.
 
 Provides interactive project automation with tools and workflows.
-Similar to Perplexity's Labs feature that creates apps, dashboards, and automated workflows.
+Similar to Perplexity's Labs feature that creates apps, dashboards, and
+automated workflows.
 """
 
-import logging
-import uuid
-from datetime import datetime
-from typing import Any
+from __future__ import annotations
 
-from haive.core.engine.aug_llm import AugLLMConfig
+from datetime import datetime
+import logging
+from typing import Any
+import uuid
+
 from langchain_core.tools import Tool, tool
 
 from haive.agents.memory.search.base import BaseSearchAgent, SearchResponse
@@ -20,6 +22,7 @@ from haive.agents.memory.search.labs.models import (
     ProjectAsset,
     WorkflowStep,
 )
+from haive.core.engine.aug_llm import AugLLMConfig
 
 logger = logging.getLogger(__name__)
 
@@ -105,7 +108,7 @@ class LabsAgent(BaseSearchAgent):
                 self.tools = labs_tools
 
         logger.info(
-            f"Initialized LabsAgent: {name} (Code execution: {enable_code_execution})"
+            f"Initialized LabsAgent: {name} (Code execution: {enable_code_execution})",
         )
 
     def _create_labs_tools(self) -> list[Tool]:
@@ -153,7 +156,9 @@ class LabsAgent(BaseSearchAgent):
 
         @tool
         def create_visualization(
-            data_description: str, chart_type: str, title: str
+            data_description: str,
+            chart_type: str,
+            title: str,
         ) -> dict[str, Any]:
             """Create a data visualization.
 
@@ -189,7 +194,9 @@ class LabsAgent(BaseSearchAgent):
 
         @tool
         def create_interactive_app(
-            app_type: str, features: list[str], data_sources: list[str]
+            app_type: str,
+            features: list[str],
+            data_sources: list[str],
         ) -> dict[str, Any]:
             """Create an interactive web application.
 
@@ -378,7 +385,10 @@ Remember: You are automating complex workflows and creating professional-grade d
 Execute each project with professional standards and comprehensive automation."""
 
     def plan_project_workflow(
-        self, query: str, project_type: str, data_sources: list[str]
+        self,
+        query: str,
+        project_type: str,
+        data_sources: list[str],
     ) -> list[dict[str, Any]]:
         """Plan the workflow steps for a project.
 
@@ -397,14 +407,16 @@ Execute each project with professional standards and comprehensive automation.""
             workflow_steps.append(
                 {
                     "name": "Load and Validate Data",
-                    "description": f"Load data from {len(data_sources)} sources and validate structure",
+                    "description": f"Load data from {
+                        len(data_sources)
+                    } sources and validate structure",
                     "tool": "process_data_file",
                     "inputs": {
                         "files": data_sources,
                         "operations": ["load", "validate"],
                     },
                     "estimated_time": 30,
-                }
+                },
             )
 
         # Step 2: Data analysis (if analysis project)
@@ -416,7 +428,7 @@ Execute each project with professional standards and comprehensive automation.""
                     "tool": "execute_python_code",
                     "inputs": {"analysis_type": "descriptive_statistics"},
                     "estimated_time": 60,
-                }
+                },
             )
 
         # Step 3: Visualization creation
@@ -432,7 +444,7 @@ Execute each project with professional standards and comprehensive automation.""
                     "tool": "create_visualization",
                     "inputs": {"chart_types": ["bar", "line", "scatter"]},
                     "estimated_time": 45,
-                }
+                },
             )
 
         # Step 4: Interactive app creation
@@ -447,7 +459,7 @@ Execute each project with professional standards and comprehensive automation.""
                         "features": ["filters", "charts", "export"],
                     },
                     "estimated_time": 120,
-                }
+                },
             )
 
         # Step 5: Testing and deployment
@@ -458,13 +470,15 @@ Execute each project with professional standards and comprehensive automation.""
                 "tool": "quality_assurance",
                 "inputs": {"test_types": ["functionality", "performance", "usability"]},
                 "estimated_time": 30,
-            }
+            },
         )
 
         return workflow_steps
 
     async def execute_workflow_step(
-        self, step_plan: dict[str, Any], step_index: int
+        self,
+        step_plan: dict[str, Any],
+        step_index: int,
     ) -> WorkflowStep:
         """Execute a single workflow step.
 
@@ -489,7 +503,8 @@ Execute each project with professional standards and comprehensive automation.""
                 # Execute Python code
                 code = f"# {step_plan['description']}\nprint('Executing step: {step_plan['name']}')"
                 result = await self.tools[0].arun(
-                    code=code, description=step_plan["description"]
+                    code=code,
+                    description=step_plan["description"],
                 )
 
             elif tool_name == "create_visualization":
@@ -511,7 +526,8 @@ Execute each project with professional standards and comprehensive automation.""
             elif tool_name == "process_data_file":
                 # Process data file
                 result = await self.tools[3].arun(
-                    file_path="data.csv", operations=["load", "clean", "analyze"]
+                    file_path="data.csv",
+                    operations=["load", "clean", "analyze"],
                 )
 
             else:
@@ -532,9 +548,7 @@ Execute each project with professional standards and comprehensive automation.""
                 output_data=result,
                 duration_seconds=duration,
                 success=result.get("success", True),
-                error_message=(
-                    result.get("error") if not result.get("success", True) else None
-                ),
+                error_message=(result.get("error") if not result.get("success", True) else None),
             )
 
         except Exception as e:
@@ -554,7 +568,8 @@ Execute each project with professional standards and comprehensive automation.""
             )
 
     def create_project_assets(
-        self, workflow_steps: list[WorkflowStep]
+        self,
+        workflow_steps: list[WorkflowStep],
     ) -> list[ProjectAsset]:
         """Create project assets from workflow results.
 
@@ -586,7 +601,7 @@ Execute each project with professional standards and comprehensive automation.""
                             "chart_type": output_data.get("chart_type"),
                             "step_id": step.step_id,
                         },
-                    )
+                    ),
                 )
 
             # Create app assets
@@ -603,7 +618,7 @@ Execute each project with professional standards and comprehensive automation.""
                             "app_type": output_data.get("app_type"),
                             "features": output_data.get("features", []),
                         },
-                    )
+                    ),
                 )
 
             # Create data processing assets
@@ -616,18 +631,21 @@ Execute each project with professional standards and comprehensive automation.""
                         type=AssetType.CSV,
                         description=f"Processed data from step: {step.name}",
                         file_path=processed.get("output_file"),
-                        content=f"Rows: {processed.get('rows', 0)}, Columns: {processed.get('columns', 0)}",
+                        content=f"Rows: {processed.get('rows', 0)}, Columns: {
+                            processed.get('columns', 0)
+                        }",
                         metadata={
                             "operations": processed.get("operations_performed", []),
                             "step_id": step.step_id,
                         },
-                    )
+                    ),
                 )
 
         return assets
 
     def create_interactive_apps(
-        self, workflow_steps: list[WorkflowStep]
+        self,
+        workflow_steps: list[WorkflowStep],
     ) -> list[InteractiveApp]:
         """Create interactive apps from workflow results.
 
@@ -658,7 +676,7 @@ Execute each project with professional standards and comprehensive automation.""
                         data_sources=output_data.get("data_sources", []),
                         interactive_elements=output_data.get("features", []),
                         deployment_url=output_data.get("deployment_url"),
-                    )
+                    ),
                 )
 
         return apps
@@ -725,7 +743,7 @@ Execute each project with professional standards and comprehensive automation.""
         total_work_time = time.time() - start_time
         tools_used = list({step.tool_used for step in workflow_steps if step.tool_used})
         visualizations_created = len(
-            [asset for asset in assets_created if asset.type == AssetType.CHART]
+            [asset for asset in assets_created if asset.type == AssetType.CHART],
         )
 
         # Generate project summary
@@ -733,11 +751,11 @@ Execute each project with professional standards and comprehensive automation.""
         project_summary = (
             f"Completed {len(successful_steps)}/{len(workflow_steps)} workflow steps. "
         )
-        project_summary += f"Created {len(assets_created)} assets including {visualizations_created} visualizations. "
+        project_summary += f"Created {len(assets_created)} assets including {
+            visualizations_created
+        } visualizations. "
         if interactive_apps:
-            project_summary += (
-                f"Built {len(interactive_apps)} interactive applications."
-            )
+            project_summary += f"Built {len(interactive_apps)} interactive applications."
 
         # Suggest next steps
         next_steps = [
@@ -807,9 +825,7 @@ Execute each project with professional standards and comprehensive automation.""
             Labs response
         """
         # Extract parameters from context
-        project_type = (
-            context.get("project_type", "analysis") if context else "analysis"
-        )
+        project_type = context.get("project_type", "analysis") if context else "analysis"
         data_sources = context.get("data_sources", []) if context else []
 
         return await self.process_labs_project(

@@ -12,13 +12,16 @@ class QuickSearchResponse(SearchResponse):
     """
 
     search_type: str = Field(
-        default="QuickSearch", description="Type of search performed"
+        default="QuickSearch",
+        description="Type of search performed",
     )
     answer_type: str = Field(
-        default="factual", description="Type of answer (factual, definition, etc.)"
+        default="factual",
+        description="Type of answer (factual, definition, etc.)",
     )
     keywords: list[str] = Field(
-        default_factory=list, description="Key terms identified in query"
+        default_factory=list,
+        description="Key terms identified in query",
     )
 
     class Config:
@@ -35,7 +38,7 @@ class QuickSearchResponse(SearchResponse):
                 "answer_type": "factual",
                 "keywords": ["capital", "France", "Paris"],
                 "metadata": {},
-            }
+            },
         }
 
 
@@ -44,10 +47,12 @@ class QuickSearchRequest(BaseModel):
 
     query: str = Field(..., min_length=1, max_length=500, description="Search query")
     include_sources: bool = Field(
-        default=True, description="Whether to include source links"
+        default=True,
+        description="Whether to include source links",
     )
     max_response_length: int = Field(
-        default=200, description="Maximum response length in characters"
+        default=200,
+        description="Maximum response length in characters",
     )
 
     class Config:
@@ -58,5 +63,5 @@ class QuickSearchRequest(BaseModel):
                 "query": "What is machine learning?",
                 "include_sources": True,
                 "max_response_length": 200,
-            }
+            },
         }

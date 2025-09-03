@@ -17,18 +17,20 @@ Example:
         Available tools: ['sql_db_query', 'sql_db_schema', 'sql_db_list_tables', ...]
 """
 
+from __future__ import annotations
+
 from typing import Any
 
+from haive.agents.rag.db_rag.sql_rag.config import SQLDatabaseConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import LLMConfig
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
 from langchain_community.utilities import SQLDatabase
-from langchain_core.runnables import RunnableLambda, RunnableWithFallbacks
+from langchain_core.runnables import RunnableLambda
+from langchain_core.runnables import RunnableWithFallbacks
 from langchain_core.tools import BaseTool
 from langchain_openai import AzureChatOpenAI
 from langgraph.prebuilt import ToolNode
-
-from haive.agents.rag.db_rag.sql_rag.config import SQLDatabaseConfig
 
 
 def create_sql_toolkit(
@@ -137,7 +139,8 @@ def create_tool_node_with_fallback(
 
     # Create tool node with fallback
     return ToolNode(tools).with_fallbacks(
-        [RunnableLambda(handle_tool_error)], exception_key="error"
+        [RunnableLambda(handle_tool_error)],
+        exception_key="error",
     )
 
 
@@ -182,7 +185,7 @@ def handle_tool_error(state: dict[str, Any]) -> dict[str, Any]:
                     tool_call_id=tc["id"],
                 )
                 for tc in tool_calls
-            ]
+            ],
         }
 
     # Otherwise, just add error to state
@@ -271,7 +274,7 @@ def explore_database_schema(db: SQLDatabase) -> dict[str, Any]:
                                     "to_table": table2,
                                     "relationship": "potential_foreign_key",
                                     "column": col_line.strip(),
-                                }
+                                },
                             )
     except Exception as e:
         # Relationship detection is best-effort

@@ -7,17 +7,18 @@ Classes:
 """
 
 # test_node_factory.py
+from __future__ import annotations
 
 import uuid
-
-from langchain_core.messages import HumanMessage
-from langgraph.graph import END
-from pydantic import BaseModel, Field
 
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.config import NodeConfig
 from haive.core.graph.node.factory import NodeFactory
 from haive.core.schema.schema_composer import SchemaComposer
+from langchain_core.messages import HumanMessage
+from langgraph.graph import END
+from pydantic import BaseModel
+from pydantic import Field
 
 
 # Define a test output schema

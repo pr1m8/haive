@@ -5,7 +5,7 @@ This module implements RAG workflows with integrated document grading,
 answer quality assessment, and hallucination detection.
 """
 
-from haive.core.schema.prebuilt.rag_state import RAGState
+from __future__ import annotations
 
 from haive.agents.multi.base import ExecutionMode, MultiAgent
 from haive.agents.rag.multi_agent_rag.grading_components import (
@@ -19,6 +19,7 @@ from haive.agents.rag.multi_agent_rag.grading_components import (
     create_query_analyzer,
 )
 from haive.agents.simple import SimpleAgent
+from haive.core.schema.prebuilt.rag_state import RAGState
 
 
 class GradedRAGState(RAGState):
@@ -277,7 +278,7 @@ class MultiCriteriaGradedRAGAgent(MultiAgent):
         multi_criteria_grader = SimpleAgent(
             name="multi_criteria_grader",
             instructions=f"""
-            Grade documents across multiple criteria: {', '.join(grading_criteria)}
+            Grade documents across multiple criteria: {", ".join(grading_criteria)}
 
             For each criterion:
             - Provide a score (0.0-1.0)

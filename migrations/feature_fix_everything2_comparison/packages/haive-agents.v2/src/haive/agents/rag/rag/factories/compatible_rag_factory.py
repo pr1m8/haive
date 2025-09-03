@@ -14,44 +14,48 @@ Key Features:
     - Enhanced system prompts and grading
 """
 
+from __future__ import annotations
+
 import logging
 from collections.abc import Callable
 from enum import Enum
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-
 from haive.agents.base.agent import Agent
-from haive.agents.multi.base import ConditionalAgent, ParallelAgent, SequentialAgent
+from haive.agents.multi.base import ConditionalAgent
+from haive.agents.multi.base import ParallelAgent
+from haive.agents.multi.base import SequentialAgent
 from haive.agents.rag.adaptive.agent import AdaptiveRAGAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.common.document_graders.comprehensive_grader import (
     COMPREHENSIVE_DOCUMENT_GRADING_PROMPT,
-    HALLUCINATION_DETECTION_PROMPT,
-    QUALITY_ASSESSMENT_PROMPT,
+)
+from haive.agents.rag.common.document_graders.comprehensive_grader import (
     ComprehensiveGradingResponse,
 )
+from haive.agents.rag.common.document_graders.comprehensive_grader import (
+    HALLUCINATION_DETECTION_PROMPT,
+)
+from haive.agents.rag.common.document_graders.comprehensive_grader import QUALITY_ASSESSMENT_PROMPT
 from haive.agents.rag.corrective.agent_v2 import CorrectiveRAGAgentV2
 from haive.agents.rag.document_grading.agent import DocumentGradingAgent
-from haive.agents.rag.hallucination_grading.agent import (
-    AdvancedHallucinationGraderAgent,
-    HallucinationGraderAgent,
-    RealtimeHallucinationGraderAgent,
-)
+from haive.agents.rag.hallucination_grading.agent import AdvancedHallucinationGraderAgent
+from haive.agents.rag.hallucination_grading.agent import HallucinationGraderAgent
+from haive.agents.rag.hallucination_grading.agent import RealtimeHallucinationGraderAgent
 from haive.agents.rag.hyde.agent_v2 import HyDERAGAgentV2
 from haive.agents.rag.multi_query.agent import MultiQueryRAGAgent
-from haive.agents.rag.query_decomposition.agent import (
-    AdaptiveQueryDecomposerAgent,
-    ContextualQueryDecomposerAgent,
-    HierarchicalQueryDecomposerAgent,
-    QueryDecomposerAgent,
-)
+from haive.agents.rag.query_decomposition.agent import AdaptiveQueryDecomposerAgent
+from haive.agents.rag.query_decomposition.agent import ContextualQueryDecomposerAgent
+from haive.agents.rag.query_decomposition.agent import HierarchicalQueryDecomposerAgent
+from haive.agents.rag.query_decomposition.agent import QueryDecomposerAgent
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig
+from haive.core.models.llm.base import LLMConfig
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
 
 logger = logging.getLogger(__name__)
 
@@ -127,8 +131,8 @@ class WorkflowPattern(str, Enum):
 class CompatibleRAGFactory:
     """Factory for building RAG workflows with I/O schema compatibility.
 
-    Uses the enhanced multi-agent base with automatic compatibility checking,
-    agent replacement, and workflow optimization.
+    Uses the enhanced multi-agent base with automatic compatibility
+    checking, agent replacement, and workflow optimization.
     """
 
     def __init__(
@@ -214,7 +218,9 @@ class CompatibleRAGFactory:
         """
         if pattern in self._pattern_builders:
             return self._pattern_builders[pattern](
-                components=components, routing_conditions=routing_conditions, **kwargs
+                components=components,
+                routing_conditions=routing_conditions,
+                **kwargs,
             )
         return self._build_custom_workflow(
             components=components or [],
@@ -290,7 +296,8 @@ class CompatibleRAGFactory:
         )
 
     def analyze_workflow_compatibility(
-        self, workflow: SequentialAgent | ConditionalAgent
+        self,
+        workflow: SequentialAgent | ConditionalAgent,
     ) -> dict[str, Any]:
         """Analyze I/O compatibility of existing workflow.
 
@@ -303,7 +310,8 @@ class CompatibleRAGFactory:
         return workflow.analyze_io_compatibility()
 
     def suggest_workflow_optimizations(
-        self, workflow: SequentialAgent | ConditionalAgent
+        self,
+        workflow: SequentialAgent | ConditionalAgent,
     ) -> dict[str, Any]:
         """Suggest optimizations for workflow based on I/O compatibility.
 
@@ -334,7 +342,8 @@ class CompatibleRAGFactory:
         return suggestions
 
     def _suggest_component_replacements(
-        self, workflow: SequentialAgent | ConditionalAgent
+        self,
+        workflow: SequentialAgent | ConditionalAgent,
     ) -> list[dict[str, Any]]:
         """Suggest component replacements for better compatibility."""
         suggestions = []
@@ -364,7 +373,7 @@ class CompatibleRAGFactory:
                                 "input_field_overlap": input_overlap,
                                 "compatibility_score": (output_overlap + input_overlap)
                                 / max(len(agent_outputs) + len(agent_inputs), 1),
-                            }
+                            },
                         )
                 except Exception:
                     # Skip if component can't be built
@@ -378,7 +387,8 @@ class CompatibleRAGFactory:
     def _build_simple_pattern(self, **kwargs) -> SequentialAgent:
         """Simple: Retrieval → Answer Generati.....on."""
         return self.create_from_schema_compatibility(
-            [RAGComponent.BASE_RETRIEVAL, RAGComponent.ANSWER_GENERATION], **kwargs
+            [RAGComponent.BASE_RETRIEVAL, RAGComponent.ANSWER_GENERATION],
+            **kwargs,
         )
 
     def _build_graded_pattern(self, **kwargs) -> SequentialAgent:
@@ -403,7 +413,8 @@ class CompatibleRAGFactory:
     def _build_multi_query_pattern(self, **kwargs) -> SequentialAgent:
         """Multi-Query: Query Expansion → Parallel Retrieval → An.....swer."""
         return self.create_from_schema_compatibility(
-            [RAGComponent.MULTI_QUERY_RAG], **kwargs
+            [RAGComponent.MULTI_QUERY_RAG],
+            **kwargs,
         )
 
     def _build_adaptive_pattern(self, **kwargs) -> ConditionalAgent:
@@ -491,13 +502,17 @@ class CompatibleRAGFactory:
     def _build_simple_rag(self, **kwargs) -> SimpleRAGAgent:
         """Build simple RAG agent."""
         return SimpleRAGAgent.from_documents(
-            documents=self.documents, llm_config=self.llm_config, **kwargs
+            documents=self.documents,
+            llm_config=self.llm_config,
+            **kwargs,
         )
 
     def _build_corrective_rag(self, **kwargs) -> CorrectiveRAGAgentV2:
         """Build corrective RAG agent."""
         return CorrectiveRAGAgentV2.from_documents(
-            documents=self.documents, llm_config=self.llm_config, **kwargs
+            documents=self.documents,
+            llm_config=self.llm_config,
+            **kwargs,
         )
 
     def _build_hyde_rag(self, **kwargs) -> HyDERAGAgentV2:
@@ -559,7 +574,8 @@ class CompatibleRAGFactory:
         return HallucinationGraderAgent(llm_config=self.llm_config, **kwargs)
 
     def _build_advanced_hallucination_grading(
-        self, **kwargs
+        self,
+        **kwargs,
     ) -> AdvancedHallucinationGraderAgent:
         """Build advanced hallucination grading agent."""
         return AdvancedHallucinationGraderAgent(
@@ -569,7 +585,8 @@ class CompatibleRAGFactory:
         )
 
     def _build_realtime_hallucination_grading(
-        self, **kwargs
+        self,
+        **kwargs,
     ) -> RealtimeHallucinationGraderAgent:
         """Build realtime hallucination grading agent."""
         return RealtimeHallucinationGraderAgent(llm_config=self.llm_config, **kwargs)
@@ -621,13 +638,15 @@ class CompatibleRAGFactory:
         return QueryDecomposerAgent(llm_config=self.llm_config, **kwargs)
 
     def _build_hierarchical_decomposition(
-        self, **kwargs
+        self,
+        **kwargs,
     ) -> HierarchicalQueryDecomposerAgent:
         """Build hierarchical query decomposition agent."""
         return HierarchicalQueryDecomposerAgent(llm_config=self.llm_config, **kwargs)
 
     def _build_contextual_decomposition(
-        self, **kwargs
+        self,
+        **kwargs,
     ) -> ContextualQueryDecomposerAgent:
         """Build contextual query decomposition agent."""
         return ContextualQueryDecomposerAgent(llm_config=self.llm_config, **kwargs)
@@ -643,7 +662,7 @@ class CompatibleRAGFactory:
 
         # This would integrate with haive.tools
         try:
-            from haive.tools import DuckDuckGoSearchTool, GoogleSearchTool
+            pass
 
             # Create tool-enabled agent
             search_prompt = ChatPromptTemplate.from_messages(
@@ -653,7 +672,7 @@ class CompatibleRAGFactory:
                         "Use web search to find current information about the query.",
                     ),
                     ("human", "Search for: {query}"),
-                ]
+                ],
             )
 
             return SimpleAgent(
@@ -674,7 +693,7 @@ class CompatibleRAGFactory:
                         [
                             ("system", "Generate web search results (simulated)."),
                             ("human", "Query: {query}"),
-                        ]
+                        ],
                     ),
                     output_key="web_search_results",
                 ),
@@ -687,7 +706,7 @@ class CompatibleRAGFactory:
             raise ValueError("Search tools not enabled")
 
         try:
-            from haive.tools import ArxivTool
+            pass
 
             arxiv_prompt = ChatPromptTemplate.from_messages(
                 [
@@ -696,7 +715,7 @@ class CompatibleRAGFactory:
                         "Search ArXiv for academic papers related to the query.",
                     ),
                     ("human", "Search ArXiv for: {query}"),
-                ]
+                ],
             )
 
             return SimpleAgent(
@@ -716,7 +735,7 @@ class CompatibleRAGFactory:
                         [
                             ("system", "Generate ArXiv search results (simulated)."),
                             ("human", "Query: {query}"),
-                        ]
+                        ],
                     ),
                     output_key="arxiv_results",
                 ),
@@ -731,7 +750,8 @@ class CompatibleRAGFactory:
 
         return SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=self.llm_config, prompt_template=RAG_ANSWER_STANDARD
+                llm_config=self.llm_config,
+                prompt_template=RAG_ANSWER_STANDARD,
             ),
             name=kwargs.get("name", "Answer Generator"),
         )
@@ -760,12 +780,13 @@ Grading Results: {grading_results}
 
 Provide a well-sourced, comprehensive answer.""",
                 ),
-            ]
+            ],
         )
 
         return SimpleAgent(
             engine=AugLLMConfig(
-                llm_config=self.llm_config, prompt_template=fusion_prompt
+                llm_config=self.llm_config,
+                prompt_template=fusion_prompt,
             ),
             name=kwargs.get("name", "Fusion Generator"),
         )
@@ -803,9 +824,14 @@ Provide a well-sourced, comprehensive answer.""",
         enable_hallucination_grading: bool = True,
         **kwargs,
     ) -> SequentialAgent:
-        """Create Query Decomposition → Retrieval → Grading → Hallucination Check → Answer workflow."""
+        """Create Query Decomposition → Retrieval → Grading → Hallucination.
+
+        Check → Answer workflow.
+        """
         factory = cls(
-            documents=documents, llm_config=llm_config, enable_search_tools=False
+            documents=documents,
+            llm_config=llm_config,
+            enable_search_tools=False,
         )
 
         components = [
@@ -834,32 +860,44 @@ Provide a well-sourced, comprehensive answer.""",
         This is the most generic method - just pass the components you want!
         """
         factory = cls(
-            documents=documents, llm_config=llm_config, enable_search_tools=True
+            documents=documents,
+            llm_config=llm_config,
+            enable_search_tools=True,
         )
 
         return factory.create_from_schema_compatibility(components, **kwargs)
 
     @classmethod
     def create_agentic_search_workflow(
-        cls, documents: list[Document], llm_config: LLMConfig | None = None, **kwargs
+        cls,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
+        **kwargs,
     ) -> ConditionalAgent:
         """Create agentic workflow with search tool integration."""
         factory = cls(
-            documents=documents, llm_config=llm_config, enable_search_tools=True
+            documents=documents,
+            llm_config=llm_config,
+            enable_search_tools=True,
         )
 
         return factory.create_workflow(pattern=WorkflowPattern.AGENTIC, **kwargs)
 
     @classmethod
     def create_full_pipeline_workflow(
-        cls, documents: list[Document], llm_config: LLMConfig | None = None, **kwargs
+        cls,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
+        **kwargs,
     ) -> SequentialAgent:
         """Create comprehensive pipeline with all major components.
 
         Pipeline: Decomposition → HyDE → Retrieval → Grading → Hallucination Check → Answer
         """
         factory = cls(
-            documents=documents, llm_config=llm_config, enable_search_tools=True
+            documents=documents,
+            llm_config=llm_config,
+            enable_search_tools=True,
         )
 
         return factory.create_from_schema_compatibility(
@@ -895,7 +933,9 @@ Provide a well-sourced, comprehensive answer.""",
             node_name = f"step_{i}"
 
             callable_node = CallableNodeConfig(
-                name=node_name, callable_func=callable_func, pass_state=True
+                name=node_name,
+                callable_func=callable_func,
+                pass_state=True,
             )
 
             graph.add_node(node_name, callable_node)
@@ -922,9 +962,7 @@ Provide a well-sourced, comprehensive answer.""",
 
         def input_mapper(input_data: dict) -> dict:
             state = input_data["state"]
-            state_dict = (
-                state.model_dump() if hasattr(state, "model_dump") else dict(state)
-            )
+            state_dict = state.model_dump() if hasattr(state, "model_dump") else dict(state)
 
             # Apply input mappings
             mapped_data = {}
@@ -942,9 +980,7 @@ Provide a well-sourced, comprehensive answer.""",
 
         def output_mapper(input_data: dict) -> dict:
             state = input_data["state"]
-            state_dict = (
-                state.model_dump() if hasattr(state, "model_dump") else dict(state)
-            )
+            state_dict = state.model_dump() if hasattr(state, "model_dump") else dict(state)
 
             # Apply output mappings
             mapped_data = {}
@@ -1114,23 +1150,22 @@ def get_component_compatibility_info(
 
 
 def _extract_relevant_docs(values: list[Any]) -> list[Document]:
-    """Extract relevant documents from graded documents and retrieved documents."""
+    """Extract relevant documents from graded documents and retrieved.
+
+    documents.
+    """
     if not values:
         return []
 
     graded_docs = values[0] if values and isinstance(values[0], list) else []
-    retrieved_docs = (
-        values[1] if len(values) > 1 and isinstance(values[1], list) else []
-    )
+    retrieved_docs = values[1] if len(values) > 1 and isinstance(values[1], list) else []
 
     if not graded_docs:
         return retrieved_docs
 
     # Get IDs of relevant documents
     relevant_ids = {
-        grade.document_id
-        for grade in graded_docs
-        if getattr(grade, "is_relevant", False)
+        grade.document_id for grade in graded_docs if getattr(grade, "is_relevant", False)
     }
 
     # Filter retrieved documents
@@ -1164,19 +1199,20 @@ def _calculate_avg_relevance(graded_docs: list[Any]) -> float:
 # COMPATIBLE RAG WORKFLOW FACTORIES
 # ============================================================================
 
-
 # ============================================================================
 # LEGACY FUNCTIONS (PRESERVED FOR BACKWARDS COMPATIBILITY)
 # ============================================================================
 
 
 def create_compatible_corrective_rag(
-    documents: list[Document] | None = None, name: str = "Compatible Corrective RAG"
+    documents: list[Document] | None = None,
+    name: str = "Compatible Corrective RAG",
 ) -> Agent:
     """Create CRAG agent with compatibility features."""
     # Create retrieval agent
     retrieval_agent = SimpleRAGAgent.from_documents(
-        documents or [], name="Compatible CRAG Retrieval"
+        documents or [],
+        name="Compatible CRAG Retrieval",
     )
 
     # Create CRAG logic agent with field mappings
@@ -1220,7 +1256,9 @@ def create_compatible_corrective_rag(
 
     # Create multi-agent system
     multi_agent = SequentialAgent(
-        name=name, agents=[retrieval_agent, crag_agent], state_schema=MultiAgentRAGState
+        name=name,
+        agents=[retrieval_agent, crag_agent],
+        state_schema=MultiAgentRAGState,
     )
 
     # Check compatibility
@@ -1230,7 +1268,8 @@ def create_compatible_corrective_rag(
 
 
 def create_compatible_self_rag(
-    documents: list[Document] | None = None, name: str = "Compatible Self-RAG"
+    documents: list[Document] | None = None,
+    name: str = "Compatible Self-RAG",
 ) -> Agent:
     """Create Self-RAG agent with compatibility features."""
 
@@ -1240,8 +1279,7 @@ def create_compatible_self_rag(
         query = getattr(state, "query", "").lower()
 
         needs_external = any(
-            term in query
-            for term in ["current", "latest", "recent", "today", "price", "cost"]
+            term in query for term in ["current", "latest", "recent", "today", "price", "cost"]
         )
 
         return {
@@ -1279,7 +1317,8 @@ def create_compatible_self_rag(
 
     # Create retrieval agent
     retrieval_agent = SimpleRAGAgent.from_documents(
-        documents or [], name="Self-RAG Retrieval"
+        documents or [],
+        name="Self-RAG Retrieval",
     )
 
     # Create Self-RAG logic agent
@@ -1299,7 +1338,8 @@ def create_compatible_self_rag(
 
 
 def create_compatible_adaptive_rag(
-    documents: list[Document] | None = None, name: str = "Compatible Adaptive RAG"
+    documents: list[Document] | None = None,
+    name: str = "Compatible Adaptive RAG",
 ) -> Agent:
     """Create adaptive RAG with compatibility-aware routing."""
     # Create different strategy agents
@@ -1378,9 +1418,7 @@ def create_compatible_adaptive_rag(
             self.add_conditional_edge(
                 source_agent=analyzer_agent,
                 condition=adaptive_router,
-                destinations={
-                    self._get_agent_node_name(agent): agent for agent in self.agents[1:]
-                },
+                destinations={self._get_agent_node_name(agent): agent for agent in self.agents[1:]},
                 default=self.agents[1],  # simple_rag as default
             )
 
@@ -1388,7 +1426,8 @@ def create_compatible_adaptive_rag(
 
 
 def create_compatible_hyde_rag(
-    documents: list[Document] | None = None, name: str = "Compatible HYDE RAG"
+    documents: list[Document] | None = None,
+    name: str = "Compatible HYDE RAG",
 ) -> Agent:
     """Create HYDE RAG with compatibility features."""
     # HYDE callables
@@ -1417,7 +1456,8 @@ def create_compatible_hyde_rag(
     )
 
     retrieval_agent = SimpleRAGAgent.from_documents(
-        documents or [], name="HYDE Retrieval"
+        documents or [],
+        name="HYDE Retrieval",
     )
 
     answer_agent = CompatibleRAGAgent(
@@ -1438,7 +1478,6 @@ def create_compatible_hyde_rag(
 # MAIN COMPATIBLE FACTORY
 # ============================================================================
 
-
 # ============================================================================
 # EXAMPLES AND USAGE PATTERNS
 # ============================================================================
@@ -1456,7 +1495,8 @@ def example_modular_rag_usage() -> Dict[str, Any]:
 
     # Method 1: Use pre-built workflows
     workflow1 = CompatibleRAGFactory.create_decomposed_graded_workflow(
-        documents=docs, enable_hallucination_grading=True
+        documents=docs,
+        enable_hallucination_grading=True,
     )
 
     # Method 2: Create custom workflow from components
@@ -1472,10 +1512,12 @@ def example_modular_rag_usage() -> Dict[str, Any]:
 
     # Method 3: Create standalone components and combine manually
     decomposer = create_plug_and_play_component(
-        RAGComponent.ADAPTIVE_DECOMPOSITION, docs
+        RAGComponent.ADAPTIVE_DECOMPOSITION,
+        docs,
     )
     hallucination_grader = create_plug_and_play_component(
-        RAGComponent.REALTIME_HALLUCINATION_GRADING, docs
+        RAGComponent.REALTIME_HALLUCINATION_GRADING,
+        docs,
     )
 
     # Combine with any other agents
@@ -1533,7 +1575,7 @@ def create_compatible_rag_workflow(
 
     if workflow_type not in pattern_map:
         raise ValueError(
-            f"Unknown workflow type: {workflow_type}. Available: {list(pattern_map.keys())}"
+            f"Unknown workflow type: {workflow_type}. Available: {list(pattern_map.keys())}",
         )
 
     return factory.create_workflow(pattern_map[workflow_type], **kwargs)

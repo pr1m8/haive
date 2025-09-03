@@ -1,20 +1,21 @@
 """Agent Registry for Haive Supervisor System.
 
-Manages agent lifecycle and routing model synchronization using DynamicChoiceModel.
-Provides runtime agent registration/deregistration with automatic routing updates.
+Manages agent lifecycle and routing model synchronization using
+DynamicChoiceModel. Provides runtime agent registration/deregistration
+with automatic routing updates.
 """
 
 import logging
 import time
 from typing import Any
 
-from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from rich.tree import Tree
 
 from haive.agents.base.agent import Agent
+from haive.core.common.models.dynamic_choice_model import DynamicChoiceModel
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -240,7 +241,7 @@ class AgentRegistry:
         action_emoji = "➕" if action == "REGISTER" else "➖"
 
         tree = Tree(
-            f"{action_emoji} [bold {action_color}]{action} Operation[/bold {action_color}]"
+            f"{action_emoji} [bold {action_color}]{action} Operation[/bold {action_color}]",
         )
 
         # Operation details
@@ -307,13 +308,9 @@ class AgentRegistry:
             "rebuild_needed": self._rebuild_needed,
             "registered_agents": list(self.agents.keys()),
             "oldest_registration": (
-                min(self.registration_timestamps.values())
-                if self.registration_timestamps
-                else None
+                min(self.registration_timestamps.values()) if self.registration_timestamps else None
             ),
             "newest_registration": (
-                max(self.registration_timestamps.values())
-                if self.registration_timestamps
-                else None
+                max(self.registration_timestamps.values()) if self.registration_timestamps else None
             ),
         }

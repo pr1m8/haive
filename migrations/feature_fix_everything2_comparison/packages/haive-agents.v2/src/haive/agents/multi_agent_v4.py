@@ -13,15 +13,18 @@ Start small, test incrementally, build up features.
 from __future__ import annotations
 
 import logging
-from typing import Any, Literal
-
-from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
-from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
-from langgraph.graph import END, START, StateGraph
-from langgraph.graph.graph import CompiledGraph
-from pydantic import Field, model_validator
+from typing import Any
+from typing import Literal
 
 from haive.agents.base.agent import Agent
+from haive.core.graph.node.agent_node_v3 import create_agent_node_v3
+from haive.core.schema.prebuilt.multi_agent_state import MultiAgentState
+from langgraph.graph import END
+from langgraph.graph import START
+from langgraph.graph import StateGraph
+from langgraph.graph.graph import CompiledGraph
+from pydantic import Field
+from pydantic import model_validator
 
 logger = logging.getLogger(__name__)
 
@@ -61,11 +64,13 @@ class MultiAgentV4(Agent):
     )
 
     execution_mode: Literal["sequential", "parallel"] = Field(
-        default="sequential", description="How to execute the agents"
+        default="sequential",
+        description="How to execute the agents",
     )
 
     build_mode: Literal["auto", "manual", "lazy"] = Field(
-        default="auto", description="When to build the execution graph"
+        default="auto",
+        description="When to build the execution graph",
     )
 
     # Internal state - use PrivateAttr for internal fields
@@ -75,11 +80,13 @@ class MultiAgentV4(Agent):
     )
 
     execution_graph: CompiledGraph | None = Field(
-        default=None, description="Compiled LangGraph for execution"
+        default=None,
+        description="Compiled LangGraph for execution",
     )
 
     state_schema: type[MultiAgentState] = Field(
-        default=MultiAgentState, description="State schema to use"
+        default=MultiAgentState,
+        description="State schema to use",
     )
 
     # ========================================================================
@@ -93,7 +100,7 @@ class MultiAgentV4(Agent):
         if self.agents:
             self.agent_dict = self._convert_agents_to_dict(self.agents)
             logger.info(
-                f"Converted {len(self.agents)} agents to dict: {list(self.agent_dict.keys())}"
+                f"Converted {len(self.agents)} agents to dict: {list(self.agent_dict.keys())}",
             )
 
         # Handle build mode
@@ -130,7 +137,7 @@ class MultiAgentV4(Agent):
             raise ValueError("No agents to build graph with")
 
         logger.info(
-            f"Building {self.execution_mode} execution graph for {len(self.agent_dict)} agents"
+            f"Building {self.execution_mode} execution graph for {len(self.agent_dict)} agents",
         )
 
         # Create state graph with MultiAgentState
@@ -197,7 +204,7 @@ class MultiAgentV4(Agent):
         if not self.execution_graph:
             if self.build_mode == "manual":
                 raise RuntimeError(
-                    "Graph not built. Call build() first or use auto build mode."
+                    "Graph not built. Call build() first or use auto build mode.",
                 )
             self._build_execution_graph()
 
@@ -205,7 +212,7 @@ class MultiAgentV4(Agent):
         initial_state = self._create_initial_state(input_data)
 
         logger.info(
-            f"Executing {self.execution_mode} workflow with {len(self.agent_dict)} agents"
+            f"Executing {self.execution_mode} workflow with {len(self.agent_dict)} agents",
         )
         logger.debug(f"Initial state keys: {list(initial_state.__dict__.keys())}")
 
@@ -217,7 +224,7 @@ class MultiAgentV4(Agent):
             return self._extract_result(final_state)
 
         except Exception as e:
-            logger.error(f"Workflow execution failed: {e}")
+            logger.exception(f"Workflow execution failed: {e}")
             raise
 
     def _create_initial_state(self, input_data: Any) -> MultiAgentState:
@@ -226,10 +233,7 @@ class MultiAgentV4(Agent):
         agents_for_state = self.agent_dict
 
         # Create state
-        if isinstance(input_data, dict):
-            state_data = input_data.copy()
-        else:
-            state_data = {"input": input_data}
+        state_data = input_data.copy() if isinstance(input_data, dict) else {"input": input_data}
 
         state_data["agents"] = agents_for_state
 
@@ -241,10 +245,7 @@ class MultiAgentV4(Agent):
     def _extract_result(self, final_state: MultiAgentState) -> Any:
         """Extract final result from state."""
         # Simple result extraction - can be enhanced later
-        if (
-            hasattr(final_state, "final_result")
-            and final_state.final_result is not None
-        ):
+        if hasattr(final_state, "final_result") and final_state.final_result is not None:
             return final_state.final_result
 
         # Return agent outputs if no final result
@@ -293,17 +294,8 @@ class MultiAgentV4(Agent):
 
     def display_workflow_info(self) -> None:
         """Display workflow information."""
-        print(f"\n=== MultiAgent V4: {self.name} ===")
-        print(f"Execution Mode: {self.execution_mode}")
-        print(f"Build Mode: {self.build_mode}")
-        print(f"Agents ({len(self.agent_dict)}):")
-
-        for i, (name, agent) in enumerate(self.agent_dict.items(), 1):
-            agent_type = type(agent).__name__
-            print(f"  {i}. {name} ({agent_type})")
-
-        print(f"Graph Built: {'Yes' if self.execution_graph else 'No'}")
-        print()
+        for _i, (_name, agent) in enumerate(self.agent_dict.items(), 1):
+            type(agent).__name__
 
     # ========================================================================
     # INHERITED METHODS - From enhanced base agent

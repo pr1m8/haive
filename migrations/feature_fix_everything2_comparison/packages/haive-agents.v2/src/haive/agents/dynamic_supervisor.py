@@ -19,17 +19,18 @@ This module contains experimental implementation of a dynamic supervisor
 that can select and execute agents based on runtime decisions.
 """
 
+from typing import Annotated, Any
 import logging
-from typing import Any
-
-from haive.core.schema.prebuilt.messages_state import MessagesState
+from langchain_core.messages import HumanMessage
+from langchain_core.tools import tool
+from langgraph.prebuilt import InjectedState
 from pydantic import BaseModel, Field, computed_field
-
 from haive.agents.base.agent import Agent
+from haive.core.schema.prebuilt.messages_state import MessagesState
 from haive.agents.react.agent import ReactAgent
 
-logger = logging.getLogger(__name__)
 
+logger = logging.getLogger(__name__)
 
 # ============================================================================
 # STATE SCHEMA
@@ -47,29 +48,35 @@ class SupervisorState(MessagesState):
 
     # Current execution state
     current_agent_name: str | None = Field(
-        default=None, description="Name of the currently selected agent"
+        default=None,
+        description="Name of the currently selected agent",
     )
 
     current_task: str | None = Field(
-        default=None, description="Current task being executed"
+        default=None,
+        description="Current task being executed",
     )
 
     # Execution tracking
     execution_history: list[dict[str, Any]] = Field(
-        default_factory=list, description="History of agent executions with results"
+        default_factory=list,
+        description="History of agent executions with results",
     )
 
     completed_agents: set[str] = Field(
-        default_factory=set, description="Set of agents that have completed their tasks"
+        default_factory=set,
+        description="Set of agents that have completed their tasks",
     )
 
     # Task status
     task_complete: bool = Field(
-        default=False, description="Whether the overall task is complete"
+        default=False,
+        description="Whether the overall task is complete",
     )
 
     max_iterations: int = Field(
-        default=10, description="Maximum number of agent iterations"
+        default=10,
+        description="Maximum number of agent iterations",
     )
 
     current_iteration: int = Field(default=0, description="Current iteration count")
@@ -99,10 +106,12 @@ class AgentRegistryEntry(BaseModel):
     description: str = Field(description="What this agent does")
     agent_class: type[Agent] = Field(description="Agent class to instantiate")
     config: dict[str, Any] = Field(
-        default_factory=dict, description="Configuration for agent instantiation"
+        default_factory=dict,
+        description="Configuration for agent instantiation",
     )
     capabilities: list[str] = Field(
-        default_factory=list, description="List of capabilities this agent has"
+        default_factory=list,
+        description="List of capabilities this agent has",
     )
 
     model_config = {"arbitrary_types_allowed": True}
@@ -187,12 +196,6 @@ class AgentRegistry:
 # DYNAMIC TOOLS FOR AGENT EXECUTION
 # ============================================================================
 
-from typing import Annotated
-
-from langchain_core.messages import HumanMessage
-from langchain_core.tools import tool
-from langgraph.prebuilt import InjectedState
-
 
 def create_dynamic_handoff_tool(supervisor_instance, agent_name: str):
     """Create a handoff tool for a specific agent."""
@@ -220,7 +223,7 @@ def create_dynamic_handoff_tool(supervisor_instance, agent_name: str):
 
             # Create input for the agent
             agent_input = {
-                "messages": [*state.get("messages", []), HumanMessage(content=task)]
+                "messages": [*state.get("messages", []), HumanMessage(content=task)],
             }
 
             # Execute the agent
@@ -358,9 +361,9 @@ def create_list_agents_tool(supervisor_instance) -> Any:
 class DynamicSupervisorAgent(ReactAgent):
     """Dynamic supervisor that selects and executes agents at runtime.
 
-    This agent inherits from ReactAgent to get the looping behavior needed for
-    continuous agent selection and execution. It dynamically creates handoff tools for
-    each agent in the registry.
+    This agent inherits from ReactAgent to get the looping behavior
+    needed for continuous agent selection and execution. It dynamically
+    creates handoff tools for each agent in the registry.
     """
 
     # Override state schema
@@ -395,7 +398,7 @@ class DynamicSupervisorAgent(ReactAgent):
                 create_list_agents_tool(self),
                 create_forward_message_tool("supervisor"),
                 self._create_end_supervision_tool(),
-            ]
+            ],
         )
 
         # Create handoff tools for each registered agent
@@ -547,7 +550,8 @@ def test_dynamic_tools() -> Any:
     # Create supervisor
     registry = create_test_registry()
     supervisor = DynamicSupervisorAgent(
-        name="Dynamic Test Supervisor", agent_registry=registry
+        name="Dynamic Test Supervisor",
+        agent_registry=registry,
     )
 
     # Check tools were created
@@ -591,14 +595,12 @@ def test_supervisor_workflow() -> Any:
     }
 
     # Test handoff functionality
-    research_handoff = next(
-        t for t in supervisor.tools if t.name == "handoff_to_research_agent"
-    )
+    research_handoff = next(t for t in supervisor.tools if t.name == "handoff_to_research_agent")
 
     try:
         # This would normally be called by the graph, but we'll test directly
         research_handoff.invoke(
-            {"task": "Research the latest developments in AI", "_state": test_state}
+            {"task": "Research the latest developments in AI", "_state": test_state},
         )
     except Exception:
         pass

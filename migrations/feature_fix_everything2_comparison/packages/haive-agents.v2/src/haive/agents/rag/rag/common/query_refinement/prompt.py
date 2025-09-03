@@ -3,6 +3,8 @@
 This module provides prompt functionality for the Haive framework.
 """
 
+from __future__ import annotations
+
 from langchain_core.prompts import ChatPromptTemplate
 
 RAG_QUERY_REFINEMENT = ChatPromptTemplate.from_messages(
@@ -56,5 +58,5 @@ Provide multiple refinement suggestions with clear rationales.""",
 
 Focus on improvements that will lead to better document retrieval and more comprehensive answers.""",
         ),
-    ]
+    ],
 ).partial(context="")

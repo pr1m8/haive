@@ -1,17 +1,17 @@
 """Base tools for supervisor agents.
 
-This module provides common tools used across all supervisor implementations
-for agent management, routing, and coordination.
+This module provides common tools used across all supervisor
+implementations for agent management, routing, and coordination.
 """
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any
 
 from langchain_core.tools import BaseTool, tool
 from pydantic import BaseModel, Field
 
-from .models import AgentInfo
+from migrations.feature_fix_everything2_comparison.packages.haive-agents.v2.src.haive.agents.base.models import AgentInfo
 
 logger = logging.getLogger(__name__)
 
@@ -19,13 +19,16 @@ logger = logging.getLogger(__name__)
 class SupervisorToolBase(BaseModel):
     """Base class for supervisor tool configurations."""
 
-    supervisor_name: str = Field(..., description="Name of supervisor using tools")
+    supervisor_name: str = Field(...,
+                                 description="Name of supervisor using tools")
     agent_registry: dict[str, Any] = Field(
-        default_factory=dict, description="Registry of available agents"
+        default_factory=dict,
+        description="Registry of available agents",
     )
 
 
-def create_list_agents_tool(get_agents_func: Callable[[], dict[str, str]]) -> BaseTool:
+def create_list_agents_tool(
+        get_agents_func: Callable[[], dict[str, str]]) -> BaseTool:
     """Create a tool for listing available agents.
 
     Args:
@@ -54,7 +57,7 @@ def create_list_agents_tool(get_agents_func: Callable[[], dict[str, str]]) -> Ba
             return "\n".join(lines)
 
         except Exception as e:
-            logger.error(f"Error listing agents: {e}")
+            logger.exception(f"Error listing agents: {e}")
             return f"Error listing agents: {e!s}"
 
     return list_agents
@@ -87,7 +90,7 @@ def create_forward_message_tool() -> BaseTool:
             return f"Message forwarded successfully: {forwarded_msg}"
 
         except Exception as e:
-            logger.error(f"Error forwarding message: {e}")
+            logger.exception(f"Error forwarding message: {e}")
             return f"Error forwarding message: {e!s}"
 
     return forward_message
@@ -119,15 +122,14 @@ def create_end_supervision_tool() -> BaseTool:
             return result
 
         except Exception as e:
-            logger.error(f"Error ending supervision: {e}")
+            logger.exception(f"Error ending supervision: {e}")
             return f"Error ending supervision: {e!s}"
 
     return end_supervision
 
 
 def create_get_agent_info_tool(
-    get_agent_info_func: Callable[[str], AgentInfo | None],
-) -> BaseTool:
+        get_agent_info_func: Callable[[str], AgentInfo | None], ) -> BaseTool:
     """Create a tool for getting detailed agent information.
 
     Args:
@@ -162,23 +164,24 @@ def create_get_agent_info_tool(
             ]
 
             if agent_info.capabilities:
-                info_lines.append(f"Capabilities: {', '.join(agent_info.capabilities)}")
+                info_lines.append(
+                    f"Capabilities: {', '.join(agent_info.capabilities)}")
 
             if agent_info.last_used:
-                info_lines.append(f"Last Used: {agent_info.last_used.isoformat()}")
+                info_lines.append(
+                    f"Last Used: {agent_info.last_used.isoformat()}")
 
             return "\n".join(info_lines)
 
         except Exception as e:
-            logger.error(f"Error getting agent info: {e}")
+            logger.exception(f"Error getting agent info: {e}")
             return f"Error getting agent info: {e!s}"
 
     return get_agent_info
 
 
 def create_get_performance_stats_tool(
-    get_stats_func: Callable[[], dict[str, Any]],
-) -> BaseTool:
+        get_stats_func: Callable[[], dict[str, Any]], ) -> BaseTool:
     """Create a tool for getting supervisor performance statistics.
 
     Args:
@@ -204,10 +207,11 @@ def create_get_performance_stats_tool(
             if "total_executions" in stats:
                 lines.append(f"Total Executions: {stats['total_executions']}")
             if "success_rate" in stats:
-                lines.append(f"Overall Success Rate: {stats['success_rate']:.2%}")
+                lines.append(
+                    f"Overall Success Rate: {stats['success_rate']:.2%}")
             if "average_execution_time" in stats:
                 lines.append(
-                    f"Average Execution Time: {stats['average_execution_time']:.2f}s"
+                    f"Average Execution Time: {stats['average_execution_time']:.2f}s",
                 )
 
             # Per-agent stats
@@ -215,16 +219,18 @@ def create_get_performance_stats_tool(
                 lines.append("\nPer-Agent Statistics:")
                 for agent_name, agent_stats in stats["agent_stats"].items():
                     lines.append(f"\n{agent_name}:")
-                    lines.append(f"  Executions: {agent_stats.get('executions', 0)}")
                     lines.append(
-                        f"  Success Rate: {agent_stats.get('success_rate', 0):.2%}"
+                        f"  Executions: {agent_stats.get('executions', 0)}")
+                    lines.append(
+                        f"  Success Rate: {agent_stats.get('success_rate', 0):.2%}",
                     )
-                    lines.append(f"  Avg Time: {agent_stats.get('avg_time', 0):.2f}s")
+                    lines.append(
+                        f"  Avg Time: {agent_stats.get('avg_time', 0):.2f}s")
 
             return "\n".join(lines)
 
         except Exception as e:
-            logger.error(f"Error getting performance stats: {e}")
+            logger.exception(f"Error getting performance stats: {e}")
             return f"Error getting performance stats: {e!s}"
 
     return get_performance_stats
@@ -249,13 +255,13 @@ def create_handoff_tool(
     @tool
     def handoff_tool(task: str, context: str = "") -> str:
         f"""Hand off a task to {agent_name}.
-        
+
         {agent_description}
-        
+
         Args:
             task: The task to hand off to {agent_name}
             context: Optional additional context for the task
-            
+
         Returns:
             Result from {agent_name}
         """
@@ -273,7 +279,7 @@ def create_handoff_tool(
             return f"Result from {agent_name}: {result}"
 
         except Exception as e:
-            logger.error(f"Error executing {agent_name}: {e}")
+            logger.exception(f"Error executing {agent_name}: {e}")
             return f"Error executing {agent_name}: {e!s}"
 
     # Set the tool name dynamically
@@ -323,7 +329,8 @@ class SupervisorToolFactory:
             create_get_performance_stats_tool(self.get_stats_func),
         ]
 
-    def create_handoff_tools(self, agent_registry: dict[str, str]) -> list[BaseTool]:
+    def create_handoff_tools(self,
+                             agent_registry: dict[str, str]) -> list[BaseTool]:
         """Create handoff tools for all registered agents.
 
         Args:
@@ -334,11 +341,13 @@ class SupervisorToolFactory:
         """
         tools = []
         for agent_name, description in agent_registry.items():
-            tool = create_handoff_tool(agent_name, description, self.execute_agent_func)
+            tool = create_handoff_tool(agent_name, description,
+                                       self.execute_agent_func)
             tools.append(tool)
         return tools
 
-    def create_all_tools(self, agent_registry: dict[str, str]) -> list[BaseTool]:
+    def create_all_tools(self, agent_registry: dict[str,
+                                                    str]) -> list[BaseTool]:
         """Create all supervisor tools (base + handoff).
 
         Args:

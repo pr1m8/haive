@@ -1,17 +1,18 @@
 """Advanced extraction prompt templates for Memory V2 system.
 
-This module provides sophisticated, focused prompt templates for extracting
-different types of information from conversations and documents, specifically
-designed for memory-based agents with KG integration.
+This module provides sophisticated, focused prompt templates for
+extracting different types of information from conversations and
+documents, specifically designed for memory-based agents with KG
+integration.
 """
+
+from __future__ import annotations
 
 from typing import Any
 
-from langchain_core.prompts import (
-    ChatPromptTemplate,
-    HumanMessagePromptTemplate,
-    SystemMessagePromptTemplate,
-)
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import HumanMessagePromptTemplate
+from langchain_core.prompts import SystemMessagePromptTemplate
 
 # ============================================================================
 # CORE MEMORY EXTRACTION PROMPTS
@@ -49,7 +50,7 @@ Output Format:
   ],
   "professional_relationships": [
     {
-      "person1": "Name1", 
+      "person1": "Name1",
       "relationship": "reports_to|manages|collaborates_with|works_with",
       "person2": "Name2",
       "context": "Description",
@@ -57,14 +58,13 @@ Output Format:
     }
   ]
 }
-```"""
+```""",
         ),
         HumanMessagePromptTemplate.from_template(
-            "Extract professional information from this conversation:\n\n{conversation_text}"
+            "Extract professional information from this conversation:\n\n{conversation_text}",
         ),
-    ]
+    ],
 )
-
 
 PERSONAL_CONTEXT_EXTRACTOR = ChatPromptTemplate.from_messages(
     [
@@ -90,7 +90,7 @@ Output Format:
     {
       "person": "Name",
       "category": "interest|family|education|value|preference|goal|habit",
-      "content": "Detailed description", 
+      "content": "Detailed description",
       "importance": "low|medium|high|critical",
       "confidence": 0.0-1.0,
       "supporting_evidence": "Direct quote or reference"
@@ -107,14 +107,13 @@ Output Format:
     }
   ]
 }
-```"""
+```""",
         ),
         HumanMessagePromptTemplate.from_template(
-            "Extract personal context from this conversation:\n\n{conversation_text}"
+            "Extract personal context from this conversation:\n\n{conversation_text}",
         ),
-    ]
+    ],
 )
-
 
 TECHNICAL_KNOWLEDGE_EXTRACTOR = ChatPromptTemplate.from_messages(
     [
@@ -149,7 +148,7 @@ Output Format:
   ],
   "technical_opinions": [
     {
-      "person": "Name", 
+      "person": "Name",
       "subject": "Technology/tool/approach",
       "opinion": "positive|negative|neutral",
       "reasoning": "Why they hold this opinion",
@@ -168,14 +167,13 @@ Output Format:
     }
   ]
 }
-```"""
+```""",
         ),
         HumanMessagePromptTemplate.from_template(
-            "Extract technical knowledge from this conversation:\n\n{conversation_text}"
+            "Extract technical knowledge from this conversation:\n\n{conversation_text}",
         ),
-    ]
+    ],
 )
-
 
 PROJECT_AND_TASK_EXTRACTOR = ChatPromptTemplate.from_messages(
     [
@@ -184,7 +182,7 @@ PROJECT_AND_TASK_EXTRACTOR = ChatPromptTemplate.from_messages(
 
 Focus on identifying:
 1. Current and upcoming projects
-2. Specific tasks and deliverables  
+2. Specific tasks and deliverables
 3. Timelines, deadlines, and milestones
 4. Project status and progress
 5. Dependencies and blockers
@@ -210,7 +208,7 @@ Output Format:
   ],
   "tasks": [
     {
-      "task": "Specific task description", 
+      "task": "Specific task description",
       "assignee": "Person responsible",
       "due_date": "Deadline or timeframe",
       "priority": "low|medium|high|critical",
@@ -224,21 +222,20 @@ Output Format:
       "event": "Meeting/event name",
       "participants": ["List of attendees"],
       "date_time": "When it's scheduled",
-      "purpose": "What it's about", 
+      "purpose": "What it's about",
       "location": "Where (if mentioned)",
       "recurring": true/false,
       "confidence": 0.0-1.0
     }
   ]
 }
-```"""
+```""",
         ),
         HumanMessagePromptTemplate.from_template(
-            "Extract projects, tasks, and timeline information from:\n\n{conversation_text}"
+            "Extract projects, tasks, and timeline information from:\n\n{conversation_text}",
         ),
-    ]
+    ],
 )
-
 
 ENTITY_RELATIONSHIP_EXTRACTOR = ChatPromptTemplate.from_messages(
     [
@@ -247,7 +244,7 @@ ENTITY_RELATIONSHIP_EXTRACTOR = ChatPromptTemplate.from_messages(
 
 Your task is to identify:
 1. People and their attributes
-2. Organizations and their properties  
+2. Organizations and their properties
 3. Locations and geographic information
 4. Products, tools, and technologies
 5. Concepts and abstract entities
@@ -278,7 +275,7 @@ Output Format:
     {
       "source": "entity_id_1",
       "relationship": "WORKS_AT|LOCATED_IN|USES|KNOWS|PART_OF|MANAGES|etc",
-      "target": "entity_id_2", 
+      "target": "entity_id_2",
       "properties": {
         "duration": "How long",
         "context": "In what context",
@@ -289,14 +286,13 @@ Output Format:
     }
   ]
 }
-```"""
+```""",
         ),
         HumanMessagePromptTemplate.from_template(
-            "Extract entities and relationships from:\n\n{conversation_text}"
+            "Extract entities and relationships from:\n\n{conversation_text}",
         ),
-    ]
+    ],
 )
-
 
 # ============================================================================
 # SPECIALIZED DOMAIN EXTRACTORS
@@ -334,7 +330,7 @@ Output Format:
   "user_feedback": [
     {
       "feedback": "What users said/want",
-      "user_segment": "Which users", 
+      "user_segment": "Which users",
       "pain_point": "Specific problem",
       "suggested_solution": "Proposed fix",
       "impact": "How important/widespread",
@@ -342,14 +338,13 @@ Output Format:
     }
   ]
 }
-```"""
+```""",
         ),
         HumanMessagePromptTemplate.from_template(
-            "Extract product management insights from:\n\n{conversation_text}"
+            "Extract product management insights from:\n\n{conversation_text}",
         ),
-    ]
+    ],
 )
-
 
 ENGINEERING_CONTEXT_EXTRACTOR = ChatPromptTemplate.from_messages(
     [
@@ -392,14 +387,13 @@ Output Format:
     }
   ]
 }
-```"""
+```""",
         ),
         HumanMessagePromptTemplate.from_template(
-            "Extract engineering context from:\n\n{conversation_text}"
+            "Extract engineering context from:\n\n{conversation_text}",
         ),
-    ]
+    ],
 )
-
 
 # ============================================================================
 # CONVERSATION ANALYSIS EXTRACTORS
@@ -444,14 +438,13 @@ Output Format:
     }
   ]
 }
-```"""
+```""",
         ),
         HumanMessagePromptTemplate.from_template(
-            "Analyze sentiment and tone in:\n\n{conversation_text}"
+            "Analyze sentiment and tone in:\n\n{conversation_text}",
         ),
-    ]
+    ],
 )
-
 
 DECISION_MAKING_EXTRACTOR = ChatPromptTemplate.from_messages(
     [
@@ -488,7 +481,7 @@ Output Format:
   "action_items": [
     {
       "action": "Specific task",
-      "owner": "Who's responsible", 
+      "owner": "Who's responsible",
       "due_date": "Deadline",
       "dependencies": ["What needs to happen first"],
       "success_criteria": "How to measure completion",
@@ -497,14 +490,13 @@ Output Format:
     }
   ]
 }
-```"""
+```""",
         ),
         HumanMessagePromptTemplate.from_template(
-            "Extract decision-making information from:\n\n{conversation_text}"
+            "Extract decision-making information from:\n\n{conversation_text}",
         ),
-    ]
+    ],
 )
-
 
 # ============================================================================
 # MULTI-TURN CONVERSATION EXTRACTOR
@@ -541,7 +533,7 @@ Output Format:
     "main_topics": [
       {
         "topic": "Topic name",
-        "importance": "low|medium|high|critical", 
+        "importance": "low|medium|high|critical",
         "resolution_status": "resolved|in_progress|unresolved",
         "key_points": ["Important points discussed"]
       }
@@ -567,14 +559,13 @@ Output Format:
     "overall_outcome": "Summary of what was accomplished"
   }
 }
-```"""
+```""",
         ),
         HumanMessagePromptTemplate.from_template(
-            "Create a comprehensive summary of this conversation:\n\n{conversation_text}"
+            "Create a comprehensive summary of this conversation:\n\n{conversation_text}",
         ),
-    ]
+    ],
 )
-
 
 # ============================================================================
 # PROMPT TEMPLATE REGISTRY
@@ -633,7 +624,9 @@ class ExtractionOrchestrator:
             self.llm = llm_config.instantiate()
 
     async def extract_all(
-        self, conversation_text: str, extraction_types: list[str] = None
+        self,
+        conversation_text: str,
+        extraction_types: list[str] | None = None,
     ) -> dict[str, Any]:
         """Run multiple extractors on the same conversation.
 
@@ -657,7 +650,7 @@ class ExtractionOrchestrator:
                     # Use configured LLM
                     chain = prompt | self.llm
                     result = await chain.ainvoke(
-                        {"conversation_text": conversation_text}
+                        {"conversation_text": conversation_text},
                     )
                     results[extraction_type] = (
                         result.content if hasattr(result, "content") else str(result)
@@ -665,7 +658,7 @@ class ExtractionOrchestrator:
                 else:
                     # Return prompt for external processing
                     formatted_prompt = prompt.format(
-                        conversation_text=conversation_text
+                        conversation_text=conversation_text,
                     )
                     results[extraction_type] = {"prompt": formatted_prompt}
 

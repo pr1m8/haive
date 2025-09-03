@@ -3,6 +3,8 @@
 This module provides prompts functionality for the Haive framework.
 """
 
+from __future__ import annotations
+
 from langchain_core.prompts import ChatPromptTemplate
 
 RAG_ANSWER_STANDARD = ChatPromptTemplate.from_messages(
@@ -47,7 +49,7 @@ Generate responses that would be valuable to someone seeking comprehensive infor
 5. Acknowledge any limitations or gaps in the available information
 6. If the documents don't contain sufficient information to answer the query, clearly state this""",
         ),
-    ]
+    ],
 )
 
 RAG_ANSWER_WITH_CITATIONS = ChatPromptTemplate.from_messages(
@@ -82,5 +84,5 @@ Generate well-cited, comprehensive responses.""",
 4. **Source Summary** (brief description of each document used)
 5. **Limitations** (what couldn't be answered from available sources)""",
         ),
-    ]
+    ],
 )

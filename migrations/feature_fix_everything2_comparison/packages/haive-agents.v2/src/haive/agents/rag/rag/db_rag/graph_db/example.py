@@ -28,6 +28,7 @@ Example:
 import asyncio
 import json
 import logging
+import sys
 import time
 
 from haive.agents.rag.db_rag.graph_db.agent import GraphDBRAGAgent
@@ -39,7 +40,8 @@ from haive.agents.rag.db_rag.graph_db.config import (
 
 # Configure logging for better debugging
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
@@ -217,11 +219,12 @@ def custom_domain_example():
                 "treatment",
             ],
             example_config=ExampleConfig(
-                examples=healthcare_examples, k=2  # Use 2 most similar examples
+                examples=healthcare_examples,
+                k=2,  # Use 2 most similar examples
             ),
             graph_db_config=GraphDBConfig(
                 # Assuming healthcare database
-                graph_db_database="healthcare"
+                graph_db_database="healthcare",
             ),
         )
 
@@ -321,7 +324,7 @@ def batch_processing_example():
                         "answer": result.get("answer"),
                         "time": execution_time,
                         "success": "not about" not in result.get("answer", "").lower(),
-                    }
+                    },
                 )
 
                 total_time += execution_time
@@ -370,9 +373,7 @@ def error_handling_example():
         agent = GraphDBRAGAgent(config)
 
         # Test 1: Query that might generate invalid Cypher
-        complex_question = (
-            "Show me all actors who have worked with directors who have won an Oscaf"
-        )
+        complex_question = "Show me all actors who have worked with directors who have won an Oscaf"
 
         # Use streaming to see the correction process
         for chunk in agent.stream({"question": complex_question}):
@@ -385,8 +386,8 @@ def error_handling_example():
         # Test 2: Query with non-existent entities
         result = agent.run(
             {
-                "question": "List all SpaceShips in the database"  # Assuming no SpaceShip label
-            }
+                "question": "List all SpaceShips in the database",  # Assuming no SpaceShip label
+            },
         )
         if "not about movies" in result.get("answer", "").lower():
             pass
@@ -396,8 +397,8 @@ def error_handling_example():
         # Test 3: Very complex query
         complex_result = agent.run(
             {
-                "question": "What is the average rating of movies directed by people who have also acted?"
-            }
+                "question": "What is the average rating of movies directed by people who have also acted?",
+            },
         )
         if complex_result.get("answer"):
             pass
@@ -513,7 +514,6 @@ async def async_example():
         ]
 
         # Define async task
-
         async def process_query(agent, question, index):
             start_time = time.time()
             try:
@@ -539,9 +539,7 @@ async def async_example():
 
         # Process all queries concurrently
         start_time = time.time()
-        tasks = [
-            process_query(agent, question, i) for i, question in enumerate(queries, 1)
-        ]
+        tasks = [process_query(agent, question, i) for i, question in enumerate(queries, 1)]
         results = await asyncio.gather(*tasks)
         time.time() - start_time
 
@@ -617,8 +615,8 @@ def main():
 def run_all_examples():
     """Run all examples in sequence.
 
-    This function executes all example functions to demonstrate
-    the full capabilities of the GraphDBRAGAgent.
+    This function executes all example functions to demonstrate the full
+    capabilities of the GraphDBRAGAgent.
     """
     examples = [
         ("Basic Usage", basic_example),
@@ -649,4 +647,4 @@ if __name__ == "__main__":
         main()
     except Exception as e:
         logger.exception(f"Fatal error: {e}")
-        exit(1)
+        sys.exit(1)

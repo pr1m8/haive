@@ -17,8 +17,12 @@ import math
 from collections import deque
 from typing import Any
 
-from langchain_core.messages import BaseMessage, HumanMessage
-from pydantic import BaseModel, Field, computed_field, field_serializer
+from langchain_core.messages import BaseMessage
+from langchain_core.messages import HumanMessage
+from pydantic import BaseModel
+from pydantic import computed_field
+from pydantic import Field
+from pydantic import field_serializer
 
 
 class Reflection(BaseModel):
@@ -28,7 +32,7 @@ class Reflection(BaseModel):
 
     def as_message(self) -> HumanMessage:
         return HumanMessage(
-            content=f"Reasoning: {self.reflections}\nScore: {self.score}"
+            content=f"Reasoning: {self.reflections}\nScore: {self.score}",
         )
 
     @property
@@ -68,9 +72,7 @@ class TreeNode(BaseModel):
             node = node.parent
 
     def get_messages(self, include_reflections: bool = True) -> list[BaseMessage]:
-        return self.messages + (
-            [self.reflection.as_message()] if include_reflections else []
-        )
+        return self.messages + ([self.reflection.as_message()] if include_reflections else [])
 
     def get_trajectory(self, include_reflections: bool = True) -> list[BaseMessage]:
         node = self

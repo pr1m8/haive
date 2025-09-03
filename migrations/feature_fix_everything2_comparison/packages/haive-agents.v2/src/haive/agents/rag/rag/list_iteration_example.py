@@ -1,21 +1,21 @@
 """Example of using ListIterationNode with RAG agents.
 
-Shows how to use the list iteration pattern for processing multiple queries
-or documents through RAG agents.
+Shows how to use the list iteration pattern for processing multiple
+queries or documents through RAG agents.
 """
 
 from typing import Any
 
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+
+from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.list_iteration_node import (
     create_engine_callable,
     create_list_iteration_node,
 )
 from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.documents import Document
-from langchain_core.prompts import ChatPromptTemplate
-
-from haive.agents.rag.simple.agent import SimpleRAGAgent
 
 
 # Example 1: Process multiple queries through a RAG agent
@@ -58,7 +58,7 @@ def create_document_summarizer() -> Any:
         [
             ("system", "You are an expert at summarizing documents concisely."),
             ("human", "Summarize this document in 2-3 sentences:\n\n{document}"),
-        ]
+        ],
     )
 
     summarize_engine = AugLLMConfig(
@@ -101,13 +101,14 @@ def create_entity_extractor() -> Any:
 
         people: list[str] = Field(default_factory=list, description="Names of people")
         organizations: list[str] = Field(
-            default_factory=list, description="Organization names"
+            default_factory=list,
+            description="Organization names",
         )
         locations: list[str] = Field(default_factory=list, description="Location names")
         dates: list[str] = Field(default_factory=list, description="Dates mentioned")
 
     extract_prompt = ChatPromptTemplate.from_messages(
-        [("system", "Extract entities from the following text."), ("human", "{text}")]
+        [("system", "Extract entities from the following text."), ("human", "{text}")],
     )
 
     extract_engine = AugLLMConfig(
@@ -160,8 +161,9 @@ def create_parallel_document_grader() -> Any:
 # Example usage in a graph
 def example_graph_usage() -> Any:
     """Example of how to use list iteration nodes in a graph."""
-    from haive.core.graph.state_graph.base_graph2 import BaseGraph
     from langgraph.graph import END, START
+
+    from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
     # Create graph
     graph = BaseGraph(name="ListIterationExample")
@@ -171,7 +173,7 @@ def example_graph_usage() -> Any:
         documents=[
             Document(page_content="Example document about AI"),
             Document(page_content="Another document about ML"),
-        ]
+        ],
     )
 
     summarizer = create_document_summarizer()

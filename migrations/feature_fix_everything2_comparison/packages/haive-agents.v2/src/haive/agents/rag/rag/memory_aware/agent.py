@@ -1,18 +1,14 @@
 """Memory-Aware RAG Agents.
 
-from typing import Any
-Memory-aware RAG with persistent context and iterative learning.
-Uses structured output models for memory management.
+from typing import Any Memory-aware RAG with persistent context and
+iterative learning. Uses structured output models for memory management.
 """
 
-import logging
 from datetime import datetime
 from enum import Enum
+import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
@@ -22,6 +18,9 @@ from haive.agents.base.agent import Agent
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +54,8 @@ class MemoryItem(BaseModel):
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence in this memory")
     created_at: datetime = Field(default_factory=datetime.now)
     keywords: list[str] = Field(
-        default_factory=list, description="Key terms for retrieval"
+        default_factory=list,
+        description="Key terms for retrieval",
     )
 
 
@@ -65,7 +65,10 @@ class MemoryRetrievalAgent(Agent):
     name: str = "Memory Retrieval"
 
     def __init__(
-        self, llm_config: LLMConfig | None = None, max_memories: int = 10, **kwargs
+        self,
+        llm_config: LLMConfig | None = None,
+        max_memories: int = 10,
+        **kwargs,
     ):
         """Initialize memory retrieval agent."""
         self.llm_config = llm_config or AzureLLMConfig(
@@ -91,7 +94,7 @@ class MemoryRetrievalAgent(Agent):
 
             for memory in self.memory_store.values():
                 keyword_overlap = len(
-                    query_words.intersection({kw.lower() for kw in memory.keywords})
+                    query_words.intersection({kw.lower() for kw in memory.keywords}),
                 )
                 if keyword_overlap > 0:
                     score = keyword_overlap / len(query_words)
@@ -99,9 +102,7 @@ class MemoryRetrievalAgent(Agent):
 
             # Sort by relevance and take top memories
             relevant_memories.sort(key=lambda x: x[1], reverse=True)
-            selected_memories = [
-                mem for mem, _ in relevant_memories[: self.max_memories]
-            ]
+            selected_memories = [mem for mem, _ in relevant_memories[: self.max_memories]]
 
             # Format memory context
             memory_context = (
@@ -109,7 +110,7 @@ class MemoryRetrievalAgent(Agent):
                     [
                         f"Memory ({mem.memory_type.value}): {mem.content}"
                         for mem in selected_memories
-                    ]
+                    ],
                 )
                 if selected_memories
                 else "No relevant memories found."
@@ -149,12 +150,15 @@ class MemoryAwareRAGAgent(SequentialAgent):
 
         # Step 1: Memory retrieval
         memory_retrieval = MemoryRetrievalAgent(
-            llm_config=llm_config, max_memories=10, name="Memory Retrieval"
+            llm_config=llm_config,
+            max_memories=10,
+            name="Memory Retrieval",
         )
 
         # Step 2: Document retrieval
         doc_retrieval = BaseRAGAgent.from_documents(
-            documents=documents, name="Document Retrieval"
+            documents=documents,
+            name="Document Retrieval",
         )
 
         # Step 3: Memory integration and response
@@ -171,7 +175,7 @@ class MemoryAwareRAGAgent(SequentialAgent):
                             "human",
                             "Query: {query}\nMemory Context: {memory_context}\nDocuments: {retrieved_documents}\nProvide integrated response.",
                         ),
-                    ]
+                    ],
                 ),
             ),
             name="Memory Integration",
@@ -199,7 +203,9 @@ def create_memory_aware_rag_agent(
         kwargs.setdefault("max_memories", 100)
 
     return MemoryAwareRAGAgent.from_documents(
-        documents=documents, llm_config=llm_config, **kwargs
+        documents=documents,
+        llm_config=llm_config,
+        **kwargs,
     )
 
 

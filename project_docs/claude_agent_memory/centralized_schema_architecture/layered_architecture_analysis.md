@@ -203,7 +203,7 @@ class TypedEngine(Protocol):
 
     def get_input_fields(self) -> Dict[str, FieldInfo]
     def get_output_fields(self) -> Dict[str, FieldInfo]
-    def create_runnable(self) -> Invokable
+    def create_runnable(self) -> Invocable
 ```
 
 ### **Layer 2: Node Contract**

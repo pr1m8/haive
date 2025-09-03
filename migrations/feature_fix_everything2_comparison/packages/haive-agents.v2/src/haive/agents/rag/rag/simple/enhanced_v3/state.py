@@ -1,14 +1,16 @@
 """Enhanced RAG State Schema for SimpleRAG V3.
 
-This module provides enhanced state management for SimpleRAG using Enhanced MultiAgent V3
-with performance tracking, debug information, and comprehensive metadata.
+This module provides enhanced state management for SimpleRAG using
+Enhanced MultiAgent V3 with performance tracking, debug information, and
+comprehensive metadata.
 """
 
 from typing import Any
 
-from haive.core.schema.state_schema import StateSchema
 from langchain_core.documents import Document
 from pydantic import BaseModel, Field
+
+from haive.core.schema.state_schema import StateSchema
 
 
 class RAGMetadata(BaseModel):
@@ -83,50 +85,60 @@ class SimpleRAGState(StateSchema):
     query: str = Field(default="", description="User query for RAG processing")
 
     retrieved_documents: list[Document] = Field(
-        default_factory=list, description="Documents retrieved from vector store"
+        default_factory=list,
+        description="Documents retrieved from vector store",
     )
 
     generated_answer: str = Field(default="", description="Generated answer from LLM")
 
     # Enhanced tracking fields (populated when features enabled)
     retrieval_metadata: RAGMetadata | None = Field(
-        default=None, description="Metadata from retrieval operation"
+        default=None,
+        description="Metadata from retrieval operation",
     )
 
     generation_metadata: RAGMetadata | None = Field(
-        default=None, description="Metadata from generation operation"
+        default=None,
+        description="Metadata from generation operation",
     )
 
     # Performance tracking (when performance_mode=True)
     performance_metrics: dict[str, float] = Field(
-        default_factory=dict, description="Performance metrics for each stage"
+        default_factory=dict,
+        description="Performance metrics for each stage",
     )
 
     # Debug information (when debug_mode=True)
     retrieval_debug: RetrievalDebugInfo | None = Field(
-        default=None, description="Debug information for retrieval"
+        default=None,
+        description="Debug information for retrieval",
     )
 
     generation_debug: GenerationDebugInfo | None = Field(
-        default=None, description="Debug information for generation"
+        default=None,
+        description="Debug information for generation",
     )
 
     # Execution tracking
     current_stage: str = Field(
-        default="ready", description="Current stage of RAG pipeline"
+        default="ready",
+        description="Current stage of RAG pipeline",
     )
 
     stage_history: list[str] = Field(
-        default_factory=list, description="History of pipeline stages"
+        default_factory=list,
+        description="History of pipeline stages",
     )
 
     # Source tracking
     document_sources: list[str] = Field(
-        default_factory=list, description="Sources of retrieved documents"
+        default_factory=list,
+        description="Sources of retrieved documents",
     )
 
     citation_info: dict[str, Any] = Field(
-        default_factory=dict, description="Citation information for sources"
+        default_factory=dict,
+        description="Citation information for sources",
     )
 
     def update_stage(self, stage: str) -> None:
@@ -140,7 +152,7 @@ class SimpleRAGState(StateSchema):
         search_time: float | None = None,
         total_documents: int | None = None,
         similarity_scores: list[float] | None = None,
-        **kwargs
+        **kwargs,
     ) -> None:
         """Add retrieval debug information."""
         if self.retrieval_debug is None:
@@ -166,7 +178,7 @@ class SimpleRAGState(StateSchema):
         prompt_tokens: int | None = None,
         completion_tokens: int | None = None,
         generation_time: float | None = None,
-        **kwargs
+        **kwargs,
     ) -> None:
         """Add generation debug information."""
         if self.generation_debug is None:
@@ -225,7 +237,7 @@ class SimpleRAGState(StateSchema):
                         if self.retrieval_debug.similarity_scores
                         else None
                     ),
-                }
+                },
             )
 
         if self.retrieval_metadata:
@@ -248,7 +260,7 @@ class SimpleRAGState(StateSchema):
                     "completion_tokens": self.generation_debug.completion_tokens,
                     "generation_time": self.generation_debug.generation_time,
                     "model_used": self.generation_debug.model_used,
-                }
+                },
             )
 
         if self.generation_metadata:

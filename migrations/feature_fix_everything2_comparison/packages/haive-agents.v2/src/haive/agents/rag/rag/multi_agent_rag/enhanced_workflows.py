@@ -1,9 +1,19 @@
 """Enhanced Multi-Agent RAG Workflows.
 
-Implements advanced RAG patterns like CRAG, Self-RAG, HYDE, and grading workflows
-using the new multi-agent base with compatibility and enhanced state management.
+Implements advanced RAG patterns like CRAG, Self-RAG, HYDE, and grading
+workflows using the new multi-agent base with compatibility and enhanced
+state management.
 """
 
+from __future__ import annotations
+
+from langchain_core.documents import Document
+from langgraph.graph import END, START
+
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import ConditionalAgent, SequentialAgent
+from haive.agents.rag.base.agent import SimpleRAGAgent
+from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.node.callable_node import (
     CallableNodeConfig,
@@ -13,13 +23,6 @@ from haive.core.graph.node.callable_node import (
 )
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.prebuilt.rag_state import MultiAgentRAGState
-from langchain_core.documents import Document
-from langgraph.graph import END, START
-
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import ConditionalAgent, SequentialAgent
-from haive.agents.rag.base.agent import SimpleRAGAgent
-from haive.agents.simple.agent import SimpleAgent
 
 
 class DocumentGradingAgent(Agent):
@@ -33,7 +36,8 @@ class DocumentGradingAgent(Agent):
 
         # Add document grader node
         grader_node = create_document_grader(
-            grading_func=simple_document_grader, name="grade_documents"
+            grading_func=simple_document_grader,
+            name="grade_documents",
         )
         graph.add_node("grade_documents", grader_node)
 
@@ -55,7 +59,9 @@ class RequeryDecisionAgent(Agent):
 
         # Add requery decision node
         decision_node = CallableNodeConfig(
-            name="requery_decision", callable_func=requery_decision, pass_state=True
+            name="requery_decision",
+            callable_func=requery_decision,
+            pass_state=True,
         )
         graph.add_node("requery_decision", decision_node)
 
@@ -89,7 +95,8 @@ class CorrectiveRAGAgent(ConditionalAgent):
             from haive.core.fixtures.documents import conversation_documents
 
             retrieval_agent = SimpleRAGAgent.from_documents(
-                documents or conversation_documents, name="CRAG Retrieval Agent"
+                documents or conversation_documents,
+                name="CRAG Retrieval Agent",
             )
 
         if not grading_agent:
@@ -161,7 +168,10 @@ class CorrectiveRAGAgent(ConditionalAgent):
 
 
 class HYDERAGAgent(SequentialAgent):
-    """HYDE RAG agent that generates hypothetical documents before retrieval."""
+    """HYDE RAG agent that generates hypothetical documents before.
+
+    retrieval.
+    """
 
     def __init__(
         self,
@@ -182,7 +192,7 @@ class HYDERAGAgent(SequentialAgent):
                         "You are an expert that generates detailed, accurate responses to questions. Write a comprehensive paragraph that would perfectly answer the given question.",
                     ),
                     ("human", "Question: {query}\n\nDetailed Answer:"),
-                ]
+                ],
             )
 
             hypothesis_agent = SimpleAgent(
@@ -195,7 +205,8 @@ class HYDERAGAgent(SequentialAgent):
             from haive.core.fixtures.documents import conversation_documents
 
             retrieval_agent = SimpleRAGAgent.from_documents(
-                documents or conversation_documents, name="HYDE Retrieval Agent"
+                documents or conversation_documents,
+                name="HYDE Retrieval Agent",
             )
 
         if not answer_agent:
@@ -235,7 +246,7 @@ class SelfRAGAgent(ConditionalAgent):
                 - [No Retrieval] if you can answer with your internal knowledge""",
                     ),
                     ("human", "Question: {query}"),
-                ]
+                ],
             )
 
             retrieval_decision_agent = SimpleAgent(
@@ -248,17 +259,20 @@ class SelfRAGAgent(ConditionalAgent):
             from haive.core.fixtures.documents import conversation_documents
 
             retrieval_agent = SimpleRAGAgent.from_documents(
-                documents or conversation_documents, name="Self-RAG Retrieval Agent"
+                documents or conversation_documents,
+                name="Self-RAG Retrieval Agent",
             )
 
         if not relevance_agent:
             relevance_agent = SimpleAgent(
-                name="Self-RAG Relevance Checker", engine=AugLLMConfig()
+                name="Self-RAG Relevance Checker",
+                engine=AugLLMConfig(),
             )
 
         if not generation_agent:
             generation_agent = SimpleAgent(
-                name="Self-RAG Generator", engine=AugLLMConfig()
+                name="Self-RAG Generator",
+                engine=AugLLMConfig(),
             )
 
         agents = [
@@ -288,10 +302,7 @@ class SelfRAGAgent(ConditionalAgent):
         def self_rag_router(state: MultiAgentRAGState) -> str:
             """Route based on Self-RAG reflection logic."""
             # Check if we need retrieval decision
-            if (
-                not hasattr(state, "needs_retrieval_decision")
-                or not state.needs_retrieval_decision
-            ):
+            if not hasattr(state, "needs_retrieval_decision") or not state.needs_retrieval_decision:
                 return self._get_agent_node_name(self.retrieval_decision_agent)
 
             # If retrieval is needed and not done
@@ -317,7 +328,9 @@ class SelfRAGAgent(ConditionalAgent):
 
 
 def create_enhanced_rag_workflow(
-    workflow_type: str = "crag", documents: list[Document] | None = None, **kwargs
+    workflow_type: str = "crag",
+    documents: list[Document] | None = None,
+    **kwargs,
 ) -> Agent:
     """Factory function to create enhanced RAG workflows.
 

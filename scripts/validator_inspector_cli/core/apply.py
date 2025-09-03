@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 
 from rich.console import Console
@@ -9,6 +11,6 @@ console = Console()
 
 def apply_fixes(filepath: str):
     fixed_tree = fix_validators(filepath)
-    Path(filepath).write_text(fixed_tree.code, encoding="utf-8")
+    Path(filepath).write_text(fixed_tree.code, encoding='utf-8')
 
     validate_fixed_file(filepath)

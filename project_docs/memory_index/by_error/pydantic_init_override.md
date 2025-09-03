@@ -1,7 +1,7 @@
 # Pydantic **init** Override Error
 
-**Error Type**: Pydantic validation bypass  
-**Impact**: Breaks all Pydantic features  
+**Error Type**: Pydantic validation bypass
+**Impact**: Breaks all Pydantic features
 **Rule**: NEVER override `__init__` in Pydantic models
 
 ## The Problem

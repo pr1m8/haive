@@ -53,7 +53,7 @@
 autoapi_ignore = []  # Remove any ignores blocking discovery
 autoapi_options = [
     'members',
-    'undoc-members', 
+    'undoc-members',
     'show-inheritance',
     'show-module-summary',
     'imported-members',
@@ -104,7 +104,7 @@ autoapi_options = [
 
 ### Phase 2: User Experience
 - [ ] Add documentation coverage badges/indicators
-- [ ] Enhance search functionality with better algorithms  
+- [ ] Enhance search functionality with better algorithms
 - [ ] Improve navigation visual hierarchy
 - [ ] Refine dark mode color scheme
 

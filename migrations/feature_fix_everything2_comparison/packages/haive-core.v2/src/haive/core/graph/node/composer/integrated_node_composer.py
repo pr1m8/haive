@@ -6,8 +6,8 @@ providing consistent patterns for node I/O configuration that work with
 StateSchema, SchemaComposer, and the broader Haive architecture.
 """
 
-import logging
 from collections.abc import Callable
+import logging
 from typing import Any, TypeVar
 
 from haive.core.common.schema.field_definition import FieldDefinition
@@ -70,7 +70,10 @@ class IntegratedNodeComposer(NodeSchemaComposer):
         # Generate or use provided schema
         if state_schema is None:
             state_schema = self._generate_state_schema(
-                base_node, input_mappings, output_mappings, preserve_field_metadata
+                base_node,
+                input_mappings,
+                output_mappings,
+                preserve_field_metadata,
             )
 
         # Create composed node
@@ -113,7 +116,9 @@ class IntegratedNodeComposer(NodeSchemaComposer):
         for mapping in all_mappings:
             # Create field definition
             field_def = self._create_field_definition(
-                mapping, base_node, preserve_metadata
+                mapping,
+                base_node,
+                preserve_metadata,
             )
 
             # Add to schema composer
@@ -132,14 +137,16 @@ class IntegratedNodeComposer(NodeSchemaComposer):
             if input_mappings:
                 for mapping in input_mappings:
                     self.schema_composer.add_engine_input_mapping(
-                        engine_name, mapping.target_path
+                        engine_name,
+                        mapping.target_path,
                     )
 
             # Track output fields
             if output_mappings:
                 for mapping in output_mappings:
                     self.schema_composer.add_engine_output_mapping(
-                        engine_name, mapping.target_path
+                        engine_name,
+                        mapping.target_path,
                     )
 
         # Build the schema
@@ -147,7 +154,10 @@ class IntegratedNodeComposer(NodeSchemaComposer):
         return self.schema_composer.build_state_schema(schema_name)
 
     def _create_field_definition(
-        self, mapping: FieldMapping, base_node: TNode, preserve_metadata: bool
+        self,
+        mapping: FieldMapping,
+        base_node: TNode,
+        preserve_metadata: bool,
     ) -> FieldDefinition:
         """Create field definition for mapped field.
 
@@ -169,9 +179,7 @@ class IntegratedNodeComposer(NodeSchemaComposer):
             return FieldDefinition(
                 name=mapping.target_path,
                 type_=original_def.type_,
-                description=f"Mapped from {
-                    mapping.source_path}: {
-                    original_def.description}",
+                description=f"Mapped from {mapping.source_path}: {original_def.description}",
                 owner=base_node.name,
                 sharing_strategy=original_def.sharing_strategy,
                 persistence_strategy=original_def.persistence_strategy,
@@ -213,8 +221,7 @@ class IntegratedNodeComposer(NodeSchemaComposer):
             field_mappings=field_mappings,
             preserve_reducers=preserve_reducers,
             preserve_sharing=preserve_sharing,
-            name=name
-            or f"adapter_{source_schema.__name__}_to_{target_schema.__name__}",
+            name=name or f"adapter_{source_schema.__name__}_to_{target_schema.__name__}",
             composer=self,
         )
 
@@ -256,7 +263,10 @@ class IntegratedNodeComposer(NodeSchemaComposer):
         # Generate state schema if needed
         if generate_schema and not input_schema:
             state_schema = self._generate_state_schema(
-                base_node, input_mappings, output_mappings, preserve_metadata=True
+                base_node,
+                input_mappings,
+                output_mappings,
+                preserve_metadata=True,
             )
         else:
             state_schema = input_schema
@@ -300,9 +310,7 @@ class SchemaAwareComposedNode:
             composer.create_extract_function(input_mappings) if input_mappings else None
         )
         self.update_func = (
-            composer.create_update_function(output_mappings)
-            if output_mappings
-            else None
+            composer.create_update_function(output_mappings) if output_mappings else None
         )
 
     def __call__(
@@ -400,7 +408,9 @@ class StateSchemaAdapter:
 
         for mapping in self.field_mappings:
             value = self.composer.path_resolver.extract_value(
-                source_instance, mapping.source_path, mapping.default
+                source_instance,
+                mapping.source_path,
+                mapping.default,
             )
 
             # Apply transforms
@@ -450,7 +460,9 @@ def integrate_node_with_schema(
 
 
 def create_schema_aware_node(
-    func: Callable, schema: type[StateSchema], **kwargs
+    func: Callable,
+    schema: type[StateSchema],
+    **kwargs,
 ) -> SchemaAwareComposedNode:
     """Create node from callable with StateSchema.
 
@@ -464,7 +476,10 @@ def create_schema_aware_node(
     """
     composer = IntegratedNodeComposer()
     return composer.from_callable_with_schema(
-        func=func, input_schema=schema, generate_schema=False, **kwargs
+        func=func,
+        input_schema=schema,
+        generate_schema=False,
+        **kwargs,
     )
 
 

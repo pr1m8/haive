@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import sys
 from pathlib import Path
 
@@ -11,21 +13,21 @@ console = Console()
 
 def process_file(file_path: Path, action: str):
     match action:
-        case "discover":
+        case 'discover':
             analyze_validators(str(file_path))
-        case "preview":
+        case 'preview':
             preview_fixes(str(file_path))
-        case "apply":
+        case 'apply':
             apply_fixes(str(file_path))
         case _:
             console.print(f"[red]Unknown action: {action}[/red]")
 
 
 def process_path(input_path: Path, action: str):
-    if input_path.is_file() and input_path.suffix == ".py":
+    if input_path.is_file() and input_path.suffix == '.py':
         process_file(input_path, action)
     elif input_path.is_dir():
-        py_files = list(input_path.rglob("*.py"))
+        py_files = list(input_path.rglob('*.py'))
         if not py_files:
             console.print(f"[yellow]No Python files found in {input_path}[/yellow]")
         for f in py_files:
@@ -37,7 +39,7 @@ def process_path(input_path: Path, action: str):
 def run_cli():
     if len(sys.argv) < 2:
         console.print(
-            "[red]Usage: python -m validator_inspector_cli <file_or_dir> [--preview|--apply][/red]"
+            '[red]Usage: python -m validator_inspector_cli <file_or_dir> [--preview|--apply][/red]',
         )
         sys.exit(1)
 
@@ -46,10 +48,10 @@ def run_cli():
         console.print(f"[red]Path does not exist: {target}[/red]")
         sys.exit(1)
 
-    action = "discover"
-    if "--preview" in sys.argv:
-        action = "preview"
-    elif "--apply" in sys.argv:
-        action = "apply"
+    action = 'discover'
+    if '--preview' in sys.argv:
+        action = 'preview'
+    elif '--apply' in sys.argv:
+        action = 'apply'
 
     process_path(target, action)

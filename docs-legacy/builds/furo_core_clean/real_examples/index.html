@@ -1,0 +1,894 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
+        <title>Real Examples Index - 🤖 Haive Core Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=25af2a20" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #2563eb;
+  --color-admonition-background: #f8fafc;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #60a5fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index_core_only.html"><div class="brand">🤖 Haive Core Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index_core_only.html">
+  
+  <span class="sidebar-brand-text">🤖 Haive Core Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Core API</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api_clean/haive/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of haive</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api_clean/haive/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">haive.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of haive.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api_clean/haive/core/errors/index.html">haive.core.errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/will-astley/haive/blob/main/docs/source/real_examples/index.md?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/will-astley/haive/edit/main/docs/source/real_examples/index.md" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="real-examples-index">
+<h1>Real Examples Index<a class="headerlink" href="#real-examples-index" title="Link to this heading">¶</a></h1>
+<p>This index contains all the real, working examples discovered in the Haive codebase.
+These are actual outputs from agents, games, and conversations - not mock data.</p>
+<section id="conversation">
+<h2>Conversation<a class="headerlink" href="#conversation" title="Link to this heading">¶</a></h2>
+<section id="conversation-readme">
+<h3>conversation_README<a class="headerlink" href="#conversation-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: conversation</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-agents/src/haive/agents/conversation/collaborative/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: conversation</p></li>
+<li><p><strong>Word Count</strong>: 1385</p></li>
+<li><p><strong>Sections</strong>: Collaborative Conversation, Overview, Architecture…</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>conversation_README<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: conversation</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-agents/src/haive/agents/conversation/base/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: conversation</p></li>
+<li><p><strong>Word Count</strong>: 653</p></li>
+<li><p><strong>Sections</strong>: Base Conversation Agent, Overview, Architecture…</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>conversation_README<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: conversation</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-agents/src/haive/agents/conversation/round_robin/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: conversation</p></li>
+<li><p><strong>Word Count</strong>: 1061</p></li>
+<li><p><strong>Sections</strong>: Round Robin Conversation, Overview, Architecture…</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>conversation_README<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: conversation</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-agents/src/haive/agents/conversation/debate/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: conversation</p></li>
+<li><p><strong>Word Count</strong>: 1288</p></li>
+<li><p><strong>Sections</strong>: Debate Conversation, Overview, Architecture…</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>conversation_README<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: conversation</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-agents/src/haive/agents/conversation/directed/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: conversation</p></li>
+<li><p><strong>Word Count</strong>: 1300</p></li>
+<li><p><strong>Sections</strong>: Directed Conversation, Overview, Architecture…</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>conversation_README<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: conversation</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-agents/src/haive/agents/conversation/social_media/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: conversation</p></li>
+<li><p><strong>Word Count</strong>: 1619</p></li>
+<li><p><strong>Sections</strong>: Social Media Conversation, Overview, Architecture…</p></li>
+</ul>
+</section>
+</section>
+<section id="games">
+<h2>Games<a class="headerlink" href="#games" title="Link to this heading">¶</a></h2>
+<section id="clue-readme">
+<h3>clue_README<a class="headerlink" href="#clue-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/clue/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: clue</p></li>
+</ul>
+</section>
+<section id="checkers-readme">
+<h3>checkers_README<a class="headerlink" href="#checkers-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/checkers/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: checkers</p></li>
+</ul>
+</section>
+<section id="mastermind-readme">
+<h3>mastermind_README<a class="headerlink" href="#mastermind-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/mastermind/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: mastermind</p></li>
+</ul>
+</section>
+<section id="mafia-readme">
+<h3>mafia_README<a class="headerlink" href="#mafia-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/mafia/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: mafia</p></li>
+</ul>
+</section>
+<section id="dominoes-readme">
+<h3>dominoes_README<a class="headerlink" href="#dominoes-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/dominoes/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: dominoes</p></li>
+</ul>
+</section>
+<section id="base-readme">
+<h3>base_README<a class="headerlink" href="#base-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/base/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: base</p></li>
+</ul>
+</section>
+<section id="monopoly-readme">
+<h3>monopoly_README<a class="headerlink" href="#monopoly-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/monopoly/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: monopoly</p></li>
+</ul>
+</section>
+<section id="hold-em-readme">
+<h3>hold_em_README<a class="headerlink" href="#hold-em-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/hold_em/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: hold_em</p></li>
+</ul>
+</section>
+<section id="nim-readme">
+<h3>nim_README<a class="headerlink" href="#nim-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/nim/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: nim</p></li>
+</ul>
+</section>
+<section id="multi-player-readme">
+<h3>multi_player_README<a class="headerlink" href="#multi-player-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/multi_player/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: multi_player</p></li>
+</ul>
+</section>
+<section id="framework-readme">
+<h3>framework_README<a class="headerlink" href="#framework-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/framework/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: framework</p></li>
+</ul>
+</section>
+<section id="tic-tac-toe-readme">
+<h3>tic_tac_toe_README<a class="headerlink" href="#tic-tac-toe-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/tic_tac_toe/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: tic_tac_toe</p></li>
+</ul>
+</section>
+<section id="mancala-readme">
+<h3>mancala_README<a class="headerlink" href="#mancala-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/mancala/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: mancala</p></li>
+</ul>
+</section>
+<section id="connect4-readme">
+<h3>connect4_README<a class="headerlink" href="#connect4-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/connect4/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: connect4</p></li>
+</ul>
+</section>
+<section id="among-us-readme">
+<h3>among_us_README<a class="headerlink" href="#among-us-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/among_us/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: among_us</p></li>
+</ul>
+</section>
+<section id="chess-readme">
+<h3>chess_README<a class="headerlink" href="#chess-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/chess/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: chess</p></li>
+</ul>
+</section>
+<section id="cards-readme">
+<h3>cards_README<a class="headerlink" href="#cards-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/cards/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: cards</p></li>
+</ul>
+</section>
+<section id="core-readme">
+<h3>core_README<a class="headerlink" href="#core-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/core/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: core</p></li>
+</ul>
+</section>
+<section id="poker-readme">
+<h3>poker_README<a class="headerlink" href="#poker-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/poker/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: poker</p></li>
+</ul>
+</section>
+<section id="debate-readme">
+<h3>debate_README<a class="headerlink" href="#debate-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/debate/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: debate</p></li>
+</ul>
+</section>
+<section id="fox-and-geese-readme">
+<h3>fox_and_geese_README<a class="headerlink" href="#fox-and-geese-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/fox_and_geese/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: fox_and_geese</p></li>
+</ul>
+</section>
+<section id="base-v2-readme">
+<h3>base_v2_README<a class="headerlink" href="#base-v2-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/base_v2/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: base_v2</p></li>
+</ul>
+</section>
+<section id="go-readme">
+<h3>go_README<a class="headerlink" href="#go-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/go/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: go</p></li>
+</ul>
+</section>
+<section id="reversi-readme">
+<h3>reversi_README<a class="headerlink" href="#reversi-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/reversi/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: reversi</p></li>
+</ul>
+</section>
+<section id="board-readme">
+<h3>board_README<a class="headerlink" href="#board-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/board/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: board</p></li>
+</ul>
+</section>
+<section id="risk-readme">
+<h3>risk_README<a class="headerlink" href="#risk-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/risk/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: risk</p></li>
+</ul>
+</section>
+<section id="single-player-readme">
+<h3>single_player_README<a class="headerlink" href="#single-player-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/single_player/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: single_player</p></li>
+</ul>
+</section>
+<section id="battleship-readme">
+<h3>battleship_README<a class="headerlink" href="#battleship-readme" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/src/haive/games/battleship/README.md</span></code></p></li>
+<li><p><strong>Agent Type</strong>: battleship</p></li>
+</ul>
+</section>
+<section id="standardized-api-integration">
+<h3>standardized_api_integration<a class="headerlink" href="#standardized-api-integration" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/examples/standardized_api_integration.py</span></code></p></li>
+</ul>
+</section>
+<section id="generic-agents-demo">
+<h3>generic_agents_demo<a class="headerlink" href="#generic-agents-demo" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/examples/generic_agents_demo.py</span></code></p></li>
+</ul>
+</section>
+<section id="configurable-agents-demo">
+<h3>configurable_agents_demo<a class="headerlink" href="#configurable-agents-demo" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/examples/configurable_agents_demo.py</span></code></p></li>
+</ul>
+</section>
+<section id="run-among-us">
+<h3>run_among_us<a class="headerlink" href="#run-among-us" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/examples/run_among_us.py</span></code></p></li>
+</ul>
+</section>
+<section id="general-api-example">
+<h3>general_api_example<a class="headerlink" href="#general-api-example" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/examples/general_api_example.py</span></code></p></li>
+</ul>
+</section>
+<section id="tic-tac-toe-example">
+<h3>tic_tac_toe_example<a class="headerlink" href="#tic-tac-toe-example" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/examples/tic_tac_toe_example.py</span></code></p></li>
+</ul>
+</section>
+<section id="chess-api-example">
+<h3>chess_api_example<a class="headerlink" href="#chess-api-example" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/examples/chess_api_example.py</span></code></p></li>
+</ul>
+</section>
+<section id="connect4-working-example">
+<h3>connect4_working_example<a class="headerlink" href="#connect4-working-example" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: game</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">packages/haive-games/examples/connect4_working_example.py</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="execution-traces">
+<h2>Execution_Traces<a class="headerlink" href="#execution-traces" title="Link to this heading">¶</a></h2>
+<section id="cached-react">
+<h3>cached_react<a class="headerlink" href="#cached-react" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/source/agent_cache_react.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: react</p></li>
+<li><p><strong>Executions</strong>: 3</p></li>
+</ul>
+</section>
+<section id="cached-simple">
+<h3>cached_simple<a class="headerlink" href="#cached-simple" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/source/agent_cache_simple.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: simple</p></li>
+<li><p><strong>Executions</strong>: 1</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>cached_react<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/scripts/cache_generation/agent_cache_react.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: react</p></li>
+<li><p><strong>Executions</strong>: 3</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>cached_simple<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/scripts/cache_generation/agent_cache_simple.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: simple</p></li>
+<li><p><strong>Executions</strong>: 1</p></li>
+</ul>
+</section>
+<section id="capture-quantumexplaineragent-quantume">
+<h3>capture_QuantumExplainerAgent_QuantumE<a class="headerlink" href="#capture-quantumexplaineragent-quantume" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/QuantumExplainerAgent_dfca177b-5cba-4e06-99cc-c42174670413_20250626_113523.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.SimpleAgent</p></li>
+<li><p><strong>Steps</strong>: 5</p></li>
+</ul>
+</section>
+<section id="capture-climateresearchagent-climater">
+<h3>capture_ClimateResearchAgent_ClimateR<a class="headerlink" href="#capture-climateresearchagent-climater" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/ClimateResearchAgent_4101dd3c-ef9f-41df-a46f-3fc0eef7b22b_20250626_113523.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.SimpleAgent</p></li>
+<li><p><strong>Steps</strong>: 5</p></li>
+</ul>
+</section>
+<section id="capture-simpleanalysisagent-simplean">
+<h3>capture_SimpleAnalysisAgent_SimpleAn<a class="headerlink" href="#capture-simpleanalysisagent-simplean" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/SimpleAnalysisAgent_2dc7adda-3576-49f8-a799-0505a1d9604b_20250626_113523.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.ReactAgent</p></li>
+<li><p><strong>Steps</strong>: 5</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>capture_SimpleAnalysisAgent_SimpleAn<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/SimpleAnalysisAgent_d3c33b9e-edd8-4749-92e3-bfaaa08e93b6_20250626_113331.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.ReactAgent</p></li>
+<li><p><strong>Steps</strong>: 5</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>capture_ClimateResearchAgent_ClimateR<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/ClimateResearchAgent_2d77d705-b381-4dc7-87d8-f3cd0aad0978_20250626_113523.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.SimpleAgent</p></li>
+<li><p><strong>Steps</strong>: 5</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>capture_QuantumExplainerAgent_QuantumE<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/QuantumExplainerAgent_cc0920a2-65f7-4e65-8a9e-4a1bbfd2729e_20250626_113523.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.SimpleAgent</p></li>
+<li><p><strong>Steps</strong>: 5</p></li>
+</ul>
+</section>
+<section id="capture-performanceagent-performa">
+<h3>capture_PerformanceAgent_Performa<a class="headerlink" href="#capture-performanceagent-performa" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/PerformanceAgent_06ad97d8-a31c-46fc-965b-e6268e60b912_20250626_115430.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.PerformanceAgent</p></li>
+<li><p><strong>Steps</strong>: 6</p></li>
+</ul>
+</section>
+<section id="capture-reactresearchagent-reactres">
+<h3>capture_ReactResearchAgent_ReactRes<a class="headerlink" href="#capture-reactresearchagent-reactres" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/ReactResearchAgent_36df075d-3abb-4e13-a950-807bdb120004_20250626_113523.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.ReactAgent</p></li>
+<li><p><strong>Steps</strong>: 5</p></li>
+</ul>
+</section>
+<section id="capture-demoagent-demoagen">
+<h3>capture_DemoAgent_DemoAgen<a class="headerlink" href="#capture-demoagent-demoagen" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/DemoAgent_39542cd9-d9dc-4072-8da4-a9495e621bee_20250626_113546.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.DemoAgent</p></li>
+<li><p><strong>Steps</strong>: 4</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>capture_SimpleAnalysisAgent_SimpleAn<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/SimpleAnalysisAgent_036b1977-3add-4d31-b5e3-82460ef5e53b_20250626_113331.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.SimpleAgent</p></li>
+<li><p><strong>Steps</strong>: 5</p></li>
+</ul>
+</section>
+<section id="capture-textsummarizeragent-textsumm">
+<h3>capture_TextSummarizerAgent_TextSumm<a class="headerlink" href="#capture-textsummarizeragent-textsumm" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/TextSummarizerAgent_6aebedd3-395d-451f-a2e0-9c6712c9e563_20250626_113523.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.SimpleAgent</p></li>
+<li><p><strong>Steps</strong>: 5</p></li>
+</ul>
+</section>
+<section id="id12">
+<h3>capture_SimpleAnalysisAgent_SimpleAn<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/SimpleAnalysisAgent_43cc3686-b221-4ef7-944a-bf3143ff6c18_20250626_113523.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.SimpleAgent</p></li>
+<li><p><strong>Steps</strong>: 5</p></li>
+</ul>
+</section>
+<section id="id13">
+<h3>capture_TextSummarizerAgent_TextSumm<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Type</strong>: json_trace</p></li>
+<li><p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">docs/captures/TextSummarizerAgent_c9e09adb-29f0-4662-b877-f45abcdd97c9_20250626_113523.json</span></code></p></li>
+<li><p><strong>Agent Type</strong>: custom.SimpleAgent</p></li>
+<li><p><strong>Steps</strong>: 5</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Haive Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Real Examples Index</a><ul>
+<li><a class="reference internal" href="#conversation">Conversation</a><ul>
+<li><a class="reference internal" href="#conversation-readme">conversation_README</a></li>
+<li><a class="reference internal" href="#id1">conversation_README</a></li>
+<li><a class="reference internal" href="#id2">conversation_README</a></li>
+<li><a class="reference internal" href="#id3">conversation_README</a></li>
+<li><a class="reference internal" href="#id4">conversation_README</a></li>
+<li><a class="reference internal" href="#id5">conversation_README</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#games">Games</a><ul>
+<li><a class="reference internal" href="#clue-readme">clue_README</a></li>
+<li><a class="reference internal" href="#checkers-readme">checkers_README</a></li>
+<li><a class="reference internal" href="#mastermind-readme">mastermind_README</a></li>
+<li><a class="reference internal" href="#mafia-readme">mafia_README</a></li>
+<li><a class="reference internal" href="#dominoes-readme">dominoes_README</a></li>
+<li><a class="reference internal" href="#base-readme">base_README</a></li>
+<li><a class="reference internal" href="#monopoly-readme">monopoly_README</a></li>
+<li><a class="reference internal" href="#hold-em-readme">hold_em_README</a></li>
+<li><a class="reference internal" href="#nim-readme">nim_README</a></li>
+<li><a class="reference internal" href="#multi-player-readme">multi_player_README</a></li>
+<li><a class="reference internal" href="#framework-readme">framework_README</a></li>
+<li><a class="reference internal" href="#tic-tac-toe-readme">tic_tac_toe_README</a></li>
+<li><a class="reference internal" href="#mancala-readme">mancala_README</a></li>
+<li><a class="reference internal" href="#connect4-readme">connect4_README</a></li>
+<li><a class="reference internal" href="#among-us-readme">among_us_README</a></li>
+<li><a class="reference internal" href="#chess-readme">chess_README</a></li>
+<li><a class="reference internal" href="#cards-readme">cards_README</a></li>
+<li><a class="reference internal" href="#core-readme">core_README</a></li>
+<li><a class="reference internal" href="#poker-readme">poker_README</a></li>
+<li><a class="reference internal" href="#debate-readme">debate_README</a></li>
+<li><a class="reference internal" href="#fox-and-geese-readme">fox_and_geese_README</a></li>
+<li><a class="reference internal" href="#base-v2-readme">base_v2_README</a></li>
+<li><a class="reference internal" href="#go-readme">go_README</a></li>
+<li><a class="reference internal" href="#reversi-readme">reversi_README</a></li>
+<li><a class="reference internal" href="#board-readme">board_README</a></li>
+<li><a class="reference internal" href="#risk-readme">risk_README</a></li>
+<li><a class="reference internal" href="#single-player-readme">single_player_README</a></li>
+<li><a class="reference internal" href="#battleship-readme">battleship_README</a></li>
+<li><a class="reference internal" href="#standardized-api-integration">standardized_api_integration</a></li>
+<li><a class="reference internal" href="#generic-agents-demo">generic_agents_demo</a></li>
+<li><a class="reference internal" href="#configurable-agents-demo">configurable_agents_demo</a></li>
+<li><a class="reference internal" href="#run-among-us">run_among_us</a></li>
+<li><a class="reference internal" href="#general-api-example">general_api_example</a></li>
+<li><a class="reference internal" href="#tic-tac-toe-example">tic_tac_toe_example</a></li>
+<li><a class="reference internal" href="#chess-api-example">chess_api_example</a></li>
+<li><a class="reference internal" href="#connect4-working-example">connect4_working_example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#execution-traces">Execution_Traces</a><ul>
+<li><a class="reference internal" href="#cached-react">cached_react</a></li>
+<li><a class="reference internal" href="#cached-simple">cached_simple</a></li>
+<li><a class="reference internal" href="#id6">cached_react</a></li>
+<li><a class="reference internal" href="#id7">cached_simple</a></li>
+<li><a class="reference internal" href="#capture-quantumexplaineragent-quantume">capture_QuantumExplainerAgent_QuantumE</a></li>
+<li><a class="reference internal" href="#capture-climateresearchagent-climater">capture_ClimateResearchAgent_ClimateR</a></li>
+<li><a class="reference internal" href="#capture-simpleanalysisagent-simplean">capture_SimpleAnalysisAgent_SimpleAn</a></li>
+<li><a class="reference internal" href="#id8">capture_SimpleAnalysisAgent_SimpleAn</a></li>
+<li><a class="reference internal" href="#id9">capture_ClimateResearchAgent_ClimateR</a></li>
+<li><a class="reference internal" href="#id10">capture_QuantumExplainerAgent_QuantumE</a></li>
+<li><a class="reference internal" href="#capture-performanceagent-performa">capture_PerformanceAgent_Performa</a></li>
+<li><a class="reference internal" href="#capture-reactresearchagent-reactres">capture_ReactResearchAgent_ReactRes</a></li>
+<li><a class="reference internal" href="#capture-demoagent-demoagen">capture_DemoAgent_DemoAgen</a></li>
+<li><a class="reference internal" href="#id11">capture_SimpleAnalysisAgent_SimpleAn</a></li>
+<li><a class="reference internal" href="#capture-textsummarizeragent-textsumm">capture_TextSummarizerAgent_TextSumm</a></li>
+<li><a class="reference internal" href="#id12">capture_SimpleAnalysisAgent_SimpleAn</a></li>
+<li><a class="reference internal" href="#id13">capture_TextSummarizerAgent_TextSumm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

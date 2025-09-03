@@ -1,9 +1,0 @@
-eecb13a3 feature/schema_v4@{2025-06-16 12:47:31 -0400}: commit: Add haive-mcp as submodule
-468b0e30 feature/schema_v4@{2025-06-13 09:02:57 -0400}: commit: Add haive-mcp submodule to .gitmodules
-1c53f117 feature/schema_v4@{2025-06-13 07:05:41 -0400}: commit: Enhance Sphinx documentation build process with detailed logging and error analysis
-1a4420a4 feature/schema_v4@{2025-06-13 00:44:55 -0400}: commit: Remove deprecated debug scripts and add utility script for generating workspace configurations
-3a3168af feature/schema_v4@{2025-06-07 11:07:44 -0400}: commit: update
-d8425a4e feature/schema_v4@{2025-06-02 00:49:06 -0400}: commit: added scripts utils
-fd569b7b feature/schema_v4@{2025-06-02 00:48:36 -0400}: commit: Refactor import statements and improve path handling in export_llm_models_to_csv.py
-3f0e0a5e feature/schema_v4@{2025-06-01 03:31:25 -0400}: commit: updated trunk
-099bfdf8 feature/schema_v4@{2025-05-21 17:25:30 -0400}: branch: Created from HEAD

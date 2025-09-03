@@ -12,9 +12,11 @@ Functions:
     normalized_score: Normalized Score functionality.
 """
 
+from __future__ import annotations
+
 import math
-import uuid
 from typing import Any
+import uuid
 
 from pydantic import BaseModel, Field
 
@@ -60,7 +62,7 @@ class Reflection(BaseModel):
     """Output from reflection agent."""
 
     reflections: str = Field(
-        description="Critique and reflections on the response quality"
+        description="Critique and reflections on the response quality",
     )
     score: float = Field(
         ge=0,
@@ -68,7 +70,7 @@ class Reflection(BaseModel):
         description="Score from 0-10 on the quality of the candidate response",
     )
     found_solution: bool = Field(
-        description="Whether the response has fully solved the question or task"
+        description="Whether the response has fully solved the question or task",
     )
 
     @property
@@ -80,7 +82,7 @@ class CandidateActions(BaseModel):
     """Output from expansion agent."""
 
     candidates: list[dict[str, Any]] = Field(
-        description="List of candidate next actions (tool calls or responses)"
+        description="List of candidate next actions (tool calls or responses)",
     )
     reasoning: str = Field(description="Reasoning for the selected candidates")
 

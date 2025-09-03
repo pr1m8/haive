@@ -1,16 +1,18 @@
 """Utility functions for creating and using SimpleAgent.
 
-This module provides helper functions for easily creating SimpleAgent instances
-with various configurations.
+This module provides helper functions for easily creating SimpleAgent
+instances with various configurations.
 """
 
-from haive.core.engine.aug_llm import AugLLMConfig
+from __future__ import annotations
+
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel
 
 from haive.agents.simple.agent import SimpleAgent
 from haive.agents.simple.config import SimpleAgentConfig
 from haive.agents.simple.state import SimpleAgentState
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 # =============================================

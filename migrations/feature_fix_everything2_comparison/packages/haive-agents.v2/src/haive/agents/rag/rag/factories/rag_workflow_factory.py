@@ -1,30 +1,35 @@
 """RAG Workflow Factory.
 
-from typing import Any, Dict
-Generic factory for creating RAG workflows by composing callable functions
-into different agent patterns. This provides a clean, modular approach to
-building complex RAG systems.
+from typing import Any, Dict Generic factory for creating RAG workflows
+by composing callable functions into different agent patterns. This
+provides a clean, modular approach to building complex RAG systems.
 """
+
+from __future__ import annotations
 
 from collections.abc import Callable
 
+from haive.agents.base.agent import Agent
+from haive.agents.multi.base import ConditionalAgent
+from haive.agents.multi.base import SequentialAgent
+from haive.agents.rag.base.agent import SimpleRAGAgent
 from haive.core.graph.node.callable_node import CallableNodeConfig
 from haive.core.graph.node.rag_callables import *
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from haive.core.schema.prebuilt.rag_state import MultiAgentRAGState
 from langchain_core.documents import Document
-from langgraph.graph import END, START
-
-from haive.agents.base.agent import Agent
-from haive.agents.multi.base import ConditionalAgent, SequentialAgent
-from haive.agents.rag.base.agent import SimpleRAGAgent
+from langgraph.graph import END
+from langgraph.graph import START
 
 
 class GenericCallableAgent(Agent):
     """Generic agent that executes a sequence of callable functions."""
 
     def __init__(
-        self, callables: list[Callable], name: str = "Generic Callable Agent", **kwargs
+        self,
+        callables: list[Callable],
+        name: str = "Generic Callable Agent",
+        **kwargs,
     ):
         super().__init__(name=name, **kwargs)
         self.callables = callables
@@ -39,7 +44,9 @@ class GenericCallableAgent(Agent):
             node_name = f"step_{i}"
 
             callable_node = CallableNodeConfig(
-                name=node_name, callable_func=callable_func, pass_state=True
+                name=node_name,
+                callable_func=callable_func,
+                pass_state=True,
             )
 
             graph.add_node(node_name, callable_node)
@@ -70,7 +77,9 @@ class ConditionalCallableAgent(Agent):
 
         # Add router node
         router_node = CallableNodeConfig(
-            name="router", callable_func=self.router_callable, pass_state=True
+            name="router",
+            callable_func=self.router_callable,
+            pass_state=True,
         )
         graph.add_node("router", router_node)
         graph.add_edge(START, "router")
@@ -78,7 +87,9 @@ class ConditionalCallableAgent(Agent):
         # Add action nodes
         for action_name, callable_func in self.action_callables.items():
             action_node = CallableNodeConfig(
-                name=action_name, callable_func=callable_func, pass_state=True
+                name=action_name,
+                callable_func=callable_func,
+                pass_state=True,
             )
             graph.add_node(action_name, action_node)
 
@@ -93,7 +104,10 @@ class ConditionalCallableAgent(Agent):
         destinations[END] = END
 
         graph.add_conditional_edges(
-            "router", route_condition, destinations, default=END
+            "router",
+            route_condition,
+            destinations,
+            default=END,
         )
 
         # Add edges from actions back to router (for loops)
@@ -109,12 +123,14 @@ class ConditionalCallableAgent(Agent):
 
 
 def create_corrective_rag_agent(
-    documents: list[Document] | None = None, name: str = "Corrective RAG Agent"
+    documents: list[Document] | None = None,
+    name: str = "Corrective RAG Agent",
 ) -> Agent:
     """Create a CRAG agent with web search fallback."""
     # Create base retrieval agent
     retrieval_agent = SimpleRAGAgent.from_documents(
-        documents or [], name="CRAG Retrieval"
+        documents or [],
+        name="CRAG Retrieval",
     )
 
     # Create conditional agent with CRAG logic
@@ -129,16 +145,21 @@ def create_corrective_rag_agent(
     }
 
     crag_agent = ConditionalCallableAgent(
-        router_callable=router_callable, action_callables=action_callables, name=name
+        router_callable=router_callable,
+        action_callables=action_callables,
+        name=name,
     )
 
     return SequentialAgent(
-        name=name, agents=[retrieval_agent, crag_agent], state_schema=MultiAgentRAGState
+        name=name,
+        agents=[retrieval_agent, crag_agent],
+        state_schema=MultiAgentRAGState,
     )
 
 
 def create_self_rag_agent(
-    documents: list[Document] | None = None, name: str = "Self-RAG Agent"
+    documents: list[Document] | None = None,
+    name: str = "Self-RAG Agent",
 ) -> Agent:
     """Create a Self-RAG agent with reflection tokens."""
 
@@ -193,7 +214,8 @@ def create_self_rag_agent(
 
     # Create retrieval agent
     retrieval_agent = SimpleRAGAgent.from_documents(
-        documents or [], name="Self-RAG Retrieval"
+        documents or [],
+        name="Self-RAG Retrieval",
     )
 
     # Create conditional agent
@@ -219,7 +241,8 @@ def create_self_rag_agent(
 
 
 def create_adaptive_rag_agent(
-    documents: list[Document] | None = None, name: str = "Adaptive RAG Agent"
+    documents: list[Document] | None = None,
+    name: str = "Adaptive RAG Agent",
 ) -> Agent:
     """Create an adaptive RAG agent with complexity-based routing."""
     # Create different RAG strategies
@@ -228,7 +251,8 @@ def create_adaptive_rag_agent(
     # Multi-query agent
     multi_query_callables = [query_rewriter, response_generator]
     multi_query_agent = GenericCallableAgent(
-        callables=multi_query_callables, name="Multi-Query RAG"
+        callables=multi_query_callables,
+        name="Multi-Query RAG",
     )
 
     # Complex RAG (CRAG)
@@ -248,7 +272,8 @@ def create_adaptive_rag_agent(
 
     # Create analyzer agent
     analyzer_agent = GenericCallableAgent(
-        callables=[query_complexity_analyzer], name="Query Analyzef"
+        callables=[query_complexity_analyzer],
+        name="Query Analyzef",
     )
 
     # Create conditional multi-agent
@@ -276,7 +301,8 @@ def create_adaptive_rag_agent(
 
 
 def create_hyde_rag_agent(
-    documents: list[Document] | None = None, name: str = "HYDE RAG Agent"
+    documents: list[Document] | None = None,
+    name: str = "HYDE RAG Agent",
 ) -> Agent:
     """Create a HYDE RAG agent with hypothesis generation."""
     # HYDE workflow callables
@@ -286,7 +312,8 @@ def create_hyde_rag_agent(
 
     # Create retrieval agent
     retrieval_agent = SimpleRAGAgent.from_documents(
-        documents or [], name="HYDE Retrieval"
+        documents or [],
+        name="HYDE Retrieval",
     )
 
     return SequentialAgent(
@@ -301,23 +328,27 @@ def create_hyde_rag_agent(
 
 
 def create_step_back_rag_agent(
-    documents: list[Document] | None = None, name: str = "Step-Back RAG Agent"
+    documents: list[Document] | None = None,
+    name: str = "Step-Back RAG Agent",
 ) -> Agent:
     """Create a step-back prompting RAG agent."""
     # Step-back workflow
     step_back_callables = [step_back_query_generator, response_generator]
 
     step_back_agent = GenericCallableAgent(
-        callables=step_back_callables, name="Step-Back Generator"
+        callables=step_back_callables,
+        name="Step-Back Generator",
     )
 
     # Create dual retrieval (original + step-back)
     original_retrieval = SimpleRAGAgent.from_documents(
-        documents or [], name="Original Retrieval"
+        documents or [],
+        name="Original Retrieval",
     )
 
     step_back_retrieval = SimpleRAGAgent.from_documents(
-        documents or [], name="Step-Back Retrieval"
+        documents or [],
+        name="Step-Back Retrieval",
     )
 
     return SequentialAgent(
@@ -333,18 +364,21 @@ def create_step_back_rag_agent(
 
 
 def create_multi_query_rag_agent(
-    documents: list[Document] | None = None, name: str = "Multi-Query RAG Agent"
+    documents: list[Document] | None = None,
+    name: str = "Multi-Query RAG Agent",
 ) -> Agent:
     """Create a multi-query RAG agent with query variations."""
     multi_query_callables = [query_rewriter, response_generator]
 
     multi_query_agent = GenericCallableAgent(
-        callables=multi_query_callables, name="Multi-Query Processor"
+        callables=multi_query_callables,
+        name="Multi-Query Processor",
     )
 
     # Multiple retrievals could be done in parallel here
     retrieval_agent = SimpleRAGAgent.from_documents(
-        documents or [], name="Multi-Query Retrieval"
+        documents or [],
+        name="Multi-Query Retrieval",
     )
 
     return SequentialAgent(
@@ -398,10 +432,12 @@ def create_rag_workflow(
     if workflow_type == "simple":
         # Create simple RAG with basic validation
         retrieval_agent = SimpleRAGAgent.from_documents(
-            documents or [], name="Simple RAG"
+            documents or [],
+            name="Simple RAG",
         )
         validator_agent = GenericCallableAgent(
-            callables=[response_validator], name="Response Validator"
+            callables=[response_validator],
+            name="Response Validator",
         )
         return SequentialAgent(
             name="Simple RAG Agent",
@@ -412,7 +448,7 @@ def create_rag_workflow(
     if workflow_type not in factory_map:
         available = [*list(factory_map.keys()), "simple"]
         raise ValueError(
-            f"Unknown workflow type: {workflow_type}. Available: {available}"
+            f"Unknown workflow type: {workflow_type}. Available: {available}",
         )
 
     return factory_map[workflow_type](documents=documents, **kwargs)

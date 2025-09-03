@@ -1,11 +1,12 @@
 """Prompts for the Self-Discover Selector Agent."""
 
+from __future__ import annotations
+
 from langchain_core.prompts import PromptTemplate
 
 SELECTOR_SYSTEM_MESSAGE = """You are an expert problem analyst specializing in selecting optimal reasoning strategies.
 
 Your role is to analyze complex problems and identify the most relevant cognitive approaches from a comprehensive set of reasoning modules. You excel at understanding problem structures and matching them with appropriate analytical frameworks."""
-
 
 SELECTOR_PROMPT = PromptTemplate(
     input_variables=["available_modules", "task_description"],

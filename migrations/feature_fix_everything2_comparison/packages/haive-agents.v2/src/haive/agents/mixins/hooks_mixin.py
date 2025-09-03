@@ -1,19 +1,23 @@
 # haive/agents/base/mixins/hooks_mixin.py
-
 """Enhanced hooks mixin for the Haive framework.
 
-from typing import Any
-Provides a flexible hooks system that can be used by both single and multi agents,
-with support for different hook points and graph-aware modifications.
+from typing import Any Provides a flexible hooks system that can be used
+by both single and multi agents, with support for different hook points
+and graph-aware modifications.
 """
+
+from __future__ import annotations
 
 import logging
 from collections.abc import Callable
-from typing import Any, Generic, TypeVar
+from typing import Any
+from typing import Generic
+from typing import TypeVar
 
+from haive.agents.base.types import HookContext
+from haive.agents.base.types import HookPoint
+from haive.agents.base.types import TState
 from pydantic import PrivateAttr
-
-from haive.agents.base.types import HookContext, HookPoint, TState
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +74,7 @@ class HooksMixin(Generic[TState]):
         priority: int = 0,
         name: str | None = None,
         graph_aware: bool = False,
-        condition: Callable[["HooksMixin", HookContext[TState]], bool] | None = None,
+        condition: Callable[[HooksMixin, HookContext[TState]], bool] | None = None,
     ) -> None:
         """Register a hook with enhanced capabilities.
 
@@ -103,7 +107,7 @@ class HooksMixin(Generic[TState]):
 
         logger.debug(
             f"Registered {'graph-aware ' if graph_aware else ''}hook "
-            f"'{hook_entry['name']}' at {point.value} with priority {priority}"
+            f"'{hook_entry['name']}' at {point.value} with priority {priority}",
         )
 
     def run_hooks(
@@ -165,7 +169,7 @@ class HooksMixin(Generic[TState]):
 
             except Exception as e:
                 logger.exception(
-                    f"Hook '{hook_entry['name']}' error at {point.value}: {e}"
+                    f"Hook '{hook_entry['name']}' error at {point.value}: {e}",
                 )
                 if logger.isEnabledFor(logging.DEBUG):
                     logger.exception("Full hook error:")
@@ -182,7 +186,9 @@ class HooksMixin(Generic[TState]):
         self._hook_results.clear()
 
     def unregister_hook(
-        self, point: HookPoint, hook: Callable | str | None = None
+        self,
+        point: HookPoint,
+        hook: Callable | str | None = None,
     ) -> None:
         """Unregister one or all hooks at a point."""
         if point not in self._hooks:

@@ -2,16 +2,14 @@
 
 TODO: Add detailed description of module functionality
 
-
-
 Example:
     Basic usage::
 
         from haive.binary_grader import module_function
 
         # TODO: Add example
-
-
 """
+
+from __future__ import annotations
 
 __all__ = []

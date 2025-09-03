@@ -9,18 +9,20 @@ proper Haive base agent infrastructure:
 - Multiple engines (LLM + Retriever + Grader)
 """
 
+from __future__ import annotations
+
 from typing import Any, Literal
 
-from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.engine.retriever import BaseRetrieverConfig
-from haive.core.models.llm.base import LLMConfig
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.tools import BaseTool, StructuredTool
 from pydantic import BaseModel, Field, computed_field, model_validator
 
 from haive.agents.react.agent import ReactAgent
+from haive.core.common.mixins.tool_route_mixin import ToolRouteMixin
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.engine.retriever import BaseRetrieverConfig
+from haive.core.models.llm.base import LLMConfig
 
 
 # Structured output models for agentic RAG
@@ -28,7 +30,7 @@ class DocumentGrade(BaseModel):
     """Grade for document relevance."""
 
     binary_score: Literal["yes", "no"] = Field(
-        description="Relevance score: 'yes' if relevant, 'no' if not relevant"
+        description="Relevance score: 'yes' if relevant, 'no' if not relevant",
     )
     reasoning: str = Field(description="Brief explanation of the grading decision")
 
@@ -45,27 +47,34 @@ class AgenticRAGState(BaseModel):
     """State schema for agentic RAG with retrieval metadata."""
 
     messages: list[Any] = Field(
-        default_factory=list, description="Conversation messages"
+        default_factory=list,
+        description="Conversation messages",
     )
     retrieved_documents: list[Document] = Field(
-        default_factory=list, description="Retrieved documents"
+        default_factory=list,
+        description="Retrieved documents",
     )
     document_grades: list[DocumentGrade] = Field(
-        default_factory=list, description="Document relevance grades"
+        default_factory=list,
+        description="Document relevance grades",
     )
     query_rewrites: list[QueryRewrite] = Field(
-        default_factory=list, description="Query rewrite history"
+        default_factory=list,
+        description="Query rewrite history",
     )
     retrieval_attempts: int = Field(
-        default=0, description="Number of retrieval attempts"
+        default=0,
+        description="Number of retrieval attempts",
     )
     max_retrieval_attempts: int = Field(
-        default=3, description="Maximum retrieval attempts"
+        default=3,
+        description="Maximum retrieval attempts",
     )
 
 
 class AgenticRAGAgent[TInput: BaseModel, TOutput: BaseModel](
-    ReactAgent[TInput, TOutput], ToolRouteMixin
+    ReactAgent[TInput, TOutput],
+    ToolRouteMixin,
 ):
     """Agentic RAG agent combining ReAct reasoning with intelligent retrieval.
 
@@ -84,29 +93,35 @@ class AgenticRAGAgent[TInput: BaseModel, TOutput: BaseModel](
 
     # Additional engines for agentic RAG
     retriever_engine: BaseRetrieverConfig = Field(
-        ..., description="Retrieval engine for document search"
+        ...,
+        description="Retrieval engine for document search",
     )
     grader_engine: AugLLMConfig | None = Field(
-        default=None, description="Engine for grading document relevance"
+        default=None,
+        description="Engine for grading document relevance",
     )
     rewriter_engine: AugLLMConfig | None = Field(
-        default=None, description="Engine for rewriting queries"
+        default=None,
+        description="Engine for rewriting queries",
     )
 
     # Agentic RAG configuration
     grade_documents_threshold: float = Field(
-        default=0.7, description="Threshold for document relevance grading"
+        default=0.7,
+        description="Threshold for document relevance grading",
     )
     max_retrieval_attempts: int = Field(
-        default=3, description="Maximum attempts to find relevant documents"
+        default=3,
+        description="Maximum attempts to find relevant documents",
     )
     enable_query_rewriting: bool = Field(
-        default=True, description="Whether to rewrite queries for better retrieval"
+        default=True,
+        description="Whether to rewrite queries for better retrieval",
     )
 
     @model_validator(mode="after")
     @classmethod
-    def setup_agentic_rag(cls) -> "AgenticRAGAgent":
+    def setup_agentic_rag(cls) -> AgenticRAGAgent:
         """Setup agentic RAG with multiple engines and tools.
 
         This follows proper Pydantic patterns using model_validator
@@ -181,9 +196,9 @@ class AgenticRAGAgent[TInput: BaseModel, TOutput: BaseModel](
                     # Combine document content
                     combined_content = "\\n\\n".join(
                         [
-                            f"Document {i+1}: {doc.page_content}"
+                            f"Document {i + 1}: {doc.page_content}"
                             for i, doc in enumerate(docs[:5])  # Limit to top 5
-                        ]
+                        ],
                     )
                     return f"Retrieved {len(docs)} documents:\\n{combined_content}"
                 return "No relevant documents found for the query."
@@ -201,11 +216,14 @@ class AgenticRAGAgent[TInput: BaseModel, TOutput: BaseModel](
         """Create document grading tool."""
 
         def grade_document_relevance(context: str, question: str) -> str:
-            """Grade whether retrieved documents are relevant to the question."""
+            """Grade whether retrieved documents are relevant to the.
+
+            question.
+            """
             try:
                 # Use grader engine to assess relevance
                 result = self.grader_engine.invoke(
-                    {"context": context, "question": question}
+                    {"context": context, "question": question},
                 )
 
                 # Extract grade from structured output
@@ -235,7 +253,7 @@ class AgenticRAGAgent[TInput: BaseModel, TOutput: BaseModel](
             try:
                 # Use rewriter engine to improve query
                 result = self.rewriter_engine.invoke(
-                    {"original_query": original_query, "feedback": feedback}
+                    {"original_query": original_query, "feedback": feedback},
                 )
 
                 # Extract rewrite from structured output
@@ -246,7 +264,9 @@ class AgenticRAGAgent[TInput: BaseModel, TOutput: BaseModel](
                 else:
                     return f"Could not rewrite query: {original_query}"
 
-                return f"Rewritten query: {rewrite.rewritten_query}\\nChanges: {rewrite.changes_made}"
+                return (
+                    f"Rewritten query: {rewrite.rewritten_query}\\nChanges: {rewrite.changes_made}"
+                )
 
             except Exception as e:
                 return f"Error rewriting query: {e!s}"
@@ -269,7 +289,7 @@ class AgenticRAGAgent[TInput: BaseModel, TOutput: BaseModel](
                 "Keep the answer concise and cite the context.\\n\\n"
                 "Question: {question}\\n\\n"
                 "Context: {context}\\n\\n"
-                "Answer:"
+                "Answer:",
             )
 
             try:
@@ -305,11 +325,13 @@ class AgenticRAGAgent[TInput: BaseModel, TOutput: BaseModel](
         llm_config: LLMConfig,
         embedding_config: Any | None = None,
         **kwargs,
-    ) -> "AgenticRAGAgent":
-        """Create agentic RAG agent from documents using proper factory pattern.
+    ) -> AgenticRAGAgent:
+        """Create agentic RAG agent from documents using proper factory.
 
-        This follows Pydantic best practices by using a classmethod factory
-        instead of complex __init__ logic.
+        pattern.
+
+        This follows Pydantic best practices by using a classmethod
+        factory instead of complex __init__ logic.
         """
         # Create retriever engine from documents
         retriever_engine = BaseRetrieverConfig.from_documents(
@@ -357,7 +379,7 @@ For each user question, decide whether to:
 Think step by step about what action to take.""",
                 ),
                 ("human", "{query}"),
-            ]
+            ],
         )
 
     @staticmethod
@@ -383,7 +405,7 @@ Retrieved Context: {context}
 
 Grade the relevance of this context to the question.""",
                 ),
-            ]
+            ],
         )
 
     @staticmethod
@@ -411,7 +433,7 @@ Feedback on previous results: {feedback}
 
 Rewrite this query for better document retrieval.""",
                 ),
-            ]
+            ],
         )
 
 

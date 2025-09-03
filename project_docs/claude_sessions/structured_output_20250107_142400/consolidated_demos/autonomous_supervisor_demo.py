@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Demo of a supervisor that can autonomously create agents based on task requirements."""
+from __future__ import annotations
 
 import asyncio
 import json
@@ -7,7 +8,8 @@ import logging
 
 from haive.agents.experiments.dynamic_supervisor_enhanced import SelfModifyingSupervisor
 from haive.agents.simple.agent import SimpleAgent
-from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.messages import AIMessage
+from langchain_core.messages import HumanMessage
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -32,7 +34,6 @@ async def demo_autonomous_supervisor():
             "system_message": "You are a helpful general assistant.",
         },
     )
-
 
     # Show self-modification tools
     mgmt_tools = [
@@ -63,7 +64,6 @@ async def demo_autonomous_supervisor():
         },
     ]
 
-
     for i, task in enumerate(tasks, 1):
 
         # Prepare the supervisor's input
@@ -79,7 +79,6 @@ async def demo_autonomous_supervisor():
         # 2. Use 'analyze_task_and_suggest_agent' to determine needs
         # 3. Use 'create_agent' to create specialized agent if needed
         # 4. Use 'handoff_to_X' to delegate the task
-
 
         # In a real scenario, you would invoke the supervisor:
 

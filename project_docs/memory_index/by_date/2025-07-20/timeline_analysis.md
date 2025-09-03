@@ -12,7 +12,7 @@ Discovered the exact timeline of how automated parse error fixes broke the entir
 
 ### 4:15 PM - First Wave
 - haive-agents: commit d0507af "fix: eliminate all parse errors"
-- haive-dataflow: commit 44e79ca "fix: eliminate parse errors"  
+- haive-dataflow: commit 44e79ca "fix: eliminate parse errors"
 - haive-games: commit 27cb06f "fix: eliminate parse errors"
 - haive-mcp: commit e2fbeef "fix: eliminate parse errors"
 - haive-prebuilt: commit 41a2e09 "fix: eliminate parse errors"

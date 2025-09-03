@@ -1,21 +1,21 @@
 """Haive Supervisor Agent Implementation.
 
-A clean supervisor that manages multiple specialized agents using
-LLM-based routing decisions.
+A clean supervisor that manages multiple specialized agents using LLM-
+based routing decisions.
 """
 
 import logging
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END
 from pydantic import BaseModel, Field, field_validator
 
 from haive.agents.base import Agent
 from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.node.agent_node_v3 import AgentNodeV3Config
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +46,7 @@ Instructions:
 Decision:""",
         ),
         ("placeholder", "{messages}"),
-    ]
+    ],
 )
 
 
@@ -62,15 +62,18 @@ class SupervisorAgent(ReactAgent):
     # ========================================================================
 
     registered_agents: dict[str, Agent] = Field(
-        default_factory=dict, description="Registered agents by name"
+        default_factory=dict,
+        description="Registered agents by name",
     )
 
     agent_descriptions: dict[str, str] = Field(
-        default_factory=dict, description="Descriptions of agent capabilities"
+        default_factory=dict,
+        description="Descriptions of agent capabilities",
     )
 
     supervisor_prompt: ChatPromptTemplate | None = Field(
-        default=None, description="Custom prompt for routing decisions"
+        default=None,
+        description="Custom prompt for routing decisions",
     )
 
     # ========================================================================
@@ -101,9 +104,7 @@ class SupervisorAgent(ReactAgent):
 
         # Update prompt template for routing
         if self.engine:
-            self.engine.prompt_template = (
-                self.supervisor_prompt or self._create_routing_prompt()
-            )
+            self.engine.prompt_template = self.supervisor_prompt or self._create_routing_prompt()
 
     def _create_routing_prompt(self) -> ChatPromptTemplate:
         """Create routing prompt with current agent descriptions."""
@@ -111,7 +112,7 @@ class SupervisorAgent(ReactAgent):
             descriptions = "No agents registered yet"
         else:
             descriptions = "\n".join(
-                [f"- {name}: {desc}" for name, desc in self.agent_descriptions.items()]
+                [f"- {name}: {desc}" for name, desc in self.agent_descriptions.items()],
             )
 
         # Use default template with current descriptions
@@ -169,7 +170,7 @@ class SupervisorAgent(ReactAgent):
 
         if not self.registered_agents:
             logger.warning(
-                "No agents registered, supervisor will only make routing decisions"
+                "No agents registered, supervisor will only make routing decisions",
             )
             return graph
 

@@ -1,0 +1,200 @@
+{
+  // Multi-root Haive workspace - Each package as independent git module
+  "folders": [
+    { 
+      "name": "🏠 Haive (meta)", 
+      "path": ".",
+      // Meta repository settings - shows submodules in source control
+      "settings": {
+        "git.detectSubmodules": true,
+        "git.showSubmodules": true,
+        "git.openRepositoryInParentFolders": "never"
+      }
+    },
+    { 
+      "name": "🧠 Core", 
+      "path": "packages/haive-core",
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "../../.venv/bin/python"
+      }
+    },
+    { 
+      "name": "🤖 Agents", 
+      "path": "packages/haive-agents",
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "../../.venv/bin/python"
+      }
+    },
+    { 
+      "name": "🛠️ Tools", 
+      "path": "packages/haive-tools",
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "../../.venv/bin/python"
+      }
+    },
+    { 
+      "name": "🎮 Games", 
+      "path": "packages/haive-games",
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "/home/will/Projects/haive/.venv/bin/python"
+      }
+    },
+    { 
+      "name": "🔌 MCP", 
+      "path": "packages/haive-mcp",
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "../../.venv/bin/python",
+        "files.exclude": {
+          "**/docs/build": false,
+          "docs/build": false
+        }
+      }
+    },
+    { 
+      "name": "📊 Dataflow", 
+      "path": "packages/haive-dataflow",
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "../../.venv/bin/python"
+      }
+    },
+    { 
+      "name": "📦 Prebuilt", 
+      "path": "packages/haive-prebuilt",
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "../../.venv/bin/python"
+      }
+    },
+    { 
+      "name": "🚀 HAP", 
+      "path": "packages/haive-hap",
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "../../.venv/bin/python"
+      }
+    },
+    {
+      "name": "🔧 CLI Tools",
+      "path": "tools/haive-cli",
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "../../.venv/bin/python"
+      }
+    },
+    {
+      "name": "⚙️ Dev Tools",
+      "path": "tools/haive-dev", 
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "../../.venv/bin/python"
+      }
+    },
+    {
+      "name": "📚 Docs Tools",
+      "path": "tools/haive-docs",
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "../../.venv/bin/python"
+      }
+    },
+    {
+      "name": "🧪 Testing Tools", 
+      "path": "tools/haive-testing",
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "../../.venv/bin/python"
+      }
+    },
+    {
+      "name": "📖 PyDevelop Docs",
+      "path": "tools/pydvlp-docs",
+      "settings": {
+        "git.openRepositoryInParentFolders": "never",
+        "python.defaultInterpreterPath": "../../.venv/bin/python"
+      }
+    }
+  ],
+
+  "settings": {
+    // Hide build/test caches globally
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/*.pyc": true,
+      "**/.pytest_cache": true,
+      "**/.ruff_cache": true,
+      "**/.mypy_cache": true,
+      "**/.venv": true,
+      "**/node_modules": true,
+      "**/.git": false,
+      "**/docs/build": false
+    },
+
+    // Git configuration for multi-repo workspace
+    "git.openRepositoryInParentFolders": "never",
+    "git.autoRepositoryDetection": "openEditors",
+    "git.detectSubmodules": true,
+    "git.showSubmodules": true,
+    "git.allowForcePushToMultipleRepositories": false,
+    "git.confirmForcePush": true,
+    "git.repositoryScanMaxDepth": 2,
+    "git.scanRepositories": [
+      "./packages",
+      "./tools"
+    ],
+    
+    // Python configuration 
+    "python.defaultInterpreterPath": "./.venv/bin/python",
+    "python.terminal.activateEnvironment": true,
+    
+    // Editor improvements
+    "explorer.compactFolders": false,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "workbench.tree.indent": 20,
+    
+    // Search configuration
+    "search.exclude": {
+      "**/.git": true,
+      "**/.venv": true,
+      "**/node_modules": true,
+      "**/__pycache__": true,
+      "**/*.pyc": true,
+      "**/docs/build": false,
+      "**/build": false
+    },
+
+    // GitLens configuration for better submodule visibility
+    "gitlens.views.repositories.enabled": true,
+    "gitlens.views.fileHistory.enabled": true,
+    "gitlens.views.lineHistory.enabled": true,
+    "gitlens.views.branches.enabled": true,
+    "gitlens.views.remotes.enabled": true,
+    "gitlens.views.stashes.enabled": true,
+    "gitlens.views.tags.enabled": true,
+    "gitlens.views.contributors.enabled": true,
+    "gitlens.showWhatsNewAfterUpgrades": false,
+    "gitlens.currentLine.enabled": true,
+    "gitlens.codeLens.enabled": true,
+    "gitlens.statusBar.enabled": true,
+    "liveServer.settings.multiRootWorkspaceName": "🏠 Haive (meta)"
+  },
+
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-python.black-formatter", 
+      "charliermarsh.ruff",
+      "ms-python.mypy-type-checker",
+      "ms-vscode.vscode-json",
+      "redhat.vscode-yaml",
+      "ms-vscode.git-graph",
+      "eamodio.gitlens"
+    ]
+  }
+}

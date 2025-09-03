@@ -12,15 +12,14 @@ Functions:
 # src/haive/agents/conversation/round_robin.py
 """Round-robin conversation agent where each participant speaks in turn."""
 
-import logging
 from typing import Any, Literal
-
-from haive.core.engine.aug_llm import AugLLMConfig
+import logging
 from pydantic import BaseModel, Field
-
 from haive.agents.conversation.base.agent import BaseConversationAgent
 from haive.agents.conversation.base.state import ConversationState
+from haive.core.engine.aug_llm import AugLLMConfig
 from haive.agents.simple.agent import SimpleAgent
+
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.WARNING)
@@ -29,8 +28,8 @@ logger.setLevel(logging.WARNING)
 class RoundRobinConversation(BaseConversationAgent):
     """Round-robin conversation where each agent speaks in a fixed order.
 
-    Each participant gets exactly one turn per round, with the order maintained
-    throughout the conversation.
+    Each participant gets exactly one turn per round, with the order
+    maintained throughout the conversation.
     """
 
     mode: Literal["round_robin"] = Field(default="round_robin")
@@ -43,10 +42,12 @@ class RoundRobinConversation(BaseConversationAgent):
 
     # Round-robin specific settings
     skip_unavailable: bool = Field(
-        default=True, description="Skip speakers who are unavailable instead of ending"
+        default=True,
+        description="Skip speakers who are unavailable instead of ending",
     )
     announce_speaker: bool = Field(
-        default=False, description="Announce who is speaking next"
+        default=False,
+        description="Announce who is speaking next",
     )
 
     def get_conversation_state_schema(self) -> type:
@@ -79,7 +80,7 @@ class RoundRobinConversation(BaseConversationAgent):
             except ValueError:
                 # Current speaker not in list, start over
                 logger.warning(
-                    f"Current speaker {current_speaker} not in speakers list"
+                    f"Current speaker {current_speaker} not in speakers list",
                 )
                 next_speaker = speakers[0]
                 new_round = round_number
@@ -103,7 +104,9 @@ class RoundRobinConversation(BaseConversationAgent):
         }
 
     def _prepare_agent_input(
-        self, state: ConversationState, agent_name: str
+        self,
+        state: ConversationState,
+        agent_name: str,
     ) -> dict[str, Any]:
         """Prepare input with round context."""
         base_input = super()._prepare_agent_input(state, agent_name)
@@ -113,7 +116,7 @@ class RoundRobinConversation(BaseConversationAgent):
             from langchain_core.messages import SystemMessage
 
             round_msg = SystemMessage(
-                content=f"[Round {state.round_number + 1} of {state.max_rounds}]"
+                content=f"[Round {state.round_number + 1} of {state.max_rounds}]",
             )
 
             # Insert at beginning of messages
@@ -160,7 +163,10 @@ class RoundRobinConversation(BaseConversationAgent):
             agents[name] = SimpleAgent(name=f"{name}_agent", engine=engine)
 
         return cls(
-            participant_agents=agents, topic=topic, max_rounds=max_rounds, **kwargs
+            participant_agents=agents,
+            topic=topic,
+            max_rounds=max_rounds,
+            **kwargs,
         )
 
     def __repr__(self) -> str:

@@ -42,8 +42,7 @@ logger = logging.getLogger(__name__)
 
 
 class RetrievalStrategy(str, Enum):
-    """Different retrieval strategies available.
-    """
+    """Different retrieval strategies available."""
 
     DENSE_ONLY = "dense_only"  # Vector similarity only
     SPARSE_ONLY = "sparse_only"  # BM25 key only
@@ -55,8 +54,7 @@ class RetrievalStrategy(str, Enum):
 
 
 class QueryComplexity(str, Enum):
-    """Query complexity levels.
-    """
+    """Query complexity levels."""
 
     SIMPLE = "simple"  # Single entity or fact
     MEDIUM = "medium"  # Multiple entities or relationships
@@ -65,8 +63,7 @@ class QueryComplexity(str, Enum):
 
 @dataclass
 class AdvancedRAGConfig:
-    """Configuration for Advanced RAG Memory Agent.
-    """
+    """Configuration for Advanced RAG Memory Agent."""
 
     # Basic settings
     user_id: str = "default_user"
@@ -118,8 +115,8 @@ class AdvancedRAGConfig:
 class AdvancedRAGMemoryAgent:
     """Advanced RAG Memory Agent with multi-stage retrieval.
 
-    This agent implements state-of-the-art retrieval-augmented generation with
-    sophisticated memory management capabilities.
+    This agent implements state-of-the-art retrieval-augmented
+    generation with sophisticated memory management capabilities.
     """
 
     def __init__(self, config: AdvancedRAGConfig):
@@ -141,8 +138,7 @@ class AdvancedRAGMemoryAgent:
         self.query_history: list[dict[str, Any]] = []
 
     def _init_vector_store(self):
-        """Initialize vector store for dense retrieval.
-        """
+        """Initialize vector store for dense retrieval."""
         embeddings = OpenAIEmbeddings()
 
         if self.config.memory_store_path:
@@ -171,8 +167,7 @@ class AdvancedRAGMemoryAgent:
             self._create_new_vector_store(embeddings)
 
     def _create_new_vector_store(self, embeddings):
-        """Create new vector store.
-        """
+        """Create new vector store."""
         # Create with initial dummy document
         initial_doc = Document(
             page_content="Initial memory system setup",
@@ -193,8 +188,7 @@ class AdvancedRAGMemoryAgent:
         self.documents = [initial_doc]
 
     def _init_retrievers(self):
-        """Initialize all retrieval components.
-        """
+        """Initialize all retrieval components."""
         # Dense retriever (vector similarity)
         self.dense_retriever = self.vector_store.as_retriever(
             search_kwargs={"k": self.config.k_initial}
@@ -244,8 +238,7 @@ class AdvancedRAGMemoryAgent:
         self._init_reranking_retriever()
 
     def _init_contextual_retriever(self):
-        """Initialize contextual compression retriever.
-        """
+        """Initialize contextual compression retriever."""
         try:
             llm = self.config.llm_config.instantiate()
             compressor = LLMChainExtractor.from_llm(llm)
@@ -258,8 +251,7 @@ class AdvancedRAGMemoryAgent:
             self.contextual_retriever = self.ensemble_retriever
 
     def _init_reranking_retriever(self):
-        """Initialize reranking retriever.
-        """
+        """Initialize reranking retriever."""
         if not self.config.enable_reranking:
             self.reranking_retriever = self.ensemble_retriever
             return
@@ -280,8 +272,7 @@ class AdvancedRAGMemoryAgent:
             self.reranking_retriever = self.ensemble_retriever
 
     def _init_generation_components(self):
-        """Initialize components for generation.
-        """
+        """Initialize components for generation."""
         # Memory-enhanced agent
         try:
             self.memory_agent = SimpleRAGAgent.from_retriever(
@@ -302,8 +293,7 @@ class AdvancedRAGMemoryAgent:
         )
 
     def analyze_query_complexity(self, query: str) -> QueryComplexity:
-        """Analyze query complexity to choose optimal strategy.
-        """
+        """Analyze query complexity to choose optimal strategy."""
         query_lower = query.lower()
 
         # Count indicators of complexity
@@ -353,8 +343,7 @@ class AdvancedRAGMemoryAgent:
     def choose_retrieval_strategy(
         self, query: str, complexity: QueryComplexity
     ) -> RetrievalStrategy:
-        """Choose optimal retrieval strategy based on query and complexity.
-        """
+        """Choose optimal retrieval strategy based on query and complexity."""
         if self.config.strategy != RetrievalStrategy.ADAPTIVE:
             return self.config.strategy
 
@@ -387,8 +376,7 @@ class AdvancedRAGMemoryAgent:
         strategy: Optional[RetrievalStrategy] = None,
         k: Optional[int] = None,
     ) -> list[Document]:
-        """Retrieve documents using specified strategy.
-        """
+        """Retrieve documents using specified strategy."""
         if strategy is None:
             complexity = self.analyze_query_complexity(query)
             strategy = self.choose_retrieval_strategy(query, complexity)
@@ -439,8 +427,7 @@ class AdvancedRAGMemoryAgent:
             return self.dense_retriever.get_relevant_documents(query)[:k]
 
     def _apply_importance_boost(self, docs: list[Document]) -> list[Document]:
-        """Boost important documents in ranking.
-        """
+        """Boost important documents in ranking."""
         if not self.config.importance_boost or self.config.importance_boost == 1.0:
             return docs
 
@@ -470,8 +457,7 @@ class AdvancedRAGMemoryAgent:
         retrieved_docs: list[Document],
         include_citations: Optional[bool] = None,
     ) -> dict[str, Any]:
-        """Generate response with citations.
-        """
+        """Generate response with citations."""
         include_citations = include_citations or self.config.include_citations
 
         # Prepare context with document IDs
@@ -534,8 +520,7 @@ Answer:"""
         metadata: dict[str, Any] | None = None,
         importance: str = "normal",
     ) -> dict[str, Any]:
-        """Add new memory to the system.
-        """
+        """Add new memory to the system."""
         # Prepare metadata
         doc_metadata = {
             "timestamp": datetime.now().isoformat(),
@@ -582,8 +567,7 @@ Answer:"""
         strategy: Optional[RetrievalStrategy] = None,
         include_analysis: bool = True,
     ) -> dict[str, Any]:
-        """Query memory with advanced RAG capabilities.
-        """
+        """Query memory with advanced RAG capabilities."""
         start_time = datetime.now()
 
         # Analyze query
@@ -630,8 +614,7 @@ Answer:"""
         return result
 
     async def get_memory_analytics(self) -> dict[str, Any]:
-        """Get comprehensive analytics about memory usage.
-        """
+        """Get comprehensive analytics about memory usage."""
         # Document statistics
         doc_stats = {
             "total_documents": len(self.documents),
@@ -702,8 +685,7 @@ Answer:"""
         }
 
     def save_memory_store(self, path: Optional[str] = None):
-        """Save the vector store and metadata.
-        """
+        """Save the vector store and metadata."""
         save_path = path or self.config.memory_store_path
         if save_path:
             try:
@@ -725,8 +707,7 @@ Answer:"""
 
 # Example usage and factory functions
 async def create_research_memory_agent() -> AdvancedRAGMemoryAgent:
-    """Create a research-focused memory agent.
-    """
+    """Create a research-focused memory agent."""
     config = AdvancedRAGConfig(
         user_id="researcher",
         strategy=RetrievalStrategy.ADAPTIVE,
@@ -742,8 +723,7 @@ async def create_research_memory_agent() -> AdvancedRAGMemoryAgent:
 
 
 async def create_conversational_memory_agent() -> AdvancedRAGMemoryAgent:
-    """Create a conversation-focused memory agent.
-    """
+    """Create a conversation-focused memory agent."""
     config = AdvancedRAGConfig(
         user_id="conversational_user",
         strategy=RetrievalStrategy.HYBRID,
@@ -759,8 +739,7 @@ async def create_conversational_memory_agent() -> AdvancedRAGMemoryAgent:
 
 # Example usage
 async def example_advanced_rag_usage():
-    """Example of using Advanced RAG Memory Agent.
-    """
+    """Example of using Advanced RAG Memory Agent."""
     agent = await create_research_memory_agent()
 
     # Add memories

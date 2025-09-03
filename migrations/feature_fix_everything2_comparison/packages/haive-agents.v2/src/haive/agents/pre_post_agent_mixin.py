@@ -43,13 +43,15 @@ Examples:
         )
 """
 
+from __future__ import annotations
+
 import logging
-from typing import Any, Dict, Generic, List, Optional, TypeVar
+from typing import Any, TypeVar
 
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from pydantic import BaseModel, Field
 
-from haive.agents.base.hooks import HookContext, HookEvent
+from haive.agents.base.hooks import HookEvent
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +65,9 @@ class MessageTransformer:
     """Simple message transformer for reflection patterns."""
 
     def __init__(
-        self, transformation_type: str = "reflection", preserve_first: bool = True
+        self,
+        transformation_type: str = "reflection",
+        preserve_first: bool = True,
     ):
         """Initialize transformer.
 
@@ -74,7 +78,7 @@ class MessageTransformer:
         self.transformation_type = transformation_type
         self.preserve_first = preserve_first
 
-    def transform_messages(self, messages: List[BaseMessage]) -> List[BaseMessage]:
+    def transform_messages(self, messages: list[BaseMessage]) -> list[BaseMessage]:
         """Transform messages according to the transformation type.
 
         Args:
@@ -102,7 +106,7 @@ class MessageTransformer:
                         HumanMessage(
                             content=msg.content,
                             additional_kwargs=getattr(msg, "additional_kwargs", {}),
-                        )
+                        ),
                     )
                 else:
                     transformed.append(msg)
@@ -134,41 +138,51 @@ class PrePostAgentMixin:
     """
 
     # Agent configuration
-    pre_agent: Optional["Agent"] = Field(
-        default=None, description="Pre-processing agent"
+    pre_agent: Agent | None = Field(
+        default=None,
+        description="Pre-processing agent",
     )
-    post_agent: Optional["Agent"] = Field(
-        default=None, description="Post-processing agent"
+    post_agent: Agent | None = Field(
+        default=None,
+        description="Post-processing agent",
     )
 
     # Message transformation config
     use_pre_transform: bool = Field(
-        default=False, description="Transform messages before main"
+        default=False,
+        description="Transform messages before main",
     )
     use_post_transform: bool = Field(
-        default=False, description="Transform messages before post"
+        default=False,
+        description="Transform messages before post",
     )
     pre_transform_type: str = Field(
-        default="ai_to_human", description="Type of pre-processing transformation"
+        default="ai_to_human",
+        description="Type of pre-processing transformation",
     )
     post_transform_type: str = Field(
-        default="reflection", description="Type of post-processing transformation"
+        default="reflection",
+        description="Type of post-processing transformation",
     )
 
     # Execution config
     skip_pre_if_empty: bool = Field(
-        default=True, description="Skip pre-agent if no input"
+        default=True,
+        description="Skip pre-agent if no input",
     )
     skip_post_if_empty: bool = Field(
-        default=False, description="Skip post-agent if no output"
+        default=False,
+        description="Skip post-agent if no output",
     )
 
     # Processing config
     combine_results: bool = Field(
-        default=True, description="Combine pre/main/post results"
+        default=True,
+        description="Combine pre/main/post results",
     )
     preserve_original: bool = Field(
-        default=True, description="Preserve original messages in result"
+        default=True,
+        description="Preserve original messages in result",
     )
 
     def __init__(self, *args, **kwargs):
@@ -183,15 +197,17 @@ class PrePostAgentMixin:
         """Set up message transformers based on configuration."""
         if self.use_pre_transform:
             self._pre_transformer = MessageTransformer(
-                transformation_type=self.pre_transform_type, preserve_first=True
+                transformation_type=self.pre_transform_type,
+                preserve_first=True,
             )
 
         if self.use_post_transform:
             self._post_transformer = MessageTransformer(
-                transformation_type=self.post_transform_type, preserve_first=True
+                transformation_type=self.post_transform_type,
+                preserve_first=True,
             )
 
-    async def run_with_pre_post_processing(self, input_data: Any) -> Dict[str, Any]:
+    async def run_with_pre_post_processing(self, input_data: Any) -> dict[str, Any]:
         """Execute the agent with pre/post processing stages.
 
         This method orchestrates the full pre → main → post workflow with
@@ -262,7 +278,7 @@ class PrePostAgentMixin:
                         )
 
                     transformed_messages = self._pre_transformer.transform_messages(
-                        original_messages
+                        original_messages,
                     )
                     current_input = {"messages": transformed_messages}
 
@@ -276,14 +292,12 @@ class PrePostAgentMixin:
 
         # Stage 2: Main processing (this agent)
         logger.debug(
-            f"Running main agent processing: {getattr(self, 'name', 'unknown')}"
+            f"Running main agent processing: {getattr(self, 'name', 'unknown')}",
         )
 
         # Use the agent's own arun method
         main_result = (
-            await super().arun(current_input)
-            if hasattr(super(), "arun")
-            else current_input
+            await super().arun(current_input) if hasattr(super(), "arun") else current_input
         )
 
         # Stage 3: Post-processing (optional)
@@ -309,7 +323,7 @@ class PrePostAgentMixin:
                         )
 
                     transformed_messages = self._post_transformer.transform_messages(
-                        original_messages
+                        original_messages,
                     )
                     current_post_input = {"messages": transformed_messages}
 
@@ -376,9 +390,7 @@ class PrePostAgentMixin:
             # Add transformation metadata
             if self.use_pre_transform or self.use_post_transform:
                 combined_result["transformations_applied"] = {
-                    "pre_transform": (
-                        self.pre_transform_type if self.use_pre_transform else None
-                    ),
+                    "pre_transform": (self.pre_transform_type if self.use_pre_transform else None),
                     "post_transform": (
                         self.post_transform_type if self.use_post_transform else None
                     ),
@@ -410,24 +422,19 @@ class PrePostAgentMixin:
         # If pre or post agents are configured, use pre/post processing
         if self.pre_agent or self.post_agent:
             return await self.run_with_pre_post_processing(input_data)
-        else:
-            # Standard execution
-            return (
-                await super().arun(input_data)
-                if hasattr(super(), "arun")
-                else input_data
-            )
+        # Standard execution
+        return await super().arun(input_data) if hasattr(super(), "arun") else input_data
 
 
 # Factory functions for common patterns
 
 
 def create_reflection_agent(
-    main_agent: "Agent",
-    reflection_agent: Optional["Agent"] = None,
-    name: Optional[str] = None,
+    main_agent: Agent,
+    reflection_agent: Agent | None = None,
+    name: str | None = None,
     **kwargs,
-) -> "Agent":
+) -> Agent:
     """Create an agent with reflection post-processing.
 
     Args:
@@ -440,10 +447,9 @@ def create_reflection_agent(
         Agent with reflection capabilities
     """
     if not reflection_agent:
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         # Import SimpleAgent locally to avoid circular import
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         reflection_agent = SimpleAgent(
             name=f"{main_agent.name}_reflector",
@@ -466,12 +472,12 @@ def create_reflection_agent(
 
 
 def create_graded_reflection_agent(
-    main_agent: "Agent",
-    grading_agent: Optional["Agent"] = None,
-    reflection_agent: Optional["Agent"] = None,
-    name: Optional[str] = None,
+    main_agent: Agent,
+    grading_agent: Agent | None = None,
+    reflection_agent: Agent | None = None,
+    name: str | None = None,
     **kwargs,
-) -> "Agent":
+) -> Agent:
     """Create an agent with grading and reflection processing.
 
     Args:
@@ -485,10 +491,9 @@ def create_graded_reflection_agent(
         Agent with grading and reflection capabilities
     """
     if not grading_agent:
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         # Import SimpleAgent locally to avoid circular import
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         grading_agent = SimpleAgent(
             name=f"{main_agent.name}_grader",
@@ -499,10 +504,9 @@ def create_graded_reflection_agent(
         )
 
     if not reflection_agent:
-        from haive.core.engine.aug_llm import AugLLMConfig
-
         # Import SimpleAgent locally to avoid circular import
         from haive.agents.simple.agent import SimpleAgent
+        from haive.core.engine.aug_llm import AugLLMConfig
 
         reflection_agent = SimpleAgent(
             name=f"{main_agent.name}_reflector",
@@ -527,11 +531,11 @@ def create_graded_reflection_agent(
 
 
 def create_structured_output_agent(
-    main_agent: "Agent",
+    main_agent: Agent,
     output_model: type[BaseModel],
-    name: Optional[str] = None,
+    name: str | None = None,
     **kwargs,
-) -> "Agent":
+) -> Agent:
     """Create an agent with structured output post-processing.
 
     Args:
@@ -543,15 +547,15 @@ def create_structured_output_agent(
     Returns:
         Agent with structured output capabilities
     """
-    from haive.core.engine.aug_llm import AugLLMConfig
-
     from haive.agents.structured_output.agent import StructuredOutputAgent
+    from haive.core.engine.aug_llm import AugLLMConfig
 
     # Create structured output agent
     structured_agent = StructuredOutputAgent(
         name=f"{main_agent.name}_structurer",
         engine=AugLLMConfig(
-            system_message="You are a structured output processor.", temperature=0.1
+            system_message="You are a structured output processor.",
+            temperature=0.1,
         ),
         output_models=[output_model],
     )
@@ -559,9 +563,7 @@ def create_structured_output_agent(
     # Add post-processing to main agent
     if hasattr(main_agent, "__dict__"):
         main_agent.post_agent = structured_agent
-        main_agent.use_post_transform = (
-            False  # No message transform for structured output
-        )
+        main_agent.use_post_transform = False  # No message transform for structured output
 
         if hasattr(main_agent, "setup_transformers"):
             main_agent.setup_transformers()

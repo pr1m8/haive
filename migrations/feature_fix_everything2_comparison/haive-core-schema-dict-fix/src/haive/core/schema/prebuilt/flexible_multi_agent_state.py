@@ -1,15 +1,20 @@
 """Flexible multi-agent state that doesn't force messages or tools.
 
-This module provides flexible state schemas for multi-agent systems without forcing
-specific fields like messages or tools.
+This module provides flexible state schemas for multi-agent systems
+without forcing specific fields like messages or tools.
 """
 
-from typing import TYPE_CHECKING, Any, Optional, Self
+from __future__ import annotations
 
-from pydantic import Field, field_validator, model_validator
-from typing_extensions import TypedDict
+from typing import Any
+from typing import Self
+from typing import TYPE_CHECKING
 
 from haive.core.schema.state_schema import StateSchema
+from pydantic import Field
+from pydantic import field_validator
+from pydantic import model_validator
+from typing_extensions import TypedDict
 
 if TYPE_CHECKING:
     from haive.agents.base import Agent
@@ -53,12 +58,14 @@ class FlexibleMultiAgentState(StateSchema):
     # AGENT MANAGEMENT - Core fields
     # ========================================================================
 
-    agents: list["Agent"] | dict[str, "Agent"] = Field(
-        default_factory=dict, description="Agent instances - can be list or dict"
+    agents: list[Agent] | dict[str, Agent] = Field(
+        default_factory=dict,
+        description="Agent instances - can be list or dict",
     )
 
     agent_states: dict[str, dict[str, Any]] = Field(
-        default_factory=dict, description="Isolated state for each agent"
+        default_factory=dict,
+        description="Isolated state for each agent",
     )
 
     # ========================================================================
@@ -66,15 +73,18 @@ class FlexibleMultiAgentState(StateSchema):
     # ========================================================================
 
     current_agent: str | None = Field(
-        default=None, description="Currently executing agent"
+        default=None,
+        description="Currently executing agent",
     )
 
     completed_agents: list[str] = Field(
-        default_factory=list, description="Agents that have completed execution"
+        default_factory=list,
+        description="Agents that have completed execution",
     )
 
     agent_outputs: dict[str, Any] = Field(
-        default_factory=dict, description="Outputs from each agent"
+        default_factory=dict,
+        description="Outputs from each agent",
     )
 
     # ========================================================================
@@ -91,7 +101,8 @@ class FlexibleMultiAgentState(StateSchema):
 
     # Optional final result
     final_result: Any | None = Field(
-        default=None, description="Final result from multi-agent execution"
+        default=None,
+        description="Final result from multi-agent execution",
     )
 
     # ========================================================================
@@ -110,8 +121,9 @@ class FlexibleMultiAgentState(StateSchema):
     @field_validator("agents", mode="before")
     @classmethod
     def normalize_agents(
-        cls, v: list["Agent"] | dict[str, "Agent"]
-    ) -> dict[str, "Agent"]:
+        cls,
+        v: list[Agent] | dict[str, Agent],
+    ) -> dict[str, Agent]:
         """Convert list to dict for consistent access."""
         if isinstance(v, list):
             agent_dict = {}
@@ -145,7 +157,7 @@ class FlexibleMultiAgentState(StateSchema):
             self.agent_states[agent_name] = {}
         self.agent_states[agent_name].update(updates)
 
-    def get_agent(self, agent_name: str) -> Optional["Agent"]:
+    def get_agent(self, agent_name: str) -> Agent | None:
         """Get agent by name."""
         if isinstance(self.agents, dict):
             return self.agents.get(agent_name)
@@ -187,15 +199,18 @@ class ContainerMultiAgentState(FlexibleMultiAgentState):
     """
 
     agent_execution_order: list[str] = Field(
-        default_factory=list, description="Order of agent execution"
+        default_factory=list,
+        description="Order of agent execution",
     )
 
     agent_metadata: dict[str, dict[str, Any]] = Field(
-        default_factory=dict, description="Metadata about each agent"
+        default_factory=dict,
+        description="Metadata about each agent",
     )
 
     recompilation_needed: bool = Field(
-        default=False, description="Whether graph recompilation is needed"
+        default=False,
+        description="Whether graph recompilation is needed",
     )
 
     @model_validator(mode="after")

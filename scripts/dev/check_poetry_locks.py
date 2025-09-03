@@ -2,6 +2,8 @@
 #!/usr/bin/env python
 """Check that Poetry lock files are in sync with pyproject.toml files."""
 
+from __future__ import annotations
+
 import os
 from pathlib import Path
 import subprocess
@@ -33,7 +35,11 @@ def find_packages():
 def check_lock_file(package_dir):
     """Check if lock file is in sync with pyproject.toml."""
     result = subprocess.run(
-        ["poetry", "lock", "--check"], cwd=package_dir, capture_output=True, text=True, check=False
+        ["poetry", "lock", "--check"],
+        cwd=package_dir,
+        capture_output=True,
+        text=True,
+        check=False,
     )
     return result.returncode == 0, result.stderr if result.returncode != 0 else ""
 

@@ -5,9 +5,11 @@ This module provides a way to wrap any Python callable (function, method, lambda
 as a proper graph node that returns Command or Send objects.
 """
 
+from __future__ import annotations
+
+from collections.abc import Callable
 import inspect
 import logging
-from collections.abc import Callable
 from typing import Any, Self, TypeVar
 
 from langgraph.types import Command
@@ -71,26 +73,31 @@ class CallableNodeConfig(BaseNodeConfig):
 
     # Routing based on boolean results
     goto_on_true: str | None = Field(
-        default=None, description="Node to go to if callable returns True"
+        default=None,
+        description="Node to go to if callable returns True",
     )
 
     goto_on_false: str | None = Field(
-        default=None, description="Node to go to if callable returns False"
+        default=None,
+        description="Node to go to if callable returns False",
     )
 
     # For non-boolean results
     goto_mapping: dict[Any, str] | None = Field(
-        default=None, description="Map function results to node names"
+        default=None,
+        description="Map function results to node names",
     )
 
     # Default goto if no mapping matches
     default_goto: str | None = Field(
-        default=None, description="Default node if no mapping matches"
+        default=None,
+        description="Default node if no mapping matches",
     )
 
     # State extraction options
     extract_full_state: bool = Field(
-        default=False, description="Pass the full state object as first parameter"
+        default=False,
+        description="Pass the full state object as first parameter",
     )
 
     parameter_mapping: dict[str, str] | None = Field(
@@ -111,7 +118,8 @@ class CallableNodeConfig(BaseNodeConfig):
     )
 
     error_goto: str | None = Field(
-        default=None, description="Node to go to on error (if on_error='goto_error')"
+        default=None,
+        description="Node to go to on error (if on_error='goto_error')",
     )
 
     @model_validator(mode="after")
@@ -125,11 +133,11 @@ class CallableNodeConfig(BaseNodeConfig):
                 self.goto_mapping,
                 self.default_goto,
                 self.command_goto,
-            ]
+            ],
         ):
             raise ValueError(
                 "Must specify at least one of: goto_on_true/false, goto_mapping, "
-                "default_goto, or command_goto"
+                "default_goto, or command_goto",
             )
 
         return self
@@ -293,7 +301,9 @@ class CallableNodeConfig(BaseNodeConfig):
 
 
 def wrap_callable(
-    func: Callable, name: str | None = None, **kwargs
+    func: Callable,
+    name: str | None = None,
+    **kwargs,
 ) -> CallableNodeConfig:
     """Convenience function to wrap a callable as a node.
 

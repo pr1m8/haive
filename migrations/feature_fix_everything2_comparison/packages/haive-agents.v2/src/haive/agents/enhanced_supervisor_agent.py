@@ -6,17 +6,16 @@ SupervisorAgent = Agent[AugLLMConfig] + worker management + delegation.
 import logging
 from typing import Any, Literal
 
-from haive.core.engine.aug_llm.config import AugLLMConfig
-from haive.core.graph.node.engine_node import EngineNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import AIMessage
 from langgraph.graph import END, START
 from pydantic import Field, field_validator, model_validator
 
 # Import base enhanced agent when available
-# from haive.agents.base.enhanced_agent import Agent
 # For now, using minimal base
 from haive.agents.simple.enhanced_simple_real import EnhancedAgentBase as Agent
+from haive.core.engine.aug_llm.config import AugLLMConfig
+from haive.core.graph.node.engine_node import EngineNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 logger = logging.getLogger(__name__)
 
@@ -71,23 +70,30 @@ class SupervisorAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
 
     # Supervisor specific fields
     workers: dict[str, Agent] = Field(
-        default_factory=dict, description="Dictionary of worker agents"
+        default_factory=dict,
+        description="Dictionary of worker agents",
     )
 
     max_delegation_rounds: int = Field(
-        default=3, ge=1, le=10, description="Maximum rounds of delegation to workers"
+        default=3,
+        ge=1,
+        le=10,
+        description="Maximum rounds of delegation to workers",
     )
 
     delegation_strategy: Literal["first", "best", "all", "round_robin"] = Field(
-        default="best", description="Strategy for choosing workers"
+        default="best",
+        description="Strategy for choosing workers",
     )
 
     supervisor_prompt: str | None = Field(
-        default=None, description="Custom supervisor prompt"
+        default=None,
+        description="Custom supervisor prompt",
     )
 
     allow_direct_response: bool = Field(
-        default=True, description="Whether supervisor can respond without delegating"
+        default=True,
+        description="Whether supervisor can respond without delegating",
     )
 
     # Convenience fields
@@ -173,10 +179,7 @@ class SupervisorAgent(Agent):  # Will be Agent[AugLLMConfig] when imports fixed
     def _get_default_supervisor_prompt(self) -> str:
         """Get default supervisor prompt."""
         worker_descriptions = "\n".join(
-            [
-                f"- {name}: {type(agent).__name__}"
-                for name, agent in self.workers.items()
-            ]
+            [f"- {name}: {type(agent).__name__}" for name, agent in self.workers.items()],
         )
 
         return f"""You are a supervisor agent coordinating a team of workers.
@@ -214,11 +217,7 @@ For each request, think about:
             # Create node for each worker
             worker_node = EngineNodeConfig(
                 name=f"worker_{worker_name}",
-                engine=(
-                    worker_agent.engine
-                    if hasattr(worker_agent, "engine")
-                    else worker_agent
-                ),
+                engine=(worker_agent.engine if hasattr(worker_agent, "engine") else worker_agent),
             )
             graph.add_node(f"worker_{worker_name}", worker_node)
 
@@ -235,8 +234,7 @@ For each request, think about:
             delegations = sum(
                 1
                 for m in messages
-                if isinstance(m, AIMessage)
-                and "delegating to" in str(m.content).lower()
+                if isinstance(m, AIMessage) and "delegating to" in str(m.content).lower()
             )
             if delegations >= self.max_delegation_rounds:
                 return "end"
@@ -308,18 +306,7 @@ if __name__ == "__main__":
         },
     )
 
-    print(f"Created: {supervisor}")
-    print(f"Workers: {supervisor.list_workers()}")
-    print(f"Delegation strategy: {supervisor.delegation_strategy}")
-
     # Add another worker dynamically
     supervisor.add_worker("tester", MockWorker("Dave", "Quality Assurance"))
-    print(f"Updated workers: {supervisor.list_workers()}")
 
     # Example delegation scenarios
-    print("\nExample delegation scenarios:")
-    print("1. 'Analyze user engagement metrics' -> delegate to analyst")
-    print("2. 'Build a REST API' -> delegate to developer")
-    print("3. 'Create mockups for mobile app' -> delegate to designer")
-    print("4. 'Test the new features' -> delegate to tester")
-    print("5. 'Plan the project timeline' -> supervisor handles directly")

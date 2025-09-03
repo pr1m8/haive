@@ -9,9 +9,11 @@ Functions:
     save_memory: Save Memory functionality.
 """
 
+from __future__ import annotations
+
+from datetime import datetime
 import json
 import logging
-from datetime import datetime
 from typing import Any
 
 from agents.memory_agent.memory_utils import (
@@ -23,11 +25,12 @@ from agents.memory_agent.memory_utils import (
 )
 from agents.react.memory.config import MemoryAgentConfig
 from agents.react.react.agent import ReactAgent
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
+from langgraph.graph import END
+
 from haive.core.engine.agent.agent import register_agent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.dynamic_graph_builder import DynamicGraph
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
-from langgraph.graph import END
 
 logger = logging.getLogger(__name__)
 
@@ -36,8 +39,8 @@ logger = logging.getLogger(__name__)
 class MemoryAgent(ReactAgent):
     """Memory Agent implementation that extends ReactAgent.
 
-    Adds long-term memory capabilities for persisting information
-    about users across conversations.
+    Adds long-term memory capabilities for persisting information about
+    users across conversations.
     """
 
     def __init__(self, config: MemoryAgentConfig):
@@ -161,7 +164,8 @@ class MemoryAgent(ReactAgent):
 
         # Create dynamic graph builder
         gb = DynamicGraph(
-            components=[self.config.engine], state_schema=self.config.state_schema
+            components=[self.config.engine],
+            state_schema=self.config.state_schema,
         )
 
         # Add memory loading node
@@ -174,7 +178,9 @@ class MemoryAgent(ReactAgent):
 
         # Add query extraction node
         gb.add_node(
-            "extract_query", self._extract_query, self.config.memory_extract_node_name
+            "extract_query",
+            self._extract_query,
+            self.config.memory_extract_node_name,
         )
 
         # Add memory extraction node
@@ -209,7 +215,8 @@ class MemoryAgent(ReactAgent):
         try:
             gb.remove_edge(self.config.tool_node_name, self.config.llm_node_name)
             gb.add_edge(
-                self.config.tool_node_name, self.config.memory_extract_node_name
+                self.config.tool_node_name,
+                self.config.memory_extract_node_name,
             )
         except Exception as e:
             logger.warning(f"Error modifying tool flow: {e}")
@@ -232,7 +239,8 @@ class MemoryAgent(ReactAgent):
             try:
                 gb.remove_edge(self.config.llm_node_name, self.config.output_node_name)
                 gb.add_edge(
-                    self.config.memory_save_node_name, self.config.output_node_name
+                    self.config.memory_save_node_name,
+                    self.config.output_node_name,
                 )
             except Exception as e:
                 logger.warning(f"Error modifying structured output flow: {e}")
@@ -312,9 +320,7 @@ class MemoryAgent(ReactAgent):
         if messages:
             # Look for the last human message
             for msg in reversed(messages):
-                if isinstance(msg, HumanMessage) or (
-                    isinstance(msg, tuple) and msg[0] == "human"
-                ):
+                if isinstance(msg, HumanMessage) or (isinstance(msg, tuple) and msg[0] == "human"):
                     content = msg.content if hasattr(msg, "content") else msg[1]
                     query = str(content)
                     break
@@ -378,7 +384,7 @@ class MemoryAgent(ReactAgent):
                 [
                     f"{msg.type if hasattr(msg, 'type') else msg[0]}: {msg.content if hasattr(msg, 'content') else msg[1]}"
                     for msg in messages
-                ]
+                ],
             )
 
             full_prompt = f"{prompt_template}\n\nConversation:\n{conversation_str}"
@@ -481,18 +487,17 @@ class MemoryAgent(ReactAgent):
                         # Try to parse string as JSON
                         try:
                             memory_dict = json.loads(memory)
-                            if all(
-                                k in memory_dict
-                                for k in ["subject", "predicate", "object_"]
-                            ):
+                            if all(k in memory_dict for k in ["subject", "predicate", "object_"]):
                                 structured_memories.append(memory_dict)
-                        except:
+                        except BaseException:
                             # Skip invalid memories
                             pass
 
                 if structured_memories:
                     save_structured_memories(
-                        structured_memories, self.config.vector_store, user_id
+                        structured_memories,
+                        self.config.vector_store,
+                        user_id,
                     )
                     logger.info(f"Saved {len(structured_memories)} structured memories")
 
@@ -508,10 +513,12 @@ class MemoryAgent(ReactAgent):
 
                 if unstructured_memories:
                     save_unstructured_memories(
-                        unstructured_memories, self.config.vector_store, user_id
+                        unstructured_memories,
+                        self.config.vector_store,
+                        user_id,
                     )
                     logger.info(
-                        f"Saved {len(unstructured_memories)} unstructured memories"
+                        f"Saved {len(unstructured_memories)} unstructured memories",
                     )
 
         except Exception as e:
@@ -529,9 +536,7 @@ class MemoryAgent(ReactAgent):
 
             # Check if we already have a system message
             has_system = any(
-                isinstance(m, SystemMessage)
-                for m in messages
-                if isinstance(m, BaseMessage)
+                isinstance(m, SystemMessage) for m in messages if isinstance(m, BaseMessage)
             )
 
             if not has_system:
@@ -544,17 +549,14 @@ class MemoryAgent(ReactAgent):
                 )
 
                 # Create system message with memories
-                system_prompt = (
-                    self.config.memory_system_prompt or self.config.system_prompt
-                )
+                system_prompt = self.config.memory_system_prompt or self.config.system_prompt
                 if not system_prompt:
-                    system_prompt = (
-                        "You are a helpful assistant with memory capabilities."
-                    )
+                    system_prompt = "You are a helpful assistant with memory capabilities."
 
                 # Replace memory placeholder
                 system_content = system_prompt.replace(
-                    "{recall_memories}", memories_str
+                    "{recall_memories}",
+                    memories_str,
                 )
 
                 # Create system message
@@ -584,7 +586,9 @@ class MemoryAgent(ReactAgent):
 
         last_message = messages[-1]
         if isinstance(last_message, AIMessage) and getattr(
-            last_message, "tool_calls", None
+            last_message,
+            "tool_calls",
+            None,
         ):
             return self.config.tool_node_name
 
@@ -592,7 +596,10 @@ class MemoryAgent(ReactAgent):
         return self.config.memory_save_node_name
 
     def run(
-        self, input_data: str | dict[str, Any], user_id: str | None = None, **kwargs
+        self,
+        input_data: str | dict[str, Any],
+        user_id: str | None = None,
+        **kwargs,
     ) -> dict[str, Any]:
         """Run the memory agent.
 

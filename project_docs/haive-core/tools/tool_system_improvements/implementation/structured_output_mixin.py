@@ -11,6 +11,8 @@ The mixin provides:
 - Support for both v1 (parser) and v2 (tool-calling) approaches
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any, Literal
 
@@ -18,7 +20,6 @@ from langchain_core.output_parsers import BaseOutputParser, PydanticOutputParser
 from langchain_core.output_parsers.openai_tools import PydanticToolsParser
 from langchain_core.runnables import Runnable
 from pydantic import BaseModel, Field, model_validator
-
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +45,8 @@ class StructuredOutputMixin(BaseModel):
 
     # Core configuration
     structured_output_model: type[BaseModel] | None = Field(
-        default=None, description="Pydantic model for structured output"
+        default=None,
+        description="Pydantic model for structured output",
     )
 
     structured_output_method: StructuredOutputMethod = Field(
@@ -57,7 +59,10 @@ class StructuredOutputMixin(BaseModel):
         description="Version of structured output: 'v1' (parser) or 'v2' (tool)",
     )
 
-    include_raw: bool = Field(default=False, description="Include raw output alongside structured")
+    include_raw: bool = Field(
+        default=False,
+        description="Include raw output alongside structured",
+    )
 
     # Context tracking
     structured_output_contexts: dict[str, str] = Field(
@@ -76,7 +81,7 @@ class StructuredOutputMixin(BaseModel):
         include_raw: bool | None = None,
         version: StructuredOutputVersion | None = None,
         **kwargs,
-    ) -> "StructuredOutputMixin":
+    ) -> StructuredOutputMixin:
         """Configure for structured output.
 
         This method configures the mixin to handle structured output,
@@ -122,7 +127,7 @@ class StructuredOutputMixin(BaseModel):
 
         logger.debug(
             f"Configured structured output: model={model_name}, "
-            f"method={self.structured_output_method}, version={self.structured_output_version}"
+            f"method={self.structured_output_method}, version={self.structured_output_version}",
         )
 
         return self
@@ -135,12 +140,12 @@ class StructuredOutputMixin(BaseModel):
         if self.structured_output_method == "parser":
             # Use PydanticOutputParser for v1 approach
             self._structured_output_parser = PydanticOutputParser(
-                pydantic_object=self.structured_output_model
+                pydantic_object=self.structured_output_model,
             )
         else:
             # Use PydanticToolsParser for v2 approach
             self._structured_output_parser = PydanticToolsParser(
-                tools=[self.structured_output_model]
+                tools=[self.structured_output_model],
             )
 
     def get_structured_output_parser(self) -> BaseOutputParser | None:
@@ -168,7 +173,11 @@ class StructuredOutputMixin(BaseModel):
         model_name = model.__name__ if hasattr(model, "__name__") else str(model)
         return self.structured_output_contexts.get(model_name) == "structured_output"
 
-    def route_pydantic_model(self, model: type[BaseModel], force_tool: bool = False) -> str:
+    def route_pydantic_model(
+        self,
+        model: type[BaseModel],
+        force_tool: bool = False,
+    ) -> str:
         """Smart routing for Pydantic models based on usage context.
 
         Args:
@@ -196,7 +205,11 @@ class StructuredOutputMixin(BaseModel):
         # Default to parser if no clear indication
         return "parser"
 
-    def bind_structured_output_tools(self, llm: Any, tools: list[Any] | None = None) -> Any:
+    def bind_structured_output_tools(
+        self,
+        llm: Any,
+        tools: list[Any] | None = None,
+    ) -> Any:
         """Bind tools for structured output using tool calling approach.
 
         This method handles the v2 approach where structured output
@@ -229,9 +242,16 @@ class StructuredOutputMixin(BaseModel):
             all_tools.extend(tools)
 
         # Bind tools with tool_choice for structured output
-        return llm.bind_tools(tools=all_tools, tool_choice=self.structured_output_model.__name__)
+        return llm.bind_tools(
+            tools=all_tools,
+            tool_choice=self.structured_output_model.__name__,
+        )
 
-    def create_structured_output_chain(self, llm: Any, prompt: Any | None = None) -> Runnable:
+    def create_structured_output_chain(
+        self,
+        llm: Any,
+        prompt: Any | None = None,
+    ) -> Runnable:
         """Create a complete chain for structured output.
 
         This method creates a chain that handles structured output
@@ -261,7 +281,8 @@ class StructuredOutputMixin(BaseModel):
         # Use with_structured_output if available
         if hasattr(llm, "with_structured_output"):
             structured_llm = llm.with_structured_output(
-                self.structured_output_model, include_raw=self.include_raw
+                self.structured_output_model,
+                include_raw=self.include_raw,
             )
         else:
             # Fallback to bind_tools
@@ -272,7 +293,7 @@ class StructuredOutputMixin(BaseModel):
         return structured_llm
 
     @model_validator(mode="after")
-    def _validate_structured_output_config(self) -> "StructuredOutputMixin":
+    def _validate_structured_output_config(self) -> StructuredOutputMixin:
         """Validate structured output configuration."""
         # Ensure version matches method
         if self.structured_output_method == "parser" and self.structured_output_version == "v2":
@@ -287,7 +308,7 @@ class StructuredOutputMixin(BaseModel):
 
         return self
 
-    def clear_structured_output(self) -> "StructuredOutputMixin":
+    def clear_structured_output(self) -> StructuredOutputMixin:
         """Clear structured output configuration.
 
         Returns:

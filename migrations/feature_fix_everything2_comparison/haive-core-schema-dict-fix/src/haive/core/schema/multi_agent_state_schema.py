@@ -7,7 +7,6 @@ key issues with engine handling, consolidation, and access from engine nodes. It
 proper engine access and visibility for sub-agents in complex agent workflows.
 """
 
-
 import logging
 from typing import Any, Self
 
@@ -39,7 +38,8 @@ class MultiAgentStateSchema(StateSchema):
 
     # Explicit engines field that EngineNodeConfig expects
     engines: dict[str, Any] = Field(
-        default_factory=dict, description="Dictionary of engines accessible to nodes"
+        default_factory=dict,
+        description="Dictionary of engines accessible to nodes",
     )
 
     @model_validator(mode="after")
@@ -62,8 +62,7 @@ class MultiAgentStateSchema(StateSchema):
         field_engines = self.get_engines()
         if field_engines:
             logger.debug(
-                f"Found {
-                    len(field_engines)} engines in instance fields"
+                f"Found {len(field_engines)} engines in instance fields",
             )
             self.engines.update(field_engines)
 
@@ -90,13 +89,13 @@ class MultiAgentStateSchema(StateSchema):
                 # Add engines from the agent
                 if hasattr(agent, "engines") and isinstance(agent.engines, dict):
                     logger.debug(
-                        f"Agent '{agent_name}' has {len(agent.engines)} engines"
+                        f"Agent '{agent_name}' has {len(agent.engines)} engines",
                     )
                     for eng_name, engine in agent.engines.items():
                         # Use qualified name to avoid collisions
                         qualified_name = f"{agent_name}.{eng_name}"
                         logger.debug(
-                            f"Adding engine '{qualified_name}' from agent '{agent_name}'"
+                            f"Adding engine '{qualified_name}' from agent '{agent_name}'",
                         )
                         self.engines[qualified_name] = engine
 
@@ -109,7 +108,9 @@ class MultiAgentStateSchema(StateSchema):
 
     @classmethod
     def from_state_schema(
-        cls, schema_class: type[StateSchema], name: str | None = None
+        cls,
+        schema_class: type[StateSchema],
+        name: str | None = None,
     ) -> type[MultiAgentStateSchema]:
         """Create a MultiAgentStateSchema from an existing StateSchema class.
 
@@ -147,7 +148,7 @@ class MultiAgentStateSchema(StateSchema):
 
         if hasattr(schema_class, "__serializable_reducers__"):
             multi_schema.__serializable_reducers__ = dict(
-                schema_class.__serializable_reducers__
+                schema_class.__serializable_reducers__,
             )
 
         if hasattr(schema_class, "__reducer_fields__"):
@@ -170,7 +171,7 @@ class MultiAgentStateSchema(StateSchema):
 
         if hasattr(schema_class, "__structured_models__"):
             multi_schema.__structured_models__ = dict(
-                schema_class.__structured_models__
+                schema_class.__structured_models__,
             )
 
         if hasattr(schema_class, "__structured_model_fields__"):
@@ -188,14 +189,15 @@ class MultiAgentStateSchema(StateSchema):
 class MultiAgentSchemaComposer:
     """Utility for creating MultiAgentStateSchema classes.
 
-    This class provides static methods for creating MultiAgentStateSchema classes from
-    existing schemas or components, ensuring proper engine handling in multi-agent
-    architectures.
+    This class provides static methods for creating
+    MultiAgentStateSchema classes from existing schemas or components,
+    ensuring proper engine handling in multi-agent architectures.
     """
 
     @staticmethod
     def from_schema(
-        schema_class: type[StateSchema], name: str | None = None
+        schema_class: type[StateSchema],
+        name: str | None = None,
     ) -> type[MultiAgentStateSchema]:
         """Create a MultiAgentStateSchema from an existing StateSchema.
 
@@ -210,7 +212,8 @@ class MultiAgentSchemaComposer:
 
     @staticmethod
     def from_components(
-        components: list[Any], name: str = "MultiAgentSchema"
+        components: list[Any],
+        name: str = "MultiAgentSchema",
     ) -> type[MultiAgentStateSchema]:
         """Create a MultiAgentStateSchema from components.
 

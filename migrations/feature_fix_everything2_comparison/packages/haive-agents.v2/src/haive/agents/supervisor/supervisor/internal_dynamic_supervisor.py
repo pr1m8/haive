@@ -4,14 +4,16 @@ The supervisor itself decides when to add/remove agents based on requests,
 not external management calls.
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Any, Literal
 
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
 from langchain_core.messages import HumanMessage
 from pydantic import Field, PrivateAttr
 
 from haive.agents.multi.agent import MultiAgent
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
 
 logger = logging.getLogger(__name__)
 
@@ -28,15 +30,18 @@ class InternalDynamicSupervisor(MultiAgent):
 
     # Configuration
     coordination_mode: Literal["internal_dynamic"] = Field(
-        default="internal_dynamic", description="Internal dynamic coordination"
+        default="internal_dynamic",
+        description="Internal dynamic coordination",
     )
 
     enable_internal_agent_creation: bool = Field(
-        default=True, description="Allow supervisor to create agents internally"
+        default=True,
+        description="Allow supervisor to create agents internally",
     )
 
     max_agents: int = Field(
-        default=10, description="Maximum number of agents to maintain"
+        default=10,
+        description="Maximum number of agents to maintain",
     )
 
     # Private attributes
@@ -165,7 +170,10 @@ class InternalDynamicSupervisor(MultiAgent):
         return graph
 
     def _create_internal_supervisor_node(self):
-        """Create supervisor that makes internal decisions about agent management."""
+        """Create supervisor that makes internal decisions about agent.
+
+        management.
+        """
 
         async def supervisor_node(state: Any) -> dict[str, Any]:
             """Make decisions about agent creation and routing."""
@@ -203,10 +211,7 @@ class InternalDynamicSupervisor(MultiAgent):
                 }
 
             # Step 2: Check if we should create a new agent
-            if (
-                self.enable_internal_agent_creation
-                and len(self.agents) < self.max_agents
-            ):
+            if self.enable_internal_agent_creation and len(self.agents) < self.max_agents:
                 needed_agent_type = self._determine_needed_agent_type(content)
 
                 if needed_agent_type:
@@ -255,7 +260,8 @@ class InternalDynamicSupervisor(MultiAgent):
 
             # Create the agent
             success = await self._create_agent_from_template(
-                agent_type, original_request
+                agent_type,
+                original_request,
             )
 
             if success:
@@ -266,7 +272,7 @@ class InternalDynamicSupervisor(MultiAgent):
                         "request": original_request,
                         "timestamp": "now",
                         "success": True,
-                    }
+                    },
                 )
 
                 # Set target for next execution
@@ -318,7 +324,10 @@ class InternalDynamicSupervisor(MultiAgent):
 
                 # Process result
                 update = self._create_agent_output(
-                    target_agent, agent, result, state_dict
+                    target_agent,
+                    agent,
+                    result,
+                    state_dict,
                 )
                 update["last_agent"] = target_agent
                 update["execution_complete"] = True
@@ -490,30 +499,30 @@ if __name__ == "__main__":
 
         # Test 1: Research request (should create research agent)
         await supervisor.ainvoke(
-            {"messages": [HumanMessage(content="Research the latest AI trends")]}
+            {"messages": [HumanMessage(content="Research the latest AI trends")]},
         )
 
         # Test 2: Coding request (should create coding agent)
         await supervisor.ainvoke(
             {
                 "messages": [
-                    HumanMessage(content="Write code to implement a binary search")
-                ]
-            }
+                    HumanMessage(content="Write code to implement a binary search"),
+                ],
+            },
         )
 
         # Test 3: Analysis request (should create analysis agent)
         await supervisor.ainvoke(
-            {"messages": [HumanMessage(content="Analyze the data patterns")]}
+            {"messages": [HumanMessage(content="Analyze the data patterns")]},
         )
 
         # Test 4: Another research request (should use existing)
         await supervisor.ainvoke(
             {
                 "messages": [
-                    HumanMessage(content="Find information about quantum computing")
-                ]
-            }
+                    HumanMessage(content="Find information about quantum computing"),
+                ],
+            },
         )
 
     asyncio.run(test_internal_dynamic())

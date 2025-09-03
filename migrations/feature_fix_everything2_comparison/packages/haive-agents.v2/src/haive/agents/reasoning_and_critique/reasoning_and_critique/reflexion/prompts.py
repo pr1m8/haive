@@ -3,6 +3,8 @@
 This module provides prompts functionality for the Haive framework.
 """
 
+from __future__ import annotations
+
 import datetime
 
 from agents.reflexion.models import AnswerQuestion, ReviseAnswer
@@ -25,7 +27,7 @@ Current time: {time}
             "\n\n<system>Reflect on the user's original question and the"
             " actions taken thus far. Respond using the {function_name} function.</reminder>",
         ),
-    ]
+    ],
 ).partial(
     role="expert researcher",
     time=lambda: datetime.datetime.now().isoformat(),
@@ -36,7 +38,6 @@ initial_answer_chain = actor_prompt_template.partial(
     function_name=AnswerQuestion.__name__,
 )  # | llm.bind_tools(tools=[AnswerQuestion])
 
-
 revise_instructions = """Revise your previous answer using the new information.
     - You should use the previous critique to add important information to your answer.
         - You MUST include numerical citations in your revised answer to ensure it can be verified.
@@ -45,7 +46,6 @@ revise_instructions = """Revise your previous answer using the new information.
             - [2] https://example.com
     - You should use the previous critique to remove superfluous information from your answer and make SURE it is not more than 250 words.
 """
-
 
 revision_chain = actor_prompt_template.partial(
     first_instruction=revise_instructions,

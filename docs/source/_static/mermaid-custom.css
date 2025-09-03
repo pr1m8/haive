@@ -1,0 +1,306 @@
+/* Custom Mermaid Styling for Intense Furo Theme */
+
+.mermaid-container {
+  background: var(--color-background-secondary);
+  border: 2px solid var(--color-background-border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.mermaid-container::before {
+  content: "📊 Mermaid Diagram";
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--color-brand-primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-bottom-left-radius: 8px;
+  z-index: 1;
+}
+
+.mermaid-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-brand-primary);
+}
+
+/* Mermaid SVG Styling */
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+  background: transparent;
+  border-radius: 8px;
+}
+
+/* Override Mermaid default colors to match Furo theme */
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node ellipse,
+.mermaid .node polygon,
+.mermaid .node path {
+  fill: var(--color-api-background);
+  stroke: var(--color-brand-primary);
+  stroke-width: 2px;
+}
+
+.mermaid .node .label {
+  color: var(--color-foreground-primary);
+  font-family: var(--font-stack);
+  font-weight: 600;
+}
+
+/* Edge styling */
+.mermaid .edgePath .path {
+  stroke: var(--color-brand-primary);
+  stroke-width: 2px;
+}
+
+.mermaid .edgeLabel {
+  background-color: var(--color-background-primary);
+  border: 1px solid var(--color-brand-primary);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Sequence diagram styling */
+.mermaid .actor {
+  fill: var(--color-api-background);
+  stroke: var(--color-brand-primary);
+  stroke-width: 2px;
+}
+
+.mermaid .actor-line {
+  stroke: var(--color-brand-primary);
+  stroke-width: 1px;
+  stroke-dasharray: 3, 3;
+}
+
+.mermaid .messageLine0,
+.mermaid .messageLine1 {
+  stroke: var(--color-brand-primary);
+  stroke-width: 2px;
+}
+
+.mermaid .messageText {
+  fill: var(--color-foreground-primary);
+  font-weight: 600;
+}
+
+.mermaid .loopText {
+  fill: var(--color-brand-primary);
+  font-weight: 700;
+}
+
+/* Class diagram styling */
+.mermaid .classBox {
+  fill: var(--color-api-background);
+  stroke: var(--color-brand-primary);
+  stroke-width: 2px;
+}
+
+.mermaid .classLabel .box {
+  fill: var(--color-brand-primary);
+  opacity: 1;
+}
+
+.mermaid .classLabel .label {
+  fill: white;
+  font-weight: 700;
+}
+
+.mermaid .relation {
+  stroke: var(--color-brand-primary);
+  stroke-width: 2px;
+}
+
+/* State diagram styling */
+.mermaid .state-start,
+.mermaid .state-end {
+  fill: var(--color-brand-primary);
+}
+
+.mermaid .state-note {
+  fill: #fbbf24;
+  stroke: #f59e0b;
+}
+
+/* Flowchart specific styling */
+.mermaid .flowchart-link {
+  stroke: var(--color-brand-primary);
+  stroke-width: 2px;
+}
+
+.mermaid .marker {
+  fill: var(--color-brand-primary);
+  stroke: var(--color-brand-primary);
+}
+
+/* Git diagram styling */
+.mermaid .commit-id,
+.mermaid .commit-msg,
+.mermaid .branch-label {
+  fill: var(--color-foreground-primary);
+  font-weight: 600;
+}
+
+.mermaid .commit0,
+.mermaid .commit1,
+.mermaid .commit2,
+.mermaid .commit3,
+.mermaid .commit4,
+.mermaid .commit5,
+.mermaid .commit6,
+.mermaid .commit7 {
+  stroke-width: 3px;
+}
+
+/* Gantt diagram styling */
+.mermaid .grid .tick {
+  stroke: var(--color-background-border);
+  stroke-dasharray: 3, 3;
+}
+
+.mermaid .grid .tick text {
+  fill: var(--color-foreground-secondary);
+  font-size: 0.875rem;
+}
+
+.mermaid .today {
+  stroke: var(--color-brand-primary);
+  stroke-width: 3px;
+}
+
+/* Pie chart styling */
+.mermaid .pieCircle {
+  stroke: var(--color-background-primary);
+  stroke-width: 2px;
+}
+
+.mermaid .pieTitleText {
+  fill: var(--color-foreground-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* Journey diagram styling */
+.mermaid .face {
+  fill: var(--color-brand-primary);
+}
+
+.mermaid .journey-section {
+  fill: var(--color-api-background);
+  stroke: var(--color-background-border);
+}
+
+/* Dark theme overrides */
+@media (prefers-color-scheme: dark) {
+  .mermaid-container {
+    background: var(--color-background-secondary);
+    border-color: var(--color-background-border);
+  }
+
+  .mermaid .node rect,
+  .mermaid .node circle,
+  .mermaid .node ellipse,
+  .mermaid .node polygon,
+  .mermaid .node path {
+    fill: var(--color-background-secondary);
+    stroke: var(--color-brand-primary);
+  }
+
+  .mermaid .node .label {
+    color: var(--color-foreground-primary);
+  }
+
+  .mermaid .edgeLabel {
+    background-color: var(--color-background-secondary);
+    color: var(--color-foreground-primary);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .mermaid-container {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  .mermaid-container::before {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+  }
+
+  .mermaid svg {
+    min-height: 200px;
+  }
+
+  .mermaid .node .label {
+    font-size: 0.875rem;
+  }
+
+  .mermaid .edgeLabel {
+    font-size: 0.75rem;
+    padding: 0.125rem 0.25rem;
+  }
+}
+
+/* Animation enhancements */
+@keyframes mermaidFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mermaid {
+  animation: mermaidFadeIn 0.6s ease-out;
+}
+
+/* Loading state */
+.mermaid-loading {
+  background: var(--color-background-secondary);
+  border: 2px dashed var(--color-background-border);
+  border-radius: 8px;
+  padding: 3rem;
+  text-align: center;
+  color: var(--color-foreground-secondary);
+  font-style: italic;
+}
+
+.mermaid-loading::before {
+  content: "🔄 Loading Mermaid diagram...";
+  display: block;
+  font-weight: 600;
+}
+
+/* Error state */
+.mermaid-error {
+  background: #fef2f2;
+  border: 2px solid #ef4444;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  color: #dc2626;
+}
+
+.mermaid-error::before {
+  content: "❌ Mermaid diagram failed to render";
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}

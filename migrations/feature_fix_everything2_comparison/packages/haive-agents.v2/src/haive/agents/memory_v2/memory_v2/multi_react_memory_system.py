@@ -1,20 +1,19 @@
 """Multi-ReactAgent Memory System with specialized agents.
 
-This advanced example shows how to coordinate multiple ReactAgents,
-each with specialized memory responsibilities.
+This advanced example shows how to coordinate multiple ReactAgents, each
+with specialized memory responsibilities.
 """
 
-import json
 from datetime import datetime
 from enum import Enum
 from typing import Any
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.tools import tool
 
 from haive.agents.memory_v2.react_memory_agent import ReactMemoryAgent
 from haive.agents.multi.simple.agent import SimpleMultiAgent
 from haive.agents.react.agent import ReactAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 
 class MemoryType(str, Enum):
@@ -27,7 +26,8 @@ class MemoryType(str, Enum):
 
 
 class MultiReactMemorySystem:
-    """Coordinate multiple specialized ReactAgents for comprehensive memory management.
+    """Coordinate multiple specialized ReactAgents for comprehensive memory
+    management.
 
     This system uses:
     - Episodic Memory Agent: Personal experiences, events, conversations
@@ -309,7 +309,7 @@ Memory types:
         """
         # First, determine which memory systems to use
         routing_result = await self.router_agent.arun(
-            f"Route this query to appropriate memory systems: {query}"
+            f"Route this query to appropriate memory systems: {query}",
         )
 
         # Extract memory types from routing result
@@ -336,7 +336,9 @@ Memory types:
         }
 
     async def store_memory(
-        self, content: str, memory_type: MemoryType | None = None
+        self,
+        content: str,
+        memory_type: MemoryType | None = None,
     ) -> str:
         """Store a memory in the appropriate system.
 
@@ -350,7 +352,7 @@ Memory types:
         # Determine memory type if not specified
         if not memory_type:
             classification = await self.router_agent.arun(
-                f"Classify this memory for storage: {content}"
+                f"Classify this memory for storage: {content}",
             )
 
             # Extract memory type
@@ -369,10 +371,12 @@ Memory types:
         return f"Memory stored in {memory_type.value} system: {result}"
 
     async def consolidate_memories(self) -> str:
-        """Consolidate memories across systems (move from working to long-term)."""
+        """Consolidate memories across systems (move from working to long-
+        term)."""
         # Get working memories
         working_memories = await self.memory_agents[MemoryType.WORKING].arun(
-            "List all recent memories", auto_save=False
+            "List all recent memories",
+            auto_save=False,
         )
 
         # Process each working memory for consolidation
@@ -399,7 +403,7 @@ For each memory, indicate the action and destination."""
             return "No relevant memories found."
 
         if len(results) == 1:
-            return list(results.values())[0]
+            return next(iter(results.values()))
 
         # Combine multiple results
         combined = f"Based on searching {len(results)} memory systems:\n\n"
@@ -419,10 +423,11 @@ For each memory, indicate the action and destination."""
 
         for memory_type, agent in self.memory_agents.items():
             system_stats = await agent.arun(
-                "List recent memories and provide a count", auto_save=False
+                "List recent memories and provide a count",
+                auto_save=False,
             )
             stats["memory_systems"][memory_type.value] = {
-                "recent_activity": system_stats[:200] + "..."  # Truncate
+                "recent_activity": system_stats[:200] + "...",  # Truncate
             }
 
         return stats
@@ -434,47 +439,40 @@ async def example_multi_memory_system():
     system = MultiReactMemorySystem(user_id="alice_doe")
 
     # Store different types of memories
-    print("Storing memories...")
 
     # Episodic memory
     await system.store_memory(
-        "Today I had lunch with Bob at the Italian restaurant downtown. We discussed the new project."
+        "Today I had lunch with Bob at the Italian restaurant downtown. We discussed the new project.",
     )
 
     # Semantic memory
     await system.store_memory(
-        "Python is a high-level programming language known for its simplicity and readability."
+        "Python is a high-level programming language known for its simplicity and readability.",
     )
 
     # Procedural memory
     await system.store_memory(
-        "How to make coffee: 1. Grind beans, 2. Add to filter, 3. Pour hot water, 4. Wait 4 minutes"
+        "How to make coffee: 1. Grind beans, 2. Add to filter, 3. Pour hot water, 4. Wait 4 minutes",
     )
 
     # Working memory
     await system.store_memory(
-        "Currently working on the quarterly report, deadline is Friday at 5 PM"
+        "Currently working on the quarterly report, deadline is Friday at 5 PM",
     )
-
-    print("\nQuerying memories...")
 
     # Query that touches multiple systems
-    result1 = await system.process_query(
-        "What am I currently working on and when did I last meet with Bob?"
+    await system.process_query(
+        "What am I currently working on and when did I last meet with Bob?",
     )
-    print(f"Multi-system query: {result1}")
 
     # Specific procedural query
-    result2 = await system.process_query("How do I make coffee?")
-    print(f"Procedural query: {result2}")
+    await system.process_query("How do I make coffee?")
 
     # Get memory statistics
-    stats = await system.get_memory_stats()
-    print(f"\nMemory statistics: {json.dumps(stats, indent=2)}")
+    await system.get_memory_stats()
 
     # Consolidate memories
-    consolidation = await system.consolidate_memories()
-    print(f"\nConsolidation result: {consolidation}")
+    await system.consolidate_memories()
 
 
 async def example_advanced_memory_operations():
@@ -492,15 +490,12 @@ async def example_advanced_memory_operations():
 
     for memory in memories:
         await system.store_memory(memory)
-        print(f"Stored: {memory[:50]}...")
 
     # Complex query spanning multiple memory types
-    result = await system.process_query(
+    await system.process_query(
         "What have I learned about Rust, what projects have I built, "
-        "and what am I currently struggling with?"
+        "and what am I currently struggling with?",
     )
-
-    print(f"\nComprehensive query result:\n{result}")
 
 
 if __name__ == "__main__":
@@ -508,4 +503,3 @@ if __name__ == "__main__":
 
     # Run examples
     asyncio.run(example_multi_memory_system())
-    # asyncio.run(example_advanced_memory_operations())

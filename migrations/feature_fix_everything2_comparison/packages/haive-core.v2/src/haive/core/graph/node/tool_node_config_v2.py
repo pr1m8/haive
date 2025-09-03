@@ -16,22 +16,31 @@ Functions:
 # ============================================================================
 # TOOL NODE CONFIG V2 - WITH SCHEMA SUPPORT
 # ============================================================================
+from __future__ import annotations
 
 import logging
 from collections.abc import Callable
-from typing import Any, Optional, Self, TypeVar
+from typing import Any
+from typing import Optional
+from typing import Self
+from typing import TypeVar
 
-from langchain_core.messages import AIMessage, BaseMessage, ToolMessage
-from langchain_core.tools import BaseTool
-from langgraph.prebuilt import ToolNode
-from langgraph.types import Command
-from pydantic import BaseModel, Field, model_validator
-from rich.console import Console
-
-from haive.core.graph.common.types import ConfigLike, NodeType, StateLike
+from haive.core.graph.common.types import ConfigLike
+from haive.core.graph.common.types import NodeType
+from haive.core.graph.common.types import StateLike
 from haive.core.graph.node.base_node_config import BaseNodeConfig
 from haive.core.schema.field_definition import FieldDefinition
 from haive.core.schema.field_registry import StandardFields
+from langchain_core.messages import AIMessage
+from langchain_core.messages import BaseMessage
+from langchain_core.messages import ToolMessage
+from langchain_core.tools import BaseTool
+from langgraph.prebuilt import ToolNode
+from langgraph.types import Command
+from pydantic import BaseModel
+from pydantic import Field
+from pydantic import model_validator
+from rich.console import Console
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -71,30 +80,37 @@ class ToolNodeConfig(BaseNodeConfig[TInput, TOutput]):
     )
 
     engines_field: str = Field(
-        default="engines", description="Name of the engines field in input schema"
+        default="engines",
+        description="Name of the engines field in input schema",
     )
 
     error_field: str = Field(
-        default="tool_error", description="Name of the error field in output schema"
+        default="tool_error",
+        description="Name of the error field in output schema",
     )
 
     # Tool configuration
     tags: list[str] | None = Field(
-        default=None, description="Optional tags for the tool node"
+        default=None,
+        description="Optional tags for the tool node",
     )
 
-    handle_tool_errors: (
-        bool | str | Callable[..., str] | tuple[type[Exception], ...]
-    ) = Field(default=True, description="How to handle tool errors")
+    handle_tool_errors: bool | str | Callable[..., str] | tuple[type[Exception], ...] = Field(
+        default=True,
+        description="How to handle tool errors",
+    )
 
     # Engine reference for getting tools
     engine_name: str | None = Field(
-        default=None, description="Name of engine to get tools from"
+        default=None,
+        description="Name of engine to get tools from",
     )
 
     # Direct tools (if not using engine)
     tools: list[BaseTool] | None = Field(
-        default=None, description="Direct list of tools to use", exclude=True
+        default=None,
+        description="Direct list of tools to use",
+        exclude=True,
     )
 
     # Tool filtering - which routes should this node handle
@@ -105,11 +121,13 @@ class ToolNodeConfig(BaseNodeConfig[TInput, TOutput]):
 
     # Options
     require_tool_calls: bool = Field(
-        default=True, description="Whether to require tool calls in the last message"
+        default=True,
+        description="Whether to require tool calls in the last message",
     )
 
     create_error_messages: bool = Field(
-        default=True, description="Whether to create ToolMessages for errors"
+        default=True,
+        description="Whether to create ToolMessages for errors",
     )
 
     @model_validator(mode="after")
@@ -134,7 +152,7 @@ class ToolNodeConfig(BaseNodeConfig[TInput, TOutput]):
                     field_type=dict[str, Any],
                     default_factory=dict,
                     description="Dictionary of available engines",
-                )
+                ),
             )
 
         return fields
@@ -188,7 +206,8 @@ class ToolNodeConfig(BaseNodeConfig[TInput, TOutput]):
         if not tools:
             logger.error("No tools available")
             return self._create_error_response(
-                messages, "No tools available for execution"
+                messages,
+                "No tools available for execution",
             )
 
         # Get tool routes if available
@@ -201,8 +220,7 @@ class ToolNodeConfig(BaseNodeConfig[TInput, TOutput]):
             logger.warning("No tools available after filtering")
             return self._create_error_response(
                 messages,
-                f"No tools match allowed routes: {
-                    self.allowed_routes}",
+                f"No tools match allowed routes: {self.allowed_routes}",
             )
 
         logger.info(f"Using {len(filtered_tools)} tools after filtering")
@@ -259,8 +277,7 @@ class ToolNodeConfig(BaseNodeConfig[TInput, TOutput]):
                 if attr_value:
                     tools.extend(attr_value)
                     logger.debug(
-                        f"Found {
-                            len(attr_value)} tools in engine.{attr}"
+                        f"Found {len(attr_value)} tools in engine.{attr}",
                     )
 
         return tools
@@ -296,7 +313,9 @@ class ToolNodeConfig(BaseNodeConfig[TInput, TOutput]):
         return {}
 
     def _filter_tools_by_route(
-        self, tools: list[BaseTool], tool_routes: dict[str, str]
+        self,
+        tools: list[BaseTool],
+        tool_routes: dict[str, str],
     ) -> list[BaseTool]:
         """Filter tools by allowed routes."""
         filtered = []
@@ -310,8 +329,7 @@ class ToolNodeConfig(BaseNodeConfig[TInput, TOutput]):
                 logger.debug(f"Including tool '{tool_name}' (route: {route})")
             else:
                 logger.debug(
-                    f"Excluding tool '{tool_name}' "
-                    f"(route: {route} not in {self.allowed_routes})"
+                    f"Excluding tool '{tool_name}' (route: {route} not in {self.allowed_routes})",
                 )
 
         return filtered
@@ -345,9 +363,7 @@ class ToolNodeConfig(BaseNodeConfig[TInput, TOutput]):
 
             # Count ToolMessages added
             tool_msg_count = sum(
-                1
-                for msg in updated_messages[len(messages) :]
-                if isinstance(msg, ToolMessage)
+                1 for msg in updated_messages[len(messages) :] if isinstance(msg, ToolMessage)
             )
 
             logger.info(f"Added {tool_msg_count} ToolMessages")
@@ -359,7 +375,8 @@ class ToolNodeConfig(BaseNodeConfig[TInput, TOutput]):
             )
         logger.error(f"Unexpected result from ToolNode: {type(result)}")
         return self._create_error_response(
-            messages, "Unexpected result format from tool execution"
+            messages,
+            "Unexpected result format from tool execution",
         )
 
     def _create_no_op_response(self) -> Command:
@@ -367,7 +384,9 @@ class ToolNodeConfig(BaseNodeConfig[TInput, TOutput]):
         return Command(update={self.error_field: None}, goto=self._get_goto_node())
 
     def _create_error_response(
-        self, messages: list[BaseMessage], error_msg: str
+        self,
+        messages: list[BaseMessage],
+        error_msg: str,
     ) -> Command:
         """Create an error response."""
         update = {self.error_field: error_msg}
@@ -379,11 +398,7 @@ class ToolNodeConfig(BaseNodeConfig[TInput, TOutput]):
                 new_messages = list(messages)
 
                 for tool_call in last_message.tool_calls:
-                    tool_name = (
-                        tool_call["name"]
-                        if isinstance(tool_call, dict)
-                        else tool_call.name
-                    )
+                    tool_name = tool_call["name"] if isinstance(tool_call, dict) else tool_call.name
                     tool_id = (
                         tool_call.get("id", f"call_{tool_name}")
                         if isinstance(tool_call, dict)
@@ -490,7 +505,10 @@ def create_pydantic_tool_node(
 
 
 def create_tool_node_from_route_filter(
-    allowed_routes: list[str], engine_name: str, name: str | None = None, **kwargs
+    allowed_routes: list[str],
+    engine_name: str,
+    name: str | None = None,
+    **kwargs,
 ) -> ToolNodeConfig:
     """Create a tool node configuration for specific routes.
 
@@ -507,5 +525,8 @@ def create_tool_node_from_route_filter(
         name = f"tool_node_{'+'.join(allowed_routes)}"
 
     return ToolNodeConfig(
-        name=name, allowed_routes=allowed_routes, engine_name=engine_name, **kwargs
+        name=name,
+        allowed_routes=allowed_routes,
+        engine_name=engine_name,
+        **kwargs,
     )

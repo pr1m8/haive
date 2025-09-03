@@ -9,15 +9,18 @@ Functions:
     from_scratch: From Scratch functionality.
 """
 
+from __future__ import annotations
+
 from collections.abc import Callable
 from datetime import datetime
 
 from agents.tot.modular.state import ToTState
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel, Field
+
 from haive.core.engine.agent.agent import AgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.models.llm.base import AzureLLMConfig
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field
 
 
 class ToTAgentConfig(AgentConfig):
@@ -32,20 +35,24 @@ class ToTAgentConfig(AgentConfig):
 
     # State schema
     state_schema: type[BaseModel] = Field(
-        default=ToTState, description="Schema for the agent state"
+        default=ToTState,
+        description="Schema for the agent state",
     )
 
     # Node names
     expand_node_name: str = Field(
-        default="expand", description="Name for the expansion node"
+        default="expand",
+        description="Name for the expansion node",
     )
 
     score_node_name: str = Field(
-        default="score", description="Name for the scoring node"
+        default="score",
+        description="Name for the scoring node",
     )
 
     prune_node_name: str = Field(
-        default="prune", description="Name for the pruning node"
+        default="prune",
+        description="Name for the pruning node",
     )
 
     # ToT parameters
@@ -54,11 +61,13 @@ class ToTAgentConfig(AgentConfig):
     threshold: float = Field(default=0.9, description="Score threshold for success")
 
     beam_size: int = Field(
-        default=3, description="Number of candidates to keep after pruning"
+        default=3,
+        description="Number of candidates to keep after pruning",
     )
 
     candidates_per_expansion: int = Field(
-        default=3, description="Number of candidates to generate in each expansion"
+        default=3,
+        description="Number of candidates to generate in each expansion",
     )
 
     # LLM configurations
@@ -80,7 +89,8 @@ class ToTAgentConfig(AgentConfig):
 
     # Customization
     visualize: bool = Field(
-        default=True, description="Whether to visualize the ToT graph"
+        default=True,
+        description="Whether to visualize the ToT graph",
     )
 
     @classmethod
@@ -93,7 +103,7 @@ class ToTAgentConfig(AgentConfig):
         score_prompt: ChatPromptTemplate | None = None,
         name: str | None = None,
         **kwargs,
-    ) -> "ToTAgentConfig":
+    ) -> ToTAgentConfig:
         """Create a ToTAgentConfig from scratch.
 
         Args:
@@ -119,7 +129,7 @@ class ToTAgentConfig(AgentConfig):
                     ),
                     ("user", "Problem: {problem}"),
                     ("user", "Previous attempt: {seed}" if "seed" in kwargs else ""),
-                ]
+                ],
             )
 
         # Create default score prompt if not provided and no score function
@@ -133,17 +143,20 @@ class ToTAgentConfig(AgentConfig):
                     ("system", "Provide feedback on the reasoning and accuracy."),
                     ("user", "Problem: {problem}"),
                     ("user", "Solution attempt: {candidate}"),
-                ]
+                ],
             )
 
         # Set up LLM configs
         llm_config = AzureLLMConfig(
-            model=model, parameters={"temperature": temperature}
+            model=model,
+            parameters={"temperature": temperature},
         )
 
         # Create expand LLM config
         expand_llm = AugLLMConfig(
-            name="tot_expand_llm", llm_config=llm_config, prompt_template=expand_prompt
+            name="tot_expand_llm",
+            llm_config=llm_config,
+            prompt_template=expand_prompt,
         )
 
         # Create score LLM config if needed

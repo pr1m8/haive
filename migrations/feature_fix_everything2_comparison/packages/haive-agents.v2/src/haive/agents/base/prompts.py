@@ -100,7 +100,7 @@ Task: {task}
 
 Consider what capabilities are required:
 - Domain expertise needed
-- Technical skills required  
+- Technical skills required
 - Tool access needed
 - Processing complexity
 - Output format requirements
@@ -214,11 +214,7 @@ def format_agent_capabilities(agents: dict[str, list[str]]) -> str:
 
     lines = []
     for name, capabilities in agents.items():
-        cap_str = (
-            ", ".join(capabilities)
-            if capabilities
-            else "No specific capabilities listed"
-        )
+        cap_str = ", ".join(capabilities) if capabilities else "No specific capabilities listed"
         lines.append(f"- {name}: {cap_str}")
 
     return "\n".join(lines)
@@ -240,7 +236,7 @@ def create_system_prompt(
         Complete system prompt
     """
     prompt = BaseSupervisorPrompts.SUPERVISOR_SYSTEM_PROMPT.format(
-        agent_list=agent_list
+        agent_list=agent_list,
     )
 
     if supervisor_name:

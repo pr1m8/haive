@@ -20,11 +20,13 @@ class Candidate(BaseModel):
 
     content: str = Field(description="The candidate solution content")
     score: float | None = Field(
-        default=None, description="Score assigned to this candidate"
+        default=None,
+        description="Score assigned to this candidate",
     )
     feedback: str | None = Field(default=None, description="Feedback on this candidate")
     metadata: dict[str, Any] = Field(
-        default_factory=dict, description="Additional metadata"
+        default_factory=dict,
+        description="Additional metadata",
     )
 
     def __str__(self) -> str:
@@ -46,7 +48,7 @@ class CandidateList(BaseModel):
     """A list of candidate solutions."""
 
     candidates: list[CandidateContent] = Field(
-        description="List of different candidate solutions to the problem"
+        description="List of different candidate solutions to the problem",
     )
     reasoning: str | None = Field(
         default=None,
@@ -58,8 +60,8 @@ class CandidateScore(BaseModel):
     """Score and feedback for a candidate solution."""
 
     score: float = Field(
-        description="Numerical score between 0.0 and 1.0, where 1.0 is perfect"
+        description="Numerical score between 0.0 and 1.0, where 1.0 is perfect",
     )
     feedback: str = Field(
-        description="Detailed feedback explaining the score and reasoning"
+        description="Detailed feedback explaining the score and reasoning",
     )

@@ -1,6 +1,6 @@
 # Haive Games Comprehensive Survey Notes
 
-**Created**: 2025-01-11  
+**Created**: 2025-01-11
 **Purpose**: Detailed directory scan and status assessment of all games
 
 ## 📁 ACTUAL DIRECTORY STRUCTURE FOUND
@@ -93,17 +93,17 @@
 
 These have complete agent.py + state.py + config.py + models.py:
 
-**Strategy**: chess, go, checkers, reversi, connect4, tic_tac_toe, mancala, risk  
-**Card**: poker, hold_em, blackjack, bs  
-**Logic**: mastermind, nim, battleship, fox_and_geese  
-**Social**: among_us, mafia, clue  
+**Strategy**: chess, go, checkers, reversi, connect4, tic_tac_toe, mancala, risk
+**Card**: poker, hold_em, blackjack, bs
+**Logic**: mastermind, nim, battleship, fox_and_geese
+**Social**: among_us, mafia, clue
 **Other**: dominoes, monopoly, debate, debate_v2
 
 ### ✅ **ACTUALLY ALL WORKING!** (Single Player Games)
 
 Import test results - ALL SUCCESSFUL:
 
-**Confirmed Working**: wordle ✅, 2048 ✅, rubiks ✅, flow_free ✅, uno ✅  
+**Confirmed Working**: wordle ✅, 2048 ✅, rubiks ✅, flow_free ✅, uno ✅
 **Not Tested Yet**: sudoku, mine_sweeper, crossword_puzzle, logic_grid, towers_of_hanoi, word_search
 
 ### 📊 **UPDATED TOTALS**
@@ -150,7 +150,7 @@ Import test results - ALL SUCCESSFUL:
 
 - Started with `debate/` (original) which used DynamicGraph (deprecated)
 - Issue: Topics becoming None in state manager initialize()
-- User feedback: "old depricated one... just a temporary solution prior to refactoring"
+- User feedback: "old deprecated one... just a temporary solution prior to refactoring"
 
 #### **Solution Approach**
 
@@ -211,7 +211,7 @@ class GameDebateAgent(BaseConversationAgent):
 - **When old system blocks progress**: DynamicGraph topics→None issue
 - **When adding major features**: AI judge system
 - **When demonstrating new patterns**: Modern agent architecture
-- **When user explicitly requests**: "go back to haive-agents/conversation, and just gamify the debate one in teh new way"
+- **When user explicitly requests**: "go back to haive-agents/conversation, and just gamify the debate one in the new way"
 
 ### **Lessons Learned**
 

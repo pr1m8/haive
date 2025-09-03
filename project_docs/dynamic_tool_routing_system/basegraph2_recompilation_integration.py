@@ -1,20 +1,21 @@
 """BaseGraph2 Integration with Dynamic Tool Routing and Recompilation.
 
-This demonstrates how to integrate dynamic tool routing with BaseGraph2's
-recompilation tracking system.
+This demonstrates how to integrate dynamic tool routing with
+BaseGraph2's recompilation tracking system.
 """
+
+from __future__ import annotations
 
 import logging
 from typing import Any
 
-from langchain_core.tools import tool
-from langgraph.types import Command, Send
-from pydantic import Field
-
 from haive.agents.simple.agent import SimpleAgent
 from haive.core.engine.aug_llm import AugLLMConfig
 from haive.core.graph.state_graph.base_graph2 import BaseGraph
-
+from langchain_core.tools import tool
+from langgraph.types import Command
+from langgraph.types import Send
+from pydantic import Field
 
 logger = logging.getLogger(__name__)
 
@@ -24,11 +25,13 @@ logger = logging.getLogger(__name__)
 
 
 class ToolRouteAwareBaseGraph(BaseGraph):
-    """Extended BaseGraph that tracks tool route changes and triggers recompilation."""
+    """Extended BaseGraph that tracks tool route changes and triggers
+    recompilation."""
 
     # Additional fields for tool route tracking
     tool_routes: dict[str, str] = Field(
-        default_factory=dict, description="Current tool routes in the graph"
+        default_factory=dict,
+        description="Current tool routes in the graph",
     )
     _tool_route_hash: str | None = Field(
         default=None,
@@ -103,7 +106,7 @@ class ToolRouteAwareBaseGraph(BaseGraph):
                 "tool_routes": self.tool_routes,
                 "tool_route_count": len(self.tool_routes),
                 "tool_route_hash": self._tool_route_hash,
-            }
+            },
         )
         return info
 
@@ -130,7 +133,10 @@ class DynamicToolNode:
             # Signal recompilation if needed
             if self.graph.needs_recompile():
                 logger.info("Tool routes changed - recompilation needed")
-                return Command(update={"needs_recompilation": True}, goto="recompilation_handler")
+                return Command(
+                    update={"needs_recompilation": True},
+                    goto="recompilation_handler",
+                )
 
         # Check for dynamic tool calls
         if "tool_call" in state:
@@ -160,7 +166,8 @@ class DynamicToolNode:
 
 
 class GraphIntegratedAgent(SimpleAgent):
-    """Agent that integrates with ToolRouteAwareBaseGraph for dynamic updates."""
+    """Agent that integrates with ToolRouteAwareBaseGraph for dynamic
+    updates."""
 
     def __init__(self, *args, graph: ToolRouteAwareBaseGraph | None = None, **kwargs):
         super().__init__(*args, **kwargs)
@@ -174,7 +181,11 @@ class GraphIntegratedAgent(SimpleAgent):
         """Register callback for tool changes."""
         # This would integrate with DynamicToolRouteMixin if used
 
-    def add_tool_with_graph_update(self, tool_func: Any, route: str = "tool_node") -> None:
+    def add_tool_with_graph_update(
+        self,
+        tool_func: Any,
+        route: str = "tool_node",
+    ) -> None:
         """Add tool to agent and update graph's tool routes."""
         # Add to engine
         if hasattr(self.engine, "add_tool"):
@@ -185,7 +196,9 @@ class GraphIntegratedAgent(SimpleAgent):
                 tool_name = tool_func.name if hasattr(tool_func, "name") else tool_func.__name__
                 self.integrated_graph.add_tool_route(tool_name, f"{self.name}.{route}")
 
-                logger.info(f"Added tool {tool_name} to agent {self.name} and updated graph")
+                logger.info(
+                    f"Added tool {tool_name} to agent {self.name} and updated graph",
+                )
 
 
 # ============================================================================
@@ -216,7 +229,11 @@ def demonstrate_basegraph2_integration():
 
     # Create agents with initial tools
     simple_engine = AugLLMConfig(tools=[web_search])
-    simple_agent = GraphIntegratedAgent(name="simple_agent", engine=simple_engine, graph=graph)
+    simple_agent = GraphIntegratedAgent(
+        name="simple_agent",
+        engine=simple_engine,
+        graph=graph,
+    )
 
     # Add initial nodes to graph
     graph.add_node("start", lambda state: state)
@@ -248,7 +265,7 @@ def demonstrate_basegraph2_integration():
         "update_tool_routes": {
             "web_search": "search_handler",
             "code_analyzer": "analyzer_handler",
-        }
+        },
     }
 
     tool_router = graph.nodes["tool_router"]
@@ -267,7 +284,8 @@ def demonstrate_basegraph2_integration():
 
 
 def build_advanced_multi_agent_graph():
-    """Build an advanced graph with multiple agents and dynamic tool routing."""
+    """Build an advanced graph with multiple agents and dynamic tool
+    routing."""
     # Create the graph
     graph = ToolRouteAwareBaseGraph(name="multi_agent_dynamic")
 

@@ -1,11 +1,12 @@
 """Prompts for the Self-Discover Adapter Agent."""
 
+from __future__ import annotations
+
 from langchain_core.prompts import PromptTemplate
 
 ADAPTER_SYSTEM_MESSAGE = """You are an expert at adapting abstract reasoning frameworks to specific problem contexts.
 
 Your role is to take selected reasoning modules and transform them into concrete, actionable steps tailored to the specific task at hand. You excel at bridging the gap between general cognitive strategies and practical application."""
-
 
 ADAPTER_PROMPT = PromptTemplate(
     input_variables=["selected_modules", "task_description"],

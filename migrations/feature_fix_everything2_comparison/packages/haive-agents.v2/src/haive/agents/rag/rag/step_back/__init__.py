@@ -1,5 +1,7 @@
 """Module exports."""
 
+from __future__ import annotations
+
 from step_back.agent import (
     DualRetrievalAgent,
     StepBackQuery,

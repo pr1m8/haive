@@ -14,19 +14,16 @@ Functions:
 # src/haive/agents/conversation/debate/state.py
 """State schema for structured debate conversations with automatic tracking."""
 
+
+from __future__ import annotations
 import operator
-from typing import Any
-
-from pydantic import Field, computed_field
-
-from haive.agents.conversation.base.state import ConversationState
 
 
 class DebateState(ConversationState):
     """Extended state schema for debate conversations with automatic tracking.
 
-    Extends ConversationState with debate-specific fields and automatic computation of
-    debate progress and statistics.
+    Extends ConversationState with debate-specific fields and automatic
+    computation of debate progress and statistics.
     """
 
     # Debate positions and tracking
@@ -37,7 +34,8 @@ class DebateState(ConversationState):
 
     # Use reducers for automatic counting
     arguments_made: dict[str, list[str]] = Field(
-        default_factory=dict, description="Arguments made by each participant"
+        default_factory=dict,
+        description="Arguments made by each participant",
     )
 
     rebuttals: dict[str, list[tuple[str, str]]] = Field(
@@ -47,11 +45,13 @@ class DebateState(ConversationState):
 
     # Debate flow control
     opening_statements_complete: bool = Field(
-        default=False, description="Whether opening statements phase is done"
+        default=False,
+        description="Whether opening statements phase is done",
     )
 
     closing_statements_complete: bool = Field(
-        default=False, description="Whether closing statements are done"
+        default=False,
+        description="Whether closing statements are done",
     )
 
     current_phase: str = Field(default="opening", description="Current debate phase")
@@ -63,27 +63,32 @@ class DebateState(ConversationState):
 
     # Counters with reducers
     total_arguments: int = Field(
-        default=0, description="Total arguments made (auto-counted)"
+        default=0,
+        description="Total arguments made (auto-counted)",
     )
 
     total_rebuttals: int = Field(
-        default=0, description="Total rebuttals made (auto-counted)"
+        default=0,
+        description="Total rebuttals made (auto-counted)",
     )
 
     # Optional scoring and judging
     argument_scores: dict[str, float] = Field(
-        default_factory=dict, description="Optional scores for each participant"
+        default_factory=dict,
+        description="Optional scores for each participant",
     )
 
     judge_feedback: list[str] = Field(
-        default_factory=list, description="Feedback from judge participants"
+        default_factory=list,
+        description="Feedback from judge participants",
     )
 
     debate_winner: str = Field(default="", description="Declared winner of the debate")
 
     # Configuration
     arguments_per_side: int = Field(
-        default=3, description="Required arguments per participant"
+        default=3,
+        description="Required arguments per participant",
     )
 
     # Extended reducers
@@ -133,7 +138,7 @@ class DebateState(ConversationState):
             return True
         return bool(
             (self.current_phase == "rebuttals" and self.all_rebuttals_complete)
-            or (self.current_phase == "closing" and self.closing_statements_complete)
+            or (self.current_phase == "closing" and self.closing_statements_complete),
         )
 
     @computed_field
@@ -169,12 +174,8 @@ class DebateState(ConversationState):
             "phase": self.current_phase,
             "total_arguments": self.total_arguments,
             "total_rebuttals": self.total_rebuttals,
-            "arguments_by_participant": {
-                p: len(args) for p, args in self.arguments_made.items()
-            },
-            "rebuttals_by_participant": {
-                p: len(rebs) for p, rebs in self.rebuttals.items()
-            },
+            "arguments_by_participant": {p: len(args) for p, args in self.arguments_made.items()},
+            "rebuttals_by_participant": {p: len(rebs) for p, rebs in self.rebuttals.items()},
             "progress": self.debate_progress,
             "winner": self.debate_winner or "Undecided",
         }

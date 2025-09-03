@@ -1,7 +1,7 @@
 # NO MOCKS Testing Pattern
 
-**Pattern**: Always use real components in tests  
-**Importance**: CRITICAL  
+**Pattern**: Always use real components in tests
+**Importance**: CRITICAL
 **Established**: Core philosophy
 
 ## The Rule

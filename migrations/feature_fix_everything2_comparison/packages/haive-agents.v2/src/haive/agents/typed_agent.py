@@ -1,18 +1,14 @@
 """Typed agent base classes with clear separation of concerns.
 
-This module provides a cleaner agent hierarchy that matches the state schema
-hierarchy, with better separation between different types of agents.
+This module provides a cleaner agent hierarchy that matches the state
+schema hierarchy, with better separation between different types of
+agents.
 """
 
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Generic,
-    TypeVar,
-)
+from typing import TYPE_CHECKING, Any, Generic, TypeVar
 
 from haive.core.schema.base_state_schemas import (
     AgentState,
@@ -26,10 +22,8 @@ from haive.core.schema.base_state_schemas import (
 if TYPE_CHECKING:
     from haive.core.engine.base import Engine
 
-
 # Type variables for state schemas
 TState = TypeVar("TState", bound=EngineState)
-
 
 # ============================================================================
 # BASE EXECUTOR (NOT AGENT)
@@ -40,8 +34,8 @@ class BaseExecutor(ABC, Generic[TState]):
     """Base class for all executors (not necessarily agents).
 
     Executors are components that process state but don't necessarily
-    have LLM capabilities. This includes tool executors, data processors,
-    routers, validators, etc.
+    have LLM capabilities. This includes tool executors, data
+    processors, routers, validators, etc.
     """
 
     def __init__(self, name: str, state_schema: type[TState], **kwargs):
@@ -60,9 +54,7 @@ class BaseExecutor(ABC, Generic[TState]):
     def validate_state(self, state: TState) -> bool:
         """Validate that state has required components."""
         # Check required engines
-        return all(
-            state.get_engine(engine_name) for engine_name in self.get_required_engines()
-        )
+        return all(state.get_engine(engine_name) for engine_name in self.get_required_engines())
 
 
 class ToolExecutor(BaseExecutor[ToolExecutorState]):
@@ -160,8 +152,8 @@ class DataProcessor(BaseExecutor[DataProcessingState]):
 class BaseAgent(BaseExecutor[AgentState]):
     """Base class for agents with primary decision-making engine.
 
-    Agents are executors that have a primary engine (usually LLM)
-    for making decisions.
+    Agents are executors that have a primary engine (usually LLM) for
+    making decisions.
     """
 
     def __init__(
@@ -184,8 +176,7 @@ class BaseAgent(BaseExecutor[AgentState]):
         engine = state.primary_engine
         if not engine:
             raise ValueError(
-                f"No primary engine available for agent {
-                    self.name}"
+                f"No primary engine available for agent {self.name}",
             )
 
         # Execute main agent logic
@@ -237,8 +228,8 @@ class LLMAgent(BaseAgent):
 class WorkflowAgent(BaseAgent):
     """Agent that can modify its own workflow graph.
 
-    This agent can inspect results and dynamically modify its
-    execution graph.
+    This agent can inspect results and dynamically modify its execution
+    graph.
     """
 
     def __init__(
@@ -273,7 +264,8 @@ class WorkflowAgent(BaseAgent):
         return False
 
     async def determine_graph_modifications(
-        self, state: WorkflowState
+        self,
+        state: WorkflowState,
     ) -> dict[str, Any]:
         """Determine what graph modifications to make."""
         # Override in subclasses
@@ -479,7 +471,10 @@ def create_executor(executor_type: str, name: str, **kwargs) -> BaseExecutor:
 
 
 def create_agent(
-    agent_type: str, name: str, engine: Engine | None = None, **kwargs
+    agent_type: str,
+    name: str,
+    engine: Engine | None = None,
+    **kwargs,
 ) -> BaseAgent:
     """Factory to create appropriate agent.
 

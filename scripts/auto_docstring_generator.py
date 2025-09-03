@@ -180,7 +180,9 @@ class DocstringGenerator:
         elif func_info["complexity"] > 5:
             return "This function implements complex logic with multiple conditional branches."
         else:
-            return f"This function processes {len(func_info['args'])} parameters to produce a result."
+            return f"This function processes {
+    len(
+        func_info['args'])} parameters to produce a result."
 
     def _generate_arg_description(self, arg: dict[str, Any]) -> str:
         """Generate description for an argument."""

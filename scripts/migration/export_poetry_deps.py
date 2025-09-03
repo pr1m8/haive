@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import sys
 from pathlib import Path
@@ -16,20 +18,21 @@ class HaiveDependencyManager:
             project_root: Root directory of the project. Defaults to script location.
         """
         self.project_root = project_root or Path(__file__).resolve().parents[2]
-        self.packages_dir = self.project_root / "packages"
+        self.packages_dir = self.project_root / 'packages'
 
         # Standard package configurations
         self.PACKAGES = [
-            "haive-core",
-            "haive-agents",
-            "haive-tools",
-            "haive-games",
-            "haive-dataflow",
-            "haive-prebuilt",
+            'haive-core',
+            'haive-agents',
+            'haive-tools',
+            'haive-games',
+            'haive-dataflow',
+            'haive-prebuilt',
         ]
 
     def extract_top_level_external_dependencies(
-        self, root_pyproject: dict[str, Any]
+        self,
+        root_pyproject: dict[str, Any],
     ) -> dict[str, Any]:
         """Extract top-level external dependencies (excluding Haive packages).
 
@@ -40,14 +43,14 @@ class HaiveDependencyManager:
             Dictionary of external dependencies
         """
         dependencies = (
-            root_pyproject.get("tool", {}).get("poetry", {}).get("dependencies", {})
+            root_pyproject.get('tool', {}).get('poetry', {}).get('dependencies', {})
         )
 
         # Filter out Haive-specific packages
         external_deps = {
             dep: version
             for dep, version in dependencies.items()
-            if not dep.startswith("haive-") and dep != "python"
+            if not dep.startswith('haive-') and dep != 'python'
         }
 
         return external_deps
@@ -60,7 +63,7 @@ class HaiveDependencyManager:
         """
         external_deps = self.extract_top_level_external_dependencies(root_pyproject)
 
-        core_pyproject_path = self.packages_dir / "haive-core" / "pyproject.toml"
+        core_pyproject_path = self.packages_dir / 'haive-core' / 'pyproject.toml'
 
         try:
             # Load existing core pyproject
@@ -69,20 +72,20 @@ class HaiveDependencyManager:
             )
 
             # Ensure nested structure exists
-            core_pyproject.setdefault("tool", {})
-            core_pyproject["tool"].setdefault("poetry", {})
+            core_pyproject.setdefault('tool', {})
+            core_pyproject['tool'].setdefault('poetry', {})
 
             # Update dependencies
-            core_pyproject["tool"]["poetry"]["dependencies"] = external_deps
+            core_pyproject['tool']['poetry']['dependencies'] = external_deps
 
             # Ensure Python version is specified
-            core_pyproject["tool"]["poetry"]["dependencies"]["python"] = "^3.12"
+            core_pyproject['tool']['poetry']['dependencies']['python'] = '^3.12'
 
             # Write updated configuration
-            with open(core_pyproject_path, "w") as f:
+            with open(core_pyproject_path, 'w') as f:
                 toml.dump(core_pyproject, f)
 
-            logger.info("✅ Successfully exported external dependencies to haive-core")
+            logger.info('✅ Successfully exported external dependencies to haive-core')
             for dep, version in external_deps.items():
                 logger.info(f"  - {dep}: {version}")
 
@@ -91,13 +94,13 @@ class HaiveDependencyManager:
 
     def run(self):
         """Main execution method to manage dependencies."""
-        logger.info("🚀 Starting Haive Dependency Management")
+        logger.info('🚀 Starting Haive Dependency Management')
 
         # Load root pyproject
         root_pyproject = self.load_root_pyproject()
 
         if not root_pyproject:
-            logger.error("❌ Cannot proceed without root pyproject.toml")
+            logger.error('❌ Cannot proceed without root pyproject.toml')
             sys.exit(1)
 
         # Export dev dependencies to core
@@ -109,7 +112,7 @@ class HaiveDependencyManager:
         # Distribute external dependencies to core
         self.distribute_external_dependencies(root_pyproject)
 
-        logger.info("✨ Dependency Management Complete!")
+        logger.info('✨ Dependency Management Complete!')
 
 
 def main():
@@ -117,5 +120,5 @@ def main():
     dependency_manager.run()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

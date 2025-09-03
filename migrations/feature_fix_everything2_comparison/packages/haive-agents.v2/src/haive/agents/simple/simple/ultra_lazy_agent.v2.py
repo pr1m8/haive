@@ -11,13 +11,16 @@ Functions:
 
 # UltraLazyAgent - Sub-3 Second Import Target
 """
-Ultra-aggressive lazy loading implementation that defers ALL dependencies
+Ultra-aggressive lazy loading implementation that defers ALL dependencies.
+
 until the moment of first actual use. Target: <3 second import time.
 
 This uses the most minimal possible imports and defers everything else.
 """
 
 # MINIMAL IMPORTS ONLY - no logging, no complex types, no frameworks
+
+
 from typing import Any
 
 
@@ -54,7 +57,7 @@ class UltraLazyAgent:
         """Proxy everything to real agent."""
         if name.startswith("_"):
             raise AttributeError(
-                f"'{self.__class__.__name__}' object has no attribute '{name}'"
+                f"'{self.__class__.__name__}' object has no attribute '{name}'",
             )
         return getattr(self._load_real_agent(), name)
 

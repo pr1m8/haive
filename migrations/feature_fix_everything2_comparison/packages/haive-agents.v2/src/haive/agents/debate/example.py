@@ -10,15 +10,9 @@ Functions:
 
 # examples/conversation/debate_example.py
 """Examples for structured debate conversations."""
+from __future__ import annotations
 
 import logging
-
-from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.messages import AIMessage, SystemMessage
-
-from haive.agents.conversation.debate.agent import DebateConversation
-from haive.agents.conversation.debate.state import DebateState
-from haive.agents.simple.agent import SimpleAgent
 
 # Set logging
 logging.getLogger("haive").setLevel(logging.WARNING)
@@ -45,7 +39,9 @@ def example_simple_debate() -> None:
 
     # Run debate
     result = debate.run(
-        {}, config={"configurable": {"recursion_limit": 50}}, debug=True
+        {},
+        config={"configurable": {"recursion_limit": 50}},
+        debug=True,
     )
 
     # Display debate highlights
@@ -129,7 +125,9 @@ def example_panel_debate() -> None:
 
     # Run debate with MUCH lower recursion limit
     result = debate.run(
-        {}, config={"configurable": {"recursion_limit": 50}}, debug=False
+        {},
+        config={"configurable": {"recursion_limit": 50}},
+        debug=False,
     )
 
     # Show debate summary
@@ -223,7 +221,9 @@ def example_oxford_debate() -> None:
 
     # Run debate
     result = debate.run(
-        {}, config={"configurable": {"recursion_limit": 100}}, debug=True
+        {},
+        config={"configurable": {"recursion_limit": 100}},
+        debug=True,
     )
 
     # Display formal structure
@@ -299,7 +299,8 @@ def example_socratic_debate() -> None:
     messages = result.get("messages", [])
     for msg in messages:
         if (isinstance(msg, AIMessage) and hasattr(msg, "name")) or isinstance(
-            msg, SystemMessage
+            msg,
+            SystemMessage,
         ):
             pass
 

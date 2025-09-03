@@ -1,0 +1,55 @@
+=== PACKAGE DEPENDENCY ANALYSIS ===
+
+## haive-agents
+Package name: haive-agents
+Internal dependencies:
+  name = "haive-agents"
+  description = "haive-agents for Haive framework"
+  haive-core = { path = '../haive-core', develop = true }
+
+## haive-core
+Package name: haive-core
+Internal dependencies:
+  name = "haive-core"
+  description = "haive-core for Haive framework"
+
+## haive-dataflow
+Package name: haive-dataflow
+Internal dependencies:
+  name = "haive-dataflow"
+  description = "haive-dataflow for Haive framework"
+  haive-core = { path = "../haive-core", develop = true }
+  haive-mcp = { path = "../haive-mcp", develop = true }
+  haive-core = { path = "../haive-core", develop = true }
+
+## haive-games
+Package name: haive-games
+Internal dependencies:
+  name = "haive-games"
+  description = "haive-games for Haive framework"
+  haive-agents = { path = '../haive-agents', develop = true }
+
+## haive-mcp
+Package name: haive-mcp
+Internal dependencies:
+  name = "haive-mcp"
+  description = "haive-mcp for Haive framework"
+
+## haive-prebuilt
+Package name: haive-prebuilt
+Internal dependencies:
+  name = "haive-prebuilt"
+  description = "haive-prebuilt for Haive framework"
+  haive-core = { path = "../haive-core", develop = true }
+  haive-agents = { path = "../haive-agents", develop = true }
+  haive-core = { path = "../haive-core", develop = true }
+  haive-agents = { path = "../haive-agents", develop = true }
+
+## haive-tools
+Package name: haive-tools
+Internal dependencies:
+  name = "haive-tools"
+  description = "haive-tools for Haive framework"
+  haive-core = { path = "../haive-core", develop = true }
+  haive-core = { path = "../haive-core", develop = true }
+

@@ -14,21 +14,24 @@ Functions:
 """
 
 # src/haive/agents/selfdiscover/models.py
+from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel
+from pydantic import Field
+from pydantic import field_validator
 
 
 class SelectedModule(BaseModel):
     """A reasoning module selected for a specific problem."""
 
     module_id: str = Field(
-        description="Identifier for the module (e.g., '1', '4', '10')"
+        description="Identifier for the module (e.g., '1', '4', '10')",
     )
     module_name: str = Field(description="Name or brief description of the module")
     rationale: str = Field(
-        description="Explanation of why this module is relevant for the task"
+        description="Explanation of why this module is relevant for the task",
     )
 
 
@@ -36,7 +39,7 @@ class ModuleSelectionResult(BaseModel):
     """Result of the module selection stage."""
 
     selected_modules: list[SelectedModule] = Field(
-        description="List of selected reasoning modules"
+        description="List of selected reasoning modules",
     )
 
     def format_for_next_stage(self) -> str:
@@ -63,10 +66,10 @@ class AdaptedModule(BaseModel):
 
     original_module_id: str = Field(description="Reference to the original module ID")
     adapted_description: str = Field(
-        description="Customized description for this specific task"
+        description="Customized description for this specific task",
     )
     application_strategy: str = Field(
-        description="How to apply this module to the specific task"
+        description="How to apply this module to the specific task",
     )
 
 
@@ -74,7 +77,7 @@ class ModuleAdaptationResult(BaseModel):
     """Result of the module adaptation stage."""
 
     adapted_modules: list[AdaptedModule] = Field(
-        description="List of adapted reasoning modules"
+        description="List of adapted reasoning modules",
     )
 
     def format_for_next_stage(self) -> str:
@@ -92,10 +95,11 @@ class ReasoningStep(BaseModel):
 
     step_id: str = Field(description="Identifier for the step (e.g., 'step1', 'step2')")
     description: str = Field(
-        description="Description of what to determine in this step"
+        description="Description of what to determine in this step",
     )
     related_module_ids: list[str] | None = Field(
-        default=None, description="IDs of related modules"
+        default=None,
+        description="IDs of related modules",
     )
 
 
@@ -103,7 +107,7 @@ class ReasoningStructure(BaseModel):
     """A structured reasoning plan."""
 
     steps: list[ReasoningStep] = Field(
-        description="List of steps in the reasoning plan"
+        description="List of steps in the reasoning plan",
     )
 
     def format_for_next_stage(self) -> str:
@@ -130,7 +134,8 @@ class ReasoningOutputStep(BaseModel):
     step_id: str = Field(description="Identifier for the step")
     reasoning: str = Field(description="Detailed reasoning for this step")
     result: Any | None = Field(
-        default=None, description="Result of this step (if applicable)"
+        default=None,
+        description="Result of this step (if applicable)",
     )
 
 
@@ -138,11 +143,12 @@ class ReasoningOutput(BaseModel):
     """Complete reasoning output with all steps and final answer."""
 
     completed_steps: list[ReasoningOutputStep] = Field(
-        description="List of completed reasoning steps"
+        description="List of completed reasoning steps",
     )
     final_answer: str = Field(description="Final answer to the problem")
     confidence: float | None = Field(
-        default=None, description="Confidence in the answer (0-1)"
+        default=None,
+        description="Confidence in the answer (0-1)",
     )
 
     def format_complete_reasoning(self) -> str:

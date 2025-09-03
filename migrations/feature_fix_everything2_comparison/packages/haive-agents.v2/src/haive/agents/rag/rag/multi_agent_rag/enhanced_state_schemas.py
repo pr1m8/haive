@@ -1,19 +1,19 @@
 """Enhanced State Schemas with Configuration Support.
 
 This module provides state schemas that include configuration fields,
-solving the issue of storing agent-specific configuration in a clean way.
+solving the issue of storing agent-specific configuration in a clean
+way.
 """
+
+from __future__ import annotations
 
 from typing import Any
 
+from haive.agents.rag.multi_agent_rag.grading_components import AnswerGrade
+from haive.agents.rag.multi_agent_rag.grading_components import DocumentGrade
+from haive.agents.rag.multi_agent_rag.grading_components import HallucinationGrade
 from haive.core.schema.prebuilt.rag_state import RAGState
 from pydantic import Field
-
-from haive.agents.rag.multi_agent_rag.grading_components import (
-    AnswerGrade,
-    DocumentGrade,
-    HallucinationGrade,
-)
 
 
 class ConfigurableRAGState(RAGState):
@@ -21,23 +21,28 @@ class ConfigurableRAGState(RAGState):
 
     # Configuration fields
     config: dict[str, Any] = Field(
-        default_factory=dict, description="Agent configuration parameters"
+        default_factory=dict,
+        description="Agent configuration parameters",
     )
 
     # Common configuration shortcuts
     relevance_threshold: float = Field(
-        default=0.5, description="Threshold for document relevance filtering"
+        default=0.5,
+        description="Threshold for document relevance filtering",
     )
     max_documents: int = Field(
-        default=10, description="Maximum number of documents to use"
+        default=10,
+        description="Maximum number of documents to use",
     )
 
     # Metadata
     agent_name: str = Field(
-        default="", description="Name of the agent using this state"
+        default="",
+        description="Name of the agent using this state",
     )
     workflow_type: str = Field(
-        default="", description="Type of RAG workflow being executed"
+        default="",
+        description="Type of RAG workflow being executed",
     )
 
 
@@ -68,7 +73,8 @@ class GradedRAGState(ConfigurableRAGState):
         description="Criteria to use for grading",
     )
     grading_weights: dict[str, float] = Field(
-        default_factory=dict, description="Weights for different grading criteria"
+        default_factory=dict,
+        description="Weights for different grading criteria",
     )
 
 
@@ -84,10 +90,12 @@ class FLAREState(ConfigurableRAGState):
 
     # FLARE configuration
     uncertainty_threshold: float = Field(
-        default=0.3, description="Threshold for triggering active retrieval"
+        default=0.3,
+        description="Threshold for triggering active retrieval",
     )
     max_retrieval_rounds: int = Field(
-        default=3, description="Maximum number of active retrieval rounds"
+        default=3,
+        description="Maximum number of active retrieval rounds",
     )
 
 
@@ -102,13 +110,16 @@ class DynamicRAGState(ConfigurableRAGState):
 
     # Dynamic RAG configuration
     min_retrievers: int = Field(
-        default=1, description="Minimum number of active retrievers"
+        default=1,
+        description="Minimum number of active retrievers",
     )
     max_retrievers: int = Field(
-        default=5, description="Maximum number of active retrievers"
+        default=5,
+        description="Maximum number of active retrievers",
     )
     performance_threshold: float = Field(
-        default=0.6, description="Minimum performance to keep retriever active"
+        default=0.6,
+        description="Minimum performance to keep retriever active",
     )
 
 
@@ -126,14 +137,17 @@ class DebateRAGState(ConfigurableRAGState):
 
     # Debate configuration
     position_names: list[str] = Field(
-        default_factory=list, description="Names of debate positions"
+        default_factory=list,
+        description="Names of debate positions",
     )
     max_debate_rounds: int = Field(default=3, description="Maximum rounds of debate")
     require_consensus: bool = Field(
-        default=False, description="Whether consensus is required to end debate"
+        default=False,
+        description="Whether consensus is required to end debate",
     )
     enable_judge: bool = Field(
-        default=False, description="Whether to include a judge for the debate"
+        default=False,
+        description="Whether to include a judge for the debate",
     )
 
 
@@ -147,10 +161,12 @@ class AdaptiveThresholdRAGState(DynamicRAGState):
 
     # Adaptive configuration
     initial_threshold: float = Field(
-        default=0.7, description="Starting retrieval threshold"
+        default=0.7,
+        description="Starting retrieval threshold",
     )
     threshold_step: float = Field(
-        default=0.1, description="Amount to adjust threshold by"
+        default=0.1,
+        description="Amount to adjust threshold by",
     )
     min_threshold: float = Field(default=0.3, description="Minimum allowed threshold")
     max_threshold: float = Field(default=0.95, description="Maximum allowed threshold")
@@ -161,7 +177,7 @@ def create_configured_state(
     state_class: type[ConfigurableRAGState],
     agent_name: str,
     workflow_type: str,
-    **config_kwargs
+    **config_kwargs,
 ) -> ConfigurableRAGState:
     """Create a state instance with configuration."""
     # Extract fields that belong to the state class
@@ -176,7 +192,9 @@ def create_configured_state(
 
     # Create state with direct fields
     state = state_class(
-        agent_name=agent_name, workflow_type=workflow_type, **state_fields
+        agent_name=agent_name,
+        workflow_type=workflow_type,
+        **state_fields,
     )
 
     # Add additional config

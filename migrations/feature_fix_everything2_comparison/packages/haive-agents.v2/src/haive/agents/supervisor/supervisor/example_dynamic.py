@@ -7,15 +7,17 @@ This example demonstrates the dynamic supervisor capabilities including:
 - Dynamic configuration updates
 """
 
+from __future__ import annotations
+
 import asyncio
 
-from haive.core.engine.aug_llm import AugLLMConfig
 from langchain_core.messages import HumanMessage
 from rich.console import Console
 
 from haive.agents.react.agent import ReactAgent
 from haive.agents.simple.agent import SimpleAgent
 from haive.agents.supervisor.dynamic_supervisor import DynamicSupervisorAgent
+from haive.core.engine.aug_llm import AugLLMConfig
 
 console = Console()
 
@@ -190,10 +192,10 @@ async def demonstrate_dynamic_supervisor():
     console.print("\n[bold yellow]Performance Summary:[/bold yellow]")
     console.print(f"Total Executions: {performance_summary.get('total_executions', 0)}")
     console.print(
-        f"Overall Success Rate: {performance_summary.get('success_rate', 0.0):.1%}"
+        f"Overall Success Rate: {performance_summary.get('success_rate', 0.0):.1%}",
     )
     console.print(
-        f"Most Used Agent: {performance_summary.get('most_used_agent', 'None')}"
+        f"Most Used Agent: {performance_summary.get('most_used_agent', 'None')}",
     )
 
     # Show final dashboard
@@ -255,7 +257,9 @@ async def demonstrate_adaptation_rules():
 
     # Create supervisor with adaptation enabled
     adaptive_supervisor = DynamicSupervisorAgent(
-        name="adaptive_supervisor", engine=AugLLMConfig(), auto_rebuild_graph=True
+        name="adaptive_supervisor",
+        engine=AugLLMConfig(),
+        auto_rebuild_graph=True,
     )
 
     # Create agent with adaptation rules
@@ -281,9 +285,7 @@ async def demonstrate_adaptation_rules():
     console.print("✅ Created adaptive supervisor with adaptation rules")
 
     # Test adaptation
-    adaptation_query = (
-        "Provide a detailed explanation with examples and markdown formatting"
-    )
+    adaptation_query = "Provide a detailed explanation with examples and markdown formatting"
 
     console.print(f"\n[yellow]Adaptation Query:[/yellow] {adaptation_query}")
 

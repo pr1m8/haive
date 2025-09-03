@@ -1,12 +1,16 @@
 """Configuration for the Reflection Agent."""
 
+from __future__ import annotations
+
 import logging
 
-from agents.reflection.models import ReflectionOutput, ReflectionResult
+from agents.reflection.models import ReflectionOutput
+from agents.reflection.models import ReflectionResult
 from agents.reflection.state import ReflectionAgentState
 from agents.simple.config import SimpleAgentConfig
 from haive.core.engine.aug_llm import AugLLMConfig
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 # Setup logging
 logger = logging.getLogger(__name__)
@@ -23,7 +27,8 @@ class ReflectionConfig(BaseModel):
     )
 
     max_reflection_rounds: int = Field(
-        default=3, description="Maximum number of reflection rounds"
+        default=3,
+        description="Maximum number of reflection rounds",
     )
 
     reflection_prompt_template: str = Field(
@@ -91,37 +96,45 @@ class ReflectionAgentConfig(SimpleAgentConfig):
 
     # Reflection-specific configuration
     reflection: ReflectionConfig = Field(
-        default_factory=ReflectionConfig, description="Reflection configuration"
+        default_factory=ReflectionConfig,
+        description="Reflection configuration",
     )
 
     # Node names for the graph
     initial_node_name: str = Field(
-        default="initial_response", description="Name of the initial response node"
+        default="initial_response",
+        description="Name of the initial response node",
     )
 
     reflection_node_name: str = Field(
-        default="reflection", description="Name of the reflection node"
+        default="reflection",
+        description="Name of the reflection node",
     )
 
     improvement_node_name: str = Field(
-        default="improvement", description="Name of the improvement node"
+        default="improvement",
+        description="Name of the improvement node",
     )
 
     evaluation_node_name: str = Field(
-        default="evaluation", description="Name of the evaluation node"
+        default="evaluation",
+        description="Name of the evaluation node",
     )
 
     search_node_name: str = Field(
-        default="search", description="Name of the search node"
+        default="search",
+        description="Name of the search node",
     )
 
     # Structured output models
     reflection_output_model: type[BaseModel] = Field(
-        default=ReflectionResult, description="Model for structured reflection output"
+        default=ReflectionResult,
+        description="Model for structured reflection output",
     )
 
     agent_output_model: type[BaseModel] = Field(
-        default=ReflectionOutput, description="Model for agent output"
+        default=ReflectionOutput,
+        description="Model for agent output",
     )
 
     @classmethod
@@ -130,12 +143,14 @@ class ReflectionAgentConfig(SimpleAgentConfig):
         aug_llm: AugLLMConfig,
         name: str | None = None,
         system_prompt: str | None = None,
-        **kwargs
-    ) -> "ReflectionAgentConfig":
+        **kwargs,
+    ) -> ReflectionAgentConfig:
         """Create a ReflectionAgentConfig from an existing AugLLMConfig."""
         # First create a SimpleAgentConfig
         simple_config = SimpleAgentConfig.from_aug_llm(
-            aug_llm=aug_llm, name=name, system_prompt=system_prompt
+            aug_llm=aug_llm,
+            name=name,
+            system_prompt=system_prompt,
         )
 
         # Then extend it with reflection-specific config
@@ -143,7 +158,7 @@ class ReflectionAgentConfig(SimpleAgentConfig):
             name=simple_config.name,
             engine=simple_config.engine,
             system_prompt=simple_config.system_prompt,
-            **kwargs
+            **kwargs,
         )
 
     @classmethod
@@ -153,12 +168,15 @@ class ReflectionAgentConfig(SimpleAgentConfig):
         model: str = "gpt-4o",
         temperature: float = 0.7,
         name: str | None = None,
-        **kwargs
-    ) -> "ReflectionAgentConfig":
+        **kwargs,
+    ) -> ReflectionAgentConfig:
         """Create a ReflectionAgentConfig from scratch."""
         # First create a SimpleAgentConfig
         simple_config = SimpleAgentConfig.from_scratch(
-            system_prompt=system_prompt, model=model, temperature=temperature, name=name
+            system_prompt=system_prompt,
+            model=model,
+            temperature=temperature,
+            name=name,
         )
 
         # Then extend it with reflection-specific config
@@ -166,5 +184,5 @@ class ReflectionAgentConfig(SimpleAgentConfig):
             name=simple_config.name,
             engine=simple_config.engine,
             system_prompt=simple_config.system_prompt,
-            **kwargs
+            **kwargs,
         )

@@ -9,5 +9,5 @@ prompt = ChatPromptTemplate.from_messages(
     [
         ("system", "You are a helpful assistant that summarizes text."),
         ("user", "{text}"),
-    ]
+    ],
 )

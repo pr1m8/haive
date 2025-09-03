@@ -14,20 +14,21 @@ import logging
 # Set up logging
 from typing import Any
 
-from haive.core.engine.agent.agent import register_agent
-from haive.core.graph.GraphBuilder import DynamicGraph
 from langgraph.graph import END, START
 
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.typed.config import TypedRAGConfig
 from haive.agents.rag.typed.query_types import QueryCategory
+from haive.core.engine.agent.agent import register_agent
+from haive.core.graph.GraphBuilder import DynamicGraph
 
 logger = logging.getLogger(__name__)
 
 
 @register_agent(TypedRAGConfig)
 class TypedRAGAgent(BaseRAGAgent):
-    """Implements Typed-RAG that classifies queries and routes to specialized handlers."""
+    """Implements Typed-RAG that classifies queries and routes to specialized
+    handlers."""
 
     def __init__(self, config: TypedRAGConfig):
         """Initialize with TypedRAGConfig."""
@@ -85,7 +86,7 @@ class TypedRAGAgent(BaseRAGAgent):
                         category = parsed.get("category", "factoid").lower()
                         metadata = {k: v for k, v in parsed.items() if k != "category"}
                         return {"query_category": category, "query_metadata": metadata}
-                except:
+                except BaseException:
                     pass
 
                 # Default to factoid
@@ -119,7 +120,7 @@ class TypedRAGAgent(BaseRAGAgent):
 
         try:
             subquery_result = handler.invoke(
-                {"query": query, "category": category, "metadata": metadata}
+                {"query": query, "category": category, "metadata": metadata},
             )
 
             if isinstance(subquery_result, str):
@@ -130,7 +131,7 @@ class TypedRAGAgent(BaseRAGAgent):
                 # List of subqueries - create a mapping
                 subqueries = {}
                 for i, sq in enumerate(subquery_result):
-                    subqueries[f"{category}_{i+1}"] = sq
+                    subqueries[f"{category}_{i + 1}"] = sq
                 return {"subqueries": subqueries}
 
             if isinstance(subquery_result, dict):
@@ -206,17 +207,13 @@ class TypedRAGAgent(BaseRAGAgent):
                     "main_query": query,
                     "category": category,
                     "subquery_results": formatted_results,
-                    "filtered_documents": [
-                        doc.page_content for doc in filtered_documents
-                    ],
-                }
+                    "filtered_documents": [doc.page_content for doc in filtered_documents],
+                },
             )
 
             if isinstance(aggregation_result, str):
                 aggregated_answer = aggregation_result
-            elif (
-                isinstance(aggregation_result, dict) and "answer" in aggregation_result
-            ):
+            elif isinstance(aggregation_result, dict) and "answer" in aggregation_result:
                 aggregated_answer = aggregation_result["answef"]
             else:
                 aggregated_answer = str(aggregation_result)
@@ -235,7 +232,7 @@ class TypedRAGAgent(BaseRAGAgent):
 
         if not documents:
             return {
-                "answer": "I couldn't find any relevant information to answer your question."
+                "answer": "I couldn't find any relevant information to answer your question.",
             }
 
         # Use the answer generation component from src.config
@@ -256,7 +253,7 @@ class TypedRAGAgent(BaseRAGAgent):
         except Exception as e:
             logger.exception(f"Error generating answer: {e}")
             return {
-                "answer": "I encountered an error while generating an answer to your question."
+                "answer": "I encountered an error while generating an answer to your question.",
             }
 
     def setup_workflow(self) -> None:

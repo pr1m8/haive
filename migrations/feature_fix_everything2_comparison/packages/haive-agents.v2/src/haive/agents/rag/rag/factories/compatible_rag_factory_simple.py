@@ -3,17 +3,16 @@
 Simplified version without legacy functions that have import issues.
 """
 
-import logging
 from enum import Enum
+import logging
 
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.documents import Document
 
 from haive.agents.multi.base import SequentialAgent
 from haive.agents.rag.base.agent import BaseRAGAgent
 from haive.agents.rag.corrective.agent_v2 import CorrectiveRAGAgentV2
 
-# from haive.agents.rag.document_grading.agent import DocumentGradingAgent  # Temporarily disabled - missing callable_node
+# # Temporarily disabled - missing callable_node
 from haive.agents.rag.hallucination_grading.agent import (
     AdvancedHallucinationGraderAgent,
     HallucinationGraderAgent,
@@ -29,6 +28,7 @@ from haive.agents.rag.query_decomposition.agent import (
 )
 from haive.agents.rag.simple.agent import SimpleRAGAgent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 logger = logging.getLogger(__name__)
 
@@ -92,11 +92,16 @@ class CompatibleRAGFactory:
 
     @classmethod
     def create_simple_workflow(
-        cls, documents: list[Document], llm_config: LLMConfig | None = None, **kwargs
+        cls,
+        documents: list[Document],
+        llm_config: LLMConfig | None = None,
+        **kwargs,
     ) -> SequentialAgent:
         """Create simple RAG workflow."""
         return SimpleRAGAgent.from_documents(
-            documents=documents, llm_config=llm_config, **kwargs
+            documents=documents,
+            llm_config=llm_config,
+            **kwargs,
         )
 
     @classmethod
@@ -117,14 +122,19 @@ class CompatibleRAGFactory:
 
         # Create components
         hyde_agent = HyDERAGAgentV2.from_documents(
-            documents=documents, llm_config=llm_config, name="HyDE RAG"
+            documents=documents,
+            llm_config=llm_config,
+            name="HyDE RAG",
         )
 
-        # grading_agent = DocumentGradingAgent(  # Temporarily disabled - missing callable_node
+        # grading_agent = DocumentGradingAgent(  # Temporarily disabled - missing
+        # callable_node
         grading_agent = None  # Placeholder until DocumentGradingAgent is fixed
 
         corrective_agent = CorrectiveRAGAgentV2.from_documents(
-            documents=documents, llm_config=llm_config, name="Corrective RAG"
+            documents=documents,
+            llm_config=llm_config,
+            name="Corrective RAG",
         )
 
         return SequentialAgent(
@@ -171,21 +181,27 @@ def create_plug_and_play_component(
         # return DocumentGradingAgent(  # Temporarily disabled - missing callable_node
         #     documents=documents, llm_config=llm_config, **kwargs
         raise NotImplementedError(
-            "DocumentGradingAgent temporarily disabled due to missing dependencies"
+            "DocumentGradingAgent temporarily disabled due to missing dependencies",
         )
 
     # Retrieval components
     if component_type == RAGComponent.SIMPLE_RETRIEVAL:
         return BaseRAGAgent.from_documents(
-            documents=documents, llm_config=llm_config, **kwargs
+            documents=documents,
+            llm_config=llm_config,
+            **kwargs,
         )
     if component_type == RAGComponent.HYDE_RETRIEVAL:
         return HyDERAGAgentV2.from_documents(
-            documents=documents, llm_config=llm_config, **kwargs
+            documents=documents,
+            llm_config=llm_config,
+            **kwargs,
         )
     if component_type == RAGComponent.MULTI_QUERY_RETRIEVAL:
         return MultiQueryRAGAgent.from_documents(
-            documents=documents, llm_config=llm_config, **kwargs
+            documents=documents,
+            llm_config=llm_config,
+            **kwargs,
         )
 
     raise ValueError(f"Unknown component type: {component_type}")

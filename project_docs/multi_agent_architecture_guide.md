@@ -48,12 +48,12 @@ EnhancedMultiAgent V3 (Coordinator)
 ```python
 class EnhancedMultiAgent(Agent, Generic[AgentsT]):
     """Enhanced MultiAgent V3 with full advanced features."""
-    
+
     agents: AgentsT = Field(default_factory=dict)
     execution_mode: str = Field(default="infer")  # infer, sequential, parallel
     performance_mode: bool = Field(default=False)
     agent_performance: dict[str, dict[str, float]] = Field(default_factory=dict)
-    
+
     # Execution modes: "infer", "sequential", "parallel", "supervisor"
     # Performance tracking for adaptive routing
     # Rich debug visualization
@@ -75,7 +75,7 @@ class EnhancedMultiAgent(Agent, Generic[AgentsT]):
 ```python
 class AgentNodeV3Config(BaseNodeConfig[TInput, TOutput]):
     """Agent node configuration with hierarchical state projection support."""
-    
+
     agent_name: str = Field(description="Name of agent to execute")
     agent: Agent | None = Field(default=None)
     project_state: bool = Field(default=True)  # Enable state projection
@@ -97,7 +97,7 @@ class AgentNodeV3Config(BaseNodeConfig[TInput, TOutput]):
 ```python
 class EnhancedSequentialAgent(Agent):
     """Sequential multi-agent with enhanced state management."""
-    
+
     agents: list[Agent] = Field(default_factory=list)
     state_passing: bool = Field(default=True)
     execution_mode: str = Field(default="sequential")
@@ -121,16 +121,16 @@ class EnhancedSequentialAgent(Agent):
 ```python
 class MultiAgentState(ToolState):
     """State schema for multi-agent systems with hierarchical management."""
-    
+
     # Agent management
     agents: list[Agent] | dict[str, Agent] = Field(default_factory=dict)
     agent_states: dict[str, dict[str, Any]] = Field(default_factory=dict)
-    
+
     # Execution tracking
     active_agent: str | None = Field(default=None)
     agent_outputs: dict[str, Any] = Field(default_factory=dict)
     agent_execution_order: list[str] = Field(default_factory=list)
-    
+
     # Recompilation support
     agents_needing_recompile: set[str] = Field(default_factory=set)
     recompile_count: int = Field(default=0)
@@ -142,13 +142,13 @@ class MultiAgentState(ToolState):
 # Self-Discover workflow
 state = MultiAgentState(agents={
     "selector": module_selector_agent,
-    "adapter": module_adapter_agent, 
+    "adapter": module_adapter_agent,
     "reasoner": reasoning_agent
 })
 
 # Sequential execution with direct field access
 select_result = select_node(state, config)  # Updates: selected_modules
-adapt_result = adapt_node(state, config)    # Reads: selected_modules, Updates: adapted_modules  
+adapt_result = adapt_node(state, config)    # Reads: selected_modules, Updates: adapted_modules
 reason_result = reason_node(state, config)  # Reads: adapted_modules, Updates: final_reasoning
 ```
 
@@ -163,11 +163,11 @@ reason_result = reason_node(state, config)  # Reads: adapted_modules, Updates: f
 ```python
 class FlexibleMultiAgentState(StateSchema):
     """Flexible multi-agent state without forcing messages or tools."""
-    
+
     agents: list[Agent] | dict[str, Agent] = Field(default_factory=dict)
     agent_states: dict[str, dict[str, Any]] = Field(default_factory=dict)
     shared_context: dict[str, Any] = Field(default_factory=dict)
-    
+
     # Optional coordination fields
     current_agent: str | None = Field(default=None)
     completed_agents: list[str] = Field(default_factory=list)
@@ -189,16 +189,16 @@ class FlexibleMultiAgentState(StateSchema):
 ```python
 class MetaStateSchema(StateSchema, RecompileMixin):
     """State schema with embedded agent and graph composition support."""
-    
+
     # Core agent embedding
     agent: Any | None = Field(default=None)
     agent_state: dict[str, Any] = Field(default_factory=dict)
-    
+
     # Graph composition
     graph_context: dict[str, Any] = Field(default_factory=dict)
     execution_result: dict[str, Any] | None = Field(default=None)
     composition_metadata: dict[str, Any] = Field(default_factory=dict)
-    
+
     # Execution tracking
     execution_status: str = Field(default="ready")
     agent_name: str | None = Field(default=None)
@@ -230,13 +230,13 @@ meta_state.update_agent(new_agent)  # Triggers recompilation
 ```python
 class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
     """Enhanced state combining dynamic supervisor and multi-agent capabilities."""
-    
+
     # Agent registry management
     agent_registry: AgentRegistryState = Field(default_factory=AgentRegistryState)
-    
-    # Multi-agent coordination  
+
+    # Multi-agent coordination
     coordination: MultiAgentCoordinationState = Field(default_factory=MultiAgentCoordinationState)
-    
+
     # Dynamic routing
     dynamic_tool_routes: dict[str, str] = Field(default_factory=dict)
     tool_usage_history: list[dict[str, Any]] = Field(default_factory=list)
@@ -260,7 +260,7 @@ class MultiAgentDynamicSupervisorState(DynamicSupervisorState):
 class ModuleSelectorAgent(SimpleAgent):
     structured_output_model = SelectedModulesSchema
 
-class ModuleAdapterAgent(SimpleAgent): 
+class ModuleAdapterAgent(SimpleAgent):
     structured_output_model = AdaptedModulesSchema
 
 class ReasoningAgent(SimpleAgent):
@@ -275,7 +275,7 @@ state = MultiAgentState(agents={
 
 # Execution Flow - each agent reads previous outputs directly
 selector_node = create_agent_node_v3("selector")
-adapter_node = create_agent_node_v3("adapter")  
+adapter_node = create_agent_node_v3("adapter")
 reasoner_node = create_agent_node_v3("reasoner")
 
 # Step 1: Select modules
@@ -283,7 +283,7 @@ result1 = selector_node(state, config)
 # Result: state.selected_modules = {...}
 
 # Step 2: Adapt modules (reads selected_modules from state)
-result2 = adapter_node(state, config)  
+result2 = adapter_node(state, config)
 # Result: state.adapted_modules = {...}
 
 # Step 3: Generate reasoning (reads adapted_modules from state)
@@ -305,7 +305,7 @@ react_agent = ReactAgent(
 
 # SimpleAgent for structured output
 simple_agent = SimpleAgent(
-    name="formatter", 
+    name="formatter",
     engine=AugLLMConfig(),
     structured_output_model=FinalResultSchema
 )
@@ -331,13 +331,13 @@ graph = StateGraph(MultiAgentState)
 
 # Add agent nodes
 graph.add_node("analyze", create_agent_node_v3("analyzer"))
-graph.add_node("plan", create_agent_node_v3("planner")) 
+graph.add_node("plan", create_agent_node_v3("planner"))
 graph.add_node("execute", create_agent_node_v3("executor"))
 graph.add_node("review", create_agent_node_v3("reviewer"))
 
 # Define execution flow
 graph.add_edge("analyze", "plan")
-graph.add_edge("plan", "execute") 
+graph.add_edge("plan", "execute")
 graph.add_edge("execute", "review")
 
 # Compile and execute
@@ -386,7 +386,7 @@ container_state.planning_result = result.planning_result
 state_transfers = {
     "planner->executor": {
         "plan": "execution_plan",
-        "steps": "tasks", 
+        "steps": "tasks",
         "timeline": "schedule"
     },
     "executor->reviewer": {
@@ -405,7 +405,7 @@ state.apply_state_transfer("planner", "executor")
 # Agents contribute engines to container with namespacing
 state = MultiAgentState(agents={
     "planner": planner_agent,  # Has engine
-    "executor": executor_agent  # Has engine  
+    "executor": executor_agent  # Has engine
 })
 
 # Results in container engines:
@@ -429,24 +429,24 @@ def test_multi_agent_sequential_execution():
         engine=AugLLMConfig(temperature=0.1),
         structured_output_model=PlanSchema
     )
-    
+
     executor = SimpleAgent(
-        name="executor", 
+        name="executor",
         engine=AugLLMConfig(temperature=0.1),
         structured_output_model=ResultSchema
     )
-    
+
     # Create state
     state = MultiAgentState(agents=[planner, executor])
-    
+
     # Execute sequence
     plan_node = create_agent_node_v3("planner")
     exec_node = create_agent_node_v3("executor")
-    
+
     # Real execution with actual LLMs
     plan_result = plan_node(state, config)
     exec_result = exec_node(state, config)
-    
+
     # Verify real behavior
     assert hasattr(state, 'plan_result')
     assert hasattr(state, 'execution_result')
@@ -460,15 +460,15 @@ def test_multi_agent_state_simple():
     """Test MultiAgentState without circular imports."""
     # Test basic functionality
     state = MultiAgentState()
-    
+
     # Test agent state management
     state.update_agent_state("planner", {"plan": "Step 1", "status": "planning"})
     state.update_agent_state("executor", {"result": None, "status": "waiting"})
-    
+
     # Test recompilation tracking
     state.mark_agent_for_recompile("planner", "Tools changed")
     state.resolve_agent_recompile("planner")
-    
+
     # Test agent outputs
     state.record_agent_output("planner", {"plan": "Complete plan", "steps": 3})
     state.record_agent_output("executor", {"result": "Success", "data": [1, 2, 3]})
@@ -551,7 +551,7 @@ The multi-agent system is designed for evolution:
 The Haive multi-agent architecture provides a sophisticated foundation for complex agent coordination through:
 
 1. **Hierarchical State Management**: No schema flattening, isolated agent states
-2. **Direct Field Updates**: Structured output agents update container fields directly  
+2. **Direct Field Updates**: Structured output agents update container fields directly
 3. **Self-Discover Support**: Agents read each other's outputs from state fields
 4. **Dynamic Recompilation**: Runtime agent changes with graph rebuilding
 5. **Rich Debugging**: Comprehensive visualization and tracking

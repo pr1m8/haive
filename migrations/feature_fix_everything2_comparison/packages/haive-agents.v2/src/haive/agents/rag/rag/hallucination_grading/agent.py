@@ -1,22 +1,24 @@
 """Hallucination Grading Agents.
 
-Modular agents for detecting and grading hallucinations in RAG responses.
-Can be plugged into any workflow with compatible I/O schemas.
+Modular agents for detecting and grading hallucinations in RAG
+responses. Can be plugged into any workflow with compatible I/O schemas.
 """
+
+from __future__ import annotations
 
 import logging
 from typing import Any, Literal
 
-from haive.core.engine.aug_llm import AugLLMConfig
-from haive.core.graph.node.agent_node import AgentNodeConfig
-from haive.core.graph.state_graph.base_graph2 import BaseGraph
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START
 from pydantic import BaseModel, Field
 
 from haive.agents.base.agent import Agent
 from haive.agents.simple.agent import SimpleAgent
+from haive.core.engine.aug_llm import AugLLMConfig
+from haive.core.graph.node.agent_node import AgentNodeConfig
+from haive.core.graph.state_graph.base_graph2 import BaseGraph
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 logger = logging.getLogger(__name__)
 
@@ -26,19 +28,22 @@ class HallucinationGrade(BaseModel):
     """Single hallucination assessment."""
 
     has_hallucination: bool = Field(
-        description="Whether response contains hallucinations"
+        description="Whether response contains hallucinations",
     )
     confidence_score: float = Field(
-        ge=0.0, le=1.0, description="Confidence in assessment (0-1)"
+        ge=0.0,
+        le=1.0,
+        description="Confidence in assessment (0-1)",
     )
     hallucination_type: Literal["factual", "contextual", "logical", "none"] = Field(
-        description="Type of hallucination detected"
+        description="Type of hallucination detected",
     )
     severity: Literal["low", "medium", "high", "critical"] = Field(
-        description="Severity of hallucination"
+        description="Severity of hallucination",
     )
     evidence: list[str] = Field(
-        default_factory=list, description="Specific evidence of hallucination"
+        default_factory=list,
+        description="Specific evidence of hallucination",
     )
     reasoning: str = Field(description="Detailed reasoning for the assessment")
 
@@ -48,54 +53,69 @@ class AdvancedHallucinationGrade(BaseModel):
 
     # Basic assessment
     has_hallucination: bool = Field(
-        description="Whether response contains hallucinations"
+        description="Whether response contains hallucinations",
     )
     overall_confidence: float = Field(
-        ge=0.0, le=1.0, description="Overall confidence in assessment"
+        ge=0.0,
+        le=1.0,
+        description="Overall confidence in assessment",
     )
 
     # Detailed analysis
     factual_accuracy: float = Field(
-        ge=0.0, le=1.0, description="Factual accuracy score"
+        ge=0.0,
+        le=1.0,
+        description="Factual accuracy score",
     )
     contextual_consistency: float = Field(
-        ge=0.0, le=1.0, description="Consistency with context"
+        ge=0.0,
+        le=1.0,
+        description="Consistency with context",
     )
     logical_coherence: float = Field(
-        ge=0.0, le=1.0, description="Logical coherence score"
+        ge=0.0,
+        le=1.0,
+        description="Logical coherence score",
     )
     source_attribution: float = Field(
-        ge=0.0, le=1.0, description="Proper source attribution"
+        ge=0.0,
+        le=1.0,
+        description="Proper source attribution",
     )
 
     # Specific hallucination types
     hallucination_types: list[str] = Field(
-        default_factory=list, description="Types of hallucinations found"
+        default_factory=list,
+        description="Types of hallucinations found",
     )
 
     # Evidence and examples
     fabricated_facts: list[str] = Field(
-        default_factory=list, description="Specific fabricated facts identified"
+        default_factory=list,
+        description="Specific fabricated facts identified",
     )
     unsupported_claims: list[str] = Field(
-        default_factory=list, description="Claims not supported by context"
+        default_factory=list,
+        description="Claims not supported by context",
     )
     contradictions: list[str] = Field(
-        default_factory=list, description="Contradictions with source material"
+        default_factory=list,
+        description="Contradictions with source material",
     )
 
     # Recommendations
     severity_level: Literal["none", "low", "medium", "high", "critical"] = Field(
-        description="Overall severity level"
+        description="Overall severity level",
     )
     action_needed: Literal["none", "review", "revise", "regenerate", "reject"] = Field(
-        description="Recommended action"
+        description="Recommended action",
     )
 
     # Detailed analysis
     detailed_reasoning: str = Field(description="Comprehensive reasoning")
     improvement_suggestions: list[str] = Field(
-        default_factory=list, description="Specific suggestions for improvement"
+        default_factory=list,
+        description="Specific suggestions for improvement",
     )
 
 
@@ -104,10 +124,11 @@ class RealtimeHallucinationCheck(BaseModel):
 
     is_safe: bool = Field(description="Whether response is safe to use")
     risk_level: Literal["very_low", "low", "medium", "high", "very_high"] = Field(
-        description="Risk level for hallucination"
+        description="Risk level for hallucination",
     )
     quick_flags: list[str] = Field(
-        default_factory=list, description="Quick warning flags"
+        default_factory=list,
+        description="Quick warning flags",
     )
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence in assessment")
 
@@ -138,9 +159,8 @@ AI Response: {generated_response}
 Check if the response contains any information not supported by the context or any fabricated facts.
 Provide a detailed assessment.""",
         ),
-    ]
+    ],
 )
-
 
 ADVANCED_HALLUCINATION_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -191,9 +211,8 @@ Be thorough and provide specific examples for any hallucinations found.""",
 
 Provide a detailed analysis with specific examples of any hallucinations found.""",
         ),
-    ]
+    ],
 )
-
 
 REALTIME_HALLUCINATION_PROMPT = ChatPromptTemplate.from_messages(
     [
@@ -219,7 +238,7 @@ Response: {generated_response}
 
 Is this response safe to use? Flag any obvious hallucinations.""",
         ),
-    ]
+    ],
 )
 
 
@@ -229,7 +248,10 @@ class HallucinationGraderAgent(Agent):
     name: str = "Hallucination Grader"
 
     def __init__(
-        self, llm_config: LLMConfig | None = None, threshold: float = 0.7, **kwargs
+        self,
+        llm_config: LLMConfig | None = None,
+        threshold: float = 0.7,
+        **kwargs,
     ):
         """Initialize hallucination grader.
 
@@ -264,16 +286,18 @@ class HallucinationGraderAgent(Agent):
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
             generated_response = getattr(state, "generated_response", "") or getattr(
-                state, "response", ""
+                state,
+                "response",
+                "",
             )
 
             # Format documents for context
             doc_context = (
                 "\n\n".join(
                     [
-                        f"Document {i+1}: {doc.page_content}"
+                        f"Document {i + 1}: {doc.page_content}"
                         for i, doc in enumerate(retrieved_documents[:5])
-                    ]
+                    ],
                 )
                 if retrieved_documents
                 else "No documents provided"
@@ -285,13 +309,11 @@ class HallucinationGraderAgent(Agent):
                     "query": query,
                     "retrieved_documents": doc_context,
                     "generated_response": generated_response,
-                }
+                },
             )
 
             # Add processing metadata
-            is_flagged = (
-                grade.confidence_score >= self.threshold and grade.has_hallucination
-            )
+            is_flagged = grade.confidence_score >= self.threshold and grade.has_hallucination
 
             return {
                 "hallucination_grade": grade,
@@ -304,7 +326,8 @@ class HallucinationGraderAgent(Agent):
         AgentNodeConfig(
             name="hallucination_grader",
             agent=SimpleAgent(
-                engine=grading_engine, name="Hallucination Grader Engine"
+                engine=grading_engine,
+                name="Hallucination Grader Engine",
             ),
         )
 
@@ -358,7 +381,9 @@ class AdvancedHallucinationGraderAgent(Agent):
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
             generated_response = getattr(state, "generated_response", "") or getattr(
-                state, "response", ""
+                state,
+                "response",
+                "",
             )
 
             # Get additional context if available
@@ -370,9 +395,9 @@ class AdvancedHallucinationGraderAgent(Agent):
             doc_context = (
                 "\n\n".join(
                     [
-                        f"Document {i+1}: {doc.page_content}"
+                        f"Document {i + 1}: {doc.page_content}"
                         for i, doc in enumerate(retrieved_documents[:10])
-                    ]
+                    ],
                 )
                 if retrieved_documents
                 else "No documents provided"
@@ -385,11 +410,9 @@ class AdvancedHallucinationGraderAgent(Agent):
                     "retrieved_documents": doc_context,
                     "generated_response": generated_response,
                     "web_search_results": str(web_search_results),
-                    "messages": (
-                        str(messages[-3:]) if messages else ""
-                    ),  # Last 3 messages
+                    "messages": (str(messages[-3:]) if messages else ""),  # Last 3 messages
                     "grading_results": str(grading_results),
-                }
+                },
             )
 
             # Calculate risk scores
@@ -412,8 +435,7 @@ class AdvancedHallucinationGraderAgent(Agent):
                 "advanced_hallucination_grade": grade,
                 "hallucination_risk_score": risk_score,
                 "action_urgency_level": action_urgency,
-                "needs_immediate_attention": grade.severity_level
-                in ["high", "critical"],
+                "needs_immediate_attention": grade.severity_level in ["high", "critical"],
                 "is_response_reliable": grade.overall_confidence > 0.8
                 and not grade.has_hallucination,
                 "improvement_needed": len(grade.improvement_suggestions) > 0,
@@ -469,16 +491,18 @@ class RealtimeHallucinationGraderAgent(Agent):
             query = getattr(state, "query", "")
             retrieved_documents = getattr(state, "retrieved_documents", [])
             generated_response = getattr(state, "generated_response", "") or getattr(
-                state, "response", ""
+                state,
+                "response",
+                "",
             )
 
             # Quick context (fewer documents for speed)
             doc_context = (
                 "\n\n".join(
                     [
-                        f"Doc {i+1}: {doc.page_content[:200]}..."
+                        f"Doc {i + 1}: {doc.page_content[:200]}..."
                         for i, doc in enumerate(retrieved_documents[:3])
-                    ]
+                    ],
                 )
                 if retrieved_documents
                 else "No context"
@@ -490,7 +514,7 @@ class RealtimeHallucinationGraderAgent(Agent):
                     "query": query,
                     "retrieved_documents": doc_context,
                     "generated_response": generated_response,
-                }
+                },
             )
 
             # Safety decision

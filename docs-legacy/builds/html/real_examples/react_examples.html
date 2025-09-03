@@ -1,0 +1,226 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta property="article:modified_time" content="2025-07-31T06:08:05-04:00" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React Agent Examples &mdash; 🤖 Haive AI Agent Framework Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css?v=a0a71c94" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_paramlinks.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5044e660" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://haive.readthedocs.io/real_examples/react_examples.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=6894dda5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=af94cf59"></script>
+      <script src="../_static/scripts/sphinx-book-theme.js"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script src="https://wavedrom.com/skins/default.js"></script>
+      <script src="https://wavedrom.com/wavedrom.min.js"></script>
+      <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX"></script>
+      <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-XXXXXXX');
+            </script>
+      <script src="../_static/js/rtd_search_config.js"></script>
+      <script src="../_static/js/rtd_sphinx_search.min.js"></script>
+      <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+      <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+      <script src="../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+      <script src="../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+      <script src="../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+      <script defer="defer" src="https://unpkg.com/@popperjs/core@2"></script>
+      <script defer="defer" src="https://unpkg.com/tippy.js@6"></script>
+      <script defer="defer" src="../_static/tippy/real_examples/react_examples.c10b9c78-c9ed-4f5f-bb50-85101641de33.js"></script>
+      <script>DOCUMENTATION_OPTIONS.pagename = 'real_examples/react_examples';</script>
+      <script src="../_static/dark_mode_js/default_dark.js?v=fd565c74"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Haive AI Agent Framework
+          </a>
+<div id="searchbox"></div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Haive AI Agent Framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">React Agent Examples</span></li>
+  </ul>
+</nav>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="react-agent-examples">
+<h1>React Agent Examples<a class="headerlink" href="#react-agent-examples" title="Link to this heading">#</a></h1>
+<p>Real examples and outputs from the react agent.</p>
+<section id="cached-react">
+<h2>cached_react<a class="headerlink" href="#cached-react" title="Link to this heading">#</a></h2>
+<p><strong>Source</strong>: <code class="docutils literal notranslate"><span class="pre">docs/source/agent_cache_react.json</span></code></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;agent_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;react&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;agent_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ReactAgent&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;agent_class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;haive.agents.react.ReactAgent&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-07-18T12:10:32.945346&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;executions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;execution_summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;start_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-07-18T12:10:53.436297&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;end_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-07-18T12:10:56.593453&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;duration_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">3.157156</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;total_events&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;total_steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;state_updates&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;execution_trace&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">      </span><span class="nt">&quot;state_history&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-07-18T12:10:56.593449&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What is 15 * 23 + 47? Please calculate step by step.&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">&quot;messages=[HumanMessage(content=&#39;What is 15 * 23 + 47? Please calculate step by step.&#39;, additional_kwargs={}, response_metadata={}, id=&#39;2c5059dd-3420-4f2a-84d3-f2bc673ac7d6&#39;), AIMessage(content=&#39;To calculate \\\\(15 \\\\times 23 + 47\\\\) step by step, follow these steps:\\n\\n1. First, calculate the multiplication:\\n   \\\\[\\n   15 \\\\times 23 = 345\\n   \\\\]\\n\\n2. Next, add the result of the multiplication to 47:\\n   \\\\[\\n   345 + 47 = 392\\n   \\\\]\\n\\nTherefore, \\\\(15 \\\\times 23 + 47 = 392\\\\).&#39;, additional_kwargs={&#39;refusal&#39;: None}, response_metadata={&#39;token_usage&#39;: {&#39;completion_tokens&#39;: 94, &#39;prompt_tokens&#39;: 85, &#39;total_tokens&#39;: 179, &#39;completion_tokens_details&#39;: {&#39;accepted_prediction_tokens&#39;: 0, &#39;audio_tokens&#39;: 0, &#39;reasoning_tokens&#39;: 0, &#39;rejected_prediction_tokens&#39;: 0}, &#39;prompt_tokens_details&#39;: {&#39;audio_tokens&#39;: 0, &#39;cached_tokens&#39;: 0}}, &#39;model_name&#39;: &#39;gpt-4o-2024-08-06&#39;, &#39;system_fingerprint&#39;: &#39;fp_ee1d74bde0&#39;, &#39;prompt_filter_results&#39;: [{&#39;prompt_index&#39;: 0, &#39;content_filter_results&#39;: {&#39;hate&#39;: {&#39;filtered&#39;: False, &#39;severity&#39;: &#39;safe&#39;}, &#39;self_harm&#39;: {&#39;filtered&#39;: False, &#39;severity&#39;: &#39;safe&#39;}, &#39;sexual&#39;: {&#39;filtered&#39;: False, &#39;severity&#39;: &#39;safe&#39;}, &#39;violence&#39;: {&#39;filtered&#39;: False, &#39;severity&#39;: &#39;safe&#39;}}}], &#39;finish_reason&#39;: &#39;stop&#39;, &#39;logprobs&#39;: None, &#39;content_filter_results&#39;: {&#39;hate&#39;: {&#39;filtered&#39;: False, &#39;se</span>
+
+<span class="err">... (truncated)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="id1">
+<h2>cached_react<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p><strong>Source</strong>: <code class="docutils literal notranslate"><span class="pre">docs/scripts/cache_generation/agent_cache_react.json</span></code></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;agent_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;react&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;agent_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ReactAgent&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;agent_class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;haive.agents.react.ReactAgent&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-07-18T12:10:32.945346&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;executions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;execution_summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;start_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-07-18T12:10:53.436297&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;end_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-07-18T12:10:56.593453&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;duration_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">3.157156</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;total_events&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;total_steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;state_updates&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;execution_trace&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">      </span><span class="nt">&quot;state_history&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-07-18T12:10:56.593449&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What is 15 * 23 + 47? Please calculate step by step.&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">&quot;messages=[HumanMessage(content=&#39;What is 15 * 23 + 47? Please calculate step by step.&#39;, additional_kwargs={}, response_metadata={}, id=&#39;2c5059dd-3420-4f2a-84d3-f2bc673ac7d6&#39;), AIMessage(content=&#39;To calculate \\\\(15 \\\\times 23 + 47\\\\) step by step, follow these steps:\\n\\n1. First, calculate the multiplication:\\n   \\\\[\\n   15 \\\\times 23 = 345\\n   \\\\]\\n\\n2. Next, add the result of the multiplication to 47:\\n   \\\\[\\n   345 + 47 = 392\\n   \\\\]\\n\\nTherefore, \\\\(15 \\\\times 23 + 47 = 392\\\\).&#39;, additional_kwargs={&#39;refusal&#39;: None}, response_metadata={&#39;token_usage&#39;: {&#39;completion_tokens&#39;: 94, &#39;prompt_tokens&#39;: 85, &#39;total_tokens&#39;: 179, &#39;completion_tokens_details&#39;: {&#39;accepted_prediction_tokens&#39;: 0, &#39;audio_tokens&#39;: 0, &#39;reasoning_tokens&#39;: 0, &#39;rejected_prediction_tokens&#39;: 0}, &#39;prompt_tokens_details&#39;: {&#39;audio_tokens&#39;: 0, &#39;cached_tokens&#39;: 0}}, &#39;model_name&#39;: &#39;gpt-4o-2024-08-06&#39;, &#39;system_fingerprint&#39;: &#39;fp_ee1d74bde0&#39;, &#39;prompt_filter_results&#39;: [{&#39;prompt_index&#39;: 0, &#39;content_filter_results&#39;: {&#39;hate&#39;: {&#39;filtered&#39;: False, &#39;severity&#39;: &#39;safe&#39;}, &#39;self_harm&#39;: {&#39;filtered&#39;: False, &#39;severity&#39;: &#39;safe&#39;}, &#39;sexual&#39;: {&#39;filtered&#39;: False, &#39;severity&#39;: &#39;safe&#39;}, &#39;violence&#39;: {&#39;filtered&#39;: False, &#39;severity&#39;: &#39;safe&#39;}}}], &#39;finish_reason&#39;: &#39;stop&#39;, &#39;logprobs&#39;: None, &#39;content_filter_results&#39;: {&#39;hate&#39;: {&#39;filtered&#39;: False, &#39;se</span>
+
+<span class="err">... (truncated)</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+
+    <script type="text/javascript">
+        function init() {
+            WaveDrom.ProcessAll();
+        }
+        window.onload = init;
+    </script>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Haive Team.
+      <span class="lastupdated">Last updated on Jul 31, 2025.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

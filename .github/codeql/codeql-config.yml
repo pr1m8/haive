@@ -1,9 +1,4 @@
-name: "CodeQL Configuration"
-
-paths:
-  - packages/*/src
-  - packages/*/tests
-paths-ignore:
-  - "**/resources/**"
-  - "**/venv/**"
-  - "**/.venv/**"
+---
+name: CodeQL Configuration
+paths: [packages/*/src, packages/*/tests]
+paths-ignore: ["**/resources/**", "**/venv/**", "**/.venv/**"]

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Properly fix showcase RST files."""
 
-from pathlib import Path
+from __future__ import annotations
 
+from pathlib import Path
 
 # Template for showcase files
 TEMPLATE = """{{agent_name}} Agent
@@ -217,7 +218,8 @@ def main():
         # Create content
         content = TEMPLATE
         content = content.replace("{{agent_name}}", agent_name)
-        content = content.replace("{{title_underline}}", "=" * len(agent_name + " Agent"))
+        content = content.replace("{{title_underline}}",
+                                  "=" * len(agent_name + " Agent"))
 
         for key, value in data.items():
             content = content.replace(f"{{{{{key}}}}}", value)

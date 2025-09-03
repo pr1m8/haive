@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Fix await outside function issues in RST files."""
 
+from __future__ import annotations
+
 from pathlib import Path
 import re
 
@@ -12,7 +14,7 @@ def fix_await_in_code_block(content):
 
     def replace_func(match):
         before = match.group(1)
-        indent = match.group(2)
+        match.group(2)
         await_line = match.group(3)
 
         # Check if this await is already inside a function
@@ -31,7 +33,7 @@ def fix_await_in_code_block(content):
             code_lines.insert(0, line)
 
         # Find the related code after the await
-        remaining = content[match.end() :]
+        remaining = content[match.end():]
         after_lines = []
         for line in remaining.split("\n"):
             if line.startswith(base_indent) or line.strip() == "":
