@@ -75,11 +75,13 @@ actions:
     - trunk-announce # silence Trunk marketing messages
 
   enabled:
+    - submodule-init-update
     - git-lfs
     - trunk-cache-prune
     - trunk-upgrade-available
     - trunk-fmt-pre-commit
     - trunk-check-pre-push
+    - trunk-check-pre-commit
     - run-pre-commit-hook # ✅ Lint staged files on pre-commit
     - run-commit-msg-hook # ✅ Validate commit messages
     - setup-pre-commit # ✅ Update pre-commit hooks
