@@ -62,10 +62,10 @@
 
 ---
 
-### Phase 3: Agent IS/HAS Engine Fix 🔄 ANALYSIS COMPLETE
+### Phase 3: Engine-Schema Contract Integration 🔄 IN PROGRESS
 
 **Target Reduction**: 15🔥
-**Status**: ✅ Full Analysis Complete, Implementation Ready
+**Status**: 🚀 Implementation Started with Base Adaptors
 
 #### Problem Identified:
 
@@ -79,12 +79,13 @@
 - `AGENT_ENGINE_PARADOX_ANALYSIS.md` - Complete paradox documentation
 - `ENGINE_ANALYSIS_SUMMARY.md` - All engines analyzed (50🔥 total)
 
-#### Solution Plan:
+#### Implementation Progress:
 
-- Remove TypedInvokableEngine inheritance
-- Make Agent pure orchestrator (composition only)
-- Add as_engine() adapter for compatibility
-- Clear separation: Agent orchestrates, Engine configures
+- ✅ Created `BaseEngineAdaptor` - Universal contract bridge
+- ✅ Created `ContractualAugLLM` - AugLLM with contracts (25🔥 → 5🔥)
+- ✅ Created `ENGINE_SCHEMA_INTEGRATION.md` - Complete integration plan
+- 🔄 Integrating contracts with schema composers
+- ⏳ Migrating other engines to contract pattern
 
 ---
 
@@ -162,12 +163,18 @@
    - `test_tool_prompt_extraction.py`
    - `test_enhanced_prompt_config.py`
 
-3. **Documentation** (25+ files):
+3. **Documentation** (28+ files):
    - Architecture analysis documents
    - Implementation plans
    - Progress tracking
    - `ENGINE_ANALYSIS_SUMMARY.md` - Complete engine analysis
    - `AGENT_ENGINE_PARADOX_ANALYSIS.md` - Paradox documentation
+   - `ENGINE_SCHEMA_INTEGRATION.md` - Contract-schema bridge
+
+4. **Contract Implementations** (3 new files):
+   - `base_engine_adaptor.py` - Base adaptor pattern
+   - `aug_llm_contractual.py` - AugLLM with contracts
+   - `aug_llm_adapter.py` - Migration adapter
 
 ---
 
@@ -178,7 +185,8 @@
 1. ✅ Complete tool extraction
 2. ✅ Complete prompt extraction
 3. ✅ Complete Agent IS/HAS analysis
-4. 🚀 Implement Agent/Engine separation
+4. 🚀 Implement base engine adaptors
+5. 🔄 Integrate contracts with schemas
 
 ### Short Term (Next 2 Weeks):
 
@@ -242,6 +250,8 @@ Target:  ████                 <20🔥
 3. **Testing is essential** - 54 tests ensure stability during refactoring
 4. **AugLLMConfig is the monster** - 2,601 LOC doing everything (25🔥)
 5. **Agent IS/HAS paradox is deep** - TypedInvokableEngine pattern causes 15🔥
+6. **Contracts bridge engines and schemas** - Unified architecture reduces 20🔥+
+7. **Base adaptors enable migration** - Wrap existing engines without breaking changes
 
 ### Challenges:
 
