@@ -1,6 +1,6 @@
 # Haive Scripts Organization
 
-**Updated**: 2025-01-14
+**Updated**: 2025-09-11
 **Purpose**: Comprehensive organization of all scripts and utilities
 **Structure**: Organized by function and frequency of use with complete README coverage
 
@@ -167,6 +167,10 @@ poetry run python scripts/development/diagnostics/recommended_full_nitpick_ignor
 ./scripts/build/build_docs.sh
 ./scripts/build/build_docs_realtime.sh
 
+# Documentation configuration sync ✨ NEW
+./scripts/sync-docs-config.sh                    # Sync docs config across all packages
+./scripts/check-docs-status.sh                   # Check sync status and health
+
 # Development server
 ./scripts/build/docs-server.sh
 ```
@@ -184,6 +188,8 @@ poetry run python scripts/development/diagnostics/recommended_full_nitpick_ignor
 - **[Maintenance Guide](maintenance/README.md)** - Deployment lessons learned and procedures
 - **[Documentation Tools](doc_tools/README.md)** - Documentation generation utilities
 - **[Development Tools](dev-tools/README.md)** - Development workflow enhancements
+- **[sync-docs-config.sh](#sync-docs-config)** - Synchronize documentation configuration across all packages
+- **[check-docs-status.sh](#check-docs-status)** - Check documentation sync status and health
 
 ### Architecture & Standards
 
@@ -271,6 +277,123 @@ Each script should have:
 3. **Use appropriate tools** - Match scripts to your specific needs
 4. **Check documentation** - Reference detailed guides for complex operations
 5. **Follow safety practices** - Always validate before applying changes
+
+## sync-docs-config
+
+**Purpose**: Synchronizes documentation configuration (conf.py, \_static, \_templates) across all haive packages.
+
+**Usage**:
+
+```bash
+# Sync from haive-core (default) to all other packages
+./scripts/sync-docs-config.sh
+
+# Sync from a specific package to all others
+./scripts/sync-docs-config.sh haive-mcp
+```
+
+**What it syncs**:
+
+- **conf.py** - Complete Sphinx configuration with automatic project-specific updates
+- **\_static files** - Essential files only (custom.css, tippy-enhancements.css, favicon.ico, logo.png)
+- **\_templates** - All template files for custom documentation layouts
+
+**Auto-updates**:
+
+- Project names (`haive-core` → `haive-mcp`)
+- GitHub repository URLs
+- Source repository links
+
+**Cleanup**:
+
+- Removes unused CSS files (purple-theme.css, etc.)
+- Cleans build artifacts and backup directories
+
+**Example output**:
+
+```
+🔄 Syncing documentation configuration across haive packages
+Source package: haive-core
+
+📋 Found packages: haive-agents haive-core haive-games haive-mcp haive-tools
+
+📦 Processing haive-mcp...
+🔄 Syncing configuration...
+📄 Copied custom.css
+📄 Copied tippy-enhancements.css
+📋 Syncing templates...
+📋 Templates synced
+✅ haive-mcp configuration synced
+```
+
+This ensures all packages have identical documentation styling and configuration, with only project-specific information customized per package.
+
+## check-docs-status
+
+**Purpose**: Checks documentation sync status and health across all haive packages.
+
+**Usage**:
+
+```bash
+# Check status using haive-core as reference (default)
+./scripts/check-docs-status.sh
+
+# Check status using a specific package as reference
+./scripts/check-docs-status.sh haive-mcp
+```
+
+**What it checks**:
+
+- **conf.py sync** - Compares configuration files (ignoring project-specific content)
+- **\_static files** - Verifies essential files are present and synced
+- **\_templates** - Checks template completeness
+- **Unwanted files** - Identifies unused CSS files that should be cleaned up
+- **Missing docs** - Finds packages without documentation directories
+
+**Status indicators**:
+
+- ✅ **Fully synced** - Perfect sync with reference
+- ⚠️ **Partially synced** - Minor differences or missing files
+- ❌ **Major issues** - Significant sync problems or missing components
+- 📊 **Health Score** - Overall sync percentage (0-100%)
+
+**Example output**:
+
+```
+📊 Documentation Sync Status Check
+Reference package: haive-core
+
+📋 Found packages: haive-agents haive-core haive-games haive-mcp haive-tools
+
+📦 Checking haive-mcp...
+   ✅ Fully synced
+
+📦 Checking haive-agents...
+   ⚠️  Partially synced conf.py-differs static:(missing:favicon.ico)
+
+📊 Summary Report
+=============================================
+Total packages:        5
+Fully synced:          3
+Partially synced:      2
+Major issues:          0
+Missing docs:          0
+
+🎯 Overall Health Score: 80%
+👍 Good! Minor sync issues to address.
+
+💡 Recommendations:
+   1. Run sync script: ./scripts/sync-docs-config.sh
+   3. Re-check after fixes: ./scripts/check-docs-status.sh
+```
+
+**Exit codes**:
+
+- `0` - Good health (70%+)
+- `1` - Fair health (50-69%)
+- `2` - Poor health (<50%)
+
+Perfect for CI/CD to ensure documentation consistency across all packages!
 
 ---
 
