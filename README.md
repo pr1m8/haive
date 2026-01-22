@@ -1,7 +1,7 @@
 # Haive AI Agent Framework
-
+docs: 
 Advanced AI Agent Framework with auto-persistence, multi-agent coordination, and rich tool ecosystem.
-
+https://tinyurl.com/haive-central
 ## Quick Start
 
 ```bash
