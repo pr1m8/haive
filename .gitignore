@@ -753,3 +753,16 @@ tests/dev/
 # Claude AI temporary files
 .claude/settings.local.json.tmp.*
 .claude/settings.local.json.tmp.*/
+
+# Never commit real env files
+.env
+.env.*
+!.env.example
+
+# Secret files/patterns
+.secrets
+.secrets.*
+secrets
+secrets.*
+secrets/**
+**/secrets/**
