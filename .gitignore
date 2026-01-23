@@ -766,3 +766,30 @@ secrets
 secrets.*
 secrets/**
 **/secrets/**
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Node
+node_modules/
+.next/
+out/
+.turbo/
+
+# OS/IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
