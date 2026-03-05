@@ -48,3 +48,8 @@
 	path = packages/haive-hap
 	url = https://github.com/pr1m8/haive-hap.git
 	branch = main
+
+[submodule "tools/pydvlp-docs"]
+	path = tools/pydvlp-docs
+	url = https://github.com/pr1m8/pydvlp-docs.git
+  branch = main
