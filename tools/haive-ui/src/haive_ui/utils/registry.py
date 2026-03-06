@@ -160,100 +160,144 @@ AGENT_REGISTRY: list[AgentInfo] = [
 GAME_REGISTRY: list[GameInfo] = [
     # Board games
     GameInfo("Chess", "haive.games.chess.agent", "ChessAgent", "board",
-             "Classic chess with LLM players", min_players=2, max_players=2,
-             has_ui=True, config_module="haive.games.chess.config", config_class="ChessConfig",
+             "Full chess implementation with legal move validation, board state tracking, and LLM-powered move selection. "
+             "Supports multiple difficulty levels and analysis modes.",
+             min_players=2, max_players=2, has_ui=True,
+             config_module="haive.games.chess.config", config_class="ChessConfig",
              example_module="haive.games.chess.example", tags=["strategy", "classic"]),
     GameInfo("Go", "haive.games.go.agent", "GoAgent", "board",
-             "Ancient strategy game of territory", min_players=2, max_players=2,
+             "Go (Weiqi) with territory scoring, ko rule enforcement, and strategic LLM play. "
+             "Configurable board sizes (9x9, 13x13, 19x19).",
+             min_players=2, max_players=2,
              config_module="haive.games.go.config", config_class="GoAgentConfig",
              example_module="haive.games.go.example", tags=["strategy", "classic"]),
     GameInfo("Checkers", "haive.games.checkers.agent", "CheckersAgent", "board",
-             "Classic checkers/draughts", min_players=2, max_players=2,
-             has_ui=True, config_module="haive.games.checkers.config", config_class="CheckersAgentConfig",
+             "Checkers/draughts with king promotion, multi-jump captures, and forced capture rules. "
+             "LLM agents evaluate board positions for optimal play.",
+             min_players=2, max_players=2, has_ui=True,
+             config_module="haive.games.checkers.config", config_class="CheckersAgentConfig",
              example_module="haive.games.checkers.example", tags=["strategy", "classic"]),
     GameInfo("Tic Tac Toe", "haive.games.tic_tac_toe.agent", "TicTacToeAgent", "board",
-             "Simple 3x3 grid game", min_players=2, max_players=2,
-             has_ui=True, config_module="haive.games.tic_tac_toe.config", config_class="TicTacToeConfig",
+             "Classic 3x3 grid game - great for testing LLM reasoning and strategy. "
+             "Simple rules make it ideal for quick agent benchmarks.",
+             min_players=2, max_players=2, has_ui=True,
+             config_module="haive.games.tic_tac_toe.config", config_class="TicTacToeConfig",
              example_module="haive.games.tic_tac_toe.example", tags=["simple", "classic"]),
     GameInfo("Connect 4", "haive.games.connect4.agent", "Connect4Agent", "board",
-             "Connect four in a row", min_players=2, max_players=2,
-             has_ui=True, config_module="haive.games.connect4.config", config_class="Connect4AgentConfig",
+             "Drop pieces to connect four in a row (horizontal, vertical, or diagonal). "
+             "Tests spatial reasoning and forward planning.",
+             min_players=2, max_players=2, has_ui=True,
+             config_module="haive.games.connect4.config", config_class="Connect4AgentConfig",
              example_module="haive.games.connect4.example", tags=["strategy", "classic"]),
     GameInfo("Battleship", "haive.games.battleship.agent", "BattleshipAgent", "board",
-             "Naval strategy game", min_players=2, max_players=2,
+             "Naval strategy with ship placement, targeted attacks, and sinking detection. "
+             "Tests deductive reasoning and probability-based targeting.",
+             min_players=2, max_players=2,
              config_module="haive.games.battleship.config", config_class="BattleshipAgentConfig",
              example_module="haive.games.battleship.example", tags=["strategy"]),
     GameInfo("Reversi", "haive.games.reversi.agent", "ReversiAgent", "board",
-             "Flip opponent pieces to win", min_players=2, max_players=2,
+             "Reversi/Othello - flip opponent pieces by surrounding them. "
+             "Strategic corner and edge control tests long-term planning.",
+             min_players=2, max_players=2,
              config_module="haive.games.reversi.config", config_class="ReversiConfig",
              example_module="haive.games.reversi.example", tags=["strategy"]),
     GameInfo("Mancala", "haive.games.mancala.agent", "MancalaAgent", "board",
-             "Ancient seed-sowing game", min_players=2, max_players=2,
+             "Ancient seed-sowing game with pit counting and capture mechanics. "
+             "Tests arithmetic reasoning and multi-step lookahead.",
+             min_players=2, max_players=2,
              config_module="haive.games.mancala.config", config_class="MancalaConfig",
              example_module="haive.games.mancala.example", tags=["strategy", "classic"]),
 
     # Card games
     GameInfo("Poker", "haive.games.poker.agent", "PokerAgent", "card",
-             "Texas Hold'em poker", min_players=2, max_players=8,
-             has_ui=True, config_module="haive.games.poker.config", config_class="PokerAgentConfig",
+             "Texas Hold'em poker with betting rounds, hand evaluation, pot management, and bluffing. "
+             "Tests strategic reasoning, risk assessment, and opponent modeling.",
+             min_players=2, max_players=8, has_ui=True,
+             config_module="haive.games.poker.config", config_class="PokerAgentConfig",
              example_module="haive.games.poker.example", tags=["cards", "betting"]),
     GameInfo("Hold'em", "haive.games.hold_em.game_agent", "HoldemGameAgent", "card",
-             "Texas Hold'em variant", min_players=2, max_players=8,
-             has_ui=True, config_module="haive.games.hold_em.config", config_class="HoldemGameAgentConfig",
+             "Full Texas Hold'em implementation with pre-flop, flop, turn, and river rounds. "
+             "Supports multi-player tables with varied LLM strategies.",
+             min_players=2, max_players=8, has_ui=True,
+             config_module="haive.games.hold_em.config", config_class="HoldemGameAgentConfig",
              example_module="haive.games.hold_em.example", tags=["cards", "betting"]),
     GameInfo("Dominoes", "haive.games.dominoes.agent", "DominoesAgent", "card",
-             "Classic domino tile game", min_players=2, max_players=4,
-             has_ui=True, config_module="haive.games.dominoes.config", config_class="DominoesAgentConfig",
+             "Classic domino tile matching game with draw rules and scoring. "
+             "Tests pattern matching and resource management.",
+             min_players=2, max_players=4, has_ui=True,
+             config_module="haive.games.dominoes.config", config_class="DominoesAgentConfig",
              example_module="haive.games.dominoes.example", tags=["tiles"]),
 
     # Strategy games
     GameInfo("Risk", "haive.games.risk.agent", "RiskAgent", "strategy",
-             "World domination strategy", min_players=2, max_players=6,
+             "World domination with territory control, army placement, and combat dice. "
+             "Tests global strategy, alliance formation, and risk assessment.",
+             min_players=2, max_players=6,
              config_module="haive.games.risk.config", config_class="RiskConfig",
              example_module="haive.games.risk.example", tags=["strategy", "territory"]),
     GameInfo("Monopoly", "haive.games.monopoly.agent", "MonopolyAgent", "strategy",
-             "Property trading game", min_players=2, max_players=6,
-             has_ui=True, config_module="haive.games.monopoly.config", config_class="MonopolyGameAgentConfig",
+             "Property trading with auctions, rent collection, and bankruptcy. "
+             "Tests negotiation, economic reasoning, and long-term investment strategy.",
+             min_players=2, max_players=6, has_ui=True,
+             config_module="haive.games.monopoly.config", config_class="MonopolyGameAgentConfig",
              example_module="haive.games.monopoly.example", tags=["strategy", "economic"]),
     GameInfo("Nim", "haive.games.nim.agent", "NimAgent", "strategy",
-             "Mathematical strategy game", min_players=2, max_players=2,
-             has_ui=True, config_module="haive.games.nim.config", config_class="NimConfig",
+             "Mathematical strategy game - remove objects from heaps. "
+             "Has a provably optimal strategy, great for testing mathematical reasoning.",
+             min_players=2, max_players=2, has_ui=True,
+             config_module="haive.games.nim.config", config_class="NimConfig",
              example_module="haive.games.nim.example", tags=["math", "simple"]),
     GameInfo("Fox & Geese", "haive.games.fox_and_geese.agent", "FoxAndGeeseAgent", "strategy",
-             "Asymmetric pursuit game", min_players=2, max_players=2,
-             has_ui=True, config_module="haive.games.fox_and_geese.config", config_class="FoxAndGeeseConfig",
+             "Asymmetric pursuit game - fox tries to escape while geese try to corner it. "
+             "Tests asymmetric strategy and spatial reasoning.",
+             min_players=2, max_players=2, has_ui=True,
+             config_module="haive.games.fox_and_geese.config", config_class="FoxAndGeeseConfig",
              example_module="haive.games.fox_and_geese.example", tags=["asymmetric"]),
 
     # Social deduction
     GameInfo("Mafia", "haive.games.mafia.agent", "MafiaAgent", "social_deduction",
-             "Social deduction party game", min_players=4, max_players=12,
+             "Social deduction party game with day/night cycles, voting, and hidden roles. "
+             "Tests deception detection, persuasion, and coalition formation.",
+             min_players=4, max_players=12,
              config_module="haive.games.mafia.config", config_class="MafiaAgentConfig",
              example_module="haive.games.mafia.example", tags=["social", "deduction"]),
     GameInfo("Among Us", "haive.games.among_us.agent", "AmongUsAgent", "social_deduction",
-             "Impostor detection game", min_players=4, max_players=10,
-             has_ui=True, config_module="haive.games.among_us.config", config_class="AmongUsAgentConfig",
+             "Impostor detection game with tasks, emergency meetings, and voting. "
+             "Tests trust reasoning, accusation, and defense under suspicion.",
+             min_players=4, max_players=10, has_ui=True,
+             config_module="haive.games.among_us.config", config_class="AmongUsAgentConfig",
              example_module="haive.games.among_us.demo", tags=["social", "deduction"]),
     GameInfo("Clue", "haive.games.clue.agent", "ClueAgent", "social_deduction",
-             "Classic murder mystery", min_players=3, max_players=6,
-             has_ui=True, config_module="haive.games.clue.config", config_class="ClueConfig",
+             "Classic murder mystery with room movement, card showing, and deductive reasoning. "
+             "Tests information gathering and elimination logic.",
+             min_players=3, max_players=6, has_ui=True,
+             config_module="haive.games.clue.config", config_class="ClueConfig",
              example_module="haive.games.clue.example", tags=["mystery", "deduction"]),
 
     # Single player / puzzle
     GameInfo("Mastermind", "haive.games.mastermind.agent", "MastermindAgent", "single_player",
-             "Code-breaking logic puzzle", min_players=1, max_players=2,
-             has_ui=True, config_module="haive.games.mastermind.config", config_class="MastermindConfig",
+             "Code-breaking logic puzzle - guess the secret color sequence. "
+             "Tests logical deduction and constraint satisfaction.",
+             min_players=1, max_players=2, has_ui=True,
+             config_module="haive.games.mastermind.config", config_class="MastermindConfig",
              example_module="haive.games.mastermind.example", tags=["puzzle", "logic"]),
 
     # Debate
     GameInfo("Debate", "haive.games.debate.agent", "DebateAgent", "debate",
-             "Structured LLM debate", min_players=2, max_players=4,
+             "Structured LLM debate with topic selection, argument rounds, and scoring. "
+             "Tests argumentation quality, evidence use, and rhetorical skill.",
+             min_players=2, max_players=4,
              config_module="haive.games.debate.config", config_class="DebateAgentConfig",
              example_module="haive.games.debate.example", tags=["debate", "argumentation"]),
     GameInfo("Debate V2", "haive.games.debate_v2.agent", "GameDebateAgent", "debate",
-             "Enhanced debate with conversation flow", min_players=2, max_players=4,
+             "Enhanced debate with natural conversation flow, rebuttal rounds, and closing arguments. "
+             "Supports configurable debate formats.",
+             min_players=2, max_players=4,
              example_module="haive.games.debate_v2.example", tags=["debate", "v2"]),
     GameInfo("Debate V2 (Judges)", "haive.games.debate_v2.agent_with_judges", "JudgedGameDebateAgent", "debate",
-             "Multi-judge debate evaluation", min_players=2, max_players=8,
+             "Multi-judge debate evaluation with individual scoring rubrics. "
+             "Tests argumentation against multiple evaluation criteria simultaneously.",
+             min_players=2, max_players=8,
              example_module="haive.games.debate_v2.example_with_judges", tags=["debate", "judges"]),
 ]
 
