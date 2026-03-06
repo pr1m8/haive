@@ -24,6 +24,44 @@ packages/*/.git
 .claude/settings.local.json
 scripts/validator_backup_*/
 vscode-wsl-context.reg
+
+# =============================================================================
+# 🗑️ Archived/legacy cruft (removed from tracking)
+# =============================================================================
+docs-legacy/
+docs-migration-logs/
+docstring_fixers/
+error_reports/
+test-project/
+shared/
+migrations/
+snapshots/
+changes/
+GIT_CLEANUP_SUMMARY.md
+PROJECT_NOTES.md
+critical_files.txt
+monkeytype.ini
+tox.ini
+pnpm-lock.yaml
+.aspell.en.pws
+.clocignore
+.codespellignore
+.deepsource.toml
+.flake8
+.proselintrc
+.pydocstyle
+.pyspelling.yml
+.vale.ini
+.vale/
+
+# Runtime artifacts
+*.log
+debug_game.py
+documents/
+projects/
+vectorstore/
+lc_cache/
+resources/
 # =============================================================================
 # 💾 Large database dumps and exports (Docker build optimization)
 # =============================================================================

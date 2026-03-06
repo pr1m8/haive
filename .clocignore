@@ -1,7 +1,0 @@
-.venv
-.trunk
-.secrets
-.nox
-*.ipynb
-*.log
-*tests
