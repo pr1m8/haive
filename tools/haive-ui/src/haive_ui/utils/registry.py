@@ -118,8 +118,18 @@ AGENT_REGISTRY: list[AgentInfo] = [
              "Research information about people", tags=["research", "person"]),
 
     # Conversation agents
-    AgentInfo("Conversation Agent", "haive.agents.conversation", "BaseConversationAgent", "conversation",
-             "Multi-turn conversational agent", tags=["conversation"]),
+    AgentInfo("Base Conversation", "haive.agents.conversation.base.agent", "BaseConversationAgent", "conversation",
+             "Multi-turn conversational agent", tags=["conversation", "base"]),
+    AgentInfo("Collaborative Conversation", "haive.agents.conversation.collaberative.agent", "CollaborativeConversation", "conversation",
+             "Collaborative multi-agent conversation", tags=["conversation", "collaborative"]),
+    AgentInfo("Debate Conversation", "haive.agents.conversation.debate.agent", "DebateConversation", "conversation",
+             "Debate-style conversation between agents", tags=["conversation", "debate"]),
+    AgentInfo("Directed Conversation", "haive.agents.conversation.directed.agent", "DirectedConversation", "conversation",
+             "Directed conversation with goals and topics", tags=["conversation", "directed"]),
+    AgentInfo("Social Media Conversation", "haive.agents.conversation.social_media.agent", "SocialMediaConversation", "conversation",
+             "Social media-style interaction simulation", tags=["conversation", "social"]),
+    AgentInfo("Round Robin Conversation", "haive.agents.conversation.round_robin.agent", "RoundRobinConversation", "conversation",
+             "Round-robin multi-agent conversation", tags=["conversation", "round-robin"]),
 ]
 
 
@@ -217,6 +227,12 @@ GAME_REGISTRY: list[GameInfo] = [
              "Structured LLM debate", min_players=2, max_players=4,
              config_module="haive.games.debate.config", config_class="DebateAgentConfig",
              example_module="haive.games.debate.example", tags=["debate", "argumentation"]),
+    GameInfo("Debate V2", "haive.games.debate_v2.agent", "GameDebateAgent", "debate",
+             "Enhanced debate with conversation flow", min_players=2, max_players=4,
+             example_module="haive.games.debate_v2.example", tags=["debate", "v2"]),
+    GameInfo("Debate V2 (Judges)", "haive.games.debate_v2.agent_with_judges", "JudgedGameDebateAgent", "debate",
+             "Multi-judge debate evaluation", min_players=2, max_players=8,
+             example_module="haive.games.debate_v2.example_with_judges", tags=["debate", "judges"]),
 ]
 
 
