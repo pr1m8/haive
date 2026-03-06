@@ -1,0 +1,20 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "haive-ui"
+version = "0.1.0"
+description = "Streamlit UI for Haive Agent Framework - demos, games, and observability"
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit>=1.30.0",
+    "langchain-core>=0.3.0",
+    "pydantic>=2.0.0",
+]
+
+[project.scripts]
+haive-ui = "haive_ui.app:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/haive_ui"]
