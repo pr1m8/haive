@@ -1,8 +1,11 @@
-"""Games page - browse, configure, and run game agents."""
+"""Games page - browse and run games with individual detail pages."""
 
+import asyncio
+import os
+import re
 import subprocess
 import sys
-import os
+import time
 import traceback
 
 import streamlit as st
@@ -14,83 +17,368 @@ from haive_ui.utils.registry import (
     try_import,
     try_import_game_config,
 )
+from haive_ui.utils.tracer import TraceCollector
+
+
+HAIVE_ROOT = os.environ.get("HAIVE_ROOT", "/home/will/Projects/haive")
 
 
 def render():
+    # Initialize tracer
+    if "tracer" not in st.session_state:
+        st.session_state.tracer = TraceCollector()
+
+    # Check if user selected a specific game
+    selected = st.session_state.get("selected_game")
+
+    if selected is not None:
+        _render_game_detail(GAME_REGISTRY[selected])
+    else:
+        _render_game_list()
+
+
+# -- Game List View (Browse All) ------------------------------------------
+
+def _render_game_list():
     st.title("Games")
+    st.caption(f"{len(GAME_REGISTRY)} games across {len(get_games_by_category())} categories")
 
-    tab1, tab2, tab3 = st.tabs(["Browse Games", "Run Game", "Import Status"])
+    # Search
+    search = st.text_input("Search games", "", key="game_search_main")
 
-    with tab1:
-        _render_browse_tab()
-
-    with tab2:
-        _render_run_tab()
-
-    with tab3:
-        _render_status_tab()
-
-
-# ── Browse Tab ──────────────────────────────────────────────────────
-
-def _render_browse_tab():
-    """Browse all games with details."""
-    search = st.text_input("Search games", "", key="game_search_browse")
-
+    # Render by category
     for cat, games in get_games_by_category().items():
-        filtered = [g for g in games
-                    if not search or search.lower() in g.name.lower()
-                    or search.lower() in g.description.lower()]
+        filtered = [
+            g for g in games
+            if not search or search.lower() in g.name.lower() or search.lower() in g.description.lower()
+        ]
         if not filtered:
             continue
 
         st.subheader(f"{cat.replace('_', ' ').title()} ({len(filtered)})")
+        rows = [filtered[i:i + 3] for i in range(0, len(filtered), 3)]
+        for row in rows:
+            cols = st.columns(3)
+            for col, game_info in zip(cols, row):
+                with col:
+                    _render_game_tile(game_info)
+        st.divider()
 
-        for g in filtered:
-            _render_game_card(g)
 
-
-def _render_game_card(g: GameInfo):
-    """Render a single game info card."""
+def _render_game_tile(g: GameInfo):
+    """Render a clickable tile for a game."""
+    idx = GAME_REGISTRY.index(g)
     cls, err = try_import(g.module_path, g.class_name)
-    status_icon = "OK" if cls else "FAIL"
 
-    with st.expander(f"**{g.name}** -- {g.description} [{status_icon}]"):
-        col1, col2 = st.columns([2, 1])
+    with st.container(border=True):
+        st.markdown(f"**{g.name}**")
+        st.caption(g.description[:80] if g.description else "")
+        st.caption(f"Players: {g.min_players}-{g.max_players}")
+        tags_str = " ".join(f"`{t}`" for t in g.tags[:3]) if g.tags else ""
+        if tags_str:
+            st.markdown(tags_str)
 
-        with col1:
-            st.markdown(f"**{g.description}**")
-            st.caption(f"Players: {g.min_players}-{g.max_players} | Tags: {', '.join(g.tags)}")
-            st.code(f"from {g.module_path} import {g.class_name}", language="python")
-
-            if g.config_module and g.config_class:
-                st.code(f"from {g.config_module} import {g.config_class}", language="python")
-
-            if g.example_module:
-                st.caption(f"Example: `python -m {g.example_module}`")
-
-        with col2:
+        col_s, col_b = st.columns([1, 1])
+        with col_s:
             if cls:
-                st.success("Agent: OK")
+                st.success("OK", icon=None)
             else:
-                st.error(f"Agent: {err}")
+                st.error("FAIL", icon=None)
+        with col_b:
+            if st.button("Open", key=f"open_game_{idx}", type="primary"):
+                st.session_state.selected_game = idx
+                st.rerun()
 
-            cfg_cls, cfg_err = try_import_game_config(g)
+
+# -- Game Detail Page -----------------------------------------------------
+
+def _render_game_detail(g: GameInfo):
+    """Full detail page for a single game."""
+    idx = GAME_REGISTRY.index(g)
+
+    # Back button
+    if st.button("< Back to Games", key="back_games"):
+        st.session_state.selected_game = None
+        st.rerun()
+
+    st.title(g.name)
+    st.caption(f"Category: **{g.category}** | Module: `{g.module_path}`")
+
+    # Import status
+    cls, err = try_import(g.module_path, g.class_name)
+    cfg_cls, cfg_err = try_import_game_config(g)
+
+    # Top info bar
+    col1, col2, col3, col4, col5 = st.columns(5)
+    with col1:
+        if cls:
+            st.success("Agent: OK")
+        else:
+            st.error("Agent: FAIL")
+    with col2:
+        if cfg_cls:
+            st.success("Config: OK")
+        else:
+            st.warning("Config: N/A" if "No config" in (cfg_err or "") else f"Config: FAIL")
+    with col3:
+        st.info(f"Players: {g.min_players}-{g.max_players}")
+    with col4:
+        st.info(f"Has UI: {'Yes' if g.has_ui else 'No'}")
+    with col5:
+        llm_cfg = st.session_state.llm_config
+        st.info(f"LLM: {llm_cfg['model']}")
+
+    if err:
+        st.error(f"Import error: {err}")
+
+    # Tabs
+    tab_info, tab_run, tab_source, tab_config = st.tabs(["Info", "Run Game", "Example Source", "Config"])
+
+    with tab_info:
+        _render_game_info(g, cls, cfg_cls)
+
+    with tab_run:
+        _render_game_run(g, cls)
+
+    with tab_source:
+        _render_game_source(g)
+
+    with tab_config:
+        _render_game_config_tab(g, cfg_cls)
+
+
+def _render_game_info(g: GameInfo, cls, cfg_cls):
+    """Show detailed info about the game."""
+    st.subheader("Description")
+    st.markdown(g.description)
+
+    # Import code
+    st.subheader("Imports")
+    st.code(f"from {g.module_path} import {g.class_name}", language="python")
+    if g.config_module and g.config_class:
+        st.code(f"from {g.config_module} import {g.config_class}", language="python")
+
+    # Tags
+    if g.tags:
+        st.subheader("Tags")
+        st.markdown(" ".join(f"`{t}`" for t in g.tags))
+
+    # Docstring
+    if cls and cls.__doc__:
+        import inspect
+        st.subheader("Documentation")
+        st.markdown(inspect.cleandoc(cls.__doc__))
+
+    # Class details
+    if cls:
+        st.subheader("Class Details")
+        bases = [b.__name__ for b in cls.__mro__[1:4] if b.__name__ != "object"]
+        st.markdown(f"**Class:** `{cls.__name__}`")
+        if bases:
+            st.markdown(f"**Inherits:** {' > '.join(bases)}")
+        key_methods = [m for m in ["run_game", "play", "run", "arun", "invoke"] if hasattr(cls, m)]
+        if key_methods:
+            st.markdown("**Key Methods:** " + ", ".join(f"`{m}()`" for m in key_methods))
+
+    # Quick usage example
+    st.subheader("Quick Start")
+    if g.config_module and g.config_class:
+        st.code(f"""from {g.config_module} import {g.config_class}
+from {g.module_path} import {g.class_name}
+
+config = {g.config_class}()
+agent = {g.class_name}(config)
+# agent.run_game()  # or use the example module
+""", language="python")
+    else:
+        st.code(f"""from {g.module_path} import {g.class_name}
+
+agent = {g.class_name}()
+# Run the game
+""", language="python")
+
+    if g.example_module:
+        st.caption(f"Example: `python -m {g.example_module}`")
+
+
+def _render_game_run(g: GameInfo, cls):
+    """Run the game example."""
+    st.subheader("Run Game")
+
+    llm_cfg = st.session_state.llm_config
+    st.caption(f"Using: {llm_cfg['provider']}/{llm_cfg['model']} (temp={llm_cfg['temperature']}) -- change in sidebar")
+
+    if not g.example_module:
+        st.warning("No example module configured for this game.")
+        return
+
+    st.markdown(f"**Example module:** `{g.example_module}`")
+
+    # Run options
+    timeout = st.slider("Timeout (seconds)", 15, 300, 120, key=f"timeout_{g.name}")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        run_btn = st.button("Run Game Example", type="primary", key=f"run_{g.name}")
+    with col2:
+        test_btn = st.button("Test Create Agent", key=f"test_create_{g.name}")
+
+    if test_btn:
+        _test_create_game_agent(g, cls)
+
+    if run_btn:
+        _run_game_example(g, timeout)
+
+    # Show cached result
+    cached = st.session_state.get(f"game_result_{g.name}")
+    if cached:
+        st.divider()
+        st.subheader("Last Run Results")
+        if cached["status"] == "success":
+            st.success(f"Completed in {cached['duration']:.1f}s")
+        elif cached["status"] == "timeout":
+            st.warning(f"Timed out after {timeout}s (game was running, likely waiting for LLM)")
+        else:
+            st.error(f"Failed (exit {cached.get('returncode', '?')})")
+
+        if cached.get("key_results"):
+            st.markdown("**Key Results:**")
+            for line in cached["key_results"]:
+                st.markdown(f"- {line}")
+
+        if cached.get("output"):
+            with st.expander("Full Output", expanded=False):
+                st.code(cached["output"])
+
+
+def _test_create_game_agent(g: GameInfo, cls):
+    """Test creating a game agent (no actual game play)."""
+    with st.spinner("Creating game agent..."):
+        try:
+            cfg_cls, _ = try_import_game_config(g)
             if cfg_cls:
-                st.success("Config: OK")
+                # Try with analysis/visualize disabled, fall back to defaults
+                try:
+                    config = cfg_cls(enable_analysis=False, visualize=False)
+                except Exception:
+                    try:
+                        config = cfg_cls(visualize=False)
+                    except Exception:
+                        config = cfg_cls()
+                agent = cls(config)
             else:
-                st.warning(f"Config: {cfg_err}")
+                agent = cls()
 
-            st.caption(f"Has UI: {'Yes' if g.has_ui else 'No'}")
+            st.success(f"Agent created: `{type(agent).__name__}`")
 
-        # View example source
-        if g.example_module:
-            if st.button("View Example Source", key=f"view_src_{g.name}"):
-                _show_example_source(g)
+            # Show details
+            if hasattr(agent, "app") and agent.app is not None:
+                st.caption("Graph compiled: Yes")
+            if hasattr(agent, "runnable_config"):
+                rc = agent.runnable_config or {}
+                rl = rc.get("recursion_limit", "default")
+                st.caption(f"Recursion limit: {rl}")
+
+        except Exception as e:
+            st.error(f"Failed: {e}")
+            with st.expander("Full traceback"):
+                st.code(traceback.format_exc())
 
 
-def _show_example_source(g: GameInfo):
-    """Display example source code."""
+def _run_game_example(g: GameInfo, timeout: int):
+    """Run a game's example module via subprocess."""
+    tracer: TraceCollector = st.session_state.tracer
+    trace = tracer.start_trace(f"Game: {g.name}")
+    tracer.log("input", g.name, f"Running example: {g.example_module}")
+
+    with st.spinner(f"Running {g.name}... (timeout: {timeout}s)"):
+        try:
+            result = subprocess.run(
+                [sys.executable, "-m", g.example_module],
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+                cwd=HAIVE_ROOT,
+                env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+            )
+
+            ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
+
+            if result.returncode == 0:
+                st.success(f"{g.name} completed successfully")
+                tracer.log("output", g.name, "Completed successfully")
+                tracer.end_trace("completed")
+            else:
+                st.error(f"{g.name} failed (exit {result.returncode})")
+                tracer.log("error", g.name, result.stderr[-500:] if result.stderr else "Unknown error")
+                tracer.end_trace("error")
+
+            # Process output
+            if result.stdout:
+                stdout_lines = result.stdout.strip().split("\n")
+                clean_lines = [ansi_escape.sub('', line).strip() for line in stdout_lines]
+
+                # Find key results
+                key_results = [
+                    l for l in clean_lines
+                    if any(kw in l.lower() for kw in
+                           ["completed", "winner", "result", "game over", "final", "score", "pass", "fail"])
+                    and l.strip()
+                ]
+
+                # Cache result
+                st.session_state[f"game_result_{g.name}"] = {
+                    "status": "success" if result.returncode == 0 else "fail",
+                    "returncode": result.returncode,
+                    "duration": 0,  # subprocess doesn't track this easily
+                    "output": "\n".join(clean_lines[-200:]),
+                    "key_results": key_results[-5:],
+                }
+
+                # Show results inline
+                if key_results:
+                    st.subheader("Key Results")
+                    for line in key_results[-5:]:
+                        st.markdown(f"- {line}")
+
+                with st.expander("Full Output", expanded=True):
+                    st.code("\n".join(clean_lines[-200:]))
+
+            if result.stderr and result.returncode != 0:
+                with st.expander("Errors"):
+                    clean_stderr = ansi_escape.sub('', result.stderr[-3000:])
+                    st.code(clean_stderr)
+
+        except subprocess.TimeoutExpired:
+            st.warning(f"{g.name} timed out after {timeout}s (game was running, likely waiting for LLM API)")
+            st.info("This means the game starts successfully but needs LLM API calls to complete.")
+            tracer.log("output", g.name, f"Timed out after {timeout}s (game was running)")
+            tracer.end_trace("completed")
+
+            st.session_state[f"game_result_{g.name}"] = {
+                "status": "timeout",
+                "output": "",
+                "key_results": [],
+            }
+
+        except Exception as e:
+            st.error(f"Error: {e}")
+            tracer.log("error", g.name, str(e))
+            tracer.end_trace("error")
+            with st.expander("Traceback"):
+                st.code(traceback.format_exc())
+
+
+def _render_game_source(g: GameInfo):
+    """Show the example source code."""
+    st.subheader("Example Source")
+
+    if not g.example_module:
+        st.info("No example module configured for this game.")
+        return
+
+    st.caption(f"Module: `{g.example_module}`")
+
     try:
         mod = __import__(g.example_module, fromlist=["__file__"])
         if hasattr(mod, "__file__") and mod.__file__:
@@ -99,151 +387,43 @@ def _show_example_source(g: GameInfo):
         else:
             st.info("No source file found")
     except Exception as e:
-        st.error(f"Cannot load: {e}")
+        st.error(f"Cannot load source: {e}")
+        with st.expander("Details"):
+            st.code(traceback.format_exc())
 
 
-# ── Run Tab ─────────────────────────────────────────────────────────
+def _render_game_config_tab(g: GameInfo, cfg_cls):
+    """Show game configuration details."""
+    st.subheader("Game Configuration")
 
-def _render_run_tab():
-    """Run a specific game."""
-    categories = list(get_games_by_category().keys())
-    selected_cat = st.selectbox("Category", categories, key="game_run_cat")
-
-    games_in_cat = [g for g in GAME_REGISTRY if g.category == selected_cat]
-    game_names = [g.name for g in games_in_cat]
-    selected_name = st.selectbox("Game", game_names, key="game_run_select")
-    game_info = next(g for g in games_in_cat if g.name == selected_name)
-
-    # Game info header
-    st.markdown(f"### {game_info.name}")
-    st.markdown(f"**{game_info.description}**")
-
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.metric("Min Players", game_info.min_players)
-    with col2:
-        st.metric("Max Players", game_info.max_players)
-    with col3:
-        st.metric("Has UI", "Yes" if game_info.has_ui else "No")
-    with col4:
-        cls, _ = try_import(game_info.module_path, game_info.class_name)
-        st.metric("Import", "OK" if cls else "FAIL")
-
-    st.divider()
-
-    # LLM config display
-    llm_cfg = st.session_state.llm_config
-    st.caption(f"Current LLM: {llm_cfg['provider']}/{llm_cfg['model']} (temp={llm_cfg['temperature']})")
-    st.caption("Change LLM settings in the sidebar.")
-
-    st.divider()
-
-    # Run options
-    timeout = st.slider("Timeout (seconds)", 15, 300, 60, key=f"timeout_run_{game_info.name}")
-
-    col_run, col_view = st.columns(2)
-    with col_run:
-        if st.button("Run Game Example", type="primary", key=f"runbtn_{game_info.name}"):
-            _run_game(game_info, timeout)
-    with col_view:
-        if st.button("View Example Source", key=f"viewbtn_{game_info.name}"):
-            _show_example_source(game_info)
-
-
-def _run_game(game_info: GameInfo, timeout: int):
-    """Run a game's example via subprocess with rich output."""
-    if not game_info.example_module:
-        st.error("No example module configured")
+    if not cfg_cls:
+        st.info("No config class available for this game.")
         return
 
-    with st.spinner(f"Running {game_info.name}..."):
-        try:
-            result = subprocess.run(
-                [sys.executable, "-m", game_info.example_module],
-                capture_output=True,
-                text=True,
-                timeout=timeout,
-                cwd=os.environ.get("HAIVE_ROOT", "/home/will/Projects/haive"),
-                env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
-            )
+    st.code(f"from {g.config_module} import {g.config_class}", language="python")
 
-            if result.returncode == 0:
-                st.success(f"{game_info.name} completed successfully")
-            else:
-                st.error(f"{game_info.name} failed (exit {result.returncode})")
+    # Show config fields
+    try:
+        import inspect
+        if cfg_cls.__doc__:
+            st.markdown(inspect.cleandoc(cfg_cls.__doc__))
 
-            # Rich output display
-            if result.stdout:
-                stdout_lines = result.stdout.strip().split("\n")
+        # Try to show fields from Pydantic model
+        if hasattr(cfg_cls, "model_fields"):
+            st.subheader("Config Fields")
+            for name, field_info in cfg_cls.model_fields.items():
+                default = field_info.default
+                if default is not None:
+                    st.markdown(f"- **{name}**: `{default}` ({field_info.annotation.__name__ if hasattr(field_info.annotation, '__name__') else str(field_info.annotation)})")
+                else:
+                    st.markdown(f"- **{name}**: *required*")
 
-                # Show summary metrics
-                _show_output_summary(game_info, stdout_lines)
+        # Show source
+        source_file = inspect.getfile(cfg_cls)
+        st.caption(f"File: `{source_file}`")
+        with st.expander("Config Source"):
+            with open(source_file) as f:
+                st.code(f.read(), language="python", line_numbers=True)
 
-                # Full output in expander
-                with st.expander("Full Output", expanded=True):
-                    # Show last 200 lines (most games have a lot of rich output)
-                    display_lines = stdout_lines[-200:]
-                    # Strip ANSI codes for cleaner display
-                    import re
-                    ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
-                    clean_lines = [ansi_escape.sub('', line) for line in display_lines]
-                    st.code("\n".join(clean_lines))
-
-            if result.stderr and result.returncode != 0:
-                with st.expander("Errors"):
-                    st.code(result.stderr[-3000:])
-
-        except subprocess.TimeoutExpired:
-            st.warning(f"{game_info.name} timed out after {timeout}s (likely waiting for LLM API calls)")
-            st.info("This usually means the game works but needs active LLM API keys to complete.")
-        except Exception as e:
-            st.error(f"Error: {e}")
-            with st.expander("Traceback"):
-                st.code(traceback.format_exc())
-
-
-def _show_output_summary(game_info: GameInfo, lines: list[str]):
-    """Extract and show key info from game output."""
-    # Look for common game output patterns
-    import re
-    ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
-
-    clean_lines = [ansi_escape.sub('', line).strip() for line in lines]
-
-    # Find status/result lines
-    result_lines = [l for l in clean_lines if any(kw in l.lower() for kw in
-                    ["completed", "winner", "result", "game over", "final", "score", "pass", "fail"])]
-
-    if result_lines:
-        st.subheader("Key Results")
-        for line in result_lines[-5:]:
-            if line:
-                st.markdown(f"- {line}")
-
-
-# ── Status Tab ──────────────────────────────────────────────────────
-
-def _render_status_tab():
-    """Show import status of all games."""
-    st.subheader("Game Import Status")
-
-    results = []
-    for g in GAME_REGISTRY:
-        cls, err = try_import(g.module_path, g.class_name)
-        cfg_cls, cfg_err = try_import_game_config(g)
-
-        results.append({
-            "Game": g.name,
-            "Category": g.category,
-            "Agent": "OK" if cls else "FAIL",
-            "Config": "OK" if cfg_cls else "FAIL",
-            "Has UI": g.has_ui,
-            "Players": f"{g.min_players}-{g.max_players}",
-            "Example": g.example_module or "None",
-        })
-
-    st.dataframe(results, use_container_width=True)
-
-    agent_ok = sum(1 for r in results if r["Agent"] == "OK")
-    config_ok = sum(1 for r in results if r["Config"] == "OK")
-    st.caption(f"Agents: {agent_ok}/{len(results)} OK | Configs: {config_ok}/{len(results)} OK")
+    except Exception as e:
+        st.warning(f"Could not inspect config: {e}")

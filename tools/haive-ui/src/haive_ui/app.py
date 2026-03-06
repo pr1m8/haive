@@ -1,5 +1,23 @@
 """Haive UI - Main Streamlit Application."""
 
+import logging
+import warnings
+
+# Suppress noisy debug logging from framework internals
+logging.getLogger().setLevel(logging.WARNING)  # Root logger
+for _logger_name in [
+    "haive", "haive.core", "haive.agents", "haive.games", "haive.mcp",
+    "langchain", "langchain_core", "langchain_community", "langchain_openai",
+    "langgraph", "httpx", "httpcore", "openai", "urllib3",
+    "chromadb", "sentence_transformers", "transformers",
+]:
+    logging.getLogger(_logger_name).setLevel(logging.WARNING)
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=UserWarning, module="pydantic")
+warnings.filterwarnings("ignore", message=".*LangChainDeprecationWarning.*")
+warnings.filterwarnings("ignore", message=".*deprecated.*")
+
 import streamlit as st
 
 

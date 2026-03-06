@@ -17,6 +17,10 @@ class AgentInfo:
     factory_method: str | None = None  # "from_documents", etc.
     requires_docs: bool = False
     requires_tools: bool = False
+    config_module: str = ""
+    config_class: str = ""
+    is_abstract: bool = False
+    is_function: bool = False
     tags: list[str] = field(default_factory=list)
 
 
@@ -48,7 +52,7 @@ AGENT_REGISTRY: list[AgentInfo] = [
              "Basic conversational agent with LLM", tags=["conversation", "basic"]),
     AgentInfo("React Agent", "haive.agents.react.agent", "ReactAgent", "core",
              "Reasoning + Acting agent with tool use", requires_tools=True, tags=["tools", "reasoning"]),
-    AgentInfo("Dynamic Supervisor", "haive.agents.supervisor.agent", "DynamicSupervisor", "core",
+    AgentInfo("Dynamic Supervisor", "haive.agents.dynamic_supervisor.agent", "DynamicSupervisorAgent", "core",
              "Creates and manages agents dynamically", tags=["multi-agent", "dynamic"]),
 
     # RAG agents
@@ -85,39 +89,59 @@ AGENT_REGISTRY: list[AgentInfo] = [
 
     # Reasoning agents
     AgentInfo("Self-Discover", "haive.agents.reasoning_and_critique.self_discover.v2.agent", "self_discovery", "reasoning",
-             "Self-discovering reasoning structures", tags=["reasoning"]),
+             "Self-discovering reasoning structures", is_function=True, tags=["reasoning"]),
     AgentInfo("Reflection", "haive.agents.reasoning_and_critique.reflection.agent", "ReflectionAgent", "reasoning",
-             "Iterative self-reflection", tags=["reasoning", "reflection"]),
+             "Iterative self-reflection",
+             config_module="haive.agents.reasoning_and_critique.reflection.config", config_class="ReflectionAgentConfig",
+             tags=["reasoning", "reflection"]),
     AgentInfo("Reflexion", "haive.agents.reasoning_and_critique.reflexion.agent", "ReflexionAgent", "reasoning",
-             "Reflexion with memory and self-improvement", tags=["reasoning", "reflexion"]),
+             "Reflexion with memory and self-improvement",
+             config_module="haive.agents.reasoning_and_critique.reflexion.config", config_class="ReflexionConfig",
+             tags=["reasoning", "reflexion"]),
     AgentInfo("Tree of Thought", "haive.agents.reasoning_and_critique.tot.agent", "ToTAgent", "reasoning",
-             "Tree-structured reasoning exploration", tags=["reasoning", "tot"]),
+             "Tree-structured reasoning exploration",
+             config_module="haive.agents.reasoning_and_critique.tot.config", config_class="TOTAgentConfig",
+             tags=["reasoning", "tot"]),
     AgentInfo("LATS", "haive.agents.reasoning_and_critique.lats.agent", "LATSAgent", "reasoning",
-             "Language Agent Tree Search", tags=["reasoning", "search"]),
+             "Language Agent Tree Search",
+             config_module="haive.agents.reasoning_and_critique.lats.config", config_class="LATSAgentConfig",
+             tags=["reasoning", "search"]),
     AgentInfo("MCTS", "haive.agents.reasoning_and_critique.mcts.agent", "MCTSAgent", "reasoning",
-             "Monte Carlo Tree Search reasoning", tags=["reasoning", "mcts"]),
+             "Monte Carlo Tree Search reasoning", is_abstract=True,
+             config_module="haive.agents.reasoning_and_critique.mcts.config", config_class="MCTSAgentConfig",
+             tags=["reasoning", "mcts"]),
     AgentInfo("Logic Agent", "haive.agents.reasoning_and_critique.logic.agent", "create_synthesis_agent", "reasoning",
-             "Formal logic-based reasoning synthesis", tags=["reasoning", "logic"]),
+             "Formal logic-based reasoning synthesis", is_function=True, tags=["reasoning", "logic"]),
 
     # Planning agents
     AgentInfo("Plan & Execute", "haive.agents.planning.plan_and_execute.agent", "PlanAndExecuteAgent", "planning",
-             "Plan then execute step-by-step", tags=["planning"]),
+             "Plan then execute step-by-step",
+             config_module="haive.agents.planning.plan_and_execute.config", config_class="PlanAndExecuteConfig",
+             tags=["planning"]),
     AgentInfo("ReWOO V3", "haive.agents.planning.rewoo_v3.agent", "ReWOOV3Agent", "planning",
              "Reasoning Without Observation", tags=["planning", "rewoo"]),
     AgentInfo("LLM Compiler V3", "haive.agents.planning.llm_compiler_v3.agent", "LLMCompilerV3Agent", "planning",
-             "Compiles tasks into execution plans", tags=["planning", "compiler"]),
+             "Compiles tasks into execution plans",
+             config_module="haive.agents.planning.llm_compiler_v3.config", config_class="LLMCompilerV3Config",
+             tags=["planning", "compiler"]),
     AgentInfo("Plan Execute V3", "haive.agents.planning.plan_execute_v3.agent", "PlanExecuteV3Agent", "planning",
-             "Enhanced plan-execute with evaluation", tags=["planning"]),
+             "Enhanced plan-execute with evaluation",
+             config_module="haive.agents.planning.plan_execute_v3.config", config_class="PlanExecuteV3Config",
+             tags=["planning"]),
 
     # Research agents
     AgentInfo("Open Perplexity", "haive.agents.research.open_perplexity.agent", "ResearchAgent", "research",
-             "Open-source Perplexity-style search", tags=["research", "search"]),
+             "Open-source Perplexity-style search",
+             config_module="haive.agents.research.open_perplexity.config", config_class="ResearchAgentConfig",
+             tags=["research", "search"]),
     AgentInfo("Person Research", "haive.agents.research.person.agent", "PersonResearchAgent", "research",
-             "Research information about people", tags=["research", "person"]),
+             "Research information about people",
+             config_module="haive.agents.research.person.config", config_class="PersonResearchAgentConfig",
+             tags=["research", "person"]),
 
     # Conversation agents
     AgentInfo("Base Conversation", "haive.agents.conversation.base.agent", "BaseConversationAgent", "conversation",
-             "Multi-turn conversational agent", tags=["conversation", "base"]),
+             "Multi-turn conversational agent", is_abstract=True, tags=["conversation", "base"]),
     AgentInfo("Collaborative Conversation", "haive.agents.conversation.collaberative.agent", "CollaborativeConversation", "conversation",
              "Collaborative multi-agent conversation", tags=["conversation", "collaborative"]),
     AgentInfo("Debate Conversation", "haive.agents.conversation.debate.agent", "DebateConversation", "conversation",
@@ -266,6 +290,13 @@ def get_class_docstring(module_path: str, class_name: str) -> str:
     if cls and cls.__doc__:
         return inspect.cleandoc(cls.__doc__)
     return ""
+
+
+def try_import_agent_config(agent_info: AgentInfo):
+    """Try to import an agent's config class."""
+    if not agent_info.config_module or not agent_info.config_class:
+        return None, "No config module specified"
+    return try_import(agent_info.config_module, agent_info.config_class)
 
 
 def try_import_game_config(game_info: GameInfo):

@@ -7,7 +7,7 @@ import streamlit as st
 from haive_ui.utils.registry import try_import
 
 
-# ── Discovery Module Registry ──────────────────────────────────────
+# -- Discovery Module Registry ------------------------------------------------
 
 DISCOVERY_MODULES = [
     {
@@ -115,7 +115,7 @@ MCP_MODULES = [
 def render():
     st.title("Discovery & MCP")
 
-    tab1, tab2, tab3 = st.tabs(["Discovery Agents", "MCP Tools", "Import Status"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Discovery Agents", "MCP Tools", "Self-Query Demo", "Import Status"])
 
     with tab1:
         _render_discovery_tab()
@@ -124,10 +124,13 @@ def render():
         _render_mcp_tab()
 
     with tab3:
+        _render_self_query_demo()
+
+    with tab4:
         _render_import_status()
 
 
-# ── Discovery Tab ──────────────────────────────────────────────────
+# -- Discovery Tab -----------------------------------------------------------
 
 def _render_discovery_tab():
     """Browse and test discovery agents."""
@@ -177,12 +180,10 @@ def _test_discovery_module(info: dict, cls):
     """Show details about a discovery module."""
     try:
         import inspect
-        # Show class docstring
         docstring = inspect.getdoc(cls)
         if docstring:
             st.caption(docstring[:500])
 
-        # Show public methods
         methods = [m for m in dir(cls) if not m.startswith("_") and callable(getattr(cls, m, None))]
         if methods:
             st.markdown("**Public Methods:**")
@@ -195,7 +196,7 @@ def _test_discovery_module(info: dict, cls):
             st.code(traceback.format_exc())
 
 
-# ── MCP Tab ────────────────────────────────────────────────────────
+# -- MCP Tab -----------------------------------------------------------------
 
 def _render_mcp_tab():
     """Browse MCP integration modules."""
@@ -222,7 +223,6 @@ def _render_mcp_card(info: dict):
         cls, err = try_import(info["module"], info["class"])
         status = "OK" if cls else "FAIL"
     else:
-        # Module-level import check
         try:
             import importlib
             importlib.import_module(info["module"])
@@ -246,7 +246,237 @@ def _render_mcp_card(info: dict):
             st.error(f"Import: {err}")
 
 
-# ── Import Status ──────────────────────────────────────────────────
+# -- Self-Query Demo ---------------------------------------------------------
+
+def _render_self_query_demo():
+    """Interactive demo of self-query and dynamic tool discovery."""
+    st.subheader("Self-Query & Dynamic Tool Discovery")
+    st.markdown(
+        "Query the framework to discover agents, tools, and capabilities dynamically. "
+        "This uses the discovery system to match your query to available components."
+    )
+
+    # Build tool/agent catalog from registries
+    from haive_ui.utils.registry import AGENT_REGISTRY, GAME_REGISTRY
+
+    all_components = []
+    for a in AGENT_REGISTRY:
+        all_components.append({
+            "name": a.name,
+            "type": "Agent",
+            "category": a.category,
+            "description": a.description,
+            "module": a.module_path,
+            "class": a.class_name,
+            "tags": a.tags,
+            "requires_docs": a.requires_docs,
+            "requires_tools": a.requires_tools,
+            "is_abstract": a.is_abstract,
+            "is_function": a.is_function,
+        })
+    for g in GAME_REGISTRY:
+        all_components.append({
+            "name": g.name,
+            "type": "Game",
+            "category": g.category,
+            "description": g.description,
+            "module": g.module_path,
+            "class": g.class_name,
+            "tags": g.tags,
+            "has_ui": g.has_ui,
+            "players": f"{g.min_players}-{g.max_players}",
+        })
+    for d in DISCOVERY_MODULES:
+        all_components.append({
+            "name": d["name"],
+            "type": "Discovery",
+            "category": "discovery",
+            "description": d["description"],
+            "module": d["module"],
+            "class": d["class"],
+            "tags": [],
+        })
+    for m in MCP_MODULES:
+        all_components.append({
+            "name": m["name"],
+            "type": "MCP",
+            "category": m.get("category", "mcp"),
+            "description": m["description"],
+            "module": m["module"],
+            "class": m.get("class", ""),
+            "tags": [],
+        })
+
+    st.caption(f"Searching across {len(all_components)} registered components")
+
+    # Query input
+    query = st.text_input(
+        "What are you looking for?",
+        placeholder="e.g., 'RAG agent for document retrieval', 'strategy game', 'tool discovery'...",
+        key="discovery_query",
+    )
+
+    col1, col2 = st.columns(2)
+    with col1:
+        type_filter = st.multiselect(
+            "Component Type",
+            ["Agent", "Game", "Discovery", "MCP"],
+            default=["Agent", "Game", "Discovery", "MCP"],
+            key="disc_type_filter",
+        )
+    with col2:
+        max_results = st.slider("Max Results", 3, 20, 10, key="disc_max_results")
+
+    if query:
+        _run_self_query(query, all_components, type_filter, max_results)
+    else:
+        # Show all components grouped by type
+        st.divider()
+        st.subheader("All Components")
+        for comp_type in ["Agent", "Game", "Discovery", "MCP"]:
+            items = [c for c in all_components if c["type"] == comp_type]
+            if items:
+                with st.expander(f"**{comp_type}** ({len(items)})"):
+                    for item in items:
+                        tags = " ".join(f"`{t}`" for t in item.get("tags", [])[:3])
+                        st.markdown(f"- **{item['name']}** ({item.get('category', '')}) {tags}")
+                        st.caption(f"  {item['description'][:100]}")
+
+
+def _run_self_query(query: str, components: list, type_filter: list, max_results: int):
+    """Run a self-query against the component catalog."""
+    query_lower = query.lower()
+    query_terms = query_lower.split()
+
+    scored = []
+    for comp in components:
+        if comp["type"] not in type_filter:
+            continue
+
+        score = 0
+        text = f"{comp['name']} {comp['description']} {comp.get('category', '')} {' '.join(comp.get('tags', []))}"
+        text_lower = text.lower()
+
+        # Exact phrase match
+        if query_lower in text_lower:
+            score += 10
+
+        # Individual term matches
+        for term in query_terms:
+            if term in text_lower:
+                score += 3
+            if term in comp["name"].lower():
+                score += 5
+            if term in comp.get("category", "").lower():
+                score += 2
+            for tag in comp.get("tags", []):
+                if term in tag.lower():
+                    score += 4
+
+        if score > 0:
+            scored.append((score, comp))
+
+    scored.sort(key=lambda x: -x[0])
+    results = scored[:max_results]
+
+    st.divider()
+
+    if not results:
+        st.warning(f"No components found matching '{query}'. Try different keywords.")
+        return
+
+    st.success(f"Found {len(results)} matching components")
+
+    for score, comp in results:
+        with st.container(border=True):
+            col1, col2, col3 = st.columns([2, 1, 1])
+            with col1:
+                st.markdown(f"**{comp['name']}** ({comp['type']})")
+                st.caption(comp["description"][:150])
+            with col2:
+                st.markdown(f"Category: `{comp.get('category', 'n/a')}`")
+                tags = " ".join(f"`{t}`" for t in comp.get("tags", [])[:4])
+                if tags:
+                    st.markdown(tags)
+            with col3:
+                st.metric("Relevance", f"{score}")
+                cls_name = comp.get("class", "")
+                if cls_name:
+                    st.code(f"from {comp['module']} import {cls_name}", language="python")
+
+    # LLM-powered discovery option
+    st.divider()
+    st.subheader("LLM-Powered Discovery")
+    st.caption("Use the LLM to analyze your query and recommend components with reasoning.")
+
+    if st.button("Run LLM Discovery", key="llm_discovery_btn"):
+        _run_llm_discovery(query, results)
+
+
+def _run_llm_discovery(query: str, keyword_results: list):
+    """Use LLM to provide intelligent component recommendations."""
+    import asyncio
+    import time
+
+    llm_cfg = st.session_state.llm_config
+
+    # Build context from search results
+    context = "Available components:\n"
+    for score, comp in keyword_results:
+        context += f"- {comp['name']} ({comp['type']}/{comp.get('category', '')}): {comp['description'][:100]}\n"
+
+    with st.spinner(f"Querying {llm_cfg['model']}..."):
+        try:
+            from haive.core.engine.aug_llm import AugLLMConfig
+            from haive.core.models.llm.base import OpenAILLMConfig
+            from haive.agents.simple.agent import SimpleAgent
+
+            engine = AugLLMConfig(
+                llm_config=OpenAILLMConfig(model=llm_cfg.get("model", "gpt-4o-mini")),
+                temperature=llm_cfg.get("temperature", 0.3),
+                system_message=(
+                    "You are a framework expert helping users discover the right components. "
+                    "Given a user query and available components, recommend the best matches "
+                    "with clear reasoning. Be concise."
+                ),
+            )
+
+            agent = SimpleAgent(name="discovery_llm", engine=engine)
+
+            prompt = (
+                f"User query: {query}\n\n"
+                f"{context}\n\n"
+                "Which components best match this query? Recommend the top 3 with reasoning."
+            )
+
+            start = time.time()
+            loop = asyncio.new_event_loop()
+            result = loop.run_until_complete(agent.arun(prompt))
+            loop.close()
+            duration = (time.time() - start) * 1000
+
+            st.success(f"LLM responded in {duration:.0f}ms")
+
+            # Display result
+            if isinstance(result, dict):
+                messages = result.get("messages", [])
+                if messages:
+                    content = getattr(messages[-1], "content", str(messages[-1]))
+                    st.markdown(content)
+                else:
+                    st.json(result)
+            elif isinstance(result, str):
+                st.markdown(result)
+            else:
+                st.write(result)
+
+        except Exception as e:
+            st.error(f"LLM discovery failed: {e}")
+            with st.expander("Details"):
+                st.code(traceback.format_exc())
+
+
+# -- Import Status -----------------------------------------------------------
 
 def _render_import_status():
     """Show import status for all discovery and MCP modules."""
@@ -288,7 +518,6 @@ def _render_import_status():
     st.dataframe(results, use_container_width=True)
 
     ok_count = sum(1 for r in results if r["Status"] == "OK")
-    fail_count = len(results) - ok_count
     disc_ok = sum(1 for r in results if r["Type"] == "Discovery" and r["Status"] == "OK")
     mcp_ok = sum(1 for r in results if r["Type"] == "MCP" and r["Status"] == "OK")
 
