@@ -17,7 +17,7 @@ def render():
     st.markdown("**Dynamic agents, games, and multi-agent systems powered by LLMs.**")
 
     # Top metrics
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
         st.metric("Agents", len(AGENT_REGISTRY))
     with col2:
@@ -26,6 +26,8 @@ def render():
         st.metric("Agent Categories", len(get_agents_by_category()))
     with col4:
         st.metric("Game Categories", len(get_games_by_category()))
+    with col5:
+        st.metric("Discovery/MCP", "9 modules")
 
     st.divider()
 

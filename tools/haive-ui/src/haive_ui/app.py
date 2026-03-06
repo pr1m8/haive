@@ -88,6 +88,7 @@ with st.sidebar:
             "Home",
             "Agents",
             "Games",
+            "Discovery & MCP",
             "Demos",
             "Status",
             "Trace Viewer",
@@ -105,6 +106,9 @@ elif page == "Agents":
 elif page == "Games":
     from haive_ui.pages import games
     games.render()
+elif page == "Discovery & MCP":
+    from haive_ui.pages import discovery
+    discovery.render()
 elif page == "Demos":
     from haive_ui.pages import demos
     demos.render()

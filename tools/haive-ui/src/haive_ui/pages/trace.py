@@ -16,6 +16,9 @@ def render():
 
     if not traces:
         st.info("No traces yet. Run an agent or game to generate traces.")
+        if st.button("Generate Sample Traces"):
+            _generate_sample_traces(tracer)
+            st.rerun()
         return
 
     # Summary metrics
@@ -96,7 +99,46 @@ def render():
 
     st.divider()
 
-    # Clear traces
-    if st.button("Clear All Traces", type="secondary"):
-        st.session_state.tracer = TraceCollector()
-        st.rerun()
+    # Actions
+    col_clear, col_gen = st.columns(2)
+    with col_clear:
+        if st.button("Clear All Traces", type="secondary"):
+            st.session_state.tracer = TraceCollector()
+            st.rerun()
+    with col_gen:
+        if st.button("Generate Sample Traces"):
+            _generate_sample_traces(tracer)
+            st.rerun()
+
+
+def _generate_sample_traces(tracer: TraceCollector):
+    """Generate sample traces for demonstration."""
+    import time as _time
+
+    # Sample: Chess game trace
+    t1 = tracer.start_trace("Chess Game: gpt-4o vs gpt-4o-mini")
+    tracer.log("input", "ChessAgent", "Starting chess game with default config")
+    tracer.log("llm_call", "Player White", "Analyzing board position... Playing e2-e4")
+    tracer.log("game_move", "Player White", "e2-e4 (King's Pawn Opening)")
+    tracer.log("llm_call", "Player Black", "Responding to King's Pawn... Playing e7-e5")
+    tracer.log("game_move", "Player Black", "e7-e5 (Open Game)")
+    tracer.log("llm_call", "Player White", "Developing knight... Playing Ng1-f3")
+    tracer.log("game_move", "Player White", "Ng1-f3 (King's Knight)")
+    tracer.log("output", "ChessAgent", "Game completed after 32 moves. White wins by checkmate.")
+    tracer.end_trace("completed")
+
+    # Sample: Agent run trace
+    t2 = tracer.start_trace("ReactAgent: research query")
+    tracer.log("input", "ReactAgent", "What are the latest trends in AI?")
+    tracer.log("llm_call", "ReactAgent", "Analyzing query, deciding to use web_search tool")
+    tracer.log("tool_call", "web_search", "Searching: 'AI trends 2025'")
+    tracer.log("llm_call", "ReactAgent", "Processing search results, formulating response")
+    tracer.log("output", "ReactAgent", "Based on my research, the key AI trends are: 1) Multi-agent systems, 2) RAG improvements, 3) Smaller, faster models")
+    tracer.end_trace("completed")
+
+    # Sample: Error trace
+    t3 = tracer.start_trace("SimpleAgent: failed query")
+    tracer.log("input", "SimpleAgent", "Test query with missing API key")
+    tracer.log("llm_call", "SimpleAgent", "Attempting LLM call...")
+    tracer.log("error", "SimpleAgent", "AuthenticationError: Invalid API key provided")
+    tracer.end_trace("error")
