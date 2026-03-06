@@ -1,4 +1,4 @@
-"""Games page - play and run tournaments with LLM agents."""
+"""Games page - browse, configure, and run game agents."""
 
 import subprocess
 import sys
@@ -19,113 +19,209 @@ from haive_ui.utils.registry import (
 def render():
     st.title("Games")
 
-    tab1, tab2 = st.tabs(["Play Game", "Import Status"])
+    tab1, tab2, tab3 = st.tabs(["Browse Games", "Run Game", "Import Status"])
 
     with tab1:
-        _render_play_tab()
+        _render_browse_tab()
 
     with tab2:
+        _render_run_tab()
+
+    with tab3:
         _render_status_tab()
 
 
-def _render_play_tab():
-    """Single game play interface."""
+# ── Browse Tab ──────────────────────────────────────────────────────
+
+def _render_browse_tab():
+    """Browse all games with details."""
+    search = st.text_input("Search games", "", key="game_search_browse")
+
+    for cat, games in get_games_by_category().items():
+        filtered = [g for g in games
+                    if not search or search.lower() in g.name.lower()
+                    or search.lower() in g.description.lower()]
+        if not filtered:
+            continue
+
+        st.subheader(f"{cat.replace('_', ' ').title()} ({len(filtered)})")
+
+        for g in filtered:
+            _render_game_card(g)
+
+
+def _render_game_card(g: GameInfo):
+    """Render a single game info card."""
+    cls, err = try_import(g.module_path, g.class_name)
+    status_icon = "OK" if cls else "FAIL"
+
+    with st.expander(f"**{g.name}** -- {g.description} [{status_icon}]"):
+        col1, col2 = st.columns([2, 1])
+
+        with col1:
+            st.markdown(f"**{g.description}**")
+            st.caption(f"Players: {g.min_players}-{g.max_players} | Tags: {', '.join(g.tags)}")
+            st.code(f"from {g.module_path} import {g.class_name}", language="python")
+
+            if g.config_module and g.config_class:
+                st.code(f"from {g.config_module} import {g.config_class}", language="python")
+
+            if g.example_module:
+                st.caption(f"Example: `python -m {g.example_module}`")
+
+        with col2:
+            if cls:
+                st.success("Agent: OK")
+            else:
+                st.error(f"Agent: {err}")
+
+            cfg_cls, cfg_err = try_import_game_config(g)
+            if cfg_cls:
+                st.success("Config: OK")
+            else:
+                st.warning(f"Config: {cfg_err}")
+
+            st.caption(f"Has UI: {'Yes' if g.has_ui else 'No'}")
+
+        # View example source
+        if g.example_module:
+            if st.button("View Example Source", key=f"view_src_{g.name}"):
+                _show_example_source(g)
+
+
+def _show_example_source(g: GameInfo):
+    """Display example source code."""
+    try:
+        mod = __import__(g.example_module, fromlist=["__file__"])
+        if hasattr(mod, "__file__") and mod.__file__:
+            with open(mod.__file__) as f:
+                st.code(f.read(), language="python", line_numbers=True)
+        else:
+            st.info("No source file found")
+    except Exception as e:
+        st.error(f"Cannot load: {e}")
+
+
+# ── Run Tab ─────────────────────────────────────────────────────────
+
+def _render_run_tab():
+    """Run a specific game."""
     categories = list(get_games_by_category().keys())
-    selected_cat = st.selectbox("Category", categories, key="game_cat")
+    selected_cat = st.selectbox("Category", categories, key="game_run_cat")
 
     games_in_cat = [g for g in GAME_REGISTRY if g.category == selected_cat]
     game_names = [g.name for g in games_in_cat]
-    selected_name = st.selectbox("Game", game_names, key="game_select")
+    selected_name = st.selectbox("Game", game_names, key="game_run_select")
     game_info = next(g for g in games_in_cat if g.name == selected_name)
 
-    # Game info
+    # Game info header
+    st.markdown(f"### {game_info.name}")
     st.markdown(f"**{game_info.description}**")
-    st.caption(
-        f"Players: {game_info.min_players}-{game_info.max_players} | "
-        f"Tags: {', '.join(game_info.tags)} | "
-        f"Has UI: {'Yes' if game_info.has_ui else 'No'}"
-    )
-    st.code(f"from {game_info.module_path} import {game_info.class_name}", language="python")
 
-    # Import check
-    cls, err = try_import(game_info.module_path, game_info.class_name)
-    if not cls:
-        st.error(f"Agent import failed: {err}")
-        return
-
-    config_cls, config_err = try_import_game_config(game_info)
-    if config_cls:
-        st.success(f"Game loaded: {game_info.class_name} + {game_info.config_class}")
-    else:
-        st.warning(f"Agent OK, config import issue: {config_err}")
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric("Min Players", game_info.min_players)
+    with col2:
+        st.metric("Max Players", game_info.max_players)
+    with col3:
+        st.metric("Has UI", "Yes" if game_info.has_ui else "No")
+    with col4:
+        cls, _ = try_import(game_info.module_path, game_info.class_name)
+        st.metric("Import", "OK" if cls else "FAIL")
 
     st.divider()
 
-    # View example source
-    if game_info.example_module:
-        with st.expander("View Example Source"):
-            try:
-                mod = __import__(game_info.example_module, fromlist=["__file__"])
-                if hasattr(mod, "__file__") and mod.__file__:
-                    with open(mod.__file__) as f:
-                        st.code(f.read(), language="python", line_numbers=True)
-                else:
-                    st.info("Example module found but no source file available")
-            except Exception as e:
-                st.error(f"Cannot load example: {e}")
+    # LLM config display
+    llm_cfg = st.session_state.llm_config
+    st.caption(f"Current LLM: {llm_cfg['provider']}/{llm_cfg['model']} (temp={llm_cfg['temperature']})")
+    st.caption("Change LLM settings in the sidebar.")
 
-    # Run game via example module
-    st.subheader("Run Game")
-    st.caption("Games run via their example scripts and stream output to the terminal.")
+    st.divider()
 
-    max_timeout = st.number_input("Timeout (seconds)", 30, 300, 120, key=f"timeout_{game_info.name}")
+    # Run options
+    timeout = st.slider("Timeout (seconds)", 15, 300, 60, key=f"timeout_run_{game_info.name}")
 
-    if st.button("Run Game Example", type="primary", key=f"run_{game_info.name}"):
-        _run_game_example(game_info, int(max_timeout))
+    col_run, col_view = st.columns(2)
+    with col_run:
+        if st.button("Run Game Example", type="primary", key=f"runbtn_{game_info.name}"):
+            _run_game(game_info, timeout)
+    with col_view:
+        if st.button("View Example Source", key=f"viewbtn_{game_info.name}"):
+            _show_example_source(game_info)
 
 
-def _run_game_example(game_info: GameInfo, timeout: int):
-    """Run a game's example script via subprocess."""
+def _run_game(game_info: GameInfo, timeout: int):
+    """Run a game's example via subprocess with rich output."""
     if not game_info.example_module:
-        st.error("No example module configured for this game")
+        st.error("No example module configured")
         return
 
-    # Convert module path to -m arg
-    module_path = game_info.example_module
-
-    with st.spinner(f"Running {game_info.name} example..."):
+    with st.spinner(f"Running {game_info.name}..."):
         try:
             result = subprocess.run(
-                [sys.executable, "-m", module_path],
+                [sys.executable, "-m", game_info.example_module],
                 capture_output=True,
                 text=True,
                 timeout=timeout,
-                cwd=os.environ.get("HAIVE_ROOT", os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "..")),
+                cwd=os.environ.get("HAIVE_ROOT", "/home/will/Projects/haive"),
                 env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
             )
 
             if result.returncode == 0:
-                st.success(f"{game_info.name} example completed successfully")
+                st.success(f"{game_info.name} completed successfully")
             else:
-                st.error(f"{game_info.name} example failed (exit {result.returncode})")
+                st.error(f"{game_info.name} failed (exit {result.returncode})")
 
+            # Rich output display
             if result.stdout:
-                with st.expander("Output", expanded=True):
-                    lines = result.stdout.strip().split("\n")
-                    # Show last 100 lines
-                    st.code("\n".join(lines[-100:]))
+                stdout_lines = result.stdout.strip().split("\n")
+
+                # Show summary metrics
+                _show_output_summary(game_info, stdout_lines)
+
+                # Full output in expander
+                with st.expander("Full Output", expanded=True):
+                    # Show last 200 lines (most games have a lot of rich output)
+                    display_lines = stdout_lines[-200:]
+                    # Strip ANSI codes for cleaner display
+                    import re
+                    ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
+                    clean_lines = [ansi_escape.sub('', line) for line in display_lines]
+                    st.code("\n".join(clean_lines))
 
             if result.stderr and result.returncode != 0:
                 with st.expander("Errors"):
                     st.code(result.stderr[-3000:])
 
         except subprocess.TimeoutExpired:
-            st.error(f"{game_info.name} timed out ({timeout}s)")
+            st.warning(f"{game_info.name} timed out after {timeout}s (likely waiting for LLM API calls)")
+            st.info("This usually means the game works but needs active LLM API keys to complete.")
         except Exception as e:
             st.error(f"Error: {e}")
             with st.expander("Traceback"):
                 st.code(traceback.format_exc())
 
+
+def _show_output_summary(game_info: GameInfo, lines: list[str]):
+    """Extract and show key info from game output."""
+    # Look for common game output patterns
+    import re
+    ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
+
+    clean_lines = [ansi_escape.sub('', line).strip() for line in lines]
+
+    # Find status/result lines
+    result_lines = [l for l in clean_lines if any(kw in l.lower() for kw in
+                    ["completed", "winner", "result", "game over", "final", "score", "pass", "fail"])]
+
+    if result_lines:
+        st.subheader("Key Results")
+        for line in result_lines[-5:]:
+            if line:
+                st.markdown(f"- {line}")
+
+
+# ── Status Tab ──────────────────────────────────────────────────────
 
 def _render_status_tab():
     """Show import status of all games."""
@@ -139,16 +235,15 @@ def _render_status_tab():
         results.append({
             "Game": g.name,
             "Category": g.category,
-            "Agent": "OK" if cls else f"FAIL: {err}",
-            "Config": "OK" if cfg_cls else f"FAIL: {cfg_err}" if cfg_err else "N/A",
-            "Example": g.example_module or "None",
-            "Has UI": "Yes" if g.has_ui else "No",
+            "Agent": "OK" if cls else "FAIL",
+            "Config": "OK" if cfg_cls else "FAIL",
+            "Has UI": g.has_ui,
             "Players": f"{g.min_players}-{g.max_players}",
+            "Example": g.example_module or "None",
         })
 
     st.dataframe(results, use_container_width=True)
 
-    # Summary
     agent_ok = sum(1 for r in results if r["Agent"] == "OK")
     config_ok = sum(1 for r in results if r["Config"] == "OK")
     st.caption(f"Agents: {agent_ok}/{len(results)} OK | Configs: {config_ok}/{len(results)} OK")
