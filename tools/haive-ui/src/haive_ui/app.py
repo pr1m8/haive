@@ -35,7 +35,7 @@ if "llm_config" not in st.session_state:
 
 # Sidebar - Global LLM Config
 with st.sidebar:
-    st.title("🐝 Haive AI")
+    st.title("Haive AI")
     st.caption("Agent Framework Dashboard")
     st.divider()
 
@@ -89,6 +89,7 @@ with st.sidebar:
             "Agents",
             "Games",
             "Demos",
+            "Status",
             "Trace Viewer",
         ],
         key="nav_radio",
@@ -107,6 +108,9 @@ elif page == "Games":
 elif page == "Demos":
     from haive_ui.pages import demos
     demos.render()
+elif page == "Status":
+    from haive_ui.pages import status
+    status.render()
 elif page == "Trace Viewer":
     from haive_ui.pages import trace
     trace.render()
