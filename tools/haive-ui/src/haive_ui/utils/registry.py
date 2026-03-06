@@ -48,9 +48,7 @@ AGENT_REGISTRY: list[AgentInfo] = [
              "Basic conversational agent with LLM", tags=["conversation", "basic"]),
     AgentInfo("React Agent", "haive.agents.react.agent", "ReactAgent", "core",
              "Reasoning + Acting agent with tool use", requires_tools=True, tags=["tools", "reasoning"]),
-    AgentInfo("Supervisor", "haive.agents.supervisor.agent", "ReactAgent", "core",
-             "Orchestrates multiple sub-agents with tool use", tags=["multi-agent", "orchestration"]),
-    AgentInfo("Dynamic Supervisor", "haive.agents.dynamic_supervisor.agent", "DynamicSupervisorAgent", "core",
+    AgentInfo("Dynamic Supervisor", "haive.agents.supervisor.agent", "DynamicSupervisor", "core",
              "Creates and manages agents dynamically", tags=["multi-agent", "dynamic"]),
 
     # RAG agents
