@@ -1,5 +1,5 @@
 ---
-name: 🚀 Publish Release
+name: Publish Release
 on:
   release:
     types: [published]
@@ -9,57 +9,124 @@ permissions:
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
-  publish:
-    name: 📦 Publish ${{ matrix.package }}
+  # Phase 1: Publish haive-core first (no dependencies)
+  publish-core:
+    name: Publish haive-core
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.GH_TOKEN }}
+      - name: Get Package Poetry Info
+        id: poetry
+        uses: ./.github/actions/get-package-poetry-info
+        with:
+          package: haive-core
+      - name: Set up Python ${{ steps.poetry.outputs.python }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.poetry.outputs.python }}
+          cache: poetry
+      - name: Install Poetry
+        run: pipx install poetry==2.1.0
+      - name: Configure PyPI Credentials
+        run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+      - name: Build and Publish haive-core
+        run: |
+          cd packages/haive-core
+          poetry build --format wheel
+          poetry publish --skip-existing
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: haive-core-dist
+          path: packages/haive-core/dist/
+
+  # Phase 2: Publish haive-agents (depends on haive-core)
+  publish-agents:
+    name: Publish haive-agents
+    needs: publish-core
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.GH_TOKEN }}
+      - name: Get Package Poetry Info
+        id: poetry
+        uses: ./.github/actions/get-package-poetry-info
+        with:
+          package: haive-agents
+      - name: Set up Python ${{ steps.poetry.outputs.python }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.poetry.outputs.python }}
+          cache: poetry
+      - name: Install Poetry
+        run: pipx install poetry==2.1.0
+      - name: Configure PyPI Credentials
+        run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+      - name: Build and Publish haive-agents
+        run: |
+          cd packages/haive-agents
+          poetry build --format wheel
+          poetry publish --skip-existing
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: haive-agents-dist
+          path: packages/haive-agents/dist/
+
+  # Phase 3: Publish remaining packages in parallel (depend on haive-agents)
+  publish-remaining:
+    name: Publish ${{ matrix.package }}
+    needs: publish-agents
     runs-on: ubuntu-latest
     env:
       ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_DEBUG || 'false' }}
     strategy:
+      fail-fast: false
       matrix:
         package:
-          - haive-core
-          - haive-agents
           - haive-games
           - haive-tools
           - haive-prebuilt
           - haive-dataflow
     steps:
-      - name: 📥 Checkout Code
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
           submodules: true
           token: ${{ secrets.GH_TOKEN }}
-      - name: 📦 Get Package Poetry Info
+      - name: Get Package Poetry Info
         id: poetry
         uses: ./.github/actions/get-package-poetry-info
         with:
           package: ${{ matrix.package }}
-      - name: 🧾 Echo Package Metadata
-        run: |
-          echo "📦 Name:        ${{ steps.poetry.outputs.name }}"
-          echo "🔖 Version:     ${{ steps.poetry.outputs.version }}"
-          echo "🧑 Authors:     ${{ steps.poetry.outputs.authors || 'N/A' }}"
-          echo "📄 License:     ${{ steps.poetry.outputs.license || 'N/A' }}"
-          echo "📝 Description: ${{ steps.poetry.outputs.description || 'N/A' }}"
-          echo "🌐 Homepage:    ${{ steps.poetry.outputs.homepage || 'N/A' }}"
-          echo "🔗 Repository:  ${{ steps.poetry.outputs.repository || 'N/A' }}"
-          echo "📚 Docs:        ${{ steps.poetry.outputs.documentation || 'N/A' }}"
-          echo "🏷 Classifiers: ${{ steps.poetry.outputs.classifiers || 'N/A' }}"
-      - name: 🐍 Set up Python ${{ steps.poetry.outputs.python }}
+      - name: Set up Python ${{ steps.poetry.outputs.python }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ steps.poetry.outputs.python }}
           cache: poetry
-      - name: 🛠 Install Poetry
+      - name: Install Poetry
         run: pipx install poetry==2.1.0
-      - name: 🔐 Configure PyPI Credentials
+      - name: Configure PyPI Credentials
         run: poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
-      - name: 📦 Build Package (No Publish)
+      - name: Build and Publish ${{ matrix.package }}
         run: |
           cd packages/${{ matrix.package }}
           poetry build --format wheel
-      - name: 📤 Upload Package as Artifact
+          poetry publish --skip-existing
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.package }}-dist

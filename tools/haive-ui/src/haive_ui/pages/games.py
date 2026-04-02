@@ -6,6 +6,7 @@ import re
 import subprocess
 import sys
 import time
+import inspect
 import traceback
 
 import streamlit as st
@@ -132,7 +133,10 @@ def _render_game_detail(g: GameInfo):
         st.error(f"Import error: {err}")
 
     # Tabs
-    tab_info, tab_run, tab_source, tab_config = st.tabs(["Info", "Run Game", "Example Source", "Config"])
+    tab_play, tab_info, tab_run, tab_source, tab_config = st.tabs(["Play", "Info", "Run Example", "Example Source", "Config"])
+
+    with tab_play:
+        _render_play_tab(g, cls, cfg_cls)
 
     with tab_info:
         _render_game_info(g, cls, cfg_cls)
@@ -427,3 +431,323 @@ def _render_game_config_tab(g: GameInfo, cfg_cls):
 
     except Exception as e:
         st.warning(f"Could not inspect config: {e}")
+
+
+# -- Play Tab (Interactive Game) ---------------------------------------------
+
+def _render_play_tab(g: GameInfo, cls, cfg_cls):
+    """Interactive game play with LLM agents and live board rendering."""
+    st.subheader("Play Game")
+
+    if not cls:
+        st.error("Cannot play - agent class failed to import.")
+        return
+
+    llm_cfg = st.session_state.llm_config
+    st.caption(f"LLM: **{llm_cfg['model']}** | Temp: {llm_cfg['temperature']}")
+
+    game_key = f"live_game_{g.name}"
+
+    # Initialize or get game state
+    col_start, col_reset = st.columns([1, 1])
+    with col_start:
+        start_btn = st.button("Start New Game", type="primary", key=f"start_{g.name}")
+    with col_reset:
+        reset_btn = st.button("Reset", key=f"reset_{g.name}")
+
+    if reset_btn:
+        st.session_state.pop(game_key, None)
+        st.session_state.pop(f"{game_key}_log", None)
+        st.rerun()
+
+    if start_btn:
+        with st.spinner("Creating game agent and compiling graph..."):
+            try:
+                agent, state = _create_game(g, cls, cfg_cls)
+                st.session_state[game_key] = {"agent": agent, "state": state, "step": 0, "done": False}
+                st.session_state[f"{game_key}_log"] = []
+                st.success("Game created! Click 'Next Move' to play.")
+            except Exception as e:
+                st.error(f"Failed to create game: {e}")
+                with st.expander("Details"):
+                    st.code(traceback.format_exc())
+                return
+
+    game_data = st.session_state.get(game_key)
+    if not game_data:
+        st.info("Click **Start New Game** to begin.")
+        return
+
+    agent = game_data["agent"]
+    state = game_data["state"]
+    step = game_data["step"]
+    done = game_data["done"]
+
+    # Render game board
+    _render_game_board(g, state)
+
+    # Game status
+    game_status = _get_game_status(state)
+    if game_status:
+        st.markdown(f"**Status:** {game_status}")
+
+    # Move log
+    move_log = st.session_state.get(f"{game_key}_log", [])
+
+    if not done:
+        move_btn = st.button("Next Move", type="primary", key=f"move_{g.name}_{step}")
+        auto_play = st.checkbox("Auto-play (run full game)", key=f"auto_{g.name}")
+
+        if move_btn or auto_play:
+            _play_move(g, game_key, agent, state, move_log, auto_play)
+    else:
+        st.success("Game Over!")
+        winner = getattr(state, "winner", None)
+        if winner:
+            st.markdown(f"### Winner: **{winner}**")
+
+    # Show move history
+    if move_log:
+        with st.expander(f"Move History ({len(move_log)} moves)", expanded=False):
+            for entry in move_log:
+                st.markdown(f"- {entry}")
+
+
+def _create_game(g: GameInfo, cls, cfg_cls):
+    """Create a game agent and initial state."""
+    if cfg_cls:
+        try:
+            config = cfg_cls(enable_analysis=False, visualize=False)
+        except Exception:
+            try:
+                config = cfg_cls(visualize=False)
+            except Exception:
+                config = cfg_cls()
+        agent = cls(config)
+    else:
+        agent = cls()
+
+    # Get initial state
+    state_module = g.module_path.rsplit(".", 1)[0] + ".state"
+    try:
+        import importlib
+        sm = importlib.import_module(state_module)
+        # Find the state class
+        state_cls = None
+        for name in dir(sm):
+            obj = getattr(sm, name)
+            if isinstance(obj, type) and name.endswith("State") and name != "BaseModel":
+                state_cls = obj
+                break
+        if state_cls:
+            state = state_cls()
+        else:
+            state = {}
+    except Exception:
+        state = {}
+
+    # Try to initialize the game
+    if hasattr(agent, "initialize_game"):
+        try:
+            state = agent.initialize_game(state)
+        except Exception:
+            pass
+
+    return agent, state
+
+
+def _render_game_board(g: GameInfo, state):
+    """Render the game board based on game type."""
+    game_name = g.name.lower().replace(" ", "_").replace("'", "")
+
+    # TicTacToe
+    if "tic_tac" in game_name:
+        board = getattr(state, "board", None)
+        if board:
+            st.markdown("#### Board")
+            for r, row in enumerate(board):
+                cols = st.columns(3)
+                for c, cell in enumerate(row):
+                    with cols[c]:
+                        val = cell if cell else "."
+                        if val == "X":
+                            st.markdown(f"<div style='text-align:center;font-size:2em;color:#e74c3c'>X</div>", unsafe_allow_html=True)
+                        elif val == "O":
+                            st.markdown(f"<div style='text-align:center;font-size:2em;color:#3498db'>O</div>", unsafe_allow_html=True)
+                        else:
+                            st.markdown(f"<div style='text-align:center;font-size:2em;color:#ccc'>.</div>", unsafe_allow_html=True)
+
+    # Chess
+    elif "chess" in game_name:
+        board = getattr(state, "board", None) or getattr(state, "board_state", None)
+        if board:
+            st.markdown("#### Board")
+            if isinstance(board, str):
+                st.code(board, language=None)
+            elif isinstance(board, list):
+                board_str = ""
+                for row in board:
+                    if isinstance(row, list):
+                        board_str += " ".join(str(c) if c else "." for c in row) + "\n"
+                    else:
+                        board_str += str(row) + "\n"
+                st.code(board_str, language=None)
+
+    # Connect4
+    elif "connect" in game_name:
+        board = getattr(state, "board", None)
+        if board:
+            st.markdown("#### Board")
+            for row in board:
+                cols = st.columns(7)
+                for c, cell in enumerate(row):
+                    with cols[c]:
+                        if cell == 1:
+                            st.markdown("<div style='text-align:center;font-size:1.5em'>🔴</div>", unsafe_allow_html=True)
+                        elif cell == 2:
+                            st.markdown("<div style='text-align:center;font-size:1.5em'>🟡</div>", unsafe_allow_html=True)
+                        else:
+                            st.markdown("<div style='text-align:center;font-size:1.5em'>⚪</div>", unsafe_allow_html=True)
+
+    # Nim
+    elif "nim" in game_name:
+        heaps = getattr(state, "heaps", None) or getattr(state, "board", None)
+        if heaps and isinstance(heaps, list):
+            st.markdown("#### Heaps")
+            for i, h in enumerate(heaps):
+                count = h if isinstance(h, int) else 0
+                st.markdown(f"Pile {i+1}: {'🪨 ' * count} ({count})")
+
+    # Reversi
+    elif "reversi" in game_name:
+        board = getattr(state, "board", None)
+        if board:
+            st.markdown("#### Board")
+            board_str = ""
+            for row in board:
+                if isinstance(row, list):
+                    for cell in row:
+                        if cell == 1:
+                            board_str += "⚫ "
+                        elif cell == 2:
+                            board_str += "⚪ "
+                        else:
+                            board_str += "· "
+                    board_str += "\n"
+            st.code(board_str, language=None)
+
+    # Fallback: show state as JSON
+    else:
+        _render_generic_state(state)
+
+
+def _render_generic_state(state):
+    """Render game state as formatted info."""
+    if isinstance(state, dict):
+        display = {k: v for k, v in state.items() if k != "messages" and not k.startswith("_")}
+        if display:
+            st.json(display)
+        return
+
+    # Pydantic/dataclass state
+    display = {}
+    for attr in ["board", "board_state", "turn", "current_player", "game_status",
+                 "winner", "score", "scores", "round", "phase", "heaps",
+                 "move_history", "players", "hands", "pot", "community_cards"]:
+        val = getattr(state, attr, None)
+        if val is not None:
+            if isinstance(val, list) and len(val) > 20:
+                display[attr] = f"[{len(val)} items]"
+            else:
+                display[attr] = val
+
+    if display:
+        st.markdown("#### Game State")
+        for k, v in display.items():
+            if isinstance(v, list) and all(isinstance(r, list) for r in v):
+                # Board-like
+                board_str = "\n".join(" ".join(str(c) if c else "." for c in row) for row in v)
+                st.markdown(f"**{k}:**")
+                st.code(board_str, language=None)
+            else:
+                st.markdown(f"**{k}:** {v}")
+    else:
+        st.caption("No displayable state yet. Start the game and make a move.")
+
+
+def _get_game_status(state) -> str:
+    """Extract game status string."""
+    status = getattr(state, "game_status", None)
+    if status:
+        return str(status)
+    turn = getattr(state, "turn", None) or getattr(state, "current_player", None)
+    if turn:
+        return f"Turn: {turn}"
+    return ""
+
+
+def _play_move(g: GameInfo, game_key: str, agent, state, move_log: list, auto_play: bool):
+    """Execute one or more game moves using the LLM agent."""
+    max_moves = 50 if auto_play else 1
+
+    for i in range(max_moves):
+        # Check if game is over
+        game_status = getattr(state, "game_status", "")
+        if game_status and any(end in str(game_status).lower() for end in ["over", "finished", "complete", "won", "draw", "tie"]):
+            st.session_state[game_key]["done"] = True
+            break
+
+        winner = getattr(state, "winner", None)
+        if winner:
+            st.session_state[game_key]["done"] = True
+            break
+
+        step = st.session_state[game_key]["step"]
+        with st.spinner(f"Move {step + 1}... (LLM thinking)"):
+            try:
+                # Run the game agent for one step
+                if hasattr(agent, "app") and agent.app is not None:
+                    state_dict = state if isinstance(state, dict) else (
+                        state.model_dump() if hasattr(state, "model_dump") else vars(state)
+                    )
+                    result = agent.app.invoke(state_dict)
+
+                    # Update state from result
+                    if isinstance(result, dict):
+                        if hasattr(state, "model_validate"):
+                            try:
+                                state = state.__class__.model_validate(result)
+                            except Exception:
+                                state = result
+                        else:
+                            state = result
+                    else:
+                        state = result
+
+                    # Log the move
+                    move_hist = getattr(state, "move_history", None)
+                    if move_hist and isinstance(move_hist, list) and len(move_hist) > step:
+                        last_move = move_hist[-1]
+                        move_log.append(f"Move {step+1}: {last_move}")
+                    else:
+                        turn = getattr(state, "turn", "?")
+                        move_log.append(f"Move {step+1}: (turn={turn})")
+
+                    st.session_state[game_key]["state"] = state
+                    st.session_state[game_key]["step"] = step + 1
+                    st.session_state[f"{game_key}_log"] = move_log
+
+                else:
+                    st.warning("Game agent has no compiled graph (app). Try 'Run Example' tab instead.")
+                    return
+
+            except Exception as e:
+                err_msg = str(e)[:200]
+                move_log.append(f"Move {step+1}: ERROR - {err_msg}")
+                st.session_state[f"{game_key}_log"] = move_log
+                st.error(f"Move failed: {err_msg}")
+                with st.expander("Details"):
+                    st.code(traceback.format_exc())
+                return
+
+    st.rerun()
