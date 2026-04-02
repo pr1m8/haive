@@ -1,6 +1,6 @@
 """Demo 23: Memory Agents.
 
-Tests: Memory system agents (long_term_memory, ltm, memory, memory_reorganized)
+Tests: Memory system agents (long_term_memory, memory with search)
 """
 
 import asyncio
@@ -19,12 +19,11 @@ async def main():
 
     memory_modules = [
         ("long_term_memory", "haive.agents.long_term_memory.agent"),
-        ("ltm", "haive.agents.ltm.agent"),
         ("memory", "haive.agents.memory.agent"),
         ("memory/quick_search", "haive.agents.memory.search.quick_search.agent"),
         ("memory/pro_search", "haive.agents.memory.search.pro_search.agent"),
         ("memory/deep_research", "haive.agents.memory.search.deep_research.agent"),
-        ("memory_reorg/base", "haive.agents.memory_reorganized.base.agent"),
+        ("memory/kg_generator", "haive.agents.memory.kg_generator_agent"),
     ]
 
     ok = broken = 0
