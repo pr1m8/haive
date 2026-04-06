@@ -455,6 +455,60 @@ poetry run python demos/agents/memory_agent_e2e.py
 poetry run python demos/agents/memory_agent_e2e.py --neo4j
 ```
 
+## Agent Status (2026-04-06)
+
+### Working (30+)
+
+| Agent | Type | Notes |
+|-------|------|-------|
+| SimpleAgent | Foundation | 1660 lines, BaseGraph, v3 |
+| ReactAgent | Foundation | 984 lines, extends SimpleAgent |
+| MultiAgent | Foundation | 920 lines, sequential/parallel/conditional |
+| DynamicSupervisor | Foundation | 220 lines, dynamic agent mgmt |
+| Supervisor | Foundation | 577 lines, multi-supervisor |
+| MemoryAgent | Memory | KG extraction, Neo4j, auto-summarize |
+| LongTermMemory | Memory | 78 lines, ReactAgent + vector store |
+| Conversation (6) | Conversation | Base, Collaborative, Debate, Directed, RoundRobin, SocialMedia |
+| LLM Compiler | Planning | 300 lines, DAG plan + join + replan |
+| ReWOO | Planning | 254 lines, plan all → execute → solve |
+| Reflexion | Reasoning | 271 lines, draft → reflect → revise loop |
+| LATS | Reasoning | 265 lines, tree search + backprop |
+| Reflection | Reasoning | 473 lines |
+| Logic | Reasoning | 140 lines |
+| RAG (24 variants) | RAG | Base, Adaptive, Agentic, Dynamic, FLARE, Fusion, HyDE, QueryPlan, SelfReflective, SelfRoute, Speculative, StepBack, + more |
+| DocumentLoader (4) | Loader | Base, File, Directory, Web |
+| TaskAnalysis | Analysis | Proper Agent inheritance |
+| StructuredOutput | Output | Extends SimpleAgent |
+
+### Needs Fix (import path: `haive.core.engine.agent.agent` → `haive.agents.base.agent`)
+
+| Agent | Issue |
+|-------|-------|
+| Filtered RAG | Wrong import path |
+| Self-Corrective RAG | Wrong import, no inheritance |
+| DB RAG (Graph + SQL) | Wrong import path (2 files) |
+| Summarizer (map + iterative) | Wrong import path |
+| KG Extraction (iterative + map) | Wrong import path |
+| Person Research | Wrong import, no inheritance |
+| Open Perplexity | Wrong import, no inheritance |
+| Discovery Agent | Circular import |
+| Plan & Execute v2 | No implementation (empty) |
+
+### Broken (need rewrite)
+
+| Agent | Issue |
+|-------|-------|
+| Complex Extraction | No Agent inheritance |
+| TNT | Wrong import, no inheritance |
+| Tree of Thoughts | No Agent inheritance (uses DynamicGraph directly) |
+| Self-Discover | 79 lines, minimal, agent2.py has better version |
+| Storm | Components only, no orchestrator |
+
+### Fix Priority
+1. **Import fixes** (15 files) — mechanical: change `from haive.core.engine.agent.agent import Agent` → `from haive.agents.base.agent import Agent`
+2. **Missing inheritance** (5 files) — add proper Agent/ReactAgent base class
+3. **Incomplete** (3 files) — Plan & Execute, Storm orchestrator, Self-Discover
+
 ## Recent Work (2026-04-06)
 
 ### MemoryAgent Phase 2 Complete
