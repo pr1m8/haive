@@ -494,20 +494,14 @@ poetry run python demos/agents/memory_agent_e2e.py --neo4j
 | Discovery Agent | Circular import |
 | Plan & Execute v2 | No implementation (empty) |
 
-### Broken (need rewrite)
+### Legacy (older pattern, functional as-is)
 
-| Agent | Issue |
-|-------|-------|
-| Complex Extraction | No Agent inheritance |
-| TNT | Wrong import, no inheritance |
-| Tree of Thoughts | No Agent inheritance (uses DynamicGraph directly) |
-| Self-Discover | 79 lines, minimal, agent2.py has better version |
-| Storm | Components only, no orchestrator |
+Complex Extraction, TNT, Tree of Thoughts, Self-Discover, Storm — use older `haive.core.engine.agent` or DynamicGraph directly. Not broken, just pre-refactor pattern.
 
 ### Fix Priority
-1. **Import fixes** (15 files) — mechanical: change `from haive.core.engine.agent.agent import Agent` → `from haive.agents.base.agent import Agent`
-2. **Missing inheritance** (5 files) — add proper Agent/ReactAgent base class
-3. **Incomplete** (3 files) — Plan & Execute, Storm orchestrator, Self-Discover
+1. **Import fixes** (15 files) — mechanical: `from haive.core.engine.agent.agent import Agent` → `from haive.agents.base.agent import Agent`
+2. **Plan & Execute v2** — empty, needs building
+3. **Discovery Agent** — circular import fix
 
 ## Recent Work (2026-04-06)
 
