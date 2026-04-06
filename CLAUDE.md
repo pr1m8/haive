@@ -396,8 +396,8 @@ project_docs/       # Documentation (main repo)
 ├── guides/tools/          # Tool guides
 └── sessions/              # Working memory
 
-demos/              # Demo scripts
-├── agents/         # Agent demos (memory_agent_e2e.py, etc.)
+demos/              # Demo scripts — EVERY working agent should have one here
+├── agents/         # Agent demos (01-49 + memory_agent_e2e.py)
 └── games/          # Game demos
 ```
 
@@ -498,10 +498,12 @@ poetry run python demos/agents/memory_agent_e2e.py --neo4j
 
 Complex Extraction, TNT, Tree of Thoughts, Self-Discover, Storm — use older `haive.core.engine.agent` or DynamicGraph directly. Not broken, just pre-refactor pattern.
 
-### Fix Priority
-1. **Import fixes** (15 files) — mechanical: `from haive.core.engine.agent.agent import Agent` → `from haive.agents.base.agent import Agent`
-2. **Plan & Execute v2** — empty, needs building
-3. **Discovery Agent** — circular import fix
+### Next Steps
+1. **Plan & Execute v2** — empty, needs building
+2. **Discovery Agent** — circular import fix
+3. **Legacy imports** — leave as-is if working, don't touch
+4. **Demos** — every working agent should have a demo in `demos/agents/`
+5. **Postgres default** — prefer async Postgres over InMemoryStore
 
 ## Recent Work (2026-04-06)
 
