@@ -307,6 +307,77 @@ def my_function(param: str, config: Config | None = None) -> Result:
     """
 ```
 
+## Memory & Persistence Patterns
+
+### MemoryAgent — Persistent Memory + KG
+
+```python
+from haive.agents.memory import create_memory_agent
+
+# Dev (InMemoryStore)
+agent = create_memory_agent(name="assistant", user_id="user123")
+
+# Production (PostgreSQL — preferred)
+agent = create_memory_agent(name="assistant", user_id="user123",
+    connection_string="postgresql://haive:haive@localhost/haive")
+
+# With Neo4j KG
+agent = create_memory_agent(name="assistant", user_id="user123")
+agent.connect_neo4j()  # Uses NEO4J_URI/USER/PASSWORD env vars
+agent.sync_kg_to_neo4j()  # Sync existing triples to graph
+triples = agent.query_kg("Alice")  # Graph query
+```
+
+### Store Namespaces
+
+```python
+# Memory agent uses 3 namespaces per user:
+("user", user_id)     # Memories (facts, preferences)
+("kg", user_id)       # Knowledge graph triples (subject-predicate-object)
+("summary", user_id)  # Conversation summaries (auto-generated)
+
+# Store API (positional args — NOT keyword):
+store.put(namespace_tuple, key, value_dict)
+store.search(namespace_tuple, query=query, limit=5)
+```
+
+### Store Configuration
+
+```python
+# Always prefer async Postgres for production
+from haive.core.persistence.store.factory import StoreFactory
+from haive.core.persistence.store.types import StoreConfig, StoreType
+
+config = StoreConfig(
+    type=StoreType.POSTGRES_SYNC,  # or POSTGRES_ASYNC
+    connection_params={"connection_string": "postgresql://haive:haive@localhost/haive"},
+    setup_on_init=True,
+)
+store = StoreFactory.create(config)
+
+# InMemoryStore for dev ONLY
+from langgraph.store.memory import InMemoryStore
+store = InMemoryStore()
+```
+
+### KG Extraction & Neo4j
+
+```python
+# MemoryAgent auto-extracts KG triples from conversations (post-hook)
+# Triples stored in both LangGraph store AND Neo4j (if connected)
+
+# Manual document-level KG extraction:
+triples = agent.extract_kg_from_document("Alice works at DeepMind on RL.")
+
+# Raw Cypher queries:
+results = agent.query_kg_cypher(
+    "MATCH (s:Entity)-[r:RELATES_TO]->(o:Entity) RETURN s.name, r.predicate, o.name"
+)
+
+# Neo4j schema: (:Entity {name, type, user_id}) -[:RELATES_TO {predicate}]-> (:Entity)
+# See: @project_docs/guides/agent/MEMORY_AGENT_GUIDE.md for full schema
+```
+
 ## Package Structure
 
 ```
