@@ -87,18 +87,225 @@ from haive.agents.utils.trace import run_traced
 result = run_traced(agent, "Hello", save_to="traces/")
 ```
 
-## Critical Rules
+## Critical Development Rules
 
 1. **NO MOCKS EVER**: Test with real LLMs, real tools, real components
-2. **Poetry Run Everything**: `poetry run python`, `poetry run pytest`
+2. **Poetry Run Everything**: `poetry run python`, `poetry run pytest` — never run Python directly
 3. **Explicit Imports**: `from haive.core.engine import X` not `from engine import X`
 4. **Pydantic**: Never override `__init__`, use `model_post_init()` and Field()
 5. **Tools in AugLLMConfig**: Pass tools via `AugLLMConfig(tools=[...])`, not `self.tools.append()`
 6. **State Schema**: Use `LLMState` when agent has tools (includes engines dict for tool_node)
 7. **System Messages**: Go in `AugLLMConfig(system_message=...)`, not ChatPromptTemplate
 8. **Agent Composition**: Use MultiAgent, not complex inheritance
-9. **Git Safety**: Always diff before commit, commit submodules first
+9. **Git Safety**: Always diff before commit, commit submodules first, never force push
 10. **Async Postgres preferred**: Use PostgresStoreWrapper for production, not InMemoryStore
+11. **Research First**: Check existing patterns before implementing — `grep -r "pattern" packages/`
+12. **Keep It Simple**: Avoid over-engineering; one line compositions like `MultiAgent([A, B], mode="sequential")`
+
+## Coding Standards
+
+### Python Code Style
+
+```python
+# ✅ CORRECT — descriptive names, type hints, early returns
+def process_agent_response(
+    agent_response: str,
+    validation_config: ValidationConfig,
+) -> ProcessedResponse:
+    """Process agent response with validation."""
+    if not agent_response:
+        raise ValidationError("Empty response")
+    if not validation_config.enabled:
+        return ProcessedResponse(content=agent_response, validated=False)
+    validated = validate_response(agent_response, validation_config)
+    return ProcessedResponse(content=validated, validated=True)
+
+# ❌ WRONG — poor naming, no types, nested logic
+def process(resp, config):
+    if resp:
+        if config:
+            if config.enabled:
+                return validate_response(resp, config)
+```
+
+### Pydantic Model Pattern
+
+```python
+from pydantic import BaseModel, Field, ConfigDict, field_validator
+
+class AgentConfig(BaseModel):
+    model_config = ConfigDict(
+        str_strip_whitespace=True,
+        validate_assignment=True,
+        extra="forbid",
+    )
+
+    name: str = Field(..., min_length=1, max_length=50)
+    temperature: float = Field(default=0.7, ge=0.0, le=2.0)
+    tools: list[str] = Field(default_factory=list)
+
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, v: str) -> str:
+        if not v.replace("_", "").isalnum():
+            raise ValueError("Name must be alphanumeric with underscores")
+        return v
+
+# ❌ NEVER override __init__ — breaks Pydantic validation
+# ❌ NEVER use __init__ for setup — use model_post_init() instead
+# ✅ Use model_post_init(self, __context) for post-init setup
+```
+
+### Error Handling
+
+```python
+import logging
+logger = logging.getLogger(__name__)
+
+def execute_agent_safely(agent: Agent, input_data: str) -> AgentResponse | None:
+    try:
+        response = agent.run(input_data)
+        if not response:
+            logger.warning(f"Agent {agent.name} returned empty response")
+            return None
+        return response
+    except ValidationError as e:
+        logger.error(f"Validation error in {agent.name}: {e}")
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error in {agent.name}: {e}")
+        raise
+
+# ❌ WRONG — silent failures, print statements
+# Never use print() — use logger
+# Never silently return None on error without logging
+```
+
+### System vs Human Message Pattern
+
+```python
+# ✅ System message in AugLLMConfig
+engine = AugLLMConfig(
+    system_message="You are a helpful assistant.",  # System message HERE
+    temperature=0.7,
+)
+
+# ✅ Human message via input or ChatPromptTemplate
+agent.run("User question here")  # Becomes HumanMessage automatically
+
+# ❌ WRONG — mixing system and human in one template string
+```
+
+## Testing Standards — NO MOCKS
+
+```python
+# ✅ CORRECT — real components, real execution
+def test_react_agent_with_calculator():
+    """Test with REAL LLM and tools."""
+    @tool
+    def calculator(expression: str) -> str:
+        """Calculate."""
+        return str(eval(expression))
+
+    agent = ReactAgent(
+        name="test_calc",
+        engine=AugLLMConfig(temperature=0.1, tools=[calculator]),
+        max_iterations=3,
+    )
+    result = agent.run("What is 15 * 23?")
+    assert "345" in str(result)
+
+# ❌ WRONG — mocks, fake responses
+def test_with_mocks():
+    mock_llm = Mock()  # NO MOCKS!
+    mock_llm.return_value = "fake"  # Tests nothing real!
+
+# Test file organization:
+# packages/haive-{package}/tests/category/test_module.py
+# NEVER delete test files — they serve as documentation
+```
+
+```bash
+# Running tests
+poetry run pytest packages/haive-agents/tests/ -v
+poetry run pytest packages/haive-agents/tests/multi/ -v
+poetry run pytest -k "test_react" -v
+```
+
+## Git Safety Protocol
+
+```bash
+# BEFORE ANY WORK
+git status && git diff
+
+# BEFORE COMMITTING
+git diff --cached
+git add specific_file.py  # NEVER git add . or git add -A
+git commit -m "feat(component): clear description"
+
+# SUBMODULE SAFETY — commit submodule first, then main repo
+cd packages/haive-agents
+git add ... && git commit -m "feat: ..." && git push origin final-refactor
+cd ../..
+git add packages/haive-agents
+git commit -m "chore: update haive-agents submodule"
+
+# RECOVERY
+git reflog  # Find lost commits
+git branch recovery-branch HEAD@{n}
+```
+
+**Key Rules**: Never force push submodules. Always create backups before major changes. Always check status before work. Stage files individually, not with `.` or `-A`.
+
+## File Organization
+
+```
+# Test files — mirror source structure
+packages/haive-agents/
+├── src/haive/agents/memory/agent.py
+└── tests/memory/test_agent.py
+
+# Scripts
+scripts/
+├── maintenance/    # Fix scripts
+├── debug/          # Debug utilities
+└── docs/           # Doc build scripts
+
+# Documentation
+project_docs/
+├── active/architecture/   # Architecture decisions
+├── guides/agent/          # Agent building guides
+└── sessions/              # Working memory
+```
+
+```bash
+# ALWAYS check if similar file exists before creating
+find packages/ -name "*similar_pattern*" -type f
+
+# Files that MUST stay in root: CLAUDE.md, README.md, pyproject.toml, docker-compose.yml
+```
+
+## Docstring Standard (Google-style)
+
+```python
+def my_function(param: str, config: Config | None = None) -> Result:
+    """Brief description of what this does.
+
+    Args:
+        param: Description of parameter.
+        config: Optional configuration.
+
+    Returns:
+        Result object with processed data.
+
+    Raises:
+        ValidationError: If response fails validation.
+
+    Examples:
+        >>> result = my_function("test")
+        >>> print(result.data)
+    """
+```
 
 ## Package Structure
 
