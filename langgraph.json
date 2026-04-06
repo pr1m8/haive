@@ -34,6 +34,8 @@
     "task_analysis": "haive.agents.graphs:task_analysis",
     "rewoo": "haive.agents.graphs:rewoo",
     "reflexion": "haive.agents.graphs:reflexion",
+    "round_robin_conversation": "haive.agents.graphs:round_robin_conversation",
+    "lats": "haive.agents.graphs:lats",
     "tic_tac_toe": "haive.games.graphs:tic_tac_toe",
     "chess": "haive.games.graphs:chess",
     "connect4": "haive.games.graphs:connect4",
