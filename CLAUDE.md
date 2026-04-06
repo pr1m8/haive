@@ -471,6 +471,7 @@ poetry run python demos/agents/memory_agent_e2e.py --neo4j
 | Conversation (6) | Conversation | Base, Collaborative, Debate, Directed, RoundRobin, SocialMedia |
 | LLM Compiler | Planning | 300 lines, DAG plan + join + replan |
 | ReWOO | Planning | 254 lines, plan all → execute → solve |
+| Plan & Execute | Planning | Planner → Executor(tools) → Replanner |
 | Reflexion | Reasoning | 271 lines, draft → reflect → revise loop |
 | LATS | Reasoning | 265 lines, tree search + backprop |
 | Reflection | Reasoning | 473 lines |
@@ -492,18 +493,20 @@ poetry run python demos/agents/memory_agent_e2e.py --neo4j
 | Person Research | Wrong import, no inheritance |
 | Open Perplexity | Wrong import, no inheritance |
 | Discovery Agent | Circular import |
-| Plan & Execute v2 | No implementation (empty) |
+| ~~Plan & Execute v2~~ | ~~FIXED — now working~~ |
 
 ### Legacy (older pattern, functional as-is)
 
 Complex Extraction, TNT, Tree of Thoughts, Self-Discover, Storm — use older `haive.core.engine.agent` or DynamicGraph directly. Not broken, just pre-refactor pattern.
 
 ### Next Steps
-1. **Plan & Execute v2** — empty, needs building
-2. **Discovery Agent** — circular import fix
-3. **Legacy imports** — leave as-is if working, don't touch
-4. **Demos** — every working agent should have a demo in `demos/agents/`
-5. **Postgres default** — prefer async Postgres over InMemoryStore
+1. **Neo4j e2e** — docker-compose up, test full memory KG pipeline with Cypher
+2. **MemoryStoreManager** — integrate 11 memory types, importance scoring, decay
+3. **GraphDBRAG as tool** — NL→Cypher queries on memory KG
+4. **Discovery Agent** — circular import fix
+5. **Demos** — every working agent should have a demo in `demos/agents/`
+6. **Postgres default** — prefer async Postgres over InMemoryStore
+7. **Legacy imports** — leave as-is if working, don't touch
 
 ## Recent Work (2026-04-06)
 
