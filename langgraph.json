@@ -32,6 +32,8 @@
     "debate_conversation": "haive.agents.graphs:debate_conversation",
     "memory_agent": "haive.agents.graphs:memory_agent",
     "task_analysis": "haive.agents.graphs:task_analysis",
+    "rewoo": "haive.agents.graphs:rewoo",
+    "reflexion": "haive.agents.graphs:reflexion",
     "tic_tac_toe": "haive.games.graphs:tic_tac_toe",
     "chess": "haive.games.graphs:chess",
     "connect4": "haive.games.graphs:connect4",
