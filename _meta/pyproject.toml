@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "haive"
-version = "1.0.0"
+version = "1.0.1"
 description = "Production-ready AI agent framework — meta-package installing the full Haive ecosystem (53+ agents, 22+ RAG variants, 23 game environments, memory + KG, MCP integration)"
 authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
 license = "MIT"
@@ -22,14 +22,14 @@ packages = [{include = "haive_meta", from = "src"}]
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
-haive-core = "^1.0.0"
-haive-agents = "^1.0.0"
-haive-games = "^1.0.0"
-haive-tools = "^1.0.0"
-haive-mcp = "^1.0.0"
-haive-hap = "^1.0.0"
-haive-dataflow = "^1.0.0"
-haive-prebuilt = "^1.0.0"
+haive-core = "^1.0.1"
+haive-agents = "^1.0.1"
+haive-games = "^1.0.1"
+haive-tools = "^1.0.1"
+haive-mcp = "^1.0.1"
+haive-hap = "^1.0.1"
+haive-dataflow = "^1.0.1"
+haive-prebuilt = "^1.0.1"
 
 [build-system]
 requires = ["poetry-core"]
