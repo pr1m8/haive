@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "haive"
-version = "0.1.0"
+version = "1.0.0"
 description = "Advanced AI Agent Framework with auto-persistence, multi-agent coordination, and rich tool ecosystem"
 authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
 license = "MIT"
