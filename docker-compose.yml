@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  # PostgreSQL for store persistence (memories, KG triples, summaries)
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: haive-postgres
+    environment:
+      POSTGRES_USER: haive
+      POSTGRES_PASSWORD: haive
+      POSTGRES_DB: haive
+    ports:
+      - "5432:5432"
+    volumes:
+      - haive-pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U haive"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Neo4j for knowledge graph storage (APOC + GDS plugins)
+  neo4j:
+    image: neo4j:5-community
+    container_name: haive-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/haivepass
+      NEO4J_PLUGINS: '["apoc", "graph-data-science"]'
+      NEO4J_dbms_security_procedures_unrestricted: apoc.*,gds.*
+      NEO4J_dbms_security_procedures_allowlist: apoc.*,gds.*
+    ports:
+      - "7474:7474"  # HTTP browser
+      - "7687:7687"  # Bolt protocol
+    volumes:
+      - haive-neo4j-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p haivepass 'RETURN 1'"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  haive-pg-data:
+  haive-neo4j-data:
